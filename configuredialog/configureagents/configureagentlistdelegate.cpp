@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "configureagentlistdelegate.h"
 
 #include <QIcon>
@@ -25,7 +24,7 @@
 #include <QToolButton>
 #include <qcheckbox.h>
 
-ConfigureAgentListDelegate::ConfigureAgentListDelegate(QAbstractItemView* itemView, QObject* parent)
+ConfigureAgentListDelegate::ConfigureAgentListDelegate(QAbstractItemView *itemView, QObject *parent)
     : KWidgetItemDelegate(itemView, parent)
 {
 }
@@ -35,7 +34,7 @@ ConfigureAgentListDelegate::~ConfigureAgentListDelegate()
 }
 
 QSize ConfigureAgentListDelegate::sizeHint(const QStyleOptionViewItem &option,
-                                    const QModelIndex &index) const
+        const QModelIndex &index) const
 {
     Q_UNUSED(index);
 
@@ -46,8 +45,8 @@ QSize ConfigureAgentListDelegate::sizeHint(const QStyleOptionViewItem &option,
     return QSize(100, qMax(buttonHeight, fontHeight));
 }
 
-void ConfigureAgentListDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
-                                  const QModelIndex& index) const
+void ConfigureAgentListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+                                       const QModelIndex &index) const
 {
     Q_UNUSED(index);
     painter->save();
@@ -61,30 +60,30 @@ void ConfigureAgentListDelegate::paint(QPainter* painter, const QStyleOptionView
     painter->restore();
 }
 
-QList<QWidget*> ConfigureAgentListDelegate::createItemWidgets(const QModelIndex&) const
+QList<QWidget *> ConfigureAgentListDelegate::createItemWidgets(const QModelIndex &) const
 {
-    QCheckBox* checkBox = new QCheckBox();
+    QCheckBox *checkBox = new QCheckBox();
     QPalette palette = checkBox->palette();
     palette.setColor(QPalette::WindowText, palette.color(QPalette::Text));
     checkBox->setPalette(palette);
     connect(checkBox, SIGNAL(clicked(bool)), this, SLOT(slotCheckboxClicked(bool)));
 
-    QPushButton* configureButton = new QPushButton();
+    QPushButton *configureButton = new QPushButton();
     connect(configureButton, SIGNAL(clicked()), this, SLOT(slotConfigure()));
 
-    return QList<QWidget*>() << checkBox << configureButton;
+    return QList<QWidget *>() << checkBox << configureButton;
 }
 
-void ConfigureAgentListDelegate::updateItemWidgets(const QList<QWidget*> widgets,
-                                              const QStyleOptionViewItem& option,
-                                              const QPersistentModelIndex& index) const
+void ConfigureAgentListDelegate::updateItemWidgets(const QList<QWidget *> widgets,
+        const QStyleOptionViewItem &option,
+        const QPersistentModelIndex &index) const
 {
-    QCheckBox* checkBox = static_cast<QCheckBox*>(widgets[0]);
-    QPushButton *configureButton = static_cast<QPushButton*>(widgets[1]);
+    QCheckBox *checkBox = static_cast<QCheckBox *>(widgets[0]);
+    QPushButton *configureButton = static_cast<QPushButton *>(widgets[1]);
 
     const int itemHeight = sizeHint(option, index).height();
 
-    const QAbstractItemModel* model = index.model();
+    const QAbstractItemModel *model = index.model();
     checkBox->setText(model->data(index).toString());
     checkBox->setChecked(model->data(index, Qt::CheckStateRole).toBool());
 
@@ -112,7 +111,7 @@ void ConfigureAgentListDelegate::updateItemWidgets(const QList<QWidget*> widgets
 
 void ConfigureAgentListDelegate::slotCheckboxClicked(bool checked)
 {
-    QAbstractItemModel* model = const_cast<QAbstractItemModel*>(focusedIndex().model());
+    QAbstractItemModel *model = const_cast<QAbstractItemModel *>(focusedIndex().model());
     model->setData(focusedIndex(), checked, Qt::CheckStateRole);
 }
 

@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "configureagentitem.h"
 
 ConfigureAgentItem::ConfigureAgentItem()
@@ -93,16 +92,10 @@ void ConfigureAgentItem::setFailed(bool failed)
 bool ConfigureAgentItem::operator ==(const ConfigureAgentItem &other) const
 {
     return (mAgentName == other.agentName()) &&
-            (mDescription == other.description()) &&
-            (mPath == other.path()) &&
-            (mInterfaceName == other.interfaceName()) &&
-            (mChecked == other.checked()) &&
-            (mFailed == other.failed());
+           (mDescription == other.description()) &&
+           (mPath == other.path()) &&
+           (mInterfaceName == other.interfaceName()) &&
+           (mChecked == other.checked()) &&
+           (mFailed == other.failed());
 }
-
-
-
-
-
-
 

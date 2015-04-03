@@ -19,8 +19,7 @@
 
 #include <QColor>
 
-
-ConfigureAgentListModel::ConfigureAgentListModel(QObject* parent) :
+ConfigureAgentListModel::ConfigureAgentListModel(QObject *parent) :
     QAbstractListModel(parent),
     mAgentItems()
 {
@@ -30,7 +29,7 @@ ConfigureAgentListModel::~ConfigureAgentListModel()
 {
 }
 
-bool ConfigureAgentListModel::insertRows(int row, int count, const QModelIndex& parent)
+bool ConfigureAgentListModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     if (row > rowCount()) {
         return false;
@@ -50,7 +49,7 @@ bool ConfigureAgentListModel::insertRows(int row, int count, const QModelIndex& 
     return true;
 }
 
-bool ConfigureAgentListModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool ConfigureAgentListModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     const int row = index.row();
     if (row >= rowCount()) {
@@ -84,7 +83,7 @@ bool ConfigureAgentListModel::setData(const QModelIndex& index, const QVariant& 
     return true;
 }
 
-QVariant ConfigureAgentListModel::data(const QModelIndex& index, int role) const
+QVariant ConfigureAgentListModel::data(const QModelIndex &index, int role) const
 {
     const int row = index.row();
     if (row < rowCount()) {
@@ -115,7 +114,7 @@ QVariant ConfigureAgentListModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-int ConfigureAgentListModel::rowCount(const QModelIndex& parent) const
+int ConfigureAgentListModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return mAgentItems.count();

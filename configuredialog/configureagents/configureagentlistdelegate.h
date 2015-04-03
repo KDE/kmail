@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef CONFIGUREAGENTLISTDELEGATE_H
 #define CONFIGUREAGENTLISTDELEGATE_H
 
@@ -26,25 +25,25 @@ class ConfigureAgentListDelegate : public KWidgetItemDelegate
 {
     Q_OBJECT
 public:
-    explicit ConfigureAgentListDelegate(QAbstractItemView* itemView, QObject* parent = 0);
+    explicit ConfigureAgentListDelegate(QAbstractItemView *itemView, QObject *parent = 0);
     virtual ~ConfigureAgentListDelegate();
 
     QSize sizeHint(const QStyleOptionViewItem &option,
-                           const QModelIndex &index) const Q_DECL_OVERRIDE;
+                   const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    void paint(QPainter* painter, const QStyleOptionViewItem& option,
-                       const QModelIndex& index) const Q_DECL_OVERRIDE;
+    void paint(QPainter *painter, const QStyleOptionViewItem &option,
+               const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-    QList<QWidget*> createItemWidgets(const QModelIndex&) const Q_DECL_OVERRIDE;
-    void updateItemWidgets(const QList<QWidget*> widgets,
-                                   const QStyleOptionViewItem& option,
-                                   const QPersistentModelIndex& index) const Q_DECL_OVERRIDE;
+    QList<QWidget *> createItemWidgets(const QModelIndex &) const Q_DECL_OVERRIDE;
+    void updateItemWidgets(const QList<QWidget *> widgets,
+                           const QStyleOptionViewItem &option,
+                           const QPersistentModelIndex &index) const Q_DECL_OVERRIDE;
 private Q_SLOTS:
     void slotCheckboxClicked(bool checked);
 
     void slotConfigure();
 Q_SIGNALS:
-    void requestConfiguration(const QModelIndex& index);
+    void requestConfiguration(const QModelIndex &index);
 };
 
 #endif // CONFIGUREAGENTLISTDELEGATE_H

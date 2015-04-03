@@ -1372,15 +1372,15 @@ void KMComposeWin::setupActions(void)
     connect(mSignAction, &KToggleAction::triggered, this, &KMComposeWin::slotSignToggled);
 
     QStringList listCryptoFormat;
-    for ( int i=0 ; i<numCryptoMessageFormats ; ++i ) {
-        listCryptoFormat.push_back( Kleo::cryptoMessageFormatToLabel( cryptoMessageFormats[i] ) );
+    for (int i = 0 ; i < numCryptoMessageFormats ; ++i) {
+        listCryptoFormat.push_back(Kleo::cryptoMessageFormatToLabel(cryptoMessageFormats[i]));
     }
 
     mCryptoModuleAction = new KSelectAction(i18n("&Cryptographic Message Format"), this);
     actionCollection()->addAction(QLatin1String("options_select_crypto"), mCryptoModuleAction);
     connect(mCryptoModuleAction, SIGNAL(triggered(int)), SLOT(slotSelectCryptoModule()));
     mCryptoModuleAction->setToolTip(i18n("Select a cryptographic format for this message"));
-    mCryptoModuleAction->setItems( listCryptoFormat );
+    mCryptoModuleAction->setItems(listCryptoFormat);
 
     actionCollection()->addActions(mComposerBase->editor()->createActions());
     actionCollection()->addAction(QLatin1String("shared_link"), mStorageService->menuShareLinkServices());

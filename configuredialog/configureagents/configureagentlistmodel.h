@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef CONFIGUREAGENTLISTMODEL_H
 #define CONFIGUREAGENTLISTMODEL_H
 
@@ -23,14 +22,12 @@
 #include <QVector>
 #include "configureagentitem.h"
 
-
 class ConfigureAgentListModel: public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    enum Role
-    {
+    enum Role {
         DescriptionRole = Qt::UserRole + 1,
         PathRole,
         InterfaceNameRole,
@@ -40,10 +37,10 @@ public:
 
     virtual ~ConfigureAgentListModel();
 
-    virtual bool insertRows(int row, int count, const QModelIndex & parent = QModelIndex());
-    virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
-    virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    virtual bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
+    virtual bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
 private:
     QVector<ConfigureAgentItem> mAgentItems;

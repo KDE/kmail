@@ -30,7 +30,7 @@ ConfigureAgentListView::ConfigureAgentListView(QWidget *parent)
     connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(slotAgentClicked(QModelIndex)));
     ConfigureAgentListModel *configureAgentListModel  = new ConfigureAgentListModel(this);
 
-    QSortFilterProxyModel* proxyModel = new QSortFilterProxyModel(this);
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
     proxyModel->setSourceModel(configureAgentListModel);
     proxyModel->setSortRole(Qt::DisplayRole);
 
@@ -46,7 +46,7 @@ ConfigureAgentListView::~ConfigureAgentListView()
 
 void ConfigureAgentListView::setAgentItems(const QVector<ConfigureAgentItem> &lst)
 {
-    Q_FOREACH(const ConfigureAgentItem &agentItem, lst) {
+    Q_FOREACH (const ConfigureAgentItem &agentItem, lst) {
         model()->insertRow(0);
         const QModelIndex index = model()->index(0, 0);
         model()->setData(index, agentItem.agentName(), Qt::DisplayRole);
@@ -61,15 +61,15 @@ void ConfigureAgentListView::setAgentItems(const QVector<ConfigureAgentItem> &ls
 
 void ConfigureAgentListView::slotConfigureAgent(const QModelIndex &index)
 {
-    const QAbstractItemModel* model = index.model();
+    const QAbstractItemModel *model = index.model();
     const QString interfaceName = model->data(index, ConfigureAgentListModel::InterfaceNameRole).toString();
     const QString path = model->data(index, ConfigureAgentListModel::PathRole).toString();
     if (!interfaceName.isEmpty() && !path.isEmpty()) {
-        QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path );
+        QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path);
         if (interface.isValid()) {
             interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
         } else {
-            qCDebug(KMAIL_LOG) <<" interface does not exist ";
+            qCDebug(KMAIL_LOG) << " interface does not exist ";
         }
 
     }
@@ -78,18 +78,18 @@ void ConfigureAgentListView::slotConfigureAgent(const QModelIndex &index)
 void ConfigureAgentListView::changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable)
 {
     if (!interfaceName.isEmpty() && !path.isEmpty()) {
-        QDBusInterface interface( QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path );
+        QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path);
         if (interface.isValid()) {
             interface.call(QLatin1String("setEnableAgent"), enable);
         } else {
-           qCDebug(KMAIL_LOG) <<interfaceName << "does not exist ";
+            qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
         }
     }
 }
 
 void ConfigureAgentListView::slotAgentClicked(const QModelIndex &index)
 {
-    const QAbstractItemModel* model = index.model();
+    const QAbstractItemModel *model = index.model();
     const QString description = model->data(index, ConfigureAgentListModel::DescriptionRole).toString();
     Q_EMIT descriptionChanged(description);
 }
