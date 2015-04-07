@@ -23,7 +23,6 @@
 
 class QSplitter;
 class KTextEdit;
-class QPushButton;
 class ConfigureAgentListView;
 class ConfigureAgentsWidget : public QWidget
 {

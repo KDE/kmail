@@ -36,4 +36,16 @@ void ConfigureAgentListViewTest::shouldHaveDefaultValue()
     QCOMPARE(view.model()->rowCount(), 0);
 }
 
+void ConfigureAgentListViewTest::shouldAddAgent()
+{
+    ConfigureAgentListView view;
+    QVector<ConfigureAgentItem> lst;
+    for (int i = 0; i < 10; ++i) {
+        ConfigureAgentItem item;
+        lst << item;
+    }
+    view.setAgentItems(lst);
+    QCOMPARE(view.model()->rowCount(), 10);
+}
+
 QTEST_MAIN(ConfigureAgentListViewTest)
