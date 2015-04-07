@@ -53,13 +53,14 @@ private Q_SLOTS:
 private:
     void writeConfig();
     void readConfig();
-    void createTagList();
+    void createTagList(bool updateList);
     enum ItemType {
         UrlTag = Qt::UserRole + 1
     };
     int mNumberOfSelectedMessages;
     Akonadi::Item mSelectedItem;
 
+    Akonadi::Tag::List mSelectedTags;
     QList<MailCommon::Tag::Ptr> mTagList;
     QList<KActionCollection*> mActionCollectionList;
     QListWidget *mListTag;

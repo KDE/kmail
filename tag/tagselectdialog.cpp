@@ -72,7 +72,7 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     mainLayout->addWidget(listWidgetSearchLine);
     mainLayout->addWidget( mListTag );
 
-    createTagList();
+    createTagList(false);
     connect(this, SIGNAL(user1Clicked()), SLOT(slotAddNewTag()));
     readConfig();
 }
@@ -102,16 +102,18 @@ void TagSelectDialog::slotAddNewTag()
     QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(mActionCollectionList, this);
     dialog->setTags(mTagList);
     if ( dialog->exec() ) {
+        mSelectedTags = selectedTag();
         mListTag->clear();
         mTagList.clear();
-        createTagList();
+        createTagList(true);
     }
     delete dialog;
 }
 
-void TagSelectDialog::createTagList()
+void TagSelectDialog::createTagList(bool updateList)
 {
     Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
+    fetchJob->setProperty("updatelist", updateList);
     fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
     connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotTagsFetched(KJob*)));
 }
@@ -128,6 +130,7 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
         return;
     }
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob*>(job);
+    bool updatelist = fetchJob->property("updatelist").toBool();
 
     foreach( const Akonadi::Tag &akonadiTag, fetchJob->tags() ) {
         mTagList.append( MailCommon::Tag::fromAkonadi( akonadiTag ) );
@@ -142,11 +145,16 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
         item->setCheckState( Qt::Unchecked );
         mListTag->addItem( item );
 
-        if ( mNumberOfSelectedMessages == 1 ) {
-            const bool hasTag = mSelectedItem.hasTag( tag->tag() );
-            item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
+        if (updatelist) {
+            const bool select = mSelectedTags.contains(tag->tag());
+            item->setCheckState( select ? Qt::Checked : Qt::Unchecked );
         } else {
-            item->setCheckState( Qt::Unchecked );
+            if ( mNumberOfSelectedMessages == 1 ) {
+                const bool hasTag = mSelectedItem.hasTag( tag->tag() );
+                item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
+            } else {
+                item->setCheckState( Qt::Unchecked );
+            }
         }
     }
 }
