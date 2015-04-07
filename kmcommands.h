@@ -444,7 +444,6 @@ public:
                      SetTagMode mode=AddIfNotExisting );
 
 protected slots:
-    void slotTagCreateDone( KJob * job );
     void slotModifyItemDone( KJob * job );
 
 private:
