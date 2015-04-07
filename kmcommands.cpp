@@ -1259,7 +1259,8 @@ void KMSetTagCommand::setTags()
                 }
             }
         } else {
-            item.setTags(mCreatedTags);
+            if (!mCreatedTags.isEmpty())
+                item.setTags(mCreatedTags);
         }
         itemsToModify << item;
     }
