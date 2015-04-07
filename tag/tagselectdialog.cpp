@@ -84,39 +84,56 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     vbox->addWidget(listWidgetSearchLine);
     vbox->addWidget(mListTag);
 
-    createTagList();
+    createTagList(false);
     connect(user1Button, &QPushButton::clicked, this, &TagSelectDialog::slotAddNewTag);
 
-    KConfigGroup group(KMKernel::self()->config(), "TagSelectDialog");
-    const QSize size = group.readEntry("Size", QSize(500, 300));
-    if (size.isValid()) {
-        resize(size);
-    }
+    readConfig();
 }
 
 TagSelectDialog::~TagSelectDialog()
 {
-    KConfigGroup group(KMKernel::self()->config(), "TagSelectDialog");
-    group.writeEntry("Size", size());
+    writeConfig();
+}
+
+void TagSelectDialog::readConfig()
+{
+    KConfigGroup group( KSharedConfig::openConfig(), "TagSelectDialog" );
+    const QSize size = group.readEntry( "Size", QSize(500, 300) );
+    if ( size.isValid() ) {
+        resize( size );
+    }
+}
+
+void TagSelectDialog::writeConfig()
+{
+    KConfigGroup group( KSharedConfig::openConfig(), "TagSelectDialog" );
+    group.writeEntry( "Size", size() );
 }
 
 void TagSelectDialog::slotAddNewTag()
 {
-    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection *>(), this);
+    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(mActionCollectionList, this);
     dialog->setTags(mTagList);
-    if (dialog->exec()) {
+    if ( dialog->exec() ) {
+        mSelectedTags = selectedTag();
         mListTag->clear();
         mTagList.clear();
-        createTagList();
+        createTagList(true);
     }
     delete dialog;
 }
 
-void TagSelectDialog::createTagList()
+void TagSelectDialog::createTagList(bool updateList)
 {
     Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
+    fetchJob->setProperty("updatelist", updateList);
     fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
     connect(fetchJob, &Akonadi::TagFetchJob::result, this, &TagSelectDialog::slotTagsFetched);
+}
+
+void TagSelectDialog::setActionCollection(const QList<KActionCollection *> &actionCollectionList)
+{
+    mActionCollectionList = actionCollectionList;
 }
 
 void TagSelectDialog::slotTagsFetched(KJob *job)
@@ -126,6 +143,7 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
         return;
     }
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
+    bool updatelist = fetchJob->property("updatelist").toBool();
 
     foreach (const Akonadi::Tag &akonadiTag, fetchJob->tags()) {
         mTagList.append(MailCommon::Tag::fromAkonadi(akonadiTag));
@@ -140,11 +158,16 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
         item->setCheckState(Qt::Unchecked);
         mListTag->addItem(item);
 
-        if (mNumberOfSelectedMessages == 1) {
-            const bool hasTag = mSelectedItem.hasTag(tag->tag());
-            item->setCheckState(hasTag ? Qt::Checked : Qt::Unchecked);
+        if (updatelist) {
+            const bool select = mSelectedTags.contains(tag->tag());
+            item->setCheckState( select ? Qt::Checked : Qt::Unchecked );
         } else {
-            item->setCheckState(Qt::Unchecked);
+            if ( mNumberOfSelectedMessages == 1 ) {
+                const bool hasTag = mSelectedItem.hasTag( tag->tag() );
+                item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
+            } else {
+                item->setCheckState( Qt::Unchecked );
+            }
         }
     }
 }
@@ -159,6 +182,5 @@ Akonadi::Tag::List TagSelectDialog::selectedTag() const
             lst.append(Akonadi::Tag::fromUrl(item->data(UrlTag).toString()));
         }
     }
-    qCDebug(KMAIL_LOG) << " lst" << lst;
     return lst;
 }

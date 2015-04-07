@@ -1255,22 +1255,6 @@ KMCommand::Result KMSetTagCommand::execute()
     return OK;
 }
 
-void KMSetTagCommand::slotTagCreateDone(KJob *job)
-{
-    if (job && job->error()) {
-        qCWarning(KMAIL_LOG) << " Error trying to create tag:" << job->errorText();
-        deleteLater();
-        return;
-    }
-    Akonadi::TagCreateJob *createJob = static_cast<Akonadi::TagCreateJob *>(job);
-    mCreatedTags << createJob->tag();
-    if (mCreatedTags.size() == mTags.size()) {
-        setTags();
-    } else {
-        deleteLater();
-    }
-}
-
 void KMSetTagCommand::setTags()
 {
     Akonadi::Item::List itemsToModify;
@@ -1289,7 +1273,8 @@ void KMSetTagCommand::setTags()
                 }
             }
         } else {
-            item.setTags(mCreatedTags);
+            if (!mCreatedTags.isEmpty())
+                item.setTags(mCreatedTags);
         }
         itemsToModify << item;
     }

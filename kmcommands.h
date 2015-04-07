@@ -465,7 +465,6 @@ public:
                     SetTagMode mode = AddIfNotExisting);
 
 protected Q_SLOTS:
-    void slotTagCreateDone(KJob *job);
     void slotModifyItemDone(KJob *job);
 
 private:
