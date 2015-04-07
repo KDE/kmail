@@ -60,7 +60,7 @@ private:
     int mNumberOfSelectedMessages;
     Akonadi::Item mSelectedItem;
 
-    Akonadi::Tag::List mSelectedTags;
+    Akonadi::Tag::List mCurrentSelectedTags;
     QList<MailCommon::Tag::Ptr> mTagList;
     QList<KActionCollection*> mActionCollectionList;
     QListWidget *mListTag;
