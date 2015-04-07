@@ -63,3 +63,6 @@ set( kmail_configureagentitemtest_source configureagentitemtest.cpp ../configure
 kde4_add_unit_test( configureagentitemtest ${kmail_configureagentitemtest_source})
 target_link_libraries( configureagentitemtest ${QT_QTTEST_LIBRARY} ${KDE4_KDEUI_LIBS} )
 
+
+
+add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "../tag/tagselectdialog.cpp" "${KDEPIMLIBS_AKONADI_LIBS};kmailprivate;mailcommon")

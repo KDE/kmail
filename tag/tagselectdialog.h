@@ -35,6 +35,7 @@
 #include "tag.h"
 
 class QListWidget;
+class KActionCollection;
 class TagSelectDialog : public KDialog
 {
     Q_OBJECT
@@ -43,11 +44,15 @@ public:
     ~TagSelectDialog();
     Akonadi::Tag::List selectedTag() const;
 
+    void setActionCollection(const QList<KActionCollection *> &actionCollectionList);
+
 private Q_SLOTS:
     void slotAddNewTag();
     void slotTagsFetched(KJob*);
 
 private:
+    void writeConfig();
+    void readConfig();
     void createTagList();
     enum ItemType {
         UrlTag = Qt::UserRole + 1
@@ -56,6 +61,7 @@ private:
     Akonadi::Item mSelectedItem;
 
     QList<MailCommon::Tag::Ptr> mTagList;
+    QList<KActionCollection*> mActionCollectionList;
     QListWidget *mListTag;
 };
 

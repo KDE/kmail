@@ -61,32 +61,45 @@ TagSelectDialog::TagSelectDialog( QWidget * parent, int numberOfSelectedMessages
     setMainWidget( mainWidget );
 
     mListTag = new QListWidget( this );
+    mListTag->setObjectName(QLatin1String("listtag"));
+
     KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this,mListTag);
     listWidgetSearchLine->setClickMessage(i18n("Search tag"));
     listWidgetSearchLine->setClearButtonShown(true);
+    listWidgetSearchLine->setTrapReturnKey(true);
+    listWidgetSearchLine->setObjectName(QLatin1String("searchline"));
 
     mainLayout->addWidget(listWidgetSearchLine);
     mainLayout->addWidget( mListTag );
 
     createTagList();
     connect(this, SIGNAL(user1Clicked()), SLOT(slotAddNewTag()));
+    readConfig();
+}
 
-    KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
+TagSelectDialog::~TagSelectDialog()
+{
+    writeConfig();
+}
+
+void TagSelectDialog::readConfig()
+{
+    KConfigGroup group( KGlobal::config(), "TagSelectDialog" );
     const QSize size = group.readEntry( "Size", QSize(500, 300) );
     if ( size.isValid() ) {
         resize( size );
     }
 }
 
-TagSelectDialog::~TagSelectDialog()
+void TagSelectDialog::writeConfig()
 {
-    KConfigGroup group( KMKernel::self()->config(), "TagSelectDialog" );
+    KConfigGroup group( KGlobal::config(), "TagSelectDialog" );
     group.writeEntry( "Size", size() );
 }
 
 void TagSelectDialog::slotAddNewTag()
 {
-    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection*>(), this);
+    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(mActionCollectionList, this);
     dialog->setTags(mTagList);
     if ( dialog->exec() ) {
         mListTag->clear();
@@ -101,6 +114,11 @@ void TagSelectDialog::createTagList()
     Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
     fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
     connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotTagsFetched(KJob*)));
+}
+
+void TagSelectDialog::setActionCollection(const QList<KActionCollection *> &actionCollectionList)
+{
+    mActionCollectionList = actionCollectionList;
 }
 
 void TagSelectDialog::slotTagsFetched(KJob *job)
@@ -143,6 +161,5 @@ Akonadi::Tag::List TagSelectDialog::selectedTag() const
             lst.append( Akonadi::Tag::fromUrl( item->data(UrlTag).toString() ) );
         }
     }
-    qDebug()<<" lst"<<lst;
     return lst;
 }

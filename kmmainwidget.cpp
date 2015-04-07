@@ -1914,6 +1914,7 @@ void KMMainWidget::slotSelectMoreMessageTagList()
         return;
 
     TagSelectDialog dlg( this, selectedMessages.count(), selectedMessages.first() );
+    dlg.setActionCollection(QList<KActionCollection*>() << actionCollection());
     if ( dlg.exec() ) {
         const Akonadi::Tag::List lst = dlg.selectedTag();
         if (!lst.isEmpty()) {
