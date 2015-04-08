@@ -28,14 +28,12 @@
 #include <KGlobal>
 #include <KConfigGroup>
 
-#include <QVBoxLayout>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QSplitter>
-#include <QPushButton>
-#include <QVBoxLayout>
 #include <QFile>
 #include <QDir>
+#include <QHBoxLayout>
 
 
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
