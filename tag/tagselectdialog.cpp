@@ -115,7 +115,7 @@ void TagSelectDialog::slotAddNewTag()
     QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(mActionCollectionList, this);
     dialog->setTags(mTagList);
     if ( dialog->exec() ) {
-        mSelectedTags = selectedTag();
+        mCurrentSelectedTags = selectedTag();
         mListTag->clear();
         mTagList.clear();
         createTagList(true);
@@ -159,7 +159,7 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
         mListTag->addItem(item);
 
         if (updatelist) {
-            const bool select = mSelectedTags.contains(tag->tag());
+            const bool select = mCurrentSelectedTags.contains(tag->tag());
             item->setCheckState( select ? Qt::Checked : Qt::Unchecked );
         } else {
             if ( mNumberOfSelectedMessages == 1 ) {
