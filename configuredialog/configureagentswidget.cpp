@@ -27,14 +27,13 @@
 #include <KTextEdit>
 #include <KConfigGroup>
 
-#include <QVBoxLayout>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QSplitter>
-#include <QPushButton>
 #include <QFile>
 #include <QDir>
 #include <KSharedConfig>
+#include <QHBoxLayout>
 
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     : QWidget(parent)
