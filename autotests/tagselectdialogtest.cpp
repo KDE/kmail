@@ -19,7 +19,7 @@
 #include "tag/tagselectdialog.h"
 #include <KListWidgetSearchLine>
 #include <QListWidget>
-#include <qtest_kde.h>
+#include <qtest.h>
 
 TagSelectDialogTest::TagSelectDialogTest(QObject *parent)
     : QObject(parent)
@@ -44,4 +44,4 @@ void TagSelectDialogTest::shouldHaveDefaultValue()
     //PORT KF5 QVERIFY(listWidgetSearchLine->trapReturnKey());
 }
 
-QTEST_KDEMAIN(TagSelectDialogTest, GUI)
+QTEST_MAIN(TagSelectDialogTest)
