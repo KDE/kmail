@@ -26,8 +26,8 @@ ConfigureAgentListView::ConfigureAgentListView(QWidget *parent)
     : QListView(parent)
 {
     ConfigureAgentListDelegate *configureListDelegate = new ConfigureAgentListDelegate(this, this);
-    connect(configureListDelegate, SIGNAL(requestConfiguration(QModelIndex)), this, SLOT(slotConfigureAgent(QModelIndex)));
-    connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(slotAgentClicked(QModelIndex)));
+    connect(configureListDelegate, &ConfigureAgentListDelegate::requestConfiguration, this, &ConfigureAgentListView::slotConfigureAgent);
+    connect(this, &QAbstractItemView::clicked, this, &ConfigureAgentListView::slotAgentClicked);
     ConfigureAgentListModel *configureAgentListModel  = new ConfigureAgentListModel(this);
 
     QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);

@@ -67,10 +67,10 @@ QList<QWidget *> ConfigureAgentListDelegate::createItemWidgets(const QModelIndex
     QPalette palette = checkBox->palette();
     palette.setColor(QPalette::WindowText, palette.color(QPalette::Text));
     checkBox->setPalette(palette);
-    connect(checkBox, SIGNAL(clicked(bool)), this, SLOT(slotCheckboxClicked(bool)));
+    connect(checkBox, &QAbstractButton::clicked, this, &ConfigureAgentListDelegate::slotCheckboxClicked);
 
     QPushButton *configureButton = new QPushButton();
-    connect(configureButton, SIGNAL(clicked()), this, SLOT(slotConfigure()));
+    connect(configureButton, &QAbstractButton::clicked, this, &ConfigureAgentListDelegate::slotConfigure);
 
     return QList<QWidget *>() << checkBox << configureButton;
 }
