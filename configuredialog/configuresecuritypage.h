@@ -42,9 +42,9 @@ public:
     void save() Q_DECL_OVERRIDE;
 
 private:
-    //virtual void doLoadFromGlobalSettings();
+    //void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
     void doLoadOther() Q_DECL_OVERRIDE;
-    //FIXME virtual void doResetToDefaultsOther();
+    //FIXME void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
     Ui_SecurityPageGeneralTab mSGTab;
