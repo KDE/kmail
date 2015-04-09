@@ -1513,7 +1513,7 @@ QString KMComposeWin::replyTo() const
     }
 }
 
-
+#if 0
 void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
 {
     QList<Kpgp::Block> pgpBlocks;
@@ -1540,6 +1540,7 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
         }
     }
 }
+#endif
 
 void KMComposeWin::setCurrentTransport( int transportId )
 {
