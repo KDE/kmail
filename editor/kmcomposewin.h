@@ -243,23 +243,11 @@ private:
 
 
     /**
-     * Returns message of the composer. To apply the user changes to the
-     * message, call applyChanges() first.
-     */
-    KMime::Message::Ptr msg() const { return mMsg; }
-    /**
      * Returns true if the message was modified by the user.
      */
     bool isModified() const;
     bool isComposerModified() const;
     void changeModifiedState( bool modified );
-
-
-
-    /**
-     * determines whether inline signing/encryption is selected
-     */
-    bool inlineSigningEncryptionSelected();
 
 
 public slots: // kmkernel, callback
@@ -513,7 +501,6 @@ private:
     */
     bool checkRecipientNumber() const;
 
-    bool checkTransport() const;
     /**
      * Initialization methods
      */
