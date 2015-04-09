@@ -564,7 +564,6 @@ private:
 
     bool canSignEncryptAttachments() const;
 
-    QString addQuotesToText( const QString &inputText ) const;
     // helper method for rethinkFields
     int calcColumnWidth( int which, long allShowing, int width ) const;
 

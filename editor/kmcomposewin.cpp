@@ -2289,17 +2289,6 @@ void KMComposeWin::slotExpandGroupResult(KJob *job)
     }
 }
 
-
-QString KMComposeWin::addQuotesToText( const QString &inputText ) const
-{
-    QString answer( inputText );
-    const QString indentStr = mComposerBase->editor()->quotePrefixName();
-    answer.replace( QLatin1Char('\n'), QLatin1Char('\n') + indentStr );
-    answer.prepend( indentStr );
-    answer += QLatin1Char('\n');
-    return MessageCore::StringUtil::smartQuote( answer, MessageComposer::MessageComposerSettings::self()->lineWrapWidth() );
-}
-
 void KMComposeWin::slotClose()
 {
     close();
