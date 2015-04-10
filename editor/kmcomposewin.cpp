@@ -1491,7 +1491,8 @@ QString KMComposeWin::replyTo() const
     }
 }
 
-void KMComposeWin::decryptOrStripOffCleartextSignature(QByteArray &body)
+#if 0
+void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
 {
     QList<Kpgp::Block> pgpBlocks;
     QList<QByteArray> nonPgpBlocks;
@@ -1517,6 +1518,7 @@ void KMComposeWin::decryptOrStripOffCleartextSignature(QByteArray &body)
         }
     }
 }
+#endif
 
 void KMComposeWin::setCurrentTransport(int transportId)
 {
@@ -2251,16 +2253,6 @@ void KMComposeWin::slotExpandGroupResult(KJob *job)
     if (!groupData.isEmpty()) {
         addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), groupData, "text/x-vcard");
     }
-}
-
-QString KMComposeWin::addQuotesToText(const QString &inputText) const
-{
-    QString answer(inputText);
-    const QString indentStr = mComposerBase->editor()->quotePrefixName();
-    answer.replace(QLatin1Char('\n'), QLatin1Char('\n') + indentStr);
-    answer.prepend(indentStr);
-    answer += QLatin1Char('\n');
-    return MessageCore::StringUtil::smartQuote(answer, MessageComposer::MessageComposerSettings::self()->lineWrapWidth());
 }
 
 void KMComposeWin::slotClose()

@@ -29,3 +29,8 @@ MailMergeJob::~MailMergeJob()
 {
 
 }
+
+void MailMergeJob::start()
+{
+
+}
