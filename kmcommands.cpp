@@ -1260,12 +1260,12 @@ void KMSetTagCommand::setTags()
     Akonadi::Item::List itemsToModify;
     Q_FOREACH (const Akonadi::Item &i, mItem) {
         Akonadi::Item item(i);
-        if ( mMode == CleanExistingAndAddNew ){
+        if (mMode == CleanExistingAndAddNew) {
             //WorkAround. ClearTags doesn't work.
-            Q_FOREACH(const Akonadi::Tag &tag, item.tags()) {
+            Q_FOREACH (const Akonadi::Tag &tag, item.tags()) {
                 item.clearTag(tag);
             }
-          //item.clearTags();
+            //item.clearTags();
         }
 
         if (mMode == KMSetTagCommand::Toggle) {
@@ -1277,8 +1277,9 @@ void KMSetTagCommand::setTags()
                 }
             }
         } else {
-            if (!mCreatedTags.isEmpty())
+            if (!mCreatedTags.isEmpty()) {
                 item.setTags(mCreatedTags);
+            }
         }
         itemsToModify << item;
     }

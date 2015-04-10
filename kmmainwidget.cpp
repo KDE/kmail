@@ -1925,10 +1925,10 @@ void KMMainWidget::slotSelectMoreMessageTagList()
     }
 
     TagSelectDialog dlg(this, selectedMessages.count(), selectedMessages.first());
-    dlg.setActionCollection(QList<KActionCollection*>() << actionCollection());
+    dlg.setActionCollection(QList<KActionCollection *>() << actionCollection());
     if (dlg.exec()) {
         const Akonadi::Tag::List lst = dlg.selectedTag();
-        KMCommand *command = new KMSetTagCommand( lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew );
+        KMCommand *command = new KMSetTagCommand(lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew);
         command->start();
     }
 }

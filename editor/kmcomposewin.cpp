@@ -1492,7 +1492,7 @@ QString KMComposeWin::replyTo() const
 }
 
 #if 0
-void KMComposeWin::decryptOrStripOffCleartextSignature( QByteArray &body )
+void KMComposeWin::decryptOrStripOffCleartextSignature(QByteArray &body)
 {
     QList<Kpgp::Block> pgpBlocks;
     QList<QByteArray> nonPgpBlocks;

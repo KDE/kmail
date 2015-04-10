@@ -97,24 +97,24 @@ TagSelectDialog::~TagSelectDialog()
 
 void TagSelectDialog::readConfig()
 {
-    KConfigGroup group( KSharedConfig::openConfig(), "TagSelectDialog" );
-    const QSize size = group.readEntry( "Size", QSize(500, 300) );
-    if ( size.isValid() ) {
-        resize( size );
+    KConfigGroup group(KSharedConfig::openConfig(), "TagSelectDialog");
+    const QSize size = group.readEntry("Size", QSize(500, 300));
+    if (size.isValid()) {
+        resize(size);
     }
 }
 
 void TagSelectDialog::writeConfig()
 {
-    KConfigGroup group( KSharedConfig::openConfig(), "TagSelectDialog" );
-    group.writeEntry( "Size", size() );
+    KConfigGroup group(KSharedConfig::openConfig(), "TagSelectDialog");
+    group.writeEntry("Size", size());
 }
 
 void TagSelectDialog::slotAddNewTag()
 {
     QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(mActionCollectionList, this);
     dialog->setTags(mTagList);
-    if ( dialog->exec() ) {
+    if (dialog->exec()) {
         mCurrentSelectedTags = selectedTag();
         mListTag->clear();
         mTagList.clear();
@@ -160,13 +160,13 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
 
         if (updatelist) {
             const bool select = mCurrentSelectedTags.contains(tag->tag());
-            item->setCheckState( select ? Qt::Checked : Qt::Unchecked );
+            item->setCheckState(select ? Qt::Checked : Qt::Unchecked);
         } else {
-            if ( mNumberOfSelectedMessages == 1 ) {
-                const bool hasTag = mSelectedItem.hasTag( tag->tag() );
-                item->setCheckState( hasTag ? Qt::Checked : Qt::Unchecked );
+            if (mNumberOfSelectedMessages == 1) {
+                const bool hasTag = mSelectedItem.hasTag(tag->tag());
+                item->setCheckState(hasTag ? Qt::Checked : Qt::Unchecked);
             } else {
-                item->setCheckState( Qt::Unchecked );
+                item->setCheckState(Qt::Unchecked);
             }
         }
     }

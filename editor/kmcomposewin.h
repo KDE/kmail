@@ -268,8 +268,7 @@ private:
      */
     bool isModified() const;
     bool isComposerModified() const;
-    void changeModifiedState( bool modified );
-
+    void changeModifiedState(bool modified);
 
 public Q_SLOTS: // kmkernel, callback
     void slotSendNow();
@@ -560,7 +559,7 @@ private:
      * This function is for example used to restore the unencrypted/unsigned
      * message text for editting.
      */
-    static void decryptOrStripOffCleartextSignature( QByteArray & );
+    static void decryptOrStripOffCleartextSignature(QByteArray &);
 #endif
     /**
      * Send the message.

@@ -62,7 +62,7 @@ private:
 
     Akonadi::Tag::List mCurrentSelectedTags;
     QList<MailCommon::Tag::Ptr> mTagList;
-    QList<KActionCollection*> mActionCollectionList;
+    QList<KActionCollection *> mActionCollectionList;
     QListWidget *mListTag;
 };
 
