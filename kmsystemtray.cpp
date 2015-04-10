@@ -111,9 +111,8 @@ bool KMSystemTray::buildPopupMenu()
     }
 
     contextMenu()->clear();
-#pragma message("port QT5")
-
-    contextMenu()->setTitle(/*QT5 qApp->windowIcon(),*/ i18n("KMail"));
+    contextMenu()->setIcon(qApp->windowIcon());
+    contextMenu()->setTitle(i18n("KMail"));
     QAction *action;
     if ((action = mainWidget->action(QLatin1String("check_mail")))) {
         contextMenu()->addAction(action);
