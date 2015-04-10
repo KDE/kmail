@@ -44,6 +44,7 @@
 #include "manageshowcollectionproperties.h"
 #include "widgets/kactionmenutransport.h"
 #include "widgets/kactionmenuaccount.h"
+#include "search/searchrulestatus.h"
 #if !defined(NDEBUG)
 #include <ksieveui/debug/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
