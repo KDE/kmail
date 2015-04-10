@@ -19,6 +19,7 @@
 #include "tag/tagselectdialog.h"
 #include <KListWidgetSearchLine>
 #include <QListWidget>
+#include <QLineEdit>
 #include <qtest.h>
 
 TagSelectDialogTest::TagSelectDialogTest(QObject *parent)
@@ -40,8 +41,7 @@ void TagSelectDialogTest::shouldHaveDefaultValue()
 
     KListWidgetSearchLine *listWidgetSearchLine = dlg.findChild<KListWidgetSearchLine *>(QLatin1String("searchline"));
     QVERIFY(listWidgetSearchLine);
-    //PORT KF5 QVERIFY(listWidgetSearchLine->isClearButtonShown());
-    //PORT KF5 QVERIFY(listWidgetSearchLine->trapReturnKey());
+    QVERIFY(listWidgetSearchLine->isClearButtonEnabled());
 }
 
 QTEST_MAIN(TagSelectDialogTest)
