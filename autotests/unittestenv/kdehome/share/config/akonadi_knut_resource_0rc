@@ -1,4 +1,0 @@
-[General]
-DataFile[$e]=$KDEHOME/testdata-res1.xml
-FileWatchingEnabled=false
-
