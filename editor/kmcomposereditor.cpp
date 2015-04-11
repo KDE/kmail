@@ -24,12 +24,6 @@
 #include "kmcommands.h"
 #include "util.h"
 #include "widgets/kactionmenuchangecase.h"
-#include <kabc/addressee.h>
-#include <kmime/kmime_codecs.h>
-#include <akonadi/itemfetchjob.h>
-
-#include <kio/jobuidelegate.h>
-
 #include "messagecore/settings/globalsettings.h"
 
 #include <KPIMTextEdit/EMailQuoteHighlighter>
@@ -37,7 +31,6 @@
 #include <KAction>
 #include <KActionCollection>
 #include <KLocalizedString>
-#include <KPushButton>
 #include <KMenu>
 #include <KActionMenu>
 #include <KToggleAction>
