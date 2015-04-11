@@ -546,9 +546,8 @@ KMCommand::Result KMEditMessageCommand::execute()
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mMessage);
-    win->setMessage( mMessage, lastSign, lastEncrypt, false, false );
+    win->setMessage( mMessage, lastSign, lastEncrypt, true, true );
     win->show();
-    win->setModified( true );
     return OK;
 }
 
@@ -588,7 +587,7 @@ KMCommand::Result KMEditItemCommand::execute()
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
-    win->setMessage( msg, lastSign, lastEncrypt, false, true );
+    win->setMessage( msg, lastSign, lastEncrypt, true, true );
 
     win->setFolder( item.parentCollection() );
 
@@ -1585,7 +1584,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
-    win->setMessage( newMsg, lastSign, lastEncrypt, false, true );
+    win->setMessage( newMsg, lastSign, lastEncrypt, true, true );
 
     win->show();
 
