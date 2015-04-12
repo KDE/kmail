@@ -102,7 +102,6 @@ void insertLibraryCataloguesAndIcons()
         "libpimcommon",
         "libmailcommon",
         "libtemplateparser",
-        "libakonadi_next",
         "libakonadi-kde",
         "libakonadi-kmime",
         "libkpimtextedit",

@@ -303,7 +303,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     KF5::Contacts
     KF5::PimTextEdit
     messageviewer
-    akonadi_next
+    
     sendlater
     followupreminder
   )
