@@ -402,4 +402,5 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     ${KDE_INSTALL_KSERVICES5DIR}/ServiceMenus)
 
 endif ()
-  
+ 
+add_subdirectory(kontactplugin) 
