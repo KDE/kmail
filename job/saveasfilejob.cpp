@@ -59,11 +59,11 @@ void SaveAsFileJob::start()
         QTextDocumentWriter writer;
         const QString filename = dlg->selectedFiles().at(0);
         writer.setFileName(filename);
-        if (dlg->selectedNameFilter() == QString::fromLatin1("text/plain") || filename.endsWith(QLatin1String(".txt"))) {
+        if (dlg->selectedNameFilter() == QStringLiteral("text/plain") || filename.endsWith(QLatin1String(".txt"))) {
             writer.setFormat("plaintext");
-        } else if (dlg->selectedNameFilter() == QString::fromLatin1("text/html") || filename.endsWith(QLatin1String(".html"))) {
+        } else if (dlg->selectedNameFilter() == QStringLiteral("text/html") || filename.endsWith(QLatin1String(".html"))) {
             writer.setFormat("HTML");
-        } else if (dlg->selectedNameFilter() == QString::fromLatin1("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1String(".odf"))) {
+        } else if (dlg->selectedNameFilter() == QStringLiteral("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1String(".odf"))) {
             writer.setFormat("ODF");
         } else {
             writer.setFormat("plaintext");

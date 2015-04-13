@@ -47,7 +47,6 @@ using KPIM::RecentAddresses;
 #include <QHBoxLayout>
 #include <KMessageBox>
 #include <KFile>
-#include <kascii.h>
 #include <QSpinBox>
 #include <KPluralHandlingSpinBox>
 #include "kmail_debug.h"
@@ -928,13 +927,13 @@ void ComposerPage::CharsetTab::slotVerifyCharset(QString &charset)
 
     // KCharsets::codecForName("us-ascii") returns "iso-8859-1" (cf. Bug #49812)
     // therefore we have to treat this case specially
-    if (charset.toLower() == QString::fromLatin1("us-ascii")) {
-        charset = QString::fromLatin1("us-ascii");
+    if (charset.toLower() == QStringLiteral("us-ascii")) {
+        charset = QStringLiteral("us-ascii");
         return;
     }
 
-    if (charset.toLower() == QString::fromLatin1("locale")) {
-        charset =  QString::fromLatin1("%1 (locale)")
+    if (charset.toLower() == QStringLiteral("locale")) {
+        charset =  QStringLiteral("%1 (locale)")
                    .arg(QString::fromLatin1(kmkernel->networkCodec()->name()).toLower());
         return;
     }
@@ -961,7 +960,7 @@ void ComposerPage::CharsetTab::doLoadOther()
             it != end ; ++it)
         if ((*it) == QString::fromLatin1("locale")) {
             QByteArray cset = kmkernel->networkCodec()->name();
-            kAsciiToLower(cset.data());
+            cset = cset.toLower();
             (*it) = QString::fromLatin1("%1 (locale)").arg(QString::fromLatin1(cset));
         }
 

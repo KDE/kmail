@@ -1925,7 +1925,7 @@ void KMKernel::slotCollectionRemoved(const Akonadi::Collection &col)
 
 void KMKernel::slotDeleteIdentity(uint identity)
 {
-    TemplateParser::Util::deleteTemplate(QString::fromLatin1("IDENTITY_%1").arg(identity));
+    TemplateParser::Util::deleteTemplate(QStringLiteral("IDENTITY_%1").arg(identity));
 }
 
 bool KMKernel::showPopupAfterDnD()
@@ -2046,7 +2046,7 @@ void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const Q
 void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
 {
     const QString identifier(instance.identifier());
-    const QString resourceGroup = QString::fromLatin1("Resource %1").arg(identifier);
+    const QString resourceGroup = QStringLiteral("Resource %1").arg(identifier);
     if (KMKernel::config()->hasGroup(resourceGroup)) {
         KConfigGroup group(KMKernel::config(), resourceGroup);
         group.deleteGroup();

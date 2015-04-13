@@ -72,10 +72,10 @@ QString toolTip(const Akonadi::Item &item)
     const bool textIsLeftToRight = (QApplication::layoutDirection() == Qt::LeftToRight);
     const QString textDirection =  textIsLeftToRight ? QLatin1String("left") : QLatin1String("right");
 
-    QString tip = QString::fromLatin1(
+    QString tip = QStringLiteral(
                       "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
                   );
-    tip += QString::fromLatin1(
+    tip += QStringLiteral(
                "<tr>"                                                         \
                "<td bgcolor=\"%1\" align=\"%4\" valign=\"middle\">"           \
                "<div style=\"color: %2; font-weight: bold;\">"                \
@@ -85,13 +85,13 @@ QString toolTip(const Akonadi::Item &item)
                "</tr>"
            ).arg(txtColorName).arg(bckColorName).arg(msg->subject()->asUnicodeString().toHtmlEscaped()).arg(textDirection);
 
-    tip += QString::fromLatin1(
+    tip += QStringLiteral(
                "<tr>"                                                              \
                "<td align=\"center\" valign=\"middle\">"                           \
                "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
            );
 
-    const QString htmlCodeForStandardRow = QString::fromLatin1(
+    const QString htmlCodeForStandardRow = QStringLiteral(
             "<tr>"                                                       \
             "<td align=\"right\" valign=\"top\" width=\"45\">"           \
             "<div style=\"font-weight: bold;\"><nobr>"                   \
