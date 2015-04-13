@@ -37,7 +37,6 @@
 #include <QAction>
 #include <KActionCollection>
 #include <KLocalizedString>
-#include <QPushButton>
 #include <QMenu>
 #include <KActionMenu>
 #include <KToggleAction>
