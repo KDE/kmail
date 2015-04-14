@@ -3075,7 +3075,7 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCompose);
         // do not set a New shortcut if kmail is a component
         if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
-            action->setShortcut(KStandardShortcut::openNew().first());
+            actionCollection()->setDefaultShortcut(action, KStandardShortcut::openNew().first());
         }
     }
 
