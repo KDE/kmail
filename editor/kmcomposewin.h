@@ -65,7 +65,6 @@ class KToggleAction;
 class KUrl;
 class KRecentFilesAction;
 class SnippetWidget;
-class SelectSpecialChar;
 class AttachmentMissingWarning;
 class ExternalEditorWarning;
 class KActionMenu;
