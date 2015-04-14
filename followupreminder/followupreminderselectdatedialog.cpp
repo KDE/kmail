@@ -64,10 +64,12 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
     mCollectionCombobox->setAccessRightsFilter(Akonadi::Collection::CanCreateItem);
     mCollectionCombobox->setMimeTypeFilter( QStringList() << KCalCore::Todo::todoMimeType() );
     mCollectionCombobox->setObjectName(QLatin1String("collectioncombobox"));
+    connect(mCollectionCombobox, SIGNAL(currentIndexChanged(int)), SLOT(updateOkButton()));
+
 
     formLayout->addRow(i18n("Store ToDo in:"), mCollectionCombobox);
 
-    connect(mDateComboBox->lineEdit(), SIGNAL(textChanged(QString)), SLOT(slotDateChanged(QString)));
+    connect(mDateComboBox->lineEdit(), SIGNAL(textChanged(QString)), SLOT(slotDateChanged()));
     setMainWidget( mainWidget );
 }
 
@@ -75,9 +77,17 @@ FollowUpReminderSelectDateDialog::~FollowUpReminderSelectDateDialog()
 {
 }
 
-void FollowUpReminderSelectDateDialog::slotDateChanged(const QString &date)
+void FollowUpReminderSelectDateDialog::updateOkButton()
 {
-    enableButtonOk(!date.isEmpty() && mDateComboBox->date().isValid());
+    enableButtonOk( !mDateComboBox->lineEdit()->text().isEmpty()
+                    && mDateComboBox->date().isValid()
+                    && (mCollectionCombobox->count() > 0)
+                    && mCollectionCombobox->currentCollection().isValid());
+}
+
+void FollowUpReminderSelectDateDialog::slotDateChanged()
+{
+    updateOkButton();
 }
 
 QDate FollowUpReminderSelectDateDialog::selectedDate() const

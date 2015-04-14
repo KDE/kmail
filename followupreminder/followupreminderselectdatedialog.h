@@ -37,7 +37,8 @@ public:
 
     Akonadi::Collection collection() const;
 private slots:
-    void slotDateChanged(const QString &date);
+    void slotDateChanged();
+    void updateOkButton();
 private:
     KDateComboBox *mDateComboBox;
     Akonadi::CollectionComboBox *mCollectionCombobox;
