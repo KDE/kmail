@@ -505,5 +505,6 @@ Name[sv]=Fel vid korgarkivering
 Name[tr]=Klasör Arşivleme Hatası
 Name[uk]=Помилка архівування до теки
 Name[x-test]=xxFolder Archive Errorxx
+Name[zh_CN]=文件夹归档错误
 Name[zh_TW]=資料夾歸檔錯誤
 Action=Popup
