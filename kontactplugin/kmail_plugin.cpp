@@ -59,7 +59,7 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
         new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")),
                     i18nc("@action:inmenu", "New Message..."), this);
     actionCollection()->addAction(QLatin1String("new_mail"), action);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_M));
+    actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_M));
     //action->setHelpText(
     //            i18nc( "@info:status", "Create a new mail message" ) );
     action->setWhatsThis(
