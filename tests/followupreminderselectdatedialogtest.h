@@ -20,7 +20,7 @@
 
 #include <QObject>
 
-
+class QStandardItemModel;
 class FollowupReminderSelectDateDialogTest : public QObject
 {
     Q_OBJECT
@@ -31,6 +31,8 @@ private Q_SLOTS:
     void shouldHaveDefaultValue();
     void shouldDisableOkButtonIfDateIsEmpty();
     void shouldDisableOkButtonIfDateIsNotValid();
+private:
+    QStandardItemModel *defaultItemModel();
 };
 
 
