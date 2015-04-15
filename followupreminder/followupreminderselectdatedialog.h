@@ -24,11 +24,12 @@ namespace Akonadi {
 class CollectionComboBox;
 }
 class KDateComboBox;
+class QAbstractItemModel;
 class FollowUpReminderSelectDateDialog : public KDialog
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderSelectDateDialog(QWidget *parent=0);
+    explicit FollowUpReminderSelectDateDialog(QWidget *parent=0, QAbstractItemModel *model = 0);
     ~FollowUpReminderSelectDateDialog();
 
     QDate selectedDate() const;

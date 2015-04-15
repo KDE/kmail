@@ -34,7 +34,7 @@
 #include <kdatecombobox.h>
 
 
-FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *parent)
+FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *parent, QAbstractItemModel *model)
     : KDialog(parent)
 {
     setCaption( i18n( "Select Date" ) );
@@ -59,7 +59,7 @@ FollowUpReminderSelectDateDialog::FollowUpReminderSelectDateDialog(QWidget *pare
 
     formLayout->addRow(i18n("Date:"), mDateComboBox);
 
-    mCollectionCombobox = new Akonadi::CollectionComboBox;
+    mCollectionCombobox = new Akonadi::CollectionComboBox(model);
     mCollectionCombobox->setMinimumWidth(250);
     mCollectionCombobox->setAccessRightsFilter(Akonadi::Collection::CanCreateItem);
     mCollectionCombobox->setMimeTypeFilter( QStringList() << KCalCore::Todo::todoMimeType() );
