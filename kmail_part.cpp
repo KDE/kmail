@@ -59,9 +59,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mParentWidget(parentWidget)
 {
     qCDebug(KMAIL_LOG) << "InstanceName:" << KComponentData::mainComponent().componentName();
-#pragma message("port QT5")
-
-    //QT5 setComponentData(KMailFactory::componentData());
+    setComponentName(QLatin1String("kmail2"), QLatin1String("kmail2"));
     qCDebug(KMAIL_LOG) << "InstanceName:" << KComponentData::mainComponent().componentName();
 
     // Migrate to xdg path
@@ -102,9 +100,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
 
     setXMLFile(QLatin1String("kmail_part.rc"), true);
-#pragma message("port QT5")
-
-    //QT5 KSettings::Dispatcher::registerComponent( KMailFactory::componentData(), mKMailKernel, "slotConfigChanged" );
+    KSettings::Dispatcher::registerComponent( QLatin1String("kmail2"), mKMailKernel, "slotConfigChanged" );
 }
 
 KMailPart::~KMailPart()
