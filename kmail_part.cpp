@@ -100,7 +100,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
 
     setXMLFile(QLatin1String("kmail_part.rc"), true);
-    KSettings::Dispatcher::registerComponent( QLatin1String("kmail2"), mKMailKernel, "slotConfigChanged" );
+    KSettings::Dispatcher::registerComponent(QLatin1String("kmail2"), mKMailKernel, "slotConfigChanged");
 }
 
 KMailPart::~KMailPart()
