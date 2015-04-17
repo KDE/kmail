@@ -48,8 +48,8 @@ private:
     void init();
     QCheckBox* mCustom;
     TemplateParser::TemplatesConfiguration* mWidget;
-    uint mIdentity;
     QString mCollectionId;
+    uint mIdentity;
     bool mIsLocalSystemFolder;
     bool mChanged;
 };

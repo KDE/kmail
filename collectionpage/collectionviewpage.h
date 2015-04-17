@@ -55,7 +55,6 @@ public slots:
 
 private:
     void init(const Akonadi::Collection&);
-    bool mIsLocalSystemFolder;
     QCheckBox   *mIconsCheckBox;
     QLabel      *mNormalIconLabel;
     KIconButton *mNormalIconButton;
@@ -68,6 +67,7 @@ private:
     MessageList::Utils::ThemeComboBox *mThemeComboBox;
     Akonadi::Collection mCurrentCollection;
     int mShowSenderReceiverValue;
+    bool mIsLocalSystemFolder;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY( CollectionViewPageFactory, CollectionViewPage )
