@@ -20,16 +20,16 @@
 #include <KConfigGroup>
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo()
-    : mArchiveType(UniqueFolder),
-      mArchiveTopLevelCollectionId(-1),
+    : mArchiveTopLevelCollectionId(-1),
+      mArchiveType(UniqueFolder),
       mEnabled(false),
       mKeepExistingStructure(false)
 {
 }
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo(const KConfigGroup &config)
-    : mArchiveType(UniqueFolder),
-      mArchiveTopLevelCollectionId(-1),
+    : mArchiveTopLevelCollectionId(-1),
+      mArchiveType(UniqueFolder),
       mEnabled(false),
       mKeepExistingStructure(false)
 {

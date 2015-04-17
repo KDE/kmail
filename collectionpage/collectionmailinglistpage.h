@@ -73,7 +73,6 @@ private:
     Akonadi::Collection mCurrentCollection;
     QSharedPointer<MailCommon::FolderCollection> mFolder;
 
-    int           mLastItem;
     MailingList   mMailingList;
     QCheckBox    *mHoldsMailingList;
     KComboBox    *mMLHandlerCombo;
@@ -82,6 +81,7 @@ private:
     KEditListWidget *mEditList;
     KSqueezedTextLabel *mMLId;
     QWidget *mGroupWidget;
+    int           mLastItem;
     bool changed;
 };
 

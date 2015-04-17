@@ -57,9 +57,9 @@ public:
     bool operator==(const FolderArchiveAccountInfo &other) const;
 
 private:
-    FolderArchiveAccountInfo::FolderArchiveType mArchiveType;
     Akonadi::Collection::Id mArchiveTopLevelCollectionId;
     QString mInstanceName;
+    FolderArchiveAccountInfo::FolderArchiveType mArchiveType;
     bool mEnabled;
     bool mKeepExistingStructure;
 };
