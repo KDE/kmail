@@ -49,7 +49,7 @@ void CsvWidgetTest::shouldChangePath()
 
     KUrlRequester *urlrequester = w.findChild<KUrlRequester *>(QStringLiteral("cvsurlrequester"));
     QVERIFY(urlrequester->url().isEmpty());
-    QUrl url(QStringLiteral("file://tmp/foo.txt"));
+    QUrl url(QStringLiteral("file:///tmp/foo.txt"));
     urlrequester->setUrl(url);
     QCOMPARE(urlrequester->url(), url);
 }
