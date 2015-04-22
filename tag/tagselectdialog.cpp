@@ -80,7 +80,7 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     mListTag->setObjectName(QStringLiteral("listtag"));
     KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
     listWidgetSearchLine->setObjectName(QStringLiteral("searchline"));
- 
+
     listWidgetSearchLine->setPlaceholderText(i18n("Search tag"));
     listWidgetSearchLine->setClearButtonEnabled(true);
 
