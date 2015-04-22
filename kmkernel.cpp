@@ -1792,7 +1792,7 @@ void KMKernel::itemDispatchStarted()
     // Watch progress of the MDA.
     KPIM::ProgressManager::createProgressItem(Q_NULLPTR,
             MailTransport::DispatcherInterface().dispatcherInstance(),
-            QString::fromLatin1("Sender"),
+            QStringLiteral("Sender"),
             i18n("Sending messages"),
             i18n("Initiating sending process..."),
             true);
