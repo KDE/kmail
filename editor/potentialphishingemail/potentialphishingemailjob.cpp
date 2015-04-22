@@ -63,7 +63,7 @@ bool PotentialPhishingEmailJob::start()
                 if (tname.startsWith(QLatin1Char('<')) && tname.endsWith(QLatin1Char('>'))) {
                     tname = tname.mid(1,tname.length()-2);
                 }
-                if (temail != tname) {
+                if (temail.toLower() != tname.toLower()) {
                     mPotentialPhisingEmails.append(addr);
                 }
             }

@@ -55,6 +55,9 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
     QTest::newRow("EmailInWhiteListWithSpace") <<  (QStringList() << QLatin1String(" \"bla@kde.org\" <foo@kde.org> ")) << (QStringList() << email) << false;
     QTest::newRow("EmailWithSameNameAndDisplayName") <<  (QStringList() << QLatin1String("\"<foo@kde.com>\" <foo@kde.com>")) << (QStringList() << email) << false;
     QTest::newRow("EmailWithSameNameAndDisplayNameWithSpace") <<  (QStringList() << QLatin1String(" \"<foo@kde.com>\" <foo@kde.com> ")) << (QStringList() << email) << false;
+
+    QTest::newRow("notsamecase") <<  (QStringList() << QLatin1String("\"Foo@kde.org\" <foo@kde.org>")) << QStringList() << false;
+    QTest::newRow("notsamecaseaddress") <<  (QStringList() << QLatin1String("\"Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << false;
 }
 
 void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
