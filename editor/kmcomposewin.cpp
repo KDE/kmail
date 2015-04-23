@@ -2112,6 +2112,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
 
     // If this is a URL list, add those files as attachments or text
     const QList<QUrl> urlList = source->urls();
+    qDebug()<<" urlList*******************************"<<urlList;
     if (!urlList.isEmpty()) {
         //Search if it's message items.
         Akonadi::Item::List items;
@@ -2146,6 +2147,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
 
                 if (selectedAction == addAsTextAction) {
                     foreach (const QUrl &url, urlList) {
+                        qDebug()<<" url***************************************************"<<url;
                         mComposerBase->editor()->insertLink(url.toDisplayString());
                     }
                 } else if (selectedAction == addAsAttachmentAction) {
