@@ -33,7 +33,6 @@
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QIcon>
-#include <QDebug>
 
 class CodecAction::Private
 {

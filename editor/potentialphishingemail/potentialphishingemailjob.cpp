@@ -20,7 +20,6 @@
 
 #include "potentialphishingemailjob.h"
 #include <KEmailAddress>
-#include <QDebug>
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)
 {

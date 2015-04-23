@@ -23,7 +23,6 @@
 #include <QFileDialog>
 #include <qpointer.h>
 #include <qtextdocumentwriter.h>
-#include <QDebug>
 #include <QUrl>
 #include <KLocalizedString>
 #include <messagecomposer/composer/kmeditor.h>
