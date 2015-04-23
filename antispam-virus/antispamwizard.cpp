@@ -86,7 +86,8 @@ AntiSpamWizard::AntiSpamWizard(WizardMode mode,
     ConfigReader reader(mMode, mToolList);
     reader.readAndMergeConfig();
     mToolList = reader.getToolList();
-
+    QPushButton *helpButton = new QPushButton(i18n("Help"));
+    addActionButton(helpButton);
 #ifndef NDEBUG
     if (mMode == AntiSpam) {
         qCDebug(KMAIL_LOG) << endl << "Considered anti-spam tools:";
@@ -137,7 +138,7 @@ AntiSpamWizard::AntiSpamWizard(WizardMode mode,
         connect(mVirusRulesPage, &ASWizVirusRulesPage::selectionChanged, this, &AntiSpamWizard::checkVirusRulesSelections);
     }
 
-    connect(button(QDialogButtonBox::Help), &QPushButton::clicked, this, &AntiSpamWizard::slotHelpClicked);
+    connect(helpButton, &QPushButton::clicked, this, &AntiSpamWizard::slotHelpClicked);
 
     QTimer::singleShot(0, this, SLOT(checkToolAvailability()));
 }
@@ -578,6 +579,7 @@ void AntiSpamWizard::checkToolAvailability()
 
 void AntiSpamWizard::slotHelpClicked()
 {
+    qDebug()<<" void AntiSpamWizard::slotHelpClicked()--------------------------------";
     KHelpClient::invokeHelp((mMode == AntiSpam) ? QLatin1String("the-anti-spam-wizard") : QLatin1String("the-anti-virus-wizard") , QLatin1String("kmail"));
 }
 
