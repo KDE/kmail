@@ -186,7 +186,6 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiWidgets/standardactionmanager.h>
 #include <KHelpClient>
 #include <QStandardPaths>
-#include <QMenu>
 
 #include <job/manageserversidesubscriptionjob.h>
 #include <job/removeduplicatemailjob.h>
