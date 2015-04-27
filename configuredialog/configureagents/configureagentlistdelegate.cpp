@@ -105,7 +105,7 @@ void ConfigureAgentListDelegate::updateItemWidgets(const QList<QWidget *> widget
 
     bool failed = model->data(index, ConfigureAgentListModel::FailedRole).toBool();
     configureButton->setEnabled(!failed);
-    configureButton->setIcon(QIcon::fromTheme(QLatin1String("configure")));
+    configureButton->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
     configureButton->resize(configureButton->sizeHint());
     configureButton->move(option.rect.right() - configureButton->width(),
                           (itemHeight - configureButton->height()) / 2);

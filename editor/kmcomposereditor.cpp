@@ -52,7 +52,7 @@
 using namespace MailCommon;
 
 KMComposerEditor::KMComposerEditor(KMComposeWin *win, QWidget *parent)
-    : MessageComposer::KMeditor(parent, QLatin1String("kmail2rc")), mComposerWin(win)
+    : MessageComposer::KMeditor(parent, QStringLiteral("kmail2rc")), mComposerWin(win)
 {
     setAutocorrection(KMKernel::self()->composerAutoCorrection());
 }
@@ -66,23 +66,23 @@ QList<QAction *> KMComposerEditor::createActions()
     QList<QAction *> lstAction = KMeditor::createActions();
 
     QAction *pasteQuotation = new QAction(i18n("Pa&ste as Quotation"), this);
-    pasteQuotation->setObjectName(QLatin1String("paste_quoted"));
+    pasteQuotation->setObjectName(QStringLiteral("paste_quoted"));
     pasteQuotation->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_O));
     connect(pasteQuotation, &QAction::triggered, this, &KMComposerEditor::slotPasteAsQuotation);
     lstAction.append(pasteQuotation);
 
     QAction *addQuoteChars = new QAction(i18n("Add &Quote Characters"), this);
-    addQuoteChars->setObjectName(QLatin1String("tools_quote"));
+    addQuoteChars->setObjectName(QStringLiteral("tools_quote"));
     connect(addQuoteChars, &QAction::triggered, this, &KMComposerEditor::slotAddQuotes);
     lstAction.append(addQuoteChars);
 
     QAction *remQuoteChars = new QAction(i18n("Re&move Quote Characters"), this);
-    remQuoteChars->setObjectName(QLatin1String("tools_unquote"));
+    remQuoteChars->setObjectName(QStringLiteral("tools_unquote"));
     connect(remQuoteChars, &QAction::triggered, this, &KMComposerEditor::slotRemoveQuotes);
     lstAction.append(remQuoteChars);
 
     QAction *pasteWithoutFormatting = new QAction(i18n("Paste Without Formatting"), this);
-    pasteWithoutFormatting->setObjectName(QLatin1String("paste_without_formatting"));
+    pasteWithoutFormatting->setObjectName(QStringLiteral("paste_without_formatting"));
     pasteWithoutFormatting->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_V));
     connect(pasteWithoutFormatting, &QAction::triggered, this, &KMComposerEditor::slotPasteWithoutFormatting);
     lstAction.append(pasteWithoutFormatting);
@@ -122,7 +122,7 @@ void KMComposerEditor::replaceUnknownChars(const QTextCodec *codec)
         if (codec->canEncode(cur)) {
             cursor.clearSelection();
         } else {
-            cursor.insertText(QLatin1String("?"));
+            cursor.insertText(QStringLiteral("?"));
         }
     }
     cursor.endEditBlock();
@@ -130,10 +130,10 @@ void KMComposerEditor::replaceUnknownChars(const QTextCodec *codec)
 
 bool KMComposerEditor::canInsertFromMimeData(const QMimeData *source) const
 {
-    if (source->hasImage() && source->hasFormat(QLatin1String("image/png"))) {
+    if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         return true;
     }
-    if (source->hasFormat(QLatin1String("text/x-kmail-textsnippet"))) {
+    if (source->hasFormat(QStringLiteral("text/x-kmail-textsnippet"))) {
         return true;
     }
     if (source->hasUrls()) {
@@ -145,7 +145,7 @@ bool KMComposerEditor::canInsertFromMimeData(const QMimeData *source) const
 
 void KMComposerEditor::insertFromMimeData(const QMimeData *source)
 {
-    if (source->hasFormat(QLatin1String("text/x-kmail-textsnippet"))) {
+    if (source->hasFormat(QStringLiteral("text/x-kmail-textsnippet"))) {
         emit insertSnippet();
         return;
     }
@@ -167,7 +167,7 @@ void KMComposerEditor::showSpellConfigDialog(const QString &configFileName)
     }
     // Hackish way to hide the "Enable spell check by default" checkbox
     // Our highlighter ignores this setting, so we should not expose its UI
-    QCheckBox *enabledByDefaultCB = dialog.findChild<QCheckBox *>(QLatin1String("m_checkerEnabledByDefaultCB"));
+    QCheckBox *enabledByDefaultCB = dialog.findChild<QCheckBox *>(QStringLiteral("m_checkerEnabledByDefaultCB"));
     if (enabledByDefaultCB) {
         enabledByDefaultCB->hide();
     } else {

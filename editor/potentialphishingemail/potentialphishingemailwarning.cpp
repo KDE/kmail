@@ -36,7 +36,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
 
     connect(this, &KMessageWidget::linkActivated, this, &PotentialPhishingEmailWarning::slotShowDetails);
     QAction *action = new QAction(i18n("Send Now"), this);
-    action->setObjectName(QLatin1String("sendnow"));
+    action->setObjectName(QStringLiteral("sendnow"));
     connect(action, &QAction::triggered, this, &PotentialPhishingEmailWarning::sendNow);
     addAction(action);
 }
@@ -48,7 +48,7 @@ PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
 
 void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {
-    if (link == QLatin1String("phishingdetails")) {
+    if (link == QStringLiteral("phishingdetails")) {
         QPointer<PotentialPhishingDetailDialog> dlg = new PotentialPhishingDetailDialog(this);
         dlg->fillList(mPotentialPhishingEmails);
         dlg->exec();

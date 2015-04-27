@@ -44,10 +44,10 @@ void ConfigureAgentItemTest::shouldHaveDefaultValue()
 void ConfigureAgentItemTest::shouldAssignValue()
 {
     ConfigureAgentItem item;
-    QString agentName = QLatin1String("foo");
-    QString description = QLatin1String("bla");
-    QString interface = QLatin1String("interface");
-    QString path = QLatin1String("path");
+    QString agentName = QStringLiteral("foo");
+    QString description = QStringLiteral("bla");
+    QString interface = QStringLiteral("interface");
+    QString path = QStringLiteral("path");
     bool failed = true;
     bool checked = true;
     item.setAgentName(agentName);
@@ -67,10 +67,10 @@ void ConfigureAgentItemTest::shouldAssignValue()
 void ConfigureAgentItemTest::shouldBeEqual()
 {
     ConfigureAgentItem item;
-    QString agentName = QLatin1String("foo");
-    QString description = QLatin1String("bla");
-    QString interface = QLatin1String("interface");
-    QString path = QLatin1String("path");
+    QString agentName = QStringLiteral("foo");
+    QString description = QStringLiteral("bla");
+    QString interface = QStringLiteral("interface");
+    QString path = QStringLiteral("path");
     bool failed = true;
     bool checked = true;
     item.setAgentName(agentName);

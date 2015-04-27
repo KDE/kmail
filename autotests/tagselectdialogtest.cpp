@@ -36,10 +36,10 @@ TagSelectDialogTest::~TagSelectDialogTest()
 void TagSelectDialogTest::shouldHaveDefaultValue()
 {
     TagSelectDialog dlg(0, 1, Akonadi::Item());
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QLatin1String("listtag"));
+    QListWidget *listWidget = dlg.findChild<QListWidget *>(QStringLiteral("listtag"));
     QVERIFY(listWidget);
 
-    KListWidgetSearchLine *listWidgetSearchLine = dlg.findChild<KListWidgetSearchLine *>(QLatin1String("searchline"));
+    KListWidgetSearchLine *listWidgetSearchLine = dlg.findChild<KListWidgetSearchLine *>(QStringLiteral("searchline"));
     QVERIFY(listWidgetSearchLine);
     QVERIFY(listWidgetSearchLine->isClearButtonEnabled());
 }

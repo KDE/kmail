@@ -49,7 +49,7 @@ CollectionMaintenancePage::CollectionMaintenancePage(QWidget *parent) :
     mFolderSizeLabel(Q_NULLPTR),
     mCollectionCount(Q_NULLPTR)
 {
-    setObjectName(QLatin1String("KMail::CollectionMaintenancePage"));
+    setObjectName(QStringLiteral("KMail::CollectionMaintenancePage"));
     setPageTitle(i18n("Maintenance"));
 }
 
@@ -109,9 +109,9 @@ void CollectionMaintenancePage::load(const Collection &col)
         if (!indexingWasEnabled) {
             mLastIndexed->hide();
         } else {
-            QDBusInterface interfaceBalooIndexer(QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QLatin1String("/"));
+            QDBusInterface interfaceBalooIndexer(QStringLiteral("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QStringLiteral("/"));
             if (interfaceBalooIndexer.isValid()) {
-                if (!interfaceBalooIndexer.callWithCallback(QLatin1String("indexedItems"), QList<QVariant>() << (qlonglong)mCurrentCollection.id(), this, SLOT(onIndexedItemsReceived(qint64)))) {
+                if (!interfaceBalooIndexer.callWithCallback(QStringLiteral("indexedItems"), QList<QVariant>() << (qlonglong)mCurrentCollection.id(), this, SLOT(onIndexedItemsReceived(qint64)))) {
                     qCWarning(KMAIL_LOG) << "Failed to request indexed items";
                 }
             }

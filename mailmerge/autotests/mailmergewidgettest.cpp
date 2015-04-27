@@ -36,18 +36,18 @@ void MailMergeWidgetTest::shouldHaveDefaultValueOnCreation()
     QVERIFY(source);
     QCOMPARE(source->currentIndex(), 0);
 
-    QStackedWidget *stackedwidget = mailmerge.findChild<QStackedWidget *>(QLatin1String("stackedwidget"));
+    QStackedWidget *stackedwidget = mailmerge.findChild<QStackedWidget *>(QStringLiteral("stackedwidget"));
     QVERIFY(stackedwidget);
     QCOMPARE(stackedwidget->count(), 2);
     QCOMPARE(stackedwidget->currentIndex(), 0);
 
     for (int i = 0; i < stackedwidget->count(); ++i) {
         const QString objectName = stackedwidget->widget(i)->objectName();
-        bool hasName = (objectName == QLatin1String("addressbookwidget") ||
-                        objectName == QLatin1String("csvwidget"));
+        bool hasName = (objectName == QStringLiteral("addressbookwidget") ||
+                        objectName == QStringLiteral("csvwidget"));
         QVERIFY(hasName);
     }
-    PimCommon::SimpleStringListEditor *listEditor = mailmerge.findChild<PimCommon::SimpleStringListEditor *>(QLatin1String("attachment-list"));
+    PimCommon::SimpleStringListEditor *listEditor = mailmerge.findChild<PimCommon::SimpleStringListEditor *>(QStringLiteral("attachment-list"));
     QVERIFY(listEditor);
     QCOMPARE(listEditor->stringList().count(), 0);
 }

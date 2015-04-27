@@ -75,18 +75,18 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
     const QSize decorationSize(KIconLoader::global()->currentSize(KIconLoader::Desktop), KIconLoader::global()->currentSize(KIconLoader::Desktop));
     const QVariant data = index.model()->data(index, Qt::DecorationRole);
     if (data.isValid() && data.type() == QVariant::Icon) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("agent_icon")),
+        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("agent_icon")),
                               qvariant_cast<QIcon> (data).pixmap(decorationSize));
     }
 
     if (!index.data(AgentInstanceModel::OnlineRole).toBool()) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("status_icon")), s_icons->offlinePixmap);
+        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->offlinePixmap);
     } else if (status == AgentInstance::Idle) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("status_icon")), s_icons->readyPixmap);
+        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->readyPixmap);
     } else if (status == AgentInstance::Running) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("status_icon")), s_icons->syncPixmap);
+        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->syncPixmap);
     } else {
-        document->addResource(QTextDocument::ImageResource, QUrl(QLatin1String("status_icon")), s_icons->errorPixmap);
+        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->errorPixmap);
     }
 
     QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;

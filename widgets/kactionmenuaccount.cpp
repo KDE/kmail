@@ -72,7 +72,7 @@ void KActionMenuAccount::updateAccountMenu()
         Q_FOREACH (const Akonadi::AgentInstance &type, lst) {
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
-            QAction *action = menu()->addAction(QString(type.name()).replace(QLatin1Char('&'), QLatin1String("&&")));
+            QAction *action = menu()->addAction(QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")));
             action->setData(type.identifier());
         }
     }
