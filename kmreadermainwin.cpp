@@ -552,6 +552,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
         if(messageHasPayload) {
             menu->addAction( mMsgActions->replyMenu() );
             menu->addSeparator();
+            menu->addAction( mMsgActions->mailingListActionMenu() );
+            menu->addSeparator();
         }
         if( !copyAdded )
             menu->addAction( mReaderWin->copyAction() );
@@ -588,6 +590,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
             }
             menu->addAction( copyActionMenu(menu) );
             menu->addAction( moveActionMenu(menu));
+            menu->addSeparator();
+            menu->addAction( mMsgActions->mailingListActionMenu() );
 
             menu->addSeparator();
             if(!imageUrl.isEmpty()) {
