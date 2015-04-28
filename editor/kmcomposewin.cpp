@@ -1546,7 +1546,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
         mLastEncryptActionState = true;
     }
 
-    mComposerBase->setMessage(newMsg);
+    mComposerBase->setMessage(newMsg, allowDecryption);
     mMsg = newMsg;
     KIdentityManagement::IdentityManager *im = KMKernel::self()->identityManager();
 
