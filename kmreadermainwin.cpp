@@ -532,7 +532,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
         if (messageHasPayload) {
             menu->addAction(mMsgActions->replyMenu());
             menu->addSeparator();
-            menu->addAction( mMsgActions->mailingListActionMenu() );
+            menu->addAction(mMsgActions->mailingListActionMenu());
             menu->addSeparator();
         }
         if (!copyAdded) {
@@ -573,7 +573,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
             menu->addAction(copyActionMenu(menu));
             menu->addAction(moveActionMenu(menu));
             menu->addSeparator();
-            menu->addAction( mMsgActions->mailingListActionMenu() );
+            menu->addAction(mMsgActions->mailingListActionMenu());
 
             menu->addSeparator();
             if (!imageUrl.isEmpty()) {
