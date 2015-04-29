@@ -291,7 +291,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     KF5::KDELibs4Support
     KF5::NotifyConfig
     KF5::MailTransport
-    KF5::Imap
+    KF5::IMAP
     KF5::KCMUtils
     kleo
     KF5::QGpgme
