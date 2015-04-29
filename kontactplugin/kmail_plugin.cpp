@@ -36,7 +36,7 @@
 
 #include <QAction>
 #include <KActionCollection>
-#include <QDebug>
+#include "kmailplugin_debug.h"
 #include <QIcon>
 #include <KLocalizedString>
 #include <QTemporaryFile>
@@ -97,7 +97,7 @@ void KMailPlugin::shortcutChanged()
     KParts::ReadOnlyPart *localPart = part();
     if (localPart) {
         if (localPart->metaObject()->indexOfMethod("updateQuickSearchText()") == -1) {
-            qWarning() << "KMailPart part is missing slot updateQuickSearchText()";
+            qCWarning(KMAILPLUGIN_LOG) << "KMailPart part is missing slot updateQuickSearchText()";
             return;
         }
         QMetaObject::invokeMethod(localPart, "updateQuickSearchText");
@@ -127,7 +127,7 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
         openComposer(to.join(QLatin1String(", ")));
     }
 
-    qWarning() << QStringLiteral("Cannot handle drop events of type '%1'.").arg(de->mimeData()->formats().join(QLatin1Char(';')));
+    qCWarning(KMAILPLUGIN_LOG) << QStringLiteral("Cannot handle drop events of type '%1'.").arg(de->mimeData()->formats().join(QLatin1Char(';')));
 }
 
 void KMailPlugin::openComposer(const QUrl &attach)

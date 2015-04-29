@@ -32,7 +32,7 @@
 #include <KAboutData>
 #include <KAcceleratorManager>
 #include <KCheckableProxyModel>
-#include <QDebug>
+#include "kmailplugin_debug.h"
 #include <QDialog>
 #include <KLocalizedString>
 #include <KSharedConfig>

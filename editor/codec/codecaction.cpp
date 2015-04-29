@@ -126,7 +126,7 @@ void CodecAction::setCharset(const QByteArray &charset)
 {
     const QString codecNameToSet = selectCharset(this, QString::fromLatin1(charset));
     if (codecNameToSet.isEmpty()) {
-        qWarning() << "Could not find charset" << charset;
+        qCDebug(KMAIL_LOG) << "Could not find charset" << charset;
         setAutoCharset();
     } else {
         setCurrentCodec(codecNameToSet);
