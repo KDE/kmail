@@ -170,7 +170,7 @@ void KMMainWin::setupStatusBar()
     mProgressBar = new KPIM::ProgressStatusBarWidget(statusBar(), this);
     mMessageLabel = new QLabel(i18n("Starting..."));
     mMessageLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    statusBar()->insertWidget(1, mMessageLabel);
+    statusBar()->addWidget(mMessageLabel);
 
     QTimer::singleShot(2000, KPIM::BroadcastStatus::instance(), SLOT(reset()));
 
