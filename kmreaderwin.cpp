@@ -899,3 +899,7 @@ QAction *KMReaderWin::createEventAction() const
     return mViewer->createEventAction();
 }
 
+QAction *KMReaderWin::createNoteAction() const
+{
+    return mViewer->createNoteAction();
+}
