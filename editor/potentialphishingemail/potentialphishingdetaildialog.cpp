@@ -22,9 +22,6 @@
 #include "potentialphishingdetailwidget.h"
 #include <KSharedConfig>
 #include <KLocalizedString>
-#include <qboxlayout.h>
-#include <QLabel>
-#include <QListWidget>
 
 
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
