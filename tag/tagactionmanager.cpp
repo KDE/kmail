@@ -79,7 +79,7 @@ void TagActionManager::clearActions()
     //Remove the tag actions from the toolbar
     if (!mToolbarActions.isEmpty()) {
         if (mGUIClient->factory()) {
-            mGUIClient->unplugActionList(QLatin1String("toolbar_messagetag_actions"));
+            mGUIClient->unplugActionList(QStringLiteral("toolbar_messagetag_actions"));
         }
         mToolbarActions.clear();
     }
@@ -117,7 +117,7 @@ void TagActionManager::clearActions()
 void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu)
 {
     QString cleanName(i18n("Message Tag: %1", tag->tagName));
-    cleanName.replace(QLatin1Char('&'), QLatin1String("&&"));
+    cleanName.replace(QLatin1Char('&'), QStringLiteral("&&"));
     KToggleAction *const tagAction = new KToggleAction(QIcon::fromTheme(tag->iconName),
             cleanName, this);
     tagAction->setShortcut(QKeySequence(tag->shortcut));

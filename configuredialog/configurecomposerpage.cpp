@@ -310,7 +310,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoSave->setMinimum(0);
     mAutoSave->setSingleStep(1);
     mAutoSave->setValue(1);
-    mAutoSave->setObjectName(QLatin1String("kcfg_AutosaveInterval"));
+    mAutoSave->setObjectName(QStringLiteral("kcfg_AutosaveInterval"));
     mAutoSave->setSpecialValueText(i18n("No autosave"));
     mAutoSave->setSuffix(ki18ncp("Interval suffix", " minute", " minutes"));
 

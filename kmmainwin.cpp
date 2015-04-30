@@ -49,7 +49,7 @@ KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow(Q_NULLPTR),
       mReallyClose(false)
 {
-    setObjectName(QLatin1String("kmail-mainwindow#"));
+    setObjectName(QStringLiteral("kmail-mainwindow#"));
     // Set this to be the group leader for all subdialogs - this means
     // modal subdialogs will only affect this dialog, not the other windows
     setAttribute(Qt::WA_GroupLeader);

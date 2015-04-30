@@ -871,7 +871,7 @@ ASWizPage::ASWizPage(QWidget *parent, const QString &name)
     : QWidget(parent)
 {
     setObjectName(name);
-    const QString banner = QLatin1String("kmwizard.png");
+    const QString banner = QStringLiteral("kmwizard.png");
     mLayout = new QHBoxLayout(this);
 
     QVBoxLayout *sideLayout = new QVBoxLayout();

@@ -59,7 +59,7 @@ QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
 ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     : QDialog(parent), mParentWidget(parent)
 {
-    setObjectName(QLatin1String("archive_folder_dialog"));
+    setObjectName(QStringLiteral("archive_folder_dialog"));
     setWindowTitle(i18nc("@title:window for archiving a folder", "Archive Folder"));
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     QVBoxLayout *topLayout = new QVBoxLayout;

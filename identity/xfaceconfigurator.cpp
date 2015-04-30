@@ -67,7 +67,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     : QWidget(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-    vlay->setObjectName(QLatin1String("main layout"));
+    vlay->setObjectName(QStringLiteral("main layout"));
     vlay->setMargin(0);
     QHBoxLayout *hlay = new QHBoxLayout();
     vlay->addLayout(hlay);
