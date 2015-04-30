@@ -65,8 +65,6 @@
    <Action name="set_status" />
    <Separator/>
    <Action name="create_todo"/>
-   <Action name="create_event"/>
-   <Action name="create_note"/>
   </Menu>
   <Menu noMerge="1" name="settings">
    <text>&amp;Settings</text>

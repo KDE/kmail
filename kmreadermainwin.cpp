@@ -578,7 +578,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item&msg ,const KUrl&url,c
                 menu->addSeparator();
                 menu->addAction( mReaderWin->createTodoAction() );
                 menu->addAction( mReaderWin->createEventAction() );
-                menu->addAction( mReaderWin->createNoteAction() );
                 menu->addSeparator();
                 menu->addAction( mReaderWin->saveMessageDisplayFormatAction() );
                 menu->addAction( mReaderWin->resetMessageDisplayFormatAction() );

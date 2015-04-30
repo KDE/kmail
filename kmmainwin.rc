@@ -169,8 +169,6 @@
    </Menu>
    <Separator/>
    <Action name="create_todo"/>
-   <Action name="create_event"/>
-   <Action name="create_note"/>
    <Separator/>
    <Action name="annotate"/>
   </Menu>
@@ -284,7 +282,6 @@
   <Separator/>
   <Action name="create_todo"/>
   <Action name="create_event"/>
-  <Action name="create_note"/>
   <Separator/>
   <Action name="annotate"/>
  </Menu>
