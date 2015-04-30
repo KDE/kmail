@@ -13,6 +13,7 @@
   <name xml:lang="es">KMail</name>
   <name xml:lang="fi">KMail</name>
   <name xml:lang="fr">KMail</name>
+  <name xml:lang="gl">KMail</name>
   <name xml:lang="hu">KMail</name>
   <name xml:lang="it">KMail</name>
   <name xml:lang="ko">KMail</name>
@@ -46,6 +47,7 @@
     <p xml:lang="es">KMail es el componente de correo de Kontact, el gestor integrado de información personal de KDE.</p>
     <p xml:lang="fi">KMail on Kontactin, KDE:n henkilökohtaisen tiedonhallintajärjestelmän, sähköpostiosa.</p>
     <p xml:lang="fr">KMail est le composant pour le courrier électronique de la suite Kontact, le gestionnaire d'informations personnelles de KDE.</p>
+    <p xml:lang="gl">KMail é o compoñente de correo electrónico de Kontact, o xestor completo de información persoal de KDE.</p>
     <p xml:lang="hu">A KMail a Kontact, a KDE integrált információkezelő alkalmazásának e-mail programja.</p>
     <p xml:lang="it">KMail è il componente di posta elettronica di Kontact, il gestore integrato di informazioni personali da KDE.</p>
     <p xml:lang="ko">KMail은 KDE 개인 정보 관리자 Kontact의 이메일 구성 요소입니다.</p>
@@ -76,6 +78,7 @@
     <p xml:lang="es">Características:</p>
     <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
+    <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ko">기능:</p>
@@ -107,6 +110,7 @@
       <li xml:lang="es">Implementa los protocolos estándar de correo IMAP, POP3 y SMTP.</li>
       <li xml:lang="fi">Tukee standardeja sähköpostiyhteyskäytäntöjä IMAP, POP3 ja SMTP.</li>
       <li xml:lang="fr">Prise en charge des protocoles standards de messagerie IMAP, POP3 et SMTP.</li>
+      <li xml:lang="gl">Compatíbel cos protocolos de correo estándar: IMAP, POP3 e SMTP.</li>
       <li xml:lang="hu">Standard levelező protokollok (IMAP, POP3, SMTP) támogatása.</li>
       <li xml:lang="it">Supporta i protocolli di posta standard IMAP, POP3 e SMTP.</li>
       <li xml:lang="ko">IMAP, POP3, SMTP 표준 메일 프로토콜을 지원합니다.</li>
@@ -135,6 +139,7 @@
       <li xml:lang="es">Implementa la autenticación vía NTLM (Microsoft Windows) y GSSAPI (Kerberos)</li>
       <li xml:lang="fi">Tukee tunnistautumista NTLM:llä (Microsoft Windows) ja GSSAPIlla (Kerberos)</li>
       <li xml:lang="fr">Prise en charge de l'authentification NTLM (Microsoft Windows) et GSSAPI (Kerberos)</li>
+      <li xml:lang="gl">Permite autenticarse mediante NTLM (Microsoft Windows) e GSSAPI (Kerberos).</li>
       <li xml:lang="hu">NTLM (Microsoft Windows) és GSSAPI (Kerberos) hitelesítés támogatása</li>
       <li xml:lang="it">Supporta l'autenticazione tramite NTLM (Microsoft Windows) e GSSAPI (Kerberos)</li>
       <li xml:lang="ko">NTLM(Microsoft Windows) 및 GSSAPI(Kerberos) 인증 지원</li>
@@ -162,6 +167,7 @@
       <li xml:lang="es">Implementa inicios de sesión con texto sin formato y cifrado SSL y TLS.</li>
       <li xml:lang="fi">Tukee salaamatonta ja salattua kirjautumista (SSL:llä ja TLS:llä).</li>
       <li xml:lang="fr">Prise en charge des identifications en texte clair ou sécurisées par SSL ou TLS.</li>
+      <li xml:lang="gl">Permite identificarse mediante texto simple ou de forma segura, usando SSL e TLS.</li>
       <li xml:lang="hu">Sima szöveges és biztonságos bejelentkezés támogatása SSL és TLS használatával.</li>
       <li xml:lang="it">Supporta testo semplice e login sicuri tramite SSL e TLS.</li>
       <li xml:lang="ko">일반 텍스트, SSL/TLS 보안 로그인을 지원합니다.</li>
@@ -189,6 +195,7 @@
       <li xml:lang="es">Integración de juegos de caracteres internacionales y revisión ortográfica (mientras-se-teclea y bajo demanda)</li>
       <li xml:lang="fi">Tukee kansainvälisiä merkistöjä ja oikolukua (kirjoittaessasi tai pyydettäessä)</li>
       <li xml:lang="fr">Intégration des ensembles de caractères et correcteurs orthographiques internationaux (pendant la saisie et à la demande)</li>
+      <li xml:lang="gl">Integración con xogos de caracteres internacionais e corrección ortográfica (a medida que escribe ou iniciada explicitamente).</li>
       <li xml:lang="hu">Nemzetközi karakterkészletek és helyesírás-ellenőrzés integrációja</li>
       <li xml:lang="it">Integrazione di insiemi di caratteri e correttore ortografico internazionali (durante la digitazione e su richiesta).</li>
       <li xml:lang="ko">다양한 문자 인코딩과 맞춤법 검사(입력하는 즉시 및 전체 텍스트) 지원</li>
@@ -215,6 +222,7 @@
       <li xml:lang="es">Implementación nativa en línea de OpenPGP, PGP/MIME y S/MIME.</li>
       <li xml:lang="fi">Tukee natiivisti sisällytettyä OpenPGP:tä, PGP/MIMEä ja S/MIMEä.</li>
       <li xml:lang="fr">Prise en charge intégrée du chiffrement en ligne OpenPGP, PGP/MIME, et S/MIME.</li>
+      <li xml:lang="gl">Compatibilidade nativa con OpenPGP, PGP/MIME e S/MIME.</li>
       <li xml:lang="hu">Natív támogatás beágyazott OpenPGP-hez, PGP/MIME-hoz és S/MIME-hoz.</li>
       <li xml:lang="it">Supporto nativo per OpenPGP in linea, PGP/MIME e S/MIME.</li>
       <li xml:lang="ko">부가 기능 없이 인라인 OpenPGP, PGP/MIME, S/MIME을 지원합니다.</li>
@@ -242,6 +250,7 @@
       <li xml:lang="es">Lectura y escritura de correo HTML.</li>
       <li xml:lang="fi">Lukee ja kirjoittaa HTML-sähköpostiviestejä.</li>
       <li xml:lang="fr">Lecture et écriture de courrier électronique en HTML.</li>
+      <li xml:lang="gl">Permite ler e escribir mensaxes usando HTML.</li>
       <li xml:lang="hu">HTML levelek írása és olvasása.</li>
       <li xml:lang="it">Lettura e scrittura di messaggi in HTML.</li>
       <li xml:lang="ko">HTML 메시지를 읽고 쓸 수 있습니다.</li>
@@ -269,6 +278,7 @@
       <li xml:lang="es">Capacidad de mostrar exclusivamente el texto sin formato de un correo HTML.</li>
       <li xml:lang="fi">Osaa näyttää HTML-viesteistä raakatekstin.</li>
       <li xml:lang="fr">Possibilité d'afficher un courrier électronique HTML en texte seul.</li>
+      <li xml:lang="gl">Permite mostrar mensaxes HTML como texto simple.</li>
       <li xml:lang="hu">Sima szöveg megjelenítése HTML levélből.</li>
       <li xml:lang="it">Capacità di mostrare il solo testo semplice da un messaggio in formato HTML.</li>
       <li xml:lang="ko">HTML 메시지의 텍스트만 표시할 수 있습니다.</li>
@@ -295,6 +305,7 @@
       <li xml:lang="es">Le permite recibir y aceptar invitaciones.</li>
       <li xml:lang="fi">Mahdollistaa kutsujen vastaanottamisen ja hyväksymisen.</li>
       <li xml:lang="fr">Permet de recevoir et accepter des invitations.</li>
+      <li xml:lang="gl">Permite recibir e aceptar invitacións.</li>
       <li xml:lang="hu">Meghívok fogadása és elfogadása.</li>
       <li xml:lang="it">Permette di ricevere e accettare inviti.</li>
       <li xml:lang="ko">초대장을 받고 보낼 수 있습니다.</li>
@@ -322,6 +333,7 @@
       <li xml:lang="es">Integración con verificadores de correo basura populares, p. ej., SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="fi">Integroituu suosittuihin roskapostitarkistimiin kuten SpamAssassiniin, Bogofilteriin jne.</li>
       <li xml:lang="fr">Intégration avec les vérificateurs de courrier indésirable courants comme SpamAssassin, Bogofilter, etc.</li>
+      <li xml:lang="gl">Intégrase con comprobadores de correo lizo populares como SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="hu">Integráció népszerű spamszűrőkkel (például SpamAssassin, Bogofilter, stb).</li>
       <li xml:lang="it">Integrazione con noti sistemi di verifica dello spam, come ad es. SpamAssassin, Bogofilter, ecc.</li>
       <li xml:lang="ko">SpamAssassin, Bogofilter와 같은 스팸 검사 도구 연동</li>
@@ -348,6 +360,7 @@
       <li xml:lang="es">Se puede mostrar un medidor opcional de probabilidad de correo basura</li>
       <li xml:lang="fi">Haluttaessa osaa näyttää roskapostin todennäköisyysarvion</li>
       <li xml:lang="fr">Une mesure de la probabilité de courrier indésirable peut être affichée en option</li>
+      <li xml:lang="gl">Permite mostrar un medidor da probabilidade de que unha mensaxe sexa correo lixo (optional).</li>
       <li xml:lang="hu">Opcionálisan spamvalószínűségi mérő megjelenítése</li>
       <li xml:lang="it">Un misuratore opzionale della probabilità di spam può essere mostrato</li>
       <li xml:lang="ko">추가적인 스팸 가능성 표시 도구</li>
@@ -375,6 +388,7 @@
       <li xml:lang="es">Potentes capacidades de búsqueda y filtrado</li>
       <li xml:lang="fi">Sisältää tehokkaat haku- ja suodatusominaisuudet</li>
       <li xml:lang="fr">Capacités de recherche et filtrage puissants</li>
+      <li xml:lang="gl">Potentes funcionalidades de buscar e filtrar.</li>
       <li xml:lang="hu">Hatékony keresési és szűrési képességek</li>
       <li xml:lang="it">Notevoli capacità di ricerca e di filtraggio</li>
       <li xml:lang="ko">강력한 검색 및 필터 기능</li>
@@ -403,6 +417,7 @@
       <li xml:lang="es">Puede importar correo de muchos otros clientes</li>
       <li xml:lang="fi">Voi tuoda viestejä monista muista ohjelmista</li>
       <li xml:lang="fr">Peut importer les messages de nombreux autres clients</li>
+      <li xml:lang="gl">Pode importar datos de moitos outros clientes de correo.</li>
       <li xml:lang="hu">Levelek importálása számos más kliensből</li>
       <li xml:lang="it">Può importare la posta da molti altri programmi</li>
       <li xml:lang="ko">다른 클라이언트에서 메일 가져오기</li>
@@ -431,6 +446,7 @@
       <li xml:lang="es">Búsqueda en carpetas IMAP completamente implementada</li>
       <li xml:lang="fi">Tukee hakuja IMAP-kansioista täysin</li>
       <li xml:lang="fr">Recherche des dossiers IMAP complètement prise en charge</li>
+      <li xml:lang="gl">Permite buscar en cartafoles IMAP.</li>
       <li xml:lang="hu">Keresés IMAP mappákban</li>
       <li xml:lang="it">Ricerca in cartelle IMAP pienamente supportata</li>
       <li xml:lang="ko">IMAP 폴더 내 검색</li>
@@ -457,6 +473,7 @@
       <li xml:lang="es">Altamente integrado con otros componentes de Kontact</li>
       <li xml:lang="fi">Integroituu erinomaisesti muihin Kontactin osiin</li>
       <li xml:lang="fr">Intégration poussée avec les autres composants de la suite Kontact</li>
+      <li xml:lang="gl">Intégrase perfectamente con outros compoñentes de Kontact.</li>
       <li xml:lang="hu">Integráció más Kontact komponensekkel</li>
       <li xml:lang="it">Molto integrato con altri componenti di Kontact</li>
       <li xml:lang="ko">Kontact 구성 요소와 강력한 통합</li>
@@ -484,6 +501,7 @@
       <li xml:lang="es">Contraseñas cifradas guardadas en KWallet</li>
       <li xml:lang="fi">Voi tallentaa salasanat salattuna KDE:n lompakkoon</li>
       <li xml:lang="fr">Enregistrement des mots de passe chiffré dans KWallet</li>
+      <li xml:lang="gl">Permite gardar os contrasinais cifrados usando KWallet.</li>
       <li xml:lang="hu">Jelszavak mentése titkosítottan a KWalletben</li>
       <li xml:lang="it">Salvataggio di password cifrate in KWallet</li>
       <li xml:lang="ko">KWallet을 사용하여 암호 저장</li>
@@ -510,6 +528,7 @@
       <li xml:lang="es">Marcado y etiquetado de mensajes para ayudar a la ordenación y recuperación de información</li>
       <li xml:lang="fi">Sisältää viestien merkintä ja luokittelu lajittelun ja tiedon palautuksen helpottamiseksi</li>
       <li xml:lang="fr">Ajout de drapeaux et d'étiquettes aux messages pour faciliter le tri et la récupération d'informations</li>
+      <li xml:lang="gl">Permite marcar as mensaxes con marcas ou etiquetas para axudar a ordenar e recuperar información.</li>
       <li xml:lang="hu">Üzenetek jelölése és címkézése a rendezés és keresés megkönnyítésére</li>
       <li xml:lang="it">Marcatura dei messaggi per aiutare l'ordinamento e il recupero delle informazioni</li>
       <li xml:lang="ko">메시지 정렬 및 빠른 찾기를 위해서 메시지에 태그 및 깃발 표시</li>
@@ -537,6 +556,7 @@
       <li xml:lang="es">Implementa características de gestión de listas de correo</li>
       <li xml:lang="fi">Tukee sähköpostilistojen hallinnan ominaisuuksia</li>
       <li xml:lang="fr">Fonctions de gestion de listes de diffusion</li>
+      <li xml:lang="gl">Fornece funcionalidades de xestión de listas de correo.</li>
       <li xml:lang="hu">Levelezőlista-kezelési szolgáltatások támogatása</li>
       <li xml:lang="it">Supporto per le funzioni di gestione delle mailing list</li>
       <li xml:lang="ko">메일링 리스트 관리 기능 지원</li>
@@ -564,6 +584,7 @@
       <li xml:lang="es">Puede remplazar sonrisas de texto con emoticones</li>
       <li xml:lang="fi">Voi korvata tekstihymiöt kuvakkeilla</li>
       <li xml:lang="fr">Peut remplacer les smileys par des émoticônes</li>
+      <li xml:lang="gl">Pode substituír as iconas de texto por imaxes.</li>
       <li xml:lang="hu">Szöveges hangulatjelek cseréje hangulatikonokra</li>
       <li xml:lang="it">Può sostituire le faccine di testo con emoticon</li>
       <li xml:lang="ko">텍스트 이모티콘을 그래픽으로 표시</li>
@@ -590,6 +611,7 @@
       <li xml:lang="es">Muestra la imagen o avatar del remitente si está presente en la libreta de direcciones</li>
       <li xml:lang="fi">Näyttää lähettäjän kuvan tai avatarin, jos se löytyy osoitekirjasta</li>
       <li xml:lang="fr">Affiche une photo ou un avatar de l'expéditeur s'il sont disponibles dans le carnet d'adresse</li>
+      <li xml:lang="gl">Mostra a imaxe do remitente se este está presente no caderno de enderezos.</li>
       <li xml:lang="hu">A küldő képének megjelenítése, ha a címjegyzékben megtalálható</li>
       <li xml:lang="it">Mostra l'immagine o l'avatar del mittente se disponibile in rubrica</li>
       <li xml:lang="ko">주소록과 연동된 보낸 사람의 사진 및 아바타 표시</li>
@@ -616,6 +638,7 @@
       <li xml:lang="es">Implementa X-Face (imágenes en blanco y negro en los mensajes)</li>
       <li xml:lang="fi">Tukee X-Face-ominaisuutta (viesteissä olevat mustavalkokuvat)</li>
       <li xml:lang="fr">Prend en charge X-Face (images noir et blanc dans l'en-tête des messages)</li>
+      <li xml:lang="gl">Compatíbel con X-Face (mensaxes en branco e negro nas mensaxes).</li>
       <li xml:lang="hu">X-Face támogatása (fekete-fehér képek az üzenetekben)</li>
       <li xml:lang="it">Supporta X-Face (immagini in bianco e nero nei messaggi)</li>
       <li xml:lang="ko">X-Face 지원(메시지 내 흑백 사진)</li>
@@ -643,6 +666,7 @@
       <li xml:lang="es">Compresión de adjuntos</li>
       <li xml:lang="fi">Tukee liitteiden pakkaamista</li>
       <li xml:lang="fr">Compression des pièces jointes</li>
+      <li xml:lang="gl">Permite comprimir os ficheiros anexos.</li>
       <li xml:lang="hu">Mellékletek tömörítése</li>
       <li xml:lang="it">Compressione degli allegati</li>
       <li xml:lang="ko">첨부 파일 압축</li>
@@ -671,6 +695,7 @@
       <li xml:lang="es">KMail implementa funcionalidades de colaboración.</li>
       <li xml:lang="fi">KMail tukee työryhmätoimintoja.</li>
       <li xml:lang="fr">Fonctionnalités de logiciel de groupe de travail.</li>
+      <li xml:lang="gl">KMail é compatíbel con funcionalidades de xestión de grupos.</li>
       <li xml:lang="hu">A KMail támogatja a csoportmunka funkciókat is.</li>
       <li xml:lang="it">KMail supporta funzionalità di groupware.</li>
       <li xml:lang="ko">KMail은 그룹웨어 기능을 지원합니다.</li>
