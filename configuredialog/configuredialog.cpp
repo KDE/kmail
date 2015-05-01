@@ -80,7 +80,7 @@ void ConfigureDialog::slotApply()
     if (KMKernel::self()) {
         KMKernel::self()->slotRequestConfigSync();
     }
-    emit configChanged();
+    Q_EMIT configChanged();
 }
 
 void ConfigureDialog::slotOk()
@@ -89,6 +89,6 @@ void ConfigureDialog::slotOk()
     if (KMKernel::self()) {
         KMKernel::self()->slotRequestConfigSync();
     }
-    emit configChanged();
+    Q_EMIT configChanged();
 }
 

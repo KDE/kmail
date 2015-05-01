@@ -75,7 +75,7 @@ int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi
         mStack.removeLast();
     }
     mStack.prepend(info);
-    emit undoStackChanged();
+    Q_EMIT undoStackChanged();
     return info->id;
 }
 
@@ -100,7 +100,7 @@ void UndoStack::undo()
 {
     if (!mStack.isEmpty()) {
         UndoInfo *info = mStack.takeFirst();
-        emit undoStackChanged();
+        Q_EMIT undoStackChanged();
         Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(info->items, info->srcFolder, this);
         connect(job, &Akonadi::ItemMoveJob::result, this, &UndoStack::slotMoveResult);
         delete info;
@@ -137,6 +137,6 @@ void UndoStack::folderDestroyed(const Akonadi::Collection &folder)
             ++it;
         }
     }
-    emit undoStackChanged();
+    Q_EMIT undoStackChanged();
 }
 

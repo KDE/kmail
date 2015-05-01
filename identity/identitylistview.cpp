@@ -168,7 +168,7 @@ void IdentityListView::commitData(QWidget *editor)
         if (edit) {
             IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(selectedItems()[0]);
             const QString text = edit->text();
-            emit rename(item, text);
+            Q_EMIT rename(item, text);
         }
     }
 }
@@ -179,10 +179,10 @@ void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
     if (item) {
         IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem *>(item);
         if (lvItem) {
-            emit contextMenu(lvItem, viewport()->mapToGlobal(pos));
+            Q_EMIT contextMenu(lvItem, viewport()->mapToGlobal(pos));
         }
     } else {
-        emit contextMenu(Q_NULLPTR, viewport()->mapToGlobal(pos));
+        Q_EMIT contextMenu(Q_NULLPTR, viewport()->mapToGlobal(pos));
     }
 }
 

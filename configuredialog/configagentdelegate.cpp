@@ -198,7 +198,7 @@ bool ConfigAgentDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, 
         case QEvent::MouseButtonRelease: {
             QPoint pos = buttonOpt.rect.bottomLeft() + option.rect.topLeft();
             const QString ident = index.data(Akonadi::AgentInstanceModel::InstanceIdentifierRole).toString();
-            emit optionsClicked(ident, pos);
+            Q_EMIT optionsClicked(ident, pos);
             return true;
         }
         default:

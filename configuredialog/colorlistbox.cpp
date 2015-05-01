@@ -60,7 +60,7 @@ void ColorListBox::setColor(int index, const QColor &color)
 {
     if (index < model()->rowCount()) {
         topLevelItem(index)->setData(0, Qt::DecorationRole, color);
-        emit changed();
+        Q_EMIT changed();
     }
 }
 
@@ -124,7 +124,7 @@ void ColorListBox::dropEvent(QDropEvent *e)
         QTreeWidgetItem *item = currentItem();
         if (item) {
             item->setData(0, Qt::DecorationRole, color);
-            emit changed();
+            Q_EMIT changed();
         }
         mCurrentOnDragEnter = Q_NULLPTR;
     }

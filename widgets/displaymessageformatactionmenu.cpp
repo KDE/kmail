@@ -66,7 +66,7 @@ void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat()
         KToggleAction *act = dynamic_cast<KToggleAction *>(sender());
         if (act) {
             MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
-            emit changeDisplayMessageFormat(format);
+            Q_EMIT changeDisplayMessageFormat(format);
         }
     }
 }

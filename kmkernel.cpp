@@ -456,7 +456,7 @@ void KMKernel::checkMail()  //might create a new reader but won't show!!
             }
             if (mResourcesBeingChecked.isEmpty()) {
                 qCDebug(KMAIL_LOG) << "Starting manual mail check";
-                emit startCheckMail();
+                Q_EMIT startCheckMail();
             }
 
             if (!mResourcesBeingChecked.contains(id)) {
@@ -1004,7 +1004,7 @@ void KMKernel::stopNetworkJobs()
 
     GlobalSettings::setNetworkState(GlobalSettings::EnumNetworkState::Offline);
     BroadcastStatus::instance()->setStatusMsg(i18n("KMail is set to be offline; all network jobs are suspended"));
-    emit onlineStatusChanged((GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState());
+    Q_EMIT onlineStatusChanged((GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState());
 
 }
 
@@ -1042,7 +1042,7 @@ void KMKernel::resumeNetworkJobs()
         BroadcastStatus::instance()->setStatusMsg(i18n("KMail is set to be online; all network jobs will resume when a network connection is detected"));
     }
     GlobalSettings::setNetworkState(GlobalSettings::EnumNetworkState::Online);
-    emit onlineStatusChanged((GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState());
+    Q_EMIT onlineStatusChanged((GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState());
     KMMainWidget *widget = getKMMainWidget();
     if (widget) {
         widget->clearViewer();
@@ -1508,7 +1508,7 @@ void KMKernel::slotShowConfigurationDialog()
 void KMKernel::slotConfigChanged()
 {
     CodecManager::self()->updatePreferredCharsets();
-    emit configChanged();
+    Q_EMIT configChanged();
 }
 
 //-------------------------------------------------------------------------------
@@ -1814,7 +1814,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 
             if (mResourcesBeingChecked.isEmpty()) {
                 qCDebug(KMAIL_LOG) << "A Resource started to synchronize, starting a mail check.";
-                emit startCheckMail();
+                Q_EMIT startCheckMail();
             }
 
             const QString identifier(instance.identifier());
@@ -1879,14 +1879,14 @@ void KMKernel::slotProgressItemCompletedOrCanceled(KPIM::ProgressItem *item)
         mResourcesBeingChecked.removeAll(identifier);
         if (mResourcesBeingChecked.isEmpty()) {
             qCDebug(KMAIL_LOG) << "Last resource finished syncing, mail check done";
-            emit endCheckMail();
+            Q_EMIT endCheckMail();
         }
     }
 }
 
 void KMKernel::updatedTemplates()
 {
-    emit customTemplatesChanged();
+    Q_EMIT customTemplatesChanged();
 }
 
 bool KMKernel::isImapFolder(const Akonadi::Collection &col, bool &isOnline) const

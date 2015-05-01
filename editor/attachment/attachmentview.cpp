@@ -128,7 +128,7 @@ void AttachmentView::saveHeaderState()
 void AttachmentView::contextMenuEvent(QContextMenuEvent *event)
 {
     Q_UNUSED(event);
-    emit contextMenuRequested();
+    Q_EMIT contextMenuRequested();
 }
 
 void AttachmentView::keyPressEvent(QKeyEvent *event)
@@ -179,7 +179,7 @@ void AttachmentView::hideIfEmpty()
     } else {
         d->infoAttachment->clear();
     }
-    emit modified(true);
+    Q_EMIT modified(true);
 }
 
 void AttachmentView::updateAttachmentLabel()

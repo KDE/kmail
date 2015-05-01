@@ -54,7 +54,7 @@ FolderShortcutCommand::~FolderShortcutCommand()
 
 void FolderShortcutCommand::start()
 {
-    emit selectCollectionFolder(mCollectionFolder);
+    Q_EMIT selectCollectionFolder(mCollectionFolder);
 }
 
 void FolderShortcutCommand::setAction(QAction *action)

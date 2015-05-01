@@ -177,7 +177,7 @@ void TagActionManager::finishedTagListing(KJob *job)
 
 void TagActionManager::onSignalMapped(const QString &tag)
 {
-    emit tagActionTriggered(Akonadi::Tag(tag.toLongLong()));
+    Q_EMIT tagActionTriggered(Akonadi::Tag(tag.toLongLong()));
 }
 
 void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
@@ -329,7 +329,7 @@ void TagActionManager::newTagActionClicked()
     if (dialog->exec() == QDialog::Accepted) {
         mNewTagId = dialog->tag().id();
         // Assign tag to all selected items right away
-        emit tagActionTriggered(dialog->tag());
+        Q_EMIT tagActionTriggered(dialog->tag());
     }
     delete dialog;
 }

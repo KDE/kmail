@@ -2962,7 +2962,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
         return;
     }
     bool wasModified(isModified());
-    emit identityChanged(identity());
+    Q_EMIT identityChanged(identity());
     if (!ident.fullEmailAddr().isNull()) {
         mEdtFrom->setText(ident.fullEmailAddr());
     }

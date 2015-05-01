@@ -75,7 +75,7 @@ KCMKMailSummary::KCMKMailSummary(QWidget *parent)
 
 void KCMKMailSummary::modified()
 {
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 
 void KCMKMailSummary::initGUI()
@@ -129,20 +129,20 @@ void KCMKMailSummary::load()
     initFolders();
     loadFolders();
 
-    emit changed(false);
+    Q_EMIT changed(false);
 }
 
 void KCMKMailSummary::save()
 {
     storeFolders();
 
-    emit changed(false);
+    Q_EMIT changed(false);
 }
 
 void KCMKMailSummary::defaults()
 {
     mFullPath->setChecked(true);
 
-    emit changed(true);
+    Q_EMIT changed(true);
 }
 

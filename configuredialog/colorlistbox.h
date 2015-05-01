@@ -38,7 +38,7 @@ public:
     explicit ColorListBox(QWidget *parent = Q_NULLPTR);
     void addColor(const QString &text, const QColor &color = Qt::black);
     void setColor(int index, const QColor &color);
-    // like setColor, but does not emit changed()
+    // like setColor, but does not Q_EMIT changed()
     void setColorSilently(int index, const QColor &color);
     QColor color(int index) const;
 

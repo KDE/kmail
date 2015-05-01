@@ -79,7 +79,7 @@ bool ConfigureAgentListModel::setData(const QModelIndex &index, const QVariant &
         return false;
     }
 
-    emit dataChanged(index, index);
+    Q_EMIT dataChanged(index, index);
     return true;
 }
 

@@ -229,7 +229,7 @@ void KMCommand::start()
             this, &KMCommand::slotPostTransfer);
 
     if (mMsgList.isEmpty()) {
-        emit messagesTransfered(OK);
+        Q_EMIT messagesTransfered(OK);
         return;
     }
 
@@ -237,14 +237,14 @@ void KMCommand::start()
     const Akonadi::Item mb = mMsgList.first();
     if ((mMsgList.count() == 1) && MessageCore::Util::isStandaloneMessage(mb)) {
         mRetrievedMsgs.append(mMsgList.takeFirst());
-        emit messagesTransfered(OK);
+        Q_EMIT messagesTransfered(OK);
         return;
     }
 
     // we can only retrieve items with a valid id
     foreach (const Akonadi::Item &item, mMsgList) {
         if (!item.isValid()) {
-            emit messagesTransfered(Failed);
+            Q_EMIT messagesTransfered(Failed);
             return;
         }
     }
@@ -262,7 +262,7 @@ void KMCommand::slotPostTransfer(KMCommand::Result result)
     }
     mResult = result;
     if (!emitsCompletedItself()) {
-        emit completed(this);
+        Q_EMIT completed(this);
     }
     if (!deletesItself()) {
         deleteLater();
@@ -278,7 +278,7 @@ void KMCommand::transferSelectedMsgs()
 {
     // make sure no other transfer is active
     if (KMCommand::mCountJobs > 0) {
-        emit messagesTransfered(Failed);
+        Q_EMIT messagesTransfered(Failed);
         return;
     }
 
@@ -320,7 +320,7 @@ void KMCommand::transferSelectedMsgs()
     if (complete) {
         delete mProgressDialog.data();
         mProgressDialog.clear();
-        emit messagesTransfered(OK);
+        Q_EMIT messagesTransfered(OK);
     } else {
         // wait for the transfer and tell the progressBar the necessary steps
         if (mProgressDialog.data()) {
@@ -334,7 +334,7 @@ void KMCommand::transferSelectedMsgs()
 void KMCommand::slotMsgTransfered(const Akonadi::Item::List &msgs)
 {
     if (mProgressDialog.data() && mProgressDialog.data()->wasCanceled()) {
-        emit messagesTransfered(Canceled);
+        Q_EMIT messagesTransfered(Canceled);
         return;
     }
     // save the complete messages
@@ -367,7 +367,7 @@ void KMCommand::slotJobFinished()
         // all done
         delete mProgressDialog.data();
         mProgressDialog.clear();
-        emit messagesTransfered(OK);
+        Q_EMIT messagesTransfered(OK);
     }
 }
 
@@ -376,7 +376,7 @@ void KMCommand::slotTransferCancelled()
     KMCommand::mCountJobs = 0;
     mCountMsgs = 0;
     mRetrievedMsgs.clear();
-    emit messagesTransfered(Canceled);
+    Q_EMIT messagesTransfered(Canceled);
 }
 
 KMMailtoComposeCommand::KMMailtoComposeCommand(const QUrl &url,
@@ -524,10 +524,10 @@ void KMUrlSaveCommand::slotUrlSaveResult(KJob *job)
     if (job->error()) {
         showJobError(job);
         setResult(Failed);
-        emit completed(this);
+        Q_EMIT completed(this);
     } else {
         setResult(OK);
-        emit completed(this);
+        Q_EMIT completed(this);
     }
 }
 
@@ -622,10 +622,10 @@ void KMEditItemCommand::slotDeleteItem(KJob *job)
     if (job->error()) {
         showJobError(job);
         setResult(Failed);
-        emit completed(this);
+        Q_EMIT completed(this);
     } else {
         setResult(OK);
-        emit completed(this);
+        Q_EMIT completed(this);
     }
     deleteLater();
 }
@@ -735,7 +735,7 @@ void KMOpenMsgCommand::doesNotContainMessage()
     KMessageBox::sorry(parentWidget(),
                        i18n("The file does not contain a message."));
     setResult(Failed);
-    emit completed(this);
+    Q_EMIT completed(this);
     // Emulate closing of a secondary window so that KMail exits in case it
     // was started with the --view command line option. Otherwise an
     // invisible KMail would keep running.
@@ -752,7 +752,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         // handle errors
         showJobError(job);
         setResult(Failed);
-        emit completed(this);
+        Q_EMIT completed(this);
     } else {
         if (mMsgString.isEmpty()) {
             qCDebug(KMAIL_LOG) << " Message not found. There is a problem";
@@ -792,7 +792,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
                                      i18n("The file contains multiple messages. "
                                           "Only the first message is shown."));
         setResult(OK);
-        emit completed(this);
+        Q_EMIT completed(this);
     }
     deleteLater();
 }
@@ -1500,8 +1500,8 @@ void KMMoveCommand::completeMove(Result result)
         mProgressItem = Q_NULLPTR;
     }
     setResult(result);
-    emit moveDone(this);
-    emit completed(this);
+    Q_EMIT moveDone(this);
+    Q_EMIT completed(this);
     deleteLater();
 }
 

@@ -441,7 +441,7 @@ void KMMainWidget::slotCollectionFetched(int collectionId)
     }
     // We call this for any collection, it could be one of our parents...
     if (mCurrentFolder) {
-        emit captionChangeRequest(MailCommon::Util::fullCollectionPath(mCurrentFolder->collection()));
+        Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(mCurrentFolder->collection()));
     }
 }
 
@@ -452,7 +452,7 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
         AgentManager::self()->synchronizeCollection(collection, false);
     }
     mMsgActions->setCurrentMessage(Akonadi::Item());
-    emit captionChangeRequest(MailCommon::Util::fullCollectionPath(collection));
+    Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(collection));
 }
 
 void KMMainWidget::folderSelected(const Akonadi::Collection &col)
@@ -822,7 +822,7 @@ void KMMainWidget::readConfig()
             deleteWidgets();
             createWidgets();
             restoreCollectionFolderViewConfig();
-            emit recreateGui();
+            Q_EMIT recreateGui();
         } else if (oldFolderQuickSearch != mEnableFolderQuickSearch) {
             if (mEnableFolderQuickSearch) {
                 mFolderTreeWidget->filterFolderLineEdit()->show();
@@ -2276,7 +2276,7 @@ void KMMainWidget::slotSaveAttachments()
 
 void KMMainWidget::slotOnlineStatus()
 {
-    // KMKernel will emit a signal when we toggle the network state that is caught by
+    // KMKernel will Q_EMIT a signal when we toggle the network state that is caught by
     // KMMainWidget::slotUpdateOnlineStatus to update our GUI
     if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online) {
         // if online; then toggle and set it offline.

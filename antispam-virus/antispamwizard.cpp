@@ -456,7 +456,7 @@ void AntiSpamWizard::accept()
     }
 
     /* Now that all the filters have been added to the list, tell
-    * the filter manager about it. That will emit filterListUpdate
+    * the filter manager about it. That will Q_EMIT filterListUpdate
     * which will result in the filter list in kmmainwidget being
     * initialized. This should happend only once. */
     if (!filterList.isEmpty()) {
@@ -970,7 +970,7 @@ bool ASWizInfoPage::isProgramSelected(const QString &visibleName) const
 
 void ASWizInfoPage::processSelectionChange()
 {
-    emit selectionChanged();
+    Q_EMIT selectionChanged();
 }
 
 //---------------------------------------------------------------------------
@@ -1091,7 +1091,7 @@ void ASWizSpamRulesPage::processSelectionChange()
 {
     mFolderReqForSpamFolder->setEnabled(mMoveSpamRules->isChecked());
     mFolderReqForUnsureFolder->setEnabled(mMoveUnsureRules->isChecked());
-    emit selectionChanged();
+    Q_EMIT selectionChanged();
 }
 
 void ASWizSpamRulesPage::processSelectionChange(const Akonadi::Collection &)
@@ -1196,7 +1196,7 @@ QString ASWizVirusRulesPage::selectedFolderName() const
 
 void ASWizVirusRulesPage::processSelectionChange()
 {
-    emit selectionChanged();
+    Q_EMIT selectionChanged();
 }
 
 //---------------------------------------------------------------------------

@@ -146,7 +146,7 @@ bool KMComposerEditor::canInsertFromMimeData(const QMimeData *source) const
 void KMComposerEditor::insertFromMimeData(const QMimeData *source)
 {
     if (source->hasFormat(QStringLiteral("text/x-kmail-textsnippet"))) {
-        emit insertSnippet();
+        Q_EMIT insertSnippet();
         return;
     }
 
