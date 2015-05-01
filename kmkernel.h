@@ -15,7 +15,6 @@
 
 #include "kmail_export.h"
 #include "settings/globalsettings.h"
-#include <kcomponentdata.h>
 #include <AkonadiCore/servermanager.h>
 #include "messageviewer/viewer/viewer.h"
 #include "progresswidget/progressmanager.h"
@@ -79,7 +78,6 @@ class JobScheduler;
 class KMFilterDialog;
 }
 
-class KComponentData;
 class QTimer;
 class KMMainWin;
 class KMainWindow;

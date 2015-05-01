@@ -58,9 +58,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KParts::ReadOnlyPart(parent),
     mParentWidget(parentWidget)
 {
-    qCDebug(KMAIL_LOG) << "InstanceName:" << KComponentData::mainComponent().componentName();
     setComponentName(QLatin1String("kmail2"), QLatin1String("kmail2"));
-    qCDebug(KMAIL_LOG) << "InstanceName:" << KComponentData::mainComponent().componentName();
 
     // Migrate to xdg path
     KMail::migrateConfig();
