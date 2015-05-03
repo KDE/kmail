@@ -30,7 +30,7 @@
  */
 
 #ifndef COLLECTIONQUOTAPAGE_P_H
-#define COLLECTIONQUOTAWIDGET_H
+#define COLLECTIONQUOTAPAGE_P_H
 
 #include <QWidget>
 
