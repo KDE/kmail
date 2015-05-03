@@ -630,7 +630,7 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
     dlg->setAddresses(RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     if (dlg->exec() && dlg) {
         if (dlg->wasChanged()) {
-            RecentAddresses::self(  MessageComposer::MessageComposerSettings::self()->config() )->clear();
+            RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->clear();
             dlg->storeAddresses(MessageComposer::MessageComposerSettings::self()->config());
         }
     }

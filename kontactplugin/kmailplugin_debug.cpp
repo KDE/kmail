@@ -20,4 +20,3 @@
 #include "kmailplugin_debug.h"
 Q_LOGGING_CATEGORY(KMAILPLUGIN_LOG, "log_kmail_plugin")
 
-
