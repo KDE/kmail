@@ -175,7 +175,7 @@ KMailPlugin::~KMailPlugin()
 
 bool KMailPlugin::createDBUSInterface(const QString &serviceType)
 {
-    if (serviceType == QStringLiteral("DBUS/Mailer")) {
+    if (serviceType == QLatin1String("DBUS/Mailer")) {
         if (part()) {
             return true;
         }

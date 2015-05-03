@@ -43,8 +43,8 @@ void MailMergeWidgetTest::shouldHaveDefaultValueOnCreation()
 
     for (int i = 0; i < stackedwidget->count(); ++i) {
         const QString objectName = stackedwidget->widget(i)->objectName();
-        bool hasName = (objectName == QStringLiteral("addressbookwidget") ||
-                        objectName == QStringLiteral("csvwidget"));
+        bool hasName = (objectName == QLatin1String("addressbookwidget") ||
+                        objectName == QLatin1String("csvwidget"));
         QVERIFY(hasName);
     }
     PimCommon::SimpleStringListEditor *listEditor = mailmerge.findChild<PimCommon::SimpleStringListEditor *>(QStringLiteral("attachment-list"));
