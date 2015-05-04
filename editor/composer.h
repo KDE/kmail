@@ -102,6 +102,7 @@ public: // kmkernel, kmcommands, callback
     virtual void setCollectionForNewMessage(const Akonadi::Collection &folder) = 0;
 
     virtual void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) = 0;
+    virtual void setCurrentIdentity(uint identity) = 0;
 
 public: // kmcommand
     /**

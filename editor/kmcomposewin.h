@@ -256,6 +256,8 @@ public: // kmkernel, kmcommands, callback
         return mGenerateShortenUrl;
     }
 
+    void setCurrentIdentity(uint identity) Q_DECL_OVERRIDE;
+
 private:
     /**
     * Write settings to app's config file.
@@ -467,6 +469,7 @@ public: // kmcommand
     */
     void ignoreStickyFields() Q_DECL_OVERRIDE;
 
+    uint currentIdentity() const;
 private:
     /**
      * Updates the visibility and text of the signature and encryption state indicators.
