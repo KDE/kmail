@@ -234,6 +234,8 @@ public: // kmkernel, kmcommands, callback
     KActionMenuChangeCase *changeCaseMenu() const { return mChangeCaseMenu; }
     KToggleAction *generateShortenUrlAction() const { return mGenerateShortenUrl; }
 
+    virtual void setCurrentIdentity(uint identity);
+
 private:
     /**
    * Write settings to app's config file.
@@ -447,6 +449,7 @@ public: // kmcommand
     */
     void ignoreStickyFields();
 
+    uint currentIdentity() const;
 private:
     /**
      * Updates the visibility and text of the signature and encryption state indicators.

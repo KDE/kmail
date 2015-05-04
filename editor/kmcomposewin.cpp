@@ -1554,6 +1554,10 @@ void KMComposeWin::setCurrentReplyTo(const QString& replyTo)
     }
 }
 
+uint KMComposeWin::currentIdentity() const
+{
+    return mComposerBase->identityCombo()->currentIdentity();
+}
 
 void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,
                                bool allowDecryption, bool isModified )
@@ -2303,6 +2307,7 @@ void KMComposeWin::slotNewComposer()
     MessageHelper::initHeader( msg, KMKernel::self()->identityManager() );
     win = new KMComposeWin( msg, false, false, KMail::Composer::New );
     win->setCollectionForNewMessage(mCollectionForNewMessage);
+    win->setCurrentIdentity(currentIdentity());
     win->show();
 }
 
@@ -3325,6 +3330,11 @@ void KMComposeWin::slotExplicitClosedMissingAttachment()
 void KMComposeWin::addExtraCustomHeaders( const QMap<QByteArray, QString> &headers)
 {
     mExtraHeaders = headers;
+}
+
+void KMComposeWin::setCurrentIdentity(uint identity)
+{
+    mComposerBase->identityCombo()->setCurrentIdentity( identity );
 }
 
 void KMComposeWin::slotSentenceCase()
