@@ -77,7 +77,7 @@ void AddressValidationJob::Private::slotAliasExpansionDone(KJob *job)
             if (i != 0) {
                 listOfDistributionList.append(QLatin1String(", "));
             }
-            listOfDistributionList.append(QString::fromLatin1("\"%1\"").arg(emptyDistributionLists.at(i)));
+            listOfDistributionList.append(QStringLiteral("\"%1\"").arg(emptyDistributionLists.at(i)));
         }
         errorMsg = i18np("Distribution list %2 is empty, it cannot be used.",
                          "Distribution lists %2 are empty, they cannot be used.",
