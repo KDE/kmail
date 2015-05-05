@@ -1207,7 +1207,7 @@ void KMComposeWin::setupActions( void )
     actionCollection()->addAction(QLatin1String("addressbook"), action );
     if (KStandardDirs::findExe(QLatin1String("kaddressbook")).isEmpty())
         action->setEnabled(false);
-    connect(action, SIGNAL(triggered(bool)), SLOT(slotAddrBook()));
+    connect(action, SIGNAL(triggered(bool)), SLOT(slotAddressBook()));
     action = new KAction(KIcon(QLatin1String("mail-message-new")), i18n("&New Composer"), this);
     actionCollection()->addAction(QLatin1String("new_composer"), action );
     connect(action, SIGNAL(triggered(bool)), SLOT(slotNewComposer()));
@@ -1996,7 +1996,7 @@ void KMComposeWin::addAttach( KMime::Content *msgPart )
     setModified( true );
 }
 
-void KMComposeWin::slotAddrBook()
+void KMComposeWin::slotAddressBook()
 {
     KRun::runCommand(QLatin1String("kaddressbook"), window());
 }
