@@ -336,7 +336,7 @@ private Q_SLOTS:
     /**
      * Open addressbook editor dialog.
      */
-    void slotAddrBook();
+    void slotAddressBook();
 
     /**
      * Insert a file to the end of the text in the editor.

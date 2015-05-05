@@ -1180,7 +1180,7 @@ void KMComposeWin::setupActions(void)
     if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty()) {
         action->setEnabled(false);
     }
-    connect(action, &QAction::triggered, this, &KMComposeWin::slotAddrBook);
+    connect(action, &QAction::triggered, this, &KMComposeWin::slotAddressBook);
     action = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18n("&New Composer"), this);
     actionCollection()->addAction(QLatin1String("new_composer"), action);
 
@@ -1958,7 +1958,7 @@ void KMComposeWin::addAttach(KMime::Content *msgPart)
     setModified(true);
 }
 
-void KMComposeWin::slotAddrBook()
+void KMComposeWin::slotAddressBook()
 {
     KRun::runCommand(QLatin1String("kaddressbook"), window());
 }
