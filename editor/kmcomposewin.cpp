@@ -1535,8 +1535,8 @@ uint KMComposeWin::currentIdentity() const
     return mComposerBase->identityCombo()->currentIdentity();
 }
 
-void KMComposeWin::setMessage( const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,
-                               bool allowDecryption, bool isModified )
+void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,
+                              bool allowDecryption, bool isModified)
 {
     if (!newMsg) {
         qCDebug(KMAIL_LOG) << "newMsg == 0!";
@@ -3272,7 +3272,7 @@ void KMComposeWin::addExtraCustomHeaders(const QMap<QByteArray, QString> &header
 
 void KMComposeWin::setCurrentIdentity(uint identity)
 {
-    mComposerBase->identityCombo()->setCurrentIdentity( identity );
+    mComposerBase->identityCombo()->setCurrentIdentity(identity);
 }
 
 void KMComposeWin::slotSentenceCase()
