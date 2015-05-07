@@ -2890,7 +2890,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(QIcon::fromTheme(QLatin1String("document-import")), i18n("&Import Messages..."), this);
         actionCollection()->addAction(QLatin1String("import"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImport);
-        if (QStandardPaths::findExecutable(QLatin1String("kmailcvt")).isEmpty()) {
+        if (QStandardPaths::findExecutable(QLatin1String("importwizard")).isEmpty()) {
             action->setEnabled(false);
         }
     }

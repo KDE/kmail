@@ -120,7 +120,14 @@ void KMLaunchExternalComponent::slotAddrBook()
 
 void KMLaunchExternalComponent::slotImport()
 {
-    KRun::runCommand(QLatin1String("kmailcvt"), mParentWidget->window());
+    QStringList lst;
+    lst.append(QStringLiteral("--mode"));
+    lst.append(QStringLiteral("manual"));
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
+    if (!QProcess::startDetached(path, lst))
+        KMessageBox::error(mParentWidget, i18n("Could not start the ImportWizard. "
+                                               "Please check your installation."),
+                           i18n("Unable to start ImportWizard"));
 }
 
 void KMLaunchExternalComponent::slotAccountWizard()
