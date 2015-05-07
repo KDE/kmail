@@ -48,7 +48,7 @@ KMLaunchExternalComponent::~KMLaunchExternalComponent()
 
 void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {
-    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QLatin1String("org.freedesktop.Akonadi.ArchiveMailAgent"), QLatin1String("/ArchiveMailAgent"), QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent"), QStringLiteral("/ArchiveMailAgent"), QDBusConnection::sessionBus(), this);
     if (archiveMailInterface.isValid()) {
         archiveMailInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
@@ -58,7 +58,7 @@ void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 
 void KMLaunchExternalComponent::slotConfigureSendLater()
 {
-    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QLatin1String("org.freedesktop.Akonadi.SendLaterAgent"), QLatin1String("/SendLaterAgent"), QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QStringLiteral("org.freedesktop.Akonadi.SendLaterAgent"), QStringLiteral("/SendLaterAgent"), QDBusConnection::sessionBus(), this);
     if (sendLaterInterface.isValid()) {
         sendLaterInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
@@ -68,7 +68,7 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
 
 void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 {
-    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QLatin1String("org.freedesktop.Akonadi.FollowUpReminder"), QLatin1String("/FollowUpReminder"), QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder"), QStringLiteral("/FollowUpReminder"), QDBusConnection::sessionBus(), this);
     if (followUpInterface.isValid()) {
         followUpInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
@@ -78,7 +78,7 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 
 void KMLaunchExternalComponent::slotStartCertManager()
 {
-    if (!QProcess::startDetached(QLatin1String("kleopatra")))
+    if (!QProcess::startDetached(QStringLiteral("kleopatra")))
         KMessageBox::error(mParentWidget, i18n("Could not start certificate manager; "
                                                "please check your installation."),
                            i18n("KMail Error"));
@@ -89,7 +89,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
 
 void KMLaunchExternalComponent::slotStartWatchGnuPG()
 {
-    if (!QProcess::startDetached(QLatin1String("kwatchgnupg")))
+    if (!QProcess::startDetached(QStringLiteral("kwatchgnupg")))
         KMessageBox::error(mParentWidget, i18n("Could not start GnuPG LogViewer (kwatchgnupg); "
                                                "please check your installation."),
                            i18n("KMail Error"));
@@ -97,7 +97,7 @@ void KMLaunchExternalComponent::slotStartWatchGnuPG()
 
 void KMLaunchExternalComponent::slotImportWizard()
 {
-    const QString path = QStandardPaths::findExecutable(QLatin1String("importwizard"));
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
     if (!QProcess::startDetached(path))
         KMessageBox::error(mParentWidget, i18n("Could not start the import wizard. "
                                                "Please check your installation."),
@@ -106,7 +106,7 @@ void KMLaunchExternalComponent::slotImportWizard()
 
 void KMLaunchExternalComponent::slotExportData()
 {
-    const QString path = QStandardPaths::findExecutable(QLatin1String("pimsettingexporter"));
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("pimsettingexporter"));
     if (!QProcess::startDetached(path))
         KMessageBox::error(mParentWidget, i18n("Could not start \"PIM Setting Exporter\" program. "
                                                "Please check your installation."),
@@ -115,7 +115,7 @@ void KMLaunchExternalComponent::slotExportData()
 
 void KMLaunchExternalComponent::slotAddrBook()
 {
-    KRun::runCommand(QLatin1String("kaddressbook"), mParentWidget->window());
+    KRun::runCommand(QStringLiteral("kaddressbook"), mParentWidget->window());
 }
 
 void KMLaunchExternalComponent::slotImport()
@@ -133,10 +133,10 @@ void KMLaunchExternalComponent::slotImport()
 void KMLaunchExternalComponent::slotAccountWizard()
 {
     QStringList lst;
-    lst.append(QLatin1String("--type"));
-    lst.append(QLatin1String("message/rfc822"));
+    lst.append(QStringLiteral("--type"));
+    lst.append(QStringLiteral("message/rfc822"));
 
-    const QString path = QStandardPaths::findExecutable(QLatin1String("accountwizard"));
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
     if (!QProcess::startDetached(path, lst))
         KMessageBox::error(mParentWidget, i18n("Could not start the account wizard. "
                                                "Please check your installation."),
