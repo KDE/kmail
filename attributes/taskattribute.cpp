@@ -18,6 +18,7 @@
 #include "taskattribute.h"
 
 #include <QByteArray>
+#include <QDataStream>
 
 TaskAttribute::TaskAttribute()
     : Akonadi::Attribute(),
