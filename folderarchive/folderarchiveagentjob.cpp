@@ -85,7 +85,7 @@ void FolderArchiveAgentJob::slotFetchCollection(KJob *job)
         sendError(i18n("List of collections is empty. %1", job->errorString()));
         return;
     }
-    sloMoveMailsToCollection(collections.first());
+    sloMoveMailsToCollection(collections.at(0));
 }
 
 void FolderArchiveAgentJob::slotCollectionIdFound(const Akonadi::Collection &col)
