@@ -210,10 +210,7 @@ void KMSystemTray::updateCount()
         return;
     }
     if (mShowUnreadMailCount) {
-        int overlaySize = KIconLoader::SizeSmallMedium;
-        if (!mIcon.availableSizes().isEmpty()) {
-            overlaySize = mIcon.availableSizes().at(0).width();
-        }
+        const int overlaySize = IconSize(KIconLoader::Panel);
 
         const QString countString = QString::number(mCount);
         QFont countFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
