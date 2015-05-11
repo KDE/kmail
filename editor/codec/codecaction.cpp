@@ -90,7 +90,7 @@ QList<QByteArray> CodecAction::mimeCharsets() const
         // Specific codec selected.
         // ret << currentCodecName().toLatin1().toLower(); // FIXME in kdelibs: returns e.g. '&koi8-r'
         ret << currentCodec()->name();
-        kDebug() << "current codec name" << ret.first();
+        kDebug() << "current codec name" << ret.at(0);
     }
     return ret;
 }

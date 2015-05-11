@@ -256,7 +256,7 @@ void XFaceConfigurator::slotDelayedSelectFromAddressbook( KJob *job )
         return;
     }
 
-    const Addressee contact = searchJob->contacts().first();
+    const Addressee contact = searchJob->contacts().at(0);
     if ( contact.photo().isIntern() )
     {
         const QImage photo = contact.photo().data();

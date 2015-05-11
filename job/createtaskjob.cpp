@@ -76,7 +76,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
     bool parentStatus = false;
     // Toggle actions on threads toggle the whole thread
     // depending on the state of the parent.
-    const Akonadi::Item first = lst.first();
+    const Akonadi::Item first = lst.at(0);
     Akonadi::MessageStatus pStatus;
     pStatus.setStatusFromFlags( first.flags() );
     if ( pStatus & Akonadi::MessageStatus::statusToAct() )
