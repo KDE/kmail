@@ -35,6 +35,7 @@ class KLineEdit;
 class QModelIndex;
 namespace MessageViewer {
 class ConfigureWidget;
+class GravatarConfigWidget;
 }
 
 namespace MessageList {
@@ -170,6 +171,7 @@ private:
 private: // data
     QCheckBox *mCloseAfterReplyOrForwardCheck;
     MessageViewer::ConfigureWidget *mViewerSettings;
+    MessageViewer::GravatarConfigWidget *mGravatarConfigWidget;
 };
 
 
