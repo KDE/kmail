@@ -118,6 +118,7 @@ using KMail::MailServiceImpl;
 #include "mailcommon/kernel/mailkernel.h"
 
 #include "searchdialog/searchdescriptionattribute.h"
+#include "kmail_options.h"
 
 using namespace MailCommon;
 
@@ -285,7 +286,7 @@ static QUrl makeAbsoluteUrl(const QString &str)
     }
 }
 
-bool KMKernel::handleCommandLine(bool noArgsOpensReader)
+bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args)
 {
     QString to, cc, bcc, subj, body, inReplyTo, replyTo;
     QStringList customHeaders;
@@ -297,9 +298,12 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
     bool calledWithSession = false; // for ignoring '-session foo'
 
     // process args:
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-    if (args->isSet("subject")) {
-        subj = args->getOption("subject");
+    QCommandLineParser parser;
+    kmail_options(&parser);
+    parser.process(args);
+
+    if (parser.isSet("subject")) {
+        subj = args.value("subject");
         // if kmail is called with 'kmail -session abc' then this doesn't mean
         // that the user wants to send a message with subject "ession" but
         // (most likely) that the user clicked on KMail's system tray applet
@@ -315,33 +319,33 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
         }
     }
 
-    if (args->isSet("cc")) {
+    if (parser.isSet("cc")) {
         mailto = true;
-        cc = args->getOption("cc");
+        cc = parser.value("cc");
     }
 
-    if (args->isSet("bcc")) {
+    if (parser.isSet("bcc")) {
         mailto = true;
-        bcc = args->getOption("bcc");
+        bcc = parser.value("bcc");
     }
 
-    if (args->isSet("replyTo")) {
+    if (parser.isSet("replyTo")) {
         mailto = true;
-        replyTo = args->getOption("replyTo");
+        replyTo = parser.value("replyTo");
     }
 
-    if (args->isSet("msg")) {
+    if (parser.isSet("msg")) {
         mailto = true;
-        const QString file = args->getOption("msg");
+        const QString file = parser.value("msg");
         messageFile = makeAbsoluteUrl(file);
     }
 
-    if (args->isSet("body")) {
+    if (parser.isSet("body")) {
         mailto = true;
-        body = args->getOption("body");
+        body = parser.value("body");
     }
 
-    const QStringList attachList = args->getOptionList("attach");
+    const QStringList attachList = parser.values("attach");
     if (!attachList.isEmpty()) {
         mailto = true;
         QStringList::ConstIterator end = attachList.constEnd();
@@ -355,20 +359,20 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
         }
     }
 
-    customHeaders = args->getOptionList("header");
+    customHeaders = parser.values("header");
 
-    if (args->isSet("composer")) {
+    if (parser.isSet("composer")) {
         mailto = true;
     }
 
-    if (args->isSet("check")) {
+    if (parser.isSet("check")) {
         checkMail = true;
     }
 
-    if (args->isSet("view")) {
+    if (parser.isSet("view")) {
         viewOnly = true;
         const QString filename =
-            args->getOption("view");
+            parser.value("view");
         messageFile = QUrl::fromLocalFile(filename);
         if (!messageFile.isValid()) {
             messageFile = QUrl();
@@ -379,10 +383,9 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
     if (!calledWithSession) {
         // only read additional command line arguments if kmail/kontact is
         // not called with "-session foo"
-        const int nbArgs = args->count();
-        for (int i = 0; i < nbArgs; ++i) {
-            if (args->arg(i).startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
-                QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(args->url(i));
+        for (const QString &arg : parser.positionalArguments()) {
+            if (arg.startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
+                QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(QUrl::fromUserInput(arg));
                 if (!values.value(QLatin1String("to")).isEmpty()) {
                     to += values.value(QLatin1String("to")) + QLatin1String(", ");
                 }
@@ -403,12 +406,11 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
                     attachURLs << makeAbsoluteUrl(attach);
                 }
             } else {
-                QString tmpArg = args->arg(i);
-                KUrl url(tmpArg);
+                KUrl url(arg);
                 if (url.isValid() && !url.scheme().isEmpty()) {
                     attachURLs += url;
                 } else {
-                    to += tmpArg + QLatin1String(", ");
+                    to += arg + QLatin1String(", ");
                 }
             }
             mailto = true;
@@ -417,10 +419,6 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
             // cut off the superfluous trailing ", "
             to.truncate(to.length() - 2);
         }
-    }
-
-    if (!calledWithSession) {
-        args->clear();
     }
 
     if (!noArgsOpensReader && !mailto && !checkMail && !viewOnly) {

@@ -41,8 +41,8 @@ class KMailUniqueAppHandler : public KontactInterface::UniqueAppHandler
 public:
     explicit KMailUniqueAppHandler(KontactInterface::Plugin *plugin)
         : KontactInterface::UniqueAppHandler(plugin) {}
-    void loadCommandLineOptions() Q_DECL_OVERRIDE;
-    int newInstance() Q_DECL_OVERRIDE;
+    void loadCommandLineOptions(QCommandLineParser *parser) Q_DECL_OVERRIDE;
+    int activate(const QStringList &args) Q_DECL_OVERRIDE;
 };
 
 class KMailPlugin : public KontactInterface::Plugin

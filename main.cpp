@@ -38,16 +38,20 @@
 #endif
 
 #include <QDir>
+#include <QApplication>
 
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KontactInterface::PimUniqueApplication
 {
 public:
-    KMailApplication() : KontactInterface::PimUniqueApplication(),
-        mDelayedInstanceCreation(false),
-        mEventLoopReached(false) { }
-    int newInstance() Q_DECL_OVERRIDE;
+    KMailApplication(int &argc, char **argv[])
+        : KontactInterface::PimUniqueApplication(argc, argv)
+        , mDelayedInstanceCreation(false)
+        , mEventLoopReached(false)
+    { }
+
+    int activate(const QStringList &args) Q_DECL_OVERRIDE;
     void commitData(QSessionManager &sm);
     void setEventLoopReached();
     void delayedInstanceCreation();
@@ -69,7 +73,7 @@ void KMailApplication::setEventLoopReached()
     mEventLoopReached = true;
 }
 
-int KMailApplication::newInstance()
+int KMailApplication::activate(const QStringList &args)
 {
     qCDebug(KMAIL_LOG);
 
@@ -86,8 +90,8 @@ int KMailApplication::newInstance()
         return 0;
     }
 
-    if (!kmkernel->firstInstance() || !kapp->isSessionRestored()) {
-        kmkernel->handleCommandLine(true);
+    if (!kmkernel->firstInstance() || !qApp->isSessionRestored()) {
+        kmkernel->handleCommandLine(true, args);
     }
     kmkernel->setFirstInstance(false);
     return 0;
@@ -96,7 +100,7 @@ int KMailApplication::newInstance()
 void KMailApplication::delayedInstanceCreation()
 {
     if (mDelayedInstanceCreation) {
-        newInstance();
+        activate(QStringList());
     }
 }
 
@@ -111,19 +115,26 @@ int main(int argc, char *argv[])
                 QString("main() %1 pid=%2").arg(argv[0]).arg(getpid()).toLatin1(),
                 QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK | MB_ICONINFORMATION | MB_TASKMODAL);
 #endif
-    KMail::AboutData about;
+    KMailApplication app(argc, &argv);
+    const QStringList args = app.arguments();
 
-    KCmdLineArgs::setCwd(QDir::currentPath().toLocal8Bit());
-    KCmdLineArgs::init(argc, argv, &about);
-    KCmdLineArgs::addCmdLineOptions(kmail_options());   // Add kmail options
-    if (!KMailApplication::start()) {
+    KMail::AboutData about;
+    KMail::AboutData::setApplicationData(&about);
+
+    QCommandLineParser parser;
+    about.setupCommandLine(&parser);
+    kmail_options(&parser);
+
+    parser.process(args);
+    about.processCommandLine(&parser);
+
+    if (!KMailApplication::start(args)) {
+        qCDebug(KMAIL_LOG) << "Another instance of KMail already running";
         return 0;
     }
 
     // Migrate to xdg path
     KMail::migrateConfig();
-
-    KMailApplication app;
 
     // Qt doesn't treat the system tray as a window, and therefore Qt would quit
     // the event loop when an error message is clicked away while KMail is in the
