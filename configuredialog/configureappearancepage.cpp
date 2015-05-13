@@ -73,6 +73,7 @@ using KMime::DateFormatter;
 #include <QSpinBox>
 #include <QLabel>
 #include <QFontDatabase>
+#include <widgets/gravatarconfigwidget.h>
 using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
@@ -913,23 +914,29 @@ AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
             this, SLOT(slotEmitChanged()));
     topLayout->addWidget(mViewerSettings);
 
-    topLayout->addStretch(100);   // spacer
+    mGravatarConfigWidget = new MessageViewer::GravatarConfigWidget;
+    connect(mGravatarConfigWidget, SIGNAL(configChanged(bool)), this, SLOT(slotEmitChanged()));
+    topLayout->addWidget( mGravatarConfigWidget );
+    topLayout->addStretch( 100 ); // spacer
 }
 
 void AppearancePage::ReaderTab::doResetToDefaultsOther()
 {
+    mGravatarConfigWidget->doResetToDefaultsOther();
 }
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
     loadWidget(mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->readConfig();
+    mGravatarConfigWidget->doLoadFromGlobalSettings();
 }
 
 void AppearancePage::ReaderTab::save()
 {
     saveCheckBox(mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->writeConfig();
+    mGravatarConfigWidget->save();
 }
 
 QString AppearancePage::SystemTrayTab::helpAnchor() const

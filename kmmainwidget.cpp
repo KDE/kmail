@@ -2125,6 +2125,15 @@ void KMMainWidget::slotToFilter()
     openFilterDialog("To",  msg->to()->asUnicodeString());
 }
 
+void KMMainWidget::slotCcFilter()
+{
+    KMime::Message::Ptr msg = mMessagePane->currentMessage();
+    if (!msg) {
+        return;
+    }
+    openFilterDialog("Cc",  msg->cc()->asUnicodeString());
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUndo()
 {
@@ -3121,6 +3130,12 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(i18n("Filter on &To..."), this);
         actionCollection()->addAction(QLatin1String("to_filter"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotToFilter);
+        mFilterMenu->addAction(action);
+    }
+    {
+        QAction *action = new QAction(i18n("Filter on &Cc..."), this);
+        actionCollection()->addAction(QLatin1String("cc_filter"), action);
+        connect(action, &QAction::triggered, this, &KMMainWidget::slotCcFilter);
         mFilterMenu->addAction(action);
     }
     mFilterMenu->addAction(mMsgActions->listFilterAction());

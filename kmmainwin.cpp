@@ -34,6 +34,7 @@
 #include <KConfigGui>
 #include <QMenuBar>
 #include <KToggleAction>
+#include <KConfigGui>
 #include <KLocalizedString>
 #include <kedittoolbar.h>
 #include <kconfig.h>
@@ -207,7 +208,7 @@ void KMMainWin::saveProperties(KConfigGroup &config)
 
 bool KMMainWin::queryClose()
 {
-    if (kmkernel->shuttingDown() || qApp->isSavingSession() || mReallyClose) {
+    if (kmkernel->shuttingDown() || KConfigGui::sessionConfig() || mReallyClose) {
         return true;
     }
     return kmkernel->canQueryClose();
