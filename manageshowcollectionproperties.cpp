@@ -90,12 +90,7 @@ void ManageShowCollectionProperties::showCollectionProperties( const QString &pa
         dlg->raise();
         return;
     }
-    if ( Solid::Networking::status() == Solid::Networking::Unconnected ) {
-        KMessageBox::information(
-                    mMainWidget,
-                    i18n( "Network is unconnected. Folder information cannot be updated." ) );
-        showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
-    } else {
+    if ( Solid::Networking::status() == Solid::Networking::Connected || Solid::Networking::status() == Solid::Networking::Unknown) {
         const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance( mMainWidget->currentFolder()->collection().resource() );
         bool isOnline = agentInstance.isOnline();
         if (!isOnline) {
@@ -118,6 +113,11 @@ void ManageShowCollectionProperties::showCollectionProperties( const QString &pa
                      KPIM::ProgressManager::instance(), SLOT(slotStandardCancelHandler(KPIM::ProgressItem*)) );
             sync->start();
         }
+    } else {
+        KMessageBox::information(
+                    mMainWidget,
+                    i18n( "Network is unconnected. Folder information cannot be updated." ) );
+        showCollectionPropertiesContinued( pageToShow, QPointer<KPIM::ProgressItem>() );
     }
 }
 
