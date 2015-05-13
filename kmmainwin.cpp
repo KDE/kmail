@@ -29,10 +29,11 @@
 #include <QTimer>
 #include <QAction>
 #include <QStatusBar>
+#include <QApplication>
 
+#include <KConfigGui>
 #include <QMenuBar>
 #include <KToggleAction>
-#include <kapplication.h>
 #include <KLocalizedString>
 #include <kedittoolbar.h>
 #include <kconfig.h>
@@ -190,7 +191,7 @@ bool KMMainWin::restoreDockedState(int n)
     // Default restore behavior is to show the window once it is restored.
     // Override this if the main window was hidden in the system tray
     // when the session was saved.
-    KConfigGroup config(kapp->sessionConfig(), QString::number(n));
+    KConfigGroup config(KConfigGui::sessionConfig(), QString::number(n));
     bool show = !config.readEntry("docked", false);
 
     return KMainWindow::restore(n, show);
@@ -206,7 +207,7 @@ void KMMainWin::saveProperties(KConfigGroup &config)
 
 bool KMMainWin::queryClose()
 {
-    if (kmkernel->shuttingDown() || kapp->sessionSaving() || mReallyClose) {
+    if (kmkernel->shuttingDown() || qApp->isSavingSession() || mReallyClose) {
         return true;
     }
     return kmkernel->canQueryClose();

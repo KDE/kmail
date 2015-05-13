@@ -141,7 +141,6 @@
 // KDELIBS includes
 #include <kactioncollection.h>
 #include <kactionmenu.h>
-#include <kapplication.h>
 #include <kcharsets.h>
 #include "kmail_debug.h"
 #include <kdescendantsproxymodel.h>
@@ -172,6 +171,7 @@
 #include <QSplitter>
 #include <QMimeData>
 #include <QTextDocumentWriter>
+#include <QApplication>
 
 // System includes
 #include <stdlib.h>
@@ -1840,7 +1840,7 @@ bool KMComposeWin::queryClose()
     if (!mComposerBase->editor()->checkExternalEditorFinished()) {
         return false;
     }
-    if (kmkernel->shuttingDown() || kapp->sessionSaving()) {
+    if (kmkernel->shuttingDown() || qApp->isSavingSession()) {
         return true;
     }
 

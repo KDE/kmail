@@ -220,9 +220,9 @@ KontactInterface::Summary *KMailPlugin::createSummaryWidget(QWidget *parent)
 ////
 
 #include "../kmail_options.h"
-void KMailUniqueAppHandler::loadCommandLineOptions()
+void KMailUniqueAppHandler::loadCommandLineOptions(QCommandLineParser *parser)
 {
-    KCmdLineArgs::addCmdLineOptions(kmail_options());
+    kmail_options(parser);
 }
 
 int KMailUniqueAppHandler::activate(const QStringList &args)

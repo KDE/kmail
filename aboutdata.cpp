@@ -374,12 +374,14 @@ AboutData::AboutData()
     using KMail::credits;
     const unsigned int numberAuthors(sizeof authors / sizeof * authors);
     for (unsigned int i = 0 ; i < numberAuthors; ++i) {
-        addAuthor(i18n(authors[i].name), i18n(authors[i].desc), authors[i].email, authors[i].web);
+        addAuthor(i18n(authors[i].name), authors[i].desc ? i18n(authors[i].desc) : QString(),
+                  QLatin1String(authors[i].email), QLatin1String(authors[i].web));
     }
 
     const unsigned int numberCredits(sizeof credits / sizeof * credits);
     for (unsigned int i = 0 ; i < numberCredits; ++i) {
-        addCredit(i18n(credits[i].name), i18n(credits[i].desc), credits[i].email, credits[i].web);
+        addCredit(i18n(credits[i].name), credits[i].desc ? i18n(credits[i].desc) : QString(),
+                  QLatin1String(credits[i].email), QLatin1String(credits[i].web));
     }
 }
 

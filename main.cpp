@@ -39,14 +39,15 @@
 
 #include <QDir>
 #include <QApplication>
+#include <QSessionManager>
 
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KontactInterface::PimUniqueApplication
 {
 public:
-    KMailApplication(int &argc, char **argv[])
-        : KontactInterface::PimUniqueApplication(argc, argv)
+    KMailApplication(int &argc, char **argv[], KAboutData &about)
+        : KontactInterface::PimUniqueApplication(argc, argv, about)
         , mDelayedInstanceCreation(false)
         , mEventLoopReached(false)
     { }
@@ -54,7 +55,7 @@ public:
     int activate(const QStringList &args) Q_DECL_OVERRIDE;
     void commitData(QSessionManager &sm);
     void setEventLoopReached();
-    void delayedInstanceCreation();
+    void delayedInstanceCreation(const QStringList &args);
 protected:
     bool mDelayedInstanceCreation;
     bool mEventLoopReached;
@@ -65,7 +66,8 @@ void KMailApplication::commitData(QSessionManager &sm)
 {
     kmkernel->dumpDeadLetters();
     kmkernel->setShuttingDown(true);   // Prevent further dumpDeadLetters calls
-    KApplication::commitData(sm);
+#warning KF5 PORTME
+    //KApplication::commitData(sm)
 }
 
 void KMailApplication::setEventLoopReached()
@@ -97,10 +99,10 @@ int KMailApplication::activate(const QStringList &args)
     return 0;
 }
 
-void KMailApplication::delayedInstanceCreation()
+void KMailApplication::delayedInstanceCreation(const QStringList &args)
 {
     if (mDelayedInstanceCreation) {
-        activate(QStringList());
+        activate(args);
     }
 }
 
@@ -115,18 +117,15 @@ int main(int argc, char *argv[])
                 QString("main() %1 pid=%2").arg(argv[0]).arg(getpid()).toLatin1(),
                 QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK | MB_ICONINFORMATION | MB_TASKMODAL);
 #endif
-    KMailApplication app(argc, &argv);
-    const QStringList args = app.arguments();
-
     KMail::AboutData about;
-    KMail::AboutData::setApplicationData(&about);
 
-    QCommandLineParser parser;
-    about.setupCommandLine(&parser);
-    kmail_options(&parser);
+    KMailApplication app(argc, &argv, about);
+    QCommandLineParser *cmdArgs = app.cmdArgs();
+    kmail_options(cmdArgs);
 
-    parser.process(args);
-    about.processCommandLine(&parser);
+    const QStringList args = QApplication::arguments();
+    cmdArgs->process(args);
+    about.processCommandLine(cmdArgs);
 
     if (!KMailApplication::start(args)) {
         qCDebug(KMAIL_LOG) << "Another instance of KMail already running";
@@ -160,7 +159,7 @@ int main(int argc, char *argv[])
 
     //If the instance hasn't been created yet, do that now
     app.setEventLoopReached();
-    app.delayedInstanceCreation();
+    app.delayedInstanceCreation(args);
 
     // Go!
     int ret = qApp->exec();
