@@ -55,10 +55,10 @@ public:
     QString helpAnchor() const;
 
     void save();
-protected slots:
+private slots:
     void slotConfigureRecentAddresses();
     void slotConfigureCompletionOrder();
-
+    void slotConfigureEmailBlacklist();
 private:
     void doLoadFromGlobalSettings();
     void doResetToDefaultsOther();
