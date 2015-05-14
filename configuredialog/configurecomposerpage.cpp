@@ -493,9 +493,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
     groupGridLayout->addWidget( recentAddressesBtn, row, 1, 1, 2 );
     ++row;
 
-    // Spacing
-    groupGridLayout->setRowMinimumHeight( row, KDialog::spacingHint() );
-    ++row;
 
     // "Configure Completion Order" button
     QPushButton *completionOrderBtn = new QPushButton( i18n( "Configure Completion Order..." ), this );
@@ -516,6 +513,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent )
              this, SLOT(slotConfigureEmailBlacklist()) );
     groupGridLayout->addWidget( completionEmailBacklistBtn, row, 1, 1, 2 );
 
+    // Spacing
+    groupGridLayout->setRowMinimumHeight( row, KDialog::spacingHint() );
+    ++row;
 
     groupBox->setLayout( groupGridLayout );
     vb2->addWidget( groupBox );
