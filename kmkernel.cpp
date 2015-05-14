@@ -301,8 +301,8 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     kmail_options(&parser);
     parser.process(args);
 
-    if (parser.isSet(QLatin1String("subject"))) {
-        subj = parser.value(QLatin1String("subject"));
+    if (parser.isSet(QStringLiteral("subject"))) {
+        subj = parser.value(QStringLiteral("subject"));
         // if kmail is called with 'kmail -session abc' then this doesn't mean
         // that the user wants to send a message with subject "ession" but
         // (most likely) that the user clicked on KMail's system tray applet
@@ -310,7 +310,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         // via D-Bus which apparently executes the application with the original
         // command line arguments and those include "-session ..." if
         // kmail/kontact was restored by session management
-        if (subj == QLatin1String(QLatin1String("ession"))) {
+        if (subj == QLatin1String("ession")) {
             subj.clear();
             calledWithSession = true;
         } else {
@@ -320,33 +320,33 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
 
 
 
-    if (parser.isSet(QLatin1String("cc"))) {
+    if (parser.isSet(QStringLiteral("cc"))) {
         mailto = true;
-        cc = parser.value(QLatin1String("cc"));
+        cc = parser.value(QStringLiteral("cc"));
     }
 
-    if (parser.isSet(QLatin1String("bcc"))) {
+    if (parser.isSet(QStringLiteral("bcc"))) {
         mailto = true;
-        bcc = parser.value(QLatin1String("bcc"));
+        bcc = parser.value(QStringLiteral("bcc"));
     }
 
-    if (parser.isSet(QLatin1String("replyTo"))) {
+    if (parser.isSet(QStringLiteral("replyTo"))) {
         mailto = true;
-        replyTo = parser.value(QLatin1String("replyTo"));
+        replyTo = parser.value(QStringLiteral("replyTo"));
     }
 
-    if (parser.isSet(QLatin1String("msg"))) {
+    if (parser.isSet(QStringLiteral("msg"))) {
         mailto = true;
-        const QString file = parser.value(QLatin1String("msg"));
+        const QString file = parser.value(QStringLiteral("msg"));
         messageFile = makeAbsoluteUrl(file);
     }
 
-    if (parser.isSet(QLatin1String("body"))) {
+    if (parser.isSet(QStringLiteral("body"))) {
         mailto = true;
-        body = parser.value(QLatin1String("body"));
+        body = parser.value(QStringLiteral("body"));
     }
 
-    const QStringList attachList = parser.values(QLatin1String("attach"));
+    const QStringList attachList = parser.values(QStringLiteral("attach"));
     if (!attachList.isEmpty()) {
         mailto = true;
         QStringList::ConstIterator end = attachList.constEnd();
@@ -360,20 +360,20 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         }
     }
 
-    customHeaders = parser.values(QLatin1String("header"));
+    customHeaders = parser.values(QStringLiteral("header"));
 
-    if (parser.isSet(QLatin1String("composer"))) {
+    if (parser.isSet(QStringLiteral("composer"))) {
         mailto = true;
     }
 
-    if (parser.isSet(QLatin1String("check"))) {
+    if (parser.isSet(QStringLiteral("check"))) {
         checkMail = true;
     }
 
-    if (parser.isSet(QLatin1String("view"))) {
+    if (parser.isSet(QStringLiteral("view"))) {
         viewOnly = true;
         const QString filename =
-            parser.value(QLatin1String("view"));
+            parser.value(QStringLiteral("view"));
         messageFile = QUrl::fromLocalFile(filename);
         if (!messageFile.isValid()) {
             messageFile = QUrl();
@@ -385,24 +385,24 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         // only read additional command line arguments if kmail/kontact is
         // not called with "-session foo"
         for (const QString &arg : parser.positionalArguments()) {
-            if (arg.startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
+            if (arg.startsWith(QStringLiteral("mailto:"), Qt::CaseInsensitive)) {
                 QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(QUrl::fromUserInput(arg));
-                if (!values.value(QLatin1String("to")).isEmpty()) {
-                    to += values.value(QLatin1String("to")) + QLatin1String(", ");
+                if (!values.value(QStringLiteral("to")).isEmpty()) {
+                    to += values.value(QStringLiteral("to")) + QStringLiteral(", ");
                 }
-                if (!values.value(QLatin1String("cc")).isEmpty()) {
-                    cc += values.value(QLatin1String("cc")) + QLatin1String(", ");
+                if (!values.value(QStringLiteral("cc")).isEmpty()) {
+                    cc += values.value(QStringLiteral("cc")) + QStringLiteral(", ");
                 }
-                if (!values.value(QLatin1String("subject")).isEmpty()) {
-                    subj = values.value(QLatin1String("subject"));
+                if (!values.value(QStringLiteral("subject")).isEmpty()) {
+                    subj = values.value(QStringLiteral("subject"));
                 }
-                if (!values.value(QLatin1String("body")).isEmpty()) {
-                    body = values.value(QLatin1String("body"));
+                if (!values.value(QStringLiteral("body")).isEmpty()) {
+                    body = values.value(QStringLiteral("body"));
                 }
-                if (!values.value(QLatin1String("in-reply-to")).isEmpty()) {
-                    inReplyTo = values.value(QLatin1String("in-reply-to"));
+                if (!values.value(QStringLiteral("in-reply-to")).isEmpty()) {
+                    inReplyTo = values.value(QStringLiteral("in-reply-to"));
                 }
-                const QString attach = values.value(QLatin1String("attachment"));
+                const QString attach = values.value(QStringLiteral("attachment"));
                 if (!attach.isEmpty()) {
                     attachURLs << makeAbsoluteUrl(attach);
                 }
@@ -411,7 +411,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                 if (url.isValid() && !url.scheme().isEmpty()) {
                     attachURLs += url;
                 } else {
-                    to += arg + QLatin1String(", ");
+                    to += arg + QStringLiteral(", ");
                 }
             }
             mailto = true;

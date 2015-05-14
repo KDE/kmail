@@ -10,49 +10,53 @@ static void kmail_options(QCommandLineParser *parser)
     QList<QCommandLineOption> options;
 
     options << QCommandLineOption(
-          QStringList() << QLatin1String("s") << QLatin1String("subject"),
-          i18n("Set subject of message"), QLatin1String("subject"))
+          QStringList() << QStringLiteral("s") << QStringLiteral("subject"),
+          i18n("Set subject of message"),
+          QStringLiteral("subject"))
     << QCommandLineOption(
-          QStringList() << QLatin1String("c") << QLatin1String("cc"),
-          i18n("Send CC: to 'address'"), QLatin1String("address"))
+          QStringList() << QStringLiteral("c") << QStringLiteral("cc"),
+          i18n("Send CC: to 'address'"),
+          QStringLiteral("address"))
     << QCommandLineOption(
-          QStringList() << QLatin1String("b") << QLatin1String("bcc"),
-          i18n("Send BCC: to 'address'"), QLatin1String("address"))
+          QStringList() << QStringLiteral("b") << QStringLiteral("bcc"),
+          i18n("Send BCC: to 'address'"),
+          QStringLiteral("address"))
     << QCommandLineOption(
-          QStringList() << QLatin1String("h") << QLatin1String("replyTo"),
-          i18n("Set replyTo to 'address'"), QLatin1String("address"))
+          QStringList() << QStringLiteral("h") << QStringLiteral("replyTo"),
+          i18n("Set replyTo to 'address'"),
+          QStringLiteral("address"))
     << QCommandLineOption(
-          QLatin1String("header"),
+          QStringLiteral("header"),
           i18n("Add 'header' to message. This can be repeated"),
-          QLatin1String("header_name:header_value"))
+          QStringLiteral("header_name:header_value"))
     << QCommandLineOption(
-          QLatin1String("msg"),
+          QStringLiteral("msg"),
           i18n("Read message body from 'file'"),
-          QLatin1String("file"))
+          QStringLiteral("file"))
     << QCommandLineOption(
-          QLatin1String("body"),
+          QStringLiteral("body"),
           i18n("Set body of message"),
-          QLatin1String("text"))
+          QStringLiteral("text"))
     << QCommandLineOption(
-          QLatin1String("attach"),
+          QStringLiteral("attach"),
           i18n("Add an attachment to the mail. This can be repeated"),
-          QLatin1String("url"))
+          QStringLiteral("url"))
     << QCommandLineOption(
-          QLatin1String("check"),
+          QStringLiteral("check"),
           i18n("Only check for new mail"))
     << QCommandLineOption(
-          QLatin1String("composer"),
+          QStringLiteral("composer"),
           i18n("Only open composer window"))
     << QCommandLineOption(
-          QLatin1String("view"),
+          QStringLiteral("view"),
           i18n("View the given message file"),
-          QLatin1String("url"));
+          QStringLiteral("url"));
 
     parser->addOptions(options);
     parser->addPositionalArgument(
-          QLatin1String("address"),
+          QStringLiteral("address"),
           i18n("Send message to 'address' or attach the file the 'URL' points to"),
-          QLatin1String("address|URL"));
+          QStringLiteral("address|URL"));
 }
 
 #endif

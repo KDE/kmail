@@ -360,14 +360,14 @@ static const about_data credits[] = {
 };
 
 AboutData::AboutData()
-    : KAboutData(QLatin1String("kmail2"),
+    : KAboutData(QStringLiteral("kmail2"),
                  i18n("KMail"),
-                 QLatin1String(KDEPIM_VERSION),
+                 QStringLiteral(KDEPIM_VERSION),
                  i18n("KDE Email Client"),
                  KAboutLicense::GPL,
                  i18n("Copyright © 1997–2015, KMail authors"),
                  QString(),
-                 QLatin1String("http://userbase.kde.org/KMail"))
+                 QStringLiteral("http://userbase.kde.org/KMail"))
 {
     setProgramIconName(QStringLiteral("kmail"));
     using KMail::authors;
