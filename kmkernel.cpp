@@ -939,7 +939,7 @@ int KMKernel::viewMessage(const QString &messageFile)
 void KMKernel::raise()
 {
     QDBusInterface iface(QLatin1String("org.kde.kmail"), QLatin1String("/MainApplication"),
-                         QLatin1String("org.kde.KUniqueApplication"),
+                         QLatin1String("org.kde.PIMUniqueApplication"),
                          QDBusConnection::sessionBus());
     QDBusReply<int> reply;
     if (!iface.isValid() || !(reply = iface.call(QLatin1String("newInstance"))).isValid()) {
