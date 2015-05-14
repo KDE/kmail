@@ -47,7 +47,7 @@ set( kmail_kactionmenutransporttest_source kactionmenutransporttest.cpp ../widge
 add_executable( kactionmenutransporttest ${kmail_kactionmenutransporttest_source})
 add_test(kactionmenutransporttest kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
-target_link_libraries( kactionmenutransporttest Qt5::Test  KF5::MailTransport)
+target_link_libraries( kactionmenutransporttest Qt5::Test  KF5::MailTransport KF5::WidgetsAddons KF5::I18n KF5::ConfigGui)
 
 set( kmail_configureagentlistviewtest_source configureagentlistviewtest.cpp ../configuredialog/configureagents/configureagentitem.cpp
                                             ../configuredialog/configureagents/configureagentlistmodel.cpp ../configuredialog/configureagents/configureagentlistview.cpp

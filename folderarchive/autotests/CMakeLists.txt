@@ -7,7 +7,7 @@ macro( folderarchive_kmail _source )
   add_test( ${_name} ${_name} )
   ecm_mark_as_test(folderararchive-${_name})
 
-  target_link_libraries( ${_name} Qt5::Test Qt5::Core  KF5::AkonadiCore)
+  target_link_libraries( ${_name} Qt5::Test Qt5::Core  KF5::AkonadiCore KF5::ConfigCore)
 endmacro()
 
 folderarchive_kmail(folderarchiveaccountinfotest.cpp)

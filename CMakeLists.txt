@@ -279,6 +279,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     KF5::Mbox
     KF5::Mime
     KF5::AkonadiCore
+    KF5::AkonadiAgentBase
     KF5::AkonadiMime
     messagecore
     messagecomposer
@@ -303,6 +304,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     KF5::Contacts
     KF5::PimTextEdit
     messageviewer
+    KF5::DBusAddons
     
     sendlater
     followupreminder
