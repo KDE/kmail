@@ -276,10 +276,9 @@ if (KDEPIM_BUILD_DESKTOP)
 generate_export_header(kmailprivate BASE_NAME kmail)
 
   target_link_libraries(kmailprivate
-    KF5::Mbox
     KF5::Mime
     KF5::AkonadiCore
-    KF5::AkonadiAgentBase
+    KF5::AkonadiPrivate
     KF5::AkonadiMime
     messagecore
     messagecomposer
@@ -292,13 +291,9 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     KF5::KDELibs4Support
     KF5::NotifyConfig
     KF5::MailTransport
-    KF5::IMAP
     KF5::KCMUtils
     kleo
-    KF5::QGpgme
-    ksieve
     ksieveui
-    kpgp
     kdepim
     KF5::KIOCore
     KF5::Contacts
