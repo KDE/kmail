@@ -63,7 +63,7 @@ public:
 protected Q_SLOTS:
     void slotConfigureRecentAddresses();
     void slotConfigureCompletionOrder();
-
+    void slotConfigureEmailBlacklist();
 private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;

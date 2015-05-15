@@ -59,6 +59,8 @@ using KPIM::RecentAddresses;
 #include <QCheckBox>
 #include <KConfigGroup>
 
+#include <addressline/blacklistbaloocompletion/blacklistbalooemailcompletiondialog.h>
+
 QString ComposerPage::helpAnchor() const
 {
     return QStringLiteral("configure-composer");
@@ -500,9 +502,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->addWidget(recentAddressesBtn, row, 1, 1, 2);
     ++row;
 
-    // Spacing
-    ++row;
-
     // "Configure Completion Order" button
     QPushButton *completionOrderBtn = new QPushButton(i18n("Configure Completion Order..."), this);
     helpText = i18n("Configure the order in which address books\n"
@@ -510,9 +509,20 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     completionOrderBtn->setToolTip(helpText);
     completionOrderBtn->setWhatsThis(helpText);
 
-    connect(completionOrderBtn, SIGNAL(clicked()),
-            this, SLOT(slotConfigureCompletionOrder()));
-    groupGridLayout->addWidget(completionOrderBtn, row, 1, 1, 2);
+    connect( completionOrderBtn, SIGNAL(clicked()),
+             this, SLOT(slotConfigureCompletionOrder()) );
+    groupGridLayout->addWidget( completionOrderBtn, row, 1, 1, 2 );
+    ++row;
+    // "Configure Completion Order" button
+    // KF5 add i18n
+    QPushButton *completionEmailBacklistBtn = new QPushButton( QLatin1String( "Configure Email Blacklist..." ), this );
+
+    connect( completionEmailBacklistBtn, SIGNAL(clicked()),
+             this, SLOT(slotConfigureEmailBlacklist()) );
+    groupGridLayout->addWidget( completionEmailBacklistBtn, row, 1, 1, 2 );
+
+    // Spacing
+    ++row;
 
     groupBox->setLayout(groupGridLayout);
     vb2->addWidget(groupBox);
@@ -634,6 +644,17 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
             dlg->storeAddresses(MessageComposer::MessageComposerSettings::self()->config());
         }
     }
+}
+
+void ComposerPage::GeneralTab::slotConfigureEmailBlacklist()
+{
+    QPointer<KPIM::BlackListBalooEmailCompletionDialog> dlg = new KPIM::BlackListBalooEmailCompletionDialog(this);
+    KSharedConfig::Ptr config = KSharedConfig::openConfig( QLatin1String("kpimbalooblacklist") );
+    KConfigGroup group( config, "AddressLineEdit" );
+    const QStringList balooBlackList = group.readEntry( "BalooBackList", QStringList() );
+    dlg->setEmailBlackList(balooBlackList);
+    dlg->exec();
+    delete dlg;
 }
 
 void ComposerPage::GeneralTab::slotConfigureCompletionOrder()
