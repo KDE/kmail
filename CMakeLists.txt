@@ -300,7 +300,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     KF5::PimTextEdit
     messageviewer
     KF5::DBusAddons
-    
+    grantleetheme 
     sendlater
     followupreminder
   )
