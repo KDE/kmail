@@ -287,7 +287,6 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     mailcommon
     templateparser
     KF5::IdentityManagement
-    KF5::KontactInterface
     KF5::KDELibs4Support
     KF5::NotifyConfig
     KF5::MailTransport
@@ -300,9 +299,9 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     KF5::PimTextEdit
     messageviewer
     KF5::DBusAddons
-    grantleetheme 
     sendlater
     followupreminder
+    grantleetheme
   )
 
   set_target_properties(kmailprivate
