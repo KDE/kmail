@@ -916,8 +916,8 @@ AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
 
     mGravatarConfigWidget = new MessageViewer::GravatarConfigWidget;
     connect(mGravatarConfigWidget, SIGNAL(configChanged(bool)), this, SLOT(slotEmitChanged()));
-    topLayout->addWidget( mGravatarConfigWidget );
-    topLayout->addStretch( 100 ); // spacer
+    topLayout->addWidget(mGravatarConfigWidget);
+    topLayout->addStretch(100);   // spacer
 }
 
 void AppearancePage::ReaderTab::doResetToDefaultsOther()

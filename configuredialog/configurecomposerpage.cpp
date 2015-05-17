@@ -509,17 +509,17 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     completionOrderBtn->setToolTip(helpText);
     completionOrderBtn->setWhatsThis(helpText);
 
-    connect( completionOrderBtn, SIGNAL(clicked()),
-             this, SLOT(slotConfigureCompletionOrder()) );
-    groupGridLayout->addWidget( completionOrderBtn, row, 1, 1, 2 );
+    connect(completionOrderBtn, SIGNAL(clicked()),
+            this, SLOT(slotConfigureCompletionOrder()));
+    groupGridLayout->addWidget(completionOrderBtn, row, 1, 1, 2);
     ++row;
     // "Configure Completion Order" button
     // KF5 add i18n
-    QPushButton *completionEmailBacklistBtn = new QPushButton( QLatin1String( "Configure Email Blacklist..." ), this );
+    QPushButton *completionEmailBacklistBtn = new QPushButton(QLatin1String("Configure Email Blacklist..."), this);
 
-    connect( completionEmailBacklistBtn, SIGNAL(clicked()),
-             this, SLOT(slotConfigureEmailBlacklist()) );
-    groupGridLayout->addWidget( completionEmailBacklistBtn, row, 1, 1, 2 );
+    connect(completionEmailBacklistBtn, SIGNAL(clicked()),
+            this, SLOT(slotConfigureEmailBlacklist()));
+    groupGridLayout->addWidget(completionEmailBacklistBtn, row, 1, 1, 2);
 
     // Spacing
     ++row;
@@ -649,9 +649,9 @@ void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
 void ComposerPage::GeneralTab::slotConfigureEmailBlacklist()
 {
     QPointer<KPIM::BlackListBalooEmailCompletionDialog> dlg = new KPIM::BlackListBalooEmailCompletionDialog(this);
-    KSharedConfig::Ptr config = KSharedConfig::openConfig( QLatin1String("kpimbalooblacklist") );
-    KConfigGroup group( config, "AddressLineEdit" );
-    const QStringList balooBlackList = group.readEntry( "BalooBackList", QStringList() );
+    KSharedConfig::Ptr config = KSharedConfig::openConfig(QLatin1String("kpimbalooblacklist"));
+    KConfigGroup group(config, "AddressLineEdit");
+    const QStringList balooBlackList = group.readEntry("BalooBackList", QStringList());
     dlg->setEmailBlackList(balooBlackList);
     dlg->exec();
     delete dlg;
