@@ -63,7 +63,10 @@ bool PotentialPhishingEmailJob::start()
                     tname = tname.mid(1, tname.length() - 2);
                 }
                 if (temail.toLower() != tname.toLower()) {
-                    mPotentialPhisingEmails.append(addr);
+                    QString str = QString::fromLatin1("(%1)").arg(temail.toLower());
+                    if (!tname.toLower().contains(str)) {
+                        mPotentialPhisingEmails.append(addr);
+                    }
                 }
             }
         }
