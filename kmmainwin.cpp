@@ -208,7 +208,7 @@ void KMMainWin::saveProperties(KConfigGroup &config)
 
 bool KMMainWin::queryClose()
 {
-    if (kmkernel->shuttingDown() || KConfigGui::sessionConfig() || mReallyClose) {
+    if (kmkernel->shuttingDown() || qApp->isSavingSession() || mReallyClose) {
         return true;
     }
     return kmkernel->canQueryClose();
