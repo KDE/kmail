@@ -171,7 +171,7 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE bool canQueryClose();
 
-    Q_SCRIPTABLE bool handleCommandLine(bool noArgsOpensReader);
+    Q_SCRIPTABLE bool handleCommandLine(bool noArgsOpensReader, const QStringList &args);
 
     /**
     * Opens a composer window and prefills it with different

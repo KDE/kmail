@@ -33,12 +33,12 @@
 #define __KMAIL_ABOUTDATA_H__
 
 #include "kmail_export.h"
-#include <k4aboutdata.h>
+#include <KAboutData>
 
 namespace KMail
 {
 
-class KMAIL_EXPORT AboutData : public K4AboutData
+class KMAIL_EXPORT AboutData : public KAboutData
 {
 public:
     AboutData();

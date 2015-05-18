@@ -70,7 +70,6 @@ using KMail::MailServiceImpl;
 
 #include <kconfig.h>
 #include <kpassivepopup.h>
-#include <kapplication.h>
 #include <ksystemtrayicon.h>
 #include <kconfiggroup.h>
 #include "kmail_debug.h"
@@ -118,6 +117,7 @@ using KMail::MailServiceImpl;
 #include "mailcommon/kernel/mailkernel.h"
 
 #include "searchdialog/searchdescriptionattribute.h"
+#include "kmail_options.h"
 
 using namespace MailCommon;
 
@@ -285,7 +285,7 @@ static QUrl makeAbsoluteUrl(const QString &str)
     }
 }
 
-bool KMKernel::handleCommandLine(bool noArgsOpensReader)
+bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args)
 {
     QString to, cc, bcc, subj, body, inReplyTo, replyTo;
     QStringList customHeaders;
@@ -297,9 +297,12 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
     bool calledWithSession = false; // for ignoring '-session foo'
 
     // process args:
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-    if (args->isSet("subject")) {
-        subj = args->getOption("subject");
+    QCommandLineParser parser;
+    kmail_options(&parser);
+    parser.process(args);
+
+    if (parser.isSet(QStringLiteral("subject"))) {
+        subj = parser.value(QStringLiteral("subject"));
         // if kmail is called with 'kmail -session abc' then this doesn't mean
         // that the user wants to send a message with subject "ession" but
         // (most likely) that the user clicked on KMail's system tray applet
@@ -315,33 +318,35 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
         }
     }
 
-    if (args->isSet("cc")) {
+
+
+    if (parser.isSet(QStringLiteral("cc"))) {
         mailto = true;
-        cc = args->getOption("cc");
+        cc = parser.value(QStringLiteral("cc"));
     }
 
-    if (args->isSet("bcc")) {
+    if (parser.isSet(QStringLiteral("bcc"))) {
         mailto = true;
-        bcc = args->getOption("bcc");
+        bcc = parser.value(QStringLiteral("bcc"));
     }
 
-    if (args->isSet("replyTo")) {
+    if (parser.isSet(QStringLiteral("replyTo"))) {
         mailto = true;
-        replyTo = args->getOption("replyTo");
+        replyTo = parser.value(QStringLiteral("replyTo"));
     }
 
-    if (args->isSet("msg")) {
+    if (parser.isSet(QStringLiteral("msg"))) {
         mailto = true;
-        const QString file = args->getOption("msg");
+        const QString file = parser.value(QStringLiteral("msg"));
         messageFile = makeAbsoluteUrl(file);
     }
 
-    if (args->isSet("body")) {
+    if (parser.isSet(QStringLiteral("body"))) {
         mailto = true;
-        body = args->getOption("body");
+        body = parser.value(QStringLiteral("body"));
     }
 
-    const QStringList attachList = args->getOptionList("attach");
+    const QStringList attachList = parser.values(QStringLiteral("attach"));
     if (!attachList.isEmpty()) {
         mailto = true;
         QStringList::ConstIterator end = attachList.constEnd();
@@ -355,20 +360,20 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
         }
     }
 
-    customHeaders = args->getOptionList("header");
+    customHeaders = parser.values(QStringLiteral("header"));
 
-    if (args->isSet("composer")) {
+    if (parser.isSet(QStringLiteral("composer"))) {
         mailto = true;
     }
 
-    if (args->isSet("check")) {
+    if (parser.isSet(QStringLiteral("check"))) {
         checkMail = true;
     }
 
-    if (args->isSet("view")) {
+    if (parser.isSet(QStringLiteral("view"))) {
         viewOnly = true;
         const QString filename =
-            args->getOption("view");
+            parser.value(QStringLiteral("view"));
         messageFile = QUrl::fromLocalFile(filename);
         if (!messageFile.isValid()) {
             messageFile = QUrl();
@@ -379,36 +384,34 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
     if (!calledWithSession) {
         // only read additional command line arguments if kmail/kontact is
         // not called with "-session foo"
-        const int nbArgs = args->count();
-        for (int i = 0; i < nbArgs; ++i) {
-            if (args->arg(i).startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
-                QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(args->url(i));
-                if (!values.value(QLatin1String("to")).isEmpty()) {
-                    to += values.value(QLatin1String("to")) + QLatin1String(", ");
+        for (const QString &arg : parser.positionalArguments()) {
+            if (arg.startsWith(QStringLiteral("mailto:"), Qt::CaseInsensitive)) {
+                QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(QUrl::fromUserInput(arg));
+                if (!values.value(QStringLiteral("to")).isEmpty()) {
+                    to += values.value(QStringLiteral("to")) + QStringLiteral(", ");
                 }
-                if (!values.value(QLatin1String("cc")).isEmpty()) {
-                    cc += values.value(QLatin1String("cc")) + QLatin1String(", ");
+                if (!values.value(QStringLiteral("cc")).isEmpty()) {
+                    cc += values.value(QStringLiteral("cc")) + QStringLiteral(", ");
                 }
-                if (!values.value(QLatin1String("subject")).isEmpty()) {
-                    subj = values.value(QLatin1String("subject"));
+                if (!values.value(QStringLiteral("subject")).isEmpty()) {
+                    subj = values.value(QStringLiteral("subject"));
                 }
-                if (!values.value(QLatin1String("body")).isEmpty()) {
-                    body = values.value(QLatin1String("body"));
+                if (!values.value(QStringLiteral("body")).isEmpty()) {
+                    body = values.value(QStringLiteral("body"));
                 }
-                if (!values.value(QLatin1String("in-reply-to")).isEmpty()) {
-                    inReplyTo = values.value(QLatin1String("in-reply-to"));
+                if (!values.value(QStringLiteral("in-reply-to")).isEmpty()) {
+                    inReplyTo = values.value(QStringLiteral("in-reply-to"));
                 }
-                const QString attach = values.value(QLatin1String("attachment"));
+                const QString attach = values.value(QStringLiteral("attachment"));
                 if (!attach.isEmpty()) {
                     attachURLs << makeAbsoluteUrl(attach);
                 }
             } else {
-                QString tmpArg = args->arg(i);
-                KUrl url(tmpArg);
+                KUrl url(arg);
                 if (url.isValid() && !url.scheme().isEmpty()) {
                     attachURLs += url;
                 } else {
-                    to += tmpArg + QLatin1String(", ");
+                    to += arg + QStringLiteral(", ");
                 }
             }
             mailto = true;
@@ -417,10 +420,6 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader)
             // cut off the superfluous trailing ", "
             to.truncate(to.length() - 2);
         }
-    }
-
-    if (!calledWithSession) {
-        args->clear();
     }
 
     if (!noArgsOpensReader && !mailto && !checkMail && !viewOnly) {
@@ -531,7 +530,7 @@ void KMKernel::openReader(bool onlyCheck)
         // Activate window - doing this instead of KWindowSystem::activateWindow(mWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_OS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(mWin, kapp->startupId());
+        KStartupInfo::setNewStartupId(mWin, KStartupInfo::startupId());
 #endif
     }
 }
@@ -640,7 +639,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
         // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_OS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, kapp->startupId());
+        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
 #endif
     }
     return 1;
@@ -672,7 +671,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
         // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, kapp->startupId());
+        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
 #endif
     } else {
 
@@ -708,7 +707,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-    KStartupInfo::setNewStartupId(cWin, kapp->startupId());
+    KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
 #endif
 
     return 1;
@@ -865,7 +864,7 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
         // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_OS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, kapp->startupId());
+        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
 #endif
     } else {
         // Always disable word wrap when we don't show the composer; otherwise,
@@ -940,7 +939,7 @@ int KMKernel::viewMessage(const QString &messageFile)
 void KMKernel::raise()
 {
     QDBusInterface iface(QLatin1String("org.kde.kmail"), QLatin1String("/MainApplication"),
-                         QLatin1String("org.kde.KUniqueApplication"),
+                         QLatin1String("org.kde.PIMUniqueApplication"),
                          QDBusConnection::sessionBus());
     QDBusReply<int> reply;
     if (!iface.isValid() || !(reply = iface.call(QLatin1String("newInstance"))).isValid()) {
@@ -1308,7 +1307,7 @@ bool KMKernel::doSessionManagement()
 {
 
     // Do session management
-    if (kapp->isSessionRestored()) {
+    if (qApp->isSessionRestored()) {
         int n = 1;
         while (KMMainWin::canBeRestored(n)) {
             //only restore main windows! (Matthias);

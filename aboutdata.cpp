@@ -360,22 +360,28 @@ static const about_data credits[] = {
 };
 
 AboutData::AboutData()
-    : K4AboutData("kmail2", "kmail", ki18n("KMail"), KDEPIM_VERSION,
-                  ki18n("KDE Email Client"), License_GPL,
-                  ki18n("Copyright © 1997–2015, KMail authors"), KLocalizedString(),
-                  "http://userbase.kde.org/KMail")
+    : KAboutData(QStringLiteral("kmail2"),
+                 i18n("KMail"),
+                 QStringLiteral(KDEPIM_VERSION),
+                 i18n("KDE Email Client"),
+                 KAboutLicense::GPL,
+                 i18n("Copyright © 1997–2015, KMail authors"),
+                 QString(),
+                 QStringLiteral("http://userbase.kde.org/KMail"))
 {
     setProgramIconName(QStringLiteral("kmail"));
     using KMail::authors;
     using KMail::credits;
     const unsigned int numberAuthors(sizeof authors / sizeof * authors);
     for (unsigned int i = 0 ; i < numberAuthors; ++i) {
-        addAuthor(ki18n(authors[i].name), ki18n(authors[i].desc), authors[i].email, authors[i].web);
+        addAuthor(i18n(authors[i].name), authors[i].desc ? i18n(authors[i].desc) : QString(),
+                  QLatin1String(authors[i].email), QLatin1String(authors[i].web));
     }
 
     const unsigned int numberCredits(sizeof credits / sizeof * credits);
     for (unsigned int i = 0 ; i < numberCredits; ++i) {
-        addCredit(ki18n(credits[i].name), ki18n(credits[i].desc), credits[i].email, credits[i].web);
+        addCredit(i18n(credits[i].name), credits[i].desc ? i18n(credits[i].desc) : QString(),
+                  QLatin1String(credits[i].email), QLatin1String(credits[i].web));
     }
 }
 

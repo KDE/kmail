@@ -220,22 +220,22 @@ KontactInterface::Summary *KMailPlugin::createSummaryWidget(QWidget *parent)
 ////
 
 #include "../kmail_options.h"
-void KMailUniqueAppHandler::loadCommandLineOptions()
+void KMailUniqueAppHandler::loadCommandLineOptions(QCommandLineParser *parser)
 {
-    KCmdLineArgs::addCmdLineOptions(kmail_options());
+    kmail_options(parser);
 }
 
-int KMailUniqueAppHandler::newInstance()
+int KMailUniqueAppHandler::activate(const QStringList &args)
 {
     // Ensure part is loaded
     (void)plugin()->part();
     org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
-    QDBusReply<bool> reply = kmail.handleCommandLine(false);
+    QDBusReply<bool> reply = kmail.handleCommandLine(false, args);
 
     if (reply.isValid()) {
         bool handled = reply;
         if (!handled) {   // no args -> simply bring kmail plugin to front
-            return KontactInterface::UniqueAppHandler::newInstance();
+            return KontactInterface::UniqueAppHandler::activate(args);
         }
     }
     return 0;

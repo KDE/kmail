@@ -29,7 +29,9 @@
 #include <QTimer>
 #include <QAction>
 #include <QStatusBar>
+#include <QApplication>
 
+#include <KConfigGui>
 #include <QMenuBar>
 #include <KToggleAction>
 #include <KConfigGui>
