@@ -58,6 +58,10 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
 
     QTest::newRow("notsamecase") <<  (QStringList() << QLatin1String("\"Foo@kde.org\" <foo@kde.org>")) << QStringList() << false;
     QTest::newRow("notsamecaseaddress") <<  (QStringList() << QLatin1String("\"Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << false;
+
+    QTest::newRow("emailinparenthese") <<  (QStringList() << QLatin1String("\"bla (Foo@kde.org)\" <FOO@kde.ORG>")) << QStringList() << false;
+    QTest::newRow("notemailinparenthese") <<  (QStringList() << QLatin1String("\"bla (bli@kde.org)\" <FOO@kde.ORG>")) << QStringList() << true;
+    QTest::newRow("erroremailinparenthese") <<  (QStringList() << QLatin1String("\"bla Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << true;
 }
 
 void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
