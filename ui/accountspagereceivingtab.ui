@@ -7,15 +7,17 @@
     <x>0</x>
     <y>0</y>
     <width>287</width>
-    <height>322</height>
+    <height>326</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <layout class="QVBoxLayout" name="vlay">
+     <property name="margin">
+      <number>6</number>
+     </property>
      <item>
-      <widget class="PimCommon::ManageAccountWidget" name="mAccountsReceiving">
-      </widget>
+      <widget class="PimCommon::ManageAccountWidget" name="mAccountsReceiving"/>
      </item>
      <item>
       <widget class="QPushButton" name="customizeAccountOrder">
