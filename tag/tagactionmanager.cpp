@@ -120,11 +120,11 @@ void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool add
     cleanName.replace(QLatin1Char('&'), QStringLiteral("&&"));
     KToggleAction *const tagAction = new KToggleAction(QIcon::fromTheme(tag->iconName),
             cleanName, this);
-    tagAction->setShortcut(QKeySequence(tag->shortcut));
     tagAction->setIconText(tag->name());
     tagAction->setChecked(tag->id() == mNewTagId);
 
     mActionCollection->addAction(tag->name(), tagAction);
+    mActionCollection->setDefaultShortcut(tagAction, QKeySequence(tag->shortcut));
     connect(tagAction, SIGNAL(triggered(bool)),
             mMessageTagToggleMapper, SLOT(map()));
 

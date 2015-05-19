@@ -325,8 +325,8 @@ void KMReaderMainWin::setupAccel()
     mTrashAction = new QAction(QIcon::fromTheme(QLatin1String("user-trash")), i18n("&Move to Trash"), this);
     mTrashAction->setIconText(i18nc("@action:intoolbar Move to Trash", "Trash"));
     KMail::Util::addQActionHelpText(mTrashAction, i18n("Move message to trashcan"));
-    mTrashAction->setShortcut(QKeySequence(Qt::Key_Delete));
     actionCollection()->addAction(QLatin1String("move_to_trash"), mTrashAction);
+    actionCollection()->setDefaultShortcut(mTrashAction, QKeySequence(Qt::Key_Delete));
     connect(mTrashAction, &QAction::triggered, this, &KMReaderMainWin::slotTrashMsg);
 
     QAction *closeAction = KStandardAction::close(this, SLOT(close()), actionCollection());

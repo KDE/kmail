@@ -3065,7 +3065,7 @@ void KMMainWidget::setupActions()
     }
     {
         QAction *action = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::CutItems);
-        action->setShortcut(QKeySequence(Qt::ALT + Qt::CTRL + Qt::Key_X));
+        actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::CTRL + Qt::Key_X));
     }
 
     {
