@@ -318,8 +318,6 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         }
     }
 
-
-
     if (parser.isSet(QStringLiteral("cc"))) {
         mailto = true;
         cc = parser.value(QStringLiteral("cc"));
