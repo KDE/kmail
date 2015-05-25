@@ -28,3 +28,20 @@ KMMigrateKMail4Config::~KMMigrateKMail4Config()
 
 }
 
+bool KMMigrateKMail4Config::start()
+{
+    //TODO
+    return false;
+}
+
+bool KMMigrateKMail4Config::checkIfNecessary()
+{
+    //TODO
+    return true;
+}
+
+void KMMigrateKMail4Config::insertMigrateInfo(const MigrateInfo &info)
+{
+    //TODO
+}
+

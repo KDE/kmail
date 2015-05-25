@@ -19,6 +19,19 @@
 #define KMMIGRATEKMAIL4CONFIG_H
 
 #include <QObject>
+#include <QVector>
+
+struct MigrateInfo
+{
+    MigrateInfo()
+        : folder(false)
+    {
+
+    }
+    QString type;
+    QString path;
+    bool folder;
+};
 
 class KMMigrateKMail4Config : public QObject
 {
@@ -27,6 +40,11 @@ public:
     explicit KMMigrateKMail4Config(QObject *parent = Q_NULLPTR);
     ~KMMigrateKMail4Config();
 
+    bool start();
+    bool checkIfNecessary();
+    void insertMigrateInfo(const MigrateInfo &info);
+private:
+    QVector<MigrateInfo> mMigrateInfoList;
 };
 
 #endif // KMMIGRATEKMAIL4CONFIG_H
