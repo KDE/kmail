@@ -16,6 +16,7 @@
 */
 
 #include "kmmigratekmail4configtest.h"
+#include "../kmmigratekmail4config.h"
 #include <qtest.h>
 
 KMMigrateKMail4ConfigTest::KMMigrateKMail4ConfigTest(QObject *parent)
@@ -27,6 +28,12 @@ KMMigrateKMail4ConfigTest::KMMigrateKMail4ConfigTest(QObject *parent)
 KMMigrateKMail4ConfigTest::~KMMigrateKMail4ConfigTest()
 {
 
+}
+
+void KMMigrateKMail4ConfigTest::shouldHaveDefaultValue()
+{
+    KMMigrateKMail4Config migrate;
+    QVERIFY(!migrate.start());
 }
 
 QTEST_MAIN(KMMigrateKMail4ConfigTest)

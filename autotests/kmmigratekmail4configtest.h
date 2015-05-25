@@ -26,6 +26,8 @@ class KMMigrateKMail4ConfigTest : public QObject
 public:
     explicit KMMigrateKMail4ConfigTest(QObject *parent = Q_NULLPTR);
     ~KMMigrateKMail4ConfigTest();
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
 
 };
 

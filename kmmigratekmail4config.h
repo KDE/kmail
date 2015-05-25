@@ -43,6 +43,10 @@ public:
     bool start();
     bool checkIfNecessary();
     void insertMigrateInfo(const MigrateInfo &info);
+
+Q_SIGNALS:
+    void migrateDone();
+
 private:
     QVector<MigrateInfo> mMigrateInfoList;
 };
