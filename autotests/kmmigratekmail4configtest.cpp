@@ -16,7 +16,7 @@
 */
 
 #include "kmmigratekmail4configtest.h"
-#include "../kmmigratekmail4config.h"
+#include "../migration/kmmigratekmail4config.h"
 #include <qtest.h>
 
 KMMigrateKMail4ConfigTest::KMMigrateKMail4ConfigTest(QObject *parent)
