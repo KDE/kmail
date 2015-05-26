@@ -514,8 +514,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->addWidget(completionOrderBtn, row, 1, 1, 2);
     ++row;
     // "Configure Completion Order" button
-    // KF5 add i18n
-    QPushButton *completionEmailBacklistBtn = new QPushButton(QLatin1String("Configure Email Blacklist..."), this);
+    QPushButton *completionEmailBacklistBtn = new QPushButton(i18n("Configure Email Blacklist..."), this);
 
     connect(completionEmailBacklistBtn, SIGNAL(clicked()),
             this, SLOT(slotConfigureEmailBlacklist()));
