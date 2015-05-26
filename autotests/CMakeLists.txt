@@ -68,11 +68,3 @@ set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
 
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "../tag/tagselectdialog.cpp;../kmail_debug.cpp" "${KDEPIMLIBS_AKONADI_LIBS};kmailprivate;mailcommon")
 
-
-set( kmail_migratekmail4configtest_source kmmigratekmail4configtest.cpp ../migration/kmmigratekmail4config.cpp)
-add_executable(migratekmail4configtest ${kmail_migratekmail4configtest_source})
-ecm_mark_as_test(kmail-migratekmail4configtest)
-target_link_libraries( migratekmail4configtest Qt5::Test )
-
-
-

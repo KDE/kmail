@@ -15,25 +15,17 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "kmmigratekmail4configtest.h"
-#include "../migration/kmmigratekmail4config.h"
-#include <qtest.h>
+#ifndef MIGRATEINFOTEST_H
+#define MIGRATEINFOTEST_H
 
-KMMigrateKMail4ConfigTest::KMMigrateKMail4ConfigTest(QObject *parent)
-    : QObject(parent)
+#include <QObject>
+
+class MigrateInfoTest : public QObject
 {
+    Q_OBJECT
+public:
+    explicit MigrateInfoTest(QObject *parent = Q_NULLPTR);
+    ~MigrateInfoTest();
+};
 
-}
-
-KMMigrateKMail4ConfigTest::~KMMigrateKMail4ConfigTest()
-{
-
-}
-
-void KMMigrateKMail4ConfigTest::shouldHaveDefaultValue()
-{
-    KMMigrateKMail4Config migrate;
-    QVERIFY(!migrate.start());
-}
-
-QTEST_MAIN(KMMigrateKMail4ConfigTest)
+#endif // MIGRATEINFOTEST_H

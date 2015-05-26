@@ -15,29 +15,29 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef KMMIGRATEKMAIL4CONFIG_H
-#define KMMIGRATEKMAIL4CONFIG_H
+#ifndef MIGRATEINFO_H
+#define MIGRATEINFO_H
 
-#include <QObject>
-#include <QVector>
-#include "migrateinfo.h"
+#include <QString>
 
-class KMMigrateKMail4Config : public QObject
+class MigrateInfo
 {
-    Q_OBJECT
 public:
-    explicit KMMigrateKMail4Config(QObject *parent = Q_NULLPTR);
-    ~KMMigrateKMail4Config();
+    MigrateInfo();
 
-    bool start();
-    bool checkIfNecessary();
-    void insertMigrateInfo(const MigrateInfo &info);
+    QString type() const;
+    void setType(const QString &type);
 
-Q_SIGNALS:
-    void migrateDone();
+    QString path() const;
+    void setPath(const QString &path);
+
+    bool folder() const;
+    void setFolder(bool folder);
 
 private:
-    QVector<MigrateInfo> mMigrateInfoList;
+    QString mType;
+    QString mPath;
+    bool mFolder;
 };
 
-#endif // KMMIGRATEKMAIL4CONFIG_H
+#endif // MIGRATEINFO_H
