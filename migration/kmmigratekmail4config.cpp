@@ -30,6 +30,9 @@ KMMigrateKMail4Config::~KMMigrateKMail4Config()
 
 bool KMMigrateKMail4Config::start()
 {
+    if (mMigrateInfoList.isEmpty()) {
+        return false;
+    }
     //TODO
     return false;
 }
@@ -42,6 +45,6 @@ bool KMMigrateKMail4Config::checkIfNecessary()
 
 void KMMigrateKMail4Config::insertMigrateInfo(const MigrateInfo &info)
 {
-    //TODO
+    mMigrateInfoList.append(info);
 }
 
