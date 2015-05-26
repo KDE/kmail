@@ -16,6 +16,7 @@
 */
 
 #include "migrateinfotest.h"
+#include "../migrateinfo.h"
 #include <qtest.h>
 
 MigrateInfoTest::MigrateInfoTest(QObject *parent)
@@ -26,6 +27,14 @@ MigrateInfoTest::MigrateInfoTest(QObject *parent)
 MigrateInfoTest::~MigrateInfoTest()
 {
 
+}
+
+void MigrateInfoTest::shouldHaveDefaultValue()
+{
+    MigrateInfo info;
+    QVERIFY(!info.folder());
+    QVERIFY(info.path().isEmpty());
+    QVERIFY(info.type().isEmpty());
 }
 
 QTEST_MAIN(MigrateInfoTest)

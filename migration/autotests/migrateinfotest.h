@@ -26,6 +26,9 @@ class MigrateInfoTest : public QObject
 public:
     explicit MigrateInfoTest(QObject *parent = Q_NULLPTR);
     ~MigrateInfoTest();
+
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
 };
 
 #endif // MIGRATEINFOTEST_H
