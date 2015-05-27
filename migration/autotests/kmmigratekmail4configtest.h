@@ -28,6 +28,7 @@ public:
     ~KMMigrateKMail4ConfigTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void shouldVerifyIfCheckIsNecessary();
 
 };
 

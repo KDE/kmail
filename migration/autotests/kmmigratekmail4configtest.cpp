@@ -34,6 +34,14 @@ void KMMigrateKMail4ConfigTest::shouldHaveDefaultValue()
 {
     KMMigrateKMail4Config migrate;
     QVERIFY(!migrate.start());
+    QVERIFY(migrate.configFileName().isEmpty());
+}
+
+void KMMigrateKMail4ConfigTest::shouldVerifyIfCheckIsNecessary()
+{
+    KMMigrateKMail4Config migrate;
+    //Invalid before config file is not set.
+    QVERIFY(!migrate.checkIfNecessary());
 }
 
 QTEST_MAIN(KMMigrateKMail4ConfigTest)

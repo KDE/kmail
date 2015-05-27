@@ -18,10 +18,27 @@
 #include "migrateinfo.h"
 
 MigrateInfo::MigrateInfo()
-    : mFolder(false)
+    : mVersion(-1),
+      mFolder(false)
 {
 
 }
+
+bool MigrateInfo::isValid() const
+{
+    return !mType.isEmpty() && !mPath.isEmpty();
+}
+
+int MigrateInfo::version() const
+{
+    return mVersion;
+}
+
+void MigrateInfo::setVersion(int version)
+{
+    mVersion = version;
+}
+
 
 QString MigrateInfo::type() const
 {
@@ -52,7 +69,4 @@ void MigrateInfo::setFolder(bool folder)
 {
     mFolder = folder;
 }
-
-
-
 

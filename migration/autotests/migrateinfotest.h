@@ -29,6 +29,8 @@ public:
 
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void shouldAssignValue();
+    void shouldBeEmpty();
 };
 
 #endif // MIGRATEINFOTEST_H
