@@ -182,6 +182,7 @@ public:
     QAction *expandShortUrlAction() const;
     QAction *createTodoAction() const;
     QAction *createEventAction() const;
+    QAction *createNoteAction() const;
 
     QAction *editContactAction() const
     {

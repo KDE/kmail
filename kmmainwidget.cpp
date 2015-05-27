@@ -1286,6 +1286,7 @@ void KMMainWidget::slotManageSieveScripts()
     }
 
     mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog;
+    connect(mManageSieveDialog, &KSieveUi::ManageSieveScriptsDialog::finished, this, &KMMainWidget::slotCheckVacation);
     mManageSieveDialog->show();
 }
 
@@ -2781,13 +2782,16 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, 
         menu->addSeparator();
         menu->addAction(mMsgView->createTodoAction());
         menu->addAction(mMsgView->createEventAction());
+        menu->addAction(mMsgView->createNoteAction());
         menu->addSeparator();
+
         if (mMsgView) {
             menu->addAction(mMsgView->saveMessageDisplayFormatAction());
             menu->addAction(mMsgView->resetMessageDisplayFormatAction());
             menu->addSeparator();
         }
         menu->addAction(mMsgActions->annotateAction());
+
         if (mMsgView && mMsgView->adblockEnabled()) {
             menu->addSeparator();
             menu->addAction(mMsgView->openBlockableItems());
