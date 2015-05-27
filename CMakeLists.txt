@@ -172,10 +172,6 @@ if (KDEPIM_BUILD_DESKTOP)
      tag/tagactionmanager.cpp
      tag/tagselectdialog.cpp
   )
-  set(kmailprivate_migrate_LIB_SRCS
-     migration/kmmigratekmail4config.cpp
-     migration/migrateinfo.cpp
-  )
   set(kmailprivate_LIB_SRCS
      kmail_debug.cpp
      kmmainwin.cpp
@@ -197,7 +193,6 @@ if (KDEPIM_BUILD_DESKTOP)
      foldershortcutactionmanager.cpp
      kmlaunchexternalcomponent.cpp
      manageshowcollectionproperties.cpp
-     ${kmailprivate_migrate_LIB_SRCS}
      ${kmailprivate_attributes_LIB_SRCS}
      ${kmailprivate_tag_LIB_SRCS}
      ${kmailprivate_job_LIB_SRCS}
@@ -355,7 +350,6 @@ generate_export_header(kmailprivate BASE_NAME kmail)
      add_subdirectory(mailmerge/autotests/)
      add_subdirectory(folderarchive/autotests/)
      add_subdirectory(editor/potentialphishingemail/autotests)
-     add_subdirectory(migration/autotests/)
   endif()
   ########### install files ###############
 
