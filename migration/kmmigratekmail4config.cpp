@@ -17,6 +17,9 @@
 
 #include "kmmigratekmail4config.h"
 #include <kdelibs4migration.h>
+#include <KSharedConfig>
+#include <KConfigGroup>
+#include <QDebug>
 
 KMMigrateKMail4Config::KMMigrateKMail4Config(QObject *parent)
     : QObject(parent),
@@ -36,6 +39,10 @@ bool KMMigrateKMail4Config::start()
         return false;
     }
 
+    if (mConfigFileName.isEmpty()) {
+        qDebug() << " config file name not defined.";
+        return false;
+    }
     // Testing for kdehome
     Kdelibs4Migration migration;
     if (!migration.kdeHomeFound()) {
@@ -66,6 +73,14 @@ void KMMigrateKMail4Config::setConfigFileName(const QString &configFileName)
     mConfigFileName = configFileName;
 }
 
+void KMMigrateKMail4Config::writeConfig()
+{
+    KSharedConfig::Ptr config = KSharedConfig::openConfig(mConfigFileName, KConfig::SimpleConfig);
+    KConfigGroup grp = config->group(QStringLiteral("Migrate"));
+    grp.writeEntry(QStringLiteral("Version"), mVersion);
+    grp.sync();
+}
+
 void KMMigrateKMail4Config::migrateFolder(const MigrateInfo &info)
 {
     //TODO
@@ -88,7 +103,20 @@ void KMMigrateKMail4Config::setVersion(int version)
 
 bool KMMigrateKMail4Config::checkIfNecessary()
 {
-    //TODO compare mVersion with current version saved in config file.
+    if (mConfigFileName.isEmpty()) {
+        qDebug() << " config file name not defined.";
+        return false;
+    }
+    KSharedConfig::Ptr config = KSharedConfig::openConfig(mConfigFileName, KConfig::SimpleConfig);
+    if (config->hasGroup(QStringLiteral("Migrate"))) {
+        KConfigGroup grp = config->group(QStringLiteral("Migrate"));
+        const int lastVersion = grp.readEntry(QStringLiteral("Version"), 0);
+        if (lastVersion < mVersion) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     return true;
 }
 
