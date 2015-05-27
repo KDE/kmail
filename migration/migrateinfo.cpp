@@ -53,6 +53,3 @@ void MigrateInfo::setFolder(bool folder)
     mFolder = folder;
 }
 
-
-
-
