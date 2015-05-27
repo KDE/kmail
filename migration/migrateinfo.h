@@ -34,6 +34,7 @@ public:
     bool folder() const;
     void setFolder(bool folder);
 
+    bool isValid() const;
 private:
     QString mType;
     QString mPath;

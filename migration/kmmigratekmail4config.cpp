@@ -16,6 +16,7 @@
 */
 
 #include "kmmigratekmail4config.h"
+#include <kdelibs4migration.h>
 
 KMMigrateKMail4Config::KMMigrateKMail4Config(QObject *parent)
     : QObject(parent)
@@ -33,6 +34,13 @@ bool KMMigrateKMail4Config::start()
     if (mMigrateInfoList.isEmpty()) {
         return false;
     }
+
+    // Testing for kdehome
+    Kdelibs4Migration migration;
+    if (!migration.kdeHomeFound()) {
+        return false;
+    }
+
     //TODO
     return false;
 }
@@ -45,6 +53,8 @@ bool KMMigrateKMail4Config::checkIfNecessary()
 
 void KMMigrateKMail4Config::insertMigrateInfo(const MigrateInfo &info)
 {
-    mMigrateInfoList.append(info);
+    if (info.isValid()) {
+        mMigrateInfoList.append(info);
+    }
 }
 

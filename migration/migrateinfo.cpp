@@ -23,6 +23,11 @@ MigrateInfo::MigrateInfo()
 
 }
 
+bool MigrateInfo::isValid() const
+{
+    return !mType.isEmpty() && !mPath.isEmpty();
+}
+
 QString MigrateInfo::type() const
 {
     return mType;
