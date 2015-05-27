@@ -37,16 +37,19 @@ KMMigrateKMail4Config::~KMMigrateKMail4Config()
 bool KMMigrateKMail4Config::start()
 {
     if (mMigrateInfoList.isEmpty()) {
+        Q_EMIT migrateDone();
         return false;
     }
 
     if (mConfigFileName.isEmpty()) {
         qDebug() << " config file name not defined.";
+        Q_EMIT migrateDone();
         return false;
     }
     // Testing for kdehome
     Kdelibs4Migration migration;
     if (!migration.kdeHomeFound()) {
+        Q_EMIT migrateDone();
         return false;
     }
     return migrateConfig();
@@ -61,6 +64,7 @@ bool KMMigrateKMail4Config::migrateConfig()
             migrateFile(info);
         }
     }
+    Q_EMIT migrateDone();
     return true;
 }
 
