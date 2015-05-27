@@ -33,11 +33,22 @@ public:
     bool checkIfNecessary();
     void insertMigrateInfo(const MigrateInfo &info);
 
+    int version() const;
+    void setVersion(int version);
+
+    QString configFileName() const;
+    void setConfigFileName(const QString &configFileName);
+
 Q_SIGNALS:
     void migrateDone();
 
 private:
+    void migrateFolder(const MigrateInfo &info);
+    void migrateFile(const MigrateInfo &info);
+    bool migrateConfig();
     QVector<MigrateInfo> mMigrateInfoList;
+    QString mConfigFileName;
+    int mVersion;
 };
 
 #endif // KMMIGRATEKMAIL4CONFIG_H

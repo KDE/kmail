@@ -19,7 +19,8 @@
 #include <kdelibs4migration.h>
 
 KMMigrateKMail4Config::KMMigrateKMail4Config(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      mVersion(1)
 {
 
 }
@@ -40,14 +41,54 @@ bool KMMigrateKMail4Config::start()
     if (!migration.kdeHomeFound()) {
         return false;
     }
+    return migrateConfig();
+}
 
+bool KMMigrateKMail4Config::migrateConfig()
+{
+    Q_FOREACH(const MigrateInfo &info, mMigrateInfoList) {
+        if (info.folder()) {
+            migrateFolder(info);
+        } else {
+            migrateFile(info);
+        }
+    }
+    return true;
+}
+
+QString KMMigrateKMail4Config::configFileName() const
+{
+    return mConfigFileName;
+}
+
+void KMMigrateKMail4Config::setConfigFileName(const QString &configFileName)
+{
+    mConfigFileName = configFileName;
+}
+
+void KMMigrateKMail4Config::migrateFolder(const MigrateInfo &info)
+{
     //TODO
-    return false;
+}
+
+void KMMigrateKMail4Config::migrateFile(const MigrateInfo &info)
+{
+    //TODO
+}
+
+int KMMigrateKMail4Config::version() const
+{
+    return mVersion;
+}
+
+void KMMigrateKMail4Config::setVersion(int version)
+{
+    mVersion = version;
 }
 
 bool KMMigrateKMail4Config::checkIfNecessary()
 {
-    //TODO
+    //TODO compare mVersion with current version saved in config file.
     return true;
 }
 
