@@ -39,6 +39,9 @@ public:
     QString configFileName() const;
     void setConfigFileName(const QString &configFileName);
 
+    int currentConfigVersion() const;
+    void setCurrentConfigVersion(int currentConfigVersion);
+
 Q_SIGNALS:
     void migrateDone();
 
@@ -49,7 +52,8 @@ private:
     bool migrateConfig();
     QVector<MigrateInfo> mMigrateInfoList;
     QString mConfigFileName;
-    int mVersion;
+    int mMigrateApplicationVersion;
+    int mCurrentConfigVersion;
 };
 
 #endif // KMMIGRATEKMAIL4CONFIG_H

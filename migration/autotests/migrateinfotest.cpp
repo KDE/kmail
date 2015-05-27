@@ -36,6 +36,7 @@ void MigrateInfoTest::shouldHaveDefaultValue()
     QVERIFY(!info.folder());
     QVERIFY(info.path().isEmpty());
     QVERIFY(info.type().isEmpty());
+    QCOMPARE(info.version(), -1);
 }
 
 void MigrateInfoTest::shouldAssignValue()
@@ -70,6 +71,13 @@ void MigrateInfoTest::shouldAssignValue()
     type.clear();
     info.setType(type);
     QCOMPARE(info.type(), type);
+
+    int version = -1;
+    info.setVersion(version);
+    QCOMPARE(info.version(), version);
+    version = 6;
+    info.setVersion(version);
+    QCOMPARE(info.version(), version);
 }
 
 void MigrateInfoTest::shouldBeEmpty()

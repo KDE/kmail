@@ -35,9 +35,14 @@ public:
     void setFolder(bool folder);
 
     bool isValid() const;
+
+    int version() const;
+    void setVersion(int version);
+
 private:
     QString mType;
     QString mPath;
+    int mVersion;
     bool mFolder;
 };
 

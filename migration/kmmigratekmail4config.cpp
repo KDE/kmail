@@ -23,7 +23,8 @@
 
 KMMigrateKMail4Config::KMMigrateKMail4Config(QObject *parent)
     : QObject(parent),
-      mVersion(1)
+      mMigrateApplicationVersion(1),
+      mCurrentConfigVersion(0)
 {
 
 }
@@ -63,6 +64,17 @@ bool KMMigrateKMail4Config::migrateConfig()
     return true;
 }
 
+int KMMigrateKMail4Config::currentConfigVersion() const
+{
+    return mCurrentConfigVersion;
+}
+
+void KMMigrateKMail4Config::setCurrentConfigVersion(int currentConfigVersion)
+{
+    mCurrentConfigVersion = currentConfigVersion;
+}
+
+
 QString KMMigrateKMail4Config::configFileName() const
 {
     return mConfigFileName;
@@ -77,7 +89,7 @@ void KMMigrateKMail4Config::writeConfig()
 {
     KSharedConfig::Ptr config = KSharedConfig::openConfig(mConfigFileName, KConfig::SimpleConfig);
     KConfigGroup grp = config->group(QStringLiteral("Migrate"));
-    grp.writeEntry(QStringLiteral("Version"), mVersion);
+    grp.writeEntry(QStringLiteral("Version"), mMigrateApplicationVersion);
     grp.sync();
 }
 
@@ -93,12 +105,12 @@ void KMMigrateKMail4Config::migrateFile(const MigrateInfo &info)
 
 int KMMigrateKMail4Config::version() const
 {
-    return mVersion;
+    return mMigrateApplicationVersion;
 }
 
 void KMMigrateKMail4Config::setVersion(int version)
 {
-    mVersion = version;
+    mMigrateApplicationVersion = version;
 }
 
 bool KMMigrateKMail4Config::checkIfNecessary()
@@ -110,8 +122,8 @@ bool KMMigrateKMail4Config::checkIfNecessary()
     KSharedConfig::Ptr config = KSharedConfig::openConfig(mConfigFileName, KConfig::SimpleConfig);
     if (config->hasGroup(QStringLiteral("Migrate"))) {
         KConfigGroup grp = config->group(QStringLiteral("Migrate"));
-        const int lastVersion = grp.readEntry(QStringLiteral("Version"), 0);
-        if (lastVersion < mVersion) {
+        mCurrentConfigVersion = grp.readEntry(QStringLiteral("Version"), 0);
+        if (mCurrentConfigVersion < mMigrateApplicationVersion) {
             return true;
         } else {
             return false;
