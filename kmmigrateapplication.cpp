@@ -43,5 +43,19 @@ void KMMigrateApplication::initializeMigrator()
     mMigrator.setApplicationName(QStringLiteral("kmail2"));
     mMigrator.setConfigFileName(QStringLiteral("kmail2rc"));
     mMigrator.setCurrentConfigVersion(1);
+    // autostart
+    PimCommon::MigrateFileInfo migrateInfoAutoStart;
+    migrateInfoAutoStart.setFolder(true);
+    migrateInfoAutoStart.setType(QStringLiteral("apps"));
+    migrateInfoAutoStart.setPath(QStringLiteral("kmail2/autostart/"));
+    mMigrator.insertMigrateInfo(migrateInfoAutoStart);
+#if 0
+    //MessageViewer
+    PimCommon::MigrateFileInfo migrateInfoMessageViewer;
+    migrateInfoMessageViewer.setFolder(true);
+    migrateInfoAutoStart.setType(QStringLiteral("apps"));
+    migrateInfoAutoStart.setPath(QStringLiteral("kmail2/autostart/"));
+    mMigrator.insertMigrateInfo(migrateInfoAutoStart);
+#endif
     //TODO add folder to migrate
 }
