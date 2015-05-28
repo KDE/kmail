@@ -43,19 +43,33 @@ void KMMigrateApplication::initializeMigrator()
     mMigrator.setApplicationName(QStringLiteral("kmail2"));
     mMigrator.setConfigFileName(QStringLiteral("kmail2rc"));
     mMigrator.setCurrentConfigVersion(1);
-    // autostart
-    PimCommon::MigrateFileInfo migrateInfoAutoStart;
-    migrateInfoAutoStart.setFolder(true);
-    migrateInfoAutoStart.setType(QStringLiteral("apps"));
-    migrateInfoAutoStart.setPath(QStringLiteral("kmail2/autostart/"));
-    mMigrator.insertMigrateInfo(migrateInfoAutoStart);
-#if 0
+    // autosave
+    PimCommon::MigrateFileInfo migrateInfoAutoSave;
+    migrateInfoAutoSave.setFolder(true);
+    migrateInfoAutoSave.setType(QStringLiteral("apps"));
+    migrateInfoAutoSave.setPath(QStringLiteral("kmail2/autosave/"));
+    mMigrator.insertMigrateInfo(migrateInfoAutoSave);
+
     //MessageViewer
     PimCommon::MigrateFileInfo migrateInfoMessageViewer;
     migrateInfoMessageViewer.setFolder(true);
-    migrateInfoAutoStart.setType(QStringLiteral("apps"));
-    migrateInfoAutoStart.setPath(QStringLiteral("kmail2/autostart/"));
-    mMigrator.insertMigrateInfo(migrateInfoAutoStart);
-#endif
+    migrateInfoMessageViewer.setType(QStringLiteral("apps"));
+    migrateInfoMessageViewer.setPath(QStringLiteral("messageviewer/theme/"));
+    mMigrator.insertMigrateInfo(migrateInfoMessageViewer);
+
+    //autocorrect
+    PimCommon::MigrateFileInfo migrateInfoAutocorrect;
+    migrateInfoAutocorrect.setFolder(true);
+    migrateInfoAutocorrect.setType(QStringLiteral("apps"));
+    migrateInfoAutocorrect.setPath(QStringLiteral("autocorrect/"));
+    mMigrator.insertMigrateInfo(migrateInfoAutocorrect);
+
+
+    //autocorrect
+    PimCommon::MigrateFileInfo migrateInfoGravatar;
+    migrateInfoGravatar.setFolder(true);
+    migrateInfoGravatar.setType(QStringLiteral("apps"));
+    migrateInfoGravatar.setPath(QStringLiteral("gravatar/"));
+    mMigrator.insertMigrateInfo(migrateInfoGravatar);
     //TODO add folder to migrate
 }
