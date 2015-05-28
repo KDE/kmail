@@ -193,6 +193,7 @@ if (KDEPIM_BUILD_DESKTOP)
      foldershortcutactionmanager.cpp
      kmlaunchexternalcomponent.cpp
      manageshowcollectionproperties.cpp
+     kmmigrateapplication.cpp
      ${kmailprivate_attributes_LIB_SRCS}
      ${kmailprivate_tag_LIB_SRCS}
      ${kmailprivate_job_LIB_SRCS}

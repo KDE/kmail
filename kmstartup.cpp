@@ -22,7 +22,6 @@
 
 #include <KLocalizedString>
 
-#include <kdelibs4configmigrator.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 
@@ -30,15 +29,6 @@
 
 namespace KMail
 {
-
-void migrateConfig()
-{
-    Kdelibs4ConfigMigrator migrate(QLatin1String("kmail"));
-    migrate.setConfigFiles(QStringList() << QLatin1String("kmail2rc") << QLatin1String("kmail2.notifyrc") << QLatin1String("kmailsnippetrc") << QLatin1String("customtemplatesrc") << QLatin1String("templatesconfigurationrc") << QLatin1String("kpimcompletionorder") << QLatin1String("messageviewer.notifyrc"));
-    migrate.setUiFiles(QStringList() << QLatin1String("kmail_part.rc") << QLatin1String("kmcomposerui.rc") <<  QLatin1String("kmmainwin.rc") <<  QLatin1String("kmreadermainwin.rc"));
-    //TODO migrate autosave too
-    migrate.migrate();
-}
 
 void checkConfigUpdates()
 {
@@ -114,7 +104,6 @@ void insertLibraryCataloguesAndIcons()
         "akonadi_followupreminder_agent"
     };
 
-    KLocale *l = KLocale::global();
     KIconLoader *il = KIconLoader::global();
     unsigned int catalogSize = (sizeof catalogs / sizeof * catalogs);
     for (unsigned int i = 0 ; i < catalogSize ; ++i) {
