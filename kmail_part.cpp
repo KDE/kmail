@@ -47,6 +47,7 @@
 #include "foldertreeview.h"
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
+#include "kmmigrateapplication.h"
 
 #include <KSharedConfig>
 
@@ -60,8 +61,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 {
     setComponentName(QLatin1String("kmail2"), QLatin1String("kmail2"));
 
-    // Migrate to xdg path
-    KMail::migrateConfig();
+    KMMigrateApplication migrate;
+    migrate.migrate();
 
     // import i18n data and icons from libraries:
     KMail::insertLibraryCataloguesAndIcons();

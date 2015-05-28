@@ -23,6 +23,7 @@
 #include "kmkernel.h" //control center
 #include "kmmainwidget.h"
 #include "kmail_options.h"
+#include "kmmigrateapplication.h"
 
 #include "kmail_debug.h"
 #include <kmessagebox.h>
@@ -132,8 +133,8 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    // Migrate to xdg path
-    KMail::migrateConfig();
+    KMMigrateApplication migrate;
+    migrate.migrate();
 
     // Qt doesn't treat the system tray as a window, and therefore Qt would quit
     // the event loop when an error message is clicked away while KMail is in the
