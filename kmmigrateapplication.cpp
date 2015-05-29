@@ -40,9 +40,10 @@ void KMMigrateApplication::migrate()
 
 void KMMigrateApplication::initializeMigrator()
 {
+    const int currentVersion = 1;
     mMigrator.setApplicationName(QStringLiteral("kmail2"));
     mMigrator.setConfigFileName(QStringLiteral("kmail2rc"));
-    mMigrator.setCurrentConfigVersion(1);
+    mMigrator.setCurrentConfigVersion(currentVersion);
     // autosave
     PimCommon::MigrateFileInfo migrateInfoAutoSave;
     migrateInfoAutoSave.setFolder(true);
@@ -64,12 +65,10 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoAutocorrect.setPath(QStringLiteral("autocorrect/"));
     mMigrator.insertMigrateInfo(migrateInfoAutocorrect);
 
-
     //autocorrect
     PimCommon::MigrateFileInfo migrateInfoGravatar;
     migrateInfoGravatar.setFolder(true);
     migrateInfoGravatar.setType(QStringLiteral("apps"));
     migrateInfoGravatar.setPath(QStringLiteral("gravatar/"));
     mMigrator.insertMigrateInfo(migrateInfoGravatar);
-    //TODO add folder to migrate
 }
