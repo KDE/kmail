@@ -43,35 +43,42 @@ void KMMigrateApplication::migrate()
 
 void KMMigrateApplication::initializeMigrator()
 {
-    const int currentVersion = 1;
+    const int currentVersion = 2;
     mMigrator.setApplicationName(QStringLiteral("kmail2"));
     mMigrator.setConfigFileName(QStringLiteral("kmail2rc"));
     mMigrator.setCurrentConfigVersion(currentVersion);
+
+    // To migrate we need a version < currentVersion
+    const int initialVersion = currentVersion - 1;
     // autosave
     PimCommon::MigrateFileInfo migrateInfoAutoSave;
     migrateInfoAutoSave.setFolder(true);
-    migrateInfoAutoSave.setType(QStringLiteral("apps"));
+    migrateInfoAutoSave.setType(QStringLiteral("data"));
     migrateInfoAutoSave.setPath(QStringLiteral("kmail2/autosave/"));
+    migrateInfoAutoSave.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAutoSave);
 
     //MessageViewer
     PimCommon::MigrateFileInfo migrateInfoMessageViewer;
     migrateInfoMessageViewer.setFolder(true);
-    migrateInfoMessageViewer.setType(QStringLiteral("apps"));
+    migrateInfoMessageViewer.setType(QStringLiteral("data"));
     migrateInfoMessageViewer.setPath(QStringLiteral("messageviewer/theme/"));
+    migrateInfoMessageViewer.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoMessageViewer);
 
     //autocorrect
     PimCommon::MigrateFileInfo migrateInfoAutocorrect;
     migrateInfoAutocorrect.setFolder(true);
-    migrateInfoAutocorrect.setType(QStringLiteral("apps"));
+    migrateInfoAutocorrect.setType(QStringLiteral("data"));
     migrateInfoAutocorrect.setPath(QStringLiteral("autocorrect/"));
+    migrateInfoAutocorrect.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAutocorrect);
 
-    //autocorrect
+    //gravatar
     PimCommon::MigrateFileInfo migrateInfoGravatar;
     migrateInfoGravatar.setFolder(true);
-    migrateInfoGravatar.setType(QStringLiteral("apps"));
+    migrateInfoGravatar.setType(QStringLiteral("data"));
     migrateInfoGravatar.setPath(QStringLiteral("gravatar/"));
+    migrateInfoGravatar.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoGravatar);
 }
