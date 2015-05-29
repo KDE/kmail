@@ -48,8 +48,8 @@ void KMMigrateApplication::initializeMigrator()
     mMigrator.setConfigFileName(QStringLiteral("kmail2rc"));
     mMigrator.setCurrentConfigVersion(currentVersion);
 
-    // To migrate we need a version < currentVersion
-    const int initialVersion = currentVersion - 1;
+    // To migrate we need a version > currentVersion
+    const int initialVersion = currentVersion + 1;
     // autosave
     PimCommon::MigrateFileInfo migrateInfoAutoSave;
     migrateInfoAutoSave.setFolder(true);
