@@ -324,7 +324,7 @@ void KMCommand::transferSelectedMsgs()
     } else {
         // wait for the transfer and tell the progressBar the necessary steps
         if (mProgressDialog.data()) {
-            connect(mProgressDialog.data(), SIGNAL(cancelClicked()),
+            connect(mProgressDialog.data(), SIGNAL(canceled()),
                     this, SLOT(slotTransferCancelled()));
             mProgressDialog.data()->setMaximum(totalSize);
         }
