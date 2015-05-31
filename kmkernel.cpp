@@ -276,7 +276,7 @@ void KMKernel::setupDBus()
 
 static QUrl makeAbsoluteUrl(const QString &str)
 {
-    QUrl url(str);
+    QUrl url = QUrl::fromLocalFile(str);
     if (url.scheme().isEmpty()) {
         const QString newUrl = KCmdLineArgs::cwd() + QLatin1Char('/') + url.fileName();
         return QUrl::fromLocalFile(newUrl);
