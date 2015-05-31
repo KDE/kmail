@@ -31,7 +31,7 @@
 #include "kmkernel.h"
 #include "kmreadermainwin.h"
 #include "util/mailutil.h"
-
+#include <KIdentityManagement/Identity>
 #include <AkonadiCore/itemfetchjob.h>
 #include <kcontacts/addressee.h>
 #include "kmail_debug.h"
