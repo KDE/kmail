@@ -81,4 +81,23 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoGravatar.setPath(QStringLiteral("gravatar/"));
     migrateInfoGravatar.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoGravatar);
+
+    //adblock
+    PimCommon::MigrateFileInfo migrateInfoAdblockrules;
+    migrateInfoAdblockrules.setFolder(false);
+    migrateInfoAdblockrules.setType(QStringLiteral("data"));
+    migrateInfoAdblockrules.setPath(QStringLiteral("kmail2/"));
+    migrateInfoAdblockrules.setFilePatterns(QStringList() << QStringLiteral("adblockrules_*"));
+    migrateInfoAdblockrules.setVersion(initialVersion);
+    mMigrator.insertMigrateInfo(migrateInfoAdblockrules);
+
+
+    //vcard from identity
+    PimCommon::MigrateFileInfo migrateInfoVCardFromIdentity;
+    migrateInfoVCardFromIdentity.setFolder(false);
+    migrateInfoVCardFromIdentity.setType(QStringLiteral("data"));
+    migrateInfoVCardFromIdentity.setPath(QStringLiteral("kmail2/"));
+    migrateInfoVCardFromIdentity.setFilePatterns(QStringList() << QStringLiteral("*.vcf"));
+    migrateInfoVCardFromIdentity.setVersion(initialVersion);
+    mMigrator.insertMigrateInfo(migrateInfoVCardFromIdentity);
 }

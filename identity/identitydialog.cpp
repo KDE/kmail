@@ -872,6 +872,12 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
         mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
         QFileInfo fileInfo(mVcardFilename);
         QDir().mkpath(fileInfo.absolutePath());
+    } else {
+        //Convert path.
+        const QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
+        if (QFile(path).exists() && (mVcardFilename != path)) {
+            mVcardFilename = path;
+        }
     }
     mAttachMyVCard->setChecked(ident.attachVcard());
     QString defaultDomainName = ident.defaultDomainName();
