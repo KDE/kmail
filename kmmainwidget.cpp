@@ -125,7 +125,7 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/favoritecollectionsmodel.h>
 #include <AkonadiCore/itemfetchscope.h>
 #include <AkonadiCore/itemmodifyjob.h>
-#include <AkonadiCore/control.h>
+#include <AkonadiWidgets/controlgui.h>
 #include <AkonadiWidgets/collectiondialog.h>
 #include <AkonadiCore/collectionstatistics.h>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
@@ -241,7 +241,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mGUIClient = aGUIClient;
     mFolderTreeWidget = Q_NULLPTR;
     mPreferHtmlLoadExtAction = Q_NULLPTR;
-    Akonadi::Control::widgetNeedsAkonadi(this);
+    Akonadi::ControlGui::widgetNeedsAkonadi(this);
     mFavoritesModel = Q_NULLPTR;
     mVacationManager = new KSieveUi::VacationManager(this);
 
