@@ -91,7 +91,6 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoAdblockrules.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAdblockrules);
 
-
     //vcard from identity
     PimCommon::MigrateFileInfo migrateInfoVCardFromIdentity;
     migrateInfoVCardFromIdentity.setFolder(false);
