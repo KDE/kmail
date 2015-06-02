@@ -50,6 +50,8 @@ protected Q_SLOTS:
     * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
     */
     void slotOk();
+private Q_SLOTS:
+    void slotHelp();
 };
 
 #endif

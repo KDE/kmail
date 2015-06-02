@@ -29,6 +29,7 @@
 #include <KWindowSystem>
 #include <KIconLoader>
 #include <QPushButton>
+#include <KHelpClient>
 
 // other headers:
 #include <assert.h>
@@ -38,7 +39,9 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     : KCMultiDialog(parent)
 {
     setFaceType(List);
-    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help | QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel | QDialogButtonBox::Apply | QDialogButtonBox::Reset);
+    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help |
+                       QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel |
+                       QDialogButtonBox::Apply | QDialogButtonBox::Reset);
     setModal(modal);
     KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop), IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small), IconSize(KIconLoader::Small)));
     addModule(QStringLiteral("kmail_config_identity"));
@@ -50,7 +53,7 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
     connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);
-
+    connect(button(QDialogButtonBox::Help), &QPushButton::clicked, this, &ConfigureDialog::slotHelp);
     // We store the size of the dialog on hide, because otherwise
     // the KCMultiDialog starts with the size of the first kcm, not
     // the largest one. This way at least after the first showing of
@@ -92,3 +95,7 @@ void ConfigureDialog::slotOk()
     Q_EMIT configChanged();
 }
 
+void ConfigureDialog::slotHelp()
+{
+    KHelpClient::invokeHelp(QStringLiteral("configure-identity"), QStringLiteral("kmail"));
+}
