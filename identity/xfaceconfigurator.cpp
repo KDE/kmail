@@ -221,7 +221,7 @@ void XFaceConfigurator::slotSelectFile()
     Q_FOREACH (const QByteArray &mime, mimeTypes) {
         filter += QString::fromLatin1(mime);
     }
-    const QUrl url = QFileDialog::getOpenFileUrl(this, QString() , QString(), filter);
+    const QUrl url = QFileDialog::getOpenFileUrl(this, QString() , QString(), i18n("Image (%1)", filter));
     if (!url.isEmpty()) {
         setXfaceFromFile(url);
     }
