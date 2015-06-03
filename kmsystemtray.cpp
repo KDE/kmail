@@ -138,12 +138,8 @@ bool KMSystemTray::buildPopupMenu()
     }
     contextMenu()->addSeparator();
 
-    // KF5 : fix me objectname is empty now.
-    Q_FOREACH (QAction *act, actionCollection()) {
-        if (act->objectName() == QLatin1String("file_quit")) {
-            contextMenu()->addAction(act);
-            break;
-        }
+    if ((action = mainWidget->action(QLatin1String("file_quit")))) {
+        contextMenu()->addAction(action);
     }
     return true;
 }
