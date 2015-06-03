@@ -48,14 +48,14 @@ void ManageServerSideSubscriptionJob::start()
     if (kmkernel->isImapFolder(mCurrentFolder->collection(), isImapOnline)) {
         QDBusInterface iface(
             QLatin1String("org.freedesktop.Akonadi.Resource.") + mCurrentFolder->collection().resource(),
-            QLatin1String("/"), QLatin1String("org.kde.Akonadi.ImapResourceBase"),
+            QStringLiteral("/"), QStringLiteral("org.kde.Akonadi.ImapResourceBase"),
             KDBusConnectionPool::threadConnection(), this);
         if (!iface.isValid()) {
             qCDebug(KMAIL_LOG) << "Cannot create imap dbus interface";
             deleteLater();
             return;
         }
-        QDBusPendingCall call = iface.asyncCall(QLatin1String("configureSubscription"), (qlonglong)mParentWidget->winId());
+        QDBusPendingCall call = iface.asyncCall(QStringLiteral("configureSubscription"), (qlonglong)mParentWidget->winId());
         QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
         connect(watcher, &QDBusPendingCallWatcher::finished, this, &ManageServerSideSubscriptionJob::slotConfigureSubscriptionFinished);
     }

@@ -118,7 +118,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
         }
 
         Akonadi::CollectionDeleteJob *job = new Akonadi::CollectionDeleteJob(col);
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotDeletionCollectionResult(KJob*)));
+        connect(job, &KJob::result, this, &RemoveCollectionJob::slotDeletionCollectionResult);
     } else {
         deleteLater();
     }

@@ -91,7 +91,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
             reminderJob->setSubject(subject->asUnicodeString());
         }
 
-        connect(reminderJob, SIGNAL(result(KJob*)), this, SLOT(slotReminderDone(KJob*)));
+        connect(reminderJob, &KJob::result, this, &CreateFollowupReminderOnExistingMessageJob::slotReminderDone);
         reminderJob->start();
     } else {
         qCDebug(KMAIL_LOG) << " no message found";
@@ -126,6 +126,7 @@ void CreateFollowupReminderOnExistingMessageJob::setDate(const QDate &date)
 {
     mDate = date;
 }
+
 Akonadi::Item CreateFollowupReminderOnExistingMessageJob::messageItem() const
 {
     return mMessageItem;

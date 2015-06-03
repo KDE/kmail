@@ -77,8 +77,8 @@ void FolderShortcutActionManager::createActions()
     // rows are inserted in the ETM, see if we have new collections that we can assign shortcuts
     // to.
     const QAbstractItemModel *model = KernelIf->collectionModel();
-    connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)),
-            this, SLOT(slotRowsInserted(QModelIndex,int,int)), Qt::UniqueConnection);
+    connect(model, &QAbstractItemModel::rowsInserted,
+            this, &FolderShortcutActionManager::slotRowsInserted, Qt::UniqueConnection);
     connect(KernelIf->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)),
             this, SLOT(slotCollectionRemoved(Akonadi::Collection)), Qt::UniqueConnection);
 

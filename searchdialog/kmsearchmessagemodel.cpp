@@ -70,7 +70,7 @@ QString toolTip(const Akonadi::Item &item)
     const QString bckColorName = bckColor.name();
     const QString txtColorName = txtColor.name();
     const bool textIsLeftToRight = (QApplication::layoutDirection() == Qt::LeftToRight);
-    const QString textDirection =  textIsLeftToRight ? QLatin1String("left") : QLatin1String("right");
+    const QString textDirection =  textIsLeftToRight ? QStringLiteral("left") : QStringLiteral("right");
 
     QString tip = QStringLiteral(
                       "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
@@ -111,7 +111,7 @@ QString toolTip(const Akonadi::Item &item)
         //Port to QDateTime QT5
         tip += htmlCodeForStandardRow.arg(i18n("Date")).arg(KLocale::global()->formatDateTime(msg->date()->dateTime()/*.toLocalZone()*/, KLocale::FancyLongDate));
         if (!content.isEmpty()) {
-            tip += htmlCodeForStandardRow.arg(i18n("Preview")).arg(content.replace(QLatin1Char('\n'), QLatin1String("<br>")));
+            tip += htmlCodeForStandardRow.arg(i18n("Preview")).arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
         }
     } else {
         tip += htmlCodeForStandardRow.arg(MessageCore::StringUtil::stripEmailAddr(msg->from()->asUnicodeString())).arg(i18n("From"));
@@ -133,8 +133,8 @@ QString toolTip(const Akonadi::Item &item)
 int KMSearchMessageModel::columnCount(const QModelIndex &parent) const
 {
     if (collection().isValid()
-            && !collection().contentMimeTypes().contains(QLatin1String("message/rfc822"))
-            && collection().contentMimeTypes() != QStringList(QLatin1String("inode/directory"))) {
+            && !collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))
+            && collection().contentMimeTypes() != QStringList(QStringLiteral("inode/directory"))) {
         return 1;
     }
 
@@ -154,7 +154,7 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    if (!collection().contentMimeTypes().contains(QLatin1String("message/rfc822"))) {
+    if (!collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))) {
         if (role == Qt::DisplayRole)
             return i18nc("@label", "This model can only handle email folders. The current collection holds mimetypes: %1",
                          collection().contentMimeTypes().join(QLatin1String(",")));
@@ -230,8 +230,8 @@ QVariant KMSearchMessageModel::headerData(int section, Qt::Orientation orientati
 {
 
     if (collection().isValid()
-            && !collection().contentMimeTypes().contains(QLatin1String("message/rfc822"))
-            && collection().contentMimeTypes() != QStringList(QLatin1String("inode/directory"))) {
+            && !collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))
+            && collection().contentMimeTypes() != QStringList(QStringLiteral("inode/directory"))) {
         return QVariant();
     }
 

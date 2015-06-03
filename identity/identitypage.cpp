@@ -65,7 +65,7 @@ IdentityPage::IdentityPage(QWidget *parent)
     connect(this, SIGNAL(changed(bool)),
             SLOT(slotIdentitySelectionChanged()));
     connect(mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),  SLOT(slotRenameIdentity(KMail::IdentityListViewItem*,QString)));
-    connect(mIPage.mIdentityList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),  SLOT(slotModifyIdentity()));
+    connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked,  this, &IdentityPage::slotModifyIdentity);
     connect(mIPage.mIdentityList, SIGNAL(contextMenu(KMail::IdentityListViewItem*,QPoint)), SLOT(slotContextMenu(KMail::IdentityListViewItem*,QPoint)));
     // ### connect dragged(...), ...
 
