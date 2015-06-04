@@ -191,8 +191,8 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
                                     QStringList(), 4);
     mFontChooser->setEnabled(false);   // since !mCustomFontCheck->isChecked()
     vlay->addWidget(mFontChooser);
-    connect(mFontChooser, SIGNAL(fontSelected(QFont)),
-            this, SLOT(slotEmitChanged()));
+    connect(mFontChooser, &KFontChooser::fontSelected,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // {en,dis}able widgets depending on the state of mCustomFontCheck:
     connect(mCustomFontCheck, SIGNAL(toggled(bool)),
@@ -1112,10 +1112,10 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     connect(mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
             this, SLOT(slotNameLineTextChanged(QString)));
 
-    connect(mTagWidget, SIGNAL(iconNameChanged(QString)), SLOT(slotIconNameChanged(QString)));
+    connect(mTagWidget, &TagWidget::iconNameChanged, this, &AppearancePageMessageTagTab::slotIconNameChanged);
 
-    connect(mTagAddLineEdit, SIGNAL(returnPressed()),
-            this, SLOT(slotAddNewTag()));
+    connect(mTagAddLineEdit, &KLineEdit::returnPressed,
+            this, &AppearancePageMessageTagTab::slotAddNewTag);
 
     connect(mTagAddButton, SIGNAL(clicked()),
             this, SLOT(slotAddNewTag()));
