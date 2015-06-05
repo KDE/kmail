@@ -371,7 +371,9 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     vbox->setMargin(0);
     KMComposerEditor *editor = new KMComposerEditor(this, mCryptoStateIndicatorWidget);
 
-    connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
+    //Don't use new connect api here. It crashs
+    connect(editor, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
+    //connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor(editor);
     vbox->addWidget(mCryptoStateIndicatorWidget);
     vbox->addWidget(editor);
