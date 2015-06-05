@@ -457,8 +457,8 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
 
     const Akonadi::Item msg = job->property("msg").value<Akonadi::Item>();
     const QPoint aPoint = job->property("point").toPoint();
-    const QUrl imageUrl = job->property("imageUrl").value<QUrl>();
-    const QUrl url = job->property("url").value<QUrl>();
+    const QUrl imageUrl = job->property("imageUrl").toUrl();
+    const QUrl url = job->property("url").toUrl();
 
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound);
 }

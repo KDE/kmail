@@ -130,7 +130,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent,
             mModelProxy->data(child,
                               Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         const int showCollection =
-            mModelProxy->data(child, Qt::CheckStateRole).value<int>();
+            mModelProxy->data(child, Qt::CheckStateRole).toInt();
 
         if (col.isValid()) {
             const Akonadi::CollectionStatistics stats = col.statistics();
