@@ -21,10 +21,7 @@
 #define SAVEASFILEJOB_H
 
 #include <QObject>
-namespace MessageComposer
-{
-class KMeditor;
-}
+class QTextDocument;
 class SaveAsFileJob : public QObject
 {
     Q_OBJECT
@@ -35,13 +32,13 @@ public:
 
     void setHtmlMode(bool htmlMode);
 
-    void setEditor(MessageComposer::KMeditor *editor);
+    void setTextDocument(QTextDocument *textDocument);
 
     void setParentWidget(QWidget *parentWidget);
 
 private:
     bool mHtmlMode;
-    MessageComposer::KMeditor *mEditor;
+    QTextDocument *mTextDocument;
     QWidget *mParentWidget;
 };
 

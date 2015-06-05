@@ -25,12 +25,12 @@
 #include <qtextdocumentwriter.h>
 #include <QUrl>
 #include <KLocalizedString>
-#include <messagecomposer/composer/kmeditor.h>
+#include <QTextDocument>
 
 SaveAsFileJob::SaveAsFileJob(QObject *parent)
     : QObject(parent),
       mHtmlMode(false),
-      mEditor(Q_NULLPTR),
+      mTextDocument(Q_NULLPTR),
       mParentWidget(Q_NULLPTR)
 {
 
@@ -67,7 +67,7 @@ void SaveAsFileJob::start()
         } else {
             writer.setFormat("plaintext");
         }
-        if (!writer.write(mEditor->document())) {
+        if (!writer.write(mTextDocument)) {
             qCDebug(KMAIL_LOG) << " Error during writing";
         }
     }
@@ -80,9 +80,9 @@ void SaveAsFileJob::setHtmlMode(bool htmlMode)
     mHtmlMode = htmlMode;
 }
 
-void SaveAsFileJob::setEditor(MessageComposer::KMeditor *editor)
+void SaveAsFileJob::setTextDocument(QTextDocument *textDocument)
 {
-    mEditor = editor;
+    mTextDocument = textDocument;
 }
 
 void SaveAsFileJob::setParentWidget(QWidget *parentWidget)

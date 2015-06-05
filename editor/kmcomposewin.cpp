@@ -3235,7 +3235,7 @@ void KMComposeWin::slotSaveAsFile()
     SaveAsFileJob *job = new SaveAsFileJob(this);
     job->setParentWidget(this);
     job->setHtmlMode(mComposerBase->editor()->textMode() == KMeditor::Rich);
-    job->setEditor(mComposerBase->editor());
+    job->setTextDocument(mComposerBase->editor()->document());
     job->start();
     //not necessary to delete it. It done in SaveAsFileJob
 }
