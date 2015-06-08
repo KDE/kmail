@@ -110,6 +110,7 @@ if (KDEPIM_BUILD_DESKTOP)
   set(kmailprivate_editor_LIB_SRCS
      editor/widgets/snippetwidget.cpp
      editor/kmcomposereditor.cpp
+     editor/kmcomposereditorng.cpp
      editor/composer.cpp
      editor/codec/codecaction.cpp
      editor/codec/codecmanager.cpp
