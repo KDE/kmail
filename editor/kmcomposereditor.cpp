@@ -22,13 +22,8 @@
 #include "kmcomposereditor.h"
 #include "kmail_debug.h"
 #include "editor/kmcomposewin.h"
-#include "kmcommands.h"
 #include "util.h"
-#include <kcontacts/addressee.h>
-#include <AkonadiCore/itemfetchjob.h>
 #include "widgets/kactionmenuchangecase.h"
-
-#include <kio/jobuidelegate.h>
 
 #include "messagecore/settings/globalsettings.h"
 
@@ -44,9 +39,7 @@
 #include <Sonnet/ConfigDialog>
 
 #include "kmkernel.h"
-#include "foldercollection.h"
 #include <QCheckBox>
-#include <QTextCodec>
 #include <QtCore/QMimeData>
 
 using namespace MailCommon;
@@ -110,22 +103,6 @@ void KMComposerEditor::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter 
 QString KMComposerEditor::smartQuote(const QString &msg)
 {
     return mComposerWin->smartQuote(msg);
-}
-
-void KMComposerEditor::replaceUnknownChars(const QTextCodec *codec)
-{
-    QTextCursor cursor(document());
-    cursor.beginEditBlock();
-    while (!cursor.atEnd()) {
-        cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
-        const QChar cur = cursor.selectedText().at(0);
-        if (codec->canEncode(cur)) {
-            cursor.clearSelection();
-        } else {
-            cursor.insertText(QStringLiteral("?"));
-        }
-    }
-    cursor.endEditBlock();
 }
 
 bool KMComposerEditor::canInsertFromMimeData(const QMimeData *source) const

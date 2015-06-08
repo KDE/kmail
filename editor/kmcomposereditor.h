@@ -51,12 +51,6 @@ public:
     QList<QAction *> createActions() Q_DECL_OVERRIDE;
 
     /**
-     * This replaces all characters not known to the specified codec with
-     * questionmarks. HTML formatting is preserved.
-     */
-    void replaceUnknownChars(const QTextCodec *codec);
-
-    /**
      * Reimplemented from KMEditor.
      */
     QString smartQuote(const QString &msg) Q_DECL_OVERRIDE;
