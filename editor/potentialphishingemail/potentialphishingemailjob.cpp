@@ -64,8 +64,8 @@ bool PotentialPhishingEmailJob::start()
                     tname = tname.mid(1,tname.length()-2);
                 }
                 if (temail.toLower() != tname.toLower()) {
-                    QString str = QString::fromLatin1("(%1)").arg(temail.toLower());
-                    if (!tname.toLower().contains(str)) {
+                    const QString str = QString::fromLatin1("(%1)").arg(temail.toLower());
+                    if (!tname.contains(str, Qt::CaseInsensitive)) {
                         mPotentialPhisingEmails.append(addr);
                     }
                 }
