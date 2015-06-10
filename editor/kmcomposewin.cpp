@@ -389,7 +389,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     mHeadersToEditorSplitter->addWidget(mSplitter);
     editor->setAcceptDrops(true);
-    connect(sigController, SIGNAL(signatureAdded()), mComposerBase->editor()->composerSignature(), SLOT(startExternalEditor()));
+    connect(sigController, &MessageComposer::SignatureController::signatureAdded, mComposerBase->editor()->externalComposer(), &MessageComposer::RichTextExternalComposer::startExternalEditor);
 
     connect(dictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposeWin::slotSpellCheckingLanguage);
 
