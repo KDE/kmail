@@ -1224,7 +1224,7 @@ void KMComposeWin::setupActions(void)
 
     mReplaceText = KStandardAction::replace(mRichTextEditorwidget, SLOT(slotReplace()), actionCollection());
     actionCollection()->addAction(KStandardAction::Spelling, QLatin1String("spellcheck"),
-                                  mComposerBase->editor(), SLOT(checkSpelling()));
+                                  mComposerBase->editor(), SLOT(slotCheckSpelling()));
 
     action = new QAction(i18n("Paste as Attac&hment"), this);
     actionCollection()->addAction(QLatin1String("paste_att"), action);
