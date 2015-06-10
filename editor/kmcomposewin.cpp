@@ -1220,7 +1220,7 @@ void KMComposeWin::setupActions(void)
     mSelectAll = KStandardAction::selectAll(mGlobalAction, SLOT(slotMarkAll()), actionCollection());
 
     mFindText = KStandardAction::find(mRichTextEditorwidget, SLOT(slotFind()), actionCollection());
-    mFindNextText = KStandardAction::findNext(mComposerBase->editor(), SLOT(slotFindNext()), actionCollection());
+    mFindNextText = KStandardAction::findNext(mRichTextEditorwidget, SLOT(slotFindNext()), actionCollection());
 
     mReplaceText = KStandardAction::replace(mRichTextEditorwidget, SLOT(slotReplace()), actionCollection());
     actionCollection()->addAction(KStandardAction::Spelling, QLatin1String("spellcheck"),
