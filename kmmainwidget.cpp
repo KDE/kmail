@@ -45,6 +45,7 @@
 #include "widgets/kactionmenutransport.h"
 #include "widgets/kactionmenuaccount.h"
 #include "search/searchrule/searchrulestatus.h"
+#include "pimcommon/util/networkutil.h"
 #if !defined(NDEBUG)
 #include <ksieveui/debug/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -2135,6 +2136,11 @@ void KMMainWidget::slotCcFilter()
     openFilterDialog("Cc",  msg->cc()->asUnicodeString());
 }
 
+void KMMainWidget::slotBandwidth(bool b)
+{
+    PimCommon::NetworkUtil::self()->setLowBandwidth(b);
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUndo()
 {
@@ -3534,8 +3540,11 @@ void KMMainWidget::setupActions()
 
     mArchiveAction = new QAction(i18nc("@action", "Archive"), this);
     actionCollection()->addAction(QLatin1String("archive_mails"), mArchiveAction);
-    connect(mArchiveAction, SIGNAL(triggered(bool)),
-            SLOT(slotArchiveMails()));
+    connect(mArchiveAction, &QAction::triggered, this, &KMMainWidget::slotArchiveMails);
+
+    mLowBandwithAction = new KToggleAction(i18n("Low Bandwidth"), this);
+    actionCollection()->addAction(QLatin1String("low_bandwidth"), mLowBandwithAction);
+    connect(mLowBandwithAction, &KToggleAction::triggered, this, &KMMainWidget::slotBandwidth);
 
 }
 

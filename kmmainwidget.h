@@ -553,13 +553,21 @@ private Q_SLOTS:
 
     void slotCollectionRemoved(const Akonadi::Collection &col);
     void slotCcFilter();
+    void slotBandwidth(bool b);
 private:
     // Message actions
-    QAction *mDeleteAction, *mTrashThreadAction,
-            *mDeleteThreadAction, *mSaveAsAction, *mUseAction,
-            *mSendAgainAction, *mApplyAllFiltersAction,
-            *mSaveAttachmentsAction, *mOpenAction,
-            *mMoveMsgToFolderAction, *mCollectionProperties, *mSendQueued;
+    QAction *mDeleteAction;
+    QAction *mTrashThreadAction;
+    QAction *mDeleteThreadAction;
+    QAction *mSaveAsAction;
+    QAction *mUseAction;
+    QAction *mSendAgainAction;
+    QAction *mApplyAllFiltersAction;
+    QAction *mSaveAttachmentsAction;
+    QAction *mOpenAction;
+    QAction *mMoveMsgToFolderAction;
+    QAction *mCollectionProperties;
+    QAction *mSendQueued;
     QAction *mArchiveAction;
     KActionMenuTransport *mSendActionMenu;
     // Filter actions
@@ -588,8 +596,11 @@ private:
     bool          mLongFolderList;
     bool          mStartupDone;
     bool          mWasEverShown;
-    bool mHtmlGlobalSetting, mHtmlLoadExtGlobalSetting, mFolderHtmlLoadExtPreference,
-         mReaderWindowActive, mReaderWindowBelow;
+    bool mHtmlGlobalSetting;
+    bool mHtmlLoadExtGlobalSetting;
+    bool mFolderHtmlLoadExtPreference;
+    bool mReaderWindowActive;
+    bool mReaderWindowBelow;
     bool mEnableFavoriteFolderView;
     bool mEnableFolderQuickSearch;
 
@@ -647,6 +658,7 @@ private:
     KMLaunchExternalComponent *mLaunchExternalComponent;
     ManageShowCollectionProperties *mManageShowCollectionProperties;
     QAction *mShowIntroductionAction;
+    KToggleAction *mLowBandwithAction;
 };
 
 #endif
