@@ -35,7 +35,7 @@ public:
     //TODO make it virtual.
     QString smartQuote(const QString &msg) Q_DECL_OVERRIDE;
 
-    void setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;
+    void setHighlighterColors(MessageComposer::RichTextComposerEmailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;
 
     void showSpellConfigDialog(const QString &configFileName);
 

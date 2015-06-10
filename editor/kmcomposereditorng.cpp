@@ -22,6 +22,7 @@
 #include "kmail_debug.h"
 
 #include <qmenu.h>
+#include <QDebug>
 #include <KToggleAction>
 #include <QMimeData>
 #include <QCheckBox>
@@ -29,6 +30,7 @@
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 #include "messagecore/settings/globalsettings.h"
 #include <Sonnet/ConfigDialog>
+#include <composer-ng/richtextcomposeremailquotehighlighter.h>
 
 KMComposerEditorNg::KMComposerEditorNg(KMComposeWin *win, QWidget *parent)
     : MessageComposer::RichTextComposer(parent),
@@ -83,8 +85,9 @@ void KMComposerEditorNg::insertFromMimeData(const QMimeData *source)
     }
 }
 
-void KMComposerEditorNg::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter *highlighter)
+void KMComposerEditorNg::setHighlighterColors(MessageComposer::RichTextComposerEmailQuoteHighlighter *highlighter)
 {
+    qDebug()<<" void KMComposerEditorNg::setHighlighterColors(KPIMTextEdit::EMailQuoteHighlighter *highlighter)*********************************";
     QColor color1 = KMail::Util::quoteL1Color();
     QColor color2 = KMail::Util::quoteL2Color();
     QColor color3 = KMail::Util::quoteL3Color();
