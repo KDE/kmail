@@ -2095,7 +2095,6 @@ QUrl KMComposeWin::insertFile()
     return url;
 }
 
-
 QString KMComposeWin::smartQuote(const QString &msg)
 {
     return MessageCore::StringUtil::smartQuote(msg, MessageComposer::MessageComposerSettings::self()->lineWrapWidth());

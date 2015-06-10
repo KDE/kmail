@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "kmcomposereditorng.h"
 #include "kmcomposewin.h"
 #include "kmkernel.h"
@@ -30,7 +29,6 @@
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 #include "messagecore/settings/globalsettings.h"
 #include <Sonnet/ConfigDialog>
-
 
 KMComposerEditorNg::KMComposerEditorNg(KMComposeWin *win, QWidget *parent)
     : MessageComposer::RichTextComposer(parent),

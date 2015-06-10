@@ -15,12 +15,12 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef KMCOMPOSEREDITORWIDGETNG_H
 #define KMCOMPOSEREDITORWIDGETNG_H
 
 #include <texteditor/richtexteditor/richtexteditorwidget.h>
-namespace PimCommon {
+namespace PimCommon
+{
 class RichTextEditor;
 }
 class KMComposerEditorWidgetNg : public PimCommon::RichTextEditorWidget

@@ -15,13 +15,13 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef KMCOMPOSEREDITORNG_H
 #define KMCOMPOSEREDITORNG_H
 
 #include "messagecomposer/composer-ng/richtextcomposer.h"
 class KMComposeWin;
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class EMailQuoteHighlighter;
 }
 
