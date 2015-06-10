@@ -38,6 +38,7 @@
 #include "messagecomposer/composer-ng/richtextcomposeractions.h"
 #include "messagecomposer/composer-ng/richtextcomposerimages.h"
 #include "messagecomposer/composer-ng/richtextexternalcomposer.h"
+#include "kmcomposereditorwidgetng.h"
 #include "kmkernel.h"
 #include "settings/globalsettings.h"
 #include "kmmainwin.h"
@@ -374,14 +375,16 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setMargin(0);
+
     KMComposerEditorNg *editor = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
+    mRichTextEditorwidget = new KMComposerEditorWidgetNg(editor, mCryptoStateIndicatorWidget);
 
     //Don't use new connect api here. It crashs
     connect(editor, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
     //connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor(editor);
     vbox->addWidget(mCryptoStateIndicatorWidget);
-    vbox->addWidget(editor);
+    vbox->addWidget(mRichTextEditorwidget);
 
     mSnippetSplitter->insertWidget(0, editorAndCryptoStateIndicators);
     mSnippetSplitter->setOpaqueResize(true);
@@ -1216,10 +1219,10 @@ void KMComposeWin::setupActions(void)
     KStandardAction::pasteText(mGlobalAction, SLOT(slotPaste()), actionCollection());
     mSelectAll = KStandardAction::selectAll(mGlobalAction, SLOT(slotMarkAll()), actionCollection());
 
-    mFindText = KStandardAction::find(mComposerBase->editor(), SLOT(slotFind()), actionCollection());
+    mFindText = KStandardAction::find(mRichTextEditorwidget, SLOT(slotFind()), actionCollection());
     mFindNextText = KStandardAction::findNext(mComposerBase->editor(), SLOT(slotFindNext()), actionCollection());
 
-    mReplaceText = KStandardAction::replace(mComposerBase->editor(), SLOT(slotReplace()), actionCollection());
+    mReplaceText = KStandardAction::replace(mRichTextEditorwidget, SLOT(slotReplace()), actionCollection());
     actionCollection()->addAction(KStandardAction::Spelling, QLatin1String("spellcheck"),
                                   mComposerBase->editor(), SLOT(checkSpelling()));
 
