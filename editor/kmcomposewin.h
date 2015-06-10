@@ -32,7 +32,8 @@
 #include <QList>
 
 // LIBKDEPIM includes
-#include <messagecomposer/composer/kmeditor.h>
+//#include <messagecomposer/composer/kmeditor.h>
+#include "messagecomposer/composer-ng/richtextcomposer.h"
 
 #include "messagecomposer/sender/messagesender.h"
 
@@ -279,7 +280,7 @@ public Q_SLOTS: // kmkernel, callback
     void slotWordWrapToggled(bool) Q_DECL_OVERRIDE;
 
     void slotToggleMarkup();
-    void slotTextModeChanged(KRichTextEdit::Mode);
+    void slotTextModeChanged(MessageComposer::RichTextComposer::Mode mode);
     void htmlToolBarVisibilityChanged(bool visible);
     void slotSpellcheckDoneClearStatus();
     void autoSaveMessage(bool force = false) Q_DECL_OVERRIDE;
@@ -471,6 +472,7 @@ public: // kmcommand
 
     uint currentIdentity() const;
 private:
+    QUrl insertFile();
     /**
      * Updates the visibility and text of the signature and encryption state indicators.
      */

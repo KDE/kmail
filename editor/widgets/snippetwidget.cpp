@@ -13,7 +13,7 @@
 
 #include "snippetwidget.h"
 
-#include "editor/kmcomposereditor.h"
+#include "editor/kmcomposereditorng.h"
 
 #include <mailcommon/snippets/snippetsmanager.h>
 
@@ -24,7 +24,7 @@
 #include <QContextMenuEvent>
 #include <QHeaderView>
 
-SnippetWidget::SnippetWidget(KMComposerEditor *editor, KActionCollection *actionCollection, QWidget *parent)
+SnippetWidget::SnippetWidget(KMComposerEditorNg *editor, KActionCollection *actionCollection, QWidget *parent)
     : QTreeView(parent)
 {
     header()->hide();

@@ -22,7 +22,7 @@
 
 #include <KLineEdit>
 
-#include <editor/kmcomposereditor.h>
+#include <editor/kmcomposereditorng.h>
 
 KMComposerGlobalAction::KMComposerGlobalAction(KMComposeWin *composerWin, QObject *parent)
     : QObject(parent),
@@ -45,8 +45,8 @@ void KMComposerGlobalAction::slotUndo()
 
     if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
         static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->undo();
-    } else if (::qobject_cast<KMComposerEditor *>(fw)) {
-        static_cast<KTextEdit *>(fw)->undo();
+    } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
+        static_cast<QTextEdit *>(fw)->undo();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
         static_cast<KLineEdit *>(fw)->undo();
     }
@@ -61,8 +61,8 @@ void KMComposerGlobalAction::slotRedo()
 
     if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
         static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->redo();
-    } else if (::qobject_cast<KMComposerEditor *>(fw)) {
-        static_cast<KTextEdit *>(fw)->redo();
+    } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
+        static_cast<QTextEdit *>(fw)->redo();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
         static_cast<KLineEdit *>(fw)->redo();
     }
@@ -77,8 +77,8 @@ void KMComposerGlobalAction::slotCut()
 
     if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
         static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->cut();
-    } else if (::qobject_cast<KMComposerEditor *>(fw)) {
-        static_cast<KTextEdit *>(fw)->cut();
+    } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
+        static_cast<QTextEdit *>(fw)->cut();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
         static_cast<KLineEdit *>(fw)->cut();
     }
@@ -93,8 +93,8 @@ void KMComposerGlobalAction::slotCopy()
 
     if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
         static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->copy();
-    } else if (::qobject_cast<KMComposerEditor *>(fw)) {
-        static_cast<KTextEdit *>(fw)->copy();
+    } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
+        static_cast<QTextEdit *>(fw)->copy();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
         static_cast<KLineEdit *>(fw)->copy();
     }
@@ -108,8 +108,8 @@ void KMComposerGlobalAction::slotPaste()
     }
     if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
         static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->paste();
-    } else if (::qobject_cast<KMComposerEditor *>(fw)) {
-        static_cast<KTextEdit *>(fw)->paste();
+    } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
+        static_cast<QTextEdit *>(fw)->paste();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
         static_cast<KLineEdit *>(fw)->paste();
     }
@@ -126,7 +126,7 @@ void KMComposerGlobalAction::slotMarkAll()
         static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->selectAll();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
         static_cast<KLineEdit *>(fw)->selectAll();
-    } else if (::qobject_cast<KMComposerEditor *>(fw)) {
-        static_cast<KTextEdit *>(fw)->selectAll();
+    } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
+        static_cast<QTextEdit *>(fw)->selectAll();
     }
 }

@@ -22,7 +22,7 @@ class SnippetsManager;
 }
 
 class KActionCollection;
-class KMComposerEditor;
+class KMComposerEditorNg;
 
 class QContextMenuEvent;
 
@@ -32,7 +32,7 @@ class QContextMenuEvent;
 class SnippetWidget : public QTreeView
 {
 public:
-    explicit SnippetWidget(KMComposerEditor *editor, KActionCollection *actionCollection, QWidget *parent = Q_NULLPTR);
+    explicit SnippetWidget(KMComposerEditorNg *editor, KActionCollection *actionCollection, QWidget *parent = Q_NULLPTR);
     ~SnippetWidget();
 
 protected:

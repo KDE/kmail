@@ -32,7 +32,12 @@
 #include <messagecomposer/job/emailaddressresolvejob.h>
 #include "kleo_util.h"
 #include "kmcommands.h"
-#include "editor/kmcomposereditor.h"
+#include "editor/kmcomposereditorng.h"
+#include "messagecomposer/composer-ng/richtextcomposercontroler.h"
+#include "messagecomposer/composer-ng/richtextcomposersignatures.h"
+#include "messagecomposer/composer-ng/richtextcomposeractions.h"
+#include "messagecomposer/composer-ng/richtextcomposerimages.h"
+#include "messagecomposer/composer-ng/richtextexternalcomposer.h"
 #include "kmkernel.h"
 #include "settings/globalsettings.h"
 #include "kmmainwin.h"
@@ -172,6 +177,7 @@
 #include <QMimeData>
 #include <QTextDocumentWriter>
 #include <QApplication>
+#include <KEncodingFileDialog>
 
 // System includes
 #include <stdlib.h>
@@ -194,7 +200,6 @@ using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
 using KPIM::RecentAddresses;
-using MessageComposer::KMeditor;
 
 KMail::Composer *KMail::makeComposer(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context,
                                      uint identity, const QString &textSelection,
@@ -369,7 +374,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setMargin(0);
-    KMComposerEditor *editor = new KMComposerEditor(this, mCryptoStateIndicatorWidget);
+    KMComposerEditorNg *editor = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
 
     //Don't use new connect api here. It crashs
     connect(editor, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
@@ -384,14 +389,14 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     mHeadersToEditorSplitter->addWidget(mSplitter);
     editor->setAcceptDrops(true);
-    connect(sigController, SIGNAL(signatureAdded()), mComposerBase->editor(), SLOT(startExternalEditor()));
+    connect(sigController, SIGNAL(signatureAdded()), mComposerBase->editor()->composerSignature(), SLOT(startExternalEditor()));
 
     connect(dictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposeWin::slotSpellCheckingLanguage);
 
-    connect(editor, &KMComposerEditor::languageChanged, this, &KMComposeWin::slotLanguageChanged);
-    connect(editor, &KMComposerEditor::spellCheckStatus, this, &KMComposeWin::slotSpellCheckingStatus);
-    connect(editor, &KMComposerEditor::insertModeChanged, this, &KMComposeWin::slotOverwriteModeChanged);
-    connect(editor, &KMComposerEditor::spellCheckingFinished, this, &KMComposeWin::slotCheckSendNow);
+    connect(editor, &KMComposerEditorNg::languageChanged, this, &KMComposeWin::slotLanguageChanged);
+    connect(editor, &KMComposerEditorNg::spellCheckStatus, this, &KMComposeWin::slotSpellCheckingStatus);
+    connect(editor, &KMComposerEditorNg::insertModeChanged, this, &KMComposeWin::slotOverwriteModeChanged);
+    connect(editor, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposeWin::slotCheckSendNow);
     mSnippetWidget = new SnippetWidget(editor, actionCollection(), mSnippetSplitter);
     mSnippetWidget->setVisible(GlobalSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
@@ -485,7 +490,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     }
 
     mComposerBase->recipientsEditor()->setFocus();
-    editor->updateActionStates(); // set toolbar buttons to correct values
+    editor->composerActions()->updateActionStates(); // set toolbar buttons to correct values
 
     mDone = true;
 
@@ -668,7 +673,7 @@ void KMComposeWin::writeConfig(void)
         mAutoSpellCheckingAction->isChecked());
     MessageViewer::GlobalSettings::self()->setUseFixedFont(mFixedFontAction->isChecked());
     if (!mForceDisableHtml) {
-        GlobalSettings::self()->setUseHtmlMarkup(mComposerBase->editor()->textMode() == KMeditor::Rich);
+        GlobalSettings::self()->setUseHtmlMarkup(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich);
     }
     GlobalSettings::self()->setComposerSize(size());
     GlobalSettings::self()->setShowSnippetManager(mSnippetAction->isChecked());
@@ -1265,7 +1270,7 @@ void KMComposeWin::setupActions(void)
     connect(mAutoSpellCheckingAction, &KToggleAction::toggled, this, &KMComposeWin::slotAutoSpellCheckingToggled);
     connect(mComposerBase->editor(), SIGNAL(checkSpellingChanged(bool)), this, SLOT(slotAutoSpellCheckingToggled(bool)));
 
-    connect(mComposerBase->editor(), SIGNAL(textModeChanged(KRichTextEdit::Mode)), this, SLOT(slotTextModeChanged(KRichTextEdit::Mode)));
+    connect(mComposerBase->editor(), SIGNAL(textModeChanged(MessageComposer::RichTextComposer::Mode)), this, SLOT(slotTextModeChanged(MessageComposer::RichTextComposer::Mode)));
     connect(mComposerBase->editor(), SIGNAL(externalEditorClosed()), this, SLOT(slotExternalEditorClosed()));
     connect(mComposerBase->editor(), SIGNAL(externalEditorStarted()), this, SLOT(slotExternalEditorStarted()));
     //these are checkable!!!
@@ -1382,7 +1387,8 @@ void KMComposeWin::setupActions(void)
     mCryptoModuleAction->setToolTip(i18n("Select a cryptographic format for this message"));
     mCryptoModuleAction->setItems(listCryptoFormat);
 
-    actionCollection()->addActions(mComposerBase->editor()->createActions());
+    mComposerBase->editor()->createActions(actionCollection());
+    //actionCollection()->addActions(mComposerBase->editor()->createActions());
     actionCollection()->addAction(QLatin1String("shared_link"), mStorageService->menuShareLinkServices());
 
     mFollowUpToggleAction = new KToggleAction(i18n("Follow Up Mail..."), this);
@@ -1755,7 +1761,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
             QTimer::singleShot(0, mComposerBase->signatureController(), SLOT(appendSignature()));
         }
     } else {
-        mComposerBase->editor()->startExternalEditor();
+        mComposerBase->editor()->externalComposer()->startExternalEditor();
     }
 
     setModified(isModified);
@@ -1967,7 +1973,7 @@ void KMComposeWin::slotAddressBook()
 
 void KMComposeWin::slotInsertFile()
 {
-    KUrl u = mComposerBase->editor()->insertFile();
+    KUrl u = insertFile();
     if (u.isEmpty()) {
         return;
     }
@@ -2067,9 +2073,25 @@ void KMComposeWin::slotUpdateFont()
     if (!mFixedFontAction) {
         return;
     }
-    mComposerBase->editor()->setFontForWholeText(mFixedFontAction->isChecked() ?
+    mComposerBase->editor()->composerControler()->setFontForWholeText(mFixedFontAction->isChecked() ?
             mFixedFont : mBodyFont);
 }
+
+QUrl KMComposeWin::insertFile()
+{
+    const KEncodingFileDialog::Result result = KEncodingFileDialog::getOpenUrlAndEncoding(QString(),
+            QUrl(),
+            QString(),
+            this,
+            i18nc("@title:window", "Insert File"));
+    QUrl url;
+    if (!result.URLs.isEmpty()) {
+        url = result.URLs.first();
+        MessageCore::StringUtil::setEncodingFile(url, MessageViewer::NodeHelper::fixEncoding(result.encoding));
+    }
+    return url;
+}
+
 
 QString KMComposeWin::smartQuote(const QString &msg)
 {
@@ -2087,7 +2109,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
             return true;
         }
         if (!forceAttachment) {
-            if (mComposerBase->editor()->textMode() == KRichTextEdit::Rich && mComposerBase->editor()->isEnableImageActions()) {
+            if (mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich /*&& mComposerBase->editor()->isEnableImageActions() Necessary ?*/) {
                 QImage image = qvariant_cast<QImage>(source->imageData());
                 QFileInfo fi(source->text());
 
@@ -2097,7 +2119,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
                 const QAction *selectedAction = menu.exec(QCursor::pos());
                 if (selectedAction == addAsInlineImageAction) {
                     // Let the textedit from kdepimlibs handle inline images
-                    mComposerBase->editor()->insertImage(image, fi);
+                    mComposerBase->editor()->composerControler()->composerImages()->insertImage(image, fi);
                     return true;
                 } else if (!selectedAction) {
                     return true;
@@ -2153,7 +2175,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
 
                 if (selectedAction == addAsTextAction) {
                     foreach (const QUrl &url, urlList) {
-                        mComposerBase->editor()->insertLink(url.toDisplayString());
+                        mComposerBase->editor()->composerControler()->insertLink(url.toDisplayString());
                     }
                 } else if (selectedAction == addAsAttachmentAction) {
                     foreach (const QUrl &url, urlList) {
@@ -2477,7 +2499,7 @@ void KMComposeWin::printComposeResult(KJob *job, bool preview)
         Akonadi::Item printItem;
         printItem.setPayload<KMime::Message::Ptr>(composer->resultMessages().first());
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().first()), printItem);
-        const bool isHtml = mComposerBase->editor()->textMode() == KMeditor::Rich;
+        const bool isHtml = mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
         KMPrintCommand *command = new KMPrintCommand(this, printItem, Q_NULLPTR,
                 Q_NULLPTR, format, isHtml);
@@ -2860,7 +2882,7 @@ void KMComposeWin::enableHtml()
         return;
     }
 
-    mComposerBase->editor()->enableRichTextMode();
+    mComposerBase->editor()->activateRichText();
     if (!toolBar(QLatin1String("htmlToolBar"))->isVisible()) {
         // Use singleshot, as we we might actually be called from a slot that wanted to disable the
         // toolbar (but the messagebox in disableHtml() prevented that and called us).
@@ -2872,14 +2894,14 @@ void KMComposeWin::enableHtml()
         markupAction->setChecked(true);
     }
 
-    mComposerBase->editor()->updateActionStates();
-    mComposerBase->editor()->setActionsEnabled(true);
+    mComposerBase->editor()->composerActions()->updateActionStates();
+    mComposerBase->editor()->composerActions()->setActionsEnabled(true);
 }
 
 void KMComposeWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation confirmation)
 {
     bool forcePlainTextMarkup = false;
-    if (confirmation == MessageComposer::ComposerViewBase::LetUserConfirm && mComposerBase->editor()->isFormattingUsed() && !mForceDisableHtml) {
+    if (confirmation == MessageComposer::ComposerViewBase::LetUserConfirm && mComposerBase->editor()->composerControler()->isFormattingUsed() && !mForceDisableHtml) {
         int choice = KMessageBox::warningYesNoCancel(this, i18n("Turning HTML mode off "
                      "will cause the text to lose the formatting. Are you sure?"),
                      i18n("Lose the formatting?"), KGuiItem(i18n("Lose Formatting")), KGuiItem(i18n("Add Markup Plain Text")) , KStandardGuiItem::cancel(),
@@ -2899,7 +2921,7 @@ void KMComposeWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation c
 
     mComposerBase->editor()->forcePlainTextMarkup(forcePlainTextMarkup);
     mComposerBase->editor()->switchToPlainText();
-    mComposerBase->editor()->setActionsEnabled(false);
+    mComposerBase->editor()->composerActions()->setActionsEnabled(false);
 
     slotUpdateFont();
     if (toolBar(QLatin1String("htmlToolBar"))->isVisible()) {
@@ -2916,9 +2938,9 @@ void KMComposeWin::slotToggleMarkup()
     htmlToolBarVisibilityChanged(markupAction->isChecked());
 }
 
-void KMComposeWin::slotTextModeChanged(MessageComposer::KMeditor::Mode mode)
+void KMComposeWin::slotTextModeChanged(MessageComposer::RichTextComposer::Mode mode)
 {
-    if (mode == KMeditor::Plain) {
+    if (mode == MessageComposer::RichTextComposer::Plain) {
         disableHtml(MessageComposer::ComposerViewBase::NoConfirmationNeeded);    // ### Can this happen at all?
     } else {
         enableHtml();
@@ -3089,7 +3111,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
 
 void KMComposeWin::slotSpellcheckConfig()
 {
-    static_cast<KMComposerEditor *>(mComposerBase->editor())->showSpellConfigDialog(QLatin1String("kmail2rc"));
+    static_cast<KMComposerEditorNg *>(mComposerBase->editor())->showSpellConfigDialog(QLatin1String("kmail2rc"));
 }
 
 void KMComposeWin::slotEditToolbars()
@@ -3180,8 +3202,8 @@ void KMComposeWin::slotCursorPositionChanged()
 
     // Show link target in status bar
     if (mComposerBase->editor()->textCursor().charFormat().isAnchor()) {
-        const QString text = mComposerBase->editor()->currentLinkText();
-        const QString url = mComposerBase->editor()->currentLinkUrl();
+        const QString text = mComposerBase->editor()->composerControler()->currentLinkText();
+        const QString url = mComposerBase->editor()->composerControler()->currentLinkUrl();
         mStatusBarLabelList.at(0)->setText(text + QLatin1String(" -> ") + url);
     } else {
         mStatusBarLabelList.at(0)->clear();
@@ -3234,7 +3256,7 @@ void KMComposeWin::slotSaveAsFile()
 {
     SaveAsFileJob *job = new SaveAsFileJob(this);
     job->setParentWidget(this);
-    job->setHtmlMode(mComposerBase->editor()->textMode() == KMeditor::Rich);
+    job->setHtmlMode(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich);
     job->setTextDocument(mComposerBase->editor()->document());
     job->start();
     //not necessary to delete it. It done in SaveAsFileJob
@@ -3319,12 +3341,12 @@ void KMComposeWin::slotExternalEditorClosed()
 
 void KMComposeWin::slotInsertShortUrl(const QString &url)
 {
-    mComposerBase->editor()->insertLink(url);
+    mComposerBase->editor()->composerControler()->insertLink(url);
 }
 
 void KMComposeWin::slotShareLinkDone(const QString &link)
 {
-    mComposerBase->editor()->insertShareLink(link);
+    mComposerBase->editor()->composerControler()->insertShareLink(link);
 }
 
 void KMComposeWin::slotTransportChanged()
