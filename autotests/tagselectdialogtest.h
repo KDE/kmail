@@ -28,6 +28,7 @@ public:
     ~TagSelectDialogTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void initTestCase();
 };
 
 #endif // TAGSELECTDIALOGTEST_H

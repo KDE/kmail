@@ -21,6 +21,7 @@
 #include <QListWidget>
 #include <QLineEdit>
 #include <qtest.h>
+#include <QStandardPaths>
 
 TagSelectDialogTest::TagSelectDialogTest(QObject *parent)
     : QObject(parent)
@@ -31,6 +32,11 @@ TagSelectDialogTest::TagSelectDialogTest(QObject *parent)
 TagSelectDialogTest::~TagSelectDialogTest()
 {
 
+}
+
+void TagSelectDialogTest::initTestCase()
+{
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 void TagSelectDialogTest::shouldHaveDefaultValue()
