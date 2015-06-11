@@ -31,6 +31,7 @@ public:
     ~PotentialPhishingDetailDialogTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+    void initTestCase();
 };
 
 #endif // POTENTIALPHISHINGDETAILDIALOGTEST_H

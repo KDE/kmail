@@ -24,7 +24,7 @@
 #include <QLabel>
 #include <QListWidget>
 #include <qtest.h>
-
+#include <QStandardPaths>
 PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *parent)
     : QObject(parent)
 {
@@ -34,6 +34,11 @@ PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *pa
 PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
 {
 
+}
+
+void PotentialPhishingDetailDialogTest::initTestCase()
+{
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
