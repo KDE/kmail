@@ -81,8 +81,8 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     connect(mMMTab.mLoopOnGotoUnread, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mActionEnterFolder, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkTime, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.mDelayedMarkAsRead, SIGNAL(toggled(bool)), mMMTab.mDelayedMarkTime, SLOT(setEnabled(bool)));
-    connect(mMMTab.mDelayedMarkAsRead, SIGNAL(toggled(bool)), this , SLOT(slotEmitChanged()));
+    connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, mMMTab.mDelayedMarkTime, &QWidget::setEnabled);
+    connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, this , &ConfigModuleTab::slotEmitChanged);
     connect(mMMTab.mShowPopupAfterDnD, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mOnStartupOpenFolder, &MailCommon::FolderRequester::folderChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mEmptyTrashCheck, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);

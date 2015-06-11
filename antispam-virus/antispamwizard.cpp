@@ -935,8 +935,8 @@ ASWizInfoPage::ASWizInfoPage(AntiSpamWizard::WizardMode mode,
     mToolsList->setBatchSize(10);
     mToolsList->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,  QSizePolicy::Maximum));
     layout->addWidget(mToolsList);
-    connect(mToolsList->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-            this, SLOT(processSelectionChange()));
+    connect(mToolsList->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &ASWizInfoPage::processSelectionChange);
 
     mSelectionHint = new QLabel(this);
     mSelectionHint->clear();

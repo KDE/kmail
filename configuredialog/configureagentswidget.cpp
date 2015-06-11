@@ -51,8 +51,8 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     mDescription->enableFindReplace(false);
     mSplitter->addWidget(mDescription);
 
-    connect(mConfigureAgentListView, SIGNAL(descriptionChanged(QString)), mDescription, SLOT(setText(QString)));
-    connect(mConfigureAgentListView, SIGNAL(agentChanged()), this, SIGNAL(changed()));
+    connect(mConfigureAgentListView, &ConfigureAgentListView::descriptionChanged, mDescription, &QTextEdit::setText);
+    connect(mConfigureAgentListView, &ConfigureAgentListView::agentChanged, this, &ConfigureAgentsWidget::changed);
 
     setLayout(lay);
     mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs("data", QLatin1String("akonadi/agents"));
