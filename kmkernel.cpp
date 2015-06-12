@@ -290,7 +290,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     QString to, cc, bcc, subj, body, inReplyTo, replyTo;
     QStringList customHeaders;
     QUrl messageFile;
-    KUrl::List attachURLs;
+    QList<QUrl> attachURLs;
     bool mailto = false;
     bool checkMail = false;
     bool viewOnly = false;
@@ -405,7 +405,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                     attachURLs << makeAbsoluteUrl(attach);
                 }
             } else {
-                KUrl url(arg);
+                QUrl url(arg);
                 if (url.isValid() && !url.scheme().isEmpty()) {
                     attachURLs += url;
                 } else {
