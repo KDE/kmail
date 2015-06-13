@@ -77,10 +77,6 @@ namespace boost
 template <typename T> class shared_ptr;
 }
 
-namespace Sonnet
-{
-class DictionaryComboBox;
-}
 
 namespace MailTransport
 {

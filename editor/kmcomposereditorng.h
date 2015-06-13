@@ -20,10 +20,6 @@
 
 #include "messagecomposer/composer-ng/richtextcomposer.h"
 class KMComposeWin;
-namespace KPIMTextEdit
-{
-class EMailQuoteHighlighter;
-}
 
 class KMComposerEditorNg : public MessageComposer::RichTextComposer
 {
