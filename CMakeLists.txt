@@ -343,7 +343,6 @@ generate_export_header(kmailprivate BASE_NAME kmail)
   target_link_libraries(kmail
     KF5::KontactInterface
     kmailprivate
-    kdepim
   )
 
 
