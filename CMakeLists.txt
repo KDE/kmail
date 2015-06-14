@@ -328,9 +328,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 
   target_link_libraries(kmailpart
     
-    KF5::AkonadiCore
     kmailprivate
-    mailcommon
     KF5::KCMUtils
   )
 
