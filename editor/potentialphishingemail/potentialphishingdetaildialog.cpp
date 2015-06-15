@@ -42,8 +42,6 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     setLayout(topLayout);
 
     setModal(true);
-    mPotentialPhishingDetailWidget = new PotentialPhishingDetailWidget(this);
-    mPotentialPhishingDetailWidget->setObjectName(QStringLiteral("potentialphising_widget"));
 
     QWidget *mainWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
