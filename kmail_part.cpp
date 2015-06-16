@@ -59,7 +59,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KParts::ReadOnlyPart(parent),
     mParentWidget(parentWidget)
 {
-    setComponentName(QLatin1String("kmail2"), QLatin1String("kmail2"));
+    setComponentName(QStringLiteral("kmail2"), QStringLiteral("kmail2"));
 
     KMMigrateApplication migrate;
     migrate.migrate();
@@ -70,7 +70,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     //local, do the init
     KMKernel *mKMailKernel = new KMKernel();
     mKMailKernel->init();
-    mKMailKernel->setXmlGuiInstanceName(QLatin1String("kmail2"));
+    mKMailKernel->setXmlGuiInstanceName(QStringLiteral("kmail2"));
 
     // and session management
     mKMailKernel->doSessionManagement();
@@ -80,17 +80,17 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
     (void) new KmailpartAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QLatin1String("/KMailPart"), this);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/KMailPart"), this);
 
     // create a canvas to insert our widget
     QWidget *canvas = new QWidget(parentWidget);
     canvas->setFocusPolicy(Qt::ClickFocus);
-    canvas->setObjectName(QLatin1String("canvas"));
+    canvas->setObjectName(QStringLiteral("canvas"));
     setWidget(canvas);
-    KIconLoader::global()->addAppDir(QLatin1String("libkdepim"));
+    KIconLoader::global()->addAppDir(QStringLiteral("libkdepim"));
     mainWidget = new KMMainWidget(canvas, this, actionCollection(),
                                   KSharedConfig::openConfig());
-    mainWidget->setObjectName(QLatin1String("partmainwidget"));
+    mainWidget->setObjectName(QStringLiteral("partmainwidget"));
     QVBoxLayout *topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);
     topLayout->setMargin(0);
@@ -98,8 +98,8 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KParts::StatusBarExtension *statusBar  = new KParts::StatusBarExtension(this);
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
 
-    setXMLFile(QLatin1String("kmail_part.rc"), true);
-    KSettings::Dispatcher::registerComponent(QLatin1String("kmail2"), mKMailKernel, "slotConfigChanged");
+    setXMLFile(QStringLiteral("kmail_part.rc"), true);
+    KSettings::Dispatcher::registerComponent(QStringLiteral("kmail2"), mKMailKernel, "slotConfigChanged");
 }
 
 KMailPart::~KMailPart()

@@ -3256,19 +3256,19 @@ void KMMainWidget::setupActions()
     //----- Go Menu
     {
         QAction *action = new QAction(i18n("&Next Message"), this);
-        actionCollection()->addAction(QLatin1String("go_next_message"), action);
-        actionCollection()->setDefaultShortcut(action, QKeySequence(QLatin1String("N; Right")));
+        actionCollection()->addAction(QStringLiteral("go_next_message"), action);
+        actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("N; Right")));
         KMail::Util::addQActionHelpText(action, i18n("Go to the next message"));
         connect(action, &QAction::triggered, this, &KMMainWidget::slotSelectNextMessage);
     }
     {
         QAction *action = new QAction(i18n("Next &Unread Message"), this);
-        actionCollection()->addAction(QLatin1String("go_next_unread_message"), action);
+        actionCollection()->addAction(QStringLiteral("go_next_unread_message"), action);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_Plus));
         if (QApplication::isRightToLeft()) {
-            action->setIcon(QIcon::fromTheme(QLatin1String("go-previous")));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("go-previous")));
         } else {
-            action->setIcon(QIcon::fromTheme(QLatin1String("go-next")));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("go-next")));
         }
         action->setIconText(i18nc("@action:inmenu Goto next unread message", "Next"));
         KMail::Util::addQActionHelpText(action, i18n("Go to the next unread message"));
@@ -3276,19 +3276,19 @@ void KMMainWidget::setupActions()
     }
     {
         QAction *action = new QAction(i18n("&Previous Message"), this);
-        actionCollection()->addAction(QLatin1String("go_prev_message"), action);
+        actionCollection()->addAction(QStringLiteral("go_prev_message"), action);
         KMail::Util::addQActionHelpText(action, i18n("Go to the previous message"));
-        actionCollection()->setDefaultShortcut(action, QKeySequence(QLatin1String("P; Left")));
+        actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("P; Left")));
         connect(action, &QAction::triggered, this, &KMMainWidget::slotSelectPreviousMessage);
     }
     {
         QAction *action = new QAction(i18n("Previous Unread &Message"), this);
-        actionCollection()->addAction(QLatin1String("go_prev_unread_message"), action);
+        actionCollection()->addAction(QStringLiteral("go_prev_unread_message"), action);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_Minus));
         if (QApplication::isRightToLeft()) {
-            action->setIcon(QIcon::fromTheme(QLatin1String("go-next")));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("go-next")));
         } else {
-            action->setIcon(QIcon::fromTheme(QLatin1String("go-previous")));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("go-previous")));
         }
         action->setIconText(i18nc("@action:inmenu Goto previous unread message.", "Previous"));
         KMail::Util::addQActionHelpText(action, i18n("Go to the previous unread message"));
@@ -3296,21 +3296,21 @@ void KMMainWidget::setupActions()
     }
     {
         QAction *action = new QAction(i18n("Next Unread &Folder"), this);
-        actionCollection()->addAction(QLatin1String("go_next_unread_folder"), action);
+        actionCollection()->addAction(QStringLiteral("go_next_unread_folder"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotNextUnreadFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Plus));
         KMail::Util::addQActionHelpText(action, i18n("Go to the next folder with unread messages"));
     }
     {
         QAction *action = new QAction(i18n("Previous Unread F&older"), this);
-        actionCollection()->addAction(QLatin1String("go_prev_unread_folder"), action);
+        actionCollection()->addAction(QStringLiteral("go_prev_unread_folder"), action);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Minus));
         KMail::Util::addQActionHelpText(action, i18n("Go to the previous folder with unread messages"));
         connect(action, &QAction::triggered, this, &KMMainWidget::slotPrevUnreadFolder);
     }
     {
         QAction *action = new QAction(i18nc("Go->", "Next Unread &Text"), this);
-        actionCollection()->addAction(QLatin1String("go_next_unread_text"), action);
+        actionCollection()->addAction(QStringLiteral("go_next_unread_text"), action);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_Space));
         KMail::Util::addQActionHelpText(action, i18n("Go to the next unread text"));
         action->setWhatsThis(i18n("Scroll down current message. "
@@ -3323,17 +3323,17 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("Configure &Filters..."), this);
         action->setMenuRole(QAction::NoRole);   // do not move to application menu on OS X
-        actionCollection()->addAction(QLatin1String("filter"), action);
+        actionCollection()->addAction(QStringLiteral("filter"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotFilter);
     }
     {
         QAction *action = new QAction(i18n("Manage &Sieve Scripts..."), this);
-        actionCollection()->addAction(QLatin1String("sieveFilters"), action);
+        actionCollection()->addAction(QStringLiteral("sieveFilters"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotManageSieveScripts);
     }
     {
-        mShowIntroductionAction = new QAction(QIcon::fromTheme(QLatin1String("kmail")), i18n("KMail &Introduction"), this);
-        actionCollection()->addAction(QLatin1String("help_kmail_welcomepage"), mShowIntroductionAction);
+        mShowIntroductionAction = new QAction(QIcon::fromTheme(QStringLiteral("kmail")), i18n("KMail &Introduction"), this);
+        actionCollection()->addAction(QStringLiteral("help_kmail_welcomepage"), mShowIntroductionAction);
         KMail::Util::addQActionHelpText(mShowIntroductionAction, i18n("Display KMail's Welcome Page"));
         connect(mShowIntroductionAction, &QAction::triggered, this, &KMMainWidget::slotIntro);
         mShowIntroductionAction->setEnabled(mMsgView != Q_NULLPTR);
@@ -3343,65 +3343,65 @@ void KMMainWidget::setupActions()
 
     //  KStandardAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("preferences-desktop-notification")),
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("preferences-desktop-notification")),
                                       i18n("Configure &Notifications..."), this);
         action->setMenuRole(QAction::NoRole);   // do not move to application menu on OS X
-        actionCollection()->addAction(QLatin1String("kmail_configure_notifications"), action);
+        actionCollection()->addAction(QStringLiteral("kmail_configure_notifications"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotEditNotifications);
     }
 
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("configure")), i18n("&Configure KMail..."), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Configure KMail..."), this);
         action->setMenuRole(QAction::PreferencesRole);   // this one should move to the application menu on OS X
-        actionCollection()->addAction(QLatin1String("kmail_configure_kmail"), action);
+        actionCollection()->addAction(QStringLiteral("kmail_configure_kmail"), action);
         connect(action, SIGNAL(triggered(bool)), kmkernel, SLOT(slotShowConfigurationDialog()));
     }
 
     {
         mExpireConfigAction = new QAction(i18n("Expire..."), this);
-        actionCollection()->addAction(QLatin1String("expire_settings"), mExpireConfigAction);
+        actionCollection()->addAction(QStringLiteral("expire_settings"), mExpireConfigAction);
         connect(mExpireConfigAction, &QAction::triggered, mManageShowCollectionProperties, &ManageShowCollectionProperties::slotShowExpiryProperties);
     }
 
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("bookmark-new")), i18n("Add Favorite Folder..."), this);
-        actionCollection()->addAction(QLatin1String("add_favorite_folder"), action);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Add Favorite Folder..."), this);
+        actionCollection()->addAction(QStringLiteral("add_favorite_folder"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotAddFavoriteFolder);
     }
 
     {
-        mServerSideSubscription = new QAction(QIcon::fromTheme(QLatin1String("folder-bookmarks")), i18n("Serverside Subscription..."), this);
-        actionCollection()->addAction(QLatin1String("serverside_subscription"), mServerSideSubscription);
+        mServerSideSubscription = new QAction(QIcon::fromTheme(QStringLiteral("folder-bookmarks")), i18n("Serverside Subscription..."), this);
+        actionCollection()->addAction(QStringLiteral("serverside_subscription"), mServerSideSubscription);
         connect(mServerSideSubscription, &QAction::triggered, this, &KMMainWidget::slotServerSideSubscription);
     }
 
     {
-        mApplyFiltersOnFolder = new QAction(QIcon::fromTheme(QLatin1String("view-filter")), i18n("Appl&y All Filters On Folder"), this);
-        actionCollection()->addAction(QLatin1String("apply_filters_on_folder"), mApplyFiltersOnFolder);
+        mApplyFiltersOnFolder = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Appl&y All Filters On Folder"), this);
+        actionCollection()->addAction(QStringLiteral("apply_filters_on_folder"), mApplyFiltersOnFolder);
         connect(mApplyFiltersOnFolder, &QAction::triggered,
                 this, &KMMainWidget::slotApplyFiltersOnFolder);
 
     }
 
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("kmail")), i18n("&Export KMail Data..."), this);
-        actionCollection()->addAction(QLatin1String("kmail_export_data"), action);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("kmail")), i18n("&Export KMail Data..."), this);
+        actionCollection()->addAction(QStringLiteral("kmail_export_data"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotExportData);
     }
 
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("contact-new")), i18n("New AddressBook Contact..."), this);
-        actionCollection()->addAction(QLatin1String("kmail_new_addressbook_contact"), action);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")), i18n("New AddressBook Contact..."), this);
+        actionCollection()->addAction(QStringLiteral("kmail_new_addressbook_contact"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCreateAddressBookContact);
 
     }
 
-    actionCollection()->addAction(KStandardAction::Undo,  QLatin1String("kmail_undo"), this, SLOT(slotUndo()));
+    actionCollection()->addAction(KStandardAction::Undo,  QStringLiteral("kmail_undo"), this, SLOT(slotUndo()));
 
     KStandardAction::tipOfDay(mLaunchExternalComponent, SLOT(slotShowTip()), actionCollection());
 
     menutimer = new QTimer(this);
-    menutimer->setObjectName(QLatin1String("menutimer"));
+    menutimer->setObjectName(QStringLiteral("menutimer"));
     menutimer->setSingleShot(true);
     connect(menutimer, &QTimer::timeout, this, &KMMainWidget::updateMessageActionsDelayed);
     connect(kmkernel->undoStack(),
@@ -3415,42 +3415,42 @@ void KMMainWidget::setupActions()
 
     {
         QAction *action = new QAction(i18n("Copy Message to Folder"), this);
-        actionCollection()->addAction(QLatin1String("copy_message_to_folder"), action);
+        actionCollection()->addAction(QStringLiteral("copy_message_to_folder"), action);
         connect(action, &QAction::triggered,
                 this, &KMMainWidget::slotCopySelectedMessagesToFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_C));
     }
     {
         QAction *action = new QAction(i18n("Jump to Folder..."), this);
-        actionCollection()->addAction(QLatin1String("jump_to_folder"), action);
+        actionCollection()->addAction(QStringLiteral("jump_to_folder"), action);
         connect(action, &QAction::triggered,
                 this, &KMMainWidget::slotJumpToFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_J));
     }
     {
         QAction *action = new QAction(i18n("Abort Current Operation"), this);
-        actionCollection()->addAction(QLatin1String("cancel"), action);
+        actionCollection()->addAction(QStringLiteral("cancel"), action);
         connect(action, SIGNAL(triggered(bool)),
                 ProgressManager::instance(), SLOT(slotAbortAll()));
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_Escape));
     }
     {
         QAction *action = new QAction(i18n("Focus on Next Folder"), this);
-        actionCollection()->addAction(QLatin1String("inc_current_folder"), action);
+        actionCollection()->addAction(QStringLiteral("inc_current_folder"), action);
         connect(action, SIGNAL(triggered(bool)),
                 mFolderTreeWidget->folderTreeView(), SLOT(slotFocusNextFolder()));
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Right));
     }
     {
         QAction *action = new QAction(i18n("Focus on Previous Folder"), this);
-        actionCollection()->addAction(QLatin1String("dec_current_folder"), action);
+        actionCollection()->addAction(QStringLiteral("dec_current_folder"), action);
         connect(action, &QAction::triggered,
                 mFolderTreeWidget->folderTreeView(), &FolderTreeView::slotFocusPrevFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Left));
     }
     {
         QAction *action = new QAction(i18n("Select Folder with Focus"), this);
-        actionCollection()->addAction(QLatin1String("select_current_folder"), action);
+        actionCollection()->addAction(QStringLiteral("select_current_folder"), action);
 
         connect(action, &QAction::triggered,
                 mFolderTreeWidget->folderTreeView(), &FolderTreeView::slotSelectFocusFolder);
@@ -3458,49 +3458,49 @@ void KMMainWidget::setupActions()
     }
     {
         QAction *action = new QAction(i18n("Focus on First Folder"), this);
-        actionCollection()->addAction(QLatin1String("focus_first_folder"), action);
+        actionCollection()->addAction(QStringLiteral("focus_first_folder"), action);
         connect(action, &QAction::triggered,
                 mFolderTreeWidget->folderTreeView(), &FolderTreeView::slotFocusFirstFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Home));
     }
     {
         QAction *action = new QAction(i18n("Focus on Last Folder"), this);
-        actionCollection()->addAction(QLatin1String("focus_last_folder"), action);
+        actionCollection()->addAction(QStringLiteral("focus_last_folder"), action);
         connect(action, SIGNAL(triggered(bool)),
                 mFolderTreeWidget->folderTreeView(), SLOT(slotFocusLastFolder()));
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_End));
     }
     {
         QAction *action = new QAction(i18n("Focus on Next Message"), this);
-        actionCollection()->addAction(QLatin1String("inc_current_message"), action);
+        actionCollection()->addAction(QStringLiteral("inc_current_message"), action);
         connect(action, SIGNAL(triggered(bool)),
                 this, SLOT(slotFocusOnNextMessage()));
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Right));
     }
     {
         QAction *action = new QAction(i18n("Focus on Previous Message"), this);
-        actionCollection()->addAction(QLatin1String("dec_current_message"), action);
+        actionCollection()->addAction(QStringLiteral("dec_current_message"), action);
         connect(action, SIGNAL(triggered(bool)),
                 this, SLOT(slotFocusOnPrevMessage()));
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Left));
     }
     {
         QAction *action = new QAction(i18n("Select First Message"), this);
-        actionCollection()->addAction(QLatin1String("select_first_message"), action);
+        actionCollection()->addAction(QStringLiteral("select_first_message"), action);
         connect(action, SIGNAL(triggered(bool)),
                 this, SLOT(slotSelectFirstMessage()));
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Home));
     }
     {
         QAction *action = new QAction(i18n("Select Last Message"), this);
-        actionCollection()->addAction(QLatin1String("select_last_message"), action);
+        actionCollection()->addAction(QStringLiteral("select_last_message"), action);
         connect(action, SIGNAL(triggered(bool)),
                 this, SLOT(slotSelectLastMessage()));
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_End));
     }
     {
         QAction *action = new QAction(i18n("Select Message with Focus"), this);
-        actionCollection()->addAction(QLatin1String("select_current_message"), action);
+        actionCollection()->addAction(QStringLiteral("select_current_message"), action);
         connect(action, SIGNAL(triggered(bool)),
                 this, SLOT(slotSelectFocusedMessage()));
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Space));
@@ -3510,7 +3510,7 @@ void KMMainWidget::setupActions()
         mQuickSearchAction = new QAction(i18n("Set Focus to Quick Search"), this);
         //If change shortcut change Panel::setQuickSearchClickMessage(...) message
         actionCollection()->setDefaultShortcut(mQuickSearchAction, QKeySequence(Qt::ALT + Qt::Key_Q));
-        actionCollection()->addAction(QLatin1String("focus_to_quickseach"), mQuickSearchAction);
+        actionCollection()->addAction(QStringLiteral("focus_to_quickseach"), mQuickSearchAction);
         connect(mQuickSearchAction, SIGNAL(triggered(bool)),
                 SLOT(slotFocusQuickSearch()));
         updateQuickSearchLineText();
@@ -3518,14 +3518,14 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("Extend Selection to Previous Message"), this);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::SHIFT + Qt::Key_Left));
-        actionCollection()->addAction(QLatin1String("previous_message"), action);
+        actionCollection()->addAction(QStringLiteral("previous_message"), action);
         connect(action, SIGNAL(triggered(bool)),
                 this, SLOT(slotExtendSelectionToPreviousMessage()));
     }
     {
         QAction *action = new QAction(i18n("Extend Selection to Next Message"), this);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::SHIFT + Qt::Key_Right));
-        actionCollection()->addAction(QLatin1String("next_message"), action);
+        actionCollection()->addAction(QStringLiteral("next_message"), action);
         connect(action, SIGNAL(triggered(bool)),
                 this, SLOT(slotExtendSelectionToNextMessage()));
     }
@@ -3533,17 +3533,17 @@ void KMMainWidget::setupActions()
     {
         mMoveMsgToFolderAction = new QAction(i18n("Move Message to Folder"), this);
         actionCollection()->setDefaultShortcut(mMoveMsgToFolderAction, QKeySequence(Qt::Key_M));
-        actionCollection()->addAction(QLatin1String("move_message_to_folder"), mMoveMsgToFolderAction);
+        actionCollection()->addAction(QStringLiteral("move_message_to_folder"), mMoveMsgToFolderAction);
         connect(mMoveMsgToFolderAction, SIGNAL(triggered(bool)),
                 SLOT(slotMoveSelectedMessageToFolder()));
     }
 
     mArchiveAction = new QAction(i18nc("@action", "Archive"), this);
-    actionCollection()->addAction(QLatin1String("archive_mails"), mArchiveAction);
+    actionCollection()->addAction(QStringLiteral("archive_mails"), mArchiveAction);
     connect(mArchiveAction, &QAction::triggered, this, &KMMainWidget::slotArchiveMails);
 
     mLowBandwithAction = new KToggleAction(i18n("Low Bandwidth"), this);
-    actionCollection()->addAction(QLatin1String("low_bandwidth"), mLowBandwithAction);
+    actionCollection()->addAction(QStringLiteral("low_bandwidth"), mLowBandwithAction);
     connect(mLowBandwithAction, &KToggleAction::triggered, this, &KMMainWidget::slotBandwidth);
 
 }

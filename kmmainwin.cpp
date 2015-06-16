@@ -78,7 +78,7 @@ KMMainWin::KMMainWin(QWidget *)
     slotToggleMenubar(true);
 
     KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
-    createGUI(QLatin1String("kmmainwin.rc"));
+    createGUI(QStringLiteral("kmmainwin.rc"));
 
     //must be after createGUI, otherwise e.g toolbar settings are not loaded
     applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
@@ -134,7 +134,7 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
                 KMessageBox::information(this,
                                          i18n("<qt>This will hide the menu bar completely."
                                               " You can show it again by typing %1.</qt>", accel),
-                                         i18n("Hide menu bar"), QLatin1String("HideMenuBarWarning"));
+                                         i18n("Hide menu bar"), QStringLiteral("HideMenuBarWarning"));
             }
             menuBar()->hide();
         }
@@ -158,7 +158,7 @@ void KMMainWin::slotUpdateGui()
     mKMMainWidget->clearFilterActions();
     mKMMainWidget->tagActionManager()->clearActions();
 
-    createGUI(QLatin1String("kmmainwin.rc"));
+    createGUI(QStringLiteral("kmmainwin.rc"));
     applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
 
     // plug dynamically created actions again

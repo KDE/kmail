@@ -27,7 +27,7 @@ KMMigrateApplication::KMMigrateApplication()
 void KMMigrateApplication::migrate()
 {
     // Migrate to xdg.
-    Kdelibs4ConfigMigrator migrate(QLatin1String("kmail"));
+    Kdelibs4ConfigMigrator migrate(QStringLiteral("kmail"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("kmail2rc") << QStringLiteral("kmail2.notifyrc") << QStringLiteral("kmailsnippetrc")
                            << QStringLiteral("customtemplatesrc") << QStringLiteral("templatesconfigurationrc") << QStringLiteral("kpimcompletionorder")
                            << QStringLiteral("messageviewer.notifyrc") << QStringLiteral("sievetemplaterc") << QStringLiteral("foldermailarchiverc"));
