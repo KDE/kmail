@@ -1479,6 +1479,9 @@ KMCommand::Result KMMoveCommand::execute()
             Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob(retrievedList, this);
             connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
         }
+    } else {
+        deleteLater();
+        return Failed;
     }
     // TODO set SSL state according to source and destfolder connection?
     Q_ASSERT(!mProgressItem);
