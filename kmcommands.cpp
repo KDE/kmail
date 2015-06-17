@@ -1454,34 +1454,32 @@ KMCommand::Result KMMoveCommand::execute()
 #endif
     setEmitsCompletedItself(true);
     setDeletesItself(true);
-    if (mDestFolder.isValid()) {
-        Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(retrievedMsgs(), mDestFolder, this);
-        connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
+    QList<Akonadi::Item> retrievedList = retrievedMsgs();
+    if (!retrievedList.isEmpty()) {
+        if (mDestFolder.isValid()) {
+            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(retrievedList, mDestFolder, this);
+            connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
 
-        // group by source folder for undo
-        Akonadi::Item::List items = retrievedMsgs();
-        std::sort(items.begin(), items.end(), boost::bind(&Akonadi::Item::storageCollectionId, _1) <
-                  boost::bind(&Akonadi::Item::storageCollectionId, _2));
-        Akonadi::Collection parent;
-        int undoId = -1;
-        foreach (const Akonadi::Item &item, items) {
-            if (item.storageCollectionId() <= 0) {
-                continue;
+            // group by source folder for undo
+            std::sort(retrievedList.begin(), retrievedList.end(), boost::bind(&Akonadi::Item::storageCollectionId, _1) <
+                      boost::bind(&Akonadi::Item::storageCollectionId, _2));
+            Akonadi::Collection parent;
+            int undoId = -1;
+            foreach (const Akonadi::Item &item, retrievedList) {
+                if (item.storageCollectionId() <= 0) {
+                    continue;
+                }
+                if (parent.id() != item.storageCollectionId()) {
+                    parent = Akonadi::Collection(item.storageCollectionId());
+                    undoId = kmkernel->undoStack()->newUndoAction(parent, mDestFolder);
+                }
+                kmkernel->undoStack()->addMsgToAction(undoId, item);
             }
-            if (parent.id() != item.storageCollectionId()) {
-                parent = Akonadi::Collection(item.storageCollectionId());
-                undoId = kmkernel->undoStack()->newUndoAction(parent, mDestFolder);
-            }
-            kmkernel->undoStack()->addMsgToAction(undoId, item);
-        }
-    } else {
-        const QList<Akonadi::Item> retrievedList = retrievedMsgs();
-        if (!retrievedList.isEmpty()) {
+        } else {
             Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob(retrievedList, this);
             connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
         }
     }
-
     // TODO set SSL state according to source and destfolder connection?
     Q_ASSERT(!mProgressItem);
     mProgressItem =
