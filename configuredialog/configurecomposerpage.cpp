@@ -61,6 +61,8 @@ using KPIM::RecentAddresses;
 
 #include <addressline/blacklistbaloocompletion/blacklistbalooemailcompletiondialog.h>
 
+#include <addressline/completionconfiguredialog/completionconfiguredialog.h>
+
 QString ComposerPage::helpAnchor() const
 {
     return QStringLiteral("configure-composer");
@@ -491,36 +493,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->addWidget(mMaximumRecentAddress, row, 2);
     ++row;
 
-    // "Edit Recent Addresses" button
-    QPushButton *recentAddressesBtn = new QPushButton(i18n("Edit Recent Addresses..."), this);
-    helpText = i18n("Edit, add or remove recent addresses");
-    recentAddressesBtn->setToolTip(helpText);
-    recentAddressesBtn->setWhatsThis(helpText);
 
-    connect(recentAddressesBtn, SIGNAL(clicked()),
-            this, SLOT(slotConfigureRecentAddresses()));
-    groupGridLayout->addWidget(recentAddressesBtn, row, 1, 1, 2);
-    ++row;
-
-    // "Configure Completion Order" button
-    QPushButton *completionOrderBtn = new QPushButton(i18n("Configure Completion Order..."), this);
-    helpText = i18n("Configure the order in which address books\n"
-                    "will be used when doing address completion");
-    completionOrderBtn->setToolTip(helpText);
-    completionOrderBtn->setWhatsThis(helpText);
-
-    connect(completionOrderBtn, SIGNAL(clicked()),
-            this, SLOT(slotConfigureCompletionOrder()));
-    groupGridLayout->addWidget(completionOrderBtn, row, 1, 1, 2);
-    ++row;
-    // "Configure Completion Order" button
-    QPushButton *completionEmailBacklistBtn = new QPushButton(i18n("Configure Email Blacklist..."), this);
-
-    connect(completionEmailBacklistBtn, SIGNAL(clicked()),
-            this, SLOT(slotConfigureEmailBlacklist()));
-    groupGridLayout->addWidget(completionEmailBacklistBtn, row, 1, 1, 2);
-
-    // Spacing
+    // Configure All Address settings
+    QPushButton *configureCompletionButton = new QPushButton(i18n("Configure Completion..."), this);
+    connect(configureCompletionButton, &QAbstractButton::clicked,this, &ComposerPageGeneralTab::slotConfigureAddressCompletion);
+    groupGridLayout->addWidget(configureCompletionButton, row, 1, 1, 2);
     ++row;
 
     groupBox->setLayout(groupGridLayout);
@@ -633,34 +610,25 @@ void ComposerPage::GeneralTab::save()
     MessageComposer::MessageComposerSettings::self()->requestSync();
 }
 
-void ComposerPage::GeneralTab::slotConfigureRecentAddresses()
+void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
 {
-    MessageViewer::AutoQPointer<KPIM::RecentAddressDialog> dlg(new KPIM::RecentAddressDialog(this));
-    dlg->setAddresses(RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
-    if (dlg->exec() && dlg) {
-        if (dlg->wasChanged()) {
-            RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->clear();
-            dlg->storeAddresses(MessageComposer::MessageComposerSettings::self()->config());
-        }
-    }
-}
-
-void ComposerPage::GeneralTab::slotConfigureEmailBlacklist()
-{
-    QPointer<KPIM::BlackListBalooEmailCompletionDialog> dlg = new KPIM::BlackListBalooEmailCompletionDialog(this);
+    MessageViewer::AutoQPointer<KPIM::CompletionConfigureDialog> dlg(new KPIM::CompletionConfigureDialog(this));
+    dlg->setRecentAddresses(KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
+    KLDAP::LdapClientSearch search;
+    dlg->setLdapClientSearch(&search);
     KSharedConfig::Ptr config = KSharedConfig::openConfig(QLatin1String("kpimbalooblacklist"));
     KConfigGroup group(config, "AddressLineEdit");
     const QStringList balooBlackList = group.readEntry("BalooBackList", QStringList());
-    dlg->setEmailBlackList(balooBlackList);
-    dlg->exec();
-    delete dlg;
-}
 
-void ComposerPage::GeneralTab::slotConfigureCompletionOrder()
-{
-    KLDAP::LdapClientSearch search;
-    KPIM::CompletionOrderEditor editor(&search, this);
-    editor.exec();
+    dlg->setEmailBlackList(balooBlackList);
+    dlg->load();
+    if (dlg->exec() && dlg) {
+        if (dlg->recentAddressWasChanged()) {
+            KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->clear();
+            dlg->storeAddresses(MessageComposer::MessageComposerSettings::self()->config());
+        }
+    }
+
 }
 
 QString ComposerPage::ExternalEditorTab::helpAnchor() const
