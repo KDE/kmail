@@ -456,6 +456,7 @@ void SearchWindow::doSearch()
             return;
         }
         mCollectionId = mSelectMultiCollectionDialog->selectedCollection();
+        searchCollections.reserve(mCollectionId.count());
         Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
             searchCollections << col;
         }
@@ -565,6 +566,7 @@ void SearchWindow::searchDone(KJob *job)
         if (mUi.mChkMultiFolders->isChecked()) {
             searchDescription->setBaseCollection(Akonadi::Collection());
             QList<Akonadi::Collection::Id> lst;
+            lst.reserve(mCollectionId.count());
             Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
                 lst << col.id();
             }
@@ -836,7 +838,8 @@ void SearchWindow::addRulesToSearchPattern(const SearchPattern &pattern)
     p.purify();
 
     QList<SearchRule::Ptr>::const_iterator it;
-    QList<SearchRule::Ptr>::const_iterator end(pattern.constEnd()) ;
+    QList<SearchRule::Ptr>::const_iterator end(pattern.constEnd());
+    p.reserve(pattern.count());
 
     for (it = pattern.constBegin() ; it != end ; ++it) {
         p.append(SearchRule::createInstance(**it));
@@ -851,6 +854,7 @@ void SearchWindow::slotSelectMultipleFolders()
     mUi.mChkMultiFolders->setChecked(true);
     if (!mSelectMultiCollectionDialog)  {
         QList<Akonadi::Collection::Id> lst;
+        lst.reserve(mCollectionId.count());
         Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
             lst << col.id();
         }

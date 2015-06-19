@@ -475,6 +475,7 @@ QStringList KMKernel::accounts()
 {
     QStringList accountLst;
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+    accountLst.reserve(lst.count());
     foreach (const Akonadi::AgentInstance &type, lst) {
         // Explicitly make a copy, as we're not changing values of the list but only
         // the local copy which is passed to action.

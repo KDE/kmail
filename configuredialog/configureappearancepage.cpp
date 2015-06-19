@@ -175,6 +175,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     mFontLocationCombo->setEnabled(false);   // !mCustomFontCheck->isChecked()
 
     QStringList fontDescriptions;
+    fontDescriptions.reserve(numFontNames);
     for (int i = 0 ; i < numFontNames ; ++i) {
         fontDescriptions << i18n(fontNames[i].displayName);
     }
@@ -1396,7 +1397,9 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
 
     QList<MailCommon::TagPtr> msgTagList;
-    foreach (const Akonadi::Tag &akonadiTag, fetchJob->tags()) {
+    const QList<Akonadi::Tag> tagList = fetchJob->tags();
+    msgTagList.reserve(tagList.count());
+    foreach (const Akonadi::Tag &akonadiTag, tagList) {
         MailCommon::Tag::Ptr tag = MailCommon::Tag::fromAkonadi(akonadiTag);
         msgTagList.append(tag);
     }

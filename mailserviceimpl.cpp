@@ -87,6 +87,7 @@ bool MailServiceImpl::sendMessage(const QString &from, const QString &to,
 
     QList<QUrl> attachUrls;
     const int nbAttachments = attachments.count();
+    attachUrls.reserve(nbAttachments);
     for (int i = 0; i < nbAttachments; ++i) {
         attachUrls += QUrl::fromLocalFile(attachments[i]);
     }

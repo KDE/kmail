@@ -137,7 +137,9 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
         // Indexes are based on row numbers, and row numbers change when items are deleted.
         // Therefore, first we need to make a list of AttachmentParts to delete.
         AttachmentPart::List toRemove;
-        foreach (const QModelIndex &index, selectionModel()->selectedRows()) {
+        const QModelIndexList selectedIndexes = selectionModel()->selectedRows();
+        toRemove.reserve(selectedIndexes.count());
+        foreach (const QModelIndex &index, selectedIndexes) {
             AttachmentPart::Ptr part = model()->data(
                                            index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
             toRemove.append(part);

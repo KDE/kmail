@@ -1016,7 +1016,9 @@ void KMComposeWin::applyTemplate(uint uoid, uint uOldId)
 
     if (mMsg->headerByType("X-KMail-Link-Message")) {
         Akonadi::Item::List items;
-        foreach (const QString &serNumStr, mMsg->headerByType("X-KMail-Link-Message")->asUnicodeString().split(QLatin1Char(','))) {
+        const QStringList serNums = mMsg->headerByType("X-KMail-Link-Message")->asUnicodeString().split(QLatin1Char(','));
+        items.reserve(serNums.count());
+        foreach (const QString &serNumStr, serNums) {
             items << Akonadi::Item(serNumStr.toLongLong());
         }
 
@@ -1380,6 +1382,7 @@ void KMComposeWin::setupActions(void)
     connect(mSignAction, &KToggleAction::triggered, this, &KMComposeWin::slotSignToggled);
 
     QStringList listCryptoFormat;
+    listCryptoFormat.reserve(numCryptoMessageFormats);
     for (int i = 0 ; i < numCryptoMessageFormats ; ++i) {
         listCryptoFormat.push_back(Kleo::cryptoMessageFormatToLabel(cryptoMessageFormats[i]));
     }

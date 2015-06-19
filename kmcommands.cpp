@@ -1258,6 +1258,7 @@ KMCommand::Result KMSetTagCommand::execute()
 void KMSetTagCommand::setTags()
 {
     Akonadi::Item::List itemsToModify;
+    itemsToModify.reserve(mItem.count());
     Q_FOREACH (const Akonadi::Item &i, mItem) {
         Akonadi::Item item(i);
         if (mMode == CleanExistingAndAddNew) {

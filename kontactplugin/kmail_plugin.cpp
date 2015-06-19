@@ -120,6 +120,7 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
     } else if (KContacts::VCardDrag::fromMimeData(md, list)) {
         KContacts::Addressee::List::ConstIterator it;
         QStringList to;
+        to.reserve(list.count());
         KContacts::Addressee::List::ConstIterator end(list.constEnd());
         for (it = list.constBegin(); it != end; ++it) {
             to.append((*it).fullEmail());
