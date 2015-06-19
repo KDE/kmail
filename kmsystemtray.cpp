@@ -61,7 +61,7 @@ namespace KMail
 {
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent),
-      mIcon(QIcon::fromTheme(QLatin1String("mail-unread-new"))),
+      mIcon(QIcon::fromTheme(QStringLiteral("mail-unread-new"))),
       mDesktopOfMainWin(0),
       mMode(GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread),
       mCount(0),
@@ -72,8 +72,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
 {
     qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
-    setToolTipIconByName(QLatin1String("kmail"));
-    setIconByName(QLatin1String("kmail"));
+    setToolTipIconByName(QStringLiteral("kmail"));
+    setIconByName(QStringLiteral("kmail"));
 
     KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
     if (mainWidget) {
@@ -114,10 +114,10 @@ bool KMSystemTray::buildPopupMenu()
     contextMenu()->setIcon(qApp->windowIcon());
     contextMenu()->setTitle(i18n("KMail"));
     QAction *action;
-    if ((action = mainWidget->action(QLatin1String("check_mail")))) {
+    if ((action = mainWidget->action(QStringLiteral("check_mail")))) {
         contextMenu()->addAction(action);
     }
-    if ((action = mainWidget->action(QLatin1String("check_mail_in")))) {
+    if ((action = mainWidget->action(QStringLiteral("check_mail_in")))) {
         contextMenu()->addAction(action);
     }
 
@@ -126,19 +126,19 @@ bool KMSystemTray::buildPopupMenu()
     contextMenu()->addAction(mainWidget->sendQueueViaMenu());
 
     contextMenu()->addSeparator();
-    if ((action = mainWidget->action(QLatin1String("new_message")))) {
+    if ((action = mainWidget->action(QStringLiteral("new_message")))) {
         contextMenu()->addAction(action);
     }
-    if ((action = mainWidget->action(QLatin1String("kmail_configure_kmail")))) {
+    if ((action = mainWidget->action(QStringLiteral("kmail_configure_kmail")))) {
         contextMenu()->addAction(action);
     }
     contextMenu()->addSeparator();
-    if ((action = mainWidget->action(QLatin1String("akonadi_work_offline")))) {
+    if ((action = mainWidget->action(QStringLiteral("akonadi_work_offline")))) {
         contextMenu()->addAction(action);
     }
     contextMenu()->addSeparator();
 
-    if ((action = mainWidget->action(QLatin1String("file_quit")))) {
+    if ((action = mainWidget->action(QStringLiteral("file_quit")))) {
         contextMenu()->addAction(action);
     }
     return true;
@@ -203,7 +203,7 @@ void KMSystemTray::slotGeneralPaletteChanged()
 void KMSystemTray::updateCount()
 {
     if (mCount == 0 || !mIconNotificationsEnabled) {
-        setIconByName(QLatin1String("kmail"));
+        setIconByName(QStringLiteral("kmail"));
         return;
     }
     if (mShowUnreadMailCount) {
@@ -343,7 +343,7 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
         }
         QString label = parentName.isEmpty() ? QString() : QString(parentName + QLatin1String("->"));
         label += model->data(index).toString();
-        label.replace(QLatin1Char('&'), QLatin1String("&&"));
+        label.replace(QLatin1Char('&'), QStringLiteral("&&"));
         if (count > 0) {
             // insert an item
             QAction *action = menu->addAction(label);
