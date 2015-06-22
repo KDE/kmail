@@ -70,6 +70,8 @@ void ManageServerSideSubscriptionJob::slotConfigureSubscriptionFinished(QDBusPen
         } else if (reply == -1) {
             KMessageBox::error(mParentWidget, i18n("Log in failed, please configure the IMAP account before setting up server-side subscription."));
         }
+    } else {
+        qCDebug(KMAIL_LOG) << "ManageServerSideSubscriptionJob return an invalid reply";
     }
     watcher->deleteLater();
     watcher = Q_NULLPTR;
