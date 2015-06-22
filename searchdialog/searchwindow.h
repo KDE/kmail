@@ -158,7 +158,7 @@ private Q_SLOTS:
 private:
     void doSearch();
     QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
-    QList<Akonadi::Collection> mCollectionId;
+    QVector<Akonadi::Collection> mCollectionId;
     Akonadi::SearchQuery mQuery;
     bool mCloseRequested;
     int mSortColumn;
