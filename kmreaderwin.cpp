@@ -591,6 +591,11 @@ QAction *KMReaderWin::toggleMimePartTreeAction() const
     return mViewer->toggleMimePartTreeAction();
 }
 
+KActionMenu *KMReaderWin::shareServiceUrlMenu() const
+{
+    return mViewer->shareServiceUrlMenu();
+}
+
 QAction *KMReaderWin::selectAllAction() const
 {
     return mViewer->selectAllAction();

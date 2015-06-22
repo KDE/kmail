@@ -2693,6 +2693,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, 
             menu->addAction(mMsgView->addBookmarksAction());
             menu->addAction(mMsgView->urlSaveAsAction());
             menu->addAction(mMsgView->copyURLAction());
+            menu->addAction(mMsgView->shareServiceUrlMenu());
             if (mMsgView->isAShortUrl(url)) {
                 menu->addSeparator();
                 menu->addAction(mMsgView->expandShortUrlAction());

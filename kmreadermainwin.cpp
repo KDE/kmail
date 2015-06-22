@@ -495,6 +495,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
             menu->addMenu(mReaderWin->viewHtmlOption());
             menu->addSeparator();
             menu->addAction(mReaderWin->copyURLAction());
+            menu->addAction(mReaderWin->shareServiceUrlMenu());
             copyAdded = true;
             urlMenuAdded = true;
         } else if (url.scheme() != QLatin1String("attachment")) {
@@ -504,6 +505,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
             menu->addAction(mReaderWin->addBookmarksAction());
             menu->addAction(mReaderWin->urlSaveAsAction());
             menu->addAction(mReaderWin->copyURLAction());
+            menu->addAction(mReaderWin->shareServiceUrlMenu());
             if (mReaderWin->isAShortUrl(url)) {
                 menu->addSeparator();
                 menu->addAction(mReaderWin->expandShortUrlAction());
