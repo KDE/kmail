@@ -319,10 +319,10 @@ void KMReaderMainWin::setupAccel()
 
     //----- File Menu
 
-    mSaveAtmAction  = new QAction(QIcon::fromTheme(QLatin1String("mail-attachment")), i18n("Save A&ttachments..."), actionCollection());
+    mSaveAtmAction  = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments..."), actionCollection());
     connect(mSaveAtmAction, &QAction::triggered, mReaderWin->viewer(), &MessageViewer::Viewer::slotAttachmentSaveAll);
 
-    mTrashAction = new QAction(QIcon::fromTheme(QLatin1String("user-trash")), i18n("&Move to Trash"), this);
+    mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("user-trash")), i18n("&Move to Trash"), this);
     mTrashAction->setIconText(i18nc("@action:intoolbar Move to Trash", "Trash"));
     KMail::Util::addQActionHelpText(mTrashAction, i18n("Move message to trashcan"));
     actionCollection()->addAction(QLatin1String("move_to_trash"), mTrashAction);
@@ -358,7 +358,7 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
     KMMainWidget *mainwin = kmkernel->getKMMainWidget();
     if (mainwin) {
         KActionMenu *action = new KActionMenu(menu);
-        action->setIcon(QIcon::fromTheme(QLatin1String("edit-copy")));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
         action->setText(i18n("Copy Message To..."));
         mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::CopyItemToMenu);
         connect(action->menu(), &QMenu::triggered, this, &KMReaderMainWin::slotCopyItem);

@@ -1049,12 +1049,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
 
     mTagAddButton = new QPushButton(mTagsGroupBox);
     mTagAddButton->setToolTip(i18n("Add new tag"));
-    mTagAddButton->setIcon(QIcon::fromTheme(QLatin1String("list-add")));
+    mTagAddButton->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
     addremovegrid->addWidget(mTagAddButton);
 
     mTagRemoveButton = new QPushButton(mTagsGroupBox);
     mTagRemoveButton->setToolTip(i18n("Remove selected tag"));
-    mTagRemoveButton->setIcon(QIcon::fromTheme(QLatin1String("list-remove")));
+    mTagRemoveButton->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
     addremovegrid->addWidget(mTagRemoveButton);
 
     //Up and down buttons
@@ -1063,13 +1063,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
 
     mTagUpButton = new QPushButton(mTagsGroupBox);
     mTagUpButton->setToolTip(i18n("Increase tag priority"));
-    mTagUpButton->setIcon(QIcon::fromTheme(QLatin1String("arrow-up")));
+    mTagUpButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
     mTagUpButton->setAutoRepeat(true);
     updowngrid->addWidget(mTagUpButton);
 
     mTagDownButton = new QPushButton(mTagsGroupBox);
     mTagDownButton->setToolTip(i18n("Decrease tag priority"));
-    mTagDownButton->setIcon(QIcon::fromTheme(QLatin1String("arrow-down")));
+    mTagDownButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
     mTagDownButton->setAutoRepeat(true);
     updowngrid->addWidget(mTagDownButton);
 

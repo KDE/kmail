@@ -2311,10 +2311,10 @@ void KMMainWidget::slotUpdateOnlineStatus(GlobalSettings::EnumNetworkState::type
     QAction *action = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::ToggleWorkOffline);
     if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online) {
         action->setText(i18n("Work Offline"));
-        action->setIcon(QIcon::fromTheme(QLatin1String("user-offline")));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("user-offline")));
     } else {
         action->setText(i18n("Work Online"));
-        action->setIcon(QIcon::fromTheme(QLatin1String("user-online")));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("user-online")));
     }
 }
 
@@ -2821,7 +2821,7 @@ void KMMainWidget::setupActions()
     mMsgActions->setMessageView(mMsgView);
 
     //----- File Menu
-    mSaveAsAction = new QAction(QIcon::fromTheme(QLatin1String("document-save")), i18n("Save &As..."), this);
+    mSaveAsAction = new QAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save &As..."), this);
     actionCollection()->addAction(QLatin1String("file_save_as"), mSaveAsAction);
     connect(mSaveAsAction, &QAction::triggered, this, &KMMainWidget::slotSaveMsg);
     actionCollection()->setDefaultShortcut(mSaveAsAction, KStandardShortcut::save().first());
@@ -2840,14 +2840,14 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, this, &KMMainWidget::slotExpireAll);
     }
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("mail-receive")), i18n("Check &Mail"), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-receive")), i18n("Check &Mail"), this);
         actionCollection()->addAction(QLatin1String("check_mail"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCheckMail);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_L));
     }
 
     KActionMenuAccount *actActionMenu = new KActionMenuAccount(this);
-    actActionMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-receive")));
+    actActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-receive")));
     actActionMenu->setText(i18n("Check Mail In"));
 
     actActionMenu->setIconText(i18n("Check Mail"));
@@ -2855,7 +2855,7 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QLatin1String("check_mail_in"), actActionMenu);
     connect(actActionMenu, &KActionMenu::triggered, this, &KMMainWidget::slotCheckMail);
 
-    mSendQueued = new QAction(QIcon::fromTheme(QLatin1String("mail-send")), i18n("&Send Queued Messages"), this);
+    mSendQueued = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("&Send Queued Messages"), this);
     actionCollection()->addAction(QLatin1String("send_queued"), mSendQueued);
     connect(mSendQueued, &QAction::triggered, this, &KMMainWidget::slotSendQueued);
     {
@@ -2868,7 +2868,7 @@ void KMMainWidget::setupActions()
     }
 
     mSendActionMenu = new KActionMenuTransport(this);
-    mSendActionMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-send-via")));
+    mSendActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send-via")));
     mSendActionMenu->setText(i18n("Send Queued Messages Via"));
     actionCollection()->addAction(QLatin1String("send_queued_via"), mSendActionMenu);
 
@@ -2876,7 +2876,7 @@ void KMMainWidget::setupActions()
 
     //----- Tools menu
     if (parent()->inherits("KMMainWin")) {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
         actionCollection()->addAction(QLatin1String("addressbook"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAddrBook);
         if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty()) {
@@ -2885,7 +2885,7 @@ void KMMainWidget::setupActions()
     }
 
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("pgp-keys")), i18n("Certificate Manager"), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("pgp-keys")), i18n("Certificate Manager"), this);
         actionCollection()->addAction(QLatin1String("tools_start_certman"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotStartCertManager);
         // disable action if no certman binary is around
@@ -2894,7 +2894,7 @@ void KMMainWidget::setupActions()
         }
     }
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("pgp-keys")), i18n("GnuPG Log Viewer"), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("pgp-keys")), i18n("GnuPG Log Viewer"), this);
         actionCollection()->addAction(QLatin1String("tools_start_kwatchgnupg"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotStartWatchGnuPG);
 #ifdef Q_OS_WIN32
@@ -2907,7 +2907,7 @@ void KMMainWidget::setupActions()
         action->setEnabled(usableKWatchGnupg);
     }
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("document-import")), i18n("&Import Messages..."), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("document-import")), i18n("&Import Messages..."), this);
         actionCollection()->addAction(QLatin1String("import"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImport);
         if (QStandardPaths::findExecutable(QLatin1String("importwizard")).isEmpty()) {
@@ -2982,7 +2982,7 @@ void KMMainWidget::setupActions()
     * sure it is plugged into the KAccel now, since that won't happen on
     * XMLGui construction or manual ->plug(). This is only a problem when run
     * as a part, though. */
-    mDeleteAction = new QAction(QIcon::fromTheme(QLatin1String("edit-delete")), i18nc("@action Hard delete, bypassing trash", "&Delete"), this);
+    mDeleteAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action Hard delete, bypassing trash", "&Delete"), this);
     actionCollection()->addAction(QLatin1String("delete"), mDeleteAction);
     connect(mDeleteAction, SIGNAL(triggered(bool)), SLOT(slotDeleteMsg()));
     actionCollection()->setDefaultShortcut(mDeleteAction, QKeySequence(Qt::SHIFT + Qt::Key_Delete));
@@ -2990,16 +2990,16 @@ void KMMainWidget::setupActions()
     mTrashThreadAction = new QAction(i18n("M&ove Thread to Trash"), this);
     actionCollection()->addAction(QLatin1String("move_thread_to_trash"), mTrashThreadAction);
     actionCollection()->setDefaultShortcut(mTrashThreadAction, QKeySequence(Qt::CTRL + Qt::Key_Delete));
-    mTrashThreadAction->setIcon(QIcon::fromTheme(QLatin1String("user-trash")));
+    mTrashThreadAction->setIcon(QIcon::fromTheme(QStringLiteral("user-trash")));
     KMail::Util::addQActionHelpText(mTrashThreadAction, i18n("Move thread to trashcan"));
     connect(mTrashThreadAction, &QAction::triggered, this, &KMMainWidget::slotTrashThread);
 
-    mDeleteThreadAction = new QAction(QIcon::fromTheme(QLatin1String("edit-delete")), i18n("Delete T&hread"), this);
+    mDeleteThreadAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete T&hread"), this);
     actionCollection()->addAction(QLatin1String("delete_thread"), mDeleteThreadAction);
     connect(mDeleteThreadAction, SIGNAL(triggered(bool)), SLOT(slotDeleteThread()));
     actionCollection()->setDefaultShortcut(mDeleteThreadAction, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_Delete));
 
-    mSearchMessages = new QAction(QIcon::fromTheme(QLatin1String("edit-find-mail")), i18n("&Find Messages..."), this);
+    mSearchMessages = new QAction(QIcon::fromTheme(QStringLiteral("edit-find-mail")), i18n("&Find Messages..."), this);
     actionCollection()->addAction(QLatin1String("search_messages"), mSearchMessages);
     connect(mSearchMessages, &QAction::triggered, this, &KMMainWidget::slotRequestFullSearchFromQuickSearch);
     actionCollection()->setDefaultShortcut(mSearchMessages, QKeySequence(Qt::Key_S));
@@ -3018,7 +3018,7 @@ void KMMainWidget::setupActions()
     connect(mFolderMailingListPropertiesAction, &QAction::triggered, mManageShowCollectionProperties, &ManageShowCollectionProperties::slotFolderMailingListProperties);
     // mFolderMailingListPropertiesAction->setIcon(QIcon::fromTheme("document-properties-mailing-list"));
 
-    mShowFolderShortcutDialogAction = new QAction(QIcon::fromTheme(QLatin1String("configure-shortcuts")), i18n("&Assign Shortcut..."), this);
+    mShowFolderShortcutDialogAction = new QAction(QIcon::fromTheme(QStringLiteral("configure-shortcuts")), i18n("&Assign Shortcut..."), this);
     actionCollection()->addAction(QLatin1String("folder_shortcut_command"), mShowFolderShortcutDialogAction);
     connect(mShowFolderShortcutDialogAction, &QAction::triggered, mManageShowCollectionProperties,
             &ManageShowCollectionProperties::slotShowFolderShortcutDialog);
@@ -3088,7 +3088,7 @@ void KMMainWidget::setupActions()
 
     //----- Message Menu
     {
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18n("&New Message..."), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18n("&New Message..."), this);
         actionCollection()->addAction(QLatin1String("new_message"), action);
         action->setIconText(i18nc("@action:intoolbar New Empty Message", "New"));
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCompose);
@@ -3098,7 +3098,7 @@ void KMMainWidget::setupActions()
         }
     }
 
-    mTemplateMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("document-new")), i18n("Message From &Template"),
+    mTemplateMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("document-new")), i18n("Message From &Template"),
                                     actionCollection());
     mTemplateMenu->setDelayed(true);
     actionCollection()->addAction(QLatin1String("new_from_template"), mTemplateMenu);
@@ -3107,7 +3107,7 @@ void KMMainWidget::setupActions()
     connect(mTemplateMenu->menu(), SIGNAL(triggered(QAction*)), this,
             SLOT(slotNewFromTemplate(QAction*)));
 
-    mMessageNewList = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new-list")),
+    mMessageNewList = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new-list")),
                                   i18n("New Message t&o Mailing-List..."),
                                   this);
     actionCollection()->addAction(QLatin1String("post_message"),  mMessageNewList);
@@ -3120,7 +3120,7 @@ void KMMainWidget::setupActions()
     connect(mSendAgainAction, &QAction::triggered, this, &KMMainWidget::slotResendMsg);
 
     //----- Create filter actions
-    mFilterMenu = new KActionMenu(QIcon::fromTheme(QLatin1String("view-filter")), i18n("&Create Filter"), this);
+    mFilterMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("&Create Filter"), this);
     actionCollection()->addAction(QLatin1String("create_filter"), mFilterMenu);
     connect(mFilterMenu, SIGNAL(triggered(bool)), this,
             SLOT(slotFilter()));
@@ -3151,7 +3151,7 @@ void KMMainWidget::setupActions()
     }
     mFilterMenu->addAction(mMsgActions->listFilterAction());
 
-    mUseAction = new QAction(QIcon::fromTheme(QLatin1String("document-new")), i18n("New Message From &Template"), this);
+    mUseAction = new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Message From &Template"), this);
     actionCollection()->addAction(QLatin1String("use_template"), mUseAction);
     connect(mUseAction, &QAction::triggered, this, &KMMainWidget::slotUseTemplate);
     actionCollection()->setDefaultShortcut(mUseAction, QKeySequence(Qt::SHIFT + Qt::Key_N));
@@ -3160,13 +3160,13 @@ void KMMainWidget::setupActions()
     mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
     actionCollection()->addAction(QLatin1String("thread_status"), mThreadStatusMenu);
 
-    mMarkThreadAsReadAction = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-read")), i18n("Mark Thread as &Read"), this);
+    mMarkThreadAsReadAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-mark-read")), i18n("Mark Thread as &Read"), this);
     actionCollection()->addAction(QLatin1String("thread_read"), mMarkThreadAsReadAction);
     connect(mMarkThreadAsReadAction, &QAction::triggered, this, &KMMainWidget::slotSetThreadStatusRead);
     KMail::Util::addQActionHelpText(mMarkThreadAsReadAction, i18n("Mark all messages in the selected thread as read"));
     mThreadStatusMenu->addAction(mMarkThreadAsReadAction);
 
-    mMarkThreadAsUnreadAction = new QAction(QIcon::fromTheme(QLatin1String("mail-mark-unread")), i18n("Mark Thread as &Unread"), this);
+    mMarkThreadAsUnreadAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-mark-unread")), i18n("Mark Thread as &Unread"), this);
     actionCollection()->addAction(QLatin1String("thread_unread"), mMarkThreadAsUnreadAction);
     connect(mMarkThreadAsUnreadAction, &QAction::triggered, this, &KMMainWidget::slotSetThreadStatusUnread);
     KMail::Util::addQActionHelpText(mMarkThreadAsUnreadAction, i18n("Mark all messages in the selected thread as unread"));
@@ -3175,24 +3175,24 @@ void KMMainWidget::setupActions()
     mThreadStatusMenu->addSeparator();
 
     //----- "Mark Thread" toggle actions
-    mToggleThreadImportantAction = new KToggleAction(QIcon::fromTheme(QLatin1String("mail-mark-important")), i18n("Mark Thread as &Important"), this);
+    mToggleThreadImportantAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("mail-mark-important")), i18n("Mark Thread as &Important"), this);
     actionCollection()->addAction(QLatin1String("thread_flag"), mToggleThreadImportantAction);
     connect(mToggleThreadImportantAction, &KToggleAction::triggered, this, &KMMainWidget::slotSetThreadStatusImportant);
     mToggleThreadImportantAction->setCheckedState(KGuiItem(i18n("Remove &Important Thread Mark")));
     mThreadStatusMenu->addAction(mToggleThreadImportantAction);
 
-    mToggleThreadToActAction = new KToggleAction(QIcon::fromTheme(QLatin1String("mail-mark-task")), i18n("Mark Thread as &Action Item"), this);
+    mToggleThreadToActAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("mail-mark-task")), i18n("Mark Thread as &Action Item"), this);
     actionCollection()->addAction(QLatin1String("thread_toact"), mToggleThreadToActAction);
     connect(mToggleThreadToActAction, &KToggleAction::triggered, this, &KMMainWidget::slotSetThreadStatusToAct);
     mToggleThreadToActAction->setCheckedState(KGuiItem(i18n("Remove &Action Item Thread Mark")));
     mThreadStatusMenu->addAction(mToggleThreadToActAction);
 
     //------- "Watch and ignore thread" actions
-    mWatchThreadAction = new KToggleAction(QIcon::fromTheme(QLatin1String("mail-thread-watch")), i18n("&Watch Thread"), this);
+    mWatchThreadAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("mail-thread-watch")), i18n("&Watch Thread"), this);
     actionCollection()->addAction(QLatin1String("thread_watched"), mWatchThreadAction);
     connect(mWatchThreadAction, &KToggleAction::triggered, this, &KMMainWidget::slotSetThreadStatusWatched);
 
-    mIgnoreThreadAction = new KToggleAction(QIcon::fromTheme(QLatin1String("mail-thread-ignored")), i18n("&Ignore Thread"), this);
+    mIgnoreThreadAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("mail-thread-ignored")), i18n("&Ignore Thread"), this);
     actionCollection()->addAction(QLatin1String("thread_ignored"), mIgnoreThreadAction);
     connect(mIgnoreThreadAction, &KToggleAction::triggered, this, &KMMainWidget::slotSetThreadStatusIgnored);
 
@@ -3200,7 +3200,7 @@ void KMMainWidget::setupActions()
     mThreadStatusMenu->addAction(mWatchThreadAction);
     mThreadStatusMenu->addAction(mIgnoreThreadAction);
 
-    mSaveAttachmentsAction = new QAction(QIcon::fromTheme(QLatin1String("mail-attachment")), i18n("Save A&ttachments..."), this);
+    mSaveAttachmentsAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments..."), this);
     actionCollection()->addAction(QLatin1String("file_save_attachments"), mSaveAttachmentsAction);
     connect(mSaveAttachmentsAction, &QAction::triggered, this, &KMMainWidget::slotSaveAttachments);
 
@@ -3209,7 +3209,7 @@ void KMMainWidget::setupActions()
     mCopyActionMenu = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::CopyItemToMenu);
 
     mApplyAllFiltersAction =
-        new QAction(QIcon::fromTheme(QLatin1String("view-filter")), i18n("Appl&y All Filters"), this);
+        new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Appl&y All Filters"), this);
     actionCollection()->addAction(QLatin1String("apply_filters"), mApplyAllFiltersAction);
     connect(mApplyAllFiltersAction, SIGNAL(triggered(bool)),
             SLOT(slotApplyFilters()));
@@ -3995,11 +3995,11 @@ void KMMainWidget::updateFolderMenu()
     bool isInTrashFolder = (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection()));
     QAction *moveToTrash = akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash);
     akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash)->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
-    akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash)->setIcon(isInTrashFolder ? QIcon::fromTheme(QLatin1String("edit-delete"))  : QIcon::fromTheme(QLatin1String("user-trash")));
+    akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash)->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete"))  : QIcon::fromTheme(QStringLiteral("user-trash")));
     //Use same text as in Text property. Change it in kf5
     moveToTrash->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
 
-    mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QLatin1String("edit-delete")) : QIcon::fromTheme(QLatin1String("user-trash")));
+    mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
     mTrashThreadAction->setText(isInTrashFolder ? i18n("Delete T&hread") : i18n("M&ove Thread to Trash"));
 
     mSearchMessages->setText((mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String("akonadi_search_resource")) ? i18n("Edit Search...") : i18n("&Find Messages..."));

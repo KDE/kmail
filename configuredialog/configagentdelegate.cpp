@@ -41,11 +41,11 @@ static const int s_delegatePaddingSize = 7;
 
 struct Icons {
     Icons()
-        : readyPixmap(QIcon::fromTheme(QLatin1String("user-online")).pixmap(QSize(16, 16)))
-        , syncPixmap(QIcon::fromTheme(QLatin1String("network-connect")).pixmap(QSize(16, 16)))
-        , errorPixmap(QIcon::fromTheme(QLatin1String("dialog-error")).pixmap(QSize(16, 16)))
-        , offlinePixmap(QIcon::fromTheme(QLatin1String("network-disconnect")).pixmap(QSize(16, 16)))
-        , checkMailIcon(QIcon::fromTheme(QLatin1String("mail-receive")))
+        : readyPixmap(QIcon::fromTheme(QStringLiteral("user-online")).pixmap(QSize(16, 16)))
+        , syncPixmap(QIcon::fromTheme(QStringLiteral("network-connect")).pixmap(QSize(16, 16)))
+        , errorPixmap(QIcon::fromTheme(QStringLiteral("dialog-error")).pixmap(QSize(16, 16)))
+        , offlinePixmap(QIcon::fromTheme(QStringLiteral("network-disconnect")).pixmap(QSize(16, 16)))
+        , checkMailIcon(QIcon::fromTheme(QStringLiteral("mail-receive")))
     {
     }
     QPixmap readyPixmap, syncPixmap, errorPixmap, offlinePixmap;

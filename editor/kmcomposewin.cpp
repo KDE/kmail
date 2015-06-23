@@ -1095,29 +1095,29 @@ void KMComposeWin::setupActions(void)
 
     if (MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
         //default = send now, alternative = queue
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("mail-send")), i18n("&Send Mail"), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("&Send Mail"), this);
         actionCollection()->addAction(QLatin1String("send_mail_default"), action);
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNow);
 
-        action = new QAction(QIcon::fromTheme(QLatin1String("mail-send")), i18n("Send Mail Using Shortcut"), this);
+        action = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("Send Mail Using Shortcut"), this);
         actionCollection()->addAction(QLatin1String("send_mail"), action);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Return));
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNowByShortcut);
 
         // FIXME: change to mail_send_via icon when this exist.
         actActionNowMenu = new KActionMenuTransport(this);
-        actActionNowMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-send")));
+        actActionNowMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send")));
         actActionNowMenu->setText(i18n("&Send Mail Via"));
 
         actActionNowMenu->setIconText(i18n("Send"));
         actionCollection()->addAction(QLatin1String("send_default_via"), actActionNowMenu);
 
-        action = new QAction(QIcon::fromTheme(QLatin1String("mail-queue")), i18n("Send &Later"), this);
+        action = new QAction(QIcon::fromTheme(QStringLiteral("mail-queue")), i18n("Send &Later"), this);
         actionCollection()->addAction(QLatin1String("send_alternative"), action);
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendLater);
 
         actActionLaterMenu = new KActionMenuTransport(this);
-        actActionLaterMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-queue")));
+        actActionLaterMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-queue")));
         actActionLaterMenu->setText(i18n("Send &Later Via"));
 
         actActionLaterMenu->setIconText(i18nc("Queue the message for sending at a later date", "Queue"));
@@ -1125,23 +1125,23 @@ void KMComposeWin::setupActions(void)
 
     } else {
         //default = queue, alternative = send now
-        QAction *action = new QAction(QIcon::fromTheme(QLatin1String("mail-queue")), i18n("Send &Later"), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-queue")), i18n("Send &Later"), this);
         actionCollection()->addAction(QLatin1String("send_mail"), action);
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendLater);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Return));
 
         actActionLaterMenu = new KActionMenuTransport(this);
-        actActionLaterMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-queue")));
+        actActionLaterMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-queue")));
         actActionLaterMenu->setText(i18n("Send &Later Via"));
         actionCollection()->addAction(QLatin1String("send_default_via"), actActionLaterMenu);
 
-        action = new QAction(QIcon::fromTheme(QLatin1String("mail-send")), i18n("&Send Mail"), this);
+        action = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("&Send Mail"), this);
         actionCollection()->addAction(QLatin1String("send_alternative"), action);
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNow);
 
         // FIXME: change to mail_send_via icon when this exits.
         actActionNowMenu = new KActionMenuTransport(this);
-        actActionNowMenu->setIcon(QIcon::fromTheme(QLatin1String("mail-send")));
+        actActionNowMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send")));
         actActionNowMenu->setText(i18n("&Send Mail Via"));
         actionCollection()->addAction(QLatin1String("send_alternative_via"), actActionNowMenu);
     }
@@ -1155,45 +1155,45 @@ void KMComposeWin::setupActions(void)
     connect(actActionLaterMenu, SIGNAL(transportSelected(MailTransport::Transport*)), this,
             SLOT(slotSendLaterVia(MailTransport::Transport*)));
 
-    QAction *action = new QAction(QIcon::fromTheme(QLatin1String("document-save")), i18n("Save as &Draft"), this);
+    QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save as &Draft"), this);
     actionCollection()->addAction(QLatin1String("save_in_drafts"), action);
     KMail::Util::addQActionHelpText(action, i18n("Save email in Draft folder"));
     actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_S));
     connect(action, &QAction::triggered, this, &KMComposeWin::slotSaveDraft);
 
-    action = new QAction(QIcon::fromTheme(QLatin1String("document-save")), i18n("Save as &Template"), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save as &Template"), this);
     KMail::Util::addQActionHelpText(action, i18n("Save email in Template folder"));
     actionCollection()->addAction(QLatin1String("save_in_templates"), action);
     connect(action, &QAction::triggered, this, &KMComposeWin::slotSaveTemplate);
 
-    action = new QAction(QIcon::fromTheme(QLatin1String("document-save")), i18n("Save as &File"), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save as &File"), this);
     KMail::Util::addQActionHelpText(action, i18n("Save email as text or html file"));
     actionCollection()->addAction(QLatin1String("save_as_file"), action);
     connect(action, &QAction::triggered, this, &KMComposeWin::slotSaveAsFile);
 
-    action = new QAction(QIcon::fromTheme(QLatin1String("contact-new")), i18n("New AddressBook Contact..."), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")), i18n("New AddressBook Contact..."), this);
     actionCollection()->addAction(QLatin1String("kmail_new_addressbook_contact"), action);
     connect(action, &QAction::triggered, this, &KMComposeWin::slotCreateAddressBookContact);
 
-    action = new QAction(QIcon::fromTheme(QLatin1String("document-open")), i18n("&Insert Text File..."), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("&Insert Text File..."), this);
     actionCollection()->addAction(QLatin1String("insert_file"), action);
     connect(action, &QAction::triggered, this, &KMComposeWin::slotInsertFile);
 
-    mRecentAction = new KRecentFilesAction(QIcon::fromTheme(QLatin1String("document-open")),
+    mRecentAction = new KRecentFilesAction(QIcon::fromTheme(QStringLiteral("document-open")),
                                            i18n("&Insert Recent Text File"), this);
     actionCollection()->addAction(QLatin1String("insert_file_recent"), mRecentAction);
     connect(mRecentAction, &KRecentFilesAction::urlSelected, this, &KMComposeWin::slotInsertRecentFile);
     connect(mRecentAction, &KRecentFilesAction::recentListCleared, this, &KMComposeWin::slotRecentListFileClear);
     mRecentAction->loadEntries(KMKernel::self()->config()->group(QString()));
 
-    action = new QAction(QIcon::fromTheme(QLatin1String("x-office-address-book")), i18n("&Address Book"), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
     KMail::Util::addQActionHelpText(action, i18n("Open Address Book"));
     actionCollection()->addAction(QLatin1String("addressbook"), action);
     if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty()) {
         action->setEnabled(false);
     }
     connect(action, &QAction::triggered, this, &KMComposeWin::slotAddressBook);
-    action = new QAction(QIcon::fromTheme(QLatin1String("mail-message-new")), i18n("&New Composer"), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18n("&New Composer"), this);
     actionCollection()->addAction(QLatin1String("new_composer"), action);
 
     connect(action, &QAction::triggered, this, &KMComposeWin::slotNewComposer);
@@ -1261,7 +1261,7 @@ void KMComposeWin::setupActions(void)
     connect(mSnippetAction, &KToggleAction::toggled, this, &KMComposeWin::slotSnippetWidgetVisibilityChanged);
     mSnippetAction->setChecked(GlobalSettings::self()->showSnippetManager());
 
-    mAutoSpellCheckingAction = new KToggleAction(QIcon::fromTheme(QLatin1String("tools-check-spelling")),
+    mAutoSpellCheckingAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("tools-check-spelling")),
             i18n("&Automatic Spellchecking"),
             this);
     actionCollection()->addAction(QLatin1String("options_auto_spellchecking"), mAutoSpellCheckingAction);
@@ -1280,7 +1280,7 @@ void KMComposeWin::setupActions(void)
     connect(mComposerBase->editor(), SIGNAL(externalEditorStarted()), this, SLOT(slotExternalEditorStarted()));
     //these are checkable!!!
     markupAction = new KToggleAction(i18n("Rich Text Editing"), this);
-    markupAction->setIcon(QIcon::fromTheme(QLatin1String("preferences-desktop-font")));
+    markupAction->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-font")));
     markupAction->setIconText(i18n("Rich Text"));
     markupAction->setToolTip(i18n("Toggle rich text editing mode"));
     actionCollection()->addAction(QLatin1String("html"), markupAction);
@@ -1360,10 +1360,10 @@ void KMComposeWin::setupActions(void)
     mGenerateShortenUrl = mCustomToolsWidget->action(PimCommon::CustomToolsWidget::ShortUrlTool);
     actionCollection()->addAction(QLatin1String("shorten_url"), mGenerateShortenUrl);
 
-    mEncryptAction = new KToggleAction(QIcon::fromTheme(QLatin1String("document-encrypt")), i18n("&Encrypt Message"), this);
+    mEncryptAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("document-encrypt")), i18n("&Encrypt Message"), this);
     mEncryptAction->setIconText(i18n("Encrypt"));
     actionCollection()->addAction(QLatin1String("encrypt_message"), mEncryptAction);
-    mSignAction = new KToggleAction(QIcon::fromTheme(QLatin1String("document-sign")), i18n("&Sign Message"), this);
+    mSignAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("document-sign")), i18n("&Sign Message"), this);
     mSignAction->setIconText(i18n("Sign"));
     actionCollection()->addAction(QLatin1String("sign_message"), mSignAction);
     const KIdentityManagement::Identity &ident =
@@ -2356,9 +2356,9 @@ void KMComposeWin::setEncryption(bool encrypt, bool setByUser)
     }
     // show the appropriate icon
     if (encrypt) {
-        mEncryptAction->setIcon(QIcon::fromTheme(QLatin1String("document-encrypt")));
+        mEncryptAction->setIcon(QIcon::fromTheme(QStringLiteral("document-encrypt")));
     } else {
-        mEncryptAction->setIcon(QIcon::fromTheme(QLatin1String("document-decrypt")));
+        mEncryptAction->setIcon(QIcon::fromTheme(QStringLiteral("document-decrypt")));
     }
 
     // mark the attachments for (no) encryption

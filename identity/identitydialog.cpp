@@ -511,7 +511,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mDefaultDomainEdit->setClearButtonShown(true);
     hbox->addWidget(mDefaultDomainEdit);
     QToolButton *restoreDefaultDomainName = new QToolButton;
-    restoreDefaultDomainName->setIcon(QIcon::fromTheme(QLatin1String("view-refresh")));
+    restoreDefaultDomainName->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
     restoreDefaultDomainName->setToolTip(i18n("Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
     connect(restoreDefaultDomainName, &QToolButton::clicked, this, &IdentityDialog::slotRefreshDefaultDomainName);
