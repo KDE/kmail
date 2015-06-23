@@ -28,6 +28,7 @@
 #include "customtemplatesmenu.h"
 
 #include "pimcommon/widgets/annotationdialog.h"
+#include "pimcommon/webshortcut/webshortcutmenumanager.h"
 #include "messagecore/settings/globalsettings.h"
 #include "messagecore/misc/mailinglist.h"
 #include "messagecore/helpers/messagehelpers.h"
@@ -76,6 +77,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
       mAddFollowupReminderAction(Q_NULLPTR),
       mDebugBalooAction(Q_NULLPTR)
 {
+    mWebShortcutMenuManager = new PimCommon::WebShortcutMenuManager(this);
     mReplyActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this);
     ac->addAction(QStringLiteral("message_reply_menu"), mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
@@ -613,68 +615,8 @@ void MessageActions::annotateMessage()
 
 void MessageActions::addWebShortcutsMenu(QMenu *menu, const QString &text)
 {
-    if (text.isEmpty()) {
-        return;
-    }
-
-    QString searchText = text;
-    searchText = searchText.replace(QLatin1Char('\n'), QLatin1Char(' ')).replace(QLatin1Char('\r'), QLatin1Char(' ')).simplified();
-
-    if (searchText.isEmpty()) {
-        return;
-    }
-
-    KUriFilterData filterData(searchText);
-
-    filterData.setSearchFilteringOptions(KUriFilterData::RetrievePreferredSearchProvidersOnly);
-
-    if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::NormalTextFilter)) {
-        const QStringList searchProviders = filterData.preferredSearchProviders();
-
-        if (!searchProviders.isEmpty()) {
-            QMenu *webShortcutsMenu = new QMenu(menu);
-            webShortcutsMenu->setIcon(QIcon::fromTheme(QStringLiteral("preferences-web-browser-shortcuts")));
-
-            const QString squeezedText = KStringHandler::rsqueeze(searchText, 21);
-            webShortcutsMenu->setTitle(i18n("Search for '%1' with", squeezedText));
-
-            QAction *action = Q_NULLPTR;
-
-            foreach (const QString &searchProvider, searchProviders) {
-                action = new QAction(searchProvider, webShortcutsMenu);
-                action->setIcon(QIcon::fromTheme(filterData.iconNameForPreferredSearchProvider(searchProvider)));
-                action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
-                connect(action, &QAction::triggered, this, &MessageActions::slotHandleWebShortcutAction);
-                webShortcutsMenu->addAction(action);
-            }
-
-            webShortcutsMenu->addSeparator();
-
-            action = new QAction(i18n("Configure Web Shortcuts..."), webShortcutsMenu);
-            action->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
-            connect(action, &QAction::triggered, this, &MessageActions::slotConfigureWebShortcuts);
-            webShortcutsMenu->addAction(action);
-
-            menu->addMenu(webShortcutsMenu);
-        }
-    }
-}
-
-void MessageActions::slotHandleWebShortcutAction()
-{
-    QAction *action = qobject_cast<QAction *>(sender());
-
-    if (action) {
-        KUriFilterData filterData(action->data().toString());
-        if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::WebShortcutFilter)) {
-            KToolInvocation::invokeBrowser(filterData.uri().url());
-        }
-    }
-}
-
-void MessageActions::slotConfigureWebShortcuts()
-{
-    KToolInvocation::kdeinitExec(QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts"));
+    mWebShortcutMenuManager->setSelectedText(text);
+    mWebShortcutMenuManager->addWebShortcutsMenu(menu);
 }
 
 void MessageActions::slotDebugBaloo()

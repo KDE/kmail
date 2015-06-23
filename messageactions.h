@@ -44,6 +44,11 @@ namespace TemplateParser
 class CustomTemplatesMenu;
 }
 
+namespace PimCommon
+{
+class WebShortcutMenuManager;
+}
+
 namespace KMail
 {
 
@@ -179,8 +184,6 @@ private Q_SLOTS:
 
     void slotUpdateActionsFetchDone(KJob *job);
     void slotMailingListFilter();
-    void slotHandleWebShortcutAction();
-    void slotConfigureWebShortcuts();
     void slotDebugBaloo();
 
     void slotAddFollowupReminder();
@@ -204,6 +207,7 @@ private:
     QAction *mListFilterAction;
     QAction *mAddFollowupReminderAction;
     QAction *mDebugBalooAction;
+    PimCommon::WebShortcutMenuManager *mWebShortcutMenuManager;
 };
 
 }
