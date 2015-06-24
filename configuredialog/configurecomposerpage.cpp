@@ -493,10 +493,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->addWidget(mMaximumRecentAddress, row, 2);
     ++row;
 
-
     // Configure All Address settings
     QPushButton *configureCompletionButton = new QPushButton(i18n("Configure Completion..."), this);
-    connect(configureCompletionButton, &QAbstractButton::clicked,this, &ComposerPageGeneralTab::slotConfigureAddressCompletion);
+    connect(configureCompletionButton, &QAbstractButton::clicked, this, &ComposerPageGeneralTab::slotConfigureAddressCompletion);
     groupGridLayout->addWidget(configureCompletionButton, row, 1, 1, 2);
     ++row;
 
