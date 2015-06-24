@@ -51,7 +51,6 @@ public Q_SLOTS:
         /*TODO*/
     }
     Q_SCRIPTABLE void exit();
-    void updateEditMenu() {}
     void updateQuickSearchText();
 
 protected:
