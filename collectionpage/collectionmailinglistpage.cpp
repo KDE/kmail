@@ -276,7 +276,7 @@ void CollectionMailingListPage::fillMLFromWidgets()
         if (!(*it).startsWith(QLatin1String("http:")) && !(*it).startsWith(QLatin1String("https:")) &&
                 !(*it).startsWith(QLatin1String("mailto:")) && ((*it).contains(QLatin1Char('@')))) {
             listChanged = true;
-            newList << QLatin1String("mailto:") + *it;
+            newList << QStringLiteral("mailto:") + *it;
         } else {
             newList << *it;
         }

@@ -325,7 +325,7 @@ void KMReaderMainWin::setupAccel()
     mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("user-trash")), i18n("&Move to Trash"), this);
     mTrashAction->setIconText(i18nc("@action:intoolbar Move to Trash", "Trash"));
     KMail::Util::addQActionHelpText(mTrashAction, i18n("Move message to trashcan"));
-    actionCollection()->addAction(QLatin1String("move_to_trash"), mTrashAction);
+    actionCollection()->addAction(QStringLiteral("move_to_trash"), mTrashAction);
     actionCollection()->setDefaultShortcut(mTrashAction, QKeySequence(Qt::Key_Delete));
     connect(mTrashAction, &QAction::triggered, this, &KMReaderMainWin::slotTrashMsg);
 
@@ -336,12 +336,12 @@ void KMReaderMainWin::setupAccel()
     //----- Message Menu
 
     mFontAction = new KFontAction(i18n("Select Font"), this);
-    actionCollection()->addAction(QLatin1String("text_font"), mFontAction);
+    actionCollection()->addAction(QStringLiteral("text_font"), mFontAction);
     mFontAction->setFont(mReaderWin->cssHelper()->bodyFont().family());
     connect(mFontAction, static_cast<void (KFontAction::*)(const QString &)>(&KFontAction::triggered), this, &KMReaderMainWin::slotFontAction);
     mFontSizeAction = new KFontSizeAction(i18n("Select Size"), this);
     mFontSizeAction->setFontSize(mReaderWin->cssHelper()->bodyFont().pointSize());
-    actionCollection()->addAction(QLatin1String("text_size"), mFontSizeAction);
+    actionCollection()->addAction(QStringLiteral("text_size"), mFontSizeAction);
     connect(mFontSizeAction, &KFontSizeAction::fontSizeChanged, this, &KMReaderMainWin::slotSizeAction);
 
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::popupMenu, this, &KMReaderMainWin::slotMessagePopup);

@@ -178,8 +178,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.setupUi(this);
 
     mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType());
-    mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QLatin1String("Resource"));
-    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QLatin1String("MailTransport") << QLatin1String("Notes"));
+    mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QStringLiteral("Resource"));
+    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QStringLiteral("MailTransport") << QStringLiteral("Notes"));
 
     KConfig specialMailCollection(QLatin1String("specialmailcollectionsrc"));
     if (specialMailCollection.hasGroup(QLatin1String("SpecialCollections"))) {

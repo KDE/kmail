@@ -47,21 +47,21 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
     QTest::addColumn<QStringList>("listEmails");
     QTest::addColumn<QStringList>("whiteListEmail");
     QTest::addColumn<bool>("hasPotentialPhishing");
-    QTest::newRow("NoPotentialPhishing") << (QStringList() << QLatin1String("foo@kde.org")) << QStringList() << false;
-    QTest::newRow("HasPotentialPhishing") << (QStringList() << QLatin1String("\"bla@kde.org\" <foo@kde.org>")) << QStringList() << true;
+    QTest::newRow("NoPotentialPhishing") << (QStringList() << QStringLiteral("foo@kde.org")) << QStringList() << false;
+    QTest::newRow("HasPotentialPhishing") << (QStringList() << QStringLiteral("\"bla@kde.org\" <foo@kde.org>")) << QStringList() << true;
     const QString email = QLatin1String("\"bla@kde.org\" <foo@kde.org>");
     QTest::newRow("EmailInWhiteList") << (QStringList() << email) << (QStringList() << email) << false;
-    QTest::newRow("NotAllEmailInWhiteList") << (QStringList() << email << QLatin1String("\"c@kde.org\" <dd@kde.org>")) << (QStringList() << email) << true;
-    QTest::newRow("EmailInWhiteListWithSpace") << (QStringList() << QLatin1String(" \"bla@kde.org\" <foo@kde.org> ")) << (QStringList() << email) << false;
-    QTest::newRow("EmailWithSameNameAndDisplayName") << (QStringList() << QLatin1String("\"<foo@kde.com>\" <foo@kde.com>")) << (QStringList() << email) << false;
-    QTest::newRow("EmailWithSameNameAndDisplayNameWithSpace") << (QStringList() << QLatin1String(" \"<foo@kde.com>\" <foo@kde.com> ")) << (QStringList() << email) << false;
+    QTest::newRow("NotAllEmailInWhiteList") << (QStringList() << email << QStringLiteral("\"c@kde.org\" <dd@kde.org>")) << (QStringList() << email) << true;
+    QTest::newRow("EmailInWhiteListWithSpace") << (QStringList() << QStringLiteral(" \"bla@kde.org\" <foo@kde.org> ")) << (QStringList() << email) << false;
+    QTest::newRow("EmailWithSameNameAndDisplayName") << (QStringList() << QStringLiteral("\"<foo@kde.com>\" <foo@kde.com>")) << (QStringList() << email) << false;
+    QTest::newRow("EmailWithSameNameAndDisplayNameWithSpace") << (QStringList() << QStringLiteral(" \"<foo@kde.com>\" <foo@kde.com> ")) << (QStringList() << email) << false;
 
-    QTest::newRow("notsamecase") << (QStringList() << QLatin1String("\"Foo@kde.org\" <foo@kde.org>")) << QStringList() << false;
-    QTest::newRow("notsamecaseaddress") << (QStringList() << QLatin1String("\"Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << false;
+    QTest::newRow("notsamecase") << (QStringList() << QStringLiteral("\"Foo@kde.org\" <foo@kde.org>")) << QStringList() << false;
+    QTest::newRow("notsamecaseaddress") << (QStringList() << QStringLiteral("\"Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << false;
 
-    QTest::newRow("emailinparenthese") << (QStringList() << QLatin1String("\"bla (Foo@kde.org)\" <FOO@kde.ORG>")) << QStringList() << false;
-    QTest::newRow("notemailinparenthese") << (QStringList() << QLatin1String("\"bla (bli@kde.org)\" <FOO@kde.ORG>")) << QStringList() << true;
-    QTest::newRow("erroremailinparenthese") << (QStringList() << QLatin1String("\"bla Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << true;
+    QTest::newRow("emailinparenthese") << (QStringList() << QStringLiteral("\"bla (Foo@kde.org)\" <FOO@kde.ORG>")) << QStringList() << false;
+    QTest::newRow("notemailinparenthese") << (QStringList() << QStringLiteral("\"bla (bli@kde.org)\" <FOO@kde.ORG>")) << QStringList() << true;
+    QTest::newRow("erroremailinparenthese") << (QStringList() << QStringLiteral("\"bla Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << true;
 }
 
 void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
@@ -81,7 +81,7 @@ void PotentialPhishingEmailJobTest::shouldEmitSignal()
 {
     PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
     QSignalSpy spy(job, SIGNAL(potentialPhishingEmailsFound(QStringList)));
-    job->setEmails((QStringList() << QLatin1String("\"bla@kde.org\" <foo@kde.org>")));
+    job->setEmails((QStringList() << QStringLiteral("\"bla@kde.org\" <foo@kde.org>")));
     job->start();
     QCOMPARE(spy.count(), 1);
 }
