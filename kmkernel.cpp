@@ -140,7 +140,7 @@ KMKernel::KMKernel(QObject *parent) :
         mDebugBaloo = true;
     }
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
-    QDBusConnection::sessionBus().registerService(QLatin1String("org.kde.kmail"));
+    QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.kmail"));
     qCDebug(KMAIL_LOG) << "Starting up...";
 
     mySelf = this;

@@ -318,7 +318,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     if (kmkernel->firstStart()) {
         if (MailCommon::Util::foundMailer()) {
             if (KMessageBox::questionYesNo(this, i18n("Another mailer was found on system. Do you want to import data from it?")) == KMessageBox::Yes) {
-                const QString path = QStandardPaths::findExecutable(QLatin1String("importwizard"));
+                const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
                 if (!QProcess::startDetached(path)) {
                     KMessageBox::error(this, i18n("Could not start the import wizard. "
                                                   "Please check your installation."),
@@ -2879,7 +2879,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
         actionCollection()->addAction(QStringLiteral("addressbook"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAddrBook);
-        if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty()) {
+        if (QStandardPaths::findExecutable(QStringLiteral("kaddressbook")).isEmpty()) {
             action->setEnabled(false);
         }
     }
@@ -2889,7 +2889,7 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QStringLiteral("tools_start_certman"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotStartCertManager);
         // disable action if no certman binary is around
-        if (QStandardPaths::findExecutable(QLatin1String("kleopatra")).isEmpty()) {
+        if (QStandardPaths::findExecutable(QStringLiteral("kleopatra")).isEmpty()) {
             action->setEnabled(false);
         }
     }
@@ -2902,7 +2902,7 @@ void KMMainWidget::setupActions()
         const bool usableKWatchGnupg = false;
 #else
         // disable action if no kwatchgnupg binary is around
-        bool usableKWatchGnupg = !QStandardPaths::findExecutable(QLatin1String("kwatchgnupg")).isEmpty();
+        bool usableKWatchGnupg = !QStandardPaths::findExecutable(QStringLiteral("kwatchgnupg")).isEmpty();
 #endif
         action->setEnabled(usableKWatchGnupg);
     }
@@ -2910,7 +2910,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("document-import")), i18n("&Import Messages..."), this);
         actionCollection()->addAction(QStringLiteral("import"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImport);
-        if (QStandardPaths::findExecutable(QLatin1String("importwizard")).isEmpty()) {
+        if (QStandardPaths::findExecutable(QStringLiteral("importwizard")).isEmpty()) {
             action->setEnabled(false);
         }
     }

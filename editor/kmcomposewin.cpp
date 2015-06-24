@@ -1189,7 +1189,7 @@ void KMComposeWin::setupActions(void)
     action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
     KMail::Util::addQActionHelpText(action, i18n("Open Address Book"));
     actionCollection()->addAction(QStringLiteral("addressbook"), action);
-    if (QStandardPaths::findExecutable(QLatin1String("kaddressbook")).isEmpty()) {
+    if (QStandardPaths::findExecutable(QStringLiteral("kaddressbook")).isEmpty()) {
         action->setEnabled(false);
     }
     connect(action, &QAction::triggered, this, &KMComposeWin::slotAddressBook);
