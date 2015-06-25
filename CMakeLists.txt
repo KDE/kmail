@@ -155,8 +155,6 @@ if (KDEPIM_BUILD_DESKTOP)
      job/savedraftjob.cpp
      job/removeduplicatemailjob.cpp
      job/createfollowupreminderonexistingmessagejob.cpp
-     job/manageserversidesubscriptionjob.cpp
-     job/manageserversidesubscriptionjob.cpp
      job/removecollectionjob.cpp
      job/saveasfilejob.cpp
   )

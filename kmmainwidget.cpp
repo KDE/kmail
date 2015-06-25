@@ -189,7 +189,7 @@ using KSieveUi::SieveDebugDialog;
 #include <KHelpClient>
 #include <QStandardPaths>
 
-#include <job/manageserversidesubscriptionjob.h>
+#include "pimcommon/manageserversidesubscription/manageserversidesubscriptionjob.h"
 #include <job/removeduplicatemailjob.h>
 #include <job/removecollectionjob.h>
 
@@ -4420,7 +4420,7 @@ void KMMainWidget::slotServerSideSubscription()
     if (!mCurrentFolder) {
         return;
     }
-    ManageServerSideSubscriptionJob *job = new ManageServerSideSubscriptionJob(this);
+    PimCommon::ManageServerSideSubscriptionJob *job = new PimCommon::ManageServerSideSubscriptionJob(this);
     job->setCurrentCollection(mCurrentFolder->collection());
     job->setParentWidget(this);
     job->start();
