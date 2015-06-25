@@ -21,6 +21,7 @@
 #include "kernel/mailkernel.h"
 
 #include "foldercollection.h"
+#include "pimcommon/util/pimutil.h"
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <Akonadi/KMime/MessageFolderAttribute>
@@ -70,7 +71,7 @@ bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) cons
 
         bool isOnline = false;
         if (CommonKernel->isSystemFolderCollection(c) &&
-                !kmkernel->isImapFolder(c, isOnline)) {
+                !PimCommon::Util::isImapFolder(c, isOnline)) {
             // local system folders
             if (c == CommonKernel->inboxCollectionFolder() ||
                     c == CommonKernel->trashCollectionFolder()) {

@@ -63,6 +63,7 @@ using KSieveUi::SieveDebugDialog;
 #include "folderarchive/folderarchivemanager.h"
 
 #include "pimcommon/acl/collectionaclpage.h"
+#include "pimcommon/util/pimutil.h"
 #include "mailcommon/collectionpage/collectiongeneralpage.h"
 #include "mailcommon/collectionpage/collectionexpirypage.h"
 #include "mailcommon/collectionpage/attributes/expirecollectionattribute.h"
@@ -4017,7 +4018,7 @@ void KMMainWidget::updateFolderMenu()
 
     actionlist << akonadiStandardAction(Akonadi::StandardActionManager::ManageLocalSubscriptions);
     bool imapFolderIsOnline = false;
-    if (mCurrentFolder && kmkernel->isImapFolder(mCurrentFolder->collection(), imapFolderIsOnline)) {
+    if (mCurrentFolder && PimCommon::Util::isImapFolder(mCurrentFolder->collection(), imapFolderIsOnline)) {
         if (imapFolderIsOnline) {
             actionlist << mServerSideSubscription;
         }

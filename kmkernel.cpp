@@ -1887,14 +1887,6 @@ void KMKernel::updatedTemplates()
     Q_EMIT customTemplatesChanged();
 }
 
-bool KMKernel::isImapFolder(const Akonadi::Collection &col, bool &isOnline) const
-{
-    const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(col.resource());
-    isOnline = agentInstance.isOnline();
-
-    return PimCommon::Util::isImapResource(agentInstance.type().identifier());
-}
-
 void KMKernel::stopAgentInstance()
 {
     const QString resourceGroupPattern(QLatin1String("Resource %1"));

@@ -16,6 +16,7 @@
 */
 
 #include "manageserversidesubscriptionjob.h"
+#include "pimcommon/util/pimutil.h"
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QDBusInterface>
@@ -45,7 +46,7 @@ void ManageServerSideSubscriptionJob::start()
         return;
     }
     bool isImapOnline = false;
-    if (kmkernel->isImapFolder(mCurrentCollection, isImapOnline)) {
+    if (PimCommon::Util::isImapFolder(mCurrentCollection, isImapOnline)) {
         QDBusInterface iface(
             QLatin1String("org.freedesktop.Akonadi.Resource.") + mCurrentCollection.resource(),
             QStringLiteral("/"), QStringLiteral("org.kde.Akonadi.ImapResourceBase"),
