@@ -1905,7 +1905,7 @@ void KMKernel::stopAgentInstance()
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(identifier));
 
         // Keep sync in ConfigureDialog, don't forget to change there.
-        if (group.readEntry("OfflineOnShutdown", identifier.startsWith(QLatin1String("akonadi_pop3_resource")) ? true : false)) {
+        if (group.readEntry("OfflineOnShutdown", identifier.startsWith(QStringLiteral("akonadi_pop3_resource")) ? true : false)) {
             type.setIsOnline(false);
         }
     }

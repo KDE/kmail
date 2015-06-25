@@ -232,7 +232,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         IncludeInManualChecks = group.readEntry("IncludeInManualChecks", true);
 
         // Keep sync with kmkernel, don't forget to change there.
-        OfflineOnShutdown = group.readEntry("OfflineOnShutdown", ident.startsWith(QLatin1String("akonadi_pop3_resource")) ? true : false);
+        OfflineOnShutdown = group.readEntry("OfflineOnShutdown", ident.startsWith(QStringLiteral("akonadi_pop3_resource")) ? true : false);
 
         CheckOnStartup = group.readEntry("CheckOnStartup", false);
         QSharedPointer<RetrievalOptions> opts(new RetrievalOptions(IncludeInManualChecks, OfflineOnShutdown, CheckOnStartup));

@@ -4420,7 +4420,7 @@ void KMMainWidget::slotServerSideSubscription()
         return;
     }
     ManageServerSideSubscriptionJob *job = new ManageServerSideSubscriptionJob(this);
-    job->setCurrentFolder(mCurrentFolder);
+    job->setCurrentCollection(mCurrentFolder->collection());
     job->setParentWidget(this);
     job->start();
 }

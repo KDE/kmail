@@ -275,7 +275,7 @@ void XFaceConfigurator::slotUpdateXFace()
     QString str = mTextEdit->editor()->toPlainText();
 
     if (!str.isEmpty()) {
-        if (str.startsWith(QLatin1String("x-face:"), Qt::CaseInsensitive)) {
+        if (str.startsWith(QStringLiteral("x-face:"), Qt::CaseInsensitive)) {
             str = str.remove(QLatin1String("x-face:"), Qt::CaseInsensitive);
             mTextEdit->editor()->setPlainText(str);
         }
