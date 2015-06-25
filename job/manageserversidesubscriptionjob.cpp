@@ -39,15 +39,15 @@ ManageServerSideSubscriptionJob::~ManageServerSideSubscriptionJob()
 
 void ManageServerSideSubscriptionJob::start()
 {
-    if (!mCurrentFolder) {
-        qCDebug(KMAIL_LOG) << " currentFolder not defined";
+    if (!mCurrentCollection.isValid()) {
+        qCDebug(KMAIL_LOG) << " collection not defined";
         deleteLater();
         return;
     }
     bool isImapOnline = false;
-    if (kmkernel->isImapFolder(mCurrentFolder->collection(), isImapOnline)) {
+    if (kmkernel->isImapFolder(mCurrentCollection, isImapOnline)) {
         QDBusInterface iface(
-            QLatin1String("org.freedesktop.Akonadi.Resource.") + mCurrentFolder->collection().resource(),
+            QLatin1String("org.freedesktop.Akonadi.Resource.") + mCurrentCollection.resource(),
             QStringLiteral("/"), QStringLiteral("org.kde.Akonadi.ImapResourceBase"),
             KDBusConnectionPool::threadConnection(), this);
         if (!iface.isValid()) {
@@ -83,8 +83,8 @@ void ManageServerSideSubscriptionJob::setParentWidget(QWidget *parentWidget)
     mParentWidget = parentWidget;
 }
 
-void ManageServerSideSubscriptionJob::setCurrentFolder(const QSharedPointer<MailCommon::FolderCollection> &currentFolder)
+void ManageServerSideSubscriptionJob::setCurrentCollection(const Akonadi::Collection &col)
 {
-    mCurrentFolder = currentFolder;
+    mCurrentCollection = col;
 }
 

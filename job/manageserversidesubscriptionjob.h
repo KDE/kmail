@@ -20,7 +20,7 @@
 
 #include <QObject>
 #include <QSharedPointer>
-#include <foldercollection.h>
+#include <AkonadiCore/collection.h>
 class QDBusPendingCallWatcher;
 class ManageServerSideSubscriptionJob : public QObject
 {
@@ -31,14 +31,14 @@ public:
     ~ManageServerSideSubscriptionJob();
 
     void start();
-    void setCurrentFolder(const QSharedPointer<MailCommon::FolderCollection> &currentFolder);
+    void setCurrentCollection(const Akonadi::Collection &col);
 
     void setParentWidget(QWidget *parentWidget);
 
 private Q_SLOTS:
     void slotConfigureSubscriptionFinished(QDBusPendingCallWatcher *watcher);
 private:
-    QSharedPointer<MailCommon::FolderCollection> mCurrentFolder;
+    Akonadi::Collection mCurrentCollection;
     QWidget *mParentWidget;
 };
 
