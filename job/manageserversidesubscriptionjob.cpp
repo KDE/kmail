@@ -22,7 +22,6 @@
 #include <QDBusInterface>
 #include <QDBusPendingCall>
 #include <QDBusPendingReply>
-#include "kmkernel.h"
 #include <kdbusconnectionpool.h>
 #include <KMessageBox>
 
