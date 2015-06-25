@@ -38,6 +38,7 @@ KMComposerEditorNg::KMComposerEditorNg(KMComposeWin *win, QWidget *parent)
 {
     setSpellCheckingConfigFileName(QStringLiteral("kmail2rc"));
     setAutocorrection(KMKernel::self()->composerAutoCorrection());
+    createHighlighter();
 }
 
 KMComposerEditorNg::~KMComposerEditorNg()
