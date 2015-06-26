@@ -119,7 +119,7 @@ QString toolTip(const Akonadi::Item &item)
         //Port to QDateTime QT5
         tip += htmlCodeForStandardRow.arg(KLocale::global()->formatDateTime(msg->date()->dateTime()/*.toLocalZone()*/, KLocale::FancyLongDate)).arg(i18n("Date"));
         if (!content.isEmpty()) {
-            tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QLatin1String("<br>"))).arg(i18n("Preview"));
+            tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>"))).arg(i18n("Preview"));
         }
     }
     tip += QString::fromLatin1(

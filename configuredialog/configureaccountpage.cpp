@@ -171,7 +171,7 @@ QString AccountsPage::ReceivingTab::helpAnchor() const
 AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QLatin1String("org.freedesktop.Akonadi.NewMailNotifierAgent"), QLatin1String("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
+    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QLatin1String("org.freedesktop.Akonadi.NewMailNotifierAgent"), QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
     if (!mNewMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
     }
@@ -307,7 +307,7 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_newmailnotifier_agent"), QLatin1String("/NewMailNotifierAgent"));
+    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
     if (interface.isValid()) {
         interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
     } else {

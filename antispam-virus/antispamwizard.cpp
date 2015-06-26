@@ -181,7 +181,7 @@ void AntiSpamWizard::accept()
                 SearchPattern *pipeFilterPattern = pipeFilter->pattern();
                 pipeFilterPattern->setName(uniqueNameFor((*it).getFilterName()));
                 pipeFilterPattern->append(SearchRule::createInstance("<size>",
-                                          SearchRule::FuncIsGreaterOrEqual, QLatin1String("0")));
+                                          SearchRule::FuncIsGreaterOrEqual, QStringLiteral("0")));
                 pipeFilter->setApplyOnOutbound(false);
                 pipeFilter->setApplyOnInbound();
                 pipeFilter->setApplyOnExplicit();
@@ -262,7 +262,7 @@ void AntiSpamWizard::accept()
                     pipeFilterPattern->setName(uniqueNameFor((*it).getFilterName()));
                 }
                 pipeFilterPattern->append(SearchRule::createInstance("<size>",
-                                          SearchRule::FuncIsLessOrEqual, QLatin1String("256000")));
+                                          SearchRule::FuncIsLessOrEqual, QStringLiteral("256000")));
                 pipeFilter->setApplyOnOutbound(false);
                 pipeFilter->setApplyOnInbound();
                 pipeFilter->setApplyOnExplicit();
@@ -398,7 +398,7 @@ void AntiSpamWizard::accept()
             classSpamFilterPattern->setName(uniqueNameFor(i18n("Classify as Spam")));
         }
         classSpamFilterPattern->append(SearchRule::createInstance("<size>",
-                                       SearchRule::FuncIsGreaterOrEqual, QLatin1String("0")));
+                                       SearchRule::FuncIsGreaterOrEqual, QStringLiteral("0")));
         classSpamFilter->setApplyOnOutbound(false);
         classSpamFilter->setApplyOnInbound(false);
         classSpamFilter->setApplyOnExplicit(false);
@@ -442,7 +442,7 @@ void AntiSpamWizard::accept()
             classHamFilterPattern->setName(uniqueNameFor(i18n("Classify as NOT Spam")));
         }
         classHamFilterPattern->append(SearchRule::createInstance("<size>",
-                                      SearchRule::FuncIsGreaterOrEqual, QLatin1String("0")));
+                                      SearchRule::FuncIsGreaterOrEqual, QStringLiteral("0")));
         classHamFilter->setApplyOnOutbound(false);
         classHamFilter->setApplyOnInbound(false);
         classHamFilter->setApplyOnExplicit(false);
@@ -577,7 +577,7 @@ void AntiSpamWizard::checkToolAvailability()
 
 void AntiSpamWizard::slotHelpClicked()
 {
-    KHelpClient::invokeHelp((mMode == AntiSpam) ? QLatin1String("the-anti-spam-wizard") : QLatin1String("the-anti-virus-wizard") , QLatin1String("kmail"));
+    KHelpClient::invokeHelp((mMode == AntiSpam) ? QLatin1String("the-anti-spam-wizard") : QLatin1String("the-anti-virus-wizard") , QStringLiteral("kmail"));
 }
 
 void AntiSpamWizard::slotBuildSummary()
@@ -800,13 +800,13 @@ AntiSpamWizard::ConfigReader::readToolConfig(KConfigGroup &configGroup)
 AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
 {
     return SpamToolConfig(QLatin1String("spamassassin"), 0, 1,
-                          QLatin1String("SpamAssassin"), QLatin1String("spamassassin -V"),
-                          QLatin1String("http://spamassassin.org"), QLatin1String("SpamAssassin Check"),
+                          QLatin1String("SpamAssassin"), QStringLiteral("spamassassin -V"),
+                          QLatin1String("http://spamassassin.org"), QStringLiteral("SpamAssassin Check"),
                           QLatin1String("spamassassin -L"),
                           QLatin1String("sa-learn -L --spam --no-sync --single"),
                           QLatin1String("sa-learn -L --ham --no-sync --single"),
                           QLatin1String("spamassassin -d"),
-                          QLatin1String("X-Spam-Flag"), QLatin1String("yes"), QString(), QString(),
+                          QLatin1String("X-Spam-Flag"), QStringLiteral("yes"), QString(), QString(),
                           false, false, true, false, AntiSpam);
 }
 

@@ -1379,7 +1379,7 @@ void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
                 subj = i18n("No Subject");
             }
 
-            QAction *templateAction = mTemplateMenu->menu()->addAction(KStringHandler::rsqueeze(subj.replace(QLatin1Char('&'), QLatin1String("&&"))));
+            QAction *templateAction = mTemplateMenu->menu()->addAction(KStringHandler::rsqueeze(subj.replace(QLatin1Char('&'), QStringLiteral("&&"))));
             QVariant var;
             var.setValue(items.at(idx));
             templateAction->setData(var);
@@ -1484,7 +1484,7 @@ void KMMainWidget::slotEmptyFolder()
                              i18n("<qt>Are you sure you want to move all messages from "
                                   "folder <b>%1</b> to the trash?</qt>", mCurrentFolder->name().toHtmlEscaped());
 
-        if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QLatin1String("user-trash")))
+        if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QStringLiteral("user-trash")))
                 != KMessageBox::Continue) {
             return;
         }

@@ -210,7 +210,7 @@ KMKernel::KMKernel(QObject *parent) :
     connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportRemoved, this, &KMKernel::transportRemoved);
     connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportRenamed, this, &KMKernel::transportRenamed);
 
-    QDBusConnection::sessionBus().connect(QString(), QLatin1String("/MailDispatcherAgent"), QLatin1String("org.freedesktop.Akonadi.MailDispatcherAgent"), QLatin1String("itemDispatchStarted"), this, SLOT(itemDispatchStarted()));
+    QDBusConnection::sessionBus().connect(QString(), QStringLiteral("/MailDispatcherAgent"), QStringLiteral("org.freedesktop.Akonadi.MailDispatcherAgent"), QStringLiteral("itemDispatchStarted"), this, SLOT(itemDispatchStarted()));
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceStatusChanged, this, &KMKernel::instanceStatusChanged);
 
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceError, this, &KMKernel::slotInstanceError);
@@ -937,7 +937,7 @@ int KMKernel::viewMessage(const QString &messageFile)
 
 void KMKernel::raise()
 {
-    QDBusInterface iface(QLatin1String("org.kde.kmail"), QLatin1String("/MainApplication"),
+    QDBusInterface iface(QLatin1String("org.kde.kmail"), QStringLiteral("/MainApplication"),
                          QLatin1String("org.kde.PIMUniqueApplication"),
                          QDBusConnection::sessionBus());
     QDBusReply<int> reply;

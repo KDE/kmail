@@ -804,10 +804,10 @@ void KMReaderWin::updateHtmlActions()
         const QStringList customs = mSearchedAddress.customs();
         Q_FOREACH (const QString &custom, customs) {
             if (custom.contains(QLatin1String("MailPreferedFormatting"))) {
-                const QString value = mSearchedAddress.custom(QLatin1String("KADDRESSBOOK"), QLatin1String("MailPreferedFormatting"));
+                const QString value = mSearchedAddress.custom(QLatin1String("KADDRESSBOOK"), QStringLiteral("MailPreferedFormatting"));
                 mViewAsHtml->setChecked(value == QLatin1String("HTML"));
             } else if (custom.contains(QLatin1String("MailAllowToRemoteContent"))) {
-                const QString value = mSearchedAddress.custom(QLatin1String("KADDRESSBOOK"), QLatin1String("MailAllowToRemoteContent"));
+                const QString value = mSearchedAddress.custom(QLatin1String("KADDRESSBOOK"), QStringLiteral("MailAllowToRemoteContent"));
                 mLoadExternalReference->setChecked((value == QLatin1String("TRUE")));
             }
         }

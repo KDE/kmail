@@ -72,7 +72,7 @@ void checkConfigUpdates()
     }
 
     for (int i = configUpdateLevel ; i < numUpdates ; ++i) {
-        config->checkUpdate(QLatin1String(updates[i]), QLatin1String("kmail.upd"));
+        config->checkUpdate(QLatin1String(updates[i]), QStringLiteral("kmail.upd"));
     }
     GlobalSettings::self()->setUpdateLevel(numUpdates);
 }

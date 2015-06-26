@@ -545,7 +545,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     tlay->addWidget(mCustom, Qt::AlignLeft);
 
 #ifndef KDEPIM_MOBILE_UI
-    mWidget = new TemplateParser::TemplatesConfiguration(tab, QLatin1String("identity-templates"));
+    mWidget = new TemplateParser::TemplatesConfiguration(tab, QStringLiteral("identity-templates"));
     mWidget->setEnabled(false);
 
     // Move the help label outside of the templates configuration widget,
@@ -604,7 +604,7 @@ IdentityDialog::~IdentityDialog()
 
 void IdentityDialog::slotHelp()
 {
-    KHelpClient::invokeHelp(QLatin1String("configure-identity"), QLatin1String("kmail"));
+    KHelpClient::invokeHelp(QLatin1String("configure-identity"), QStringLiteral("kmail"));
 }
 
 void IdentityDialog::slotAboutToShow(int index)

@@ -55,7 +55,7 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     connect(mConfigureAgentListView, &ConfigureAgentListView::agentChanged, this, &ConfigureAgentsWidget::changed);
 
     setLayout(lay);
-    mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs("data", QLatin1String("akonadi/agents"));
+    mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs("data", QStringLiteral("akonadi/agents"));
     initialize();
     readConfig();
 }
@@ -90,10 +90,10 @@ void ConfigureAgentsWidget::addInfos(const QString &desktopFile, ConfigureAgentI
 void ConfigureAgentsWidget::initialize()
 {
     QVector<ConfigureAgentItem> lst;
-    createItem(QLatin1String("akonadi_sendlater_agent"), QLatin1String("/SendLaterAgent"), QLatin1String("sendlateragent.desktop"), lst);
-    createItem(QLatin1String("akonadi_archivemail_agent"), QLatin1String("/ArchiveMailAgent"), QLatin1String("archivemailagent.desktop"), lst);
-    createItem(QLatin1String("akonadi_newmailnotifier_agent"), QLatin1String("/NewMailNotifierAgent"), QLatin1String("newmailnotifieragent.desktop"), lst);
-    createItem(QLatin1String("akonadi_followupreminder_agent"), QLatin1String("/FollowUpReminder"), QLatin1String("followupreminder.desktop"), lst);
+    createItem(QLatin1String("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"), QStringLiteral("sendlateragent.desktop"), lst);
+    createItem(QLatin1String("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"), QStringLiteral("archivemailagent.desktop"), lst);
+    createItem(QLatin1String("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"), QStringLiteral("newmailnotifieragent.desktop"), lst);
+    createItem(QLatin1String("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"), QStringLiteral("followupreminder.desktop"), lst);
     //Add more
     mConfigureAgentListView->setAgentItems(lst);
 }

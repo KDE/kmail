@@ -336,7 +336,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::sizeHintChanged, this, &KMComposeWin::recipientEditorSizeHintChanged);
     mComposerBase->setRecipientsEditor(recipientsEditor);
 
-    mEdtSubject = new PimCommon::LineEditWithAutoCorrection(mHeadersArea, QLatin1String("kmail2rc"));
+    mEdtSubject = new PimCommon::LineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
     mEdtSubject->setActivateLanguageMenu(false);
     mEdtSubject->setToolTip(i18n("Set a subject for this message"));
     mEdtSubject->setAutocorrection(KMKernel::self()->composerAutoCorrection());
@@ -1225,7 +1225,7 @@ void KMComposeWin::setupActions(void)
     mFindNextText = KStandardAction::findNext(mRichTextEditorwidget, SLOT(slotFindNext()), actionCollection());
 
     mReplaceText = KStandardAction::replace(mRichTextEditorwidget, SLOT(slotReplace()), actionCollection());
-    actionCollection()->addAction(KStandardAction::Spelling, QLatin1String("spellcheck"),
+    actionCollection()->addAction(KStandardAction::Spelling, QStringLiteral("spellcheck"),
                                   mComposerBase->editor(), SLOT(slotCheckSpelling()));
 
     action = new QAction(i18n("Paste as Attac&hment"), this);
@@ -1447,11 +1447,11 @@ void KMComposeWin::setupStatusBar(QWidget *w)
 
     lab = new QLabel(this);
     lab->setText(i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
-                       , QLatin1String("     ")));
+                       , QStringLiteral("     ")));
     statusBar()->addPermanentWidget(lab);
     mStatusBarLabelList.append(lab);
 
-    lab = new QLabel(i18n(" Column: %1 ", QLatin1String("     ")));
+    lab = new QLabel(i18n(" Column: %1 ", QStringLiteral("     ")));
     statusBar()->addPermanentWidget(lab);
     mStatusBarLabelList.append(lab);
 
@@ -1653,7 +1653,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
         if (!xface.isEmpty()) {
             int numNL = (xface.length() - 1) / 70;
             for (int i = numNL; i > 0; --i) {
-                xface.insert(i * 70, QLatin1String("\n\t"));
+                xface.insert(i * 70, QStringLiteral("\n\t"));
             }
             mMsg->setHeader(new KMime::Headers::Generic("X-Face", mMsg.get(), xface, "utf-8"));
         }
@@ -1872,7 +1872,7 @@ bool KMComposeWin::queryClose()
         const int rc = KMessageBox::warningYesNoCancel(this,
                        i18n("Do you want to save the message for later or discard it?"),
                        i18n("Close Composer"),
-                       KGuiItem(savebut, QLatin1String("document-save"), QString(), savetext),
+                       KGuiItem(savebut, QStringLiteral("document-save"), QString(), savetext),
                        KStandardGuiItem::discard(),
                        KStandardGuiItem::cancel());
         if (rc == KMessageBox::Cancel) {
@@ -2218,7 +2218,7 @@ void KMComposeWin::slotPasteAsAttachment()
                                 i18n("Name of the attachment:"), QLineEdit::Normal,
                                 QString(), &ok);
         if (ok) {
-            mComposerBase->addAttachment(attName, attName, QLatin1String("utf-8"), QApplication::clipboard()->text().toUtf8(), "text/plain");
+            mComposerBase->addAttachment(attName, attName, QStringLiteral("utf-8"), QApplication::clipboard()->text().toUtf8(), "text/plain");
         }
         return;
     }
@@ -3028,7 +3028,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
         if (!xface.isEmpty()) {
             int numNL = (xface.length() - 1) / 70;
             for (int i = numNL; i > 0; --i) {
-                xface.insert(i * 70, QLatin1String("\n\t"));
+                xface.insert(i * 70, QStringLiteral("\n\t"));
             }
             KMime::Headers::Generic *header = new KMime::Headers::Generic("X-Face", mMsg.get(), xface, "utf-8");
             mMsg->setHeader(header);
@@ -3051,7 +3051,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
 
     const bool fccIsDisabled = ident.disabledFcc();
     if (fccIsDisabled) {
-        KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-FccDisabled", mMsg.get(), QLatin1String("true"), "utf-8");
+        KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-FccDisabled", mMsg.get(), QStringLiteral("true"), "utf-8");
         mMsg->setHeader(header);
     } else {
         mMsg->removeHeader("X-KMail-FccDisabled");

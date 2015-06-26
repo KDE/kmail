@@ -103,7 +103,7 @@ void KMReaderMainWin::initKMReaderMainWin()
 {
     setCentralWidget(mReaderWin);
     setupAccel();
-    setupGUI(Keys | StatusBar | Create, QLatin1String("kmreadermainwin.rc"));
+    setupGUI(Keys | StatusBar | Create, QStringLiteral("kmreadermainwin.rc"));
     mMsgActions->setupForwardingActionsList(this);
     applyMainWindowSettings(KMKernel::self()->config()->group("Separate Reader Window"));
     if (! mReaderWin->message().isValid()) {
