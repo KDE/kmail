@@ -1972,7 +1972,8 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
         if (type.status() == Akonadi::AgentInstance::Broken) {
             continue;
         }
-        if (PimCommon::Util::isImapResource(type.identifier())) {
+        const QString typeIdentifier(type.identifier());
+        if (PimCommon::Util::isImapResource(typeIdentifier)) {
             OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(type.identifier());
             if (iface && iface->isValid()) {
                 foreach (const Akonadi::Collection &collection, collectionList) {
@@ -1986,8 +1987,8 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
                 }
             }
             delete iface;
-        } else if (type.identifier().contains(POP3_RESOURCE_IDENTIFIER)) {
-            OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(type.identifier());
+        } else if (typeIdentifier.contains(POP3_RESOURCE_IDENTIFIER)) {
+            OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier);
             if (iface->isValid()) {
                 foreach (const Akonadi::Collection &collection, collectionList) {
                     const Akonadi::Collection::Id collectionId = collection.id();

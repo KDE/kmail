@@ -530,8 +530,9 @@ void AntiSpamWizard::checkToolAvailability()
                 if (type.status() == Akonadi::AgentInstance::Broken) {
                     continue;
                 }
-                if (PimCommon::Util::isImapResource(type.identifier())) {
-                    OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(type.identifier());
+                const QString typeIdentifier(type.identifier());
+                if (PimCommon::Util::isImapResource(typeIdentifier)) {
+                    OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(typeIdentifier);
                     if (iface && iface->isValid()) {
                         const QString host = iface->imapServer();
                         if (host.toLower().contains(pattern.toLower())) {
@@ -541,7 +542,7 @@ void AntiSpamWizard::checkToolAvailability()
                     }
                     delete iface;
                 } else if (type.identifier().contains(POP3_RESOURCE_IDENTIFIER)) {
-                    OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(type.identifier());
+                    OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier);
                     if (iface->isValid()) {
                         const QString host = iface->host();
                         if (host.toLower().contains(pattern.toLower())) {
