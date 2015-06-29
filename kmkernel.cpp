@@ -1826,7 +1826,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
             } else {
                 if (PimCommon::Util::isImapResource(identifier)) {
                     OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(identifier);
-                    if (iface->isValid()) {
+                    if (iface && iface->isValid()) {
                         const QString imapSafety = iface->safety();
                         if ((imapSafety == QLatin1String("SSL") || imapSafety == QLatin1String("STARTTLS"))) {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
@@ -1974,7 +1974,7 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
         }
         if (PimCommon::Util::isImapResource(type.identifier())) {
             OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(type.identifier());
-            if (iface->isValid()) {
+            if (iface && iface->isValid()) {
                 foreach (const Akonadi::Collection &collection, collectionList) {
                     const Akonadi::Collection::Id collectionId = collection.id();
                     if (iface->trashCollection() == collectionId) {

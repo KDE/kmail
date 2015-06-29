@@ -532,7 +532,7 @@ void AntiSpamWizard::checkToolAvailability()
                 }
                 if (PimCommon::Util::isImapResource(type.identifier())) {
                     OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(type.identifier());
-                    if (iface->isValid()) {
+                    if (iface && iface->isValid()) {
                         const QString host = iface->imapServer();
                         if (host.toLower().contains(pattern.toLower())) {
                             mInfoPage->addAvailableTool((*it).getVisibleName());
