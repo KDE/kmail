@@ -184,7 +184,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     KConfig specialMailCollection(QLatin1String("specialmailcollectionsrc"));
     if (specialMailCollection.hasGroup(QLatin1String("SpecialCollections"))) {
         KConfigGroup grp = specialMailCollection.group(QLatin1String("SpecialCollections"));
-        mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(QLatin1String("DefaultResourceId")));
+        mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(QStringLiteral("DefaultResourceId")));
     }
     ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
