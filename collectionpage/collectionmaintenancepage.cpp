@@ -109,11 +109,13 @@ void CollectionMaintenancePage::load(const Collection &col)
         if (!indexingWasEnabled) {
             mLastIndexed->hide();
         } else {
-            QDBusInterface interfaceBalooIndexer(QStringLiteral("org.freedesktop.Akonadi.Agent.akonadi_baloo_indexer"), QStringLiteral("/"));
+            QDBusInterface interfaceBalooIndexer(QStringLiteral("org.freedesktop.Akonadi.Agent.akonadi_indexing_agent"), QStringLiteral("/"));
             if (interfaceBalooIndexer.isValid()) {
                 if (!interfaceBalooIndexer.callWithCallback(QStringLiteral("indexedItems"), QList<QVariant>() << (qlonglong)mCurrentCollection.id(), this, SLOT(onIndexedItemsReceived(qint64)))) {
                     qCWarning(KMAIL_LOG) << "Failed to request indexed items";
                 }
+            } else {
+                qCWarning(KMAIL_LOG) << "Dbus interface invalid.";
             }
         }
     }
