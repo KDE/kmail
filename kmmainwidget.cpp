@@ -1156,10 +1156,10 @@ void KMMainWidget::updateMoveAction(bool hasUnreadMails, bool hasMails)
     const bool enable_goto_unread = hasUnreadMails
                                     || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
                                     || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
-    actionCollection()->action(QLatin1String("go_next_message"))->setEnabled(hasMails);
-    actionCollection()->action(QLatin1String("go_next_unread_message"))->setEnabled(enable_goto_unread);
-    actionCollection()->action(QLatin1String("go_prev_message"))->setEnabled(hasMails);
-    actionCollection()->action(QLatin1String("go_prev_unread_message"))->setEnabled(enable_goto_unread);
+    actionCollection()->action(QStringLiteral("go_next_message"))->setEnabled(hasMails);
+    actionCollection()->action(QStringLiteral("go_next_unread_message"))->setEnabled(enable_goto_unread);
+    actionCollection()->action(QStringLiteral("go_prev_message"))->setEnabled(hasMails);
+    actionCollection()->action(QStringLiteral("go_prev_unread_message"))->setEnabled(enable_goto_unread);
     if (mAkonadiStandardActionManager && mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkAllMailAsRead)) {
         mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkAllMailAsRead)->setEnabled(hasUnreadMails);
     }
@@ -3830,8 +3830,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMessageNewList->setEnabled(newPostToMailingList);
 
     slotUpdateOnlineStatus(static_cast<GlobalSettingsBase::EnumNetworkState::type>(GlobalSettings::self()->networkState()));
-    if (action(QLatin1String("kmail_undo"))) {
-        action(QLatin1String("kmail_undo"))->setEnabled(kmkernel->undoStack()->size() > 0);
+    if (action(QStringLiteral("kmail_undo"))) {
+        action(QStringLiteral("kmail_undo"))->setEnabled(kmkernel->undoStack()->size() > 0);
     }
 
     // Enable / disable all filters.
@@ -4095,8 +4095,8 @@ QList<KActionCollection *> KMMainWidget::actionCollections() const
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUpdateUndo()
 {
-    if (actionCollection()->action(QLatin1String("kmail_undo"))) {
-        QAction *act = actionCollection()->action(QLatin1String("kmail_undo"));
+    if (actionCollection()->action(QStringLiteral("kmail_undo"))) {
+        QAction *act = actionCollection()->action(QStringLiteral("kmail_undo"));
         act->setEnabled(!kmkernel->undoStack()->isEmpty());
         const QString infoStr = kmkernel->undoStack()->undoInfo();
         if (infoStr.isEmpty()) {
@@ -4192,8 +4192,8 @@ void KMMainWidget::initializeFilterActions()
 void KMMainWidget::updateFileMenu()
 {
     const bool isEmpty = MailCommon::Util::agentInstances().isEmpty();
-    actionCollection()->action(QLatin1String("check_mail"))->setEnabled(!isEmpty);
-    actionCollection()->action(QLatin1String("check_mail_in"))->setEnabled(!isEmpty);
+    actionCollection()->action(QStringLiteral("check_mail"))->setEnabled(!isEmpty);
+    actionCollection()->action(QStringLiteral("check_mail_in"))->setEnabled(!isEmpty);
 }
 
 //-----------------------------------------------------------------------------

@@ -1408,7 +1408,7 @@ void KMComposeWin::setupActions(void)
 
     // In Kontact, this entry would read "Configure Kontact", but bring
     // up KMail's config dialog. That's sensible, though, so fix the label.
-    QAction *configureAction = actionCollection()->action(QLatin1String("options_configure"));
+    QAction *configureAction = actionCollection()->action(QStringLiteral("options_configure"));
     if (configureAction) {
         configureAction->setText(i18n("Configure KMail..."));
     }
