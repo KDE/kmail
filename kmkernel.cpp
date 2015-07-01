@@ -1013,8 +1013,8 @@ void KMKernel::setAccountStatus(bool goOnline)
         const QString identifier(type.identifier());
         if (PimCommon::Util::isImapResource(identifier) ||
                 identifier.contains(POP3_RESOURCE_IDENTIFIER) ||
-                identifier.contains(QLatin1String("akonadi_maildispatcher_agent")) ||
-                type.type().capabilities().contains(QLatin1String("NeedsNetwork"))) {
+                identifier.contains(QStringLiteral("akonadi_maildispatcher_agent")) ||
+                type.type().capabilities().contains(QStringLiteral("NeedsNetwork"))) {
             type.setIsOnline(goOnline);
         }
     }

@@ -719,7 +719,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     for (int i = 0 ; i < numDateDisplayConfig ; ++i) {
         const char *label = dateDisplayConfig[i].displayName;
         QString buttonLabel;
-        if (QString::fromLatin1(label).contains(QLatin1String("%1"))) {
+        if (QString::fromLatin1(label).contains(QStringLiteral("%1"))) {
             buttonLabel = i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
         } else {
             buttonLabel = i18n(label);
