@@ -37,6 +37,7 @@ public:
 private Q_SLOTS:
     void slotSelectionChanged();
 
+    void slotDoubleClicked();
 private:
     void readConfig();
     void writeConfig();
