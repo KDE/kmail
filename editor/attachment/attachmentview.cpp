@@ -188,7 +188,7 @@ void AttachmentView::updateAttachmentLabel()
 {
     MessageCore::AttachmentPart::List list = d->model->attachments();
     qint64 size = 0;
-    Q_FOREACH (MessageCore::AttachmentPart::Ptr part, list) {
+    Q_FOREACH (const MessageCore::AttachmentPart::Ptr &part, list) {
         size += part->size();
     }
     d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)", model()->rowCount(), KFormat().formatByteSize(qMax(0LL, size))));
