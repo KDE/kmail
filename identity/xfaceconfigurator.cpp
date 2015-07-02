@@ -161,6 +161,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     page_vlay = new QVBoxLayout(page);
     page_vlay->setMargin(0);
     mTextEdit = new PimCommon::PlainTextEditorWidget(page);
+    mTextEdit->editor()->setSpellCheckingSupport(false);
     page_vlay->addWidget(mTextEdit);
     mTextEdit->editor()->setWhatsThis(i18n("Use this field to enter an arbitrary X-Face string."));
     mTextEdit->editor()->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
