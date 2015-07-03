@@ -46,6 +46,7 @@
 #include "widgets/kactionmenuaccount.h"
 #include "search/searchrule/searchrulestatus.h"
 #include "pimcommon/util/networkutil.h"
+#include "pimcommon/texttospeech/texttospeech.h"
 #if !defined(NDEBUG)
 #include <ksieveui/debug/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -2727,8 +2728,10 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, 
         mMsgActions->addWebShortcutsMenu(menu, selectedText);
         menu->addSeparator();
         menu->addAction(mMsgView->translateAction());
-        menu->addSeparator();
-        menu->addAction(mMsgView->speakTextAction());
+        if (PimCommon::TextToSpeech::self()->isReady()) {
+            menu->addSeparator();
+            menu->addAction(mMsgView->speakTextAction());
+        }
     } else if (!urlMenuAdded) {
         // popup somewhere else (i.e., not a URL) on the message
         if (!mMessagePane->currentMessage()) {
