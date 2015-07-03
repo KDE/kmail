@@ -312,6 +312,7 @@
       <li>Allows you to receive and accept invitations.</li>
       <li xml:lang="ast">Permítete recibir y aceutar invitaciones.</li>
       <li xml:lang="ca">Permet rebre i acceptar invitacions</li>
+      <li xml:lang="de">Einladungen können gesendet und empfangen werden.</li>
       <li xml:lang="en-GB">Allows you to receive and accept invitations.</li>
       <li xml:lang="es">Le permite recibir y aceptar invitaciones.</li>
       <li xml:lang="fi">Mahdollistaa kutsujen vastaanottamisen ja hyväksymisen.</li>
@@ -341,6 +342,7 @@
       <li>Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="ast">Integración colos comprobadores d'spam populares exem. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="ca">Integració amb els comprovadors de correu brossa més populars, p. ex., SpamAssassin, Bogofilter, etc.</li>
+      <li xml:lang="de">Integration von bekannten Spam-Filtern wie SpamAssassin, Bogofilter, usw.</li>
       <li xml:lang="en-GB">Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="es">Integración con verificadores de correo basura populares, p. ej., SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="fi">Integroituu suosittuihin roskapostitarkistimiin kuten SpamAssassiniin, Bogofilteriin jne.</li>
