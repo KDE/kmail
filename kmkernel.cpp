@@ -1467,6 +1467,16 @@ void KMKernel::slotSyncConfig()
     MailCommon::MailCommonSettings::self()->save();
     GlobalSettings::self()->save();
     KMKernel::config()->sync();
+    //Laurent investigate why we need to reload them.
+    PimCommon::PimCommonSettings::self()->load();
+    MessageCore::GlobalSettings::self()->load();
+    MessageViewer::GlobalSettings::self()->load();
+    MessageComposer::MessageComposerSettings::self()->load();
+    TemplateParser::GlobalSettings::self()->load();
+    MessageList::Core::Settings::self()->load();
+    MailCommon::MailCommonSettings::self()->load();
+    GlobalSettings::self()->load();
+    KMKernel::config()->reparseConfiguration();
 }
 
 void KMKernel::updateConfig()
