@@ -615,7 +615,7 @@ void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
     dlg->setRecentAddresses(KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     KLDAP::LdapClientSearch search;
     dlg->setLdapClientSearch(&search);
-    KSharedConfig::Ptr config = KSharedConfig::openConfig(QLatin1String("kpimbalooblacklist"));
+    KSharedConfig::Ptr config = KSharedConfig::openConfig(QStringLiteral("kpimbalooblacklist"));
     KConfigGroup group(config, "AddressLineEdit");
     const QStringList balooBlackList = group.readEntry("BalooBackList", QStringList());
 

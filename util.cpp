@@ -95,15 +95,15 @@ bool KMail::Util::handleClickedURL(const KUrl &url, const QSharedPointer<MailCom
 
         QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl(url);
 
-        msg->to()->fromUnicodeString(fields.value(QLatin1String("to")), "utf-8");
-        if (!fields.value(QLatin1String("subject")).isEmpty()) {
-            msg->subject()->fromUnicodeString(fields.value(QLatin1String("subject")), "utf-8");
+        msg->to()->fromUnicodeString(fields.value(QStringLiteral("to")), "utf-8");
+        if (!fields.value(QStringLiteral("subject")).isEmpty()) {
+            msg->subject()->fromUnicodeString(fields.value(QStringLiteral("subject")), "utf-8");
         }
-        if (!fields.value(QLatin1String("body")).isEmpty()) {
-            msg->setBody(fields.value(QLatin1String("body")).toUtf8());
+        if (!fields.value(QStringLiteral("body")).isEmpty()) {
+            msg->setBody(fields.value(QStringLiteral("body")).toUtf8());
         }
-        if (!fields.value(QLatin1String("cc")).isEmpty()) {
-            msg->cc()->fromUnicodeString(fields.value(QLatin1String("cc")), "utf-8");
+        if (!fields.value(QStringLiteral("cc")).isEmpty()) {
+            msg->cc()->fromUnicodeString(fields.value(QStringLiteral("cc")), "utf-8");
         }
 
         if (!folder.isNull()) {

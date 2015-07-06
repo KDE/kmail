@@ -175,7 +175,7 @@ void AntiSpamWizard::accept()
                 // (could get combined but so it's easier to understand for the user)
                 MailFilter *pipeFilter = new MailFilter();
                 QList<FilterAction *> *pipeFilterActions = pipeFilter->actions();
-                FilterAction *pipeFilterAction = dict.value(QLatin1String("filter app"))->create();
+                FilterAction *pipeFilterAction = dict.value(QStringLiteral("filter app"))->create();
                 pipeFilterAction->argsFromString((*it).getDetectCmd());
                 pipeFilterActions->append(pipeFilterAction);
                 SearchPattern *pipeFilterPattern = pipeFilter->pattern();
@@ -196,11 +196,11 @@ void AntiSpamWizard::accept()
             // Sort out viruses depending on header fields set by the tools
             MailFilter *virusFilter = new MailFilter();
             QList<FilterAction *> *virusFilterActions = virusFilter->actions();
-            FilterAction *virusFilterAction1 = dict.value(QLatin1String("transfer"))->create();
+            FilterAction *virusFilterAction1 = dict.value(QStringLiteral("transfer"))->create();
             virusFilterAction1->argsFromString(mVirusRulesPage->selectedFolderName());
             virusFilterActions->append(virusFilterAction1);
             if (mVirusRulesPage->markReadRulesSelected()) {
-                FilterAction *virusFilterAction2 = dict.value(QLatin1String("set status"))->create();
+                FilterAction *virusFilterAction2 = dict.value(QStringLiteral("set status"))->create();
                 virusFilterAction2->argsFromString(QLatin1String("R"));   // Read
                 virusFilterActions->append(virusFilterAction2);
             }
@@ -252,7 +252,7 @@ void AntiSpamWizard::accept()
                 // (could get combined but so it's easier to understand for the user)
                 MailFilter *pipeFilter = new MailFilter();
                 QList<FilterAction *> *pipeFilterActions = pipeFilter->actions();
-                FilterAction *pipeFilterAction = dict.value(QLatin1String("filter app"))->create();
+                FilterAction *pipeFilterAction = dict.value(QStringLiteral("filter app"))->create();
                 pipeFilterAction->argsFromString((*it).getDetectCmd());
                 pipeFilterActions->append(pipeFilterAction);
                 SearchPattern *pipeFilterPattern = pipeFilter->pattern();
@@ -277,15 +277,15 @@ void AntiSpamWizard::accept()
         MailFilter *spamFilter = new MailFilter();
         QList<FilterAction *> *spamFilterActions = spamFilter->actions();
         if (mSpamRulesPage->moveSpamSelected()) {
-            FilterAction *spamFilterAction1 = dict.value(QLatin1String("transfer"))->create();
+            FilterAction *spamFilterAction1 = dict.value(QStringLiteral("transfer"))->create();
             spamFilterAction1->argsFromString(mSpamRulesPage->selectedSpamCollectionId());
             spamFilterActions->append(spamFilterAction1);
         }
-        FilterAction *spamFilterAction2 = dict.value(QLatin1String("set status"))->create();
+        FilterAction *spamFilterAction2 = dict.value(QStringLiteral("set status"))->create();
         spamFilterAction2->argsFromString(QLatin1String("P"));   // Spam
         spamFilterActions->append(spamFilterAction2);
         if (mSpamRulesPage->markAsReadSelected()) {
-            FilterAction *spamFilterAction3 = dict.value(QLatin1String("set status"))->create();
+            FilterAction *spamFilterAction3 = dict.value(QStringLiteral("set status"))->create();
             spamFilterAction3->argsFromString(QLatin1String("R"));   // Read
             spamFilterActions->append(spamFilterAction3);
         }
@@ -326,7 +326,7 @@ void AntiSpamWizard::accept()
             bool atLeastOneUnsurePattern = false;
             MailFilter *unsureFilter = new MailFilter();
             QList<FilterAction *> *unsureFilterActions = unsureFilter->actions();
-            FilterAction *unsureFilterAction1 = dict.value(QLatin1String("transfer"))->create();
+            FilterAction *unsureFilterAction1 = dict.value(QStringLiteral("transfer"))->create();
             unsureFilterAction1->argsFromString(mSpamRulesPage->selectedUnsureCollectionId());
             unsureFilterActions->append(unsureFilterAction1);
             SearchPattern *unsureFilterPattern = unsureFilter->pattern();
@@ -372,7 +372,7 @@ void AntiSpamWizard::accept()
         MailFilter *classSpamFilter = new MailFilter();
         classSpamFilter->setIcon(QLatin1String("mail-mark-junk"));
         QList<FilterAction *> *classSpamFilterActions = classSpamFilter->actions();
-        FilterAction *classSpamFilterActionFirst = dict.value(QLatin1String("set status"))->create();
+        FilterAction *classSpamFilterActionFirst = dict.value(QStringLiteral("set status"))->create();
         classSpamFilterActionFirst->argsFromString(QLatin1String("P"));
         classSpamFilterActions->append(classSpamFilterActionFirst);
         QList<SpamToolConfig>::ConstIterator endToolList2(mToolList.constEnd());
@@ -380,13 +380,13 @@ void AntiSpamWizard::accept()
                 it != endToolList2; ++it) {
             if (mInfoPage->isProgramSelected((*it).getVisibleName())
                     && (*it).useBayesFilter() && !(*it).isDetectionOnly()) {
-                FilterAction *classSpamFilterAction = dict.value(QLatin1String("execute"))->create();
+                FilterAction *classSpamFilterAction = dict.value(QStringLiteral("execute"))->create();
                 classSpamFilterAction->argsFromString((*it).getSpamCmd());
                 classSpamFilterActions->append(classSpamFilterAction);
             }
         }
         if (mSpamRulesPage->moveSpamSelected()) {
-            FilterAction *classSpamFilterActionLast = dict.value(QLatin1String("transfer"))->create();
+            FilterAction *classSpamFilterActionLast = dict.value(QStringLiteral("transfer"))->create();
             classSpamFilterActionLast->argsFromString(mSpamRulesPage->selectedSpamCollectionId());
             classSpamFilterActions->append(classSpamFilterActionLast);
         }
@@ -412,7 +412,7 @@ void AntiSpamWizard::accept()
         MailFilter *classHamFilter = new MailFilter();
         classHamFilter->setIcon(QLatin1String("mail-mark-notjunk"));
         QList<FilterAction *> *classHamFilterActions = classHamFilter->actions();
-        FilterAction *classHamFilterActionFirst = dict.value(QLatin1String("set status"))->create();
+        FilterAction *classHamFilterActionFirst = dict.value(QStringLiteral("set status"))->create();
         classHamFilterActionFirst->argsFromString(QLatin1String("H"));
         classHamFilterActions->append(classHamFilterActionFirst);
         end = mToolList.constEnd();
@@ -420,7 +420,7 @@ void AntiSpamWizard::accept()
                 it != end; ++it) {
             if (mInfoPage->isProgramSelected((*it).getVisibleName())
                     && (*it).useBayesFilter() && !(*it).isDetectionOnly()) {
-                FilterAction *classHamFilterAction = dict.value(QLatin1String("execute"))->create();
+                FilterAction *classHamFilterAction = dict.value(QStringLiteral("execute"))->create();
                 classHamFilterAction->argsFromString((*it).getHamCmd());
                 classHamFilterActions->append(classHamFilterAction);
             }
@@ -430,7 +430,7 @@ void AntiSpamWizard::accept()
                 it != end; ++it) {
             if (mInfoPage->isProgramSelected((*it).getVisibleName())
                     && (*it).useBayesFilter() && !(*it).isDetectionOnly()) {
-                FilterAction *classHamFilterAction = dict.value(QLatin1String("filter app"))->create();
+                FilterAction *classHamFilterAction = dict.value(QStringLiteral("filter app"))->create();
                 classHamFilterAction->argsFromString((*it).getNoSpamCmd());
                 classHamFilterActions->append(classHamFilterAction);
             }
@@ -717,9 +717,9 @@ AntiSpamWizard::ConfigReader::ConfigReader(WizardMode mode,
       mMode(mode)
 {
     if (mMode == AntiSpam) {
-        mConfig = KSharedConfig::openConfig(QLatin1String("kmail.antispamrc"));
+        mConfig = KSharedConfig::openConfig(QStringLiteral("kmail.antispamrc"));
     } else {
-        mConfig = KSharedConfig::openConfig(QLatin1String("kmail.antivirusrc"));
+        mConfig = KSharedConfig::openConfig(QStringLiteral("kmail.antivirusrc"));
     }
 }
 
