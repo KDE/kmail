@@ -6,4 +6,5 @@ ItemAccessors=true
 SetUserTexts=true
 IncludeFiles=qapplication.h,defaulttemplates.h,mailkernel.h,kdepim-version.h,kmail_debug.h
 CategoryLoggingName=KMAIL_LOG
-
+TranslationDomain=kmail
+TranslationSystem=kde
