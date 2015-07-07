@@ -42,7 +42,7 @@
     <p>
       KMail is the email component of Kontact, the integrated personal information manager from KDE.
     </p>
-    <p xml:lang="ast">KMail ye'l componente de corréu de KMail, el xestor d'información personal integráu de KDE.</p>
+    <p xml:lang="ast">KMail ye'l componente de corréu de Kontact, el xestor d'información personal integráu de KDE.</p>
     <p xml:lang="ca">El KMail és el component de correu electrònic del Kontact, el gestor per a la informació personal integrat del KDE.</p>
     <p xml:lang="de">KMail ist die E-Mail-Komponente von Kontact, der integrierten persönlichen Informationsverwaltung für KDE.</p>
     <p xml:lang="en-GB">KMail is the email component of Kontact, the integrated personal information manager from KDE.</p>
@@ -195,7 +195,7 @@
       <li xml:lang="x-test">xxSupports plain text and secure logins, using SSL and TLS.xx</li>
       <li xml:lang="zh-TW">支援純文字與透過 SSL 與 TLS安全登入</li>
       <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
-      <li xml:lang="ast">Integración de conxuntos de carauteres internacionales y comprobación d'escritura (como-escribes y en demanda)</li>
+      <li xml:lang="ast">Integración de conxuntos de carauteres internacionales y comprobación d'escritura (como-escribes y so demanda)</li>
       <li xml:lang="ca">Integra els jocs de caràcters internacionals i la correcció ortogràfica (mentre escriviu i sota demanda)</li>
       <li xml:lang="de">Integration von internationalen Zeichensätzen und einer Rechtschreibprüfung bei der Eingabe oder auf Anforderung</li>
       <li xml:lang="en-GB">Integration of international character sets and spell-checking (as-you-type and on demand)</li>
@@ -252,7 +252,7 @@
       <li xml:lang="x-test">xxNative support for inline OpenPGP, PGP/MIME, and S/MIME.xx</li>
       <li xml:lang="zh-TW">支援內含式 OpenPGP, PGP/MIME 與  S/MIME</li>
       <li>Reading and writing of HTML mail.</li>
-      <li xml:lang="ast">Llectura y escritura de corréu HTML</li>
+      <li xml:lang="ast">Llectura y escritura de corréu HTML.</li>
       <li xml:lang="ca">Lectura i escriptura d'un correu HTML</li>
       <li xml:lang="de">Lesen und Schreiben von HTML-E-Mails.</li>
       <li xml:lang="en-GB">Reading and writing of HTML mail.</li>
@@ -397,7 +397,7 @@
       <li xml:lang="x-test">xxAn optional spam probability meter can be displayedxx</li>
       <li xml:lang="zh-TW">可以選擇顯示垃圾信指數</li>
       <li>Powerful search and filter abilities</li>
-      <li xml:lang="ast">Habilidaes poderoses de gueta y filtráu</li>
+      <li xml:lang="ast">Habilidaes poderoses de gueta y peñera</li>
       <li xml:lang="ca">Poderoses habilitats per a la cerca i filtratge</li>
       <li xml:lang="de">Leistungsfähige Such- und Filtermöglichkeiten</li>
       <li xml:lang="en-GB">Powerful search and filter abilities</li>
@@ -427,7 +427,7 @@
       <li xml:lang="x-test">xxPowerful search and filter abilitiesxx</li>
       <li xml:lang="zh-TW">強大的搜尋與過濾功能</li>
       <li>Can import mail from many other clients</li>
-      <li xml:lang="ast">Pues importar el corréu dende munchos otros veceros</li>
+      <li xml:lang="ast">Pue importase'l corréu dende munchos otros veceros</li>
       <li xml:lang="ca">Pot importar el correu des de molts altres clients</li>
       <li xml:lang="de">E-Mails können von vielen anderen Programmen importiert werden</li>
       <li xml:lang="en-GB">Can import mail from many other clients</li>
@@ -457,7 +457,7 @@
       <li xml:lang="x-test">xxCan import mail from many other clientsxx</li>
       <li xml:lang="zh-TW">可以從其它郵件程式中匯入信件</li>
       <li>Searching in IMAP folders fully supported</li>
-      <li xml:lang="ast">Gueta en carpetes IMAP sofitada dafechu</li>
+      <li xml:lang="ast">Sofítase la gueta en carpetes IMAP dafechu</li>
       <li xml:lang="ca">La cerca a les carpetes IMAP està totalment implementada</li>
       <li xml:lang="de">Suche in IMAP-Ordnern wird vollständig unterstützt</li>
       <li xml:lang="en-GB">Searching in IMAP folders fully supported</li>
@@ -486,7 +486,7 @@
       <li xml:lang="x-test">xxSearching in IMAP folders fully supportedxx</li>
       <li xml:lang="zh-TW">完整支援在 IMAP 資料夾中搜尋</li>
       <li>Highly integrated with other Kontact components</li>
-      <li xml:lang="ast">Integráu altamente colos otros componentes de Kontact</li>
+      <li xml:lang="ast">Altamente integráu colos otros componentes de Kontact</li>
       <li xml:lang="ca">Altament integrat amb els altres components del Kontact</li>
       <li xml:lang="en-GB">Highly integrated with other Kontact components</li>
       <li xml:lang="es">Altamente integrado con otros componentes de Kontact</li>
@@ -543,7 +543,7 @@
       <li xml:lang="x-test">xxEncrypted password saving in KWalletxx</li>
       <li xml:lang="zh-TW">將密碼加密並儲存在 KWallet</li>
       <li>Flagging and tagging of messages to aid sorting and recovery of information</li>
-      <li xml:lang="ast">Marcáu y etiquetáu de mensaxes pa l'ayuda d'ordenar y la recuperación d'información</li>
+      <li xml:lang="ast">Marcáu y etiquetáu de mensaxes p'ayudar nel orde y la recuperación d'información</li>
       <li xml:lang="ca">Marca i etiqueta els missatges per ajudar a la classificació i recuperació de la informació</li>
       <li xml:lang="en-GB">Flagging and tagging of messages to aid sorting and recovery of information</li>
       <li xml:lang="es">Marcado y etiquetado de mensajes para ayudar a la ordenación y recuperación de información</li>
@@ -600,7 +600,7 @@
       <li xml:lang="x-test">xxSupports mailing list management featuresxx</li>
       <li xml:lang="zh-TW">支援郵件論壇管理功能</li>
       <li>Can replace text smilies with emoticons</li>
-      <li xml:lang="ast">Pue trocar fustaxes en mou testu en fustaxes normales</li>
+      <li xml:lang="ast">Puen trocase fustaxes n'ASCII por fustaxes normales</li>
       <li xml:lang="ca">Pot substituir les cares de text amb emoticones</li>
       <li xml:lang="de">Kann Text-Smileys durch Emoticons ersetzen</li>
       <li xml:lang="en-GB">Can replace text smilies with emoticons</li>
