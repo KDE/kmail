@@ -2592,7 +2592,7 @@ void KMComposeWin::doSend(MessageComposer::MessageSender::SendMethod method,
         // Validate the To:, CC: and BCC fields
         const QStringList recipients = QStringList() << mComposerBase->to().trimmed() << mComposerBase->cc().trimmed() << mComposerBase->bcc().trimmed();
 
-        AddressValidationJob *job = new AddressValidationJob(recipients.join(QLatin1String(", ")), this, this);
+        AddressValidationJob *job = new AddressValidationJob(recipients.join(QStringLiteral(", ")), this, this);
         const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
         QString defaultDomainName;
         if (!ident.isNull()) {
