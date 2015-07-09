@@ -108,16 +108,14 @@ QString toolTip(const Akonadi::Item &item)
     if (textIsLeftToRight) {
         tip += htmlCodeForStandardRow.arg(i18n("From")).arg(MessageCore::StringUtil::stripEmailAddr(msg->from()->asUnicodeString()));
         tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To")).arg(MessageCore::StringUtil::stripEmailAddr(msg->to()->asUnicodeString()));
-        //Port to QDateTime QT5
-        tip += htmlCodeForStandardRow.arg(i18n("Date")).arg(KLocale::global()->formatDateTime(msg->date()->dateTime()/*.toLocalZone()*/, KLocale::FancyLongDate));
+        tip += htmlCodeForStandardRow.arg(i18n("Date")).arg(QLocale().toString(msg->date()->dateTime()));
         if (!content.isEmpty()) {
             tip += htmlCodeForStandardRow.arg(i18n("Preview")).arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
         }
     } else {
         tip += htmlCodeForStandardRow.arg(MessageCore::StringUtil::stripEmailAddr(msg->from()->asUnicodeString())).arg(i18n("From"));
         tip += htmlCodeForStandardRow.arg(MessageCore::StringUtil::stripEmailAddr(msg->to()->asUnicodeString())).arg(i18nc("Receiver of the email", "To"));
-        //Port to QDateTime QT5
-        tip += htmlCodeForStandardRow.arg(KLocale::global()->formatDateTime(msg->date()->dateTime()/*.toLocalZone()*/, KLocale::FancyLongDate)).arg(i18n("Date"));
+        tip += htmlCodeForStandardRow.arg(QLocale().toString(msg->date()->dateTime())).arg(i18n("Date"));
         if (!content.isEmpty()) {
             tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>"))).arg(i18n("Preview"));
         }
@@ -182,8 +180,7 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
         case Receiver:
             return msg->to()->asUnicodeString();
         case Date:
-            //Port to QDateTime QT5
-            return KLocale::global()->formatDateTime(msg->date()->dateTime()/*.toLocalZone()*/, KLocale::FancyLongDate);
+            return QLocale().toString(msg->date()->dateTime());
         case Size:
             if (item.size() == 0) {
                 return i18nc("@label No size available", "-");
