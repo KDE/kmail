@@ -78,39 +78,40 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 
 void KMLaunchExternalComponent::slotStartCertManager()
 {
-    if (!QProcess::startDetached(QStringLiteral("kleopatra")))
+    if (!QProcess::startDetached(QStringLiteral("kleopatra"))) {
         KMessageBox::error(mParentWidget, i18n("Could not start certificate manager; "
                                                "please check your installation."),
                            i18n("KMail Error"));
-    else {
-        qCDebug(KMAIL_LOG) << "slotStartCertManager(): certificate manager started.";
     }
 }
 
 void KMLaunchExternalComponent::slotStartWatchGnuPG()
 {
-    if (!QProcess::startDetached(QStringLiteral("kwatchgnupg")))
+    if (!QProcess::startDetached(QStringLiteral("kwatchgnupg"))) {
         KMessageBox::error(mParentWidget, i18n("Could not start GnuPG LogViewer (kwatchgnupg); "
                                                "please check your installation."),
                            i18n("KMail Error"));
+    }
 }
 
 void KMLaunchExternalComponent::slotImportWizard()
 {
     const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
-    if (!QProcess::startDetached(path))
+    if (!QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the import wizard. "
                                                "Please check your installation."),
                            i18n("Unable to start import wizard"));
+    }
 }
 
 void KMLaunchExternalComponent::slotExportData()
 {
     const QString path = QStandardPaths::findExecutable(QStringLiteral("pimsettingexporter"));
-    if (!QProcess::startDetached(path))
+    if (!QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget, i18n("Could not start \"PIM Setting Exporter\" program. "
                                                "Please check your installation."),
                            i18n("Unable to start \"PIM Setting Exporter\" program"));
+    }
 }
 
 void KMLaunchExternalComponent::slotAddrBook()
@@ -124,10 +125,11 @@ void KMLaunchExternalComponent::slotImport()
     lst.append(QStringLiteral("--mode"));
     lst.append(QStringLiteral("manual"));
     const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
-    if (!QProcess::startDetached(path, lst))
+    if (!QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the ImportWizard. "
                                                "Please check your installation."),
                            i18n("Unable to start ImportWizard"));
+    }
 }
 
 void KMLaunchExternalComponent::slotAccountWizard()
@@ -137,10 +139,11 @@ void KMLaunchExternalComponent::slotAccountWizard()
     lst.append(QStringLiteral("message/rfc822"));
 
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
-    if (!QProcess::startDetached(path, lst))
+    if (!QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the account wizard. "
                                                "Please check your installation."),
                            i18n("Unable to start account wizard"));
+    }
 }
 
 void KMLaunchExternalComponent::slotAntiSpamWizard()
