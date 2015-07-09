@@ -39,7 +39,6 @@ if (KDEPIM_BUILD_DESKTOP)
   if (BUILD_TESTING)
      add_subdirectory(autotests)
   endif()
-  add_subdirectory(kconf_update)
 endif()
 add_subdirectory(kcm_kpimidentities)
 
