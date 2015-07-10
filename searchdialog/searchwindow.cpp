@@ -437,7 +437,7 @@ void SearchWindow::doSearch()
 
     mUi.mSearchFolderEdt->setEnabled(false);
 
-    Akonadi::Collection::List searchCollections;
+    QVector<Akonadi::Collection> searchCollections;
     bool recursive = false;
     if (mUi.mChkbxSpecificFolders->isChecked()) {
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
