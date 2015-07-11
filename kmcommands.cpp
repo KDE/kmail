@@ -338,7 +338,15 @@ void KMCommand::slotMsgTransfered(const Akonadi::Item::List &msgs)
         return;
     }
     // save the complete messages
+#if QT_VERSION >= QT_VERSION_CHECK(5, 5, 0)
     mRetrievedMsgs.append(msgs);
+#else
+    Q_FOREACH(const Akonadi::Item &item, msgs) {
+        mRetrievedMsgs.append(item);
+    }
+#endif
+
+    //mRetrievedMsgs.append(msgs);
 }
 
 void KMCommand::slotJobFinished()
