@@ -60,7 +60,7 @@ public:
     explicit KMCommand(QWidget *parent = Q_NULLPTR);
     KMCommand(QWidget *parent, const Akonadi::Item &);
     // Retrieve all messages in msgList when start is called.
-    KMCommand(QWidget *parent, const QList<Akonadi::Item> &msgList);
+    KMCommand(QWidget *parent, const Akonadi::Item::List &msgList);
     // Retrieve the single message msgBase when start is called.
     virtual ~KMCommand();
 
@@ -91,7 +91,7 @@ protected:
     }
 
     // Returns list of messages retrieved
-    const QList<Akonadi::Item> retrievedMsgs() const;
+    const Akonadi::Item::List retrievedMsgs() const;
     // Returns the single message retrieved
     Akonadi::Item retrievedMessage() const;
     // Returns the parent widget
@@ -152,7 +152,7 @@ private Q_SLOTS:
     void slotTransferCancelled();
 
 protected:
-    QList<Akonadi::Item> mRetrievedMsgs;
+    Akonadi::Item::List mRetrievedMsgs;
 
 private:
     // ProgressDialog for transferring messages
@@ -165,7 +165,7 @@ private:
     bool mEmitsCompletedItself : 1;
 
     QWidget *mParent;
-    QList<Akonadi::Item> mMsgList;
+    Akonadi::Item::List mMsgList;
     Akonadi::ItemFetchScope mFetchScope;
 };
 
@@ -280,7 +280,7 @@ class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMSaveMsgCommand(QWidget *parent, const QList<Akonadi::Item> &msgList);
+    KMSaveMsgCommand(QWidget *parent, const Akonadi::Item::List &msgList);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -325,7 +325,7 @@ public:
       @param parent  The parent widget of the command used for message boxes.
       @param msgs    The messages of which the attachments should be saved.
     */
-    KMSaveAttachmentsCommand(QWidget *parent, const QList<Akonadi::Item> &msgs);
+    KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -354,7 +354,7 @@ class KMAIL_EXPORT KMForwardCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMForwardCommand(QWidget *parent, const QList<Akonadi::Item> &msgList,
+    KMForwardCommand(QWidget *parent, const Akonadi::Item::List &msgList,
                      uint identity = 0, const QString &templateName = QString());
     KMForwardCommand(QWidget *parent, const Akonadi::Item &msg,
                      uint identity = 0, const QString &templateName = QString());
@@ -373,7 +373,7 @@ class KMAIL_EXPORT KMForwardAttachedCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMForwardAttachedCommand(QWidget *parent, const QList<Akonadi::Item> &msgList,
+    KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item::List &msgList,
                              uint identity = 0, KMail::Composer *win = Q_NULLPTR);
     KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item &msg,
                              uint identity = 0, KMail::Composer *win = Q_NULLPTR);
@@ -391,7 +391,7 @@ class KMAIL_EXPORT KMRedirectCommand : public KMCommand
 
 public:
     KMRedirectCommand(QWidget *parent, const Akonadi::Item &msg);
-    KMRedirectCommand(QWidget *parent, const QList<Akonadi::Item> &msgList);
+    KMRedirectCommand(QWidget *parent, const Akonadi::Item::List &msgList);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -456,7 +456,7 @@ class KMAIL_EXPORT KMSetTagCommand : public KMCommand
 public:
     enum SetTagMode { AddIfNotExisting, Toggle, CleanExistingAndAddNew };
 
-    KMSetTagCommand(const Akonadi::Tag::List &tags, const QList<Akonadi::Item> &item,
+    KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::Item::List &item,
                     SetTagMode mode = AddIfNotExisting);
 
 protected Q_SLOTS:
@@ -468,7 +468,7 @@ private:
 
     Akonadi::Tag::List mTags;
     Akonadi::Tag::List mCreatedTags;
-    QList<Akonadi::Item> mItem;
+    Akonadi::Item::List mItem;
     SetTagMode mMode;
 };
 
@@ -519,7 +519,7 @@ class KMAIL_EXPORT KMCopyCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMCopyCommand(const Akonadi::Collection &destFolder, const QList<Akonadi::Item> &msgList);
+    KMCopyCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList);
     KMCopyCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg);
 
 protected Q_SLOTS:
@@ -539,7 +539,7 @@ class KMAIL_EXPORT KMMoveCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMMoveCommand(const Akonadi::Collection &destFolder, const QList<Akonadi::Item> &msgList, MessageList::Core::MessageItemSetReference ref);
+    KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref);
     KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref = MessageList::Core::MessageItemSetReference());
     Akonadi::Collection destFolder() const
     {
@@ -577,7 +577,7 @@ class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
     Q_OBJECT
 
 public:
-    KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const QList<Akonadi::Item> &msgList, MessageList::Core::MessageItemSetReference ref);
+    KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref);
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref);
 
 private:

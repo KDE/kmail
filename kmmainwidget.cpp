@@ -1614,7 +1614,7 @@ void KMMainWidget::slotForwardInlineMsg()
         return;
     }
 
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -1632,7 +1632,7 @@ void KMMainWidget::slotForwardAttachedMsg()
         return;
     }
 
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -1667,7 +1667,7 @@ void KMMainWidget::slotResendMsg()
 
 void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion)
 {
-    QList<Akonadi::Item> selectMsg  = mMessagePane->itemListFromPersistentSet(ref);
+    Akonadi::Item::List selectMsg  = mMessagePane->itemListFromPersistentSet(ref);
     // If this is a deletion, ask for confirmation
     if (!dest.isValid() && confirmOnDeletion) {
         int ret = KMessageBox::warningContinueCancel(
@@ -1798,7 +1798,7 @@ void KMMainWidget::moveSelectedMessagesToFolder(const Akonadi::Collection &dest)
     }
 }
 
-void KMMainWidget::copyMessageSelected(const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest)
+void KMMainWidget::copyMessageSelected(const Akonadi::Item::List &selectMsg, const Akonadi::Collection &dest)
 {
     if (selectMsg.isEmpty()) {
         return;
@@ -1843,7 +1843,7 @@ void KMMainWidget::slotCopySelectedMessagesToFolder()
 
 void KMMainWidget::copySelectedMessagesToFolder(const Akonadi::Collection &dest)
 {
-    const QList<Akonadi::Item > lstMsg = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List lstMsg = mMessagePane->selectionAsMessageItemList();
     if (!lstMsg.isEmpty()) {
         copyMessageSelected(lstMsg, dest);
     }
@@ -1858,7 +1858,7 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
         return;
     }
 
-    const QList<Akonadi::Item> select = mMessagePane->itemListFromPersistentSet(ref);
+    const Akonadi::Item::List select = mMessagePane->itemListFromPersistentSet(ref);
     mMessagePane->markMessageItemsAsAboutToBeRemoved(ref, true);
 
     // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
@@ -1912,7 +1912,7 @@ void KMMainWidget::slotTrashThread()
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
-void KMMainWidget::toggleMessageSetTag(const QList<Akonadi::Item> &select, const Akonadi::Tag &tag)
+void KMMainWidget::toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag)
 {
     if (select.isEmpty()) {
         return;
@@ -1923,7 +1923,7 @@ void KMMainWidget::toggleMessageSetTag(const QList<Akonadi::Item> &select, const
 
 void KMMainWidget::slotSelectMoreMessageTagList()
 {
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -1940,7 +1940,7 @@ void KMMainWidget::slotSelectMoreMessageTagList()
 void KMMainWidget::slotUpdateMessageTagList(const Akonadi::Tag &tag)
 {
     // Create a persistent set from the current thread.
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -1958,7 +1958,7 @@ void KMMainWidget::refreshMessageListSelection()
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
-void KMMainWidget::setMessageSetStatus(const QList<Akonadi::Item> &select,
+void KMMainWidget::setMessageSetStatus(const Akonadi::Item::List &select,
                                        const Akonadi::MessageStatus &status,
                                        bool toggle)
 {
@@ -1968,7 +1968,7 @@ void KMMainWidget::setMessageSetStatus(const QList<Akonadi::Item> &select,
 
 void KMMainWidget::setCurrentThreadStatus(const Akonadi::MessageStatus &status, bool toggle)
 {
-    const QList<Akonadi::Item> select = mMessagePane->currentThreadAsMessageList();
+    const Akonadi::Item::List select = mMessagePane->currentThreadAsMessageList();
     if (select.isEmpty()) {
         return;
     }
@@ -2014,7 +2014,7 @@ void KMMainWidget::slotSetThreadStatusIgnored()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotRedirectMsg()
 {
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -2073,7 +2073,7 @@ void KMMainWidget::slotCustomForwardMsg(const QString &tmpl)
         return;
     }
 
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -2174,7 +2174,7 @@ void KMMainWidget::slotSelectCollectionFolder(const Akonadi::Collection &col)
 
 void KMMainWidget::slotApplyFilters()
 {
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -2197,7 +2197,7 @@ void KMMainWidget::slotFetchItemsForFolderDone(KJob *job)
     applyFilters(items);
 }
 
-void KMMainWidget::applyFilters(const QList<Akonadi::Item> &selectedMessages)
+void KMMainWidget::applyFilters(const Akonadi::Item::List &selectedMessages)
 {
 #ifndef QT_NO_CURSOR
     MessageViewer::KCursorSaver busy(MessageViewer::KBusyPtr::busy());
@@ -2252,7 +2252,7 @@ void KMMainWidget::slotConfigChanged()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveMsg()
 {
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -2271,7 +2271,7 @@ void KMMainWidget::slotOpenMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveAttachments()
 {
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {
         return;
     }
@@ -2644,7 +2644,7 @@ void KMMainWidget::slotContactSearchJobForMessagePopupDone(KJob *job)
     const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob *>(job);
     const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
 
-    const QList<Akonadi::Item> listContact = searchJob->items();
+    const Akonadi::Item::List listContact = searchJob->items();
     const bool uniqueContactFound = (listContact.count() == 1);
     if (uniqueContactFound) {
         mMsgView->setContactItem(listContact.first(), searchJob->contacts().at(0));
@@ -4473,7 +4473,7 @@ void KMMainWidget::slotMoveMessageToTrash()
 
 void KMMainWidget::slotArchiveMails()
 {
-    const QList<Akonadi::Item> selectedMessages = mMessagePane->selectionAsMessageItemList();
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentFolder->collection().resource());
 }
 

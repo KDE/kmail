@@ -184,7 +184,7 @@ KMCommand::KMCommand(QWidget *parent, const Akonadi::Item &msg)
     }
 }
 
-KMCommand::KMCommand(QWidget *parent, const QList<Akonadi::Item> &msgList)
+KMCommand::KMCommand(QWidget *parent, const Akonadi::Item::List &msgList)
     : mCountMsgs(0), mResult(Undefined), mDeletesItself(false),
       mEmitsCompletedItself(false), mParent(parent)
 {
@@ -203,7 +203,7 @@ KMCommand::Result KMCommand::result() const
     return mResult;
 }
 
-const QList<Akonadi::Item> KMCommand::retrievedMsgs() const
+const Akonadi::Item::List KMCommand::retrievedMsgs() const
 {
     return mRetrievedMsgs;
 }
@@ -665,7 +665,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
     return OK;
 }
 
-KMSaveMsgCommand::KMSaveMsgCommand(QWidget *parent, const QList<Akonadi::Item> &msgList)
+KMSaveMsgCommand::KMSaveMsgCommand(QWidget *parent, const Akonadi::Item::List &msgList)
     : KMCommand(parent, msgList)
 {
     if (msgList.empty()) {
@@ -852,7 +852,7 @@ KMCommand::Result KMReplyCommand::execute()
 }
 
 KMForwardCommand::KMForwardCommand(QWidget *parent,
-                                   const QList<Akonadi::Item> &msgList, uint identity, const QString &templateName)
+                                   const Akonadi::Item::List &msgList, uint identity, const QString &templateName)
     : KMCommand(parent, msgList),
       mIdentity(identity),
       mTemplate(templateName)
@@ -906,7 +906,7 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
 
 KMCommand::Result KMForwardCommand::execute()
 {
-    QList<Akonadi::Item> msgList = retrievedMsgs();
+    Akonadi::Item::List msgList = retrievedMsgs();
 
     if (msgList.count() >= 2) {
         // ask if they want a mime digest forward
@@ -931,8 +931,8 @@ KMCommand::Result KMForwardCommand::execute()
             win->show();
             return OK;
         } else if (answer == KMessageBox::No) {  // NO MIME DIGEST, Multiple forward
-            QList<Akonadi::Item>::const_iterator it;
-            QList<Akonadi::Item>::const_iterator end(msgList.constEnd());
+            Akonadi::Item::List::const_iterator it;
+            Akonadi::Item::List::const_iterator end(msgList.constEnd());
 
             for (it = msgList.constBegin(); it != end; ++it) {
                 if (createComposer(*it) == Failed) {
@@ -955,7 +955,7 @@ KMCommand::Result KMForwardCommand::execute()
 }
 
 KMForwardAttachedCommand::KMForwardAttachedCommand(QWidget *parent,
-        const QList<Akonadi::Item> &msgList, uint identity, KMail::Composer *win)
+        const Akonadi::Item::List &msgList, uint identity, KMail::Composer *win)
     : KMCommand(parent, msgList), mIdentity(identity),
       mWin(QPointer<KMail::Composer>(win))
 {
@@ -974,7 +974,7 @@ KMForwardAttachedCommand::KMForwardAttachedCommand(QWidget *parent,
 
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
-    QList<Akonadi::Item> msgList = retrievedMsgs();
+    Akonadi::Item::List msgList = retrievedMsgs();
     Akonadi::Item firstItem(msgList.first());
     MessageFactory factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(), MailCommon::Util::updatedCollection(firstItem.parentCollection()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
@@ -992,7 +992,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 }
 
 KMRedirectCommand::KMRedirectCommand(QWidget *parent,
-                                     const QList<Akonadi::Item> &msgList)
+                                     const Akonadi::Item::List &msgList)
     : KMCommand(parent, msgList)
 {
     fetchScope().fetchFullPayload(true);
@@ -1226,7 +1226,7 @@ void KMSetStatusCommand::slotModifyItemDone(KJob *job)
     deleteLater();
 }
 
-KMSetTagCommand::KMSetTagCommand(const Akonadi::Tag::List &tags, const QList<Akonadi::Item> &item,
+KMSetTagCommand::KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::Item::List &item,
                                  SetTagMode mode)
     : mTags(tags)
     , mItem(item)
@@ -1390,7 +1390,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 }
 
 KMCopyCommand::KMCopyCommand(const Akonadi::Collection &destFolder,
-                             const QList<Akonadi::Item> &msgList)
+                             const Akonadi::Item::List &msgList)
     : KMCommand(Q_NULLPTR, msgList), mDestFolder(destFolder)
 {
 }
@@ -1404,7 +1404,7 @@ KMCommand::Result KMCopyCommand::execute()
 {
     setDeletesItself(true);
 
-    QList<Akonadi::Item> listItem = retrievedMsgs();
+    Akonadi::Item::List listItem = retrievedMsgs();
     Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob(listItem, Akonadi::Collection(mDestFolder.id()), this);
     connect(job, &KIO::Job::result, this, &KMCopyCommand::slotCopyResult);
 
@@ -1422,7 +1422,7 @@ void KMCopyCommand::slotCopyResult(KJob *job)
 }
 
 KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder,
-                             const QList<Akonadi::Item> &msgList,
+                             const Akonadi::Item::List &msgList,
                              MessageList::Core::MessageItemSetReference ref)
     : KMCommand(Q_NULLPTR, msgList), mDestFolder(destFolder), mProgressItem(Q_NULLPTR), mRef(ref)
 {
@@ -1455,7 +1455,7 @@ KMCommand::Result KMMoveCommand::execute()
 #endif
     setEmitsCompletedItself(true);
     setDeletesItself(true);
-    QList<Akonadi::Item> retrievedList = retrievedMsgs();
+    Akonadi::Item::List retrievedList = retrievedMsgs();
     if (!retrievedList.isEmpty()) {
         if (mDestFolder.isValid()) {
             Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(retrievedList, mDestFolder, this);
@@ -1514,7 +1514,7 @@ void KMMoveCommand::slotMoveCanceled()
 
 // srcFolder doesn't make much sense for searchFolders
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder,
-                                     const QList<Akonadi::Item> &msgList, MessageList::Core::MessageItemSetReference ref)
+                                     const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
     : KMMoveCommand(findTrashFolder(srcFolder), msgList, ref)
 {
 }
@@ -1543,7 +1543,7 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonad
     fetchScope().fetchFullPayload(true);
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const QList<Akonadi::Item> &msgs)
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs)
     : KMCommand(parent, msgs),
       mViewer(Q_NULLPTR)
 {

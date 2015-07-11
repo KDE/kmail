@@ -470,7 +470,7 @@ private:
 
     void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);
 
-    void copyMessageSelected(const QList<Akonadi::Item> &selectMsg, const Akonadi::Collection &dest);
+    void copyMessageSelected(const Akonadi::Item::List &selectMsg, const Akonadi::Collection &dest);
 
     /**
      * Move the messages referenced by the specified set to trash.
@@ -482,7 +482,7 @@ private:
      * Set the status of the messages referenced by the specified set, eventually toggling it.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-    void setMessageSetStatus(const QList<Akonadi::Item> &select,
+    void setMessageSetStatus(const Akonadi::Item::List &select,
                              const Akonadi::MessageStatus &status,
                              bool toggle
                             );
@@ -490,13 +490,13 @@ private:
      * Toggles a tag for the messages referenced by the specified set.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-    void toggleMessageSetTag(const QList<Akonadi::Item> &select, const Akonadi::Tag &tag);
+    void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
     /**
      * This applies setMessageSetStatus() on the current thread.
      */
     void setCurrentThreadStatus(const Akonadi::MessageStatus &status, bool toggle);
 
-    void applyFilters(const QList< Akonadi::Item > &selectedMessages);
+    void applyFilters(const Akonadi::Item::List &selectedMessages);
 
     /**
      * Internal helper that creates the folder selection dialog used for the
