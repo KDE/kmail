@@ -493,8 +493,8 @@ void MessageActions::slotNoQuoteReplyToMsg()
 void MessageActions::slotRunUrl(QAction *urlAction)
 {
     const QVariant q = urlAction->data();
-    if (q.type() == QVariant::String) {
-        new KRun(QUrl(q.toString()) , mParent);
+    if (q.type() == QVariant::Url) {
+        new KRun(q.toUrl(), mParent);
     }
 }
 
