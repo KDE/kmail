@@ -341,7 +341,7 @@ void KMCommand::slotMsgTransfered(const Akonadi::Item::List &msgs)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 5, 0)
     mRetrievedMsgs.append(msgs);
 #else
-    Q_FOREACH(const Akonadi::Item &item, msgs) {
+    Q_FOREACH (const Akonadi::Item &item, msgs) {
         mRetrievedMsgs.append(item);
     }
 #endif
