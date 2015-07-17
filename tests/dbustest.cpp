@@ -8,7 +8,6 @@
 #include <QCommandLineParser>
 
 #include "kmailinterface.h"
-//#include "aboutdata.h"
 
 int main(int argc, char **argv)
 {
