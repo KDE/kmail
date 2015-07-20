@@ -35,27 +35,15 @@ void insertLibraryCataloguesAndIcons()
 {
     static const char *const catalogs[] = {
         "libkdepim",
-        "libksieve",
         "libkleopatra",
         "libkpgp",
-        "libkmime",
         "libmessagelist",
         "libmessageviewer",
         "libmessagecore",
         "libmessagecomposer",
         "libpimcommon",
         "libmailcommon",
-        "libtemplateparser",
-        "libakonadi-kde",
-        "libakonadi-kmime",
-        "libkpimtextedit",
-        "akonadicontact",
-        "kabc",
-        "akonadi_sendlater_agent",
-        "akonadi_folderagent_agent",
-        "akonadi_imap_resource",
-        "libkgapi",
-        "akonadi_followupreminder_agent"
+        "libkpimtextedit"
     };
 
     KIconLoader *il = KIconLoader::global();
