@@ -4154,7 +4154,7 @@ void KMMainWidget::initializeFilterActions()
             QString displayText = i18n("Filter %1", filter->name());
             QString icon = filter->icon();
             if (icon.isEmpty()) {
-                icon = QLatin1String("system-run");
+                icon = QStringLiteral("system-run");
             }
             QAction *filterAction = new QAction(QIcon::fromTheme(icon), displayText, actionCollection());
             filterAction->setIconText(filter->toolbarName());
