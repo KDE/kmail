@@ -22,7 +22,6 @@
 
 namespace KMail
 {
-KMAIL_EXPORT void checkConfigUpdates();
 KMAIL_EXPORT void insertLibraryCataloguesAndIcons();
 }
 
