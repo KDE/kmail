@@ -19,7 +19,7 @@
 
 #include "searchdescriptionattribute.h"
 
-#include <QtCore/QByteArray>
+#include <QByteArray>
 #include <QDataStream>
 
 #include <AkonadiCore/Collection>

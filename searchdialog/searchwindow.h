@@ -30,7 +30,7 @@
 #include <QDialog>
 #include <kxmlguiclient.h>
 #include <KGuiItem>
-#include <QtCore/QTimer>
+#include <QTimer>
 
 class QCloseEvent;
 class QKeyEvent;
