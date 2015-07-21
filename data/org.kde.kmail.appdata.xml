@@ -26,6 +26,7 @@
   <name xml:lang="pt">KMail</name>
   <name xml:lang="pt-BR">KMail</name>
   <name xml:lang="ro">KMail</name>
+  <name xml:lang="ru">KMail</name>
   <name xml:lang="sk">KMail</name>
   <name xml:lang="sl">KMail</name>
   <name xml:lang="sr">К‑пошта</name>
@@ -60,6 +61,7 @@
     <p xml:lang="pl">KMail jest składnikiem pocztowym pakietu Kontact, programu do zarządzania informacjami osobistymi w KDE.</p>
     <p xml:lang="pt">O KMail é o componente de e-mail do Kontact, o gestor de informações pessoais do KDE.</p>
     <p xml:lang="pt-BR">KMail é o componente de e-mail do Kontact, o gerenciador integrado de informações pessoais do KDE.</p>
+    <p xml:lang="ru">KMail — почтовый клиент в составе интегрированного диспетчера личной информации Kontact.</p>
     <p xml:lang="sk">KMail je e-mailový komponent programu Kontact, integrovaný správca osobných informácií z KDE.</p>
     <p xml:lang="sl">KMail je sestavni del paketa Kontact, ki omogoča delo z e-pošto.</p>
     <p xml:lang="sr">К‑пошта је е‑поштанска компонента Контакта, КДЕ‑овог интегрисаног менаџера личних података.</p>
@@ -93,6 +95,7 @@
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Funcionalidades:</p>
     <p xml:lang="ro">Caracteristici:</p>
+    <p xml:lang="ru">Возможности:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sr">Могућности:</p>
@@ -125,6 +128,7 @@
       <li xml:lang="pl">Obsługa standardowych protokołów pocztowych IMAP, POP3 oraz SMTP.</li>
       <li xml:lang="pt">Suporta os protocolos-padrão de correio electrónico IMAP, POP3 e SMTP.</li>
       <li xml:lang="pt-BR">Suporte aos padrões de protocolo de e-mail IMAP, POP3 e SMTP.</li>
+      <li xml:lang="ru">Поддержка распространённых почтовых протоколов IMAP, POP3 и SMTP;</li>
       <li xml:lang="sk">Podporuje štandardné mailové protokoly IMAP, POP3 a SMTP.</li>
       <li xml:lang="sl">Podpira standardne poštne protokole: IMAP, POP3 in SMTP.</li>
       <li xml:lang="sr">Подршка за стандардне поштанске протоколе ИМАП, ПОП3 и СМТП.</li>
@@ -154,6 +158,7 @@
       <li xml:lang="pl">Obsługa uwierzytelniania przez NTLM (Microsoft Windows) oraz GSSAPI (Kerberos)</li>
       <li xml:lang="pt">Suporta a autenticação por NTLM (Microsoft Windows) e por GSSAPI (Kerberos)</li>
       <li xml:lang="pt-BR">Suporte a autenticação por NTLM (Microsoft Windows) e por GSSAPI (Kerberos)</li>
+      <li xml:lang="ru">Поддержка аутентификации с помощью NTLM (Microsoft Windows) и GSSAPI (Kerberos);</li>
       <li xml:lang="sk">Podporuje overenie cez NTLM (Microsoft Windows) a GSSAPI (Kerberos)</li>
       <li xml:lang="sl">Podpira overjanje preko NTLM (Microsoft Windows) in GSSAPI (Kerberos)</li>
       <li xml:lang="sr">Аутентификација преко НТЛМ‑а (Виндоуз) и ГССАПИ‑ја (кербер).</li>
@@ -183,6 +188,7 @@
       <li xml:lang="pl">Obsługa logowania przy użyciu zwykłego tekstu oraz bezpiecznego poprzez SSL i TLS.</li>
       <li xml:lang="pt">Suporta a autenticação por texto simples e segura, usando o SSL e o TLS.</li>
       <li xml:lang="pt-BR">Suporte a autenticação segura e por texto simples, usando SSL e TLS.</li>
+      <li xml:lang="ru">Поддержка аутентификации с пересылкой регистрационных данных как открытым текстом, так и безопасным образом с помощью SSL и TLS;</li>
       <li xml:lang="sk">Podporuje čisté textové a zabezpečené prihlásenia, pomocou SSL a TLS.</li>
       <li xml:lang="sl">Podpira prijavo z navadnim besedilom ali varno prijavo s pomočjo SSL in TLS.</li>
       <li xml:lang="sr">Обичнотекстуално и безбедно пријављивање, преко ССЛ‑а и ТЛС‑а.</li>
@@ -212,6 +218,7 @@
       <li xml:lang="pl">Integracja międzynarodowych zestawów znaków i sprawdzania pisowni (w trakcie pisania i na żądanie)</li>
       <li xml:lang="pt">Integração dos conjuntos de caracteres internacionais e a verificação ortográfica (à medida que escreve ou a pedido)</li>
       <li xml:lang="pt-BR">Integração dos conjuntos de caracteres internacionais e verificação ortográfica (enquanto escreve ou por solicitação)</li>
+      <li xml:lang="ru">Поддержка множества кодировок текста и проверки орфографии (на лету или по запросу);</li>
       <li xml:lang="sk">Integrácia medzinárodných znakových sád a kontroly pravopisu (ako píšete a na požiadanie)</li>
       <li xml:lang="sl">Podpira mednarodne nabore znakov in preverjanje črkovanja (med tipkanjem in na zahtevo)</li>
       <li xml:lang="sr">Међународна кодирања и провера правописа (током куцања и на захтев).</li>
@@ -240,6 +247,7 @@
       <li xml:lang="pl">Bezpośrednia obsługa dla OpenPGP w treści, PGP/MIME oraz S/MIME.</li>
       <li xml:lang="pt">Suporte nativo e incorporado para o OpenPGP, PGP/MIME e S/MIME.</li>
       <li xml:lang="pt-BR">Suporte nativo e integrado para OpenPGP, PGP/MIME e S/MIME.</li>
+      <li xml:lang="ru">Встроенная поддержка OpenPGP, PGP/MIME и S/MIME в тексте письма;</li>
       <li xml:lang="sk">Natívna podpora pre vstavané OpenPGP, PGP/MIME a S/MIME.</li>
       <li xml:lang="sl">Ima lastno podporo znotrajvrstičnim OpenPGP, PGP/MIME in S/MIME.</li>
       <li xml:lang="sr">Самосвојна подршка за уткани опенПГП, ПГП/МИМЕ и С/МИМЕ.</li>
@@ -270,6 +278,7 @@
       <li xml:lang="pl">Czytanie i pisanie wiadomości HTML.</li>
       <li xml:lang="pt">Leitura e escrita de mensagens em HTML.</li>
       <li xml:lang="pt-BR">Leitura e gravação de e-mails em HTML.</li>
+      <li xml:lang="ru">Просмотр и написание писем в формате HTML;</li>
       <li xml:lang="sk">Čítanie a písanie HTML mailov.</li>
       <li xml:lang="sl">Branje in zapisovanje e-pošte v obliki HTML.</li>
       <li xml:lang="sr">Читање и писање ХТМЛ порука.</li>
@@ -298,6 +307,7 @@
       <li xml:lang="pl">Możliwość wyświetlania zwykłego tekstu w wiadomości HTML.</li>
       <li xml:lang="pt">Capacidade de apresentar apenas o texto simples de uma mensagem em HTML.</li>
       <li xml:lang="pt-BR">Capacidade de exibir apenas o texto simples de um e-mail em HTML.</li>
+      <li xml:lang="ru">Функция просмотра текстового варианта из письма в формате HTML;</li>
       <li xml:lang="sk">Schopnosť zobraziť iba čistý text z HTML mailu.</li>
       <li xml:lang="sl">Prikaz samo besedila iz e-pošte v obliki HTML.</li>
       <li xml:lang="sr">Приказивање само обичног текста из ХТМЛ порука.</li>
@@ -328,6 +338,7 @@
       <li xml:lang="pl">Możliwość odbierania i przyjmowania zaproszeń.</li>
       <li xml:lang="pt">Permite-lhe receber e aceitar convites.</li>
       <li xml:lang="pt-BR">Permite-lhe receber e aceitar convites.</li>
+      <li xml:lang="ru">Получение и отправка приглашений;</li>
       <li xml:lang="sk">Umožní vám prijať a prijímať pozvánky.</li>
       <li xml:lang="sl">Omogoča prejemanje in sprejemanje povabil.</li>
       <li xml:lang="sr">Слање и прихватање позивница.</li>
@@ -357,6 +368,7 @@
       <li xml:lang="pl">Integracja z powszechnymi programami wykrywającymi spam, np. SpamAssassin, Bogofilter, itp.</li>
       <li xml:lang="pt">Integração com as verificações de lixo electrónico, p.ex. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="pt-BR">Integração com programas de verificação de spam, como o SpamAssassin, Bogofilter, etc.</li>
+      <li xml:lang="ru">Интеграция с распространёнными системами фильтрации спама, например SpamAssassin, Bogofilter и другими;</li>
       <li xml:lang="sk">Integrácia s populárnymi kontrolami spamu, napr. SmamAssassin, Bogofilter, atď.</li>
       <li xml:lang="sl">Podpira priljubljena orodja proti neželeni pošti, npr. SpamAssassin, Bogofilter, itd.</li>
       <li xml:lang="sr">Интеграција популарних оверивача спама, као што су Спамасасин, Богофилтер, итд.</li>
