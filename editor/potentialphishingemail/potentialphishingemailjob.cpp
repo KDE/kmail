@@ -62,6 +62,9 @@ bool PotentialPhishingEmailJob::start()
                 if (tname.startsWith(QLatin1Char('<')) && tname.endsWith(QLatin1Char('>'))) {
                     tname = tname.mid(1, tname.length() - 2);
                 }
+                if (tname.startsWith(QLatin1Char('\'')) && tname.endsWith(QLatin1Char('\''))) {
+                    tname = tname.mid(1, tname.length() - 2);
+                }
                 if (temail.toLower() != tname.toLower()) {
                     const QString str = QStringLiteral("(%1)").arg(temail);
                     if (!tname.contains(str, Qt::CaseInsensitive)) {
