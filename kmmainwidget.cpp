@@ -3471,43 +3471,43 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("Focus on Last Folder"), this);
         actionCollection()->addAction(QStringLiteral("focus_last_folder"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                mFolderTreeWidget->folderTreeView(), SLOT(slotFocusLastFolder()));
+        connect(action, &QAction::triggered,
+                mFolderTreeWidget->folderTreeView(), &FolderTreeView::slotFocusLastFolder);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_End));
     }
     {
         QAction *action = new QAction(i18n("Focus on Next Message"), this);
         actionCollection()->addAction(QStringLiteral("inc_current_message"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                this, SLOT(slotFocusOnNextMessage()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotFocusOnNextMessage);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Right));
     }
     {
         QAction *action = new QAction(i18n("Focus on Previous Message"), this);
         actionCollection()->addAction(QStringLiteral("dec_current_message"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                this, SLOT(slotFocusOnPrevMessage()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotFocusOnPrevMessage);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Left));
     }
     {
         QAction *action = new QAction(i18n("Select First Message"), this);
         actionCollection()->addAction(QStringLiteral("select_first_message"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                this, SLOT(slotSelectFirstMessage()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotSelectFirstMessage);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Home));
     }
     {
         QAction *action = new QAction(i18n("Select Last Message"), this);
         actionCollection()->addAction(QStringLiteral("select_last_message"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                this, SLOT(slotSelectLastMessage()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotSelectLastMessage);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_End));
     }
     {
         QAction *action = new QAction(i18n("Select Message with Focus"), this);
         actionCollection()->addAction(QStringLiteral("select_current_message"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                this, SLOT(slotSelectFocusedMessage()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotSelectFocusedMessage);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Space));
     }
 
@@ -3516,31 +3516,31 @@ void KMMainWidget::setupActions()
         //If change shortcut change Panel::setQuickSearchClickMessage(...) message
         actionCollection()->setDefaultShortcut(mQuickSearchAction, QKeySequence(Qt::ALT + Qt::Key_Q));
         actionCollection()->addAction(QStringLiteral("focus_to_quickseach"), mQuickSearchAction);
-        connect(mQuickSearchAction, SIGNAL(triggered(bool)),
-                SLOT(slotFocusQuickSearch()));
+        connect(mQuickSearchAction, &QAction::triggered,
+                this, &KMMainWidget::slotFocusQuickSearch);
         updateQuickSearchLineText();
     }
     {
         QAction *action = new QAction(i18n("Extend Selection to Previous Message"), this);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::SHIFT + Qt::Key_Left));
         actionCollection()->addAction(QStringLiteral("previous_message"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                this, SLOT(slotExtendSelectionToPreviousMessage()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotExtendSelectionToPreviousMessage);
     }
     {
         QAction *action = new QAction(i18n("Extend Selection to Next Message"), this);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::SHIFT + Qt::Key_Right));
         actionCollection()->addAction(QStringLiteral("next_message"), action);
-        connect(action, SIGNAL(triggered(bool)),
-                this, SLOT(slotExtendSelectionToNextMessage()));
+        connect(action, &QAction::triggered,
+                this, &KMMainWidget::slotExtendSelectionToNextMessage);
     }
 
     {
         mMoveMsgToFolderAction = new QAction(i18n("Move Message to Folder"), this);
         actionCollection()->setDefaultShortcut(mMoveMsgToFolderAction, QKeySequence(Qt::Key_M));
         actionCollection()->addAction(QStringLiteral("move_message_to_folder"), mMoveMsgToFolderAction);
-        connect(mMoveMsgToFolderAction, SIGNAL(triggered(bool)),
-                SLOT(slotMoveSelectedMessageToFolder()));
+        connect(mMoveMsgToFolderAction, &QAction::triggered,
+                this, &KMMainWidget::slotMoveSelectedMessageToFolder);
     }
 
     mArchiveAction = new QAction(i18nc("@action", "Archive"), this);
