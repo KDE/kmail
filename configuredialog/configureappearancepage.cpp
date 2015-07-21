@@ -73,7 +73,7 @@ using KMime::DateFormatter;
 #include <QSpinBox>
 #include <QLabel>
 #include <QFontDatabase>
-#include <widgets/gravatarconfigwidget.h>
+#include <gravatar/gravatarconfigwidget.h>
 using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
