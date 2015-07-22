@@ -495,6 +495,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
             menu->addMenu(mReaderWin->viewHtmlOption());
             menu->addSeparator();
             menu->addAction(mReaderWin->copyURLAction());
+            menu->addSeparator();
             menu->addAction(mReaderWin->shareServiceUrlMenu());
             copyAdded = true;
             urlMenuAdded = true;
@@ -505,6 +506,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg , const QUrl &ur
             menu->addAction(mReaderWin->addBookmarksAction());
             menu->addAction(mReaderWin->urlSaveAsAction());
             menu->addAction(mReaderWin->copyURLAction());
+            menu->addSeparator();
             menu->addAction(mReaderWin->shareServiceUrlMenu());
             if (mReaderWin->isAShortUrl(url)) {
                 menu->addSeparator();
