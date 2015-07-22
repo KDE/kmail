@@ -1028,7 +1028,7 @@ KMCommand::Result KMRedirectCommand::execute()
             : MailCommon::RedirectDialog::SendLater;
 
     MessageViewer::AutoQPointer<MailCommon::RedirectDialog> dlg(new MailCommon::RedirectDialog(sendMode, parentWidget()));
-    dlg->setObjectName(QLatin1String("redirect"));
+    dlg->setObjectName(QStringLiteral("redirect"));
     if (dlg->exec() == QDialog::Rejected || !dlg) {
         return Failed;
     }

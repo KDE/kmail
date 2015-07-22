@@ -684,10 +684,10 @@ void KMMainWidget::layoutSplitters()
     //
     // Set splitter properties
     //
-    mSplitter1->setObjectName(QLatin1String("splitter1"));
+    mSplitter1->setObjectName(QStringLiteral("splitter1"));
     mSplitter1->setOpaqueResize(opaqueResize);
     //mSplitter1->setChildrenCollapsible( false );
-    mSplitter2->setObjectName(QLatin1String("splitter2"));
+    mSplitter2->setObjectName(QStringLiteral("splitter2"));
     mSplitter2->setOpaqueResize(opaqueResize);
     //mSplitter2->setChildrenCollapsible( false );
 
@@ -1257,7 +1257,7 @@ bool KMMainWidget::slotSearch()
     if (!mSearchWin) {
         mSearchWin = new SearchWindow(this, mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
         mSearchWin->setModal(false);
-        mSearchWin->setObjectName(QLatin1String("Search"));
+        mSearchWin->setObjectName(QStringLiteral("Search"));
     } else {
         mSearchWin->activateFolder(mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
     }

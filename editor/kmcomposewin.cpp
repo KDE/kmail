@@ -283,7 +283,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mMainWidget = new QWidget(this);
     // splitter between the headers area and the actual editor
     mHeadersToEditorSplitter = new QSplitter(Qt::Vertical, mMainWidget);
-    mHeadersToEditorSplitter->setObjectName(QLatin1String("mHeadersToEditorSplitter"));
+    mHeadersToEditorSplitter->setObjectName(QStringLiteral("mHeadersToEditorSplitter"));
     mHeadersToEditorSplitter->setChildrenCollapsible(false);
     mHeadersArea = new QWidget(mHeadersToEditorSplitter);
     mHeadersArea->setSizePolicy(mHeadersToEditorSplitter->sizePolicy().horizontalPolicy(),
@@ -321,11 +321,11 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     connect(transport, static_cast<void (MailTransport::TransportComboBox::*)(int)>(&MailTransport::TransportComboBox::activated), this, &KMComposeWin::slotTransportChanged);
 
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
-    mEdtFrom->setObjectName(QLatin1String("fromLine"));
+    mEdtFrom->setObjectName(QStringLiteral("fromLine"));
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     mEdtFrom->setToolTip(i18n("Set the \"From:\" email address for this message"));
     mEdtReplyTo = new MessageComposer::ComposerLineEdit(true, mHeadersArea);
-    mEdtReplyTo->setObjectName(QLatin1String("replyToLine"));
+    mEdtReplyTo->setObjectName(QStringLiteral("replyToLine"));
     mEdtReplyTo->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     mEdtReplyTo->setToolTip(i18n("Set the \"Reply-To:\" email address for this message"));
     connect(mEdtReplyTo, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposeWin::slotCompletionModeChanged);
@@ -363,10 +363,10 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mFixedFontAction = Q_NULLPTR;
     // the attachment view is separated from the editor by a splitter
     mSplitter = new QSplitter(Qt::Vertical, mMainWidget);
-    mSplitter->setObjectName(QLatin1String("mSplitter"));
+    mSplitter->setObjectName(QStringLiteral("mSplitter"));
     mSplitter->setChildrenCollapsible(false);
     mSnippetSplitter = new QSplitter(Qt::Horizontal, mSplitter);
-    mSnippetSplitter->setObjectName(QLatin1String("mSnippetSplitter"));
+    mSnippetSplitter->setObjectName(QStringLiteral("mSnippetSplitter"));
     mSplitter->addWidget(mSnippetSplitter);
 
     QWidget *editorAndCryptoStateIndicators = new QWidget(mSplitter);

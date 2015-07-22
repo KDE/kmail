@@ -49,7 +49,7 @@ using namespace MailCommon;
 CollectionMailingListPage::CollectionMailingListPage(QWidget *parent) :
     CollectionPropertiesPage(parent), mGroupWidget(Q_NULLPTR), mLastItem(0), changed(false)
 {
-    setObjectName(QLatin1String("KMail::CollectionMailingListPage"));
+    setObjectName(QStringLiteral("KMail::CollectionMailingListPage"));
     setPageTitle(i18nc("@title:tab Mailing list settings for a folder.", "Mailing List"));
 }
 

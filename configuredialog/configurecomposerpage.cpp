@@ -393,7 +393,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // "Warn if too many recipients" checkbox/spinbox
     mRecipientCheck = new QCheckBox(
         GlobalSettings::self()->tooManyRecipientsItem()->label(), this);
-    mRecipientCheck->setObjectName(QLatin1String("kcfg_TooManyRecipients"));
+    mRecipientCheck->setObjectName(QStringLiteral("kcfg_TooManyRecipients"));
     helpText = i18n(GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8());
     mRecipientCheck->setWhatsThis(helpText);
     mRecipientCheck->setToolTip(i18n("Warn if too many recipients are specified"));
@@ -403,7 +403,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setMinimum(1/*min*/);
     mRecipientSpin->setSingleStep(1/*step*/);
     mRecipientSpin->setValue(5/*init*/);
-    mRecipientSpin->setObjectName(QLatin1String("kcfg_RecipientThreshold"));
+    mRecipientSpin->setObjectName(QStringLiteral("kcfg_RecipientThreshold"));
     mRecipientSpin->setEnabled(false);
     helpText = i18n(GlobalSettings::self()->recipientThresholdItem()->whatsThis().toUtf8());
     mRecipientSpin->setWhatsThis(helpText);
@@ -642,7 +642,7 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
 
     mExternalEditorCheck = new QCheckBox(
         GlobalSettings::self()->useExternalEditorItem()->label(), this);
-    mExternalEditorCheck->setObjectName(QLatin1String("kcfg_UseExternalEditor"));
+    mExternalEditorCheck->setObjectName(QStringLiteral("kcfg_UseExternalEditor"));
     connect(mExternalEditorCheck, SIGNAL(toggled(bool)),
             this, SLOT(slotEmitChanged()));
 

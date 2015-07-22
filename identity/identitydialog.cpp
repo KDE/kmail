@@ -157,7 +157,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     QVBoxLayout *vlay = new QVBoxLayout(page);
     vlay->setMargin(0);
     mTabWidget = new QTabWidget(page);
-    mTabWidget->setObjectName(QLatin1String("config-identity-tab"));
+    mTabWidget->setObjectName(QStringLiteral("config-identity-tab"));
     vlay->addWidget(mTabWidget);
 
     tab = new QWidget(mTabWidget);
@@ -387,7 +387,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mReplyToEdit = new KPIM::AddresseeLineEdit(tab, true);
     mReplyToEdit->setClearButtonShown(true);
-    mReplyToEdit->setObjectName(QLatin1String("mReplyToEdit"));
+    mReplyToEdit->setObjectName(QStringLiteral("mReplyToEdit"));
     glay->addWidget(mReplyToEdit, row, 1);
     label = new QLabel(i18n("&Reply-To address:"), tab);
     label->setBuddy(mReplyToEdit);
@@ -409,7 +409,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mCcEdit = new KPIM::AddresseeLineEdit(tab, true);
     mCcEdit->setClearButtonShown(true);
-    mCcEdit->setObjectName(QLatin1String("mCcEdit"));
+    mCcEdit->setObjectName(QStringLiteral("mCcEdit"));
     glay->addWidget(mCcEdit, row, 1);
     label = new QLabel(i18n("&CC addresses:"), tab);
     label->setBuddy(mCcEdit);
@@ -429,7 +429,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mBccEdit = new KPIM::AddresseeLineEdit(tab, true);
     mBccEdit->setClearButtonShown(true);
-    mBccEdit->setObjectName(QLatin1String("mBccEdit"));
+    mBccEdit->setObjectName(QStringLiteral("mBccEdit"));
     glay->addWidget(mBccEdit, row, 1);
     label = new QLabel(i18n("&BCC addresses:"), tab);
     label->setBuddy(mBccEdit);
