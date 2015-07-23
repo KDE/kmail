@@ -137,12 +137,6 @@ int main(int argc, char *argv[])
     KMMigrateApplication migrate;
     migrate.migrate();
 
-    // Qt doesn't treat the system tray as a window, and therefore Qt would quit
-    // the event loop when an error message is clicked away while KMail is in the
-    // tray.
-    // Rely on KGlobal::ref() and KGlobal::deref() instead, like we did in KDE3.
-    // See http://bugs.kde.org/show_bug.cgi?id=163479
-    QApplication::setQuitOnLastWindowClosed(false);
 
     // import i18n data and icons from libraries:
     KMail::insertLibraryCataloguesAndIcons();
