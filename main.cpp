@@ -47,8 +47,8 @@
 class KMailApplication : public KontactInterface::PimUniqueApplication
 {
 public:
-    KMailApplication(int &argc, char **argv[], KAboutData &about)
-        : KontactInterface::PimUniqueApplication(argc, argv, about)
+    KMailApplication(int &argc, char **argv[])
+        : KontactInterface::PimUniqueApplication(argc, argv)
         , mDelayedInstanceCreation(false)
         , mEventLoopReached(false)
     { }
@@ -109,6 +109,7 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args)
 
 int main(int argc, char *argv[])
 {
+    KMailApplication app(argc, &argv);
     // WABA: KMail is a KUniqueApplication. Unfortunately this makes debugging
     // a bit harder: You should pass --nofork as commandline argument when using
     // a debugger. In gdb you can do this by typing "set args --nofork" before
@@ -119,8 +120,8 @@ int main(int argc, char *argv[])
                 QString("main() \"%1\"").arg(argv[0]).toLatin1(), MB_OK | MB_ICONINFORMATION | MB_TASKMODAL);
 #endif
     KMail::AboutData about;
+    app.setAboutData(about);
 
-    KMailApplication app(argc, &argv, about);
     QCommandLineParser *cmdArgs = app.cmdArgs();
     kmail_options(cmdArgs);
 
