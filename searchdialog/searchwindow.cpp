@@ -473,8 +473,7 @@ void SearchWindow::doSearch()
     SearchPattern searchPattern(mSearchPattern);
     searchPattern.purify();
 
-    MailCommon::SearchPattern::SparqlQueryError queryError = MailCommon::SearchPattern::NoError;
-    queryError = searchPattern.asAkonadiQuery(mQuery);
+    MailCommon::SearchPattern::SparqlQueryError queryError = searchPattern.asAkonadiQuery(mQuery);
     switch (queryError) {
     case MailCommon::SearchPattern::NoError:
         break;
