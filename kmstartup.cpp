@@ -30,7 +30,6 @@
 namespace KMail
 {
 
-
 void insertLibraryCataloguesAndIcons()
 {
     static const char *const catalogs[] = {

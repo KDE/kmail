@@ -137,7 +137,6 @@ int main(int argc, char *argv[])
     KMMigrateApplication migrate;
     migrate.migrate();
 
-
     // import i18n data and icons from libraries:
     KMail::insertLibraryCataloguesAndIcons();
 
