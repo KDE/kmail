@@ -2106,10 +2106,10 @@ QString KMComposeWin::smartQuote(const QString &msg)
 bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachment)
 {
     // If this is a PNG image, either add it as an attachment or as an inline image
-    if (source->hasImage() && source->hasFormat(QLatin1String("image/png"))) {
+    if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         // Get the image data before showing the dialog, since that processes events which can delete
         // the QMimeData object behind our back
-        const QByteArray imageData = source->data(QLatin1String("image/png"));
+        const QByteArray imageData = source->data(QStringLiteral("image/png"));
         if (imageData.isEmpty()) {
             return true;
         }

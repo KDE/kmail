@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 {
     qDebug() << "Test KMail D-Bus interface.";
 
-    KAboutData aboutData(QLatin1String("testKMailDBUS"), i18n("Test for KMail D-Bus interface"), QStringLiteral("0.0"));
+    KAboutData aboutData(QStringLiteral("testKMailDBUS"), i18n("Test for KMail D-Bus interface"), QStringLiteral("0.0"));
     QCoreApplication app(argc, argv);
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
