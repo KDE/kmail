@@ -194,7 +194,7 @@ KMKernel::KMKernel(QObject *parent) :
     connect(mFolderCollectionMonitor->monitor(), &Akonadi::Monitor::collectionRemoved, this, &KMKernel::slotCollectionRemoved);
 
     mEntityTreeModel = new Akonadi::EntityTreeModel(folderCollectionMonitor(), this);
-    mEntityTreeModel->setIncludeUnsubscribed(false);
+    mEntityTreeModel->setListFilter(Akonadi::CollectionFetchScope::Enabled);
     mEntityTreeModel->setItemPopulationStrategy(Akonadi::EntityTreeModel::LazyPopulation);
 
     mCollectionModel = new Akonadi::EntityMimeTypeFilterModel(this);
