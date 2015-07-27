@@ -1582,7 +1582,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
                      i18n("Security Warning"),
                      KGuiItem(i18n("Load External References")),
                      KStandardGuiItem::cancel(),
-                     QLatin1String("OverrideHtmlLoadExtWarning"), Q_NULLPTR);
+                     QStringLiteral("OverrideHtmlLoadExtWarning"), Q_NULLPTR);
         if (result == KMessageBox::Cancel) {
             mPreferHtmlLoadExtAction->setChecked(false);
             return;
@@ -3813,8 +3813,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     if (mCurrentFolder && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentFolder->collection().resource())) {
         actionList << mArchiveAction;
     }
-    mGUIClient->unplugActionList(QLatin1String("messagelist_actionlist"));
-    mGUIClient->plugActionList(QLatin1String("messagelist_actionlist"), actionList);
+    mGUIClient->unplugActionList(QStringLiteral("messagelist_actionlist"));
+    mGUIClient->plugActionList(QStringLiteral("messagelist_actionlist"), actionList);
     mSendAgainAction->setEnabled(statusSendAgain);
 
     mSaveAsAction->setEnabled(mass_actions);
@@ -3868,8 +3868,8 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
         if (mCollectionProperties->isEnabled()) {
             collectionProperties << mCollectionProperties;
         }
-        mGUIClient->unplugActionList(QLatin1String("akonadi_collection_collectionproperties_actionlist"));
-        mGUIClient->plugActionList(QLatin1String("akonadi_collection_collectionproperties_actionlist"), collectionProperties);
+        mGUIClient->unplugActionList(QStringLiteral("akonadi_collection_collectionproperties_actionlist"));
+        mGUIClient->plugActionList(QStringLiteral("akonadi_collection_collectionproperties_actionlist"), collectionProperties);
 
     }
 
@@ -3898,8 +3898,8 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
         if (mEnableFavoriteFolderView && actionAddToFavoriteCollections->isEnabled()) {
             addToFavorite << actionAddToFavoriteCollections;
         }
-        mGUIClient->unplugActionList(QLatin1String("akonadi_collection_add_to_favorites_actionlist"));
-        mGUIClient->plugActionList(QLatin1String("akonadi_collection_add_to_favorites_actionlist"), addToFavorite);
+        mGUIClient->unplugActionList(QStringLiteral("akonadi_collection_add_to_favorites_actionlist"));
+        mGUIClient->plugActionList(QStringLiteral("akonadi_collection_add_to_favorites_actionlist"), addToFavorite);
     }
 
     QList< QAction * > syncActionList;
@@ -3911,8 +3911,8 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     if (actionSync && actionSync->isEnabled()) {
         syncActionList << actionSync;
     }
-    mGUIClient->unplugActionList(QLatin1String("akonadi_collection_sync_actionlist"));
-    mGUIClient->plugActionList(QLatin1String("akonadi_collection_sync_actionlist"), syncActionList);
+    mGUIClient->unplugActionList(QStringLiteral("akonadi_collection_sync_actionlist"));
+    mGUIClient->plugActionList(QStringLiteral("akonadi_collection_sync_actionlist"), syncActionList);
 
     QList< QAction * > actionList;
 
@@ -3930,8 +3930,8 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     if (action && action->isEnabled()) {
         actionList << action;
     }
-    mGUIClient->unplugActionList(QLatin1String("akonadi_collection_move_copy_menu_actionlist"));
-    mGUIClient->plugActionList(QLatin1String("akonadi_collection_move_copy_menu_actionlist"), actionList);
+    mGUIClient->unplugActionList(QStringLiteral("akonadi_collection_move_copy_menu_actionlist"));
+    mGUIClient->plugActionList(QStringLiteral("akonadi_collection_move_copy_menu_actionlist"), actionList);
 
 }
 
@@ -3986,8 +3986,8 @@ void KMMainWidget::updateFolderMenu()
     //   if ( mCurrentFolder && mCurrentFolder->collection().id() != CommonKernel->trashCollectionFolder().id() ) {
     //     actionlist << mTrashAction;
     //   }
-    mGUIClient->unplugActionList(QLatin1String("outbox_folder_actionlist"));
-    mGUIClient->plugActionList(QLatin1String("outbox_folder_actionlist"), actionlist);
+    mGUIClient->unplugActionList(QStringLiteral("outbox_folder_actionlist"));
+    mGUIClient->plugActionList(QStringLiteral("outbox_folder_actionlist"), actionlist);
     actionlist.clear();
 
     const bool isASearchFolder = mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String("akonadi_search_resource");
@@ -4028,8 +4028,8 @@ void KMMainWidget::updateFolderMenu()
         }
     }
 
-    mGUIClient->unplugActionList(QLatin1String("collectionview_actionlist"));
-    mGUIClient->plugActionList(QLatin1String("collectionview_actionlist"), actionlist);
+    mGUIClient->unplugActionList(QStringLiteral("collectionview_actionlist"));
+    mGUIClient->plugActionList(QStringLiteral("collectionview_actionlist"), actionlist);
 
 }
 
@@ -4116,12 +4116,12 @@ void KMMainWidget::clearFilterActions()
 {
     if (!mFilterTBarActions.isEmpty())
         if (mGUIClient->factory()) {
-            mGUIClient->unplugActionList(QLatin1String("toolbar_filter_actions"));
+            mGUIClient->unplugActionList(QStringLiteral("toolbar_filter_actions"));
         }
 
     if (!mFilterMenuActions.isEmpty())
         if (mGUIClient->factory()) {
-            mGUIClient->unplugActionList(QLatin1String("menu_filter_actions"));
+            mGUIClient->unplugActionList(QStringLiteral("menu_filter_actions"));
         }
 
     foreach (QAction *a, mFilterMenuActions) {
@@ -4182,11 +4182,11 @@ void KMMainWidget::initializeFilterActions()
         }
     }
     if (!mFilterMenuActions.isEmpty() && mGUIClient->factory()) {
-        mGUIClient->plugActionList(QLatin1String("menu_filter_actions"), mFilterMenuActions);
+        mGUIClient->plugActionList(QStringLiteral("menu_filter_actions"), mFilterMenuActions);
     }
     if (!mFilterTBarActions.isEmpty() && mGUIClient->factory()) {
         mFilterTBarActions.prepend(mToolbarActionSeparator);
-        mGUIClient->plugActionList(QLatin1String("toolbar_filter_actions"), mFilterTBarActions);
+        mGUIClient->plugActionList(QStringLiteral("toolbar_filter_actions"), mFilterTBarActions);
     }
 
     // Our filters have changed, now enable/disable them
@@ -4459,7 +4459,7 @@ void KMMainWidget::slotOpenRecentMsg(const QUrl &url)
 void KMMainWidget::addRecentFile(const QUrl &mUrl)
 {
     mOpenRecentAction->addUrl(mUrl);
-    KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
+    KConfigGroup grp = mConfig->group(QStringLiteral("Recent Files"));
     mOpenRecentAction->saveEntries(grp);
     grp.sync();
 }
@@ -4495,7 +4495,7 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
                            i18n("Security Warning"),
                            KGuiItem(i18n("Use HTML")),
                            KStandardGuiItem::cancel(),
-                           QLatin1String("OverrideHtmlWarning"), Q_NULLPTR);
+                           QStringLiteral("OverrideHtmlWarning"), Q_NULLPTR);
         if (result == KMessageBox::Cancel) {
             mDisplayMessageFormatMenu->setDisplayMessageFormat(MessageViewer::Viewer::Text);
             return;
