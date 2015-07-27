@@ -40,7 +40,6 @@
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/CollectionModel>
 #include <QFontDatabase>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 
@@ -328,7 +327,7 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
         const QModelIndex index = model->index(row, 0, parentIndex);
-        const Akonadi::Collection collection = model->data(index, Akonadi::CollectionModel::CollectionRole).value<Akonadi::Collection>();
+        const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         qint64 count = 0;
         if (!excludeFolder(collection)) {
             Akonadi::CollectionStatistics statistics = collection.statistics();
@@ -399,7 +398,7 @@ void KMSystemTray::unreadMail(const QAbstractItemModel *model, const QModelIndex
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
         const QModelIndex index = model->index(row, 0, parentIndex);
-        const Akonadi::Collection collection = model->data(index, Akonadi::CollectionModel::CollectionRole).value<Akonadi::Collection>();
+        const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
 
         if (!excludeFolder(collection)) {
 
