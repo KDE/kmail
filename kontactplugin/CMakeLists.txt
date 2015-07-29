@@ -15,7 +15,7 @@ set(kontact_kmailplugin_PART_SRCS kmailplugin_debug.cpp kmail_plugin.cpp summary
 add_library(kontact_kmailplugin MODULE ${kontact_kmailplugin_PART_SRCS})
 add_dependencies(kontact_kmailplugin kmail_xml)
 
-target_link_libraries(kontact_kmailplugin KF5::Mime  KF5::KontactInterface KF5::CalendarCore KF5::CalendarUtils kdepim)
+target_link_libraries(kontact_kmailplugin KF5::Mime  KF5::KontactInterface KF5::CalendarCore KF5::CalendarUtils KF5::AkonadiCore KF5::Contacts KF5::AkonadiWidgets)
 
 ########### next target ###############
 
@@ -24,7 +24,7 @@ set(kcm_kmailsummary_PART_SRCS kmailplugin_debug.cpp kcmkmailsummary.cpp ${konta
 add_library(kcm_kmailsummary MODULE ${kcm_kmailsummary_PART_SRCS})
 add_dependencies(kcm_kmailsummary kmail_xml)
 
-target_link_libraries(kcm_kmailsummary  KF5::Mime KF5::AkonadiCore  pimcommon)
+target_link_libraries(kcm_kmailsummary  KF5::Mime pimcommon)
 
 ########### install files ###############
 
