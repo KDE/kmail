@@ -39,9 +39,7 @@
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
 // other KMail headers:
-#ifndef KDEPIM_MOBILE_UI
 #include "xfaceconfigurator.h"
-#endif
 #include "pimcommon/widgets/simplestringlisteditor.h"
 #include "folderrequester.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
@@ -54,9 +52,7 @@
 #include "job/addressvalidationjob.h"
 #include "kleo_util.h"
 #include "utils/stringutil.h"
-#ifndef KDEPIM_MOBILE_UI
 #include "templatesconfiguration.h"
-#endif
 #include "templatesconfiguration_kfg.h"
 // other kdepim headers:
 #include <KIdentityManagement/kidentitymanagement/identity.h>
@@ -126,12 +122,8 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     QVBoxLayout *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
 
-#ifndef KDEPIM_MOBILE_UI
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
     connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &IdentityDialog::slotHelp);
-#else
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-#endif
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -544,7 +536,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mCustom = new QCheckBox(i18n("&Use custom message templates for this identity"), tab);
     tlay->addWidget(mCustom, Qt::AlignLeft);
 
-#ifndef KDEPIM_MOBILE_UI
     mWidget = new TemplateParser::TemplatesConfiguration(tab, QStringLiteral("identity-templates"));
     mWidget->setEnabled(false);
 
@@ -554,23 +545,16 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     tlay->addWidget(mWidget->helpLabel(), Qt::AlignRight);
 
     vlay->addWidget(mWidget);
-#endif
 
     QHBoxLayout *btns = new QHBoxLayout();
     mCopyGlobal = new QPushButton(i18n("&Copy Global Templates"), tab);
     mCopyGlobal->setEnabled(false);
     btns->addWidget(mCopyGlobal);
     vlay->addLayout(btns);
-#ifndef KDEPIM_MOBILE_UI
     connect(mCustom, &QCheckBox::toggled, mWidget, &TemplateParser::TemplatesConfiguration::setEnabled);
-#endif
     connect(mCustom, &QCheckBox::toggled, mCopyGlobal, &QPushButton::setEnabled);
     connect(mCopyGlobal, &QPushButton::clicked, this, &IdentityDialog::slotCopyGlobal);
-#ifdef KDEPIM_MOBILE_UI
-    tab->hide(); // not yet mobile ready
-#else
     mTabWidget->addTab(tab, i18n("Templates"));
-#endif
 
     //
     // Tab Widget: Signature
@@ -582,10 +566,8 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // Tab Widget: Picture
     //
 
-#ifndef KDEPIM_MOBILE_UI
     mXFaceConfigurator = new XFaceConfigurator(mTabWidget);
     mTabWidget->addTab(mXFaceConfigurator, i18n("Picture"));
-#endif
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
     resize(GlobalSettings::self()->identityDialogSize());
@@ -623,9 +605,7 @@ void IdentityDialog::slotAboutToShow(int index)
 
 void IdentityDialog::slotCopyGlobal()
 {
-#ifndef KDEPIM_MOBILE_UI
     mWidget->loadFromGlobal();
-#endif
 }
 
 namespace
@@ -887,21 +867,17 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mDefaultDomainEdit->setText(defaultDomainName);
 
     // "Templates" tab:
-#ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
     QString iid = TemplateParser::TemplatesConfiguration::configIdString(identity);
     TemplateParser::Templates t(iid);
     mCustom->setChecked(t.useCustomTemplates());
     mWidget->loadFromIdentity(identity);
-#endif
 
     // "Signature" tab:
     mSignatureConfigurator->setImageLocation(ident);
     mSignatureConfigurator->setSignature(ident.signature());
-#ifndef KDEPIM_MOBILE_UI
     mXFaceConfigurator->setXFace(ident.xface());
     mXFaceConfigurator->setXFaceEnabled(ident.isXFaceEnabled());
-#endif
 }
 
 void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
@@ -965,7 +941,6 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setDefaultDomainName(mDefaultDomainEdit->text());
 
     // "Templates" tab:
-#ifndef KDEPIM_MOBILE_UI
     uint identity = ident.uoid();
     QString iid = TemplateParser::TemplatesConfiguration::configIdString(identity);
     TemplateParser::Templates t(iid);
@@ -973,14 +948,11 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     t.setUseCustomTemplates(mCustom->isChecked());
     t.save();
     mWidget->saveToIdentity(identity);
-#endif
 
     // "Signature" tab:
     ident.setSignature(mSignatureConfigurator->signature());
-#ifndef KDEPIM_MOBILE_UI
     ident.setXFace(mXFaceConfigurator->xface());
     ident.setXFaceEnabled(mXFaceConfigurator->isXFaceEnabled());
-#endif
 
 }
 void IdentityDialog::slotEditVcard()
