@@ -63,7 +63,6 @@ protected:
 
 protected Q_SLOTS:
     void slotQuit();
-    void slotShowTipOnStart();
 
 private Q_SLOTS:
     void slotToggleMenubar(bool dontShowWarning = false);

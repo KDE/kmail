@@ -3404,8 +3404,6 @@ void KMMainWidget::setupActions()
 
     actionCollection()->addAction(KStandardAction::Undo,  QStringLiteral("kmail_undo"), this, SLOT(slotUndo()));
 
-    KStandardAction::tipOfDay(mLaunchExternalComponent, SLOT(slotShowTip()), actionCollection());
-
     menutimer = new QTimer(this);
     menutimer->setObjectName(QStringLiteral("menutimer"));
     menutimer->setSingleShot(true);

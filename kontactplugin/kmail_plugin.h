@@ -56,7 +56,6 @@ public:
     bool isRunningStandalone() const Q_DECL_OVERRIDE;
     bool createDBUSInterface(const QString &serviceType) Q_DECL_OVERRIDE;
     KontactInterface::Summary *createSummaryWidget(QWidget *parent) Q_DECL_OVERRIDE;
-    QString tipFile() const Q_DECL_OVERRIDE;
     int weight() const Q_DECL_OVERRIDE
     {
         return 200;

@@ -89,10 +89,6 @@ KMMainWin::KMMainWin(QWidget *)
     connect(mKMMainWidget, SIGNAL(captionChangeRequest(QString)),
             SLOT(setCaption(QString)));
 
-    if (kmkernel->firstInstance()) {
-        QTimer::singleShot(200, this, SLOT(slotShowTipOnStart()));
-    }
-
     mKMMainWidget->updateQuickSearchLineText();
 }
 
@@ -212,11 +208,6 @@ bool KMMainWin::queryClose()
         return true;
     }
     return kmkernel->canQueryClose();
-}
-
-void KMMainWin::slotShowTipOnStart()
-{
-    KTipDialog::showTip(this);
 }
 
 void KMMainWin::slotConfigureShortcuts()

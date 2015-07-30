@@ -184,12 +184,6 @@ bool KMailPlugin::createDBUSInterface(const QString &serviceType)
     return false;
 }
 
-QString KMailPlugin::tipFile() const
-{
-    const QString file = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("kmail2/tips"));
-    return file;
-}
-
 KParts::ReadOnlyPart *KMailPlugin::createPart()
 {
     KParts::ReadOnlyPart *part = loadPart();

@@ -41,7 +41,6 @@ public Q_SLOTS:
     void slotFilterLogViewer();
     void slotAntiVirusWizard();
     void slotAntiSpamWizard();
-    void slotShowTip();
 private:
     QWidget *mParentWidget;
 };

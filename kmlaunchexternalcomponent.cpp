@@ -19,7 +19,6 @@
 #include <KMessageBox>
 #include <KLocalizedString>
 #include <KRun>
-#include <KTipDialog>
 
 #include "util.h"
 #include "archivemailagentinterface.h"
@@ -163,7 +162,3 @@ void KMLaunchExternalComponent::slotFilterLogViewer()
     MailCommon::FilterManager::instance()->showFilterLogDialog((qlonglong)mParentWidget->winId());
 }
 
-void KMLaunchExternalComponent::slotShowTip()
-{
-    KTipDialog::showTip(mParentWidget, QString(), true);
-}

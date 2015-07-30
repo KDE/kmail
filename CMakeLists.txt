@@ -360,7 +360,6 @@ generate_export_header(kmailprivate BASE_NAME kmail)
   )
   install(FILES data/org.kde.kmail.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
   install(FILES antispam-virus/kmail.antispamrc antispam-virus/kmail.antivirusrc  DESTINATION ${KDE_INSTALL_CONFDIR})
-  install(FILES tips  DESTINATION ${KDE_INSTALL_DATADIR}/kmail2)
   install(FILES
     data/kmail_config_misc.desktop
     data/kmail_config_appearance.desktop
