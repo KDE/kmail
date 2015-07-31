@@ -190,8 +190,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
     connect(configDelegate, &ConfigAgentDelegate::optionsClicked, this, &AccountsPageReceivingTab::slotShowMailCheckMenu);
 
-    connect(mAccountsReceiving.mBeepNewMailCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-
     connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
 
     connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
@@ -320,15 +318,9 @@ void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
     mAccountsReceiving.mVerboseNotificationCheck->setChecked(mNewMailNotifierInterface->verboseMailNotification());
 }
 
-void AccountsPage::ReceivingTab::doLoadOther()
-{
-    mAccountsReceiving.mBeepNewMailCheck->setChecked(mNewMailNotifierInterface->beepOnNewMails());
-}
-
 void AccountsPage::ReceivingTab::save()
 {
     // Save Mail notification settings
-    mNewMailNotifierInterface->setBeepOnNewMails(mAccountsReceiving.mBeepNewMailCheck->isChecked());
     mNewMailNotifierInterface->setVerboseMailNotification(mAccountsReceiving.mVerboseNotificationCheck->isChecked());
 
     const QString resourceGroupPattern(QLatin1String("Resource %1"));

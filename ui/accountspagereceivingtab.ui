@@ -13,11 +13,20 @@
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <layout class="QVBoxLayout" name="vlay">
-     <property name="margin">
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
       <number>6</number>
      </property>
      <item>
-      <widget class="PimCommon::ManageAccountWidget" name="mAccountsReceiving"/>
+      <widget class="PimCommon::ManageAccountWidget" name="mAccountsReceiving" native="true"/>
      </item>
      <item>
       <widget class="QPushButton" name="customizeAccountOrder">
@@ -32,19 +41,6 @@
         <string>New Mail Notification</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QCheckBox" name="mBeepNewMailCheck">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>&amp;Beep</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QCheckBox" name="mVerboseNotificationCheck">
           <property name="sizePolicy">
