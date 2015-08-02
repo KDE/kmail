@@ -1560,7 +1560,7 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonad
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
-    QList<KMime::Content *> contentsToSave;
+    KMime::Content::List contentsToSave;
     foreach (const Akonadi::Item &item, retrievedMsgs()) {
         if (item.hasPayload<KMime::Message::Ptr>()) {
             contentsToSave += MessageViewer::Util::extractAttachments(item.payload<KMime::Message::Ptr>().get());
