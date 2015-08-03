@@ -32,7 +32,6 @@
 #include <QList>
 
 // LIBKDEPIM includes
-//#include <messagecomposer/composer/kmeditor.h>
 #include "messagecomposer/composer-ng/richtextcomposer.h"
 
 #include "messagecomposer/sender/messagesender.h"
