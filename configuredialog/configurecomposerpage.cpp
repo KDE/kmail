@@ -189,10 +189,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mDashDashCheck->setToolTip(helpText);
     mDashDashCheck->setWhatsThis(helpText);
 
-    connect(mDashDashCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
-    connect(mAutoAppSignFileCheck, SIGNAL(toggled(bool)),
-            mDashDashCheck, SLOT(setEnabled(bool)));
+    connect(mDashDashCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAutoAppSignFileCheck, &QAbstractButton::toggled,
+            mDashDashCheck, &QWidget::setEnabled);
     groupVBoxLayout->addWidget(mDashDashCheck);
 
     // "Remove signature when replying" checkbox

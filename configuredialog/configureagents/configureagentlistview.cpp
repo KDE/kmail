@@ -36,7 +36,7 @@ ConfigureAgentListView::ConfigureAgentListView(QWidget *parent)
 
     setModel(proxyModel);
     setItemDelegate(configureListDelegate);
-    connect(configureAgentListModel, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SIGNAL(agentChanged()));
+    connect(configureAgentListModel, &QAbstractItemModel::dataChanged, this, &ConfigureAgentListView::agentChanged);
 
 }
 

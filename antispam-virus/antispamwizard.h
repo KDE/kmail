@@ -421,7 +421,6 @@ protected:
 
 private Q_SLOTS:
     void processSelectionChange();
-    void processSelectionChange(const Akonadi::Collection &);
 
 Q_SIGNALS:
     void selectionChanged();

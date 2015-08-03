@@ -1018,16 +1018,16 @@ ASWizSpamRulesPage::ASWizSpamRulesPage(QWidget *parent, const QString &name)
 
     layout->addStretch();
 
-    connect(mMarkRules, SIGNAL(clicked()),
-            this, SLOT(processSelectionChange()));
-    connect(mMoveSpamRules, SIGNAL(clicked()),
-            this, SLOT(processSelectionChange()));
-    connect(mMoveUnsureRules, SIGNAL(clicked()),
-            this, SLOT(processSelectionChange()));
-    connect(mFolderReqForSpamFolder, SIGNAL(folderChanged(Akonadi::Collection)),
-            this, SLOT(processSelectionChange(Akonadi::Collection)));
-    connect(mFolderReqForUnsureFolder, SIGNAL(folderChanged(Akonadi::Collection)),
-            this, SLOT(processSelectionChange(Akonadi::Collection)));
+    connect(mMarkRules, &QAbstractButton::clicked,
+            this, &ASWizSpamRulesPage::processSelectionChange);
+    connect(mMoveSpamRules, &QAbstractButton::clicked,
+            this, &ASWizSpamRulesPage::processSelectionChange);
+    connect(mMoveUnsureRules, &QAbstractButton::clicked,
+            this, &ASWizSpamRulesPage::processSelectionChange);
+    connect(mFolderReqForSpamFolder, &FolderRequester::folderChanged,
+            this, &ASWizSpamRulesPage::processSelectionChange);
+    connect(mFolderReqForUnsureFolder, &FolderRequester::folderChanged,
+            this, &ASWizSpamRulesPage::processSelectionChange);
 
     mMarkRules->setChecked(true);
     mMoveSpamRules->setChecked(true);
@@ -1091,11 +1091,6 @@ void ASWizSpamRulesPage::processSelectionChange()
     mFolderReqForSpamFolder->setEnabled(mMoveSpamRules->isChecked());
     mFolderReqForUnsureFolder->setEnabled(mMoveUnsureRules->isChecked());
     Q_EMIT selectionChanged();
-}
-
-void ASWizSpamRulesPage::processSelectionChange(const Akonadi::Collection &)
-{
-    processSelectionChange();
 }
 
 void ASWizSpamRulesPage::allowUnsureFolderSelection(bool enabled)
