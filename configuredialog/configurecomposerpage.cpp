@@ -883,16 +883,16 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
                 i18n("A&dd..."), i18n("Remo&ve"),
                 i18n("&Modify..."), i18n("Enter charset:"));
     mCharsetListEditor->setUpDownAutoRepeat(true);
-    connect(mCharsetListEditor, SIGNAL(changed()),
-            this, SLOT(slotEmitChanged()));
+    connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::changed,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addWidget(mCharsetListEditor, 1);
 
     mKeepReplyCharsetCheck = new QCheckBox(i18n("&Keep original charset when "
                                            "replying or forwarding (if "
                                            "possible)"), this);
-    connect(mKeepReplyCharsetCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mKeepReplyCharsetCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mKeepReplyCharsetCheck);
 
     connect(mCharsetListEditor, SIGNAL(aboutToAdd(QString&)),
@@ -990,8 +990,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     // "Use custom Message-Id suffix" checkbox:
     mCreateOwnMessageIdCheck =
         new QCheckBox(i18n("&Use custom message-id suffix"), this);
-    connect(mCreateOwnMessageIdCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mCreateOwnMessageIdCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mCreateOwnMessageIdCheck);
 
     // "Message-Id suffix" line edit and label:
@@ -1031,18 +1031,18 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mHeaderList->setSortingEnabled(false);
     connect(mHeaderList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
             this, SLOT(slotMimeHeaderSelectionChanged()));
-    connect(mHeaderList, SIGNAL(addHeader()), SLOT(slotNewMimeHeader()));
-    connect(mHeaderList, SIGNAL(removeHeader()), SLOT(slotRemoveMimeHeader()));
+    connect(mHeaderList, &ListView::addHeader, this, &ComposerPageHeadersTab::slotNewMimeHeader);
+    connect(mHeaderList, &ListView::removeHeader, this, &ComposerPageHeadersTab::slotRemoveMimeHeader);
     glay->addWidget(mHeaderList, 0, 0, 3, 2);
 
     // "new" and "remove" buttons:
     QPushButton *button = new QPushButton(i18nc("@action:button Add new mime header field.", "Ne&w"), this);
-    connect(button, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()));
+    connect(button, &QAbstractButton::clicked, this, &ComposerPageHeadersTab::slotNewMimeHeader);
     button->setAutoDefault(false);
     glay->addWidget(button, 0, 2);
     mRemoveHeaderButton = new QPushButton(i18n("Re&move"), this);
-    connect(mRemoveHeaderButton, SIGNAL(clicked()),
-            this, SLOT(slotRemoveMimeHeader()));
+    connect(mRemoveHeaderButton, &QAbstractButton::clicked,
+            this, &ComposerPageHeadersTab::slotRemoveMimeHeader);
     button->setAutoDefault(false);
     glay->addWidget(mRemoveHeaderButton, 1, 2);
 
@@ -1055,8 +1055,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mTagNameLabel->setEnabled(false);
     glay->addWidget(mTagNameLabel, 3, 0);
     glay->addWidget(mTagNameEdit, 3, 1);
-    connect(mTagNameEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(slotMimeHeaderNameChanged(QString)));
+    connect(mTagNameEdit, &QLineEdit::textChanged,
+            this, &ComposerPageHeadersTab::slotMimeHeaderNameChanged);
 
     mTagValueEdit = new QLineEdit(this);
     mTagValueEdit->setClearButtonEnabled(true);
