@@ -978,7 +978,7 @@ void KMComposeWin::applyTemplate(uint uoid, uint uOldId)
     if (ident.isNull()) {
         return;
     }
-    KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Templates", mMsg.get(), ident.templates(), "utf-8");
+    KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Templates", mMsg.data(), ident.templates(), "utf-8");
     mMsg->setHeader(header);
 
     TemplateParser::TemplateParser::Mode mode;
@@ -1655,7 +1655,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
             for (int i = numNL; i > 0; --i) {
                 xface.insert(i * 70, QStringLiteral("\n\t"));
             }
-            mMsg->setHeader(new KMime::Headers::Generic("X-Face", mMsg.get(), xface, "utf-8"));
+            mMsg->setHeader(new KMime::Headers::Generic("X-Face", mMsg.data(), xface, "utf-8"));
         }
     }
 
@@ -3018,7 +3018,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
         mMsg->organization()->clear();
     } else {
         KMime::Headers::Organization *const organization
-            = new KMime::Headers::Organization(mMsg.get(), ident.organization(), "utf-8");
+            = new KMime::Headers::Organization(mMsg.data(), ident.organization(), "utf-8");
         mMsg->setHeader(organization);
     }
     if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
@@ -3030,7 +3030,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
             for (int i = numNL; i > 0; --i) {
                 xface.insert(i * 70, QStringLiteral("\n\t"));
             }
-            KMime::Headers::Generic *header = new KMime::Headers::Generic("X-Face", mMsg.get(), xface, "utf-8");
+            KMime::Headers::Generic *header = new KMime::Headers::Generic("X-Face", mMsg.data(), xface, "utf-8");
             mMsg->setHeader(header);
         }
     }
@@ -3043,7 +3043,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
             mMsg->removeHeader("X-KMail-Transport");
             mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
         } else {
-            KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport", mMsg.get(), QString::number(transport->id()), "utf-8");
+            KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport", mMsg.data(), QString::number(transport->id()), "utf-8");
             mMsg->setHeader(header);
             mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
         }
@@ -3051,7 +3051,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
 
     const bool fccIsDisabled = ident.disabledFcc();
     if (fccIsDisabled) {
-        KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-FccDisabled", mMsg.get(), QStringLiteral("true"), "utf-8");
+        KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-FccDisabled", mMsg.data(), QStringLiteral("true"), "utf-8");
         mMsg->setHeader(header);
     } else {
         mMsg->removeHeader("X-KMail-FccDisabled");

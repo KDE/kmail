@@ -192,8 +192,8 @@ bool KMail::Util::mailingListHelp(const QSharedPointer<MailCommon::FolderCollect
 
 void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr &msg)
 {
-    lastSign = KMime::isSigned(msg.get());
-    lastEncrypt = KMime::isEncrypted(msg.get());
+    lastSign = KMime::isSigned(msg.data());
+    lastEncrypt = KMime::isEncrypted(msg.data());
 }
 
 QColor KMail::Util::misspelledColor()

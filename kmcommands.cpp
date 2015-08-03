@@ -1563,7 +1563,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
     KMime::Content::List contentsToSave;
     foreach (const Akonadi::Item &item, retrievedMsgs()) {
         if (item.hasPayload<KMime::Message::Ptr>()) {
-            contentsToSave += MessageViewer::Util::extractAttachments(item.payload<KMime::Message::Ptr>().get());
+            contentsToSave += MessageViewer::Util::extractAttachments(item.payload<KMime::Message::Ptr>().data());
         } else {
             qCWarning(KMAIL_LOG) << "Retrieved item has no payload? Ignoring for saving the attachments";
         }
@@ -1598,7 +1598,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
     KMime::Message::Ptr newMsg = factory.createResend();
-    newMsg->contentType()->setCharset(MessageViewer::NodeHelper::charset(msg.get()));
+    newMsg->contentType()->setCharset(MessageViewer::NodeHelper::charset(msg.data()));
 
     KMail::Composer *win = KMail::makeComposer();
     if (msg->headerByType("Reply-To")) {
