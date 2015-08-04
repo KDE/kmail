@@ -172,7 +172,6 @@ private Q_SLOTS:
     void slotVerifyCharset(QString &);
 
 private:
-    //virtual void doLoadFromGlobalSettings();
     void doLoadOther() Q_DECL_OVERRIDE;
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
@@ -198,7 +197,6 @@ private Q_SLOTS:
     void slotRemoveMimeHeader();
 
 private:
-    //virtual void doLoadFromGlobalSettings();
     void doLoadOther() Q_DECL_OVERRIDE;
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
@@ -227,7 +225,6 @@ private Q_SLOTS:
 
 private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    //FIXME virtual void doResetToDefaultsOther();
 
 private:
     QCheckBox   *mOutlookCompatibleCheck;

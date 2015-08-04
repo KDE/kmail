@@ -28,7 +28,6 @@ public:
     explicit KMComposerEditorNg(KMComposeWin *win, QWidget *parent);
     ~KMComposerEditorNg();
 
-    //TODO make it virtual.
     QString smartQuote(const QString &msg) Q_DECL_OVERRIDE;
 
     void setHighlighterColors(MessageComposer::RichTextComposerEmailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;

@@ -71,7 +71,6 @@ private Q_SLOTS:
     void slotFontSelectorChanged(int);
 
 private:
-    //virtual void doLoadFromGlobalSettings();
     void doLoadOther() Q_DECL_OVERRIDE;
     void updateFontSelector();
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
@@ -94,7 +93,6 @@ public:
     void save() Q_DECL_OVERRIDE;
 
 private:
-    //virtual void doLoadFromGlobalSettings();
     void doLoadOther() Q_DECL_OVERRIDE;
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
     void loadColor(bool loadFromConfig);
@@ -116,9 +114,7 @@ public:
     void save() Q_DECL_OVERRIDE;
 
 private:
-    //virtual void doLoadFromGlobalSettings();
     void doLoadOther() Q_DECL_OVERRIDE;
-    //FIXME virtual void doResetToDefaultsOther();
 
 private: // data
     QButtonGroup  *mFolderListGroup;

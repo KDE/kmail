@@ -46,7 +46,6 @@ public:
 private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
     void doLoadOther() Q_DECL_OVERRIDE;
-    //FIXME virtual void doResetToDefaultsOther();
 
 private:
     Ui_MiscMainTab mMMTab;

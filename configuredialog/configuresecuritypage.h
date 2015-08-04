@@ -88,7 +88,6 @@ public:
 private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
     void doLoadOther() Q_DECL_OVERRIDE;
-    //FIXME virtual void doResetToDefaultsOther();
 
 private:
     Ui::ComposerCryptoConfiguration *mWidget;
@@ -112,7 +111,6 @@ private Q_SLOTS:
 private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
     void doLoadOther() Q_DECL_OVERRIDE;
-    //FIXME virtual void doResetToDefaultsOther();
 
 private:
     Ui::WarningConfiguration *mWidget;
@@ -133,9 +131,7 @@ private Q_SLOTS:
     void slotUpdateHTTPActions();
 
 private:
-    //virtual void doLoadFromGlobalSettings();
     void doLoadOther() Q_DECL_OVERRIDE;
-    //FIXME virtual void doResetToDefaultsOther();
 
 private:
     Ui::SMimeConfiguration *mWidget;
