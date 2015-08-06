@@ -8,7 +8,6 @@
 #include <QUrl>
 #include <KMime/Message>
 
-#include <boost/scoped_ptr.hpp>
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/collection.h>
 #include <QModelIndex>
