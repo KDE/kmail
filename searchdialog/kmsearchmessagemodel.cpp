@@ -37,8 +37,6 @@
 
 #include <Akonadi/KMime/MessageParts>
 #include <kmime/kmime_message.h>
-#include <boost/shared_ptr.hpp>
-typedef boost::shared_ptr<KMime::Message> MessagePtr;
 
 #include <QColor>
 #include <QApplication>
@@ -61,7 +59,7 @@ KMSearchMessageModel::~KMSearchMessageModel()
 
 QString toolTip(const Akonadi::Item &item)
 {
-    MessagePtr msg = item.payload<MessagePtr>();
+    KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
 
     QColor bckColor = QApplication::palette().color(QPalette::ToolTipBase);
     QColor txtColor = QApplication::palette().color(QPalette::ToolTipText);
@@ -161,10 +159,10 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
     }
 
     Akonadi::Item item = itemForIndex(index);
-    if (!item.hasPayload<MessagePtr>()) {
+    if (!item.hasPayload<KMime::Message::Ptr>()) {
         return QVariant();
     }
-    MessagePtr msg = item.payload<MessagePtr>();
+    KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
         case Collection:
