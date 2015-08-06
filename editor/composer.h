@@ -26,8 +26,6 @@
 #include <kmime/kmime_message.h>
 #include <AkonadiCore/collection.h>
 
-#include <boost/shared_ptr.hpp>
-
 namespace KMime
 {
 class Content;

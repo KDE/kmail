@@ -185,7 +185,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <memory>
-#include <boost/shared_ptr.hpp>
 #include <KHelpClient>
 #include <KCharsets>
 #include <QStandardPaths>

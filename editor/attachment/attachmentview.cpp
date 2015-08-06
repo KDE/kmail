@@ -42,7 +42,6 @@
 #include <KLocalizedString>
 
 #include <messagecore/attachment/attachmentpart.h>
-#include <boost/shared_ptr.hpp>
 #include <KFormat>
 using MessageCore::AttachmentPart;
 
