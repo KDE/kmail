@@ -267,7 +267,7 @@ private:
     void changeModifiedState(bool modified);
 
 public Q_SLOTS: // kmkernel, callback
-    void slotSendNow();
+    void slotSendNow() Q_DECL_OVERRIDE;
     /**
      * Switch wordWrap on/off
      */
