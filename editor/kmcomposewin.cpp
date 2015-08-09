@@ -752,14 +752,14 @@ void KMComposeWin::slotUpdateView(void)
         if (id > 0) {
             mShowHeaders = mShowHeaders & ~id;
         } else {
-            mShowHeaders = abs(mShowHeaders);
+            mShowHeaders = std::abs(mShowHeaders);
         }
     } else {
         // show header
         if (id > 0) {
             mShowHeaders |= id;
         } else {
-            mShowHeaders = -abs(mShowHeaders);
+            mShowHeaders = -std::abs(mShowHeaders);
         }
     }
     rethinkFields(true);
@@ -838,37 +838,37 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     }
 
     if (!fromSlot) {
-        mIdentityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
+        mIdentityAction->setChecked(std::abs(mShowHeaders)&HDR_IDENTITY);
     }
     rethinkHeaderLine(showHeaders, HDR_IDENTITY, row, mLblIdentity, mComposerBase->identityCombo(),
                       mBtnIdentity);
 
     if (!fromSlot) {
-        mDictionaryAction->setChecked(abs(mShowHeaders)&HDR_DICTIONARY);
+        mDictionaryAction->setChecked(std::abs(mShowHeaders)&HDR_DICTIONARY);
     }
     rethinkHeaderLine(showHeaders, HDR_DICTIONARY, row, mDictionaryLabel,
                       mComposerBase->dictionary(), mBtnDictionary);
 
     if (!fromSlot) {
-        mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
+        mFccAction->setChecked(std::abs(mShowHeaders)&HDR_FCC);
     }
     rethinkHeaderLine(showHeaders, HDR_FCC, row, mLblFcc, mFccFolder, mBtnFcc);
 
     if (!fromSlot) {
-        mTransportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
+        mTransportAction->setChecked(std::abs(mShowHeaders)&HDR_TRANSPORT);
     }
     rethinkHeaderLine(showHeaders, HDR_TRANSPORT, row, mLblTransport, mComposerBase->transportComboBox(),
                       mBtnTransport);
 
     if (!fromSlot) {
-        mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
+        mFromAction->setChecked(std::abs(mShowHeaders)&HDR_FROM);
     }
     rethinkHeaderLine(showHeaders, HDR_FROM, row, mLblFrom, mEdtFrom);
 
     QWidget *prevFocus = mEdtFrom;
 
     if (!fromSlot) {
-        mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
+        mReplyToAction->setChecked(std::abs(mShowHeaders)&HDR_REPLY_TO);
     }
     rethinkHeaderLine(showHeaders, HDR_REPLY_TO, row, mLblReplyTo, mEdtReplyTo);
     if (showHeaders & HDR_REPLY_TO) {
@@ -891,7 +891,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     prevFocus = mComposerBase->recipientsEditor();
 
     if (!fromSlot) {
-        mSubjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
+        mSubjectAction->setChecked(std::abs(mShowHeaders)&HDR_SUBJECT);
     }
     rethinkHeaderLine(showHeaders, HDR_SUBJECT, row, mLblSubject, mEdtSubject);
     connectFocusMoving(mEdtSubject, mComposerBase->editor());
