@@ -35,8 +35,6 @@ public:
     {}
     ~ConfigModule() {}
 
-    virtual void load() = 0;
-    virtual void save() = 0;
     void defaults() Q_DECL_OVERRIDE {}
 
     /** Should return the help anchor for this page or tab */
