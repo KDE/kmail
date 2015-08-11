@@ -746,7 +746,8 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
         msg->to()->fromUnicodeString(to, "utf-8");
     }
     if (identity > 0) {
-        KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity", msg.data(), QByteArray::number(identity));
+        KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity", msg.data());
+        h->from7BitString(QByteArray::number(identity));
         msg->setHeader(h);
     }
     if (!body.isEmpty()) {
