@@ -3016,8 +3016,8 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
     if (ident.organization().isEmpty()) {
         mMsg->organization()->clear();
     } else {
-        KMime::Headers::Organization *const organization
-            = new KMime::Headers::Organization(mMsg.data(), ident.organization(), "utf-8");
+        KMime::Headers::Organization *const organization = new KMime::Headers::Organization(mMsg.data());
+        organization->fromUnicodeString(ident.organization(), "utf-8");
         mMsg->setHeader(organization);
     }
     if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {

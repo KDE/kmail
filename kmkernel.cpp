@@ -591,7 +591,8 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     }
 
     if (!inReplyTo.isEmpty()) {
-        KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo(msg.data(), inReplyTo, "utf-8");
+        KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo(msg.data());
+        header->fromUnicodeString(inReplyTo, "utf-8");
         msg->setHeader(header);
     }
 
