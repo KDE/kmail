@@ -591,7 +591,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     }
 
     if (!inReplyTo.isEmpty()) {
-        KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo(msg.data());
+        KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo;
         header->fromUnicodeString(inReplyTo, "utf-8");
         msg->setHeader(header);
     }
@@ -746,7 +746,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
         msg->to()->fromUnicodeString(to, "utf-8");
     }
     if (identity > 0) {
-        KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity", msg.data());
+        KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity");
         h->from7BitString(QByteArray::number(identity));
         msg->setHeader(h);
     }
