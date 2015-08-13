@@ -111,7 +111,7 @@
     <ul>
       <li>Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="ast">Sofita los protocolos de correu estándar IMAP, POP3 y SMTP.</li>
-      <li xml:lang="ca">Implementa els protocols de correu estàndards: IMAP, POP3 i SMTP</li>
+      <li xml:lang="ca">Implementa els protocols de correu estàndards: IMAP, POP3 i SMTP.</li>
       <li xml:lang="de">Unterstützt die E-Mail-Standardprotokoll IMAP, POP3 und SMTP.</li>
       <li xml:lang="en-GB">Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="es">Implementa los protocolos estándar de correo IMAP, POP3 y SMTP.</li>
@@ -172,7 +172,7 @@
       <li xml:lang="zh-TW">支援透過 NTLM（Microsoft Windows）與 GSSAPI（Kerberos）認證</li>
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="ast">Sofita testu planu y anicios de sesión seguros, usando SSL y TLS.</li>
-      <li xml:lang="ca">Implementa accés en text pla i segur, usant SSL i TLS</li>
+      <li xml:lang="ca">Implementa accés en text pla i segur, usant SSL i TLS.</li>
       <li xml:lang="de">Unterstützt einfachen Text und sichere Anmeldung durch SSL und TLS.</li>
       <li xml:lang="en-GB">Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="es">Implementa inicios de sesión con texto sin formato y cifrado SSL y TLS.</li>
@@ -232,7 +232,7 @@
       <li xml:lang="zh-TW">整合國際字元集與拼字檢查（輸入時即時檢查）</li>
       <li>Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
       <li xml:lang="ast">Sofitu nativu pa OpenPGP, PGP/MIME, y S/MIME en llinia.</li>
-      <li xml:lang="ca">Implementació nativa per a OpenPGP, PGP/MIME i S/MIME inclòs</li>
+      <li xml:lang="ca">Implementació nativa per a OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="en-GB">Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
       <li xml:lang="es">Implementación nativa en línea de OpenPGP, PGP/MIME y S/MIME.</li>
       <li xml:lang="fi">Tukee natiivisti sisällytettyä OpenPGP:tä, PGP/MIMEä ja S/MIMEä.</li>
@@ -261,7 +261,7 @@
       <li xml:lang="zh-TW">支援內含式 OpenPGP, PGP/MIME 與  S/MIME</li>
       <li>Reading and writing of HTML mail.</li>
       <li xml:lang="ast">Llectura y escritura de corréu HTML.</li>
-      <li xml:lang="ca">Lectura i escriptura d'un correu HTML</li>
+      <li xml:lang="ca">Lectura i escriptura d'un correu HTML.</li>
       <li xml:lang="de">Lesen und Schreiben von HTML-E-Mails.</li>
       <li xml:lang="en-GB">Reading and writing of HTML mail.</li>
       <li xml:lang="es">Lectura y escritura de correo HTML.</li>
@@ -292,7 +292,7 @@
       <li xml:lang="zh-TW">讀寫 HTML 郵件。</li>
       <li>Ability to display plain text only from an HTML mail.</li>
       <li xml:lang="ast">L'habilidá d'amosar el testu planu d'un corréu HTML.</li>
-      <li xml:lang="ca">L'habilitat de mostrar en text pla un correu HTML</li>
+      <li xml:lang="ca">L'habilitat de mostrar en text pla un correu HTML.</li>
       <li xml:lang="en-GB">Ability to display plain text only from an HTML mail.</li>
       <li xml:lang="es">Capacidad de mostrar exclusivamente el texto sin formato de un correo HTML.</li>
       <li xml:lang="fi">Osaa näyttää HTML-viesteistä raakatekstin.</li>
@@ -321,7 +321,7 @@
       <li xml:lang="zh-TW">可以只顯示 HTML 郵件中的純文字部份。</li>
       <li>Allows you to receive and accept invitations.</li>
       <li xml:lang="ast">Permítete recibir y aceutar invitaciones.</li>
-      <li xml:lang="ca">Permet rebre i acceptar invitacions</li>
+      <li xml:lang="ca">Permet rebre i acceptar invitacions.</li>
       <li xml:lang="de">Einladungen können gesendet und empfangen werden.</li>
       <li xml:lang="en-GB">Allows you to receive and accept invitations.</li>
       <li xml:lang="es">Le permite recibir y aceptar invitaciones.</li>
@@ -729,7 +729,7 @@
       <li xml:lang="zh-TW">附件壓縮</li>
       <li>KMail supports Groupware functionality.</li>
       <li xml:lang="ast">KMail sofita la funcionalidá de grupu d'aplicaciones.</li>
-      <li xml:lang="ca">El KMail implementa el treball en grup (groupware)</li>
+      <li xml:lang="ca">El KMail implementa el treball en grup (groupware).</li>
       <li xml:lang="de">KMail unterstützt Groupware-Funktionalität.</li>
       <li xml:lang="en-GB">KMail supports Groupware functionality.</li>
       <li xml:lang="es">KMail implementa funcionalidades de colaboración.</li>
