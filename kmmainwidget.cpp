@@ -619,7 +619,6 @@ void KMMainWidget::layoutSplitters()
     // The folder view is both the folder tree and the favorite folder view, if
     // enabled
 
-    const bool opaqueResize = KGlobalSettings::opaqueResize();
     const bool readerWindowAtSide = !mReaderWindowBelow && mReaderWindowActive;
     const bool readerWindowBelow = mReaderWindowBelow && mReaderWindowActive;
 
@@ -629,7 +628,6 @@ void KMMainWidget::layoutSplitters()
     QWidget *folderTreeWidget = mSearchAndTree;
     if (mFavoriteCollectionsView) {
         mFolderViewSplitter = new QSplitter(Qt::Vertical);
-        mFolderViewSplitter->setOpaqueResize(opaqueResize);
         //mFolderViewSplitter->setChildrenCollapsible( false );
         mFolderViewSplitter->addWidget(mFavoriteCollectionsView);
         mFavoriteCollectionsView->setParent(mFolderViewSplitter);
@@ -685,10 +683,8 @@ void KMMainWidget::layoutSplitters()
     // Set splitter properties
     //
     mSplitter1->setObjectName(QStringLiteral("splitter1"));
-    mSplitter1->setOpaqueResize(opaqueResize);
     //mSplitter1->setChildrenCollapsible( false );
     mSplitter2->setObjectName(QStringLiteral("splitter2"));
-    mSplitter2->setOpaqueResize(opaqueResize);
     //mSplitter2->setChildrenCollapsible( false );
 
     //
