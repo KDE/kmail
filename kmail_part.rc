@@ -130,8 +130,6 @@
    <Action name="folder_mailinglist_properties" />
    <Action name="folder_shortcut_command" />
    <Action name="modify" />
-   <Separator/>
-   <Action name="messages_debug_nepomuk" />
   </Menu>
   <Menu noMerge="1" name="message" >
    <text>&amp;Message</text>
