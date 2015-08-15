@@ -108,7 +108,7 @@ void KMReaderMainWin::initKMReaderMainWin()
     applyMainWindowSettings(KMKernel::self()->config()->group("Separate Reader Window"));
     if (! mReaderWin->message().isValid()) {
         menuBar()->hide();
-        toolBar(QLatin1String("mainToolBar"))->hide();
+        toolBar(QStringLiteral("mainToolBar"))->hide();
     }
     connect(kmkernel, SIGNAL(configChanged()), this, SLOT(slotConfigChanged()));
     connect(mReaderWin, SIGNAL(showStatusBarMessage(QString)), statusBar(), SLOT(showMessage(QString)));
@@ -150,7 +150,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     mTrashAction->setEnabled(canChange);
 
     menuBar()->show();
-    toolBar(QLatin1String("mainToolBar"))->show();
+    toolBar(QStringLiteral("mainToolBar"))->show();
 }
 
 void KMReaderMainWin::showMessage(const QString &encoding, KMime::Message::Ptr message)
@@ -175,7 +175,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, KMime::Message::Ptr m
     mTrashAction->setEnabled(false);
 
     menuBar()->show();
-    toolBar(QLatin1String("mainToolBar"))->show();
+    toolBar(QStringLiteral("mainToolBar"))->show();
 }
 
 void KMReaderMainWin::slotReplyOrForwardFinished()
@@ -675,7 +675,7 @@ void KMReaderMainWin::slotEditToolbars()
 
 void KMReaderMainWin::slotUpdateToolbars()
 {
-    createGUI(QLatin1String("kmreadermainwin.rc"));
+    createGUI(QStringLiteral("kmreadermainwin.rc"));
     applyMainWindowSettings(KConfigGroup(KMKernel::self()->config(), "ReaderWindow"));
 }
 

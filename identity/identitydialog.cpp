@@ -586,7 +586,7 @@ IdentityDialog::~IdentityDialog()
 
 void IdentityDialog::slotHelp()
 {
-    KHelpClient::invokeHelp(QLatin1String("configure-identity"), QStringLiteral("kmail"));
+    KHelpClient::invokeHelp(QStringLiteral("configure-identity"), QStringLiteral("kmail"));
 }
 
 void IdentityDialog::slotAboutToShow(int index)
@@ -742,7 +742,7 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
                                                i18n("Email Address Not Found in Key/Certificates"),
                                                KStandardGuiItem::cont(),
                                                KStandardGuiItem::cancel(),
-                                               QLatin1String("warn_email_not_in_certificate"))
+                                               QStringLiteral("warn_email_not_in_certificate"))
                 != KMessageBox::Continue) {
             return;
         }
@@ -908,7 +908,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     if (collection.isValid()) {
         ident.setFcc(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Entity::AddIfMissing);
-        attribute->setIconName(QLatin1String("mail-folder-sent"));
+        attribute->setIconName(QStringLiteral("mail-folder-sent"));
         new Akonadi::CollectionModifyJob(collection);
     } else {
         ident.setFcc(QString());
@@ -918,7 +918,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     if (collection.isValid()) {
         ident.setDrafts(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Entity::AddIfMissing);
-        attribute->setIconName(QLatin1String("document-properties"));
+        attribute->setIconName(QStringLiteral("document-properties"));
         new Akonadi::CollectionModifyJob(collection);
     } else {
         ident.setDrafts(QString());
@@ -928,7 +928,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     if (collection.isValid()) {
         ident.setTemplates(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Entity::AddIfMissing);
-        attribute->setIconName(QLatin1String("document-new"));
+        attribute->setIconName(QStringLiteral("document-new"));
         new Akonadi::CollectionModifyJob(collection);
     } else {
         ident.setTemplates(QString());

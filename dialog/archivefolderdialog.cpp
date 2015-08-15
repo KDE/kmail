@@ -110,7 +110,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mainLayout->addWidget(fileNameLabel, row, 0);
     mUrlRequester = new KUrlRequester(mainWidget);
     mUrlRequester->setMode(KFile::LocalOnly | KFile::File);
-    mUrlRequester->setFilter(QLatin1String("*.tar *.zip *.tar.gz *.tar.bz2"));
+    mUrlRequester->setFilter(QStringLiteral("*.tar *.zip *.tar.gz *.tar.bz2"));
     fileNameLabel->setBuddy(mUrlRequester);
     connect(mUrlRequester, &KUrlRequester::urlSelected, this, &ArchiveFolderDialog::slotFixFileExtension);
     connect(mUrlRequester, &KUrlRequester::textChanged, this, &ArchiveFolderDialog::slotUrlChanged);

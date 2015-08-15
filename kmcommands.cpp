@@ -707,7 +707,7 @@ KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url,
 KMCommand::Result KMOpenMsgCommand::execute()
 {
     if (mUrl.isEmpty()) {
-        mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18n("Open Message"), QUrl(QLatin1String("kfiledialog:///OpenMessage")),
+        mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18n("Open Message"), QUrl(QStringLiteral("kfiledialog:///OpenMessage")),
                                            i18n("Message (*.mbox)")
                                           );
     }
@@ -1300,7 +1300,7 @@ void KMSetTagCommand::setTags()
     if (!mCreatedTags.isEmpty()) {
         KConfigGroup tag(KMKernel::self()->config(), "MessageListView");
         const QString oldTagList = tag.readEntry("TagSelected");
-        QStringList lst = oldTagList.split(QLatin1String(","));
+        QStringList lst = oldTagList.split(QStringLiteral(","));
         Q_FOREACH (const Akonadi::Tag &tag, mCreatedTags) {
             const QString url = tag.url().url();
             if (!lst.contains(url)) {

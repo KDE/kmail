@@ -1678,7 +1678,7 @@ void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReferenc
                       selectMsg.count() > 1 ? i18n("Delete Messages") : i18n("Delete Message"),
                       KStandardGuiItem::del(),
                       KStandardGuiItem::cancel(),
-                      QLatin1String("NoConfirmDelete")
+                      QStringLiteral("NoConfirmDelete")
                   );
         if (ret == KMessageBox::Cancel) {
             mMessagePane->deletePersistentSet(ref);
@@ -2832,7 +2832,7 @@ void KMMainWidget::setupActions()
 
     mOpenRecentAction = KStandardAction::openRecent(this, SLOT(slotOpenRecentMsg(QUrl)),
                         actionCollection());
-    KConfigGroup grp = mConfig->group(QLatin1String("Recent Files"));
+    KConfigGroup grp = mConfig->group(QStringLiteral("Recent Files"));
     mOpenRecentAction->loadEntries(grp);
 
     {

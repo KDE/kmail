@@ -159,7 +159,7 @@ KMKernel::KMKernel(QObject *parent) :
     GlobalSettings::self();
 
     mJobScheduler = new JobScheduler(this);
-    mXmlGuiInstance = QLatin1String("kmail2");
+    mXmlGuiInstance = QStringLiteral("kmail2");
 
     mAutoCorrection = new PimCommon::AutoCorrection();
     KMime::setFallbackCharEncoding(MessageCore::GlobalSettings::self()->fallbackCharacterEncoding());
@@ -271,7 +271,7 @@ Akonadi::EntityMimeTypeFilterModel *KMKernel::collectionModel() const
 void KMKernel::setupDBus()
 {
     (void) new KmailAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QLatin1String("/KMail"), this);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/KMail"), this);
     mMailService = new MailServiceImpl();
 }
 
@@ -442,7 +442,7 @@ void KMKernel::checkMail()  //might create a new reader but won't show!!
         return;
     }
 
-    const QString resourceGroupPattern(QLatin1String("Resource %1"));
+    const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     foreach (Akonadi::AgentInstance type, lst) {
@@ -940,11 +940,11 @@ int KMKernel::viewMessage(const QString &messageFile)
 
 void KMKernel::raise()
 {
-    QDBusInterface iface(QLatin1String("org.kde.kmail"), QStringLiteral("/MainApplication"),
-                         QLatin1String("org.kde.PIMUniqueApplication"),
+    QDBusInterface iface(QStringLiteral("org.kde.kmail"), QStringLiteral("/MainApplication"),
+                         QStringLiteral("org.kde.PIMUniqueApplication"),
                          QDBusConnection::sessionBus());
     QDBusReply<int> reply;
-    if (!iface.isValid() || !(reply = iface.call(QLatin1String("newInstance"))).isValid()) {
+    if (!iface.isValid() || !(reply = iface.call(QStringLiteral("newInstance"))).isValid()) {
         QDBusError err = iface.lastError();
         qCritical() << "Communication problem with KMail. "
                     << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
@@ -1065,7 +1065,7 @@ bool KMKernel::isOffline()
 
 void KMKernel::verifyAccount()
 {
-    const QString resourceGroupPattern(QLatin1String("Resource %1"));
+    const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     foreach (Akonadi::AgentInstance type, lst) {
@@ -1217,7 +1217,7 @@ void KMKernel::recoverDeadLetters()
 {
     const QString pathName = localDataPath();
     QDir dir(pathName);
-    if (!dir.exists(QLatin1String("autosave"))) {
+    if (!dir.exists(QStringLiteral("autosave"))) {
         return;
     }
 
@@ -1279,7 +1279,7 @@ void KMKernel::init()
     the_firstStart = GlobalSettings::self()->firstStart();
     GlobalSettings::self()->setFirstStart(false);
     the_previousVersion = GlobalSettings::self()->previousVersion();
-    GlobalSettings::self()->setPreviousVersion(QLatin1String(KDEPIM_VERSION));
+    GlobalSettings::self()->setPreviousVersion(QStringLiteral(KDEPIM_VERSION));
 
     the_undoStack = new UndoStack(20);
 
@@ -1874,7 +1874,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 void KMKernel::agentInstanceBroken(const Akonadi::AgentInstance &instance)
 {
     const QString summary = i18n("Resource %1 is broken.",  instance.name());
-    KNotification::event(QLatin1String("akonadi-resource-broken"),
+    KNotification::event(QStringLiteral("akonadi-resource-broken"),
                          summary,
                          QPixmap(),
                          Q_NULLPTR,
@@ -1901,7 +1901,7 @@ void KMKernel::updatedTemplates()
 
 void KMKernel::stopAgentInstance()
 {
-    const QString resourceGroupPattern(QLatin1String("Resource %1"));
+    const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     foreach (Akonadi::AgentInstance type, lst) {
@@ -2029,7 +2029,7 @@ const QAbstractItemModel *KMKernel::treeviewModelSelection()
 void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance , const QString &message)
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
-    KNotification::event(QLatin1String("akonadi-instance-warning"),
+    KNotification::event(QStringLiteral("akonadi-instance-warning"),
                          summary,
                          QPixmap(),
                          Q_NULLPTR,
@@ -2039,7 +2039,7 @@ void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance , cons
 void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const QString &message)
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
-    KNotification::event(QLatin1String("akonadi-instance-error"),
+    KNotification::event(QStringLiteral("akonadi-instance-error"),
                          summary,
                          QPixmap(),
                          Q_NULLPTR,

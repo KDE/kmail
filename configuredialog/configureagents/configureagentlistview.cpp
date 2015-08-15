@@ -68,7 +68,7 @@ void ConfigureAgentListView::slotConfigureAgent(const QModelIndex &index)
     if (!interfaceName.isEmpty() && !path.isEmpty()) {
         QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path);
         if (interface.isValid()) {
-            interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
+            interface.call(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
         } else {
             qCDebug(KMAIL_LOG) << " interface does not exist ";
         }
@@ -81,7 +81,7 @@ void ConfigureAgentListView::changeAgentActiveState(const QString &interfaceName
     if (!interfaceName.isEmpty() && !path.isEmpty()) {
         QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path);
         if (interface.isValid()) {
-            interface.call(QLatin1String("setEnableAgent"), enable);
+            interface.call(QStringLiteral("setEnableAgent"), enable);
         } else {
             qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
         }

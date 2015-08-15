@@ -1402,8 +1402,8 @@ void KMComposeWin::setupActions(void)
     connect(mFollowUpToggleAction, &KToggleAction::triggered, this, &KMComposeWin::slotFollowUpMail);
     mFollowUpToggleAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
 
-    createGUI(QLatin1String("kmcomposerui.rc"));
-    connect(toolBar(QLatin1String("htmlToolBar"))->toggleViewAction(), SIGNAL(toggled(bool)),
+    createGUI(QStringLiteral("kmcomposerui.rc"));
+    connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), SIGNAL(toggled(bool)),
             SLOT(htmlToolBarVisibilityChanged(bool)));
 
     // In Kontact, this entry would read "Configure Kontact", but bring
@@ -1976,7 +1976,7 @@ void KMComposeWin::addAttach(KMime::Content *msgPart)
 
 void KMComposeWin::slotAddressBook()
 {
-    KRun::runCommand(QLatin1String("kaddressbook"), window());
+    KRun::runCommand(QStringLiteral("kaddressbook"), window());
 }
 
 void KMComposeWin::slotInsertFile()
@@ -2253,7 +2253,7 @@ void KMComposeWin::slotFetchJob(KJob *job)
         command->start();
     } else {
         foreach (const Akonadi::Item &item, items) {
-            QString attachmentName = QLatin1String("attachment");
+            QString attachmentName = QStringLiteral("attachment");
             if (item.hasPayload<KContacts::Addressee>()) {
                 const KContacts::Addressee contact = item.payload<KContacts::Addressee>();
                 attachmentName = contact.realName() + QLatin1String(".vcf");
@@ -2562,7 +2562,7 @@ void KMComposeWin::doSend(MessageComposer::MessageSender::SendMethod method,
                                                     i18n("No To: specified"),
                                                     KStandardGuiItem::yes(),
                                                     KStandardGuiItem::no(),
-                                                    QLatin1String(":kmail_no_to_field_specified"));
+                                                    QStringLiteral(":kmail_no_to_field_specified"));
                 if (rc == KMessageBox::No) {
                     return;
                 }
@@ -2578,7 +2578,7 @@ void KMComposeWin::doSend(MessageComposer::MessageSender::SendMethod method,
                                            i18n("No Subject Specified"),
                                            KGuiItem(i18n("S&end as Is")),
                                            KGuiItem(i18n("&Specify the Subject")),
-                                           QLatin1String("no_subject_specified"));
+                                           QStringLiteral("no_subject_specified"));
             if (rc == KMessageBox::No) {
                 return;
             }
@@ -2890,12 +2890,12 @@ void KMComposeWin::enableHtml()
     }
 
     mComposerBase->editor()->activateRichText();
-    if (!toolBar(QLatin1String("htmlToolBar"))->isVisible()) {
+    if (!toolBar(QStringLiteral("htmlToolBar"))->isVisible()) {
         // Use singleshot, as we we might actually be called from a slot that wanted to disable the
         // toolbar (but the messagebox in disableHtml() prevented that and called us).
         // The toolbar can't correctly deal with being enabled right in a slot called from the "disabled"
         // signal, so wait one event loop run for that.
-        QTimer::singleShot(0, toolBar(QLatin1String("htmlToolBar")), SLOT(show()));
+        QTimer::singleShot(0, toolBar(QStringLiteral("htmlToolBar")), SLOT(show()));
     }
     if (!markupAction->isChecked()) {
         markupAction->setChecked(true);
@@ -2912,7 +2912,7 @@ void KMComposeWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation c
         int choice = KMessageBox::warningYesNoCancel(this, i18n("Turning HTML mode off "
                      "will cause the text to lose the formatting. Are you sure?"),
                      i18n("Lose the formatting?"), KGuiItem(i18n("Lose Formatting")), KGuiItem(i18n("Add Markup Plain Text")) , KStandardGuiItem::cancel(),
-                     QLatin1String("LoseFormattingWarning"));
+                     QStringLiteral("LoseFormattingWarning"));
 
         switch (choice) {
         case KMessageBox::Cancel:
@@ -2931,9 +2931,9 @@ void KMComposeWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation c
     mComposerBase->editor()->composerActions()->setActionsEnabled(false);
 
     slotUpdateFont();
-    if (toolBar(QLatin1String("htmlToolBar"))->isVisible()) {
+    if (toolBar(QStringLiteral("htmlToolBar"))->isVisible()) {
         // See the comment in enableHtml() why we use a singleshot timer, similar situation here.
-        QTimer::singleShot(0, toolBar(QLatin1String("htmlToolBar")), SLOT(hide()));
+        QTimer::singleShot(0, toolBar(QStringLiteral("htmlToolBar")), SLOT(hide()));
     }
     if (markupAction->isChecked()) {
         markupAction->setChecked(false);
@@ -3121,7 +3121,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
 
 void KMComposeWin::slotSpellcheckConfig()
 {
-    static_cast<KMComposerEditorNg *>(mComposerBase->editor())->showSpellConfigDialog(QLatin1String("kmail2rc"));
+    static_cast<KMComposerEditorNg *>(mComposerBase->editor())->showSpellConfigDialog(QStringLiteral("kmail2rc"));
 }
 
 void KMComposeWin::slotEditToolbars()
@@ -3137,7 +3137,7 @@ void KMComposeWin::slotEditToolbars()
 
 void KMComposeWin::slotUpdateToolbars()
 {
-    createGUI(QLatin1String("kmcomposerui.rc"));
+    createGUI(QStringLiteral("kmcomposerui.rc"));
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 }
 

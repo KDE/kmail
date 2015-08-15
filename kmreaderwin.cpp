@@ -362,8 +362,8 @@ void KMReaderWin::displayAboutPage()
                "<p>We hope that you will enjoy KMail.</p>\n"
                "<p>Thank you,</p>\n"
                "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
-        .subs(QLatin1String(KDEPIM_VERSION))
-        .subs(QLatin1String("help:/kmail/index.html"));
+        .subs(QStringLiteral(KDEPIM_VERSION))
+        .subs(QStringLiteral("help:/kmail/index.html"));
 
     if ((numKMailNewFeatures > 1) || (numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0)) {
         QString featuresText =
@@ -804,10 +804,10 @@ void KMReaderWin::updateHtmlActions()
         const QStringList customs = mSearchedAddress.customs();
         Q_FOREACH (const QString &custom, customs) {
             if (custom.contains(QStringLiteral("MailPreferedFormatting"))) {
-                const QString value = mSearchedAddress.custom(QLatin1String("KADDRESSBOOK"), QStringLiteral("MailPreferedFormatting"));
+                const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailPreferedFormatting"));
                 mViewAsHtml->setChecked(value == QLatin1String("HTML"));
             } else if (custom.contains(QStringLiteral("MailAllowToRemoteContent"))) {
-                const QString value = mSearchedAddress.custom(QLatin1String("KADDRESSBOOK"), QStringLiteral("MailAllowToRemoteContent"));
+                const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailAllowToRemoteContent"));
                 mLoadExternalReference->setChecked((value == QLatin1String("TRUE")));
             }
         }

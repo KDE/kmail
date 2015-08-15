@@ -236,7 +236,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
     }
 
     if (!mToolbarActions.isEmpty() && mGUIClient->factory()) {
-        mGUIClient->plugActionList(QLatin1String("toolbar_messagetag_actions"), mToolbarActions);
+        mGUIClient->plugActionList(QStringLiteral("toolbar_messagetag_actions"), mToolbarActions);
     }
 }
 
@@ -250,7 +250,7 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages,
         Q_ASSERT(selectedItem.isValid());
         for (; it != end; ++it) {
             //FIXME Not very performant tag label retrieval
-            QString label(QLatin1String("not found"));
+            QString label(QStringLiteral("not found"));
             foreach (const MailCommon::Tag::Ptr &tag, mTags) {
                 if (tag->id() == it.key()) {
                     label = tag->name();

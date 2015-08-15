@@ -90,10 +90,10 @@ void ConfigureAgentsWidget::addInfos(const QString &desktopFile, ConfigureAgentI
 void ConfigureAgentsWidget::initialize()
 {
     QVector<ConfigureAgentItem> lst;
-    createItem(QLatin1String("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"), QStringLiteral("sendlateragent.desktop"), lst);
-    createItem(QLatin1String("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"), QStringLiteral("archivemailagent.desktop"), lst);
-    createItem(QLatin1String("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"), QStringLiteral("newmailnotifieragent.desktop"), lst);
-    createItem(QLatin1String("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"), QStringLiteral("followupreminder.desktop"), lst);
+    createItem(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"), QStringLiteral("sendlateragent.desktop"), lst);
+    createItem(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"), QStringLiteral("archivemailagent.desktop"), lst);
+    createItem(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"), QStringLiteral("newmailnotifieragent.desktop"), lst);
+    createItem(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"), QStringLiteral("followupreminder.desktop"), lst);
     //Add more
     mConfigureAgentListView->setAgentItems(lst);
 }
@@ -121,7 +121,7 @@ bool ConfigureAgentsWidget::agentActivateState(const QString &interfaceName, con
     failed = false;
     QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName);
     if (interface.isValid()) {
-        QDBusReply<bool> enabled = interface.call(QLatin1String("enabledAgent"));
+        QDBusReply<bool> enabled = interface.call(QStringLiteral("enabledAgent"));
         if (enabled.isValid()) {
             return enabled;
         } else {

@@ -591,7 +591,7 @@ void ComposerPage::GeneralTab::save()
     saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
     MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
-        mAutoAppSignFileCheck->isChecked() ? QLatin1String("auto") : QLatin1String("manual"));
+        mAutoAppSignFileCheck->isChecked() ? QStringLiteral("auto") : QStringLiteral("manual"));
     saveSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem());
     saveSpinBox(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
     GlobalSettings::self()->setAutosaveInterval(mAutoSave->value());
@@ -664,7 +664,7 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
     label->setBuddy(mEditorRequester);
     label->setEnabled(false);   // since !mExternalEditorCheck->isChecked()
     // ### FIXME: allow only executables (x-bit when available..)
-    mEditorRequester->setFilter(QLatin1String("application/x-executable "
+    mEditorRequester->setFilter(QStringLiteral("application/x-executable "
                                 "application/x-shellscript "
                                 "application/x-desktop"));
     mEditorRequester->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
@@ -971,7 +971,7 @@ void ComposerPage::CharsetTab::save()
 
     for (; it != end ; ++it)
         if ((*it).endsWith(QLatin1String("(locale)"))) {
-            (*it) = QLatin1String("locale");
+            (*it) = QStringLiteral("locale");
         }
     MessageComposer::MessageComposerSettings::setPreferredCharsets(charsetList);
     saveCheckBox(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
@@ -1001,7 +1001,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mMessageIdSuffixEdit->setClearButtonEnabled(true);
     // only ASCII letters, digits, plus, minus and dots are allowed
     QRegExpValidator *messageIdSuffixValidator =
-        new QRegExpValidator(QRegExp(QLatin1String("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
+        new QRegExpValidator(QRegExp(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
     mMessageIdSuffixEdit->setValidator(messageIdSuffixValidator);
     QLabel *label = new QLabel(i18n("Custom message-&id suffix:"), this);
     label->setBuddy(mMessageIdSuffixEdit);

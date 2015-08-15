@@ -201,7 +201,7 @@ void AntiSpamWizard::accept()
             virusFilterActions->append(virusFilterAction1);
             if (mVirusRulesPage->markReadRulesSelected()) {
                 FilterAction *virusFilterAction2 = dict.value(QStringLiteral("set status"))->create();
-                virusFilterAction2->argsFromString(QLatin1String("R"));   // Read
+                virusFilterAction2->argsFromString(QStringLiteral("R"));   // Read
                 virusFilterActions->append(virusFilterAction2);
             }
             SearchPattern *virusFilterPattern = virusFilter->pattern();
@@ -282,11 +282,11 @@ void AntiSpamWizard::accept()
             spamFilterActions->append(spamFilterAction1);
         }
         FilterAction *spamFilterAction2 = dict.value(QStringLiteral("set status"))->create();
-        spamFilterAction2->argsFromString(QLatin1String("P"));   // Spam
+        spamFilterAction2->argsFromString(QStringLiteral("P"));   // Spam
         spamFilterActions->append(spamFilterAction2);
         if (mSpamRulesPage->markAsReadSelected()) {
             FilterAction *spamFilterAction3 = dict.value(QStringLiteral("set status"))->create();
-            spamFilterAction3->argsFromString(QLatin1String("R"));   // Read
+            spamFilterAction3->argsFromString(QStringLiteral("R"));   // Read
             spamFilterActions->append(spamFilterAction3);
         }
         SearchPattern *spamFilterPattern = spamFilter->pattern();
@@ -370,10 +370,10 @@ void AntiSpamWizard::accept()
 
         // Classify messages manually as Spam
         MailFilter *classSpamFilter = new MailFilter();
-        classSpamFilter->setIcon(QLatin1String("mail-mark-junk"));
+        classSpamFilter->setIcon(QStringLiteral("mail-mark-junk"));
         QList<FilterAction *> *classSpamFilterActions = classSpamFilter->actions();
         FilterAction *classSpamFilterActionFirst = dict.value(QStringLiteral("set status"))->create();
-        classSpamFilterActionFirst->argsFromString(QLatin1String("P"));
+        classSpamFilterActionFirst->argsFromString(QStringLiteral("P"));
         classSpamFilterActions->append(classSpamFilterActionFirst);
         QList<SpamToolConfig>::ConstIterator endToolList2(mToolList.constEnd());
         for (QList<SpamToolConfig>::ConstIterator it = mToolList.constBegin();
@@ -410,10 +410,10 @@ void AntiSpamWizard::accept()
 
         // Classify messages manually as not Spam / as Ham
         MailFilter *classHamFilter = new MailFilter();
-        classHamFilter->setIcon(QLatin1String("mail-mark-notjunk"));
+        classHamFilter->setIcon(QStringLiteral("mail-mark-notjunk"));
         QList<FilterAction *> *classHamFilterActions = classHamFilter->actions();
         FilterAction *classHamFilterActionFirst = dict.value(QStringLiteral("set status"))->create();
-        classHamFilterActionFirst->argsFromString(QLatin1String("H"));
+        classHamFilterActionFirst->argsFromString(QStringLiteral("H"));
         classHamFilterActions->append(classHamFilterActionFirst);
         end = mToolList.constEnd();
         for (QList<SpamToolConfig>::ConstIterator it = mToolList.constBegin();
@@ -578,7 +578,7 @@ void AntiSpamWizard::checkToolAvailability()
 
 void AntiSpamWizard::slotHelpClicked()
 {
-    KHelpClient::invokeHelp((mMode == AntiSpam) ? QLatin1String("the-anti-spam-wizard") : QLatin1String("the-anti-virus-wizard") , QStringLiteral("kmail"));
+    KHelpClient::invokeHelp((mMode == AntiSpam) ? QStringLiteral("the-anti-spam-wizard") : QStringLiteral("the-anti-virus-wizard") , QStringLiteral("kmail"));
 }
 
 void AntiSpamWizard::slotBuildSummary()
@@ -800,14 +800,14 @@ AntiSpamWizard::ConfigReader::readToolConfig(KConfigGroup &configGroup)
 
 AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
 {
-    return SpamToolConfig(QLatin1String("spamassassin"), 0, 1,
-                          QLatin1String("SpamAssassin"), QStringLiteral("spamassassin -V"),
-                          QLatin1String("http://spamassassin.org"), QStringLiteral("SpamAssassin Check"),
-                          QLatin1String("spamassassin -L"),
-                          QLatin1String("sa-learn -L --spam --no-sync --single"),
-                          QLatin1String("sa-learn -L --ham --no-sync --single"),
-                          QLatin1String("spamassassin -d"),
-                          QLatin1String("X-Spam-Flag"), QStringLiteral("yes"), QString(), QString(),
+    return SpamToolConfig(QStringLiteral("spamassassin"), 0, 1,
+                          QStringLiteral("SpamAssassin"), QStringLiteral("spamassassin -V"),
+                          QStringLiteral("http://spamassassin.org"), QStringLiteral("SpamAssassin Check"),
+                          QStringLiteral("spamassassin -L"),
+                          QStringLiteral("sa-learn -L --spam --no-sync --single"),
+                          QStringLiteral("sa-learn -L --ham --no-sync --single"),
+                          QStringLiteral("spamassassin -d"),
+                          QStringLiteral("X-Spam-Flag"), QStringLiteral("yes"), QString(), QString(),
                           false, false, true, false, AntiSpam);
 }
 

@@ -171,7 +171,7 @@ QString AccountsPage::ReceivingTab::helpAnchor() const
 AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QLatin1String("org.freedesktop.Akonadi.NewMailNotifierAgent"), QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
+    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QStringLiteral("org.freedesktop.Akonadi.NewMailNotifierAgent"), QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
     if (!mNewMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
     }
@@ -181,9 +181,9 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QStringLiteral("Resource"));
     mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QStringLiteral("MailTransport") << QStringLiteral("Notes"));
 
-    KConfig specialMailCollection(QLatin1String("specialmailcollectionsrc"));
-    if (specialMailCollection.hasGroup(QLatin1String("SpecialCollections"))) {
-        KConfigGroup grp = specialMailCollection.group(QLatin1String("SpecialCollections"));
+    KConfig specialMailCollection(QStringLiteral("specialmailcollectionsrc"));
+    if (specialMailCollection.hasGroup(QStringLiteral("SpecialCollections"))) {
+        KConfigGroup grp = specialMailCollection.group(QStringLiteral("SpecialCollections"));
         mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(QStringLiteral("DefaultResourceId")));
     }
     ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
@@ -216,14 +216,14 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
     bool OfflineOnShutdown;
     bool CheckOnStartup;
     if (!mRetrievalHash.contains(ident)) {
-        const QString resourceGroupPattern(QLatin1String("Resource %1"));
+        const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
         KConfigGroup group;
         KConfig *conf = Q_NULLPTR;
         if (KMKernel::self()) {
             group = KConfigGroup(KMKernel::self()->config(), resourceGroupPattern.arg(ident));
         } else {
-            conf = new KConfig(QLatin1String("kmail2rc"));
+            conf = new KConfig(QStringLiteral("kmail2rc"));
             group = KConfigGroup(conf, resourceGroupPattern.arg(ident));
         }
 
@@ -305,9 +305,9 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
+    QDBusInterface interface(QStringLiteral("org.freedesktop.Akonadi.Agent.akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
     if (interface.isValid()) {
-        interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
+        interface.call(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
     } else {
         KMessageBox::error(this, i18n("New Mail Notifier Agent not registered. Please contact your administrator."));
     }
@@ -323,7 +323,7 @@ void AccountsPage::ReceivingTab::save()
     // Save Mail notification settings
     mNewMailNotifierInterface->setVerboseMailNotification(mAccountsReceiving.mVerboseNotificationCheck->isChecked());
 
-    const QString resourceGroupPattern(QLatin1String("Resource %1"));
+    const QString resourceGroupPattern(QStringLiteral("Resource %1"));
     QHashIterator<QString, QSharedPointer<RetrievalOptions> > it(mRetrievalHash);
     while (it.hasNext()) {
         it.next();
@@ -332,7 +332,7 @@ void AccountsPage::ReceivingTab::save()
         if (KMKernel::self()) {
             group = KConfigGroup(KMKernel::self()->config(), resourceGroupPattern.arg(it.key()));
         } else {
-            conf = new KConfig(QLatin1String("kmail2rc"));
+            conf = new KConfig(QStringLiteral("kmail2rc"));
             group = KConfigGroup(conf, resourceGroupPattern.arg(it.key()));
         }
         QSharedPointer<RetrievalOptions> opts = it.value();
