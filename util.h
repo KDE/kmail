@@ -42,7 +42,6 @@
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/Collection>
 #include "mailcommon/folder/foldercollection.h"
-#include <KUrl>
 
 namespace KMail
 {
@@ -84,7 +83,7 @@ Akonadi::Item::Id putRepliesInSameFolder(const Akonadi::Item &item);
      * Handles a clicked URL, but only in case the viewer didn't handle it.
      * Currently only support mailto.
      */
-bool handleClickedURL(const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder = QSharedPointer<MailCommon::FolderCollection>());
+bool handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder = QSharedPointer<MailCommon::FolderCollection>());
 
 bool mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderCollection> &folder);
 

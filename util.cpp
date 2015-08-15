@@ -85,7 +85,7 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
     return -1;
 }
 
-bool KMail::Util::handleClickedURL(const KUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder)
+bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder)
 {
     if (url.scheme() == QLatin1String("mailto")) {
         KMime::Message::Ptr msg(new KMime::Message);

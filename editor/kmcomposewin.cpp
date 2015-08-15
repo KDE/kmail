@@ -1981,7 +1981,7 @@ void KMComposeWin::slotAddressBook()
 
 void KMComposeWin::slotInsertFile()
 {
-    KUrl u = insertFile();
+    auto u = insertFile();
     if (u.isEmpty()) {
         return;
     }
@@ -1989,7 +1989,8 @@ void KMComposeWin::slotInsertFile()
     mRecentAction->addUrl(u);
     // Prevent race condition updating list when multiple composers are open
     {
-        const QString encoding = MessageViewer::NodeHelper::encodingForName(u.fileEncoding());
+        QUrlQuery query;
+        const QString encoding = MessageViewer::NodeHelper::encodingForName(query.queryItemValue(QStringLiteral("charset")));
         QStringList urls = GlobalSettings::self()->recentUrls();
         QStringList encodings = GlobalSettings::self()->recentEncodings();
         // Prevent config file from growing without bound
@@ -2006,7 +2007,7 @@ void KMComposeWin::slotInsertFile()
             urls.clear();
             encodings.clear();
         }
-        urls.prepend(u.prettyUrl());
+        urls.prepend(u.toDisplayString());
         encodings.prepend(encoding);
         GlobalSettings::self()->setRecentUrls(urls);
         GlobalSettings::self()->setRecentEncodings(encodings);
