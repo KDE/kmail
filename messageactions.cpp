@@ -53,7 +53,6 @@
 #include <KRun>
 #include <QMenu>
 #include <KUriFilterData>
-#include <KToolInvocation>
 #include <KUriFilter>
 #include <KStringHandler>
 #include <KPrintPreview>
