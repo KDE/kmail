@@ -276,6 +276,7 @@ if (KDEPIM_BUILD_DESKTOP)
   generate_export_header(kmailprivate BASE_NAME kmail)
 
   target_link_libraries(kmailprivate
+   PRIVATE
     KF5::Mime
     KF5::AkonadiCore
     KF5::AkonadiPrivate
@@ -303,6 +304,9 @@ if (KDEPIM_BUILD_DESKTOP)
     followupreminder
     grantleetheme
   )
+  target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messagelist,INTERFACE_INCLUDE_DIRECTORIES>)
+  target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messageviewer,INTERFACE_INCLUDE_DIRECTORIES>)
+  target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:mailcommon,INTERFACE_INCLUDE_DIRECTORIES>)
 
   set_target_properties(kmailprivate
     PROPERTIES VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}
@@ -312,7 +316,7 @@ if (KDEPIM_BUILD_DESKTOP)
 
   set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
   add_library(kcm_kmail MODULE ${kcm_kmail_PART_SRCS})
-  target_link_libraries(kcm_kmail  kmailprivate )
+  target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils)
 
   ########### kmailpart ###############
 
@@ -327,7 +331,9 @@ if (KDEPIM_BUILD_DESKTOP)
   target_link_libraries(kmailpart
     
     kmailprivate
+    pimcommon
     KF5::KCMUtils
+    KF5::Parts
   )
 
   ########### KMail executable ###############
@@ -339,6 +345,7 @@ if (KDEPIM_BUILD_DESKTOP)
   target_link_libraries(kmail
     KF5::KontactInterface
     kmailprivate
+    pimcommon
   )
 
   if(BUILD_TESTING)
