@@ -33,27 +33,28 @@
 #include "xfaceconfigurator.h"
 
 #include <Akonadi/Contact/ContactSearchJob>
-#include <kcombobox.h>
-#include <QDialog>
-#include <kio/netaccess.h>
-#include <KLocalizedString>
-#include <kmessagebox.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditor.h"
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditorwidget.h"
 #include <messageviewer/header/kxface.h>
 
+#include <KConfigGroup>
+#include <KJobWidgets>
+#include <kcombobox.h>
+#include <KLocalizedString>
+#include <kmessagebox.h>
+#include <KIO/StoredTransferJob>
+
 #include <QCheckBox>
+#include <QDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QStackedWidget>
 #include <QVBoxLayout>
-
 #include <QFontDatabase>
 #include <QImageReader>
-#include <KConfigGroup>
 #include <QFileDialog>
 using namespace KContacts;
 using namespace KIO;
@@ -205,13 +206,13 @@ void XFaceConfigurator::setXFace(const QString &text)
 
 void XFaceConfigurator::setXfaceFromFile(const QUrl &url)
 {
-    QString tmpFile;
-    if (KIO::NetAccess::download(url, tmpFile, this)) {
+    auto job = KIO::storedGet(url);
+    KJobWidgets::setWindow(job, this);
+    if (job->exec()) {
         KXFace xf;
-        mTextEdit->editor()->setPlainText(xf.fromImage(QImage(tmpFile)));
-        KIO::NetAccess::removeTempFile(tmpFile);
+        mTextEdit->editor()->setPlainText(xf.fromImage(QImage::fromData(job->data())));
     } else {
-        KMessageBox::error(this, KIO::NetAccess::lastErrorString());
+        KMessageBox::error(this, job->errorString());
     }
 }
 
