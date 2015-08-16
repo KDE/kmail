@@ -167,7 +167,6 @@
 #include <sonnet/dictionarycombobox.h>
 #include <krun.h>
 #include <KIO/JobUiDelegate>
-#include <KPrintPreview>
 #include <QFileDialog>
 #include <QAction>
 #include <KEmailAddress>
@@ -1209,9 +1208,7 @@ void KMComposeWin::setupActions(void)
             mComposerBase->recipientsEditor(), SLOT(saveDistributionList()));
 
     KStandardAction::print(this, SLOT(slotPrint()), actionCollection());
-    if (KPrintPreview::isAvailable()) {
-        KStandardAction::printPreview(this, SLOT(slotPrintPreview()), actionCollection());
-    }
+    KStandardAction::printPreview(this, SLOT(slotPrintPreview()), actionCollection());
     KStandardAction::close(this, SLOT(slotClose()), actionCollection());
 
     KStandardAction::undo(mGlobalAction, SLOT(slotUndo()), actionCollection());

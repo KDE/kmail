@@ -55,7 +55,6 @@
 #include <KUriFilterData>
 #include <KUriFilter>
 #include <KStringHandler>
-#include <KPrintPreview>
 #include <QIcon>
 
 #include <QVariant>
@@ -145,9 +144,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);
 
     mPrintAction = KStandardAction::print(this, SLOT(slotPrintMsg()), ac);
-    if (KPrintPreview::isAvailable()) {
-        mPrintPreviewAction = KStandardAction::printPreview(this, SLOT(slotPrintPreviewMsg()), ac);
-    }
+    mPrintPreviewAction = KStandardAction::printPreview(this, SLOT(slotPrintPreviewMsg()), ac);
 
     mForwardActionMenu  = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this);
     ac->addAction(QStringLiteral("message_forward"), mForwardActionMenu);
