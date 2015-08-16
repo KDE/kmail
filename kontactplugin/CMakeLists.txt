@@ -24,7 +24,7 @@ set(kcm_kmailsummary_PART_SRCS kmailplugin_debug.cpp kcmkmailsummary.cpp ${konta
 add_library(kcm_kmailsummary MODULE ${kcm_kmailsummary_PART_SRCS})
 add_dependencies(kcm_kmailsummary kmail_xml)
 
-target_link_libraries(kcm_kmailsummary  KF5::Mime pimcommon Qt5::DBus)
+target_link_libraries(kcm_kmailsummary  KF5::Mime pimcommon Qt5::DBus KF5::ConfigWidgets)
 
 ########### install files ###############
 
