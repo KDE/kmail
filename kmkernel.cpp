@@ -76,7 +76,6 @@ using KMail::MailServiceImpl;
 #include <kio/jobuidelegate.h>
 #include <kprocess.h>
 #include <KCrash>
-#include <KMimeType>
 
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_headers.h>
@@ -96,6 +95,7 @@ using KMail::MailServiceImpl;
 #include <QWidget>
 #include <QFileInfo>
 #include <QtDBus/QtDBus>
+#include <QMimeDatabase>
 
 #include <sys/types.h>
 #include <dirent.h>
@@ -604,7 +604,8 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     QList<QUrl> attachURLs = QUrl::fromStringList(attachmentPaths);
     QList<QUrl>::ConstIterator endAttachment(attachURLs.constEnd());
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin() ; it != endAttachment; ++it) {
-        if (KMimeType::findByUrl(*it)->name() == QLatin1String("inode/directory")) {
+        QMimeDatabase mimeDb;
+        if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
             if (KMessageBox::questionYesNo(Q_NULLPTR, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder")) == KMessageBox::No) {
                 continue;
             }
