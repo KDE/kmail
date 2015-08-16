@@ -334,6 +334,7 @@ if (KDEPIM_BUILD_DESKTOP)
     pimcommon
     KF5::KCMUtils
     KF5::Parts
+    KF5::IconThemes
   )
 
   ########### KMail executable ###############

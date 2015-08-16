@@ -13,6 +13,7 @@ macro(add_kmail_unittest _source _additionalsource)
     pimcommon
     Qt5::Test
     KF5::KIOCore
+    KF5::KIOWidgets
   )
 endmacro ()
 
