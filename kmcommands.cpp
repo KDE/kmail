@@ -57,10 +57,11 @@
 #include <kmessagebox.h>
 #include <kbookmarkmanager.h>
 #include <QFileDialog>
+#include <KJobWidgets>
 // KIO headers
 #include <kio/job.h>
 #include <kio/jobuidelegate.h>
-#include <kio/netaccess.h>
+#include <kio/statjob.h>
 
 #include <kmime/kmime_message.h>
 
@@ -513,7 +514,17 @@ KMCommand::Result KMUrlSaveCommand::execute()
     if (saveUrl.isEmpty()) {
         return Canceled;
     }
-    if (KIO::NetAccess::exists(saveUrl, KIO::NetAccess::DestinationSide, parentWidget())) {
+
+    bool fileExists = false;
+    if (saveUrl.isLocalFile()) {
+        fileExists = QFile::exists(saveUrl.toLocalFile());
+    } else {
+        auto job = KIO::stat(saveUrl, KIO::StatJob::DestinationSide, 0);
+        KJobWidgets::setWindow(job, parentWidget());
+        fileExists = job->exec();
+    }
+
+    if (fileExists) {
         if (KMessageBox::warningContinueCancel(Q_NULLPTR,
                                                xi18nc("@info", "File <filename>%1</filename> exists.<nl/>Do you want to replace it?",
                                                        saveUrl.toDisplayString()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
