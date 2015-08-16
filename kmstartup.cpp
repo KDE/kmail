@@ -22,7 +22,6 @@
 
 #include <KLocalizedString>
 
-#include <kglobal.h>
 #include <kiconloader.h>
 
 #undef Status // stupid X headers
