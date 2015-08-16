@@ -21,7 +21,6 @@
 #include "kmail_export.h"
 #include <config-enterprise.h>
 #include "configuredialog_p.h"
-#include "ui_customtemplates_base.h"
 class QCheckBox;
 class QSpinBox;
 class QSpinBox;
