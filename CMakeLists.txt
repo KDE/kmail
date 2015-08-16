@@ -307,6 +307,8 @@ if (KDEPIM_BUILD_DESKTOP)
   target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messagelist,INTERFACE_INCLUDE_DIRECTORIES>)
   target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messageviewer,INTERFACE_INCLUDE_DIRECTORIES>)
   target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:mailcommon,INTERFACE_INCLUDE_DIRECTORIES>)
+  # for Solid in kmkernel.h
+  target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::KDELibs4Support,INTERFACE_INCLUDE_DIRECTORIES>)
 
   set_target_properties(kmailprivate
     PROPERTIES VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}

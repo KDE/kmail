@@ -24,6 +24,7 @@ target_link_libraries(kcm_kpimidentities
   KF5::MailTransport
   KF5::KCMUtils
   KF5::KIOCore
+  KF5::KIOWidgets
   
   mailcommon
   messagecomposer
