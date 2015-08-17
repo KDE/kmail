@@ -20,7 +20,6 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <AkonadiCore/CollectionAttributesSynchronizationJob>
-#include <Solid/Networking>
 #include "kmail_debug.h"
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiWidgets/CollectionPropertiesDialog>
@@ -89,7 +88,7 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
         dlg->raise();
         return;
     }
-    if (Solid::Networking::status() == Solid::Networking::Connected || Solid::Networking::status() == Solid::Networking::Unknown) {
+    if (!KMKernel::self()->isOffline()) {
         const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(mMainWidget->currentFolder()->collection().resource());
         bool isOnline = agentInstance.isOnline();
         if (!isOnline) {
