@@ -52,7 +52,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <AkonadiCore/TagModifyJob>
 
 #include <KIconButton>
-#include <KButtonGroup>
 #include <KLocalizedString>
 #include <KColorScheme>
 #include <KSeparator>
@@ -73,6 +72,7 @@ using KMime::DateFormatter;
 #include <QSpinBox>
 #include <QLabel>
 #include <QFontDatabase>
+#include <QGroupBox>
 #include <gravatar/gravatarconfigwidget.h>
 using namespace MailCommon;
 
@@ -712,9 +712,11 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     vlay->addWidget(group);
 
     // "Date Display" group:
-    mDateDisplay = new KButtonGroup(this);
-    mDateDisplay->setTitle(i18n("Date Display"));
-    gvlay = new QVBoxLayout(mDateDisplay);
+    mDateDisplayBox = new QGroupBox(this);
+    mDateDisplayBox->setTitle(i18n("Date Display"));
+    mDateDisplay = new QButtonGroup(this);
+    mDateDisplay->setExclusive(true);
+    gvlay = new QVBoxLayout(mDateDisplayBox);
 
     for (int i = 0 ; i < numDateDisplayConfig ; ++i) {
         const char *label = dateDisplayConfig[i].displayName;
@@ -724,11 +726,12 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
         } else {
             buttonLabel = i18n(label);
         }
-        QRadioButton *radio = new QRadioButton(buttonLabel, mDateDisplay);
+        QRadioButton *radio = new QRadioButton(buttonLabel, mDateDisplayBox);
         gvlay->addWidget(radio);
+        mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
 
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
-            QWidget *hbox = new QWidget(mDateDisplay);
+            QWidget *hbox = new QWidget(mDateDisplayBox);
             QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
             hboxHBoxLayout->setMargin(0);
 
@@ -787,9 +790,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
         }
     } // end for loop populating mDateDisplay
 
-    vlay->addWidget(mDateDisplay);
-    connect(mDateDisplay, SIGNAL(clicked(int)),
-            this, SLOT(slotEmitChanged()));
+    vlay->addWidget(mDateDisplayBox);
+    connect(mDateDisplay, SIGNAL(buttonClicked(int)), this, SLOT(slotEmitChanged()));
 
     vlay->addStretch(10);   // spacer
 }
@@ -858,11 +860,11 @@ void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
 
     for (int i = 0 ; i < numDateDisplayConfig ; ++i)
         if (dateDisplay == dateDisplayConfig[i].dateDisplay) {
-            mDateDisplay->setSelected(i);
+            mDateDisplay->button(dateDisplay)->setChecked(true);
             return;
         }
     // fell through since none found:
-    mDateDisplay->setSelected(numDateDisplayConfig - 2);   // default
+    mDateDisplay->button(numDateDisplayConfig - 2)->setChecked(true);   // default
 }
 
 void AppearancePage::HeadersTab::save()
@@ -878,12 +880,8 @@ void AppearancePage::HeadersTab::save()
     // "Theme"
     mThemeComboBox->writeDefaultConfig();
 
-    const int dateDisplayID = mDateDisplay->selected();
-    // check bounds:
-    if ((dateDisplayID >= 0) && (dateDisplayID < numDateDisplayConfig)) {
-        MessageCore::GlobalSettings::self()->setDateFormat(
-            static_cast<int>(dateDisplayConfig[ dateDisplayID ].dateDisplay));
-    }
+    const int dateDisplayID = mDateDisplay->checkedId();
+    MessageCore::GlobalSettings::self()->setDateFormat(dateDisplayID);
     MessageCore::GlobalSettings::self()->setCustomDateFormat(mCustomDateFormatEdit->text());
 }
 

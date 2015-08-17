@@ -30,7 +30,6 @@ class ColorListBox;
 class QButtonGroup;
 class QGroupBox;
 class QSpinBox;
-class KButtonGroup;
 class KLineEdit;
 class QModelIndex;
 namespace MessageViewer
@@ -150,7 +149,8 @@ private: // data
     QCheckBox    *mTabsHaveCloseButton;
     MessageList::Utils::AggregationComboBox *mAggregationComboBox;
     MessageList::Utils::ThemeComboBox *mThemeComboBox;
-    KButtonGroup *mDateDisplay;
+    QButtonGroup *mDateDisplay;
+    QGroupBox    *mDateDisplayBox;
     KLineEdit    *mCustomDateFormatEdit;
     QString       mCustomDateWhatsThis;
 
