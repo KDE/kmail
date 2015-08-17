@@ -439,7 +439,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     v->addWidget(mAttachmentMissing);
 
     mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
-    connect(mPotentialPhishingEmailWarning, SIGNAL(sendNow()), this, SLOT(slotCheckSendNowStep2()));
+    connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposeWin::slotCheckSendNowStep2);
     v->addWidget(mPotentialPhishingEmailWarning);
 
     if (GlobalSettings::self()->showForgottenAttachmentWarning()) {

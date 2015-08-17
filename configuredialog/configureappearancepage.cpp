@@ -1110,28 +1110,28 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
             this, SLOT(slotAddLineTextChanged(QString)));
 
     //For on-the-fly updating of tag name in editbox
-    connect(mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
-            this, SLOT(slotNameLineTextChanged(QString)));
+    connect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged,
+            this, &AppearancePageMessageTagTab::slotNameLineTextChanged);
 
     connect(mTagWidget, &TagWidget::iconNameChanged, this, &AppearancePageMessageTagTab::slotIconNameChanged);
 
     connect(mTagAddLineEdit, &KLineEdit::returnPressed,
             this, &AppearancePageMessageTagTab::slotAddNewTag);
 
-    connect(mTagAddButton, SIGNAL(clicked()),
-            this, SLOT(slotAddNewTag()));
+    connect(mTagAddButton, &QAbstractButton::clicked,
+            this, &AppearancePageMessageTagTab::slotAddNewTag);
 
-    connect(mTagRemoveButton, SIGNAL(clicked()),
-            this, SLOT(slotRemoveTag()));
+    connect(mTagRemoveButton, &QAbstractButton::clicked,
+            this, &AppearancePageMessageTagTab::slotRemoveTag);
 
-    connect(mTagUpButton, SIGNAL(clicked()),
-            this, SLOT(slotMoveTagUp()));
+    connect(mTagUpButton, &QAbstractButton::clicked,
+            this, &AppearancePageMessageTagTab::slotMoveTagUp);
 
-    connect(mTagDownButton, SIGNAL(clicked()),
-            this, SLOT(slotMoveTagDown()));
+    connect(mTagDownButton, &QAbstractButton::clicked,
+            this, &AppearancePageMessageTagTab::slotMoveTagDown);
 
-    connect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-            this, SLOT(slotSelectionChanged()));
+    connect(mTagListBox, &QListWidget::currentItemChanged,
+            this, &AppearancePageMessageTagTab::slotSelectionChanged);
     //Adjust widths for columns
     maingrid->setStretchFactor(mTagsGroupBox, 1);
     maingrid->setStretchFactor(lay, 1);

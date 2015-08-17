@@ -267,8 +267,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     connect(mWrapColumnSpin, SIGNAL(valueChanged(int)),
             this, SLOT(slotEmitChanged()));
     // only enable the spinbox if the checkbox is checked
-    connect(mWordWrapCheck, SIGNAL(toggled(bool)),
-            mWrapColumnSpin, SLOT(setEnabled(bool)));
+    connect(mWordWrapCheck, &QAbstractButton::toggled,
+            mWrapColumnSpin, &QWidget::setEnabled);
 
     groupGridLayout->addWidget(mWordWrapCheck, row, 0);
     groupGridLayout->addWidget(mWrapColumnSpin, row, 1);
@@ -669,18 +669,18 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
                                 "application/x-desktop"));
     mEditorRequester->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
     mEditorRequester->setEnabled(false);   // !mExternalEditorCheck->isChecked()
-    connect(mExternalEditorCheck, SIGNAL(toggled(bool)),
-            label, SLOT(setEnabled(bool)));
-    connect(mExternalEditorCheck, SIGNAL(toggled(bool)),
-            mEditorRequester, SLOT(setEnabled(bool)));
+    connect(mExternalEditorCheck, &QAbstractButton::toggled,
+            label, &QWidget::setEnabled);
+    connect(mExternalEditorCheck, &QAbstractButton::toggled,
+            mEditorRequester, &QWidget::setEnabled);
 
     label = new QLabel(i18n("<b>%f</b> will be replaced with the "
                             "filename to edit.<br />"
                             "<b>%w</b> will be replaced with the window id.<br />"
                             "<b>%l</b> will be replaced with the line number."), this);
     label->setEnabled(false);   // see above
-    connect(mExternalEditorCheck, SIGNAL(toggled(bool)),
-            label, SLOT(setEnabled(bool)));
+    connect(mExternalEditorCheck, &QAbstractButton::toggled,
+            label, &QWidget::setEnabled);
     layout->addWidget(mExternalEditorCheck);
     layout->addWidget(hbox);
     layout->addWidget(label);
