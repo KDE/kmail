@@ -196,7 +196,8 @@ private:
 private: // data
     QCheckBox    *mSystemTrayCheck;
     QCheckBox    *mSystemTrayShowUnreadMail;
-    KButtonGroup *mSystemTrayGroup;
+    QButtonGroup *mSystemTrayGroup;
+    QGroupBox    *mSystemTrayGroupBox;
 };
 
 class TagListWidgetItem : public QListWidgetItem

@@ -965,19 +965,25 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
             mSystemTrayShowUnreadMail, SLOT(setEnabled(bool)));
 
     // System tray modes
-    mSystemTrayGroup = new KButtonGroup(this);
-    mSystemTrayGroup->setTitle(i18n("System Tray Mode"));
-    QVBoxLayout *gvlay = new QVBoxLayout(mSystemTrayGroup);
+    mSystemTrayGroup = new QButtonGroup(this);
+    mSystemTrayGroup->setExclusive(true);
+    mSystemTrayGroupBox = new QGroupBox(this);
+    mSystemTrayGroupBox->setTitle(i18n("System Tray Mode"));
+    QVBoxLayout *gvlay = new QVBoxLayout(mSystemTrayGroupBox);
 
-    connect(mSystemTrayGroup, SIGNAL(clicked(int)),
+    connect(mSystemTrayGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(slotEmitChanged()));
     connect(mSystemTrayCheck, SIGNAL(toggled(bool)),
-            mSystemTrayGroup, SLOT(setEnabled(bool)));
+            mSystemTrayGroupBox, SLOT(setEnabled(bool)));
 
-    gvlay->addWidget(new QRadioButton(i18n("Always show KMail in system tray"), mSystemTrayGroup));
-    gvlay->addWidget(new QRadioButton(i18n("Only show KMail in system tray if there are unread messages"), mSystemTrayGroup));
+    auto button = new QRadioButton(i18n("Always show KMail in system tray"), mSystemTrayGroupBox);
+    gvlay->addWidget(button);
+    mSystemTrayGroup->addButton(button, GlobalSettings::EnumSystemTrayPolicy::ShowAlways);
+    button = new QRadioButton(i18n("Only show KMail in system tray if there are unread messages"), mSystemTrayGroupBox);
+    gvlay->addWidget(button);
+    mSystemTrayGroup->addButton(button, GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread);
 
-    vlay->addWidget(mSystemTrayGroup);
+    vlay->addWidget(mSystemTrayGroupBox);
     vlay->addStretch(10);   // spacer
 }
 
@@ -985,14 +991,14 @@ void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings()
 {
     loadWidget(mSystemTrayCheck, GlobalSettings::self()->systemTrayEnabledItem());
     loadWidget(mSystemTrayShowUnreadMail, GlobalSettings::self()->systemTrayShowUnreadItem());
-    mSystemTrayGroup->setSelected(GlobalSettings::self()->systemTrayPolicy());
-    mSystemTrayGroup->setEnabled(mSystemTrayCheck->isChecked());
+    mSystemTrayGroup->button(GlobalSettings::self()->systemTrayPolicy())->setChecked(true);
+    mSystemTrayGroupBox->setEnabled(mSystemTrayCheck->isChecked());
 }
 
 void AppearancePage::SystemTrayTab::save()
 {
     saveCheckBox(mSystemTrayCheck, GlobalSettings::self()->systemTrayEnabledItem());
-    GlobalSettings::self()->setSystemTrayPolicy(mSystemTrayGroup->selected());
+    GlobalSettings::self()->setSystemTrayPolicy(mSystemTrayGroup->checkedId());
     saveCheckBox(mSystemTrayShowUnreadMail, GlobalSettings::self()->systemTrayShowUnreadItem());
     GlobalSettings::self()->save();
 }
