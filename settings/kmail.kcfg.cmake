@@ -8,7 +8,7 @@
   <include>kcolorscheme.h</include>
   <include>editor/composer.h</include>
   <include>messagecomposer/utils/util.h</include>
-  <include>KGlobalSettings</include>
+  <include>KCompletion</include>
   <kcfgfile name="kmail2rc"/>
   <group name="Behaviour">
       <entry name="ActionEnterFolder"  type="Enum">
@@ -238,7 +238,7 @@
         <default>KMail::Composer::HDR_SUBJECT</default>
       </entry>
       <entry name="CompletionMode" type="Int" key="Completion Mode">
-        <default code="true">KGlobalSettings::completionMode()</default>
+        <default code="true">KCompletion::CompletionPopup</default>
       </entry>
       <entry name="AutoSpellChecking" type="Bool" key="autoSpellChecking">
         <default>true</default>
