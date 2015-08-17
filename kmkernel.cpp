@@ -91,6 +91,7 @@ using KMail::MailServiceImpl;
 #include <AkonadiCore/entitymimetypefiltermodel.h>
 #include <AkonadiCore/CollectionStatisticsJob>
 
+#include <QNetworkConfigurationManager>
 #include <QDir>
 #include <QWidget>
 #include <QFileInfo>
@@ -123,7 +124,7 @@ using namespace MailCommon;
 
 static KMKernel *mySelf = Q_NULLPTR;
 static bool s_askingToGoOnline = false;
-
+static QNetworkConfigurationManager *s_networkConfigMgr = 0;
 /********************************************************************/
 /*                     Constructor and destructor                   */
 /********************************************************************/
@@ -132,13 +133,17 @@ KMKernel::KMKernel(QObject *parent) :
     mIdentityManager(Q_NULLPTR),
     mConfigureDialog(Q_NULLPTR),
     mMailService(Q_NULLPTR),
-    mSystemNetworkStatus(Solid::Networking::status()),
+    mSystemNetworkStatus(true),
     mSystemTray(Q_NULLPTR),
     mDebugBaloo(false)
 {
     if (!qgetenv("KDEPIM_BALOO_DEBUG").isEmpty()) {
         mDebugBaloo = true;
     }
+    if (!s_networkConfigMgr)
+        s_networkConfigMgr = new QNetworkConfigurationManager(QCoreApplication::instance());
+    mSystemNetworkStatus = s_networkConfigMgr->isOnline();
+
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
     QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.kmail"));
     qCDebug(KMAIL_LOG) << "Starting up...";
@@ -219,8 +224,8 @@ KMKernel::KMKernel(QObject *parent) :
 
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KMKernel::slotInstanceRemoved);
 
-    connect(Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)),
-            this, SLOT(slotSystemNetworkStatusChanged(Solid::Networking::Status)));
+    connect(s_networkConfigMgr, &QNetworkConfigurationManager::onlineStateChanged,
+            this, &KMKernel::slotSystemNetworkStatusChanged);
 
     connect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
             this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)));
@@ -1035,8 +1040,7 @@ void KMKernel::resumeNetworkJobs()
         return;
     }
 
-    if ((mSystemNetworkStatus == Solid::Networking::Connected) ||
-            (mSystemNetworkStatus == Solid::Networking::Unknown)) {
+    if (mSystemNetworkStatus) {
         setAccountStatus(true);
         BroadcastStatus::instance()->setStatusMsg(i18n("KMail is set to be online; all network jobs resumed"));
     } else {
@@ -1052,11 +1056,7 @@ void KMKernel::resumeNetworkJobs()
 
 bool KMKernel::isOffline()
 {
-    Solid::Networking::Status networkStatus = Solid::Networking::status();
-    if ((GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline) ||
-            (networkStatus == Solid::Networking::Unconnected) ||
-            (networkStatus == Solid::Networking::Disconnecting) ||
-            (networkStatus == Solid::Networking::Connecting)) {
+    if ((GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline) || !s_networkConfigMgr->isOnline()) {
         return true;
     } else {
         return false;
@@ -1138,14 +1138,14 @@ bool KMKernel::askToGoOnline()
     return true;
 }
 
-void KMKernel::slotSystemNetworkStatusChanged(Solid::Networking::Status status)
+void KMKernel::slotSystemNetworkStatusChanged(bool isOnline)
 {
-    mSystemNetworkStatus = status;
+    mSystemNetworkStatus = isOnline;
     if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline) {
         return;
     }
 
-    if (status == Solid::Networking::Connected || status == Solid::Networking::Unknown) {
+    if (isOnline) {
         BroadcastStatus::instance()->setStatusMsg(i18n(
                     "Network connection detected, all network jobs resumed"));
         kmkernel->setAccountStatus(true);
@@ -1370,7 +1370,6 @@ void KMKernel::cleanup(void)
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)));
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceWarning(Akonadi::AgentInstance,QString)));
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)));
-    disconnect(Solid::Networking::notifier(), SIGNAL(statusChanged(Solid::Networking::Status)));
     disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)));
     disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)));
 

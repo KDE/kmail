@@ -9,7 +9,6 @@
 #include <QObject>
 #include <QPointer>
 #include <QDBusObjectPath>
-#include <Solid/Networking>
 
 #include <qurl.h>
 
@@ -551,7 +550,7 @@ private Q_SLOTS:
     void slotCollectionRemoved(const Akonadi::Collection &col);
     void slotDeleteIdentity(uint identity);
     void slotInstanceRemoved(const Akonadi::AgentInstance &);
-    void slotSystemNetworkStatusChanged(Solid::Networking::Status);
+    void slotSystemNetworkStatusChanged(bool isOnline);
     void slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set);
 
     void slotCheckAccount(Akonadi::ServerManager::State state);
@@ -605,7 +604,7 @@ private:
     KMMainWin *mWin;
     MailServiceImpl *mMailService;
 
-    Solid::Networking::Status mSystemNetworkStatus;
+    bool mSystemNetworkStatus;
 
     KMail::KMSystemTray *mSystemTray;
     QHash<QString, KPIM::ProgressItem::CryptoStatus> mResourceCryptoSettingCache;
