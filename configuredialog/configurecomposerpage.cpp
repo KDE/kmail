@@ -939,10 +939,10 @@ void ComposerPage::CharsetTab::doLoadOther()
     QStringList::Iterator end(charsets.end());
     for (QStringList::Iterator it = charsets.begin() ;
             it != end ; ++it)
-        if ((*it) == QString::fromLatin1("locale")) {
+        if ((*it) == QLatin1String("locale")) {
             QByteArray cset = kmkernel->networkCodec()->name();
             cset = cset.toLower();
-            (*it) = QString::fromLatin1("%1 (locale)").arg(QString::fromLatin1(cset));
+            (*it) = QStringLiteral("%1 (locale)").arg(QString::fromLatin1(cset));
         }
 
     mCharsetListEditor->setStringList(charsets);
@@ -979,7 +979,7 @@ void ComposerPage::CharsetTab::save()
 
 QString ComposerPage::HeadersTab::helpAnchor() const
 {
-    return QString::fromLatin1("configure-composer-headers");
+    return QStringLiteral("configure-composer-headers");
 }
 
 ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
@@ -1189,7 +1189,7 @@ void ComposerPage::HeadersTab::save()
     //Clean config
     const int oldHeadersCount = GlobalSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < oldHeadersCount; ++i) {
-        const QString groupMimeName = QString::fromLatin1("Mime #%1").arg(i);
+        const QString groupMimeName = QStringLiteral("Mime #%1").arg(i);
         if (KMKernel::self()->config()->hasGroup(groupMimeName)) {
             KConfigGroup config(KMKernel::self()->config(), groupMimeName);
             config.deleteGroup();
@@ -1202,7 +1202,7 @@ void ComposerPage::HeadersTab::save()
     for (int i = 0; i < numberOfEntry; ++i) {
         item = mHeaderList->topLevelItem(i);
         if (!item->text(0).isEmpty()) {
-            KConfigGroup config(KMKernel::self()->config(), QString::fromLatin1("Mime #%1").arg(numValidEntries));
+            KConfigGroup config(KMKernel::self()->config(), QStringLiteral("Mime #%1").arg(numValidEntries));
             config.writeEntry("name",  item->text(0));
             config.writeEntry("value", item->text(1));
             numValidEntries++;

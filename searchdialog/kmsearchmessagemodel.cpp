@@ -117,7 +117,7 @@ QString toolTip(const Akonadi::Item &item)
             tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>"))).arg(i18n("Preview"));
         }
     }
-    tip += QString::fromLatin1(
+    tip += QLatin1String(
                "</table"         \
                "</td>"           \
                "</tr>"
@@ -152,7 +152,7 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
     if (!collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))) {
         if (role == Qt::DisplayRole)
             return i18nc("@label", "This model can only handle email folders. The current collection holds mimetypes: %1",
-                         collection().contentMimeTypes().join(QLatin1String(",")));
+                         collection().contentMimeTypes().join(QStringLiteral(",")));
         else {
             return QVariant();
         }

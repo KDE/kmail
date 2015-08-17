@@ -781,7 +781,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
             // KOrganizer invitation caught and to be sent as body instead
             msg->setBody(attachData);
             msg->contentType()->from7BitString(
-                QString::fromLatin1("text/calendar; method=%1; "
+                QStringLiteral("text/calendar; method=%1; "
                                     "charset=\"utf-8\"").
                 arg(attachParamValue).toLatin1());
 

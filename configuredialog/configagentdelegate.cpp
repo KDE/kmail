@@ -101,7 +101,7 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
         textColor = option.palette.color(cg, QPalette::Text);
     }
 
-    const QString content = QString::fromLatin1(
+    const QString content = QStringLiteral(
                                 "<html style=\"color:%1\">"
                                 "<body>"
                                 "<table>"
@@ -109,10 +109,10 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
                                 "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
                                 "<td><b>%2</b></td>"
                                 "</tr>").arg(textColor.name().toUpper()).arg(name)
-                            + QString::fromLatin1(
+                            + QStringLiteral(
                                 "<tr>"
                                 "<td><img src=\"status_icon\"/> %1 %2</td>"
-                                "</tr>").arg(statusMessage).arg(status == 1 ? QString::fromLatin1("(%1%)").arg(progress) : QLatin1String(""))
+                                "</tr>").arg(statusMessage).arg(status == 1 ? QStringLiteral("(%1%)").arg(progress) : QLatin1String(""))
                             + QLatin1String("</table></body></html>");
 
     document->setHtml(content);
