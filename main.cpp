@@ -53,10 +53,10 @@ public:
         , mEventLoopReached(false)
     { }
 
-    int activate(const QStringList &args) Q_DECL_OVERRIDE;
+    int activate(const QStringList &args, const QString &workindDir) Q_DECL_OVERRIDE;
     void commitData(QSessionManager &sm);
     void setEventLoopReached();
-    void delayedInstanceCreation(const QStringList &args);
+    void delayedInstanceCreation(const QStringList &args, const QString &workindDir);
 protected:
     bool mDelayedInstanceCreation;
     bool mEventLoopReached;
@@ -74,7 +74,7 @@ void KMailApplication::setEventLoopReached()
     mEventLoopReached = true;
 }
 
-int KMailApplication::activate(const QStringList &args)
+int KMailApplication::activate(const QStringList &args, const QString &workindDir)
 {
     qCDebug(KMAIL_LOG);
 
@@ -92,16 +92,16 @@ int KMailApplication::activate(const QStringList &args)
     }
 
     if (!kmkernel->firstInstance() || !qApp->isSessionRestored()) {
-        kmkernel->handleCommandLine(true, args);
+        kmkernel->handleCommandLine(true, args, workindDir);
     }
     kmkernel->setFirstInstance(false);
     return 0;
 }
 
-void KMailApplication::delayedInstanceCreation(const QStringList &args)
+void KMailApplication::delayedInstanceCreation(const QStringList &args, const QString &workindDir)
 {
     if (mDelayedInstanceCreation) {
-        activate(args);
+        activate(args, workindDir);
     }
 }
 
@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
 
     //If the instance hasn't been created yet, do that now
     app.setEventLoopReached();
-    app.delayedInstanceCreation(args);
+    app.delayedInstanceCreation(args, QDir::currentPath());
 
     // Go!
     int ret = qApp->exec();

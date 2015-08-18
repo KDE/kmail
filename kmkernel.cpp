@@ -276,18 +276,18 @@ void KMKernel::setupDBus()
     mMailService = new MailServiceImpl();
 }
 
-static QUrl makeAbsoluteUrl(const QString &str)
+static QUrl makeAbsoluteUrl(const QString &str, const QString &cwd)
 {
     QUrl url = QUrl::fromLocalFile(str);
     if (url.scheme().isEmpty()) {
-        const QString newUrl = QDir::currentPath() + QLatin1Char('/') + url.fileName();
+        const QString newUrl = cwd + QLatin1Char('/') + url.fileName();
         return QUrl::fromLocalFile(newUrl);
     } else {
         return url;
     }
 }
 
-bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args)
+bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args, const QString &workingDir)
 {
     QString to, cc, bcc, subj, body, inReplyTo, replyTo;
     QStringList customHeaders;
@@ -338,7 +338,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     if (parser.isSet(QStringLiteral("msg"))) {
         mailto = true;
         const QString file = parser.value(QStringLiteral("msg"));
-        messageFile = makeAbsoluteUrl(file);
+        messageFile = makeAbsoluteUrl(file, workingDir);
     }
 
     if (parser.isSet(QStringLiteral("body"))) {
@@ -354,7 +354,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                 it != end; ++it) {
             if (!(*it).isEmpty()) {
                 if ((*it) != QLatin1String("--")) {
-                    attachURLs.append(makeAbsoluteUrl(*it));
+                    attachURLs.append(makeAbsoluteUrl(*it, workingDir));
                 }
             }
         }
@@ -404,7 +404,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                 }
                 const QString attach = values.value(QStringLiteral("attachment"));
                 if (!attach.isEmpty()) {
-                    attachURLs << makeAbsoluteUrl(attach);
+                    attachURLs << makeAbsoluteUrl(attach, workingDir);
                 }
             } else {
                 QUrl url(arg);
