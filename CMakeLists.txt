@@ -36,6 +36,8 @@ add_subdirectory(pics)
 add_subdirectory(icons)
 add_subdirectory(avscripts)
 add_subdirectory(kcm_kpimidentities)
+add_subdirectory(kontactplugin)
+add_subdirectory(kconf_update)
 
 ########### kmailprivate ###############
 
@@ -397,6 +399,3 @@ install(FILES
 
 install( FILES data/kmail_addattachmentservicemenu.desktop DESTINATION
     ${KDE_INSTALL_KSERVICES5DIR}/ServiceMenus)
-
- 
-add_subdirectory(kontactplugin) 

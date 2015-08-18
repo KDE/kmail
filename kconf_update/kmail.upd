@@ -1,0 +1,5 @@
+Version=5
+
+# Update entry in kickoffrc after the .desktop file has been renamed in 15.08
+Id=kmail-15.08-kickoff
+Script=kmail-15.08-kickoff.sh,sh
