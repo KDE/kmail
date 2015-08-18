@@ -280,7 +280,12 @@ target_link_libraries(kmailprivate
     mailcommon
     templateparser
     KF5::IdentityManagement
-    KF5::KDELibs4Support
+    KF5::WindowSystem
+    KF5::Notifications
+    KF5::GuiAddons
+    KF5::Crash
+    KF5::Bookmarks
+    KF5::KIOFileWidgets
     KF5::NotifyConfig
     KF5::MailTransport
     KF5::KCMUtils
