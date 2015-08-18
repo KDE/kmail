@@ -70,7 +70,6 @@ using KMail::MailServiceImpl;
 
 #include <kconfig.h>
 #include <kpassivepopup.h>
-#include <ksystemtrayicon.h>
 #include <kconfiggroup.h>
 #include "kmail_debug.h"
 #include <kio/jobuidelegate.h>
