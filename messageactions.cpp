@@ -52,7 +52,6 @@
 #include <KXMLGUIClient>
 #include <KRun>
 #include <QMenu>
-#include <KUriFilterData>
 #include <KUriFilter>
 #include <KStringHandler>
 #include <QIcon>
