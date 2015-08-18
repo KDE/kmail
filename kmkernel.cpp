@@ -40,7 +40,6 @@ using KPIM::RecentAddresses;
 #include <MailTransport/mailtransport/dispatcherinterface.h>
 #include <AkonadiCore/servermanager.h>
 
-#include <kde_file.h>
 #include <kwindowsystem.h>
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
@@ -105,7 +104,6 @@ using KMail::MailServiceImpl;
 #include <stdlib.h>
 #include <assert.h>
 
-#include <kcmdlineargs.h>
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
 #include <KLocalizedString>
@@ -282,7 +280,7 @@ static QUrl makeAbsoluteUrl(const QString &str)
 {
     QUrl url = QUrl::fromLocalFile(str);
     if (url.scheme().isEmpty()) {
-        const QString newUrl = KCmdLineArgs::cwd() + QLatin1Char('/') + url.fileName();
+        const QString newUrl = QDir::currentPath() + QLatin1Char('/') + url.fileName();
         return QUrl::fromLocalFile(newUrl);
     } else {
         return url;
