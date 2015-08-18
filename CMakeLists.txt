@@ -43,6 +43,9 @@ if (KDEPIM_BUILD_DESKTOP)
 endif()
 add_subdirectory(kcm_kpimidentities)
 
+add_subdirectory(kontactplugin)
+add_subdirectory(kconf_update)
+
 ########### kmailprivate ###############
 
 if (KDEPIM_BUILD_DESKTOP)
@@ -394,5 +397,3 @@ generate_export_header(kmailprivate BASE_NAME kmail)
     ${KDE_INSTALL_KSERVICES5DIR}/ServiceMenus)
 
 endif ()
- 
-add_subdirectory(kontactplugin) 
