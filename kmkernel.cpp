@@ -1704,7 +1704,7 @@ bool KMKernel::canQueryClose()
             KMMainWidget::mainWidgetList()->count() > 1) {
         return true;
     }
-    if (!mSystemTray || GlobalSettings::closeDespiteSystemTray()) {
+    if (!mSystemTray) {
         return true;
     }
     if (mSystemTray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways) {

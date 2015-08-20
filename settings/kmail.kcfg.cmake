@@ -96,10 +96,6 @@
         <label>Show unread mail in system tray</label>
         <default>true</default>
       </entry>
-      <entry name="CloseDespiteSystemTray" type="Bool">
-          <label>Close the application when the main window is closed, even if there is a system tray icon active.</label>
-        <default>false</default>
-      </entry>
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
         <default>kwrite %f</default>
@@ -166,10 +162,6 @@
         <label>Show folder quick search line edit</label>
         <default>false</default>
       </entry>
-      <!-- <entry name="HideLocalInbox" type="Bool">
-        <label>Hide local inbox if unused</label>
-        <default>true</default>
-      </entry> -->
     </group>
 
     <group name="Composer">
