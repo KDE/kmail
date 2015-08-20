@@ -18,13 +18,7 @@
 
 #include "kmstartup.h"
 
-#include "kmkernel.h" //control center
-
-#include <KLocalizedString>
-
 #include <kiconloader.h>
-
-#undef Status // stupid X headers
 
 namespace KMail
 {
@@ -32,16 +26,11 @@ namespace KMail
 void insertLibraryCataloguesAndIcons()
 {
     static const char *const catalogs[] = {
-        "libkdepim",
         "libkleopatra",
         "libkpgp",
         "libmessagelist",
         "libmessageviewer",
-        "libmessagecore",
-        "libmessagecomposer",
         "libpimcommon",
-        "libmailcommon",
-        "libkpimtextedit"
     };
 
     KIconLoader *il = KIconLoader::global();
