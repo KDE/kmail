@@ -59,5 +59,5 @@ target_link_libraries( configureagentitemtest Qt5::Test Qt5::Widgets KF5::ItemVi
 set(KDEPIMLIBS_RUN_ISOLATED_TESTS TRUE)
 set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
 
-add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "../tag/tagselectdialog.cpp;../kmail_debug.cpp" "${KDEPIMLIBS_AKONADI_LIBS};kmailprivate;mailcommon")
+add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "../tag/tagselectdialog.cpp;../kmail_debug.cpp" "${KDEPIMLIBS_AKONADI_LIBS};kmailprivate;mailcommon;kdepim")
 
