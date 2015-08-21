@@ -98,7 +98,7 @@
 #include <messageviewer/viewer/objecttreeemptysource.h>
 
 #ifndef QT_NO_CURSOR
-#include <messageviewer/utils/kcursorsaver.h>
+#include <mailcommon/util/kcursorsaver.h>
 #endif
 
 #include <messageviewer/viewer/objecttreeparser.h>
@@ -2660,7 +2660,7 @@ void KMComposeWin::applyComposerSetting(MessageComposer::ComposerViewBase *mComp
 void KMComposeWin::doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn)
 {
 #ifndef QT_NO_CURSOR
-    MessageViewer::KCursorSaver busy(MessageViewer::KBusyPtr::busy());
+    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
 #endif
     applyComposerSetting(mComposerBase);
     if (mForceDisableHtml) {

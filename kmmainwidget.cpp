@@ -86,7 +86,7 @@ using KSieveUi::SieveDebugDialog;
 #include "messageviewer/header/headerstrategy.h"
 #include "messageviewer/header/headerstyle.h"
 #ifndef QT_NO_CURSOR
-#include "messageviewer/utils/kcursorsaver.h"
+#include "mailcommon/util/kcursorsaver.h"
 #endif
 
 #include "messagecomposer/sender/messagesender.h"
@@ -487,7 +487,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 
     mGoToFirstUnreadMessageInSelectedFolder = false;
 #ifndef QT_NO_CURSOR
-    MessageViewer::KCursorSaver busy(MessageViewer::KBusyPtr::busy());
+    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
 #endif
 
     if (mMsgView) {
@@ -1486,7 +1486,7 @@ void KMMainWidget::slotEmptyFolder()
         }
     }
 #ifndef QT_NO_CURSOR
-    MessageViewer::KCursorSaver busy(MessageViewer::KBusyPtr::busy());
+    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
 #endif
     slotMarkAll();
     if (isTrash) {
@@ -2195,7 +2195,7 @@ void KMMainWidget::slotFetchItemsForFolderDone(KJob *job)
 void KMMainWidget::applyFilters(const Akonadi::Item::List &selectedMessages)
 {
 #ifndef QT_NO_CURSOR
-    MessageViewer::KCursorSaver busy(MessageViewer::KBusyPtr::busy());
+    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
 #endif
 
     MailCommon::FilterManager::instance()->filter(selectedMessages);
@@ -3616,7 +3616,7 @@ void KMMainWidget::slotExpandAllThreads()
 {
     // TODO: Make this asynchronous ? (if there is enough demand)
 #ifndef QT_NO_CURSOR
-    MessageViewer::KCursorSaver busy(MessageViewer::KBusyPtr::busy());
+    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
 #endif
     mMessagePane->setAllThreadsExpanded(true);
 }
@@ -3625,7 +3625,7 @@ void KMMainWidget::slotCollapseAllThreads()
 {
     // TODO: Make this asynchronous ? (if there is enough demand)
 #ifndef QT_NO_CURSOR
-    MessageViewer::KCursorSaver busy(MessageViewer::KBusyPtr::busy());
+    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
 #endif
     mMessagePane->setAllThreadsExpanded(false);
 }
