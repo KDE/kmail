@@ -383,14 +383,6 @@
      </entry>
     </group>
 
-    <group name="MDN">
-      <entry name="SendMDNsWithEmptySender" type="Bool">
-        <default>false</default>
-        <label>Send Message Disposition Notifications with an empty sender.</label>
-        <whatsthis>Send Message Disposition Notifications with an empty sender string. Some servers might be configure to reject such messages, so if you are experiencing problems sending MDNs, uncheck this option.</whatsthis>
-      </entry>
-    </group>
-
   <group name="GlobalTemplates">
     <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
       <label>Message template for new message</label>
