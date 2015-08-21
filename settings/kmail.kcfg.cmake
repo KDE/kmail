@@ -425,13 +425,6 @@
    </entry>
  </group>
 
- <!-- Startup settings -->
- <group name="Startup">
-   <entry name="UpdateLevel" type="Int" key="update-level">
-     <label>Specifies the number of updates to perform (for internal use only)</label>
-     <default>0</default>
-   </entry>
- </group>
  <!-- Main Folder View settings -->
  <group name="MainFolderView">
     <entry name="ToolTipDisplayPolicy" type="Int">
