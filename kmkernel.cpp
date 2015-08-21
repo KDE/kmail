@@ -183,9 +183,6 @@ KMKernel::KMKernel(QObject *parent) :
 #endif
        ) {
         mNetCodec = QTextCodec::codecForName("jis7");
-        // QTextCodec *cdc = QTextCodec::codecForName("jis7");
-        // QTextCodec::setCodecForLocale(cdc);
-        // KLocale::global()->setEncoding(cdc->mibEnum());
     }
     // until here ================================================
 
