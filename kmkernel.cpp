@@ -163,7 +163,6 @@ KMKernel::KMKernel(QObject *parent) :
     mXmlGuiInstance = QStringLiteral("kmail2");
 
     mAutoCorrection = new PimCommon::AutoCorrection();
-    KMime::setFallbackCharEncoding(MessageCore::GlobalSettings::self()->fallbackCharacterEncoding());
     KMime::setUseOutlookAttachmentEncoding(MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments());
 
     // cberzan: this crap moved to CodecManager ======================
