@@ -103,15 +103,15 @@ QString toolTip(const Akonadi::Item &item)
     QString content = MessageList::Util::contentSummary(item);
 
     if (textIsLeftToRight) {
-        tip += htmlCodeForStandardRow.arg(i18n("From")).arg(MessageCore::StringUtil::stripEmailAddr(msg->from()->asUnicodeString()));
-        tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To")).arg(MessageCore::StringUtil::stripEmailAddr(msg->to()->asUnicodeString()));
+        tip += htmlCodeForStandardRow.arg(i18n("From")).arg(msg->from()->displayString());
+        tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To")).arg(msg->to()->displayString());
         tip += htmlCodeForStandardRow.arg(i18n("Date")).arg(QLocale().toString(msg->date()->dateTime()));
         if (!content.isEmpty()) {
             tip += htmlCodeForStandardRow.arg(i18n("Preview")).arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
         }
     } else {
-        tip += htmlCodeForStandardRow.arg(MessageCore::StringUtil::stripEmailAddr(msg->from()->asUnicodeString())).arg(i18n("From"));
-        tip += htmlCodeForStandardRow.arg(MessageCore::StringUtil::stripEmailAddr(msg->to()->asUnicodeString())).arg(i18nc("Receiver of the email", "To"));
+        tip += htmlCodeForStandardRow.arg(msg->from()->displayString()).arg(i18n("From"));
+        tip += htmlCodeForStandardRow.arg(msg->to()->displayString()).arg(i18nc("Receiver of the email", "To"));
         tip += htmlCodeForStandardRow.arg(QLocale().toString(msg->date()->dateTime())).arg(i18n("Date"));
         if (!content.isEmpty()) {
             tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>"))).arg(i18n("Preview"));
