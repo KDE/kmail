@@ -27,10 +27,9 @@ void insertLibraryCataloguesAndIcons()
 {
     static const char *const catalogs[] = {
         "libkleopatra",
-        "libkpgp",
         "libmessagelist",
         "libmessageviewer",
-        "libpimcommon",
+        "libpimcommon"
     };
 
     KIconLoader *il = KIconLoader::global();
