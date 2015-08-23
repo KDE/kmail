@@ -137,8 +137,9 @@ KMKernel::KMKernel(QObject *parent) :
     if (!qgetenv("KDEPIM_BALOO_DEBUG").isEmpty()) {
         mDebugBaloo = true;
     }
-    if (!s_networkConfigMgr)
+    if (!s_networkConfigMgr) {
         s_networkConfigMgr = new QNetworkConfigurationManager(QCoreApplication::instance());
+    }
     mSystemNetworkStatus = s_networkConfigMgr->isOnline();
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
@@ -775,7 +776,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
             msg->setBody(attachData);
             msg->contentType()->from7BitString(
                 QStringLiteral("text/calendar; method=%1; "
-                                    "charset=\"utf-8\"").
+                               "charset=\"utf-8\"").
                 arg(attachParamValue).toLatin1());
 
             iCalAutoSend = true; // no point in editing raw ICAL
