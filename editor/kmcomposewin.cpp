@@ -1084,8 +1084,8 @@ void KMComposeWin::setQuotePrefix(uint uoid)
             quotePrefix = quoteTemplate.quoteString();
         }
     }
-    mComposerBase->editor()->setQuotePrefixName(MessageCore::StringUtil::formatString(quotePrefix,
-            mMsg->from()->asUnicodeString()));
+    mComposerBase->editor()->setQuotePrefixName(MessageCore::StringUtil::formatQuotePrefix(quotePrefix,
+            mMsg->from()->displayString()));
 }
 
 void KMComposeWin::setupActions(void)
