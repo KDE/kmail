@@ -302,6 +302,7 @@ target_link_libraries(kmailprivate
     sendlater
     followupreminder
     grantleetheme
+    KF5::IconThemes
 )
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messagelist,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messageviewer,INTERFACE_INCLUDE_DIRECTORIES>)
