@@ -2787,12 +2787,12 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, 
             menu->addAction(akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash));
         }
         menu->addSeparator();
-        menu->addAction(mMsgView->createTodoAction());
-        menu->addAction(mMsgView->createEventAction());
-        menu->addAction(mMsgView->createNoteAction());
-        menu->addSeparator();
 
         if (mMsgView) {
+            menu->addAction(mMsgView->createTodoAction());
+            menu->addAction(mMsgView->createEventAction());
+            menu->addAction(mMsgView->createNoteAction());
+            menu->addSeparator();
             menu->addAction(mMsgView->saveMessageDisplayFormatAction());
             menu->addAction(mMsgView->resetMessageDisplayFormatAction());
             menu->addSeparator();
