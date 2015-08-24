@@ -252,11 +252,6 @@
 
       <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
 
-
-      <entry name="FolderLoadingTimeout" type="Int" hidden="true">
-         <default>1000</default>
-      </entry>
-
       <entry name="ShowSnippetManager" type="Bool">
           <label>Show the Text Snippet Management and Insertion Panel in the composer.</label>
           <default>false</default>

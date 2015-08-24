@@ -4313,7 +4313,7 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
             mShowBusySplashTimer = new QTimer(this);
             mShowBusySplashTimer->setSingleShot(true);
             connect(mShowBusySplashTimer, &QTimer::timeout, this, &KMMainWidget::slotShowBusySplash);
-            mShowBusySplashTimer->start(GlobalSettings::self()->folderLoadingTimeout());   //TODO: check if we need a different timeout setting for this
+            mShowBusySplashTimer->start(1000);
 
             Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob(item);
             if (mCurrentFolder) {
