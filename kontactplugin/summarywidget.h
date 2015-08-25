@@ -85,7 +85,6 @@ private:
     KViewStateMaintainer<Akonadi::ETMViewStateSaver> *mModelState;
     KCheckableProxyModel *mModelProxy;
     QItemSelectionModel *mSelectionModel;
-    int mTimeOfLastMessageCountUpdate;
 };
 
 #endif

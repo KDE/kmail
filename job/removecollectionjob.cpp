@@ -27,7 +27,8 @@
 #include "kmkernel.h"
 
 RemoveCollectionJob::RemoveCollectionJob(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      mMainWidget(Q_NULLPTR)
 {
 
 }
