@@ -7,10 +7,13 @@ include_directories(
 ########### next target ###############
 set(interface_SRCS)
 
+set(kontact_kmail_plugins_interface_common_SRCS)
+ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEADER kmailplugin_debug.h IDENTIFIER KMAILPLUGIN_LOG CATEGORY_NAME log_kmail_plugin)
+
 set(kontact_kmail_plugins_interface_SRCS ${interface_SRCS})
 qt5_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml)
 
-set(kontact_kmailplugin_PART_SRCS kmailplugin_debug.cpp kmail_plugin.cpp summarywidget.cpp ${kontact_kmail_plugins_interface_SRCS})
+set(kontact_kmailplugin_PART_SRCS kmail_plugin.cpp summarywidget.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 
 add_library(kontact_kmailplugin MODULE ${kontact_kmailplugin_PART_SRCS})
 add_dependencies(kontact_kmailplugin kmail_xml)
@@ -19,7 +22,7 @@ target_link_libraries(kontact_kmailplugin KF5::Mime  KF5::KontactInterface KF5::
 
 ########### next target ###############
 
-set(kcm_kmailsummary_PART_SRCS kmailplugin_debug.cpp kcmkmailsummary.cpp ${kontact_kmail_plugins_interface_SRCS})
+set(kcm_kmailsummary_PART_SRCS kcmkmailsummary.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 
 add_library(kcm_kmailsummary MODULE ${kcm_kmailsummary_PART_SRCS})
 add_dependencies(kcm_kmailsummary kmail_xml)

@@ -166,8 +166,11 @@ set(kmailprivate_tag_LIB_SRCS
      tag/tagactionmanager.cpp
      tag/tagselectdialog.cpp
 )
+
+set(kmail_common_SRCS)
+ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME log_kmail)
 set(kmailprivate_LIB_SRCS
-     kmail_debug.cpp
+     ${kmail_common_SRCS}
      kmmainwin.cpp
      settings/globalsettings.cpp
      kmreaderwin.cpp
@@ -320,7 +323,7 @@ target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils)
 
   ########### kmailpart ###############
 
-set(kmailpart_PART_SRCS kmail_part.cpp kmail_debug.cpp)
+set(kmailpart_PART_SRCS kmail_part.cpp ${kmail_common_SRCS})
 qt5_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
 qt5_add_dbus_adaptor(kmailpart_PART_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
@@ -339,7 +342,7 @@ target_link_libraries(kmailpart
 
   ########### KMail executable ###############
 
-set(kmail_SRCS main.cpp kmail_debug.cpp)
+set(kmail_SRCS main.cpp ${kmail_common_SRCS})
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/*-apps-kmail.png")
 ecm_add_app_icon(kmail_SRCS ICONS ${ICONS_SRCS})
 add_executable(kmail ${kmail_SRCS})
