@@ -338,6 +338,7 @@ target_link_libraries(kmailpart
     KF5::KCMUtils
     KF5::Parts
     KF5::IconThemes
+    templateparser
 )
 
   ########### KMail executable ###############
@@ -351,6 +352,7 @@ target_link_libraries(kmail
     kmailprivate
     pimcommon
     kdepim
+    templateparser
 )
 
 if(BUILD_TESTING)
