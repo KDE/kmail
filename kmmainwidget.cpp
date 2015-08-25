@@ -4387,7 +4387,9 @@ void KMMainWidget::itemsFetchDone(KJob *job)
             if (kmkernel->isOffline()) {
                 showOfflinePage();
             } else {
-                showResourceOfflinePage();
+                if (mMsgView) {
+                    showResourceOfflinePage();
+                }
             }
         } else {
             // Some other error
