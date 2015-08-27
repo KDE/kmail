@@ -138,7 +138,7 @@ void KMKnotify::initCombobox()
                 KConfigGroup globalConfig(&config, QStringLiteral("Global"));
                 const QString icon = globalConfig.readEntry(QStringLiteral("IconName"), QStringLiteral("misc"));
                 const QString description = globalConfig.readEntry(QStringLiteral("Comment"), appname);
-                m_comboNotify->addItem(SmallIcon(icon), description, appname);
+                m_comboNotify->addItem(QIcon::fromTheme(icon), description, appname);
             }
         }
     }
