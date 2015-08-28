@@ -18,7 +18,6 @@ set(kcm_identities_srcs
 ki18n_wrap_ui(kcm_identities_srcs ../ui/identitypage.ui)
 add_library(kcm_kpimidentities MODULE ${kcm_identities_srcs})
 target_link_libraries(kcm_kpimidentities
-  ${KDEPIMLIBS_GPGMEPP_LIBS}
   KF5::AkonadiCore
   KF5::IdentityManagement
   KF5::MailTransport
