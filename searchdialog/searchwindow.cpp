@@ -28,7 +28,6 @@
 #include "kmmainwidget.h"
 #include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/search/searchpatternedit.h"
-#include "mailcommon/widgets/regexplineedit.h"
 #include "searchdescriptionattribute.h"
 #include "foldertreeview.h"
 #include "kmsearchmessagemodel.h"
@@ -220,7 +219,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     connect(mUi.mButtonBox->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &SearchWindow::slotClose);
 
     // give focus to the value field of the first search rule
-    RegExpLineEdit *r = mUi.mPatternEdit->findChild<RegExpLineEdit *>(QStringLiteral("regExpLineEdit"));
+    KLineEdit *r = mUi.mPatternEdit->findChild<KLineEdit *>(QStringLiteral("regExpLineEdit"));
     if (r) {
         r->setFocus();
     } else {
