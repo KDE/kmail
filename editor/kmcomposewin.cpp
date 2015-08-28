@@ -1001,7 +1001,7 @@ void KMComposeWin::applyTemplate(uint uoid, uint uOldId)
     if (mode == TemplateParser::TemplateParser::NewMessage) {
         TemplateParser::TemplateParser parser(mMsg, mode);
         parser.setSelection(mTextSelection);
-        parser.setAllowDecryption(MessageViewer::GlobalSettings::self()->automaticDecrypt());
+        parser.setAllowDecryption(true);
         parser.setIdentityManager(KMKernel::self()->identityManager());
         if (!mCustomTemplate.isEmpty()) {
             parser.process(mCustomTemplate, mMsg, mCollectionForNewMessage);
@@ -1042,7 +1042,7 @@ void KMComposeWin::slotDelayedApplyTemplate(KJob *job)
 
     TemplateParser::TemplateParser parser(mMsg, mode);
     parser.setSelection(mTextSelection);
-    parser.setAllowDecryption(MessageViewer::GlobalSettings::self()->automaticDecrypt());
+    parser.setAllowDecryption(true);
     parser.setWordWrap(MessageComposer::MessageComposerSettings::self()->wordWrap(), MessageComposer::MessageComposerSettings::self()->lineWrapWidth());
     parser.setIdentityManager(KMKernel::self()->identityManager());
     foreach (const Akonadi::Item &item, items) {
