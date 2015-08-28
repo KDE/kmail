@@ -49,7 +49,7 @@ class Composer;
 typedef QMap<KMime::Content *, Akonadi::Item> PartNodeMessageMap;
 /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
 
-class KMAIL_EXPORT KMCommand : public QObject
+class  KMCommand : public QObject
 {
     Q_OBJECT
 
@@ -169,7 +169,7 @@ private:
     Akonadi::ItemFetchScope mFetchScope;
 };
 
-class KMAIL_EXPORT KMMailtoComposeCommand : public KMCommand
+class  KMMailtoComposeCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -183,7 +183,7 @@ private:
     Akonadi::Item mMessage;
 };
 
-class KMAIL_EXPORT KMMailtoReplyCommand : public KMCommand
+class KMMailtoReplyCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -198,7 +198,7 @@ private:
     QString mSelection;
 };
 
-class KMAIL_EXPORT KMMailtoForwardCommand : public KMCommand
+class KMMailtoForwardCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -210,7 +210,7 @@ private:
     QUrl mUrl;
 };
 
-class KMAIL_EXPORT KMAddBookmarksCommand : public KMCommand
+class KMAddBookmarksCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -223,7 +223,7 @@ private:
     QUrl mUrl;
 };
 
-class KMAIL_EXPORT KMUrlSaveCommand : public KMCommand
+class  KMUrlSaveCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -239,7 +239,7 @@ private:
     QUrl mUrl;
 };
 
-class KMAIL_EXPORT KMEditItemCommand : public KMCommand
+class  KMEditItemCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -253,7 +253,7 @@ private:
     bool mDeleteFromSource;
 };
 
-class KMAIL_EXPORT KMEditMessageCommand : public KMCommand
+class  KMEditMessageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -264,7 +264,7 @@ private:
     KMime::Message::Ptr mMessage;
 };
 
-class KMAIL_EXPORT KMUseTemplateCommand : public KMCommand
+class  KMUseTemplateCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -275,7 +275,7 @@ private:
     Result execute() Q_DECL_OVERRIDE;
 };
 
-class KMAIL_EXPORT KMSaveMsgCommand : public KMCommand
+class  KMSaveMsgCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -287,7 +287,7 @@ private:
 
 };
 
-class KMAIL_EXPORT KMOpenMsgCommand : public KMCommand
+class  KMOpenMsgCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -312,7 +312,7 @@ private:
     KMMainWidget *mMainWidget;
 };
 
-class KMAIL_EXPORT KMSaveAttachmentsCommand : public KMCommand
+class  KMSaveAttachmentsCommand : public KMCommand
 {
     Q_OBJECT
 public:
@@ -332,7 +332,7 @@ private:
     MessageViewer::Viewer *mViewer;
 };
 
-class KMAIL_EXPORT KMReplyCommand : public KMCommand
+class  KMReplyCommand : public KMCommand
 {
     Q_OBJECT
 public:
@@ -349,7 +349,7 @@ private:
     bool mNoQuote;
 };
 
-class KMAIL_EXPORT KMForwardCommand : public KMCommand
+class  KMForwardCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -368,7 +368,7 @@ private:
     QString mTemplate;
 };
 
-class KMAIL_EXPORT KMForwardAttachedCommand : public KMCommand
+class  KMForwardAttachedCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -385,7 +385,7 @@ private:
     QPointer<KMail::Composer> mWin;
 };
 
-class KMAIL_EXPORT KMRedirectCommand : public KMCommand
+class  KMRedirectCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -397,7 +397,7 @@ private:
     Result execute() Q_DECL_OVERRIDE;
 };
 
-class KMAIL_EXPORT KMPrintCommand : public KMCommand
+class  KMPrintCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -428,7 +428,7 @@ private:
     bool mPrintPreview;
 };
 
-class KMAIL_EXPORT KMSetStatusCommand : public KMCommand
+class  KMSetStatusCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -449,7 +449,7 @@ private:
 /** This command is used to set or toggle a tag for a list of messages. If toggle is
     true then the tag is deleted if it is already applied.
  */
-class KMAIL_EXPORT KMSetTagCommand : public KMCommand
+class  KMSetTagCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -474,7 +474,7 @@ private:
 
 /* This command is used to apply a single filter (AKA ad-hoc filter)
     to a set of messages */
-class KMAIL_EXPORT KMFilterActionCommand : public KMCommand
+class  KMFilterActionCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -488,7 +488,7 @@ private:
     QString mFilterId;
 };
 
-class KMAIL_EXPORT KMMetaFilterActionCommand : public QObject
+class  KMMetaFilterActionCommand : public QObject
 {
     Q_OBJECT
 
@@ -503,7 +503,7 @@ private:
     KMMainWidget *mMainWidget;
 };
 
-class KMAIL_EXPORT KMMailingListFilterCommand : public KMCommand
+class  KMMailingListFilterCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -514,7 +514,7 @@ private:
     Result execute() Q_DECL_OVERRIDE;
 };
 
-class KMAIL_EXPORT KMCopyCommand : public KMCommand
+class  KMCopyCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -534,7 +534,7 @@ namespace KPIM
 {
 class ProgressItem;
 }
-class KMAIL_EXPORT KMMoveCommand : public KMCommand
+class  KMMoveCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -572,7 +572,7 @@ private:
     MessageList::Core::MessageItemSetReference mRef;
 };
 
-class KMAIL_EXPORT KMTrashMsgCommand : public KMMoveCommand
+class  KMTrashMsgCommand : public KMMoveCommand
 {
     Q_OBJECT
 
@@ -585,7 +585,7 @@ private:
 
 };
 
-class KMAIL_EXPORT KMResendMessageCommand : public KMCommand
+class  KMResendMessageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -596,7 +596,7 @@ private:
     Result execute() Q_DECL_OVERRIDE;
 };
 
-class KMAIL_EXPORT KMShareImageCommand : public KMCommand
+class  KMShareImageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -608,7 +608,7 @@ private:
     QUrl mUrl;
 };
 
-class KMAIL_EXPORT KMFetchMessageCommand : public KMCommand
+class  KMFetchMessageCommand : public KMCommand
 {
     Q_OBJECT
 public:
