@@ -674,8 +674,8 @@ KMCommand::Result KMUseTemplateCommand::execute()
     newMsg->setContent(msg->encodedContent());
     newMsg->parse();
     // these fields need to be regenerated for the new message
-    newMsg->removeHeader("Date");
-    newMsg->removeHeader("Message-ID");
+    newMsg->removeHeader<KMime::Headers::Date>();
+    newMsg->removeHeader<KMime::Headers::MessageID>();
 
     KMail::Composer *win = KMail::makeComposer();
 
