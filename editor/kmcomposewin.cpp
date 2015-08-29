@@ -89,7 +89,6 @@
 #include "agents/sendlateragent/sendlaterinfo.h"
 
 // KDEPIM includes
-#include <libkpgp/kpgpblock.h>
 #include <libkleo/ui/progressdialog.h>
 #include <libkleo/ui/keyselectiondialog.h>
 #include "kleo/cryptobackendfactory.h"
@@ -151,16 +150,12 @@
 #include "kmail_debug.h"
 #include <kdescendantsproxymodel.h>
 #include <kedittoolbar.h>
-#include <qinputdialog.h>
-#include <QMenu>
 
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kshortcutsdialog.h>
 
 #include <kstandardshortcut.h>
-#include <qstatusbar.h>
-#include <QTemporaryDir>
 #include <ktoggleaction.h>
 #include <ktoolbar.h>
 #include <ktoolinvocation.h>
@@ -168,29 +163,34 @@
 #include <krun.h>
 #include <KIO/JobUiDelegate>
 #include <QFileDialog>
-#include <QAction>
 #include <KEmailAddress>
+#include <KEncodingFileDialog>
+#include <KHelpClient>
+#include <KCharsets>
+#include <KConfigGroup>
 
 // Qt includes
+#include <QMenu>
+#include <qinputdialog.h>
+#include <qstatusbar.h>
+#include <QTemporaryDir>
+#include <QAction>
 #include <QClipboard>
 #include <QSplitter>
 #include <QMimeData>
 #include <QTextDocumentWriter>
 #include <QApplication>
-#include <KEncodingFileDialog>
+#include <QCheckBox>
+#include <QStandardPaths>
+#include <QFontDatabase>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 // System includes
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <memory>
-#include <KHelpClient>
-#include <KCharsets>
-#include <QStandardPaths>
-#include <QFontDatabase>
-#include <QMimeDatabase>
-#include <QMimeType>
-#include <KConfigGroup>
 #include <KSplitterCollapserButton>
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <editor/potentialphishingemail/potentialphishingemailjob.h>
