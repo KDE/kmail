@@ -73,6 +73,9 @@ using KMime::DateFormatter;
 #include <QLabel>
 #include <QFontDatabase>
 #include <QGroupBox>
+#include <QVBoxLayout>
+#include <QRadioButton>
+#include <QCheckBox>
 #include <gravatar/gravatarconfigwidget.h>
 using namespace MailCommon;
 
