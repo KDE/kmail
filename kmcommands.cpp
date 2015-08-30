@@ -1574,7 +1574,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
     KMime::Content::List contentsToSave;
     foreach (const Akonadi::Item &item, retrievedMsgs()) {
         if (item.hasPayload<KMime::Message::Ptr>()) {
-            contentsToSave += MessageViewer::Util::extractAttachments(item.payload<KMime::Message::Ptr>().data());
+            contentsToSave += item.payload<KMime::Message::Ptr>()->attachments();
         } else {
             qCWarning(KMAIL_LOG) << "Retrieved item has no payload? Ignoring for saving the attachments";
         }
