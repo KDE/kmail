@@ -47,7 +47,6 @@
 #include "messageviewer/viewer/stl_util.h"
 #include "messageviewer/utils/util.h"
 #include "messagecore/utils/stringutil.h"
-#include "messagecore/attachment/attachmentcollector.h"
 #include "util.h"
 #include "editor/widgets/snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
