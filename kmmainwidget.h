@@ -84,7 +84,6 @@ class FolderShortcutActionManager;
 namespace KSieveUi
 {
 class SieveDebugDialog;
-class Vacation;
 class ManageSieveScriptsDialog;
 class VacationManager;
 }
