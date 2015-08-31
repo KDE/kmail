@@ -125,15 +125,9 @@ public:
     void writeReaderConfig();
 
     /** Easy access to main components of the window. */
-    KMReaderWin *messageView() const
-    {
-        return mMsgView;
-    }
+    KMReaderWin *messageView() const;
     /** Access to the header list pane. */
-    CollectionPane *messageListPane() const
-    {
-        return mMessagePane;
-    }
+    CollectionPane *messageListPane() const;
 
     QSharedPointer<MailCommon::FolderCollection> currentFolder() const;
 

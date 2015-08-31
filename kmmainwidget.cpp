@@ -932,6 +932,16 @@ void KMMainWidget::writeReaderConfig()
     }
 }
 
+KMReaderWin *KMMainWidget::messageView() const
+{
+    return mMsgView;
+}
+
+CollectionPane *KMMainWidget::messageListPane() const
+{
+    return mMessagePane;
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::deleteWidgets()
 {
