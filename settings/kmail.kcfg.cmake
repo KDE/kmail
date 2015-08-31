@@ -295,10 +295,6 @@
       <entry name="ComposerSize" type="Size" key="composer">
         <default>QSize(480,510)</default>
       </entry>
-      <entry name="FilterDialogSize" type="Size" key="filterDialogSize">
-        <label>The size of the filter dialog (for internal use only)</label>
-        <default>QSize()</default>
-      </entry>
       <entry name="IdentityDialogSize" type="Size" key="Identity Dialog size">
         <label>The size of the identity dialog (for internal use only)</label>
         <default>QSize()</default>
