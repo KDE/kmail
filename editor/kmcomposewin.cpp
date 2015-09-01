@@ -419,7 +419,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mBtnTransport->setFocusPolicy(Qt::NoFocus);
     mBtnDictionary->setFocusPolicy(Qt::NoFocus);
 
-    mCustomToolsWidget = new PimCommon::CustomToolsWidget(this);
+    mCustomToolsWidget = new PimCommon::CustomToolsWidget(this, actionCollection());
     mSplitter->addWidget(mCustomToolsWidget);
     connect(mCustomToolsWidget, &PimCommon::CustomToolsWidget::insertShortUrl, this, &KMComposeWin::slotInsertShortUrl);
 
