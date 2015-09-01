@@ -30,7 +30,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kleo/cryptobackendfactory.h"
 #include "libkleo/ui/keyrequester.h"
 #include "libkleo/ui/keyselectiondialog.h"
-#include "libkleo/ui/cryptoconfigdialog.h"
 
 #include <KLocalizedString>
 #include <KCMultiDialog>
