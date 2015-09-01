@@ -3301,6 +3301,21 @@ void KMComposeWin::addExtraCustomHeaders(const QMap<QByteArray, QString> &header
     mExtraHeaders = headers;
 }
 
+KToggleAction *KMComposeWin::translateAction() const
+{
+    return mTranslateAction;
+}
+
+PimCommon::KActionMenuChangeCase *KMComposeWin::changeCaseMenu() const
+{
+    return mChangeCaseMenu;
+}
+
+KToggleAction *KMComposeWin::generateShortenUrlAction() const
+{
+    return mGenerateShortenUrl;
+}
+
 void KMComposeWin::setCurrentIdentity(uint identity)
 {
     mComposerBase->identityCombo()->setCurrentIdentity(identity);

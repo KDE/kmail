@@ -238,18 +238,9 @@ public: // kmkernel, kmcommands, callback
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) Q_DECL_OVERRIDE;
 
-    KToggleAction *translateAction() const
-    {
-        return mTranslateAction;
-    }
-    PimCommon::KActionMenuChangeCase *changeCaseMenu() const
-    {
-        return mChangeCaseMenu;
-    }
-    KToggleAction *generateShortenUrlAction() const
-    {
-        return mGenerateShortenUrl;
-    }
+    KToggleAction *translateAction() const;
+    PimCommon::KActionMenuChangeCase *changeCaseMenu() const;
+    KToggleAction *generateShortenUrlAction() const;
 
     void setCurrentIdentity(uint identity) Q_DECL_OVERRIDE;
 
