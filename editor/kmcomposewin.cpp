@@ -421,7 +421,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     mCustomToolsWidget = new PimCommon::CustomToolsWidget(this, actionCollection());
     mSplitter->addWidget(mCustomToolsWidget);
-    connect(mCustomToolsWidget, &PimCommon::CustomToolsWidget::insertShortUrl, this, &KMComposeWin::slotInsertShortUrl);
+    connect(mCustomToolsWidget, &PimCommon::CustomToolsWidget::insertText, this, &KMComposeWin::slotInsertShortUrl);
 
     MessageComposer::AttachmentModel *attachmentModel = new MessageComposer::AttachmentModel(this);
     KMail::AttachmentView *attachmentView = new KMail::AttachmentView(attachmentModel, mSplitter);
