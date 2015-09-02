@@ -1571,8 +1571,8 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     // Restore the quote prefix. We can't just use the global quote prefix here,
     // since the prefix is different for each message, it might for example depend
     // on the original sender in a reply.
-    if (mMsg->headerByType("X-KMail-QuotePrefix")) {
-        mComposerBase->editor()->setQuotePrefixName(mMsg->headerByType("X-KMail-QuotePrefix")->asUnicodeString());
+    if (auto hdr = mMsg->headerByType("X-KMail-QuotePrefix")) {
+        mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
     }
 
     const bool stickyIdentity = mBtnIdentity->isChecked() && !mIgnoreStickyFields;
@@ -1625,8 +1625,8 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     // however, requires the actions to be there as well in order to share with mobile client
 
     // check for the presence of a DNT header, indicating that MDN's were requested
-    if (newMsg->headerByType("Disposition-Notification-To")) {
-        QString mdnAddr = newMsg->headerByType("Disposition-Notification-To")->asUnicodeString();
+    if (auto hdr = newMsg->headerByType("Disposition-Notification-To")) {
+        QString mdnAddr = hdr->asUnicodeString();
         mRequestMDNAction->setChecked((!mdnAddr.isEmpty() &&
                                        im->thatIsMe(mdnAddr)) ||
                                       GlobalSettings::self()->requestMDN());
@@ -1656,15 +1656,15 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     }
 
     // if these headers are present, the state of the message should be overruled
-    if (mMsg->headerByType("X-KMail-SignatureActionEnabled")) {
-        mLastSignActionState = (mMsg->headerByType("X-KMail-SignatureActionEnabled")->as7BitString().contains("true"));
+    if (auto hdr = mMsg->headerByType("X-KMail-SignatureActionEnabled")) {
+        mLastSignActionState = (hdr->as7BitString(false).contains("true"));
     }
-    if (mMsg->headerByType("X-KMail-EncryptActionEnabled")) {
-        mLastEncryptActionState = (mMsg->headerByType("X-KMail-EncryptActionEnabled")->as7BitString().contains("true"));
+    if (auto hdr = mMsg->headerByType("X-KMail-EncryptActionEnabled")) {
+        mLastEncryptActionState = (hdr->as7BitString(false).contains("true"));
     }
-    if (mMsg->headerByType("X-KMail-CryptoMessageFormat")) {
+    if (auto hdr = mMsg->headerByType("X-KMail-CryptoMessageFormat")) {
         mCryptoModuleAction->setCurrentItem(format2cb(static_cast<Kleo::CryptoMessageFormat>(
-                                                mMsg->headerByType("X-KMail-CryptoMessageFormat")->asUnicodeString().toInt())));
+                                                hdr->asUnicodeString().toInt())));
     }
 
     mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
@@ -1682,8 +1682,8 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     updateSignatureAndEncryptionStateIndicators();
 
     QString kmailFcc;
-    if (mMsg->headerByType("X-KMail-Fcc")) {
-        kmailFcc = mMsg->headerByType("X-KMail-Fcc")->asUnicodeString();
+    if (auto hdr = mMsg->headerByType("X-KMail-Fcc")) {
+        kmailFcc = hdr->asUnicodeString();
     }
     if (!mBtnFcc->isChecked()) {
         if (kmailFcc.isEmpty()) {
@@ -1695,8 +1695,8 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
 
     const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
     if (!stickyDictionary) {
-        if (mMsg->headerByType("X-KMail-Dictionary")) {
-            const QString dictionary = mMsg->headerByType("X-KMail-Dictionary")->asUnicodeString();
+        if (auto hdr = mMsg->headerByType("X-KMail-Dictionary")) {
+            const QString dictionary = hdr->asUnicodeString();
             if (!dictionary.isEmpty()) {
                 mComposerBase->dictionary()->setCurrentByDictionary(dictionary);
             }
