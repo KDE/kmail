@@ -306,11 +306,12 @@ target_link_libraries(kmailprivate
     followupreminder
     grantleetheme
     KF5::IconThemes
+    KF5::XmlGui
+    KF5::Completion
 )
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messagelist,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messageviewer,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:mailcommon,INTERFACE_INCLUDE_DIRECTORIES>)
-target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::KDELibs4Support,INTERFACE_INCLUDE_DIRECTORIES>)
 
 set_target_properties(kmailprivate
     PROPERTIES VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}
@@ -319,7 +320,7 @@ set_target_properties(kmailprivate
   ########### kcm_kmail ###############
 set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
 add_library(kcm_kmail MODULE ${kcm_kmail_PART_SRCS})
-target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils)
+target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion)
 
   ########### kmailpart ###############
 
