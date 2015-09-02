@@ -1641,9 +1641,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     }
 
     if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
-        if (mMsg->headerByType("X-Face")) {
-            mMsg->headerByType("X-Face")->clear();
-        }
+        mMsg->removeHeader("X-Face");
     } else {
         QString xface = ident.xface();
         if (!xface.isEmpty()) {
