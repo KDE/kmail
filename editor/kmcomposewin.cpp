@@ -55,7 +55,7 @@
 #include "custommimeheader.h"
 #include "pimcommon/autocorrection/widgets/lineeditwithautocorrection.h"
 #include "pimcommon/translator/translatorwidget.h"
-#include "pimcommon/widgets/customtoolswidget.h"
+#include "pimcommon/customtools/customtoolswidget.h"
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "job/createnewcontactjob.h"
 #include "job/savedraftjob.h"
