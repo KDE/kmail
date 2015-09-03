@@ -619,8 +619,8 @@ KMCommand::Result KMEditItemCommand::execute()
         }
     }
 
-    if (msg->headerByType("Reply-To")) {
-        const QString replyTo = msg->headerByType("Reply-To")->asUnicodeString();
+    if (auto hdr = msg->replyTo(false)) {
+        const QString replyTo = hdr->asUnicodeString();
         win->setCurrentReplyTo(replyTo);
     }
 
@@ -1612,8 +1612,8 @@ KMCommand::Result KMResendMessageCommand::execute()
     newMsg->contentType()->setCharset(MessageViewer::NodeHelper::charset(msg.data()));
 
     KMail::Composer *win = KMail::makeComposer();
-    if (msg->headerByType("Reply-To")) {
-        const QString replyTo = msg->headerByType("Reply-To")->asUnicodeString();
+    if (auto hdr = msg->replyTo(false)) {
+        const QString replyTo = hdr->asUnicodeString();
         win->setCurrentReplyTo(replyTo);
     }
     bool lastEncrypt = false;
