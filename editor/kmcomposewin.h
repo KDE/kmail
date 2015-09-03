@@ -454,6 +454,7 @@ public: // kmcommand
     void ignoreStickyFields() Q_DECL_OVERRIDE;
 
     uint currentIdentity() const;
+    QList<KToggleAction *> customToolsList() const;
 private:
     QUrl insertFile();
     /**

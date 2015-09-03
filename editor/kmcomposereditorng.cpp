@@ -55,8 +55,9 @@ void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, const QPoint &pos)
         menu->addAction(mComposerWin->changeCaseMenu());
     }
     menu->addSeparator();
-    //menu->addAction(mComposerWin->translateAction());
-    //menu->addAction(mComposerWin->generateShortenUrlAction());
+    Q_FOREACH(KToggleAction *ta, mComposerWin->customToolsList()) {
+        menu->addAction(ta);
+    }
 }
 
 bool KMComposerEditorNg::canInsertFromMimeData(const QMimeData *source) const

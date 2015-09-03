@@ -3384,3 +3384,8 @@ PimCommon::KActionMenuChangeCase *KMComposeWin::changeCaseMenu() const
 {
     return mChangeCaseMenu;
 }
+
+QList<KToggleAction *> KMComposeWin::customToolsList() const
+{
+    return mCustomToolsWidget->actionList();
+}
