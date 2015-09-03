@@ -54,8 +54,7 @@
 #include "kernel/mailkernel.h"
 #include "custommimeheader.h"
 #include "pimcommon/autocorrection/widgets/lineeditwithautocorrection.h"
-#include "pimcommon/translator/translatorwidget.h"
-#include "pimcommon/customtools/customtoolswidget.h"
+#include "pimcommon/customtools/customtoolswidgetng.h"
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "job/createnewcontactjob.h"
 #include "job/savedraftjob.h"
@@ -231,9 +230,8 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
       mReplyToAction(Q_NULLPTR), mSubjectAction(Q_NULLPTR),
       mIdentityAction(Q_NULLPTR), mTransportAction(Q_NULLPTR), mFccAction(Q_NULLPTR),
       mWordWrapAction(Q_NULLPTR), mFixedFontAction(Q_NULLPTR), mAutoSpellCheckingAction(Q_NULLPTR),
-      mDictionaryAction(Q_NULLPTR), mSnippetAction(Q_NULLPTR), mTranslateAction(Q_NULLPTR),
+      mDictionaryAction(Q_NULLPTR), mSnippetAction(Q_NULLPTR),
       mAppendSignature(Q_NULLPTR), mPrependSignature(Q_NULLPTR), mInsertSignatureAtCursorPosition(Q_NULLPTR),
-      mGenerateShortenUrl(Q_NULLPTR),
       mCodecAction(Q_NULLPTR),
       mCryptoModuleAction(Q_NULLPTR),
       mFindText(Q_NULLPTR),
@@ -419,9 +417,9 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mBtnTransport->setFocusPolicy(Qt::NoFocus);
     mBtnDictionary->setFocusPolicy(Qt::NoFocus);
 
-    mCustomToolsWidget = new PimCommon::CustomToolsWidget(this, actionCollection());
+    mCustomToolsWidget = new PimCommon::CustomToolsWidgetNg(actionCollection(), this);
     mSplitter->addWidget(mCustomToolsWidget);
-    connect(mCustomToolsWidget, &PimCommon::CustomToolsWidget::insertText, this, &KMComposeWin::slotInsertShortUrl);
+    connect(mCustomToolsWidget, &PimCommon::CustomToolsWidgetNg::insertText, this, &KMComposeWin::slotInsertShortUrl);
 
     MessageComposer::AttachmentModel *attachmentModel = new MessageComposer::AttachmentModel(this);
     KMail::AttachmentView *attachmentView = new KMail::AttachmentView(attachmentModel, mSplitter);
@@ -1350,11 +1348,6 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("setup_spellchecker"), action);
     connect(action, &QAction::triggered, this, &KMComposeWin::slotSpellcheckConfig);
 
-    mTranslateAction = mCustomToolsWidget->action(PimCommon::CustomToolsWidget::TranslatorTool);
-    actionCollection()->addAction(QStringLiteral("translator"), mTranslateAction);
-
-    mGenerateShortenUrl = mCustomToolsWidget->action(PimCommon::CustomToolsWidget::ShortUrlTool);
-    actionCollection()->addAction(QStringLiteral("shorten_url"), mGenerateShortenUrl);
 
     mEncryptAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("document-encrypt")), i18n("&Encrypt Message"), this);
     mEncryptAction->setIconText(i18n("Encrypt"));
@@ -3299,21 +3292,6 @@ void KMComposeWin::addExtraCustomHeaders(const QMap<QByteArray, QString> &header
     mExtraHeaders = headers;
 }
 
-KToggleAction *KMComposeWin::translateAction() const
-{
-    return mTranslateAction;
-}
-
-PimCommon::KActionMenuChangeCase *KMComposeWin::changeCaseMenu() const
-{
-    return mChangeCaseMenu;
-}
-
-KToggleAction *KMComposeWin::generateShortenUrlAction() const
-{
-    return mGenerateShortenUrl;
-}
-
 void KMComposeWin::setCurrentIdentity(uint identity)
 {
     mComposerBase->identityCombo()->setCurrentIdentity(identity);
@@ -3400,4 +3378,9 @@ void KMComposeWin::slotOverwriteModeWasChanged(bool state)
 {
     mComposerBase->editor()->setCursorWidth(state ? 5 : 1);
     mComposerBase->editor()->setOverwriteMode(state);
+}
+
+PimCommon::KActionMenuChangeCase *KMComposeWin::changeCaseMenu() const
+{
+    return mChangeCaseMenu;
 }

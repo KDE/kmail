@@ -110,7 +110,7 @@ class FolderRequester;
 namespace PimCommon
 {
 class KActionMenuChangeCase;
-class CustomToolsWidget;
+class CustomToolsWidgetNg;
 class LineEditWithAutoCorrection;
 }
 class KMStorageService;
@@ -238,9 +238,7 @@ public: // kmkernel, kmcommands, callback
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) Q_DECL_OVERRIDE;
 
-    KToggleAction *translateAction() const;
     PimCommon::KActionMenuChangeCase *changeCaseMenu() const;
-    KToggleAction *generateShortenUrlAction() const;
 
     void setCurrentIdentity(uint identity) Q_DECL_OVERRIDE;
 
@@ -620,11 +618,10 @@ private:
     KToggleAction *mSubjectAction;
     KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
     KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
-    KToggleAction *mDictionaryAction, *mSnippetAction, *mTranslateAction;
+    KToggleAction *mDictionaryAction, *mSnippetAction;
     QAction *mAppendSignature;
     QAction *mPrependSignature;
     QAction *mInsertSignatureAtCursorPosition;
-    KToggleAction *mGenerateShortenUrl;
 
     KToggleAction *markupAction;
 
@@ -653,7 +650,7 @@ private:
     MessageComposer::ComposerViewBase *mComposerBase;
 
     SnippetWidget *mSnippetWidget;
-    PimCommon::CustomToolsWidget *mCustomToolsWidget;
+    PimCommon::CustomToolsWidgetNg *mCustomToolsWidget;
     QPointer<KPIMTextEdit::SelectSpecialCharDialog> mSelectSpecialChar;
     AttachmentMissingWarning *mAttachmentMissing;
     ExternalEditorWarning *mExternalEditorWarning;
