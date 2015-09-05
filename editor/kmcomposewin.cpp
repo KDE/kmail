@@ -3005,7 +3005,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
         KMKernel::self()->identityManager()->identityForUoidOrDefault(mId);
 
     if (ident.organization().isEmpty()) {
-        mMsg->organization()->clear();
+        mMsg->removeHeader<KMime::Headers::Organization>();
     } else {
         KMime::Headers::Organization *const organization = new KMime::Headers::Organization;
         organization->fromUnicodeString(ident.organization(), "utf-8");

@@ -768,7 +768,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
                            attachParamAttr == "method";
         // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
         if (isICalInvitation && bcc.isEmpty()) {
-            msg->bcc()->clear();
+            msg->removeHeader<KMime::Headers::Bcc>();
         }
         if (isICalInvitation &&
                 MessageViewer::GlobalSettings::self()->legacyBodyInvites()) {
