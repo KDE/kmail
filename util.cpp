@@ -66,7 +66,9 @@ KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage(const Akonadi::
     if (parentCollection.isValid()) {
         const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCollection, false);
         if (fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty()) {
-            addresses << MessageCore::StringUtil::mailboxFromUnicodeString(fd->mailingListPostAddress());
+            KMime::Types::Mailbox mailbox;
+            mailbox.fromUnicodeString(fd->mailingListPostAddress());
+            addresses << mailbox;
         }
     }
 
