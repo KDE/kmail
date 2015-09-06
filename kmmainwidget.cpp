@@ -134,7 +134,6 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <Akonadi/KMime/MessageFlags>
 #include <Akonadi/KMime/RemoveDuplicatesJob>
-#include <kdbusconnectionpool.h>
 #include <AkonadiCore/CachePolicy>
 
 #include <kidentitymanagement/identity.h>

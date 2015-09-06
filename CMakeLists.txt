@@ -301,7 +301,6 @@ target_link_libraries(kmailprivate
     KF5::Contacts
     KF5::PimTextEdit
     messageviewer
-    KF5::DBusAddons
     sendlater
     followupreminder
     grantleetheme
