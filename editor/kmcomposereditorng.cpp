@@ -55,7 +55,7 @@ void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, const QPoint &pos)
         menu->addAction(mComposerWin->changeCaseMenu());
     }
     menu->addSeparator();
-    Q_FOREACH(KToggleAction *ta, mComposerWin->customToolsList()) {
+    Q_FOREACH (KToggleAction *ta, mComposerWin->customToolsList()) {
         menu->addAction(ta);
     }
 }

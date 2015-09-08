@@ -1348,7 +1348,6 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("setup_spellchecker"), action);
     connect(action, &QAction::triggered, this, &KMComposeWin::slotSpellcheckConfig);
 
-
     mEncryptAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("document-encrypt")), i18n("&Encrypt Message"), this);
     mEncryptAction->setIconText(i18n("Encrypt"));
     actionCollection()->addAction(QStringLiteral("encrypt_message"), mEncryptAction);
