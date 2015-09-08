@@ -92,7 +92,7 @@ using KSieveUi::SieveDebugDialog;
 #include "messagecomposer/sender/messagesender.h"
 #include "messagecomposer/helper/messagehelper.h"
 
-#include "templateparser/templateparser.h"
+#include "templateparser.h"
 
 #include "messagecore/settings/globalsettings.h"
 #include "messagecore/misc/mailinglist.h"

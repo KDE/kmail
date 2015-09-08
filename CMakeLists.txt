@@ -283,7 +283,7 @@ target_link_libraries(kmailprivate
     messagelist
     pimcommon
     mailcommon
-    templateparser
+    KF5::TemplateParser
     KF5::IdentityManagement
     KF5::WindowSystem
     KF5::Notifications
@@ -303,7 +303,7 @@ target_link_libraries(kmailprivate
     messageviewer
     sendlater
     followupreminder
-    grantleetheme
+    KF5::GrantleeTheme
     KF5::IconThemes
     KF5::XmlGui
     KF5::Completion
@@ -339,7 +339,7 @@ target_link_libraries(kmailpart
     KF5::KCMUtils
     KF5::Parts
     KF5::IconThemes
-    templateparser
+    KF5::TemplateParser
 )
 
   ########### KMail executable ###############
@@ -353,7 +353,7 @@ target_link_libraries(kmail
     kmailprivate
     pimcommon
     kdepim
-    templateparser
+    KF5::TemplateParser
 )
 
 if(BUILD_TESTING)

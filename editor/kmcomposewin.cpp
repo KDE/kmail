@@ -112,7 +112,7 @@
 #include <messagecomposer/composer/composerlineedit.h>
 #include <messagecore/attachment/attachmentpart.h>
 #include "messagecore/settings/globalsettings.h"
-#include <templateparser/templateparser.h>
+#include <templateparser.h>
 #include <templatesconfiguration.h>
 #include "messagecore/helpers/nodehelper.h"
 #include <Akonadi/KMime/MessageStatus>
