@@ -2179,12 +2179,23 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
                 const QAction *selectedAction = p.exec(QCursor::pos());
 
                 if (selectedAction == addAsTextAction) {
+                    QStringList urlAdded;
                     foreach (const QUrl &url, urlList) {
-                        mComposerBase->editor()->composerControler()->insertLink(url.toDisplayString());
+                        QString urlStr = url.toDisplayString();
+                        // Workaround #346370
+                        if (urlStr.isEmpty()) {
+                            urlStr = source->text();
+                        }
+                        if (!urlAdded.contains(urlStr)) {
+                            mComposerBase->editor()->composerControler()->insertLink(urlStr);
+                            urlAdded.append(urlStr);
+                        }
                     }
                 } else if (selectedAction == addAsAttachmentAction) {
                     foreach (const QUrl &url, urlList) {
-                        addAttachment(url, QString());
+                        if (url.isValid()) {
+                            addAttachment(url, QString());
+                        }
                     }
                 }
             }
