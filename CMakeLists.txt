@@ -264,7 +264,7 @@ endif()
 configure_file(settings/kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
 kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
-    settings/globalsettings_base.kcfgc
+    settings/globalsettings_kmail.kcfgc
     editor/custommimeheader/custommimeheader.kcfgc
 )
 

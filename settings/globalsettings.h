@@ -24,7 +24,7 @@
 #ifndef KMAIL_GLOBALSETTINGS_H
 #define KMAIL_GLOBALSETTINGS_H
 
-#include "globalsettings_base.h"
+#include "globalsettings_kmail.h"
 
 class QTimer;
 
