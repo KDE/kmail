@@ -171,9 +171,14 @@ QString AccountsPage::ReceivingTab::helpAnchor() const
 AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QLatin1String("org.freedesktop.Akonadi.NewMailNotifierAgent"), QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
+    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QStringLiteral("org.freedesktop.Akonadi.NewMailNotifierAgent"),
+                                                                                  QStringLiteral("/NewMailNotifierAgent"),
+                                                                                  QDBusConnection::sessionBus(),
+                                                                                  this);
     if (!mNewMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
+        delete mNewMailNotifierInterface;
+        mNewMailNotifierInterface = Q_NULLPTR;
     }
     mAccountsReceiving.setupUi(this);
 
@@ -307,9 +312,8 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
-    if (interface.isValid()) {
-        interface.call(QLatin1String("showConfigureDialog"), (qlonglong)winId());
+    if (mNewMailNotifierInterface) {
+        mNewMailNotifierInterface->asyncCall(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
     } else {
         KMessageBox::error(this, i18n("New Mail Notifier Agent not registered. Please contact your administrator."));
     }
@@ -317,19 +321,25 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
 
 void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
 {
-    mAccountsReceiving.mVerboseNotificationCheck->setChecked(mNewMailNotifierInterface->verboseMailNotification());
+    if (mNewMailNotifierInterface) {
+        mAccountsReceiving.mVerboseNotificationCheck->setChecked(mNewMailNotifierInterface->verboseMailNotification());
+    }
 }
 
 void AccountsPage::ReceivingTab::doLoadOther()
 {
-    mAccountsReceiving.mBeepNewMailCheck->setChecked(mNewMailNotifierInterface->beepOnNewMails());
+    if (mNewMailNotifierInterface) {
+        mAccountsReceiving.mBeepNewMailCheck->setChecked(mNewMailNotifierInterface->beepOnNewMails());
+    }
 }
 
 void AccountsPage::ReceivingTab::save()
 {
     // Save Mail notification settings
-    mNewMailNotifierInterface->setBeepOnNewMails(mAccountsReceiving.mBeepNewMailCheck->isChecked());
-    mNewMailNotifierInterface->setVerboseMailNotification(mAccountsReceiving.mVerboseNotificationCheck->isChecked());
+    if (mNewMailNotifierInterface) {
+        mNewMailNotifierInterface->setBeepOnNewMails(mAccountsReceiving.mBeepNewMailCheck->isChecked());
+        mNewMailNotifierInterface->setVerboseMailNotification(mAccountsReceiving.mVerboseNotificationCheck->isChecked());
+    }
 
     const QString resourceGroupPattern(QLatin1String("Resource %1"));
     QHashIterator<QString, QSharedPointer<RetrievalOptions> > it(mRetrievalHash);
