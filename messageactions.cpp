@@ -29,11 +29,11 @@
 
 #include "pimcommon/widgets/annotationdialog.h"
 #include "pimcommon/webshortcut/webshortcutmenumanager.h"
-#include "messagecore/settings/globalsettings_messagecore_impl.h"
+#include "messagecore/settings/messagecoresettings.h"
 #include "messagecore/misc/mailinglist.h"
 #include "messagecore/helpers/messagehelpers.h"
 #include "messageviewer/viewer/csshelper.h"
-#include "messageviewer/settings/globalsettings.h"
+#include "messageviewer/settings/messageviewersettings.h"
 
 #include <AkonadiCore/itemfetchjob.h>
 #include <Akonadi/KMime/MessageParts>

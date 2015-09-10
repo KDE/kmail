@@ -42,7 +42,7 @@
 #include "messageviewer/header/headerstyle.h"
 #include "messageviewer/viewer/mailwebview.h"
 #include "messageviewer/utils/markmessagereadhandler.h"
-#include "messageviewer/settings/globalsettings.h"
+#include "messageviewer/settings/messageviewersettings.h"
 #include "messageviewer/viewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
@@ -53,7 +53,7 @@ using MessageViewer::CSSHelper;
 
 #include "messageviewer/viewer/viewer.h"
 using namespace MessageViewer;
-#include <messagecore/settings/globalsettings_messagecore_impl.h>
+#include <messagecore/settings/messagecoresettings.h>
 
 #include "messageviewer/viewer/attachmentstrategy.h"
 #include "messagecomposer/sender/messagesender.h"

@@ -16,7 +16,7 @@
 */
 
 #include "cryptostateindicatorwidget.h"
-#include "messagecore/settings/globalsettings_messagecore_impl.h"
+#include "messagecore/settings/messagecoresettings.h"
 
 #include <KColorScheme>
 #include <KLocalizedString>

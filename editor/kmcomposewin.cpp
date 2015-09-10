@@ -100,7 +100,7 @@
 
 #include <messageviewer/viewer/objecttreeparser.h>
 #include <messageviewer/viewer/nodehelper.h>
-#include <messageviewer/settings/globalsettings.h>
+#include <messageviewer/settings/messageviewersettings.h>
 #include <messagecomposer/composer/composer.h>
 #include <messagecomposer/part/globalpart.h>
 #include <messagecomposer/part/infopart.h>
@@ -111,7 +111,7 @@
 #include <messagecomposer/job/inserttextfilejob.h>
 #include <messagecomposer/composer/composerlineedit.h>
 #include <messagecore/attachment/attachmentpart.h>
-#include "messagecore/settings/globalsettings_messagecore_impl.h"
+#include "messagecore/settings/messagecoresettings.h"
 #include <templateparser.h>
 #include <templatesconfiguration.h>
 #include "messagecore/helpers/nodehelper.h"

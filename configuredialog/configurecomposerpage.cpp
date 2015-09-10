@@ -24,7 +24,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "pimcommon/autocorrection/autocorrectionwidget.h"
 #include "messagecomposer/imagescaling/imagescalingwidget.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
-#include "messagecore/settings/globalsettings_messagecore_impl.h"
+#include "messagecore/settings/messagecoresettings.h"
 #include "settings/globalsettings.h"
 #include "configuredialog/configuredialoglistview.h"
 #include "pimcommon/widgets/simplestringlisteditor.h"

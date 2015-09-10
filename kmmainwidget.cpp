@@ -80,7 +80,7 @@ using KSieveUi::SieveDebugDialog;
 #include "kdepim-version.h"
 
 #include "messageviewer/utils/autoqpointer.h"
-#include "messageviewer/settings/globalsettings.h"
+#include "messageviewer/settings/messageviewersettings.h"
 #include "messageviewer/viewer/viewer.h"
 #include "messageviewer/viewer/attachmentstrategy.h"
 #include "messageviewer/header/headerstrategy.h"
@@ -94,7 +94,7 @@ using KSieveUi::SieveDebugDialog;
 
 #include "templateparser.h"
 
-#include "messagecore/settings/globalsettings_messagecore_impl.h"
+#include "messagecore/settings/messagecoresettings.h"
 #include "messagecore/misc/mailinglist.h"
 #include "messagecore/helpers/messagehelpers.h"
 
