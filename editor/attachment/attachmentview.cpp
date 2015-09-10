@@ -41,7 +41,7 @@
 #include <QIcon>
 #include <KLocalizedString>
 
-#include <messagecore/attachment/attachmentpart.h>
+#include <attachment/attachmentpart.h>
 #include <KFormat>
 using MessageCore::AttachmentPart;
 

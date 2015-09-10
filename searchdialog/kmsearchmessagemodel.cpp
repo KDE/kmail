@@ -29,7 +29,7 @@
 #include "mailcommon/util/mailutil.h"
 #include "messagelist/messagelistutil.h"
 
-#include "messagecore/utils/stringutil.h"
+#include "utils/stringutil.h"
 
 #include <AkonadiCore/itemfetchscope.h>
 #include <AkonadiCore/monitor.h>

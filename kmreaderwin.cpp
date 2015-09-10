@@ -22,7 +22,7 @@
 // filehtmlwriter.out in the current working directory
 #include "kmreaderwin.h"
 
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "kernel/mailkernel.h"
@@ -53,7 +53,7 @@ using MessageViewer::CSSHelper;
 
 #include "messageviewer/viewer/viewer.h"
 using namespace MessageViewer;
-#include <messagecore/settings/messagecoresettings.h>
+#include <settings/messagecoresettings.h>
 
 #include "messageviewer/viewer/attachmentstrategy.h"
 #include "messagecomposer/sender/messagesender.h"
@@ -65,7 +65,7 @@ using namespace MessageViewer;
 #include <KIO/JobUiDelegate>
 using MessageComposer::MessageFactory;
 
-#include "messagecore/helpers/messagehelpers.h"
+#include "helpers/messagehelpers.h"
 
 #include <Akonadi/Contact/ContactEditorDialog>
 

@@ -18,7 +18,7 @@
 
 #include "messageactions.h"
 
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "kmreaderwin.h"
 #include "kmkernel.h"
 #include "kernel/mailkernel.h"
@@ -29,9 +29,9 @@
 
 #include "pimcommon/widgets/annotationdialog.h"
 #include "pimcommon/webshortcut/webshortcutmenumanager.h"
-#include "messagecore/settings/messagecoresettings.h"
-#include "messagecore/misc/mailinglist.h"
-#include "messagecore/helpers/messagehelpers.h"
+#include "settings/messagecoresettings.h"
+#include "misc/mailinglist.h"
+#include "helpers/messagehelpers.h"
 #include "messageviewer/viewer/csshelper.h"
 #include "messageviewer/settings/messageviewersettings.h"
 

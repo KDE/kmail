@@ -36,7 +36,7 @@
 #include "util/mailutil.h"
 #include "kernel/mailkernel.h"
 #include "dialog/archivefolderdialog.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "foldertreeview.h"
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
@@ -94,9 +94,9 @@ using KSieveUi::SieveDebugDialog;
 
 #include "templateparser.h"
 
-#include "messagecore/settings/messagecoresettings.h"
-#include "messagecore/misc/mailinglist.h"
-#include "messagecore/helpers/messagehelpers.h"
+#include "settings/messagecoresettings.h"
+#include "misc/mailinglist.h"
+#include "helpers/messagehelpers.h"
 
 #include "dialog/kmknotify.h"
 #include "widgets/displaymessageformatactionmenu.h"

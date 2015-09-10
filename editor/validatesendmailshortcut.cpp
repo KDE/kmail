@@ -18,7 +18,7 @@
 #include "validatesendmailshortcut.h"
 #include "kmail_debug.h"
 #include "libkdepim/widgets/pimmessagebox.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 
 #include <KMessageBox>
 #include <KActionCollection>

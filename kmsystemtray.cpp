@@ -20,7 +20,7 @@
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "util/mailutil.h"
 #include "mailcommon/kernel/mailkernel.h"
 #include "mailcommon/folder/foldertreeview.h"

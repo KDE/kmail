@@ -2,7 +2,7 @@
 
 #include "kmkernel.h"
 
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "misc/broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
@@ -45,7 +45,7 @@ using KPIM::RecentAddresses;
 using KMail::MailServiceImpl;
 #include "job/jobscheduler.h"
 
-#include "messagecore/settings/messagecoresettings.h"
+#include "settings/messagecoresettings.h"
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
 #include "messageviewer/settings/messageviewersettings.h"

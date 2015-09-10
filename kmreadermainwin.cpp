@@ -65,7 +65,7 @@
 #include <AkonadiCore/itemmovejob.h>
 #include <Akonadi/KMime/MessageFlags>
 #include "pimcommon/texttospeech/texttospeech.h"
-#include "messagecore/helpers/messagehelpers.h"
+#include "helpers/messagehelpers.h"
 #include <util/mailutil.h>
 
 using namespace MailCommon;

@@ -39,9 +39,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
-#include "messagecore/settings/messagecoresettings.h"
-#include "messagecore/messagecoreutil.h"
-#include "settings/globalsettings.h"
+#include "settings/messagecoresettings.h"
+#include "messagecoreutil.h"
+#include "settings/kmailsettings.h"
 
 #include "mailcommon/util/mailutil.h"
 

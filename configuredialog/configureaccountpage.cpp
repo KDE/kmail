@@ -19,7 +19,7 @@
 #include "dialog/kmknotify.h"
 #include "newmailnotifierinterface.h"
 #include "kmkernel.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "configagentdelegate.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
 #include "mailcommon/folder/accountconfigorderdialog.h"

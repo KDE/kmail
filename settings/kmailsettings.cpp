@@ -21,7 +21,7 @@
     without including the source code for Qt in the source distribution.
 */
 
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include <QTimer>
 
 GlobalSettings *GlobalSettings::mSelf = Q_NULLPTR;

@@ -20,7 +20,7 @@
  *
  */
 
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "kmkernel.h"
 // my headers:
 #include "configuredialog.h"

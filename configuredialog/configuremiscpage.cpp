@@ -19,7 +19,7 @@
 #include "pimcommon/widgets/configureimmutablewidgetutils.h"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configureagentswidget.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 
 #include <mailcommon/folder/folderrequester.h>
 #include "messageviewer/widgets/invitationsettings.h"

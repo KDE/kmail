@@ -71,7 +71,7 @@
 
 #include "foldercollection.h"
 
-#include "messagecore/misc/mailinglist.h"
+#include "misc/mailinglist.h"
 #include "editor/composer.h"
 #include "mailcommon/filter/filteractions/filteraction.h"
 #include "mailcommon/filter/filtermanager.h"
@@ -92,11 +92,11 @@
 using KMail::SecondaryWindow;
 #include "util.h"
 #include "misc/broadcaststatus.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "utils/stringutil.h"
 #include "messageviewer/utils/autoqpointer.h"
 #include "messageviewer/settings/messageviewersettings.h"
-#include "messagecore/settings/messagecoresettings.h"
+#include "settings/messagecoresettings.h"
 
 #include <AkonadiCore/itemmovejob.h>
 #include <AkonadiCore/itemcopyjob.h>
@@ -114,8 +114,8 @@ using MailTransport::TransportManager;
 #include "messageviewer/viewer/nodehelper.h"
 #include "messageviewer/viewer/objecttreeemptysource.h"
 
-#include "messagecore/utils/stringutil.h"
-#include "messagecore/helpers/messagehelpers.h"
+#include "utils/stringutil.h"
+#include "helpers/messagehelpers.h"
 
 #include "messagecomposer/sender/messagesender.h"
 #include "messagecomposer/helper/messagehelper.h"

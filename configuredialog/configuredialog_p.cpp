@@ -5,7 +5,7 @@
 #include "configuredialog_p.h"
 
 // other KMail headers:
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 
 // other KDE headers:
 #include <QTabWidget>

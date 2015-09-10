@@ -13,7 +13,7 @@
 #include <qurl.h>
 
 #include "kmail_export.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include <AkonadiCore/servermanager.h>
 #include "messageviewer/viewer/viewer.h"
 #include "progresswidget/progressmanager.h"

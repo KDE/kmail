@@ -40,13 +40,13 @@
 #include "messagecomposer/composer-ng/richtextexternalcomposer.h"
 #include "kmcomposereditorwidgetng.h"
 #include "kmkernel.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "messageviewer/viewer/stl_util.h"
 #include "messageviewer/utils/util.h"
-#include "messagecore/utils/stringutil.h"
+#include "utils/stringutil.h"
 #include "util.h"
 #include "editor/widgets/snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
@@ -110,13 +110,13 @@
 #include <messagecomposer/composer/signaturecontroller.h>
 #include <messagecomposer/job/inserttextfilejob.h>
 #include <messagecomposer/composer/composerlineedit.h>
-#include <messagecore/attachment/attachmentpart.h>
-#include "messagecore/settings/messagecoresettings.h"
+#include <attachment/attachmentpart.h>
+#include "settings/messagecoresettings.h"
 #include <templateparser.h>
 #include <templatesconfiguration.h>
-#include "messagecore/helpers/nodehelper.h"
+#include "helpers/nodehelper.h"
 #include <Akonadi/KMime/MessageStatus>
-#include "messagecore/helpers/messagehelpers.h"
+#include "helpers/messagehelpers.h"
 #include "mailcommon/folder/folderrequester.h"
 #include "mailcommon/folder/foldercollection.h"
 

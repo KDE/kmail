@@ -25,7 +25,7 @@
 #include "attachmentview.h"
 #include "messagecomposer/job/attachmentfrompublickeyjob.h"
 #include "foldercollection.h"
-#include "settings/globalsettings.h"
+#include "settings/kmailsettings.h"
 #include "kmcommands.h"
 #include "editor/kmcomposewin.h"
 #include "kmkernel.h"
@@ -38,7 +38,7 @@
 #include <libkleo/kleo/cryptobackendfactory.h>
 
 #include <messagecomposer/attachment/attachmentmodel.h>
-#include <messagecore/attachment/attachmentpart.h>
+#include <attachment/attachmentpart.h>
 
 using namespace KMail;
 using namespace KPIM;
