@@ -16,7 +16,7 @@
 */
 
 #include "cryptostateindicatorwidget.h"
-#include "messagecore/settings/messagecoresettings.h"
+#include "messagecore/messagecoreutil.h"
 
 #include <KColorScheme>
 #include <KLocalizedString>
@@ -30,6 +30,9 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
       mIsSign(false),
       mIsEncrypted(false)
 {
+    // Get the colors for the label
+    KColorScheme scheme(QPalette::Active, KColorScheme::View);
+
     QHBoxLayout *hbox = new QHBoxLayout;
     setLayout(hbox);
     hbox->setMargin(0);
@@ -37,29 +40,18 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     mSignatureStateIndicator->setAlignment(Qt::AlignHCenter);
     hbox->addWidget(mSignatureStateIndicator);
     mSignatureStateIndicator->setObjectName(QStringLiteral("signatureindicator"));
-
-    // Get the colors for the label
     QPalette p(mSignatureStateIndicator->palette());
-    KColorScheme scheme(QPalette::Active, KColorScheme::View);
-    const QColor defaultSignedColor =  // pgp signed
-        scheme.background(KColorScheme::PositiveBackground).color();
-    const QColor defaultEncryptedColor(0x00, 0x80, 0xFF);   // light blue // pgp encrypted
-
-    QColor signedColor = defaultSignedColor;
-    QColor encryptedColor = defaultEncryptedColor;
-    if (!MessageCore::GlobalSettings::self()->useDefaultColors()) {
-        signedColor = MessageCore::GlobalSettings::self()->pgpSignedMessageColor();
-        encryptedColor = MessageCore::GlobalSettings::self()->pgpEncryptedMessageColor();
-    }
-
-    p.setColor(QPalette::Window, signedColor);
+    p.setColor(QPalette::Window, MessageCore::Util::pgpSignedTrustedMessageColor());
+    p.setColor(QPalette::Text, MessageCore::Util::pgpSignedTrustedTextColor());
     mSignatureStateIndicator->setPalette(p);
     mSignatureStateIndicator->setAutoFillBackground(true);
 
     mEncryptionStateIndicator = new QLabel(this);
     mEncryptionStateIndicator->setAlignment(Qt::AlignHCenter);
     hbox->addWidget(mEncryptionStateIndicator);
-    p.setColor(QPalette::Window, encryptedColor);
+    p = mEncryptionStateIndicator->palette();
+    p.setColor(QPalette::Window, MessageCore::Util::pgpEncryptedMessageColor());
+    p.setColor(QPalette::Text, MessageCore::Util::pgpEncryptedTextColor());
     mEncryptionStateIndicator->setPalette(p);
     mEncryptionStateIndicator->setAutoFillBackground(true);
     mEncryptionStateIndicator->setObjectName(QStringLiteral("encryptionindicator"));

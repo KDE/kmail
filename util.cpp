@@ -198,26 +198,6 @@ void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, con
     lastEncrypt = KMime::isEncrypted(msg.data());
 }
 
-QColor KMail::Util::misspelledColor()
-{
-    return QColor(Qt::red);
-}
-
-QColor KMail::Util::quoteL1Color()
-{
-    return QColor(0x00, 0x80, 0x00);
-}
-
-QColor KMail::Util::quoteL2Color()
-{
-    return QColor(0x00, 0x70, 0x00);
-}
-
-QColor KMail::Util::quoteL3Color()
-{
-    return QColor(0x00, 0x60, 0x00);
-}
-
 void KMail::Util::addQActionHelpText(QAction *action, const QString &text)
 {
     action->setStatusTip(text);

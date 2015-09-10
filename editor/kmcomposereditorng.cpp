@@ -89,10 +89,10 @@ void KMComposerEditorNg::insertFromMimeData(const QMimeData *source)
 
 void KMComposerEditorNg::setHighlighterColors(MessageComposer::RichTextComposerEmailQuoteHighlighter *highlighter)
 {
-    QColor color1 = KMail::Util::quoteL1Color();
-    QColor color2 = KMail::Util::quoteL2Color();
-    QColor color3 = KMail::Util::quoteL3Color();
-    QColor misspelled = KMail::Util::misspelledColor();
+    QColor color1 = MessageCore::Util::quoteLevel1DefaultTextColor();
+    QColor color2 = MessageCore::Util::quoteLevel2DefaultTextColor();
+    QColor color3 = MessageCore::Util::quoteLevel3DefaultTextColor();
+    QColor misspelled = MessageCore::Util::misspelledDefaultTextColor();
 
     if (!MessageCore::GlobalSettings::self()->useDefaultColors()) {
         color1 = MessageCore::GlobalSettings::self()->quotedText1();

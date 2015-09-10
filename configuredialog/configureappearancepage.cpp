@@ -23,6 +23,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messagelist/utils/aggregationconfigbutton.h"
 #include "messagelist/utils/themecombobox.h"
 #include "messagelist/utils/themeconfigbutton.h"
+#include "messagelist/core/settings.h"
 #include "mailcommon/tag/tagwidget.h"
 #include "mailcommon/tag/tag.h"
 #include "kmkernel.h"
@@ -39,6 +40,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"
 #include "messagecore/settings/messagecoresettings.h"
+#include "messagecore/messagecoreutil.h"
 #include "settings/globalsettings.h"
 
 #include "mailcommon/util/mailutil.h"
@@ -339,11 +341,6 @@ static const struct {
     { "UnreadMessageColor", I18N_NOOP("Unread Message") },
     { "ImportantMessageColor", I18N_NOOP("Important Message") },
     { "TodoMessageColor", I18N_NOOP("Action Item Message") },
-    { "PGPMessageEncr", I18N_NOOP("OpenPGP Message - Encrypted") },
-    { "PGPMessageOkKeyOk", I18N_NOOP("OpenPGP Message - Valid Signature with Trusted Key") },
-    { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP Message - Valid Signature with Untrusted Key") },
-    { "PGPMessageWarn", I18N_NOOP("OpenPGP Message - Unchecked Signature") },
-    { "PGPMessageErr", I18N_NOOP("OpenPGP Message - Bad Signature") },
     { "HTMLWarningColor", I18N_NOOP("Border Around Warning Prepending HTML Messages") },
     { "CloseToQuotaColor", I18N_NOOP("Folder Name and Size When Close to Quota") },
     { "ColorbarBackgroundPlain", I18N_NOOP("HTML Status Bar Background - No HTML Message") },
@@ -422,25 +419,18 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
 
         KConfigGroup reader(KMKernel::self()->config(), "Reader");
 
-        KConfigGroup messageListView(KMKernel::self()->config(), "MessageListView::Colors");
-
         KConfigGroup collectionFolderView(KMKernel::self()->config(), "CollectionFolderView");
 
         static const QColor defaultColor[ numColorNames ] = {
-            KMail::Util::quoteL1Color(),
-            KMail::Util::quoteL2Color(),
-            KMail::Util::quoteL3Color(),
+            MessageCore::Util::quoteLevel1DefaultTextColor(),
+            MessageCore::Util::quoteLevel2DefaultTextColor(),
+            MessageCore::Util::quoteLevel3DefaultTextColor(),
             scheme.foreground(KColorScheme::LinkText).color(),   // link
             scheme.foreground(KColorScheme::VisitedText).color(),  // visited link
             scheme.foreground(KColorScheme::NegativeText).color(),   // misspelled words
             MessageList::Util::unreadDefaultMessageColor(), // unread mgs
             MessageList::Util::importantDefaultMessageColor(), // important msg
             MessageList::Util::todoDefaultMessageColor(), // action item mgs
-            QColor(0x00, 0x80, 0xFF),   // pgp encrypted
-            scheme.background(KColorScheme::PositiveBackground).color(),   // pgp ok, trusted key
-            QColor(0xFF, 0xFF, 0x40),   // pgp ok, untrusted key
-            QColor(0xFF, 0xFF, 0x40),   // pgp unchk
-            Qt::red, // pgp bad
             QColor(0xFF, 0x40, 0x40),   // warning text color
             MailCommon::Util::defaultQuotaColor(), // close to quota
             Qt::lightGray, // colorbar plain bg
@@ -454,10 +444,12 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
         for (int i = 0 ; i < numColorNames ; ++i) {
             if (loadFromConfig) {
                 const QString configName = QLatin1String(colorNames[i].configName);
-                if (configName == QLatin1String("UnreadMessageColor") ||
-                        configName == QLatin1String("ImportantMessageColor") ||
-                        configName == QLatin1String("TodoMessageColor")) {
-                    mColorList->setColorSilently(i, messageListView.readEntry(configName, defaultColor[i]));
+                if (configName == QLatin1String("UnreadMessageColor")) {
+                    mColorList->setColorSilently(i, MessageList::Core::Settings::self()->unreadMessageColor());
+                } else if (configName == QLatin1String("ImportantMessageColor")) {
+                    mColorList->setColorSilently(i, MessageList::Core::Settings::self()->importantMessageColor());
+                } else if (configName == QLatin1String("TodoMessageColor")) {
+                    mColorList->setColorSilently(i, MessageList::Core::Settings::self()->todoMessageColor());
                 } else if (configName == QLatin1String("BrokenAccountColor")) {
                     mColorList->setColorSilently(i, collectionFolderView.readEntry(configName, defaultColor[i]));
                 } else {
@@ -486,7 +478,6 @@ void AppearancePage::ColorsTab::save()
         return;
     }
     KConfigGroup reader(KMKernel::self()->config(), "Reader");
-    KConfigGroup messageListView(KMKernel::self()->config(), "MessageListView::Colors");
     KConfigGroup collectionFolderView(KMKernel::self()->config(), "CollectionFolderView");
     bool customColors = mCustomColorCheck->isChecked();
     MessageCore::GlobalSettings::self()->setUseDefaultColors(!customColors);
@@ -494,16 +485,13 @@ void AppearancePage::ColorsTab::save()
     KColorScheme scheme(QPalette::Active, KColorScheme::View);
 
     for (int i = 0 ; i < numColorNames ; ++i) {
-        // Don't write color info when we use default colors, but write
-        // if it's already there:
         const QString configName = QLatin1String(colorNames[i].configName);
-        if (configName == QLatin1String("UnreadMessageColor") ||
-                configName == QLatin1String("ImportantMessageColor") ||
-                configName == QLatin1String("TodoMessageColor")) {
-            if (customColors || messageListView.hasKey(configName)) {
-                messageListView.writeEntry(configName, mColorList->color(i));
-            }
-
+        if (customColors && configName == QLatin1String("UnreadMessageColor")) {
+            MessageList::Core::Settings::self()->setUnreadMessageColor(mColorList->color(i));
+        } else if (customColors && configName == QLatin1String("ImportantMessageColor")) {
+            MessageList::Core::Settings::self()->setImportantMessageColor(mColorList->color(i));
+        } else if (customColors && configName == QLatin1String("TodoMessageColor")) {
+            MessageList::Core::Settings::self()->setTodoMessageColor(mColorList->color(i));
         } else if (configName == QLatin1String("BrokenAccountColor")) {
             if (customColors || collectionFolderView.hasKey(configName)) {
                 collectionFolderView.writeEntry(configName, mColorList->color(i));
