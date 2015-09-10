@@ -28,7 +28,7 @@
 #include <QCheckBox>
 #include "widgets/kactionmenuchangecase.h"
 #include <KPIMTextEdit/EMailQuoteHighlighter>
-#include "messagecore/settings/globalsettings.h"
+#include "messagecore/settings/globalsettings_messagecore_impl.h"
 #include <Sonnet/ConfigDialog>
 #include <composer-ng/richtextcomposeremailquotehighlighter.h>
 

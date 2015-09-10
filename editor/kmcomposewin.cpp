@@ -111,7 +111,7 @@
 #include <messagecomposer/job/inserttextfilejob.h>
 #include <messagecomposer/composer/composerlineedit.h>
 #include <messagecore/attachment/attachmentpart.h>
-#include "messagecore/settings/globalsettings.h"
+#include "messagecore/settings/globalsettings_messagecore_impl.h"
 #include <templateparser.h>
 #include <templatesconfiguration.h>
 #include "messagecore/helpers/nodehelper.h"

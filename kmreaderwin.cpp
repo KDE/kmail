@@ -53,7 +53,7 @@ using MessageViewer::CSSHelper;
 
 #include "messageviewer/viewer/viewer.h"
 using namespace MessageViewer;
-#include <messagecore/settings/globalsettings.h>
+#include <messagecore/settings/globalsettings_messagecore_impl.h>
 
 #include "messageviewer/viewer/attachmentstrategy.h"
 #include "messagecomposer/sender/messagesender.h"

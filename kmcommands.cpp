@@ -96,7 +96,7 @@ using KMail::SecondaryWindow;
 #include "utils/stringutil.h"
 #include "messageviewer/utils/autoqpointer.h"
 #include "messageviewer/settings/globalsettings.h"
-#include "messagecore/settings/globalsettings.h"
+#include "messagecore/settings/globalsettings_messagecore_impl.h"
 
 #include <AkonadiCore/itemmovejob.h>
 #include <AkonadiCore/itemcopyjob.h>
