@@ -33,7 +33,7 @@ set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.
 add_executable( cryptostateindicatorwidgettest ${kmail_cryptostateindicatorwidgettest_source})
 add_test(cryptostateindicatorwidgettest cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
-target_link_libraries( cryptostateindicatorwidgettest Qt5::Test  messagecore Qt5::Widgets KF5::ConfigWidgets KF5::I18n)
+target_link_libraries( cryptostateindicatorwidgettest Qt5::Test  KF5::MessageCore Qt5::Widgets KF5::ConfigWidgets KF5::I18n)
 
 
 set( kmail_kactionmenutransporttest_source kactionmenutransporttest.cpp ../widgets/kactionmenutransport.cpp)

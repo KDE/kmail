@@ -172,7 +172,7 @@ ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIE
 set(kmailprivate_LIB_SRCS
      ${kmail_common_SRCS}
      kmmainwin.cpp
-     settings/globalsettings.cpp
+     settings/kmailsettings.cpp
      kmreaderwin.cpp
      kmsystemtray.cpp
      undostack.cpp
@@ -278,7 +278,7 @@ target_link_libraries(kmailprivate
     KF5::AkonadiCore
     KF5::AkonadiPrivate
     KF5::AkonadiMime
-    messagecore
+    KF5::MessageCore
     messagecomposer
     messagelist
     pimcommon
