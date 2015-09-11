@@ -216,6 +216,7 @@ qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
 )
+#TODO fix me. We need to find a solution before to split lib.
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${CMAKE_SOURCE_DIR}/libkdepim/src/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h
     KMail::MailServiceImpl
