@@ -32,8 +32,8 @@
 #include "settings/messagecoresettings.h"
 #include "misc/mailinglist.h"
 #include "helpers/messagehelpers.h"
-#include "messageviewer/viewer/csshelper.h"
-#include "messageviewer/settings/messageviewersettings.h"
+#include "viewer/csshelper.h"
+#include "settings/messageviewersettings.h"
 
 #include <AkonadiCore/itemfetchjob.h>
 #include <Akonadi/KMime/MessageParts>

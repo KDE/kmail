@@ -23,7 +23,7 @@
 // KMail
 #include "codecmanager.h"
 
-#include "messageviewer/viewer/nodehelper.h"
+#include "viewer/nodehelper.h"
 
 #include <KCharsets>
 // Qt

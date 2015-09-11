@@ -10,7 +10,7 @@ set( kmail_displaymenu_source displaymessageformatactionmenutest.cpp ../widgets/
 add_executable( displaymessageformatactionmenutest ${kmail_displaymenu_source} )
 add_test( displaymessageformatactionmenutest displaymessageformatactionmenutest )
 ecm_mark_as_test(kmail-displaymessageformatactionmenutest)
-target_link_libraries( displaymessageformatactionmenutest Qt5::Test  messageviewer)
+target_link_libraries( displaymessageformatactionmenutest Qt5::Test  KF5::MessageViewer)
 
 set( kmail_identityaddvcarddialog_source identityaddvcarddialogtest.cpp ../identity/identityaddvcarddialog.cpp )
 add_executable( identityaddvcarddialogtest  ${kmail_identityaddvcarddialog_source})

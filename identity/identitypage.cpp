@@ -31,7 +31,7 @@
 #endif
 
 #include <mailcommon/kernel/mailkernel.h>
-#include <messageviewer/utils/autoqpointer.h>
+#include <utils/autoqpointer.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 

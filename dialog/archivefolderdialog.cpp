@@ -22,7 +22,7 @@
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "folderrequester.h"
-#include "messageviewer/utils/util.h"
+#include "utils/messageviewerutil.h"
 
 #include <AkonadiCore/Collection>
 

@@ -27,7 +27,7 @@ target_link_libraries(kcm_kpimidentities
   KF5::IconThemes  
   mailcommon
   messagecomposer
-  messageviewer
+  KF5::MessageViewer
   KF5::TemplateParser
   pimcommon
   kleo

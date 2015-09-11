@@ -19,7 +19,7 @@
 #define DisplayMessageFormatActionMenu_H
 
 #include <KActionMenu>
-#include "messageviewer/viewer/viewer.h"
+#include "viewer/viewer.h"
 
 class DisplayMessageFormatActionMenu : public KActionMenu
 {

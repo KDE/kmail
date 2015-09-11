@@ -82,11 +82,11 @@
 #ifndef QT_NO_CURSOR
 #include "mailcommon/util/kcursorsaver.h"
 #endif
-#include "messageviewer/viewer/objecttreeparser.h"
-#include "messageviewer/viewer/csshelper.h"
-#include "messageviewer/utils/util.h"
-#include "messageviewer/header/headerstrategy.h"
-#include "messageviewer/header/headerstyle.h"
+#include "viewer/objecttreeparser.h"
+#include "viewer/csshelper.h"
+#include "utils/util.h"
+#include "header/headerstrategy.h"
+#include "header/headerstyle.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
@@ -94,8 +94,8 @@ using KMail::SecondaryWindow;
 #include "misc/broadcaststatus.h"
 #include "settings/kmailsettings.h"
 #include "utils/stringutil.h"
-#include "messageviewer/utils/autoqpointer.h"
-#include "messageviewer/settings/messageviewersettings.h"
+#include "utils/autoqpointer.h"
+#include "settings/messageviewersettings.h"
 #include "settings/messagecoresettings.h"
 
 #include <AkonadiCore/itemmovejob.h>
@@ -111,8 +111,8 @@ using KMail::SecondaryWindow;
 #include <MailTransport/mailtransport/transportmanager.h>
 using MailTransport::TransportManager;
 
-#include "messageviewer/viewer/nodehelper.h"
-#include "messageviewer/viewer/objecttreeemptysource.h"
+#include "viewer/nodehelper.h"
+#include "viewer/objecttreeemptysource.h"
 
 #include "utils/stringutil.h"
 #include "helpers/messagehelpers.h"

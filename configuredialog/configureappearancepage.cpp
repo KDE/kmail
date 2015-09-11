@@ -34,8 +34,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "mailcommon/mailcommonsettings_base.h"
 
-#include "messageviewer/widgets/configurewidget.h"
-#include "messageviewer/settings/messageviewersettings.h"
+#include "widgets/configurewidget.h"
+#include "settings/messageviewersettings.h"
 
 #include "messagelist/core/settings.h"
 #include "messagelist/messagelistutil.h"

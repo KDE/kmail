@@ -300,7 +300,7 @@ target_link_libraries(kmailprivate
     KF5::KIOCore
     KF5::Contacts
     KF5::PimTextEdit
-    messageviewer
+    KF5::MessageViewer
     sendlater
     followupreminder
     KF5::GrantleeTheme
@@ -310,7 +310,7 @@ target_link_libraries(kmailprivate
     KF5::Ldap
 )
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messagelist,INTERFACE_INCLUDE_DIRECTORIES>)
-target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messageviewer,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:mailcommon,INTERFACE_INCLUDE_DIRECTORIES>)
 
 set_target_properties(kmailprivate

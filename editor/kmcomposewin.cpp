@@ -44,8 +44,8 @@
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
-#include "messageviewer/viewer/stl_util.h"
-#include "messageviewer/utils/util.h"
+#include "viewer/stl_util.h"
+#include "utils/util.h"
 #include "utils/stringutil.h"
 #include "util.h"
 #include "editor/widgets/snippetwidget.h"
@@ -92,15 +92,15 @@
 #include "kleo/cryptobackendfactory.h"
 #include "kleo/exportjob.h"
 #include "kleo/specialjob.h"
-#include <messageviewer/viewer/objecttreeemptysource.h>
+#include <viewer/objecttreeemptysource.h>
 
 #ifndef QT_NO_CURSOR
 #include <mailcommon/util/kcursorsaver.h>
 #endif
 
-#include <messageviewer/viewer/objecttreeparser.h>
-#include <messageviewer/viewer/nodehelper.h>
-#include <messageviewer/settings/messageviewersettings.h>
+#include <viewer/objecttreeparser.h>
+#include <viewer/nodehelper.h>
+#include <settings/messageviewersettings.h>
 #include <messagecomposer/composer/composer.h>
 #include <messagecomposer/part/globalpart.h>
 #include <messagecomposer/part/infopart.h>

@@ -6,7 +6,7 @@
 #include "messagecomposer/helper/messagefactory.h"
 #include "messagelist/core/view.h"
 #include "search/searchpattern.h"
-#include "messageviewer/viewer/viewer.h"
+#include "viewer/viewer.h"
 
 #include <Akonadi/KMime/MessageStatus>
 #include <kio/job.h>

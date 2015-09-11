@@ -38,12 +38,12 @@
 #include "kmcommands.h"
 #include "mailcommon/mdn/sendmdnhandler.h"
 #include <QVBoxLayout>
-#include "messageviewer/header/headerstrategy.h"
-#include "messageviewer/header/headerstyle.h"
-#include "messageviewer/viewer/mailwebview.h"
-#include "messageviewer/utils/markmessagereadhandler.h"
-#include "messageviewer/settings/messageviewersettings.h"
-#include "messageviewer/viewer/csshelper.h"
+#include "header/headerstrategy.h"
+#include "header/headerstyle.h"
+#include "viewer/mailwebview.h"
+#include "utils/markmessagereadhandler.h"
+#include "settings/messageviewersettings.h"
+#include "viewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
 #include "utils/stringutil.h"
@@ -51,11 +51,11 @@ using MessageViewer::CSSHelper;
 #include <kmime/kmime_mdn.h>
 #include <akonadi/kmime/messageflags.h>
 
-#include "messageviewer/viewer/viewer.h"
+#include "viewer/viewer.h"
 using namespace MessageViewer;
 #include <settings/messagecoresettings.h>
 
-#include "messageviewer/viewer/attachmentstrategy.h"
+#include "viewer/attachmentstrategy.h"
 #include "messagecomposer/sender/messagesender.h"
 #include "messagecomposer/helper/messagefactory.h"
 #include "messagecomposer/composer/composer.h"

@@ -46,7 +46,7 @@
 #include <QMenuBar>
 #include <qmenu.h>
 #include "kmmainwidget.h"
-#include "messageviewer/viewer/csshelper.h"
+#include "viewer/csshelper.h"
 #include "customtemplatesmenu.h"
 #include "messageactions.h"
 #include "util.h"
@@ -58,7 +58,7 @@
 #include <KEmailAddress>
 #include <kmime/kmime_message.h>
 
-#include <messageviewer/viewer/viewer.h>
+#include <viewer/viewer.h>
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemcreatejob.h>

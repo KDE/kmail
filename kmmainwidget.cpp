@@ -79,12 +79,12 @@ using KSieveUi::SieveDebugDialog;
 // Other PIM includes
 #include "kdepim-version.h"
 
-#include "messageviewer/utils/autoqpointer.h"
-#include "messageviewer/settings/messageviewersettings.h"
-#include "messageviewer/viewer/viewer.h"
-#include "messageviewer/viewer/attachmentstrategy.h"
-#include "messageviewer/header/headerstrategy.h"
-#include "messageviewer/header/headerstyle.h"
+#include "utils/autoqpointer.h"
+#include "settings/messageviewersettings.h"
+#include "viewer/viewer.h"
+#include "viewer/attachmentstrategy.h"
+#include "header/headerstrategy.h"
+#include "header/headerstyle.h"
 #ifndef QT_NO_CURSOR
 #include "mailcommon/util/kcursorsaver.h"
 #endif

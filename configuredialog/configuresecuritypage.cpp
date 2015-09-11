@@ -18,9 +18,9 @@
 #include "configuresecuritypage.h"
 #include "pimcommon/widgets/configureimmutablewidgetutils.h"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include "messageviewer/settings/messageviewersettings.h"
+#include "settings/messageviewersettings.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
-#include "messageviewer/adblock/adblocksettingwidget.h"
+#include "adblock/adblocksettingwidget.h"
 #include "mailcommon/folder/foldercollection.h"
 #include "settings/kmailsettings.h"
 

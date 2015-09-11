@@ -32,7 +32,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "templatesconfiguration.h"
 #include "customtemplates.h"
 #include "globalsettings_templateparser.h"
-#include "messageviewer/utils/autoqpointer.h"
+#include "utils/autoqpointer.h"
 #include "addressline/recentaddress/recentaddresses.h"
 #include <libkdepim/ldap/ldapclientsearch.h>
 #include "addressline/completionorder/completionordereditor.h"

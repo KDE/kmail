@@ -22,9 +22,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "settings/kmailsettings.h"
 
 #include <mailcommon/folder/folderrequester.h>
-#include "messageviewer/widgets/invitationsettings.h"
-#include "messageviewer/widgets/printingsettings.h"
-#include "messageviewer/settings/messageviewersettings.h"
+#include "widgets/invitationsettings.h"
+#include "widgets/printingsettings.h"
+#include "settings/messageviewersettings.h"
 
 #include <KCModuleProxy>
 #include <KCModuleInfo>

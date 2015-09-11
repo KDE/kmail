@@ -23,8 +23,8 @@
 
 #include <QWidget>
 #include <qurl.h>
-#include <messageviewer/viewer/viewer.h>
-#include <messageviewer/interfaces/bodypart.h>
+#include <viewer/viewer.h>
+#include <interfaces/bodypart.h>
 #include <AkonadiCore/Item>
 #include <KContacts/Addressee>
 class KActionCollection;

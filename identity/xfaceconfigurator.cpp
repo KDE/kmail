@@ -37,7 +37,7 @@
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditor.h"
 #include "pimcommon/texteditor/plaintexteditor/plaintexteditorwidget.h"
-#include <messageviewer/header/kxface.h>
+#include <header/kxface.h>
 
 #include <KConfigGroup>
 #include <KJobWidgets>
