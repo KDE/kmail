@@ -60,13 +60,13 @@
 
 #include "pimcommon/autocorrection/autocorrectionlanguage.h"
 
-#include <libkdepim/addressline/addresslineedit/addresseelineedit.h>
+#include <Libkdepim/AddresseeLineEdit>
 // libkleopatra:
 #include "libkleo/ui/keyrequester.h"
 #include "kleo/cryptobackendfactory.h"
 
 #include <KEmailAddress>
-#include <libkdepim/misc/emailvalidator.h>
+#include <Libkdepim/EmailValidator>
 #include <MailTransport/mailtransport/transport.h>
 #include <MailTransport/mailtransport/transportmanager.h>
 #include <MailTransport/mailtransport/transportcombobox.h>

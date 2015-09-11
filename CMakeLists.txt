@@ -217,7 +217,7 @@ qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
 )
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
-    ${CMAKE_SOURCE_DIR}/libkdepim/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h
+    ${CMAKE_SOURCE_DIR}/libkdepim/src/interfaces/org.kde.mailtransport.service.xml mailserviceimpl.h
     KMail::MailServiceImpl
 )
 
@@ -296,7 +296,7 @@ target_link_libraries(kmailprivate
     KF5::KCMUtils
     kleo
     ksieveui
-    kdepim
+    KF5::Libkdepim
     KF5::KIOCore
     KF5::Contacts
     KF5::PimTextEdit
@@ -335,7 +335,7 @@ add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
 target_link_libraries(kmailpart
     kmailprivate
     pimcommon
-    kdepim
+    KF5::Libkdepim
     KF5::KCMUtils
     KF5::Parts
     KF5::IconThemes
@@ -352,7 +352,7 @@ target_link_libraries(kmail
     KF5::KontactInterface
     kmailprivate
     pimcommon
-    kdepim
+    KF5::Libkdepim
     KF5::TemplateParser
 )
 

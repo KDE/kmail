@@ -21,7 +21,7 @@
 #include "createnewcontactjob.h"
 #include "util.h"
 
-#include <libkdepim/misc/broadcaststatus.h>
+#include <Libkdepim/BroadcastStatus>
 
 #include <KContacts/Addressee>
 #include <KContacts/ContactGroup>

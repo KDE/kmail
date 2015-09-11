@@ -30,7 +30,7 @@
 #include "pimcommon/widgets/annotationdialog.h"
 #include "pimcommon/webshortcut/webshortcutmenumanager.h"
 #include "settings/messagecoresettings.h"
-#include "misc/mailinglist.h"
+#include "MessageCore/MailingList"
 #include "helpers/messagehelpers.h"
 #include "viewer/csshelper.h"
 #include "settings/messageviewersettings.h"

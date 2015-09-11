@@ -95,7 +95,7 @@ using KSieveUi::SieveDebugDialog;
 #include "TemplateParser/TemplateParser"
 
 #include "settings/messagecoresettings.h"
-#include "misc/mailinglist.h"
+#include "MessageCore/MailingList"
 #include "helpers/messagehelpers.h"
 
 #include "dialog/kmknotify.h"

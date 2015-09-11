@@ -72,8 +72,8 @@
 #include "widgets/kactionmenutransport.h"
 #include "widgets/kactionmenuchangecase.h"
 
-#include "libkdepim/progresswidget/statusbarprogresswidget.h"
-#include "libkdepim/progresswidget/progressstatusbarwidget.h"
+#include "Libkdepim/StatusbarProgressWidget"
+#include "Libkdepim/ProgressStatusBarWidget"
 
 #include "pimcommon/util/editorutil.h"
 #include "pimcommon/storageservice/storageservicemanager.h"
@@ -123,7 +123,7 @@
 #include "widgets/statusbarlabeltoggledstate.h"
 
 // LIBKDEPIM includes
-#include <libkdepim/addressline/recentaddress/recentaddresses.h>
+#include <Libkdepim/RecentAddresses>
 
 // KDEPIMLIBS includes
 #include <AkonadiCore/changerecorder.h>

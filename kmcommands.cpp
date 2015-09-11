@@ -71,7 +71,7 @@
 
 #include "foldercollection.h"
 
-#include "misc/mailinglist.h"
+#include "MessageCore/MailingList"
 #include "editor/composer.h"
 #include "mailcommon/filter/filteractions/filteraction.h"
 #include "mailcommon/filter/filtermanager.h"

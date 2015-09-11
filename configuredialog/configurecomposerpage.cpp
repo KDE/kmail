@@ -34,7 +34,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "globalsettings_templateparser.h"
 #include "utils/autoqpointer.h"
 #include "addressline/recentaddress/recentaddresses.h"
-#include <libkdepim/ldap/ldapclientsearch.h>
+#include <Libkdepim/LdapClientSearch>
 #include "addressline/completionorder/completionordereditor.h"
 using KPIM::RecentAddresses;
 

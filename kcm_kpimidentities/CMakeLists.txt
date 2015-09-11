@@ -31,7 +31,7 @@ target_link_libraries(kcm_kpimidentities
   KF5::TemplateParser
   pimcommon
   kleo
-  kdepim
+  KF5::Libkdepim
 )
 
 install(FILES kcm_kpimidentities.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

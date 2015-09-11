@@ -17,7 +17,7 @@
 
 #include "addemailtoexistingcontactjob.h"
 #include "kmail_debug.h"
-#include <libkdepim/misc/broadcaststatus.h>
+#include <Libkdepim/BroadcastStatus>
 
 #include <AkonadiCore/ItemModifyJob>
 

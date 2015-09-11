@@ -31,10 +31,10 @@
 
 #include "kdepim-version.h"
 #include <KEmailAddress>
-#include <libkdepim/job/addemailaddressjob.h>
-#include <libkdepim/job/openemailaddressjob.h>
-#include <libkdepim/job/addemaildisplayjob.h>
-#include <libkdepim/misc/broadcaststatus.h>
+#include <Libkdepim/AddEmailAddressJob>
+#include <Libkdepim/OpenEmailAddressJob>
+#include <Libkdepim/AddEmailDisplayJob>
+#include <Libkdepim/BroadcastStatus>
 #include "kmcommands.h"
 #include "mailcommon/mdn/sendmdnhandler.h"
 #include <QVBoxLayout>

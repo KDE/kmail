@@ -202,7 +202,7 @@
   <customwidget>
    <class>KPIM::ProgressIndicatorWidget</class>
    <extends>QLabel</extends>
-   <header>libkdepim/widgets/progressindicatorwidget.h</header>
+   <header>Libkdepim/ProgressIndicatorWidget</header>
    <container>1</container>
   </customwidget>
   <customwidget>
