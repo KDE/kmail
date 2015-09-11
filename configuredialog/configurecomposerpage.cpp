@@ -30,7 +30,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "pimcommon/widgets/simplestringlisteditor.h"
 #include "templatesconfiguration_kfg.h"
 #include "templatesconfiguration.h"
-#include "customtemplates.h"
+#include "templateparser/customtemplates.h"
 #include "globalsettings_templateparser.h"
 #include "utils/autoqpointer.h"
 #include "addressline/recentaddress/recentaddresses.h"
