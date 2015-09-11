@@ -56,9 +56,9 @@ using KMail::MailServiceImpl;
 #include "pimcommon/settings/pimcommonsettings.h"
 #include "pimcommon/autocorrection/autocorrection.h"
 
-#include "templateparser.h"
+#include "TemplateParser/TemplateParser"
 #include "globalsettings_templateparser.h"
-#include "templatesutil.h"
+#include "TemplateParser/TemplatesUtil"
 
 #include "foldercollection.h"
 #include "editor/codec/codecmanager.h"

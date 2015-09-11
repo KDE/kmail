@@ -29,7 +29,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configuredialog/configuredialoglistview.h"
 #include "pimcommon/widgets/simplestringlisteditor.h"
 #include "templatesconfiguration_kfg.h"
-#include "templatesconfiguration.h"
+#include "TemplateParser/TemplatesConfiguration"
 #include "templateparser/customtemplates.h"
 #include "globalsettings_templateparser.h"
 #include "utils/autoqpointer.h"

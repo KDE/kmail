@@ -47,7 +47,7 @@
 #include <qmenu.h>
 #include "kmmainwidget.h"
 #include "viewer/csshelper.h"
-#include "customtemplatesmenu.h"
+#include <TemplateParser/CustomTemplatesMenu>
 #include "messageactions.h"
 #include "util.h"
 #include "kernel/mailkernel.h"

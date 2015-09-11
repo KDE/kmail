@@ -29,7 +29,7 @@
 #include "kmcommands.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
-#include "customtemplatesmenu.h"
+#include <TemplateParser/CustomTemplatesMenu>
 #include "folderselectiondialog.h"
 #include "foldertreewidget.h"
 #include "util.h"
@@ -92,7 +92,7 @@ using KSieveUi::SieveDebugDialog;
 #include "messagecomposer/sender/messagesender.h"
 #include "messagecomposer/helper/messagehelper.h"
 
-#include "templateparser.h"
+#include "TemplateParser/TemplateParser"
 
 #include "settings/messagecoresettings.h"
 #include "misc/mailinglist.h"

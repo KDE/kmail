@@ -52,7 +52,7 @@
 #include "job/addressvalidationjob.h"
 #include "kleo_util.h"
 #include "utils/stringutil.h"
-#include "templatesconfiguration.h"
+#include "TemplateParser/TemplatesConfiguration"
 #include "templatesconfiguration_kfg.h"
 // other kdepim headers:
 #include <KIdentityManagement/kidentitymanagement/identity.h>

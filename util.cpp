@@ -41,7 +41,7 @@
 #include "utils/stringutil.h"
 #include "messagecomposer/helper/messagehelper.h"
 
-#include "templateparser.h"
+#include "TemplateParser/TemplateParser"
 
 #include <kmime/kmime_message.h>
 #include <kmessagebox.h>

@@ -25,7 +25,7 @@
 #include "kmmainwidget.h"
 #include "util.h"
 #include "kmcommands.h"
-#include "customtemplatesmenu.h"
+#include <TemplateParser/CustomTemplatesMenu>
 
 #include "pimcommon/widgets/annotationdialog.h"
 #include "pimcommon/webshortcut/webshortcutmenumanager.h"

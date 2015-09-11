@@ -21,7 +21,7 @@
 #include "kmkernel.h"
 #include "kernel/mailkernel.h"
 #include "foldercollection.h"
-#include "templatesconfiguration.h"
+#include "TemplateParser/TemplatesConfiguration"
 #include "templatesconfiguration_kfg.h"
 #include <AkonadiCore/collection.h>
 

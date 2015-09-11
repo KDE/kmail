@@ -113,7 +113,7 @@
 #include <attachment/attachmentpart.h>
 #include "settings/messagecoresettings.h"
 #include <templateparser.h>
-#include <templatesconfiguration.h>
+#include <TemplateParser/TemplatesConfiguration>
 #include "helpers/nodehelper.h"
 #include <Akonadi/KMime/MessageStatus>
 #include "helpers/messagehelpers.h"
