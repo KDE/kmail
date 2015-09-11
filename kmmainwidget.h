@@ -36,7 +36,7 @@
 #include <QTimer>
 #include <Akonadi/KMime/StandardMailActionManager>
 #include <AkonadiCore/tag.h>
-#include <messagelist/core/view.h>
+#include <MessageList/View>
 
 namespace MailTransport
 {

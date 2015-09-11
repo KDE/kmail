@@ -35,10 +35,10 @@
 #include <KIconButton>
 #include <KConfigGroup>
 
-#include "messagelist/utils/aggregationcombobox.h"
-#include "messagelist/utils/aggregationconfigbutton.h"
-#include "messagelist/utils/themecombobox.h"
-#include "messagelist/utils/themeconfigbutton.h"
+#include "messagelist/aggregationcombobox.h"
+#include "messagelist/aggregationconfigbutton.h"
+#include "messagelist/themecombobox.h"
+#include "messagelist/themeconfigbutton.h"
 
 #include "foldercollection.h"
 

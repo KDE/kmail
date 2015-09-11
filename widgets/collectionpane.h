@@ -20,7 +20,7 @@
 #define COLLECTIONPANE_H
 
 #include <messagelist/pane.h>
-#include <messagelist/storagemodel.h>
+#include <MessageList/StorageModel>
 
 class CollectionPane : public MessageList::Pane
 {

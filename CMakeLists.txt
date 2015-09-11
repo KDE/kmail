@@ -280,7 +280,7 @@ target_link_libraries(kmailprivate
     KF5::AkonadiMime
     KF5::MessageCore
     messagecomposer
-    messagelist
+    KF5::MessageList
     pimcommon
     mailcommon
     KF5::TemplateParser
@@ -309,7 +309,7 @@ target_link_libraries(kmailprivate
     KF5::Completion
     KF5::Ldap
 )
-target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:messagelist,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:mailcommon,INTERFACE_INCLUDE_DIRECTORIES>)
 
