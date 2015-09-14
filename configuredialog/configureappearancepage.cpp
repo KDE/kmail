@@ -32,7 +32,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "kmmainwidget.h"
 
-#include "mailcommon/mailcommonsettings_base.h"
+#include "mailcommonsettings_base.h"
 
 #include "widgets/configurewidget.h"
 #include "settings/messageviewersettings.h"

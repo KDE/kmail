@@ -73,7 +73,7 @@ using KSieveUi::SieveDebugDialog;
 #include "MailCommon/FavoriteCollectionWidget"
 #include "MailCommon/FolderTreeWidget"
 #include "MailCommon/FolderTreeView"
-#include "mailcommon/mailcommonsettings_base.h"
+#include "mailcommonsettings_base.h"
 #include "kmmainwidget.h"
 
 // Other PIM includes

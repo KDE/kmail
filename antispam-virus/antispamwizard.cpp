@@ -37,7 +37,7 @@
 #include "MailCommon/FolderTreeWidget"
 #include "MailCommon/FolderTreeView"
 #include "MailCommon/FolderTreeWidgetProxyModel"
-#include "mailcommon/pop3settings.h"
+#include "pop3settings.h"
 #include "MailCommon/MailUtil"
 #include "pimcommon/imapresourcesettings.h"
 #include "MailCommon/MailKernel"
