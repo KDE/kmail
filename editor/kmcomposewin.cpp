@@ -110,7 +110,7 @@
 #include <messagecomposer/composer/signaturecontroller.h>
 #include <messagecomposer/job/inserttextfilejob.h>
 #include <messagecomposer/composer/composerlineedit.h>
-#include <attachment/attachmentpart.h>
+#include <MessageCore/AttachmentPart>
 #include "settings/messagecoresettings.h"
 #include <templateparser.h>
 #include <TemplateParser/TemplatesConfiguration>
