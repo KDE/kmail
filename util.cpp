@@ -54,7 +54,7 @@
 #include <QAction>
 #include <QStandardPaths>
 
-#include "foldercollection.h"
+#include "MailCommon/FolderCollection"
 
 using namespace MailCommon;
 

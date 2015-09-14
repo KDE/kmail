@@ -29,22 +29,22 @@
 
 #include "antispamwizard.h"
 #ifndef QT_NO_CURSOR
-#include "mailcommon/util/kcursorsaver.h"
+#include "MailCommon/KCursorSaver"
 #endif
 #include "kmkernel.h"
 #include "kmmainwin.h"
-#include "folderrequester.h"
-#include "foldertreewidget.h"
-#include "foldertreeview.h"
-#include "foldertreewidgetproxymodel.h"
+#include "MailCommon/FolderRequester"
+#include "MailCommon/FolderTreeWidget"
+#include "MailCommon/FolderTreeView"
+#include "MailCommon/FolderTreeWidgetProxyModel"
 #include "mailcommon/pop3settings.h"
-#include "mailcommon/util/mailutil.h"
+#include "MailCommon/MailUtil"
 #include "pimcommon/imapresourcesettings.h"
-#include "mailcommon/kernel/mailkernel.h"
-#include "mailcommon/filter/mailfilter.h"
-#include "mailcommon/filter/filteractions/filteraction.h"
-#include "mailcommon/filter/filteractions/filteractiondict.h"
-#include "mailcommon/filter/filtermanager.h"
+#include "MailCommon/MailKernel"
+#include "MailCommon/MailFilter"
+#include "MailCommon/FilterAction"
+#include "MailCommon/FilterActionDict"
+#include "MailCommon/FilterManager"
 
 #include "pimcommon/util/pimutil.h"
 

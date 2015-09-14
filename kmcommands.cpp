@@ -69,18 +69,18 @@
 #include <AkonadiCore/itemmodifyjob.h>
 #include <AkonadiCore/itemfetchjob.h>
 
-#include "foldercollection.h"
+#include "MailCommon/FolderCollection"
 
 #include "MessageCore/MailingList"
 #include "editor/composer.h"
-#include "mailcommon/filter/filteractions/filteraction.h"
-#include "mailcommon/filter/filtermanager.h"
-#include "mailcommon/filter/mailfilter.h"
-#include "mailcommon/widgets/redirectdialog.h"
+#include "MailCommon/FilterAction"
+#include "MailCommon/FilterManager"
+#include "MailCommon/MailFilter"
+#include "MailCommon/RedirectDialog"
 #include "kmmainwidget.h"
 #include "undostack.h"
 #ifndef QT_NO_CURSOR
-#include "mailcommon/util/kcursorsaver.h"
+#include "MailCommon/KCursorSaver"
 #endif
 #include "viewer/objecttreeparser.h"
 #include "viewer/csshelper.h"

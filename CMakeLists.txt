@@ -17,9 +17,6 @@ add_custom_target(kmail_xml ALL
 
 include_directories(
   ${CMAKE_SOURCE_DIR}/libksieve/ksieveui/
-  ${CMAKE_SOURCE_DIR}/mailcommon/folder
-  ${CMAKE_SOURCE_DIR}/mailcommon/tag
-  ${CMAKE_SOURCE_DIR}/mailcommon/kernel
   ${CMAKE_SOURCE_DIR}/pimcommon/util/
   ${CMAKE_SOURCE_DIR}/messagecomposer/utils/
   ${CMAKE_CURRENT_BINARY_DIR}
@@ -283,7 +280,7 @@ target_link_libraries(kmailprivate
     messagecomposer
     KF5::MessageList
     pimcommon
-    mailcommon
+    KF5::MailCommon
     KF5::TemplateParser
     KF5::IdentityManagement
     KF5::WindowSystem
@@ -312,7 +309,7 @@ target_link_libraries(kmailprivate
 )
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
-target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:mailcommon,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MailCommon,INTERFACE_INCLUDE_DIRECTORIES>)
 
 set_target_properties(kmailprivate
     PROPERTIES VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}

@@ -24,11 +24,11 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messagelist/themecombobox.h"
 #include "messagelist/themeconfigbutton.h"
 #include "core/settings.h"
-#include "mailcommon/tag/tagwidget.h"
-#include "mailcommon/tag/tag.h"
+#include "MailCommon/TagWidget"
+#include "MailCommon/Tag"
 #include "kmkernel.h"
 #include "util.h"
-#include "foldertreewidget.h"
+#include "MailCommon/FolderTreeWidget"
 
 #include "kmmainwidget.h"
 
@@ -42,7 +42,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messagecoreutil.h"
 #include "settings/kmailsettings.h"
 
-#include "mailcommon/util/mailutil.h"
+#include "MailCommon/MailUtil"
 
 #include <AkonadiCore/Tag>
 #include <AkonadiCore/TagFetchJob>

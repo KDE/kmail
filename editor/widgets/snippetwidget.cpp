@@ -15,7 +15,7 @@
 
 #include "editor/kmcomposereditorng.h"
 
-#include <mailcommon/snippets/snippetsmanager.h>
+#include <MailCommon/SnippetsManager>
 
 #include <kactioncollection.h>
 #include <KLocalizedString>

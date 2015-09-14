@@ -20,7 +20,7 @@
 
 #include <QObject>
 #include <QPointer>
-#include <foldercollection.h>
+#include <MailCommon/FolderCollection>
 
 #include <progresswidget/progressmanager.h>
 

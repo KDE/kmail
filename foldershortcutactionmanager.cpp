@@ -18,7 +18,7 @@
 */
 #include "foldershortcutactionmanager.h"
 
-#include "foldercollection.h"
+#include "MailCommon/FolderCollection"
 #include "kernel/mailkernel.h"
 
 #include <AkonadiCore/ChangeRecorder>

@@ -50,7 +50,7 @@
 #include "util.h"
 #include "editor/widgets/snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
-#include "foldercollectionmonitor.h"
+#include "mailcommon/foldercollectionmonitor.h"
 #include "kernel/mailkernel.h"
 #include "custommimeheader.h"
 #include "pimcommon/autocorrection/widgets/lineeditwithautocorrection.h"
@@ -95,7 +95,7 @@
 #include <viewer/objecttreeemptysource.h>
 
 #ifndef QT_NO_CURSOR
-#include <mailcommon/util/kcursorsaver.h>
+#include <MailCommon/KCursorSaver>
 #endif
 
 #include <viewer/objecttreeparser.h>
@@ -117,8 +117,8 @@
 #include "helpers/nodehelper.h"
 #include <Akonadi/KMime/MessageStatus>
 #include "helpers/messagehelpers.h"
-#include "mailcommon/folder/folderrequester.h"
-#include "mailcommon/folder/foldercollection.h"
+#include "MailCommon/FolderRequester"
+#include "MailCommon/FolderCollection"
 
 #include "widgets/statusbarlabeltoggledstate.h"
 

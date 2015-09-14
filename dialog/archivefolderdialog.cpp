@@ -18,10 +18,10 @@
 */
 #include "archivefolderdialog.h"
 
-#include "mailcommon/job/backupjob.h"
+#include "MailCommon/BackupJob"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "folderrequester.h"
+#include "MailCommon/FolderRequester"
 #include "utils/messageviewerutil.h"
 
 #include <AkonadiCore/Collection>

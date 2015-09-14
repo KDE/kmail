@@ -18,7 +18,7 @@
 #ifndef KMailSearchPatternEdit_H
 #define KMailSearchPatternEdit_H
 
-#include <mailcommon/search/searchpatternedit.h>
+#include <MailCommon/SearchPatternEdit>
 
 namespace KMail
 {

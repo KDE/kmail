@@ -24,7 +24,7 @@
 #include "archivemailagentinterface.h"
 #include "sendlateragentinterface.h"
 #include "followupreminderinterface.h"
-#include "mailcommon/filter/filtermanager.h"
+#include "MailCommon/FilterManager"
 
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>

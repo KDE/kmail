@@ -32,7 +32,7 @@
 #include <QDialog>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/Tag>
-#include "tag.h"
+#include "MailCommon/Tag"
 
 class QListWidget;
 class KActionCollection;

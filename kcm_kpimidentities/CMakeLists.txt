@@ -25,7 +25,7 @@ target_link_libraries(kcm_kpimidentities
   KF5::KIOCore
   KF5::KIOWidgets
   KF5::IconThemes  
-  mailcommon
+  KF5::MailCommon
   messagecomposer
   KF5::MessageViewer
   KF5::TemplateParser

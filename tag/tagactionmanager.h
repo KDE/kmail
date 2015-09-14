@@ -22,7 +22,7 @@
 #define TAGACTIONMANAGER_H
 
 #include "kmail_export.h"
-#include "tag.h"
+#include "mailcommon/tag.h"
 #include <QMap>
 
 class KJob;

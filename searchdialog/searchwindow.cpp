@@ -23,13 +23,13 @@
 
 #include "searchwindow.h"
 
-#include "folderrequester.h"
+#include "MailCommon/FolderRequester"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
-#include "mailcommon/kernel/mailkernel.h"
-#include "mailcommon/search/searchpatternedit.h"
+#include "MailCommon/MailKernel"
+#include "MailCommon/SearchPatternEdit"
 #include "searchdescriptionattribute.h"
-#include "foldertreeview.h"
+#include "MailCommon/FolderTreeView"
 #include "kmsearchmessagemodel.h"
 #include "kmsearchfilterproxymodel.h"
 #include "searchpatternwarning.h"

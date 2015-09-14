@@ -41,7 +41,7 @@
 // other KMail headers:
 #include "xfaceconfigurator.h"
 #include "pimcommon/widgets/simplestringlisteditor.h"
-#include "folderrequester.h"
+#include "mailcommon/folderrequester.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "settings/kmailsettings.h"
 #include "kmkernel.h"

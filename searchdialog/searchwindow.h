@@ -22,7 +22,7 @@
 #ifndef KMAIL_SEARCHWINDOW_H
 #define KMAIL_SEARCHWINDOW_H
 
-#include "mailcommon/search/searchpattern.h"
+#include "MailCommon/SearchPattern"
 #include "ui_searchwindow.h"
 
 #include <AkonadiCore/collection.h>

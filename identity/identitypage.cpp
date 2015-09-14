@@ -30,7 +30,7 @@
 #include "settings/kmailsettings.h"
 #endif
 
-#include <mailcommon/kernel/mailkernel.h>
+#include <MailCommon/MailKernel>
 #include <utils/autoqpointer.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>

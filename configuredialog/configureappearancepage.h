@@ -19,7 +19,7 @@
 
 #include "kmail_export.h"
 #include "configuredialog_p.h"
-#include "tag.h"
+#include "MailCommon/Tag"
 #include <QListWidgetItem>
 
 class QPushButton;

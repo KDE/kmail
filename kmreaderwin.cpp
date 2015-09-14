@@ -36,7 +36,7 @@
 #include <Libkdepim/AddEmailDisplayJob>
 #include <Libkdepim/BroadcastStatus>
 #include "kmcommands.h"
-#include "mailcommon/mdn/sendmdnhandler.h"
+#include "MailCommon/SendMdnHandler"
 #include <QVBoxLayout>
 #include "header/headerstrategy.h"
 #include "header/headerstyle.h"

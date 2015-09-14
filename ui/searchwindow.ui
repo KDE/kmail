@@ -196,7 +196,7 @@
   <customwidget>
    <class>MailCommon::FolderRequester</class>
    <extends>QWidget</extends>
-   <header location="global">mailcommon/folder/folderrequester.h</header>
+   <header location="global">MailCommon/FolderRequester</header>
    <container>1</container>
   </customwidget>
   <customwidget>

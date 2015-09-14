@@ -22,8 +22,8 @@
 #include <KMessageBox>
 #include <KGuiItem>
 #include "kmmainwidget.h"
-#include "mailcommon/util/mailutil.h"
-#include "mailcommon/kernel/mailkernel.h"
+#include "MailCommon/MailUtil"
+#include "MailCommon/MailKernel"
 #include "kmkernel.h"
 
 RemoveCollectionJob::RemoveCollectionJob(QObject *parent)

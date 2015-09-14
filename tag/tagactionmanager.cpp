@@ -21,7 +21,7 @@
 
 #include "messageactions.h"
 
-#include "mailcommon/tag/addtagdialog.h"
+#include "MailCommon/AddTagDialog"
 
 #include <QAction>
 #include <KActionCollection>

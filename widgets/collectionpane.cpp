@@ -20,7 +20,7 @@
 #include "kmkernel.h"
 #include "kernel/mailkernel.h"
 
-#include "foldercollection.h"
+#include "MailCommon/FolderCollection"
 #include "pimcommon/util/pimutil.h"
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>

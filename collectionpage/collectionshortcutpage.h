@@ -20,7 +20,7 @@
 #ifndef COLLECTIONSHORTCUTPAGE_H
 #define COLLECTIONSHORTCUTPAGE_H
 
-#include "foldercollection.h"
+#include "MailCommon/FolderCollection"
 
 #include <AkonadiWidgets/collectionpropertiespage.h>
 

@@ -20,8 +20,8 @@ using KPIM::RecentAddresses;
 #include "utils/stringutil.h"
 #include "util/mailutil.h"
 #include "mailcommon/pop3settings.h"
-#include "mailcommon/folder/foldertreeview.h"
-#include "mailcommon/filter/kmfilterdialog.h"
+#include "MailCommon/FolderTreeView"
+#include "MailCommon/KMFilterDialog"
 #include "mailcommon/mailcommonsettings_base.h"
 #include "pimcommon/util/pimutil.h"
 #include "folderarchive/folderarchivemanager.h"
@@ -60,7 +60,7 @@ using KMail::MailServiceImpl;
 #include "globalsettings_templateparser.h"
 #include "TemplateParser/TemplatesUtil"
 
-#include "foldercollection.h"
+#include "mailcommon/foldercollection.h"
 #include "editor/codec/codecmanager.h"
 
 #include <kmessagebox.h>
@@ -109,10 +109,10 @@ using KMail::MailServiceImpl;
 #include <KLocalizedString>
 #include <QStandardPaths>
 #include "kmailinterface.h"
-#include "foldercollectionmonitor.h"
+#include "mailcommon/foldercollectionmonitor.h"
 #include "imapresourcesettings.h"
 #include "util.h"
-#include "mailcommon/kernel/mailkernel.h"
+#include "MailCommon/MailKernel"
 
 #include "searchdialog/searchdescriptionattribute.h"
 #include "kmail_options.h"

@@ -30,7 +30,7 @@
 #include "tag.h"
 #include "kmkernel.h"
 
-#include <mailcommon/tag/addtagdialog.h>
+#include <MailCommon/AddTagDialog>
 
 #include <KListWidgetSearchLine>
 #include <KLocalizedString>

@@ -21,7 +21,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configureagentswidget.h"
 #include "settings/kmailsettings.h"
 
-#include <mailcommon/folder/folderrequester.h>
+#include <MailCommon/FolderRequester>
 #include "widgets/invitationsettings.h"
 #include "widgets/printingsettings.h"
 #include "settings/messageviewersettings.h"

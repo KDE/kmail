@@ -22,13 +22,13 @@
 #include "settings/kmailsettings.h"
 #include "configagentdelegate.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
-#include "mailcommon/folder/accountconfigorderdialog.h"
+#include "MailCommon/AccountConfigOrderDialog"
 #include "pimcommon/widgets/configureimmutablewidgetutils.h"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MailTransport/mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;
 #include "ui_accountspagereceivingtab.h"
-#include "mailcommon/util/mailutil.h"
+#include "MailCommon/MailUtil"
 
 #include <AkonadiCore/agentfilterproxymodel.h>
 #include <AkonadiCore/agentinstancemodel.h>

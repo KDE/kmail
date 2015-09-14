@@ -51,7 +51,7 @@
 #include "messageactions.h"
 #include "util.h"
 #include "kernel/mailkernel.h"
-#include "foldercollection.h"
+#include "MailCommon/FolderCollection"
 
 #include <KActionCollection>
 #include <Akonadi/Contact/ContactSearchJob>
