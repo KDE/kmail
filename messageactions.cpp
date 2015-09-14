@@ -27,8 +27,8 @@
 #include "kmcommands.h"
 #include <TemplateParser/CustomTemplatesMenu>
 
-#include "pimcommon/widgets/annotationdialog.h"
-#include "pimcommon/webshortcut/webshortcutmenumanager.h"
+#include "PimCommon/AnnotationDialog"
+#include "PimCommon/WebShortCutMenuManager"
 #include "settings/messagecoresettings.h"
 #include "MessageCore/MailingList"
 #include "helpers/messagehelpers.h"
@@ -39,7 +39,7 @@
 #include <Akonadi/KMime/MessageParts>
 #include <AkonadiCore/ChangeRecorder>
 #include <QAction>
-#include "pimcommon/baloodebug/baloodebugdialog.h"
+#include "PimCommon/BalooDebugDialog"
 
 #include "followupreminder/followupreminderselectdatedialog.h"
 #include "job/createfollowupreminderonexistingmessagejob.h"

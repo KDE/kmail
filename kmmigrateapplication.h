@@ -18,7 +18,7 @@
 #ifndef KMMIGRATEAPPLICATION_H
 #define KMMIGRATEAPPLICATION_H
 
-#include "pimcommon/migration/migrateapplicationfiles.h"
+#include "PimCommon/MigrateApplicationFiles"
 #include "kmail_export.h"
 class KMAIL_EXPORT KMMigrateApplication
 {

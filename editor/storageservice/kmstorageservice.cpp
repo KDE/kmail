@@ -16,7 +16,7 @@
 */
 
 #include "kmstorageservice.h"
-#include "pimcommon/storageservice/storageservicemanager.h"
+#include "PimCommon/StorageServiceManager"
 
 #include <KMessageBox>
 #include <KLocalizedString>

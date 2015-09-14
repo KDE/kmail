@@ -17,7 +17,7 @@
 
 #include "mailmergewidgettest.h"
 #include "../widgets/mailmergewidget.h"
-#include "pimcommon/widgets/simplestringlisteditor.h"
+#include "PimCommon/SimpleStringlistEditor"
 #include <qtest.h>
 #include <KComboBox>
 #include <QStackedWidget>

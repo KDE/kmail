@@ -16,7 +16,7 @@
 */
 
 #include "configureappearancepage.h"
-#include "pimcommon/widgets/configureimmutablewidgetutils.h"
+#include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configuredialog/colorlistbox.h"
 #include "messagelist/aggregationcombobox.h"

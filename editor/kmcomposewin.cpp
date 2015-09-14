@@ -53,8 +53,8 @@
 #include "mailcommon/foldercollectionmonitor.h"
 #include "kernel/mailkernel.h"
 #include "custommimeheader.h"
-#include "pimcommon/autocorrection/widgets/lineeditwithautocorrection.h"
-#include "pimcommon/customtools/customtoolswidgetng.h"
+#include "PimCommon/LineEditWithAutoCorrection"
+#include "PimCommon/CustomToolsWidgetng"
 #include "warningwidgets/attachmentmissingwarning.h"
 #include "job/createnewcontactjob.h"
 #include "job/savedraftjob.h"
@@ -66,7 +66,7 @@
 #include "followupreminder/followupreminderselectdatedialog.h"
 #include "followupreminder/followupremindercreatejob.h"
 #include "agents/followupreminderagent/followupreminderutil.h"
-#include "pimcommon/util/vcardutil.h"
+#include "PimCommon/VCardUtil"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "kmcomposerglobalaction.h"
 #include "widgets/kactionmenutransport.h"
@@ -75,9 +75,9 @@
 #include "Libkdepim/StatusbarProgressWidget"
 #include "Libkdepim/ProgressStatusBarWidget"
 
-#include "pimcommon/util/editorutil.h"
-#include "pimcommon/storageservice/storageservicemanager.h"
-#include "pimcommon/storageservice/storageserviceprogressmanager.h"
+#include "PimCommon/EditorUtil"
+#include "PimCommon/StorageServiceManager"
+#include "PimCommon/StorageServiceProgressManager"
 
 #include "messagecomposer/utils/util.h"
 

@@ -64,7 +64,7 @@
 #include <AkonadiCore/itemcreatejob.h>
 #include <AkonadiCore/itemmovejob.h>
 #include <Akonadi/KMime/MessageFlags>
-#include "pimcommon/texttospeech/texttospeech.h"
+#include "PimCommon/TextToSpeech"
 #include "helpers/messagehelpers.h"
 #include <util/mailutil.h>
 

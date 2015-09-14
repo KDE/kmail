@@ -23,10 +23,10 @@ using KPIM::RecentAddresses;
 #include "MailCommon/FolderTreeView"
 #include "MailCommon/KMFilterDialog"
 #include "mailcommonsettings_base.h"
-#include "pimcommon/util/pimutil.h"
+#include "PimCommon/PimUtil"
 #include "folderarchive/folderarchivemanager.h"
-#include "pimcommon/storageservice/storageservicemanager.h"
-#include "pimcommon/storageservice/storageservicejobconfig.h"
+#include "PimCommon/StorageServiceManager"
+#include "PimCommon/StorageServiceJobConfig"
 #include "storageservice/storageservicesettingsjob.h"
 
 // kdepim includes
@@ -53,8 +53,8 @@ using KMail::MailServiceImpl;
 #include "settings/messagecomposersettings.h"
 #include "messagecomposer/helper/messagehelper.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
-#include "pimcommon/settings/pimcommonsettings.h"
-#include "pimcommon/autocorrection/autocorrection.h"
+#include "PimCommon/PimCommonSettings"
+#include "PimCommon/AutoCorrection"
 
 #include "TemplateParser/TemplateParser"
 #include "globalsettings_templateparser.h"

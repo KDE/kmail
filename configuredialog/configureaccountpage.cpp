@@ -23,7 +23,7 @@
 #include "configagentdelegate.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
 #include "MailCommon/AccountConfigOrderDialog"
-#include "pimcommon/widgets/configureimmutablewidgetutils.h"
+#include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MailTransport/mailtransport/transportmanagementwidget.h>
 using MailTransport::TransportManagementWidget;

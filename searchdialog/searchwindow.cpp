@@ -33,7 +33,7 @@
 #include "kmsearchmessagemodel.h"
 #include "kmsearchfilterproxymodel.h"
 #include "searchpatternwarning.h"
-#include "pimcommon/folderdialog/selectmulticollectiondialog.h"
+#include "PimCommon/SelectMultiCollectionDialog"
 
 #include <AkonadiCore/CollectionModifyJob>
 #include <AkonadiCore/CollectionFetchJob>

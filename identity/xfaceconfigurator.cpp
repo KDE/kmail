@@ -35,8 +35,8 @@
 #include <Akonadi/Contact/ContactSearchJob>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include "pimcommon/texteditor/plaintexteditor/plaintexteditor.h"
-#include "pimcommon/texteditor/plaintexteditor/plaintexteditorwidget.h"
+#include "PimCommon/PlainTextEditor"
+#include "PimCommon/PlainTextEditorWidget"
 #include <header/kxface.h>
 
 #include <KConfigGroup>

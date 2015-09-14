@@ -21,7 +21,7 @@
 #include "kernel/mailkernel.h"
 
 #include "MailCommon/FolderCollection"
-#include "pimcommon/util/pimutil.h"
+#include "PimCommon/PimUtil"
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <Akonadi/KMime/MessageFolderAttribute>

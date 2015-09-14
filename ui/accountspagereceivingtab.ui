@@ -82,7 +82,7 @@
   <customwidget>
    <class>PimCommon::ManageAccountWidget</class>
    <extends>QWidget</extends>
-   <header>pimcommon/widgets/manageaccountwidget.h</header>
+   <header>PimCommon/ManageAccountWidget</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -18,7 +18,7 @@
 #ifndef ATTACHMENTLISTWIDGET_H
 #define ATTACHMENTLISTWIDGET_H
 
-#include "pimcommon/widgets/simplestringlisteditor.h"
+#include "PimCommon/SimpleStringlistEditor"
 #include <QDialog>
 
 namespace MailMerge

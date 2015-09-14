@@ -17,7 +17,6 @@ add_custom_target(kmail_xml ALL
 
 include_directories(
   ${CMAKE_SOURCE_DIR}/libksieve/ksieveui/
-  ${CMAKE_SOURCE_DIR}/pimcommon/util/
   ${CMAKE_SOURCE_DIR}/messagecomposer/utils/
   ${CMAKE_CURRENT_BINARY_DIR}
   ${GPGME_INCLUDES}
@@ -279,7 +278,7 @@ target_link_libraries(kmailprivate
     KF5::MessageCore
     messagecomposer
     KF5::MessageList
-    pimcommon
+    KF5::PimCommon
     KF5::MailCommon
     KF5::TemplateParser
     KF5::IdentityManagement
@@ -332,7 +331,7 @@ add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
 
 target_link_libraries(kmailpart
     kmailprivate
-    pimcommon
+    KF5::PimCommon
     KF5::Libkdepim
     KF5::KCMUtils
     KF5::Parts
@@ -349,7 +348,7 @@ add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
     KF5::KontactInterface
     kmailprivate
-    pimcommon
+    KF5::PimCommon
     KF5::Libkdepim
     KF5::TemplateParser
 )

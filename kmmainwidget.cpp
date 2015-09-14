@@ -45,8 +45,8 @@
 #include "widgets/kactionmenutransport.h"
 #include "widgets/kactionmenuaccount.h"
 #include "search/searchrule/searchrulestatus.h"
-#include "pimcommon/util/networkutil.h"
-#include "pimcommon/texttospeech/texttospeech.h"
+#include "PimCommon/NetworkUtil"
+#include "PimCommon/TextToSpeech"
 #if !defined(NDEBUG)
 #include <ksieveui/debug/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -63,8 +63,8 @@ using KSieveUi::SieveDebugDialog;
 #include "folderarchive/folderarchiveutil.h"
 #include "folderarchive/folderarchivemanager.h"
 
-#include "pimcommon/acl/collectionaclpage.h"
-#include "pimcommon/util/pimutil.h"
+#include "PimCommon/CollectionAclPage"
+#include "PimCommon/PimUtil"
 #include "MailCommon/CollectionGeneralPage"
 #include "MailCommon/CollectionExpiryPage"
 #include "MailCommon/ExpireCollectionAttribute"
@@ -188,7 +188,7 @@ using KSieveUi::SieveDebugDialog;
 #include <KHelpClient>
 #include <QStandardPaths>
 
-#include "pimcommon/manageserversidesubscription/manageserversidesubscriptionjob.h"
+#include "PimCommon/ManageServerSideSubscriptionJob"
 #include <job/removeduplicatemailjob.h>
 #include <job/removecollectionjob.h>
 

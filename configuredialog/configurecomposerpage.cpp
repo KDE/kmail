@@ -16,18 +16,18 @@
 */
 
 #include "configurecomposerpage.h"
-#include "pimcommon/widgets/configureimmutablewidgetutils.h"
+#include "PimCommon/ConfigureImmutableWidgetUtils"
 #include "configurestorageservicewidget.h"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "pimcommon/autocorrection/autocorrectionwidget.h"
+#include "PimCommon/AutoCorrectionWidget"
 #include "messagecomposer/imagescaling/imagescalingwidget.h"
 #include "messagecomposer/settings/messagecomposersettings.h"
 #include "settings/messagecoresettings.h"
 #include "settings/kmailsettings.h"
 #include "configuredialog/configuredialoglistview.h"
-#include "pimcommon/widgets/simplestringlisteditor.h"
+#include "PimCommon/SimpleStringlistEditor"
 #include "templatesconfiguration_kfg.h"
 #include "TemplateParser/TemplatesConfiguration"
 #include "templateparser/customtemplates.h"

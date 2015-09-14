@@ -40,7 +40,7 @@
 
 // other KMail headers:
 #include "xfaceconfigurator.h"
-#include "pimcommon/widgets/simplestringlisteditor.h"
+#include "PimCommon/SimpleStringlistEditor"
 #include "mailcommon/folderrequester.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "settings/kmailsettings.h"
@@ -58,7 +58,7 @@
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/signatureconfigurator.h>
 
-#include "pimcommon/autocorrection/autocorrectionlanguage.h"
+#include "PimCommon/AutoCorrectionLanguage"
 
 #include <Libkdepim/AddresseeLineEdit>
 // libkleopatra:
