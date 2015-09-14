@@ -89,9 +89,9 @@
 // KDEPIM includes
 #include <libkleo/ui/progressdialog.h>
 #include <libkleo/ui/keyselectiondialog.h>
-#include "kleo/cryptobackendfactory.h"
-#include "kleo/exportjob.h"
-#include "kleo/specialjob.h"
+#include "libkleo/kleo/cryptobackendfactory.h"
+#include "libkleo/kleo/exportjob.h"
+#include "libkleo/kleo/specialjob.h"
 #include <viewer/objecttreeemptysource.h>
 
 #ifndef QT_NO_CURSOR

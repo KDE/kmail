@@ -26,8 +26,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "kmkernel.h"
 
-#include "kleo/cryptoconfig.h"
-#include "kleo/cryptobackendfactory.h"
+#include "libkleo/kleo/cryptoconfig.h"
+#include "libkleo/kleo/cryptobackendfactory.h"
 #include "libkleo/ui/keyrequester.h"
 #include "libkleo/ui/keyselectiondialog.h"
 

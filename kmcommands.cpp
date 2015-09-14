@@ -129,8 +129,8 @@ using KPIM::ProgressItem;
 #include <kmime/kmime_mdn.h>
 using namespace KMime;
 
-#include "kleo/cryptobackend.h"
-#include "kleo/cryptobackendfactory.h"
+#include "libkleo/kleo/cryptobackend.h"
+#include "libkleo/kleo/cryptobackendfactory.h"
 
 #include <gpgme++/error.h>
 
