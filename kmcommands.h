@@ -96,42 +96,27 @@ protected:
     // Returns the parent widget
     QWidget *parentWidget() const;
 
-    bool deletesItself() const
-    {
-        return mDeletesItself;
-    }
+    bool deletesItself() const;
     /** Specify whether the subclass takes care of the deletion of the object.
       By default the base class will delete the object.
       @param deletesItself true if the subclass takes care of deletion, false
                            if the base class should take care of deletion
     */
-    void setDeletesItself(bool deletesItself)
-    {
-        mDeletesItself = deletesItself;
-    }
+    void setDeletesItself(bool deletesItself);
 
-    bool emitsCompletedItself() const
-    {
-        return mEmitsCompletedItself;
-    }
+    bool emitsCompletedItself() const;
     /** Specify whether the subclass takes care of emitting the completed()
       signal. By default the base class will Q_EMIT this signal.
       @param emitsCompletedItself true if the subclass emits the completed
                                   signal, false if the base class should emit
                                   the signal
     */
-    void setEmitsCompletedItself(bool emitsCompletedItself)
-    {
-        mEmitsCompletedItself = emitsCompletedItself;
-    }
+    void setEmitsCompletedItself(bool emitsCompletedItself);
 
     /** Use this to set the result of the command.
       @param result The result of the command.
     */
-    void setResult(Result result)
-    {
-        mResult = result;
-    }
+    void setResult(Result result);
 
 private:
     // execute should be implemented by derived classes

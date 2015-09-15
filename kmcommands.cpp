@@ -222,6 +222,31 @@ QWidget *KMCommand::parentWidget() const
     return mParent;
 }
 
+bool KMCommand::deletesItself() const
+{
+    return mDeletesItself;
+}
+
+void KMCommand::setDeletesItself(bool deletesItself)
+{
+    mDeletesItself = deletesItself;
+}
+
+bool KMCommand::emitsCompletedItself() const
+{
+    return mEmitsCompletedItself;
+}
+
+void KMCommand::setEmitsCompletedItself(bool emitsCompletedItself)
+{
+    mEmitsCompletedItself = emitsCompletedItself;
+}
+
+void KMCommand::setResult(KMCommand::Result result)
+{
+    mResult = result;
+}
+
 int KMCommand::mCountJobs = 0;
 
 void KMCommand::start()
