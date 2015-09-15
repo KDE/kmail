@@ -81,9 +81,9 @@
 #include "MessageComposer/Util"
 
 #include <kcontacts/vcardconverter.h>
-#include "agents/sendlateragent/sendlaterutil.h"
-#include "agents/sendlateragent/sendlaterdialog.h"
-#include "agents/sendlateragent/sendlaterinfo.h"
+#include "libsendlater/sendlaterutil.h"
+#include "libsendlater/sendlaterdialog.h"
+#include "libsendlater/sendlaterinfo.h"
 
 // KDEPIM includes
 #include <libkleo/ui/progressdialog.h>
