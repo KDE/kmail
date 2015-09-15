@@ -64,7 +64,7 @@
 #include "editor/storageservice/kmstorageservice.h"
 #include "followupreminder/followupreminderselectdatedialog.h"
 #include "followupreminder/followupremindercreatejob.h"
-#include "agents/followupreminderagent/followupreminderutil.h"
+#include "libfollowupreminder/followupreminderutil.h"
 #include "PimCommon/VCardUtil"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "kmcomposerglobalaction.h"
