@@ -18,7 +18,7 @@
 #include "configureagentswidget.h"
 #include "configureagents/configureagentlistview.h"
 
-#include "libsendlater/sendlaterutil.h"
+#include "SendLater/SendLaterUtil"
 #include <akonadi/private/xdgbasedirs_p.h>
 
 #include <KLocalizedString>
