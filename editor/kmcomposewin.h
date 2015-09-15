@@ -25,16 +25,16 @@
 
 // KMail includes
 #include "editor/composer.h"
-#include "messagecomposer/recipient/recipientseditor.h"
+#include "MessageComposer/RecipientsEditor"
 
 // Qt includes
 #include <QFont>
 #include <QList>
 
 // LIBKDEPIM includes
-#include "messagecomposer/composer-ng/richtextcomposer.h"
+#include "MessageComposer/RichTextComposer"
 
-#include "messagecomposer/sender/messagesender.h"
+#include "MessageComposer/MessageSender"
 
 // KDEPIMLIBS includes
 #include <kmime/kmime_message.h>

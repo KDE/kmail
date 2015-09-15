@@ -49,10 +49,10 @@ using KMail::MailServiceImpl;
 #include "core/settings.h"
 #include "messagelist/messagelistutil.h"
 #include "settings/messageviewersettings.h"
-#include "messagecomposer/sender/akonadisender.h"
+#include "MessageComposer/AkonadiSender"
 #include "settings/messagecomposersettings.h"
-#include "messagecomposer/helper/messagehelper.h"
-#include "messagecomposer/settings/messagecomposersettings.h"
+#include "MessageComposer/MessageHelper"
+#include "MessageComposer/MessageComposerSettings"
 #include "PimCommon/PimCommonSettings"
 #include "PimCommon/AutoCorrection"
 

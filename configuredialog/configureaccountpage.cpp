@@ -21,7 +21,7 @@
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
 #include "configagentdelegate.h"
-#include "messagecomposer/settings/messagecomposersettings.h"
+#include "MessageComposer/MessageComposerSettings"
 #include "MailCommon/AccountConfigOrderDialog"
 #include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;

@@ -34,7 +34,7 @@
 #include "identityeditvcarddialog.h"
 #include "identityaddvcarddialog.h"
 
-#include "messagecomposer/settings/messagecomposersettings.h"
+#include "MessageComposer/MessageComposerSettings"
 
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
@@ -50,7 +50,7 @@
 #include "kernel/mailkernel.h"
 
 #include "job/addressvalidationjob.h"
-#include "kleo_util.h"
+#include "MessageComposer/Kleo_Util"
 #include "utils/stringutil.h"
 #include "TemplateParser/TemplatesConfiguration"
 #include "templatesconfiguration_kfg.h"

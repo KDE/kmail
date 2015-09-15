@@ -21,7 +21,7 @@
  */
 
 #include "addressvalidationjob.h"
-#include <messagecomposer/job/aliasesexpandjob.h>
+#include <MessageComposer/AliasesExpandJob>
 using MessageComposer::AliasesExpandJob;
 
 #include "settings/messagecomposersettings.h"

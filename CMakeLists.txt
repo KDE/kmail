@@ -17,7 +17,6 @@ add_custom_target(kmail_xml ALL
 
 include_directories(
   ${CMAKE_SOURCE_DIR}/libksieve/ksieveui/
-  ${CMAKE_SOURCE_DIR}/messagecomposer/utils/
   ${CMAKE_CURRENT_BINARY_DIR}
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
@@ -276,8 +275,8 @@ target_link_libraries(kmailprivate
     KF5::AkonadiPrivate
     KF5::AkonadiMime
     KF5::MessageCore
-    messagecomposer
     KF5::MessageList
+    KF5::MessageComposer
     KF5::PimCommon
     KF5::MailCommon
     KF5::TemplateParser

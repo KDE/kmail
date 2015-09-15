@@ -56,11 +56,11 @@ using namespace MessageViewer;
 #include <settings/messagecoresettings.h>
 
 #include "viewer/attachmentstrategy.h"
-#include "messagecomposer/sender/messagesender.h"
-#include "messagecomposer/helper/messagefactory.h"
-#include "messagecomposer/composer/composer.h"
-#include "messagecomposer/part/textpart.h"
-#include "messagecomposer/part/infopart.h"
+#include "MessageComposer/MessageSender"
+#include "MessageComposer/MessageFactory"
+#include "MessageComposer/Composer"
+#include "MessageComposer/TextPart"
+#include "MessageComposer/InfoPart"
 
 #include <KIO/JobUiDelegate>
 using MessageComposer::MessageFactory;

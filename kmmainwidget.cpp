@@ -89,8 +89,8 @@ using KSieveUi::SieveDebugDialog;
 #include "MailCommon/KCursorSaver"
 #endif
 
-#include "messagecomposer/sender/messagesender.h"
-#include "messagecomposer/helper/messagehelper.h"
+#include "MessageComposer/MessageSender"
+#include "MessageComposer/MessageHelper"
 
 #include "TemplateParser/TemplateParser"
 

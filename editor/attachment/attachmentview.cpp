@@ -25,7 +25,7 @@
 
 #include "attachmentview.h"
 
-#include "messagecomposer/attachment/attachmentmodel.h"
+#include "MessageComposer/AttachmentModel"
 #include "kmkernel.h"
 
 #include <QContextMenuEvent>

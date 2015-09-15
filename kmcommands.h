@@ -3,7 +3,7 @@
 #ifndef KMCommands_h
 #define KMCommands_h
 
-#include "messagecomposer/helper/messagefactory.h"
+#include "MessageComposer/MessageFactory"
 #include "MessageList/View"
 #include "search/searchpattern.h"
 #include "viewer/viewer.h"

@@ -19,7 +19,7 @@
 #include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "settings/messageviewersettings.h"
-#include "messagecomposer/settings/messagecomposersettings.h"
+#include "MessageComposer/MessageComposerSettings"
 #include "adblock/adblocksettingwidget.h"
 #include "MailCommon/FolderCollection"
 #include "settings/kmailsettings.h"

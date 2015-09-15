@@ -7,7 +7,7 @@
   <include>QFontDatabase</include>
   <include>kcolorscheme.h</include>
   <include>editor/composer.h</include>
-  <include>messagecomposer/utils/util.h</include>
+  <include>MessageComposer/Util</include>
   <include>KCompletion</include>
   <kcfgfile name="kmail2rc"/>
   <group name="Behaviour">

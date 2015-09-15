@@ -26,18 +26,17 @@
 // KMail includes
 #include "job/addressvalidationjob.h"
 #include "attachment/attachmentcontroller.h"
-#include "messagecomposer/attachment/attachmentmodel.h"
+#include "MessageComposer/AttachmentModel"
 #include "attachment/attachmentview.h"
 #include "codec/codecaction.h"
-#include <messagecomposer/job/emailaddressresolvejob.h>
-#include "kleo_util.h"
+#include "MessageComposer/Kleo_Util"
 #include "kmcommands.h"
 #include "editor/kmcomposereditorng.h"
-#include "messagecomposer/composer-ng/richtextcomposercontroler.h"
-#include "messagecomposer/composer-ng/richtextcomposersignatures.h"
-#include "messagecomposer/composer-ng/richtextcomposeractions.h"
-#include "messagecomposer/composer-ng/richtextcomposerimages.h"
-#include "messagecomposer/composer-ng/richtextexternalcomposer.h"
+#include "MessageComposer/RichTextComposerControler"
+#include "MessageComposer/RichTextComposerSignatures"
+#include "MessageComposer/RichTextComposerActions"
+#include "MessageComposer/RichTextComposerImages"
+#include "MessageComposer/RichTextExternalComposer"
 #include "kmcomposereditorwidgetng.h"
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
@@ -79,7 +78,7 @@
 #include "PimCommon/StorageServiceManager"
 #include "PimCommon/StorageServiceProgressManager"
 
-#include "messagecomposer/utils/util.h"
+#include "MessageComposer/Util"
 
 #include <kcontacts/vcardconverter.h>
 #include "agents/sendlateragent/sendlaterutil.h"
@@ -101,15 +100,15 @@
 #include <viewer/objecttreeparser.h>
 #include <viewer/nodehelper.h>
 #include <settings/messageviewersettings.h>
-#include <messagecomposer/composer/composer.h>
-#include <messagecomposer/part/globalpart.h>
-#include <messagecomposer/part/infopart.h>
-#include <messagecomposer/part/textpart.h>
+#include <MessageComposer/Composer>
+#include <MessageComposer/GlobalPart>
+#include <MessageComposer/InfoPart>
+#include <MessageComposer/TextPart>
 #include <settings/messagecomposersettings.h>
-#include <messagecomposer/helper/messagehelper.h>
-#include <messagecomposer/composer/signaturecontroller.h>
-#include <messagecomposer/job/inserttextfilejob.h>
-#include <messagecomposer/composer/composerlineedit.h>
+#include <MessageComposer/MessageHelper>
+#include <MessageComposer/SignatureController>
+#include <MessageComposer/InsertTextFileJob>
+#include <MessageComposer/ComposerLineEdit>
 #include <MessageCore/AttachmentPart>
 #include "settings/messagecoresettings.h"
 #include <templateparser.h>

@@ -117,10 +117,10 @@ using MailTransport::TransportManager;
 #include "utils/stringutil.h"
 #include "helpers/messagehelpers.h"
 
-#include "messagecomposer/sender/messagesender.h"
-#include "messagecomposer/helper/messagehelper.h"
-#include "messagecomposer/settings/messagecomposersettings.h"
-#include "messagecomposer/helper/messagefactory.h"
+#include "MessageComposer/MessageSender"
+#include "MessageComposer/MessageHelper"
+#include "MessageComposer/MessageComposerSettings"
+#include "MessageComposer/MessageFactory"
 using MessageComposer::MessageFactory;
 
 #include "progresswidget/progressmanager.h"

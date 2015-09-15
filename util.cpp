@@ -39,7 +39,7 @@
 #include "kmkernel.h"
 
 #include "utils/stringutil.h"
-#include "messagecomposer/helper/messagehelper.h"
+#include "MessageComposer/MessageHelper"
 
 #include "TemplateParser/TemplateParser"
 

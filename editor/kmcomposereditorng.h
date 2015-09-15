@@ -18,7 +18,7 @@
 #ifndef KMCOMPOSEREDITORNG_H
 #define KMCOMPOSEREDITORNG_H
 
-#include "messagecomposer/composer-ng/richtextcomposer.h"
+#include "MessageComposer/RichTextComposer"
 class KMComposeWin;
 
 class KMComposerEditorNg : public MessageComposer::RichTextComposer
