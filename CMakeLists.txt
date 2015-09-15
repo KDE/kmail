@@ -298,7 +298,7 @@ target_link_libraries(kmailprivate
     KF5::PimTextEdit
     KF5::MessageViewer
     KF5::SendLater
-    followupreminder
+    KF5::FollowupReminder
     KF5::GrantleeTheme
     KF5::IconThemes
     KF5::XmlGui
