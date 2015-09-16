@@ -145,9 +145,9 @@ static const struct {
 } fontNames[] = {
     { "body-font", I18N_NOOP("Message Body"), true, false },
     { "MessageListFont", I18N_NOOP("Message List"), true, false },
-    { "UnreadMessageFont", I18N_NOOP("Message List - Unread Messages"), true, false },
-    { "ImportantMessageFont", I18N_NOOP("Message List - Important Messages"), true, false },
-    { "TodoMessageFont", I18N_NOOP("Message List - Action Item Messages"), true, false },
+    { "UnreadMessageFont", I18N_NOOP("Message List - Unread Messages"), false, false },
+    { "ImportantMessageFont", I18N_NOOP("Message List - Important Messages"), false, false },
+    { "TodoMessageFont", I18N_NOOP("Message List - Action Item Messages"), false, false },
     { "folder-font", I18N_NOOP("Folder List"), true, false },
     { "quote1-font", I18N_NOOP("Quoted Text - First Level"), false, false },
     { "quote2-font", I18N_NOOP("Quoted Text - Second Level"), false, false },
@@ -254,19 +254,20 @@ void AppearancePage::FontsTab::doLoadOther()
 {
     if (KMKernel::self()) {
         KConfigGroup fonts(KMKernel::self()->config(), "Fonts");
-        KConfigGroup messagelistFont(KMKernel::self()->config(), "MessageListView::Fonts");
 
         mFont[0] = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
         QFont fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 
         for (int i = 0 ; i < numFontNames ; ++i) {
             const QString configName = QLatin1String(fontNames[i].configName);
-            if (configName == QLatin1String("MessageListFont") ||
-                    configName == QLatin1String("UnreadMessageFont") ||
-                    configName == QLatin1String("ImportantMessageFont") ||
-                    configName == QLatin1String("TodoMessageFont")) {
-                mFont[i] = messagelistFont.readEntry(configName,
-                                                     (fontNames[i].onlyFixed) ? fixedFont : mFont[0]);
+            if (configName == QLatin1String("MessageListFont")) {
+                mFont[i] = MessageList::Core::Settings::self()->messageListFont();
+            } else if (configName == QLatin1String("UnreadMessageFont")) {
+                mFont[i] = MessageList::Core::Settings::self()->unreadMessageFont();
+            } else if (configName == QLatin1String("ImportantMessageFont")) {
+                mFont[i] = MessageList::Core::Settings::self()->importantMessageFont();
+            } else if (configName == QLatin1String("TodoMessageFont")) {
+                mFont[i] = MessageList::Core::Settings::self()->todoMessageFont();
             } else {
                 mFont[i] = fonts.readEntry(configName,
                                            (fontNames[i].onlyFixed) ? fixedFont : mFont[0]);
@@ -284,7 +285,6 @@ void AppearancePage::FontsTab::save()
 {
     if (KMKernel::self()) {
         KConfigGroup fonts(KMKernel::self()->config(), "Fonts");
-        KConfigGroup messagelistFont(KMKernel::self()->config(), "MessageListView::Fonts");
 
         // read the current font (might have been modified)
         if (mActiveFontIndex >= 0) {
@@ -296,15 +296,14 @@ void AppearancePage::FontsTab::save()
 
         for (int i = 0 ; i < numFontNames ; ++i) {
             const QString configName = QLatin1String(fontNames[i].configName);
-            if (configName == QLatin1String("MessageListFont") ||
-                    configName == QLatin1String("UnreadMessageFont") ||
-                    configName == QLatin1String("ImportantMessageFont") ||
-                    configName == QLatin1String("TodoMessageFont")) {
-                if (customFonts || messagelistFont.hasKey(configName)) {
-                    // Don't write font info when we use default fonts, but write
-                    // if it's already there:
-                    messagelistFont.writeEntry(configName, mFont[i]);
-                }
+            if (customFonts && configName == QLatin1String("MessageListFont")) {
+                MessageList::Core::Settings::self()->setMessageListFont(mFont[i]);
+            } else if (customFonts && configName == QLatin1String("UnreadMessageFont")) {
+                MessageList::Core::Settings::self()->setUnreadMessageFont(mFont[i]);
+            } else if (customFonts && configName == QLatin1String("ImportantMessageFont")) {
+                MessageList::Core::Settings::self()->setImportantMessageFont(mFont[i]);
+            } else if (customFonts && configName == QLatin1String("TodoMessageFont")) {
+                MessageList::Core::Settings::self()->setTodoMessageFont(mFont[i]);
             } else {
                 if (customFonts || fonts.hasKey(configName))
                     // Don't write font info when we use default fonts, but write
@@ -1100,8 +1099,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     connect(mTagWidget, SIGNAL(changed()), this, SLOT(slotEmitChangeCheck()));
 
     //For enabling the add button in case box is non-empty
-    connect(mTagAddLineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(slotAddLineTextChanged(QString)));
+    connect(mTagAddLineEdit, &KLineEdit::textChanged,
+            this, &AppearancePage::MessageTagTab::slotAddLineTextChanged);
 
     //For on-the-fly updating of tag name in editbox
     connect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged,
@@ -1235,19 +1234,19 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets(int aIndex)
     TagListWidgetItem *tagItem = static_cast<TagListWidgetItem *>(item);
     MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
-    disconnect(mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
-               this, SLOT(slotNameLineTextChanged(QString)));
+    disconnect(mTagWidget->tagNameLineEdit(), &KLineEdit::textChanged,
+               this, &AppearancePage::MessageTagTab::slotNameLineTextChanged);
 
     mTagWidget->tagNameLineEdit()->setEnabled(!tmp_desc->isImmutable);
     mTagWidget->tagNameLineEdit()->setText(tmp_desc->tagName);
-    connect(mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
-            this, SLOT(slotNameLineTextChanged(QString)));
+    connect(mTagWidget->tagNameLineEdit(), &KLineEdit::textChanged,
+            this, &AppearancePage::MessageTagTab::slotNameLineTextChanged);
 
     mTagWidget->setTagTextColor(tmp_desc->textColor);
 
     mTagWidget->setTagBackgroundColor(tmp_desc->backgroundColor);
 
-    mTagWidget->setTagTextFont(tmp_desc->textFont);
+    mTagWidget->setTagTextFormat(tmp_desc->isBold, tmp_desc->isItalic);
 
     mTagWidget->iconButton()->setEnabled(!tmp_desc->isImmutable);
     mTagWidget->iconButton()->setIcon(tmp_desc->iconName);
@@ -1307,8 +1306,7 @@ void AppearancePage::MessageTagTab::slotDeleteTagJob(KJob *job)
     }
 }
 
-void AppearancePage::MessageTagTab::slotNameLineTextChanged(const QString
-        &aText)
+void AppearancePage::MessageTagTab::slotNameLineTextChanged(const QString &aText)
 {
     //If deleted all, leave the first character for the sake of not having an
     //empty tag name
@@ -1370,7 +1368,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
     newItem->setKMailTag(tag);
     mTagListBox->addItem(newItem);
     mTagListBox->setCurrentItem(newItem);
-    mTagAddLineEdit->setText(QString());
+    mTagAddLineEdit->clear();
 }
 
 void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
@@ -1450,9 +1448,7 @@ void AppearancePage::MessageTagTab::save()
         if ((i >= mOriginalMsgTagList.count()) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i])) {
             MailCommon::Tag::Ptr tag = tagItem->kmailTag();
             tag->priority = i;
-
-            MailCommon::Tag::SaveFlags saveFlags = mTagWidget->saveFlags();
-            Akonadi::Tag akonadiTag = tag->saveToAkonadi(saveFlags);
+            Akonadi::Tag akonadiTag = tag->saveToAkonadi();
             if ((*tag).id() > 0) {
                 akonadiTag.setId((*tag).id());
             }
