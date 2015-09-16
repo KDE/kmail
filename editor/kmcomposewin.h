@@ -41,7 +41,7 @@
 #include <kmime/kmime_headers.h>
 
 // Other includes
-#include "libkleo/kleo/enum.h"
+#include "Libkleo/Enum"
 #include <composer/composerviewbase.h>
 
 class QUrl;

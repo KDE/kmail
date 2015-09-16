@@ -62,8 +62,8 @@
 
 #include <Libkdepim/AddresseeLineEdit>
 // libkleopatra:
-#include "libkleo/ui/keyrequester.h"
-#include "libkleo/kleo/cryptobackendfactory.h"
+#include "Libkleo/KeyRequester"
+#include "Libkleo/CryptoBackendFactory"
 
 #include <KEmailAddress>
 #include <Libkdepim/EmailValidator>

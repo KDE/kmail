@@ -34,7 +34,7 @@
 #include <AkonadiCore/itemfetchjob.h>
 #include <kcontacts/addressee.h>
 #include "kmail_debug.h"
-#include <libkleo/kleo/cryptobackendfactory.h>
+#include <Libkleo/CryptoBackendFactory>
 
 #include <MessageComposer/AttachmentModel>
 #include <MessageCore/AttachmentPart>

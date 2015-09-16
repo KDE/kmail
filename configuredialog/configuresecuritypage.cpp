@@ -26,10 +26,10 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "kmkernel.h"
 
-#include "libkleo/kleo/cryptoconfig.h"
-#include "libkleo/kleo/cryptobackendfactory.h"
-#include "libkleo/ui/keyrequester.h"
-#include "libkleo/ui/keyselectiondialog.h"
+#include "Libkleo/CryptoConfig"
+#include "Libkleo/CryptoBackendFactory"
+#include "Libkleo/KeyRequester"
+#include "Libkleo/KeySelectionDialog"
 
 #include <KLocalizedString>
 #include <KCMultiDialog>

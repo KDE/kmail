@@ -86,11 +86,11 @@
 #include "SendLater/SendLaterInfo"
 
 // KDEPIM includes
-#include <libkleo/ui/progressdialog.h>
-#include <libkleo/ui/keyselectiondialog.h>
-#include "libkleo/kleo/cryptobackendfactory.h"
-#include "libkleo/kleo/exportjob.h"
-#include "libkleo/kleo/specialjob.h"
+#include <Libkleo/ProgressDialog>
+#include <Libkleo/KeySelectionDialog>
+#include "Libkleo/CryptoBackendFactory"
+#include "Libkleo/ExportJob"
+#include "Libkleo/SpecialJob"
 #include <viewer/objecttreeemptysource.h>
 
 #ifndef QT_NO_CURSOR

@@ -30,7 +30,7 @@ target_link_libraries(kcm_kpimidentities
   KF5::MessageViewer
   KF5::TemplateParser
   KF5::PimCommon
-  kleo
+  KF5::Libkleo
   KF5::Libkdepim
 )
 

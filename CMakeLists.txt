@@ -290,7 +290,7 @@ target_link_libraries(kmailprivate
     KF5::NotifyConfig
     KF5::MailTransport
     KF5::KCMUtils
-    kleo
+    KF5::Libkleo
     ksieveui
     KF5::Libkdepim
     KF5::KIOCore
