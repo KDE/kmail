@@ -16,7 +16,7 @@ add_custom_target(kmail_xml ALL
 )
 
 include_directories(
-  ${CMAKE_SOURCE_DIR}/libksieve/ksieveui/
+  ${CMAKE_SOURCE_DIR}/libksieve/src/ksieveui/
   ${CMAKE_CURRENT_BINARY_DIR}
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}

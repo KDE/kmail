@@ -48,7 +48,7 @@
 #include "PimCommon/NetworkUtil"
 #include "PimCommon/TextToSpeech"
 #if !defined(NDEBUG)
-#include <ksieveui/debug/sievedebugdialog.h>
+#include <libksieve/src/ksieveui/debug/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
 #endif
 
@@ -101,7 +101,7 @@ using KSieveUi::SieveDebugDialog;
 #include "dialog/kmknotify.h"
 #include "widgets/displaymessageformatactionmenu.h"
 
-#include "ksieveui/vacation/vacationmanager.h"
+#include "libksieve/src/ksieveui/vacation/vacationmanager.h"
 #include "kmlaunchexternalcomponent.h"
 
 // LIBKDEPIM includes
@@ -144,8 +144,8 @@ using KSieveUi::SieveDebugDialog;
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
 #include <kmime/kmime_message.h>
-#include <ksieveui/managesievescriptsdialog.h>
-#include <ksieveui/util/util.h>
+#include <libksieve/src/ksieveui/managesievescriptsdialog.h>
+#include <libksieve/src/ksieveui/util/util.h>
 
 // KDELIBS includes
 #include <kwindowsystem.h>
