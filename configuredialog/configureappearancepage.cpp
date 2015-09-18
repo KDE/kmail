@@ -38,8 +38,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "settings/messageviewersettings.h"
 
 #include "messagelist/messagelistutil.h"
-#include "settings/messagecoresettings.h"
-#include "messagecoreutil.h"
+#include "MessageCore/MessageCoreSettings"
+#include "MessageCore/MessageCoreUtil"
 #include "settings/kmailsettings.h"
 
 #include "MailCommon/MailUtil"

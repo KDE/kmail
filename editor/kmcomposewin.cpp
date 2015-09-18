@@ -45,7 +45,7 @@
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "viewer/stl_util.h"
 #include "utils/util.h"
-#include "utils/stringutil.h"
+#include "MessageCore/StringUtil"
 #include "util.h"
 #include "editor/widgets/snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
@@ -110,10 +110,10 @@
 #include <MessageComposer/InsertTextFileJob>
 #include <MessageComposer/ComposerLineEdit>
 #include <MessageCore/AttachmentPart>
-#include "settings/messagecoresettings.h"
+#include "MessageCore/MessageCoreSettings"
 #include <templateparser.h>
 #include <TemplateParser/TemplatesConfiguration>
-#include "helpers/nodehelper.h"
+#include "MessageCore/NodeHelper"
 #include <Akonadi/KMime/MessageStatus>
 #include "helpers/messagehelpers.h"
 #include "MailCommon/FolderRequester"

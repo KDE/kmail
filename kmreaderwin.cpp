@@ -46,14 +46,14 @@
 #include "viewer/csshelper.h"
 using MessageViewer::CSSHelper;
 #include "util.h"
-#include "utils/stringutil.h"
+#include "MessageCore/StringUtil"
 #include <QCryptographicHash>
 #include <kmime/kmime_mdn.h>
 #include <akonadi/kmime/messageflags.h>
 
 #include "viewer/viewer.h"
 using namespace MessageViewer;
-#include <settings/messagecoresettings.h>
+#include <MessageCore/MessageCoreSettings>
 
 #include "viewer/attachmentstrategy.h"
 #include "MessageComposer/MessageSender"

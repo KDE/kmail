@@ -93,10 +93,10 @@ using KMail::SecondaryWindow;
 #include "util.h"
 #include "misc/broadcaststatus.h"
 #include "settings/kmailsettings.h"
-#include "utils/stringutil.h"
+#include "MessageCore/StringUtil"
 #include "utils/autoqpointer.h"
 #include "settings/messageviewersettings.h"
-#include "settings/messagecoresettings.h"
+#include "MessageCore/MessageCoreSettings"
 
 #include <AkonadiCore/itemmovejob.h>
 #include <AkonadiCore/itemcopyjob.h>
@@ -114,7 +114,7 @@ using MailTransport::TransportManager;
 #include "viewer/nodehelper.h"
 #include "viewer/objecttreeemptysource.h"
 
-#include "utils/stringutil.h"
+#include "MessageCore/StringUtil"
 #include "helpers/messagehelpers.h"
 
 #include "MessageComposer/MessageSender"

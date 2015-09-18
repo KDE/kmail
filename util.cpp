@@ -38,7 +38,7 @@
 #include "util.h"
 #include "kmkernel.h"
 
-#include "utils/stringutil.h"
+#include "MessageCore/StringUtil"
 #include "MessageComposer/MessageHelper"
 
 #include "TemplateParser/TemplateParser"
