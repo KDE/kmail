@@ -91,14 +91,14 @@
 #include "Libkleo/CryptoBackendFactory"
 #include "Libkleo/ExportJob"
 #include "Libkleo/SpecialJob"
-#include <viewer/objecttreeemptysource.h>
+#include <MessageViewer/ObjectTreeEmptySource>
 
 #ifndef QT_NO_CURSOR
 #include <MailCommon/KCursorSaver>
 #endif
 
-#include <viewer/objecttreeparser.h>
-#include <viewer/nodehelper.h>
+#include <MessageViewer/ObjectTreeParser>
+#include <messageviewer/nodehelper.h>
 #include <settings/messageviewersettings.h>
 #include <MessageComposer/Composer>
 #include <MessageComposer/GlobalPart>

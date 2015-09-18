@@ -81,7 +81,7 @@ using KSieveUi::SieveDebugDialog;
 
 #include "utils/autoqpointer.h"
 #include "settings/messageviewersettings.h"
-#include "viewer/viewer.h"
+#include "messageviewer/viewer.h"
 #include "viewer/attachmentstrategy.h"
 #include "header/headerstrategy.h"
 #include "header/headerstyle.h"

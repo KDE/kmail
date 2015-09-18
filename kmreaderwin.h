@@ -23,7 +23,7 @@
 
 #include <QWidget>
 #include <qurl.h>
-#include <viewer/viewer.h>
+#include <messageviewer/viewer.h>
 #include <interfaces/bodypart.h>
 #include <AkonadiCore/Item>
 #include <KContacts/Addressee>

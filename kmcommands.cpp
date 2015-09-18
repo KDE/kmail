@@ -82,8 +82,8 @@
 #ifndef QT_NO_CURSOR
 #include "MailCommon/KCursorSaver"
 #endif
-#include "viewer/objecttreeparser.h"
-#include "viewer/csshelper.h"
+#include "MessageViewer/ObjectTreeParser"
+#include "MessageViewer/CSSHelper"
 #include "utils/util.h"
 #include "header/headerstrategy.h"
 #include "header/headerstyle.h"
@@ -111,8 +111,8 @@ using KMail::SecondaryWindow;
 #include <MailTransport/mailtransport/transportmanager.h>
 using MailTransport::TransportManager;
 
-#include "viewer/nodehelper.h"
-#include "viewer/objecttreeemptysource.h"
+#include "messageviewer/nodehelper.h"
+#include "MessageViewer/ObjectTreeEmptySource"
 
 #include "MessageCore/StringUtil"
 #include "helpers/messagehelpers.h"

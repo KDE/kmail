@@ -43,7 +43,7 @@
 #include "viewer/mailwebview.h"
 #include "utils/markmessagereadhandler.h"
 #include "settings/messageviewersettings.h"
-#include "viewer/csshelper.h"
+#include "MessageViewer/CSSHelper"
 using MessageViewer::CSSHelper;
 #include "util.h"
 #include "MessageCore/StringUtil"
@@ -51,7 +51,7 @@ using MessageViewer::CSSHelper;
 #include <kmime/kmime_mdn.h>
 #include <akonadi/kmime/messageflags.h>
 
-#include "viewer/viewer.h"
+#include "messageviewer/viewer.h"
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 

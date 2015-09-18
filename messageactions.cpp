@@ -32,7 +32,7 @@
 #include "MessageCore/MessageCoreSettings"
 #include "MessageCore/MailingList"
 #include "helpers/messagehelpers.h"
-#include "viewer/csshelper.h"
+#include "MessageViewer/CSSHelper"
 #include "settings/messageviewersettings.h"
 
 #include <AkonadiCore/itemfetchjob.h>

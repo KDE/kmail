@@ -11,7 +11,7 @@
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/collection.h>
 #include <QModelIndex>
-#include <viewer/viewer.h>
+#include <messageviewer/viewer.h>
 class KMReaderWin;
 class QAction;
 class KFontAction;
