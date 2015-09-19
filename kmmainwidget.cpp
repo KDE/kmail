@@ -105,7 +105,7 @@ using KSieveUi::SieveDebugDialog;
 #include "kmlaunchexternalcomponent.h"
 
 // LIBKDEPIM includes
-#include "progresswidget/progressmanager.h"
+#include "libkdepim/progressmanager.h"
 #include "misc/broadcaststatus.h"
 
 // KDEPIMLIBS includes

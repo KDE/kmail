@@ -22,7 +22,7 @@
 #include <QPointer>
 #include <MailCommon/FolderCollection>
 
-#include <progresswidget/progressmanager.h>
+#include <libkdepim/progressmanager.h>
 
 namespace Akonadi
 {

@@ -123,7 +123,7 @@ using MailTransport::TransportManager;
 #include "MessageComposer/MessageFactory"
 using MessageComposer::MessageFactory;
 
-#include "progresswidget/progressmanager.h"
+#include "libkdepim/progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
 #include <kmime/kmime_mdn.h>

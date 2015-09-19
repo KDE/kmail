@@ -17,7 +17,7 @@
 
 #include "removeduplicatemailjob.h"
 
-#include "progresswidget/progressmanager.h"
+#include "libkdepim/progressmanager.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 

@@ -65,7 +65,7 @@ using KMail::MailServiceImpl;
 
 #include <kmessagebox.h>
 #include <knotification.h>
-#include <progresswidget/progressmanager.h>
+#include <libkdepim/progressmanager.h>
 
 #include <kconfig.h>
 #include <kpassivepopup.h>
