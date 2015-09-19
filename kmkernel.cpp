@@ -12,7 +12,7 @@ using KPIM::BroadcastStatus;
 #include "undostack.h"
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
-#include "addressline/recentaddress/recentaddresses.h"
+#include "libkdepim/recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
