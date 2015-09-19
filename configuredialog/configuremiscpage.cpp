@@ -24,7 +24,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MailCommon/FolderRequester>
 #include "MessageViewer/InvitationSettings"
 #include "MessageViewer/PrintingSettings"
-#include "settings/messageviewersettings.h"
+#include "messageviewer/messageviewersettings.h"
 
 #include <KCModuleProxy>
 #include <KCModuleInfo>

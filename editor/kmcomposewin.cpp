@@ -99,7 +99,7 @@
 
 #include <MessageViewer/ObjectTreeParser>
 #include <messageviewer/nodehelper.h>
-#include <settings/messageviewersettings.h>
+#include <messageviewer/messageviewersettings.h>
 #include <MessageComposer/Composer>
 #include <MessageComposer/GlobalPart>
 #include <MessageComposer/InfoPart>

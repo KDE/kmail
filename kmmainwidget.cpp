@@ -80,7 +80,7 @@ using KSieveUi::SieveDebugDialog;
 #include "kdepim-version.h"
 
 #include "messageviewer/autoqpointer.h"
-#include "settings/messageviewersettings.h"
+#include "messageviewer/messageviewersettings.h"
 #include "messageviewer/viewer.h"
 #include "viewer/attachmentstrategy.h"
 #include "header/headerstrategy.h"

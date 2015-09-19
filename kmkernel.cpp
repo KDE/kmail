@@ -48,7 +48,7 @@ using KMail::MailServiceImpl;
 #include "MessageCore/MessageCoreSettings"
 #include "core/settings.h"
 #include "messagelist/messagelistutil.h"
-#include "settings/messageviewersettings.h"
+#include "messageviewer/messageviewersettings.h"
 #include "MessageComposer/AkonadiSender"
 #include "settings/messagecomposersettings.h"
 #include "MessageComposer/MessageHelper"
