@@ -79,7 +79,7 @@ using KSieveUi::SieveDebugDialog;
 // Other PIM includes
 #include "kdepim-version.h"
 
-#include "utils/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 #include "settings/messageviewersettings.h"
 #include "messageviewer/viewer.h"
 #include "viewer/attachmentstrategy.h"
@@ -96,7 +96,7 @@ using KSieveUi::SieveDebugDialog;
 
 #include "MessageCore/MessageCoreSettings"
 #include "MessageCore/MailingList"
-#include "helpers/messagehelpers.h"
+#include "messagecore/messagehelpers.h"
 
 #include "dialog/kmknotify.h"
 #include "widgets/displaymessageformatactionmenu.h"

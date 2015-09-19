@@ -65,7 +65,7 @@ using namespace MessageViewer;
 #include <KIO/JobUiDelegate>
 using MessageComposer::MessageFactory;
 
-#include "helpers/messagehelpers.h"
+#include "messagecore/messagehelpers.h"
 
 #include <Akonadi/Contact/ContactEditorDialog>
 

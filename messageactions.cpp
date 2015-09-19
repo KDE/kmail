@@ -31,7 +31,7 @@
 #include "PimCommon/WebShortCutMenuManager"
 #include "MessageCore/MessageCoreSettings"
 #include "MessageCore/MailingList"
-#include "helpers/messagehelpers.h"
+#include "messagecore/messagehelpers.h"
 #include "MessageViewer/CSSHelper"
 #include "settings/messageviewersettings.h"
 

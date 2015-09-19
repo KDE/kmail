@@ -94,7 +94,7 @@ using KMail::SecondaryWindow;
 #include "misc/broadcaststatus.h"
 #include "settings/kmailsettings.h"
 #include "MessageCore/StringUtil"
-#include "utils/autoqpointer.h"
+#include "messageviewer/autoqpointer.h"
 #include "settings/messageviewersettings.h"
 #include "MessageCore/MessageCoreSettings"
 
@@ -115,7 +115,7 @@ using MailTransport::TransportManager;
 #include "MessageViewer/ObjectTreeEmptySource"
 
 #include "MessageCore/StringUtil"
-#include "helpers/messagehelpers.h"
+#include "messagecore/messagehelpers.h"
 
 #include "MessageComposer/MessageSender"
 #include "MessageComposer/MessageHelper"

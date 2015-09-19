@@ -115,7 +115,7 @@
 #include <TemplateParser/TemplatesConfiguration>
 #include "MessageCore/NodeHelper"
 #include <Akonadi/KMime/MessageStatus>
-#include "helpers/messagehelpers.h"
+#include "messagecore/messagehelpers.h"
 #include "MailCommon/FolderRequester"
 #include "MailCommon/FolderCollection"
 
