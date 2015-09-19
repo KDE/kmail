@@ -80,7 +80,7 @@
 #include "kmmainwidget.h"
 #include "undostack.h"
 #ifndef QT_NO_CURSOR
-#include "MailCommon/KCursorSaver"
+#include "Libkdepim/KCursorSaver"
 #endif
 #include "MessageViewer/ObjectTreeParser"
 #include "MessageViewer/CSSHelper"
@@ -861,7 +861,7 @@ KMReplyCommand::KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, Messag
 KMCommand::Result KMReplyCommand::execute()
 {
 #ifndef QT_NO_CURSOR
-    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
     Akonadi::Item item = retrievedMessage();
     KMime::Message::Ptr msg = MessageCore::Util::message(item);
@@ -922,7 +922,7 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
         return Failed;
     }
 #ifndef QT_NO_CURSOR
-    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
     MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
@@ -1366,7 +1366,7 @@ KMFilterActionCommand::KMFilterActionCommand(QWidget *parent,
 KMCommand::Result KMFilterActionCommand::execute()
 {
 #ifndef QT_NO_CURSOR
-    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
     int msgCount = 0;
     const int msgCountToFilter = mMsgListId.count();
@@ -1495,7 +1495,7 @@ void KMMoveCommand::slotMoveResult(KJob *job)
 KMCommand::Result KMMoveCommand::execute()
 {
 #ifndef QT_NO_CURSOR
-    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
     setEmitsCompletedItself(true);
     setDeletesItself(true);

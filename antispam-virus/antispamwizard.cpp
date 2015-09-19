@@ -29,7 +29,7 @@
 
 #include "antispamwizard.h"
 #ifndef QT_NO_CURSOR
-#include "MailCommon/KCursorSaver"
+#include "Libkdepim/KCursorSaver"
 #endif
 #include "kmkernel.h"
 #include "kmmainwin.h"
@@ -513,7 +513,7 @@ void AntiSpamWizard::checkToolAvailability()
 {
     // this can take some time to find the tools
 #ifndef QT_NO_CURSOR
-    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
     bool found = false;
     QList<SpamToolConfig>::ConstIterator end(mToolList.constEnd());

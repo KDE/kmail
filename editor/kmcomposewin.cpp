@@ -94,7 +94,7 @@
 #include <MessageViewer/ObjectTreeEmptySource>
 
 #ifndef QT_NO_CURSOR
-#include <MailCommon/KCursorSaver>
+#include <Libkdepim/KCursorSaver>
 #endif
 
 #include <MessageViewer/ObjectTreeParser>
@@ -2659,7 +2659,7 @@ void KMComposeWin::applyComposerSetting(MessageComposer::ComposerViewBase *mComp
 void KMComposeWin::doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn)
 {
 #ifndef QT_NO_CURSOR
-    MailCommon::KCursorSaver busy(MailCommon::KBusyPtr::busy());
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
     applyComposerSetting(mComposerBase);
     if (mForceDisableHtml) {
