@@ -50,7 +50,7 @@
 #include "editor/widgets/snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
 #include "mailcommon/foldercollectionmonitor.h"
-#include "kernel/mailkernel.h"
+#include "mailcommon/mailkernel.h"
 #include "custommimeheader.h"
 #include "PimCommon/LineEditWithAutoCorrection"
 #include "PimCommon/CustomToolsWidgetng"

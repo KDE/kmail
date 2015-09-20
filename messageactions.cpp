@@ -21,7 +21,7 @@
 #include "settings/kmailsettings.h"
 #include "kmreaderwin.h"
 #include "kmkernel.h"
-#include "kernel/mailkernel.h"
+#include "mailcommon/mailkernel.h"
 #include "kmmainwidget.h"
 #include "util.h"
 #include "kmcommands.h"
@@ -60,7 +60,7 @@
 #include <qwidget.h>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entityannotationsattribute.h>
-#include <util/mailutil.h>
+#include <mailcommon/mailutil.h>
 
 using namespace KMail;
 

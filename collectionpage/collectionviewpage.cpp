@@ -18,7 +18,7 @@
 
 #include "collectionviewpage.h"
 #include "kmkernel.h"
-#include "kernel/mailkernel.h"
+#include "mailcommon/mailkernel.h"
 
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entitydisplayattribute.h>

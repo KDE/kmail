@@ -25,7 +25,7 @@
 #include "settings/kmailsettings.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
-#include "kernel/mailkernel.h"
+#include "mailcommon/mailkernel.h"
 #include "dialog/addemailtoexistingcontactdialog.h"
 #include "job/addemailtoexistingcontactjob.h"
 
@@ -38,9 +38,9 @@
 #include "kmcommands.h"
 #include "MailCommon/SendMdnHandler"
 #include <QVBoxLayout>
-#include "header/headerstrategy.h"
-#include "header/headerstyle.h"
-#include "viewer/mailwebview.h"
+#include "messageviewer/headerstrategy.h"
+#include "messageviewer/headerstyle.h"
+#include "messageviewer/mailwebview.h"
 #include "utils/markmessagereadhandler.h"
 #include "messageviewer/messageviewersettings.h"
 #include "MessageViewer/CSSHelper"
@@ -91,7 +91,7 @@ using MessageComposer::MessageFactory;
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include <util/mailutil.h>
+#include <mailcommon/mailutil.h>
 
 using namespace KMail;
 using namespace MailCommon;

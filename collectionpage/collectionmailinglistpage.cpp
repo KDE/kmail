@@ -20,8 +20,8 @@
 
 #include "collectionmailinglistpage.h"
 #include "kmkernel.h"
-#include "kernel/mailkernel.h"
-#include "util/mailutil.h"
+#include "mailcommon/mailkernel.h"
+#include "mailcommon/mailutil.h"
 #include "util.h"
 
 #include <AkonadiCore/itemfetchjob.h>

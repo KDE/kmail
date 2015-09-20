@@ -19,7 +19,7 @@
 #include "foldershortcutactionmanager.h"
 
 #include "MailCommon/FolderCollection"
-#include "kernel/mailkernel.h"
+#include "mailcommon/mailkernel.h"
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/EntityDisplayAttribute>

@@ -50,7 +50,7 @@
 #include <TemplateParser/CustomTemplatesMenu>
 #include "messageactions.h"
 #include "util.h"
-#include "kernel/mailkernel.h"
+#include "mailcommon/mailkernel.h"
 #include "MailCommon/FolderCollection"
 
 #include <KActionCollection>
@@ -66,7 +66,7 @@
 #include <Akonadi/KMime/MessageFlags>
 #include "PimCommon/TextToSpeech"
 #include "messagecore/messagehelpers.h"
-#include <util/mailutil.h>
+#include <mailcommon/mailutil.h>
 
 using namespace MailCommon;
 

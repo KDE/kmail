@@ -21,7 +21,7 @@
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
 #include "settings/kmailsettings.h"
-#include "util/mailutil.h"
+#include "mailcommon/mailutil.h"
 #include "MailCommon/MailKernel"
 #include "MailCommon/FolderTreeView"
 #include <AkonadiCore/NewMailNotifierAttribute>

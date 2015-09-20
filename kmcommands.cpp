@@ -44,8 +44,8 @@
 #include "kmcommands.h"
 
 #include "widgets/collectionpane.h"
-#include "kernel/mailkernel.h"
-#include "util/mailutil.h"
+#include "mailcommon/mailkernel.h"
+#include "mailcommon/mailutil.h"
 
 #include <unistd.h> // link()
 #include <QProgressDialog>
@@ -85,13 +85,13 @@
 #include "MessageViewer/ObjectTreeParser"
 #include "MessageViewer/CSSHelper"
 #include "utils/util.h"
-#include "header/headerstrategy.h"
+#include "messageviewer/headerstrategy.h"
 #include "header/headerstyle.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
 #include "util.h"
-#include "misc/broadcaststatus.h"
+#include "libkdepim/broadcaststatus.h"
 #include "settings/kmailsettings.h"
 #include "MessageCore/StringUtil"
 #include "messageviewer/autoqpointer.h"

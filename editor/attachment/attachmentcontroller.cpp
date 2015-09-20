@@ -29,7 +29,7 @@
 #include "editor/kmcomposewin.h"
 #include "kmkernel.h"
 #include "kmreadermainwin.h"
-#include "util/mailutil.h"
+#include "mailcommon/mailutil.h"
 #include <KIdentityManagement/Identity>
 #include <AkonadiCore/itemfetchjob.h>
 #include <kcontacts/addressee.h>

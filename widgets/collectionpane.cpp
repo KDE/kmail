@@ -18,7 +18,7 @@
 
 #include "collectionpane.h"
 #include "kmkernel.h"
-#include "kernel/mailkernel.h"
+#include "mailcommon/mailkernel.h"
 
 #include "MailCommon/FolderCollection"
 #include "PimCommon/PimUtil"

@@ -3,7 +3,7 @@
 #include "kmkernel.h"
 
 #include "settings/kmailsettings.h"
-#include "misc/broadcaststatus.h"
+#include "libkdepim/broadcaststatus.h"
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmainwin.h"
@@ -18,7 +18,7 @@ using KPIM::RecentAddresses;
 #include "kmcommands.h"
 #include "kmsystemtray.h"
 #include "MessageCore/StringUtil"
-#include "util/mailutil.h"
+#include "mailcommon/mailutil.h"
 #include "pop3settings.h"
 #include "MailCommon/FolderTreeView"
 #include "MailCommon/KMFilterDialog"

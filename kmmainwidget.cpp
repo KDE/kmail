@@ -33,8 +33,8 @@
 #include "MailCommon/FolderSelectionDialog"
 #include "MailCommon/FolderTreeWidget"
 #include "util.h"
-#include "util/mailutil.h"
-#include "kernel/mailkernel.h"
+#include "mailcommon/mailutil.h"
+#include "mailcommon/mailkernel.h"
 #include "dialog/archivefolderdialog.h"
 #include "settings/kmailsettings.h"
 #include "MailCommon/FolderTreeView"
@@ -82,9 +82,9 @@ using KSieveUi::SieveDebugDialog;
 #include "messageviewer/autoqpointer.h"
 #include "messageviewer/messageviewersettings.h"
 #include "messageviewer/viewer.h"
-#include "viewer/attachmentstrategy.h"
-#include "header/headerstrategy.h"
-#include "header/headerstyle.h"
+#include "messageviewer/attachmentstrategy.h"
+#include "messageviewer/headerstrategy.h"
+#include "messageviewer/headerstyle.h"
 #ifndef QT_NO_CURSOR
 #include "Libkdepim/KCursorSaver"
 #endif
@@ -106,7 +106,7 @@ using KSieveUi::SieveDebugDialog;
 
 // LIBKDEPIM includes
 #include "libkdepim/progressmanager.h"
-#include "misc/broadcaststatus.h"
+#include "libkdepim/broadcaststatus.h"
 
 // KDEPIMLIBS includes
 #include <AkonadiCore/AgentManager>

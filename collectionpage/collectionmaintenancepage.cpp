@@ -17,7 +17,7 @@
 */
 
 #include "collectionmaintenancepage.h"
-#include "util/mailutil.h"
+#include "mailcommon/mailutil.h"
 #include "kmkernel.h"
 
 #include <AkonadiCore/collectionstatistics.h>
