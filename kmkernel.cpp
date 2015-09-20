@@ -50,7 +50,7 @@ using KMail::MailServiceImpl;
 #include "messagelist/messagelistutil.h"
 #include "messageviewer/messageviewersettings.h"
 #include "MessageComposer/AkonadiSender"
-#include "settings/messagecomposersettings.h"
+#include "messagecomposer/messagecomposersettings.h"
 #include "MessageComposer/MessageHelper"
 #include "MessageComposer/MessageComposerSettings"
 #include "PimCommon/PimCommonSettings"

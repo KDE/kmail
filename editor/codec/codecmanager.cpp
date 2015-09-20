@@ -31,7 +31,7 @@
 
 // KDE libs
 #include <kcodecaction.h>
-#include <settings/messagecomposersettings.h>
+#include <messagecomposer/messagecomposersettings.h>
 
 class CodecManagerPrivate
 {

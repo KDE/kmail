@@ -104,7 +104,7 @@
 #include <MessageComposer/GlobalPart>
 #include <MessageComposer/InfoPart>
 #include <MessageComposer/TextPart>
-#include <settings/messagecomposersettings.h>
+#include <messagecomposer/messagecomposersettings.h>
 #include <MessageComposer/MessageHelper>
 #include <MessageComposer/SignatureController>
 #include <MessageComposer/InsertTextFileJob>
