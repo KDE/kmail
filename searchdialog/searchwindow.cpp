@@ -108,7 +108,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     mSearchButton = new QPushButton;
     KGuiItem::assign(mSearchButton, mStartSearchGuiItem);
     mUi.mButtonBox->addButton(mSearchButton, QDialogButtonBox::ActionRole);
-    connect(mUi.mButtonBox, SIGNAL(rejected()), SLOT(slotClose()));
+    connect(mUi.mButtonBox, &QDialogButtonBox::rejected, this, &SearchWindow::slotClose);
     searchWidget->layout()->setMargin(0);
 
     mUi.mCbxFolders->setMustBeReadWrite(false);
@@ -184,7 +184,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
             this, SLOT(slotCurrentChanged(Akonadi::Item)));
     connect(mUi.selectMultipleFolders, &QPushButton::clicked, this, &SearchWindow::slotSelectMultipleFolders);
 
-    connect(KMKernel::self()->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, SLOT(updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics)));
+    connect(KMKernel::self()->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &SearchWindow::updateCollectionStatistic);
 
     if (currentFolderIsSearchFolder) {
         mFolder = collection;
@@ -619,7 +619,7 @@ void SearchWindow::closeEvent(QCloseEvent *event)
         mSearchJob->kill(KJob::Quietly);
         mSearchJob->deleteLater();
         mSearchJob = Q_NULLPTR;
-        QTimer::singleShot(0, this, SLOT(slotClose()));
+        QTimer::singleShot(0, this, &SearchWindow::slotClose);
     } else {
         QDialog::closeEvent(event);
     }

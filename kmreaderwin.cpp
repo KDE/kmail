@@ -119,8 +119,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mViewer->setExternalWindow(true);
     mViewer->setAppName(QStringLiteral("KMail"));
     connect(mViewer, SIGNAL(urlClicked(Akonadi::Item,QUrl)), this, SLOT(slotUrlClicked(Akonadi::Item,QUrl)));
-    connect(mViewer, SIGNAL(requestConfigSync()), kmkernel, SLOT(slotRequestConfigSync()), Qt::QueuedConnection);   // happens anyway on shutdown, so we can skip it there with using a queued connection
-    connect(mViewer, SIGNAL(makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode)), kmkernel, SLOT(makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode)));
+    connect(mViewer, &Viewer::requestConfigSync, kmkernel, &KMKernel::slotRequestConfigSync, Qt::QueuedConnection);   // happens anyway on shutdown, so we can skip it there with using a queued connection
+    connect(mViewer, &Viewer::makeResourceOnline, kmkernel, &KMKernel::makeResourceOnline);
     connect(mViewer, &MessageViewer::Viewer::showReader, this, &KMReaderWin::slotShowReader);
     connect(mViewer, &MessageViewer::Viewer::showMessage, this, &KMReaderWin::slotShowMessage);
     connect(mViewer, &MessageViewer::Viewer::showStatusBarMessage, this, &KMReaderWin::showStatusBarMessage);

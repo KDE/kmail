@@ -110,7 +110,7 @@ void KMReaderMainWin::initKMReaderMainWin()
         menuBar()->hide();
         toolBar(QStringLiteral("mainToolBar"))->hide();
     }
-    connect(kmkernel, SIGNAL(configChanged()), this, SLOT(slotConfigChanged()));
+    connect(kmkernel, &KMKernel::configChanged, this, &KMReaderMainWin::slotConfigChanged);
     connect(mReaderWin, SIGNAL(showStatusBarMessage(QString)), statusBar(), SLOT(showMessage(QString)));
 }
 
@@ -374,7 +374,7 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
         KActionMenu *action = new KActionMenu(menu);
         action->setText(i18n("Move Message To..."));
         mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::MoveItemToMenu);
-        connect(action->menu(), SIGNAL(triggered(QAction*)), SLOT(slotMoveItem(QAction*)));
+        connect(action->menu(), &QMenu::triggered, this, &KMReaderMainWin::slotMoveItem);
 
         return action;
     }
@@ -396,14 +396,14 @@ void KMReaderMainWin::copyOrMoveItem(const Akonadi::Collection &collection, bool
     if (mMsg.isValid()) {
         if (move) {
             Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(mMsg, collection, this);
-            connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)));
+            connect(job, &KJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
         } else {
             Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob(mMsg, collection, this);
-            connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)));
+            connect(job, &KJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
         }
     } else {
         Akonadi::ItemCreateJob *job = new Akonadi::ItemCreateJob(mMsg, collection, this);
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(slotCopyMoveResult(KJob*)));
+        connect(job, &KJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
     }
 }
 

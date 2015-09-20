@@ -261,8 +261,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mWrapColumnSpin->setToolTip(helpText);
     mWrapColumnSpin->setWhatsThis(helpText);
 
-    connect(mWordWrapCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mWordWrapCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     connect(mWrapColumnSpin, SIGNAL(valueChanged(int)),
             this, SLOT(slotEmitChanged()));
     // only enable the spinbox if the checkbox is checked
@@ -299,8 +299,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mImprovePlainTextOfHtmlMessage->setToolTip(helpText);
     mImprovePlainTextOfHtmlMessage->setWhatsThis(helpText);
 
-    connect(mImprovePlainTextOfHtmlMessage, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mImprovePlainTextOfHtmlMessage, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mImprovePlainTextOfHtmlMessage, row, 0, 1, -1);
     ++row;
 
@@ -370,8 +370,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoRequestMDNCheck->setToolTip(helpText);
     mAutoRequestMDNCheck->setWhatsThis(helpText);
 
-    connect(mAutoRequestMDNCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mAutoRequestMDNCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mAutoRequestMDNCheck, row, 0, 1, -1);
     ++row;
 
@@ -383,8 +383,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
         MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(),
         this);
 
-    connect(mShowBalooSearchAddressesInComposer, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mShowBalooSearchAddressesInComposer, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mShowBalooSearchAddressesInComposer, row, 0, 1, -1);
     ++row;
 
@@ -460,8 +460,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mShowRecentAddressesInComposer->setToolTip(helpText);
     mShowRecentAddressesInComposer->setWhatsThis(helpText);
 
-    connect(mShowRecentAddressesInComposer, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mShowRecentAddressesInComposer, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mShowRecentAddressesInComposer, row, 0, 1, -1);
     ++row;
 
@@ -483,10 +483,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     connect(mMaximumRecentAddress, SIGNAL(valueChanged(int)),
             this, SLOT(slotEmitChanged()));
-    connect(mShowRecentAddressesInComposer, SIGNAL(toggled(bool)),
-            mMaximumRecentAddress, SLOT(setEnabled(bool)));
-    connect(mShowRecentAddressesInComposer, SIGNAL(toggled(bool)),
-            label, SLOT(setEnabled(bool)));
+    connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled,
+            mMaximumRecentAddress, &QWidget::setEnabled);
+    connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled,
+            label, &QWidget::setEnabled);
 
     groupGridLayout->addWidget(label, row, 0, 1, 2);
     groupGridLayout->addWidget(mMaximumRecentAddress, row, 2);
@@ -642,8 +642,8 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
     mExternalEditorCheck = new QCheckBox(
         GlobalSettings::self()->useExternalEditorItem()->label(), this);
     mExternalEditorCheck->setObjectName(QStringLiteral("kcfg_UseExternalEditor"));
-    connect(mExternalEditorCheck, SIGNAL(toggled(bool)),
-            this, SLOT(slotEmitChanged()));
+    connect(mExternalEditorCheck, &QAbstractButton::toggled,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     QWidget *hbox = new QWidget(this);
     QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
@@ -654,10 +654,10 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
     hboxHBoxLayout->addWidget(mEditorRequester);
     //Laurent 25/10/2011 fix #Bug 256655 - A "save changes?" dialog appears ALWAYS when leaving composer settings, even when unchanged.
     //mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
-    connect(mEditorRequester, SIGNAL(urlSelected(QUrl)),
-            this, SLOT(slotEmitChanged()));
-    connect(mEditorRequester, SIGNAL(textChanged(QString)),
-            this, SLOT(slotEmitChanged()));
+    connect(mEditorRequester, &KUrlRequester::urlSelected,
+            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mEditorRequester, &KUrlRequester::textChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     hboxHBoxLayout->setStretchFactor(mEditorRequester, 1);
     label->setBuddy(mEditorRequester);
@@ -712,8 +712,8 @@ ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
     mWidget = new TemplateParser::TemplatesConfiguration(this);
     vlay->addWidget(mWidget);
 
-    connect(mWidget, SIGNAL(changed()),
-            this, SLOT(slotEmitChanged()));
+    connect(mWidget, &TemplateParser::TemplatesConfiguration::changed,
+            this, &ConfigModuleTab::slotEmitChanged);
 }
 
 void ComposerPage::TemplatesTab::doLoadFromGlobalSettings()
@@ -745,10 +745,10 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
     mWidget = new TemplateParser::CustomTemplates(kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection *>(), this);
     vlay->addWidget(mWidget);
 
-    connect(mWidget, SIGNAL(changed()),
-            this, SLOT(slotEmitChanged()));
+    connect(mWidget, &TemplateParser::CustomTemplates::changed,
+            this, &ConfigModuleTab::slotEmitChanged);
     if (KMKernel::self()) {
-        connect(mWidget, SIGNAL(templatesUpdated()), KMKernel::self(), SLOT(updatedTemplates()));
+        connect(mWidget, &TemplateParser::CustomTemplates::templatesUpdated, KMKernel::self(), &KMKernel::updatedTemplates);
     }
 }
 
@@ -789,15 +789,15 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
                 i18n("A&dd..."), i18n("Re&move"),
                 i18n("Mod&ify..."),
                 i18n("Enter new reply prefix:"));
-    connect(mReplyListEditor, SIGNAL(changed()),
-            this, SLOT(slotEmitChanged()));
+    connect(mReplyListEditor, &PimCommon::SimpleStringListEditor::changed,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // row 2: "replace [...]" check box:
     mReplaceReplyPrefixCheck = new QCheckBox(
         MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem()->label(),
         group);
-    connect(mReplaceReplyPrefixCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mReplaceReplyPrefixCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
     layout->addWidget(mReplyListEditor);
     layout->addWidget(mReplaceReplyPrefixCheck);
@@ -820,15 +820,15 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
                 i18n("Remo&ve"),
                 i18n("Modify..."),
                 i18n("Enter new forward prefix:"));
-    connect(mForwardListEditor, SIGNAL(changed()),
-            this, SLOT(slotEmitChanged()));
+    connect(mForwardListEditor, &PimCommon::SimpleStringListEditor::changed,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // row 3: "replace [...]" check box:
     mReplaceForwardPrefixCheck = new QCheckBox(
         MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem()->label(),
         group);
-    connect(mReplaceForwardPrefixCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mReplaceForwardPrefixCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
     layout->addWidget(mForwardListEditor);
     layout->addWidget(mReplaceForwardPrefixCheck);
@@ -894,8 +894,8 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
             this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mKeepReplyCharsetCheck);
 
-    connect(mCharsetListEditor, SIGNAL(aboutToAdd(QString&)),
-            this, SLOT(slotVerifyCharset(QString&)));
+    connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::aboutToAdd,
+            this, &ComposerPageCharsetTab::slotVerifyCharset);
     setEnabled(kmkernel);
 }
 
@@ -1008,12 +1008,12 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mMessageIdSuffixEdit->setEnabled(false);
     hlay->addWidget(label);
     hlay->addWidget(mMessageIdSuffixEdit, 1);
-    connect(mCreateOwnMessageIdCheck, SIGNAL(toggled(bool)),
-            label, SLOT(setEnabled(bool)));
-    connect(mCreateOwnMessageIdCheck, SIGNAL(toggled(bool)),
-            mMessageIdSuffixEdit, SLOT(setEnabled(bool)));
-    connect(mMessageIdSuffixEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(slotEmitChanged()));
+    connect(mCreateOwnMessageIdCheck, &QAbstractButton::toggled,
+            label, &QWidget::setEnabled);
+    connect(mCreateOwnMessageIdCheck, &QAbstractButton::toggled,
+            mMessageIdSuffixEdit, &QWidget::setEnabled);
+    connect(mMessageIdSuffixEdit, &QLineEdit::textChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // horizontal rule and "custom header fields" label:
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
@@ -1028,8 +1028,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mHeaderList->setHeaderLabels(QStringList() << i18nc("@title:column Name of the mime header.", "Name")
                                  << i18nc("@title:column Value of the mimeheader.", "Value"));
     mHeaderList->setSortingEnabled(false);
-    connect(mHeaderList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
-            this, SLOT(slotMimeHeaderSelectionChanged()));
+    connect(mHeaderList, &QTreeWidget::currentItemChanged,
+            this, &ComposerPageHeadersTab::slotMimeHeaderSelectionChanged);
     connect(mHeaderList, &ListView::addHeader, this, &ComposerPageHeadersTab::slotNewMimeHeader);
     connect(mHeaderList, &ListView::removeHeader, this, &ComposerPageHeadersTab::slotRemoveMimeHeader);
     glay->addWidget(mHeaderList, 0, 0, 3, 2);
@@ -1065,8 +1065,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mTagValueLabel->setEnabled(false);
     glay->addWidget(mTagValueLabel, 4, 0);
     glay->addWidget(mTagValueEdit, 4, 1);
-    connect(mTagValueEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(slotMimeHeaderValueChanged(QString)));
+    connect(mTagValueEdit, &QLineEdit::textChanged,
+            this, &ComposerPageHeadersTab::slotMimeHeaderValueChanged);
 }
 
 void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
@@ -1275,14 +1275,14 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
                 i18n("A&dd..."), i18n("Re&move"),
                 i18n("Mod&ify..."),
                 i18n("Enter new key word:"));
-    connect(mAttachWordsListEditor, SIGNAL(changed()),
-            this, SLOT(slotEmitChanged()));
+    connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed,
+            this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mAttachWordsListEditor);
 
-    connect(mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool)),
-            label, SLOT(setEnabled(bool)));
-    connect(mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool)),
-            mAttachWordsListEditor, SLOT(setEnabled(bool)));
+    connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled,
+            label, &QWidget::setEnabled);
+    connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled,
+            mAttachWordsListEditor, &QWidget::setEnabled);
 
     QHBoxLayout *layAttachment = new QHBoxLayout;
     label = new QLabel(i18n("Offer to share for files larger than:"), this);
@@ -1301,7 +1301,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
 
     mStorageServiceWidget = new ConfigureStorageServiceWidget;
     vlay->addWidget(mStorageServiceWidget);
-    connect(mStorageServiceWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()));
+    connect(mStorageServiceWidget, &ConfigureStorageServiceWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
 void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
@@ -1352,7 +1352,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
     }
     vlay->addWidget(autocorrectionWidget);
     setLayout(vlay);
-    connect(autocorrectionWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()));
+    connect(autocorrectionWidget, &PimCommon::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
 QString ComposerPageAutoCorrectionTab::helpAnchor() const
@@ -1384,7 +1384,7 @@ ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
     autoResizeWidget = new MessageComposer::ImageScalingWidget(this);
     vlay->addWidget(autoResizeWidget);
     setLayout(vlay);
-    connect(autoResizeWidget, SIGNAL(changed()), this, SLOT(slotEmitChanged()));
+    connect(autoResizeWidget, &MessageComposer::ImageScalingWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 
 }
 

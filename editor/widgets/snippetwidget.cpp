@@ -38,12 +38,12 @@ SnippetWidget::SnippetWidget(KMComposerEditorNg *editor, KActionCollection *acti
     setModel(mSnippetsManager->model());
     setSelectionModel(mSnippetsManager->selectionModel());
 
-    connect(this, SIGNAL(activated(QModelIndex)),
-            mSnippetsManager->editSnippetAction(), SLOT(trigger()));
-    connect(mSnippetsManager->model(), SIGNAL(rowsInserted(QModelIndex,int,int)),
-            this, SLOT(expandAll()));
-    connect(mSnippetsManager->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)),
-            this, SLOT(expandAll()));
+    connect(this, &QAbstractItemView::activated,
+            mSnippetsManager->editSnippetAction(), &QAction::trigger);
+    connect(mSnippetsManager->model(), &QAbstractItemModel::rowsInserted,
+            this, &QTreeView::expandAll);
+    connect(mSnippetsManager->model(), &QAbstractItemModel::rowsRemoved,
+            this, &QTreeView::expandAll);
 
     expandAll();
 }

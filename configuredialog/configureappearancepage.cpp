@@ -168,8 +168,8 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     mCustomFontCheck = new QCheckBox(i18n("&Use custom fonts"), this);
     vlay->addWidget(mCustomFontCheck);
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
-    connect(mCustomFontCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mCustomFontCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // "font location" combo box and label:
     QHBoxLayout *hlay = new QHBoxLayout(); // inherites spacing
@@ -200,12 +200,12 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
             this, &ConfigModuleTab::slotEmitChanged);
 
     // {en,dis}able widgets depending on the state of mCustomFontCheck:
-    connect(mCustomFontCheck, SIGNAL(toggled(bool)),
-            label, SLOT(setEnabled(bool)));
-    connect(mCustomFontCheck, SIGNAL(toggled(bool)),
-            mFontLocationCombo, SLOT(setEnabled(bool)));
-    connect(mCustomFontCheck, SIGNAL(toggled(bool)),
-            mFontChooser, SLOT(setEnabled(bool)));
+    connect(mCustomFontCheck, &QAbstractButton::toggled,
+            label, &QWidget::setEnabled);
+    connect(mCustomFontCheck, &QAbstractButton::toggled,
+            mFontLocationCombo, &QWidget::setEnabled);
+    connect(mCustomFontCheck, &QAbstractButton::toggled,
+            mFontChooser, &QWidget::setEnabled);
     // load the right font settings into mFontChooser:
     connect(mFontLocationCombo, SIGNAL(activated(int)),
             this, SLOT(slotFontSelectorChanged(int)));
@@ -236,14 +236,14 @@ void AppearancePage::FontsTab::slotFontSelectorChanged(int index)
     mActiveFontIndex = index;
 
     // Disonnect so the "Apply" button is not activated by the change
-    disconnect(mFontChooser, SIGNAL(fontSelected(QFont)),
-               this, SLOT(slotEmitChanged()));
+    disconnect(mFontChooser, &KFontChooser::fontSelected,
+               this, &ConfigModuleTab::slotEmitChanged);
 
     // Display the new setting:
     mFontChooser->setFont(mFont[index], fontNames[index].onlyFixed);
 
-    connect(mFontChooser, SIGNAL(fontSelected(QFont)),
-            this, SLOT(slotEmitChanged()));
+    connect(mFontChooser, &KFontChooser::fontSelected,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // Disable Family and Size list if we have selected a quote font:
     mFontChooser->enableColumn(KFontChooser::FamilyList | KFontChooser::SizeList,
@@ -357,8 +357,8 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     QVBoxLayout *vlay = new QVBoxLayout(this);
     mCustomColorCheck = new QCheckBox(i18n("&Use custom colors"), this);
     vlay->addWidget(mCustomColorCheck);
-    connect(mCustomColorCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mCustomColorCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // color list box:
     mColorList = new ColorListBox(this);
@@ -373,8 +373,8 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
         new QCheckBox(i18n("Recycle colors on deep &quoting"), this);
     mRecycleColorCheck->setEnabled(false);
     vlay->addWidget(mRecycleColorCheck);
-    connect(mRecycleColorCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mRecycleColorCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // close to quota threshold
     QHBoxLayout *hbox = new QHBoxLayout();
@@ -392,14 +392,14 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     hbox->addWidget(new QWidget(this), 2);
 
     // {en,dir}able widgets depending on the state of mCustomColorCheck:
-    connect(mCustomColorCheck, SIGNAL(toggled(bool)),
-            mColorList, SLOT(setEnabled(bool)));
-    connect(mCustomColorCheck, SIGNAL(toggled(bool)),
-            mRecycleColorCheck, SLOT(setEnabled(bool)));
-    connect(mCustomColorCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
-    connect(mColorList, SIGNAL(changed()),
-            this, SLOT(slotEmitChanged()));
+    connect(mCustomColorCheck, &QAbstractButton::toggled,
+            mColorList, &QWidget::setEnabled);
+    connect(mCustomColorCheck, &QAbstractButton::toggled,
+            mRecycleColorCheck, &QWidget::setEnabled);
+    connect(mCustomColorCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mColorList, &ColorListBox::changed,
+            this, &ConfigModuleTab::slotEmitChanged);
 }
 
 void AppearancePage::ColorsTab::doLoadOther()
@@ -528,7 +528,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
 
     QHBoxLayout *folderCBHLayout = new QHBoxLayout();
     mFolderQuickSearchCB = new QCheckBox(i18n("Show folder quick search field"), this);
-    connect(mFolderQuickSearchCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()));
+    connect(mFolderQuickSearchCB, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
     folderCBHLayout->addWidget(mFolderQuickSearchCB);
     vlay->addLayout(folderCBHLayout);
 
@@ -639,22 +639,22 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
         MessageList::Core::Settings::self()->messageToolTipEnabledItem()->label(), group);
     gvlay->addWidget(mDisplayMessageToolTips);
 
-    connect(mDisplayMessageToolTips, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mDisplayMessageToolTips, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     mHideTabBarWithSingleTab = new QCheckBox(
         MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem()->label(), group);
     gvlay->addWidget(mHideTabBarWithSingleTab);
 
-    connect(mHideTabBarWithSingleTab, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mHideTabBarWithSingleTab, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     mTabsHaveCloseButton = new QCheckBox(
         MessageList::Core::Settings::self()->tabsHaveCloseButtonItem()->label(), group);
     gvlay->addWidget(mTabsHaveCloseButton);
 
-    connect(mTabsHaveCloseButton, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mTabsHaveCloseButton, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // "Aggregation"
     using MessageList::Utils::AggregationComboBox;
@@ -672,8 +672,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     aggregationLayout->addWidget(aggregationConfigButton, 0);
     gvlay->addLayout(aggregationLayout);
 
-    connect(aggregationConfigButton, SIGNAL(configureDialogCompleted()),
-            this, SLOT(slotSelectDefaultAggregation()));
+    connect(aggregationConfigButton, &MessageList::Utils::AggregationConfigButton::configureDialogCompleted,
+            this, &AppearancePageHeadersTab::slotSelectDefaultAggregation);
     connect(mAggregationComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEmitChanged()));
 
@@ -693,8 +693,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     themeLayout->addWidget(themeConfigButton, 0);
     gvlay->addLayout(themeLayout);
 
-    connect(themeConfigButton, SIGNAL(configureDialogCompleted()),
-            this, SLOT(slotSelectDefaultTheme()));
+    connect(themeConfigButton, &MessageList::Utils::ThemeConfigButton::configureDialogCompleted,
+            this, &AppearancePageHeadersTab::slotSelectDefaultTheme);
     connect(mThemeComboBox, SIGNAL(activated(int)),
             this, SLOT(slotEmitChanged()));
 
@@ -729,16 +729,16 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             mCustomDateFormatEdit->setEnabled(false);
             hboxHBoxLayout->setStretchFactor(mCustomDateFormatEdit, 1);
 
-            connect(radio, SIGNAL(toggled(bool)),
-                    mCustomDateFormatEdit, SLOT(setEnabled(bool)));
-            connect(mCustomDateFormatEdit, SIGNAL(textChanged(QString)),
-                    this, SLOT(slotEmitChanged()));
+            connect(radio, &QAbstractButton::toggled,
+                    mCustomDateFormatEdit, &QWidget::setEnabled);
+            connect(mCustomDateFormatEdit, &QLineEdit::textChanged,
+                    this, &ConfigModuleTab::slotEmitChanged);
 
             QLabel *formatHelp = new QLabel(
                 i18n("<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), hbox);
             formatHelp->setContextMenuPolicy(Qt::NoContextMenu);
-            connect(formatHelp, SIGNAL(linkActivated(QString)),
-                    SLOT(slotLinkClicked(QString)));
+            connect(formatHelp, &QLabel::linkActivated,
+                    this, &AppearancePageHeadersTab::slotLinkClicked);
             hboxHBoxLayout->addWidget(formatHelp);
 
             mCustomDateWhatsThis =
@@ -894,16 +894,16 @@ AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
     mCloseAfterReplyOrForwardCheck->setToolTip(
         i18n("Close the standalone message window after replying or forwarding the message"));
     topLayout->addWidget(mCloseAfterReplyOrForwardCheck);
-    connect(mCloseAfterReplyOrForwardCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mCloseAfterReplyOrForwardCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     mViewerSettings = new MessageViewer::ConfigureWidget;
-    connect(mViewerSettings, SIGNAL(settingsChanged()),
-            this, SLOT(slotEmitChanged()));
+    connect(mViewerSettings, &MessageViewer::ConfigureWidget::settingsChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
     topLayout->addWidget(mViewerSettings);
 
     mGravatarConfigWidget = new MessageViewer::GravatarConfigWidget;
-    connect(mGravatarConfigWidget, SIGNAL(configChanged(bool)), this, SLOT(slotEmitChanged()));
+    connect(mGravatarConfigWidget, &MessageViewer::GravatarConfigWidget::configChanged, this, &ConfigModuleTab::slotEmitChanged);
     topLayout->addWidget(mGravatarConfigWidget);
     topLayout->addStretch(100);   // spacer
 }
@@ -940,16 +940,16 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
     // "Enable system tray applet" check box
     mSystemTrayCheck = new QCheckBox(i18n("Enable system tray icon"), this);
     vlay->addWidget(mSystemTrayCheck);
-    connect(mSystemTrayCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mSystemTrayCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
 
     mSystemTrayShowUnreadMail = new QCheckBox(i18n("Show unread mail in tray icon"), this);
     vlay->addWidget(mSystemTrayShowUnreadMail);
     mSystemTrayShowUnreadMail->setEnabled(false);
-    connect(mSystemTrayShowUnreadMail, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
-    connect(mSystemTrayCheck, SIGNAL(toggled(bool)),
-            mSystemTrayShowUnreadMail, SLOT(setEnabled(bool)));
+    connect(mSystemTrayShowUnreadMail, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mSystemTrayCheck, &QAbstractButton::toggled,
+            mSystemTrayShowUnreadMail, &QWidget::setEnabled);
 
     // System tray modes
     mSystemTrayGroup = new QButtonGroup(this);
@@ -960,8 +960,8 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
 
     connect(mSystemTrayGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(slotEmitChanged()));
-    connect(mSystemTrayCheck, SIGNAL(toggled(bool)),
-            mSystemTrayGroupBox, SLOT(setEnabled(bool)));
+    connect(mSystemTrayCheck, &QAbstractButton::toggled,
+            mSystemTrayGroupBox, &QWidget::setEnabled);
 
     auto button = new QRadioButton(i18n("Always show KMail in system tray"), mSystemTrayGroupBox);
     gvlay->addWidget(button);
@@ -1071,7 +1071,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     tageditgrid->addLayout(listboxgrid);
     mTagListBox = new QListWidget(mTagsGroupBox);
     mTagListBox->setDragDropMode(QAbstractItemView::InternalMove);
-    connect(mTagListBox->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), SLOT(slotRowsMoved(QModelIndex,int,int,QModelIndex,int)));
+    connect(mTagListBox->model(), &QAbstractItemModel::rowsMoved, this, &AppearancePageMessageTagTab::slotRowsMoved);
 
     mTagListBox->setMinimumWidth(150);
     listboxgrid->addWidget(mTagListBox);
@@ -1096,7 +1096,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     mTagWidget = new MailCommon::TagWidget(actionCollections, this);
     lay->addWidget(mTagWidget);
 
-    connect(mTagWidget, SIGNAL(changed()), this, SLOT(slotEmitChangeCheck()));
+    connect(mTagWidget, &TagWidget::changed, this, &AppearancePageMessageTagTab::slotEmitChangeCheck);
 
     //For enabling the add button in case box is non-empty
     connect(mTagAddLineEdit, &KLineEdit::textChanged,
@@ -1187,16 +1187,16 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
 void AppearancePage::MessageTagTab::swapTagsInListBox(const int first,
         const int second)
 {
-    disconnect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-               this, SLOT(slotSelectionChanged()));
+    disconnect(mTagListBox, &QListWidget::currentItemChanged,
+               this, &AppearancePageMessageTagTab::slotSelectionChanged);
     QListWidgetItem *item = mTagListBox->takeItem(first);
     // now selected item is at idx(idx-1), so
     // insert the other item at idx, ie. above(below).
     mPreviousTag = second;
     mTagListBox->insertItem(second, item);
     mTagListBox->setCurrentRow(second);
-    connect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-            this, SLOT(slotSelectionChanged()));
+    connect(mTagListBox, &QListWidget::currentItemChanged,
+            this, &AppearancePageMessageTagTab::slotSelectionChanged);
     slotEmitChangeCheck();
 }
 
@@ -1286,12 +1286,12 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
             //Before deleting the current item, make sure the selectionChanged signal
             //is disconnected, so that the widgets will not get updated while the
             //deletion takes place.
-            disconnect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-                       this, SLOT(slotSelectionChanged()));
+            disconnect(mTagListBox, &QListWidget::currentItemChanged,
+                       this, &AppearancePageMessageTagTab::slotSelectionChanged);
 
             delete item;
-            connect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-                    this, SLOT(slotSelectionChanged()));
+            connect(mTagListBox, &QListWidget::currentItemChanged,
+                    this, &AppearancePageMessageTagTab::slotSelectionChanged);
 
             slotSelectionChanged();
             slotEmitChangeCheck();
@@ -1318,23 +1318,23 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged(const QString &aText
     for (int i = 0; i < count; ++i) {
         if (mTagListBox->item(i)->text() == aText) {
             KMessageBox::error(this, i18n("We cannot create tag. A tag with same name already exists."));
-            disconnect(mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
-                       this, SLOT(slotNameLineTextChanged(QString)));
+            disconnect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged,
+                       this, &AppearancePageMessageTagTab::slotNameLineTextChanged);
             mTagWidget->tagNameLineEdit()->setText(mTagListBox->currentItem()->text());
-            connect(mTagWidget->tagNameLineEdit(), SIGNAL(textChanged(QString)),
-                    this, SLOT(slotNameLineTextChanged(QString)));
+            connect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged,
+                    this, &AppearancePageMessageTagTab::slotNameLineTextChanged);
             return;
         }
     }
 
     //Disconnect so the tag information is not saved and reloaded with every
     //letter
-    disconnect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-               this, SLOT(slotSelectionChanged()));
+    disconnect(mTagListBox, &QListWidget::currentItemChanged,
+               this, &AppearancePageMessageTagTab::slotSelectionChanged);
 
     mTagListBox->currentItem()->setText(aText);
-    connect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-            this, SLOT(slotSelectionChanged()));
+    connect(mTagListBox, &QListWidget::currentItemChanged,
+            this, &AppearancePageMessageTagTab::slotSelectionChanged);
 }
 
 void AppearancePage::MessageTagTab::slotIconNameChanged(const QString &iconName)
@@ -1377,7 +1377,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 
     Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
     fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
-    connect(fetchJob, SIGNAL(result(KJob*)), this, SLOT(slotTagsFetched(KJob*)));
+    connect(fetchJob, &KJob::result, this, &AppearancePageMessageTagTab::slotTagsFetched);
 }
 
 void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
@@ -1407,11 +1407,11 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
     }
 
     //Disconnect so that insertItem's do not trigger an update procedure
-    disconnect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-               this, SLOT(slotSelectionChanged()));
+    disconnect(mTagListBox, &QListWidget::currentItemChanged,
+               this, &AppearancePageMessageTagTab::slotSelectionChanged);
 
-    connect(mTagListBox, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),
-            this, SLOT(slotSelectionChanged()));
+    connect(mTagListBox, &QListWidget::currentItemChanged,
+            this, &AppearancePageMessageTagTab::slotSelectionChanged);
 
     slotUpdateTagSettingWidgets(-1);
     //Needed since the previous function doesn't affect add button

@@ -61,7 +61,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection &col)
     QGroupBox *filesGroup = new QGroupBox(i18n("Files"), this);
     QFormLayout *box = new QFormLayout(filesGroup);
     mIsNotAVirtualCollection = !MailCommon::Util::isVirtualCollection(col);
-    connect(KMKernel::self()->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, SLOT(updateCollectionStatistic(Akonadi::Collection::Id,Akonadi::CollectionStatistics)));
+    connect(KMKernel::self()->folderCollectionMonitor(), &Monitor::collectionStatisticsChanged, this, &CollectionMaintenancePage::updateCollectionStatistic);
 
     const AgentInstance instance = Akonadi::AgentManager::self()->instance(col.resource());
     const QString folderDesc = instance.type().name();

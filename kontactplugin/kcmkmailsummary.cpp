@@ -56,8 +56,8 @@ KCMKMailSummary::KCMKMailSummary(QWidget *parent)
 {
     initGUI();
 
-    connect(mCheckedCollectionWidget->folderTreeView(), SIGNAL(clicked(QModelIndex)),
-            SLOT(modified()));
+    connect(mCheckedCollectionWidget->folderTreeView(), &QAbstractItemView::clicked,
+            this, &KCMKMailSummary::modified);
     connect(mFullPath, &QCheckBox::toggled, this, &KCMKMailSummary::modified);
 
     KAcceleratorManager::manage(this);

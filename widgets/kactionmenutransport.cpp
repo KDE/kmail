@@ -24,7 +24,7 @@ KActionMenuTransport::KActionMenuTransport(QObject *parent)
       mInitialized(false)
 {
     setDelayed(true);
-    connect(MailTransport::TransportManager::self(), SIGNAL(transportsChanged()), this, SLOT(updateTransportMenu()));
+    connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportsChanged, this, &KActionMenuTransport::updateTransportMenu);
     connect(menu(), &QMenu::aboutToShow, this, &KActionMenuTransport::slotCheckTransportMenu);
     connect(menu(), &QMenu::triggered, this, &KActionMenuTransport::slotSelectTransport);
 }

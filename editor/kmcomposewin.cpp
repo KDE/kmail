@@ -374,7 +374,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mRichTextEditorwidget = new KMComposerEditorWidgetNg(editor, mCryptoStateIndicatorWidget);
 
     //Don't use new connect api here. It crashs
-    connect(editor, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
+    connect(editor, &QTextEdit::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     //connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor(editor);
     vbox->addWidget(mCryptoStateIndicatorWidget);
@@ -465,8 +465,8 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
             SLOT(slotIdentityChanged(uint)));
 
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposeWin::slotCompletionModeChanged);
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), SLOT(slotFolderRemoved(Akonadi::Collection)));
-    connect(kmkernel, SIGNAL(configChanged()), this, SLOT(slotConfigChanged()));
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMComposeWin::slotFolderRemoved);
+    connect(kmkernel, &KMKernel::configChanged, this, &KMComposeWin::slotConfigChanged);
 
     mMainWidget->resize(480, 510);
     setCentralWidget(mMainWidget);
@@ -873,15 +873,15 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 3);
     ++row;
     if (showHeaders & HDR_REPLY_TO) {
-        connect(mEdtReplyTo, SIGNAL(focusDown()), mComposerBase->recipientsEditor(), SLOT(setFocusTop()));
+        connect(mEdtReplyTo, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
         connect(mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtReplyTo, SLOT(setFocus()));
     } else {
-        connect(mEdtFrom, SIGNAL(focusDown()), mComposerBase->recipientsEditor(), SLOT(setFocusTop()));
+        connect(mEdtFrom, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
         connect(mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtFrom, SLOT(setFocus()));
     }
 
     connect(mComposerBase->recipientsEditor(), SIGNAL(focusDown()), mEdtSubject, SLOT(setFocus()));
-    connect(mEdtSubject, SIGNAL(focusUp()), mComposerBase->recipientsEditor(), SLOT(setFocusBottom()));
+    connect(mEdtSubject, &PimCommon::SpellCheckLineEdit::focusUp, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusBottom);
 
     prevFocus = mComposerBase->recipientsEditor();
 
@@ -1143,12 +1143,12 @@ void KMComposeWin::setupActions(void)
 
     connect(actActionNowMenu, SIGNAL(triggered(bool)), this,
             SLOT(slotSendNow()));
-    connect(actActionLaterMenu, SIGNAL(triggered(bool)), this,
-            SLOT(slotSendLater()));
-    connect(actActionNowMenu, SIGNAL(transportSelected(MailTransport::Transport*)), this,
-            SLOT(slotSendNowVia(MailTransport::Transport*)));
-    connect(actActionLaterMenu, SIGNAL(transportSelected(MailTransport::Transport*)), this,
-            SLOT(slotSendLaterVia(MailTransport::Transport*)));
+    connect(actActionLaterMenu, &QAction::triggered, this,
+            &KMComposeWin::slotSendLater);
+    connect(actActionNowMenu, &KActionMenuTransport::transportSelected, this,
+            &KMComposeWin::slotSendNowVia);
+    connect(actActionLaterMenu, &KActionMenuTransport::transportSelected, this,
+            &KMComposeWin::slotSendLaterVia);
 
     QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save as &Draft"), this);
     actionCollection()->addAction(QStringLiteral("save_in_drafts"), action);
@@ -1196,12 +1196,12 @@ void KMComposeWin::setupActions(void)
 
     action = new QAction(i18n("Select &Recipients..."), this);
     actionCollection()->addAction(QStringLiteral("select_recipients"), action);
-    connect(action, SIGNAL(triggered(bool)),
-            mComposerBase->recipientsEditor(), SLOT(selectRecipients()));
+    connect(action, &QAction::triggered,
+            mComposerBase->recipientsEditor(), &MessageComposer::RecipientsEditor::selectRecipients);
     action = new QAction(i18n("Save &Distribution List..."), this);
     actionCollection()->addAction(QStringLiteral("save_distribution_list"), action);
-    connect(action, SIGNAL(triggered(bool)),
-            mComposerBase->recipientsEditor(), SLOT(saveDistributionList()));
+    connect(action, &QAction::triggered,
+            mComposerBase->recipientsEditor(), &MessageComposer::RecipientsEditor::saveDistributionList);
 
     KStandardAction::print(this, SLOT(slotPrint()), actionCollection());
     KStandardAction::printPreview(this, SLOT(slotPrintPreview()), actionCollection());
@@ -1227,7 +1227,7 @@ void KMComposeWin::setupActions(void)
 
     action = new QAction(i18n("Cl&ean Spaces"), this);
     actionCollection()->addAction(QStringLiteral("clean_spaces"), action);
-    connect(action, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(cleanSpace()));
+    connect(action, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::cleanSpace);
 
     mFixedFontAction = new KToggleAction(i18n("Use Fi&xed Font"), this);
     actionCollection()->addAction(QStringLiteral("toggle_fixedfont"), mFixedFontAction);
@@ -1266,11 +1266,11 @@ void KMComposeWin::setupActions(void)
     mAutoSpellCheckingAction->setChecked(spellCheckingEnabled);
     slotAutoSpellCheckingToggled(spellCheckingEnabled);
     connect(mAutoSpellCheckingAction, &KToggleAction::toggled, this, &KMComposeWin::slotAutoSpellCheckingToggled);
-    connect(mComposerBase->editor(), SIGNAL(checkSpellingChanged(bool)), this, SLOT(slotAutoSpellCheckingToggled(bool)));
+    connect(mComposerBase->editor(), &PimCommon::RichTextEditor::checkSpellingChanged, this, &KMComposeWin::slotAutoSpellCheckingToggled);
 
-    connect(mComposerBase->editor(), SIGNAL(textModeChanged(MessageComposer::RichTextComposer::Mode)), this, SLOT(slotTextModeChanged(MessageComposer::RichTextComposer::Mode)));
-    connect(mComposerBase->editor(), SIGNAL(externalEditorClosed()), this, SLOT(slotExternalEditorClosed()));
-    connect(mComposerBase->editor(), SIGNAL(externalEditorStarted()), this, SLOT(slotExternalEditorStarted()));
+    connect(mComposerBase->editor(), &MessageComposer::RichTextComposer::textModeChanged, this, &KMComposeWin::slotTextModeChanged);
+    connect(mComposerBase->editor(), &MessageComposer::RichTextComposer::externalEditorClosed, this, &KMComposeWin::slotExternalEditorClosed);
+    connect(mComposerBase->editor(), &MessageComposer::RichTextComposer::externalEditorStarted, this, &KMComposeWin::slotExternalEditorStarted);
     //these are checkable!!!
     markupAction = new KToggleAction(i18n("Rich Text Editing"), this);
     markupAction->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-font")));
@@ -1316,7 +1316,7 @@ void KMComposeWin::setupActions(void)
 
     mInsertSignatureAtCursorPosition = new QAction(i18n("Insert Signature At C&ursor Position"), this);
     actionCollection()->addAction(QStringLiteral("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition);
-    connect(mInsertSignatureAtCursorPosition, SIGNAL(triggered(bool)), mComposerBase->signatureController(), SLOT(insertSignatureAtCursor()));
+    connect(mInsertSignatureAtCursorPosition, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::insertSignatureAtCursor);
 
     action = new QAction(i18n("Insert Special Character..."), this);
     actionCollection()->addAction(QStringLiteral("insert_special_character"), action);
@@ -1390,8 +1390,8 @@ void KMComposeWin::setupActions(void)
     mFollowUpToggleAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
 
     createGUI(QStringLiteral("kmcomposerui.rc"));
-    connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), SIGNAL(toggled(bool)),
-            SLOT(htmlToolBarVisibilityChanged(bool)));
+    connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
+            this, &KMComposeWin::htmlToolBarVisibilityChanged);
 
     // In Kontact, this entry would read "Configure Kontact", but bring
     // up KMail's config dialog. That's sensible, though, so fix the label.
@@ -1466,8 +1466,8 @@ void KMComposeWin::setupEditor(void)
     // Font setup
     slotUpdateFont();
 
-    connect(mComposerBase->editor(), SIGNAL(cursorPositionChanged()),
-            this, SLOT(slotCursorPositionChanged()));
+    connect(mComposerBase->editor(), &QTextEdit::cursorPositionChanged,
+            this, &KMComposeWin::slotCursorPositionChanged);
     slotCursorPositionChanged();
 }
 
@@ -1749,9 +1749,9 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
         // composer.
         //
         if (MessageComposer::MessageComposerSettings::self()->prependSignature()) {
-            QTimer::singleShot(0, mComposerBase->signatureController(), SLOT(prependSignature()));
+            QTimer::singleShot(0, mComposerBase->signatureController(), &MessageComposer::SignatureController::prependSignature);
         } else {
-            QTimer::singleShot(0, mComposerBase->signatureController(), SLOT(appendSignature()));
+            QTimer::singleShot(0, mComposerBase->signatureController(), &MessageComposer::SignatureController::appendSignature);
         }
     } else {
         mComposerBase->editor()->externalComposer()->startExternalEditor();
@@ -1761,7 +1761,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
 
     // honor "keep reply in this folder" setting even when the identity is changed later on
     mPreventFccOverwrite = (!kmailFcc.isEmpty() && ident.fcc() != kmailFcc);
-    QTimer::singleShot(0, this, SLOT(forceAutoSaveMessage()));   //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
+    QTimer::singleShot(0, this, &KMComposeWin::forceAutoSaveMessage);   //Force autosaving to make sure this composer reappears if a crash happens before the autosave timer kicks in.
 }
 
 void KMComposeWin::setAutoSaveFileName(const QString &fileName)
@@ -2029,7 +2029,7 @@ void KMComposeWin::slotInsertRecentFile(const QUrl &u)
 
     MessageComposer::InsertTextFileJob *job = new MessageComposer::InsertTextFileJob(mComposerBase->editor(), u);
     job->setEncoding(encoding);
-    connect(job, SIGNAL(result(KJob*)), SLOT(slotInsertTextFile(KJob*)));
+    connect(job, &KJob::result, this, &KMComposeWin::slotInsertTextFile);
     job->start();
 }
 
@@ -2846,7 +2846,7 @@ void KMComposeWin::slotCheckSendNow()
         lst << mComposerBase->bcc().split(QLatin1Char(','));
     }
     job->setEmails(lst);
-    connect(job, SIGNAL(potentialPhishingEmailsFound(QStringList)), this, SLOT(slotPotentialPhishingEmailsFound(QStringList)));
+    connect(job, &PotentialPhishingEmailJob::potentialPhishingEmailsFound, this, &KMComposeWin::slotPotentialPhishingEmailsFound);
     job->start();
 }
 
@@ -2892,7 +2892,7 @@ void KMComposeWin::enableHtml()
         // toolbar (but the messagebox in disableHtml() prevented that and called us).
         // The toolbar can't correctly deal with being enabled right in a slot called from the "disabled"
         // signal, so wait one event loop run for that.
-        QTimer::singleShot(0, toolBar(QStringLiteral("htmlToolBar")), SLOT(show()));
+        QTimer::singleShot(0, toolBar(QStringLiteral("htmlToolBar")), &QWidget::show);
     }
     if (!markupAction->isChecked()) {
         markupAction->setChecked(true);
@@ -2930,7 +2930,7 @@ void KMComposeWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation c
     slotUpdateFont();
     if (toolBar(QStringLiteral("htmlToolBar"))->isVisible()) {
         // See the comment in enableHtml() why we use a singleshot timer, similar situation here.
-        QTimer::singleShot(0, toolBar(QStringLiteral("htmlToolBar")), SLOT(hide()));
+        QTimer::singleShot(0, toolBar(QStringLiteral("htmlToolBar")), &QWidget::hide);
     }
     if (markupAction->isChecked()) {
         markupAction->setChecked(false);
@@ -2975,7 +2975,7 @@ void KMComposeWin::slotAutoSpellCheckingToggled(bool on)
 void KMComposeWin::slotSpellCheckingStatus(const QString &status)
 {
     mStatusBarLabelList.at(0)->setText(status);
-    QTimer::singleShot(2000, this, SLOT(slotSpellcheckDoneClearStatus()));
+    QTimer::singleShot(2000, this, &KMComposeWin::slotSpellcheckDoneClearStatus);
 }
 
 void KMComposeWin::slotSpellcheckDoneClearStatus()
@@ -3219,7 +3219,7 @@ void KMComposeWin::slotCursorPositionChanged()
 
 void KMComposeWin::recipientEditorSizeHintChanged()
 {
-    QTimer::singleShot(1, this, SLOT(setMaximumHeaderSize()));
+    QTimer::singleShot(1, this, &KMComposeWin::setMaximumHeaderSize);
 }
 
 void KMComposeWin::setMaximumHeaderSize()

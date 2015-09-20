@@ -221,11 +221,11 @@ KMKernel::KMKernel(QObject *parent) :
     connect(s_networkConfigMgr, &QNetworkConfigurationManager::onlineStateChanged,
             this, &KMKernel::slotSystemNetworkStatusChanged);
 
-    connect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)),
-            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)));
-    connect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-            this, SLOT(slotProgressItemCompletedOrCanceled(KPIM::ProgressItem*)));
-    connect(identityManager(), SIGNAL(deleted(uint)), this, SLOT(slotDeleteIdentity(uint)));
+    connect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCompleted,
+            this, &KMKernel::slotProgressItemCompletedOrCanceled);
+    connect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCanceled,
+            this, &KMKernel::slotProgressItemCompletedOrCanceled);
+    connect(identityManager(), &KIdentityManagement::IdentityManager::deleted, this, &KMKernel::slotDeleteIdentity);
     CommonKernel->registerKernelIf(this);
     CommonKernel->registerSettingsIf(this);
     CommonKernel->registerFilterIf(this);

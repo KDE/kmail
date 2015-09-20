@@ -138,7 +138,7 @@ AntiSpamWizard::AntiSpamWizard(WizardMode mode,
 
     connect(button(QDialogButtonBox::Help), &QPushButton::clicked, this, &AntiSpamWizard::slotHelpClicked);
 
-    QTimer::singleShot(0, this, SLOT(checkToolAvailability()));
+    QTimer::singleShot(0, this, &AntiSpamWizard::checkToolAvailability);
 }
 
 void AntiSpamWizard::accept()

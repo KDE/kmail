@@ -87,12 +87,12 @@ KMSystemTray::KMSystemTray(QObject *parent)
     connect(contextMenu(), &QMenu::aboutToShow,
             this, &KMSystemTray::slotContextMenuAboutToShow);
 
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), SLOT(slotCollectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)));
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &KMSystemTray::slotCollectionStatisticsChanged);
 
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionAdded(Akonadi::Collection,Akonadi::Collection)), this, SLOT(initListOfCollection()));
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)), this, SLOT(initListOfCollection()));
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionSubscribed(Akonadi::Collection,Akonadi::Collection)), SLOT(initListOfCollection()));
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionUnsubscribed(Akonadi::Collection)), SLOT(initListOfCollection()));
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionAdded, this, &KMSystemTray::initListOfCollection);
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMSystemTray::initListOfCollection);
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionSubscribed, this, &KMSystemTray::initListOfCollection);
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &KMSystemTray::initListOfCollection);
 
     initListOfCollection();
 
@@ -376,7 +376,7 @@ void KMSystemTray::initListOfCollection()
     mCount = 0;
     const QAbstractItemModel *model = kmkernel->collectionModel();
     if (model->rowCount() == 0) {
-        QTimer::singleShot(1000, this, SLOT(initListOfCollection()));
+        QTimer::singleShot(1000, this, &KMSystemTray::initListOfCollection);
         return;
     }
     unreadMail(model);

@@ -97,13 +97,13 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
 
 void SummaryWidget::slotCollectionChanged()
 {
-    QTimer::singleShot(0, this, SLOT(slotUpdateFolderList()));
+    QTimer::singleShot(0, this, &SummaryWidget::slotUpdateFolderList);
 }
 
 void SummaryWidget::updateSummary(bool force)
 {
     Q_UNUSED(force);
-    QTimer::singleShot(0, this, SLOT(slotUpdateFolderList()));
+    QTimer::singleShot(0, this, &SummaryWidget::slotUpdateFolderList);
 }
 
 void SummaryWidget::selectFolder(const QString &folder)

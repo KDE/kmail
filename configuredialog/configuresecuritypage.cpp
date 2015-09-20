@@ -89,15 +89,15 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
 
     connect(mSGTab.mHtmlMailCheck, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
     connect(mSGTab.mExternalReferences, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-    connect(mSGTab.labelWarnHTML, SIGNAL(linkActivated(QString)), SLOT(slotLinkClicked(QString)));
+    connect(mSGTab.labelWarnHTML, &QLabel::linkActivated, this, &SecurityPageGeneralTab::slotLinkClicked);
 
     connect(mSGTab.mAlwaysDecrypt, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
 
-    connect(mSGTab.mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()));
+    connect(mSGTab.mAutomaticallyImportAttachedKeysCheck, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
 
-    connect(mSGTab.mScamDetection, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()));
+    connect(mSGTab.mScamDetection, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
 
-    connect(mSGTab.scamWhiteList, SIGNAL(changed()), SLOT(slotEmitChanged()));
+    connect(mSGTab.scamWhiteList, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
 void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
@@ -215,7 +215,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
     mOrigQuoteGroup->addButton(mUi.radioFull, 1);
     mOrigQuoteGroup->addButton(mUi.radioHeaders, 2);
 
-    connect(mUi.mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()));
+    connect(mUi.mNoMDNsWhenEncryptedCheck, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
     connect(mUi.labelWarning, SIGNAL(linkActivated(QString)), SLOT(slotLinkClicked(QString)));
 }
 

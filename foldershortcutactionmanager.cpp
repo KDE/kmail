@@ -79,8 +79,8 @@ void FolderShortcutActionManager::createActions()
     const QAbstractItemModel *model = KernelIf->collectionModel();
     connect(model, &QAbstractItemModel::rowsInserted,
             this, &FolderShortcutActionManager::slotRowsInserted, Qt::UniqueConnection);
-    connect(KernelIf->folderCollectionMonitor(), SIGNAL(collectionRemoved(Akonadi::Collection)),
-            this, SLOT(slotCollectionRemoved(Akonadi::Collection)), Qt::UniqueConnection);
+    connect(KernelIf->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved,
+            this, &FolderShortcutActionManager::slotCollectionRemoved, Qt::UniqueConnection);
 
     if (model->rowCount() > 0) {
         updateShortcutsForIndex(QModelIndex(), 0, model->rowCount() - 1);
@@ -147,7 +147,7 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
     action->setShortcut(shortcut);
     action->setIcon(icon);
 
-    connect(action, SIGNAL(triggered(bool)), command, SLOT(start()));
+    connect(action, &QAction::triggered, command, &FolderShortcutCommand::start);
     command->setAction(action);   // will be deleted along with the command
 }
 

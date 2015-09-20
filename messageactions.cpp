@@ -180,8 +180,8 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     ac->addAction(QStringLiteral("mailing_list"), mMailingListActionMenu);
     mMailingListActionMenu->setEnabled(false);
 
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(itemChanged(Akonadi::Item,QSet<QByteArray>)), SLOT(slotItemModified(Akonadi::Item,QSet<QByteArray>)));
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), SLOT(slotItemRemoved(Akonadi::Item)));
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::itemChanged, this, &MessageActions::slotItemModified);
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::itemRemoved, this, &MessageActions::slotItemRemoved);
 
     mCustomTemplatesMenu = new TemplateParser::CustomTemplatesMenu(parent, ac);
 
@@ -198,11 +198,11 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     //Don't translate it. Shown only when we set env variable KDEPIM_BALOO_DEBUG
     mDebugBalooAction = new QAction(QStringLiteral("Debug Baloo..."), this);
-    connect(mDebugBalooAction, SIGNAL(triggered(bool)), this, SLOT(slotDebugBaloo()));
+    connect(mDebugBalooAction, &QAction::triggered, this, &MessageActions::slotDebugBaloo);
 
     mAddFollowupReminderAction = new QAction(i18n("Add Followup Reminder..."), this);
     ac->addAction(QStringLiteral("message_followup_reminder"), mAddFollowupReminderAction);
-    connect(mAddFollowupReminderAction, SIGNAL(triggered(bool)), this, SLOT(slotAddFollowupReminder()));
+    connect(mAddFollowupReminderAction, &QAction::triggered, this, &MessageActions::slotAddFollowupReminder);
 
     updateActions();
 }

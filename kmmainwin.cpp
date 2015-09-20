@@ -59,7 +59,7 @@ KMMainWin::KMMainWin(QWidget *)
     resize(700, 500);   // The default size
 
     mKMMainWidget = new KMMainWidget(this, this, actionCollection());
-    connect(mKMMainWidget, SIGNAL(recreateGui()), this, SLOT(slotUpdateGui()));
+    connect(mKMMainWidget, &KMMainWidget::recreateGui, this, &KMMainWin::slotUpdateGui);
     setCentralWidget(mKMMainWidget);
     setupStatusBar();
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
@@ -170,7 +170,7 @@ void KMMainWin::setupStatusBar()
     mMessageLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     statusBar()->addWidget(mMessageLabel);
 
-    QTimer::singleShot(2000, KPIM::BroadcastStatus::instance(), SLOT(reset()));
+    QTimer::singleShot(2000, KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::reset);
 
     statusBar()->addPermanentWidget(mKMMainWidget->vacationScriptIndicator());
     statusBar()->addPermanentWidget(mProgressBar->littleProgress());
