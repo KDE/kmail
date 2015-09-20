@@ -41,7 +41,7 @@
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
 #include "messageviewer/mailwebview.h"
-#include "utils/markmessagereadhandler.h"
+#include "messageviewer/markmessagereadhandler.h"
 #include "messageviewer/messageviewersettings.h"
 #include "MessageViewer/CSSHelper"
 using MessageViewer::CSSHelper;
@@ -55,7 +55,7 @@ using MessageViewer::CSSHelper;
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 
-#include "viewer/attachmentstrategy.h"
+#include "messageviewer/attachmentstrategy.h"
 #include "MessageComposer/MessageSender"
 #include "MessageComposer/MessageFactory"
 #include "MessageComposer/Composer"
