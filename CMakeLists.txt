@@ -16,7 +16,6 @@ add_custom_target(kmail_xml ALL
 )
 
 include_directories(
-  ${CMAKE_SOURCE_DIR}/libksieve/src/ksieveui/
   ${CMAKE_CURRENT_BINARY_DIR}
   ${GPGME_INCLUDES}
   ${Boost_INCLUDE_DIR}
@@ -291,7 +290,7 @@ target_link_libraries(kmailprivate
     KF5::MailTransport
     KF5::KCMUtils
     KF5::Libkleo
-    ksieveui
+    KF5::KSieveUi
     KF5::Libkdepim
     KF5::KIOCore
     KF5::Contacts
