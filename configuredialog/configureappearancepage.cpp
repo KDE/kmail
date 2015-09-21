@@ -23,7 +23,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messagelist/aggregationconfigbutton.h"
 #include "messagelist/themecombobox.h"
 #include "messagelist/themeconfigbutton.h"
-#include "settings.h"
+#include "messagelistsettings.h"
 #include "MailCommon/TagWidget"
 #include "MailCommon/Tag"
 #include "kmkernel.h"
