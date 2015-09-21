@@ -374,7 +374,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mRichTextEditorwidget = new KMComposerEditorWidgetNg(editor, mCryptoStateIndicatorWidget);
 
     //Don't use new connect api here. It crashs
-    connect(editor, &QTextEdit::textChanged, this, &KMComposeWin::slotEditorTextChanged);
+    connect(editor, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
     //connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor(editor);
     vbox->addWidget(mCryptoStateIndicatorWidget);
