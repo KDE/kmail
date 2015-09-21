@@ -23,7 +23,7 @@
 #ifndef KMAIL_ATTACHMENTCONTROLLER_H
 #define KMAIL_ATTACHMENTCONTROLLER_H
 
-#include "attachment/attachmentcontrollerbase.h"
+#include "messagecomposer/attachmentcontrollerbase.h"
 
 class KMComposeWin;
 class QModelIndex;

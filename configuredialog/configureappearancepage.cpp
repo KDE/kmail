@@ -23,7 +23,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messagelist/aggregationconfigbutton.h"
 #include "messagelist/themecombobox.h"
 #include "messagelist/themeconfigbutton.h"
-#include "core/settings.h"
+#include "messagelist/settings.h"
 #include "MailCommon/TagWidget"
 #include "MailCommon/Tag"
 #include "kmkernel.h"
@@ -77,7 +77,7 @@ using KMime::DateFormatter;
 #include <QVBoxLayout>
 #include <QRadioButton>
 #include <QCheckBox>
-#include <gravatar/gravatarconfigwidget.h>
+#include <messageviewer/gravatarconfigwidget.h>
 using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const

@@ -41,7 +41,7 @@
 #include <QAction>
 #include "PimCommon/BalooDebugDialog"
 
-#include "followupreminder/followupreminderselectdatedialog.h"
+#include "messagecomposer/followupreminderselectdatedialog.h"
 #include "job/createfollowupreminderonexistingmessagejob.h"
 
 #include <AkonadiCore/ItemFetchJob>

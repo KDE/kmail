@@ -42,7 +42,7 @@
 
 // Other includes
 #include "Libkleo/Enum"
-#include <composer/composerviewbase.h>
+#include <messagecomposer/composerviewbase.h>
 
 class QUrl;
 

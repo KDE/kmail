@@ -44,7 +44,7 @@
 #include "manageshowcollectionproperties.h"
 #include "widgets/kactionmenutransport.h"
 #include "widgets/kactionmenuaccount.h"
-#include "search/searchrule/searchrulestatus.h"
+#include "mailcommon/searchrulestatus.h"
 #include "PimCommon/NetworkUtil"
 #include "PimCommon/TextToSpeech"
 #if !defined(NDEBUG)

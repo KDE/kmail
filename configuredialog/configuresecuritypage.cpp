@@ -20,7 +20,7 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messageviewer/messageviewersettings.h"
 #include "MessageComposer/MessageComposerSettings"
-#include "adblock/adblocksettingwidget.h"
+#include "messageviewer/adblocksettingwidget.h"
 #include "MailCommon/FolderCollection"
 #include "settings/kmailsettings.h"
 

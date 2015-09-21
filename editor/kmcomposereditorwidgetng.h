@@ -18,7 +18,7 @@
 #ifndef KMCOMPOSEREDITORWIDGETNG_H
 #define KMCOMPOSEREDITORWIDGETNG_H
 
-#include <texteditor/richtexteditor/richtexteditorwidget.h>
+#include <pimcommon/richtexteditorwidget.h>
 namespace PimCommon
 {
 class RichTextEditor;

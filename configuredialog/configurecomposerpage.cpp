@@ -58,7 +58,7 @@ using KPIM::RecentAddresses;
 #include <QCheckBox>
 #include <KConfigGroup>
 
-#include <addressline/blacklistbaloocompletion/blacklistbalooemailcompletiondialog.h>
+#include <libkdepim/blacklistbalooemailcompletiondialog.h>
 
 #include <libkdepim/completionconfiguredialog.h>
 

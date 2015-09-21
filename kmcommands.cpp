@@ -84,9 +84,9 @@
 #endif
 #include "MessageViewer/ObjectTreeParser"
 #include "MessageViewer/CSSHelper"
-#include "utils/util.h"
+#include "messagecomposer/util.h"
 #include "messageviewer/headerstrategy.h"
-#include "header/headerstyle.h"
+#include "messageviewer/headerstyle.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;

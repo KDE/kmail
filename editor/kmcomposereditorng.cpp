@@ -26,11 +26,11 @@
 #include <KToggleAction>
 #include <QMimeData>
 #include <QCheckBox>
-#include "widgets/kactionmenuchangecase.h"
+#include "pimcommon/kactionmenuchangecase.h"
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 #include "MessageCore/MessageCoreSettings"
 #include <Sonnet/ConfigDialog>
-#include <composer-ng/richtextcomposeremailquotehighlighter.h>
+#include <messagecomposer/richtextcomposeremailquotehighlighter.h>
 
 KMComposerEditorNg::KMComposerEditorNg(KMComposeWin *win, QWidget *parent)
     : MessageComposer::RichTextComposer(parent),

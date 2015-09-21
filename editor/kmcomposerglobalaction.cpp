@@ -18,7 +18,7 @@
 #include "kmcomposerglobalaction.h"
 #include "kmcomposewin.h"
 
-#include <autocorrection/widgets/lineeditwithautocorrection.h>
+#include <pimcommon/lineeditwithautocorrection.h>
 
 #include <KLineEdit>
 

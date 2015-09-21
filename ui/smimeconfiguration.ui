@@ -279,7 +279,7 @@ The syntax is &quot;HOST&quot; or &quot;HOST:PORT&quot;. If PORT is omitted, por
   <customwidget>
    <class>Kleo::KeyRequester</class>
    <extends></extends>
-   <header location="global">ui/keyrequester.h</header>
+   <header location="global">libkleo/keyrequester.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -301,7 +301,7 @@ The syntax is &quot;HOST&quot; or &quot;HOST:PORT&quot;. If PORT is omitted, por
   <tabstop>customLDAPProxy</tabstop>
  </tabstops>
  <includes>
-  <include location="local">ui/keyrequester.h</include>
+  <include location="local">libkleo/keyrequester.h</include>
  </includes>
  <resources/>
  <connections>
