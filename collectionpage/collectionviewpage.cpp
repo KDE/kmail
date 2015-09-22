@@ -268,10 +268,10 @@ void CollectionViewPage::save(Akonadi::Collection &col)
     const int currentIndex = mShowSenderReceiverComboBox->currentIndex();
     if (mShowSenderReceiverValue != currentIndex) {
         if (currentIndex == 1) {
-            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Entity::AddIfMissing);
+            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Collection::AddIfMissing);
             messageFolder->setOutboundFolder(false);
         } else if (currentIndex == 2) {
-            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Entity::AddIfMissing);
+            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Collection::AddIfMissing);
             messageFolder->setOutboundFolder(true);
         } else {
             col.removeAttribute<Akonadi::MessageFolderAttribute>();

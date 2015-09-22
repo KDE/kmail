@@ -1938,12 +1938,12 @@ qreal KMKernel::closeToQuotaThreshold()
     return GlobalSettings::self()->closeToQuotaThreshold();
 }
 
-Akonadi::Entity::Id KMKernel::lastSelectedFolder()
+Akonadi::Collection::Id KMKernel::lastSelectedFolder()
 {
     return GlobalSettings::self()->lastSelectedFolder();
 }
 
-void KMKernel::setLastSelectedFolder(const Akonadi::Entity::Id &col)
+void KMKernel::setLastSelectedFolder(const Akonadi::Collection::Id &col)
 {
     GlobalSettings::self()->setLastSelectedFolder(col);
 }

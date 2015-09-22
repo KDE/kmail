@@ -21,7 +21,6 @@
 
 #include "kmail_export.h"
 
-#include <AkonadiCore/Entity>
 #include <AkonadiCore/Collection>
 
 #include <QHash>
@@ -85,7 +84,7 @@ private Q_SLOTS:
 
 private:
     void updateShortcutsForIndex(const QModelIndex &parent, int start, int end);
-    QHash< Akonadi::Entity::Id, FolderShortcutCommand * > mFolderShortcutCommands;
+    QHash< Akonadi::Collection::Id, FolderShortcutCommand * > mFolderShortcutCommands;
     KActionCollection *mActionCollection;
     QWidget *mParent;
 };

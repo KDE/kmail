@@ -45,12 +45,12 @@ void TaskAttribute::deserialize(const QByteArray &data)
     s >> mId;
 }
 
-void TaskAttribute::setTaskId(Akonadi::Entity::Id id)
+void TaskAttribute::setTaskId(Akonadi::Item::Id id)
 {
     mId = id;
 }
 
-Akonadi::Entity::Id TaskAttribute::taskId() const
+Akonadi::Item::Id TaskAttribute::taskId() const
 {
     return mId;
 }

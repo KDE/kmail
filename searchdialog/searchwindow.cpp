@@ -559,7 +559,7 @@ void SearchWindow::searchDone(KJob *job)
         // the server, for easy retrieval when editing it again
         const QByteArray search = mSearchPattern.serialize();
         Q_ASSERT(!search.isEmpty());
-        Akonadi::SearchDescriptionAttribute *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>(Akonadi::Entity::AddIfMissing);
+        Akonadi::SearchDescriptionAttribute *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>(Akonadi::Collection::AddIfMissing);
         searchDescription->setDescription(search);
         if (mUi.mChkMultiFolders->isChecked()) {
             searchDescription->setBaseCollection(Akonadi::Collection());

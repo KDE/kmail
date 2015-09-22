@@ -56,7 +56,7 @@ QByteArray SearchDescriptionAttribute::serialized() const
 void SearchDescriptionAttribute::deserialize(const QByteArray &data)
 {
     QDataStream s(data);
-    Akonadi::Entity::Id id;
+    Akonadi::Collection::Id id;
     s >> id;
     mBaseCollection = Akonadi::Collection(id);
     s >> mRecursive;
