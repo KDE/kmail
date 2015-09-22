@@ -261,13 +261,13 @@ void AppearancePage::FontsTab::doLoadOther()
         for (int i = 0 ; i < numFontNames ; ++i) {
             const QString configName = QLatin1String(fontNames[i].configName);
             if (configName == QLatin1String("MessageListFont")) {
-                mFont[i] = MessageList::Core::Settings::self()->messageListFont();
+                mFont[i] = MessageList::MessageListSettings::self()->messageListFont();
             } else if (configName == QLatin1String("UnreadMessageFont")) {
-                mFont[i] = MessageList::Core::Settings::self()->unreadMessageFont();
+                mFont[i] = MessageList::MessageListSettings::self()->unreadMessageFont();
             } else if (configName == QLatin1String("ImportantMessageFont")) {
-                mFont[i] = MessageList::Core::Settings::self()->importantMessageFont();
+                mFont[i] = MessageList::MessageListSettings::self()->importantMessageFont();
             } else if (configName == QLatin1String("TodoMessageFont")) {
-                mFont[i] = MessageList::Core::Settings::self()->todoMessageFont();
+                mFont[i] = MessageList::MessageListSettings::self()->todoMessageFont();
             } else {
                 mFont[i] = fonts.readEntry(configName,
                                            (fontNames[i].onlyFixed) ? fixedFont : mFont[0]);
@@ -297,13 +297,13 @@ void AppearancePage::FontsTab::save()
         for (int i = 0 ; i < numFontNames ; ++i) {
             const QString configName = QLatin1String(fontNames[i].configName);
             if (customFonts && configName == QLatin1String("MessageListFont")) {
-                MessageList::Core::Settings::self()->setMessageListFont(mFont[i]);
+                MessageList::MessageListSettings::self()->setMessageListFont(mFont[i]);
             } else if (customFonts && configName == QLatin1String("UnreadMessageFont")) {
-                MessageList::Core::Settings::self()->setUnreadMessageFont(mFont[i]);
+                MessageList::MessageListSettings::self()->setUnreadMessageFont(mFont[i]);
             } else if (customFonts && configName == QLatin1String("ImportantMessageFont")) {
-                MessageList::Core::Settings::self()->setImportantMessageFont(mFont[i]);
+                MessageList::MessageListSettings::self()->setImportantMessageFont(mFont[i]);
             } else if (customFonts && configName == QLatin1String("TodoMessageFont")) {
-                MessageList::Core::Settings::self()->setTodoMessageFont(mFont[i]);
+                MessageList::MessageListSettings::self()->setTodoMessageFont(mFont[i]);
             } else {
                 if (customFonts || fonts.hasKey(configName))
                     // Don't write font info when we use default fonts, but write
@@ -443,11 +443,11 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
             if (loadFromConfig) {
                 const QString configName = QLatin1String(colorNames[i].configName);
                 if (configName == QLatin1String("UnreadMessageColor")) {
-                    mColorList->setColorSilently(i, MessageList::Core::Settings::self()->unreadMessageColor());
+                    mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->unreadMessageColor());
                 } else if (configName == QLatin1String("ImportantMessageColor")) {
-                    mColorList->setColorSilently(i, MessageList::Core::Settings::self()->importantMessageColor());
+                    mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->importantMessageColor());
                 } else if (configName == QLatin1String("TodoMessageColor")) {
-                    mColorList->setColorSilently(i, MessageList::Core::Settings::self()->todoMessageColor());
+                    mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->todoMessageColor());
                 } else if (configName == QLatin1String("BrokenAccountColor")) {
                     mColorList->setColorSilently(i, collectionFolderView.readEntry(configName, defaultColor[i]));
                 } else {
@@ -485,11 +485,11 @@ void AppearancePage::ColorsTab::save()
     for (int i = 0 ; i < numColorNames ; ++i) {
         const QString configName = QLatin1String(colorNames[i].configName);
         if (customColors && configName == QLatin1String("UnreadMessageColor")) {
-            MessageList::Core::Settings::self()->setUnreadMessageColor(mColorList->color(i));
+            MessageList::MessageListSettings::self()->setUnreadMessageColor(mColorList->color(i));
         } else if (customColors && configName == QLatin1String("ImportantMessageColor")) {
-            MessageList::Core::Settings::self()->setImportantMessageColor(mColorList->color(i));
+            MessageList::MessageListSettings::self()->setImportantMessageColor(mColorList->color(i));
         } else if (customColors && configName == QLatin1String("TodoMessageColor")) {
-            MessageList::Core::Settings::self()->setTodoMessageColor(mColorList->color(i));
+            MessageList::MessageListSettings::self()->setTodoMessageColor(mColorList->color(i));
         } else if (configName == QLatin1String("BrokenAccountColor")) {
             if (customColors || collectionFolderView.hasKey(configName)) {
                 collectionFolderView.writeEntry(configName, mColorList->color(i));
@@ -636,21 +636,21 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     QVBoxLayout *gvlay = new QVBoxLayout(group);
 
     mDisplayMessageToolTips = new QCheckBox(
-        MessageList::Core::Settings::self()->messageToolTipEnabledItem()->label(), group);
+        MessageList::MessageListSettings::self()->messageToolTipEnabledItem()->label(), group);
     gvlay->addWidget(mDisplayMessageToolTips);
 
     connect(mDisplayMessageToolTips, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
     mHideTabBarWithSingleTab = new QCheckBox(
-        MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem()->label(), group);
+        MessageList::MessageListSettings::self()->autoHideTabBarWithSingleTabItem()->label(), group);
     gvlay->addWidget(mHideTabBarWithSingleTab);
 
     connect(mHideTabBarWithSingleTab, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
     mTabsHaveCloseButton = new QCheckBox(
-        MessageList::Core::Settings::self()->tabsHaveCloseButtonItem()->label(), group);
+        MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem()->label(), group);
     gvlay->addWidget(mTabsHaveCloseButton);
 
     connect(mTabsHaveCloseButton, &QCheckBox::stateChanged,
@@ -807,9 +807,9 @@ void AppearancePage::HeadersTab::slotSelectDefaultTheme()
 void AppearancePage::HeadersTab::doLoadOther()
 {
     // "General Options":
-    loadWidget(mDisplayMessageToolTips, MessageList::Core::Settings::self()->messageToolTipEnabledItem());
-    loadWidget(mHideTabBarWithSingleTab, MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem());
-    loadWidget(mTabsHaveCloseButton, MessageList::Core::Settings::self()->tabsHaveCloseButtonItem());
+    loadWidget(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
+    loadWidget(mHideTabBarWithSingleTab, MessageList::MessageListSettings::self()->autoHideTabBarWithSingleTabItem());
+    loadWidget(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
 
     // "Aggregation":
     slotSelectDefaultAggregation();
@@ -824,9 +824,9 @@ void AppearancePage::HeadersTab::doLoadOther()
 
 void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
 {
-    loadWidget(mDisplayMessageToolTips, MessageList::Core::Settings::self()->messageToolTipEnabledItem());
-    loadWidget(mHideTabBarWithSingleTab, MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem());
-    loadWidget(mTabsHaveCloseButton, MessageList::Core::Settings::self()->tabsHaveCloseButtonItem());
+    loadWidget(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
+    loadWidget(mHideTabBarWithSingleTab, MessageList::MessageListSettings::self()->autoHideTabBarWithSingleTabItem());
+    loadWidget(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
     // "Aggregation":
     slotSelectDefaultAggregation();
 
@@ -858,9 +858,9 @@ void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
 
 void AppearancePage::HeadersTab::save()
 {
-    saveCheckBox(mDisplayMessageToolTips, MessageList::Core::Settings::self()->messageToolTipEnabledItem());
-    saveCheckBox(mHideTabBarWithSingleTab, MessageList::Core::Settings::self()->autoHideTabBarWithSingleTabItem());
-    saveCheckBox(mTabsHaveCloseButton, MessageList::Core::Settings::self()->tabsHaveCloseButtonItem());
+    saveCheckBox(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
+    saveCheckBox(mHideTabBarWithSingleTab, MessageList::MessageListSettings::self()->autoHideTabBarWithSingleTabItem());
+    saveCheckBox(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
 
     KMKernel::self()->savePaneSelection();
     // "Aggregation"
