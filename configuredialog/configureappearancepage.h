@@ -22,6 +22,8 @@
 #include "MailCommon/Tag"
 #include <QListWidgetItem>
 
+#include <AkonadiCore/TagFetchJob>
+
 class QPushButton;
 class QCheckBox;
 class KComboBox;
