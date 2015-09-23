@@ -62,7 +62,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent),
       mIcon(QIcon::fromTheme(QStringLiteral("mail-unread-new"))),
       mDesktopOfMainWin(0),
-      mMode(GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread),
+      mMode(KMailSettings::EnumSystemTrayPolicy::ShowOnUnread),
       mCount(0),
       mShowUnreadMailCount(true),
       mIconNotificationsEnabled(true),
@@ -166,10 +166,10 @@ void KMSystemTray::setMode(int newMode)
     mMode = newMode;
 
     switch (mMode) {
-    case GlobalSettings::EnumSystemTrayPolicy::ShowAlways:
+    case KMailSettings::EnumSystemTrayPolicy::ShowAlways:
         setStatus(KStatusNotifierItem::Active);
         break;
-    case GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread:
+    case KMailSettings::EnumSystemTrayPolicy::ShowOnUnread:
         setStatus(mCount > 0 ? KStatusNotifierItem::Active : KStatusNotifierItem::Passive);
         break;
     default:
@@ -381,7 +381,7 @@ void KMSystemTray::initListOfCollection()
     }
     unreadMail(model);
 
-    if (mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread) {
+    if (mMode == KMailSettings::EnumSystemTrayPolicy::ShowOnUnread) {
         if (status() == KStatusNotifierItem::Passive && (mCount > 0)) {
             setStatus(KStatusNotifierItem::Active);
         } else if (status() == KStatusNotifierItem::Active && (mCount == 0)) {

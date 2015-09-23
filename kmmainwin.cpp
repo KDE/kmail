@@ -74,7 +74,7 @@ KMMainWin::KMMainWin(QWidget *)
                                  actionCollection());
 
     mHideMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotToggleMenubar()), actionCollection());
-    mHideMenuBarAction->setChecked(GlobalSettings::self()->showMenuBar());
+    mHideMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
     slotToggleMenubar(true);
 
     KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
@@ -134,7 +134,7 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
             }
             menuBar()->hide();
         }
-        GlobalSettings::self()->setShowMenuBar(mHideMenuBarAction->isChecked());
+        KMailSettings::self()->setShowMenuBar(mHideMenuBarAction->isChecked());
     }
 }
 

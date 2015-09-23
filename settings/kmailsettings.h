@@ -28,11 +28,11 @@
 
 class QTimer;
 
-class GlobalSettings : public GlobalSettingsBase
+class KMailSettings : public GlobalSettingsBase
 {
     Q_OBJECT
 public:
-    static GlobalSettings *self();
+    static KMailSettings *self();
 
     /** Call this slot instead of directly @ref KConfig::sync() to
         minimize the overall config writes. Calling this slot will
@@ -45,9 +45,9 @@ private Q_SLOTS:
     void slotSyncNow();
 
 private:
-    GlobalSettings();
-    virtual ~GlobalSettings();
-    static GlobalSettings *mSelf;
+    KMailSettings();
+    virtual ~KMailSettings();
+    static KMailSettings *mSelf;
 
     QTimer *mConfigSyncTimer;
 

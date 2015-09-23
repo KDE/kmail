@@ -56,15 +56,15 @@ bool ValidateSendMailShortcut::validate()
         }
         sendNow = false;
     } else if (result == KMessageBox::No) {
-        GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(true);
+        KMailSettings::self()->setConfirmBeforeSendWhenUseShortcut(true);
         sendNow = true;
     } else if (result == KMessageBox::Ok) {
-        GlobalSettings::self()->setConfirmBeforeSendWhenUseShortcut(false);
+        KMailSettings::self()->setConfirmBeforeSendWhenUseShortcut(false);
         sendNow = true;
     } else if (result == KMessageBox::Cancel) {
         return false;
     }
-    GlobalSettings::self()->setCheckSendDefaultActionShortcut(true);
-    GlobalSettings::self()->save();
+    KMailSettings::self()->setCheckSendDefaultActionShortcut(true);
+    KMailSettings::self()->save();
     return sendNow;
 }

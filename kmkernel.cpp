@@ -158,7 +158,7 @@ KMKernel::KMKernel(QObject *parent) :
     // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
     // so better do it here, than in some code where changing the group of config()
     // would be unexpected
-    GlobalSettings::self();
+    KMailSettings::self();
 
     mJobScheduler = new JobScheduler(this);
     mXmlGuiInstance = QStringLiteral("kmail2");
@@ -996,15 +996,15 @@ void KMKernel::resumeBackgroundJobs()
 
 void KMKernel::stopNetworkJobs()
 {
-    if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline) {
+    if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) {
         return;
     }
 
     setAccountStatus(false);
 
-    GlobalSettings::setNetworkState(GlobalSettings::EnumNetworkState::Offline);
+    KMailSettings::setNetworkState(KMailSettings::EnumNetworkState::Offline);
     BroadcastStatus::instance()->setStatusMsg(i18n("KMail is set to be offline; all network jobs are suspended"));
-    Q_EMIT onlineStatusChanged((GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState());
+    Q_EMIT onlineStatusChanged((KMailSettings::EnumNetworkState::type)KMailSettings::networkState());
 
 }
 
@@ -1030,7 +1030,7 @@ void KMKernel::setAccountStatus(bool goOnline)
 
 void KMKernel::resumeNetworkJobs()
 {
-    if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online) {
+    if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Online) {
         return;
     }
 
@@ -1040,8 +1040,8 @@ void KMKernel::resumeNetworkJobs()
     } else {
         BroadcastStatus::instance()->setStatusMsg(i18n("KMail is set to be online; all network jobs will resume when a network connection is detected"));
     }
-    GlobalSettings::setNetworkState(GlobalSettings::EnumNetworkState::Online);
-    Q_EMIT onlineStatusChanged((GlobalSettings::EnumNetworkState::type)GlobalSettings::networkState());
+    KMailSettings::setNetworkState(KMailSettings::EnumNetworkState::Online);
+    Q_EMIT onlineStatusChanged((KMailSettings::EnumNetworkState::type)KMailSettings::networkState());
     KMMainWidget *widget = getKMMainWidget();
     if (widget) {
         widget->clearViewer();
@@ -1050,7 +1050,7 @@ void KMKernel::resumeNetworkJobs()
 
 bool KMKernel::isOffline()
 {
-    if ((GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline) || !s_networkConfigMgr->isOnline()) {
+    if ((KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) || !s_networkConfigMgr->isOnline()) {
         return true;
     } else {
         return false;
@@ -1108,7 +1108,7 @@ bool KMKernel::askToGoOnline()
         return false;
     }
 
-    if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline) {
+    if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) {
         s_askingToGoOnline = true;
         int rc =
             KMessageBox::questionYesNo(KMKernel::self()->mainWin(),
@@ -1135,7 +1135,7 @@ bool KMKernel::askToGoOnline()
 void KMKernel::slotSystemNetworkStatusChanged(bool isOnline)
 {
     mSystemNetworkStatus = isOnline;
-    if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Offline) {
+    if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) {
         return;
     }
 
@@ -1270,10 +1270,10 @@ void KMKernel::init()
 {
     the_shuttingDown = false;
 
-    the_firstStart = GlobalSettings::self()->firstStart();
-    GlobalSettings::self()->setFirstStart(false);
-    the_previousVersion = GlobalSettings::self()->previousVersion();
-    GlobalSettings::self()->setPreviousVersion(QStringLiteral(KDEPIM_VERSION));
+    the_firstStart = KMailSettings::self()->firstStart();
+    KMailSettings::self()->setFirstStart(false);
+    the_previousVersion = KMailSettings::self()->previousVersion();
+    KMailSettings::self()->setPreviousVersion(QStringLiteral(KDEPIM_VERSION));
 
     the_undoStack = new UndoStack(20);
 
@@ -1384,7 +1384,7 @@ void KMKernel::cleanup(void)
     KSharedConfig::Ptr config =  KMKernel::config();
     Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
     if (trashCollection.isValid()) {
-        if (GlobalSettings::self()->emptyTrashOnExit()) {
+        if (KMailSettings::self()->emptyTrashOnExit()) {
             Akonadi::CollectionStatisticsJob *jobStatistics = new Akonadi::CollectionStatisticsJob(trashCollection);
             if (jobStatistics->exec()) {
                 if (jobStatistics->statistics().count() > 0) {
@@ -1461,7 +1461,7 @@ void KMKernel::slotSyncConfig()
     TemplateParser::GlobalSettings::self()->save();
     MessageList::MessageListSettings::self()->save();
     MailCommon::MailCommonSettings::self()->save();
-    GlobalSettings::self()->save();
+    KMailSettings::self()->save();
     KMKernel::config()->sync();
     //Laurent investigate why we need to reload them.
     PimCommon::PimCommonSettings::self()->load();
@@ -1471,7 +1471,7 @@ void KMKernel::slotSyncConfig()
     TemplateParser::GlobalSettings::self()->load();
     MessageList::MessageListSettings::self()->load();
     MailCommon::MailCommonSettings::self()->load();
-    GlobalSettings::self()->load();
+    KMailSettings::self()->load();
     KMKernel::config()->reparseConfiguration();
 }
 
@@ -1656,7 +1656,7 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
 {
     // Hidden KConfig keys. Not meant to be used, but a nice fallback in case
     // a stable kmail release goes out with a nasty bug in CompactionJob...
-    if (GlobalSettings::self()->autoExpiring()) {
+    if (KMailSettings::self()->autoExpiring()) {
         mFolderCollectionMonitor->expireAllFolders(false /*scheduled, not immediate*/, entityTreeModel());
     }
 
@@ -1704,10 +1704,10 @@ bool KMKernel::canQueryClose()
     if (!mSystemTray) {
         return true;
     }
-    if (mSystemTray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways) {
+    if (mSystemTray->mode() == KMailSettings::EnumSystemTrayPolicy::ShowAlways) {
         mSystemTray->hideKMail();
         return false;
-    } else if ((mSystemTray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread)) {
+    } else if ((mSystemTray->mode() == KMailSettings::EnumSystemTrayPolicy::ShowOnUnread)) {
         if (mSystemTray->hasUnreadMail()) {
             mSystemTray->setStatus(KStatusNotifierItem::Active);
         }
@@ -1750,9 +1750,9 @@ void KMKernel::transportRemoved(int id, const QString &name)
     }
 
     // if the deleted transport is the currently used transport reset it to default
-    const QString &currentTransport = GlobalSettings::self()->currentTransport();
+    const QString &currentTransport = KMailSettings::self()->currentTransport();
     if (name == currentTransport) {
-        GlobalSettings::self()->setCurrentTransport(QString());
+        KMailSettings::self()->setCurrentTransport(QString());
     }
 
     if (!changedIdents.isEmpty()) {
@@ -1925,27 +1925,27 @@ void KMKernel::slotDeleteIdentity(uint identity)
 
 bool KMKernel::showPopupAfterDnD()
 {
-    return GlobalSettings::self()->showPopupAfterDnD();
+    return KMailSettings::self()->showPopupAfterDnD();
 }
 
 bool KMKernel::excludeImportantMailFromExpiry()
 {
-    return GlobalSettings::self()->excludeImportantMailFromExpiry();
+    return KMailSettings::self()->excludeImportantMailFromExpiry();
 }
 
 qreal KMKernel::closeToQuotaThreshold()
 {
-    return GlobalSettings::self()->closeToQuotaThreshold();
+    return KMailSettings::self()->closeToQuotaThreshold();
 }
 
 Akonadi::Collection::Id KMKernel::lastSelectedFolder()
 {
-    return GlobalSettings::self()->lastSelectedFolder();
+    return KMailSettings::self()->lastSelectedFolder();
 }
 
 void KMKernel::setLastSelectedFolder(const Akonadi::Collection::Id &col)
 {
-    GlobalSettings::self()->setLastSelectedFolder(col);
+    KMailSettings::self()->setLastSelectedFolder(col);
 }
 
 QStringList KMKernel::customTemplates()
@@ -2104,9 +2104,9 @@ void KMKernel::toggleSystemTray()
 {
     KMMainWidget *widget = getKMMainWidget();
     if (widget) {
-        if (!mSystemTray && GlobalSettings::self()->systemTrayEnabled()) {
+        if (!mSystemTray && KMailSettings::self()->systemTrayEnabled()) {
             mSystemTray = new KMail::KMSystemTray(widget);
-        } else if (mSystemTray && !GlobalSettings::self()->systemTrayEnabled()) {
+        } else if (mSystemTray && !KMailSettings::self()->systemTrayEnabled()) {
             // Get rid of system tray on user's request
             qCDebug(KMAIL_LOG) << "deleting systray";
             delete mSystemTray;
@@ -2115,8 +2115,8 @@ void KMKernel::toggleSystemTray()
 
         // Set mode of systemtray. If mode has changed, tray will handle this.
         if (mSystemTray) {
-            mSystemTray->setMode(GlobalSettings::self()->systemTrayPolicy());
-            mSystemTray->setShowUnreadCount(GlobalSettings::self()->systemTrayShowUnread());
+            mSystemTray->setMode(KMailSettings::self()->systemTrayPolicy());
+            mSystemTray->setShowUnreadCount(KMailSettings::self()->systemTrayShowUnread());
         }
 
     }

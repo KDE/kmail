@@ -279,10 +279,10 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
     loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem()) ;
-    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, GlobalSettings::self()->neverEncryptDraftsItem());
+    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
 
-    loadWidget(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem());
-    loadWidget(mWidget->mShowEncSignIndicator, GlobalSettings::self()->showCryptoLabelIndicatorItem());
+    loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
+    loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }
 
 void SecurityPage::ComposerCryptoTab::save()
@@ -291,9 +291,9 @@ void SecurityPage::ComposerCryptoTab::save()
     saveCheckBox(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
     saveCheckBox(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem()) ;
-    saveCheckBox(mWidget->mNeverEncryptWhenSavingInDrafts, GlobalSettings::self()->neverEncryptDraftsItem());
-    saveCheckBox(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem());
-    saveCheckBox(mWidget->mShowEncSignIndicator, GlobalSettings::self()->showCryptoLabelIndicatorItem());
+    saveCheckBox(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
+    saveCheckBox(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
+    saveCheckBox(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }
 
 void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
@@ -302,9 +302,9 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
     loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->pgpAutoEncryptItem()) ;
-    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, GlobalSettings::self()->neverEncryptDraftsItem());
-    loadWidget(mWidget->mStoreEncrypted, GlobalSettings::self()->cryptoStoreEncryptedItem());
-    loadWidget(mWidget->mShowEncSignIndicator, GlobalSettings::self()->showCryptoLabelIndicatorItem());
+    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
+    loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
+    loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 
 }
 

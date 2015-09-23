@@ -88,9 +88,9 @@ void ConfigModuleTab::defaults()
 {
     // reset settings which are available via GlobalSettings to their defaults
     // (stolen from KConfigDialogManager::updateWidgetsDefault())
-    const bool bUseDefaults = GlobalSettings::self()->useDefaults(true);
+    const bool bUseDefaults = KMailSettings::self()->useDefaults(true);
     doLoadFromGlobalSettings();
-    GlobalSettings::self()->useDefaults(bUseDefaults);
+    KMailSettings::self()->useDefaults(bUseDefaults);
     // reset other settings to default values
     doResetToDefaultsOther();
 }

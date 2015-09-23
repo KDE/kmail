@@ -355,8 +355,8 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
     }
 
     if (id == -1) {
-        if (GlobalSettings::self()->startSpecificFolderAtStartup()) {
-            Akonadi::Collection::Id startupFolder = GlobalSettings::self()->startupFolder();
+        if (KMailSettings::self()->startSpecificFolderAtStartup()) {
+            Akonadi::Collection::Id startupFolder = KMailSettings::self()->startupFolder();
             if (startupFolder > 0) {
                 saver->restoreCurrentItem(QStringLiteral("c%1").arg(startupFolder));
             }
@@ -419,9 +419,9 @@ void KMMainWidget::slotEndCheckMail()
 void KMMainWidget::slotUpdateActionsAfterMailChecking()
 {
     const bool sendOnAll =
-        GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
+        KMailSettings::self()->sendOnCheck() == KMailSettings::EnumSendOnCheck::SendOnAllChecks;
     const bool sendOnManual =
-        GlobalSettings::self()->sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
+        KMailSettings::self()->sendOnCheck() == KMailSettings::EnumSendOnCheck::SendOnManualChecks;
     if (!kmkernel->isOffline() && (sendOnAll || sendOnManual)) {
         slotSendQueued();
     }
@@ -465,17 +465,17 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
         mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;
     } else {
         // use the default action
-        switch (GlobalSettings::self()->actionEnterFolder()) {
-        case GlobalSettings::EnumActionEnterFolder::SelectFirstUnread:
+        switch (KMailSettings::self()->actionEnterFolder()) {
+        case KMailSettings::EnumActionEnterFolder::SelectFirstUnread:
             mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;
             break;
-        case GlobalSettings::EnumActionEnterFolder::SelectLastSelected:
+        case KMailSettings::EnumActionEnterFolder::SelectLastSelected:
             mPreSelectionMode = MessageList::Core::PreSelectLastSelected;
             break;
-        case GlobalSettings::EnumActionEnterFolder::SelectNewest:
+        case KMailSettings::EnumActionEnterFolder::SelectNewest:
             mPreSelectionMode = MessageList::Core::PreSelectNewestCentered;
             break;
-        case GlobalSettings::EnumActionEnterFolder::SelectOldest:
+        case KMailSettings::EnumActionEnterFolder::SelectOldest:
             mPreSelectionMode = MessageList::Core::PreSelectOldestCentered;
             break;
         default:
@@ -541,15 +541,15 @@ void KMMainWidget::clearViewer()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readPreConfig()
 {
-    mLongFolderList = GlobalSettings::self()->folderList() == GlobalSettings::EnumFolderList::longlist;
-    mReaderWindowActive = GlobalSettings::self()->readerWindowMode() != GlobalSettings::EnumReaderWindowMode::hide;
-    mReaderWindowBelow = GlobalSettings::self()->readerWindowMode() == GlobalSettings::EnumReaderWindowMode::below;
+    mLongFolderList = KMailSettings::self()->folderList() == KMailSettings::EnumFolderList::longlist;
+    mReaderWindowActive = KMailSettings::self()->readerWindowMode() != KMailSettings::EnumReaderWindowMode::hide;
+    mReaderWindowBelow = KMailSettings::self()->readerWindowMode() == KMailSettings::EnumReaderWindowMode::below;
 
     mHtmlGlobalSetting = MessageViewer::GlobalSettings::self()->htmlMail();
     mHtmlLoadExtGlobalSetting = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
 
     mEnableFavoriteFolderView = (MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode);
-    mEnableFolderQuickSearch = GlobalSettings::self()->enableFolderQuickSearch();
+    mEnableFolderQuickSearch = KMailSettings::self()->enableFolderQuickSearch();
     readFolderConfig();
     updateHtmlMenuEntry();
     if (mMsgView) {
@@ -712,12 +712,12 @@ void KMMainWidget::layoutSplitters()
     QList<int> splitter1Sizes;
     QList<int> splitter2Sizes;
 
-    const int folderViewWidth = GlobalSettings::self()->folderViewWidth();
-    int ftHeight = GlobalSettings::self()->folderTreeHeight();
-    int headerHeight = GlobalSettings::self()->searchAndHeaderHeight();
-    const int messageViewerWidth = GlobalSettings::self()->readerWindowWidth();
-    int headerWidth = GlobalSettings::self()->searchAndHeaderWidth();
-    int messageViewerHeight = GlobalSettings::self()->readerWindowHeight();
+    const int folderViewWidth = KMailSettings::self()->folderViewWidth();
+    int ftHeight = KMailSettings::self()->folderTreeHeight();
+    int headerHeight = KMailSettings::self()->searchAndHeaderHeight();
+    const int messageViewerWidth = KMailSettings::self()->readerWindowWidth();
+    int headerWidth = KMailSettings::self()->searchAndHeaderWidth();
+    int messageViewerHeight = KMailSettings::self()->readerWindowHeight();
 
     int ffvHeight = mFolderViewSplitter ? MailCommon::MailCommonSettings::self()->favoriteCollectionViewHeight() : 0;
 
@@ -881,19 +881,19 @@ void KMMainWidget::writeConfig(bool force)
             headersHeight = height() / 2;
         }
 
-        GlobalSettings::self()->setSearchAndHeaderHeight(headersHeight);
-        GlobalSettings::self()->setSearchAndHeaderWidth(mMessagePane->width());
+        KMailSettings::self()->setSearchAndHeaderHeight(headersHeight);
+        KMailSettings::self()->setSearchAndHeaderWidth(mMessagePane->width());
         if (mFavoriteCollectionsView) {
             MailCommon::MailCommonSettings::self()->setFavoriteCollectionViewHeight(mFavoriteCollectionsView->height());
-            GlobalSettings::self()->setFolderTreeHeight(mFolderTreeWidget->height());
+            KMailSettings::self()->setFolderTreeHeight(mFolderTreeWidget->height());
             if (!mLongFolderList) {
-                GlobalSettings::self()->setFolderViewHeight(mFolderViewSplitter->height());
+                KMailSettings::self()->setFolderViewHeight(mFolderViewSplitter->height());
             }
         } else if (!mLongFolderList && mFolderTreeWidget) {
-            GlobalSettings::self()->setFolderTreeHeight(mFolderTreeWidget->height());
+            KMailSettings::self()->setFolderTreeHeight(mFolderTreeWidget->height());
         }
         if (mFolderTreeWidget) {
-            GlobalSettings::self()->setFolderViewWidth(mFolderTreeWidget->width());
+            KMailSettings::self()->setFolderViewWidth(mFolderTreeWidget->width());
             KSharedConfig::Ptr config = KMKernel::self()->config();
             KConfigGroup group(config, "CollectionFolderView");
 
@@ -914,10 +914,10 @@ void KMMainWidget::writeConfig(bool force)
 
         if (mMsgView) {
             if (!mReaderWindowBelow) {
-                GlobalSettings::self()->setReaderWindowWidth(mMsgView->width());
+                KMailSettings::self()->setReaderWindowWidth(mMsgView->width());
             }
             mMsgView->viewer()->writeConfig(force);
-            GlobalSettings::self()->setReaderWindowHeight(mMsgView->height());
+            KMailSettings::self()->setReaderWindowHeight(mMsgView->height());
         }
     }
 }
@@ -982,7 +982,7 @@ void KMMainWidget::createWidgets()
     connect(mFolderTreeWidget->folderTreeView(), &FolderTreeView::prefereCreateNewTab, this, &KMMainWidget::slotCreateNewTab);
 
     mFolderTreeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    mMessagePane = new CollectionPane(!GlobalSettings::self()->startSpecificFolderAtStartup(), KMKernel::self()->entityTreeModel(),
+    mMessagePane = new CollectionPane(!KMailSettings::self()->startSpecificFolderAtStartup(), KMKernel::self()->entityTreeModel(),
                                       mFolderTreeWidget->folderTreeView()->selectionModel(),
                                       this);
     connect(KMKernel::self()->entityTreeModel(), &Akonadi::EntityTreeModel::collectionFetched, this, &KMMainWidget::slotCollectionFetched);
@@ -1039,7 +1039,7 @@ void KMMainWidget::createWidgets()
 
     vboxlayout->addWidget(mFolderTreeWidget);
 
-    if (!GlobalSettings::self()->enableFolderQuickSearch()) {
+    if (!KMailSettings::self()->enableFolderQuickSearch()) {
         mFolderTreeWidget->filterFolderLineEdit()->hide();
     }
     //
@@ -1159,8 +1159,8 @@ void KMMainWidget::updateMoveAction(const Akonadi::CollectionStatistics &statist
 void KMMainWidget::updateMoveAction(bool hasUnreadMails, bool hasMails)
 {
     const bool enable_goto_unread = hasUnreadMails
-                                    || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
-                                    || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
+                                    || (KMailSettings::self()->loopOnGotoUnread() == KMailSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
+                                    || (KMailSettings::self()->loopOnGotoUnread() == KMailSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
     actionCollection()->action(QStringLiteral("go_next_message"))->setEnabled(hasMails);
     actionCollection()->action(QStringLiteral("go_next_unread_message"))->setEnabled(enable_goto_unread);
     actionCollection()->action(QStringLiteral("go_prev_message"))->setEnabled(hasMails);
@@ -1456,7 +1456,7 @@ void KMMainWidget::slotExpireFolder()
         return;
     }
 
-    if (GlobalSettings::self()->warnBeforeExpire()) {
+    if (KMailSettings::self()->warnBeforeExpire()) {
         const QString message = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>",
                                      mCurrentFolder->name().toHtmlEscaped());
         if (KMessageBox::warningContinueCancel(this, message, i18n("Expire Folder"),
@@ -1482,7 +1482,7 @@ void KMMainWidget::slotEmptyFolder()
         return;
     }
     const bool isTrash = CommonKernel->folderIsTrash(mCurrentFolder->collection());
-    if (GlobalSettings::self()->confirmBeforeEmpty()) {
+    if (KMailSettings::self()->confirmBeforeEmpty()) {
         const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
         const QString text = (isTrash) ?
                              i18n("Are you sure you want to empty the trash folder?") :
@@ -1562,7 +1562,7 @@ void KMMainWidget::slotClearCurrentFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotExpireAll()
 {
-    if (GlobalSettings::self()->warnBeforeExpire()) {
+    if (KMailSettings::self()->warnBeforeExpire()) {
         const int ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
                         i18n("Are you sure you want to expire all old messages?"),
                         i18n("Expire Old Messages?"), KGuiItem(i18n("Expire")));
@@ -2300,7 +2300,7 @@ void KMMainWidget::slotOnlineStatus()
 {
     // KMKernel will Q_EMIT a signal when we toggle the network state that is caught by
     // KMMainWidget::slotUpdateOnlineStatus to update our GUI
-    if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online) {
+    if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Online) {
         // if online; then toggle and set it offline.
         kmkernel->stopNetworkJobs();
     } else {
@@ -2309,13 +2309,13 @@ void KMMainWidget::slotOnlineStatus()
     }
 }
 
-void KMMainWidget::slotUpdateOnlineStatus(GlobalSettings::EnumNetworkState::type)
+void KMMainWidget::slotUpdateOnlineStatus(KMailSettings::EnumNetworkState::type)
 {
     if (!mAkonadiStandardActionManager) {
         return;
     }
     QAction *action = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::ToggleWorkOffline);
-    if (GlobalSettings::self()->networkState() == GlobalSettings::EnumNetworkState::Online) {
+    if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Online) {
         action->setText(i18n("Work Offline"));
         action->setIcon(QIcon::fromTheme(QStringLiteral("user-offline")));
     } else {
@@ -2496,13 +2496,13 @@ void KMMainWidget::slotSelectNextUnreadMessage()
                 MessageList::Core::ClearExistingSelection,
                 true,  // center item
                 /*GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder*/
-                GlobalSettings::self()->loopOnGotoUnread() != GlobalSettings::EnumLoopOnGotoUnread::DontLoop
+                KMailSettings::self()->loopOnGotoUnread() != KMailSettings::EnumLoopOnGotoUnread::DontLoop
             )) {
         // no next unread message was found in the current folder
-        if ((GlobalSettings::self()->loopOnGotoUnread() ==
-                GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders) ||
-                (GlobalSettings::self()->loopOnGotoUnread() ==
-                 GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders)) {
+        if ((KMailSettings::self()->loopOnGotoUnread() ==
+                KMailSettings::EnumLoopOnGotoUnread::LoopInAllFolders) ||
+                (KMailSettings::self()->loopOnGotoUnread() ==
+                 KMailSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders)) {
             mGoToFirstUnreadMessageInSelectedFolder = true;
             mFolderTreeWidget->folderTreeView()->selectNextUnreadFolder(true);
             mGoToFirstUnreadMessageInSelectedFolder = false;
@@ -2533,13 +2533,13 @@ void KMMainWidget::slotSelectPreviousUnreadMessage()
                 MessageList::Core::MessageTypeUnreadOnly,
                 MessageList::Core::ClearExistingSelection,
                 true,  // center item
-                GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder
+                KMailSettings::self()->loopOnGotoUnread() == KMailSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder
             )) {
         // no next unread message was found in the current folder
-        if ((GlobalSettings::self()->loopOnGotoUnread() ==
-                GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders) ||
-                (GlobalSettings::self()->loopOnGotoUnread() ==
-                 GlobalSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders)) {
+        if ((KMailSettings::self()->loopOnGotoUnread() ==
+                KMailSettings::EnumLoopOnGotoUnread::LoopInAllFolders) ||
+                (KMailSettings::self()->loopOnGotoUnread() ==
+                 KMailSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders)) {
             mGoToFirstUnreadMessageInSelectedFolder = true;
             mFolderTreeWidget->folderTreeView()->selectPrevUnreadFolder();
             mGoToFirstUnreadMessageInSelectedFolder = false;
@@ -3733,7 +3733,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     // does the selection identify a single thread ?
     bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessagePane->isThreaded();
     // can we apply flags to the selected messages ?
-    bool flags_available = GlobalSettings::self()->allowLocalFlags() || !(mCurrentFolder &&  mCurrentFolder->isValid() ? readOnly : true);
+    bool flags_available = KMailSettings::self()->allowLocalFlags() || !(mCurrentFolder &&  mCurrentFolder->isValid() ? readOnly : true);
 
     mThreadStatusMenu->setEnabled(thread_actions);
     // these need to be handled individually, the user might have them
@@ -3835,7 +3835,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     const bool newPostToMailingList = mCurrentFolder && mCurrentFolder->isMailingListEnabled();
     mMessageNewList->setEnabled(newPostToMailingList);
 
-    slotUpdateOnlineStatus(static_cast<GlobalSettingsBase::EnumNetworkState::type>(GlobalSettings::self()->networkState()));
+    slotUpdateOnlineStatus(static_cast<GlobalSettingsBase::EnumNetworkState::type>(KMailSettings::self()->networkState()));
     if (action(QStringLiteral("kmail_undo"))) {
         action(QStringLiteral("kmail_undo"))->setEnabled(kmkernel->undoStack()->size() > 0);
     }
@@ -4067,8 +4067,8 @@ void KMMainWidget::slotShowStartupFolder()
 
     QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
     if (kmkernel->firstStart() ||
-            GlobalSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5) {
-        GlobalSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
+            KMailSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5) {
+        KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
         slotIntro();
         return;
     }

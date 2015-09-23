@@ -370,7 +370,7 @@ protected Q_SLOTS:
     void slotSendQueued();
     void slotSendQueuedVia(MailTransport::Transport *transport);
     void slotOnlineStatus();
-    void slotUpdateOnlineStatus(GlobalSettings::EnumNetworkState::type);
+    void slotUpdateOnlineStatus(KMailSettings::EnumNetworkState::type);
     void slotMessagePopup(const Akonadi::Item &, const QUrl &, const QUrl &imageUrl, const QPoint &);
     void slotContactSearchJobForMessagePopupDone(KJob *job);
     void slotMarkAll();

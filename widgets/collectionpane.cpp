@@ -39,7 +39,7 @@ CollectionPane::~CollectionPane()
 
 void CollectionPane::writeConfig(bool /*restoreSession*/)
 {
-    MessageList::Pane::writeConfig(!GlobalSettings::self()->startSpecificFolderAtStartup());
+    MessageList::Pane::writeConfig(!KMailSettings::self()->startSpecificFolderAtStartup());
 }
 
 MessageList::StorageModel *CollectionPane::createStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent)

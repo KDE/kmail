@@ -424,7 +424,7 @@ void MessageActions::setupForwardActions(KActionCollection *ac)
     mForwardActionMenu->removeAction(mForwardInlineAction);
     mForwardActionMenu->removeAction(mForwardAttachedAction);
 
-    if (GlobalSettings::self()->forwardingInlineByDefault()) {
+    if (KMailSettings::self()->forwardingInlineByDefault()) {
         mForwardActionMenu->insertAction(mRedirectAction, mForwardInlineAction);
         mForwardActionMenu->insertAction(mRedirectAction, mForwardAttachedAction);
         ac->setDefaultShortcut(mForwardInlineAction, QKeySequence(Qt::Key_F));
@@ -445,7 +445,7 @@ void MessageActions::setupForwardingActionsList(KXMLGUIClient *guiClient)
 {
     QList<QAction *> forwardActionList;
     guiClient->unplugActionList(QStringLiteral("forward_action_list"));
-    if (GlobalSettings::self()->forwardingInlineByDefault()) {
+    if (KMailSettings::self()->forwardingInlineByDefault()) {
         forwardActionList.append(mForwardInlineAction);
         forwardActionList.append(mForwardAttachedAction);
     } else {

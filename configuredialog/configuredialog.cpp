@@ -58,8 +58,8 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     // the KCMultiDialog starts with the size of the first kcm, not
     // the largest one. This way at least after the first showing of
     // the largest kcm the size is kept.
-    const int width = GlobalSettings::self()->configureDialogWidth();
-    const int height = GlobalSettings::self()->configureDialogHeight();
+    const int width = KMailSettings::self()->configureDialogWidth();
+    const int height = KMailSettings::self()->configureDialogHeight();
     if (width != 0 && height != 0) {
         resize(width, height);
     }
@@ -68,8 +68,8 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
 
 void ConfigureDialog::hideEvent(QHideEvent *ev)
 {
-    GlobalSettings::self()->setConfigureDialogWidth(width());
-    GlobalSettings::self()->setConfigureDialogHeight(height());
+    KMailSettings::self()->setConfigureDialogWidth(width());
+    KMailSettings::self()->setConfigureDialogHeight(height());
     KPageDialog::hideEvent(ev);
 }
 

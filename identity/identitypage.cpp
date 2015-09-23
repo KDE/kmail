@@ -112,16 +112,16 @@ void IdentityPage::save()
     if (mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1) {
         // have more than one identity, so better show the combo in the
         // composer now:
-        int showHeaders = GlobalSettings::self()->headers();
+        int showHeaders = KMailSettings::self()->headers();
         showHeaders |= KMail::Composer::HDR_IDENTITY;
-        GlobalSettings::self()->setHeaders(showHeaders);
+        KMailSettings::self()->setHeaders(showHeaders);
     }
     // and now the reverse
     if (mOldNumberOfIdentities > 1 && mIPage.mIdentityList->topLevelItemCount() < 2) {
         // have only one identity, so remove the combo in the composer:
-        int showHeaders = GlobalSettings::self()->headers();
+        int showHeaders = KMailSettings::self()->headers();
         showHeaders &= ~KMail::Composer::HDR_IDENTITY;
-        GlobalSettings::self()->setHeaders(showHeaders);
+        KMailSettings::self()->setHeaders(showHeaders);
     }
 #endif
 }

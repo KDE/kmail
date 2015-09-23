@@ -406,7 +406,7 @@ void AppearancePage::ColorsTab::doLoadOther()
 {
     mCustomColorCheck->setChecked(!MessageCore::GlobalSettings::self()->useDefaultColors());
     mRecycleColorCheck->setChecked(MessageViewer::GlobalSettings::self()->recycleQuoteColors());
-    mCloseToQuotaThreshold->setValue(GlobalSettings::self()->closeToQuotaThreshold());
+    mCloseToQuotaThreshold->setValue(KMailSettings::self()->closeToQuotaThreshold());
     loadColor(true);
 }
 
@@ -505,7 +505,7 @@ void AppearancePage::ColorsTab::save()
         }
     }
     MessageViewer::GlobalSettings::self()->setRecycleQuoteColors(mRecycleColorCheck->isChecked());
-    GlobalSettings::self()->setCloseToQuotaThreshold(mCloseToQuotaThreshold->value());
+    KMailSettings::self()->setCloseToQuotaThreshold(mCloseToQuotaThreshold->value());
 }
 
 QString AppearancePage::LayoutTab::helpAnchor() const
@@ -521,7 +521,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     // "folder list" radio buttons:
     populateButtonGroup(mFolderListGroupBox = new QGroupBox(this),
                         mFolderListGroup = new QButtonGroup(this),
-                        Qt::Vertical, GlobalSettings::self()->folderListItem());
+                        Qt::Vertical, KMailSettings::self()->folderListItem());
     vlay->addWidget(mFolderListGroupBox);
     connect(mFolderListGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(slotEmitChanged()));
@@ -575,7 +575,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     // "show reader window" radio buttons:
     populateButtonGroup(mReaderWindowModeGroupBox = new QGroupBox(this),
                         mReaderWindowModeGroup = new QButtonGroup(this),
-                        Qt::Vertical, GlobalSettings::self()->readerWindowModeItem());
+                        Qt::Vertical, KMailSettings::self()->readerWindowModeItem());
     vlay->addWidget(mReaderWindowModeGroupBox);
     connect(mReaderWindowModeGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(slotEmitChanged()));
@@ -585,11 +585,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
 
 void AppearancePage::LayoutTab::doLoadOther()
 {
-    loadWidget(mFolderListGroupBox, mFolderListGroup, GlobalSettings::self()->folderListItem());
-    loadWidget(mReaderWindowModeGroupBox, mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem());
+    loadWidget(mFolderListGroupBox, mFolderListGroup, KMailSettings::self()->folderListItem());
+    loadWidget(mReaderWindowModeGroupBox, mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
     loadWidget(mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem());
-    loadWidget(mFolderQuickSearchCB, GlobalSettings::self()->enableFolderQuickSearchItem());
-    const int checkedFolderToolTipsPolicy = GlobalSettings::self()->toolTipDisplayPolicy();
+    loadWidget(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
+    const int checkedFolderToolTipsPolicy = KMailSettings::self()->toolTipDisplayPolicy();
     if (checkedFolderToolTipsPolicy >= 0) {
         mFolderToolTipsGroup->button(checkedFolderToolTipsPolicy)->setChecked(true);
     }
@@ -597,11 +597,11 @@ void AppearancePage::LayoutTab::doLoadOther()
 
 void AppearancePage::LayoutTab::save()
 {
-    saveButtonGroup(mFolderListGroup, GlobalSettings::self()->folderListItem());
-    saveButtonGroup(mReaderWindowModeGroup, GlobalSettings::self()->readerWindowModeItem());
+    saveButtonGroup(mFolderListGroup, KMailSettings::self()->folderListItem());
+    saveButtonGroup(mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
     saveButtonGroup(mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem());
-    saveCheckBox(mFolderQuickSearchCB, GlobalSettings::self()->enableFolderQuickSearchItem());
-    GlobalSettings::self()->setToolTipDisplayPolicy(mFolderToolTipsGroup->checkedId());
+    saveCheckBox(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
+    KMailSettings::self()->setToolTipDisplayPolicy(mFolderToolTipsGroup->checkedId());
 }
 
 //
@@ -890,7 +890,7 @@ AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
 
     // "Close message window after replying or forwarding" check box:
     populateCheckBox(mCloseAfterReplyOrForwardCheck = new QCheckBox(this),
-                     GlobalSettings::self()->closeAfterReplyOrForwardItem());
+                     KMailSettings::self()->closeAfterReplyOrForwardItem());
     mCloseAfterReplyOrForwardCheck->setToolTip(
         i18n("Close the standalone message window after replying or forwarding the message"));
     topLayout->addWidget(mCloseAfterReplyOrForwardCheck);
@@ -915,14 +915,14 @@ void AppearancePage::ReaderTab::doResetToDefaultsOther()
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
-    loadWidget(mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem());
+    loadWidget(mCloseAfterReplyOrForwardCheck, KMailSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->readConfig();
     mGravatarConfigWidget->doLoadFromGlobalSettings();
 }
 
 void AppearancePage::ReaderTab::save()
 {
-    saveCheckBox(mCloseAfterReplyOrForwardCheck, GlobalSettings::self()->closeAfterReplyOrForwardItem());
+    saveCheckBox(mCloseAfterReplyOrForwardCheck, KMailSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->writeConfig();
     mGravatarConfigWidget->save();
 }
@@ -965,10 +965,10 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
 
     auto button = new QRadioButton(i18n("Always show KMail in system tray"), mSystemTrayGroupBox);
     gvlay->addWidget(button);
-    mSystemTrayGroup->addButton(button, GlobalSettings::EnumSystemTrayPolicy::ShowAlways);
+    mSystemTrayGroup->addButton(button, KMailSettings::EnumSystemTrayPolicy::ShowAlways);
     button = new QRadioButton(i18n("Only show KMail in system tray if there are unread messages"), mSystemTrayGroupBox);
     gvlay->addWidget(button);
-    mSystemTrayGroup->addButton(button, GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread);
+    mSystemTrayGroup->addButton(button, KMailSettings::EnumSystemTrayPolicy::ShowOnUnread);
 
     vlay->addWidget(mSystemTrayGroupBox);
     vlay->addStretch(10);   // spacer
@@ -976,18 +976,18 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
 
 void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings()
 {
-    loadWidget(mSystemTrayCheck, GlobalSettings::self()->systemTrayEnabledItem());
-    loadWidget(mSystemTrayShowUnreadMail, GlobalSettings::self()->systemTrayShowUnreadItem());
-    mSystemTrayGroup->button(GlobalSettings::self()->systemTrayPolicy())->setChecked(true);
+    loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
+    loadWidget(mSystemTrayShowUnreadMail, KMailSettings::self()->systemTrayShowUnreadItem());
+    mSystemTrayGroup->button(KMailSettings::self()->systemTrayPolicy())->setChecked(true);
     mSystemTrayGroupBox->setEnabled(mSystemTrayCheck->isChecked());
 }
 
 void AppearancePage::SystemTrayTab::save()
 {
-    saveCheckBox(mSystemTrayCheck, GlobalSettings::self()->systemTrayEnabledItem());
-    GlobalSettings::self()->setSystemTrayPolicy(mSystemTrayGroup->checkedId());
-    saveCheckBox(mSystemTrayShowUnreadMail, GlobalSettings::self()->systemTrayShowUnreadItem());
-    GlobalSettings::self()->save();
+    saveCheckBox(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
+    KMailSettings::self()->setSystemTrayPolicy(mSystemTrayGroup->checkedId());
+    saveCheckBox(mSystemTrayShowUnreadMail, KMailSettings::self()->systemTrayShowUnreadItem());
+    KMailSettings::self()->save();
 }
 
 QString AppearancePage::MessageTagTab::helpAnchor() const

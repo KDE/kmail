@@ -180,7 +180,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, KMime::Message::Ptr m
 
 void KMReaderMainWin::slotReplyOrForwardFinished()
 {
-    if (GlobalSettings::self()->closeAfterReplyOrForward()) {
+    if (KMailSettings::self()->closeAfterReplyOrForward()) {
         close();
     }
 }

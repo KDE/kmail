@@ -194,7 +194,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     } else {
         mUi.mSearchFolderEdt->setText(i18n("Last Search"));
         // find last search and reuse it if possible
-        mFolder = CommonKernel->collectionFromId(GlobalSettings::lastSearchCollectionId());
+        mFolder = CommonKernel->collectionFromId(KMailSettings::lastSearchCollectionId());
         // when the last folder got renamed, create a new one
         if (mFolder.isValid() && mFolder.name() != mUi.mSearchFolderEdt->text()) {
             mFolder = Akonadi::Collection();
@@ -207,8 +207,8 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
 
     connect(mUi.mSearchResultOpenBtn, &QPushButton::clicked, this, &SearchWindow::slotViewSelectedMsg);
 
-    const int mainWidth = GlobalSettings::self()->searchWidgetWidth();
-    const int mainHeight = GlobalSettings::self()->searchWidgetHeight();
+    const int mainWidth = KMailSettings::self()->searchWidgetWidth();
+    const int mainHeight = KMailSettings::self()->searchWidgetHeight();
 
     if (mainWidth || mainHeight) {
         resize(mainWidth, mainHeight);
@@ -254,7 +254,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     actionCollection()->addAction(QStringLiteral("search_message_forward_as_attachment"), mForwardAttachedAction);
     connect(mForwardAttachedAction, &QAction::triggered, this, &SearchWindow::slotForwardAttachedMsg);
 
-    if (GlobalSettings::self()->forwardingInlineByDefault()) {
+    if (KMailSettings::self()->forwardingInlineByDefault()) {
         mForwardActionMenu->addAction(mForwardInlineAction);
         mForwardActionMenu->addAction(mForwardAttachedAction);
     } else {
@@ -290,26 +290,26 @@ SearchWindow::~SearchWindow()
 {
     if (mResultModel) {
         if (mUi.mLbxMatches->columnWidth(0) > 0) {
-            GlobalSettings::self()->setCollectionWidth(mUi.mLbxMatches->columnWidth(0));
+            KMailSettings::self()->setCollectionWidth(mUi.mLbxMatches->columnWidth(0));
         }
         if (mUi.mLbxMatches->columnWidth(1) > 0) {
-            GlobalSettings::self()->setSubjectWidth(mUi.mLbxMatches->columnWidth(1));
+            KMailSettings::self()->setSubjectWidth(mUi.mLbxMatches->columnWidth(1));
         }
         if (mUi.mLbxMatches->columnWidth(2) > 0) {
-            GlobalSettings::self()->setSenderWidth(mUi.mLbxMatches->columnWidth(2));
+            KMailSettings::self()->setSenderWidth(mUi.mLbxMatches->columnWidth(2));
         }
         if (mUi.mLbxMatches->columnWidth(3) > 0) {
-            GlobalSettings::self()->setReceiverWidth(mUi.mLbxMatches->columnWidth(3));
+            KMailSettings::self()->setReceiverWidth(mUi.mLbxMatches->columnWidth(3));
         }
         if (mUi.mLbxMatches->columnWidth(4) > 0) {
-            GlobalSettings::self()->setDateWidth(mUi.mLbxMatches->columnWidth(4));
+            KMailSettings::self()->setDateWidth(mUi.mLbxMatches->columnWidth(4));
         }
         if (mUi.mLbxMatches->columnWidth(5) > 0) {
-            GlobalSettings::self()->setFolderWidth(mUi.mLbxMatches->columnWidth(5));
+            KMailSettings::self()->setFolderWidth(mUi.mLbxMatches->columnWidth(5));
         }
-        GlobalSettings::self()->setSearchWidgetWidth(width());
-        GlobalSettings::self()->setSearchWidgetHeight(height());
-        GlobalSettings::self()->requestSync();
+        KMailSettings::self()->setSearchWidgetWidth(width());
+        KMailSettings::self()->setSearchWidgetHeight(height());
+        KMailSettings::self()->requestSync();
         mResultModel->deleteLater();
     }
 }
@@ -325,12 +325,12 @@ void SearchWindow::createSearchModel()
     sortproxy->setSourceModel(mResultModel);
     mUi.mLbxMatches->setModel(sortproxy);
 
-    mUi.mLbxMatches->setColumnWidth(0, GlobalSettings::self()->collectionWidth());
-    mUi.mLbxMatches->setColumnWidth(1, GlobalSettings::self()->subjectWidth());
-    mUi.mLbxMatches->setColumnWidth(2, GlobalSettings::self()->senderWidth());
-    mUi.mLbxMatches->setColumnWidth(3, GlobalSettings::self()->receiverWidth());
-    mUi.mLbxMatches->setColumnWidth(4, GlobalSettings::self()->dateWidth());
-    mUi.mLbxMatches->setColumnWidth(5, GlobalSettings::self()->folderWidth());
+    mUi.mLbxMatches->setColumnWidth(0, KMailSettings::self()->collectionWidth());
+    mUi.mLbxMatches->setColumnWidth(1, KMailSettings::self()->subjectWidth());
+    mUi.mLbxMatches->setColumnWidth(2, KMailSettings::self()->senderWidth());
+    mUi.mLbxMatches->setColumnWidth(3, KMailSettings::self()->receiverWidth());
+    mUi.mLbxMatches->setColumnWidth(4, KMailSettings::self()->dateWidth());
+    mUi.mLbxMatches->setColumnWidth(5, KMailSettings::self()->folderWidth());
     mUi.mLbxMatches->setColumnHidden(6, true);
     mUi.mLbxMatches->setColumnHidden(7, true);
     mUi.mLbxMatches->header()->setSortIndicator(2, Qt::DescendingOrder);
@@ -551,9 +551,9 @@ void SearchWindow::searchDone(KJob *job)
         Q_ASSERT(mFolder.isValid());
         Q_ASSERT(mFolder.hasAttribute<Akonadi::PersistentSearchAttribute>());
 
-        GlobalSettings::setLastSearchCollectionId(mFolder.id());
-        GlobalSettings::self()->save();
-        GlobalSettings::self()->requestSync();
+        KMailSettings::setLastSearchCollectionId(mFolder.id());
+        KMailSettings::self()->save();
+        KMailSettings::self()->requestSync();
 
         // store the kmail specific serialization of the search in an attribute on
         // the server, for easy retrieval when editing it again

@@ -75,7 +75,7 @@ ComposerPage::ComposerPage(QWidget *parent)
     //
     mGeneralTab = new GeneralTab();
     addTab(mGeneralTab, i18nc("General settings for the composer.", "General"));
-    addConfig(GlobalSettings::self(), mGeneralTab);
+    addConfig(KMailSettings::self(), mGeneralTab);
 
     //
     // "Templates" tab:
@@ -94,7 +94,7 @@ ComposerPage::ComposerPage(QWidget *parent)
     //
     mSubjectTab = new SubjectTab();
     addTab(mSubjectTab, i18nc("Settings regarding the subject when composing a message.", "Subject"));
-    addConfig(GlobalSettings::self(), mSubjectTab);
+    addConfig(KMailSettings::self(), mSubjectTab);
 
     //
     // "Charset" tab:
@@ -321,7 +321,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoSave->setToolTip(helpText);
     mAutoSave->setWhatsThis(helpText);
 
-    QLabel *label = new QLabel(GlobalSettings::self()->autosaveIntervalItem()->label(), this);
+    QLabel *label = new QLabel(KMailSettings::self()->autosaveIntervalItem()->label(), this);
     label->setBuddy(mAutoSave);
 
     connect(mAutoSave, SIGNAL(valueChanged(int)),
@@ -362,7 +362,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     row = 0;
 
     // "Automatically request MDNs" checkbox
-    mAutoRequestMDNCheck = new QCheckBox(GlobalSettings::self()->requestMDNItem()->label(),
+    mAutoRequestMDNCheck = new QCheckBox(KMailSettings::self()->requestMDNItem()->label(),
                                          this);
 
     helpText = i18n("By default, request an MDN when starting to compose a message.\n"
@@ -393,7 +393,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientCheck = new QCheckBox(
         GlobalSettings::self()->tooManyRecipientsItem()->label(), this);
     mRecipientCheck->setObjectName(QStringLiteral("kcfg_TooManyRecipients"));
-    helpText = i18n(GlobalSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8());
+    helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8());
     mRecipientCheck->setWhatsThis(helpText);
     mRecipientCheck->setToolTip(i18n("Warn if too many recipients are specified"));
 
@@ -404,7 +404,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setValue(5/*init*/);
     mRecipientSpin->setObjectName(QStringLiteral("kcfg_RecipientThreshold"));
     mRecipientSpin->setEnabled(false);
-    helpText = i18n(GlobalSettings::self()->recipientThresholdItem()->whatsThis().toUtf8());
+    helpText = i18n(KMailSettings::self()->recipientThresholdItem()->whatsThis().toUtf8());
     mRecipientSpin->setWhatsThis(helpText);
     mRecipientSpin->setToolTip(i18n("Set the maximum number of recipients for the warning"));
 
@@ -553,20 +553,20 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 
     loadWidget(mReplyUsingHtml, TemplateParser::GlobalSettings::self()->replyUsingHtmlItem());
     loadWidget(mStripSignatureCheck, TemplateParser::GlobalSettings::self()->stripSignatureItem());
-    loadWidget(mAutoRequestMDNCheck, GlobalSettings::self()->requestMDNItem());
+    loadWidget(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     loadWidget(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
     loadWidget(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem());
     loadWidget(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
-    mAutoSave->setValue(GlobalSettings::self()->autosaveInterval());
+    mAutoSave->setValue(KMailSettings::self()->autosaveInterval());
     loadWidget(mShowRecentAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem());
     loadWidget(mShowBalooSearchAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem());
     mImprovePlainTextOfHtmlMessage->setChecked(MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessage());
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
-    mRecipientCheck->setChecked(GlobalSettings::self()->tooManyRecipients());
-    mRecipientSpin->setValue(GlobalSettings::self()->recipientThreshold());
-    if (GlobalSettings::self()->forwardingInlineByDefault()) {
+    mRecipientCheck->setChecked(KMailSettings::self()->tooManyRecipients());
+    mRecipientSpin->setValue(KMailSettings::self()->recipientThreshold());
+    if (KMailSettings::self()->forwardingInlineByDefault()) {
         mForwardTypeCombo->setCurrentIndex(0);
     } else {
         mForwardTypeCombo->setCurrentIndex(1);
@@ -586,21 +586,21 @@ void ComposerPage::GeneralTab::save()
 
     saveCheckBox(mReplyUsingHtml, TemplateParser::GlobalSettings::self()->replyUsingHtmlItem());
     saveCheckBox(mStripSignatureCheck, TemplateParser::GlobalSettings::self()->stripSignatureItem());
-    saveCheckBox(mAutoRequestMDNCheck, GlobalSettings::self()->requestMDNItem());
+    saveCheckBox(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
     MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
         mAutoAppSignFileCheck->isChecked() ? QStringLiteral("auto") : QStringLiteral("manual"));
     saveSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem());
     saveSpinBox(mMaximumRecipients,  MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
-    GlobalSettings::self()->setAutosaveInterval(mAutoSave->value());
+    KMailSettings::self()->setAutosaveInterval(mAutoSave->value());
     MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer(mShowRecentAddressesInComposer->isChecked());
     MessageComposer::MessageComposerSettings::self()->setShowBalooSearchInComposer(mShowBalooSearchAddressesInComposer->isChecked());
     MessageComposer::MessageComposerSettings::self()->setImprovePlainTextOfHtmlMessage(mImprovePlainTextOfHtmlMessage->isChecked());
 #ifdef KDEPIM_ENTERPRISE_BUILD
-    GlobalSettings::self()->setTooManyRecipients(mRecipientCheck->isChecked());
-    GlobalSettings::self()->setRecipientThreshold(mRecipientSpin->value());
-    GlobalSettings::self()->setForwardingInlineByDefault(mForwardTypeCombo->currentIndex() == 0);
+    KMailSettings::self()->setTooManyRecipients(mRecipientCheck->isChecked());
+    KMailSettings::self()->setRecipientThreshold(mRecipientSpin->value());
+    KMailSettings::self()->setForwardingInlineByDefault(mForwardTypeCombo->currentIndex() == 0);
 #endif
 
     RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->setMaxCount(mMaximumRecentAddress->value());
@@ -640,7 +640,7 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
     QVBoxLayout *layout = new QVBoxLayout(this);
 
     mExternalEditorCheck = new QCheckBox(
-        GlobalSettings::self()->useExternalEditorItem()->label(), this);
+        KMailSettings::self()->useExternalEditorItem()->label(), this);
     mExternalEditorCheck->setObjectName(QStringLiteral("kcfg_UseExternalEditor"));
     connect(mExternalEditorCheck, &QAbstractButton::toggled,
             this, &ConfigModuleTab::slotEmitChanged);
@@ -648,7 +648,7 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
     QWidget *hbox = new QWidget(this);
     QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
     hboxHBoxLayout->setMargin(0);
-    QLabel *label = new QLabel(GlobalSettings::self()->externalEditorItem()->label(),
+    QLabel *label = new QLabel(KMailSettings::self()->externalEditorItem()->label(),
                                hbox);
     mEditorRequester = new KUrlRequester(hbox);
     hboxHBoxLayout->addWidget(mEditorRequester);
@@ -688,14 +688,14 @@ ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
 
 void ComposerPage::ExternalEditorTab::doLoadFromGlobalSettings()
 {
-    loadWidget(mExternalEditorCheck, GlobalSettings::self()->useExternalEditorItem());
-    loadWidget(mEditorRequester, GlobalSettings::self()->externalEditorItem());
+    loadWidget(mExternalEditorCheck, KMailSettings::self()->useExternalEditorItem());
+    loadWidget(mEditorRequester, KMailSettings::self()->externalEditorItem());
 }
 
 void ComposerPage::ExternalEditorTab::save()
 {
-    saveCheckBox(mExternalEditorCheck, GlobalSettings::self()->useExternalEditorItem());
-    saveUrlRequester(mEditorRequester, GlobalSettings::self()->externalEditorItem());
+    saveCheckBox(mExternalEditorCheck, KMailSettings::self()->useExternalEditorItem());
+    saveUrlRequester(mEditorRequester, KMailSettings::self()->externalEditorItem());
 }
 
 QString ComposerPage::TemplatesTab::helpAnchor() const
@@ -1160,7 +1160,7 @@ void ComposerPage::HeadersTab::doLoadOther()
 
     QTreeWidgetItem *item = Q_NULLPTR;
 
-    const int count = GlobalSettings::self()->customMessageHeadersCount();
+    const int count = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0 ; i < count ; ++i) {
         KConfigGroup config(KMKernel::self()->config(),
                             QLatin1String("Mime #") + QString::number(i));
@@ -1186,7 +1186,7 @@ void ComposerPage::HeadersTab::save()
     MessageComposer::MessageComposerSettings::self()->setUseCustomMessageIdSuffix(mCreateOwnMessageIdCheck->isChecked());
 
     //Clean config
-    const int oldHeadersCount = GlobalSettings::self()->customMessageHeadersCount();
+    const int oldHeadersCount = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < oldHeadersCount; ++i) {
         const QString groupMimeName = QStringLiteral("Mime #%1").arg(i);
         if (KMKernel::self()->config()->hasGroup(groupMimeName)) {
@@ -1207,7 +1207,7 @@ void ComposerPage::HeadersTab::save()
             numValidEntries++;
         }
     }
-    GlobalSettings::self()->setCustomMessageHeadersCount(numValidEntries);
+    KMailSettings::self()->setCustomMessageHeadersCount(numValidEntries);
 }
 
 void ComposerPage::HeadersTab::doResetToDefaultsOther()
@@ -1307,8 +1307,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
 void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 {
     loadWidget(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
-    loadWidget(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
-    loadWidget(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem());
+    loadWidget(mMissingAttachmentDetectionCheck, KMailSettings::self()->showForgottenAttachmentWarningItem());
+    loadWidget(mAttachWordsListEditor, KMailSettings::self()->attachmentKeywordsItem());
     const int maximumAttachmentSize(MessageCore::GlobalSettings::self()->maximumAttachmentSize());
     mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageCore::GlobalSettings::self()->maximumAttachmentSize() / 1024);
     mStorageServiceWidget->doLoadFromGlobalSettings();
@@ -1317,8 +1317,8 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
 void ComposerPage::AttachmentsTab::save()
 {
     saveCheckBox(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
-    saveCheckBox(mMissingAttachmentDetectionCheck, GlobalSettings::self()->showForgottenAttachmentWarningItem());
-    saveSimpleStringListEditor(mAttachWordsListEditor, GlobalSettings::self()->attachmentKeywordsItem());
+    saveCheckBox(mMissingAttachmentDetectionCheck, KMailSettings::self()->showForgottenAttachmentWarningItem());
+    saveSimpleStringListEditor(mAttachWordsListEditor, KMailSettings::self()->attachmentKeywordsItem());
 
     KMime::setUseOutlookAttachmentEncoding(mOutlookCompatibleCheck->isChecked());
     const int maximumAttachmentSize(mMaximumAttachmentSize->value());

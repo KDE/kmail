@@ -134,7 +134,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     l->setBuddy(mSendOnCheckCombo);
     glay->addWidget(l, 2, 0);
 
-    QString msg = i18n(GlobalSettings::self()->sendOnCheckItem()->whatsThis().toUtf8());
+    QString msg = i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8());
     l->setWhatsThis(msg);
     mSendOnCheckCombo->setWhatsThis(msg);
 
@@ -145,21 +145,21 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 
 void AccountsPage::SendingTab::doLoadFromGlobalSettings()
 {
-    mSendOnCheckCombo->setCurrentIndex(GlobalSettings::self()->sendOnCheck());
+    mSendOnCheckCombo->setCurrentIndex(KMailSettings::self()->sendOnCheck());
 }
 
 void AccountsPage::SendingTab::doLoadOther()
 {
     mSendMethodCombo->setCurrentIndex(MessageComposer::MessageComposerSettings::self()->sendImmediate() ? 0 : 1);
-    loadWidget(mConfirmSendCheck, GlobalSettings::self()->confirmBeforeSendItem());
-    loadWidget(mCheckSpellingBeforeSending, GlobalSettings::self()->checkSpellingBeforeSendItem());
+    loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
+    loadWidget(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
 }
 
 void AccountsPage::SendingTab::save()
 {
-    GlobalSettings::self()->setSendOnCheck(mSendOnCheckCombo->currentIndex());
-    saveCheckBox(mConfirmSendCheck, GlobalSettings::self()->confirmBeforeSendItem());
-    saveCheckBox(mCheckSpellingBeforeSending, GlobalSettings::self()->checkSpellingBeforeSendItem());
+    KMailSettings::self()->setSendOnCheck(mSendOnCheckCombo->currentIndex());
+    saveCheckBox(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
+    saveCheckBox(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
     MessageComposer::MessageComposerSettings::self()->setSendImmediate(mSendMethodCombo->currentIndex() == 0);
 }
 

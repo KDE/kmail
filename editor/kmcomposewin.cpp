@@ -351,7 +351,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mBtnDictionary = new QCheckBox(sticky, mHeadersArea);
     mBtnDictionary->setToolTip(i18n("Use the selected value as your dictionary for future messages"));
 
-    mShowHeaders = GlobalSettings::self()->headers();
+    mShowHeaders = KMailSettings::self()->headers();
     mDone = false;
     mGrid = Q_NULLPTR;
     mFixedFontAction = Q_NULLPTR;
@@ -365,7 +365,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     QWidget *editorAndCryptoStateIndicators = new QWidget(mSplitter);
     mCryptoStateIndicatorWidget = new CryptoStateIndicatorWidget;
-    mCryptoStateIndicatorWidget->setShowAlwaysIndicator(GlobalSettings::self()->showCryptoLabelIndicator());
+    mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setMargin(0);
@@ -395,18 +395,18 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     connect(editor, &KMComposerEditorNg::insertModeChanged, this, &KMComposeWin::slotOverwriteModeChanged);
     connect(editor, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposeWin::slotCheckSendNow);
     mSnippetWidget = new SnippetWidget(editor, actionCollection(), mSnippetSplitter);
-    mSnippetWidget->setVisible(GlobalSettings::self()->showSnippetManager());
+    mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
     mSnippetSplitter->setCollapsible(0, false);
     mSnippetSplitterCollapser = new KSplitterCollapserButton(mSnippetWidget, mSnippetSplitter);
-    mSnippetSplitterCollapser->setVisible(GlobalSettings::self()->showSnippetManager());
+    mSnippetSplitterCollapser->setVisible(KMailSettings::self()->showSnippetManager());
 
     mSplitter->setOpaqueResize(true);
 
-    mBtnIdentity->setWhatsThis(GlobalSettings::self()->stickyIdentityItem()->whatsThis());
-    mBtnFcc->setWhatsThis(GlobalSettings::self()->stickyFccItem()->whatsThis());
-    mBtnTransport->setWhatsThis(GlobalSettings::self()->stickyTransportItem()->whatsThis());
-    mBtnDictionary->setWhatsThis(GlobalSettings::self()->stickyDictionaryItem()->whatsThis());
+    mBtnIdentity->setWhatsThis(KMailSettings::self()->stickyIdentityItem()->whatsThis());
+    mBtnFcc->setWhatsThis(KMailSettings::self()->stickyFccItem()->whatsThis());
+    mBtnTransport->setWhatsThis(KMailSettings::self()->stickyTransportItem()->whatsThis());
+    mBtnDictionary->setWhatsThis(KMailSettings::self()->stickyDictionaryItem()->whatsThis());
 
     setWindowTitle(i18n("Composer"));
     setMinimumSize(200, 200);
@@ -438,7 +438,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposeWin::slotCheckSendNowStep2);
     v->addWidget(mPotentialPhishingEmailWarning);
 
-    if (GlobalSettings::self()->showForgottenAttachmentWarning()) {
+    if (KMailSettings::self()->showForgottenAttachmentWarning()) {
         m_verifyMissingAttachment = new QTimer(this);
         m_verifyMissingAttachment->setSingleShot(true);
         m_verifyMissingAttachment->setInterval(1000 * 5);
@@ -471,15 +471,15 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mMainWidget->resize(480, 510);
     setCentralWidget(mMainWidget);
 
-    if (GlobalSettings::self()->useHtmlMarkup()) {
+    if (KMailSettings::self()->useHtmlMarkup()) {
         enableHtml();
     } else {
         disableHtml(MessageComposer::ComposerViewBase::LetUserConfirm);
     }
 
-    if (GlobalSettings::self()->useExternalEditor()) {
+    if (KMailSettings::self()->useExternalEditor()) {
         editor->setUseExternalEditor(true);
-        editor->setExternalEditorPath(GlobalSettings::self()->externalEditor());
+        editor->setExternalEditorPath(KMailSettings::self()->externalEditor());
     }
 
     if (aMsg) {
@@ -578,25 +578,25 @@ void KMComposeWin::addAttachment(const QString &name,
 
 void KMComposeWin::readConfig(bool reload /* = false */)
 {
-    mBtnIdentity->setChecked(GlobalSettings::self()->stickyIdentity());
+    mBtnIdentity->setChecked(KMailSettings::self()->stickyIdentity());
     if (mBtnIdentity->isChecked()) {
-        mId = (GlobalSettings::self()->previousIdentity() != 0) ?
-              GlobalSettings::self()->previousIdentity() : mId;
+        mId = (KMailSettings::self()->previousIdentity() != 0) ?
+              KMailSettings::self()->previousIdentity() : mId;
     }
-    mBtnFcc->setChecked(GlobalSettings::self()->stickyFcc());
-    mBtnTransport->setChecked(GlobalSettings::self()->stickyTransport());
-    const int currentTransport = GlobalSettings::self()->currentTransport().isEmpty() ? -1 : GlobalSettings::self()->currentTransport().toInt();
-    mBtnDictionary->setChecked(GlobalSettings::self()->stickyDictionary());
+    mBtnFcc->setChecked(KMailSettings::self()->stickyFcc());
+    mBtnTransport->setChecked(KMailSettings::self()->stickyTransport());
+    const int currentTransport = KMailSettings::self()->currentTransport().isEmpty() ? -1 : KMailSettings::self()->currentTransport().toInt();
+    mBtnDictionary->setChecked(KMailSettings::self()->stickyDictionary());
 
-    mEdtFrom->setCompletionMode((KCompletion::CompletionMode)GlobalSettings::self()->completionMode());
-    mComposerBase->recipientsEditor()->setCompletionMode((KCompletion::CompletionMode)GlobalSettings::self()->completionMode());
-    mEdtReplyTo->setCompletionMode((KCompletion::CompletionMode)GlobalSettings::self()->completionMode());
+    mEdtFrom->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
+    mComposerBase->recipientsEditor()->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
+    mEdtReplyTo->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
 
     if (MessageCore::GlobalSettings::self()->useDefaultFonts()) {
         mBodyFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
         mFixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     } else {
-        mBodyFont = GlobalSettings::self()->composerFont();
+        mBodyFont = KMailSettings::self()->composerFont();
         mFixedFont = MessageViewer::GlobalSettings::self()->fixedFont();
     }
 
@@ -606,7 +606,7 @@ void KMComposeWin::readConfig(bool reload /* = false */)
     mEdtSubject->setFont(mBodyFont);
 
     if (!reload) {
-        QSize siz = GlobalSettings::self()->composerSize();
+        QSize siz = KMailSettings::self()->composerSize();
         if (siz.width() < 200) {
             siz.setWidth(200);
         }
@@ -615,8 +615,8 @@ void KMComposeWin::readConfig(bool reload /* = false */)
         }
         resize(siz);
 
-        if (!GlobalSettings::self()->snippetSplitterPosition().isEmpty()) {
-            mSnippetSplitter->setSizes(GlobalSettings::self()->snippetSplitterPosition());
+        if (!KMailSettings::self()->snippetSplitterPosition().isEmpty()) {
+            mSnippetSplitter->setSizes(KMailSettings::self()->snippetSplitterPosition());
         } else {
             QList<int> defaults;
             defaults << (int)(width() * 0.8) << (int)(width() * 0.2);
@@ -636,17 +636,17 @@ void KMComposeWin::readConfig(bool reload /* = false */)
         }
     }
 
-    mComposerBase->setAutoSaveInterval(GlobalSettings::self()->autosaveInterval() * 1000 * 60);
+    mComposerBase->setAutoSaveInterval(KMailSettings::self()->autosaveInterval() * 1000 * 60);
 
     if (mBtnDictionary->isChecked()) {
-        mComposerBase->dictionary()->setCurrentByDictionaryName(GlobalSettings::self()->previousDictionary());
+        mComposerBase->dictionary()->setCurrentByDictionaryName(KMailSettings::self()->previousDictionary());
     } else {
         mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     }
 
     QString fccName;
     if (mBtnFcc->isChecked()) {
-        fccName = GlobalSettings::self()->previousFcc();
+        fccName = KMailSettings::self()->previousFcc();
     } else if (!ident.fcc().isEmpty()) {
         fccName = ident.fcc();
     }
@@ -655,30 +655,30 @@ void KMComposeWin::readConfig(bool reload /* = false */)
 
 void KMComposeWin::writeConfig(void)
 {
-    GlobalSettings::self()->setHeaders(mShowHeaders);
-    GlobalSettings::self()->setStickyFcc(mBtnFcc->isChecked());
+    KMailSettings::self()->setHeaders(mShowHeaders);
+    KMailSettings::self()->setStickyFcc(mBtnFcc->isChecked());
     if (!mIgnoreStickyFields) {
-        GlobalSettings::self()->setCurrentTransport(mComposerBase->transportComboBox()->currentText());
-        GlobalSettings::self()->setStickyTransport(mBtnTransport->isChecked());
-        GlobalSettings::self()->setStickyDictionary(mBtnDictionary->isChecked());
-        GlobalSettings::self()->setStickyIdentity(mBtnIdentity->isChecked());
-        GlobalSettings::self()->setPreviousIdentity(mComposerBase->identityCombo()->currentIdentity());
+        KMailSettings::self()->setCurrentTransport(mComposerBase->transportComboBox()->currentText());
+        KMailSettings::self()->setStickyTransport(mBtnTransport->isChecked());
+        KMailSettings::self()->setStickyDictionary(mBtnDictionary->isChecked());
+        KMailSettings::self()->setStickyIdentity(mBtnIdentity->isChecked());
+        KMailSettings::self()->setPreviousIdentity(mComposerBase->identityCombo()->currentIdentity());
     }
-    GlobalSettings::self()->setPreviousFcc(QString::number(mFccFolder->collection().id()));
-    GlobalSettings::self()->setPreviousDictionary(mComposerBase->dictionary()->currentDictionaryName());
-    GlobalSettings::self()->setAutoSpellChecking(
+    KMailSettings::self()->setPreviousFcc(QString::number(mFccFolder->collection().id()));
+    KMailSettings::self()->setPreviousDictionary(mComposerBase->dictionary()->currentDictionaryName());
+    KMailSettings::self()->setAutoSpellChecking(
         mAutoSpellCheckingAction->isChecked());
     MessageViewer::GlobalSettings::self()->setUseFixedFont(mFixedFontAction->isChecked());
     if (!mForceDisableHtml) {
-        GlobalSettings::self()->setUseHtmlMarkup(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich);
+        KMailSettings::self()->setUseHtmlMarkup(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich);
     }
-    GlobalSettings::self()->setComposerSize(size());
-    GlobalSettings::self()->setShowSnippetManager(mSnippetAction->isChecked());
+    KMailSettings::self()->setComposerSize(size());
+    KMailSettings::self()->setShowSnippetManager(mSnippetAction->isChecked());
 
     KConfigGroup grp(KMKernel::self()->config()->group("Composer"));
     saveMainWindowSettings(grp);
     if (mSnippetAction->isChecked()) {
-        GlobalSettings::setSnippetSplitterPosition(mSnippetSplitter->sizes());
+        KMailSettings::setSnippetSplitterPosition(mSnippetSplitter->sizes());
     }
 
     // make sure config changes are written to disk, cf. bug 127538
@@ -1240,7 +1240,7 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("urgent"), mUrgentAction);
     mRequestMDNAction = new KToggleAction(i18n("&Request Disposition Notification"), this);
     actionCollection()->addAction(QStringLiteral("options_request_mdn"), mRequestMDNAction);
-    mRequestMDNAction->setChecked(GlobalSettings::self()->requestMDN());
+    mRequestMDNAction->setChecked(KMailSettings::self()->requestMDN());
     //----- Message-Encoding Submenu
     mCodecAction = new CodecAction(CodecAction::ComposerMode, this);
     actionCollection()->addAction(QStringLiteral("charsets"), mCodecAction);
@@ -1252,14 +1252,14 @@ void KMComposeWin::setupActions(void)
     mSnippetAction = new KToggleAction(i18n("&Snippets"), this);
     actionCollection()->addAction(QStringLiteral("snippets"), mSnippetAction);
     connect(mSnippetAction, &KToggleAction::toggled, this, &KMComposeWin::slotSnippetWidgetVisibilityChanged);
-    mSnippetAction->setChecked(GlobalSettings::self()->showSnippetManager());
+    mSnippetAction->setChecked(KMailSettings::self()->showSnippetManager());
 
     mAutoSpellCheckingAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("tools-check-spelling")),
             i18n("&Automatic Spellchecking"),
             this);
     actionCollection()->addAction(QStringLiteral("options_auto_spellchecking"), mAutoSpellCheckingAction);
-    const bool spellChecking = GlobalSettings::self()->autoSpellChecking();
-    const bool useKmailEditor = !GlobalSettings::self()->useExternalEditor();
+    const bool spellChecking = KMailSettings::self()->autoSpellChecking();
+    const bool useKmailEditor = !KMailSettings::self()->useExternalEditor();
     const bool spellCheckingEnabled = useKmailEditor && spellChecking;
     mAutoSpellCheckingAction->setEnabled(useKmailEditor);
 
@@ -1620,7 +1620,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
         QString mdnAddr = hdr->asUnicodeString();
         mRequestMDNAction->setChecked((!mdnAddr.isEmpty() &&
                                        im->thatIsMe(mdnAddr)) ||
-                                      GlobalSettings::self()->requestMDN());
+                                      KMailSettings::self()->requestMDN());
     }
     // check for presence of a priority header, indicating urgent mail:
     if (newMsg->headerByType("X-PRIORITY") && newMsg->headerByType("Priority")) {
@@ -1886,14 +1886,14 @@ bool KMComposeWin::queryClose()
 
 MessageComposer::ComposerViewBase::MissingAttachment KMComposeWin::userForgotAttachment()
 {
-    bool checkForForgottenAttachments = mCheckForForgottenAttachments && GlobalSettings::self()->showForgottenAttachmentWarning();
+    bool checkForForgottenAttachments = mCheckForForgottenAttachments && KMailSettings::self()->showForgottenAttachmentWarning();
 
     if (!checkForForgottenAttachments) {
         return MessageComposer::ComposerViewBase::NoMissingAttachmentFound;
     }
 
     mComposerBase->setSubject(subject());   //be sure the composer knows the subject
-    MessageComposer::ComposerViewBase::MissingAttachment missingAttachments = mComposerBase->checkForMissingAttachments(GlobalSettings::self()->attachmentKeywords());
+    MessageComposer::ComposerViewBase::MissingAttachment missingAttachments = mComposerBase->checkForMissingAttachments(KMailSettings::self()->attachmentKeywords());
 
     return missingAttachments;
 }
@@ -1976,8 +1976,8 @@ void KMComposeWin::slotInsertFile()
     {
         QUrlQuery query;
         const QString encoding = MessageViewer::NodeHelper::encodingForName(query.queryItemValue(QStringLiteral("charset")));
-        QStringList urls = GlobalSettings::self()->recentUrls();
-        QStringList encodings = GlobalSettings::self()->recentEncodings();
+        QStringList urls = KMailSettings::self()->recentUrls();
+        QStringList encodings = KMailSettings::self()->recentEncodings();
         // Prevent config file from growing without bound
         // Would be nicer to get this constant from KRecentFilesAction
         const int mMaxRecentFiles = 30;
@@ -1994,8 +1994,8 @@ void KMComposeWin::slotInsertFile()
         }
         urls.prepend(u.toDisplayString());
         encodings.prepend(encoding);
-        GlobalSettings::self()->setRecentUrls(urls);
-        GlobalSettings::self()->setRecentEncodings(encodings);
+        KMailSettings::self()->setRecentUrls(urls);
+        KMailSettings::self()->setRecentEncodings(encodings);
         mRecentAction->saveEntries(KMKernel::self()->config()->group(QString()));
     }
     slotInsertRecentFile(u);
@@ -2017,8 +2017,8 @@ void KMComposeWin::slotInsertRecentFile(const QUrl &u)
 
     // Get the encoding previously used when inserting this file
     QString encoding;
-    const QStringList urls = GlobalSettings::self()->recentUrls();
-    const QStringList encodings = GlobalSettings::self()->recentEncodings();
+    const QStringList urls = KMailSettings::self()->recentUrls();
+    const QStringList encodings = KMailSettings::self()->recentEncodings();
     const int index = urls.indexOf(u.toDisplayString());
     if (index != -1) {
         encoding = encodings[ index ];
@@ -2606,7 +2606,7 @@ void KMComposeWin::doSend(MessageComposer::MessageSender::SendMethod method,
         // we'll call send from within slotDoDelaySend
     } else {
         if (saveIn == MessageComposer::MessageSender::SaveInDrafts && mEncryptAction->isChecked() &&
-                !GlobalSettings::self()->neverEncryptDrafts() &&
+                !KMailSettings::self()->neverEncryptDrafts() &&
                 mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty()) {
 
             KMessageBox::information(this, i18n("You must specify at least one receiver "
@@ -2669,10 +2669,10 @@ void KMComposeWin::doDelayedSend(MessageComposer::MessageSender::SendMethod meth
     bool encrypt = mEncryptAction->isChecked();
 
     mComposerBase->setCryptoOptions(sign, encrypt, cryptoMessageFormat(),
-                                    ((saveIn != MessageComposer::MessageSender::SaveInNone && GlobalSettings::self()->neverEncryptDrafts())
+                                    ((saveIn != MessageComposer::MessageSender::SaveInNone && KMailSettings::self()->neverEncryptDrafts())
                                      || mSigningAndEncryptionExplicitlyDisabled));
 
-    const int num = GlobalSettings::self()->customMessageHeadersCount();
+    const int num = KMailSettings::self()->customMessageHeadersCount();
     QMap<QByteArray, QString> customHeader;
     for (int ix = 0; ix < num; ++ix) {
         CustomMimeHeader customMimeHeader(QString::number(ix));
@@ -2778,7 +2778,7 @@ void KMComposeWin::sendNow(bool shortcutUsed)
         return;
     }
     mSendNowByShortcutUsed = shortcutUsed;
-    if (GlobalSettings::self()->checkSpellingBeforeSend()) {
+    if (KMailSettings::self()->checkSpellingBeforeSend()) {
         mComposerBase->editor()->forceSpellChecking();
     } else {
         slotCheckSendNow();
@@ -2812,17 +2812,17 @@ void KMComposeWin::confirmBeforeSend()
 
 void KMComposeWin::slotCheckSendNowStep2()
 {
-    if (GlobalSettings::self()->confirmBeforeSend()) {
+    if (KMailSettings::self()->confirmBeforeSend()) {
         confirmBeforeSend();
     } else {
         if (mSendNowByShortcutUsed) {
-            if (!GlobalSettings::self()->checkSendDefaultActionShortcut()) {
+            if (!KMailSettings::self()->checkSendDefaultActionShortcut()) {
                 ValidateSendMailShortcut validateShortcut(actionCollection(), this);
                 if (!validateShortcut.validate()) {
                     return;
                 }
             }
-            if (GlobalSettings::self()->confirmBeforeSendWhenUseShortcut()) {
+            if (KMailSettings::self()->confirmBeforeSendWhenUseShortcut()) {
                 confirmBeforeSend();
                 return;
             }
@@ -2861,8 +2861,8 @@ void KMComposeWin::slotPotentialPhishingEmailsFound(const QStringList &list)
 
 bool KMComposeWin::checkRecipientNumber() const
 {
-    const int thresHold = GlobalSettings::self()->recipientThreshold();
-    if (GlobalSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold) {
+    const int thresHold = KMailSettings::self()->recipientThreshold();
+    if (KMailSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold) {
         if (KMessageBox::questionYesNo(mMainWidget,
                                        i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
                                        i18n("Too many recipients"),
@@ -3158,7 +3158,7 @@ void KMComposeWin::setFocusToSubject()
 
 void KMComposeWin::slotCompletionModeChanged(KCompletion::CompletionMode mode)
 {
-    GlobalSettings::self()->setCompletionMode((int) mode);
+    KMailSettings::self()->setCompletionMode((int) mode);
 
     // sync all the lineedits to the same completion mode
     mEdtFrom->setCompletionMode(mode);
@@ -3282,7 +3282,7 @@ void KMComposeWin::slotAttachMissingFile()
 
 void KMComposeWin::slotVerifyMissingAttachmentTimeout()
 {
-    if (mComposerBase->hasMissingAttachments(GlobalSettings::self()->attachmentKeywords())) {
+    if (mComposerBase->hasMissingAttachments(KMailSettings::self()->attachmentKeywords())) {
         mAttachmentMissing->animatedShow();
     }
 }

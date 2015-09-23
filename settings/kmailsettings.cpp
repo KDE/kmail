@@ -24,38 +24,38 @@
 #include "settings/kmailsettings.h"
 #include <QTimer>
 
-GlobalSettings *GlobalSettings::mSelf = Q_NULLPTR;
+KMailSettings *KMailSettings::mSelf = Q_NULLPTR;
 
-GlobalSettings *GlobalSettings::self()
+KMailSettings *KMailSettings::self()
 {
     if (!mSelf) {
-        mSelf = new GlobalSettings();
+        mSelf = new KMailSettings();
         mSelf->load();
     }
 
     return mSelf;
 }
 
-GlobalSettings::GlobalSettings()
+KMailSettings::KMailSettings()
 {
     mConfigSyncTimer = new QTimer(this);
     mConfigSyncTimer->setSingleShot(true);
-    connect(mConfigSyncTimer, &QTimer::timeout, this, &GlobalSettings::slotSyncNow);
+    connect(mConfigSyncTimer, &QTimer::timeout, this, &KMailSettings::slotSyncNow);
 }
 
-void GlobalSettings::requestSync()
+void KMailSettings::requestSync()
 {
     if (!mConfigSyncTimer->isActive()) {
         mConfigSyncTimer->start(0);
     }
 }
 
-void GlobalSettings::slotSyncNow()
+void KMailSettings::slotSyncNow()
 {
     config()->sync();
 }
 
-GlobalSettings::~GlobalSettings()
+KMailSettings::~KMailSettings()
 {
 }
 

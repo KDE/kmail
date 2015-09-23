@@ -529,7 +529,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void configChanged();
-    void onlineStatusChanged(GlobalSettings::EnumNetworkState::type);
+    void onlineStatusChanged(KMailSettings::EnumNetworkState::type);
     void customTemplatesChanged();
 
     void startCheckMail();

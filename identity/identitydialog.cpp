@@ -570,7 +570,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mTabWidget->addTab(mXFaceConfigurator, i18n("Picture"));
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-    resize(GlobalSettings::self()->identityDialogSize());
+    resize(KMailSettings::self()->identityDialogSize());
 #endif
     mNameEdit->setFocus();
 
@@ -580,7 +580,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 IdentityDialog::~IdentityDialog()
 {
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
-    GlobalSettings::self()->setIdentityDialogSize(size());
+    KMailSettings::self()->setIdentityDialogSize(size());
 #endif
 }
 
