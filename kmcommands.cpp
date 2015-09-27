@@ -1172,9 +1172,11 @@ KMCommand::Result KMPrintCommand::execute()
     KMReaderWin *printerWin = new KMReaderWin(Q_NULLPTR, kmkernel->mainWin(), Q_NULLPTR, Q_NULLPTR);
     printerWin->setPrinting(true);
     printerWin->readConfig();
+#if 0 //TODO PORT_PLUGIN
     if (mHeaderStyle != Q_NULLPTR && mHeaderStrategy != Q_NULLPTR) {
         printerWin->setHeaderStyleAndStrategy(mHeaderStyle, mHeaderStrategy);
     }
+#endif
     printerWin->setDisplayFormatMessageOverwrite(mFormat);
     printerWin->setHtmlLoadExtOverride(mHtmlLoadExtOverride);
     printerWin->setUseFixedFont(mUseFixedFont);

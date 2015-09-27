@@ -258,11 +258,6 @@ void KMReaderWin::setAttachmentStrategy(const AttachmentStrategy *strategy)
     mViewer->setAttachmentStrategy(strategy);
 }
 
-void KMReaderWin::setHeaderStyleAndStrategy(HeaderStyle *style,
-        HeaderStrategy *strategy)
-{
-    mViewer->setHeaderStyleAndStrategy(style, strategy);
-}
 void KMReaderWin::setOverrideEncoding(const QString &encoding)
 {
     mViewer->setOverrideEncoding(encoding);
@@ -601,16 +596,6 @@ QAction *KMReaderWin::selectAllAction() const
     return mViewer->selectAllAction();
 }
 
-const HeaderStrategy *KMReaderWin::headerStrategy() const
-{
-    return mViewer->headerStrategy();
-}
-
-HeaderStyle *KMReaderWin::headerStyle() const
-{
-    return mViewer->headerStyle();
-}
-
 QAction *KMReaderWin::copyURLAction() const
 {
     return mViewer->copyURLAction();
@@ -753,6 +738,7 @@ bool KMReaderWin::printSelectedText(bool preview)
 
 void KMReaderWin::slotPrintComposeResult(KJob *job)
 {
+#if 0 //TODO PORT_PLUGIN
     const bool preview = job->property("preview").toBool();
     Q_ASSERT(dynamic_cast< ::MessageComposer::Composer * >(job));
 
@@ -777,7 +763,7 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
             qCWarning(KMAIL_LOG) << "Composer for printing failed:" << composer->errorString();
         }
     }
-
+#endif
 }
 
 void KMReaderWin::clearContactItem()

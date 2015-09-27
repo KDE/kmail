@@ -33,8 +33,6 @@ class KToggleAction;
 class QMenu;
 namespace MessageViewer
 {
-class HeaderStrategy;
-class HeaderStyle;
 class CSSHelper;
 class AttachmentStrategy;
 }
@@ -57,15 +55,6 @@ public:
 
     /** Read settings from app's config file. */
     void readConfig();
-
-    MessageViewer::HeaderStyle *headerStyle() const;
-
-    /** Set the header style and strategy. We only want them to be set
-      together. */
-    void setHeaderStyleAndStrategy(MessageViewer::HeaderStyle *style,
-                                   MessageViewer::HeaderStrategy *strategy);
-    /** Getthe message header strategy. */
-    const MessageViewer::HeaderStrategy *headerStrategy() const;
 
     /** Get/set the message attachment strategy. */
     const MessageViewer::AttachmentStrategy *attachmentStrategy() const;

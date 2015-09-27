@@ -505,6 +505,7 @@ void MessageActions::slotMailingListFilter()
 
 void MessageActions::printMessage(bool preview)
 {
+#if 0 //TODO PORT_PLUGIN
     bool result = false;
     if (mMessageView) {
         if (MessageViewer::GlobalSettings::self()->printSelectedText()) {
@@ -524,6 +525,7 @@ void MessageActions::printMessage(bool preview)
         command->setPrintPreview(preview);
         command->start();
     }
+#endif
 }
 
 void MessageActions::slotPrintPreviewMsg()
