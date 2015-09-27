@@ -34,6 +34,7 @@
 #include "messagecore/messagehelpers.h"
 #include "MessageViewer/CSSHelper"
 #include "messageviewer/messageviewersettings.h"
+#include "messageviewer/headerstyleplugin.h"
 
 #include <AkonadiCore/itemfetchjob.h>
 #include <Akonadi/KMime/MessageParts>
@@ -505,7 +506,6 @@ void MessageActions::slotMailingListFilter()
 
 void MessageActions::printMessage(bool preview)
 {
-#if 0 //TODO PORT_PLUGIN
     bool result = false;
     if (mMessageView) {
         if (MessageViewer::GlobalSettings::self()->printSelectedText()) {
@@ -519,13 +519,12 @@ void MessageActions::printMessage(bool preview)
         const Akonadi::Item message = mCurrentItem;
         KMPrintCommand *command =
             new KMPrintCommand(mParent, message,
-                               mMessageView->viewer()->headerStyle(), mMessageView->viewer()->headerStrategy(),
+                               mMessageView->viewer()->headerStylePlugin()->headerStyle(), mMessageView->viewer()->headerStylePlugin()->headerStrategy(),
                                mMessageView->viewer()->displayFormatMessageOverwrite(), mMessageView->viewer()->htmlLoadExternal(),
                                useFixedFont, overrideEncoding);
         command->setPrintPreview(preview);
         command->start();
     }
-#endif
 }
 
 void MessageActions::slotPrintPreviewMsg()

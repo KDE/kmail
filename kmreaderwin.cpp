@@ -40,6 +40,7 @@
 #include <QVBoxLayout>
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/headerstyle.h"
+#include "messageviewer/headerstyleplugin.h"
 #include "messageviewer/mailwebview.h"
 #include "messageviewer/markmessagereadhandler.h"
 #include "messageviewer/messageviewersettings.h"
@@ -738,7 +739,6 @@ bool KMReaderWin::printSelectedText(bool preview)
 
 void KMReaderWin::slotPrintComposeResult(KJob *job)
 {
-#if 0 //TODO PORT_PLUGIN
     const bool preview = job->property("preview").toBool();
     Q_ASSERT(dynamic_cast< ::MessageComposer::Composer * >(job));
 
@@ -752,7 +752,7 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
         const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
-        KMPrintCommand *command = new KMPrintCommand(this, printItem, mViewer->headerStyle(), mViewer->headerStrategy()
+        KMPrintCommand *command = new KMPrintCommand(this, printItem, mViewer->headerStylePlugin()->headerStyle(), mViewer->headerStylePlugin()->headerStrategy()
                 , mViewer->displayFormatMessageOverwrite(), mViewer->htmlLoadExternal() , useFixedFont, overrideEncoding);
         command->setPrintPreview(preview);
         command->start();
@@ -763,7 +763,6 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
             qCWarning(KMAIL_LOG) << "Composer for printing failed:" << composer->errorString();
         }
     }
-#endif
 }
 
 void KMReaderWin::clearContactItem()
