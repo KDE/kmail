@@ -39,8 +39,6 @@
 #include "MailCommon/SendMdnHandler"
 #include <QVBoxLayout>
 #include "messageviewer/headerstrategy.h"
-#include "messageviewer/headerstyle.h"
-#include "messageviewer/headerstyleplugin.h"
 #include "messageviewer/mailwebview.h"
 #include "messageviewer/markmessagereadhandler.h"
 #include "messageviewer/messageviewersettings.h"

@@ -86,8 +86,6 @@
 #include "MessageViewer/ObjectTreeParser"
 #include "MessageViewer/CSSHelper"
 #include "messagecomposer/util.h"
-#include "messageviewer/headerstrategy.h"
-#include "messageviewer/headerstyle.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
