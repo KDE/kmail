@@ -387,8 +387,7 @@ class  KMPrintCommand : public KMCommand
 
 public:
     KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
-                   MessageViewer::HeaderStyle *headerStyle = Q_NULLPTR,
-                   MessageViewer::HeaderStrategy *headerStrategy = Q_NULLPTR,
+                   MessageViewer::HeaderStylePlugin *plugin = Q_NULLPTR,
                    MessageViewer::Viewer::DisplayFormatMessage format = MessageViewer::Viewer::UseGlobalSetting,
                    bool htmlLoadExtOverride = false,
                    bool useFixedFont = false,
@@ -401,8 +400,7 @@ public:
 private:
     Result execute() Q_DECL_OVERRIDE;
 
-    MessageViewer::HeaderStyle *mHeaderStyle;
-    MessageViewer::HeaderStrategy *mHeaderStrategy;
+    MessageViewer::HeaderStylePlugin *mHeaderStylePlugin;
     const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
     QFont mOverrideFont;
     QString mEncoding;

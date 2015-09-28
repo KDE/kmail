@@ -46,6 +46,7 @@
 #include "widgets/collectionpane.h"
 #include "mailcommon/mailkernel.h"
 #include "mailcommon/mailutil.h"
+#include "messageviewer/headerstyleplugin.h"
 
 #include <unistd.h> // link()
 #include <QProgressDialog>
@@ -1130,12 +1131,11 @@ KMCommand::Result KMRedirectCommand::execute()
 }
 
 KMPrintCommand::KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
-                               MessageViewer::HeaderStyle *headerStyle,
-                               MessageViewer::HeaderStrategy *headerStrategy,
+                               MessageViewer::HeaderStylePlugin *plugin,
                                MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride,
                                bool useFixedFont, const QString &encoding)
     : KMCommand(parent, msg),
-      mHeaderStyle(headerStyle), mHeaderStrategy(headerStrategy),
+      mHeaderStylePlugin(plugin),
       mAttachmentStrategy(Q_NULLPTR),
       mEncoding(encoding),
       mFormat(format),
@@ -1172,11 +1172,9 @@ KMCommand::Result KMPrintCommand::execute()
     KMReaderWin *printerWin = new KMReaderWin(Q_NULLPTR, kmkernel->mainWin(), Q_NULLPTR, Q_NULLPTR);
     printerWin->setPrinting(true);
     printerWin->readConfig();
-#if 0 //TODO PORT_PLUGIN
-    if (mHeaderStyle != Q_NULLPTR && mHeaderStrategy != Q_NULLPTR) {
-        printerWin->setHeaderStyleAndStrategy(mHeaderStyle, mHeaderStrategy);
+    if (mHeaderStylePlugin) {
+        printerWin->viewer()->setPluginName(mHeaderStylePlugin->name());
     }
-#endif
     printerWin->setDisplayFormatMessageOverwrite(mFormat);
     printerWin->setHtmlLoadExtOverride(mHtmlLoadExtOverride);
     printerWin->setUseFixedFont(mUseFixedFont);

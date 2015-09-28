@@ -519,7 +519,7 @@ void MessageActions::printMessage(bool preview)
         const Akonadi::Item message = mCurrentItem;
         KMPrintCommand *command =
             new KMPrintCommand(mParent, message,
-                               mMessageView->viewer()->headerStylePlugin()->headerStyle(), mMessageView->viewer()->headerStylePlugin()->headerStrategy(),
+                               mMessageView->viewer()->headerStylePlugin(),
                                mMessageView->viewer()->displayFormatMessageOverwrite(), mMessageView->viewer()->htmlLoadExternal(),
                                useFixedFont, overrideEncoding);
         command->setPrintPreview(preview);

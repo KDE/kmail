@@ -752,8 +752,8 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
         const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
-        KMPrintCommand *command = new KMPrintCommand(this, printItem, mViewer->headerStylePlugin()->headerStyle(), mViewer->headerStylePlugin()->headerStrategy()
-                , mViewer->displayFormatMessageOverwrite(), mViewer->htmlLoadExternal() , useFixedFont, overrideEncoding);
+        KMPrintCommand *command = new KMPrintCommand(this, printItem, mViewer->headerStylePlugin(),
+                mViewer->displayFormatMessageOverwrite(), mViewer->htmlLoadExternal() , useFixedFont, overrideEncoding);
         command->setPrintPreview(preview);
         command->start();
     } else {

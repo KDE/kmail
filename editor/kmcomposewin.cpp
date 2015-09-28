@@ -2506,7 +2506,7 @@ void KMComposeWin::printComposeResult(KJob *job, bool preview)
         const bool isHtml = mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
         KMPrintCommand *command = new KMPrintCommand(this, printItem, Q_NULLPTR,
-                Q_NULLPTR, format, isHtml);
+                format, isHtml);
         command->setPrintPreview(preview);
         command->start();
     } else {
