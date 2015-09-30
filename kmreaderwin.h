@@ -209,6 +209,9 @@ public:
 
     bool mimePartTreeIsEmpty() const;
     KActionMenu *shareServiceUrlMenu() const;
+
+    QList<QAction *> viewerPluginActionList(bool needValidMessage = false);
+
 Q_SIGNALS:
     /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */

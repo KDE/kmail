@@ -590,6 +590,11 @@ KActionMenu *KMReaderWin::shareServiceUrlMenu() const
     return mViewer->shareServiceUrlMenu();
 }
 
+QList<QAction *> KMReaderWin::viewerPluginActionList(bool needValidMessage)
+{
+    return mViewer->viewerPluginActionList(needValidMessage);
+}
+
 QAction *KMReaderWin::selectAllAction() const
 {
     return mViewer->selectAllAction();
