@@ -159,7 +159,6 @@ public:
     }
     QAction *toggleMimePartTreeAction() const;
     QAction *speakTextAction() const;
-    QAction *translateAction() const;
     QAction *downloadImageToDiskAction() const;
     QAction *viewSourceAction() const;
     QAction *findInMessageAction() const;
@@ -169,9 +168,6 @@ public:
     QAction *blockImage() const;
     QAction *openBlockableItems() const;
     QAction *expandShortUrlAction() const;
-    QAction *createTodoAction() const;
-    QAction *createEventAction() const;
-    QAction *createNoteAction() const;
 
     QAction *editContactAction() const
     {

@@ -644,11 +644,6 @@ QAction *KMReaderWin::downloadImageToDiskAction() const
     return mImageUrlSaveAsAction;
 }
 
-QAction *KMReaderWin::translateAction() const
-{
-    return mViewer->translateAction();
-}
-
 void KMReaderWin::clear(bool force)
 {
     mViewer->clear(force ? Viewer::Force : Viewer::Delayed);
@@ -875,19 +870,4 @@ bool KMReaderWin::isAShortUrl(const QUrl &url) const
 QAction *KMReaderWin::expandShortUrlAction() const
 {
     return mViewer->expandShortUrlAction();
-}
-
-QAction *KMReaderWin::createTodoAction() const
-{
-    return mViewer->createTodoAction();
-}
-
-QAction *KMReaderWin::createEventAction() const
-{
-    return mViewer->createEventAction();
-}
-
-QAction *KMReaderWin::createNoteAction() const
-{
-    return mViewer->createNoteAction();
 }

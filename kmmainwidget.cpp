@@ -2730,7 +2730,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, 
         menu->addSeparator();
         mMsgActions->addWebShortcutsMenu(menu, selectedText);
         menu->addSeparator();
-        menu->addAction(mMsgView->translateAction());
+        //menu->addAction(mMsgView->translateAction());
         if (PimCommon::TextToSpeech::self()->isReady()) {
             menu->addSeparator();
             menu->addAction(mMsgView->speakTextAction());
@@ -2796,9 +2796,9 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, 
         menu->addSeparator();
 
         if (mMsgView) {
-            menu->addAction(mMsgView->createTodoAction());
-            menu->addAction(mMsgView->createEventAction());
-            menu->addAction(mMsgView->createNoteAction());
+            //menu->addAction(mMsgView->createTodoAction());
+            //menu->addAction(mMsgView->createEventAction());
+            //menu->addAction(mMsgView->createNoteAction());
             menu->addSeparator();
             menu->addAction(mMsgView->saveMessageDisplayFormatAction());
             menu->addAction(mMsgView->resetMessageDisplayFormatAction());
