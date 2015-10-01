@@ -120,10 +120,7 @@ public:
 public Q_SLOTS:
 
     Q_SCRIPTABLE void checkMail();
-    Q_SCRIPTABLE void openReader()
-    {
-        openReader(false);
-    }
+    Q_SCRIPTABLE void openReader();
 
     /**
     * Enables/disables systray icon changing when mail arrives.
@@ -388,19 +385,10 @@ public:
     //sets online status for akonadi accounts. true for online, false for offline
     void setAccountStatus(bool);
 
-    const QString xmlGuiInstanceName() const
-    {
-        return mXmlGuiInstance;
-    }
-    void setXmlGuiInstanceName(const QString &instance)
-    {
-        mXmlGuiInstance = instance;
-    }
+    const QString xmlGuiInstanceName() const;
+    void setXmlGuiInstanceName(const QString &instance);
 
-    UndoStack *undoStack() const
-    {
-        return the_undoStack;
-    }
+    UndoStack *undoStack() const;
     MessageComposer::MessageSender *msgSender() Q_DECL_OVERRIDE;
 
     void openFilterDialog(bool createDummyFilter = true) Q_DECL_OVERRIDE;
@@ -417,22 +405,10 @@ public:
     /** Expire all folders, used for the gui action */
     void expireAllFoldersNow();
 
-    bool firstStart() const
-    {
-        return the_firstStart;
-    }
-    QString previousVersion() const
-    {
-        return the_previousVersion;
-    }
-    bool shuttingDown() const
-    {
-        return the_shuttingDown;
-    }
-    void setShuttingDown(bool flag)
-    {
-        the_shuttingDown = flag;
-    }
+    bool firstStart() const;
+    QString previousVersion() const;
+    bool shuttingDown() const;
+    void setShuttingDown(bool flag);
 
     /** Returns the full path of the user's local data directory for KMail.
       The path ends with '/'.

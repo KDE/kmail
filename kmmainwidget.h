@@ -584,7 +584,9 @@ private:
     Akonadi::FavoriteCollectionsModel *mFavoritesModel;
     QWidget      *mSearchAndTree;
     KMReaderWin  *mMsgView;
-    QSplitter    *mSplitter1, *mSplitter2, *mFolderViewSplitter;
+    QSplitter    *mSplitter1;
+    QSplitter *mSplitter2;
+    QSplitter *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;
     bool          mLongFolderList;
     bool          mStartupDone;
@@ -599,10 +601,11 @@ private:
 
     QPointer<KMail::SearchWindow> mSearchWin;
 
-    QAction *mExpireFolderAction,
-            *mFolderMailingListPropertiesAction,
-            *mShowFolderShortcutDialogAction,
-            *mArchiveFolderAction, *mMessageNewList;
+    QAction *mExpireFolderAction;
+    QAction *mFolderMailingListPropertiesAction;
+    QAction *mShowFolderShortcutDialogAction;
+    QAction *mArchiveFolderAction;
+    QAction *mMessageNewList;
     KToggleAction *mPreferHtmlLoadExtAction;
 
     QTimer *menutimer;

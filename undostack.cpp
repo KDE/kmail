@@ -53,6 +53,11 @@ void UndoStack::clear()
     mStack.clear();
 }
 
+int UndoStack::size() const
+{
+    return mStack.count();
+}
+
 QString UndoStack::undoInfo() const
 {
     if (!mStack.isEmpty()) {
@@ -94,6 +99,11 @@ void UndoStack::addMsgToAction(int undoId, const Akonadi::Item &item)
 
     Q_ASSERT(mCachedInfo);
     mCachedInfo->items.append(item);
+}
+
+bool UndoStack::isEmpty() const
+{
+    return mStack.isEmpty();
 }
 
 void UndoStack::undo()

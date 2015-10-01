@@ -99,6 +99,11 @@ KMMainWin::~KMMainWin()
     KMKernel::self()->config()->sync();
 }
 
+KMMainWidget *KMMainWin::mainKMWidget() const
+{
+    return mKMMainWidget;
+}
+
 void KMMainWin::displayStatusMsg(const QString &aText)
 {
     if (!statusBar() || !mProgressBar->littleProgress()) {

@@ -77,77 +77,28 @@ public:
 
     void setCurrentMessage(const Akonadi::Item &item , const Akonadi::Item::List &items = Akonadi::Item::List());
 
-    KActionMenu *replyMenu() const
-    {
-        return mReplyActionMenu;
-    }
-    QAction *replyListAction() const
-    {
-        return mReplyListAction;
-    }
-    QAction *createTodoAction() const
-    {
-        return mCreateTodoAction;
-    }
-    QAction *forwardInlineAction() const
-    {
-        return mForwardInlineAction;
-    }
-    QAction *forwardAttachedAction() const
-    {
-        return mForwardAttachedAction;
-    }
-    QAction *redirectAction() const
-    {
-        return mRedirectAction;
-    }
+    KActionMenu *replyMenu() const;
+    QAction *replyListAction() const;
+    QAction *forwardInlineAction() const;
+    QAction *forwardAttachedAction() const;
+    QAction *redirectAction() const;
 
-    KActionMenu *messageStatusMenu() const
-    {
-        return mStatusMenu;
-    }
-    KActionMenu *forwardMenu() const
-    {
-        return mForwardActionMenu;
-    }
+    KActionMenu *messageStatusMenu() const;
+    KActionMenu *forwardMenu() const;
 
-    QAction *editAction() const
-    {
-        return mEditAction;
-    }
-    QAction *annotateAction() const
-    {
-        return mAnnotateAction;
-    }
-    QAction *printAction() const
-    {
-        return mPrintAction;
-    }
-    QAction *printPreviewAction() const
-    {
-        return mPrintPreviewAction;
-    }
-    QAction *listFilterAction() const
-    {
-        return mListFilterAction;
-    }
+    QAction *editAction() const;
+    QAction *annotateAction() const;
+    QAction *printAction() const;
+    QAction *printPreviewAction() const;
+    QAction *listFilterAction() const;
 
-    KActionMenu *mailingListActionMenu() const
-    {
-        return mMailingListActionMenu;
-    }
+    KActionMenu *mailingListActionMenu() const;
     TemplateParser::CustomTemplatesMenu *customTemplatesMenu() const;
 
     void addWebShortcutsMenu(QMenu *menu, const QString &text);
 
-    QAction *debugBalooAction() const
-    {
-        return mDebugBalooAction;
-    }
-    QAction *addFollowupReminderAction() const
-    {
-        return mAddFollowupReminderAction;
-    }
+    QAction *debugBalooAction() const;
+    QAction *addFollowupReminderAction() const;
 
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
@@ -195,14 +146,21 @@ private:
     KMReaderWin *mMessageView;
 
     KActionMenu *mReplyActionMenu;
-    QAction *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
-            *mReplyListAction, *mNoQuoteReplyAction,
-            *mForwardInlineAction, *mForwardAttachedAction, *mRedirectAction;
-    QAction *mCreateTodoAction;
+    QAction *mReplyAction;
+    QAction *mReplyAllAction;
+    QAction *mReplyAuthorAction;
+    QAction *mReplyListAction;
+    QAction *mNoQuoteReplyAction;
+    QAction *mForwardInlineAction;
+    QAction *mForwardAttachedAction;
+    QAction *mRedirectAction;
     KActionMenu *mStatusMenu;
     KActionMenu *mForwardActionMenu;
     KActionMenu *mMailingListActionMenu;
-    QAction *mEditAction, *mAnnotateAction, *mPrintAction, *mPrintPreviewAction;
+    QAction *mEditAction;
+    QAction *mAnnotateAction;
+    QAction *mPrintAction;
+    QAction *mPrintPreviewAction;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
     QAction *mListFilterAction;
     QAction *mAddFollowupReminderAction;

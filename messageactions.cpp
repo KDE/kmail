@@ -238,6 +238,71 @@ void MessageActions::setCurrentMessage(const Akonadi::Item &msg, const Akonadi::
     updateActions();
 }
 
+KActionMenu *MessageActions::replyMenu() const
+{
+    return mReplyActionMenu;
+}
+
+QAction *MessageActions::replyListAction() const
+{
+    return mReplyListAction;
+}
+
+QAction *MessageActions::forwardInlineAction() const
+{
+    return mForwardInlineAction;
+}
+
+QAction *MessageActions::forwardAttachedAction() const
+{
+    return mForwardAttachedAction;
+}
+
+QAction *MessageActions::redirectAction() const
+{
+    return mRedirectAction;
+}
+
+KActionMenu *MessageActions::messageStatusMenu() const
+{
+    return mStatusMenu;
+}
+
+KActionMenu *MessageActions::forwardMenu() const
+{
+    return mForwardActionMenu;
+}
+
+QAction *MessageActions::editAction() const
+{
+    return mEditAction;
+}
+
+QAction *MessageActions::annotateAction() const
+{
+    return mAnnotateAction;
+}
+
+QAction *MessageActions::printAction() const
+{
+    return mPrintAction;
+}
+
+QAction *MessageActions::printPreviewAction() const
+{
+    return mPrintPreviewAction;
+}
+
+QAction *MessageActions::listFilterAction() const
+{
+    return mListFilterAction;
+}
+
+KActionMenu *MessageActions::mailingListActionMenu() const
+{
+    return mMailingListActionMenu;
+}
+
 void MessageActions::slotItemRemoved(const Akonadi::Item &item)
 {
     if (item == mCurrentItem) {
@@ -613,6 +678,16 @@ void MessageActions::addWebShortcutsMenu(QMenu *menu, const QString &text)
 {
     mWebShortcutMenuManager->setSelectedText(text);
     mWebShortcutMenuManager->addWebShortcutsToMenu(menu);
+}
+
+QAction *MessageActions::debugBalooAction() const
+{
+    return mDebugBalooAction;
+}
+
+QAction *MessageActions::addFollowupReminderAction() const
+{
+    return mAddFollowupReminderAction;
 }
 
 void MessageActions::slotDebugBaloo()

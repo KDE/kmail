@@ -463,6 +463,11 @@ void KMKernel::checkMail()  //might create a new reader but won't show!!
     }
 }
 
+void KMKernel::openReader()
+{
+    openReader(false);
+}
+
 void KMKernel::setSystrayIconNotificationsEnabled(bool enabled)
 {
     if (mSystemTray) {
@@ -1026,6 +1031,21 @@ void KMKernel::setAccountStatus(bool goOnline)
             kmkernel->msgSender()->sendQueued();
         }
     }
+}
+
+const QString KMKernel::xmlGuiInstanceName() const
+{
+    return mXmlGuiInstance;
+}
+
+void KMKernel::setXmlGuiInstanceName(const QString &instance)
+{
+    mXmlGuiInstance = instance;
+}
+
+KMail::UndoStack *KMKernel::undoStack() const
+{
+    return the_undoStack;
 }
 
 void KMKernel::resumeNetworkJobs()
@@ -2157,4 +2177,24 @@ PimCommon::StorageServiceManager *KMKernel::storageServiceManager() const
 bool KMKernel::allowToDebugBalooSupport() const
 {
     return mDebugBaloo;
+}
+
+bool KMKernel::firstStart() const
+{
+    return the_firstStart;
+}
+
+QString KMKernel::previousVersion() const
+{
+    return the_previousVersion;
+}
+
+bool KMKernel::shuttingDown() const
+{
+    return the_shuttingDown;
+}
+
+void KMKernel::setShuttingDown(bool flag)
+{
+    the_shuttingDown = flag;
 }
