@@ -28,7 +28,7 @@
 #include <TemplateParser/CustomTemplatesMenu>
 
 #include "PimCommon/AnnotationDialog"
-#include "PimCommon/WebShortCutMenuManager"
+#include "PimCommon/WebShortCutsMenuManager"
 #include "MessageCore/MessageCoreSettings"
 #include "MessageCore/MailingList"
 #include "messagecore/messagehelpers.h"
