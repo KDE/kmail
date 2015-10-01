@@ -46,7 +46,7 @@ class CustomTemplatesMenu;
 
 namespace PimCommon
 {
-class WebShortcutMenuManager;
+class WebShortcutsMenuManager;
 }
 
 namespace KMail
@@ -207,7 +207,7 @@ private:
     QAction *mListFilterAction;
     QAction *mAddFollowupReminderAction;
     QAction *mDebugBalooAction;
-    PimCommon::WebShortcutMenuManager *mWebShortcutMenuManager;
+    PimCommon::WebShortcutsMenuManager *mWebShortcutMenuManager;
 };
 
 }

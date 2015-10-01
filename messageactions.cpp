@@ -75,7 +75,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
       mAddFollowupReminderAction(Q_NULLPTR),
       mDebugBalooAction(Q_NULLPTR)
 {
-    mWebShortcutMenuManager = new PimCommon::WebShortcutMenuManager(this);
+    mWebShortcutMenuManager = new PimCommon::WebShortcutsMenuManager(this);
     mReplyActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this);
     ac->addAction(QStringLiteral("message_reply_menu"), mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
@@ -612,7 +612,7 @@ void MessageActions::annotateMessage()
 void MessageActions::addWebShortcutsMenu(QMenu *menu, const QString &text)
 {
     mWebShortcutMenuManager->setSelectedText(text);
-    mWebShortcutMenuManager->addWebShortcutsMenu(menu);
+    mWebShortcutMenuManager->addWebShortcutsToMenu(menu);
 }
 
 void MessageActions::slotDebugBaloo()
