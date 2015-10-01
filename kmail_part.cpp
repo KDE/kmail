@@ -146,4 +146,9 @@ QWidget *KMailPart::parentWidget() const
 {
     return mParentWidget;
 }
+
+void KMailPart::save()
+{
+    /*TODO*/
+}
 #include "kmail_part.moc"

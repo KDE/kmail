@@ -46,10 +46,7 @@ public:
     QWidget *parentWidget() const;
 
 public Q_SLOTS:
-    Q_SCRIPTABLE void save()
-    {
-        /*TODO*/
-    }
+    Q_SCRIPTABLE void save();
     Q_SCRIPTABLE void exit();
     void updateQuickSearchText();
 
