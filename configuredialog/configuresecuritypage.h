@@ -138,7 +138,6 @@ private:
     Kleo::CryptoConfig *mConfig;
 };
 
-#ifndef KDEPIM_NO_WEBKIT
 class SecurityPageAdBlockTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -158,7 +157,6 @@ private:
 private:
     MessageViewer::AdBlockSettingWidget *mWidget;
 };
-#endif
 
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 {
@@ -179,9 +177,7 @@ private:
     ComposerCryptoTab *mComposerCryptoTab;
     WarningTab    *mWarningTab;
     SMimeTab      *mSMimeTab;
-#ifndef KDEPIM_NO_WEBKIT
     SecurityPageAdBlockTab *mSAdBlockTab;
-#endif
 };
 
 #endif // CONFIGURESECURITYPAGE_H
