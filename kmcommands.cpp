@@ -69,6 +69,7 @@
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <AkonadiCore/itemmodifyjob.h>
 #include <AkonadiCore/itemfetchjob.h>
+#include <MessageCore/MDNStateAttribute>
 
 #include "MailCommon/FolderCollection"
 
