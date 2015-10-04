@@ -69,7 +69,7 @@
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <AkonadiCore/itemmodifyjob.h>
 #include <AkonadiCore/itemfetchjob.h>
-#include <MessageCore/MDNStateAttribute>
+#include <MailCommon/MDNStateAttribute>
 
 #include "MailCommon/FolderCollection"
 
@@ -332,7 +332,7 @@ void KMCommand::transferSelectedMsgs()
         complete = false;
         ++KMCommand::mCountJobs;
         Akonadi::ItemFetchJob *fetch = createFetchJob(mMsgList);
-        mFetchScope.fetchAttribute< MessageCore::MDNStateAttribute >();
+        mFetchScope.fetchAttribute< MailCommon::MDNStateAttribute >();
         fetch->setFetchScope(mFetchScope);
         connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
         connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
