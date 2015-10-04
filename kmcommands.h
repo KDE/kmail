@@ -33,7 +33,6 @@ template <typename T> class QSharedPointer;
 namespace MessageViewer
 {
 class HeaderStyle;
-class HeaderStrategy;
 class AttachmentStrategy;
 }
 
