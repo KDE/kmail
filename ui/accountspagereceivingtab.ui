@@ -26,7 +26,7 @@
       <number>6</number>
      </property>
      <item>
-      <widget class="PimCommon::ManageAccountWidget" name="mAccountsReceiving" native="true"/>
+      <widget class="Akonadi::ManageAccountWidget" name="mAccountsReceiving" native="true"/>
      </item>
      <item>
       <widget class="QPushButton" name="customizeAccountOrder">
@@ -80,9 +80,9 @@
  <layoutdefault spacing="6" margin="0"/>
  <customwidgets>
   <customwidget>
-   <class>PimCommon::ManageAccountWidget</class>
+   <class>Akonadi::ManageAccountWidget</class>
    <extends>QWidget</extends>
-   <header>PimCommon/ManageAccountWidget</header>
+   <header>AkonadiWidgets/ManageAccountWidget</header>
   </customwidget>
  </customwidgets>
  <resources/>
