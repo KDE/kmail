@@ -776,7 +776,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
             msg->removeHeader<KMime::Headers::Bcc>();
         }
         if (isICalInvitation &&
-                MessageViewer::GlobalSettings::self()->legacyBodyInvites()) {
+                MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
             // KOrganizer invitation caught and to be sent as body instead
             msg->setBody(attachData);
             msg->contentType()->from7BitString(
@@ -793,7 +793,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
             msgPart->setBody(attachData);   //TODO: check if was setBodyEncoded
             msgPart->contentType()->setMimeType(attachType + '/' +  attachSubType);
             msgPart->contentType()->setParameter(QLatin1String(attachParamAttr), attachParamValue);   //TODO: Check if the content disposition parameter needs to be set!
-            if (! MessageViewer::GlobalSettings::self()->exchangeCompatibleInvitations()) {
+            if (! MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
                 msgPart->contentDisposition()->fromUnicodeString(QLatin1String(attachContDisp), "utf-8");
             }
             if (!attachCharset.isEmpty()) {
@@ -804,7 +804,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
             msgPart->contentType()->setName(attachName, "utf-8");
             msgPart->assemble();
             // Don't show the composer window if the automatic sending is checked
-            iCalAutoSend = MessageViewer::GlobalSettings::self()->automaticSending();
+            iCalAutoSend = MessageViewer::MessageViewerSettings::self()->automaticSending();
         }
     }
 
@@ -817,7 +817,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
     cWin = KMail::makeComposer(KMime::Message::Ptr(), false, false, context);
     cWin->setMessage(msg, false, false, !isICalInvitation /* mayAutoSign */);
     cWin->setSigningAndEncryptionDisabled(isICalInvitation
-                                          && MessageViewer::GlobalSettings::self()->legacyBodyInvites());
+                                          && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites());
     if (noWordWrap) {
         cWin->disableWordWrap();
     }
@@ -1476,7 +1476,7 @@ void KMKernel::slotSyncConfig()
 {
     PimCommon::PimCommonSettings::self()->save();
     MessageCore::GlobalSettings::self()->save();
-    MessageViewer::GlobalSettings::self()->save();
+    MessageViewer::MessageViewerSettings::self()->save();
     MessageComposer::MessageComposerSettings::self()->save();
     TemplateParser::GlobalSettings::self()->save();
     MessageList::MessageListSettings::self()->save();
@@ -1486,7 +1486,7 @@ void KMKernel::slotSyncConfig()
     //Laurent investigate why we need to reload them.
     PimCommon::PimCommonSettings::self()->load();
     MessageCore::GlobalSettings::self()->load();
-    MessageViewer::GlobalSettings::self()->load();
+    MessageViewer::MessageViewerSettings::self()->load();
     MessageComposer::MessageComposerSettings::self()->load();
     TemplateParser::GlobalSettings::self()->load();
     MessageList::MessageListSettings::self()->load();
@@ -1610,8 +1610,8 @@ KSharedConfig::Ptr KMKernel::config()
         MessageComposer::MessageComposerSettings::self()->load();
         MessageCore::GlobalSettings::self()->setSharedConfig(mySelf->mConfig);
         MessageCore::GlobalSettings::self()->load();
-        MessageViewer::GlobalSettings::self()->setSharedConfig(mySelf->mConfig);
-        MessageViewer::GlobalSettings::self()->load();
+        MessageViewer::MessageViewerSettings::self()->setSharedConfig(mySelf->mConfig);
+        MessageViewer::MessageViewerSettings::self()->load();
         MailCommon::MailCommonSettings::self()->setSharedConfig(mySelf->mConfig);
         MailCommon::MailCommonSettings::self()->load();
         PimCommon::PimCommonSettings::self()->setSharedConfig(mySelf->mConfig);

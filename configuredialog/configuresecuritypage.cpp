@@ -109,22 +109,22 @@ void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
 
 void SecurityPage::GeneralTab::doLoadOther()
 {
-    loadWidget(mSGTab.mHtmlMailCheck, MessageViewer::GlobalSettings::self()->htmlMailItem());
-    loadWidget(mSGTab.mExternalReferences, MessageViewer::GlobalSettings::self()->htmlLoadExternalItem());
-    loadWidget(mSGTab.mAutomaticallyImportAttachedKeysCheck, MessageViewer::GlobalSettings::self()->autoImportKeysItem());
-    loadWidget(mSGTab.mAlwaysDecrypt, MessageViewer::GlobalSettings::self()->alwaysDecryptItem());
+    loadWidget(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
+    loadWidget(mSGTab.mExternalReferences, MessageViewer::MessageViewerSettings::self()->htmlLoadExternalItem());
+    loadWidget(mSGTab.mAutomaticallyImportAttachedKeysCheck, MessageViewer::MessageViewerSettings::self()->autoImportKeysItem());
+    loadWidget(mSGTab.mAlwaysDecrypt, MessageViewer::MessageViewerSettings::self()->alwaysDecryptItem());
 
-    loadWidget(mSGTab.mScamDetection, MessageViewer::GlobalSettings::self()->scamDetectionEnabledItem());
-    loadWidget(mSGTab.scamWhiteList, MessageViewer::GlobalSettings::self()->scamDetectionWhiteListItem());
+    loadWidget(mSGTab.mScamDetection, MessageViewer::MessageViewerSettings::self()->scamDetectionEnabledItem());
+    loadWidget(mSGTab.scamWhiteList, MessageViewer::MessageViewerSettings::self()->scamDetectionWhiteListItem());
 }
 
 void SecurityPage::GeneralTab::save()
 {
-    if (MessageViewer::GlobalSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked()) {
+    if (MessageViewer::MessageViewerSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked()) {
         if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
                                                "HTML setting will override all folder specific values."), QString(),
                                                KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("htmlMailOverride")) == KMessageBox::Continue) {
-            saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::GlobalSettings::self()->htmlMailItem());
+            saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
             if (kmkernel) {
                 foreach (const Akonadi::Collection &collection, kmkernel->allFolders()) {
                     KConfigGroup config(KMKernel::self()->config(), MailCommon::FolderCollection::configGroupName(collection));
@@ -135,12 +135,12 @@ void SecurityPage::GeneralTab::save()
             }
         }
     }
-    saveCheckBox(mSGTab.mExternalReferences, MessageViewer::GlobalSettings::self()->htmlLoadExternalItem());
+    saveCheckBox(mSGTab.mExternalReferences, MessageViewer::MessageViewerSettings::self()->htmlLoadExternalItem());
 
-    saveCheckBox(mSGTab.mAutomaticallyImportAttachedKeysCheck, MessageViewer::GlobalSettings::self()->autoImportKeysItem());
-    saveCheckBox(mSGTab.mAlwaysDecrypt, MessageViewer::GlobalSettings::self()->alwaysDecryptItem());
-    saveCheckBox(mSGTab.mScamDetection, MessageViewer::GlobalSettings::self()->scamDetectionEnabledItem());
-    saveSimpleStringListEditor(mSGTab.scamWhiteList, MessageViewer::GlobalSettings::self()->scamDetectionWhiteListItem());
+    saveCheckBox(mSGTab.mAutomaticallyImportAttachedKeysCheck, MessageViewer::MessageViewerSettings::self()->autoImportKeysItem());
+    saveCheckBox(mSGTab.mAlwaysDecrypt, MessageViewer::MessageViewerSettings::self()->alwaysDecryptItem());
+    saveCheckBox(mSGTab.mScamDetection, MessageViewer::MessageViewerSettings::self()->scamDetectionEnabledItem());
+    saveSimpleStringListEditor(mSGTab.scamWhiteList, MessageViewer::MessageViewerSettings::self()->scamDetectionWhiteListItem());
 }
 
 //Adblock
@@ -224,24 +224,24 @@ void SecurityPageMDNTab::slotLinkClicked(const QString &link)
 
 void SecurityPage::MDNTab::doLoadOther()
 {
-    int num = MessageViewer::GlobalSettings::self()->defaultPolicy();
+    int num = MessageViewer::MessageViewerSettings::self()->defaultPolicy();
     if (num < 0 || num >= mMDNGroup->buttons().count()) {
         num = 0;
     }
     mMDNGroup->button(num)->setChecked(true);
-    num = MessageViewer::GlobalSettings::self()->quoteMessage();
+    num = MessageViewer::MessageViewerSettings::self()->quoteMessage();
     if (num < 0 || num >= mOrigQuoteGroup->buttons().count()) {
         num = 0;
     }
     mOrigQuoteGroup->button(num)->setChecked(true);
-    loadWidget(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::GlobalSettings::self()->notSendWhenEncryptedItem());
+    loadWidget(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::MessageViewerSettings::self()->notSendWhenEncryptedItem());
 }
 
 void SecurityPage::MDNTab::save()
 {
-    MessageViewer::GlobalSettings::self()->setDefaultPolicy(mMDNGroup->checkedId());
-    MessageViewer::GlobalSettings::self()->setQuoteMessage(mOrigQuoteGroup->checkedId());
-    saveCheckBox(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::GlobalSettings::self()->notSendWhenEncryptedItem());
+    MessageViewer::MessageViewerSettings::self()->setDefaultPolicy(mMDNGroup->checkedId());
+    MessageViewer::MessageViewerSettings::self()->setQuoteMessage(mOrigQuoteGroup->checkedId());
+    saveCheckBox(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::MessageViewerSettings::self()->notSendWhenEncryptedItem());
 }
 
 QString SecurityPage::ComposerCryptoTab::helpAnchor() const

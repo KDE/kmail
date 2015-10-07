@@ -543,8 +543,8 @@ void KMMainWidget::readPreConfig()
     mReaderWindowActive = KMailSettings::self()->readerWindowMode() != KMailSettings::EnumReaderWindowMode::hide;
     mReaderWindowBelow = KMailSettings::self()->readerWindowMode() == KMailSettings::EnumReaderWindowMode::below;
 
-    mHtmlGlobalSetting = MessageViewer::GlobalSettings::self()->htmlMail();
-    mHtmlLoadExtGlobalSetting = MessageViewer::GlobalSettings::self()->htmlLoadExternal();
+    mHtmlGlobalSetting = MessageViewer::MessageViewerSettings::self()->htmlMail();
+    mHtmlLoadExtGlobalSetting = MessageViewer::MessageViewerSettings::self()->htmlLoadExternal();
 
     mEnableFavoriteFolderView = (MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode);
     mEnableFolderQuickSearch = KMailSettings::self()->enableFolderQuickSearch();
@@ -2590,7 +2590,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
 
     KMReaderMainWin *win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() :
-                              MessageViewer::GlobalSettings::self()->useFixedFont();
+                              MessageViewer::MessageViewerSettings::self()->useFixedFont();
     win->setUseFixedFont(useFixedFont);
 
     const Akonadi::Collection parentCollection = MailCommon::Util::parentCollectionFromItem(msg);
@@ -4350,8 +4350,8 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
         if (mMessagePane->currentItem() != item) {
             // The user has selected another email already, so don't render this one.
             // Mark it as read, though, if the user settings say so.
-            if (MessageViewer::GlobalSettings::self()->delayedMarkAsRead() &&
-                    MessageViewer::GlobalSettings::self()->delayedMarkTime() == 0) {
+            if (MessageViewer::MessageViewerSettings::self()->delayedMarkAsRead() &&
+                    MessageViewer::MessageViewerSettings::self()->delayedMarkTime() == 0) {
                 item.setFlag(Akonadi::MessageFlags::Seen);
                 Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob(item, this);
                 modifyJob->disableRevisionCheck();

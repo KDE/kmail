@@ -117,7 +117,7 @@ AppearancePage::AppearancePage(QWidget *parent)
     //
     mReaderTab = new ReaderTab();
     addTab(mReaderTab, i18n("Message Window"));
-    addConfig(MessageViewer::GlobalSettings::self(), mReaderTab);
+    addConfig(MessageViewer::MessageViewerSettings::self(), mReaderTab);
 
     //
     // "System Tray" tab:
@@ -405,7 +405,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
 void AppearancePage::ColorsTab::doLoadOther()
 {
     mCustomColorCheck->setChecked(!MessageCore::GlobalSettings::self()->useDefaultColors());
-    mRecycleColorCheck->setChecked(MessageViewer::GlobalSettings::self()->recycleQuoteColors());
+    mRecycleColorCheck->setChecked(MessageViewer::MessageViewerSettings::self()->recycleQuoteColors());
     mCloseToQuotaThreshold->setValue(KMailSettings::self()->closeToQuotaThreshold());
     loadColor(true);
 }
@@ -504,7 +504,7 @@ void AppearancePage::ColorsTab::save()
             }
         }
     }
-    MessageViewer::GlobalSettings::self()->setRecycleQuoteColors(mRecycleColorCheck->isChecked());
+    MessageViewer::MessageViewerSettings::self()->setRecycleQuoteColors(mRecycleColorCheck->isChecked());
     KMailSettings::self()->setCloseToQuotaThreshold(mCloseToQuotaThreshold->value());
 }
 

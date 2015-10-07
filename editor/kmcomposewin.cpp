@@ -596,7 +596,7 @@ void KMComposeWin::readConfig(bool reload /* = false */)
         mFixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     } else {
         mBodyFont = KMailSettings::self()->composerFont();
-        mFixedFont = MessageViewer::GlobalSettings::self()->fixedFont();
+        mFixedFont = MessageViewer::MessageViewerSettings::self()->fixedFont();
     }
 
     slotUpdateFont();
@@ -667,7 +667,7 @@ void KMComposeWin::writeConfig(void)
     KMailSettings::self()->setPreviousDictionary(mComposerBase->dictionary()->currentDictionaryName());
     KMailSettings::self()->setAutoSpellChecking(
         mAutoSpellCheckingAction->isChecked());
-    MessageViewer::GlobalSettings::self()->setUseFixedFont(mFixedFontAction->isChecked());
+    MessageViewer::MessageViewerSettings::self()->setUseFixedFont(mFixedFontAction->isChecked());
     if (!mForceDisableHtml) {
         KMailSettings::self()->setUseHtmlMarkup(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich);
     }
@@ -1231,7 +1231,7 @@ void KMComposeWin::setupActions(void)
     mFixedFontAction = new KToggleAction(i18n("Use Fi&xed Font"), this);
     actionCollection()->addAction(QStringLiteral("toggle_fixedfont"), mFixedFontAction);
     connect(mFixedFontAction, &KToggleAction::triggered, this, &KMComposeWin::slotUpdateFont);
-    mFixedFontAction->setChecked(MessageViewer::GlobalSettings::self()->useFixedFont());
+    mFixedFontAction->setChecked(MessageViewer::MessageViewerSettings::self()->useFixedFont());
 
     //these are checkable!!!
     mUrgentAction = new KToggleAction(

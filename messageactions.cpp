@@ -573,12 +573,12 @@ void MessageActions::printMessage(bool preview)
 {
     bool result = false;
     if (mMessageView) {
-        if (MessageViewer::GlobalSettings::self()->printSelectedText()) {
+        if (MessageViewer::MessageViewerSettings::self()->printSelectedText()) {
             result = mMessageView->printSelectedText(preview);
         }
     }
     if (!result) {
-        const bool useFixedFont = MessageViewer::GlobalSettings::self()->useFixedFont();
+        const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
         const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
 
         const Akonadi::Item message = mCurrentItem;
