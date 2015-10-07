@@ -65,7 +65,6 @@
 #include "messagecomposer/followupreminderselectdatedialog.h"
 #include "messagecomposer/followupremindercreatejob.h"
 #include "FollowupReminder/FollowUpReminderUtil"
-#include "PimCommon/VCardUtil"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "kmcomposerglobalaction.h"
 #include "widgets/kactionmenutransport.h"
@@ -2256,8 +2255,7 @@ void KMComposeWin::slotFetchJob(KJob *job)
                 attachmentName = contact.realName() + QLatin1String(".vcf");
                 //Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();
-                PimCommon::VCardUtil vcardUtil;
-                vcardUtil.adaptVcard(data);
+                KContacts::adaptIMAttributes(data);
                 addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard");
             } else if (item.hasPayload<KContacts::ContactGroup>()) {
                 const KContacts::ContactGroup group = item.payload<KContacts::ContactGroup>();
