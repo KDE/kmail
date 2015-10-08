@@ -1478,7 +1478,7 @@ void KMKernel::slotSyncConfig()
     MessageCore::MessageCoreSettings::self()->save();
     MessageViewer::MessageViewerSettings::self()->save();
     MessageComposer::MessageComposerSettings::self()->save();
-    TemplateParser::GlobalSettings::self()->save();
+    TemplateParser::TemplateParserSettings::self()->save();
     MessageList::MessageListSettings::self()->save();
     MailCommon::MailCommonSettings::self()->save();
     KMailSettings::self()->save();
@@ -1488,7 +1488,7 @@ void KMKernel::slotSyncConfig()
     MessageCore::MessageCoreSettings::self()->load();
     MessageViewer::MessageViewerSettings::self()->load();
     MessageComposer::MessageComposerSettings::self()->load();
-    TemplateParser::GlobalSettings::self()->load();
+    TemplateParser::TemplateParserSettings::self()->load();
     MessageList::MessageListSettings::self()->load();
     MailCommon::MailCommonSettings::self()->load();
     KMailSettings::self()->load();
@@ -1604,8 +1604,8 @@ KSharedConfig::Ptr KMKernel::config()
         // Check that all updates have been run on the config file:
         MessageList::MessageListSettings::self()->setSharedConfig(mySelf->mConfig);
         MessageList::MessageListSettings::self()->load();
-        TemplateParser::GlobalSettings::self()->setSharedConfig(mySelf->mConfig);
-        TemplateParser::GlobalSettings::self()->load();
+        TemplateParser::TemplateParserSettings::self()->setSharedConfig(mySelf->mConfig);
+        TemplateParser::TemplateParserSettings::self()->load();
         MessageComposer::MessageComposerSettings::self()->setSharedConfig(mySelf->mConfig);
         MessageComposer::MessageComposerSettings::self()->load();
         MessageCore::MessageCoreSettings::self()->setSharedConfig(mySelf->mConfig);

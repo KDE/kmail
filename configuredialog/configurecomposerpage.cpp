@@ -195,7 +195,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupVBoxLayout->addWidget(mDashDashCheck);
 
     // "Remove signature when replying" checkbox
-    mStripSignatureCheck = new QCheckBox(TemplateParser::GlobalSettings::self()->stripSignatureItem()->label(),
+    mStripSignatureCheck = new QCheckBox(TemplateParser::TemplateParserSettings::self()->stripSignatureItem()->label(),
                                          this);
 
     helpText = i18n("When replying, do not quote any existing signature");
@@ -230,7 +230,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // "Use smart quoting" checkbox
     mSmartQuoteCheck = new QCheckBox(
-        TemplateParser::GlobalSettings::self()->smartQuoteItem()->label(), this);
+        TemplateParser::TemplateParserSettings::self()->smartQuoteItem()->label(), this);
     helpText = i18n("When replying, add quote signs in front of all lines of the quoted text,\n"
                     "even when the line was created by adding an additional line break while\n"
                     "word-wrapping the text.");
@@ -277,7 +277,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // "Reply/Forward using HTML if present" checkbox
-    mReplyUsingHtml = new QCheckBox(TemplateParser::GlobalSettings::self()->replyUsingHtmlItem()->label(), this);
+    mReplyUsingHtml = new QCheckBox(TemplateParser::TemplateParserSettings::self()->replyUsingHtmlItem()->label(), this);
     helpText = i18n("When replying or forwarding, quote the message\n"
                     "in the original format it was received.\n"
                     "If unchecked, the reply will be as plain text by default.");
@@ -548,11 +548,11 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
         MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String("auto"));
     loadWidget(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem());
     loadWidget(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
-    loadWidget(mSmartQuoteCheck, TemplateParser::GlobalSettings::self()->smartQuoteItem());
+    loadWidget(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
     loadWidget(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem());
 
-    loadWidget(mReplyUsingHtml, TemplateParser::GlobalSettings::self()->replyUsingHtmlItem());
-    loadWidget(mStripSignatureCheck, TemplateParser::GlobalSettings::self()->stripSignatureItem());
+    loadWidget(mReplyUsingHtml, TemplateParser::TemplateParserSettings::self()->replyUsingHtmlItem());
+    loadWidget(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
     loadWidget(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     loadWidget(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
@@ -581,11 +581,11 @@ void ComposerPage::GeneralTab::save()
 
     saveCheckBox(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem());
     saveCheckBox(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
-    saveCheckBox(mSmartQuoteCheck, TemplateParser::GlobalSettings::self()->smartQuoteItem());
+    saveCheckBox(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
     saveCheckBox(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem());
 
-    saveCheckBox(mReplyUsingHtml, TemplateParser::GlobalSettings::self()->replyUsingHtmlItem());
-    saveCheckBox(mStripSignatureCheck, TemplateParser::GlobalSettings::self()->stripSignatureItem());
+    saveCheckBox(mReplyUsingHtml, TemplateParser::TemplateParserSettings::self()->replyUsingHtmlItem());
+    saveCheckBox(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
     saveCheckBox(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 

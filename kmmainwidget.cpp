@@ -903,7 +903,7 @@ void KMMainWidget::writeConfig(bool force)
             //Work around from startup folder
             group.deleteEntry("Selection");
 #if 0
-            if (!GlobalSettings::self()->startSpecificFolderAtStartup()) {
+            if (!KMailSettings::self()->startSpecificFolderAtStartup()) {
                 group.deleteEntry("Current");
             }
 #endif
@@ -2493,7 +2493,6 @@ void KMMainWidget::slotSelectNextUnreadMessage()
                 MessageList::Core::MessageTypeUnreadOnly,
                 MessageList::Core::ClearExistingSelection,
                 true,  // center item
-                /*GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInCurrentFolder*/
                 KMailSettings::self()->loopOnGotoUnread() != KMailSettings::EnumLoopOnGotoUnread::DontLoop
             )) {
         // no next unread message was found in the current folder
