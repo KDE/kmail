@@ -591,7 +591,7 @@ void KMComposeWin::readConfig(bool reload /* = false */)
     mComposerBase->recipientsEditor()->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
     mEdtReplyTo->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
 
-    if (MessageCore::GlobalSettings::self()->useDefaultFonts()) {
+    if (MessageCore::MessageCoreSettings::self()->useDefaultFonts()) {
         mBodyFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
         mFixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     } else {

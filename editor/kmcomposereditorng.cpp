@@ -94,11 +94,11 @@ void KMComposerEditorNg::setHighlighterColors(MessageComposer::RichTextComposerE
     QColor color3 = MessageCore::Util::quoteLevel3DefaultTextColor();
     QColor misspelled = MessageCore::Util::misspelledDefaultTextColor();
 
-    if (!MessageCore::GlobalSettings::self()->useDefaultColors()) {
-        color1 = MessageCore::GlobalSettings::self()->quotedText1();
-        color2 = MessageCore::GlobalSettings::self()->quotedText2();
-        color3 = MessageCore::GlobalSettings::self()->quotedText3();
-        misspelled = MessageCore::GlobalSettings::self()->misspelledColor();
+    if (!MessageCore::MessageCoreSettings::self()->useDefaultColors()) {
+        color1 = MessageCore::MessageCoreSettings::self()->quotedText1();
+        color2 = MessageCore::MessageCoreSettings::self()->quotedText2();
+        color3 = MessageCore::MessageCoreSettings::self()->quotedText3();
+        misspelled = MessageCore::MessageCoreSettings::self()->misspelledColor();
     }
 
     highlighter->setQuoteColor(Qt::black /* ignored anyway */,

@@ -977,7 +977,7 @@ bool KMKernel::showMail(qint64 serialNumber)
         if (job->exec()) {
             if (job->items().count() >= 1) {
                 KMReaderMainWin *win = new KMReaderMainWin(MessageViewer::Viewer::UseGlobalSetting, false);
-                win->showMessage(MessageCore::GlobalSettings::self()->overrideCharacterEncoding(),
+                win->showMessage(MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding(),
                                  job->items().at(0));
                 win->show();
                 return true;
@@ -1475,7 +1475,7 @@ void KMKernel::slotRequestConfigSync()
 void KMKernel::slotSyncConfig()
 {
     PimCommon::PimCommonSettings::self()->save();
-    MessageCore::GlobalSettings::self()->save();
+    MessageCore::MessageCoreSettings::self()->save();
     MessageViewer::MessageViewerSettings::self()->save();
     MessageComposer::MessageComposerSettings::self()->save();
     TemplateParser::GlobalSettings::self()->save();
@@ -1485,7 +1485,7 @@ void KMKernel::slotSyncConfig()
     KMKernel::config()->sync();
     //Laurent investigate why we need to reload them.
     PimCommon::PimCommonSettings::self()->load();
-    MessageCore::GlobalSettings::self()->load();
+    MessageCore::MessageCoreSettings::self()->load();
     MessageViewer::MessageViewerSettings::self()->load();
     MessageComposer::MessageComposerSettings::self()->load();
     TemplateParser::GlobalSettings::self()->load();
@@ -1608,8 +1608,8 @@ KSharedConfig::Ptr KMKernel::config()
         TemplateParser::GlobalSettings::self()->load();
         MessageComposer::MessageComposerSettings::self()->setSharedConfig(mySelf->mConfig);
         MessageComposer::MessageComposerSettings::self()->load();
-        MessageCore::GlobalSettings::self()->setSharedConfig(mySelf->mConfig);
-        MessageCore::GlobalSettings::self()->load();
+        MessageCore::MessageCoreSettings::self()->setSharedConfig(mySelf->mConfig);
+        MessageCore::MessageCoreSettings::self()->load();
         MessageViewer::MessageViewerSettings::self()->setSharedConfig(mySelf->mConfig);
         MessageViewer::MessageViewerSettings::self()->load();
         MailCommon::MailCommonSettings::self()->setSharedConfig(mySelf->mConfig);

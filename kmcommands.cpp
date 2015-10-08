@@ -1143,10 +1143,10 @@ KMPrintCommand::KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
       mPrintPreview(false)
 {
     fetchScope().fetchFullPayload(true);
-    if (MessageCore::GlobalSettings::useDefaultFonts()) {
+    if (MessageCore::MessageCoreSettings::useDefaultFonts()) {
         mOverrideFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
     } else {
-        mOverrideFont = MessageCore::GlobalSettings::self()->printFont();
+        mOverrideFont = MessageCore::MessageCoreSettings::self()->printFont();
     }
 }
 

@@ -4219,7 +4219,7 @@ QString KMMainWidget::overrideEncoding() const
     if (mMsgView) {
         return mMsgView->overrideEncoding();
     } else {
-        return MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
+        return MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
     }
 }
 

@@ -579,7 +579,7 @@ void MessageActions::printMessage(bool preview)
     }
     if (!result) {
         const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
-        const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
+        const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
         const Akonadi::Item message = mCurrentItem;
         KMPrintCommand *command =

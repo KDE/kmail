@@ -748,7 +748,7 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         printItem.setPayload<KMime::Message::Ptr>(composer->resultMessages().first());
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().first()), printItem);
         const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
-        const QString overrideEncoding = MessageCore::GlobalSettings::self()->overrideCharacterEncoding();
+        const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
         KMPrintCommand *command = new KMPrintCommand(this, printItem, mViewer->headerStylePlugin(),
                 mViewer->displayFormatMessageOverwrite(), mViewer->htmlLoadExternal() , useFixedFont, overrideEncoding);

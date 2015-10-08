@@ -273,7 +273,7 @@ void AppearancePage::FontsTab::doLoadOther()
                                            (fontNames[i].onlyFixed) ? fixedFont : mFont[0]);
             }
         }
-        mCustomFontCheck->setChecked(!MessageCore::GlobalSettings::self()->useDefaultFonts());
+        mCustomFontCheck->setChecked(!MessageCore::MessageCoreSettings::self()->useDefaultFonts());
         mFontLocationCombo->setCurrentIndex(0);
         slotFontSelectorChanged(0);
     } else {
@@ -292,7 +292,7 @@ void AppearancePage::FontsTab::save()
         }
 
         const bool customFonts = mCustomFontCheck->isChecked();
-        MessageCore::GlobalSettings::self()->setUseDefaultFonts(!customFonts);
+        MessageCore::MessageCoreSettings::self()->setUseDefaultFonts(!customFonts);
 
         for (int i = 0 ; i < numFontNames ; ++i) {
             const QString configName = QLatin1String(fontNames[i].configName);
@@ -404,7 +404,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
 
 void AppearancePage::ColorsTab::doLoadOther()
 {
-    mCustomColorCheck->setChecked(!MessageCore::GlobalSettings::self()->useDefaultColors());
+    mCustomColorCheck->setChecked(!MessageCore::MessageCoreSettings::self()->useDefaultColors());
     mRecycleColorCheck->setChecked(MessageViewer::MessageViewerSettings::self()->recycleQuoteColors());
     mCloseToQuotaThreshold->setValue(KMailSettings::self()->closeToQuotaThreshold());
     loadColor(true);
@@ -478,7 +478,7 @@ void AppearancePage::ColorsTab::save()
     KConfigGroup reader(KMKernel::self()->config(), "Reader");
     KConfigGroup collectionFolderView(KMKernel::self()->config(), "CollectionFolderView");
     bool customColors = mCustomColorCheck->isChecked();
-    MessageCore::GlobalSettings::self()->setUseDefaultColors(!customColors);
+    MessageCore::MessageCoreSettings::self()->setUseDefaultColors(!customColors);
 
     KColorScheme scheme(QPalette::Active, KColorScheme::View);
 
@@ -818,8 +818,8 @@ void AppearancePage::HeadersTab::doLoadOther()
     slotSelectDefaultTheme();
 
     // "Date Display":
-    setDateDisplay(MessageCore::GlobalSettings::self()->dateFormat(),
-                   MessageCore::GlobalSettings::self()->customDateFormat());
+    setDateDisplay(MessageCore::MessageCoreSettings::self()->dateFormat(),
+                   MessageCore::MessageCoreSettings::self()->customDateFormat());
 }
 
 void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
@@ -833,8 +833,8 @@ void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
     // "Theme":
     slotSelectDefaultTheme();
 
-    setDateDisplay(MessageCore::GlobalSettings::self()->dateFormat(),
-                   MessageCore::GlobalSettings::self()->customDateFormat());
+    setDateDisplay(MessageCore::MessageCoreSettings::self()->dateFormat(),
+                   MessageCore::MessageCoreSettings::self()->customDateFormat());
 }
 
 void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
@@ -870,8 +870,8 @@ void AppearancePage::HeadersTab::save()
     mThemeComboBox->writeDefaultConfig();
 
     const int dateDisplayID = mDateDisplay->checkedId();
-    MessageCore::GlobalSettings::self()->setDateFormat(dateDisplayID);
-    MessageCore::GlobalSettings::self()->setCustomDateFormat(mCustomDateFormatEdit->text());
+    MessageCore::MessageCoreSettings::self()->setDateFormat(dateDisplayID);
+    MessageCore::MessageCoreSettings::self()->setCustomDateFormat(mCustomDateFormatEdit->text());
 }
 
 //
