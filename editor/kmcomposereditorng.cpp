@@ -26,11 +26,13 @@
 #include <KToggleAction>
 #include <QMimeData>
 #include <QCheckBox>
+#include <QLabel>
 #include "pimcommon/kactionmenuchangecase.h"
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 #include "MessageCore/MessageCoreSettings"
 #include <Sonnet/ConfigDialog>
 #include <messagecomposer/richtextcomposeremailquotehighlighter.h>
+#include <sonnet/dictionarycombobox.h>
 
 KMComposerEditorNg::KMComposerEditorNg(KMComposeWin *win, QWidget *parent)
     : MessageComposer::RichTextComposer(parent),
@@ -124,6 +126,20 @@ void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
     } else {
         qCWarning(KMAIL_LOG) << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
     }
+    QLabel *textLabel = dialog.findChild<QLabel *>(QStringLiteral("textLabel1"));
+    if (textLabel) {
+        textLabel->hide();
+    } else {
+        qCWarning(KMAIL_LOG) << "Could not find any label named 'textLabel'. Sonnet::ConfigDialog must have changed!";
+    }
+    Sonnet::DictionaryComboBox *dictionaryComboBox = dialog.findChild<Sonnet::DictionaryComboBox *>(QStringLiteral("m_langCombo"));
+    if (dictionaryComboBox) {
+        dictionaryComboBox->hide();
+    } else {
+        qCWarning(KMAIL_LOG) << "Could not find any Sonnet::DictionaryComboBox named 'dictionaryComboBox'. Sonnet::ConfigDialog must have changed!";
+    }
+
+
     if (dialog.exec()) {
         setSpellCheckingLanguage(dialog.language());
     }
