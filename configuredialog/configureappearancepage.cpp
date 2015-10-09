@@ -77,7 +77,7 @@ using KMime::DateFormatter;
 #include <QVBoxLayout>
 #include <QRadioButton>
 #include <QCheckBox>
-#include <messageviewer/gravatarconfigwidget.h>
+#include <gravatar/gravatarconfigwidget.h>
 using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
@@ -902,8 +902,8 @@ AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
             this, &ConfigModuleTab::slotEmitChanged);
     topLayout->addWidget(mViewerSettings);
 
-    mGravatarConfigWidget = new MessageViewer::GravatarConfigWidget;
-    connect(mGravatarConfigWidget, &MessageViewer::GravatarConfigWidget::configChanged, this, &ConfigModuleTab::slotEmitChanged);
+    mGravatarConfigWidget = new Gravatar::GravatarConfigWidget;
+    connect(mGravatarConfigWidget, &Gravatar::GravatarConfigWidget::configChanged, this, &ConfigModuleTab::slotEmitChanged);
     topLayout->addWidget(mGravatarConfigWidget);
     topLayout->addStretch(100);   // spacer
 }

@@ -47,6 +47,7 @@ using KMail::MailServiceImpl;
 
 #include "MessageCore/MessageCoreSettings"
 #include "messagelistsettings.h"
+#include "gravatarsettings.h"
 #include "messagelist/messagelistutil.h"
 #include "messageviewer/messageviewersettings.h"
 #include "MessageComposer/AkonadiSender"
@@ -1481,6 +1482,7 @@ void KMKernel::slotSyncConfig()
     TemplateParser::TemplateParserSettings::self()->save();
     MessageList::MessageListSettings::self()->save();
     MailCommon::MailCommonSettings::self()->save();
+    Gravatar::GravatarSettings::self()->save();
     KMailSettings::self()->save();
     KMKernel::config()->sync();
     //Laurent investigate why we need to reload them.
@@ -1491,6 +1493,7 @@ void KMKernel::slotSyncConfig()
     TemplateParser::TemplateParserSettings::self()->load();
     MessageList::MessageListSettings::self()->load();
     MailCommon::MailCommonSettings::self()->load();
+    Gravatar::GravatarSettings::self()->load();
     KMailSettings::self()->load();
     KMKernel::config()->reparseConfiguration();
 }
@@ -1616,6 +1619,8 @@ KSharedConfig::Ptr KMKernel::config()
         MailCommon::MailCommonSettings::self()->load();
         PimCommon::PimCommonSettings::self()->setSharedConfig(mySelf->mConfig);
         PimCommon::PimCommonSettings::self()->load();
+        Gravatar::GravatarSettings::self()->setSharedConfig(mySelf->mConfig);
+        Gravatar::GravatarSettings::self()->load();
     }
     return mySelf->mConfig;
 }

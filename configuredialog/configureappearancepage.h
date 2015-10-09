@@ -37,6 +37,9 @@ class QModelIndex;
 namespace MessageViewer
 {
 class ConfigureWidget;
+}
+namespace Gravatar
+{
 class GravatarConfigWidget;
 }
 
@@ -179,7 +182,7 @@ private:
 private: // data
     QCheckBox *mCloseAfterReplyOrForwardCheck;
     MessageViewer::ConfigureWidget *mViewerSettings;
-    MessageViewer::GravatarConfigWidget *mGravatarConfigWidget;
+    Gravatar::GravatarConfigWidget *mGravatarConfigWidget;
 };
 
 class AppearancePageSystemTrayTab : public ConfigModuleTab

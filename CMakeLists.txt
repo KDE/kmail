@@ -269,6 +269,7 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 
 target_link_libraries(kmailprivate
    PRIVATE
+    KF5::Gravatar
     KF5::Mime
     KF5::AkonadiCore
     KF5::AkonadiPrivate
