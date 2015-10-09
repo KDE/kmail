@@ -3270,7 +3270,7 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("Next &Unread Message"), this);
         actionCollection()->addAction(QStringLiteral("go_next_unread_message"), action);
-        actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_Plus));
+        actionCollection()->setDefaultShortcuts(action, QList<QKeySequence>() << QKeySequence(Qt::Key_Plus) << QKeySequence(Qt::Key_Plus + Qt::KeypadModifier));
         if (QApplication::isRightToLeft()) {
             action->setIcon(QIcon::fromTheme(QStringLiteral("go-previous")));
         } else {
@@ -3290,7 +3290,7 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("Previous Unread &Message"), this);
         actionCollection()->addAction(QStringLiteral("go_prev_unread_message"), action);
-        actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_Minus));
+        actionCollection()->setDefaultShortcuts(action, QList<QKeySequence>() << QKeySequence(Qt::Key_Minus) << QKeySequence(Qt::Key_Minus + Qt::KeypadModifier));
         if (QApplication::isRightToLeft()) {
             action->setIcon(QIcon::fromTheme(QStringLiteral("go-next")));
         } else {
@@ -3304,13 +3304,13 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(i18n("Next Unread &Folder"), this);
         actionCollection()->addAction(QStringLiteral("go_next_unread_folder"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotNextUnreadFolder);
-        actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Plus));
+        actionCollection()->setDefaultShortcuts(action, QList<QKeySequence>() << QKeySequence(Qt::ALT + Qt::Key_Plus) << QKeySequence(Qt::ALT + Qt::Key_Plus + Qt::KeypadModifier));
         KMail::Util::addQActionHelpText(action, i18n("Go to the next folder with unread messages"));
     }
     {
         QAction *action = new QAction(i18n("Previous Unread F&older"), this);
         actionCollection()->addAction(QStringLiteral("go_prev_unread_folder"), action);
-        actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::ALT + Qt::Key_Minus));
+        actionCollection()->setDefaultShortcuts(action, QList<QKeySequence>() << QKeySequence(Qt::ALT + Qt::Key_Minus) << QKeySequence(Qt::ALT + Qt::Key_Minus + Qt::KeypadModifier));
         KMail::Util::addQActionHelpText(action, i18n("Go to the previous folder with unread messages"));
         connect(action, &QAction::triggered, this, &KMMainWidget::slotPrevUnreadFolder);
     }
