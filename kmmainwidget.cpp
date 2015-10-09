@@ -2988,7 +2988,8 @@ void KMMainWidget::setupActions()
     * as a part, though. */
     mDeleteAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action Hard delete, bypassing trash", "&Delete"), this);
     actionCollection()->addAction(QStringLiteral("delete"), mDeleteAction);
-    connect(mDeleteAction, &QAction::triggered, this, &KMMainWidget::slotDeleteMsg);
+    //Don't convert to new connect api.
+    connect(mDeleteAction, SIGNAL(triggered(bool)), this, SLOT(slotDeleteMsg(bool)));
     actionCollection()->setDefaultShortcut(mDeleteAction, QKeySequence(Qt::SHIFT + Qt::Key_Delete));
 
     mTrashThreadAction = new QAction(i18n("M&ove Thread to Trash"), this);
@@ -3000,7 +3001,8 @@ void KMMainWidget::setupActions()
 
     mDeleteThreadAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete T&hread"), this);
     actionCollection()->addAction(QStringLiteral("delete_thread"), mDeleteThreadAction);
-    connect(mDeleteThreadAction, &QAction::triggered, this, &KMMainWidget::slotDeleteThread);
+    //Don't use new connect api.
+    connect(mDeleteThreadAction, SIGNAL(triggered(bool)), this, SLOT(slotDeleteThread(bool)));
     actionCollection()->setDefaultShortcut(mDeleteThreadAction, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_Delete));
 
     mSearchMessages = new QAction(QIcon::fromTheme(QStringLiteral("edit-find-mail")), i18n("&Find Messages..."), this);
