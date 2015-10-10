@@ -172,9 +172,9 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QStringLiteral("org.freedesktop.Akonadi.NewMailNotifierAgent"),
-                                                                                  QStringLiteral("/NewMailNotifierAgent"),
-                                                                                  QDBusConnection::sessionBus(),
-                                                                                  this);
+            QStringLiteral("/NewMailNotifierAgent"),
+            QDBusConnection::sessionBus(),
+            this);
     if (!mNewMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
         delete mNewMailNotifierInterface;

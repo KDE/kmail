@@ -139,7 +139,6 @@ void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
         qCWarning(KMAIL_LOG) << "Could not find any Sonnet::DictionaryComboBox named 'dictionaryComboBox'. Sonnet::ConfigDialog must have changed!";
     }
 
-
     if (dialog.exec()) {
         setSpellCheckingLanguage(dialog.language());
     }
