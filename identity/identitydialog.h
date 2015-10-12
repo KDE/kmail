@@ -36,11 +36,7 @@
 #include <AkonadiCore/Item>
 class QCheckBox;
 
-namespace PimCommon
-{
-class SimpleStringListEditor;
-}
-
+class KEditListWidget;
 class KComboBox;
 class KJob;
 class KLineEdit;
@@ -124,7 +120,7 @@ private:
     KLineEdit                    *mNameEdit;
     KLineEdit                    *mOrganizationEdit;
     KLineEdit                    *mEmailEdit;
-    PimCommon::SimpleStringListEditor       *mAliasEdit;
+    KEditListWidget       *mAliasEdit;
     // "cryptography" tab:
     QWidget                      *mCryptographyTab;
     Kleo::SigningKeyRequester    *mPGPSigningKeyRequester;

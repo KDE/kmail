@@ -40,7 +40,7 @@
 
 // other KMail headers:
 #include "xfaceconfigurator.h"
-#include "PimCommon/SimpleStringlistEditor"
+#include <KEditListWidget>
 #include "mailcommon/folderrequester.h"
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "settings/kmailsettings.h"
@@ -211,7 +211,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Email Aliases" string text edit and label:
     ++row;
-    mAliasEdit = new PimCommon::SimpleStringListEditor(tab);
+    mAliasEdit = new KEditListWidget(tab);
     glay->addWidget(mAliasEdit, row, 1);
     label = new QLabel(i18n("Email a&liases:"), tab);
     label->setBuddy(mAliasEdit);
@@ -658,7 +658,7 @@ void IdentityDialog::slotRefreshDefaultDomainName()
 
 void IdentityDialog::slotAccepted()
 {
-    const QStringList aliases = mAliasEdit->stringList();
+    const QStringList aliases = mAliasEdit->items();
     foreach (const QString &alias, aliases) {
         if (!KEmailAddress::isValidSimpleAddress(alias)) {
             const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
@@ -782,7 +782,7 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mNameEdit->setText(ident.fullName());
     mOrganizationEdit->setText(ident.organization());
     mEmailEdit->setText(ident.primaryEmailAddress());
-    mAliasEdit->setStringList(ident.emailAliases());
+    mAliasEdit->insertStringList(ident.emailAliases());
 
     // "Cryptography" tab:
     mPGPSigningKeyRequester->setFingerprint(QLatin1String(ident.pgpSigningKey()));
@@ -887,7 +887,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setOrganization(mOrganizationEdit->text());
     QString email = mEmailEdit->text();
     ident.setPrimaryEmailAddress(email);
-    ident.setEmailAliases(mAliasEdit->stringList());
+    ident.setEmailAliases(mAliasEdit->items());
     // "Cryptography" tab:
     ident.setPGPSigningKey(mPGPSigningKeyRequester->fingerprint().toLatin1());
     ident.setPGPEncryptionKey(mPGPEncryptionKeyRequester->fingerprint().toLatin1());
