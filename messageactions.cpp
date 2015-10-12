@@ -28,7 +28,6 @@
 #include <TemplateParser/CustomTemplatesMenu>
 
 #include "PimCommon/AnnotationDialog"
-#include "PimCommon/WebShortCutsMenuManager"
 #include "MessageCore/MessageCoreSettings"
 #include "MessageCore/MailingList"
 #include "messagecore/messagehelpers.h"
@@ -41,6 +40,7 @@
 #include <AkonadiCore/ChangeRecorder>
 #include <QAction>
 #include "PimCommon/BalooDebugDialog"
+#include <KIO/KUriFilterSearchProviderActions>
 
 #include "messagecomposer/followupreminderselectdatedialog.h"
 #include "job/createfollowupreminderonexistingmessagejob.h"
@@ -75,7 +75,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
       mAddFollowupReminderAction(Q_NULLPTR),
       mDebugBalooAction(Q_NULLPTR)
 {
-    mWebShortcutMenuManager = new PimCommon::WebShortcutsMenuManager(this);
+    mWebShortcutMenuManager = new KIO::KUriFilterSearchProviderActions(this);
     mReplyActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this);
     ac->addAction(QStringLiteral("message_reply_menu"), mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);

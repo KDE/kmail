@@ -44,11 +44,10 @@ namespace TemplateParser
 class CustomTemplatesMenu;
 }
 
-namespace PimCommon
+namespace KIO
 {
-class WebShortcutsMenuManager;
+class KUriFilterSearchProviderActions;
 }
-
 namespace KMail
 {
 
@@ -165,7 +164,7 @@ private:
     QAction *mListFilterAction;
     QAction *mAddFollowupReminderAction;
     QAction *mDebugBalooAction;
-    PimCommon::WebShortcutsMenuManager *mWebShortcutMenuManager;
+    KIO::KUriFilterSearchProviderActions *mWebShortcutMenuManager;
 };
 
 }
