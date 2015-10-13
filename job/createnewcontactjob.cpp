@@ -67,7 +67,7 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
 
     const Akonadi::CollectionFetchJob *addressBookJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
 
-    Akonadi::Collection::List canCreateItemCollections ;
+    Akonadi::Collection::List canCreateItemCollections;
 
     foreach (const Akonadi::Collection &collection, addressBookJob->collections()) {
         if (Akonadi::Collection::CanCreateItem & collection.rights()) {

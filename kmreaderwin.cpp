@@ -294,10 +294,10 @@ static const int numKMailNewFeatures =
 QString KMReaderWin::newFeaturesMD5()
 {
     QByteArray str;
-    for (int i = 0 ; i < numKMailChanges ; ++i) {
+    for (int i = 0; i < numKMailChanges; ++i) {
         str += kmailChanges[i];
     }
-    for (int i = 0 ; i < numKMailNewFeatures ; ++i) {
+    for (int i = 0; i < numKMailNewFeatures; ++i) {
         str += kmailNewFeatures[i];
     }
     QCryptographicHash md5(QCryptographicHash::Md5);
@@ -365,7 +365,7 @@ void KMReaderWin::displayAboutPage()
                  "(compared to KMail %1, which is part of KDE Software Compilation %2):</p>\n",
                  QLatin1String("1.13"), QLatin1String(KDEPIM_VERSION));  // prior KMail and KDE version
         featuresText += QLatin1String("<ul>\n");
-        for (int i = 0 ; i < numKMailNewFeatures ; ++i) {
+        for (int i = 0; i < numKMailNewFeatures; ++i) {
             featuresText += QLatin1String("<li>") + i18n(kmailNewFeatures[i]) + QLatin1String("</li>\n");
         }
         featuresText += QLatin1String("</ul>\n");
@@ -391,7 +391,7 @@ void KMReaderWin::displayAboutPage()
                  "Important changes</span> (compared to KMail %1):</p>\n",
                  QLatin1String("1.13"));
         changesText += QLatin1String("<ul>\n");
-        for (int i = 0 ; i < numKMailChanges ; ++i) {
+        for (int i = 0; i < numKMailChanges; ++i) {
             changesText += i18n("<li>%1</li>\n", i18n(kmailChanges[i]));
         }
         changesText += QLatin1String("</ul>\n");
@@ -751,7 +751,7 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
         KMPrintCommand *command = new KMPrintCommand(this, printItem, mViewer->headerStylePlugin(),
-                mViewer->displayFormatMessageOverwrite(), mViewer->htmlLoadExternal() , useFixedFont, overrideEncoding);
+                mViewer->displayFormatMessageOverwrite(), mViewer->htmlLoadExternal(), useFixedFont, overrideEncoding);
         command->setPrintPreview(preview);
         command->start();
     } else {

@@ -839,7 +839,7 @@ void SearchWindow::addRulesToSearchPattern(const SearchPattern &pattern)
     QList<SearchRule::Ptr>::const_iterator end(pattern.constEnd());
     p.reserve(pattern.count());
 
-    for (it = pattern.constBegin() ; it != end ; ++it) {
+    for (it = pattern.constBegin(); it != end; ++it) {
         p.append(SearchRule::createInstance(**it));
     }
 

@@ -180,7 +180,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
 
     QStringList fontDescriptions;
     fontDescriptions.reserve(numFontNames);
-    for (int i = 0 ; i < numFontNames ; ++i) {
+    for (int i = 0; i < numFontNames; ++i) {
         fontDescriptions << i18n(fontNames[i].displayName);
     }
     mFontLocationCombo->addItems(fontDescriptions);
@@ -222,7 +222,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged(int index)
     if (mActiveFontIndex == 0) {
         mFont[0] = mFontChooser->font();
         // hardcode the family and size of "message body" dependant fonts:
-        for (int i = 0 ; i < numFontNames ; ++i)
+        for (int i = 0; i < numFontNames; ++i)
             if (!fontNames[i].enableFamilyAndSize) {
                 // ### shall we copy the font and set the save and re-set
                 // {regular,italic,bold,bold italic} property or should we
@@ -258,7 +258,7 @@ void AppearancePage::FontsTab::doLoadOther()
         mFont[0] = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
         QFont fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 
-        for (int i = 0 ; i < numFontNames ; ++i) {
+        for (int i = 0; i < numFontNames; ++i) {
             const QString configName = QLatin1String(fontNames[i].configName);
             if (configName == QLatin1String("MessageListFont")) {
                 mFont[i] = MessageList::MessageListSettings::self()->messageListFont();
@@ -294,7 +294,7 @@ void AppearancePage::FontsTab::save()
         const bool customFonts = mCustomFontCheck->isChecked();
         MessageCore::MessageCoreSettings::self()->setUseDefaultFonts(!customFonts);
 
-        for (int i = 0 ; i < numFontNames ; ++i) {
+        for (int i = 0; i < numFontNames; ++i) {
             const QString configName = QLatin1String(fontNames[i].configName);
             if (customFonts && configName == QLatin1String("MessageListFont")) {
                 MessageList::MessageListSettings::self()->setMessageListFont(mFont[i]);
@@ -363,7 +363,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     // color list box:
     mColorList = new ColorListBox(this);
     mColorList->setEnabled(false);   // since !mCustomColorCheck->isChecked()
-    for (int i = 0 ; i < numColorNames ; ++i) {
+    for (int i = 0; i < numColorNames; ++i) {
         mColorList->addColor(i18n(colorNames[i].displayName));
     }
     vlay->addWidget(mColorList, 1);
@@ -439,7 +439,7 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
             scheme.background().color() // reader background color
         };
 
-        for (int i = 0 ; i < numColorNames ; ++i) {
+        for (int i = 0; i < numColorNames; ++i) {
             if (loadFromConfig) {
                 const QString configName = QLatin1String(colorNames[i].configName);
                 if (configName == QLatin1String("UnreadMessageColor")) {
@@ -482,7 +482,7 @@ void AppearancePage::ColorsTab::save()
 
     KColorScheme scheme(QPalette::Active, KColorScheme::View);
 
-    for (int i = 0 ; i < numColorNames ; ++i) {
+    for (int i = 0; i < numColorNames; ++i) {
         const QString configName = QLatin1String(colorNames[i].configName);
         if (customColors && configName == QLatin1String("UnreadMessageColor")) {
             MessageList::MessageListSettings::self()->setUnreadMessageColor(mColorList->color(i));
@@ -707,7 +707,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     mDateDisplay->setExclusive(true);
     gvlay = new QVBoxLayout(mDateDisplayBox);
 
-    for (int i = 0 ; i < numDateDisplayConfig ; ++i) {
+    for (int i = 0; i < numDateDisplayConfig; ++i) {
         const char *label = dateDisplayConfig[i].displayName;
         QString buttonLabel;
         if (QString::fromLatin1(label).contains(QStringLiteral("%1"))) {
@@ -847,7 +847,7 @@ void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
         mCustomDateFormatEdit->setText(format);
     }
 
-    for (int i = 0 ; i < numDateDisplayConfig ; ++i)
+    for (int i = 0; i < numDateDisplayConfig; ++i)
         if (dateDisplay == dateDisplayConfig[i].dateDisplay) {
             mDateDisplay->button(dateDisplay)->setChecked(true);
             return;

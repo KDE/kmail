@@ -624,7 +624,7 @@ bool DoesntMatchEMailAddress::operator()(const GpgME::Key &key) const
 {
     const std::vector<GpgME::UserID> uids = key.userIDs();
     std::vector<GpgME::UserID>::const_iterator end = uids.end();
-    for (std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != end ; ++it)
+    for (std::vector<GpgME::UserID>::const_iterator it = uids.begin(); it != end; ++it)
         if (checkForEmail(it->email() ? it->email() : it->id())) {
             return false;
         }

@@ -512,7 +512,7 @@ KMAddBookmarksCommand::KMAddBookmarksCommand(const QUrl &url, QWidget *parent)
 
 KMCommand::Result KMAddBookmarksCommand::execute()
 {
-    const QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + QLatin1String("konqueror/bookmarks.xml") ;
+    const QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + QLatin1String("konqueror/bookmarks.xml");
     QFileInfo fileInfo(filename);
     QDir().mkpath(fileInfo.absolutePath());
     KBookmarkManager *bookManager = KBookmarkManager::managerForFile(filename, QStringLiteral("konqueror"));
@@ -1404,7 +1404,7 @@ KMMetaFilterActionCommand::KMMetaFilterActionCommand(const QString &filterId,
 void KMMetaFilterActionCommand::start()
 {
     KMCommand *filterCommand = new KMFilterActionCommand(
-        mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId() , mFilterId);
+        mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId(), mFilterId);
     filterCommand->start();
 }
 
@@ -1473,7 +1473,7 @@ KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder,
 }
 
 KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder,
-                             const Akonadi::Item &msg ,
+                             const Akonadi::Item &msg,
                              MessageList::Core::MessageItemSetReference ref)
     : KMCommand(Q_NULLPTR, msg), mDestFolder(destFolder), mProgressItem(Q_NULLPTR), mRef(ref)
 {
@@ -1579,7 +1579,7 @@ Akonadi::Collection KMTrashMsgCommand::findTrashFolder(const Akonadi::Collection
     return Akonadi::Collection();
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item &msg , MessageViewer::Viewer *viewer)
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::Viewer *viewer)
     : KMCommand(parent, msg),
       mViewer(viewer)
 {

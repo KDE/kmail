@@ -266,12 +266,12 @@ void KMSystemTray::slotActivated()
 {
     KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
     if (!mainWidget) {
-        return ;
+        return;
     }
 
     QWidget *mainWin = mainWidget->window();
     if (!mainWin) {
-        return ;
+        return;
     }
 
     KWindowInfo cur = KWindowSystem::windowInfo(mainWin->winId(), NET::WMDesktop);
@@ -433,7 +433,7 @@ void KMSystemTray::slotSelectCollection(QAction *act)
     kmkernel->selectCollectionFromId(id);
     KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
     if (!mainWidget) {
-        return ;
+        return;
     }
     QWidget *mainWin = mainWidget->window();
     if (mainWin && !mainWin->isVisible()) {

@@ -64,7 +64,7 @@ private Q_SLOTS:
     void slotContextMenuAboutToShow();
     void slotSelectCollection(QAction *act);
     void initListOfCollection();
-    void slotCollectionStatisticsChanged(Akonadi::Collection::Id , const Akonadi::CollectionStatistics &);
+    void slotCollectionStatisticsChanged(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
     void slotGeneralPaletteChanged();
     void slotGeneralFontChanged();
 

@@ -608,7 +608,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     }
     QList<QUrl> attachURLs = QUrl::fromStringList(attachmentPaths);
     QList<QUrl>::ConstIterator endAttachment(attachURLs.constEnd());
-    for (QList<QUrl>::ConstIterator it = attachURLs.constBegin() ; it != endAttachment; ++it) {
+    for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
         if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
             if (KMessageBox::questionYesNo(Q_NULLPTR, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder")) == KMessageBox::No) {
@@ -624,7 +624,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     if (!customHeaders.isEmpty()) {
         QMap<QByteArray, QString> extraCustomHeaders;
         QStringList::ConstIterator end = customHeaders.constEnd();
-        for (QStringList::ConstIterator it = customHeaders.constBegin() ; it != end ; ++it) {
+        for (QStringList::ConstIterator it = customHeaders.constBegin(); it != end; ++it) {
             if (!(*it).isEmpty()) {
                 const int pos = (*it).indexOf(QLatin1Char(':'));
                 if (pos > 0) {
@@ -1261,7 +1261,7 @@ void KMKernel::recoverDeadLetters()
             autoSaveWin->show();
             autoSaveFile.close();
         } else {
-            KMessageBox::sorry(Q_NULLPTR, i18n("Failed to open autosave file at %1.\nReason: %2" ,
+            KMessageBox::sorry(Q_NULLPTR, i18n("Failed to open autosave file at %1.\nReason: %2",
                                                file.absoluteFilePath(), autoSaveFile.errorString()),
                                i18n("Opening Autosave File Failed"));
         }
@@ -1542,7 +1542,7 @@ void KMKernel::slotConfigChanged()
 //static
 QString KMKernel::localDataPath()
 {
-    return QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kmail2/") ;
+    return QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kmail2/");
 }
 
 //-------------------------------------------------------------------------------
@@ -2044,7 +2044,7 @@ const QAbstractItemModel *KMKernel::treeviewModelSelection()
     }
 }
 
-void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance , const QString &message)
+void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance, const QString &message)
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
     KNotification::event(QStringLiteral("akonadi-instance-warning"),

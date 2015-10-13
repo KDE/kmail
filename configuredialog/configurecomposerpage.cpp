@@ -936,8 +936,8 @@ void ComposerPage::CharsetTab::doLoadOther()
     }
     QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
     QStringList::Iterator end(charsets.end());
-    for (QStringList::Iterator it = charsets.begin() ;
-            it != end ; ++it)
+    for (QStringList::Iterator it = charsets.begin();
+            it != end; ++it)
         if ((*it) == QLatin1String("locale")) {
             QByteArray cset = kmkernel->networkCodec()->name();
             cset = cset.toLower();
@@ -968,7 +968,7 @@ void ComposerPage::CharsetTab::save()
     QStringList::Iterator it = charsetList.begin();
     QStringList::Iterator end = charsetList.end();
 
-    for (; it != end ; ++it)
+    for (; it != end; ++it)
         if ((*it).endsWith(QLatin1String("(locale)"))) {
             (*it) = QStringLiteral("locale");
         }
@@ -1161,7 +1161,7 @@ void ComposerPage::HeadersTab::doLoadOther()
     QTreeWidgetItem *item = Q_NULLPTR;
 
     const int count = KMailSettings::self()->customMessageHeadersCount();
-    for (int i = 0 ; i < count ; ++i) {
+    for (int i = 0; i < count; ++i) {
         KConfigGroup config(KMKernel::self()->config(),
                             QLatin1String("Mime #") + QString::number(i));
         const QString name  = config.readEntry("name");

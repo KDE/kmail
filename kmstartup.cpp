@@ -33,7 +33,7 @@ void insertLibraryCataloguesAndIcons()
 
     KIconLoader *il = KIconLoader::global();
     unsigned int catalogSize = (sizeof catalogs / sizeof * catalogs);
-    for (unsigned int i = 0 ; i < catalogSize ; ++i) {
+    for (unsigned int i = 0; i < catalogSize; ++i) {
         il->addAppDir(QLatin1String(catalogs[i]));
     }
 

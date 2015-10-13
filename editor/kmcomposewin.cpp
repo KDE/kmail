@@ -1369,7 +1369,7 @@ void KMComposeWin::setupActions(void)
 
     QStringList listCryptoFormat;
     listCryptoFormat.reserve(numCryptoMessageFormats);
-    for (int i = 0 ; i < numCryptoMessageFormats ; ++i) {
+    for (int i = 0; i < numCryptoMessageFormats; ++i) {
         listCryptoFormat.push_back(Kleo::cryptoMessageFormatToLabel(cryptoMessageFormats[i]));
     }
 
@@ -1579,7 +1579,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     // unless the identity is sticky
     if (!stickyIdentity) {
         disconnect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
-                   this, SLOT(slotIdentityChanged(uint))) ;
+                   this, SLOT(slotIdentityChanged(uint)));
     }
 
     // load the mId into the gui, sticky or not, without emitting
@@ -2906,7 +2906,7 @@ void KMComposeWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation c
     if (confirmation == MessageComposer::ComposerViewBase::LetUserConfirm && mComposerBase->editor()->composerControler()->isFormattingUsed() && !mForceDisableHtml) {
         int choice = KMessageBox::warningYesNoCancel(this, i18n("Turning HTML mode off "
                      "will cause the text to lose the formatting. Are you sure?"),
-                     i18n("Lose the formatting?"), KGuiItem(i18n("Lose Formatting")), KGuiItem(i18n("Add Markup Plain Text")) , KStandardGuiItem::cancel(),
+                     i18n("Lose the formatting?"), KGuiItem(i18n("Lose Formatting")), KGuiItem(i18n("Add Markup Plain Text")), KStandardGuiItem::cancel(),
                      QStringLiteral("LoseFormattingWarning"));
 
         switch (choice) {

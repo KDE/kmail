@@ -152,7 +152,7 @@ void IdentityPage::slotNewIdentity()
             break;
         case NewIdentityDialog::Empty:
             mIdentityManager->newFromScratch(identityName);
-        default: ;
+        default:;
         }
 
         //
@@ -256,7 +256,7 @@ void IdentityPage::slotRenameIdentity()
     mIPage.mIdentityList->editItem(item);
 }
 
-void IdentityPage::slotRenameIdentity(KMail::IdentityListViewItem *item , const QString &text)
+void IdentityPage::slotRenameIdentity(KMail::IdentityListViewItem *item, const QString &text)
 {
     if (!item) {
         return;

@@ -44,7 +44,7 @@ void ConfigModuleWithTabs::showEvent(QShowEvent *event)
 void ConfigModuleWithTabs::load()
 {
     const int numberOfTab = mTabWidget->count();
-    for (int i = 0 ; i < numberOfTab ; ++i) {
+    for (int i = 0; i < numberOfTab; ++i) {
         ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab *>(mTabWidget->widget(i));
         if (tab) {
             tab->load();
@@ -58,7 +58,7 @@ void ConfigModuleWithTabs::save()
     if (mWasInitialized) {
         KCModule::save();
         const int numberOfTab = mTabWidget->count();
-        for (int i = 0 ; i < numberOfTab ; ++i) {
+        for (int i = 0; i < numberOfTab; ++i) {
             ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab *>(mTabWidget->widget(i));
             if (tab) {
                 tab->save();

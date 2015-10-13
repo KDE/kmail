@@ -391,7 +391,7 @@ private Q_SLOTS:
 
     void slotPrintComposeResult(KJob *job);
 
-    void slotSendFailed(const QString &msg , MessageComposer::ComposerViewBase::FailedType type);
+    void slotSendFailed(const QString &msg, MessageComposer::ComposerViewBase::FailedType type);
     void slotSendSuccessful();
 
     /**
@@ -494,7 +494,7 @@ private:
     /**
      * Apply template to new or unmodified message.
      */
-    void applyTemplate(uint uoid , uint uOldId);
+    void applyTemplate(uint uoid, uint uOldId);
 
     /**
      * Set the quote prefix according to identity.

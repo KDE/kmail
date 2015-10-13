@@ -74,7 +74,7 @@ public:
      */
     void setupForwardingActionsList(KXMLGUIClient *guiClient);
 
-    void setCurrentMessage(const Akonadi::Item &item , const Akonadi::Item::List &items = Akonadi::Item::List());
+    void setCurrentMessage(const Akonadi::Item &item, const Akonadi::Item::List &items = Akonadi::Item::List());
 
     KActionMenu *replyMenu() const;
     QAction *replyListAction() const;

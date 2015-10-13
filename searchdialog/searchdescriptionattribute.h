@@ -32,7 +32,7 @@ class SearchDescriptionAttribute : public Akonadi::Attribute
 {
 public:
     SearchDescriptionAttribute();
-    QByteArray description() const ;
+    QByteArray description() const;
     void setDescription(const QByteArray &desc);
     Akonadi::Collection baseCollection() const;
     void setBaseCollection(const Akonadi::Collection &);

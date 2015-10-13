@@ -578,7 +578,7 @@ void AntiSpamWizard::checkToolAvailability()
 
 void AntiSpamWizard::slotHelpClicked()
 {
-    KHelpClient::invokeHelp((mMode == AntiSpam) ? QStringLiteral("the-anti-spam-wizard") : QStringLiteral("the-anti-virus-wizard") , QStringLiteral("kmail"));
+    KHelpClient::invokeHelp((mMode == AntiSpam) ? QStringLiteral("the-anti-spam-wizard") : QStringLiteral("the-anti-virus-wizard"), QStringLiteral("kmail"));
 }
 
 void AntiSpamWizard::slotBuildSummary()

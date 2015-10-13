@@ -435,7 +435,7 @@ protected Q_SLOTS:
     */
     void showOfflinePage();
     void showResourceOfflinePage();
-    void updateVacationScriptStatus(bool active , const QString &serverName = QString());
+    void updateVacationScriptStatus(bool active, const QString &serverName = QString());
 
     void slotItemAdded(const Akonadi::Item &, const Akonadi::Collection &col);
     void slotItemRemoved(const Akonadi::Item &);
@@ -512,7 +512,7 @@ private:
 
     void openFilterDialog(const QByteArray &field, const QString &value);
 
-    void showMessagePopup(const Akonadi::Item &msg , const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
+    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
 private Q_SLOTS:
     void slotMoveMessageToTrash();

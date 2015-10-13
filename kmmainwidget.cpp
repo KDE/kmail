@@ -524,7 +524,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 void KMMainWidget::slotShowSelectedFolderInPane()
 {
     if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
-        mMessagePane->setCurrentFolder(mCurrentFolder->collection(), false , mPreSelectionMode);
+        mMessagePane->setCurrentFolder(mCurrentFolder->collection(), false, mPreSelectionMode);
     }
 }
 
@@ -2621,7 +2621,7 @@ void KMMainWidget::slotMarkAll()
     updateMessageActions();
 }
 
-void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg , const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint)
+void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint)
 {
     updateMessageMenu();
 
@@ -2660,7 +2660,7 @@ void KMMainWidget::slotContactSearchJobForMessagePopupDone(KJob *job)
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound);
 }
 
-void KMMainWidget::showMessagePopup(const Akonadi::Item &msg , const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
+void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
 {
     QMenu *menu = new QMenu;
 

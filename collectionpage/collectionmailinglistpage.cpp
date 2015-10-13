@@ -218,7 +218,7 @@ void CollectionMailingListPage::slotFetchDone(KJob *job)
     Akonadi::Item::List items = fjob->items();
     const int maxchecks = 5;
     int num = items.size();
-    for (int i = --num ; (i > num - maxchecks) && (i >= 0); --i) {
+    for (int i = --num; (i > num - maxchecks) && (i >= 0); --i) {
         Akonadi::Item item = items[i];
         if (item.hasPayload<KMime::Message::Ptr>()) {
             KMime::Message::Ptr message = item.payload<KMime::Message::Ptr>();

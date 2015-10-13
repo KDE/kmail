@@ -276,7 +276,7 @@ class  KMOpenMsgCommand : public KMCommand
 
 public:
     explicit KMOpenMsgCommand(QWidget *parent, const QUrl &url = QUrl(),
-                              const QString &encoding = QString() , KMMainWidget *main = Q_NULLPTR);
+                              const QString &encoding = QString(), KMMainWidget *main = Q_NULLPTR);
 
 private:
     Result execute() Q_DECL_OVERRIDE;

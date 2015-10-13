@@ -82,7 +82,7 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     connect(mMMTab.mActionEnterFolder, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkTime, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, mMMTab.mDelayedMarkTime, &QWidget::setEnabled);
-    connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, this , &ConfigModuleTab::slotEmitChanged);
+    connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
     connect(mMMTab.mShowPopupAfterDnD, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mOnStartupOpenFolder, &MailCommon::FolderRequester::folderChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mEmptyTrashCheck, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
@@ -131,7 +131,7 @@ MiscPageAgentSettingsTab::MiscPageAgentSettingsTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0 , 0, 0, 0);
+    l->setContentsMargins(0, 0, 0, 0);
     mConfigureAgent = new ConfigureAgentsWidget;
     l->addWidget(mConfigureAgent);
 
@@ -163,7 +163,7 @@ MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)
 {
     mInvitationUi = new MessageViewer::InvitationSettings(this);
     QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0 , 0, 0, 0);
+    l->setContentsMargins(0, 0, 0, 0);
     l->addWidget(mInvitationUi);
     connect(mInvitationUi, &MessageViewer::InvitationSettings::changed, this, &MiscPageInviteTab::slotEmitChanged);
 }
@@ -203,7 +203,7 @@ MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
 {
     mPrintingUi = new MessageViewer::PrintingSettings(this);
     QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0 , 0, 0, 0);
+    l->setContentsMargins(0, 0, 0, 0);
     l->addWidget(mPrintingUi);
     connect(mPrintingUi, &MessageViewer::PrintingSettings::changed, this, &MiscPagePrintingTab::slotEmitChanged);
 }

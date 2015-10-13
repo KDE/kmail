@@ -279,7 +279,7 @@ static const about_data credits[] = {
     { "Davide Bettio", Q_NULLPTR, "davide.bettio@kdemail.net", Q_NULLPTR },
     { "Pradeepto Bhattacharya", Q_NULLPTR, "pradeepto@kde.org", Q_NULLPTR },
     { "Bruno Bigras", Q_NULLPTR, "bigras.bruno@gmail.com", Q_NULLPTR },
-    { "Bertjan Broeksema", Q_NULLPTR , "broeksema@kde.org", Q_NULLPTR },
+    { "Bertjan Broeksema", Q_NULLPTR, "broeksema@kde.org", Q_NULLPTR },
     { "Albert Astals Cid", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // fix for bug:95441 (folder tree context menu doesn't show shortcuts assigned to the actions)
     { "Cornelius Schumacher", Q_NULLPTR, "schumacher@kde.org", Q_NULLPTR }, // implemented the new recipients editor and picker
     {
@@ -373,13 +373,13 @@ AboutData::AboutData()
     using KMail::authors;
     using KMail::credits;
     const unsigned int numberAuthors(sizeof authors / sizeof * authors);
-    for (unsigned int i = 0 ; i < numberAuthors; ++i) {
+    for (unsigned int i = 0; i < numberAuthors; ++i) {
         addAuthor(i18n(authors[i].name), authors[i].desc ? i18n(authors[i].desc) : QString(),
                   QLatin1String(authors[i].email), QLatin1String(authors[i].web));
     }
 
     const unsigned int numberCredits(sizeof credits / sizeof * credits);
-    for (unsigned int i = 0 ; i < numberCredits; ++i) {
+    for (unsigned int i = 0; i < numberCredits; ++i) {
         addCredit(i18n(credits[i].name), credits[i].desc ? i18n(credits[i].desc) : QString(),
                   QLatin1String(credits[i].email), QLatin1String(credits[i].web));
     }
