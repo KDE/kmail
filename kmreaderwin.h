@@ -210,7 +210,7 @@ public:
     bool mimePartTreeIsEmpty() const;
     KActionMenu *shareServiceUrlMenu() const;
 
-    QList<QAction *> viewerPluginActionList(bool needValidMessage = false);
+    QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
 Q_SIGNALS:
     /** Emitted after parsing of a message to have it stored

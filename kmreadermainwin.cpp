@@ -546,7 +546,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
         menu->addSeparator();
         mMsgActions->addWebShortcutsMenu(menu, selectedText);
         menu->addSeparator();
-        menu->addActions(mReaderWin->viewerPluginActionList(false));
+        menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
         if (PimCommon::TextToSpeech::self()->isReady()) {
             menu->addSeparator();
             menu->addAction(mReaderWin->speakTextAction());
@@ -608,7 +608,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mSaveAtmAction);
             if (msg.isValid()) {
                 menu->addSeparator();
-                menu->addActions(mReaderWin->viewerPluginActionList(true));
+                menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
                 menu->addSeparator();
                 menu->addAction(mReaderWin->saveMessageDisplayFormatAction());
                 menu->addAction(mReaderWin->resetMessageDisplayFormatAction());
