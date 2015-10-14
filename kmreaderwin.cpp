@@ -305,102 +305,68 @@ QString KMReaderWin::newFeaturesMD5()
     return QLatin1String(md5.result().toBase64());
 }
 
-void KMReaderWin::displaySplashPage(const QString &info)
+void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantHash &_data)
 {
-    mViewer->displaySplashPage(info);
+    QVariantHash data = _data;
+    if (!data.contains(QStringLiteral("icon"))) {
+         data[QStringLiteral("icon")] = QStringLiteral("kmail");
+    }
+    if (!data.contains(QStringLiteral("name"))) {
+        data[QStringLiteral("name")] = i18n("KMail");
+    }
+    if (!data.contains(QStringLiteral("subtitle"))) {
+        data[QStringLiteral("subtitle")] = i18n("The KDE Mail Client");
+    }
+
+    mViewer->displaySplashPage(templateName, data);
 }
 
 void KMReaderWin::displayBusyPage()
 {
-    const QString info =
-        i18n("<h2 style='margin-top: 0px;'>Retrieving Folder Contents</h2><p>Please wait . . .</p>&nbsp;");
-
-    displaySplashPage(info);
+    displaySplashPage(QStringLiteral("status.html"),
+                      { { QStringLiteral("title"), i18n("Retrieving Folder Contents") },
+                        { QStringLiteral("subtext"), i18n("Please wait . . .") } });
 }
 
 void KMReaderWin::displayOfflinePage()
 {
-    const QString info =
-        i18n("<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline mode. "
-             "Click <a href=\"kmail:goOnline\">here</a> to go online . . .</p>&nbsp;");
-
-    displaySplashPage(info);
+    displaySplashPage(QStringLiteral("status.html"),
+                      { { QStringLiteral("title"), i18n("Offline") },
+                        { QStringLiteral("subtext"), i18n("KMail is currently in offline mode. "
+                                                          "Click <a href=\"kmail:goOnline\">here</a> to go online . . .</p>") }
+                      });
 }
 
 void KMReaderWin::displayResourceOfflinePage()
 {
-    const QString info =
-        i18n("<h2 style='margin-top: 0px;'>Offline</h2><p>Account is currently in offline mode. "
-             "Click <a href=\"kmail:goResourceOnline\">here</a> to go online . . .</p>&nbsp;");
-
-    displaySplashPage(info);
+    displaySplashPage(QStringLiteral("status.html"),
+                      { { QStringLiteral("title"), i18n("Offline") },
+                        { QStringLiteral("subtext"),i18n("Account is currently in offline mode. "
+                                                         "Click <a href=\"kmail:goResourceOnline\">here</a> to go online . . .</p>") }
+                      });
 }
 
 void KMReaderWin::displayAboutPage()
 {
-    KLocalizedString info =
-        ki18nc("%1: KMail version; %2: help:// URL; "
-               "%3: generated list of new features; "
-               "%4: First-time user text (only shown on first start); "
-               "%5: generated list of important changes; "
-               "--- end of comment ---",
-               "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client by KDE. "
-               "It is designed to be fully compatible with "
-               "Internet mailing standards including MIME, SMTP, POP3, and IMAP."
-               "</p>\n"
-               "<ul><li>KMail has many powerful features which are described in the "
-               "<a href=\"%2\">documentation</a></li>\n"
-               "%5\n" // important changes
-               "%3\n" // new features
-               "%4\n" // first start info
-               "<p>We hope that you will enjoy KMail.</p>\n"
-               "<p>Thank you,</p>\n"
-               "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
-        .subs(QStringLiteral(KDEPIM_VERSION))
-        .subs(QStringLiteral("help:/kmail/index.html"));
+    QVariantHash data;
+    data[QStringLiteral("version")] = QStringLiteral(KDEPIM_VERSION);
+    data[QStringLiteral("firstStart")] = kmkernel->firstStart();
 
-    if ((numKMailNewFeatures > 1) || (numKMailNewFeatures == 1 && strlen(kmailNewFeatures[0]) > 0)) {
-        QString featuresText =
-            i18n("<p>Some of the new features in this release of KMail include "
-                 "(compared to KMail %1, which is part of KDE Software Compilation %2):</p>\n",
-                 QLatin1String("1.13"), QLatin1String(KDEPIM_VERSION));  // prior KMail and KDE version
-        featuresText += QLatin1String("<ul>\n");
-        for (int i = 0; i < numKMailNewFeatures; ++i) {
-            featuresText += QLatin1String("<li>") + i18n(kmailNewFeatures[i]) + QLatin1String("</li>\n");
-        }
-        featuresText += QLatin1String("</ul>\n");
-        info = info.subs(featuresText);
-    } else {
-        info = info.subs(QString());    // remove the place holder
+    QVariantList features;
+    features.reserve(numKMailNewFeatures);
+    for (int i = 0; i < numKMailNewFeatures; ++i) {
+        features.push_back(i18n(kmailNewFeatures[i]));
     }
+    data[QStringLiteral("newFeatures")] = features;
 
-    if (kmkernel->firstStart()) {
-        info = info.subs(i18n("<p>Please take a moment to fill in the KMail "
-                              "configuration panel at Settings-&gt;Configure "
-                              "KMail.\n"
-                              "You need to create at least a default identity and "
-                              "an incoming as well as outgoing mail account."
-                              "</p>\n"));
-    } else {
-        info = info.subs(QString());   // remove the place holder
+    QVariantList changes;
+    changes.reserve(numKMailChanges);
+    for (int i = 0; i < numKMailChanges; ++i) {
+        features.push_back(i18n(kmailChanges[i]));
     }
+    data[QStringLiteral("importantChanges")] = changes;
 
-    if ((numKMailChanges > 1) || (numKMailChanges == 1 && strlen(kmailChanges[0]) > 0)) {
-        QString changesText =
-            i18n("<p><span style='font-size:125%; font-weight:bold;'>"
-                 "Important changes</span> (compared to KMail %1):</p>\n",
-                 QLatin1String("1.13"));
-        changesText += QLatin1String("<ul>\n");
-        for (int i = 0; i < numKMailChanges; ++i) {
-            changesText += i18n("<li>%1</li>\n", i18n(kmailChanges[i]));
-        }
-        changesText += QLatin1String("</ul>\n");
-        info = info.subs(changesText);
-    } else {
-        info = info.subs(QString());    // remove the place holder
-    }
-
-    displaySplashPage(info.toString());
+    displaySplashPage(QStringLiteral("introduction_kmail.html"), data);
 }
 
 void KMReaderWin::slotFind()

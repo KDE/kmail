@@ -105,7 +105,7 @@ public:
     static QString newFeaturesMD5();
 
     /** Display a generic HTML splash page instead of a message */
-    void displaySplashPage(const QString &info);
+    void displaySplashPage(const QString &templateName, const QVariantHash &data);
 
     /** Display the about page instead of a message */
     void displayAboutPage();
