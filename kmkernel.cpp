@@ -1455,7 +1455,7 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
 {
     if (mailto) {
         openComposer(to, cc, bcc, subj, body, 0,
-                     messageFile.toDisplayString(), QUrl::toStringList(attachURLs),
+                     messageFile.toLocalFile(), QUrl::toStringList(attachURLs),
                      customHeaders, replyTo, inReplyTo);
     } else {
         openReader(check);
