@@ -455,11 +455,12 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mExternalEditorWarning = new ExternalEditorWarning(this);
     v->addWidget(mExternalEditorWarning);
 
-    readConfig();
     setupStatusBar(attachmentView->widget());
     setupActions();
     setupEditor();
     rethinkFields();
+    readConfig();
+
     updateSignatureAndEncryptionStateIndicators();
 
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
