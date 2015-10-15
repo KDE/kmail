@@ -562,9 +562,8 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
         msg->subject()->fromUnicodeString(subject, "utf-8");
     }
 
-    QUrl messageUrl = QUrl::fromLocalFile(messageFile);
-    if (!messageUrl.isEmpty() && messageUrl.isLocalFile()) {
-        QFile f(messageUrl.toLocalFile());
+    if (!messageFile.isEmpty() && QFile::exists(messageFile)) {
+        QFile f(messageFile);
         QByteArray str;
         if (!f.open(QIODevice::ReadOnly)) {
             qCWarning(KMAIL_LOG) << "Failed to load message: " << f.errorString();
