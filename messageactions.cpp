@@ -39,7 +39,7 @@
 #include <Akonadi/KMime/MessageParts>
 #include <AkonadiCore/ChangeRecorder>
 #include <QAction>
-#include "PimCommon/AkonadiSearchDebugDialog"
+#include <AkonadiSearch/Debug/akonadisearchdebugdialog.h>
 #include <KIO/KUriFilterSearchProviderActions>
 
 #include "messagecomposer/followupreminderselectdatedialog.h"
@@ -695,10 +695,10 @@ void MessageActions::slotDebugBaloo()
     if (!mCurrentItem.isValid()) {
         return;
     }
-    QPointer<PimCommon::AkonadiSearchDebugDialog> dlg = new PimCommon::AkonadiSearchDebugDialog;
+    QPointer<Akonadi::Search::AkonadiSearchDebugDialog> dlg = new Akonadi::Search::AkonadiSearchDebugDialog;
     dlg->setAkonadiId(mCurrentItem.id());
     dlg->setAttribute(Qt::WA_DeleteOnClose);
-    dlg->setSearchType(PimCommon::AkonadiSearchDebugSearchPathComboBox::Emails);
+    dlg->setSearchType(Akonadi::Search::AkonadiSearchDebugSearchPathComboBox::Emails);
     dlg->doSearch();
     dlg->show();
 }

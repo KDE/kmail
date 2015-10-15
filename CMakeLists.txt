@@ -304,6 +304,7 @@ target_link_libraries(kmailprivate
     KF5::XmlGui
     KF5::Completion
     KF5::Ldap
+    KF5::AkonadiSearchDebug
 )
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
