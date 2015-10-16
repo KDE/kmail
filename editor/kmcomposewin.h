@@ -52,7 +52,6 @@ class QGridLayout;
 class QLabel;
 class QPushButton;
 class QSplitter;
-class KMComposerEditorWidgetNg;
 class KSplitterCollapserButton;
 class CodecAction;
 class KMComposeWin;
@@ -89,6 +88,7 @@ class Identity;
 namespace KPIMTextEdit
 {
 class SelectSpecialCharDialog;
+class RichTextEditorWidget;
 }
 
 namespace KIO
@@ -671,7 +671,7 @@ private:
     StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode;
     PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning;
     KMComposerGlobalAction *mGlobalAction;
-    KMComposerEditorWidgetNg *mRichTextEditorwidget;
+    KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget;
 };
 
 #endif

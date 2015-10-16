@@ -37,7 +37,7 @@
 #include "MessageComposer/RichTextComposerActions"
 #include "MessageComposer/RichTextComposerImages"
 #include "MessageComposer/RichTextExternalComposer"
-#include "kmcomposereditorwidgetng.h"
+#include <KPIMTextEdit/RichTextEditorWidget>
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
 #include "kmmainwin.h"
@@ -370,7 +370,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     vbox->setMargin(0);
 
     KMComposerEditorNg *editor = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
-    mRichTextEditorwidget = new KMComposerEditorWidgetNg(editor, mCryptoStateIndicatorWidget);
+    mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(editor, mCryptoStateIndicatorWidget);
 
     //Don't use new connect api here. It crashs
     connect(editor, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
