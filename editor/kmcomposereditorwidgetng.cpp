@@ -17,8 +17,8 @@
 
 #include "kmcomposereditorwidgetng.h"
 
-KMComposerEditorWidgetNg::KMComposerEditorWidgetNg(PimCommon::RichTextEditor *customEditor, QWidget *parent)
-    : PimCommon::RichTextEditorWidget(customEditor, parent)
+KMComposerEditorWidgetNg::KMComposerEditorWidgetNg(KPIMTextEdit::RichTextEditor *customEditor, QWidget *parent)
+    : KPIMTextEdit::RichTextEditorWidget(customEditor, parent)
 {
 
 }

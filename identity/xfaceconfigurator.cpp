@@ -35,8 +35,8 @@
 #include <Akonadi/Contact/ContactSearchJob>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include "PimCommon/PlainTextEditor"
-#include "PimCommon/PlainTextEditorWidget"
+#include "kpimtextedit/plaintexteditor.h"
+#include "kpimtextedit/plaintexteditorwidget.h"
 #include <messageviewer/kxface.h>
 
 #include <KConfigGroup>
@@ -161,7 +161,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     widgetStack->insertWidget(pageno, page);
     page_vlay = new QVBoxLayout(page);
     page_vlay->setMargin(0);
-    mTextEdit = new PimCommon::PlainTextEditorWidget(page);
+    mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(page);
     mTextEdit->editor()->setSpellCheckingSupport(false);
     page_vlay->addWidget(mTextEdit);
     mTextEdit->editor()->setWhatsThis(i18n("Use this field to enter an arbitrary X-Face string."));
@@ -176,7 +176,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
 
     page_vlay->addWidget(label2);
 
-    connect(mTextEdit->editor(), &PimCommon::PlainTextEditor::textChanged, this, &XFaceConfigurator::slotUpdateXFace);
+    connect(mTextEdit->editor(), &KPIMTextEdit::PlainTextEditor::textChanged, this, &XFaceConfigurator::slotUpdateXFace);
 }
 
 XFaceConfigurator::~XFaceConfigurator()

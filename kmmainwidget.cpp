@@ -46,7 +46,7 @@
 #include "widgets/kactionmenuaccount.h"
 #include "mailcommon/searchrulestatus.h"
 #include "PimCommon/NetworkUtil"
-#include "PimCommon/TextToSpeech"
+#include "kpimtextedit/texttospeech.h"
 #if !defined(NDEBUG)
 #include <ksieveui/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -2730,7 +2730,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         mMsgActions->addWebShortcutsMenu(menu, selectedText);
         menu->addSeparator();
         menu->addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-        if (PimCommon::TextToSpeech::self()->isReady()) {
+        if (KPIMTextEdit::TextToSpeech::self()->isReady()) {
             menu->addSeparator();
             menu->addAction(mMsgView->speakTextAction());
         }

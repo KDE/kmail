@@ -18,16 +18,16 @@
 #ifndef KMCOMPOSEREDITORWIDGETNG_H
 #define KMCOMPOSEREDITORWIDGETNG_H
 
-#include <pimcommon/richtexteditorwidget.h>
+#include <kpimtextedit/richtexteditorwidget.h>
 namespace PimCommon
 {
 class RichTextEditor;
 }
-class KMComposerEditorWidgetNg : public PimCommon::RichTextEditorWidget
+class KMComposerEditorWidgetNg : public KPIMTextEdit::RichTextEditorWidget
 {
     Q_OBJECT
 public:
-    explicit KMComposerEditorWidgetNg(PimCommon::RichTextEditor *customEditor, QWidget *parent = Q_NULLPTR);
+    explicit KMComposerEditorWidgetNg(KPIMTextEdit::RichTextEditor *customEditor, QWidget *parent = Q_NULLPTR);
     ~KMComposerEditorWidgetNg();
 };
 

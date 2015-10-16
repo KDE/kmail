@@ -24,7 +24,7 @@ class QUrl;
 
 class QCheckBox;
 class QLabel;
-namespace PimCommon
+namespace KPIMTextEdit
 {
 class PlainTextEditorWidget;
 }
@@ -55,7 +55,7 @@ private Q_SLOTS:
 
 private:
     QCheckBox      *mEnableCheck;
-    PimCommon::PlainTextEditorWidget      *mTextEdit;
+    KPIMTextEdit::PlainTextEditorWidget      *mTextEdit;
     QLabel         *mXFaceLabel;
 };
 } // namespace KMail

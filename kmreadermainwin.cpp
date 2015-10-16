@@ -64,7 +64,7 @@
 #include <AkonadiCore/itemcreatejob.h>
 #include <AkonadiCore/itemmovejob.h>
 #include <Akonadi/KMime/MessageFlags>
-#include "PimCommon/TextToSpeech"
+#include "kpimtextedit/texttospeech.h"
 #include "messagecore/messagehelpers.h"
 #include <mailcommon/mailutil.h>
 
@@ -547,7 +547,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
         mMsgActions->addWebShortcutsMenu(menu, selectedText);
         menu->addSeparator();
         menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-        if (PimCommon::TextToSpeech::self()->isReady()) {
+        if (KPIMTextEdit::TextToSpeech::self()->isReady()) {
             menu->addSeparator();
             menu->addAction(mReaderWin->speakTextAction());
         }

@@ -1266,7 +1266,7 @@ void KMComposeWin::setupActions(void)
     mAutoSpellCheckingAction->setChecked(spellCheckingEnabled);
     slotAutoSpellCheckingToggled(spellCheckingEnabled);
     connect(mAutoSpellCheckingAction, &KToggleAction::toggled, this, &KMComposeWin::slotAutoSpellCheckingToggled);
-    connect(mComposerBase->editor(), &PimCommon::RichTextEditor::checkSpellingChanged, this, &KMComposeWin::slotAutoSpellCheckingToggled);
+    connect(mComposerBase->editor(), &KPIMTextEdit::RichTextEditor::checkSpellingChanged, this, &KMComposeWin::slotAutoSpellCheckingToggled);
 
     connect(mComposerBase->editor(), &MessageComposer::RichTextComposer::textModeChanged, this, &KMComposeWin::slotTextModeChanged);
     connect(mComposerBase->editor(), &MessageComposer::RichTextComposer::externalEditorClosed, this, &KMComposeWin::slotExternalEditorClosed);
