@@ -32,7 +32,7 @@
 #include <QList>
 
 // LIBKDEPIM includes
-#include "MessageComposer/RichTextComposer"
+#include "MessageComposer/RichTextComposerNg"
 
 #include "MessageComposer/MessageSender"
 
@@ -263,7 +263,7 @@ public Q_SLOTS: // kmkernel, callback
     void slotWordWrapToggled(bool) Q_DECL_OVERRIDE;
 
     void slotToggleMarkup();
-    void slotTextModeChanged(MessageComposer::RichTextComposer::Mode mode);
+    void slotTextModeChanged(MessageComposer::RichTextComposerNg::Mode mode);
     void htmlToolBarVisibilityChanged(bool visible);
     void slotSpellcheckDoneClearStatus();
     void autoSaveMessage(bool force = false) Q_DECL_OVERRIDE;

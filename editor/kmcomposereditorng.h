@@ -18,10 +18,13 @@
 #ifndef KMCOMPOSEREDITORNG_H
 #define KMCOMPOSEREDITORNG_H
 
-#include "MessageComposer/RichTextComposer"
+#include "messagecomposer/richtextcomposerng.h"
 class KMComposeWin;
-
-class KMComposerEditorNg : public MessageComposer::RichTextComposer
+namespace KPIMTextEdit
+{
+class RichTextComposerEmailQuoteHighlighter;
+}
+class KMComposerEditorNg : public MessageComposer::RichTextComposerNg
 {
     Q_OBJECT
 public:
@@ -30,7 +33,7 @@ public:
 
     QString smartQuote(const QString &msg) Q_DECL_OVERRIDE;
 
-    void setHighlighterColors(MessageComposer::RichTextComposerEmailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;
+    void setHighlighterColors(KPIMTextEdit::RichTextComposerEmailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;
 
     void showSpellConfigDialog(const QString &configFileName);
 

@@ -31,11 +31,11 @@
 #include <KPIMTextEdit/EMailQuoteHighlighter>
 #include "MessageCore/MessageCoreSettings"
 #include <Sonnet/ConfigDialog>
-#include <messagecomposer/richtextcomposeremailquotehighlighter.h>
+#include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
 #include <sonnet/dictionarycombobox.h>
 
 KMComposerEditorNg::KMComposerEditorNg(KMComposeWin *win, QWidget *parent)
-    : MessageComposer::RichTextComposer(parent),
+    : MessageComposer::RichTextComposerNg(parent),
       mComposerWin(win)
 {
     setSpellCheckingConfigFileName(QStringLiteral("kmail2rc"));
@@ -74,7 +74,7 @@ bool KMComposerEditorNg::canInsertFromMimeData(const QMimeData *source) const
         return true;
     }
 
-    return MessageComposer::RichTextComposer::canInsertFromMimeData(source);
+    return MessageComposer::RichTextComposerNg::canInsertFromMimeData(source);
 }
 
 void KMComposerEditorNg::insertFromMimeData(const QMimeData *source)
@@ -85,11 +85,11 @@ void KMComposerEditorNg::insertFromMimeData(const QMimeData *source)
     }
 
     if (!mComposerWin->insertFromMimeData(source, false)) {
-        MessageComposer::RichTextComposer::insertFromMimeData(source);
+        MessageComposer::RichTextComposerNg::insertFromMimeData(source);
     }
 }
 
-void KMComposerEditorNg::setHighlighterColors(MessageComposer::RichTextComposerEmailQuoteHighlighter *highlighter)
+void KMComposerEditorNg::setHighlighterColors(KPIMTextEdit::RichTextComposerEmailQuoteHighlighter *highlighter)
 {
     QColor color1 = MessageCore::Util::quoteLevel1DefaultTextColor();
     QColor color2 = MessageCore::Util::quoteLevel2DefaultTextColor();

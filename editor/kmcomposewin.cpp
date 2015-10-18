@@ -32,11 +32,11 @@
 #include "MessageComposer/Kleo_Util"
 #include "kmcommands.h"
 #include "editor/kmcomposereditorng.h"
-#include "MessageComposer/RichTextComposerControler"
+#include "KPIMTextEdit/RichTextComposerControler"
 #include "MessageComposer/RichTextComposerSignatures"
-#include "MessageComposer/RichTextComposerActions"
-#include "MessageComposer/RichTextComposerImages"
-#include "MessageComposer/RichTextExternalComposer"
+#include "KPIMTextEdit/RichTextComposerActions"
+#include "KPIMTextEdit/RichTextComposerImages"
+#include "KPIMTextEdit/RichTextExternalComposer"
 #include <KPIMTextEdit/RichTextEditorWidget>
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
@@ -385,7 +385,8 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     mHeadersToEditorSplitter->addWidget(mSplitter);
     editor->setAcceptDrops(true);
-    connect(sigController, &MessageComposer::SignatureController::signatureAdded, mComposerBase->editor()->externalComposer(), &MessageComposer::RichTextExternalComposer::startExternalEditor);
+    connect(sigController, &MessageComposer::SignatureController::signatureAdded,
+            mComposerBase->editor()->externalComposer(), &KPIMTextEdit::RichTextExternalComposer::startExternalEditor);
 
     connect(dictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposeWin::slotSpellCheckingLanguage);
 
@@ -670,7 +671,7 @@ void KMComposeWin::writeConfig(void)
         mAutoSpellCheckingAction->isChecked());
     MessageViewer::MessageViewerSettings::self()->setUseFixedFont(mFixedFontAction->isChecked());
     if (!mForceDisableHtml) {
-        KMailSettings::self()->setUseHtmlMarkup(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich);
+        KMailSettings::self()->setUseHtmlMarkup(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
     }
     KMailSettings::self()->setComposerSize(size());
     KMailSettings::self()->setShowSnippetManager(mSnippetAction->isChecked());
@@ -1268,9 +1269,9 @@ void KMComposeWin::setupActions(void)
     connect(mAutoSpellCheckingAction, &KToggleAction::toggled, this, &KMComposeWin::slotAutoSpellCheckingToggled);
     connect(mComposerBase->editor(), &KPIMTextEdit::RichTextEditor::checkSpellingChanged, this, &KMComposeWin::slotAutoSpellCheckingToggled);
 
-    connect(mComposerBase->editor(), &MessageComposer::RichTextComposer::textModeChanged, this, &KMComposeWin::slotTextModeChanged);
-    connect(mComposerBase->editor(), &MessageComposer::RichTextComposer::externalEditorClosed, this, &KMComposeWin::slotExternalEditorClosed);
-    connect(mComposerBase->editor(), &MessageComposer::RichTextComposer::externalEditorStarted, this, &KMComposeWin::slotExternalEditorStarted);
+    connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::textModeChanged, this, &KMComposeWin::slotTextModeChanged);
+    connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::externalEditorClosed, this, &KMComposeWin::slotExternalEditorClosed);
+    connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::externalEditorStarted, this, &KMComposeWin::slotExternalEditorStarted);
     //these are checkable!!!
     markupAction = new KToggleAction(i18n("Rich Text Editing"), this);
     markupAction->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-font")));
@@ -2102,7 +2103,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
             return true;
         }
         if (!forceAttachment) {
-            if (mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich /*&& mComposerBase->editor()->isEnableImageActions() Necessary ?*/) {
+            if (mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich /*&& mComposerBase->editor()->isEnableImageActions() Necessary ?*/) {
                 QImage image = qvariant_cast<QImage>(source->imageData());
                 QFileInfo fi(source->text());
 
@@ -2502,7 +2503,7 @@ void KMComposeWin::printComposeResult(KJob *job, bool preview)
         Akonadi::Item printItem;
         printItem.setPayload<KMime::Message::Ptr>(composer->resultMessages().first());
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().first()), printItem);
-        const bool isHtml = mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich;
+        const bool isHtml = mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
         KMPrintCommand *command = new KMPrintCommand(this, printItem, Q_NULLPTR,
                 format, isHtml);
@@ -2941,9 +2942,9 @@ void KMComposeWin::slotToggleMarkup()
     htmlToolBarVisibilityChanged(markupAction->isChecked());
 }
 
-void KMComposeWin::slotTextModeChanged(MessageComposer::RichTextComposer::Mode mode)
+void KMComposeWin::slotTextModeChanged(MessageComposer::RichTextComposerNg::Mode mode)
 {
-    if (mode == MessageComposer::RichTextComposer::Plain) {
+    if (mode == MessageComposer::RichTextComposerNg::Plain) {
         disableHtml(MessageComposer::ComposerViewBase::NoConfirmationNeeded);    // ### Can this happen at all?
     } else {
         enableHtml();
@@ -3262,7 +3263,7 @@ void KMComposeWin::slotSaveAsFile()
 {
     SaveAsFileJob *job = new SaveAsFileJob(this);
     job->setParentWidget(this);
-    job->setHtmlMode(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposer::Rich);
+    job->setHtmlMode(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
     job->setTextDocument(mComposerBase->editor()->document());
     job->start();
     //not necessary to delete it. It done in SaveAsFileJob
