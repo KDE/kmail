@@ -28,7 +28,6 @@
 #include <QCheckBox>
 #include <QLabel>
 #include "pimcommon/kactionmenuchangecase.h"
-#include <KPIMTextEdit/EMailQuoteHighlighter>
 #include "MessageCore/MessageCoreSettings"
 #include <Sonnet/ConfigDialog>
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
