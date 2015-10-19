@@ -1739,6 +1739,11 @@ void KMMainWidget::slotMoveMessagesCompleted(KMMoveCommand *command)
     // The command will autodelete itself and will also kill the set.
 }
 
+void KMMainWidget::slotDeleteMessages()
+{
+    slotDeleteMsg(true);
+}
+
 void KMMainWidget::slotDeleteMsg(bool confirmDelete)
 {
     // Create a persistent message set from the current selection
@@ -2988,8 +2993,7 @@ void KMMainWidget::setupActions()
     * as a part, though. */
     mDeleteAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action Hard delete, bypassing trash", "&Delete"), this);
     actionCollection()->addAction(QStringLiteral("delete"), mDeleteAction);
-    //Don't convert to new connect api.
-    connect(mDeleteAction, SIGNAL(triggered(bool)), this, SLOT(slotDeleteMsg()));
+    connect(mDeleteAction, &QAction::triggered, this, &KMMainWidget::slotDeleteMessages);
     actionCollection()->setDefaultShortcut(mDeleteAction, QKeySequence(Qt::SHIFT + Qt::Key_Delete));
 
     mTrashThreadAction = new QAction(i18n("M&ove Thread to Trash"), this);
