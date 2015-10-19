@@ -73,7 +73,7 @@
 #include "Libkdepim/StatusbarProgressWidget"
 #include "Libkdepim/ProgressStatusBarWidget"
 
-#include "PimCommon/EditorUtil"
+#include "KPIMTextEdit/EditorUtil"
 #include "PimCommon/StorageServiceManager"
 #include "PimCommon/StorageServiceProgressManager"
 
@@ -3309,13 +3309,13 @@ void KMComposeWin::setCurrentIdentity(uint identity)
 void KMComposeWin::slotSentenceCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil editorUtil;
+    KPIMTextEdit::EditorUtil editorUtil;
     editorUtil.sentenceCase(textCursor);
 }
 
 void KMComposeWin::slotUpperCase()
 {
-    PimCommon::EditorUtil editorUtil;
+    KPIMTextEdit::EditorUtil editorUtil;
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
     editorUtil.upperCase(textCursor);
 }
@@ -3323,14 +3323,14 @@ void KMComposeWin::slotUpperCase()
 void KMComposeWin::slotLowerCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil editorUtil;
+    KPIMTextEdit::EditorUtil editorUtil;
     editorUtil.lowerCase(textCursor);
 }
 
 void KMComposeWin::slotReverseCase()
 {
     QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    PimCommon::EditorUtil editorUtil;
+    KPIMTextEdit::EditorUtil editorUtil;
     editorUtil.reverseCase(textCursor);
 }
 
