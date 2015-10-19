@@ -20,14 +20,13 @@
 #include "kmkernel.h"
 #include "util.h"
 #include "kmail_debug.h"
+#include "pimcommon/kactionmenuchangecase.h"
 
 #include <qmenu.h>
-#include <QDebug>
 #include <KToggleAction>
 #include <QMimeData>
 #include <QCheckBox>
 #include <QLabel>
-#include "pimcommon/kactionmenuchangecase.h"
 #include "MessageCore/MessageCoreSettings"
 #include <Sonnet/ConfigDialog>
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
