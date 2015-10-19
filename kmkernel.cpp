@@ -135,9 +135,8 @@ KMKernel::KMKernel(QObject *parent) :
     mSystemTray(Q_NULLPTR),
     mDebugBaloo(false)
 {
-    if (!qgetenv("KDEPIM_BALOO_DEBUG").isEmpty()) {
-        mDebugBaloo = true;
-    }
+    mDebugBaloo = !qEnvironmentVariableIsEmpty("KDEPIM_BALOO_DEBUG");
+
     if (!s_networkConfigMgr) {
         s_networkConfigMgr = new QNetworkConfigurationManager(QCoreApplication::instance());
     }
