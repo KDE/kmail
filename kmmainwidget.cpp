@@ -1671,7 +1671,7 @@ void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReferenc
 {
     Akonadi::Item::List selectMsg  = mMessagePane->itemListFromPersistentSet(ref);
     // If this is a deletion, ask for confirmation
-    if (!dest.isValid() && confirmOnDeletion) {
+    if (confirmOnDeletion) {
         int ret = KMessageBox::warningContinueCancel(
                       this,
                       i18np(
