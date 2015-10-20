@@ -2134,8 +2134,9 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
     }
 
     // If this is a URL list, add those files as attachments or text
+    // but do not offer this if we are pasting plain text containing an url, e.g. from a browser
     const QList<QUrl> urlList = source->urls();
-    if (!urlList.isEmpty()) {
+    if (!urlList.isEmpty() && !source->hasFormat(QStringLiteral("text/plain"))) {
         //Search if it's message items.
         Akonadi::Item::List items;
         Akonadi::Collection::List collections;
