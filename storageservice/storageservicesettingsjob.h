@@ -22,7 +22,7 @@
 #define StorageServiceSettingsJob_H
 
 #include <QObject>
-#include "storageservice/interface/storageserviceinterface.h"
+#include "pimcommon/storageserviceinterface.h"
 
 class StorageServiceSettingsJob : public PimCommon::ISettingsJob
 {
