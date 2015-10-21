@@ -309,7 +309,7 @@ void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantH
 {
     QVariantHash data = _data;
     if (!data.contains(QStringLiteral("icon"))) {
-         data[QStringLiteral("icon")] = QStringLiteral("kmail");
+        data[QStringLiteral("icon")] = QStringLiteral("kmail");
     }
     if (!data.contains(QStringLiteral("name"))) {
         data[QStringLiteral("name")] = i18n("KMail");
@@ -323,27 +323,32 @@ void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantH
 
 void KMReaderWin::displayBusyPage()
 {
-    displaySplashPage(QStringLiteral("status.html"),
-                      { { QStringLiteral("title"), i18n("Retrieving Folder Contents") },
-                        { QStringLiteral("subtext"), i18n("Please wait . . .") } });
+    displaySplashPage(QStringLiteral("status.html"), {
+        { QStringLiteral("title"), i18n("Retrieving Folder Contents") },
+        { QStringLiteral("subtext"), i18n("Please wait . . .") }
+    });
 }
 
 void KMReaderWin::displayOfflinePage()
 {
-    displaySplashPage(QStringLiteral("status.html"),
-                      { { QStringLiteral("title"), i18n("Offline") },
-                        { QStringLiteral("subtext"), i18n("KMail is currently in offline mode. "
-                                                          "Click <a href=\"kmail:goOnline\">here</a> to go online . . .</p>") }
-                      });
+    displaySplashPage(QStringLiteral("status.html"), {
+        { QStringLiteral("title"), i18n("Offline") },
+        {
+            QStringLiteral("subtext"), i18n("KMail is currently in offline mode. "
+            "Click <a href=\"kmail:goOnline\">here</a> to go online . . .</p>")
+        }
+    });
 }
 
 void KMReaderWin::displayResourceOfflinePage()
 {
-    displaySplashPage(QStringLiteral("status.html"),
-                      { { QStringLiteral("title"), i18n("Offline") },
-                        { QStringLiteral("subtext"),i18n("Account is currently in offline mode. "
-                                                         "Click <a href=\"kmail:goResourceOnline\">here</a> to go online . . .</p>") }
-                      });
+    displaySplashPage(QStringLiteral("status.html"), {
+        { QStringLiteral("title"), i18n("Offline") },
+        {
+            QStringLiteral("subtext"), i18n("Account is currently in offline mode. "
+            "Click <a href=\"kmail:goResourceOnline\">here</a> to go online . . .</p>")
+        }
+    });
 }
 
 void KMReaderWin::displayAboutPage()
