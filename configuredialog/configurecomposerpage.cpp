@@ -32,7 +32,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "TemplateParser/TemplatesConfiguration"
 #include "templateparser/customtemplates.h"
 #include "globalsettings_templateparser.h"
-#include "messageviewer/autoqpointer.h"
+#include "libkdepim/autoqpointer.h"
 #include "libkdepim/recentaddresses.h"
 #include <Libkdepim/LdapClientSearch>
 #include "libkdepim/completionordereditor.h"
@@ -610,7 +610,7 @@ void ComposerPage::GeneralTab::save()
 
 void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
 {
-    MessageViewer::AutoQPointer<KPIM::CompletionConfigureDialog> dlg(new KPIM::CompletionConfigureDialog(this));
+    KPIM::AutoQPointer<KPIM::CompletionConfigureDialog> dlg(new KPIM::CompletionConfigureDialog(this));
     dlg->setRecentAddresses(KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     KLDAP::LdapClientSearch search;
     dlg->setLdapClientSearch(&search);
