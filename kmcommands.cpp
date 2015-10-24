@@ -94,7 +94,7 @@ using KMail::SecondaryWindow;
 #include "libkdepim/broadcaststatus.h"
 #include "settings/kmailsettings.h"
 #include "MessageCore/StringUtil"
-#include "libkdepim/autoqpointer.h"
+
 #include "messageviewer/messageviewersettings.h"
 #include "MessageCore/MessageCoreSettings"
 
@@ -1063,7 +1063,7 @@ KMCommand::Result KMRedirectCommand::execute()
             ? MailCommon::RedirectDialog::SendNow
             : MailCommon::RedirectDialog::SendLater;
 
-    KPIM::AutoQPointer<MailCommon::RedirectDialog> dlg(new MailCommon::RedirectDialog(sendMode, parentWidget()));
+    QScopedPointer<MailCommon::RedirectDialog> dlg(new MailCommon::RedirectDialog(sendMode, parentWidget()));
     dlg->setObjectName(QStringLiteral("redirect"));
     if (dlg->exec() == QDialog::Rejected || !dlg) {
         return Failed;

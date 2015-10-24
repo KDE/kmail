@@ -31,7 +31,7 @@
 #endif
 
 #include <MailCommon/MailKernel>
-#include <libkdepim/autoqpointer.h>
+
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
@@ -130,7 +130,7 @@ void IdentityPage::slotNewIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    KPIM::AutoQPointer<NewIdentityDialog> dialog(new NewIdentityDialog(
+    QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(
                 mIdentityManager, this));
     dialog->setObjectName(QStringLiteral("new"));
 
