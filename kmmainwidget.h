@@ -458,7 +458,7 @@ private:
 
     void updateAllToTrashAction(int statistics);
 
-    /** Get Q_DECL_OVERRIDE character encoding. */
+    /** Get override character encoding. */
     QString overrideEncoding() const;
 
     void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);
