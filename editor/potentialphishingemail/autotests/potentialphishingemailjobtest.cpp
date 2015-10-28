@@ -49,7 +49,7 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
     QTest::addColumn<bool>("hasPotentialPhishing");
     QTest::newRow("NoPotentialPhishing") << (QStringList() << QStringLiteral("foo@kde.org")) << QStringList() << false;
     QTest::newRow("HasPotentialPhishing") << (QStringList() << QStringLiteral("\"bla@kde.org\" <foo@kde.org>")) << QStringList() << true;
-    const QString email = QLatin1String("\"bla@kde.org\" <foo@kde.org>");
+    const QString email = QStringLiteral("\"bla@kde.org\" <foo@kde.org>");
     QTest::newRow("EmailInWhiteList") << (QStringList() << email) << (QStringList() << email) << false;
     QTest::newRow("NotAllEmailInWhiteList") << (QStringList() << email << QStringLiteral("\"c@kde.org\" <dd@kde.org>")) << (QStringList() << email) << true;
     QTest::newRow("EmailInWhiteListWithSpace") << (QStringList() << QStringLiteral(" \"bla@kde.org\" <foo@kde.org> ")) << (QStringList() << email) << false;
