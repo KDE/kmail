@@ -44,7 +44,6 @@
    <Separator/>
    <Action name="sign_message" />
    <Action name="encrypt_message" />
-   <Action name="encrypt_message_chiasmus"/>
    <Separator/>
    <Action name="options_select_crypto" />
    <Action name="html"/>
