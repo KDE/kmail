@@ -107,7 +107,7 @@ protected:
     /** Specify whether the subclass takes care of emitting the completed()
       signal. By default the base class will Q_EMIT this signal.
       @param emitsCompletedItself true if the subclass emits the completed
-                                  signal, false if the base class should emit
+                                  signal, false if the base class should Q_EMIT
                                   the signal
     */
     void setEmitsCompletedItself(bool emitsCompletedItself);
