@@ -67,16 +67,6 @@ private:
     MessageViewer::InvitationSettings *mInvitationUi;
 };
 
-class MiscPageProxyTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit MiscPageProxyTab(QWidget *parent = Q_NULLPTR);
-    void save() Q_DECL_OVERRIDE;
-private:
-    KCModuleProxy *mProxyModule;
-};
-
 class MiscPageAgentSettingsTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -118,12 +108,10 @@ public:
 
     typedef MiscPageFolderTab FolderTab;
     typedef MiscPageInviteTab InviteTab;
-    typedef MiscPageProxyTab ProxyTab;
 
 private:
     FolderTab *mFolderTab;
     InviteTab *mInviteTab;
-    ProxyTab *mProxyTab;
     MiscPageAgentSettingsTab *mAgentSettingsTab;
     MiscPagePrintingTab *mPrintingTab;
 };

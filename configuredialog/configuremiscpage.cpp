@@ -47,9 +47,6 @@ MiscPage::MiscPage(QWidget *parent)
     mInviteTab = new InviteTab();
     addTab(mInviteTab, i18n("Invitations"));
 
-    mProxyTab = new ProxyTab();
-    addTab(mProxyTab, i18n("Proxy"));
-
     mAgentSettingsTab = new MiscPageAgentSettingsTab();
     addTab(mAgentSettingsTab, i18n("Plugins Settings"));
 
@@ -181,21 +178,6 @@ void MiscPage::InviteTab::save()
 void MiscPage::InviteTab::doResetToDefaultsOther()
 {
     mInvitationUi->doResetToDefaultsOther();
-}
-
-MiscPageProxyTab::MiscPageProxyTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    KCModuleInfo proxyInfo(QStringLiteral("proxy.desktop"));
-    mProxyModule = new KCModuleProxy(proxyInfo, parent);
-    QHBoxLayout *l = new QHBoxLayout(this);
-    l->addWidget(mProxyModule);
-    connect(mProxyModule, SIGNAL(changed(bool)), this, SLOT(slotEmitChanged()));
-}
-
-void MiscPage::ProxyTab::save()
-{
-    mProxyModule->save();
 }
 
 MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
