@@ -109,6 +109,7 @@ int main(int argc, char *argv[])
 {
     KMailApplication app(argc, &argv);
     app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     KMail::AboutData about;
     app.setAboutData(about);
 

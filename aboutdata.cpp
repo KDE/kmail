@@ -369,7 +369,6 @@ AboutData::AboutData()
                  QString(),
                  QStringLiteral("http://userbase.kde.org/KMail"))
 {
-    setProgramIconName(QStringLiteral("kmail"));
     using KMail::authors;
     using KMail::credits;
     const unsigned int numberAuthors(sizeof authors / sizeof * authors);
