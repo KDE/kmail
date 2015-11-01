@@ -2295,12 +2295,18 @@ void KMComposeWin::slotClose()
 void KMComposeWin::slotNewComposer()
 {
     KMComposeWin *win;
-    KMime::Message::Ptr msg(new KMime::Message);
+    KMime::Message::Ptr msg(new KMime::Message());
 
-    MessageHelper::initHeader(msg, KMKernel::self()->identityManager());
-    win = new KMComposeWin(msg, false, false, KMail::Composer::New);
+    MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), currentIdentity());
+    TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
+    parser.setIdentityManager(KMKernel::self()->identityManager());
+    parser.process(msg, mCollectionForNewMessage);
+    win = new KMComposeWin(msg, false, false, KMail::Composer::New, currentIdentity());
     win->setCollectionForNewMessage(mCollectionForNewMessage);
-    win->setCurrentIdentity(currentIdentity());
+    bool forceCursorPosition = parser.cursorPositionWasSet();
+    if (forceCursorPosition) {
+        win->setFocusToEditor();
+    }
     win->show();
 }
 
