@@ -57,6 +57,8 @@ using KPIM::RecentAddresses;
 #include <QTextCodec>
 #include <QCheckBox>
 #include <KConfigGroup>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 
 #include <libkdepim/blacklistbalooemailcompletiondialog.h>
 
@@ -999,8 +1001,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mMessageIdSuffixEdit = new QLineEdit(this);
     mMessageIdSuffixEdit->setClearButtonEnabled(true);
     // only ASCII letters, digits, plus, minus and dots are allowed
-    QRegExpValidator *messageIdSuffixValidator =
-        new QRegExpValidator(QRegExp(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
+    QRegularExpressionValidator *messageIdSuffixValidator =
+        new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
     mMessageIdSuffixEdit->setValidator(messageIdSuffixValidator);
     QLabel *label = new QLabel(i18n("Custom message-&id suffix:"), this);
     label->setBuddy(mMessageIdSuffixEdit);
