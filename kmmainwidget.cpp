@@ -79,7 +79,6 @@ using KSieveUi::SieveDebugDialog;
 // Other PIM includes
 #include "kdepim-version.h"
 
-
 #include "messageviewer/messageviewersettings.h"
 #include "messageviewer/viewer.h"
 #include "messageviewer/attachmentstrategy.h"
