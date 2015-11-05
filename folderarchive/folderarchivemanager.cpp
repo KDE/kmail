@@ -33,6 +33,8 @@
 #include <KIconLoader>
 #include "kmail_debug.h"
 
+#include <QRegularExpression>
+
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
     : QObject(parent),
       mCurrentJob(Q_NULLPTR)
@@ -161,7 +163,7 @@ void FolderArchiveManager::load()
     mFolderArchiveCache->clearCache();
 
     KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
-    const QStringList accountList = config.groupList().filter(QRegExp(FolderArchive::FolderArchiveUtil::groupConfigPattern()));
+    const QStringList accountList = config.groupList().filter(QRegularExpression(FolderArchive::FolderArchiveUtil::groupConfigPattern()));
     Q_FOREACH (const QString &account, accountList) {
         KConfigGroup group = config.group(account);
         FolderArchiveAccountInfo *info = new FolderArchiveAccountInfo(group);
