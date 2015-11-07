@@ -78,8 +78,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     if (mainWidget) {
         QWidget *mainWin = mainWidget->window();
         if (mainWin) {
-            mDesktopOfMainWin = KWindowSystem::windowInfo(mainWin->winId(),
-                                NET::WMDesktop).desktop();
+            mDesktopOfMainWin = KWindowInfo(mainWin->winId(), NET::WMDesktop).desktop();
         }
     }
 
@@ -274,7 +273,7 @@ void KMSystemTray::slotActivated()
         return;
     }
 
-    KWindowInfo cur = KWindowSystem::windowInfo(mainWin->winId(), NET::WMDesktop);
+    KWindowInfo cur = KWindowInfo(mainWin->winId(), NET::WMDesktop);
 
     const int currentDesktop = KWindowSystem::currentDesktop();
     const bool wasMinimized = cur.isMinimized();
@@ -363,8 +362,7 @@ void KMSystemTray::hideKMail()
     QWidget *mainWin = mainWidget->window();
     Q_ASSERT(mainWin);
     if (mainWin) {
-        mDesktopOfMainWin = KWindowSystem::windowInfo(mainWin->winId(),
-                            NET::WMDesktop).desktop();
+        mDesktopOfMainWin = KWindowInfo(mainWin->winId(), NET::WMDesktop).desktop();
         // iconifying is unnecessary, but it looks cooler
         KWindowSystem::minimizeWindow(mainWin->winId());
         mainWin->hide();
