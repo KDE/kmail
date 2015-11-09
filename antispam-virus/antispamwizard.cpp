@@ -71,7 +71,7 @@
 #include <QPushButton>
 #include <KConfigGroup>
 
-#include <util/resoucereadconfigfile.h>
+#include <util/resourcereadconfigfile.h>
 using namespace KMail;
 using namespace MailCommon;
 
@@ -534,7 +534,7 @@ void AntiSpamWizard::checkToolAvailability()
                 }
                 const QString typeIdentifier(type.identifier());
                 if (PimCommon::Util::isImapResource(typeIdentifier)) {
-                    PimCommon::ResouceReadConfigFile resourceFile(typeIdentifier);
+                    PimCommon::ResourceReadConfigFile resourceFile(typeIdentifier);
                     const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
                     if (grp.isValid()) {
                         const QString host = grp.readEntry(QStringLiteral("ImapServer"));

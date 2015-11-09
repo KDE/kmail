@@ -104,7 +104,7 @@ using KMail::MailServiceImpl;
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <util/resoucereadconfigfile.h>
+#include <util/resourcereadconfigfile.h>
 
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
@@ -1848,7 +1848,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                 cryptoStatus = mResourceCryptoSettingCache.value(identifier);
             } else {
                 if (PimCommon::Util::isImapResource(identifier)) {
-                    PimCommon::ResouceReadConfigFile resourceFile(identifier);
+                    PimCommon::ResourceReadConfigFile resourceFile(identifier);
                     const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
                     if (grp.isValid()) {
                         const QString imapSafety = grp.readEntry(QStringLiteral("Safety"));
@@ -1859,7 +1859,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                         mResourceCryptoSettingCache.insert(identifier, cryptoStatus);
                     }
                 } else if (identifier.contains(POP3_RESOURCE_IDENTIFIER)) {
-                    PimCommon::ResouceReadConfigFile resourceFile(identifier);
+                    PimCommon::ResourceReadConfigFile resourceFile(identifier);
                     const KConfigGroup grp = resourceFile.group(QStringLiteral("General"));
                     if (grp.isValid()) {
                         if (grp.readEntry(QStringLiteral("useSSL"), false) || grp.readEntry(QStringLiteral("useTLS"), false)) {
