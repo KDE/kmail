@@ -104,6 +104,7 @@ using KMail::MailServiceImpl;
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <util/resoucereadconfigfile.h>
 
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
@@ -1847,25 +1848,25 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                 cryptoStatus = mResourceCryptoSettingCache.value(identifier);
             } else {
                 if (PimCommon::Util::isImapResource(identifier)) {
-                    OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(identifier);
-                    if (iface && iface->isValid()) {
-                        const QString imapSafety = iface->safety();
+                    PimCommon::ResouceReadConfigFile resourceFile(identifier);
+                    const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
+                    if (grp.isValid()) {
+                        const QString imapSafety = grp.readEntry(QStringLiteral("Safety"));
                         if ((imapSafety == QLatin1String("SSL") || imapSafety == QLatin1String("STARTTLS"))) {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
                         }
 
                         mResourceCryptoSettingCache.insert(identifier, cryptoStatus);
                     }
-                    delete iface;
                 } else if (identifier.contains(POP3_RESOURCE_IDENTIFIER)) {
-                    OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(identifier);
-                    if (iface->isValid()) {
-                        if ((iface->useSSL() || iface->useTLS())) {
+                    PimCommon::ResouceReadConfigFile resourceFile(identifier);
+                    const KConfigGroup grp = resourceFile.group(QStringLiteral("General"));
+                    if (grp.isValid()) {
+                        if (grp.readEntry(QStringLiteral("useSSL"), false) || grp.readEntry(QStringLiteral("useTLS"), false)) {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
                         }
                         mResourceCryptoSettingCache.insert(identifier, cryptoStatus);
                     }
-                    delete iface;
                 }
             }
 

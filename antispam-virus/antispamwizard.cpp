@@ -70,6 +70,8 @@
 #include <KHelpClient>
 #include <QPushButton>
 #include <KConfigGroup>
+
+#include <util/resoucereadconfigfile.h>
 using namespace KMail;
 using namespace MailCommon;
 
@@ -532,15 +534,15 @@ void AntiSpamWizard::checkToolAvailability()
                 }
                 const QString typeIdentifier(type.identifier());
                 if (PimCommon::Util::isImapResource(typeIdentifier)) {
-                    OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(typeIdentifier);
-                    if (iface && iface->isValid()) {
-                        const QString host = iface->imapServer();
+                    PimCommon::ResouceReadConfigFile resourceFile(typeIdentifier);
+                    const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
+                    if (grp.isValid()) {
+                        const QString host = grp.readEntry(QStringLiteral("ImapServer"));
                         if (host.toLower().contains(pattern.toLower())) {
                             mInfoPage->addAvailableTool((*it).getVisibleName());
                             found = true;
                         }
                     }
-                    delete iface;
                 } else if (type.identifier().contains(POP3_RESOURCE_IDENTIFIER)) {
                     OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier);
                     if (iface->isValid()) {
