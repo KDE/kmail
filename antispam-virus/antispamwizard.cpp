@@ -37,9 +37,7 @@
 #include "MailCommon/FolderTreeWidget"
 #include "MailCommon/FolderTreeView"
 #include "MailCommon/FolderTreeWidgetProxyModel"
-#include "pop3settings.h"
 #include "MailCommon/MailUtil"
-#include "imapresourcesettings.h"
 #include "MailCommon/MailKernel"
 #include "MailCommon/MailFilter"
 #include "MailCommon/FilterAction"
@@ -544,15 +542,15 @@ void AntiSpamWizard::checkToolAvailability()
                         }
                     }
                 } else if (type.identifier().contains(POP3_RESOURCE_IDENTIFIER)) {
-                    OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier);
-                    if (iface->isValid()) {
-                        const QString host = iface->host();
+                    PimCommon::ResourceReadConfigFile resourceFile(typeIdentifier);
+                    const KConfigGroup grp = resourceFile.group(QStringLiteral("General"));
+                    if (grp.isValid()) {
+                        const QString host = grp.readEntry(QStringLiteral("host"));
                         if (host.toLower().contains(pattern.toLower())) {
                             mInfoPage->addAvailableTool((*it).getVisibleName());
                             found = true;
                         }
                     }
-                    delete iface;
                 }
             }
         } else {
