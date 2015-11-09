@@ -1997,11 +1997,12 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
         }
         const QString typeIdentifier(type.identifier());
         if (PimCommon::Util::isImapResource(typeIdentifier)) {
-            OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(type.identifier());
+            OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(typeIdentifier);
             if (iface && iface->isValid()) {
+                const Akonadi::Collection::Id imapTrashId = iface->trashCollection();
                 foreach (const Akonadi::Collection &collection, collectionList) {
                     const Akonadi::Collection::Id collectionId = collection.id();
-                    if (iface->trashCollection() == collectionId) {
+                    if (imapTrashId == collectionId) {
                         //Use default trash
                         iface->setTrashCollection(CommonKernel->trashCollectionFolder().id());
                         iface->save();
