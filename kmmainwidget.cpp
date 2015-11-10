@@ -1494,7 +1494,7 @@ void KMMainWidget::slotEmptyFolder()
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
-    slotMarkAll();
+    slotSelectAllMessages();
     if (isTrash) {
         /* Don't ask for confirmation again when deleting, the user has already
         confirmed. */
@@ -2619,7 +2619,7 @@ void KMMainWidget::slotMessageStatusChangeRequest(const Akonadi::Item &item, con
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotMarkAll()
+void KMMainWidget::slotSelectAllMessages()
 {
     mMessagePane->selectAll();
     updateMessageActions();
@@ -3016,7 +3016,7 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("Select &All Messages"), this);
         actionCollection()->addAction(QStringLiteral("mark_all_messages"), action);
-        connect(action, &QAction::triggered, this, &KMMainWidget::slotMarkAll);
+        connect(action, &QAction::triggered, this, &KMMainWidget::slotSelectAllMessages);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_A));
     }
 

@@ -373,7 +373,7 @@ protected Q_SLOTS:
     void slotUpdateOnlineStatus(KMailSettings::EnumNetworkState::type);
     void slotMessagePopup(const Akonadi::Item &, const QUrl &, const QUrl &imageUrl, const QPoint &);
     void slotContactSearchJobForMessagePopupDone(KJob *job);
-    void slotMarkAll();
+    void slotSelectAllMessages();
     void slotFocusQuickSearch();
     bool slotSearch();
     void slotIntro();
