@@ -49,15 +49,11 @@ void FetchRecursiveCollectionsJob::slotInitialCollectionFetchingDone(KJob *job)
 {
     if (job->error()) {
         qCWarning(KMAIL_LOG) << job->errorString();
-        //Q_EMIT checkFailed(QString());
+        Q_EMIT fetchCollectionFailed();
+        deleteLater();
         return;
     }
-#if 0
-    //TODO
     Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
-
-    foreach (const Akonadi::Collection &collection, fetchJob->collections()) {
-
-    }
-#endif
+    Q_EMIT fetchCollectionFinished(fetchJob->collections());
+    deleteLater();
 }
