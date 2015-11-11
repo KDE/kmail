@@ -419,7 +419,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     }
 
     if (viewOnly) {
-        viewMessage(messageFile.url());
+        viewMessage(messageFile);
     } else
         action(mailto, checkMail, to, cc, bcc, subj, body, messageFile,
                attachURLs, customHeaders, replyTo, inReplyTo);
@@ -926,6 +926,13 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
         win->show();
     }
     return QDBusObjectPath(win->dbusObjectPath());
+}
+
+void KMKernel::viewMessage(const QUrl &url)
+{
+    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(Q_NULLPTR, url);
+
+    openCommand->start();
 }
 
 int KMKernel::viewMessage(const QString &messageFile)

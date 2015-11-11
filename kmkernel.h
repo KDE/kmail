@@ -531,6 +531,7 @@ private Q_SLOTS:
 
     void slotCheckAccount(Akonadi::ServerManager::State state);
 private:
+    void viewMessage(const QUrl &url);
     /*
      * Fills a composer cWin
      *
