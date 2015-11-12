@@ -549,6 +549,7 @@ private Q_SLOTS:
     void slotBandwidth(bool b);
     void slotDeleteMessages();
 
+    void slotMarkAllMessageAsReadInCurrentFolderAndSubfolder();
 private:
     // Message actions
     QAction *mDeleteAction;
@@ -657,6 +658,7 @@ private:
     ManageShowCollectionProperties *mManageShowCollectionProperties;
     QAction *mShowIntroductionAction;
     KToggleAction *mLowBandwithAction;
+    QAction *mMarkAllMessageAsReadAndInAllSubFolder;
 };
 
 #endif

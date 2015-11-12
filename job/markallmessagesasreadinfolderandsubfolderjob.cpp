@@ -49,6 +49,7 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::start()
     fetchJob->setTopCollection(mTopLevelCollection);
     connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed);
     connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone);
+    fetchJob->start();
 }
 
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed()

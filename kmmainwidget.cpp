@@ -47,6 +47,7 @@
 #include "mailcommon/searchrulestatus.h"
 #include "PimCommon/NetworkUtil"
 #include "kpimtextedit/texttospeech.h"
+#include "job/markallmessagesasreadinfolderandsubfolderjob.h"
 #if !defined(NDEBUG)
 #include <ksieveui/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -222,7 +223,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mFolderDisplayFormatPreference(MessageViewer::Viewer::UseGlobalSetting),
     mSearchMessages(Q_NULLPTR),
     mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this)),
-    mShowIntroductionAction(Q_NULLPTR)
+    mShowIntroductionAction(Q_NULLPTR),
+    mMarkAllMessageAsReadAndInAllSubFolder(Q_NULLPTR)
 {
     mLaunchExternalComponent = new KMLaunchExternalComponent(this, this);
     // must be the first line of the constructor:
@@ -3554,6 +3556,10 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("low_bandwidth"), mLowBandwithAction);
     connect(mLowBandwithAction, &KToggleAction::triggered, this, &KMMainWidget::slotBandwidth);
 
+    mMarkAllMessageAsReadAndInAllSubFolder = new QAction(i18n("Mark All Messages As Read in This Folder and All its Subfolder"), this);
+    actionCollection()->addAction(QStringLiteral("markallmessagereadcurentfolderandsubfolder"), mMarkAllMessageAsReadAndInAllSubFolder);
+    connect(mMarkAllMessageAsReadAndInAllSubFolder, &KToggleAction::triggered, this, &KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder);
+
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
@@ -4470,7 +4476,7 @@ void KMMainWidget::addRecentFile(const QUrl &mUrl)
 
 void KMMainWidget::slotMoveMessageToTrash()
 {
-    if (messageView() && messageView()->viewer()) {
+    if (messageView() && messageView()->viewer() && mCurrentFolder) {
         KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentFolder->collection(), messageView()->viewer()->messageItem(), -1);
         command->start();
     }
@@ -4478,8 +4484,10 @@ void KMMainWidget::slotMoveMessageToTrash()
 
 void KMMainWidget::slotArchiveMails()
 {
-    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
-    KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentFolder->collection().resource());
+    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
+        const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
+        KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentFolder->collection().resource());
+    }
 }
 
 void KMMainWidget::updateQuickSearchLineText()
@@ -4526,5 +4534,14 @@ void KMMainWidget::slotCollectionRemoved(const Akonadi::Collection &col)
 {
     if (mFavoritesModel) {
         mFavoritesModel->removeCollection(col);
+    }
+}
+
+void KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder()
+{
+    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
+        MarkAllMessagesAsReadInFolderAndSubFolderJob *job = new MarkAllMessagesAsReadInFolderAndSubFolderJob(this);
+        job->setTopLevelCollection(mCurrentFolder->collection());
+        job->start();
     }
 }

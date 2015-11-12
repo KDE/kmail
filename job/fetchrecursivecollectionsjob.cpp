@@ -60,6 +60,7 @@ void FetchRecursiveCollectionsJob::slotInitialCollectionFetchingDone(KJob *job)
         return;
     }
     Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
-    Q_EMIT fetchCollectionFinished(fetchJob->collections());
+    Q_EMIT fetchCollectionFinished(fetchJob->collections() << mTopCollection);
     deleteLater();
 }
+
