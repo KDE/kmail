@@ -3557,6 +3557,7 @@ void KMMainWidget::setupActions()
     connect(mLowBandwithAction, &KToggleAction::triggered, this, &KMMainWidget::slotBandwidth);
 
     mMarkAllMessageAsReadAndInAllSubFolder = new QAction(i18n("Mark All Messages As Read in This Folder and All its Subfolder"), this);
+    mMarkAllMessageAsReadAndInAllSubFolder->setIcon(QIcon::fromTheme(QStringLiteral("mail-mark-read")));
     actionCollection()->addAction(QStringLiteral("markallmessagereadcurentfolderandsubfolder"), mMarkAllMessageAsReadAndInAllSubFolder);
     connect(mMarkAllMessageAsReadAndInAllSubFolder, &KToggleAction::triggered, this, &KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder);
 
