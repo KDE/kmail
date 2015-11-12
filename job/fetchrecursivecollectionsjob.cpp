@@ -48,7 +48,7 @@ void FetchRecursiveCollectionsJob::start()
 
 void FetchRecursiveCollectionsJob::setTopCollection(const Akonadi::Collection &col)
 {
-   mTopCollection = col;
+    mTopCollection = col;
 }
 
 void FetchRecursiveCollectionsJob::slotInitialCollectionFetchingDone(KJob *job)

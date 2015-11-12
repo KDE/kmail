@@ -69,7 +69,7 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone(const
 
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotMarkAsResult(Akonadi::MarkAsCommand::Result result)
 {
-    switch(result) {
+    switch (result) {
     case Akonadi::MarkAsCommand::Undefined:
         qCDebug(KMAIL_LOG()) << "MarkAllMessagesAsReadInFolderAndSubFolderJob undefined result";
         break;
