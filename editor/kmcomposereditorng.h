@@ -41,7 +41,7 @@ Q_SIGNALS:
     void insertSnippet();
 
 protected:
-    void addExtraMenuEntry(QMenu *menu, const QPoint &pos) Q_DECL_OVERRIDE;
+    void addExtraMenuEntry(QMenu *menu, QPoint pos) Q_DECL_OVERRIDE;
     bool canInsertFromMimeData(const QMimeData *source) const Q_DECL_OVERRIDE;
     void insertFromMimeData(const QMimeData *source) Q_DECL_OVERRIDE;
 

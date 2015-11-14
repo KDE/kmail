@@ -46,7 +46,7 @@ KMComposerEditorNg::~KMComposerEditorNg()
 
 }
 
-void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, const QPoint &pos)
+void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {
     Q_UNUSED(pos);
     QTextCursor cursor = textCursor();
