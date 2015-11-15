@@ -69,7 +69,7 @@
 #include <QPushButton>
 #include <KConfigGroup>
 
-#include <util/resourcereadconfigfile.h>
+#include <MailCommon/ResourceReadConfigFile>
 using namespace KMail;
 using namespace MailCommon;
 

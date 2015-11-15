@@ -104,7 +104,7 @@ using KMail::MailServiceImpl;
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <util/resourcereadconfigfile.h>
+#include <MailCommon/ResourceReadConfigFile>
 
 #include <kstartupinfo.h>
 #include <kmailadaptor.h>
