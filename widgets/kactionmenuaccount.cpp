@@ -69,11 +69,17 @@ void KActionMenuAccount::updateAccountMenu()
     if (mInitialized) {
         menu()->clear();
         const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+        QMap<QString, QString> listAgent;
         Q_FOREACH (const Akonadi::AgentInstance &type, lst) {
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
-            QAction *action = menu()->addAction(QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")));
-            action->setData(type.identifier());
+            listAgent.insert(QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")), type.identifier());
+        }
+        QMapIterator<QString, QString> i(listAgent);
+        while (i.hasNext()) {
+            i.next();
+            QAction *action = menu()->addAction(i.key());
+            action->setData(i.value());
         }
     }
 }
