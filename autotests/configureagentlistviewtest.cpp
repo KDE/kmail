@@ -40,6 +40,7 @@ void ConfigureAgentListViewTest::shouldAddAgent()
 {
     ConfigureAgentListView view;
     QVector<ConfigureAgentItem> lst;
+    lst.reserve(10);
     for (int i = 0; i < 10; ++i) {
         ConfigureAgentItem item;
         lst << item;
