@@ -90,8 +90,8 @@ void KActionMenuAccount::updateAccountMenu()
     if (mInitialized) {
         menu()->clear();
         const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-        QVector<AgentIdentifier> vector;
-        vector.reserve(lst.count());
+        QVector<AgentIdentifier> agentIdentifierList;
+        agentIdentifierList.reserve(lst.count());
 
         Q_FOREACH (const Akonadi::AgentInstance &type, lst) {
             // Explicitly make a copy, as we're not changing values of the list but only
@@ -99,12 +99,12 @@ void KActionMenuAccount::updateAccountMenu()
             const QString identifierName = type.identifier();
             const int index = mOrderIdentifier.indexOf(identifierName);
             const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")),index);
-            vector << id;
+            agentIdentifierList << id;
         }
-        qSort( vector.begin(), vector.end(), orderAgentIdentifier);
-        const int numberOfAccount(vector.size());
+        qSort( agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);
+        const int numberOfAccount(agentIdentifierList.size());
         for (int i = 0; i < numberOfAccount; ++i) {
-            const AgentIdentifier id = vector.at(i);
+            const AgentIdentifier id = agentIdentifierList.at(i);
             QAction *action = menu()->addAction(id.mName);
             action->setData(id.mIdentifier);
         }
