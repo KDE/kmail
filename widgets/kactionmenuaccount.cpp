@@ -91,21 +91,22 @@ void KActionMenuAccount::updateAccountMenu()
         menu()->clear();
         const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
         QVector<AgentIdentifier> vector;
+        vector.reserve(lst.count());
 
-        QMap<QString, QString> listAgent;
         Q_FOREACH (const Akonadi::AgentInstance &type, lst) {
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
-            listAgent.insert(QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")), type.identifier());
-            AgentIdentifier id(type.identifier(), QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")));
+            const QString identifierName = type.identifier();
+            const int index = mOrderIdentifier.indexOf(identifierName);
+            const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")),index);
             vector << id;
         }
         qSort( vector.begin(), vector.end(), orderAgentIdentifier);
-        QMapIterator<QString, QString> i(listAgent);
-        while (i.hasNext()) {
-            i.next();
-            QAction *action = menu()->addAction(i.key());
-            action->setData(i.value());
+        const int numberOfAccount(vector.size());
+        for (int i = 0; i < numberOfAccount; ++i) {
+            const AgentIdentifier id = vector.at(i);
+            QAction *action = menu()->addAction(id.mName);
+            action->setData(id.mIdentifier);
         }
     }
 }

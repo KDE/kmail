@@ -224,7 +224,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mSearchMessages(Q_NULLPTR),
     mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this)),
     mShowIntroductionAction(Q_NULLPTR),
-    mMarkAllMessageAsReadAndInAllSubFolder(Q_NULLPTR)
+    mMarkAllMessageAsReadAndInAllSubFolder(Q_NULLPTR),
+    mAccountActionMenu(Q_NULLPTR)
 {
     mLaunchExternalComponent = new KMLaunchExternalComponent(this, this);
     // must be the first line of the constructor:
@@ -857,6 +858,7 @@ void KMMainWidget::readConfig()
     updateMessageMenu();
     updateFileMenu();
     kmkernel->toggleSystemTray();
+    mAccountActionMenu->setAccountOrder(MailCommon::MailCommonSettings::self()->order());
 
     connect(Akonadi::AgentManager::self(), &AgentManager::instanceAdded,
             this, &KMMainWidget::updateFileMenu);
@@ -2856,14 +2858,14 @@ void KMMainWidget::setupActions()
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_L));
     }
 
-    KActionMenuAccount *actActionMenu = new KActionMenuAccount(this);
-    actActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-receive")));
-    actActionMenu->setText(i18n("Check Mail In"));
+    mAccountActionMenu = new KActionMenuAccount(this);
+    mAccountActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-receive")));
+    mAccountActionMenu->setText(i18n("Check Mail In"));
 
-    actActionMenu->setIconText(i18n("Check Mail"));
-    actActionMenu->setToolTip(i18n("Check Mail"));
-    actionCollection()->addAction(QStringLiteral("check_mail_in"), actActionMenu);
-    connect(actActionMenu, &KActionMenu::triggered, this, &KMMainWidget::slotCheckMail);
+    mAccountActionMenu->setIconText(i18n("Check Mail"));
+    mAccountActionMenu->setToolTip(i18n("Check Mail"));
+    actionCollection()->addAction(QStringLiteral("check_mail_in"), mAccountActionMenu);
+    connect(mAccountActionMenu, &KActionMenu::triggered, this, &KMMainWidget::slotCheckMail);
 
     mSendQueued = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("&Send Queued Messages"), this);
     actionCollection()->addAction(QStringLiteral("send_queued"), mSendQueued);
