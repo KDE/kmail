@@ -39,6 +39,14 @@ KActionMenuAccount::~KActionMenuAccount()
 
 }
 
+void KActionMenuAccount::setAccountOrder(const QStringList &identifier)
+{
+    if (mOrderIdentifier != identifier) {
+        mOrderIdentifier = identifier;
+        mInitialized = false;
+    }
+}
+
 void KActionMenuAccount::slotSelectAccount(QAction *act)
 {
     if (!act) {
@@ -64,17 +72,35 @@ void KActionMenuAccount::slotCheckTransportMenu()
     }
 }
 
+
+bool orderAgentIdentifier(const AgentIdentifier &lhs, const AgentIdentifier &rhs)
+{
+    if ((lhs.mIndex == -1) && (rhs.mIndex == -1)) {
+        return lhs.mName < rhs.mName;
+    }
+    if (lhs.mIndex != rhs.mIndex) {
+        return lhs.mIndex < rhs.mIndex;
+    }
+    // we can't have same index but fallback
+    return true;
+}
+
 void KActionMenuAccount::updateAccountMenu()
 {
     if (mInitialized) {
         menu()->clear();
         const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+        QVector<AgentIdentifier> vector;
+
         QMap<QString, QString> listAgent;
         Q_FOREACH (const Akonadi::AgentInstance &type, lst) {
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
             listAgent.insert(QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")), type.identifier());
+            AgentIdentifier id(type.identifier(), QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")));
+            vector << id;
         }
+        qSort( vector.begin(), vector.end(), orderAgentIdentifier);
         QMapIterator<QString, QString> i(listAgent);
         while (i.hasNext()) {
             i.next();

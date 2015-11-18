@@ -20,6 +20,27 @@
 
 #include <KActionMenu>
 
+class AgentIdentifier
+{
+public:
+    AgentIdentifier()
+        : mIndex(-1)
+    {
+
+    }
+
+    AgentIdentifier(const QString &identifier, const QString &name, int index = -1)
+        : mIdentifier(identifier),
+          mName(name),
+          mIndex(index)
+    {
+
+    }
+    QString mIdentifier;
+    QString mName;
+    int mIndex;
+};
+
 class KActionMenuAccount : public KActionMenu
 {
     Q_OBJECT
@@ -27,11 +48,14 @@ public:
     explicit KActionMenuAccount(QObject *parent = Q_NULLPTR);
     ~KActionMenuAccount();
 
+    void setAccountOrder(const QStringList &identifier);
+
 private Q_SLOTS:
     void updateAccountMenu();
     void slotCheckTransportMenu();
     void slotSelectAccount(QAction *act);
 private:
+    QStringList mOrderIdentifier;
     bool mInitialized;
 };
 
