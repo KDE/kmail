@@ -153,7 +153,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     toolBar(QStringLiteral("mainToolBar"))->show();
 }
 
-void KMReaderMainWin::showMessage(const QString &encoding, KMime::Message::Ptr message)
+void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message::Ptr &message)
 {
     if (!message) {
         return;

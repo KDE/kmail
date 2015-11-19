@@ -631,7 +631,7 @@ void KMReaderWin::setMessage(const Akonadi::Item &item, Viewer::UpdateMode updat
     mViewer->setMessageItem(item, updateMode);
 }
 
-void KMReaderWin::setMessage(KMime::Message::Ptr message)
+void KMReaderWin::setMessage(const KMime::Message::Ptr &message)
 {
     mViewer->setMessage(message);
 }
@@ -670,7 +670,7 @@ void KMReaderWin::slotShowReader(KMime::Content *msgPart, bool html, const QStri
     win->show();
 }
 
-void KMReaderWin::slotShowMessage(KMime::Message::Ptr message, const QString &encoding)
+void KMReaderWin::slotShowMessage(const KMime::Message::Ptr &message, const QString &encoding)
 {
     KMReaderMainWin *win = new KMReaderMainWin();
     win->showMessage(encoding, message);
