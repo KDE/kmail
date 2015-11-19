@@ -52,7 +52,7 @@ public:
     */
     void showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection = Akonadi::Collection());
 
-    void showMessage(const QString &encoding, KMime::Message::Ptr message);
+    void showMessage(const QString &encoding, const KMime::Message::Ptr &message);
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
 private Q_SLOTS:
