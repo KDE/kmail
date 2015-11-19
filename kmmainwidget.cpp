@@ -1186,7 +1186,7 @@ void KMMainWidget::updateAllToTrashAction(int statistics)
     }
 }
 
-void KMMainWidget::slotCollectionStatisticsChanged(const Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &statistic)
+void KMMainWidget::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &statistic)
 {
     if (id == CommonKernel->outboxCollectionFolder().id()) {
         const bool enableAction = (statistic.count() > 0);

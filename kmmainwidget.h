@@ -441,7 +441,7 @@ protected Q_SLOTS:
     void slotItemAdded(const Akonadi::Item &, const Akonadi::Collection &col);
     void slotItemRemoved(const Akonadi::Item &);
     void slotItemMoved(const Akonadi::Item &item, const Akonadi::Collection &from, const Akonadi::Collection &to);
-    void slotCollectionStatisticsChanged(const Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
+    void slotCollectionStatisticsChanged(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
 
     void slotAkonadiStandardActionUpdated();
     void slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &);
