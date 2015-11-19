@@ -31,7 +31,6 @@ namespace MessageViewer
 class InvitationSettings;
 class PrintingSettings;
 }
-class KCModuleProxy;
 class ConfigureAgentsWidget;
 
 class MiscPageFolderTab : public ConfigModuleTab
