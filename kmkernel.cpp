@@ -1630,7 +1630,7 @@ void KMKernel::syncConfig()
     slotRequestConfigSync();
 }
 
-void KMKernel::selectCollectionFromId(const Akonadi::Collection::Id id)
+void KMKernel::selectCollectionFromId(Akonadi::Collection::Id id)
 {
     KMMainWidget *widget = getKMMainWidget();
     Q_ASSERT(widget);
@@ -1968,7 +1968,7 @@ Akonadi::Collection::Id KMKernel::lastSelectedFolder()
     return KMailSettings::self()->lastSelectedFolder();
 }
 
-void KMKernel::setLastSelectedFolder(const Akonadi::Collection::Id &col)
+void KMKernel::setLastSelectedFolder(Akonadi::Collection::Id col)
 {
     KMailSettings::self()->setLastSelectedFolder(col);
 }
