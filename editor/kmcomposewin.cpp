@@ -1408,6 +1408,7 @@ void KMComposeWin::setupActions(void)
     connect(mZoomOutAction, &QAction::triggered, this, &KMComposeWin::slotZoomOut);
     actionCollection()->setDefaultShortcut(mZoomOutAction, QKeySequence(Qt::CTRL | Qt::Key_Minus));
 
+    zoomMenu->addSeparator();
     mZoomResetAction = new QAction(i18n("Reset"), this);
     zoomMenu->addAction(mZoomResetAction);
     actionCollection()->addAction(QStringLiteral("zoom_reset"), mZoomResetAction);
