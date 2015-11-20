@@ -147,6 +147,7 @@ set(kmailprivate_job_LIB_SRCS
      job/saveasfilejob.cpp
      job/fetchrecursivecollectionsjob.cpp
      job/markallmessagesasreadinfolderandsubfolderjob.cpp
+     job/removeduplicatemessageinfolderandsubfolderjob.cpp
 )
  
 set(kmailprivate_widgets_LIB_SRCS
