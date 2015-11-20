@@ -131,7 +131,6 @@ using KSieveUi::SieveDebugDialog;
 #include <AkonadiCore/collectionstatistics.h>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <Akonadi/KMime/MessageFlags>
-#include <Akonadi/KMime/RemoveDuplicatesJob>
 #include <AkonadiCore/CachePolicy>
 
 #include <kidentitymanagement/identity.h>
