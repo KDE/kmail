@@ -68,7 +68,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone(cons
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
 {
     if (job->error()) {
-        //TODO show error
+        qCDebug(KMAIL_LOG()) << " Error during remove duplicates " << job->errorString();
     }
     deleteLater();
 }
