@@ -551,6 +551,7 @@ private Q_SLOTS:
     void slotDeleteMessages();
 
     void slotMarkAllMessageAsReadInCurrentFolderAndSubfolder();
+    void slotRemoveDuplicateRecursive();
 private:
     // Message actions
     QAction *mDeleteAction;
@@ -661,6 +662,7 @@ private:
     KToggleAction *mLowBandwithAction;
     QAction *mMarkAllMessageAsReadAndInAllSubFolder;
     KActionMenuAccount *mAccountActionMenu;
+    QAction *mRemoveDuplicateRecursiveAction;
 };
 
 #endif

@@ -48,6 +48,7 @@
 #include "PimCommon/NetworkUtil"
 #include "kpimtextedit/texttospeech.h"
 #include "job/markallmessagesasreadinfolderandsubfolderjob.h"
+#include "job/removeduplicatemessageinfolderandsubfolderjob.h"
 #if !defined(NDEBUG)
 #include <ksieveui/sievedebugdialog.h>
 using KSieveUi::SieveDebugDialog;
@@ -224,7 +225,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this)),
     mShowIntroductionAction(Q_NULLPTR),
     mMarkAllMessageAsReadAndInAllSubFolder(Q_NULLPTR),
-    mAccountActionMenu(Q_NULLPTR)
+    mAccountActionMenu(Q_NULLPTR),
+    mRemoveDuplicateRecursiveAction(Q_NULLPTR)
 {
     mLaunchExternalComponent = new KMLaunchExternalComponent(this, this);
     // must be the first line of the constructor:
@@ -3562,6 +3564,9 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("markallmessagereadcurentfolderandsubfolder"), mMarkAllMessageAsReadAndInAllSubFolder);
     connect(mMarkAllMessageAsReadAndInAllSubFolder, &KToggleAction::triggered, this, &KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder);
 
+    mRemoveDuplicateRecursiveAction = new QAction(i18n("Remove Duplicates in This Folder and All its Subfolder"), this);
+    actionCollection()->addAction(QStringLiteral("remove_duplicate_recursive"), mRemoveDuplicateRecursiveAction);
+    connect(mRemoveDuplicateRecursiveAction, &KToggleAction::triggered, this, &KMMainWidget::slotRemoveDuplicateRecursive);
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
@@ -4543,6 +4548,15 @@ void KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder()
 {
     if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
         MarkAllMessagesAsReadInFolderAndSubFolderJob *job = new MarkAllMessagesAsReadInFolderAndSubFolderJob(this);
+        job->setTopLevelCollection(mCurrentFolder->collection());
+        job->start();
+    }
+}
+
+void KMMainWidget::slotRemoveDuplicateRecursive()
+{
+    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
+        RemoveDuplicateMessageInFolderAndSubFolderJob *job = new RemoveDuplicateMessageInFolderAndSubFolderJob(this);
         job->setTopLevelCollection(mCurrentFolder->collection());
         job->start();
     }
