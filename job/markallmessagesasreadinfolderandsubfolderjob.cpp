@@ -40,16 +40,16 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::setTopLevelCollection(const A
 
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::start()
 {
-    if (!mTopLevelCollection.isValid()) {
+    if (mTopLevelCollection.isValid()) {
+        FetchRecursiveCollectionsJob *fetchJob = new FetchRecursiveCollectionsJob(this);
+        fetchJob->setTopCollection(mTopLevelCollection);
+        connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed);
+        connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone);
+        fetchJob->start();
+    } else {
         qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
         deleteLater();
-        return;
     }
-    FetchRecursiveCollectionsJob *fetchJob = new FetchRecursiveCollectionsJob(this);
-    fetchJob->setTopCollection(mTopLevelCollection);
-    connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed);
-    connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone);
-    fetchJob->start();
 }
 
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed()
