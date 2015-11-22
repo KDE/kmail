@@ -212,6 +212,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Email Aliases" string text edit and label:
     ++row;
     mAliasEdit = new KEditListWidget(tab);
+
+    KPIM::EmailValidator *emailValidator1 = new KPIM::EmailValidator(this);
+    mAliasEdit->lineEdit()->setValidator(emailValidator1);
+
     glay->addWidget(mAliasEdit, row, 1);
     label = new QLabel(i18n("Email a&liases:"), tab);
     label->setBuddy(mAliasEdit);
