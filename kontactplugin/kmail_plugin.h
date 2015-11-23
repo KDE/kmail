@@ -38,6 +38,7 @@ class UniqueAppWatcher;
 
 class KMailUniqueAppHandler : public KontactInterface::UniqueAppHandler
 {
+    Q_OBJECT
 public:
     explicit KMailUniqueAppHandler(KontactInterface::Plugin *plugin)
         : KontactInterface::UniqueAppHandler(plugin) {}
