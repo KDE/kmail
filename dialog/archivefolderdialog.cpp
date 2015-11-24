@@ -67,7 +67,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &ArchiveFolderDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &ArchiveFolderDialog::slotAccepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &ArchiveFolderDialog::reject);
     mOkButton->setDefault(true);
     mOkButton->setText(i18nc("@action", "Archive"));
