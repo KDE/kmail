@@ -72,7 +72,6 @@ void KActionMenuAccount::slotCheckTransportMenu()
     }
 }
 
-
 bool orderAgentIdentifier(const AgentIdentifier &lhs, const AgentIdentifier &rhs)
 {
     if ((lhs.mIndex == -1) && (rhs.mIndex == -1)) {
@@ -98,10 +97,10 @@ void KActionMenuAccount::updateAccountMenu()
             // the local copy which is passed to action.
             const QString identifierName = type.identifier();
             const int index = mOrderIdentifier.indexOf(identifierName);
-            const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")),index);
+            const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")), index);
             agentIdentifierList << id;
         }
-        qSort( agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);
+        qSort(agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);
         const int numberOfAccount(agentIdentifierList.size());
         for (int i = 0; i < numberOfAccount; ++i) {
             const AgentIdentifier id = agentIdentifierList.at(i);

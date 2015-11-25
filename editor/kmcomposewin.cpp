@@ -1415,7 +1415,6 @@ void KMComposeWin::setupActions(void)
     connect(mZoomResetAction, &QAction::triggered, this, &KMComposeWin::slotZoomReset);
     actionCollection()->setDefaultShortcut(mZoomResetAction, QKeySequence(Qt::CTRL | Qt::Key_0));
 
-
     createGUI(QStringLiteral("kmcomposerui.rc"));
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
             this, &KMComposeWin::htmlToolBarVisibilityChanged);
