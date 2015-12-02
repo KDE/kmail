@@ -144,96 +144,30 @@ protected:
                        bool detectionOnly, bool regExp, bool bayesFilter,
                        bool tristateDetection, WizardMode type);
 
-        int getVersion() const
-        {
-            return mVersion;
-        }
-        int getPrio() const
-        {
-            return mPrio;
-        }
-        QString getId()  const
-        {
-            return mId;
-        }
-        QString getVisibleName()  const
-        {
-            return mVisibleName;
-        }
-        QString getExecutable() const
-        {
-            return mExecutable;
-        }
-        QString getWhatsThisText() const
-        {
-            return mWhatsThisText;
-        }
-        QString getFilterName() const
-        {
-            return mFilterName;
-        }
-        QString getDetectCmd() const
-        {
-            return mDetectCmd;
-        }
-        QString getSpamCmd() const
-        {
-            return mSpamCmd;
-        }
-        QString getHamCmd() const
-        {
-            return mHamCmd;
-        }
-        QString getNoSpamCmd() const
-        {
-            return mNoSpamCmd;
-        }
-        QString getDetectionHeader() const
-        {
-            return mDetectionHeader;
-        }
-        QString getDetectionPattern() const
-        {
-            return mDetectionPattern;
-        }
-        QString getDetectionPattern2() const
-        {
-            return mDetectionPattern2;
-        }
-        QString getServerPattern() const
-        {
-            return mServerPattern;
-        }
+        int getVersion() const;
+        int getPrio() const;
+        QString getId()  const;
+        QString getVisibleName()  const;
+        QString getExecutable() const;
+        QString getWhatsThisText() const;
+        QString getFilterName() const;
+        QString getDetectCmd() const;
+        QString getSpamCmd() const;
+        QString getHamCmd() const;
+        QString getNoSpamCmd() const;
+        QString getDetectionHeader() const;
+        QString getDetectionPattern() const;
+        QString getDetectionPattern2() const;
+        QString getServerPattern() const;
         bool isServerBased() const;
-        bool isDetectionOnly() const
-        {
-            return mDetectionOnly;
-        }
-        bool isUseRegExp() const
-        {
-            return mUseRegExp;
-        }
-        bool useBayesFilter() const
-        {
-            return mSupportsBayesFilter;
-        }
-        bool hasTristateDetection() const
-        {
-            return mSupportsUnsure;
-        }
-        WizardMode getType() const
-        {
-            return mType;
-        }
+        bool isDetectionOnly() const;
+        bool isUseRegExp() const;
+        bool useBayesFilter() const;
+        bool hasTristateDetection() const;
+        WizardMode getType() const;
         // convenience methods for types
-        bool isSpamTool() const
-        {
-            return (mType == AntiSpam);
-        }
-        bool isVirusTool() const
-        {
-            return (mType == AntiVirus);
-        }
+        bool isSpamTool() const;
+        bool isVirusTool() const;
 
     private:
         // used to identifiy configs for the same tool

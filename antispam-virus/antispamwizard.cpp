@@ -705,9 +705,119 @@ AntiSpamWizard::SpamToolConfig::SpamToolConfig(const QString &toolId,
 {
 }
 
+int AntiSpamWizard::SpamToolConfig::getVersion() const
+{
+    return mVersion;
+}
+
+int AntiSpamWizard::SpamToolConfig::getPrio() const
+{
+    return mPrio;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getId() const
+{
+    return mId;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getVisibleName() const
+{
+    return mVisibleName;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getExecutable() const
+{
+    return mExecutable;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getWhatsThisText() const
+{
+    return mWhatsThisText;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getFilterName() const
+{
+    return mFilterName;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getDetectCmd() const
+{
+    return mDetectCmd;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getSpamCmd() const
+{
+    return mSpamCmd;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getHamCmd() const
+{
+    return mHamCmd;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getNoSpamCmd() const
+{
+    return mNoSpamCmd;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getDetectionHeader() const
+{
+    return mDetectionHeader;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getDetectionPattern() const
+{
+    return mDetectionPattern;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getDetectionPattern2() const
+{
+    return mDetectionPattern2;
+}
+
+QString AntiSpamWizard::SpamToolConfig::getServerPattern() const
+{
+    return mServerPattern;
+}
+
 bool AntiSpamWizard::SpamToolConfig::isServerBased() const
 {
     return !mServerPattern.isEmpty();
+}
+
+bool AntiSpamWizard::SpamToolConfig::isDetectionOnly() const
+{
+    return mDetectionOnly;
+}
+
+bool AntiSpamWizard::SpamToolConfig::isUseRegExp() const
+{
+    return mUseRegExp;
+}
+
+bool AntiSpamWizard::SpamToolConfig::useBayesFilter() const
+{
+    return mSupportsBayesFilter;
+}
+
+bool AntiSpamWizard::SpamToolConfig::hasTristateDetection() const
+{
+    return mSupportsUnsure;
+}
+
+AntiSpamWizard::WizardMode AntiSpamWizard::SpamToolConfig::getType() const
+{
+    return mType;
+}
+
+bool AntiSpamWizard::SpamToolConfig::isSpamTool() const
+{
+    return (mType == AntiSpam);
+}
+
+bool AntiSpamWizard::SpamToolConfig::isVirusTool() const
+{
+    return (mType == AntiVirus);
 }
 
 //---------------------------------------------------------------------------
