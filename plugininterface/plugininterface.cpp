@@ -34,3 +34,7 @@ void PluginInterface::setParentWidget(QWidget *widget)
     mParentWidget = widget;
 }
 
+QVector<PimCommon::ActionType> PluginInterface::actionsType() const
+{
+    return QVector<PimCommon::ActionType>();
+}

@@ -19,6 +19,9 @@
 #define PLUGININTERFACE_H
 
 #include <QObject>
+#include <QVector>
+
+#include <genericplugins/genericplugininterface.h>
 
 class PluginInterface : public QObject
 {
@@ -28,6 +31,7 @@ public:
     ~PluginInterface();
 
     void setParentWidget(QWidget *widget);
+    QVector<PimCommon::ActionType> actionsType() const;
 private:
     QWidget *mParentWidget;
 };
