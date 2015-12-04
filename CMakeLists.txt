@@ -163,6 +163,11 @@ set(kmailprivate_tag_LIB_SRCS
      tag/tagselectdialog.cpp
 )
 
+
+set(kmailprivate_plugininterface_LIB_SRCS
+     plugininterface/plugininterface.cpp
+)
+
 set(kmail_common_SRCS)
 ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME log_kmail)
 set(kmailprivate_LIB_SRCS
@@ -202,6 +207,8 @@ set(kmailprivate_LIB_SRCS
      ${kmailprivate_identity_LIB_SRCS}
      ${kmailprivate_editor_LIB_SRCS}
      ${kmailprivate_editor_potentialphishingemail_SRCS}
+     ${kmailprivate_plugininterface_LIB_SRCS}
+  
 )
 
 qt5_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
