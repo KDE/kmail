@@ -19,7 +19,9 @@
 #include "pimcommon/genericpluginmanager.h"
 #include "kmail_debug.h"
 
-PluginInterface::PluginInterface(QObject *parent)
+#include <KActionCollection>
+
+PluginInterface::PluginInterface(KActionCollection *ac, QObject *parent)
     : QObject(parent),
       mParentWidget(Q_NULLPTR)
 {
@@ -28,6 +30,7 @@ PluginInterface::PluginInterface(QObject *parent)
     if (!PimCommon::GenericPluginManager::self()->initializePlugins()) {
         qCDebug(KMAIL_LOG) << " Impossible to initialize plugins";
     }
+    //TODO create plugin interface.
 }
 
 PluginInterface::~PluginInterface()

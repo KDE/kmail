@@ -22,12 +22,12 @@
 #include <QVector>
 
 #include <genericplugins/genericplugininterface.h>
-
+class KActionCollection;
 class PluginInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginInterface(QObject *parent = Q_NULLPTR);
+    explicit PluginInterface(KActionCollection *ac, QObject *parent = Q_NULLPTR);
     ~PluginInterface();
 
     void setParentWidget(QWidget *widget);
