@@ -16,12 +16,18 @@
 */
 
 #include "plugininterface.h"
+#include "pimcommon/genericpluginmanager.h"
+#include "kmail_debug.h"
 
 PluginInterface::PluginInterface(QObject *parent)
     : QObject(parent),
       mParentWidget(Q_NULLPTR)
 {
-
+    PimCommon::GenericPluginManager::self()->setPluginName(QStringLiteral("kmail"));
+    PimCommon::GenericPluginManager::self()->setServiceTypeName(QStringLiteral("KMail/MainViewPlugin"));
+    if (!PimCommon::GenericPluginManager::self()->initializePlugins()) {
+        qCDebug(KMAIL_LOG) << " Impossible to initialize plugins";
+    }
 }
 
 PluginInterface::~PluginInterface()
