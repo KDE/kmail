@@ -31,8 +31,6 @@
 #ifndef QT_NO_CURSOR
 #include "Libkdepim/KCursorSaver"
 #endif
-#include "kmkernel.h"
-#include "kmmainwin.h"
 #include "MailCommon/FolderRequester"
 #include "MailCommon/FolderTreeWidget"
 #include "MailCommon/FolderTreeView"
