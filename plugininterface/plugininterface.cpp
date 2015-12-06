@@ -52,17 +52,17 @@ void PluginInterface::setParentWidget(QWidget *widget)
     mParentWidget = widget;
 }
 
-QHash<PimCommon::ActionType::Type, QList<KToggleAction *> > PluginInterface::actionsType() const
+QHash<PimCommon::ActionType::Type, QList<QAction *> > PluginInterface::actionsType() const
 {
-    QHash<PimCommon::ActionType::Type, QList<KToggleAction *> > listType;
+    QHash<PimCommon::ActionType::Type, QList<QAction *> > listType;
     Q_FOREACH(PimCommon::GenericPluginInterface *interface, mListGenericInterface) {
         PimCommon::ActionType actionType = interface->actionType();
         if (listType.contains(actionType.type())) {
-            QList<KToggleAction *> lst = listType.value(actionType.type());
+            QList<QAction *> lst = listType.value(actionType.type());
             lst << actionType.action();
             listType.insert(actionType.type(), lst);
         } else {
-            listType.insert(actionType.type(), QList<KToggleAction *>() << actionType.action());
+            listType.insert(actionType.type(), QList<QAction *>() << actionType.action());
         }
     }
 

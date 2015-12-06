@@ -23,6 +23,7 @@
 
 #include <genericplugins/genericplugininterface.h>
 class KActionCollection;
+class QAction;
 class PluginInterface : public QObject
 {
     Q_OBJECT
@@ -31,7 +32,7 @@ public:
     ~PluginInterface();
 
     void setParentWidget(QWidget *widget);
-    QHash<PimCommon::ActionType::Type, QList<KToggleAction *> > actionsType() const;
+    QHash<PimCommon::ActionType::Type, QList<QAction *> > actionsType() const;
     void createPluginInterface();
 
 private:

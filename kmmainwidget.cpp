@@ -3572,6 +3572,12 @@ void KMMainWidget::setupActions()
     mRemoveDuplicateRecursiveAction = new QAction(i18n("Remove Duplicates in This Folder and All its Subfolder"), this);
     actionCollection()->addAction(QStringLiteral("remove_duplicate_recursive"), mRemoveDuplicateRecursiveAction);
     connect(mRemoveDuplicateRecursiveAction, &KToggleAction::triggered, this, &KMMainWidget::slotRemoveDuplicateRecursive);
+
+    const QHash<PimCommon::ActionType::Type, QList<QAction *> > localActionsType = mPluginInterface->actionsType();
+    QList<QAction *> lstTools = localActionsType.value(PimCommon::ActionType::Tools);
+    if (!lstTools.isEmpty()) {
+        mGUIClient->plugActionList(QStringLiteral("plugins_tools"), lstTools);
+    }
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
