@@ -201,6 +201,7 @@ public:
     void updateQuickSearchLineText();
 
     void populateMessageListStatusFilterCombo();
+    void initializePluginToolsActions();
 public Q_SLOTS:
     // Moving messages around
     /**

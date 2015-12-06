@@ -3563,12 +3563,6 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("remove_duplicate_recursive"), mRemoveDuplicateRecursiveAction);
     connect(mRemoveDuplicateRecursiveAction, &KToggleAction::triggered, this, &KMMainWidget::slotRemoveDuplicateRecursive);
 
-    const QHash<PimCommon::ActionType::Type, QList<QAction *> > localActionsType = mPluginInterface->actionsType();
-    QList<QAction *> lstTools = localActionsType.value(PimCommon::ActionType::Tools);
-    if (!lstTools.isEmpty() && mGUIClient->factory()) {
-        mGUIClient->unplugActionList(QStringLiteral("kmail_plugins_tools"));
-        mGUIClient->plugActionList(QStringLiteral("kmail_plugins_tools"), lstTools);
-    }
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
@@ -4079,6 +4073,7 @@ void KMMainWidget::slotShowStartupFolder()
     mFolderShortcutActionManager->createActions();
     mTagActionManager->createActions();
     messageActions()->setupForwardingActionsList(mGUIClient);
+    initializePluginToolsActions();
 
     QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
     if (kmkernel->firstStart() ||
@@ -4151,6 +4146,16 @@ void KMMainWidget::clearFilterActions()
 
     qDeleteAll(mFilterCommands);
     mFilterCommands.clear();
+}
+
+void KMMainWidget::initializePluginToolsActions()
+{
+    const QHash<PimCommon::ActionType::Type, QList<QAction *> > localActionsType = mPluginInterface->actionsType();
+    QList<QAction *> lstTools = localActionsType.value(PimCommon::ActionType::Tools);
+    if (!lstTools.isEmpty() && mGUIClient->factory()) {
+        mGUIClient->unplugActionList(QStringLiteral("kmail_plugins_tools"));
+        mGUIClient->plugActionList(QStringLiteral("kmail_plugins_tools"), lstTools);
+    }
 }
 
 //-----------------------------------------------------------------------------
