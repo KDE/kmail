@@ -23,7 +23,6 @@
 #include "kmreadermainwin.h"
 #include "editor/composer.h"
 #include "searchdialog/searchwindow.h"
-#include "antispam-virus/antispamwizard.h"
 #include "widgets/vacationscriptindicatorwidget.h"
 #include "undostack.h"
 #include "kmcommands.h"
@@ -197,7 +196,6 @@ using namespace MailCommon;
 using KPIM::ProgressManager;
 using KPIM::BroadcastStatus;
 using KMail::SearchWindow;
-using KMail::AntiSpamWizard;
 using KMime::Types::AddrSpecList;
 using MessageViewer::AttachmentStrategy;
 

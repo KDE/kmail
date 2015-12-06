@@ -31,7 +31,6 @@
 #include <QProcess>
 #include "kmail_debug.h"
 #include <QStandardPaths>
-#include <antispam-virus/antispamwizard.h>
 
 KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent)
     : QObject(parent),

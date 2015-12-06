@@ -184,7 +184,6 @@ set(kmailprivate_LIB_SRCS
      kmmainwidget.cpp
      aboutdata.cpp
      mailserviceimpl.cpp
-     antispam-virus/antispamwizard.cpp
      secondarywindow.cpp
      util.cpp
      messageactions.cpp
@@ -381,7 +380,6 @@ install(FILES
     DESTINATION ${KDE_INSTALL_KCFGDIR}
 )
 install(FILES data/org.kde.kmail.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-install(FILES antispam-virus/kmail.antispamrc antispam-virus/kmail.antivirusrc  DESTINATION ${KDE_INSTALL_CONFDIR})
 install(FILES
     data/kmail_config_misc.desktop
     data/kmail_config_appearance.desktop
