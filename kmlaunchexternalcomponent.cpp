@@ -145,18 +145,6 @@ void KMLaunchExternalComponent::slotAccountWizard()
     }
 }
 
-void KMLaunchExternalComponent::slotAntiSpamWizard()
-{
-    KMail::AntiSpamWizard wiz(KMail::AntiSpamWizard::AntiSpam, mParentWidget);
-    wiz.exec();
-}
-
-void KMLaunchExternalComponent::slotAntiVirusWizard()
-{
-    KMail::AntiSpamWizard wiz(KMail::AntiSpamWizard::AntiVirus, mParentWidget);
-    wiz.exec();
-}
-
 void KMLaunchExternalComponent::slotFilterLogViewer()
 {
     MailCommon::FilterManager::instance()->showFilterLogDialog((qlonglong)mParentWidget->winId());

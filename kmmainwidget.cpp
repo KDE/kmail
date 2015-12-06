@@ -2947,16 +2947,6 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotFilterLogViewer);
     }
     {
-        QAction *action = new QAction(i18n("&Anti-Spam Wizard..."), this);
-        actionCollection()->addAction(QStringLiteral("antiSpamWizard"), action);
-        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAntiSpamWizard);
-    }
-    {
-        QAction *action = new QAction(i18n("&Anti-Virus Wizard..."), this);
-        actionCollection()->addAction(QStringLiteral("antiVirusWizard"), action);
-        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAntiVirusWizard);
-    }
-    {
         QAction *action = new QAction(i18n("&Account Wizard..."), this);
         actionCollection()->addAction(QStringLiteral("accountWizard"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAccountWizard);
@@ -3576,7 +3566,8 @@ void KMMainWidget::setupActions()
     const QHash<PimCommon::ActionType::Type, QList<QAction *> > localActionsType = mPluginInterface->actionsType();
     QList<QAction *> lstTools = localActionsType.value(PimCommon::ActionType::Tools);
     if (!lstTools.isEmpty()) {
-        mGUIClient->plugActionList(QStringLiteral("plugins_tools"), lstTools);
+        mGUIClient->unplugActionList(QStringLiteral("kmail_plugins_tools"));
+        mGUIClient->plugActionList(QStringLiteral("kmail_plugins_tools"), lstTools);
     }
 }
 
