@@ -54,5 +54,10 @@ void PluginInterface::setParentWidget(QWidget *widget)
 
 QVector<PimCommon::ActionType> PluginInterface::actionsType() const
 {
-    return QVector<PimCommon::ActionType>();
+    QVector<PimCommon::ActionType> typeList;
+    Q_FOREACH(PimCommon::GenericPluginInterface *interface, mListGenericInterface) {
+        typeList.append(interface->actionType());
+    }
+
+    return typeList;
 }

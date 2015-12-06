@@ -45,6 +45,7 @@
 #include "widgets/kactionmenutransport.h"
 #include "widgets/kactionmenuaccount.h"
 #include "mailcommon/searchrulestatus.h"
+#include "plugininterface/plugininterface.h"
 #include "PimCommon/NetworkUtil"
 #include "kpimtextedit/texttospeech.h"
 #include "job/markallmessagesasreadinfolderandsubfolderjob.h"
@@ -249,6 +250,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
 
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);
+
+    mPluginInterface = new PluginInterface(mActionCollection, this);
 
     theMainWidgetList->append(this);
 
@@ -2830,6 +2833,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
 
 void KMMainWidget::setupActions()
 {
+    mPluginInterface->setParentWidget(this);
+    mPluginInterface->createPluginInterface();
     mMsgActions = new KMail::MessageActions(actionCollection(), this);
     mMsgActions->setMessageView(mMsgView);
 
