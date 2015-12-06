@@ -32,8 +32,12 @@ public:
 
     void setParentWidget(QWidget *widget);
     QVector<PimCommon::ActionType> actionsType() const;
+    void createPluginInterface();
+
 private:
     QWidget *mParentWidget;
+    KActionCollection *mActionCollection;
+    QVector<PimCommon::GenericPluginInterface *> mListGenericInterface;
 };
 
 #endif // PLUGININTERFACE_H

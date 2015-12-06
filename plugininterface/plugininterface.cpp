@@ -21,21 +21,30 @@
 
 #include <KActionCollection>
 
+#include <pimcommon/genericplugin.h>
+
 PluginInterface::PluginInterface(KActionCollection *ac, QObject *parent)
     : QObject(parent),
-      mParentWidget(Q_NULLPTR)
+      mParentWidget(Q_NULLPTR),
+      mActionCollection(ac)
 {
     PimCommon::GenericPluginManager::self()->setPluginName(QStringLiteral("kmail"));
     PimCommon::GenericPluginManager::self()->setServiceTypeName(QStringLiteral("KMail/MainViewPlugin"));
     if (!PimCommon::GenericPluginManager::self()->initializePlugins()) {
         qCDebug(KMAIL_LOG) << " Impossible to initialize plugins";
     }
-    //TODO create plugin interface.
 }
 
 PluginInterface::~PluginInterface()
 {
 
+}
+
+void PluginInterface::createPluginInterface()
+{
+    Q_FOREACH(PimCommon::GenericPlugin *plugin, PimCommon::GenericPluginManager::self()->pluginsList()) {
+        mListGenericInterface.append(plugin->createInterface(mActionCollection, mParentWidget));
+    }
 }
 
 void PluginInterface::setParentWidget(QWidget *widget)
