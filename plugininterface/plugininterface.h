@@ -31,7 +31,7 @@ public:
     ~PluginInterface();
 
     void setParentWidget(QWidget *widget);
-    QVector<PimCommon::ActionType> actionsType() const;
+    QHash<PimCommon::ActionType::Type, QList<KToggleAction *> > actionsType() const;
     void createPluginInterface();
 
 private:
