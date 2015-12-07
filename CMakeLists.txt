@@ -28,7 +28,6 @@ include_directories(
 add_subdirectory(about)
 add_subdirectory(pics)
 add_subdirectory(icons)
-add_subdirectory(avscripts)
 add_subdirectory(kcm_kpimidentities)
 add_subdirectory(kontactplugin)
 add_subdirectory(kconf_update)
