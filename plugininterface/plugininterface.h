@@ -21,7 +21,7 @@
 #include <QObject>
 #include <QVector>
 
-#include <GenericPluginInterface>
+#include <pimcommon/genericplugininterface.h>
 class KActionCollection;
 class QAction;
 class PluginInterface : public QObject
