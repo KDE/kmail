@@ -35,6 +35,9 @@ public:
     QHash<PimCommon::ActionType::Type, QList<QAction *> > actionsType() const;
     void createPluginInterface();
 
+private Q_SLOTS:
+    void slotPluginActivated(PimCommon::GenericPluginInterface *interface);
+
 private:
     QWidget *mParentWidget;
     KActionCollection *mActionCollection;
