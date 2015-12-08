@@ -66,12 +66,13 @@ QHash<PimCommon::ActionType::Type, QList<QAction *> > PluginInterface::actionsTy
     QHash<PimCommon::ActionType::Type, QList<QAction *> > listType;
     Q_FOREACH(PimCommon::GenericPluginInterface *interface, mListGenericInterface) {
         PimCommon::ActionType actionType = interface->actionType();
-        if (listType.contains(actionType.type())) {
-            QList<QAction *> lst = listType.value(actionType.type());
+        const PimCommon::ActionType::Type type = actionType.type();
+        if (listType.contains(type)) {
+            QList<QAction *> lst = listType.value(type);
             lst << actionType.action();
-            listType.insert(actionType.type(), lst);
+            listType.insert(type, lst);
         } else {
-            listType.insert(actionType.type(), QList<QAction *>() << actionType.action());
+            listType.insert(type, QList<QAction *>() << actionType.action());
         }
     }
 
