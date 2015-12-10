@@ -165,7 +165,7 @@ void KMMainWin::slotUpdateGui()
     // plug dynamically created actions again
     mKMMainWidget->initializeFilterActions();
     mKMMainWidget->tagActionManager()->createActions();
-    mKMMainWidget->initializePluginToolsActions();
+    mKMMainWidget->initializePluginActions();
 }
 
 void KMMainWin::setupStatusBar()

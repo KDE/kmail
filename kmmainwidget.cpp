@@ -4071,7 +4071,7 @@ void KMMainWidget::slotShowStartupFolder()
     mFolderShortcutActionManager->createActions();
     mTagActionManager->createActions();
     messageActions()->setupForwardingActionsList(mGUIClient);
-    initializePluginToolsActions();
+    initializePluginActions();
 
     QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
     if (kmkernel->firstStart() ||
@@ -4146,7 +4146,7 @@ void KMMainWidget::clearFilterActions()
     mFilterCommands.clear();
 }
 
-void KMMainWidget::initializePluginToolsActions()
+void KMMainWidget::initializePluginActions()
 {
     const QHash<PimCommon::ActionType::Type, QList<QAction *> > localActionsType = mPluginInterface->actionsType();
     QList<QAction *> lstTools = localActionsType.value(PimCommon::ActionType::Tools);
