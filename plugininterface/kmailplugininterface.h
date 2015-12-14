@@ -21,12 +21,12 @@
 #include <QObject>
 #include <pimcommon/plugininterface.h>
 class KActionCollection;
-class PluginInterface : public PimCommon::PluginInterface
+class KMailPluginInterface : public PimCommon::PluginInterface
 {
     Q_OBJECT
 public:
-    explicit PluginInterface(KActionCollection *ac, QObject *parent = Q_NULLPTR);
-    ~PluginInterface();
+    explicit KMailPluginInterface(KActionCollection *ac, QObject *parent = Q_NULLPTR);
+    ~KMailPluginInterface();
 };
 
 #endif // KMAILPLUGININTERFACE_H

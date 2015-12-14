@@ -15,11 +15,11 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "plugininterface.h"
+#include "kmailplugininterface.h"
 #include <KActionCollection>
 
 
-PluginInterface::PluginInterface(KActionCollection *ac, QObject *parent)
+KMailPluginInterface::KMailPluginInterface(KActionCollection *ac, QObject *parent)
     : PimCommon::PluginInterface(ac, parent)
 {
     setPluginName(QStringLiteral("kmail"));
@@ -27,7 +27,7 @@ PluginInterface::PluginInterface(KActionCollection *ac, QObject *parent)
     initializePlugins();
 }
 
-PluginInterface::~PluginInterface()
+KMailPluginInterface::~KMailPluginInterface()
 {
 
 }

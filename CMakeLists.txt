@@ -164,7 +164,7 @@ set(kmailprivate_tag_LIB_SRCS
 
 
 set(kmailprivate_plugininterface_LIB_SRCS
-     plugininterface/plugininterface.cpp
+     plugininterface/kmailplugininterface.cpp
 )
 
 set(kmail_common_SRCS)

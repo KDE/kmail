@@ -44,7 +44,7 @@
 #include "widgets/kactionmenutransport.h"
 #include "widgets/kactionmenuaccount.h"
 #include "mailcommon/searchrulestatus.h"
-#include "plugininterface/plugininterface.h"
+#include "plugininterface/kmailplugininterface.h"
 #include "PimCommon/NetworkUtil"
 #include "kpimtextedit/texttospeech.h"
 #include "job/markallmessagesasreadinfolderandsubfolderjob.h"
@@ -249,7 +249,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);
 
-    mPluginInterface = new PluginInterface(mActionCollection, this);
+    mPluginInterface = new KMailPluginInterface(mActionCollection, this);
 
     theMainWidgetList->append(this);
 
