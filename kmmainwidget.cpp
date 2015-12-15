@@ -4148,11 +4148,13 @@ void KMMainWidget::clearFilterActions()
 
 void KMMainWidget::initializePluginActions()
 {
-    const QHash<PimCommon::ActionType::Type, QList<QAction *> > localActionsType = mPluginInterface->actionsType();
-    QList<QAction *> lstTools = localActionsType.value(PimCommon::ActionType::Tools);
-    if (!lstTools.isEmpty() && mGUIClient->factory()) {
-        mGUIClient->unplugActionList(QStringLiteral("kmail_plugins_tools"));
-        mGUIClient->plugActionList(QStringLiteral("kmail_plugins_tools"), lstTools);
+    if (mGUIClient->factory()) {
+        const QHash<PimCommon::ActionType::Type, QList<QAction *> > localActionsType = mPluginInterface->actionsType();
+        const QList<QAction *> lstTools = localActionsType.value(PimCommon::ActionType::Tools);
+        if (!lstTools.isEmpty()) {
+            mGUIClient->unplugActionList(QStringLiteral("kmail_plugins_tools"));
+            mGUIClient->plugActionList(QStringLiteral("kmail_plugins_tools"), lstTools);
+        }
     }
 }
 
