@@ -18,7 +18,6 @@
 #include "kmailplugininterface.h"
 #include <KActionCollection>
 
-
 KMailPluginInterface::KMailPluginInterface(KActionCollection *ac, QObject *parent)
     : PimCommon::PluginInterface(ac, parent),
       mMainWindow(Q_NULLPTR)
