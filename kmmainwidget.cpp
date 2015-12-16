@@ -250,6 +250,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mToolbarActionSeparator->setSeparator(true);
 
     mPluginInterface = new KMailPluginInterface(mActionCollection, this);
+    mPluginInterface->setMainWidget(this);
 
     theMainWidgetList->append(this);
 

@@ -20,7 +20,8 @@
 
 
 KMailPluginInterface::KMailPluginInterface(KActionCollection *ac, QObject *parent)
-    : PimCommon::PluginInterface(ac, parent)
+    : PimCommon::PluginInterface(ac, parent),
+      mMainWindow(Q_NULLPTR)
 {
     setPluginName(QStringLiteral("kmail"));
     setServiceTypeName(QStringLiteral("KMail/MainViewPlugin"));
@@ -29,5 +30,32 @@ KMailPluginInterface::KMailPluginInterface(KActionCollection *ac, QObject *paren
 
 KMailPluginInterface::~KMailPluginInterface()
 {
+
+}
+
+void KMailPluginInterface::setMainWidget(KMMainWidget *mainwindow)
+{
+    mMainWindow = mainwindow;
+}
+
+void KMailPluginInterface::initializeInterfaceRequires(PimCommon::GenericPluginInterface *interface)
+{
+#if 0
+    PimCommon::GenericPluginInterface::RequireTypes requires = interface->requires();
+    if (requires & PimCommon::GenericPluginInterface::CurrentItems) {
+
+    }
+    if (requires & PimCommon::GenericPluginInterface::Items) {
+        //TODO
+    }
+    if (requires & PimCommon::GenericPluginInterface::CurrentCollection) {
+        //TODO
+    }
+    if (requires & PimCommon::GenericPluginInterface::Collections) {
+        //TODO
+    }
+#else
+    Q_UNUSED(interface);
+#endif
 
 }

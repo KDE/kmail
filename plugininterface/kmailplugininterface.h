@@ -21,12 +21,18 @@
 #include <QObject>
 #include <pimcommon/plugininterface.h>
 class KActionCollection;
+class KMMainWidget;
 class KMailPluginInterface : public PimCommon::PluginInterface
 {
     Q_OBJECT
 public:
     explicit KMailPluginInterface(KActionCollection *ac, QObject *parent = Q_NULLPTR);
     ~KMailPluginInterface();
+
+    void setMainWidget(KMMainWidget *mainwindow);
+    void initializeInterfaceRequires(PimCommon::GenericPluginInterface *interface) Q_DECL_OVERRIDE;
+private:
+    KMMainWidget *mMainWindow;
 };
 
 #endif // KMAILPLUGININTERFACE_H
