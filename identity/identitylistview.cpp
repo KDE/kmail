@@ -41,7 +41,6 @@
 
 #include "kmail_debug.h"
 #include <KLocalizedString> // i18n
-#include <KIconLoader> // SmallIcon
 
 #include <QDrag>
 #include <QHeaderView>
