@@ -53,11 +53,12 @@
 #include <KEmailAddress>
 #include <kdbusservicestarter.h>
 #include "kmail_debug.h"
-#include <qfiledialog.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kbookmarkmanager.h>
+#include <KFileWidget>
 #include <QFileDialog>
+#include <KRecentDirs>
 #include <KJobWidgets>
 // KIO headers
 #include <kio/job.h>
@@ -535,9 +536,16 @@ KMCommand::Result KMUrlSaveCommand::execute()
     if (mUrl.isEmpty()) {
         return OK;
     }
-    const QUrl saveUrl = QFileDialog::getSaveFileUrl(parentWidget(), QString(), mUrl.fileName());
+    QString recentDirClass;
+    const QUrl saveUrl = QFileDialog::getSaveFileUrl(parentWidget()
+                                                     , KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///OpenMessage")), recentDirClass).toLocalFile()
+                                                     , mUrl.fileName());
     if (saveUrl.isEmpty()) {
         return Canceled;
+    }
+
+    if (!recentDirClass.isEmpty()) {
+        KRecentDirs::add(recentDirClass, saveUrl.path());
     }
 
     bool fileExists = false;
