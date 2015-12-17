@@ -17,6 +17,7 @@
 
 #include "kmailplugininterface.h"
 #include <KActionCollection>
+#include "kmail_debug.h"
 
 KMailPluginInterface::KMailPluginInterface(KActionCollection *ac, QObject *parent)
     : PimCommon::PluginInterface(ac, parent),
@@ -39,22 +40,20 @@ void KMailPluginInterface::setMainWidget(KMMainWidget *mainwindow)
 
 void KMailPluginInterface::initializeInterfaceRequires(PimCommon::GenericPluginInterface *interface)
 {
-#if 0
     PimCommon::GenericPluginInterface::RequireTypes requires = interface->requires();
     if (requires & PimCommon::GenericPluginInterface::CurrentItems) {
-
+        qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::CurrentItems not implemented";
     }
     if (requires & PimCommon::GenericPluginInterface::Items) {
+        qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Items not implemented";
         //TODO
     }
     if (requires & PimCommon::GenericPluginInterface::CurrentCollection) {
+        qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::CurrentCollection not implemented";
         //TODO
     }
     if (requires & PimCommon::GenericPluginInterface::Collections) {
+        qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Collection not implemented";
         //TODO
     }
-#else
-    Q_UNUSED(interface);
-#endif
-
 }
