@@ -17,6 +17,7 @@
 
 #include "kmailplugininterface.h"
 #include <KActionCollection>
+#include <kmmainwidget.h>
 #include "kmail_debug.h"
 
 KMailPluginInterface::KMailPluginInterface(KActionCollection *ac, QObject *parent)
@@ -49,8 +50,11 @@ void KMailPluginInterface::initializeInterfaceRequires(PimCommon::GenericPluginI
         //TODO
     }
     if (requires & PimCommon::GenericPluginInterface::CurrentCollection) {
-        qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::CurrentCollection not implemented";
-        //TODO
+        if (mMainWindow->currentFolder()) {
+            interface->setCurrentCollection(mMainWindow->currentFolder()->collection());
+        } else {
+            qCDebug(KMAIL_LOG) << "Current Collection not defined";
+        }
     }
     if (requires & PimCommon::GenericPluginInterface::Collections) {
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Collection not implemented";
