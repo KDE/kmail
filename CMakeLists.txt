@@ -109,6 +109,12 @@ set(kmailprivate_editor_LIB_SRCS
      editor/validatesendmailshortcut.cpp
      editor/kmcomposerglobalaction.cpp
 )
+
+set(kmailprivate_plugineditor_LIB_SRCS
+    editor/plugineditor/plugineditormanager.cpp
+)
+
+
 set(kmailprivate_warningwidgets_LIB_SRCS
      warningwidgets/externaleditorwarning.cpp
      warningwidgets/attachmentmissingwarning.cpp
@@ -206,7 +212,7 @@ set(kmailprivate_LIB_SRCS
      ${kmailprivate_editor_LIB_SRCS}
      ${kmailprivate_editor_potentialphishingemail_SRCS}
      ${kmailprivate_plugininterface_LIB_SRCS}
-  
+     ${kmailprivate_plugineditor_LIB_SRCS}
 )
 
 qt5_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
