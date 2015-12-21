@@ -15,23 +15,17 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef PLUGINEDITORMANAGER_H
-#define PLUGINEDITORMANAGER_H
+#ifndef PLUGINEDITORINTERFACE_H
+#define PLUGINEDITORINTERFACE_H
 
 #include <QObject>
 
-class PluginEditorManagerPrivate;
-class PluginEditorManager : public QObject
+class PluginEditorInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginEditorManager(QObject *parent = Q_NULLPTR);
-    ~PluginEditorManager();
-
-    static PluginEditorManager *self();
-
-private:
-    PluginEditorManagerPrivate *const d;
+    explicit PluginEditorInterface(QObject *parent = Q_NULLPTR);
+    ~PluginEditorInterface();
 };
 
-#endif // PLUGINEDITORMANAGER_H
+#endif // PLUGINEDITORINTERFACE_H

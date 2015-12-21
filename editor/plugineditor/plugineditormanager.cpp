@@ -17,12 +17,28 @@
 
 #include "plugineditormanager.h"
 
+class PluginEditorManagerInstancePrivate
+{
+public:
+    PluginEditorManagerInstancePrivate()
+        : pluginManager(new PluginEditorManager)
+    {
+    }
+
+    ~PluginEditorManagerInstancePrivate()
+    {
+        delete pluginManager;
+    }
+    PluginEditorManager *pluginManager;
+};
+
+Q_GLOBAL_STATIC(PluginEditorManagerInstancePrivate, sInstance)
+
 class PluginEditorManagerPrivate
 {
 public:
     PluginEditorManagerPrivate()
     {
-
     }
 };
 
@@ -36,4 +52,9 @@ PluginEditorManager::PluginEditorManager(QObject *parent)
 PluginEditorManager::~PluginEditorManager()
 {
     delete d;
+}
+
+PluginEditorManager *PluginEditorManager::self()
+{
+    return sInstance->pluginManager;
 }

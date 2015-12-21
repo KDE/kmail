@@ -15,23 +15,17 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef PLUGINEDITORMANAGER_H
-#define PLUGINEDITORMANAGER_H
-
+#ifndef PLUGINEDITOR_H
+#define PLUGINEDITOR_H
 #include <QObject>
-
-class PluginEditorManagerPrivate;
-class PluginEditorManager : public QObject
+class KActionCollection;
+class PluginEditor : public QObject
 {
     Q_OBJECT
 public:
-    explicit PluginEditorManager(QObject *parent = Q_NULLPTR);
-    ~PluginEditorManager();
+    explicit PluginEditor(QObject *parent = Q_NULLPTR);
+    ~PluginEditor();
 
-    static PluginEditorManager *self();
-
-private:
-    PluginEditorManagerPrivate *const d;
+    //virtual PimCommon::GenericPluginInterface *createInterface(KActionCollection *ac, QWidget *parent = Q_NULLPTR) = 0;
 };
-
-#endif // PLUGINEDITORMANAGER_H
+#endif // PLUGINEDITOR_H

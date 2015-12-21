@@ -112,6 +112,8 @@ set(kmailprivate_editor_LIB_SRCS
 
 set(kmailprivate_plugineditor_LIB_SRCS
     editor/plugineditor/plugineditormanager.cpp
+    editor/plugineditor/plugineditor.cpp
+    editor/plugineditor/plugineditorinterface.cpp
 )
 
 
