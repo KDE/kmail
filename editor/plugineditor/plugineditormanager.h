@@ -21,6 +21,7 @@
 #include <QObject>
 
 class PluginEditorManagerPrivate;
+class PluginEditor;
 class PluginEditorManager : public QObject
 {
     Q_OBJECT
@@ -29,6 +30,8 @@ public:
     ~PluginEditorManager();
 
     static PluginEditorManager *self();
+
+    QVector<PluginEditor *> pluginsList() const;
 
 private:
     PluginEditorManagerPrivate *const d;

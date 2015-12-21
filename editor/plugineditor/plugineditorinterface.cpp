@@ -17,8 +17,32 @@
 
 #include "plugineditorinterface.h"
 
+ActionType::ActionType()
+    : mAction(Q_NULLPTR),
+      mType(Tools)
+{
+
+}
+
+ActionType::ActionType(QAction *action, ActionType::Type type)
+    : mAction(action),
+      mType(type)
+{
+}
+
+QAction *ActionType::action() const
+{
+    return mAction;
+}
+
+ActionType::Type ActionType::type() const
+{
+    return mType;
+}
+
 PluginEditorInterface::PluginEditorInterface(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      mParentWidget(Q_NULLPTR)
 {
 
 }
@@ -26,4 +50,24 @@ PluginEditorInterface::PluginEditorInterface(QObject *parent)
 PluginEditorInterface::~PluginEditorInterface()
 {
 
+}
+
+void PluginEditorInterface::setActionType(const ActionType &type)
+{
+    mActionType = type;
+}
+
+ActionType PluginEditorInterface::actionType() const
+{
+    return mActionType;
+}
+
+void PluginEditorInterface::setParentWidget(QWidget *parent)
+{
+    mParentWidget = parent;
+}
+
+QWidget *PluginEditorInterface::parentWidget() const
+{
+    return mParentWidget;
 }

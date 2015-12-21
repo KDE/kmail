@@ -19,7 +19,10 @@
 #include "plugineditormanager.h"
 
 #include <QFileInfo>
+#include <QSet>
+#include <KPluginLoader>
 #include <kpluginmetadata.h>
+#include <KPluginFactory>
 
 class PluginEditorManagerInstancePrivate
 {
@@ -53,15 +56,76 @@ public:
 
 Q_GLOBAL_STATIC(PluginEditorManagerInstancePrivate, sInstance)
 
+namespace {
+QString pluginVersion() {
+    return QStringLiteral("1.0");
+}
+}
+
+
 class PluginEditorManagerPrivate
 {
 public:
     PluginEditorManagerPrivate(PluginEditorManager *qq)
         : q(qq)
     {
+        initializePlugins();
     }
+    void loadPlugin(PluginEditorInfo *item);
+    QVector<PluginEditor *> pluginsList() const;
+    bool initializePlugins();
+    QVector<PluginEditorInfo> mPluginList;
     PluginEditorManager *q;
 };
+
+bool PluginEditorManagerPrivate::initializePlugins()
+{
+    const QVector<KPluginMetaData> plugins = KPluginLoader::findPlugins(QStringLiteral("kmail"), [](const KPluginMetaData & md) {
+        return md.serviceTypes().contains(QStringLiteral("KMailEditor/Plugin"));
+    });
+
+    QVectorIterator<KPluginMetaData> i(plugins);
+    i.toBack();
+    QSet<QString> unique;
+    while (i.hasPrevious()) {
+        PluginEditorInfo info;
+        info.metaData = i.previous();
+        if (pluginVersion() == info.metaData.version()) {
+            // only load plugins once, even if found multiple times!
+            if (unique.contains(info.saveName())) {
+                continue;
+            }
+            info.plugin = Q_NULLPTR;
+            mPluginList.push_back(info);
+            unique.insert(info.saveName());
+        }
+    }
+    QVector<PluginEditorInfo>::iterator end(mPluginList.end());
+    for (QVector<PluginEditorInfo>::iterator it = mPluginList.begin(); it != end; ++it) {
+        loadPlugin(&(*it));
+    }
+    return true;
+}
+
+void PluginEditorManagerPrivate::loadPlugin(PluginEditorInfo *item)
+{
+    item->plugin = KPluginLoader(item->metaData.fileName()).factory()->create<PluginEditor>(q, QVariantList() << item->saveName());
+}
+
+
+QVector<PluginEditor *> PluginEditorManagerPrivate::pluginsList() const
+{
+    QVector<PluginEditor *> lst;
+    QVector<PluginEditorInfo>::ConstIterator end(mPluginList.constEnd());
+    for (QVector<PluginEditorInfo>::ConstIterator it = mPluginList.constBegin(); it != end; ++it) {
+        if ((*it).plugin) {
+            lst << (*it).plugin;
+        }
+    }
+    return lst;
+}
+
+
 
 PluginEditorManager::PluginEditorManager(QObject *parent)
     : QObject(parent),
@@ -83,4 +147,9 @@ PluginEditorManager *PluginEditorManager::self()
 QString PluginEditorInfo::saveName() const
 {
     return QFileInfo(metaData.fileName()).baseName();
+}
+
+QVector<PluginEditor *> PluginEditorManager::pluginsList() const
+{
+    return d->pluginsList();
 }

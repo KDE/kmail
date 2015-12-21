@@ -19,6 +19,30 @@
 #define PLUGINEDITORINTERFACE_H
 
 #include <QObject>
+class QAction;
+class KActionCollection;
+
+
+class ActionType
+{
+public:
+    enum Type {
+        Tools = 0,
+        Edit = 1,
+        File = 2,
+        Action = 3,
+        PopupMenu = 4
+    };
+    ActionType();
+
+    ActionType(QAction *action, Type type);
+    QAction *action() const;
+    Type type() const;
+
+private:
+    QAction *mAction;
+    Type mType;
+};
 
 class PluginEditorInterface : public QObject
 {
@@ -26,6 +50,19 @@ class PluginEditorInterface : public QObject
 public:
     explicit PluginEditorInterface(QObject *parent = Q_NULLPTR);
     ~PluginEditorInterface();
+
+    void setActionType(const ActionType &type);
+    ActionType actionType() const;
+
+    virtual void createAction(KActionCollection *ac) = 0;
+    virtual void exec() = 0;
+
+    void setParentWidget(QWidget *parent);
+    QWidget *parentWidget() const;
+
+private:
+     ActionType mActionType;
+     QWidget *mParentWidget;
 };
 
 #endif // PLUGINEDITORINTERFACE_H
