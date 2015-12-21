@@ -1750,6 +1750,16 @@ void KMMainWidget::slotDeleteMessages()
     slotDeleteMsg(true);
 }
 
+Akonadi::Item::List KMMainWidget::currentSelection() const
+{
+    Akonadi::Item::List selectMsg;
+    MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
+    if (ref != -1) {
+        selectMsg  = mMessagePane->itemListFromPersistentSet(ref);
+    }
+    return selectMsg;
+}
+
 void KMMainWidget::slotDeleteMsg(bool confirmDelete)
 {
     // Create a persistent message set from the current selection

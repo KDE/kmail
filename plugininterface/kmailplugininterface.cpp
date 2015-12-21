@@ -43,11 +43,10 @@ void KMailPluginInterface::initializeInterfaceRequires(PimCommon::GenericPluginI
 {
     PimCommon::GenericPluginInterface::RequireTypes requires = interface->requires();
     if (requires & PimCommon::GenericPluginInterface::CurrentItems) {
-        qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::CurrentItems not implemented";
+        interface->setItems(mMainWindow->currentSelection());
     }
     if (requires & PimCommon::GenericPluginInterface::Items) {
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Items not implemented";
-        //TODO
     }
     if (requires & PimCommon::GenericPluginInterface::CurrentCollection) {
         if (mMainWindow->currentFolder()) {

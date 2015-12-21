@@ -202,6 +202,9 @@ public:
 
     void populateMessageListStatusFilterCombo();
     void initializePluginActions();
+
+    Akonadi::Item::List currentSelection() const;
+
 public Q_SLOTS:
     // Moving messages around
     /**
