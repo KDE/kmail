@@ -15,7 +15,11 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include "plugineditor.h"
 #include "plugineditormanager.h"
+
+#include <QFileInfo>
+#include <kpluginmetadata.h>
 
 class PluginEditorManagerInstancePrivate
 {
@@ -32,19 +36,36 @@ public:
     PluginEditorManager *pluginManager;
 };
 
+class PluginEditorInfo
+{
+public:
+    PluginEditorInfo()
+        : plugin(Q_NULLPTR)
+    {
+
+    }
+    QString saveName() const;
+
+    KPluginMetaData metaData;
+    PluginEditor *plugin;
+};
+
+
 Q_GLOBAL_STATIC(PluginEditorManagerInstancePrivate, sInstance)
 
 class PluginEditorManagerPrivate
 {
 public:
-    PluginEditorManagerPrivate()
+    PluginEditorManagerPrivate(PluginEditorManager *qq)
+        : q(qq)
     {
     }
+    PluginEditorManager *q;
 };
 
 PluginEditorManager::PluginEditorManager(QObject *parent)
     : QObject(parent),
-      d(new PluginEditorManagerPrivate)
+      d(new PluginEditorManagerPrivate(this))
 {
 
 }
@@ -57,4 +78,9 @@ PluginEditorManager::~PluginEditorManager()
 PluginEditorManager *PluginEditorManager::self()
 {
     return sInstance->pluginManager;
+}
+
+QString PluginEditorInfo::saveName() const
+{
+    return QFileInfo(metaData.fileName()).baseName();
 }

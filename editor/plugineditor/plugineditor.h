@@ -19,6 +19,7 @@
 #define PLUGINEDITOR_H
 #include <QObject>
 class KActionCollection;
+class PluginEditorInterface;
 class PluginEditor : public QObject
 {
     Q_OBJECT
@@ -26,6 +27,6 @@ public:
     explicit PluginEditor(QObject *parent = Q_NULLPTR);
     ~PluginEditor();
 
-    //virtual PimCommon::GenericPluginInterface *createInterface(KActionCollection *ac, QWidget *parent = Q_NULLPTR) = 0;
+    virtual PluginEditorInterface *createInterface(KActionCollection *ac, QWidget *parent = Q_NULLPTR) = 0;
 };
 #endif // PLUGINEDITOR_H
