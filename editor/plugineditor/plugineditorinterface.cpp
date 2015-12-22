@@ -40,45 +40,73 @@ ActionType::Type ActionType::type() const
     return mType;
 }
 
+class PluginEditorInterfacePrivate
+{
+public:
+    PluginEditorInterfacePrivate()
+        : mParentWidget(Q_NULLPTR),
+          mRichTextEditor(Q_NULLPTR)
+    {
+
+    }
+    ActionType mActionType;
+    QWidget *mParentWidget;
+    KPIMTextEdit::RichTextEditor *mRichTextEditor;
+};
+
 PluginEditorInterface::PluginEditorInterface(QObject *parent)
     : QObject(parent),
-      mParentWidget(Q_NULLPTR),
-      mRichTextEditor(Q_NULLPTR)
+      d(new PluginEditorInterfacePrivate)
 {
 
 }
 
 PluginEditorInterface::~PluginEditorInterface()
 {
-
+    delete d;
 }
 
 void PluginEditorInterface::setActionType(const ActionType &type)
 {
-    mActionType = type;
+    d->mActionType = type;
 }
 
 ActionType PluginEditorInterface::actionType() const
 {
-    return mActionType;
+    return d->mActionType;
 }
 
 void PluginEditorInterface::setParentWidget(QWidget *parent)
 {
-    mParentWidget = parent;
+    d->mParentWidget = parent;
 }
 
 QWidget *PluginEditorInterface::parentWidget() const
 {
-    return mParentWidget;
+    return d->mParentWidget;
 }
 
 KPIMTextEdit::RichTextEditor *PluginEditorInterface::richTextEditor() const
 {
-    return mRichTextEditor;
+    return d->mRichTextEditor;
 }
 
 void PluginEditorInterface::setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor)
 {
-    mRichTextEditor = richTextEditor;
+    d->mRichTextEditor = richTextEditor;
+}
+
+bool PluginEditorInterface::hasPopupMenuSupport() const
+{
+    return false;
+}
+
+bool PluginEditorInterface::hasConfigureDialog() const
+{
+    return false;
+}
+
+void PluginEditorInterface::showConfigureDialog(QWidget *parentWidget)
+{
+    Q_UNUSED(parentWidget);
 }

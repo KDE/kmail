@@ -48,6 +48,7 @@ private:
     Type mType;
 };
 
+class PluginEditorInterfacePrivate;
 class PluginEditorInterface : public QObject
 {
     Q_OBJECT
@@ -68,10 +69,16 @@ public:
     KPIMTextEdit::RichTextEditor *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor);
 
+    virtual bool hasPopupMenuSupport() const;
+    virtual bool hasConfigureDialog() const;
+
+    virtual void showConfigureDialog(QWidget *parentWidget = Q_NULLPTR);
+
+Q_SIGNALS:
+    void emitPluginActivated(PluginEditorInterface *interface);
+
 private:
-    ActionType mActionType;
-    QWidget *mParentWidget;
-    KPIMTextEdit::RichTextEditor *mRichTextEditor;
+    PluginEditorInterfacePrivate *const d;
 };
 
 #endif // PLUGINEDITORINTERFACE_H
