@@ -4160,11 +4160,15 @@ void KMMainWidget::clearFilterActions()
 void KMMainWidget::initializePluginActions()
 {
     if (mGUIClient->factory()) {
-        const QHash<PimCommon::ActionType::Type, QList<QAction *> > localActionsType = mPluginInterface->actionsType();
-        const QList<QAction *> lstTools = localActionsType.value(PimCommon::ActionType::Tools);
-        if (!lstTools.isEmpty()) {
-            mGUIClient->unplugActionList(QStringLiteral("kmail_plugins_tools"));
-            mGUIClient->plugActionList(QStringLiteral("kmail_plugins_tools"), lstTools);
+        QHashIterator<PimCommon::ActionType::Type, QList<QAction *> > localActionsType(mPluginInterface->actionsType());
+        while (localActionsType.hasNext()) {
+            localActionsType.next();
+            QList<QAction *> lst = localActionsType.value();
+            if (!lst.isEmpty()) {
+                const QString actionlistname = QStringLiteral("kmail") + PimCommon::PluginInterface::actionXmlExtension(localActionsType.key());
+                mGUIClient->unplugActionList(actionlistname);
+                mGUIClient->plugActionList(actionlistname, lst);
+            }
         }
     }
 }
