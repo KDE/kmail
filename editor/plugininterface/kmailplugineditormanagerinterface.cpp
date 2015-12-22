@@ -16,11 +16,17 @@
 */
 
 #include "kmailplugineditormanagerinterface.h"
+#include "messagecomposer/plugineditormanager.h"
+#include "messagecomposer/plugineditorinterface.h"
+#include "messagecomposer/plugineditor.h"
+
+#include <QVector>
 
 KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
     : QObject(parent),
       mRichTextEditor(Q_NULLPTR),
-      mParentWidget(Q_NULLPTR)
+      mParentWidget(Q_NULLPTR),
+      mActionCollection(Q_NULLPTR)
 {
 
 }
@@ -52,5 +58,22 @@ void KMailPluginEditorManagerInterface::setParentWidget(QWidget *parentWidget)
 
 void KMailPluginEditorManagerInterface::initializePlugins()
 {
+    const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
+    Q_FOREACH (MessageComposer::PluginEditor *plugin, lstPlugin) {
+        MessageComposer::PluginEditorInterface *interface = plugin->createInterface(mActionCollection, this);
+        //TODO
+        mListPluginInterface.append(interface);
+    }
+
     //TODO
+}
+
+KActionCollection *KMailPluginEditorManagerInterface::actionCollection() const
+{
+    return mActionCollection;
+}
+
+void KMailPluginEditorManagerInterface::setActionCollection(KActionCollection *actionCollection)
+{
+    mActionCollection = actionCollection;
 }

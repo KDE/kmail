@@ -23,6 +23,11 @@ namespace KPIMTextEdit
 {
 class RichTextEditor;
 }
+namespace MessageComposer
+{
+class PluginEditorInterface;
+}
+class KActionCollection;
 class KMailPluginEditorManagerInterface : public QObject
 {
     Q_OBJECT
@@ -38,9 +43,14 @@ public:
 
     void initializePlugins();
 
+    KActionCollection *actionCollection() const;
+    void setActionCollection(KActionCollection *actionCollection);
+
 private:
     KPIMTextEdit::RichTextEditor *mRichTextEditor;
     QWidget *mParentWidget;
+    KActionCollection *mActionCollection;
+    QList<MessageComposer::PluginEditorInterface *> mListPluginInterface;
 };
 
 #endif // KMAILPLUGINEDITORMANAGERINTERFACE_H
