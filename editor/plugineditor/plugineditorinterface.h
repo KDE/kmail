@@ -22,6 +22,10 @@
 class QAction;
 class KActionCollection;
 
+namespace KPIMTextEdit
+{
+class RichTextEditor;
+}
 
 class ActionType
 {
@@ -60,9 +64,14 @@ public:
     void setParentWidget(QWidget *parent);
     QWidget *parentWidget() const;
 
+
+    KPIMTextEdit::RichTextEditor *richTextEditor() const;
+    void setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor);
+
 private:
-     ActionType mActionType;
-     QWidget *mParentWidget;
+    ActionType mActionType;
+    QWidget *mParentWidget;
+    KPIMTextEdit::RichTextEditor *mRichTextEditor;
 };
 
 #endif // PLUGINEDITORINTERFACE_H

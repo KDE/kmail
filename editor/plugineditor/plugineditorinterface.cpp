@@ -42,7 +42,8 @@ ActionType::Type ActionType::type() const
 
 PluginEditorInterface::PluginEditorInterface(QObject *parent)
     : QObject(parent),
-      mParentWidget(Q_NULLPTR)
+      mParentWidget(Q_NULLPTR),
+      mRichTextEditor(Q_NULLPTR)
 {
 
 }
@@ -70,4 +71,14 @@ void PluginEditorInterface::setParentWidget(QWidget *parent)
 QWidget *PluginEditorInterface::parentWidget() const
 {
     return mParentWidget;
+}
+
+KPIMTextEdit::RichTextEditor *PluginEditorInterface::richTextEditor() const
+{
+    return mRichTextEditor;
+}
+
+void PluginEditorInterface::setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor)
+{
+    mRichTextEditor = richTextEditor;
 }
