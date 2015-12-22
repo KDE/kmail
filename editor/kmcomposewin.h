@@ -70,6 +70,7 @@ class CryptoStateIndicatorWidget;
 class StatusBarLabelToggledState;
 class PotentialPhishingEmailWarning;
 class KMComposerGlobalAction;
+class KMailPluginEditorManagerInterface;
 namespace boost
 {
 template <typename T> class shared_ptr;
@@ -679,6 +680,7 @@ private:
     QAction *mZoomInAction;
     QAction *mZoomOutAction;
     QAction *mZoomResetAction;
+    KMailPluginEditorManagerInterface *mPluginEditorManagerInterface;
 };
 
 #endif

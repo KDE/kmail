@@ -19,13 +19,28 @@
 #define KMAILPLUGINEDITORMANAGERINTERFACE_H
 
 #include <QObject>
-
+namespace KPIMTextEdit
+{
+class RichTextEditor;
+}
 class KMailPluginEditorManagerInterface : public QObject
 {
     Q_OBJECT
 public:
     explicit KMailPluginEditorManagerInterface(QObject *parent = Q_NULLPTR);
     ~KMailPluginEditorManagerInterface();
+
+    KPIMTextEdit::RichTextEditor *richTextEditor() const;
+    void setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor);
+
+    QWidget *parentWidget() const;
+    void setParentWidget(QWidget *parentWidget);
+
+    void initializePlugins();
+
+private:
+    KPIMTextEdit::RichTextEditor *mRichTextEditor;
+    QWidget *mParentWidget;
 };
 
 #endif // KMAILPLUGINEDITORMANAGERINTERFACE_H

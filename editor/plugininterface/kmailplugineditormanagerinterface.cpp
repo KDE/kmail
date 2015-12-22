@@ -18,7 +18,9 @@
 #include "kmailplugineditormanagerinterface.h"
 
 KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      mRichTextEditor(Q_NULLPTR),
+      mParentWidget(Q_NULLPTR)
 {
 
 }
@@ -26,4 +28,29 @@ KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *pa
 KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface()
 {
 
+}
+
+KPIMTextEdit::RichTextEditor *KMailPluginEditorManagerInterface::richTextEditor() const
+{
+    return mRichTextEditor;
+}
+
+void KMailPluginEditorManagerInterface::setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor)
+{
+    mRichTextEditor = richTextEditor;
+}
+
+QWidget *KMailPluginEditorManagerInterface::parentWidget() const
+{
+    return mParentWidget;
+}
+
+void KMailPluginEditorManagerInterface::setParentWidget(QWidget *parentWidget)
+{
+    mParentWidget = parentWidget;
+}
+
+void KMailPluginEditorManagerInterface::initializePlugins()
+{
+    //TODO
 }

@@ -77,6 +77,8 @@
 #include "PimCommon/StorageServiceManager"
 #include "PimCommon/StorageServiceProgressManager"
 
+#include "editor/plugininterface/kmailplugineditormanagerinterface.h"
+
 #include "MessageComposer/Util"
 
 #include <kcontacts/vcardconverter.h>
@@ -253,11 +255,14 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
       mStatusBarLabelSpellCheckingChangeMode(Q_NULLPTR),
       mZoomInAction(Q_NULLPTR),
       mZoomOutAction(Q_NULLPTR),
-      mZoomResetAction(Q_NULLPTR)
+      mZoomResetAction(Q_NULLPTR),
+      mPluginEditorManagerInterface(Q_NULLPTR)
 {
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
     mComposerBase->setIdentityManager(kmkernel->identityManager());
+
+    mPluginEditorManagerInterface = new KMailPluginEditorManagerInterface(this);
 
     connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposeWin::disableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposeWin::enableHtml);
@@ -451,6 +456,10 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     mExternalEditorWarning = new ExternalEditorWarning(this);
     v->addWidget(mExternalEditorWarning);
+
+    mPluginEditorManagerInterface->setParentWidget(this);
+    mPluginEditorManagerInterface->setRichTextEditor(mRichTextEditorwidget->editor());
+
 
     setupStatusBar(attachmentView->widget());
     setupActions();
