@@ -169,7 +169,7 @@ set(kmailprivate_plugininterface_LIB_SRCS
 )
 
 set(kmailprivate_editor_plugininterface_LIB_SRCS
-     editor/plugininterface/kmailpluginmanagerinterface.cpp
+     editor/plugininterface/kmailplugineditormanagerinterface.cpp
 )
 
 set(kmail_common_SRCS)

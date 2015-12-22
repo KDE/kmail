@@ -15,15 +15,15 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "kmailpluginmanagerinterface.h"
+#include "kmailplugineditormanagerinterface.h"
 
-KMailPluginManagerInterface::KMailPluginManagerInterface(QObject *parent)
+KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
     : QObject(parent)
 {
 
 }
 
-KMailPluginManagerInterface::~KMailPluginManagerInterface()
+KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface()
 {
 
 }
