@@ -46,6 +46,9 @@ public:
     KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
+private Q_SLOTS:
+    void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
+
 private:
     KPIMTextEdit::RichTextEditor *mRichTextEditor;
     QWidget *mParentWidget;

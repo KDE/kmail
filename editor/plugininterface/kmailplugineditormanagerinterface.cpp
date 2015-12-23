@@ -19,6 +19,7 @@
 #include "messagecomposer/plugineditormanager.h"
 #include "messagecomposer/plugineditorinterface.h"
 #include "messagecomposer/plugineditor.h"
+#include "kmail_debug.h"
 
 #include <QVector>
 
@@ -58,14 +59,25 @@ void KMailPluginEditorManagerInterface::setParentWidget(QWidget *parentWidget)
 
 void KMailPluginEditorManagerInterface::initializePlugins()
 {
+    if (!mListPluginInterface.isEmpty()) {
+        qCDebug(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
+        return;
+    }
     const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
     Q_FOREACH (MessageComposer::PluginEditor *plugin, lstPlugin) {
         MessageComposer::PluginEditorInterface *interface = plugin->createInterface(mActionCollection, this);
+        connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
         //TODO
         mListPluginInterface.append(interface);
     }
 
     //TODO
+}
+
+void KMailPluginEditorManagerInterface::slotPluginActivated(MessageComposer::PluginEditorInterface *interface)
+{
+    //TODO
+    interface->exec();
 }
 
 KActionCollection *KMailPluginEditorManagerInterface::actionCollection() const

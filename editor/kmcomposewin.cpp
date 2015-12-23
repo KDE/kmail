@@ -459,7 +459,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     mPluginEditorManagerInterface->setParentWidget(this);
     mPluginEditorManagerInterface->setRichTextEditor(mRichTextEditorwidget->editor());
-
+    mPluginEditorManagerInterface->setActionCollection(actionCollection());
 
     setupStatusBar(attachmentView->widget());
     setupActions();
@@ -1423,6 +1423,9 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("zoom_reset"), mZoomResetAction);
     connect(mZoomResetAction, &QAction::triggered, this, &KMComposeWin::slotZoomReset);
     actionCollection()->setDefaultShortcut(mZoomResetAction, QKeySequence(Qt::CTRL | Qt::Key_0));
+
+    mPluginEditorManagerInterface->initializePlugins();
+
 
     createGUI(QStringLiteral("kmcomposerui.rc"));
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
