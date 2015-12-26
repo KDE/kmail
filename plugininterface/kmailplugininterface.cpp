@@ -41,6 +41,10 @@ void KMailPluginInterface::setMainWidget(KMMainWidget *mainwindow)
 
 void KMailPluginInterface::initializeInterfaceRequires(PimCommon::GenericPluginInterface *interface)
 {
+    if (!mMainWindow) {
+        qCCritical(KMAIL_LOG) << "mainwindows not defined";
+        return;
+    }
     PimCommon::GenericPluginInterface::RequireTypes requires = interface->requires();
     if (requires & PimCommon::GenericPluginInterface::CurrentItems) {
         interface->setItems(mMainWindow->currentSelection());
