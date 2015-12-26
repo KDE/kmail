@@ -67,16 +67,12 @@ void KMailPluginEditorManagerInterface::initializePlugins()
     Q_FOREACH (MessageComposer::PluginEditor *plugin, lstPlugin) {
         MessageComposer::PluginEditorInterface *interface = plugin->createInterface(mActionCollection, this);
         connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
-        //TODO
         mListPluginInterface.append(interface);
     }
-
-    //TODO
 }
 
 void KMailPluginEditorManagerInterface::slotPluginActivated(MessageComposer::PluginEditorInterface *interface)
 {
-    //TODO
     interface->exec();
 }
 
