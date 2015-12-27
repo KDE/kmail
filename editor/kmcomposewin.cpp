@@ -1426,7 +1426,6 @@ void KMComposeWin::setupActions(void)
 
     mPluginEditorManagerInterface->initializePlugins();
 
-
     createGUI(QStringLiteral("kmcomposerui.rc"));
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
             this, &KMComposeWin::htmlToolBarVisibilityChanged);

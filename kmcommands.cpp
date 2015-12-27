@@ -538,8 +538,8 @@ KMCommand::Result KMUrlSaveCommand::execute()
     }
     QString recentDirClass;
     const QUrl saveUrl = QFileDialog::getSaveFileUrl(parentWidget()
-                                                     , KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///OpenMessage")), recentDirClass).toLocalFile()
-                                                     , mUrl.fileName());
+                         , KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///OpenMessage")), recentDirClass).toLocalFile()
+                         , mUrl.fileName());
     if (saveUrl.isEmpty()) {
         return Canceled;
     }
