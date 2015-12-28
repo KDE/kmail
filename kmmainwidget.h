@@ -303,6 +303,7 @@ public Q_SLOTS:
     void slotSelectCollectionFolder(const Akonadi::Collection &col);
 
     void restoreCollectionFolderViewConfig();
+    void slotUpdateConfig();
 Q_SIGNALS:
     void messagesTransfered(bool);
     void captionChangeRequest(const QString &caption);

@@ -4572,3 +4572,9 @@ void KMMainWidget::slotRemoveDuplicateRecursive()
         job->start();
     }
 }
+
+void KMMainWidget::slotUpdateConfig()
+{
+    readFolderConfig();
+    updateHtmlMenuEntry();
+}

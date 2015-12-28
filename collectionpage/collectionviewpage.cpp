@@ -34,6 +34,8 @@
 #include <QDialog>
 #include <KIconButton>
 #include <KConfigGroup>
+#include <QRadioButton>
+#include "kmail_debug.h"
 
 #include "messagelist/aggregationcombobox.h"
 #include "messagelist/aggregationconfigbutton.h"
@@ -175,6 +177,20 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     themeLayout->addWidget(themeConfigButton, 0);
     messageListGroupLayout->addLayout(themeLayout);
 
+    // Message Default Format
+    QGroupBox *messageFormatGroup = new QGroupBox(i18n("Message Default Format"), this);
+    QVBoxLayout *messageFormatGroupLayout = new QVBoxLayout(messageFormatGroup);
+    mPreferHtmlToText = new QRadioButton(i18n("Prefer Html To Text"), this);
+    messageFormatGroupLayout->addWidget(mPreferHtmlToText);
+    mPreferTextToHtml = new QRadioButton(i18n("Prefer Text To Html"), this);
+    messageFormatGroupLayout->addWidget(mPreferTextToHtml);
+    mUseGlobalSettings = new QRadioButton(i18n("Use Global Settings"), this);
+    messageFormatGroupLayout->addWidget(mUseGlobalSettings);
+
+
+    topLayout->addWidget(messageFormatGroup);
+
+
     topLayout->addStretch(100);
 }
 
@@ -246,11 +262,30 @@ void CollectionViewPage::load(const Akonadi::Collection &col)
     }
     mShowSenderReceiverValue = mShowSenderReceiverComboBox->currentIndex();
 
+
     // message list aggregation
     slotSelectFolderAggregation();
 
     // message list theme
     slotSelectFolderTheme();
+
+    KSharedConfig::Ptr config = KMKernel::self()->config();
+    KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(col));
+    MessageViewer::Viewer::DisplayFormatMessage formatMessage = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(group.readEntry("displayFormatOverride", static_cast<int>(MessageViewer::Viewer::UseGlobalSetting)));
+    switch(formatMessage) {
+    case MessageViewer::Viewer::Html:
+        mPreferHtmlToText->setChecked(true);
+        break;
+    case MessageViewer::Viewer::Text:
+        mPreferTextToHtml->setChecked(true);
+        break;
+    case MessageViewer::Viewer::UseGlobalSetting:
+        mUseGlobalSettings->setChecked(true);
+        break;
+    default:
+        qCDebug(KMAIL_LOG) << "No settings defined";
+        break;
+    }
 }
 
 void CollectionViewPage::save(Akonadi::Collection &col)
@@ -283,5 +318,26 @@ void CollectionViewPage::save(Akonadi::Collection &col)
     // message list aggregation
     const bool usePrivateAggregation = !mUseDefaultAggregationCheckBox->isChecked();
     mAggregationComboBox->writeStorageModelConfig(mCurrentCollection, usePrivateAggregation);
+
+    KSharedConfig::Ptr config = KMKernel::self()->config();
+    KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(col));
+    MessageViewer::Viewer::DisplayFormatMessage formatMessage = MessageViewer::Viewer::Unknown;
+
+    if (mPreferHtmlToText->isChecked()) {
+        formatMessage = MessageViewer::Viewer::Html;
+    } else if (mPreferTextToHtml->isChecked()) {
+        formatMessage = MessageViewer::Viewer::Text;
+    } else if (mUseGlobalSettings->isChecked()) {
+        formatMessage = MessageViewer::Viewer::UseGlobalSetting;
+    } else {
+        qCDebug(KMAIL_LOG) << "No settings defined";
+    }
+    if (formatMessage != MessageViewer::Viewer::Unknown) {
+        if (formatMessage == MessageViewer::Viewer::UseGlobalSetting) {
+            group.deleteEntry("displayFormatOverride");
+        } else {
+            group.writeEntry("displayFormatOverride", static_cast<int>(formatMessage));
+        }
+    }
 }
 

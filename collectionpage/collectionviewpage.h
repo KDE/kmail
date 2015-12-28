@@ -25,7 +25,7 @@ class QCheckBox;
 class QLabel;
 class KComboBox;
 class KIconButton;
-
+class QRadioButton;
 template <typename T> class QSharedPointer;
 
 namespace MessageList
@@ -66,6 +66,9 @@ private:
     MessageList::Utils::AggregationComboBox *mAggregationComboBox;
     QCheckBox *mUseDefaultThemeCheckBox;
     MessageList::Utils::ThemeComboBox *mThemeComboBox;
+    QRadioButton *mPreferHtmlToText;
+    QRadioButton *mPreferTextToHtml;
+    QRadioButton *mUseGlobalSettings;
     Akonadi::Collection mCurrentCollection;
     int mShowSenderReceiverValue;
     bool mIsLocalSystemFolder;
