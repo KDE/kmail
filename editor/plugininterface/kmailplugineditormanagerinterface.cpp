@@ -62,9 +62,14 @@ void KMailPluginEditorManagerInterface::initializePlugins()
         qCDebug(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
         return;
     }
+    if (!mRichTextEditor) {
+        qCDebug(KMAIL_LOG) << "Missing richtexteditor";
+        return;
+    }
     const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
     Q_FOREACH (MessageComposer::PluginEditor *plugin, lstPlugin) {
         MessageComposer::PluginEditorInterface *interface = plugin->createInterface(mActionCollection, this);
+        interface->setRichTextEditor(mRichTextEditor);
         connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
         mListPluginInterface.append(interface);
     }
@@ -100,6 +105,16 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
         }
         if (interface->hasPopupMenuSupport()) {
             type = MessageComposer::ActionType::PopupMenu;
+            if (listType.contains(type)) {
+                QList<QAction *> lst = listType.value(type);
+                lst << actionType.action();
+                listType.insert(type, lst);
+            } else {
+                listType.insert(type, QList<QAction *>() << actionType.action());
+            }
+        }
+        if (interface->hasToolBarSupport()) {
+            type = MessageComposer::ActionType::ToolBar;
             if (listType.contains(type)) {
                 QList<QAction *> lst = listType.value(type);
                 lst << actionType.action();

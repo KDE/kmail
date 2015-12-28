@@ -166,6 +166,7 @@
 #include <KHelpClient>
 #include <KCharsets>
 #include <KConfigGroup>
+#include <KXMLGUIFactory>
 
 // Qt includes
 #include <QMenu>
@@ -1425,8 +1426,8 @@ void KMComposeWin::setupActions(void)
     actionCollection()->setDefaultShortcut(mZoomResetAction, QKeySequence(Qt::CTRL | Qt::Key_0));
 
     mPluginEditorManagerInterface->initializePlugins();
-
     createGUI(QStringLiteral("kmcomposerui.rc"));
+    initializePluginActions();
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
             this, &KMComposeWin::htmlToolBarVisibilityChanged);
 
@@ -1441,18 +1442,18 @@ void KMComposeWin::setupActions(void)
 void KMComposeWin::initializePluginActions()
 {
     if (guiFactory()) {
-#if 0
         QHashIterator<MessageComposer::ActionType::Type, QList<QAction *> > localActionsType(mPluginEditorManagerInterface->actionsType());
         while (localActionsType.hasNext()) {
             localActionsType.next();
             QList<QAction *> lst = localActionsType.value();
             if (!lst.isEmpty()) {
-                const QString actionlistname = prefix + PimCommon::PluginInterface::actionXmlExtension(localActionsType.key());
-                guiFactory()->unplugActionList(actionlistname);
-                guiFactory()->plugActionList(actionlistname, lst);
+                const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginEditorInterface::actionXmlExtension(localActionsType.key());
+                Q_FOREACH(KXMLGUIClient *client, guiFactory()->clients()) {
+                    client->unplugActionList(actionlistname);
+                    client->plugActionList(actionlistname, lst);
+                }
             }
         }
-#endif
     }
 }
 
