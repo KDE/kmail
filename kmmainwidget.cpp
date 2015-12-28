@@ -4541,6 +4541,7 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
         mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
         mMsgView->update(true);
     }
+    writeFolderConfig();
 }
 
 void KMMainWidget::populateMessageListStatusFilterCombo()
