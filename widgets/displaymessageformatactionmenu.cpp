@@ -37,21 +37,19 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     act->setData(MessageViewer::Viewer::Html);
     actionGroup->addAction(act);
     subMenu->addAction(act);
-    connect(act, &KToggleAction::triggered, this, &DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat);
 
     act = new KToggleAction(i18n("Prefer &Plain Text to HTML"), this);
     act->setData(MessageViewer::Viewer::Text);
     act->setObjectName(QStringLiteral("prefer-text-action"));
     actionGroup->addAction(act);
     subMenu->addAction(act);
-    connect(act, &KToggleAction::triggered, this, &DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat);
 
     act = new KToggleAction(i18n("Use Global Setting"), this);
     act->setObjectName(QStringLiteral("use-global-setting-action"));
     act->setData(MessageViewer::Viewer::UseGlobalSetting);
-    connect(act, &KToggleAction::triggered, this, &DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat);
     actionGroup->addAction(act);
     subMenu->addAction(act);
+    connect(actionGroup, &QActionGroup::triggered, this, &DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat);
     updateMenu();
 }
 
@@ -60,16 +58,15 @@ DisplayMessageFormatActionMenu::~DisplayMessageFormatActionMenu()
 
 }
 
-void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat()
+void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat(QAction *act)
 {
-    if (sender()) {
-        KToggleAction *act = dynamic_cast<KToggleAction *>(sender());
-        if (act) {
-            MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
-            Q_EMIT changeDisplayMessageFormat(format);
-        }
+    MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
+    if (format != mDisplayMessageFormat) {
+        mDisplayMessageFormat = format;
+        Q_EMIT changeDisplayMessageFormat(format);
     }
 }
+
 MessageViewer::Viewer::DisplayFormatMessage DisplayMessageFormatActionMenu::displayMessageFormat() const
 {
     return mDisplayMessageFormat;

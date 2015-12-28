@@ -35,7 +35,7 @@ Q_SIGNALS:
     void changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
 private Q_SLOTS:
-    void slotChangeDisplayMessageFormat();
+    void slotChangeDisplayMessageFormat(QAction *act);
 
 private:
     void updateMenu();
