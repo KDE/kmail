@@ -585,6 +585,7 @@ private:
     inline bool encryptToSelf() const;
 
 private:
+    void initializePluginActions();
     bool showErrorMessage(KJob *job);
     int validateLineWrapWidth();
     Akonadi::Collection mCollectionForNewMessage;

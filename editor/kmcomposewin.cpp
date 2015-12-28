@@ -76,7 +76,7 @@
 #include "KPIMTextEdit/EditorUtil"
 #include "PimCommon/StorageServiceManager"
 #include "PimCommon/StorageServiceProgressManager"
-
+#include "plugineditorinterface.h"
 #include "editor/plugininterface/kmailplugineditormanagerinterface.h"
 
 #include "MessageComposer/Util"
@@ -1436,8 +1436,26 @@ void KMComposeWin::setupActions(void)
     if (configureAction) {
         configureAction->setText(i18n("Configure KMail..."));
     }
-
 }
+
+void KMComposeWin::initializePluginActions()
+{
+    if (guiFactory()) {
+#if 0
+        QHashIterator<MessageComposer::ActionType::Type, QList<QAction *> > localActionsType(mPluginEditorManagerInterface->actionsType());
+        while (localActionsType.hasNext()) {
+            localActionsType.next();
+            QList<QAction *> lst = localActionsType.value();
+            if (!lst.isEmpty()) {
+                const QString actionlistname = prefix + PimCommon::PluginInterface::actionXmlExtension(localActionsType.key());
+                guiFactory()->unplugActionList(actionlistname);
+                guiFactory()->plugActionList(actionlistname, lst);
+            }
+        }
+#endif
+    }
+}
+
 
 void KMComposeWin::slotZoomReset()
 {

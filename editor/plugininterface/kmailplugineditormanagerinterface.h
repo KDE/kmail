@@ -19,6 +19,7 @@
 #define KMAILPLUGINEDITORMANAGERINTERFACE_H
 
 #include <QObject>
+#include "messagecomposer/plugineditorinterface.h"
 namespace KPIMTextEdit
 {
 class RichTextEditor;
@@ -46,6 +47,7 @@ public:
     KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
+    QHash<MessageComposer::ActionType::Type, QList<QAction *> > actionsType() const;
 private Q_SLOTS:
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
 
