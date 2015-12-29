@@ -134,6 +134,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
     mainWidget->folderShortcutActionManager()->createActions();
     mainWidget->updateVacationScriptStatus();
     mainWidget->populateMessageListStatusFilterCombo();
+    mainWidget->initializePluginActions();
 }
 
 void KMailPart::exit()
