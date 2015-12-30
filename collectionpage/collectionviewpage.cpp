@@ -180,9 +180,9 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     // Message Default Format
     QGroupBox *messageFormatGroup = new QGroupBox(i18n("Message Default Format"), this);
     QVBoxLayout *messageFormatGroupLayout = new QVBoxLayout(messageFormatGroup);
-    mPreferHtmlToText = new QRadioButton(i18n("Prefer Html To Text"), this);
+    mPreferHtmlToText = new QRadioButton(i18n("Prefer HTML to text"), this);
     messageFormatGroupLayout->addWidget(mPreferHtmlToText);
-    mPreferTextToHtml = new QRadioButton(i18n("Prefer Text To Html"), this);
+    mPreferTextToHtml = new QRadioButton(i18n("Prefer text to HTML"), this);
     messageFormatGroupLayout->addWidget(mPreferTextToHtml);
     mUseGlobalSettings = new QRadioButton(i18n("Use Global Settings"), this);
     messageFormatGroupLayout->addWidget(mUseGlobalSettings);
