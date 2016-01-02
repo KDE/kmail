@@ -6,7 +6,7 @@
     copyright            : (C) 2001 by Ryan Breen
     email                : ryan@porivo.com
 
-    Copyright (c) 2010-2015 Montel Laurent <montel@kde.org>
+    Copyright (c) 2010-2016 Montel Laurent <montel@kde.org>
  ***************************************************************************/
 
 /***************************************************************************
