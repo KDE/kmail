@@ -2961,7 +2961,7 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAccountWizard);
     }
     {
-        QAction *action = new QAction(i18n("&Import Wizard..."), this);
+        QAction *action = new QAction(i18n("&Import from another Email Client..."), this);
         actionCollection()->addAction(QStringLiteral("importWizard"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImportWizard);
     }
@@ -3403,7 +3403,7 @@ void KMMainWidget::setupActions()
     }
 
     {
-        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("kmail")), i18n("&Export KMail Data..."), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("kmail")), i18n("Import/Export KMail Data..."), this);
         actionCollection()->addAction(QStringLiteral("kmail_export_data"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotExportData);
     }
