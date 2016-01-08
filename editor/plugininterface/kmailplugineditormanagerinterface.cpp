@@ -93,7 +93,7 @@ void KMailPluginEditorManagerInterface::setActionCollection(KActionCollection *a
 QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType() const
 {
     QHash<MessageComposer::ActionType::Type, QList<QAction *> > listType;
-    Q_FOREACH(MessageComposer::PluginEditorInterface *interface, mListPluginInterface) {
+    Q_FOREACH (MessageComposer::PluginEditorInterface *interface, mListPluginInterface) {
         MessageComposer::ActionType actionType = interface->actionType();
         MessageComposer::ActionType::Type type = actionType.type();
         if (listType.contains(type)) {

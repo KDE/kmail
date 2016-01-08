@@ -187,9 +187,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     mUseGlobalSettings = new QRadioButton(i18n("Use Global Settings"), this);
     messageFormatGroupLayout->addWidget(mUseGlobalSettings);
 
-
     topLayout->addWidget(messageFormatGroup);
-
 
     topLayout->addStretch(100);
 }
@@ -262,7 +260,6 @@ void CollectionViewPage::load(const Akonadi::Collection &col)
     }
     mShowSenderReceiverValue = mShowSenderReceiverComboBox->currentIndex();
 
-
     // message list aggregation
     slotSelectFolderAggregation();
 
@@ -272,7 +269,7 @@ void CollectionViewPage::load(const Akonadi::Collection &col)
     KSharedConfig::Ptr config = KMKernel::self()->config();
     KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(col));
     MessageViewer::Viewer::DisplayFormatMessage formatMessage = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(group.readEntry("displayFormatOverride", static_cast<int>(MessageViewer::Viewer::UseGlobalSetting)));
-    switch(formatMessage) {
+    switch (formatMessage) {
     case MessageViewer::Viewer::Html:
         mPreferHtmlToText->setChecked(true);
         break;

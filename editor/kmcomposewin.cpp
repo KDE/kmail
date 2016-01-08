@@ -1448,7 +1448,7 @@ void KMComposeWin::initializePluginActions()
             QList<QAction *> lst = localActionsType.value();
             if (!lst.isEmpty()) {
                 const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginEditorInterface::actionXmlExtension(localActionsType.key());
-                Q_FOREACH(KXMLGUIClient *client, guiFactory()->clients()) {
+                Q_FOREACH (KXMLGUIClient *client, guiFactory()->clients()) {
                     client->unplugActionList(actionlistname);
                     client->plugActionList(actionlistname, lst);
                 }
@@ -1456,7 +1456,6 @@ void KMComposeWin::initializePluginActions()
         }
     }
 }
-
 
 void KMComposeWin::slotZoomReset()
 {
