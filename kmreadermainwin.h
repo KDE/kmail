@@ -58,6 +58,7 @@ public:
 private Q_SLOTS:
     void slotMessagePopup(const Akonadi::Item &, const QUrl &, const QUrl &imageUrl, const QPoint &);
     void slotContactSearchJobForMessagePopupDone(KJob *);
+    void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
     void slotTrashMsg();
     void slotForwardInlineMsg();
     void slotForwardAttachedMsg();

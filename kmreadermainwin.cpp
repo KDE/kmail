@@ -194,6 +194,25 @@ Akonadi::Collection KMReaderMainWin::parentCollection() const
     }
 }
 
+void KMReaderMainWin::slotExecuteMailAction(MessageViewer::Viewer::MailAction action)
+{
+    switch(action) {
+    case MessageViewer::Viewer::Trash:
+        slotTrashMsg();
+        break;
+    case MessageViewer::Viewer::Reply:
+        slotCustomReplyToMsg(QString());
+        break;
+    case MessageViewer::Viewer::ReplyToAll:
+        break;
+    case MessageViewer::Viewer::Forward:
+        slotRedirectMsg();
+        break;
+    case MessageViewer::Viewer::NewMessage:
+        break;
+    }
+}
+
 void KMReaderMainWin::slotTrashMsg()
 {
     if (!mMsg.isValid()) {
@@ -351,6 +370,7 @@ void KMReaderMainWin::setupAccel()
     setStandardToolBarMenuEnabled(true);
     KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::moveMessageToTrash, this, &KMReaderMainWin::slotTrashMsg);
+    connect(mReaderWin->viewer(), &MessageViewer::Viewer::executeMailAction, this, &KMReaderMainWin::slotExecuteMailAction);
 }
 
 QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
