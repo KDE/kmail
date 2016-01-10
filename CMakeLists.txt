@@ -283,7 +283,6 @@ target_link_libraries(kmailprivate
     KF5::Gravatar
     KF5::Mime
     KF5::AkonadiCore
-    KF5::AkonadiPrivate
     KF5::AkonadiMime
     KF5::MessageCore
     KF5::MessageList

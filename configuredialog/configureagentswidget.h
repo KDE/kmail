@@ -21,6 +21,11 @@
 #include <QWidget>
 #include "configureagents/configureagentitem.h"
 
+namespace Akonadi
+{
+class AgentType;
+}
+
 class QSplitter;
 class KTextEdit;
 class ConfigureAgentListView;
@@ -45,9 +50,8 @@ private:
 
     bool agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed);
     void initialize();
-    void addInfos(const QString &desktopFile, ConfigureAgentItem &item);
-    void createItem(const QString &interfaceName, const QString &path, const QString &desktopFileName, QVector<ConfigureAgentItem> &listItem);
-    QStringList mAgentPathList;
+    void createItem(const QString &interfaceName, const QString &path, QVector<ConfigureAgentItem> &listItem);
+    QVector<Akonadi::AgentType> mAgentsTypes;
     ConfigureAgentListView *mConfigureAgentListView;
     QSplitter *mSplitter;
     KTextEdit *mDescription;

@@ -19,7 +19,9 @@
 #include "configureagents/configureagentlistview.h"
 
 #include "SendLater/SendLaterUtil"
-#include <akonadi/private/xdgbasedirs_p.h>
+
+#include <AkonadiCore/AgentManager>
+#include <AkonadiCore/AgentType>
 
 #include <KLocalizedString>
 #include <KDesktopFile>
@@ -55,7 +57,6 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     connect(mConfigureAgentListView, &ConfigureAgentListView::agentChanged, this, &ConfigureAgentsWidget::changed);
 
     setLayout(lay);
-    mAgentPathList = Akonadi::XdgBaseDirs::findAllResourceDirs("data", QStringLiteral("akonadi/agents"));
     initialize();
     readConfig();
 }
@@ -79,30 +80,22 @@ void ConfigureAgentsWidget::writeConfig()
     group.writeEntry("splitter", mSplitter->sizes());
 }
 
-void ConfigureAgentsWidget::addInfos(const QString &desktopFile, ConfigureAgentItem &item)
-{
-    KDesktopFile config(desktopFile);
-    item.setAgentName(config.readName());
-    const QString descriptionStr = QLatin1String("<b>") + i18n("Description:") + QLatin1String("</b><br>") + config.readComment();
-    item.setDescription(descriptionStr);
-}
-
 void ConfigureAgentsWidget::initialize()
 {
+    mAgentsTypes = Akonadi::AgentManager::self()->types();
     QVector<ConfigureAgentItem> lst;
-    createItem(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"), QStringLiteral("sendlateragent.desktop"), lst);
-    createItem(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"), QStringLiteral("archivemailagent.desktop"), lst);
-    createItem(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"), QStringLiteral("newmailnotifieragent.desktop"), lst);
-    createItem(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"), QStringLiteral("followupreminder.desktop"), lst);
+    createItem(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"), lst);
+    createItem(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"), lst);
+    createItem(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"), lst);
+    createItem(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"), lst);
     //Add more
     mConfigureAgentListView->setAgentItems(lst);
 }
 
-void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &path, const QString &desktopFileName, QVector<ConfigureAgentItem> &listItem)
+void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QString &path, QVector<ConfigureAgentItem> &listItem)
 {
-    Q_FOREACH (const QString &agentPath, mAgentPathList) {
-        QFile file(agentPath + QDir::separator() + desktopFileName);
-        if (file.exists()) {
+    Q_FOREACH (const Akonadi::AgentType &type, mAgentsTypes) {
+        if (type.identifier() == interfaceName) {
             ConfigureAgentItem item;
             item.setInterfaceName(interfaceName);
             item.setPath(path);
@@ -110,8 +103,11 @@ void ConfigureAgentsWidget::createItem(const QString &interfaceName, const QStri
             const bool enabled = agentActivateState(interfaceName, path, failed);
             item.setChecked(enabled);
             item.setFailed(failed);
-            addInfos(file.fileName(), item);
+            item.setAgentName(type.name());
+            const QString descriptionStr = QLatin1String("<b>") + i18n("Description:") + QLatin1String("</b><br>") + type.description();
+            item.setDescription(descriptionStr);
             listItem.append(item);
+            break;
         }
     }
 }
