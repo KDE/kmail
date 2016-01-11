@@ -1019,6 +1019,8 @@ void KMMainWidget::createWidgets()
                 this, &KMMainWidget::slotMessagePopup);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::moveMessageToTrash,
                 this, &KMMainWidget::slotMoveMessageToTrash);
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::executeMailAction,
+                this, &KMMainWidget::slotExecuteMailAction);
         if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(true);
         }
@@ -4578,4 +4580,21 @@ void KMMainWidget::slotUpdateConfig()
 {
     readFolderConfig();
     updateHtmlMenuEntry();
+}
+
+void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction action)
+{
+    //TODO
+    switch(action) {
+    case MessageViewer::Viewer::Trash:
+        break;
+    case MessageViewer::Viewer::Reply:
+        break;
+    case MessageViewer::Viewer::ReplyToAll:
+        break;
+    case MessageViewer::Viewer::Forward:
+        break;
+    case MessageViewer::Viewer::NewMessage:
+        break;
+    }
 }
