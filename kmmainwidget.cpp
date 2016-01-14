@@ -50,7 +50,7 @@
 #include "job/markallmessagesasreadinfolderandsubfolderjob.h"
 #include "job/removeduplicatemessageinfolderandsubfolderjob.h"
 #if !defined(NDEBUG)
-#include <ksieveui/sievedebugdialog.h>
+#include <KSieveUi/SieveDebugDialog>
 using KSieveUi::SieveDebugDialog;
 #endif
 
