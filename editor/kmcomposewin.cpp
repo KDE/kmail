@@ -2178,71 +2178,92 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
     // If this is a URL list, add those files as attachments or text
     // but do not offer this if we are pasting plain text containing an url, e.g. from a browser
     const QList<QUrl> urlList = source->urls();
-    if (!urlList.isEmpty() && !source->hasFormat(QStringLiteral("text/plain"))) {
-        //Search if it's message items.
-        Akonadi::Item::List items;
-        Akonadi::Collection::List collections;
-        bool allLocalURLs = true;
-
-        foreach (const QUrl &url, urlList) {
-            if (!url.isLocalFile()) {
-                allLocalURLs = false;
-            }
-            const Akonadi::Item item = Akonadi::Item::fromUrl(url);
-            if (item.isValid()) {
-                items << item;
-            } else {
-                const Akonadi::Collection collection = Akonadi::Collection::fromUrl(url);
-                if (collection.isValid()) {
-                    collections << collection;
-                }
-            }
-        }
-
-        if (items.isEmpty() && collections.isEmpty()) {
-            if (allLocalURLs || forceAttachment) {
-                foreach (const QUrl &url, urlList) {
-                    addAttachment(url, QString());
-                }
-            } else {
-                QMenu p;
-                const QAction *addAsTextAction = p.addAction(i18np("Add URL into Message", "Add URLs into Message", urlList.size()));
-                const QAction *addAsAttachmentAction = p.addAction(i18np("Add File as &Attachment", "Add Files as &Attachment", urlList.size()));
-                const QAction *selectedAction = p.exec(QCursor::pos());
-
-                if (selectedAction == addAsTextAction) {
-                    QStringList urlAdded;
-                    foreach (const QUrl &url, urlList) {
-                        QString urlStr = url.toDisplayString();
-                        // Workaround #346370
-                        if (urlStr.isEmpty()) {
-                            urlStr = source->text();
-                        }
-                        if (!urlAdded.contains(urlStr)) {
-                            mComposerBase->editor()->composerControler()->insertLink(urlStr);
-                            urlAdded.append(urlStr);
-                        }
+    if (!urlList.isEmpty()) {
+        if (source->hasFormat(QStringLiteral("text/plain"))) {
+            QStringList urlAdded;
+            foreach (const QUrl &url, urlList) {
+                QString urlStr;
+                if (url.scheme() == QLatin1String("mailto")) {
+                    urlStr = KEmailAddress::decodeMailtoUrl(url);
+                } else {
+                    urlStr = url.toDisplayString();
+                    // Workaround #346370
+                    if (urlStr.isEmpty()) {
+                        urlStr = source->text();
                     }
-                } else if (selectedAction == addAsAttachmentAction) {
-                    foreach (const QUrl &url, urlList) {
-                        if (url.isValid()) {
-                            addAttachment(url, QString());
-                        }
-                    }
+                }
+                if (!urlAdded.contains(urlStr)) {
+                    mComposerBase->editor()->composerControler()->insertLink(urlStr);
+                    urlAdded.append(urlStr);
                 }
             }
             return true;
         } else {
-            if (!items.isEmpty()) {
-                Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
-                itemFetchJob->fetchScope().fetchFullPayload(true);
-                itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-                connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMComposeWin::slotFetchJob);
+            //Search if it's message items.
+            Akonadi::Item::List items;
+            Akonadi::Collection::List collections;
+            bool allLocalURLs = true;
+
+            foreach (const QUrl &url, urlList) {
+                if (!url.isLocalFile()) {
+                    allLocalURLs = false;
+                }
+                const Akonadi::Item item = Akonadi::Item::fromUrl(url);
+                if (item.isValid()) {
+                    items << item;
+                } else {
+                    const Akonadi::Collection collection = Akonadi::Collection::fromUrl(url);
+                    if (collection.isValid()) {
+                        collections << collection;
+                    }
+                }
             }
-            if (!collections.isEmpty()) {
-                //TODO
+
+            if (items.isEmpty() && collections.isEmpty()) {
+                if (allLocalURLs || forceAttachment) {
+                    foreach (const QUrl &url, urlList) {
+                        addAttachment(url, QString());
+                    }
+                } else {
+                    QMenu p;
+                    const QAction *addAsTextAction = p.addAction(i18np("Add URL into Message", "Add URLs into Message", urlList.size()));
+                    const QAction *addAsAttachmentAction = p.addAction(i18np("Add File as &Attachment", "Add Files as &Attachment", urlList.size()));
+                    const QAction *selectedAction = p.exec(QCursor::pos());
+
+                    if (selectedAction == addAsTextAction) {
+                        QStringList urlAdded;
+                        foreach (const QUrl &url, urlList) {
+                            QString urlStr = url.toDisplayString();
+                            // Workaround #346370
+                            if (urlStr.isEmpty()) {
+                                urlStr = source->text();
+                            }
+                            if (!urlAdded.contains(urlStr)) {
+                                mComposerBase->editor()->composerControler()->insertLink(urlStr);
+                                urlAdded.append(urlStr);
+                            }
+                        }
+                    } else if (selectedAction == addAsAttachmentAction) {
+                        foreach (const QUrl &url, urlList) {
+                            if (url.isValid()) {
+                                addAttachment(url, QString());
+                            }
+                        }
+                    }
+                }
+                return true;
+            } else {
+                if (!items.isEmpty()) {
+                    Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
+                    itemFetchJob->fetchScope().fetchFullPayload(true);
+                    itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+                    connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMComposeWin::slotFetchJob);
+                }
+                if (!collections.isEmpty()) {
+                    //TODO
+                }
+                return true;
             }
-            return true;
         }
     }
     return false;
