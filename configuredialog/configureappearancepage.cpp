@@ -334,7 +334,6 @@ static const struct {
     { "QuotedText2", I18N_NOOP("Quoted Text - Second Level") },
     { "QuotedText3", I18N_NOOP("Quoted Text - Third Level") },
     { "LinkColor", I18N_NOOP("Link") },
-    { "FollowedColor", I18N_NOOP("Followed Link") },
     { "MisspelledColor", I18N_NOOP("Misspelled Words") },
     { "UnreadMessageColor", I18N_NOOP("Unread Message") },
     { "ImportantMessageColor", I18N_NOOP("Important Message") },
@@ -424,7 +423,6 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
             MessageCore::Util::quoteLevel2DefaultTextColor(),
             MessageCore::Util::quoteLevel3DefaultTextColor(),
             scheme.foreground(KColorScheme::LinkText).color(),   // link
-            scheme.foreground(KColorScheme::VisitedText).color(),  // visited link
             scheme.foreground(KColorScheme::NegativeText).color(),   // misspelled words
             MessageList::Util::unreadDefaultMessageColor(), // unread mgs
             MessageList::Util::importantDefaultMessageColor(), // important msg
