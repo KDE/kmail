@@ -2162,6 +2162,28 @@ QString KMComposeWin::smartQuote(const QString &msg)
     return MessageCore::StringUtil::smartQuote(msg, MessageComposer::MessageComposerSettings::self()->lineWrapWidth());
 }
 
+void KMComposeWin::insertUrls(const QMimeData *source, const QList<QUrl> &urlList)
+{
+    QStringList urlAdded;
+    foreach (const QUrl &url, urlList) {
+        QString urlStr;
+        if (url.scheme() == QLatin1String("mailto")) {
+            urlStr = KEmailAddress::decodeMailtoUrl(url);
+        } else {
+            urlStr = url.toDisplayString();
+            // Workaround #346370
+            if (urlStr.isEmpty()) {
+                urlStr = source->text();
+            }
+        }
+        if (!urlAdded.contains(urlStr)) {
+            mComposerBase->editor()->composerControler()->insertLink(urlStr);
+            urlAdded.append(urlStr);
+        }
+    }
+
+}
+
 bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachment)
 {
     // If this is a PNG image, either add it as an attachment or as an inline image
@@ -2208,23 +2230,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
     const QList<QUrl> urlList = source->urls();
     if (!urlList.isEmpty()) {
         if (source->hasFormat(QStringLiteral("text/plain"))) {
-            QStringList urlAdded;
-            foreach (const QUrl &url, urlList) {
-                QString urlStr;
-                if (url.scheme() == QLatin1String("mailto")) {
-                    urlStr = KEmailAddress::decodeMailtoUrl(url);
-                } else {
-                    urlStr = url.toDisplayString();
-                    // Workaround #346370
-                    if (urlStr.isEmpty()) {
-                        urlStr = source->text();
-                    }
-                }
-                if (!urlAdded.contains(urlStr)) {
-                    mComposerBase->editor()->composerControler()->insertLink(urlStr);
-                    urlAdded.append(urlStr);
-                }
-            }
+            insertUrls(source, urlList);
             return true;
         } else {
             //Search if it's message items.
@@ -2259,18 +2265,7 @@ bool KMComposeWin::insertFromMimeData(const QMimeData *source, bool forceAttachm
                     const QAction *selectedAction = p.exec(QCursor::pos());
 
                     if (selectedAction == addAsTextAction) {
-                        QStringList urlAdded;
-                        foreach (const QUrl &url, urlList) {
-                            QString urlStr = url.toDisplayString();
-                            // Workaround #346370
-                            if (urlStr.isEmpty()) {
-                                urlStr = source->text();
-                            }
-                            if (!urlAdded.contains(urlStr)) {
-                                mComposerBase->editor()->composerControler()->insertLink(urlStr);
-                                urlAdded.append(urlStr);
-                            }
-                        }
+                        insertUrls(source, urlList);
                     } else if (selectedAction == addAsAttachmentAction) {
                         foreach (const QUrl &url, urlList) {
                             if (url.isValid()) {

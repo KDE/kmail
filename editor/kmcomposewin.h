@@ -585,6 +585,7 @@ private:
     inline bool encryptToSelf() const;
 
 private:
+    void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
     bool showErrorMessage(KJob *job);
     int validateLineWrapWidth();
