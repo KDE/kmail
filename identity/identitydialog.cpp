@@ -754,9 +754,8 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
 
     if (mSignatureConfigurator->isSignatureEnabled() &&
             mSignatureConfigurator->signatureType() == Signature::FromFile) {
-        QUrl url(mSignatureConfigurator->fileURL());
-        KFileItem signatureFile(url);
-        if (!signatureFile.isFile() || !signatureFile.isReadable() || !signatureFile.isLocalFile()) {
+        QFileInfo file(mSignatureConfigurator->filePath());
+        if (!file.isReadable()) {
             KMessageBox::error(this, i18n("The signature file is not valid"));
             return;
         }
