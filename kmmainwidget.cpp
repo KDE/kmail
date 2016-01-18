@@ -4593,8 +4593,10 @@ void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction actio
     case MessageViewer::Viewer::ReplyToAll:
         break;
     case MessageViewer::Viewer::Forward:
+        slotRedirectMsg();
         break;
     case MessageViewer::Viewer::NewMessage:
+        slotCompose();
         break;
     }
 }
