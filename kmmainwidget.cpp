@@ -4587,6 +4587,7 @@ void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction actio
     //TODO
     switch(action) {
     case MessageViewer::Viewer::Trash:
+        slotMoveMessageToTrash();
         break;
     case MessageViewer::Viewer::Reply:
         break;
