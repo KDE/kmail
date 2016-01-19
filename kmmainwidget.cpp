@@ -4590,8 +4590,10 @@ void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction actio
         slotMoveMessageToTrash();
         break;
     case MessageViewer::Viewer::Reply:
+        replyCurrentMessageCommand(MessageComposer::ReplySmart);
         break;
     case MessageViewer::Viewer::ReplyToAll:
+        replyCurrentMessageCommand(MessageComposer::ReplyAll);
         break;
     case MessageViewer::Viewer::Forward:
         slotRedirectCurrentMessage();
@@ -4606,6 +4608,19 @@ void KMMainWidget::slotRedirectCurrentMessage()
 {
     if (messageView() && messageView()->viewer() && mCurrentFolder) {
         KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentFolder->collection(), messageView()->viewer()->messageItem(), -1);
+        command->start();
+    }
+}
+
+void KMMainWidget::replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy)
+{
+    if (messageView() && messageView()->viewer()) {
+        Akonadi::Item currentItem = messageView()->viewer()->messageItem();
+        if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
+            return;
+        }
+        const QString text = messageView()->copyText();
+        KMCommand *command = new KMReplyCommand(this, currentItem, strategy, text);
         command->start();
     }
 }
