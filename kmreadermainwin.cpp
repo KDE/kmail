@@ -198,7 +198,7 @@ void KMReaderMainWin::slotExecuteMailAction(MessageViewer::Viewer::MailAction ac
 {
     switch(action) {
     case MessageViewer::Viewer::Trash:
-        slotTrashMsg();
+        slotTrashMessage();
         break;
     case MessageViewer::Viewer::Reply:
         slotCustomReplyToMsg(QString());
@@ -206,14 +206,14 @@ void KMReaderMainWin::slotExecuteMailAction(MessageViewer::Viewer::MailAction ac
     case MessageViewer::Viewer::ReplyToAll:
         break;
     case MessageViewer::Viewer::Forward:
-        slotRedirectMsg();
+        slotRedirectMessage();
         break;
     case MessageViewer::Viewer::NewMessage:
         break;
     }
 }
 
-void KMReaderMainWin::slotTrashMsg()
+void KMReaderMainWin::slotTrashMessage()
 {
     if (!mMsg.isValid()) {
         return;
@@ -245,7 +245,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     command->start();
 }
 
-void KMReaderMainWin::slotForwardAttachedMsg()
+void KMReaderMainWin::slotForwardAttachedMessage()
 {
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
         return;
@@ -268,23 +268,25 @@ void KMReaderMainWin::slotForwardAttachedMsg()
     command->start();
 }
 
-void KMReaderMainWin::slotRedirectMsg()
+void KMReaderMainWin::slotRedirectMessage()
 {
-    if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
+    const Akonadi::Item currentItem  = mReaderWin->message();
+    if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = new KMRedirectCommand(this, mReaderWin->message());
+    KMCommand *command = new KMRedirectCommand(this, currentItem);
     connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
 void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
 {
-    if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
+    const Akonadi::Item currentItem  = mReaderWin->message();
+    if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
     KMCommand *command = new KMReplyCommand(this,
-                                            mReaderWin->message(),
+                                            currentItem,
                                             MessageComposer::ReplySmart,
                                             mReaderWin->copyText(),
                                             false, tmpl);
@@ -294,11 +296,12 @@ void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
 
 void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
 {
-    if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
+    const Akonadi::Item currentItem  = mReaderWin->message();
+    if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
     KMCommand *command = new KMReplyCommand(this,
-                                            mReaderWin->message(),
+                                            currentItem,
                                             MessageComposer::ReplyAll,
                                             mReaderWin->copyText(),
                                             false, tmpl);
@@ -309,11 +312,12 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
 
 void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
 {
-    if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
+    const Akonadi::Item currentItem  = mReaderWin->message();
+    if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
     KMCommand *command = new KMForwardCommand(this,
-            mReaderWin->message(),
+            currentItem,
             0, tmpl);
     connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
@@ -346,7 +350,7 @@ void KMReaderMainWin::setupAccel()
     KMail::Util::addQActionHelpText(mTrashAction, i18n("Move message to trashcan"));
     actionCollection()->addAction(QStringLiteral("move_to_trash"), mTrashAction);
     actionCollection()->setDefaultShortcut(mTrashAction, QKeySequence(Qt::Key_Delete));
-    connect(mTrashAction, &QAction::triggered, this, &KMReaderMainWin::slotTrashMsg);
+    connect(mTrashAction, &QAction::triggered, this, &KMReaderMainWin::slotTrashMessage);
 
     QAction *closeAction = KStandardAction::close(this, SLOT(close()), actionCollection());
     QList<QKeySequence> closeShortcut = closeAction->shortcuts();
@@ -369,7 +373,7 @@ void KMReaderMainWin::setupAccel()
 
     setStandardToolBarMenuEnabled(true);
     KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
-    connect(mReaderWin->viewer(), &MessageViewer::Viewer::moveMessageToTrash, this, &KMReaderMainWin::slotTrashMsg);
+    connect(mReaderWin->viewer(), &MessageViewer::Viewer::moveMessageToTrash, this, &KMReaderMainWin::slotTrashMessage);
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::executeMailAction, this, &KMReaderMainWin::slotExecuteMailAction);
 }
 

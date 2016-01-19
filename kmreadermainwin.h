@@ -59,10 +59,10 @@ private Q_SLOTS:
     void slotMessagePopup(const Akonadi::Item &, const QUrl &, const QUrl &imageUrl, const QPoint &);
     void slotContactSearchJobForMessagePopupDone(KJob *);
     void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
-    void slotTrashMsg();
+    void slotTrashMessage();
     void slotForwardInlineMsg();
-    void slotForwardAttachedMsg();
-    void slotRedirectMsg();
+    void slotForwardAttachedMessage();
+    void slotRedirectMessage();
     void slotFontAction(const QString &);
     void slotSizeAction(int);
     void slotCustomReplyToMsg(const QString &tmpl);
