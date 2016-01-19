@@ -559,6 +559,7 @@ private Q_SLOTS:
     void slotMarkAllMessageAsReadInCurrentFolderAndSubfolder();
     void slotRemoveDuplicateRecursive();
     void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
+    void slotRedirectCurrentMessage();
 private:
     // Message actions
     QAction *mDeleteAction;

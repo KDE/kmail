@@ -4594,10 +4594,18 @@ void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction actio
     case MessageViewer::Viewer::ReplyToAll:
         break;
     case MessageViewer::Viewer::Forward:
-        slotRedirectMsg();
+        slotRedirectCurrentMessage();
         break;
     case MessageViewer::Viewer::NewMessage:
         slotCompose();
         break;
+    }
+}
+
+void KMMainWidget::slotRedirectCurrentMessage()
+{
+    if (messageView() && messageView()->viewer() && mCurrentFolder) {
+        KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentFolder->collection(), messageView()->viewer()->messageItem(), -1);
+        command->start();
     }
 }
