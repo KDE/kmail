@@ -4605,8 +4605,12 @@ void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction actio
 
 void KMMainWidget::slotRedirectCurrentMessage()
 {
-    if (messageView() && messageView()->viewer() && mCurrentFolder) {
-        KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentFolder->collection(), messageView()->viewer()->messageItem(), -1);
+    if (messageView() && messageView()->viewer()) {
+        const Akonadi::Item currentItem = messageView()->viewer()->messageItem();
+        if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
+            return;
+        }
+        KMCommand *command = new KMRedirectCommand(this, currentItem);
         command->start();
     }
 }
