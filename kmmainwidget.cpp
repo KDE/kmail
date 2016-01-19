@@ -4600,6 +4600,8 @@ void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction actio
     case MessageViewer::Viewer::NewMessage:
         slotCompose();
         break;
+    case MessageViewer::Viewer::CreateTodo:
+        break;
     }
 }
 
