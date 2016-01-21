@@ -196,7 +196,7 @@ Akonadi::Collection KMReaderMainWin::parentCollection() const
 
 void KMReaderMainWin::slotExecuteMailAction(MessageViewer::Viewer::MailAction action)
 {
-    switch(action) {
+    switch (action) {
     case MessageViewer::Viewer::Trash:
         slotTrashMessage();
         break;

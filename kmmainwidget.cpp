@@ -4584,7 +4584,7 @@ void KMMainWidget::slotUpdateConfig()
 
 void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction action)
 {
-    switch(action) {
+    switch (action) {
     case MessageViewer::Viewer::Trash:
         slotMoveMessageToTrash();
         break;
