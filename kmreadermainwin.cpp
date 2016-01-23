@@ -210,8 +210,6 @@ void KMReaderMainWin::slotExecuteMailAction(MessageViewer::Viewer::MailAction ac
         break;
     case MessageViewer::Viewer::NewMessage:
         break;
-    case MessageViewer::Viewer::CreateTodo:
-        break;
     }
 }
 
