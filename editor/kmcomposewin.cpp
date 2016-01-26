@@ -246,7 +246,6 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
       m_verifyMissingAttachment(Q_NULLPTR),
       mPreventFccOverwrite(false),
       mCheckForForgottenAttachments(true),
-      mIgnoreStickyFields(false),
       mWasModified(false),
       mCryptoStateIndicatorWidget(Q_NULLPTR),
       mStorageService(new KMStorageService(this, this)),
@@ -671,13 +670,11 @@ void KMComposeWin::writeConfig(void)
 {
     KMailSettings::self()->setHeaders(mShowHeaders);
     KMailSettings::self()->setStickyFcc(mBtnFcc->isChecked());
-    if (!mIgnoreStickyFields) {
-        KMailSettings::self()->setCurrentTransport(mComposerBase->transportComboBox()->currentText());
-        KMailSettings::self()->setStickyTransport(mBtnTransport->isChecked());
-        KMailSettings::self()->setStickyDictionary(mBtnDictionary->isChecked());
-        KMailSettings::self()->setStickyIdentity(mBtnIdentity->isChecked());
-        KMailSettings::self()->setPreviousIdentity(mComposerBase->identityCombo()->currentIdentity());
-    }
+    KMailSettings::self()->setCurrentTransport(mComposerBase->transportComboBox()->currentText());
+    KMailSettings::self()->setStickyTransport(mBtnTransport->isChecked());
+    KMailSettings::self()->setStickyDictionary(mBtnDictionary->isChecked());
+    KMailSettings::self()->setStickyIdentity(mBtnIdentity->isChecked());
+    KMailSettings::self()->setPreviousIdentity(mComposerBase->identityCombo()->currentIdentity());
     KMailSettings::self()->setPreviousFcc(QString::number(mFccFolder->collection().id()));
     KMailSettings::self()->setPreviousDictionary(mComposerBase->dictionary()->currentDictionaryName());
     KMailSettings::self()->setAutoSpellChecking(
@@ -1637,7 +1634,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
         mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
     }
 
-    const bool stickyIdentity = mBtnIdentity->isChecked() && !mIgnoreStickyFields;
+    const bool stickyIdentity = mBtnIdentity->isChecked();
     bool messageHasIdentity = false;
     if (newMsg->headerByType("X-KMail-Identity") &&
             !newMsg->headerByType("X-KMail-Identity")->asUnicodeString().isEmpty()) {
@@ -1678,7 +1675,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
 
     const KIdentityManagement::Identity &ident = im->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
 
-    const bool stickyTransport = mBtnTransport->isChecked() && !mIgnoreStickyFields;
+    const bool stickyTransport = mBtnTransport->isChecked();
     if (stickyTransport) {
         mComposerBase->transportComboBox()->setCurrentTransport(ident.transport().toInt());
     }
@@ -1755,7 +1752,7 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
         }
     }
 
-    const bool stickyDictionary = mBtnDictionary->isChecked() && !mIgnoreStickyFields;
+    const bool stickyDictionary = mBtnDictionary->isChecked();
     if (!stickyDictionary) {
         if (auto hdr = mMsg->headerByType("X-KMail-Dictionary")) {
             const QString dictionary = hdr->asUnicodeString();
@@ -2547,17 +2544,6 @@ void KMComposeWin::disableForgottenAttachmentsCheck()
     mCheckForForgottenAttachments = false;
 }
 
-void KMComposeWin::ignoreStickyFields()
-{
-    mIgnoreStickyFields = true;
-    mBtnTransport->setChecked(false);
-    mBtnDictionary->setChecked(false);
-    mBtnIdentity->setChecked(false);
-    mBtnTransport->setEnabled(false);
-    mBtnDictionary->setEnabled(false);
-    mBtnIdentity->setEnabled(false);
-}
-
 void KMComposeWin::slotPrint()
 {
     printComposer(false);
@@ -3129,7 +3115,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
     }
     // If the transport sticky checkbox is not checked, set the transport
     // from the new identity
-    if (!mBtnTransport->isChecked() && !mIgnoreStickyFields) {
+    if (!mBtnTransport->isChecked()) {
         const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
         const Transport *transport = TransportManager::self()->transportById(transportId, true);
         if (!transport) {
@@ -3153,7 +3139,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
     }
     mFccFolder->setEnabled(!fccIsDisabled);
 
-    if (!mBtnDictionary->isChecked() && !mIgnoreStickyFields) {
+    if (!mBtnDictionary->isChecked()) {
         mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     }
     slotSpellCheckingLanguage(mComposerBase->dictionary()->currentDictionary());
