@@ -63,8 +63,6 @@ private Q_SLOTS:
     void slotForwardInlineMsg();
     void slotForwardAttachedMessage();
     void slotRedirectMessage();
-    void slotFontAction(const QString &);
-    void slotSizeAction(int);
     void slotCustomReplyToMsg(const QString &tmpl);
     void slotCustomReplyAllToMsg(const QString &tmpl);
     void slotCustomForwardMsg(const QString &tmpl);
@@ -87,14 +85,11 @@ private:
     void setupAccel();
     QAction *copyActionMenu(QMenu *menu);
     QAction *moveActionMenu(QMenu *menu);
-    void changeFont(const QFont &f);
 
     KMReaderWin *mReaderWin;
     Akonadi::Item mMsg;
     // a few actions duplicated from kmmainwidget
     QAction *mTrashAction, *mSaveAtmAction;
-    KFontAction *mFontAction;
-    KFontSizeAction *mFontSizeAction;
     KMail::MessageActions *mMsgActions;
     Akonadi::Collection mParentCollection;
 };

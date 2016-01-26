@@ -361,16 +361,6 @@ void KMReaderMainWin::setupAccel()
     closeAction->setShortcuts(closeShortcut << QKeySequence(Qt::Key_Escape));
 
     //----- Message Menu
-
-    mFontAction = new KFontAction(i18n("Select Font"), this);
-    actionCollection()->addAction(QStringLiteral("text_font"), mFontAction);
-    mFontAction->setFont(mReaderWin->cssHelper()->bodyFont().family());
-    connect(mFontAction, static_cast<void (KFontAction::*)(const QString &)>(&KFontAction::triggered), this, &KMReaderMainWin::slotFontAction);
-    mFontSizeAction = new KFontSizeAction(i18n("Select Size"), this);
-    mFontSizeAction->setFontSize(mReaderWin->cssHelper()->bodyFont().pointSize());
-    actionCollection()->addAction(QStringLiteral("text_size"), mFontSizeAction);
-    connect(mFontSizeAction, &KFontSizeAction::fontSizeChanged, this, &KMReaderMainWin::slotSizeAction);
-
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::popupMenu, this, &KMReaderMainWin::slotMessagePopup);
 
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::itemRemoved, this, &QWidget::close);
@@ -668,27 +658,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
         menu->exec(aPoint, Q_NULLPTR);
         delete menu;
     }
-}
-
-void KMReaderMainWin::slotFontAction(const QString &font)
-{
-    QFont f(mReaderWin->cssHelper()->bodyFont());
-    f.setFamily(font);
-    changeFont(f);
-}
-
-void KMReaderMainWin::slotSizeAction(int size)
-{
-    QFont f(mReaderWin->cssHelper()->bodyFont());
-    f.setPointSize(size);
-    changeFont(f);
-}
-
-void KMReaderMainWin::changeFont(const QFont &f)
-{
-    mReaderWin->cssHelper()->setBodyFont(f);
-    mReaderWin->cssHelper()->setPrintFont(f);
-    mReaderWin->update();
 }
 
 void KMReaderMainWin::slotEditToolbars()
