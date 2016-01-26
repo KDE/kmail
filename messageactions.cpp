@@ -174,9 +174,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     ac->setDefaultShortcut(mRedirectAction, QKeySequence(Qt::Key_E));
     mForwardActionMenu->addAction(mRedirectAction);
 
-    //FIXME add QIcon::fromTheme("mail-list") as first arguement. Icon can be derived from
-    // mail-reply-list icon by removing top layers off svg
-    mMailingListActionMenu = new KActionMenu(i18nc("Message->", "Mailing-&List"), this);
+    mMailingListActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-message-new-list")), i18nc("Message->", "Mailing-&List"), this);
     connect(mMailingListActionMenu->menu(), &QMenu::triggered, this, &MessageActions::slotRunUrl);
     ac->addAction(QStringLiteral("mailing_list"), mMailingListActionMenu);
     mMailingListActionMenu->setEnabled(false);
