@@ -386,6 +386,7 @@ void KMMainWidget::destruct()
     if (mSearchWin) {
         mSearchWin->close();
     }
+    disconnect(mFolderTreeWidget->folderTreeView()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &KMMainWidget::updateFolderMenu);
     writeConfig(false); /* don't force kmkernel sync when close BUG: 289287 */
     writeFolderConfig();
     deleteWidgets();
