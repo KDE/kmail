@@ -169,24 +169,6 @@
         <default>false</default>
         <label>Forward Inline As Default.</label>
       </entry>
-      <entry name="StickyIdentity" type="Bool" key="sticky-identity">
-        <whatsthis>Remember this identity, so that it will be used in future composer windows as well.
-        </whatsthis>
-        <default>false</default>
-      </entry>
-      <entry name="StickyFcc" type="Bool" key="sticky-fcc">
-        <whatsthis>Remember this folder for sent items, so that it will be used in future composer windows as well.</whatsthis>
-        <default>false</default>
-      </entry>
-      <entry name="StickyTransport" type="Bool" key="sticky-transport">
-        <whatsthis>Remember this mail transport, so that it will be used in future composer windows as well.</whatsthis>
-        <default>false</default>
-      </entry>
-      <entry name="StickyDictionary" type="Bool">
-        <whatsthis>Remember this dictionary, so that it will be used in future composer windows as well.
-        </whatsthis>
-        <default>false</default>
-      </entry>
        <entry name="TooManyRecipients" type="Bool" key="too-many-recipients">
         <label>Warn if the number of recipients is more than:</label>
         <default>${WARN_TOOMANY_RECIPIENTS_DEFAULT}</default>

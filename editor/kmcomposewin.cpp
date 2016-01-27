@@ -349,14 +349,6 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     mLblReplyTo = new QLabel(i18n("&Reply to:"), mHeadersArea);
     mLblSubject = new QLabel(i18nc("@label:textbox Subject of email.", "S&ubject:"), mHeadersArea);
     QString sticky = i18nc("@option:check Sticky identity.", "Sticky");
-    mBtnIdentity = new QCheckBox(sticky, mHeadersArea);
-    mBtnIdentity->setToolTip(i18n("Use the selected value as your identity for future messages"));
-    mBtnFcc = new QCheckBox(sticky, mHeadersArea);
-    mBtnFcc->setToolTip(i18n("Use the selected value as your sent-mail folder for future messages"));
-    mBtnTransport = new QCheckBox(sticky, mHeadersArea);
-    mBtnTransport->setToolTip(i18n("Use the selected value as your outgoing account for future messages"));
-    mBtnDictionary = new QCheckBox(sticky, mHeadersArea);
-    mBtnDictionary->setToolTip(i18n("Use the selected value as your dictionary for future messages"));
 
     mShowHeaders = KMailSettings::self()->headers();
     mDone = false;
@@ -411,18 +403,8 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     mSplitter->setOpaqueResize(true);
 
-    mBtnIdentity->setWhatsThis(KMailSettings::self()->stickyIdentityItem()->whatsThis());
-    mBtnFcc->setWhatsThis(KMailSettings::self()->stickyFccItem()->whatsThis());
-    mBtnTransport->setWhatsThis(KMailSettings::self()->stickyTransportItem()->whatsThis());
-    mBtnDictionary->setWhatsThis(KMailSettings::self()->stickyDictionaryItem()->whatsThis());
-
     setWindowTitle(i18n("Composer"));
     setMinimumSize(200, 200);
-
-    mBtnIdentity->setFocusPolicy(Qt::NoFocus);
-    mBtnFcc->setFocusPolicy(Qt::NoFocus);
-    mBtnTransport->setFocusPolicy(Qt::NoFocus);
-    mBtnDictionary->setFocusPolicy(Qt::NoFocus);
 
     mCustomToolsWidget = new PimCommon::CustomToolsWidgetNg(actionCollection(), this);
     mSplitter->addWidget(mCustomToolsWidget);
@@ -591,16 +573,6 @@ void KMComposeWin::addAttachment(const QString &name,
 
 void KMComposeWin::readConfig(bool reload /* = false */)
 {
-    mBtnIdentity->setChecked(KMailSettings::self()->stickyIdentity());
-    if (mBtnIdentity->isChecked()) {
-        mId = (KMailSettings::self()->previousIdentity() != 0) ?
-              KMailSettings::self()->previousIdentity() : mId;
-    }
-    mBtnFcc->setChecked(KMailSettings::self()->stickyFcc());
-    mBtnTransport->setChecked(KMailSettings::self()->stickyTransport());
-    const int currentTransport = KMailSettings::self()->currentTransport().isEmpty() ? -1 : KMailSettings::self()->currentTransport().toInt();
-    mBtnDictionary->setChecked(KMailSettings::self()->stickyDictionary());
-
     mEdtFrom->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
     mComposerBase->recipientsEditor()->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
     mEdtReplyTo->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
@@ -642,25 +614,12 @@ void KMComposeWin::readConfig(bool reload /* = false */)
     const KIdentityManagement::Identity &ident =
         kmkernel->identityManager()->identityForUoid(mId);
 
-    if (mBtnTransport->isChecked() && currentTransport != -1) {
-        const Transport *transport = TransportManager::self()->transportById(currentTransport);
-        if (transport) {
-            mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
-        }
-    }
-
     mComposerBase->setAutoSaveInterval(KMailSettings::self()->autosaveInterval() * 1000 * 60);
 
-    if (mBtnDictionary->isChecked()) {
-        mComposerBase->dictionary()->setCurrentByDictionaryName(KMailSettings::self()->previousDictionary());
-    } else {
-        mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
-    }
+    mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
 
     QString fccName;
-    if (mBtnFcc->isChecked()) {
-        fccName = KMailSettings::self()->previousFcc();
-    } else if (!ident.fcc().isEmpty()) {
+    if (!ident.fcc().isEmpty()) {
         fccName = ident.fcc();
     }
     setFcc(fccName);
@@ -669,11 +628,7 @@ void KMComposeWin::readConfig(bool reload /* = false */)
 void KMComposeWin::writeConfig(void)
 {
     KMailSettings::self()->setHeaders(mShowHeaders);
-    KMailSettings::self()->setStickyFcc(mBtnFcc->isChecked());
     KMailSettings::self()->setCurrentTransport(mComposerBase->transportComboBox()->currentText());
-    KMailSettings::self()->setStickyTransport(mBtnTransport->isChecked());
-    KMailSettings::self()->setStickyDictionary(mBtnDictionary->isChecked());
-    KMailSettings::self()->setStickyIdentity(mBtnIdentity->isChecked());
     KMailSettings::self()->setPreviousIdentity(mComposerBase->identityCombo()->currentIdentity());
     KMailSettings::self()->setPreviousFcc(QString::number(mFccFolder->collection().id()));
     KMailSettings::self()->setPreviousDictionary(mComposerBase->dictionary()->currentDictionaryName());
@@ -824,7 +779,6 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     mGrid = new QGridLayout(mHeadersArea);
     mGrid->setColumnStretch(0, 1);
     mGrid->setColumnStretch(1, 100);
-    mGrid->setColumnStretch(2, 1);
     mGrid->setRowStretch(mNumHeaders + 1, 100);
 
     row = 0;
@@ -846,25 +800,23 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     if (!fromSlot) {
         mIdentityAction->setChecked(std::abs(mShowHeaders)&HDR_IDENTITY);
     }
-    rethinkHeaderLine(showHeaders, HDR_IDENTITY, row, mLblIdentity, mComposerBase->identityCombo(),
-                      mBtnIdentity);
+    rethinkHeaderLine(showHeaders, HDR_IDENTITY, row, mLblIdentity, mComposerBase->identityCombo());
 
     if (!fromSlot) {
         mDictionaryAction->setChecked(std::abs(mShowHeaders)&HDR_DICTIONARY);
     }
     rethinkHeaderLine(showHeaders, HDR_DICTIONARY, row, mDictionaryLabel,
-                      mComposerBase->dictionary(), mBtnDictionary);
+                      mComposerBase->dictionary());
 
     if (!fromSlot) {
         mFccAction->setChecked(std::abs(mShowHeaders)&HDR_FCC);
     }
-    rethinkHeaderLine(showHeaders, HDR_FCC, row, mLblFcc, mFccFolder, mBtnFcc);
+    rethinkHeaderLine(showHeaders, HDR_FCC, row, mLblFcc, mFccFolder);
 
     if (!fromSlot) {
         mTransportAction->setChecked(std::abs(mShowHeaders)&HDR_TRANSPORT);
     }
-    rethinkHeaderLine(showHeaders, HDR_TRANSPORT, row, mLblTransport, mComposerBase->transportComboBox(),
-                      mBtnTransport);
+    rethinkHeaderLine(showHeaders, HDR_TRANSPORT, row, mLblTransport, mComposerBase->transportComboBox());
 
     if (!fromSlot) {
         mFromAction->setChecked(std::abs(mShowHeaders)&HDR_FROM);
@@ -954,8 +906,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
 }
 
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
-                                     QLabel *aLbl, QWidget *aCbx,
-                                     QCheckBox *aChk)
+                                     QLabel *aLbl, QWidget *aCbx)
 {
     if (aValue & aMask) {
         aLbl->setBuddy(aCbx);
@@ -963,17 +914,10 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
 
         mGrid->addWidget(aCbx, aRow, 1);
         aCbx->show();
-        if (aChk) {
-            mGrid->addWidget(aChk, aRow, 2);
-            aChk->show();
-        }
         aRow++;
     } else {
         aLbl->hide();
         aCbx->hide();
-        if (aChk) {
-            aChk->hide();
-        }
     }
 }
 
@@ -1634,39 +1578,25 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
         mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
     }
 
-    const bool stickyIdentity = mBtnIdentity->isChecked();
     bool messageHasIdentity = false;
     if (newMsg->headerByType("X-KMail-Identity") &&
             !newMsg->headerByType("X-KMail-Identity")->asUnicodeString().isEmpty()) {
         messageHasIdentity = true;
     }
-    if (!stickyIdentity && messageHasIdentity) {
+    if (messageHasIdentity) {
         mId = newMsg->headerByType("X-KMail-Identity")->asUnicodeString().toUInt();
     }
 
     // don't overwrite the header values with identity specific values
     // unless the identity is sticky
-    if (!stickyIdentity) {
-        disconnect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
-                   this, SLOT(slotIdentityChanged(uint)));
-    }
+    disconnect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
+               this, SLOT(slotIdentityChanged(uint)));
 
     // load the mId into the gui, sticky or not, without emitting
     mComposerBase->identityCombo()->setCurrentIdentity(mId);
     const uint idToApply = mId;
-    if (!stickyIdentity) {
-        connect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
-                this, SLOT(slotIdentityChanged(uint)));
-    } else {
-        // load the message's state into the mId, without applying it to the gui
-        // that's so we can detect that the id changed (because a sticky was set)
-        // on apply()
-        if (messageHasIdentity) {
-            mId = newMsg->headerByType("X-KMail-Identity")->asUnicodeString().toUInt();
-        } else {
-            mId = im->defaultIdentity().uoid();
-        }
-    }
+    connect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
+            this, SLOT(slotIdentityChanged(uint)));
 
     // manually load the identity's value into the fields; either the one from the
     // messge, where appropriate, or the one from the sticky identity. What's in
@@ -1675,10 +1605,6 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
 
     const KIdentityManagement::Identity &ident = im->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
 
-    const bool stickyTransport = mBtnTransport->isChecked();
-    if (stickyTransport) {
-        mComposerBase->transportComboBox()->setCurrentTransport(ident.transport().toInt());
-    }
 
     // TODO move the following to ComposerViewBase
     // however, requires the actions to be there as well in order to share with mobile client
@@ -1744,24 +1670,18 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     if (auto hdr = mMsg->headerByType("X-KMail-Fcc")) {
         kmailFcc = hdr->asUnicodeString();
     }
-    if (!mBtnFcc->isChecked()) {
-        if (kmailFcc.isEmpty()) {
-            setFcc(ident.fcc());
-        } else {
-            setFcc(kmailFcc);
-        }
+    if (kmailFcc.isEmpty()) {
+        setFcc(ident.fcc());
+    } else {
+        setFcc(kmailFcc);
     }
-
-    const bool stickyDictionary = mBtnDictionary->isChecked();
-    if (!stickyDictionary) {
-        if (auto hdr = mMsg->headerByType("X-KMail-Dictionary")) {
-            const QString dictionary = hdr->asUnicodeString();
-            if (!dictionary.isEmpty()) {
-                mComposerBase->dictionary()->setCurrentByDictionary(dictionary);
-            }
-        } else {
-            mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
+    if (auto hdr = mMsg->headerByType("X-KMail-Dictionary")) {
+        const QString dictionary = hdr->asUnicodeString();
+        if (!dictionary.isEmpty()) {
+            mComposerBase->dictionary()->setCurrentByDictionary(dictionary);
         }
+    } else {
+        mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     }
 
     mEdtReplyTo->setText(mMsg->replyTo()->asUnicodeString());
@@ -3113,20 +3033,16 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
             mMsg->setHeader(header);
         }
     }
-    // If the transport sticky checkbox is not checked, set the transport
-    // from the new identity
-    if (!mBtnTransport->isChecked()) {
-        const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
-        const Transport *transport = TransportManager::self()->transportById(transportId, true);
-        if (!transport) {
-            mMsg->removeHeader("X-KMail-Transport");
-            mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
-        } else {
-            KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport");
-            header->fromUnicodeString(QString::number(transport->id()), "utf-8");
-            mMsg->setHeader(header);
-            mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
-        }
+    const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
+    const Transport *transport = TransportManager::self()->transportById(transportId, true);
+    if (!transport) {
+        mMsg->removeHeader("X-KMail-Transport");
+        mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
+    } else {
+        KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport");
+        header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+        mMsg->setHeader(header);
+        mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
     }
 
     const bool fccIsDisabled = ident.disabledFcc();
@@ -3139,11 +3055,9 @@ void KMComposeWin::slotIdentityChanged(uint uoid, bool initalChange)
     }
     mFccFolder->setEnabled(!fccIsDisabled);
 
-    if (!mBtnDictionary->isChecked()) {
-        mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
-    }
+    mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     slotSpellCheckingLanguage(mComposerBase->dictionary()->currentDictionary());
-    if (!mBtnFcc->isChecked() && !mPreventFccOverwrite) {
+    if (!mPreventFccOverwrite) {
         setFcc(ident.fcc());
     }
     // if unmodified, apply new template, if one is set

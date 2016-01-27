@@ -479,10 +479,10 @@ private:
      */
     void rethinkHeaderLine(int aValue, int aMask, int &aRow,
                            QLabel *aLbl, QWidget *aEdt,
-                           QPushButton *aBtn = Q_NULLPTR);
+                           QPushButton *aBtn);
 
     void rethinkHeaderLine(int value, int mask, int &row,
-                           QLabel *lbl, QWidget *cbx, QCheckBox *chk);  // krazy:exclude=qclasses
+                           QLabel *lbl, QWidget *cbx);  // krazy:exclude=qclasses
 
     /**
      * Apply template to new or unmodified message.
@@ -588,7 +588,6 @@ private:
     QLabel    *mLblFrom, *mLblReplyTo;
     QLabel    *mLblSubject;
     QLabel    *mDictionaryLabel;
-    QCheckBox *mBtnIdentity, *mBtnDictionary, *mBtnTransport, *mBtnFcc;
     bool mDone;
 
     KMime::Message::Ptr mMsg;
