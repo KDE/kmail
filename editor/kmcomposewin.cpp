@@ -1605,7 +1605,6 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
 
     const KIdentityManagement::Identity &ident = im->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
 
-
     // TODO move the following to ComposerViewBase
     // however, requires the actions to be there as well in order to share with mobile client
 
