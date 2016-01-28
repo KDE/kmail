@@ -1120,10 +1120,6 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("save_as_file"), action);
     connect(action, &QAction::triggered, this, &KMComposeWin::slotSaveAsFile);
 
-    action = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")), i18n("New AddressBook Contact..."), this);
-    actionCollection()->addAction(QStringLiteral("kmail_new_addressbook_contact"), action);
-    connect(action, &QAction::triggered, this, &KMComposeWin::slotCreateAddressBookContact);
-
     action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("&Insert Text File..."), this);
     actionCollection()->addAction(QStringLiteral("insert_file"), action);
     connect(action, &QAction::triggered, this, &KMComposeWin::slotInsertFile);
@@ -3238,12 +3234,6 @@ void KMComposeWin::slotSaveAsFile()
     job->setTextDocument(mComposerBase->editor()->document());
     job->start();
     //not necessary to delete it. It done in SaveAsFileJob
-}
-
-void KMComposeWin::slotCreateAddressBookContact()
-{
-    CreateNewContactJob *job = new CreateNewContactJob(this, this);
-    job->start();
 }
 
 void KMComposeWin::slotAttachMissingFile()

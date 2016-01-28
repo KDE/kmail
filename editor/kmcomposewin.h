@@ -403,7 +403,6 @@ private Q_SLOTS:
     void slotSpellCheckingLanguage(const QString &language);
     void forceAutoSaveMessage();
     void slotSaveAsFile();
-    void slotCreateAddressBookContact();
 
     void slotAttachMissingFile();
     void slotExplicitClosedMissingAttachment();
