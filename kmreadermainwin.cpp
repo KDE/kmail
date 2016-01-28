@@ -52,6 +52,8 @@
 #include "util.h"
 #include "mailcommon/mailkernel.h"
 #include "MailCommon/FolderCollection"
+#include "messageviewer/headerstyleplugin.h"
+#include "messageviewer/headerstyle.h"
 
 #include <KActionCollection>
 #include <Akonadi/Contact/ContactSearchJob>
@@ -148,6 +150,9 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
 
     const bool canChange = mParentCollection.isValid() ? (bool)(mParentCollection.rights() & Akonadi::Collection::CanDeleteItem) : false;
     mTrashAction->setEnabled(canChange);
+
+    mReaderWin->viewer()->headerStylePlugin()->headerStyle()->setReadOnlyMessage(!canChange);
+
 
     menuBar()->show();
     toolBar(QStringLiteral("mainToolBar"))->show();

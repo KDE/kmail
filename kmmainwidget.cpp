@@ -84,6 +84,8 @@ using KSieveUi::SieveDebugDialog;
 #include "messageviewer/messageviewersettings.h"
 #include "messageviewer/viewer.h"
 #include "messageviewer/attachmentstrategy.h"
+#include "messageviewer/headerstyleplugin.h"
+#include "messageviewer/headerstyle.h"
 #ifndef QT_NO_CURSOR
 #include "Libkdepim/KCursorSaver"
 #endif
@@ -3769,6 +3771,9 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     mTrashThreadAction->setEnabled(thread_actions && canDeleteMessages);
     mDeleteThreadAction->setEnabled(thread_actions && canDeleteMessages);
+    if (messageView() && messageView()->viewer()) {
+        messageView()->viewer()->headerStylePlugin()->headerStyle()->setReadOnlyMessage(!canDeleteMessages);
+    }
 
     if (currentMessage.isValid()) {
         MessageStatus status;
