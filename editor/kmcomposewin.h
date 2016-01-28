@@ -88,7 +88,6 @@ class Identity;
 
 namespace KPIMTextEdit
 {
-class SelectSpecialCharDialog;
 class RichTextEditorWidget;
 }
 
@@ -403,8 +402,6 @@ private Q_SLOTS:
     void setAutoSaveFileName(const QString &fileName) Q_DECL_OVERRIDE;
     void slotSpellCheckingLanguage(const QString &language);
     void forceAutoSaveMessage();
-    void insertSpecialCharacter();
-    void charSelected(const QChar &c);
     void slotSaveAsFile();
     void slotCreateAddressBookContact();
 
@@ -646,7 +643,6 @@ private:
 
     SnippetWidget *mSnippetWidget;
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget;
-    QPointer<KPIMTextEdit::SelectSpecialCharDialog> mSelectSpecialChar;
     AttachmentMissingWarning *mAttachmentMissing;
     ExternalEditorWarning *mExternalEditorWarning;
     QTimer *m_verifyMissingAttachment;

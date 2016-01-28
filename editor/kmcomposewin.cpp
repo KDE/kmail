@@ -242,7 +242,6 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
       mDummyComposer(Q_NULLPTR),
       mLabelWidth(0),
       mComposerBase(Q_NULLPTR),
-      mSelectSpecialChar(Q_NULLPTR),
       m_verifyMissingAttachment(Q_NULLPTR),
       mPreventFccOverwrite(false),
       mCheckForForgottenAttachments(true),
@@ -1272,10 +1271,6 @@ void KMComposeWin::setupActions(void)
     mInsertSignatureAtCursorPosition = new QAction(i18n("Insert Signature At C&ursor Position"), this);
     actionCollection()->addAction(QStringLiteral("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition);
     connect(mInsertSignatureAtCursorPosition, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::insertSignatureAtCursor);
-
-    action = new QAction(i18n("Insert Special Character..."), this);
-    actionCollection()->addAction(QStringLiteral("insert_special_character"), action);
-    connect(action, &QAction::triggered, this, &KMComposeWin::insertSpecialCharacter);
 
     QAction *upperCase = new QAction(i18n("Uppercase"), this);
     actionCollection()->addAction(QStringLiteral("change_to_uppercase"), upperCase);
@@ -3233,22 +3228,6 @@ void KMComposeWin::slotFccFolderChanged(const Akonadi::Collection &collection)
 {
     mComposerBase->setFcc(collection);
     mComposerBase->editor()->document()->setModified(true);
-}
-
-void KMComposeWin::insertSpecialCharacter()
-{
-    if (!mSelectSpecialChar) {
-        mSelectSpecialChar = new KPIMTextEdit::SelectSpecialCharDialog(this);
-        mSelectSpecialChar->setWindowTitle(i18n("Insert Special Character"));
-        mSelectSpecialChar->setOkButtonText(i18n("Insert"));
-        connect(mSelectSpecialChar.data(), &KPIMTextEdit::SelectSpecialCharDialog::charSelected, this, &KMComposeWin::charSelected);
-    }
-    mSelectSpecialChar->show();
-}
-
-void KMComposeWin::charSelected(const QChar &c)
-{
-    mComposerBase->editor()->insertPlainText(c);
 }
 
 void KMComposeWin::slotSaveAsFile()
