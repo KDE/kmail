@@ -70,6 +70,7 @@ void KMailPluginEditorManagerInterface::initializePlugins()
     Q_FOREACH (MessageComposer::PluginEditor *plugin, lstPlugin) {
         MessageComposer::PluginEditorInterface *interface = plugin->createInterface(mActionCollection, this);
         interface->setRichTextEditor(mRichTextEditor);
+        interface->setParentWidget(mParentWidget);
         connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
         mListPluginInterface.append(interface);
     }
