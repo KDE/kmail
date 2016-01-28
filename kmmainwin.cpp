@@ -74,8 +74,6 @@ KMMainWin::KMMainWin(QWidget *)
                                  actionCollection());
 
     mHideMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotToggleMenubar()), actionCollection());
-    mHideMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
-    slotToggleMenubar(true);
 
     KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
     createGUI(QStringLiteral("kmmainwin.rc"));
@@ -90,6 +88,8 @@ KMMainWin::KMMainWin(QWidget *)
             SLOT(setCaption(QString)));
 
     mKMMainWidget->updateQuickSearchLineText();
+    mHideMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
+    slotToggleMenubar(true);
 }
 
 KMMainWin::~KMMainWin()
