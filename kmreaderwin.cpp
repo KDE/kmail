@@ -622,10 +622,10 @@ QAction *KMReaderWin::downloadImageToDiskAction() const
 
 void KMReaderWin::clear(bool force)
 {
-    mViewer->clear(force ? Viewer::Force : Viewer::Delayed);
+    mViewer->clear(force ? Force : Delayed);
 }
 
-void KMReaderWin::setMessage(const Akonadi::Item &item, Viewer::UpdateMode updateMode)
+void KMReaderWin::setMessage(const Akonadi::Item &item, UpdateMode updateMode)
 {
     qCDebug(KMAIL_LOG) << Q_FUNC_INFO << parentWidget();
     mViewer->setMessageItem(item, updateMode);
@@ -648,7 +648,7 @@ QUrl KMReaderWin::imageUrlClicked() const
 
 void KMReaderWin::update(bool force)
 {
-    mViewer->update(force ? Viewer::Force : Viewer::Delayed);
+    mViewer->update(force ? Force : Delayed);
 }
 
 void KMReaderWin::slotUrlClicked(const Akonadi::Item &item, const QUrl &url)
