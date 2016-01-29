@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE kpartgui>
-<kpartgui version="514" name="kmmainwin" translationDomain="kmail">
+<kpartgui version="515" name="kmmainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -298,9 +298,6 @@
   <Separator/>
   <Action name="message_reply_menu" />
   <Action name="message_forward"/>
-  <Separator/>
-  <Action name="go_prev_unread_message"/>
-  <Action name="go_next_unread_message"/>
   <Separator/>
   <Action name="akonadi_move_to_trash" />
   <Separator/>
