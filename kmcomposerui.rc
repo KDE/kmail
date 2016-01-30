@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="438" name="kmcomposer" translationDomain="kmail">
+<kpartgui version="512" name="kmcomposer" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -16,6 +16,7 @@
    <Separator/>
    <Action name="insert_file" />
    <Action name="insert_file_recent" />
+   <Separator/>
    <Action name="file_print_preview"/>
    <Action name="file_print" />
    <Separator/>
