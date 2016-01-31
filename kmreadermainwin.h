@@ -3,6 +3,8 @@
 #ifndef KMReaderMainWin_h
 #define KMReaderMainWin_h
 
+#include "kmail_export.h"
+
 #include "secondarywindow.h"
 
 #include <QUrl>
@@ -28,7 +30,7 @@ class Content;
 }
 Q_DECLARE_METATYPE(QModelIndex)
 
-class KMReaderMainWin : public KMail::SecondaryWindow
+class KMAIL_EXPORT KMReaderMainWin : public KMail::SecondaryWindow
 {
     Q_OBJECT
 

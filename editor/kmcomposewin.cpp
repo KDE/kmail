@@ -296,6 +296,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
     KIdentityManagement::IdentityCombo *identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(),
             mHeadersArea);
     identity->setToolTip(i18n("Select an identity for this message"));
+    identity->setCurrentIdentity(mId);
     mComposerBase->setIdentityCombo(identity);
 
     sigController->setIdentityCombo(identity);
@@ -1371,6 +1372,7 @@ void KMComposeWin::changeCryptoAction()
 {
     const KIdentityManagement::Identity &ident =
         KMKernel::self()->identityManager()->identityForUoidOrDefault(mComposerBase->identityCombo()->currentIdentity());
+
     if (!Kleo::CryptoBackendFactory::instance()->openpgp() && !Kleo::CryptoBackendFactory::instance()->smime()) {
         // no crypto whatsoever
         mEncryptAction->setEnabled(false);
@@ -1518,6 +1520,8 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
         // manually load the identity's value into the fields
         slotIdentityChanged(newId, true /*initalChange*/);
 
+        // Fixing the identitis with auto signing activated
+        mLastSignActionState = mSignAction->isChecked();
     }
 
     const KIdentityManagement::Identity &ident = im->identityForUoid(mComposerBase->identityCombo()->currentIdentity());

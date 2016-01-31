@@ -21,6 +21,8 @@
 #ifndef KMREADERWIN_H
 #define KMREADERWIN_H
 
+#include "kmail_export.h"
+
 #include <QWidget>
 #include <qurl.h>
 #include <messageviewer/viewer.h>
@@ -44,7 +46,7 @@ class KJob;
    used for reading or viewing messages.
 */
 
-class KMReaderWin: public QWidget
+class KMAIL_EXPORT KMReaderWin: public QWidget
 {
     Q_OBJECT
 

@@ -20,6 +20,8 @@
 #ifndef __KMMAINWIN
 #define __KMMAINWIN
 
+#include "kmail_export.h"
+
 #include <kxmlguiwindow.h>
 
 class KMMainWidget;
@@ -29,7 +31,7 @@ namespace KPIM
 {
 class ProgressStatusBarWidget;
 }
-class KMMainWin : public KXmlGuiWindow
+class KMAIL_EXPORT KMMainWin : public KXmlGuiWindow
 {
     Q_OBJECT
 

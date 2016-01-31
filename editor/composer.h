@@ -20,6 +20,7 @@
 #ifndef __KMAIL_COMPOSER_H__
 #define __KMAIL_COMPOSER_H__
 
+#include "kmail_export.h"
 #include "secondarywindow.h"
 
 #include <qurl.h>
@@ -34,7 +35,7 @@ class Content;
 namespace KMail
 {
 
-class Composer : public KMail::SecondaryWindow
+class KMAIL_EXPORT Composer : public KMail::SecondaryWindow
 {
     Q_OBJECT
 protected:
@@ -150,7 +151,7 @@ public: // kmcommand
     virtual void addAttach(KMime::Content *msgPart) = 0;
 };
 
-Composer *makeComposer(const KMime::Message::Ptr &msg = KMime::Message::Ptr(), bool lastSignState = false, bool lastEncryptState = false,
+KMAIL_EXPORT Composer *makeComposer(const KMime::Message::Ptr &msg = KMime::Message::Ptr(), bool lastSignState = false, bool lastEncryptState = false,
                        Composer::TemplateContext context = Composer::NoTemplate,
                        uint identity = 0, const QString &textSelection = QString(),
                        const QString &customTemplate = QString());
