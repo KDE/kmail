@@ -108,6 +108,7 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args, const QS
 int main(int argc, char *argv[])
 {
     KMailApplication app(argc, &argv);
+    KLocalizedString::setApplicationDomain("kmail");
     app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     KMail::AboutData about;
