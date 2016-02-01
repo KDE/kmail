@@ -1493,35 +1493,6 @@ QString KMComposeWin::replyTo() const
     }
 }
 
-#if 0
-void KMComposeWin::decryptOrStripOffCleartextSignature(QByteArray &body)
-{
-    QList<Kpgp::Block> pgpBlocks;
-    QList<QByteArray> nonPgpBlocks;
-    if (Kpgp::Module::prepareMessageForDecryption(body,
-            pgpBlocks, nonPgpBlocks)) {
-        // Only decrypt/strip off the signature if there is only one OpenPGP
-        // block in the message
-        if (pgpBlocks.count() == 1) {
-            Kpgp::Block &block = pgpBlocks.first();
-            if ((block.type() == Kpgp::PgpMessageBlock) ||
-                    (block.type() == Kpgp::ClearsignedBlock)) {
-                if (block.type() == Kpgp::PgpMessageBlock) {
-                    // try to decrypt this OpenPGP block
-                    block.decrypt();
-                } else {
-                    // strip off the signature
-                    block.verify();
-                }
-                body = nonPgpBlocks.first();
-                body.append(block.text());
-                body.append(nonPgpBlocks.last());
-            }
-        }
-    }
-}
-#endif
-
 void KMComposeWin::setCurrentTransport(int transportId)
 {
     mComposerBase->transportComboBox()->setCurrentTransport(transportId);
