@@ -1099,7 +1099,7 @@ void KMComposeWin::setupActions(void)
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNow);
 
         action = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("Send Mail Using Shortcut"), this);
-        actionCollection()->addAction(QStringLiteral("send_mail"), action);
+        actionCollection()->addAction(QStringLiteral("send_default"), action);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Return));
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNowByShortcut);
 
@@ -1125,7 +1125,7 @@ void KMComposeWin::setupActions(void)
     } else {
         //default = queue, alternative = send now
         QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-queue")), i18n("Send &Later"), this);
-        actionCollection()->addAction(QStringLiteral("send_mail"), action);
+        actionCollection()->addAction(QStringLiteral("send_default"), action);
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendLater);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Return));
 
