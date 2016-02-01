@@ -153,7 +153,6 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
 
     mReaderWin->viewer()->headerStylePlugin()->headerStyle()->setReadOnlyMessage(!canChange);
 
-
     menuBar()->show();
     toolBar(QStringLiteral("mainToolBar"))->show();
 }
