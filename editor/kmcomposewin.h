@@ -353,7 +353,7 @@ private Q_SLOTS:
     /**
      * Change window title to given string.
      */
-    void slotUpdWinTitle();
+    void slotUpdateWindowTitle();
 
     /**
      * Switch the icon to lock or unlock respectivly.

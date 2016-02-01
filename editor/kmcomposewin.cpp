@@ -452,7 +452,7 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
 
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 
-    connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposeWin::slotUpdWinTitle);
+    connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposeWin::slotUpdateWindowTitle);
     connect(identity, SIGNAL(identityChanged(uint)),
             SLOT(slotIdentityChanged(uint)));
     connect(kmkernel->identityManager(), SIGNAL(changed(uint)),
@@ -2274,7 +2274,7 @@ void KMComposeWin::slotNewComposer()
     win->show();
 }
 
-void KMComposeWin::slotUpdWinTitle()
+void KMComposeWin::slotUpdateWindowTitle()
 {
     QString s(mEdtSubject->toPlainText());
     // Remove characters that show badly in most window decorations:
