@@ -561,6 +561,7 @@ private Q_SLOTS:
     void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
     void slotRedirectCurrentMessage();
 private:
+    void printCurrentMessage(bool preview);
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
     // Message actions
     QAction *mDeleteAction;

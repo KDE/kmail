@@ -4607,9 +4607,34 @@ void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction actio
         slotCompose();
         break;
     case MessageViewer::Viewer::Print:
+        printCurrentMessage(false);
         break;
     case MessageViewer::Viewer::PrintPreview:
+        printCurrentMessage(true);
         break;
+    }
+}
+
+void KMMainWidget::printCurrentMessage(bool preview)
+{
+    bool result = false;
+    if (messageView() && messageView()->viewer()) {
+        if (MessageViewer::MessageViewerSettings::self()->printSelectedText()) {
+            result = messageView()->printSelectedText(preview);
+        }
+    }
+    if (!result) {
+        const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
+        const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
+
+        const Akonadi::Item currentItem = messageView()->viewer()->messageItem();
+        KMPrintCommand *command =
+            new KMPrintCommand(this, currentItem,
+                               messageView()->viewer()->headerStylePlugin(),
+                               messageView()->viewer()->displayFormatMessageOverwrite(), messageView()->viewer()->htmlLoadExternal(),
+                               useFixedFont, overrideEncoding);
+        command->setPrintPreview(preview);
+        command->start();
     }
 }
 
