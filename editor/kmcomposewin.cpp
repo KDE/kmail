@@ -1268,10 +1268,6 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition);
     connect(mInsertSignatureAtCursorPosition, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::insertSignatureAtCursor);
 
-    QAction *upperCase = new QAction(i18n("Uppercase"), this);
-    actionCollection()->addAction(QStringLiteral("change_to_uppercase"), upperCase);
-    connect(upperCase, &QAction::triggered, this, &KMComposeWin::slotUpperCase);
-
     mChangeCaseMenu = new PimCommon::KActionMenuChangeCase(this);
     mChangeCaseMenu->appendInActionCollection(actionCollection());
     actionCollection()->addAction(QStringLiteral("change_case_menu"), mChangeCaseMenu);
