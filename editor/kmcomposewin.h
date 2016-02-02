@@ -109,7 +109,6 @@ class FolderRequester;
 
 namespace PimCommon
 {
-class KActionMenuChangeCase;
 class CustomToolsWidgetNg;
 class LineEditWithAutoCorrection;
 }
@@ -237,8 +236,6 @@ public: // kmkernel, kmcommands, callback
     void setCollectionForNewMessage(const Akonadi::Collection &folder) Q_DECL_OVERRIDE;
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) Q_DECL_OVERRIDE;
-
-    PimCommon::KActionMenuChangeCase *changeCaseMenu() const;
 
     void setCurrentIdentity(uint identity) Q_DECL_OVERRIDE;
 
@@ -409,10 +406,6 @@ private Q_SLOTS:
     void slotVerifyMissingAttachmentTimeout();
     void slotCheckSendNow();
 
-    void slotUpperCase();
-    void slotLowerCase();
-    void slotSentenceCase();
-
     void slotExternalEditorStarted();
     void slotExternalEditorClosed();
 
@@ -429,7 +422,6 @@ private Q_SLOTS:
     void slotCheckSendNowStep2();
     void slotPotentialPhishingEmailsFound(const QStringList &list);
     void slotInsertTextFile(KJob *job);
-    void slotReverseCase();
     void slotZoomIn();
     void slotZoomOut();
     void slotZoomReset();
@@ -632,8 +624,6 @@ private:
     QList< MessageComposer::Composer * > mMiscComposers;
 
     int mLabelWidth;
-
-    PimCommon::KActionMenuChangeCase *mChangeCaseMenu;
 
     QString mdbusObjectPath;
     static int s_composerNumber;

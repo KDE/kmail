@@ -1268,13 +1268,6 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition);
     connect(mInsertSignatureAtCursorPosition, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::insertSignatureAtCursor);
 
-    mChangeCaseMenu = new PimCommon::KActionMenuChangeCase(this);
-    mChangeCaseMenu->appendInActionCollection(actionCollection());
-    actionCollection()->addAction(QStringLiteral("change_case_menu"), mChangeCaseMenu);
-    connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::upperCase, this, &KMComposeWin::slotUpperCase);
-    connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::lowerCase, this, &KMComposeWin::slotLowerCase);
-    connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::sentenceCase, this, &KMComposeWin::slotSentenceCase);
-    connect(mChangeCaseMenu, &PimCommon::KActionMenuChangeCase::reverseCase, this, &KMComposeWin::slotReverseCase);
 
     mComposerBase->attachmentController()->createActions();
 
@@ -3234,34 +3227,6 @@ void KMComposeWin::setCurrentIdentity(uint identity)
     mComposerBase->identityCombo()->setCurrentIdentity(identity);
 }
 
-void KMComposeWin::slotSentenceCase()
-{
-    QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    KPIMTextEdit::EditorUtil editorUtil;
-    editorUtil.sentenceCase(textCursor);
-}
-
-void KMComposeWin::slotUpperCase()
-{
-    KPIMTextEdit::EditorUtil editorUtil;
-    QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    editorUtil.upperCase(textCursor);
-}
-
-void KMComposeWin::slotLowerCase()
-{
-    QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    KPIMTextEdit::EditorUtil editorUtil;
-    editorUtil.lowerCase(textCursor);
-}
-
-void KMComposeWin::slotReverseCase()
-{
-    QTextCursor textCursor = mComposerBase->editor()->textCursor();
-    KPIMTextEdit::EditorUtil editorUtil;
-    editorUtil.reverseCase(textCursor);
-}
-
 void KMComposeWin::slotExternalEditorStarted()
 {
     mComposerBase->identityCombo()->setEnabled(false);
@@ -3315,11 +3280,6 @@ void KMComposeWin::slotOverwriteModeWasChanged(bool state)
 {
     mComposerBase->editor()->setCursorWidth(state ? 5 : 1);
     mComposerBase->editor()->setOverwriteMode(state);
-}
-
-PimCommon::KActionMenuChangeCase *KMComposeWin::changeCaseMenu() const
-{
-    return mChangeCaseMenu;
 }
 
 QList<KToggleAction *> KMComposeWin::customToolsList() const
