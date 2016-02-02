@@ -91,39 +91,46 @@ void KMailPluginEditorManagerInterface::setActionCollection(KActionCollection *a
     mActionCollection = actionCollection;
 }
 
-QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType() const
+
+QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer::ActionType::Type type)
 {
-    QHash<MessageComposer::ActionType::Type, QList<QAction *> > listType;
-    Q_FOREACH (MessageComposer::PluginEditorInterface *interface, mListPluginInterface) {
-        MessageComposer::ActionType actionType = interface->actionType();
-        MessageComposer::ActionType::Type type = actionType.type();
-        if (listType.contains(type)) {
-            QList<QAction *> lst = listType.value(type);
-            lst << actionType.action();
-            listType.insert(type, lst);
-        } else {
-            listType.insert(type, QList<QAction *>() << actionType.action());
-        }
-        if (interface->hasPopupMenuSupport()) {
-            type = MessageComposer::ActionType::PopupMenu;
-            if (listType.contains(type)) {
-                QList<QAction *> lst = listType.value(type);
+    return mActionHash.value(type);
+}
+
+QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType()
+{
+    if (mActionHash.isEmpty()) {
+        Q_FOREACH (MessageComposer::PluginEditorInterface *interface, mListPluginInterface) {
+            MessageComposer::ActionType actionType = interface->actionType();
+            MessageComposer::ActionType::Type type = actionType.type();
+            if (mActionHash.contains(type)) {
+                QList<QAction *> lst = mActionHash.value(type);
                 lst << actionType.action();
-                listType.insert(type, lst);
+                mActionHash.insert(type, lst);
             } else {
-                listType.insert(type, QList<QAction *>() << actionType.action());
+                mActionHash.insert(type, QList<QAction *>() << actionType.action());
             }
-        }
-        if (interface->hasToolBarSupport()) {
-            type = MessageComposer::ActionType::ToolBar;
-            if (listType.contains(type)) {
-                QList<QAction *> lst = listType.value(type);
-                lst << actionType.action();
-                listType.insert(type, lst);
-            } else {
-                listType.insert(type, QList<QAction *>() << actionType.action());
+            if (interface->hasPopupMenuSupport()) {
+                type = MessageComposer::ActionType::PopupMenu;
+                if (mActionHash.contains(type)) {
+                    QList<QAction *> lst = mActionHash.value(type);
+                    lst << actionType.action();
+                    mActionHash.insert(type, lst);
+                } else {
+                    mActionHash.insert(type, QList<QAction *>() << actionType.action());
+                }
+            }
+            if (interface->hasToolBarSupport()) {
+                type = MessageComposer::ActionType::ToolBar;
+                if (mActionHash.contains(type)) {
+                    QList<QAction *> lst = mActionHash.value(type);
+                    lst << actionType.action();
+                    mActionHash.insert(type, lst);
+                } else {
+                    mActionHash.insert(type, QList<QAction *>() << actionType.action());
+                }
             }
         }
     }
-    return listType;
+    return mActionHash;
 }
