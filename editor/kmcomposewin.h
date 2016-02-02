@@ -436,6 +436,7 @@ public: // kmcommand
 
     uint currentIdentity() const;
     QList<KToggleAction *> customToolsList() const;
+    QList<QAction *> pluginToolsList() const;
 private:
     QUrl insertFile();
     /**

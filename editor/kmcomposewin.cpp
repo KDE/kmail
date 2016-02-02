@@ -3286,3 +3286,8 @@ QList<KToggleAction *> KMComposeWin::customToolsList() const
 {
     return mCustomToolsWidget->actionList();
 }
+
+QList<QAction *> KMComposeWin::pluginToolsList() const
+{
+    return QList<QAction *>(); //TODO extend api
+}

@@ -49,13 +49,11 @@ KMComposerEditorNg::~KMComposerEditorNg()
 void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {
     Q_UNUSED(pos);
-#if 0 //TODO readd it from list of plugins
-    QTextCursor cursor = textCursor();
-    if (cursor.hasSelection()) {
+    Q_FOREACH (QAction *a, mComposerWin->pluginToolsList()) {
         menu->addSeparator();
-        menu->addAction(mComposerWin->changeCaseMenu());
+        menu->addAction(a);
     }
-#endif
+
     menu->addSeparator();
     Q_FOREACH (KToggleAction *ta, mComposerWin->customToolsList()) {
         menu->addAction(ta);
