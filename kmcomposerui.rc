@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd" >
-<kpartgui version="513" name="kmcomposer" translationDomain="kmail">
+<kpartgui version="514" name="kmcomposer" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -131,7 +131,9 @@
   <Action name="format_list_style" />
   <Action name="format_font_family" />
   <Action name="format_font_size" />
+  <Separator/>
   <Action name="format_reset" />
+  <Separator/>
   <Action name="format_painter" />
   <Action name="format_text_bold" />
   <Action name="format_text_italic" />
@@ -139,15 +141,23 @@
   <Action name="format_text_strikeout" />
   <Action name="format_text_foreground_color" />
   <Action name="format_text_background_color" />
+  <Separator/>
   <Action name="format_align_left" />
   <Action name="format_align_center" />
   <Action name="format_align_right" />
+  <Action name="format_align_justify" />
+  <Separator/>
   <Action name="format_list_indent_more"/>
   <Action name="format_list_indent_less"/>
+  <Separator/>
   <Action name="manage_link" />
+  <Separator/>
   <Action name="insert_horizontal_rule" />
+  <Separator/>
   <Action name="add_image" />
+  <Separator/>
   <Action name="insert_html" />
+  <Separator/>
   <Action name="insert_table" />
  </ToolBar>
  <ToolBar noMerge="1" newline="true" hidden="true" enable="0" name="directionToolBar" iconText="icononly" >
