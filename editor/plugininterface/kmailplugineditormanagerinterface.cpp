@@ -20,6 +20,7 @@
 #include "messagecomposer/plugineditor.h"
 #include "kmail_debug.h"
 
+#include <QAction>
 #include <QVector>
 
 KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
@@ -105,7 +106,9 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
             MessageComposer::ActionType::Type type = actionType.type();
             if (mActionHash.contains(type)) {
                 QList<QAction *> lst = mActionHash.value(type);
-                lst << actionType.action();
+                QAction *act = new QAction(this);
+                act->setSeparator(true);
+                lst << act << actionType.action();
                 mActionHash.insert(type, lst);
             } else {
                 mActionHash.insert(type, QList<QAction *>() << actionType.action());
@@ -114,7 +117,9 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
                 type = MessageComposer::ActionType::PopupMenu;
                 if (mActionHash.contains(type)) {
                     QList<QAction *> lst = mActionHash.value(type);
-                    lst << actionType.action();
+                    QAction *act = new QAction(this);
+                    act->setSeparator(true);
+                    lst << act << actionType.action();
                     mActionHash.insert(type, lst);
                 } else {
                     mActionHash.insert(type, QList<QAction *>() << actionType.action());
@@ -124,7 +129,9 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
                 type = MessageComposer::ActionType::ToolBar;
                 if (mActionHash.contains(type)) {
                     QList<QAction *> lst = mActionHash.value(type);
-                    lst << actionType.action();
+                    QAction *act = new QAction(this);
+                    act->setSeparator(true);
+                    lst << act << actionType.action();
                     mActionHash.insert(type, lst);
                 } else {
                     mActionHash.insert(type, QList<QAction *>() << actionType.action());
