@@ -44,106 +44,109 @@
 #include "kmcommands.h"
 
 #include "widgets/collectionpane.h"
-#include "mailcommon/mailkernel.h"
-#include "mailcommon/mailutil.h"
-#include "messageviewer/headerstyleplugin.h"
-
-#include <unistd.h> // link()
-#include <QProgressDialog>
-#include <KEmailAddress>
-#include <kdbusservicestarter.h>
-#include "kmail_debug.h"
-#include <KLocalizedString>
-#include <kmessagebox.h>
-#include <kbookmarkmanager.h>
-#include <KFileWidget>
-#include <QFileDialog>
-#include <KRecentDirs>
-#include <KJobWidgets>
-// KIO headers
-#include <kio/job.h>
-#include <kio/jobuidelegate.h>
-#include <kio/statjob.h>
-
-#include <kmime/kmime_message.h>
-
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include <AkonadiCore/itemmodifyjob.h>
-#include <AkonadiCore/itemfetchjob.h>
-#include <MailCommon/MDNStateAttribute>
-
-#include "MailCommon/FolderCollection"
-
-#include "MessageCore/MailingList"
-#include "editor/composer.h"
-#include "MailCommon/FilterAction"
-#include "MailCommon/FilterManager"
-#include "MailCommon/MailFilter"
-#include "MailCommon/RedirectDialog"
-#include "kmmainwidget.h"
-#include "undostack.h"
-#ifndef QT_NO_CURSOR
-#include "Libkdepim/KCursorSaver"
-#endif
-#include "MessageViewer/ObjectTreeParser"
-#include "MessageViewer/CSSHelper"
-#include "messagecomposer/util.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
-using KMail::SecondaryWindow;
 #include "util.h"
-#include "libkdepim/broadcaststatus.h"
 #include "settings/kmailsettings.h"
-#include "MessageCore/StringUtil"
+#include "kmail_debug.h"
 
-#include "messageviewer/messageviewersettings.h"
-#include "MessageCore/MessageCoreSettings"
+#include "editor/composer.h"
+#include "kmmainwidget.h"
+#include "undostack.h"
 
-#include <AkonadiCore/itemmovejob.h>
-#include <AkonadiCore/itemcopyjob.h>
-#include <AkonadiCore/itemdeletejob.h>
-#include <AkonadiCore/tag.h>
-#include <AkonadiCore/tagcreatejob.h>
-#include <MailTransport/mailtransport/transportattribute.h>
-#include <MailTransport/mailtransport/sentbehaviourattribute.h>
+#include <KIdentityManagement/IdentityManager>
 
-#include <messagelist/pane.h>
+#include <KMime/Message>
+#include <KMime/MDN>
 
-#include <MailTransport/mailtransport/transportmanager.h>
-using MailTransport::TransportManager;
+#include <AkonadiCore/ItemModifyJob>
+#include <AkonadiCore/ItemFetchJob>
+#include <AkonadiCore/ItemMoveJob>
+#include <AkonadiCore/ItemCopyJob>
+#include <AkonadiCore/ItemDeleteJob>
+#include <AkonadiCore/Tag>
+#include <AkonadiCore/TagCreateJob>
 
-#include "messageviewer/nodehelper.h"
-#include "MessageViewer/ObjectTreeEmptySource"
+#include <MailCommon/FolderCollection>
+#include <MailCommon/FilterAction>
+#include <MailCommon/FilterManager>
+#include <MailCommon/MailFilter>
+#include <MailCommon/RedirectDialog>
+#include <MailCommon/MDNStateAttribute>
+#include <MailCommon/MailKernel>
+#include <MailCommon/MailUtil>
 
-#include "MessageCore/StringUtil"
-#include "messagecore/messagehelpers.h"
+#include <MessageCore/StringUtil>
+#include <MessageCore/MessageCoreSettings>
+#include <MessageCore/StringUtil>
+#include <MessageCore/MessageHelpers>
+#include <MessageCore/MailingList>
 
-#include "MessageComposer/MessageSender"
-#include "MessageComposer/MessageHelper"
-#include "MessageComposer/MessageComposerSettings"
-#include "MessageComposer/MessageFactory"
-using MessageComposer::MessageFactory;
+#include <MessageComposer/MessageSender>
+#include <MessageComposer/MessageHelper>
+#include <MessageComposer/MessageComposerSettings>
+#include <MessageComposer/MessageFactory>
+#include <MessageComposer/Util>
 
-#include "libkdepim/progressmanager.h"
-using KPIM::ProgressManager;
-using KPIM::ProgressItem;
-#include <kmime/kmime_mdn.h>
-using namespace KMime;
+#include <MessageList/Pane>
 
-#include "Libkleo/CryptoBackend"
-#include "Libkleo/CryptoBackendFactory"
+#include <MessageViewer/CSSHelper>
+#include <MessageViewer/HeaderStylePlugin>
+#include <MessageViewer/MessageViewerSettings>
+#include <MessageViewer/MessageViewerUtil>
+#include <MessageViewer/NodeHelper>
+#include <MessageViewer/ObjectTreeEmptySource>
+#include <MessageViewer/ObjectTreeParser>
+
+#include <MailTransport/TransportAttribute>
+#include <MailTransport/SentBehaviourAttribute>
+#include <MailTransport/TransportManager>
+
+#include <Libkdepim/ProgressManager>
+#include <Libkdepim/BroadcastStatus>
+#ifndef QT_NO_CURSOR
+#include <Libkdepim/KCursorSaver>
+#endif
+
+#include <Libkleo/CryptoBackend>
+#include <Libkleo/CryptoBackendFactory>
 
 #include <gpgme++/error.h>
-
-#include <QByteArray>
-#include <QApplication>
-#include <QList>
 
 #include <boost/bind.hpp>
 #include <algorithm>
 #include <memory>
-#include <QStandardPaths>
+#include <unistd.h> // link()
+#include <KBookmarkManager>
+
+#include <KDBusServiceStarter>
+#include <KEmailAddress>
+#include <KFileWidget>
+#include <KJobWidgets>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KRecentDirs>
+
+// KIO headers
+#include <KIO/Job>
+#include <KIO/JobUiDelegate>
+#include <KIO/StatJob>
+
+#include <QApplication>
+#include <QByteArray>
+#include <QFileDialog>
 #include <QFontDatabase>
+#include <QList>
+#include <QProgressDialog>
+#include <QStandardPaths>
+
+using KMail::SecondaryWindow;
+using MailTransport::TransportManager;
+using MessageComposer::MessageFactory;
+
+using KPIM::ProgressManager;
+using KPIM::ProgressItem;
+using namespace KMime;
 
 using namespace MailCommon;
 
