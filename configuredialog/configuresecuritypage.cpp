@@ -411,7 +411,15 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
 void SecurityPage::WarningTab::slotConfigureGnupg()
 {
     QPointer<KCMultiDialog> dlg(new KCMultiDialog(this));
-    dlg->addModule(QStringLiteral("kleopatra_config_gnupgsystem"));
+    KPageWidgetItem *page = dlg->addModule(QStringLiteral("kleopatra_config_gnupgsystem"));
+    if (!page) {
+        QLabel *info = new QLabel(i18n("The module is missing. Please verify your installation. This module is provided by Kleopatra."), this);
+        QFont font = info->font();
+        font.setBold(true);
+        info->setFont(font);
+        info->setWordWrap(true);
+        dlg->addPage(info, i18n("Gnupg Configure Module Error"));
+    }
     dlg->exec();
     delete dlg;
 }
