@@ -244,6 +244,7 @@
       <li xml:lang="ast">Sofitu nativu pa OpenPGP, PGP/MIME, y S/MIME en llinia.</li>
       <li xml:lang="ca">Implementació nativa per a OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="ca-valencia">Implementació nativa per a OpenPGP, PGP/MIME i S/MIME inclòs.</li>
+      <li xml:lang="de">Native Unterstützung für Inline-OpenPGP, PGP/MIME und S/MIME.</li>
       <li xml:lang="en-GB">Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
       <li xml:lang="es">Implementación nativa de OpenPGP, PGP/MIME y S/MIME intercalados.</li>
       <li xml:lang="fi">Tukee natiivisti sisällytettyä OpenPGP:tä, PGP/MIMEä ja S/MIMEä.</li>
