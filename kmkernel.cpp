@@ -384,6 +384,9 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                 if (!values.value(QStringLiteral("cc")).isEmpty()) {
                     cc += values.value(QStringLiteral("cc")) + QStringLiteral(", ");
                 }
+                if (!values.value(QStringLiteral("bcc")).isEmpty()) {
+                    bcc += values.value(QStringLiteral("bcc")) + QStringLiteral(", ");
+                }
                 if (!values.value(QStringLiteral("subject")).isEmpty()) {
                     subj = values.value(QStringLiteral("subject"));
                 }
