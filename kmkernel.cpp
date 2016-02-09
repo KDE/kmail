@@ -294,7 +294,6 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     QCommandLineParser parser;
     kmail_options(&parser);
     parser.process(args);
-
     if (parser.isSet(QStringLiteral("subject"))) {
         subj = parser.value(QStringLiteral("subject"));
         // if kmail is called with 'kmail -session abc' then this doesn't mean
@@ -394,10 +393,15 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                 if (!values.value(QStringLiteral("in-reply-to")).isEmpty()) {
                     inReplyTo = values.value(QStringLiteral("in-reply-to"));
                 }
-                const QString attach = values.value(QStringLiteral("attachment"));
+                QString attach = values.value(QStringLiteral("attachment"));
                 if (!attach.isEmpty()) {
                     attachURLs << makeAbsoluteUrl(attach, workingDir);
                 }
+                attach = values.value(QStringLiteral("attach"));
+                if (!attach.isEmpty()) {
+                    attachURLs << makeAbsoluteUrl(attach, workingDir);
+                }
+
             } else {
                 QUrl url(arg);
                 if (url.isValid() && !url.scheme().isEmpty()) {
