@@ -2017,7 +2017,7 @@ void KMComposeWin::slotAddressBook()
 
 void KMComposeWin::slotInsertFile()
 {
-    auto u = insertFile();
+    const QUrl u = insertFile();
     if (u.isEmpty()) {
         return;
     }
@@ -2132,7 +2132,9 @@ QUrl KMComposeWin::insertFile()
     QUrl url;
     if (!result.URLs.isEmpty()) {
         url = result.URLs.first();
-        MessageCore::StringUtil::setEncodingFile(url, MessageViewer::NodeHelper::fixEncoding(result.encoding));
+        if (url.isValid()) {
+            MessageCore::StringUtil::setEncodingFile(url, MessageViewer::NodeHelper::fixEncoding(result.encoding));
+        }
     }
     return url;
 }
