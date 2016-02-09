@@ -209,7 +209,7 @@
         <default>false</default>
       </entry>
       <entry name="Headers" type="Int" key="headers">
-        <default>KMail::Composer::HDR_SUBJECT</default>
+        <default>KMail::Composer::HDR_SUBJECT|KMail::Composer::HDR_FROM</default>
       </entry>
       <entry name="CompletionMode" type="Int" key="Completion Mode">
         <default code="true">KCompletion::CompletionPopup</default>
