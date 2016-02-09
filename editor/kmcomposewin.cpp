@@ -783,14 +783,21 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     row = 0;
     qCDebug(KMAIL_LOG);
 
-    mLabelWidth = mComposerBase->recipientsEditor()->setFirstColumnWidth(0);
-    mLabelWidth = calcColumnWidth(HDR_IDENTITY, showHeaders, mLabelWidth);
-    mLabelWidth = calcColumnWidth(HDR_DICTIONARY, showHeaders, mLabelWidth);
-    mLabelWidth = calcColumnWidth(HDR_FCC, showHeaders, mLabelWidth);
-    mLabelWidth = calcColumnWidth(HDR_TRANSPORT, showHeaders, mLabelWidth);
-    mLabelWidth = calcColumnWidth(HDR_FROM, showHeaders, mLabelWidth);
-    mLabelWidth = calcColumnWidth(HDR_REPLY_TO, showHeaders, mLabelWidth);
-    mLabelWidth = calcColumnWidth(HDR_SUBJECT, showHeaders, mLabelWidth);
+    mLabelWidth = mComposerBase->recipientsEditor()->setFirstColumnWidth(0) + 2;
+    if (std::abs(mShowHeaders)&HDR_IDENTITY)
+        mLabelWidth = calcColumnWidth(HDR_IDENTITY, showHeaders, mLabelWidth);
+    if (std::abs(mShowHeaders)&HDR_DICTIONARY)
+        mLabelWidth = calcColumnWidth(HDR_DICTIONARY, showHeaders, mLabelWidth);
+    if (std::abs(mShowHeaders)&HDR_FCC)
+        mLabelWidth = calcColumnWidth(HDR_FCC, showHeaders, mLabelWidth);
+    if (std::abs(mShowHeaders)&HDR_TRANSPORT)
+        mLabelWidth = calcColumnWidth(HDR_TRANSPORT, showHeaders, mLabelWidth);
+    if (std::abs(mShowHeaders)&HDR_FROM)
+        mLabelWidth = calcColumnWidth(HDR_FROM, showHeaders, mLabelWidth);
+    if (std::abs(mShowHeaders)&HDR_REPLY_TO)
+        mLabelWidth = calcColumnWidth(HDR_REPLY_TO, showHeaders, mLabelWidth);
+    if (std::abs(mShowHeaders)&HDR_SUBJECT)
+        mLabelWidth = calcColumnWidth(HDR_SUBJECT, showHeaders, mLabelWidth);
 
     if (!fromSlot) {
         mAllFieldsAction->setChecked(showHeaders == HDR_ALL);
@@ -909,6 +916,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
 {
     if (aValue & aMask) {
         aLbl->setBuddy(aCbx);
+        aLbl->setFixedWidth(mLabelWidth);
         mGrid->addWidget(aLbl, aRow, 0);
 
         mGrid->addWidget(aCbx, aRow, 1);
@@ -1904,7 +1912,7 @@ void KMComposeWin::slotAddressBook()
 
 void KMComposeWin::slotInsertFile()
 {
-    auto u = insertFile();
+    const QUrl u = insertFile();
     if (u.isEmpty()) {
         return;
     }
@@ -2019,7 +2027,9 @@ QUrl KMComposeWin::insertFile()
     QUrl url;
     if (!result.URLs.isEmpty()) {
         url = result.URLs.first();
-        MessageCore::StringUtil::setEncodingFile(url, MessageViewer::NodeHelper::fixEncoding(result.encoding));
+        if (url.isValid()) {
+            MessageCore::StringUtil::setEncodingFile(url, MessageViewer::NodeHelper::fixEncoding(result.encoding));
+        }
     }
     return url;
 }
