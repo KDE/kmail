@@ -1505,12 +1505,11 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
 
     if (newMsg->headerByType("X-KMail-Identity") &&
             !newMsg->headerByType("X-KMail-Identity")->asUnicodeString().isEmpty()) {
-        mId = newMsg->headerByType("X-KMail-Identity")->asUnicodeString().toUInt();
+        const uint newId = newMsg->headerByType("X-KMail-Identity")->asUnicodeString().toUInt();
 
         disconnect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
                 this, SLOT(slotIdentityChanged(uint)));
 
-        const uint newId = mId;
         // load the mId into the gui, without emitting
         mComposerBase->identityCombo()->setCurrentIdentity(newId);
         connect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
