@@ -1302,6 +1302,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     vlay->addLayout(layAttachment);
 
     mStorageServiceWidget = new ConfigureStorageServiceWidget;
+    //Laurent disable until we fix it.
+    mStorageServiceWidget->hide();
     vlay->addWidget(mStorageServiceWidget);
     connect(mStorageServiceWidget, &ConfigureStorageServiceWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
