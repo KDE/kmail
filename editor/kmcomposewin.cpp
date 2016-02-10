@@ -781,20 +781,27 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     qCDebug(KMAIL_LOG);
 
     mLabelWidth = mComposerBase->recipientsEditor()->setFirstColumnWidth(0) + 2;
-    if (std::abs(mShowHeaders)&HDR_IDENTITY)
+    if (std::abs(mShowHeaders)&HDR_IDENTITY) {
         mLabelWidth = calcColumnWidth(HDR_IDENTITY, showHeaders, mLabelWidth);
-    if (std::abs(mShowHeaders)&HDR_DICTIONARY)
+    }
+    if (std::abs(mShowHeaders)&HDR_DICTIONARY) {
         mLabelWidth = calcColumnWidth(HDR_DICTIONARY, showHeaders, mLabelWidth);
-    if (std::abs(mShowHeaders)&HDR_FCC)
+    }
+    if (std::abs(mShowHeaders)&HDR_FCC) {
         mLabelWidth = calcColumnWidth(HDR_FCC, showHeaders, mLabelWidth);
-    if (std::abs(mShowHeaders)&HDR_TRANSPORT)
+    }
+    if (std::abs(mShowHeaders)&HDR_TRANSPORT) {
         mLabelWidth = calcColumnWidth(HDR_TRANSPORT, showHeaders, mLabelWidth);
-    if (std::abs(mShowHeaders)&HDR_FROM)
+    }
+    if (std::abs(mShowHeaders)&HDR_FROM) {
         mLabelWidth = calcColumnWidth(HDR_FROM, showHeaders, mLabelWidth);
-    if (std::abs(mShowHeaders)&HDR_REPLY_TO)
+    }
+    if (std::abs(mShowHeaders)&HDR_REPLY_TO) {
         mLabelWidth = calcColumnWidth(HDR_REPLY_TO, showHeaders, mLabelWidth);
-    if (std::abs(mShowHeaders)&HDR_SUBJECT)
+    }
+    if (std::abs(mShowHeaders)&HDR_SUBJECT) {
         mLabelWidth = calcColumnWidth(HDR_SUBJECT, showHeaders, mLabelWidth);
+    }
 
     if (!fromSlot) {
         mAllFieldsAction->setChecked(showHeaders == HDR_ALL);
@@ -1273,7 +1280,6 @@ void KMComposeWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition);
     connect(mInsertSignatureAtCursorPosition, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::insertSignatureAtCursor);
 
-
     mComposerBase->attachmentController()->createActions();
 
     setStandardToolBarMenuEnabled(true);
@@ -1623,29 +1629,6 @@ void KMComposeWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignSt
     mCodecAction->setAutoCharset();
 
     delete msgContent;
-#if 0 //TODO port to kmime
-
-    /* Handle the special case of non-mime mails */
-    if (mMsg->numBodyParts() == 0 && otp.textualContent().isEmpty()) {
-        mCharset = mMsg->charset();
-        if (mCharset.isEmpty() ||  mCharset == "default") {
-            mCharset = Util::defaultCharset();
-        }
-
-        QByteArray bodyDecoded = mMsg->bodyDecoded();
-
-        if (allowDecryption) {
-            decryptOrStripOffCleartextSignature(bodyDecoded);
-        }
-
-        const QTextCodec *codec = KMail::Util::codecForName(mCharset);
-        if (codec) {
-            mEditor->setText(codec->toUnicode(bodyDecoded));
-        } else {
-            mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
-        }
-    }
-#endif
 
     if ((MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String("auto")) && mayAutoSign) {
         //
@@ -1915,6 +1898,7 @@ void KMComposeWin::slotRecentListFileClear()
     group.deleteEntry("recent-encodings");
     mRecentAction->saveEntries(config->group(QString()));
 }
+
 void KMComposeWin::slotInsertRecentFile(const QUrl &u)
 {
     if (u.fileName().isEmpty()) {

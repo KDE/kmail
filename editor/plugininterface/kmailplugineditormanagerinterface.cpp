@@ -92,7 +92,6 @@ void KMailPluginEditorManagerInterface::setActionCollection(KActionCollection *a
     mActionCollection = actionCollection;
 }
 
-
 QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer::ActionType::Type type)
 {
     return mActionHash.value(type);
