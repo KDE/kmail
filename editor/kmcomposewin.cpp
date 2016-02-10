@@ -252,9 +252,6 @@ KMComposeWin::KMComposeWin(const KMime::Message::Ptr &aMsg, bool lastSignState, 
       mFollowUpToggleAction(Q_NULLPTR),
       mStatusBarLabelToggledOverrideMode(Q_NULLPTR),
       mStatusBarLabelSpellCheckingChangeMode(Q_NULLPTR),
-      mZoomInAction(Q_NULLPTR),
-      mZoomOutAction(Q_NULLPTR),
-      mZoomResetAction(Q_NULLPTR),
       mPluginEditorManagerInterface(Q_NULLPTR)
 {
     mGlobalAction = new KMComposerGlobalAction(this, this);
@@ -1332,28 +1329,6 @@ void KMComposeWin::setupActions(void)
     connect(mFollowUpToggleAction, &KToggleAction::triggered, this, &KMComposeWin::slotFollowUpMail);
     mFollowUpToggleAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
 
-    KActionMenu *zoomMenu = new KActionMenu(i18n("Zoom..."), this);
-    actionCollection()->addAction(QStringLiteral("zoom_menu"), zoomMenu);
-
-    mZoomInAction = new QAction(QIcon::fromTheme(QStringLiteral("zoom-in")), i18n("&Zoom In"), this);
-    zoomMenu->addAction(mZoomInAction);
-    actionCollection()->addAction(QStringLiteral("zoom_in"), mZoomInAction);
-    connect(mZoomInAction, &QAction::triggered, this, &KMComposeWin::slotZoomIn);
-    actionCollection()->setDefaultShortcut(mZoomInAction, QKeySequence(Qt::CTRL | Qt::Key_Plus));
-
-    mZoomOutAction = new QAction(QIcon::fromTheme(QStringLiteral("zoom-out")), i18n("Zoom &Out"), this);
-    zoomMenu->addAction(mZoomOutAction);
-    actionCollection()->addAction(QStringLiteral("zoom_out"), mZoomOutAction);
-    connect(mZoomOutAction, &QAction::triggered, this, &KMComposeWin::slotZoomOut);
-    actionCollection()->setDefaultShortcut(mZoomOutAction, QKeySequence(Qt::CTRL | Qt::Key_Minus));
-
-    zoomMenu->addSeparator();
-    mZoomResetAction = new QAction(i18n("Reset"), this);
-    zoomMenu->addAction(mZoomResetAction);
-    actionCollection()->addAction(QStringLiteral("zoom_reset"), mZoomResetAction);
-    connect(mZoomResetAction, &QAction::triggered, this, &KMComposeWin::slotZoomReset);
-    actionCollection()->setDefaultShortcut(mZoomResetAction, QKeySequence(Qt::CTRL | Qt::Key_0));
-
     mPluginEditorManagerInterface->initializePlugins();
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();
@@ -1384,21 +1359,6 @@ void KMComposeWin::initializePluginActions()
             }
         }
     }
-}
-
-void KMComposeWin::slotZoomReset()
-{
-    mRichTextEditorwidget->editor()->slotZoomReset();
-}
-
-void KMComposeWin::slotZoomOut()
-{
-    mRichTextEditorwidget->editor()->zoomOut();
-}
-
-void KMComposeWin::slotZoomIn()
-{
-    mRichTextEditorwidget->editor()->zoomIn();
 }
 
 void KMComposeWin::changeCryptoAction()
