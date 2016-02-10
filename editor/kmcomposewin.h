@@ -47,7 +47,6 @@
 class QUrl;
 
 class QByteArray;
-class QCheckBox;
 class QGridLayout;
 class QLabel;
 class QPushButton;
@@ -65,7 +64,6 @@ class KRecentFilesAction;
 class SnippetWidget;
 class AttachmentMissingWarning;
 class ExternalEditorWarning;
-class KActionMenu;
 class CryptoStateIndicatorWidget;
 class StatusBarLabelToggledState;
 class PotentialPhishingEmailWarning;

@@ -14,8 +14,6 @@
 #include <messageviewer/viewer.h>
 class KMReaderWin;
 class QAction;
-class KFontAction;
-class KFontSizeAction;
 class KJob;
 
 namespace KMail
