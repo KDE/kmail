@@ -19,7 +19,7 @@
 #define KMCOMPOSEREDITORNG_H
 
 #include "messagecomposer/richtextcomposerng.h"
-class KMComposeWin;
+class KMComposerWin;
 namespace KPIMTextEdit
 {
 class RichTextComposerEmailQuoteHighlighter;
@@ -28,7 +28,7 @@ class KMComposerEditorNg : public MessageComposer::RichTextComposerNg
 {
     Q_OBJECT
 public:
-    explicit KMComposerEditorNg(KMComposeWin *win, QWidget *parent);
+    explicit KMComposerEditorNg(KMComposerWin *win, QWidget *parent);
     ~KMComposerEditorNg();
 
     QString smartQuote(const QString &msg) Q_DECL_OVERRIDE;
@@ -46,7 +46,7 @@ protected:
     void insertFromMimeData(const QMimeData *source) Q_DECL_OVERRIDE;
 
 private:
-    KMComposeWin *mComposerWin;
+    KMComposerWin *mComposerWin;
 };
 
 #endif // KMCOMPOSEREDITORNG_H

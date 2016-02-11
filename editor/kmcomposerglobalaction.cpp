@@ -16,7 +16,7 @@
 */
 
 #include "kmcomposerglobalaction.h"
-#include "kmcomposewin.h"
+#include "kmcomposerwin.h"
 
 #include <pimcommon/lineeditwithautocorrection.h>
 
@@ -24,7 +24,7 @@
 
 #include <editor/kmcomposereditorng.h>
 
-KMComposerGlobalAction::KMComposerGlobalAction(KMComposeWin *composerWin, QObject *parent)
+KMComposerGlobalAction::KMComposerGlobalAction(KMComposerWin *composerWin, QObject *parent)
     : QObject(parent),
       mComposerWin(composerWin)
 {

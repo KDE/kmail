@@ -53,7 +53,7 @@ class QPushButton;
 class QSplitter;
 class KSplitterCollapserButton;
 class CodecAction;
-class KMComposeWin;
+class KMComposerWin;
 class KMComposerEditor;
 class KSelectAction;
 class QAction;
@@ -112,7 +112,7 @@ class LineEditWithAutoCorrection;
 }
 class KMStorageService;
 //-----------------------------------------------------------------------------
-class KMComposeWin : public KMail::Composer
+class KMComposerWin : public KMail::Composer
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.mailcomposer")
@@ -120,10 +120,10 @@ class KMComposeWin : public KMail::Composer
     friend class ::KMComposerEditor;
 
 private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposeWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,
+    explicit KMComposerWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,
                           uint identity = 0, const QString &textSelection = QString(),
                           const QString &customTemplate = QString());
-    ~KMComposeWin();
+    ~KMComposerWin();
 
 public:
     static Composer *create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,

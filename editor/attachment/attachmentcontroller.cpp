@@ -26,7 +26,7 @@
 #include "MailCommon/FolderCollection"
 #include "settings/kmailsettings.h"
 #include "kmcommands.h"
-#include "editor/kmcomposewin.h"
+#include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
 #include "kmreadermainwin.h"
 #include "mailcommon/mailutil.h"
@@ -44,12 +44,12 @@ using namespace KPIM;
 using namespace MailCommon;
 using namespace MessageCore;
 
-AttachmentController::AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer)
+AttachmentController::AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposerWin *composer)
     : AttachmentControllerBase(model, composer, composer->actionCollection()),
       mComposer(composer),
       mView(view)
 {
-    connect(composer, &KMComposeWin::identityChanged,
+    connect(composer, &KMComposerWin::identityChanged,
             this, &AttachmentController::identityChanged);
 
     connect(view, &AttachmentView::contextMenuRequested, this, &AttachmentControllerBase::showContextMenu);
@@ -107,7 +107,7 @@ void AttachmentController::addAttachmentItems(const Akonadi::Item::List &items)
     Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
     itemFetchJob->fetchScope().fetchFullPayload(true);
     itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-    connect(itemFetchJob, &Akonadi::ItemFetchJob::result, mComposer, &KMComposeWin::slotFetchJob);
+    connect(itemFetchJob, &Akonadi::ItemFetchJob::result, mComposer, &KMComposerWin::slotFetchJob);
 }
 
 void AttachmentController::selectionChanged()

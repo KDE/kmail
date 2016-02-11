@@ -25,7 +25,7 @@
 
 #include "messagecomposer/attachmentcontrollerbase.h"
 
-class KMComposeWin;
+class KMComposerWin;
 class QModelIndex;
 namespace MessageComposer
 {
@@ -41,7 +41,7 @@ class AttachmentController : public MessageComposer::AttachmentControllerBase
     Q_OBJECT
 
 public:
-    explicit AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposeWin *composer);
+    explicit AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposerWin *composer);
     ~AttachmentController();
 
 public Q_SLOTS:
@@ -58,7 +58,7 @@ private Q_SLOTS:
     void slotSelectAllAttachment();
 
 private:
-    KMComposeWin *mComposer;
+    KMComposerWin *mComposer;
     AttachmentView *mView;
 };
 

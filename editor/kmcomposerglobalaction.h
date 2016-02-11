@@ -19,12 +19,12 @@
 #define KMCOMPOSERGLOBALACTION_H
 
 #include <QObject>
-class KMComposeWin;
+class KMComposerWin;
 class KMComposerGlobalAction : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMComposerGlobalAction(KMComposeWin *composerWin, QObject *parent = Q_NULLPTR);
+    explicit KMComposerGlobalAction(KMComposerWin *composerWin, QObject *parent = Q_NULLPTR);
     ~KMComposerGlobalAction();
 
 public Q_SLOTS:
@@ -35,7 +35,7 @@ public Q_SLOTS:
     void slotPaste();
     void slotMarkAll();
 private:
-    KMComposeWin *mComposerWin;
+    KMComposerWin *mComposerWin;
 };
 
 #endif // KMCOMPOSERGLOBALACTION_H

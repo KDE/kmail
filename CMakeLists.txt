@@ -7,7 +7,7 @@ add_definitions( -DQT_NO_CAST_FROM_ASCII )
 add_definitions( -DQT_NO_CAST_TO_ASCII )
 
 qt5_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
-qt5_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
@@ -101,7 +101,7 @@ set(kmailprivate_editor_LIB_SRCS
      editor/composer.cpp
      editor/codec/codecaction.cpp
      editor/codec/codecmanager.cpp
-     editor/kmcomposewin.cpp
+     editor/kmcomposerwin.cpp
      editor/attachment/attachmentcontroller.cpp
      editor/attachment/attachmentview.cpp
      editor/widgets/cryptostateindicatorwidget.cpp
@@ -214,9 +214,9 @@ set(kmailprivate_LIB_SRCS
      ${kmailprivate_editor_plugininterface_LIB_SRCS}
 )
 
-qt5_generate_dbus_interface(editor/kmcomposewin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml editor/kmcomposewin.h KMComposeWin
+    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
 )
 
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS

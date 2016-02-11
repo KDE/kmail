@@ -16,7 +16,7 @@
 */
 
 #include "kmcomposereditorng.h"
-#include "kmcomposewin.h"
+#include "kmcomposerwin.h"
 #include "kmkernel.h"
 #include "util.h"
 #include "kmail_debug.h"
@@ -32,7 +32,7 @@
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
 #include <sonnet/dictionarycombobox.h>
 
-KMComposerEditorNg::KMComposerEditorNg(KMComposeWin *win, QWidget *parent)
+KMComposerEditorNg::KMComposerEditorNg(KMComposerWin *win, QWidget *parent)
     : MessageComposer::RichTextComposerNg(parent),
       mComposerWin(win)
 {
