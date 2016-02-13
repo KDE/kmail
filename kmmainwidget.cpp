@@ -632,7 +632,7 @@ void KMMainWidget::layoutSplitters()
     QWidget *folderTreeWidget = mSearchAndTree;
     if (mFavoriteCollectionsView) {
         mFolderViewSplitter = new QSplitter(Qt::Vertical);
-        //mFolderViewSplitter->setChildrenCollapsible( false );
+        mFolderViewSplitter->setChildrenCollapsible( false );
         mFolderViewSplitter->addWidget(mFavoriteCollectionsView);
         mFavoriteCollectionsView->setParent(mFolderViewSplitter);
         mFolderViewSplitter->addWidget(mSearchAndTree);
@@ -687,9 +687,9 @@ void KMMainWidget::layoutSplitters()
     // Set splitter properties
     //
     mSplitter1->setObjectName(QStringLiteral("splitter1"));
-    //mSplitter1->setChildrenCollapsible( false );
+    mSplitter1->setChildrenCollapsible( false );
     mSplitter2->setObjectName(QStringLiteral("splitter2"));
-    //mSplitter2->setChildrenCollapsible( false );
+    mSplitter2->setChildrenCollapsible( false );
 
     //
     // Set the stretch factors
