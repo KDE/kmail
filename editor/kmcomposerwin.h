@@ -511,16 +511,6 @@ private:
     void setSigning(bool sign, bool setByUser = false);
 
     MessageComposer::ComposerViewBase::MissingAttachment userForgotAttachment();
-#if 0
-    /**
-     * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
-     * block with a clear text signature. This is only done if the given
-     * string contains exactly one OpenPGP block.
-     * This function is for example used to restore the unencrypted/unsigned
-     * message text for editting.
-     */
-    static void decryptOrStripOffCleartextSignature(QByteArray &);
-#endif
     /**
      * Send the message.
      */
