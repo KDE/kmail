@@ -37,18 +37,18 @@
 Akonadi::Item createItem(const KIdentityManagement::Identity &ident)
 {
     QByteArray data =
-    "From: Konqui <konqui@kde.org>\n"
-    "To: Friends <friends@kde.org>\n"
-    "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
-    "Subject: Sample message\n"
-    "MIME-Version: 1.0\n"
-    "X-KMail-Identity: "+ QByteArray::number(ident.uoid()) +"\n"
-    "Content-type: text/plain; charset=us-ascii\n"
-    "\n"
-    "\n"
-    "This is explicitly typed plain US-ASCII text.\n"
-    "It DOES end with a linebreak.\n"
-    "\n";
+        "From: Konqui <konqui@kde.org>\n"
+        "To: Friends <friends@kde.org>\n"
+        "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
+        "Subject: Sample message\n"
+        "MIME-Version: 1.0\n"
+        "X-KMail-Identity: " + QByteArray::number(ident.uoid()) + "\n"
+        "Content-type: text/plain; charset=us-ascii\n"
+        "\n"
+        "\n"
+        "This is explicitly typed plain US-ASCII text.\n"
+        "It DOES end with a linebreak.\n"
+        "\n";
 
     KMime::Message::Ptr msgPtr = KMime::Message::Ptr(new KMime::Message());
     Akonadi::Item item;
@@ -122,29 +122,32 @@ void KMCommandsTest::verifySignature(bool sign)
 void KMCommandsTest::testMailtoReply()
 {
     resetIdentities();
-    {   // default has auto sign set -> verifySignature = true
+    {
+        // default has auto sign set -> verifySignature = true
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
-        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(Q_NULLPTR, QStringLiteral("mailto:test@example.com") , item, QString()));
+        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(Q_NULLPTR, QStringLiteral("mailto:test@example.com"), item, QString()));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
     }
-    {   // secundus has no auto sign set -> verifySignature = false
+    {
+        // secundus has no auto sign set -> verifySignature = false
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(Q_NULLPTR, QStringLiteral("mailto:test@example.com") , item, QString()));
+        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(Q_NULLPTR, QStringLiteral("mailto:test@example.com"), item, QString()));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
     }
-    {   // drei has auto sign set -> verifySignature = true
+    {
+        // drei has auto sign set -> verifySignature = true
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(Q_NULLPTR, QStringLiteral("mailto:test@example.com") , item, QString()));
+        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(Q_NULLPTR, QStringLiteral("mailto:test@example.com"), item, QString()));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -154,7 +157,8 @@ void KMCommandsTest::testMailtoReply()
 void KMCommandsTest::testReply()
 {
     resetIdentities();
-    {   // default has auto sign set -> verifySignature = true
+    {
+        // default has auto sign set -> verifySignature = true
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
@@ -163,7 +167,8 @@ void KMCommandsTest::testReply()
         verifySignature(true);
         waitForMainWindowToClose();
     }
-    {   // secundus has no auto sign set -> verifySignature = false
+    {
+        // secundus has no auto sign set -> verifySignature = false
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
@@ -172,7 +177,8 @@ void KMCommandsTest::testReply()
         verifySignature(false);
         waitForMainWindowToClose();
     }
-    {   // drei has auto sign set -> verifySignature = true
+    {
+        // drei has auto sign set -> verifySignature = true
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
@@ -190,7 +196,8 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
     i1.setPgpAutoSign(false);
     mKernel->identityManager()->commit();
 
-    {   // default has auto sign set -> verifySignature = true
+    {
+        // default has auto sign set -> verifySignature = true
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
@@ -199,7 +206,8 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
         verifySignature(false);
         waitForMainWindowToClose();
     }
-    {   // secundus has no auto sign set -> verifySignature = false
+    {
+        // secundus has no auto sign set -> verifySignature = false
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
@@ -208,7 +216,8 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
         verifySignature(false);
         waitForMainWindowToClose();
     }
-    {   // drei has auto sign set -> verifySignature = true
+    {
+        // drei has auto sign set -> verifySignature = true
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
@@ -227,7 +236,6 @@ void KMCommandsTest::waitForMainWindowToClose()
     w->close();
     loop.exec();
 }
-
 
 int main(int argc, char *argv[])
 {

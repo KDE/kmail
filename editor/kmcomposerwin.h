@@ -116,8 +116,8 @@ class KMComposerWin : public KMail::Composer
 
 private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
     explicit KMComposerWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,
-                          uint identity = 0, const QString &textSelection = QString(),
-                          const QString &customTemplate = QString());
+                           uint identity = 0, const QString &textSelection = QString(),
+                           const QString &customTemplate = QString());
     ~KMComposerWin();
 
 public:

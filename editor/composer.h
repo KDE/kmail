@@ -152,9 +152,9 @@ public: // kmcommand
 };
 
 KMAIL_EXPORT Composer *makeComposer(const KMime::Message::Ptr &msg = KMime::Message::Ptr(), bool lastSignState = false, bool lastEncryptState = false,
-                       Composer::TemplateContext context = Composer::NoTemplate,
-                       uint identity = 0, const QString &textSelection = QString(),
-                       const QString &customTemplate = QString());
+                                    Composer::TemplateContext context = Composer::NoTemplate,
+                                    uint identity = 0, const QString &textSelection = QString(),
+                                    const QString &customTemplate = QString());
 
 }
 

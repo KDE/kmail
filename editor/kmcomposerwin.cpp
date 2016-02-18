@@ -207,8 +207,8 @@ KMail::Composer *KMail::makeComposer(const KMime::Message::Ptr &msg, bool lastSi
 }
 
 KMail::Composer *KMComposerWin::create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context,
-                                      uint identity, const QString &textSelection,
-                                      const QString &customTemplate)
+                                       uint identity, const QString &textSelection,
+                                       const QString &customTemplate)
 {
     return new KMComposerWin(msg, lastSignState, lastEncryptState, context, identity, textSelection, customTemplate);
 }
@@ -216,7 +216,7 @@ KMail::Composer *KMComposerWin::create(const KMime::Message::Ptr &msg, bool last
 int KMComposerWin::s_composerNumber = 0;
 
 KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint id,
-                           const QString &textSelection, const QString &customTemplate)
+                             const QString &textSelection, const QString &customTemplate)
     : KMail::Composer("kmail-composer#"),
       mDone(false),
       mTextSelection(textSelection),
@@ -559,10 +559,10 @@ void KMComposerWin::addAttachment(const QUrl &url, const QString &comment)
 }
 
 void KMComposerWin::addAttachment(const QString &name,
-                                 KMime::Headers::contentEncoding cte,
-                                 const QString &charset,
-                                 const QByteArray &data,
-                                 const QByteArray &mimeType)
+                                  KMime::Headers::contentEncoding cte,
+                                  const QString &charset,
+                                  const QByteArray &data,
+                                  const QByteArray &mimeType)
 {
     Q_UNUSED(cte);
     mComposerBase->addAttachment(name, name, charset, data, mimeType);
@@ -890,8 +890,8 @@ QWidget *KMComposerWin::connectFocusMoving(QWidget *prev, QWidget *next)
 }
 
 void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
-                                     QLabel *aLbl, QWidget *aEdt,
-                                     QPushButton *aBtn)
+                                      QLabel *aLbl, QWidget *aEdt,
+                                      QPushButton *aBtn)
 {
     if (aValue & aMask) {
         aLbl->setFixedWidth(mLabelWidth);
@@ -917,7 +917,7 @@ void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
 }
 
 void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
-                                     QLabel *aLbl, QWidget *aCbx)
+                                      QLabel *aLbl, QWidget *aCbx)
 {
     if (aValue & aMask) {
         aLbl->setBuddy(aCbx);
@@ -1476,7 +1476,7 @@ uint KMComposerWin::currentIdentity() const
 }
 
 void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,
-                              bool allowDecryption, bool isModified)
+                               bool allowDecryption, bool isModified)
 {
     if (!newMsg) {
         qCDebug(KMAIL_LOG) << "newMsg == 0!";
@@ -1510,7 +1510,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         const uint newId = newMsg->headerByType("X-KMail-Identity")->asUnicodeString().toUInt();
 
         disconnect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
-                this, SLOT(slotIdentityChanged(uint)));
+                   this, SLOT(slotIdentityChanged(uint)));
 
         // load the mId into the gui, without emitting
         mComposerBase->identityCombo()->setCurrentIdentity(newId);
@@ -2412,7 +2412,7 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
 }
 
 void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
-                          MessageComposer::MessageSender::SaveIn saveIn)
+                           MessageComposer::MessageSender::SaveIn saveIn)
 {
     if (mStorageService->numProgressUpdateFile() > 0) {
         KMessageBox::sorry(this, i18np("There is %1 file upload in progress.",
