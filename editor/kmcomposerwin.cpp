@@ -1505,12 +1505,8 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
     }
 
-    bool messageHasIdentity = false;
     if (newMsg->headerByType("X-KMail-Identity") &&
             !newMsg->headerByType("X-KMail-Identity")->asUnicodeString().isEmpty()) {
-        messageHasIdentity = true;
-    }
-    if (messageHasIdentity) {
         mId = newMsg->headerByType("X-KMail-Identity")->asUnicodeString().toUInt();
     }
 
@@ -1520,14 +1516,13 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
 
     // load the mId into the gui, sticky or not, without emitting
     mComposerBase->identityCombo()->setCurrentIdentity(mId);
-    const uint idToApply = mId;
     connect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
             this, SLOT(slotIdentityChanged(uint)));
 
     // manually load the identity's value into the fields; either the one from the
     // messge, where appropriate, or the one from the sticky identity. What's in
     // mId might have changed meanwhile, thus the save value
-    slotIdentityChanged(idToApply, true /*initalChange*/);
+    slotIdentityChanged(mId, true /*initalChange*/);
 
     const KIdentityManagement::Identity &ident = im->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
 
