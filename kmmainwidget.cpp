@@ -1639,7 +1639,7 @@ void KMMainWidget::slotForwardInlineMsg()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotForwardAttachedMsg()
+void KMMainWidget::slotForwardAttachedMessage()
 {
     if (!mCurrentFolder) {
         return;
@@ -2040,7 +2040,7 @@ void KMMainWidget::slotSetThreadStatusIgnored()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotRedirectMsg()
+void KMMainWidget::slotRedirectMessage()
 {
     const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
     if (selectedMessages.isEmpty()) {

@@ -424,8 +424,8 @@ protected Q_SLOTS:
     void slotCustomReplyToMsg(const QString &tmpl);
     void slotCustomReplyAllToMsg(const QString &tmpl);
     void slotForwardInlineMsg();
-    void slotForwardAttachedMsg();
-    void slotRedirectMsg();
+    void slotForwardAttachedMessage();
+    void slotRedirectMessage();
     void slotCustomForwardMsg(const QString &tmpl);
     void slotSubjectFilter();
     void slotFromFilter();

@@ -153,7 +153,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
                                          i18nc("@action:inmenu Message->Forward->",
                                                  "As &Attachment..."),
                                          this);
-    connect(mForwardAttachedAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardAttachedMsg()));
+    connect(mForwardAttachedAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardAttachedMessage()));
 
     ac->addAction(QStringLiteral("message_forward_as_attachment"), mForwardAttachedAction);
 
@@ -169,7 +169,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     mRedirectAction  = new QAction(i18nc("Message->Forward->", "&Redirect..."), this);
     ac->addAction(QStringLiteral("message_forward_redirect"), mRedirectAction);
-    connect(mRedirectAction, SIGNAL(triggered(bool)), parent, SLOT(slotRedirectMsg()));
+    connect(mRedirectAction, SIGNAL(triggered(bool)), parent, SLOT(slotRedirectMessage()));
 
     ac->setDefaultShortcut(mRedirectAction, QKeySequence(Qt::Key_E));
     mForwardActionMenu->addAction(mRedirectAction);
@@ -501,7 +501,7 @@ void MessageActions::setupForwardActions(KActionCollection *ac)
         ac->setDefaultShortcut(mForwardInlineAction, QKeySequence(Qt::Key_F));
         ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT + Qt::Key_F));
         QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)),
-                         mParent, SLOT(slotForwardAttachedMsg()));
+                         mParent, SLOT(slotForwardAttachedMessage()));
     }
 }
 
