@@ -455,10 +455,6 @@ private:
     /**
      * Show or hide header lines
      */
-    void rethinkHeaderLine(int aValue, int aMask, int &aRow,
-                           QLabel *aLbl, QWidget *aEdt,
-                           QPushButton *aBtn);
-
     void rethinkHeaderLine(int value, int mask, int &row,
                            QLabel *lbl, QWidget *cbx);  // krazy:exclude=qclasses
 

@@ -888,34 +888,6 @@ QWidget *KMComposerWin::connectFocusMoving(QWidget *prev, QWidget *next)
 
     return next;
 }
-
-void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
-                                      QLabel *aLbl, QWidget *aEdt,
-                                      QPushButton *aBtn)
-{
-    if (aValue & aMask) {
-        aLbl->setFixedWidth(mLabelWidth);
-        aLbl->setBuddy(aEdt);
-        mGrid->addWidget(aLbl, aRow, 0);
-        aEdt->show();
-
-        if (aBtn) {
-            mGrid->addWidget(aEdt, aRow, 1);
-            mGrid->addWidget(aBtn, aRow, 2);
-            aBtn->show();
-        } else {
-            mGrid->addWidget(aEdt, aRow, 1, 1, 2);
-        }
-        aRow++;
-    } else {
-        aLbl->hide();
-        aEdt->hide();
-        if (aBtn) {
-            aBtn->hide();
-        }
-    }
-}
-
 void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
                                       QLabel *aLbl, QWidget *aCbx)
 {
