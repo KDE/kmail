@@ -90,6 +90,10 @@ int KMailApplication::activate(const QStringList &args, const QString &workindDi
     if (!kmkernel) {
         return 0;
     }
+    if (!kmkernel->shuttingDown()) {
+        qCDebug(KMAIL_LOG) << "KMail is in a shutdown mode.";
+        return 0;
+    }
 
     if (!kmkernel->firstInstance() || !qApp->isSessionRestored()) {
         kmkernel->handleCommandLine(true, args, workindDir);
