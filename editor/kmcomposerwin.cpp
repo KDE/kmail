@@ -844,7 +844,7 @@ void KMComposerWin::rethinkFields(bool fromSlot)
         prevFocus = connectFocusMoving(prevFocus, mEdtReplyTo);
     }
 
-    mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 3);
+    mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 2);
     ++row;
     if (showHeaders & HDR_REPLY_TO) {
         connect(mEdtReplyTo, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
