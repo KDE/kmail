@@ -145,7 +145,6 @@ set(kmailprivate_job_LIB_SRCS
      job/createfollowupreminderonexistingmessagejob.cpp
      job/removecollectionjob.cpp
      job/saveasfilejob.cpp
-     job/fetchrecursivecollectionsjob.cpp
      job/markallmessagesasreadinfolderandsubfolderjob.cpp
      job/removeduplicatemessageinfolderandsubfolderjob.cpp
 )

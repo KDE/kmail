@@ -18,8 +18,8 @@
 
 */
 
-#include "fetchrecursivecollectionsjob.h"
 #include "removeduplicatemessageinfolderandsubfolderjob.h"
+#include <PimCommon/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
 #include <Akonadi/KMime/RemoveDuplicatesJob>
 
@@ -37,10 +37,10 @@ RemoveDuplicateMessageInFolderAndSubFolderJob::~RemoveDuplicateMessageInFolderAn
 void RemoveDuplicateMessageInFolderAndSubFolderJob::start()
 {
     if (mTopLevelCollection.isValid()) {
-        FetchRecursiveCollectionsJob *fetchJob = new FetchRecursiveCollectionsJob(this);
+        PimCommon::FetchRecursiveCollectionsJob *fetchJob = new PimCommon::FetchRecursiveCollectionsJob(this);
         fetchJob->setTopCollection(mTopLevelCollection);
-        connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionFailed);
-        connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone);
+        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionFailed);
+        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone);
         fetchJob->start();
     } else {
         qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";

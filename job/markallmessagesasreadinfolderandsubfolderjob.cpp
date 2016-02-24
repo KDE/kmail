@@ -19,7 +19,7 @@
 */
 
 #include "markallmessagesasreadinfolderandsubfolderjob.h"
-#include "fetchrecursivecollectionsjob.h"
+#include <PimCommon/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
 
 MarkAllMessagesAsReadInFolderAndSubFolderJob::MarkAllMessagesAsReadInFolderAndSubFolderJob(QObject *parent)
@@ -41,10 +41,10 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::setTopLevelCollection(const A
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::start()
 {
     if (mTopLevelCollection.isValid()) {
-        FetchRecursiveCollectionsJob *fetchJob = new FetchRecursiveCollectionsJob(this);
+        PimCommon::FetchRecursiveCollectionsJob *fetchJob = new PimCommon::FetchRecursiveCollectionsJob(this);
         fetchJob->setTopCollection(mTopLevelCollection);
-        connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed);
-        connect(fetchJob, &FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone);
+        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed);
+        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone);
         fetchJob->start();
     } else {
         qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
