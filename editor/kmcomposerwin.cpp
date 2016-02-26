@@ -89,10 +89,9 @@
 // KDEPIM includes
 #include <Libkleo/ProgressDialog>
 #include <Libkleo/KeySelectionDialog>
-#include "Libkleo/CryptoBackendFactory"
-#include "Libkleo/ExportJob"
-#include "Libkleo/SpecialJob"
-#include <MessageViewer/ObjectTreeEmptySource>
+#include <Libkleo/CryptoBackendFactory>
+#include <Libkleo/ExportJob>
+#include <Libkleo/SpecialJob>
 
 #ifndef QT_NO_CURSOR
 #include <Libkdepim/KCursorSaver>
@@ -114,22 +113,19 @@
 #include "MessageCore/MessageCoreSettings"
 #include <templateparser.h>
 #include <TemplateParser/TemplatesConfiguration>
-#include "MessageCore/NodeHelper"
+#include <MessageCore/NodeHelper>
 #include <Akonadi/KMime/MessageStatus>
 #include "messagecore/messagehelpers.h"
-#include "MailCommon/FolderRequester"
-#include "MailCommon/FolderCollection"
+#include <MailCommon/FolderRequester>
+#include <MailCommon/FolderCollection>
 
 #include "widgets/statusbarlabeltoggledstate.h"
 
-// LIBKDEPIM includes
-#include <Libkdepim/RecentAddresses>
 
 // KDEPIMLIBS includes
 #include <AkonadiCore/changerecorder.h>
-#include <AkonadiCore/itemcreatejob.h>
-#include <AkonadiCore/entitymimetypefiltermodel.h>
-#include <AkonadiCore/itemfetchjob.h>
+#include <AkonadiCore/Monitor>
+#include <AkonadiCore/ItemFetchJob>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KIdentityManagement/kidentitymanagement/identitycombo.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
@@ -197,7 +193,6 @@
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
-using KPIM::RecentAddresses;
 
 KMail::Composer *KMail::makeComposer(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context,
                                      uint identity, const QString &textSelection,
