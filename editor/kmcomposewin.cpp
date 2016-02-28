@@ -1103,10 +1103,6 @@ void KMComposeWin::setupActions(void)
     if (MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
         //default = send now, alternative = queue
         QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("&Send Mail"), this);
-        actionCollection()->addAction(QStringLiteral("send_mail_default"), action);
-        connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNow);
-
-        action = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("Send Mail Using Shortcut"), this);
         actionCollection()->addAction(QStringLiteral("send_default"), action);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Return));
         connect(action, &QAction::triggered, this, &KMComposeWin::slotSendNowByShortcut);
