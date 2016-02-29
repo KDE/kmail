@@ -427,7 +427,6 @@
       <li xml:lang="pl">Możliwość wyświetlania miernika prawdopodobieństwa, że to spam</li>
       <li xml:lang="pt">Pode ser apresentado um medidor de probabilidades de lixo electrónico</li>
       <li xml:lang="pt-BR">Pode ser apresentado um medidor de probabilidades de spam</li>
-      <li xml:lang="ru">Может быть показан индикатор вероятности спама;</li>
       <li xml:lang="sk">Je možné zobraziť voliteľný meter pravdepodobnosti spamu</li>
       <li xml:lang="sl">Prikazuje lahko dodatni merilnik za verjetnost, da je pošta neželena</li>
       <li xml:lang="sr">Опциони приказ мерача вероватноће спама.</li>
@@ -460,7 +459,6 @@
       <li xml:lang="pl">Zaawansowane możliwości wyszukiwania i filtrowania</li>
       <li xml:lang="pt">Capacidades poderosas de pesquisa e filtragem</li>
       <li xml:lang="pt-BR">Capacidades pesquisa e filtragem poderosas</li>
-      <li xml:lang="ru">Широкие возможности поиска и фильтрации писем;</li>
       <li xml:lang="sk">Silné schopnosti hľadania a filtrovania</li>
       <li xml:lang="sl">Zmogljiv iskalnik in filtri</li>
       <li xml:lang="sr">Моћна претрага и филтрирање.</li>
@@ -493,7 +491,6 @@
       <li xml:lang="pl">Możliwość importowania poczty z innych programów pocztowych</li>
       <li xml:lang="pt">Poderá importar o correio a partir de muitos outros clientes</li>
       <li xml:lang="pt-BR">Importação de e-mails de muitos outros clientes</li>
-      <li xml:lang="ru">Возможен импорт писем из множества других почтовых клиентов;</li>
       <li xml:lang="sk">Môže importovať mail z mnohých iných klientov</li>
       <li xml:lang="sl">Lahko uvozi e-pošto iz drugih odjemalcev</li>
       <li xml:lang="sr">Увоз поште из многих других клијената.</li>
@@ -525,7 +522,6 @@
       <li xml:lang="pl">W pełni obsługiwane wyszukiwanie w katalogach IMAP</li>
       <li xml:lang="pt">A pesquisa nas pastas de IMAP é totalmente suportada</li>
       <li xml:lang="pt-BR">Suporte completo para pesquisa em pastas IMAP</li>
-      <li xml:lang="ru">Полная поддержка поиска в папках IMAP;</li>
       <li xml:lang="sk">Hľadanie v IMAP priečinokoch je plne podporované</li>
       <li xml:lang="sl">Polno podpira iskanje po mapah IMAP</li>
       <li xml:lang="sr">Потпуна подршка за претрагу по ИМАП фасциклама.</li>
@@ -556,7 +552,6 @@
       <li xml:lang="pl">Wysoce zintegrowane z innymi składnikami Kontact</li>
       <li xml:lang="pt">Altamente integrado com os outros componentes do Kontact</li>
       <li xml:lang="pt-BR">Altamente integrado com os outros componentes do Kontact</li>
-      <li xml:lang="ru">Тесная интеграция с другими компонентами Kontact;</li>
       <li xml:lang="sk">Vysoko integrovaný s inými komponentmi Kontact</li>
       <li xml:lang="sl">Se zelo dobro vključi v druge sestavne dele paketa Kontact</li>
       <li xml:lang="sr">Висока интеграција са осталим компонентама Контакта.</li>
@@ -588,7 +583,6 @@
       <li xml:lang="pl">Szyfrowane zapisywanie haseł w KPortfelu</li>
       <li xml:lang="pt">Gravação das senhas encriptadas na KWallet</li>
       <li xml:lang="pt-BR">Salvamento das senhas criptografadas no KWallet</li>
-      <li xml:lang="ru">Сохранение паролей в зашифрованном виде с помощью KWallet;</li>
       <li xml:lang="sk">Ukladanie šifrovaných hesiel v KWallet</li>
       <li xml:lang="sl">Šifrirano shranjevanje gesel v KWallet</li>
       <li xml:lang="sr">Уписивање шифрованих лозинки у К‑новчаник.</li>
@@ -619,7 +613,6 @@
       <li xml:lang="pl">Oflagowywanie i znaczenie wiadomości w celu wspomożenia ich szeregowania i uzyskiwania informacji</li>
       <li xml:lang="pt">Marcação e classificação de mensagens para ajudar a ordenar e a recuperar informações</li>
       <li xml:lang="pt-BR">Marcação e classificação de mensagens para ajudar a ordenar e recuperar informações</li>
-      <li xml:lang="ru">Письмам можно присваивать различные состояния и метки;</li>
       <li xml:lang="sk">Označovanie a značkovanie správ na podporu triedenia a využitia informácií</li>
       <li xml:lang="sl">Označevanje sporočil, ki pomaga pri razvrščanju in obnovitvi podatkov</li>
       <li xml:lang="sr">Означавање порука ради лакшег разврставања и доступности информација.</li>
@@ -651,7 +644,6 @@
       <li xml:lang="pl">Możliwość zarządzania listą dyskusyjną</li>
       <li xml:lang="pt">Suporta funcionalidades de gestão de listas de correio</li>
       <li xml:lang="pt-BR">Suporte a funcionalidades de gerenciamento de listas de discussão</li>
-      <li xml:lang="ru">Функции для работы со списками рассылки;</li>
       <li xml:lang="sk">Podpora funkcií správy mailing listov</li>
       <li xml:lang="sl">Podpira upravljanje dopisnih seznamov</li>
       <li xml:lang="sr">Управљање поштанском листом.</li>
