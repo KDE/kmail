@@ -418,7 +418,7 @@ void SecurityPage::WarningTab::slotConfigureGnupg()
         font.setBold(true);
         info->setFont(font);
         info->setWordWrap(true);
-        dlg->addPage(info, i18n("Gnupg Configure Module Error"));
+        dlg->addPage(info, i18n("GnuPG Configure Module Error"));
     }
     dlg->exec();
     delete dlg;
