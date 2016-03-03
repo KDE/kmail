@@ -699,14 +699,14 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
         } else {
             buttonLabel = i18n(label);
         }
-        QRadioButton *radio = new QRadioButton(buttonLabel, mDateDisplayBox);
-        gvlay->addWidget(radio);
-        mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
-
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
+
             QWidget *hbox = new QWidget(mDateDisplayBox);
             QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
             hboxHBoxLayout->setMargin(0);
+            QRadioButton *radio = new QRadioButton(buttonLabel, hbox);
+            hboxHBoxLayout->addWidget(radio);
+            mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
 
             mCustomDateFormatEdit = new KLineEdit(hbox);
             hboxHBoxLayout->addWidget(mCustomDateFormatEdit);
@@ -760,6 +760,10 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             mCustomDateFormatEdit->setWhatsThis(mCustomDateWhatsThis);
             radio->setWhatsThis(mCustomDateWhatsThis);
             gvlay->addWidget(hbox);
+        } else {
+            QRadioButton *radio = new QRadioButton(buttonLabel, mDateDisplayBox);
+            gvlay->addWidget(radio);
+            mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
         }
     } // end for loop populating mDateDisplay
 
