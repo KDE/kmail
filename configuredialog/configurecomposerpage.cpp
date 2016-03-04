@@ -709,7 +709,6 @@ ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-    vlay->setMargin(0);
 
     mWidget = new TemplateParser::TemplatesConfiguration(this);
     vlay->addWidget(mWidget);
@@ -742,7 +741,6 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-    vlay->setMargin(0);
 
     mWidget = new TemplateParser::CustomTemplates(kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection *>(), this);
     vlay->addWidget(mWidget);
