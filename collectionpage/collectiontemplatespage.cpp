@@ -55,8 +55,8 @@ bool CollectionTemplatesPage::canHandle(const Collection &collection) const
 void CollectionTemplatesPage::init()
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
-
     QHBoxLayout *topItems = new QHBoxLayout;
+    topItems->setMargin(0);
     topLayout->addLayout(topItems);
 
     mCustom = new QCheckBox(i18n("&Use custom message templates in this folder"), this);
