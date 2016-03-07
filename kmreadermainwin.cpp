@@ -517,8 +517,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addMenu(mReaderWin->viewHtmlOption());
             menu->addSeparator();
             menu->addAction(mReaderWin->copyURLAction());
-            menu->addSeparator();
-            menu->addAction(mReaderWin->shareServiceUrlMenu());
             copyAdded = true;
             urlMenuAdded = true;
         } else if (url.scheme() != QLatin1String("attachment")) {
