@@ -1,9 +1,9 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 include_directories(
-  BEFORE
-  ${CMAKE_SOURCE_DIR}/kmail
-  ${CMAKE_BINARY_DIR}/kmail
-)
+    BEFORE
+    ${CMAKE_SOURCE_DIR}/kmail
+    ${CMAKE_BINARY_DIR}/kmail
+    )
 
 ########### dbus test ###############
 set( kmail_displaymenu_source displaymessageformatactionmenutest.cpp ../widgets/displaymessageformatactionmenu.cpp )
@@ -42,8 +42,8 @@ ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt5::Test  KF5::MailTransport KF5::WidgetsAddons KF5::I18n KF5::ConfigGui)
 
 set( kmail_configureagentlistviewtest_source configureagentlistviewtest.cpp ../configuredialog/configureagents/configureagentitem.cpp
-                                            ../configuredialog/configureagents/configureagentlistmodel.cpp ../configuredialog/configureagents/configureagentlistview.cpp
-                                            ../configuredialog/configureagents/configureagentlistdelegate.cpp ../kmail_debug.cpp)
+    ../configuredialog/configureagents/configureagentlistmodel.cpp ../configuredialog/configureagents/configureagentlistview.cpp
+    ../configuredialog/configureagents/configureagentlistdelegate.cpp ../kmail_debug.cpp)
 add_executable( configureagentlistviewtest ${kmail_configureagentlistviewtest_source})
 add_test(configureagentlistviewtest configureagentlistviewtest)
 ecm_mark_as_test(configureagentlistviewtest)
@@ -61,4 +61,4 @@ set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "../tag/tagselectdialog.cpp;../kmail_debug.cpp" "${KDEPIMLIBS_AKONADI_LIBS};kmailprivate;KF5::MailCommon;KF5::Libkdepim;KF5::ItemViews;KF5::TemplateParser;KF5::XmlGui;KF5::Completion")
 
 add_akonadi_isolated_test_advanced(kmcommandstest.cpp "../kmcommands.cpp;../util.cpp;../secondarywindow.cpp;../undostack.cpp;../kmail_debug.cpp"
-"Qt5::Test;Qt5::Widgets;KF5::AkonadiCore;KF5::Bookmarks;KF5::ConfigWidgets;KF5::Contacts;KF5::I18n;KF5::IconThemes;KF5::IdentityManagement;KF5::KIOCore;KF5::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KF5::MailCommon;KF5::MailTransport;KF5::Libkdepim;KF5::TemplateParser;kmailprivate")
+    "Qt5::Test;Qt5::Widgets;KF5::AkonadiCore;KF5::Bookmarks;KF5::ConfigWidgets;KF5::Contacts;KF5::I18n;KF5::IconThemes;KF5::IdentityManagement;KF5::KIOCore;KF5::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KF5::MailCommon;KF5::MailTransport;KF5::Libkdepim;KF5::TemplateParser;kmailprivate")
