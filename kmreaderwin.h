@@ -169,7 +169,6 @@ public:
     QAction *resetMessageDisplayFormatAction() const;
     QAction *blockImage() const;
     QAction *openBlockableItems() const;
-    QAction *expandShortUrlAction() const;
 
     QAction *editContactAction() const
     {
@@ -207,7 +206,6 @@ public:
     void setContactItem(const Akonadi::Item &contact, const KContacts::Addressee &address);
     void clearContactItem();
     bool adblockEnabled() const;
-    bool isAShortUrl(const QUrl &url) const;
 
     bool mimePartTreeIsEmpty() const;
     KActionMenu *shareServiceUrlMenu() const;

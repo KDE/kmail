@@ -837,13 +837,3 @@ void KMReaderWin::slotShareImage()
     KMCommand *command = new KMShareImageCommand(imageUrlClicked(), this);
     command->start();
 }
-
-bool KMReaderWin::isAShortUrl(const QUrl &url) const
-{
-    return mViewer->isAShortUrl(url);
-}
-
-QAction *KMReaderWin::expandShortUrlAction() const
-{
-    return mViewer->expandShortUrlAction();
-}

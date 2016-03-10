@@ -2713,10 +2713,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu->addAction(mMsgView->copyURLAction());
             menu->addSeparator();
             menu->addAction(mMsgView->shareServiceUrlMenu());
-            if (mMsgView->isAShortUrl(url)) {
-                menu->addSeparator();
-                menu->addAction(mMsgView->expandShortUrlAction());
-            }
+            menu->addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
             if (!imageUrl.isEmpty()) {
                 menu->addSeparator();
                 menu->addAction(mMsgView->copyImageLocation());

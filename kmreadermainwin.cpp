@@ -528,10 +528,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mReaderWin->copyURLAction());
             menu->addSeparator();
             menu->addAction(mReaderWin->shareServiceUrlMenu());
-            if (mReaderWin->isAShortUrl(url)) {
-                menu->addSeparator();
-                menu->addAction(mReaderWin->expandShortUrlAction());
-            }
+            menu->addSeparator();
+            menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
             if (!imageUrl.isEmpty()) {
                 menu->addSeparator();
                 menu->addAction(mReaderWin->copyImageLocation());
