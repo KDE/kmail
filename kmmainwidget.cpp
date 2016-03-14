@@ -83,9 +83,11 @@ using KSieveUi::SieveDebugDialog;
 
 #include "messageviewer/messageviewersettings.h"
 #include "messageviewer/viewer.h"
-#include "messageviewer/attachmentstrategy.h"
 #include "messageviewer/headerstyleplugin.h"
 #include "messageviewer/headerstyle.h"
+
+#include <MimeTreeParser/AttachmentStrategy>
+
 #ifndef QT_NO_CURSOR
 #include "Libkdepim/KCursorSaver"
 #endif

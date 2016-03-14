@@ -97,9 +97,9 @@
 #include <Libkdepim/KCursorSaver>
 #endif
 
-#include <MessageViewer/ObjectTreeParser>
-#include <messageviewer/nodehelper.h>
-#include <messageviewer/messageviewersettings.h>
+#include <MessageViewer/MessageViewerSettings>
+#include <MimeTreeParser/ObjectTreeParser>
+#include <MimeTreeParser/NodeHelper>
 #include <MessageComposer/Composer>
 #include <MessageComposer/GlobalPart>
 #include <MessageComposer/InfoPart>

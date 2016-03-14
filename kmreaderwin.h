@@ -25,8 +25,8 @@
 
 #include <QWidget>
 #include <qurl.h>
-#include <messageviewer/viewer.h>
-#include <messageviewer/bodypart.h>
+#include <MessageViewer/Viewer>
+#include <MimeTreeParser/BodyPart>
 #include <AkonadiCore/Item>
 #include <KContacts/Addressee>
 class KActionCollection;

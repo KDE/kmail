@@ -94,9 +94,10 @@
 #include <MessageViewer/HeaderStylePlugin>
 #include <MessageViewer/MessageViewerSettings>
 #include <MessageViewer/MessageViewerUtil>
-#include <MessageViewer/NodeHelper>
 #include <MessageViewer/ObjectTreeEmptySource>
-#include <MessageViewer/ObjectTreeParser>
+
+#include <MimeTreeParser/NodeHelper>
+#include <MimeTreeParser/ObjectTreeParser>
 
 #include <MailTransport/TransportAttribute>
 #include <MailTransport/SentBehaviourAttribute>

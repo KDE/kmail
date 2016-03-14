@@ -54,7 +54,7 @@ using MessageViewer::CSSHelper;
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 
-#include "messageviewer/attachmentstrategy.h"
+#include <MimeTreeParser/AttachmentStrategy>
 #include "MessageComposer/MessageSender"
 #include "MessageComposer/MessageFactory"
 #include "MessageComposer/Composer"
