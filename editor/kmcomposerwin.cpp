@@ -121,7 +121,6 @@
 
 #include "widgets/statusbarlabeltoggledstate.h"
 
-
 // KDEPIMLIBS includes
 #include <AkonadiCore/changerecorder.h>
 #include <AkonadiCore/Monitor>
