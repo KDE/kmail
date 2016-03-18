@@ -709,9 +709,8 @@ bool KMReaderWin::printSelectedText(bool preview)
 void KMReaderWin::slotPrintComposeResult(KJob *job)
 {
     const bool preview = job->property("preview").toBool();
-    Q_ASSERT(dynamic_cast< ::MessageComposer::Composer * >(job));
-
     ::MessageComposer::Composer *composer = dynamic_cast< ::MessageComposer::Composer * >(job);
+    Q_ASSERT(composer);
     if (composer->error() == ::MessageComposer::Composer::NoError) {
 
         Q_ASSERT(composer->resultMessages().size() == 1);
