@@ -125,7 +125,6 @@ private: // data
     QGroupBox     *mFolderListGroupBox;
     QButtonGroup  *mReaderWindowModeGroup;
     QGroupBox     *mReaderWindowModeGroupBox;
-    QCheckBox     *mFolderQuickSearchCB;
     QButtonGroup  *mFolderToolTipsGroup;
     QGroupBox     *mFolderToolTipsGroupBox;
     QButtonGroup  *mFavoriteFoldersViewGroup;
