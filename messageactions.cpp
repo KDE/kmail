@@ -569,24 +569,24 @@ void MessageActions::slotMailingListFilter()
 
 void MessageActions::printMessage(bool preview)
 {
-    bool result = false;
     if (mMessageView) {
+        bool result = false;
         if (MessageViewer::MessageViewerSettings::self()->printSelectedText()) {
             result = mMessageView->printSelectedText(preview);
         }
-    }
-    if (!result) {
-        const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
-        const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
+        if (!result) {
+            const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
+            const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
-        const Akonadi::Item message = mCurrentItem;
-        KMPrintCommand *command =
-            new KMPrintCommand(mParent, message,
-                               mMessageView->viewer()->headerStylePlugin(),
-                               mMessageView->viewer()->displayFormatMessageOverwrite(), mMessageView->viewer()->htmlLoadExternal(),
-                               useFixedFont, overrideEncoding);
-        command->setPrintPreview(preview);
-        command->start();
+            const Akonadi::Item message = mCurrentItem;
+            KMPrintCommand *command =
+                    new KMPrintCommand(mParent, message,
+                                       mMessageView->viewer()->headerStylePlugin(),
+                                       mMessageView->viewer()->displayFormatMessageOverwrite(), mMessageView->viewer()->htmlLoadExternal(),
+                                       useFixedFont, overrideEncoding);
+            command->setPrintPreview(preview);
+            command->start();
+        }
     }
 }
 
