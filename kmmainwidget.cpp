@@ -4416,10 +4416,10 @@ void KMMainWidget::itemsFetchDone(KJob *job)
             }
             mMessagePane->show();
 
-            if (kmkernel->isOffline()) {
-                showOfflinePage();
-            } else {
-                if (mMsgView) {
+            if (mMsgView) {
+                if (kmkernel->isOffline()) {
+                    showOfflinePage();
+                } else {
                     showResourceOfflinePage();
                 }
             }
