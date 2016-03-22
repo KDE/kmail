@@ -74,7 +74,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
         item->setStatus(i18n("Done"));
         item = Q_NULLPTR;
     }
-    if (job->error() && job->error() != KJob::KilledJobError) {
+    if (job && (job->error() != KJob::KilledJobError)) {
         KMessageBox::error(mParent, job->errorText(), i18n("Error while removing duplicates"));
     }
     deleteLater();
