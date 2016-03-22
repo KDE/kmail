@@ -94,6 +94,8 @@ set(kmailprivate_identity_LIB_SRCS
     identity/newidentitydialog.cpp
     identity/identityeditvcarddialog.cpp
     identity/identityaddvcarddialog.cpp
+    identity/identityinvalidfolder.cpp
+    identity/identityfolderrequester.cpp
     )
 set(kmailprivate_editor_LIB_SRCS
     editor/widgets/snippetwidget.cpp

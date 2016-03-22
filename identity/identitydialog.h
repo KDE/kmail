@@ -84,7 +84,8 @@ class AutoCorrectionLanguage;
 
 namespace KMail
 {
-
+class IdentityFolderRequester;
+class IdentityInvalidFolder;
 class IdentityDialog : public QDialog
 {
     Q_OBJECT
@@ -110,7 +111,7 @@ private Q_SLOTS:
     void slotVCardRemoved();
     void slotHelp();
 private:
-    bool checkFolderExists(const QString &folder, const QString &msg);
+    bool checkFolderExists(const QString &folder);
     bool validateAddresses(const QString &addresses);
     void updateVcardButton();
     void editVcard(const QString &filename);
@@ -134,10 +135,10 @@ private:
     KLineEdit                        *mBccEdit;
     KLineEdit                        *mCcEdit;
     Sonnet::DictionaryComboBox       *mDictionaryCombo;
-    MailCommon::FolderRequester      *mFccCombo;
+    IdentityFolderRequester      *mFccCombo;
     QCheckBox                        *mSentMailFolderCheck;
-    MailCommon::FolderRequester      *mDraftsCombo;
-    MailCommon::FolderRequester      *mTemplatesCombo;
+    IdentityFolderRequester      *mDraftsCombo;
+    IdentityFolderRequester      *mTemplatesCombo;
     QCheckBox                        *mTransportCheck;
     MailTransport::TransportComboBox *mTransportCombo;
     QCheckBox                        *mAttachMyVCard;
@@ -155,6 +156,7 @@ private:
     // "X-Face" tab:
     KMail::XFaceConfigurator *mXFaceConfigurator;
     QTabWidget *mTabWidget;
+    IdentityInvalidFolder *mIdentityInvalidFolder;
 };
 
 } // namespace KMail

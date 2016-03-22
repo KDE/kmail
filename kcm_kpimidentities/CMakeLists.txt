@@ -13,6 +13,8 @@ set(kcm_identities_srcs
   ../identity/identityeditvcarddialog.cpp
   ../identity/identityaddvcarddialog.cpp
   ../identity/xfaceconfigurator.cpp
+  ../identity/identityinvalidfolder.cpp
+  ../identity/identityfolderrequester.cpp
 )
 
 ki18n_wrap_ui(kcm_identities_srcs ../ui/identitypage.ui)

@@ -33,6 +33,8 @@
 #include "identitydialog.h"
 #include "identityeditvcarddialog.h"
 #include "identityaddvcarddialog.h"
+#include "identityinvalidfolder.h"
+#include "identityfolderrequester.h"
 
 #include "MessageComposer/MessageComposerSettings"
 
@@ -374,8 +376,12 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     row = -1;
     tab = new QWidget(mTabWidget);
+    QVBoxLayout *advancedMainLayout = new QVBoxLayout(tab);
+    mIdentityInvalidFolder = new IdentityInvalidFolder(tab);
+    advancedMainLayout->addWidget(mIdentityInvalidFolder);
     mTabWidget->addTab(tab, i18nc("@title:tab Advanced identity settings.", "Advanced"));
-    glay = new QGridLayout(tab);
+    glay = new QGridLayout;
+    advancedMainLayout->addLayout(glay);
     // the last (empty) row takes all the remaining space
     glay->setColumnStretch(1, 1);
 
@@ -452,7 +458,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Sent-mail Folder" combo box and label:
     ++row;
-    mFccCombo = new FolderRequester(tab);
+    mFccCombo = new IdentityFolderRequester(tab);
     mFccCombo->setShowOutbox(false);
     glay->addWidget(mFccCombo, row, 1);
     mSentMailFolderCheck = new QCheckBox(i18n("Sent-mail &folder:"), tab);
@@ -461,7 +467,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Drafts Folder" combo box and label:
     ++row;
-    mDraftsCombo = new FolderRequester(tab);
+    mDraftsCombo = new IdentityFolderRequester(tab);
     mDraftsCombo->setShowOutbox(false);
     glay->addWidget(mDraftsCombo, row, 1);
     label = new QLabel(i18n("&Drafts folder:"), tab);
@@ -470,7 +476,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Templates Folder" combo box and label:
     ++row;
-    mTemplatesCombo = new FolderRequester(tab);
+    mTemplatesCombo = new IdentityFolderRequester(tab);
     mTemplatesCombo->setShowOutbox(false);
     glay->addWidget(mTemplatesCombo, row, 1);
     label = new QLabel(i18n("&Templates folder:"), tab);
@@ -764,16 +770,10 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
     accept();
 }
 
-bool IdentityDialog::checkFolderExists(const QString &folderID,
-                                       const QString &msg)
+bool IdentityDialog::checkFolderExists(const QString &folderID)
 {
     const Akonadi::Collection folder = CommonKernel->collectionFromId(folderID.toLongLong());
-    if (!folder.isValid()) {
-        KMessageBox::sorry(this, msg);
-        return false;
-    }
-
-    return true;
+    return folder.isValid();
 }
 
 void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
@@ -812,41 +812,36 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
 
     mSentMailFolderCheck->setChecked(!ident.disabledFcc());
     mFccCombo->setEnabled(mSentMailFolderCheck->isChecked());
+    bool foundNoExistingFolder = false;
     if (ident.fcc().isEmpty() ||
-            !checkFolderExists(ident.fcc(),
-                               i18n("The custom sent-mail folder for identity "
-                                    "\"%1\" does not exist (anymore); "
-                                    "therefore, the default sent-mail folder "
-                                    "will be used.",
-                                    ident.identityName()))) {
+            !checkFolderExists(ident.fcc())) {
+        foundNoExistingFolder = true;
+        mFccCombo->setIsInvalidFolder();
         mFccCombo->setCollection(CommonKernel->sentCollectionFolder());
     } else {
         mFccCombo->setCollection(Akonadi::Collection(ident.fcc().toLongLong()));
     }
     if (ident.drafts().isEmpty() ||
-            !checkFolderExists(ident.drafts(),
-                               i18n("The custom drafts folder for identity "
-                                    "\"%1\" does not exist (anymore); "
-                                    "therefore, the default drafts folder "
-                                    "will be used.",
-                                    ident.identityName()))) {
+            !checkFolderExists(ident.drafts())) {
+        foundNoExistingFolder = true;
+        mDraftsCombo->setIsInvalidFolder();
         mDraftsCombo->setCollection(CommonKernel->draftsCollectionFolder());
     } else {
         mDraftsCombo->setCollection(Akonadi::Collection(ident.drafts().toLongLong()));
     }
 
     if (ident.templates().isEmpty() ||
-            !checkFolderExists(ident.templates(),
-                               i18n("The custom templates folder for identity "
-                                    "\"%1\" does not exist (anymore); "
-                                    "therefore, the default templates folder "
-                                    "will be used.", ident.identityName()))) {
+            !checkFolderExists(ident.templates())) {
+        foundNoExistingFolder = true;
+        mTemplatesCombo->setIsInvalidFolder();
         mTemplatesCombo->setCollection(CommonKernel->templatesCollectionFolder());
 
     } else {
         mTemplatesCombo->setCollection(Akonadi::Collection(ident.templates().toLongLong()));
     }
-
+    if (foundNoExistingFolder) {
+        mIdentityInvalidFolder->setErrorMessage(i18n("Some custom folder for identity does not exist (anymore); therefore, default folders will be used."));
+    }
     mVcardFilename = ident.vCardFile();
 
     mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
