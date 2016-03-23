@@ -458,29 +458,29 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Sent-mail Folder" combo box and label:
     ++row;
-    mFccCombo = new IdentityFolderRequester(tab);
-    mFccCombo->setShowOutbox(false);
-    glay->addWidget(mFccCombo, row, 1);
+    mFccFolderRequester = new IdentityFolderRequester(tab);
+    mFccFolderRequester->setShowOutbox(false);
+    glay->addWidget(mFccFolderRequester, row, 1);
     mSentMailFolderCheck = new QCheckBox(i18n("Sent-mail &folder:"), tab);
     glay->addWidget(mSentMailFolderCheck, row, 0);
-    connect(mSentMailFolderCheck, &QCheckBox::toggled, mFccCombo, &MailCommon::FolderRequester::setEnabled);
+    connect(mSentMailFolderCheck, &QCheckBox::toggled, mFccFolderRequester, &MailCommon::FolderRequester::setEnabled);
 
     // "Drafts Folder" combo box and label:
     ++row;
-    mDraftsCombo = new IdentityFolderRequester(tab);
-    mDraftsCombo->setShowOutbox(false);
-    glay->addWidget(mDraftsCombo, row, 1);
+    mDraftsFolderRequester = new IdentityFolderRequester(tab);
+    mDraftsFolderRequester->setShowOutbox(false);
+    glay->addWidget(mDraftsFolderRequester, row, 1);
     label = new QLabel(i18n("&Drafts folder:"), tab);
-    label->setBuddy(mDraftsCombo);
+    label->setBuddy(mDraftsFolderRequester);
     glay->addWidget(label, row, 0);
 
     // "Templates Folder" combo box and label:
     ++row;
-    mTemplatesCombo = new IdentityFolderRequester(tab);
-    mTemplatesCombo->setShowOutbox(false);
-    glay->addWidget(mTemplatesCombo, row, 1);
+    mTemplatesFolderRequester = new IdentityFolderRequester(tab);
+    mTemplatesFolderRequester->setShowOutbox(false);
+    glay->addWidget(mTemplatesFolderRequester, row, 1);
     label = new QLabel(i18n("&Templates folder:"), tab);
-    label->setBuddy(mTemplatesCombo);
+    label->setBuddy(mTemplatesFolderRequester);
     glay->addWidget(label, row, 0);
 
     // "Special transport" combobox and label:
@@ -811,33 +811,33 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mDictionaryCombo->setCurrentByDictionaryName(ident.dictionary());
 
     mSentMailFolderCheck->setChecked(!ident.disabledFcc());
-    mFccCombo->setEnabled(mSentMailFolderCheck->isChecked());
+    mFccFolderRequester->setEnabled(mSentMailFolderCheck->isChecked());
     bool foundNoExistingFolder = false;
     if (ident.fcc().isEmpty() ||
             !checkFolderExists(ident.fcc())) {
         foundNoExistingFolder = true;
-        mFccCombo->setIsInvalidFolder();
-        mFccCombo->setCollection(CommonKernel->sentCollectionFolder());
+        mFccFolderRequester->setIsInvalidFolder();
+        mFccFolderRequester->setCollection(CommonKernel->sentCollectionFolder());
     } else {
-        mFccCombo->setCollection(Akonadi::Collection(ident.fcc().toLongLong()));
+        mFccFolderRequester->setCollection(Akonadi::Collection(ident.fcc().toLongLong()));
     }
     if (ident.drafts().isEmpty() ||
             !checkFolderExists(ident.drafts())) {
         foundNoExistingFolder = true;
-        mDraftsCombo->setIsInvalidFolder();
-        mDraftsCombo->setCollection(CommonKernel->draftsCollectionFolder());
+        mDraftsFolderRequester->setIsInvalidFolder();
+        mDraftsFolderRequester->setCollection(CommonKernel->draftsCollectionFolder());
     } else {
-        mDraftsCombo->setCollection(Akonadi::Collection(ident.drafts().toLongLong()));
+        mDraftsFolderRequester->setCollection(Akonadi::Collection(ident.drafts().toLongLong()));
     }
 
     if (ident.templates().isEmpty() ||
             !checkFolderExists(ident.templates())) {
         foundNoExistingFolder = true;
-        mTemplatesCombo->setIsInvalidFolder();
-        mTemplatesCombo->setCollection(CommonKernel->templatesCollectionFolder());
+        mTemplatesFolderRequester->setIsInvalidFolder();
+        mTemplatesFolderRequester->setCollection(CommonKernel->templatesCollectionFolder());
 
     } else {
-        mTemplatesCombo->setCollection(Akonadi::Collection(ident.templates().toLongLong()));
+        mTemplatesFolderRequester->setCollection(Akonadi::Collection(ident.templates().toLongLong()));
     }
     if (foundNoExistingFolder) {
         mIdentityInvalidFolder->setErrorMessage(i18n("Some custom folder for identity does not exist (anymore); therefore, default folders will be used."));
@@ -902,7 +902,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
                        : QString());
     ident.setDictionary(mDictionaryCombo->currentDictionaryName());
     ident.setDisabledFcc(!mSentMailFolderCheck->isChecked());
-    Akonadi::Collection collection = mFccCombo->collection();
+    Akonadi::Collection collection = mFccFolderRequester->collection();
     if (collection.isValid()) {
         ident.setFcc(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
@@ -912,7 +912,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
         ident.setFcc(QString());
     }
 
-    collection = mDraftsCombo->collection();
+    collection = mDraftsFolderRequester->collection();
     if (collection.isValid()) {
         ident.setDrafts(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
@@ -922,7 +922,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
         ident.setDrafts(QString());
     }
 
-    collection = mTemplatesCombo->collection();
+    collection = mTemplatesFolderRequester->collection();
     if (collection.isValid()) {
         ident.setTemplates(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);

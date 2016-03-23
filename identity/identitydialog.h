@@ -135,10 +135,10 @@ private:
     KLineEdit                        *mBccEdit;
     KLineEdit                        *mCcEdit;
     Sonnet::DictionaryComboBox       *mDictionaryCombo;
-    IdentityFolderRequester      *mFccCombo;
+    IdentityFolderRequester      *mFccFolderRequester;
     QCheckBox                        *mSentMailFolderCheck;
-    IdentityFolderRequester      *mDraftsCombo;
-    IdentityFolderRequester      *mTemplatesCombo;
+    IdentityFolderRequester      *mDraftsFolderRequester;
+    IdentityFolderRequester      *mTemplatesFolderRequester;
     QCheckBox                        *mTransportCheck;
     MailTransport::TransportComboBox *mTransportCombo;
     QCheckBox                        *mAttachMyVCard;
