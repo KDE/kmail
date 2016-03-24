@@ -571,11 +571,10 @@ void KMUrlSaveCommand::slotUrlSaveResult(KJob *job)
     if (job->error()) {
         showJobError(job);
         setResult(Failed);
-        Q_EMIT completed(this);
     } else {
         setResult(OK);
-        Q_EMIT completed(this);
     }
+    Q_EMIT completed(this);
 }
 
 KMEditMessageCommand::KMEditMessageCommand(QWidget *parent, const KMime::Message::Ptr &msg)
@@ -669,11 +668,10 @@ void KMEditItemCommand::slotDeleteItem(KJob *job)
     if (job->error()) {
         showJobError(job);
         setResult(Failed);
-        Q_EMIT completed(this);
     } else {
         setResult(OK);
-        Q_EMIT completed(this);
     }
+    Q_EMIT completed(this);
     deleteLater();
 }
 
@@ -799,7 +797,6 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         // handle errors
         showJobError(job);
         setResult(Failed);
-        Q_EMIT completed(this);
     } else {
         if (mMsgString.isEmpty()) {
             qCDebug(KMAIL_LOG) << " Message not found. There is a problem";
@@ -839,8 +836,8 @@ void KMOpenMsgCommand::slotResult(KJob *job)
                                      i18n("The file contains multiple messages. "
                                           "Only the first message is shown."));
         setResult(OK);
-        Q_EMIT completed(this);
     }
+    Q_EMIT completed(this);
     deleteLater();
 }
 
@@ -1464,6 +1461,7 @@ void KMCopyCommand::slotCopyResult(KJob *job)
         showJobError(job);
         setResult(Failed);
     }
+    Q_EMIT completed(this);
     deleteLater();
 }
 
