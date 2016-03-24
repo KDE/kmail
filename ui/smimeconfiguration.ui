@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>434</height>
+    <height>442</height>
    </rect>
   </property>
   <layout class="QGridLayout">
@@ -17,7 +17,7 @@
       <string>If this option is selected, S/MIME certificates are validated using Certificate Revocation Lists (CRLs).</string>
      </property>
      <property name="text">
-      <string>Validate certificates using CRLs</string>
+      <string>&amp;Validate certificates using CRLs</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -69,9 +69,12 @@
         <item>
          <layout class="QVBoxLayout">
           <item>
-           <widget class="QLineEdit" name="OCSPResponderURL">
+           <widget class="KLineEdit" name="OCSPResponderURL">
             <property name="whatsThis">
              <string>Enter here the address of the server for online validation of certificates (OCSP responder). The URL is usually starting with http://.</string>
+            </property>
+            <property name="trapEnterKeyEvent" stdset="0">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -173,7 +176,7 @@
             <string>If this option is selected, the value of the HTTP proxy shown on the right (which comes from the environment variable http_proxy) will be used for any HTTP request.</string>
            </property>
            <property name="text">
-            <string>Use system HTTP proxy:</string>
+            <string>Use s&amp;ystem HTTP proxy:</string>
            </property>
           </widget>
          </item>
@@ -190,14 +193,17 @@
          <item row="1" column="0">
           <widget class="QRadioButton" name="useCustomHTTPProxyRB">
            <property name="text">
-            <string>Use this proxy for HTTP requests: </string>
+            <string>Use &amp;this proxy for HTTP requests: </string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="customHTTPProxy">
+          <widget class="KLineEdit" name="customHTTPProxy">
            <property name="whatsThis">
             <string>Enter here the location of your HTTP Proxy, which will be used for all HTTP requests relating to S/MIME. The syntax is host:port, for instance myproxy.nowhere.com:3128.</string>
+           </property>
+           <property name="trapEnterKeyEvent" stdset="0">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -245,10 +251,13 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="customLDAPProxy">
+            <widget class="KLineEdit" name="customLDAPProxy">
              <property name="whatsThis">
               <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been omitted from the URL. Other LDAP servers will be used only if the connection to the &quot;proxy&quot; failed.
 The syntax is &quot;HOST&quot; or &quot;HOST:PORT&quot;. If PORT is omitted, port 389 (standard LDAP port) is used.</string>
+             </property>
+             <property name="trapEnterKeyEvent" stdset="0">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -276,6 +285,11 @@ The syntax is &quot;HOST&quot; or &quot;HOST:PORT&quot;. If PORT is omitted, por
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
   <customwidget>
    <class>Kleo::KeyRequester</class>
    <extends></extends>
