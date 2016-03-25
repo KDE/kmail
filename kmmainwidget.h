@@ -568,7 +568,7 @@ private:
     QAction *mTrashThreadAction;
     QAction *mDeleteThreadAction;
     QAction *mSaveAsAction;
-    QAction *mUseAction;
+    QAction *mNewMessageFromTemplateAction;
     QAction *mSendAgainAction;
     QAction *mApplyAllFiltersAction;
     QAction *mSaveAttachmentsAction;

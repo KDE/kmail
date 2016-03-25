@@ -2757,7 +2757,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
         Akonadi::Collection parentCol = msg.parentCollection();
         if (parentCol.isValid() && CommonKernel->folderIsTemplates(parentCol)) {
-            menu->addAction(mUseAction);
+            menu->addAction(mNewMessageFromTemplateAction);
         } else {
             menu->addAction(mMsgActions->replyMenu());
             menu->addAction(mMsgActions->forwardMenu());
@@ -3162,10 +3162,10 @@ void KMMainWidget::setupActions()
     }
     mFilterMenu->addAction(mMsgActions->listFilterAction());
 
-    mUseAction = new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Message From &Template"), this);
-    actionCollection()->addAction(QStringLiteral("use_template"), mUseAction);
-    connect(mUseAction, &QAction::triggered, this, &KMMainWidget::slotUseTemplate);
-    actionCollection()->setDefaultShortcut(mUseAction, QKeySequence(Qt::SHIFT + Qt::Key_N));
+    mNewMessageFromTemplateAction = new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Message From &Template"), this);
+    actionCollection()->addAction(QStringLiteral("use_template"), mNewMessageFromTemplateAction);
+    connect(mNewMessageFromTemplateAction, &QAction::triggered, this, &KMMainWidget::slotUseTemplate);
+    actionCollection()->setDefaultShortcut(mNewMessageFromTemplateAction, QKeySequence(Qt::SHIFT + Qt::Key_N));
 
     //----- "Mark Thread" submenu
     mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
@@ -3793,7 +3793,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMsgActions->forwardMenu()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
 
     mMsgActions->editAction()->setEnabled(single_actions);
-    mUseAction->setEnabled(single_actions && CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
+    mNewMessageFromTemplateAction->setEnabled(single_actions && CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
     filterMenu()->setEnabled(single_actions);
     mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/mass_actions && !CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
 
