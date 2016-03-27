@@ -3757,7 +3757,7 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     mTrashThreadAction->setEnabled(thread_actions && canDeleteMessages);
     mDeleteThreadAction->setEnabled(thread_actions && canDeleteMessages);
-    if (messageView() && messageView()->viewer()) {
+    if (messageView() && messageView()->viewer() && messageView()->viewer()->headerStylePlugin()) {
         messageView()->viewer()->headerStylePlugin()->headerStyle()->setReadOnlyMessage(!canDeleteMessages);
     }
 
