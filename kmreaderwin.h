@@ -36,6 +36,10 @@ class QMenu;
 namespace MessageViewer
 {
 class CSSHelper;
+}
+
+namespace MimeTreeParser
+{
 class AttachmentStrategy;
 }
 
@@ -59,9 +63,9 @@ public:
     void readConfig();
 
     /** Get/set the message attachment strategy. */
-    const MessageViewer::AttachmentStrategy *attachmentStrategy() const;
+    const MimeTreeParser::AttachmentStrategy *attachmentStrategy() const;
 
-    void setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy);
+    void setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy);
 
     /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
@@ -71,7 +75,7 @@ public:
     void setOverrideEncoding(const QString &encoding);
     virtual void setPrinting(bool enable);
 
-    void setMessage(const Akonadi::Item &item, MessageViewer::UpdateMode updateMode = MessageViewer::Delayed);
+    void setMessage(const Akonadi::Item &item, MimeTreeParser::UpdateMode updateMode = MimeTreeParser::Delayed);
 
     void setMessage(const KMime::Message::Ptr &message);
 

@@ -111,7 +111,7 @@ static QString selectCharset(KSelectAction *root, const QString &encoding)
                 return codecNameToSet;
             }
         } else {
-            const QString fixedActionText = MessageViewer::NodeHelper::fixEncoding(action->text());
+            const QString fixedActionText = MimeTreeParser::NodeHelper::fixEncoding(action->text());
             if (KCharsets::charsets()->codecForName(
                         KCharsets::charsets()->encodingForName(fixedActionText))
                     == KCharsets::charsets()->codecForName(encoding)) {

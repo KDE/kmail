@@ -252,7 +252,7 @@ void KMReaderWin::readConfig(void)
     mViewer->readConfig();
 }
 
-void KMReaderWin::setAttachmentStrategy(const AttachmentStrategy *strategy)
+void KMReaderWin::setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy)
 {
     mViewer->setAttachmentStrategy(strategy);
 }
@@ -531,7 +531,7 @@ void KMReaderWin::setDecryptMessageOverwrite(bool overwrite)
 {
     mViewer->setDecryptMessageOverwrite(overwrite);
 }
-const AttachmentStrategy *KMReaderWin::attachmentStrategy() const
+const MimeTreeParser::AttachmentStrategy *KMReaderWin::attachmentStrategy() const
 {
     return mViewer->attachmentStrategy();
 }
@@ -622,10 +622,10 @@ QAction *KMReaderWin::downloadImageToDiskAction() const
 
 void KMReaderWin::clear(bool force)
 {
-    mViewer->clear(force ? Force : Delayed);
+    mViewer->clear(force ? MimeTreeParser::Force : MimeTreeParser::Delayed);
 }
 
-void KMReaderWin::setMessage(const Akonadi::Item &item, UpdateMode updateMode)
+void KMReaderWin::setMessage(const Akonadi::Item &item, MimeTreeParser::UpdateMode updateMode)
 {
     qCDebug(KMAIL_LOG) << Q_FUNC_INFO << parentWidget();
     mViewer->setMessageItem(item, updateMode);
@@ -648,7 +648,7 @@ QUrl KMReaderWin::imageUrlClicked() const
 
 void KMReaderWin::update(bool force)
 {
-    mViewer->update(force ? Force : Delayed);
+    mViewer->update(force ? MimeTreeParser::Force : MimeTreeParser::Delayed);
 }
 
 void KMReaderWin::slotUrlClicked(const Akonadi::Item &item, const QUrl &url)

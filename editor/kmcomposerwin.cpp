@@ -1571,7 +1571,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     msgContent->setContent(mMsg->encodedContent());
     msgContent->parse();
     MessageViewer::EmptySource emptySource;
-    MessageViewer::ObjectTreeParser otp(&emptySource);  //All default are ok
+    MimeTreeParser::ObjectTreeParser otp(&emptySource);  //All default are ok
     emptySource.setAllowDecryption(allowDecryption);
     otp.parseObjectTree(msgContent);
 
@@ -1821,7 +1821,7 @@ void KMComposerWin::slotInsertFile()
     // Prevent race condition updating list when multiple composers are open
     {
         QUrlQuery query;
-        const QString encoding = MessageViewer::NodeHelper::encodingForName(query.queryItemValue(QStringLiteral("charset")));
+        const QString encoding = MimeTreeParser::NodeHelper::encodingForName(query.queryItemValue(QStringLiteral("charset")));
         QStringList urls = KMailSettings::self()->recentUrls();
         QStringList encodings = KMailSettings::self()->recentEncodings();
         // Prevent config file from growing without bound
@@ -1929,7 +1929,7 @@ QUrl KMComposerWin::insertFile()
     if (!result.URLs.isEmpty()) {
         url = result.URLs.first();
         if (url.isValid()) {
-            MessageCore::StringUtil::setEncodingFile(url, MessageViewer::NodeHelper::fixEncoding(result.encoding));
+            MessageCore::StringUtil::setEncodingFile(url, MimeTreeParser::NodeHelper::fixEncoding(result.encoding));
         }
     }
     return url;

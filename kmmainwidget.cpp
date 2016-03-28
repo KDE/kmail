@@ -201,7 +201,7 @@ using KPIM::ProgressManager;
 using KPIM::BroadcastStatus;
 using KMail::SearchWindow;
 using KMime::Types::AddrSpecList;
-using MessageViewer::AttachmentStrategy;
+using MimeTreeParser::AttachmentStrategy;
 
 Q_GLOBAL_STATIC(KMMainWidget::PtrList, theMainWidgetList)
 

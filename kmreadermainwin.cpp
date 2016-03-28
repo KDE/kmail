@@ -132,7 +132,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
 
     mParentCollection = parentCollection;
     mReaderWin->setOverrideEncoding(encoding);
-    mReaderWin->setMessage(msg, MessageViewer::Force);
+    mReaderWin->setMessage(msg, MimeTreeParser::Force);
     KMime::Message::Ptr message = MessageCore::Util::message(msg);
     QString caption;
     if (message) {

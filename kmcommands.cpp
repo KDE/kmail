@@ -1156,7 +1156,7 @@ void KMPrintCommand::setOverrideFont(const QFont &font)
     mOverrideFont = font;
 }
 
-void KMPrintCommand::setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy)
+void KMPrintCommand::setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy)
 {
     mAttachmentStrategy = strategy;
 }
@@ -1635,7 +1635,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
     KMime::Message::Ptr newMsg = factory.createResend();
-    newMsg->contentType()->setCharset(MessageViewer::NodeHelper::charset(msg.data()));
+    newMsg->contentType()->setCharset(MimeTreeParser::NodeHelper::charset(msg.data()));
 
     KMail::Composer *win = KMail::makeComposer();
     if (auto hdr = msg->replyTo(false)) {

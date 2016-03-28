@@ -393,14 +393,14 @@ public:
                    const QString &encoding = QString());
 
     void setOverrideFont(const QFont &);
-    void setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy);
+    void setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy);
     void setPrintPreview(bool preview);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
 
     MessageViewer::HeaderStylePlugin *mHeaderStylePlugin;
-    const MessageViewer::AttachmentStrategy *mAttachmentStrategy;
+    const MimeTreeParser::AttachmentStrategy *mAttachmentStrategy;
     QFont mOverrideFont;
     QString mEncoding;
     MessageViewer::Viewer::DisplayFormatMessage mFormat;
