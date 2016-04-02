@@ -2828,6 +2828,12 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu->addAction(mMsgActions->debugBalooAction());
         }
     }
+
+#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+    //TODO use interceptorUrlActions
+    //QList<QAction *> mMsgActions->interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const;
+#endif
+
     KAcceleratorManager::manage(menu);
     menu->exec(aPoint, Q_NULLPTR);
     delete menu;

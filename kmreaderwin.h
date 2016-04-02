@@ -177,6 +177,10 @@ public:
 
     QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
+#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+    QList<QAction *> interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const;
+#endif
+
 Q_SIGNALS:
     /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */

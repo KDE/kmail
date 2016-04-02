@@ -901,3 +901,10 @@ void KMReaderWin::slotShareImage()
     KMCommand *command = new KMShareImageCommand(imageUrlClicked(), this);
     command->start();
 }
+
+#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+QList<QAction *> KMReaderWin::interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const
+{
+    return mViewer->interceptorUrlActions(result);
+}
+#endif
