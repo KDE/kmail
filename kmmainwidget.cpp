@@ -2794,7 +2794,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu->addAction(mMsgView->toggleMimePartTreeAction());
         }
         menu->addSeparator();
-#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+#ifdef QTWEBENGINE_SUPPORT_OPTION
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
         menu->addAction(mMsgActions->printPreviewAction());
         menu->addAction(mMsgActions->printAction());
@@ -2834,7 +2834,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
     }
 
-#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+#ifdef QTWEBENGINE_SUPPORT_OPTION
     //TODO use interceptorUrlActions
     //QList<QAction *> mMsgActions->interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const;
 #endif

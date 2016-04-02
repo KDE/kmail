@@ -19,6 +19,7 @@
 #define CONFIGURESECURITYPAGE_H
 
 #include "kmail_export.h"
+#include "config-kdepim.h"
 #include "configuredialog_p.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_securitypagemdntab.h"
@@ -138,6 +139,7 @@ private:
     Kleo::CryptoConfig *mConfig;
 };
 
+#ifndef QTWEBENGINE_SUPPORT_OPTION
 class SecurityPageAdBlockTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -157,7 +159,7 @@ private:
 private:
     MessageViewer::AdBlockSettingWidget *mWidget;
 };
-
+#endif
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
@@ -177,7 +179,9 @@ private:
     ComposerCryptoTab *mComposerCryptoTab;
     WarningTab    *mWarningTab;
     SMimeTab      *mSMimeTab;
+#ifndef QTWEBENGINE_SUPPORT_OPTION
     SecurityPageAdBlockTab *mSAdBlockTab;
+#endif
 };
 
 #endif // CONFIGURESECURITYPAGE_H

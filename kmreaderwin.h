@@ -177,7 +177,7 @@ public:
 
     QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
-#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+#ifdef QTWEBENGINE_SUPPORT_OPTION
     QList<QAction *> interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const;
 #endif
 

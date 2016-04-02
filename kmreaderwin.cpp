@@ -902,7 +902,7 @@ void KMReaderWin::slotShareImage()
     command->start();
 }
 
-#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+#ifdef QTWEBENGINE_SUPPORT_OPTION
 QList<QAction *> KMReaderWin::interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const
 {
     return mViewer->interceptorUrlActions(result);

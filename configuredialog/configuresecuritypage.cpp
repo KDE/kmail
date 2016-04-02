@@ -71,8 +71,10 @@ SecurityPage::SecurityPage(QWidget *parent)
     //
     mSMimeTab = new SMimeTab();
     addTab(mSMimeTab, i18n("S/MIME Validation"));
+#ifndef QTWEBENGINE_SUPPORT_OPTION
     mSAdBlockTab = new SecurityPageAdBlockTab;
     addTab(mSAdBlockTab, i18n("Ad block"));
+#endif
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const
@@ -145,6 +147,7 @@ void SecurityPage::GeneralTab::save()
 }
 
 //Adblock
+#ifndef QTWEBENGINE_SUPPORT_OPTION
 
 QString SecurityPageAdBlockTab::helpAnchor() const
 {
@@ -186,6 +189,7 @@ void SecurityPageAdBlockTab::doResetToDefaultsOther()
 {
     mWidget->doResetToDefaultsOther();
 }
+#endif
 
 QString SecurityPage::MDNTab::helpAnchor() const
 {

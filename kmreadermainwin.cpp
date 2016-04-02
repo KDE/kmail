@@ -619,7 +619,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             }
             menu->addSeparator();
 
-#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+#ifdef QTWEBENGINE_SUPPORT_OPTION
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
             menu->addAction(mMsgActions->printPreviewAction());
             menu->addAction(mMsgActions->printAction());
