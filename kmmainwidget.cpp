@@ -2795,17 +2795,12 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
         menu->addSeparator();
 #ifdef MESSAGEVIEWER_USE_QTWEBENGINE
-
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-        if (mMsgActions->printPreviewAction()) {
-            menu->addAction(mMsgActions->printPreviewAction());
-        }
+        menu->addAction(mMsgActions->printPreviewAction());
         menu->addAction(mMsgActions->printAction());
 #endif
 #else
-        if (mMsgActions->printPreviewAction()) {
-            menu->addAction(mMsgActions->printPreviewAction());
-        }
+        menu->addAction(mMsgActions->printPreviewAction());
         menu->addAction(mMsgActions->printAction());
 #endif
         menu->addAction(mSaveAsAction);
