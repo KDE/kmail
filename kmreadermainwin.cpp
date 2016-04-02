@@ -618,10 +618,20 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 menu->addAction(mReaderWin->toggleMimePartTreeAction());
             }
             menu->addSeparator();
+
+#ifdef MESSAGEVIEWER_USE_QTWEBENGINE
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
             if (mMsgActions->printPreviewAction()) {
                 menu->addAction(mMsgActions->printPreviewAction());
             }
             menu->addAction(mMsgActions->printAction());
+#endif
+#else
+            if (mMsgActions->printPreviewAction()) {
+                menu->addAction(mMsgActions->printPreviewAction());
+            }
+            menu->addAction(mMsgActions->printAction());
+#endif
             menu->addAction(mReaderWin->saveAsAction());
             menu->addAction(mSaveAtmAction);
             if (msg.isValid()) {
