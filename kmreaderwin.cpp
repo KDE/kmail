@@ -238,6 +238,11 @@ void KMReaderWin::setUseFixedFont(bool useFixedFont)
     mViewer->setUseFixedFont(useFixedFont);
 }
 
+Viewer *KMReaderWin::viewer()
+{
+    return mViewer;
+}
+
 bool KMReaderWin::isFixedFont() const
 {
     return mViewer->isFixedFont();
@@ -426,6 +431,11 @@ Akonadi::Item KMReaderWin::message() const
     return mViewer->messageItem();
 }
 
+QWidget *KMReaderWin::mainWindow()
+{
+    return mMainWindow;
+}
+
 void KMReaderWin::slotMailtoCompose()
 {
     KMCommand *command = new KMMailtoComposeCommand(urlClicked(), message());
@@ -546,6 +556,31 @@ KToggleAction *KMReaderWin::toggleFixFontAction() const
     return mViewer->toggleFixFontAction();
 }
 
+QAction *KMReaderWin::mailToComposeAction() const
+{
+    return mMailToComposeAction;
+}
+
+QAction *KMReaderWin::mailToReplyAction() const
+{
+    return mMailToReplyAction;
+}
+
+QAction *KMReaderWin::mailToForwardAction() const
+{
+    return mMailToForwardAction;
+}
+
+QAction *KMReaderWin::addAddrBookAction() const
+{
+    return mAddAddrBookAction;
+}
+
+QAction *KMReaderWin::openAddrBookAction() const
+{
+    return mOpenAddrBookAction;
+}
+
 bool KMReaderWin::mimePartTreeIsEmpty() const
 {
     return mViewer->mimePartTreeIsEmpty();
@@ -604,6 +639,16 @@ QAction *KMReaderWin::findInMessageAction() const
 QAction *KMReaderWin::urlOpenAction() const
 {
     return mViewer->urlOpenAction();
+}
+
+QAction *KMReaderWin::urlSaveAsAction() const
+{
+    return mUrlSaveAsAction;
+}
+
+QAction *KMReaderWin::addBookmarksAction() const
+{
+    return mAddBookmarksAction;
 }
 void KMReaderWin::setPrinting(bool enable)
 {
@@ -829,6 +874,26 @@ bool KMReaderWin::adblockEnabled() const
 QAction *KMReaderWin::openBlockableItems() const
 {
     return mViewer->openBlockableItems();
+}
+
+QAction *KMReaderWin::editContactAction() const
+{
+    return mEditContactAction;
+}
+
+QMenu *KMReaderWin::viewHtmlOption() const
+{
+    return mViewHtmlOptions;
+}
+
+QAction *KMReaderWin::shareImage() const
+{
+    return mShareImage;
+}
+
+QAction *KMReaderWin::addToExistingContactAction() const
+{
+    return mAddEmailToExistingContactAction;
 }
 
 void KMReaderWin::slotShareImage()

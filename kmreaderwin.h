@@ -125,44 +125,20 @@ public:
 
     bool isFixedFont() const;
     void setUseFixedFont(bool useFixedFont);
-    MessageViewer::Viewer *viewer()
-    {
-        return mViewer;
-    }
+    MessageViewer::Viewer *viewer();
     KToggleAction *toggleFixFontAction() const;
-    QAction *mailToComposeAction() const
-    {
-        return mMailToComposeAction;
-    }
-    QAction *mailToReplyAction() const
-    {
-        return mMailToReplyAction;
-    }
-    QAction *mailToForwardAction() const
-    {
-        return mMailToForwardAction;
-    }
-    QAction *addAddrBookAction() const
-    {
-        return mAddAddrBookAction;
-    }
-    QAction *openAddrBookAction() const
-    {
-        return mOpenAddrBookAction;
-    }
+    QAction *mailToComposeAction() const;
+    QAction *mailToReplyAction() const;
+    QAction *mailToForwardAction() const;
+    QAction *addAddrBookAction() const;
+    QAction *openAddrBookAction() const;
     QAction *copyAction() const;
     QAction *selectAllAction() const;
     QAction *copyURLAction() const;
     QAction *copyImageLocation() const;
     QAction *urlOpenAction() const;
-    QAction *urlSaveAsAction() const
-    {
-        return mUrlSaveAsAction;
-    }
-    QAction *addBookmarksAction() const
-    {
-        return mAddBookmarksAction;
-    }
+    QAction *urlSaveAsAction() const;
+    QAction *addBookmarksAction() const;
     QAction *toggleMimePartTreeAction() const;
     QAction *speakTextAction() const;
     QAction *downloadImageToDiskAction() const;
@@ -174,31 +150,16 @@ public:
     QAction *blockImage() const;
     QAction *openBlockableItems() const;
 
-    QAction *editContactAction() const
-    {
-        return mEditContactAction;
-    }
+    QAction *editContactAction() const;
 
-    QMenu *viewHtmlOption() const
-    {
-        return mViewHtmlOptions;
-    }
-    QAction *shareImage() const
-    {
-        return mShareImage;
-    }
+    QMenu *viewHtmlOption() const;
+    QAction *shareImage() const;
 
-    QAction *addToExistingContactAction() const
-    {
-        return mAddEmailToExistingContactAction;
-    }
+    QAction *addToExistingContactAction() const;
 
     Akonadi::Item message() const;
 
-    QWidget *mainWindow()
-    {
-        return mMainWindow;
-    }
+    QWidget *mainWindow();
 
     /** Enforce message decryption. */
     void setDecryptMessageOverwrite(bool overwrite = true);
