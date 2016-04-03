@@ -31,6 +31,11 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KLocalizedString>
 #include <QDialog>
 #include <KConfigGroup>
+#include <QHBoxLayout>
+
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+#include <MessageViewer/NetworkPluginUrlInterceptorConfigureWidget>
+#endif
 
 using namespace MailCommon;
 QString MiscPage::helpAnchor() const
@@ -208,10 +213,13 @@ void MiscPagePrintingTab::save()
 //----------------------------
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-AddonsPluginTab::AddonsPluginTab(QWidget *parent)
-    : ConfigModuleTab(parent)
+AddonsPluginTab::AddonsPluginTab(MessageViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent)
+    : ConfigModuleTab(parent),
+      mConfigureWidget(configureWidget)
 {
-
+    QHBoxLayout *l = new QHBoxLayout(this);
+    l->setContentsMargins(0, 0, 0, 0);
+    l->addWidget(mConfigureWidget);
 }
 
 AddonsPluginTab::~AddonsPluginTab()
@@ -221,21 +229,21 @@ AddonsPluginTab::~AddonsPluginTab()
 
 void AddonsPluginTab::save()
 {
-
+    mConfigureWidget->saveSettings();
 }
 
 void AddonsPluginTab::doLoadFromGlobalSettings()
 {
-
+    //TODO ?
 }
 
 void AddonsPluginTab::doLoadOther()
 {
-
+    mConfigureWidget->loadSettings();
 }
 
 void AddonsPluginTab::doResetToDefaultsOther()
 {
-
+    mConfigureWidget->resetSettings();
 }
 #endif

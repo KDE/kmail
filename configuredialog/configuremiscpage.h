@@ -34,6 +34,13 @@ class PrintingSettings;
 }
 class ConfigureAgentsWidget;
 
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+namespace MessageViewer
+{
+class NetworkPluginUrlInterceptorConfigureWidget;
+}
+#endif
+
 class MiscPageFolderTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -121,7 +128,7 @@ class AddonsPluginTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AddonsPluginTab(QWidget *parent = Q_NULLPTR);
+    explicit AddonsPluginTab(MessageViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent = Q_NULLPTR);
     ~AddonsPluginTab();
 
     void save() Q_DECL_OVERRIDE;
@@ -132,6 +139,7 @@ private:
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
+    MessageViewer::NetworkPluginUrlInterceptorConfigureWidget *mConfigureWidget;
 };
 #endif
 #endif // CONFIGUREMISCPAGE_H
