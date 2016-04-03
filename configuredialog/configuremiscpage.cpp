@@ -206,3 +206,36 @@ void MiscPagePrintingTab::save()
 }
 
 //----------------------------
+
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+AddonsPluginTab::AddonsPluginTab(QWidget *parent)
+    : ConfigModuleTab(parent)
+{
+
+}
+
+AddonsPluginTab::~AddonsPluginTab()
+{
+
+}
+
+void AddonsPluginTab::save()
+{
+
+}
+
+void AddonsPluginTab::doLoadFromGlobalSettings()
+{
+
+}
+
+void AddonsPluginTab::doLoadOther()
+{
+
+}
+
+void AddonsPluginTab::doResetToDefaultsOther()
+{
+
+}
+#endif

@@ -19,6 +19,7 @@
 #define CONFIGUREMISCPAGE_H
 
 #include "kmail_export.h"
+#include "config-kdepim.h"
 #include "ui_miscpagemaintab.h"
 #include "configuredialog_p.h"
 
@@ -115,4 +116,22 @@ private:
     MiscPagePrintingTab *mPrintingTab;
 };
 
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+class AddonsPluginTab : public ConfigModuleTab
+{
+    Q_OBJECT
+public:
+    explicit AddonsPluginTab(QWidget *parent = Q_NULLPTR);
+    ~AddonsPluginTab();
+
+    void save() Q_DECL_OVERRIDE;
+
+private:
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+
+private:
+};
+#endif
 #endif // CONFIGUREMISCPAGE_H
