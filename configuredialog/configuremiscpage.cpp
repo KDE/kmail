@@ -35,6 +35,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
 #include <MessageViewer/NetworkPluginUrlInterceptorConfigureWidget>
+#include <MessageViewer/NetworkUrlInterceptorPluginManager>
+#include <MessageViewer/NetworkPluginUrlInterceptor>
 #endif
 
 using namespace MailCommon;
@@ -57,6 +59,17 @@ MiscPage::MiscPage(QWidget *parent)
 
     mPrintingTab = new MiscPagePrintingTab();
     addTab(mPrintingTab, i18n("Printing"));
+
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+    Q_FOREACH(MessageViewer::NetworkPluginUrlInterceptor *plugin, MessageViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
+        if (plugin->hasConfigureSupport()) {
+            MessageViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
+
+            AddonsPluginTab *tab = new AddonsPluginTab(settings.configureWidget, this);
+            addTab(tab, settings.name);
+        }
+    }
+#endif
 }
 
 QString MiscPageFolderTab::helpAnchor() const
