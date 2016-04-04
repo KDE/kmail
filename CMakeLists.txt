@@ -360,7 +360,7 @@ target_link_libraries(kmail
     KF5::KontactInterface
     kmailprivate
     KF5::PimCommon
-    KF5::Libkdepim
+    KF5::I18n
     KF5::TemplateParser
     )
 

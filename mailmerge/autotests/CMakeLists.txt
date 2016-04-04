@@ -14,6 +14,7 @@ macro(add_kmail_unittest _source _additionalsource)
     Qt5::Test
     KF5::KIOCore
     KF5::KIOWidgets
+    KF5::I18n
   )
 endmacro ()
 

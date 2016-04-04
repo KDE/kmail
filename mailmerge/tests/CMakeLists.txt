@@ -7,5 +7,6 @@ target_link_libraries(mailmergewidget_gui
   KF5::KIOCore
   KF5::KIOWidgets
   KF5::PimCommon
+  KF5::I18n
 )
 
