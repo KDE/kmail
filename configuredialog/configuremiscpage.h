@@ -106,23 +106,6 @@ private:
     MessageViewer::PrintingSettings *mPrintingUi;
 };
 
-class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
-{
-    Q_OBJECT
-public:
-    explicit MiscPage(QWidget *parent = Q_NULLPTR);
-    QString helpAnchor() const Q_DECL_OVERRIDE;
-
-    typedef MiscPageFolderTab FolderTab;
-    typedef MiscPageInviteTab InviteTab;
-
-private:
-    FolderTab *mFolderTab;
-    InviteTab *mInviteTab;
-    MiscPageAgentSettingsTab *mAgentSettingsTab;
-    MiscPagePrintingTab *mPrintingTab;
-};
-
 #ifdef QTWEBENGINE_SUPPORT_OPTION
 class AddonsPluginTab : public ConfigModuleTab
 {
@@ -142,4 +125,16 @@ private:
     MessageViewer::NetworkPluginUrlInterceptorConfigureWidget *mConfigureWidget;
 };
 #endif
+
+class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
+{
+    Q_OBJECT
+public:
+    explicit MiscPage(QWidget *parent = Q_NULLPTR);
+    QString helpAnchor() const Q_DECL_OVERRIDE;
+
+    typedef MiscPageFolderTab FolderTab;
+    typedef MiscPageInviteTab InviteTab;
+};
+
 #endif // CONFIGUREMISCPAGE_H

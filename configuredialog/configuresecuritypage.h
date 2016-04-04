@@ -174,14 +174,6 @@ public:
     typedef SecurityPageWarningTab WarningTab;
     typedef SecurityPageSMimeTab SMimeTab;
 
-private:
-    GeneralTab    *mGeneralTab;
-    ComposerCryptoTab *mComposerCryptoTab;
-    WarningTab    *mWarningTab;
-    SMimeTab      *mSMimeTab;
-#ifndef QTWEBENGINE_SUPPORT_OPTION
-    SecurityPageAdBlockTab *mSAdBlockTab;
-#endif
 };
 
 #endif // CONFIGURESECURITYPAGE_H

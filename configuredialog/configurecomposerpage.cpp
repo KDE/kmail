@@ -75,63 +75,63 @@ ComposerPage::ComposerPage(QWidget *parent)
     //
     // "General" tab:
     //
-    mGeneralTab = new GeneralTab();
-    addTab(mGeneralTab, i18nc("General settings for the composer.", "General"));
-    addConfig(KMailSettings::self(), mGeneralTab);
+    GeneralTab *generalTab = new GeneralTab();
+    addTab(generalTab, i18nc("General settings for the composer.", "General"));
+    addConfig(KMailSettings::self(), generalTab);
 
     //
     // "Templates" tab:
     //
-    mTemplatesTab = new TemplatesTab();
-    addTab(mTemplatesTab, i18n("Standard Templates"));
+    TemplatesTab *templatesTab = new TemplatesTab();
+    addTab(templatesTab, i18n("Standard Templates"));
 
     //
     // "Custom Templates" tab:
     //
-    mCustomTemplatesTab = new CustomTemplatesTab();
-    addTab(mCustomTemplatesTab, i18n("Custom Templates"));
+    CustomTemplatesTab *customTemplatesTab = new CustomTemplatesTab();
+    addTab(customTemplatesTab, i18n("Custom Templates"));
 
     //
     // "Subject" tab:
     //
-    mSubjectTab = new SubjectTab();
-    addTab(mSubjectTab, i18nc("Settings regarding the subject when composing a message.", "Subject"));
-    addConfig(KMailSettings::self(), mSubjectTab);
+    SubjectTab *subjectTab = new SubjectTab();
+    addTab(subjectTab, i18nc("Settings regarding the subject when composing a message.", "Subject"));
+    addConfig(KMailSettings::self(), subjectTab);
 
     //
     // "Charset" tab:
     //
-    mCharsetTab = new CharsetTab();
-    addTab(mCharsetTab, i18n("Charset"));
+    CharsetTab *charsetTab = new CharsetTab();
+    addTab(charsetTab, i18n("Charset"));
 
     //
     // "Headers" tab:
     //
-    mHeadersTab = new HeadersTab();
-    addTab(mHeadersTab, i18n("Headers"));
+    HeadersTab *headersTab = new HeadersTab();
+    addTab(headersTab, i18n("Headers"));
 
     //
     // "Attachments" tab:
     //
-    mAttachmentsTab = new AttachmentsTab();
-    addTab(mAttachmentsTab, i18nc("Config->Composer->Attachments", "Attachments"));
+    AttachmentsTab *attachmentsTab = new AttachmentsTab();
+    addTab(attachmentsTab, i18nc("Config->Composer->Attachments", "Attachments"));
 
     //
     // "autocorrection" tab:
     //
-    mAutoCorrectionTab = new AutoCorrectionTab();
-    addTab(mAutoCorrectionTab, i18n("Autocorrection"));
+    AutoCorrectionTab *autoCorrectionTab = new AutoCorrectionTab();
+    addTab(autoCorrectionTab, i18n("Autocorrection"));
 
     //
     // "autoresize" tab:
     //
-    mAutoImageResizeTab = new AutoImageResizeTab();
-    addTab(mAutoImageResizeTab, i18n("Auto Resize Image"));
+    AutoImageResizeTab *autoImageResizeTab = new AutoImageResizeTab();
+    addTab(autoImageResizeTab, i18n("Auto Resize Image"));
 
     //
     // "external editor" tab:
-    mExternalEditorTab = new ExternalEditorTab();
-    addTab(mExternalEditorTab, i18n("External Editor"));
+    ExternalEditorTab *externalEditorTab = new ExternalEditorTab();
+    addTab(externalEditorTab, i18n("External Editor"));
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const

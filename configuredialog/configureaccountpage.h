@@ -100,10 +100,6 @@ public:
 
 Q_SIGNALS:
     void accountListChanged(const QStringList &);
-
-private:
-    SendingTab   *mSendingTab;
-    ReceivingTab *mReceivingTab;
 };
 
 #endif // CONFIGUREACCOUNTPAGE_H

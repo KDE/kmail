@@ -286,17 +286,6 @@ public:
     typedef ComposerPageAutoCorrectionTab AutoCorrectionTab;
     typedef ComposerPageAutoImageResizeTab AutoImageResizeTab;
     typedef ComposerPageExternalEditorTab ExternalEditorTab;
-private:
-    GeneralTab  *mGeneralTab;
-    TemplatesTab  *mTemplatesTab;
-    CustomTemplatesTab  *mCustomTemplatesTab;
-    SubjectTab  *mSubjectTab;
-    CharsetTab  *mCharsetTab;
-    HeadersTab  *mHeadersTab;
-    AttachmentsTab  *mAttachmentsTab;
-    AutoCorrectionTab *mAutoCorrectionTab;
-    AutoImageResizeTab *mAutoImageResizeTab;
-    ExternalEditorTab *mExternalEditorTab;
 };
 
 #endif // CONFIGURECOMPOSERPAGE_H

@@ -49,31 +49,31 @@ SecurityPage::SecurityPage(QWidget *parent)
     //
     // "Reading" tab:
     //
-    mGeneralTab = new GeneralTab(); //  @TODO: rename
-    addTab(mGeneralTab, i18n("Reading"));
+    GeneralTab *generalTab = new GeneralTab(); //  @TODO: rename
+    addTab(generalTab, i18n("Reading"));
 
     addTab(new MDNTab(), i18n("Message Disposition Notifications"));
 
     //
     // "Composing" tab:
     //
-    mComposerCryptoTab = new ComposerCryptoTab();
-    addTab(mComposerCryptoTab, i18n("Composing"));
+    ComposerCryptoTab *composerCryptoTab = new ComposerCryptoTab();
+    addTab(composerCryptoTab, i18n("Composing"));
 
     //
     // "Warnings" tab:
     //
-    mWarningTab = new WarningTab();
-    addTab(mWarningTab, i18n("Miscellaneous"));
+    WarningTab *warningTab = new WarningTab();
+    addTab(warningTab, i18n("Miscellaneous"));
 
     //
     // "S/MIME Validation" tab:
     //
-    mSMimeTab = new SMimeTab();
-    addTab(mSMimeTab, i18n("S/MIME Validation"));
+    SMimeTab *sMimeTab = new SMimeTab();
+    addTab(sMimeTab, i18n("S/MIME Validation"));
 #ifndef QTWEBENGINE_SUPPORT_OPTION
-    mSAdBlockTab = new SecurityPageAdBlockTab;
-    addTab(mSAdBlockTab, i18n("Ad block"));
+    SecurityPageAdBlockTab *adBlockTab = new SecurityPageAdBlockTab;
+    addTab(adBlockTab, i18n("Ad block"));
 #endif
 }
 

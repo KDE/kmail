@@ -48,17 +48,17 @@ QString MiscPage::helpAnchor() const
 MiscPage::MiscPage(QWidget *parent)
     : ConfigModuleWithTabs(parent)
 {
-    mFolderTab = new FolderTab();
-    addTab(mFolderTab, i18n("Folders"));
+    FolderTab *folderTab = new FolderTab();
+    addTab(folderTab, i18n("Folders"));
 
-    mInviteTab = new InviteTab();
-    addTab(mInviteTab, i18n("Invitations"));
+    InviteTab *inviteTab = new InviteTab();
+    addTab(inviteTab, i18n("Invitations"));
 
-    mAgentSettingsTab = new MiscPageAgentSettingsTab();
-    addTab(mAgentSettingsTab, i18n("Plugins Settings"));
+    MiscPageAgentSettingsTab *agentSettingsTab = new MiscPageAgentSettingsTab();
+    addTab(agentSettingsTab, i18n("Plugins Settings"));
 
-    mPrintingTab = new MiscPagePrintingTab();
-    addTab(mPrintingTab, i18n("Printing"));
+    MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
+    addTab(printingTab, i18n("Printing"));
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
     Q_FOREACH(MessageViewer::NetworkPluginUrlInterceptor *plugin, MessageViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {

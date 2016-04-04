@@ -91,45 +91,45 @@ AppearancePage::AppearancePage(QWidget *parent)
     //
     // "Fonts" tab:
     //
-    mFontsTab = new FontsTab();
-    addTab(mFontsTab, i18n("Fonts"));
+    FontsTab *fontsTab = new FontsTab();
+    addTab(fontsTab, i18n("Fonts"));
 
     //
     // "Colors" tab:
     //
-    mColorsTab = new ColorsTab();
-    addTab(mColorsTab, i18n("Colors"));
+    ColorsTab *colorsTab = new ColorsTab();
+    addTab(colorsTab, i18n("Colors"));
 
     //
     // "Layout" tab:
     //
-    mLayoutTab = new LayoutTab();
-    addTab(mLayoutTab, i18n("Layout"));
+    LayoutTab *layoutTab = new LayoutTab();
+    addTab(layoutTab, i18n("Layout"));
 
     //
     // "Headers" tab:
     //
-    mHeadersTab = new HeadersTab();
-    addTab(mHeadersTab, i18n("Message List"));
+    HeadersTab *headersTab = new HeadersTab();
+    addTab(headersTab, i18n("Message List"));
 
     //
     // "Reader window" tab:
     //
-    mReaderTab = new ReaderTab();
-    addTab(mReaderTab, i18n("Message Window"));
-    addConfig(MessageViewer::MessageViewerSettings::self(), mReaderTab);
+    ReaderTab *readerTab = new ReaderTab();
+    addTab(readerTab, i18n("Message Window"));
+    addConfig(MessageViewer::MessageViewerSettings::self(), readerTab);
 
     //
     // "System Tray" tab:
     //
-    mSystemTrayTab = new SystemTrayTab();
-    addTab(mSystemTrayTab, i18n("System Tray"));
+    SystemTrayTab *systemTrayTab = new SystemTrayTab();
+    addTab(systemTrayTab, i18n("System Tray"));
 
     //
     // "Message Tag" tab:
     //
-    mMessageTagTab = new MessageTagTab();
-    addTab(mMessageTagTab, i18n("Message Tags"));
+    MessageTagTab *messageTagTab = new MessageTagTab();
+    addTab(messageTagTab, i18n("Message Tags"));
 }
 
 QString AppearancePage::FontsTab::helpAnchor() const

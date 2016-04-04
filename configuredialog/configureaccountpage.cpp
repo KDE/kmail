@@ -61,15 +61,15 @@ AccountsPage::AccountsPage(QWidget *parent)
     //
     // "Receiving" tab:
     //
-    mReceivingTab = new ReceivingTab();
-    addTab(mReceivingTab, i18nc("@title:tab Tab page where the user configures accounts to receive mail", "Receiving"));
-    connect(mReceivingTab, &ReceivingTab::accountListChanged, this, &AccountsPage::accountListChanged);
+    ReceivingTab *receivingTab = new ReceivingTab();
+    addTab(receivingTab, i18nc("@title:tab Tab page where the user configures accounts to receive mail", "Receiving"));
+    connect(receivingTab, &ReceivingTab::accountListChanged, this, &AccountsPage::accountListChanged);
 
     //
     // "Sending" tab:
     //
-    mSendingTab = new SendingTab();
-    addTab(mSendingTab, i18nc("@title:tab Tab page where the user configures accounts to send mail", "Sending"));
+    SendingTab *sendingTab = new SendingTab();
+    addTab(sendingTab, i18nc("@title:tab Tab page where the user configures accounts to send mail", "Sending"));
 }
 
 AccountsPageSendingTab::~AccountsPageSendingTab()

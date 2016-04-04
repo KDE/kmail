@@ -315,15 +315,6 @@ public:
     typedef AppearancePageReaderTab ReaderTab;
     typedef AppearancePageSystemTrayTab SystemTrayTab;
     typedef AppearancePageMessageTagTab MessageTagTab;
-
-private:
-    FontsTab      *mFontsTab;
-    ColorsTab     *mColorsTab;
-    LayoutTab     *mLayoutTab;
-    HeadersTab    *mHeadersTab;
-    ReaderTab     *mReaderTab;
-    SystemTrayTab *mSystemTrayTab;
-    MessageTagTab *mMessageTagTab;
 };
 
 #endif // CONFIGUREAPPEARANCEPAGE_H
