@@ -4,6 +4,7 @@
 #define KMReaderMainWin_h
 
 #include "kmail_export.h"
+#include "config-kdepim.h"
 
 #include "secondarywindow.h"
 
@@ -56,7 +57,11 @@ public:
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
 private Q_SLOTS:
-    void slotMessagePopup(const Akonadi::Item &, const QUrl &, const QUrl &imageUrl, const QPoint &);
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+    void slotMessagePopup(const Akonadi::Item &aMsg, const MessageViewer::WebHitTestResult &result, const QPoint &aPoint);
+#else
+    void slotMessagePopup(const Akonadi::Item &aMsg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint);
+#endif
     void slotContactSearchJobForMessagePopupDone(KJob *);
     void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
     void slotTrashMessage();

@@ -58,6 +58,9 @@
 #include <KActionCollection>
 #include <Akonadi/Contact/ContactSearchJob>
 #include <KEmailAddress>
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+#include <MessageViewer/WebHitTestResult>
+#endif
 #include <kmime/kmime_message.h>
 
 #include <messageviewer/viewer.h>
@@ -365,7 +368,11 @@ void KMReaderMainWin::setupAccel()
     closeAction->setShortcuts(closeShortcut << QKeySequence(Qt::Key_Escape));
 
     //----- Message Menu
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+    connect(mReaderWin->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMReaderMainWin::slotMessagePopup);
+#else
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::popupMenu, this, &KMReaderMainWin::slotMessagePopup);
+#endif
 
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::itemRemoved, this, &QWidget::close);
 
@@ -445,8 +452,16 @@ void KMReaderMainWin::slotCopyMoveResult(KJob *job)
     }
 }
 
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const MessageViewer::WebHitTestResult &result, const QPoint &aPoint)
+#else
 void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint)
+#endif
 {
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+    QUrl aUrl = result.linkUrl();
+    QUrl imageUrl = result.imageUrl();
+#endif
     mMsg = aMsg;
 
     const QString email =  KEmailAddress::firstEmailAddress(aUrl.path()).toLower();

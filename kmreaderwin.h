@@ -22,6 +22,7 @@
 #define KMREADERWIN_H
 
 #include "kmail_export.h"
+#include "config-kdepim.h"
 
 #include <QWidget>
 #include <qurl.h>

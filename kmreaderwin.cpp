@@ -21,6 +21,7 @@
 // define this to copy all html that is written to the readerwindow to
 // filehtmlwriter.out in the current working directory
 #include "kmreaderwin.h"
+#include "config-kdepim.h"
 
 #include "settings/kmailsettings.h"
 #include "kmmainwidget.h"
