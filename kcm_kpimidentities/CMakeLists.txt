@@ -34,6 +34,8 @@ target_link_libraries(kcm_kpimidentities
   KF5::PimCommon
   KF5::Libkleo
   KF5::Libkdepim
+  KF5::I18n
+  KF5::SonnetUi
 )
 
 install(FILES kcm_kpimidentities.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

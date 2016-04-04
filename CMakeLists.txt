@@ -281,6 +281,8 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 
 target_link_libraries(kmailprivate
     PRIVATE
+    KF5::TextWidgets
+    KF5::I18n
     KF5::Gravatar
     KF5::Mime
     KF5::AkonadiCore
@@ -328,7 +330,7 @@ set_target_properties(kmailprivate
 ########### kcm_kmail ###############
 set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
 add_library(kcm_kmail MODULE ${kcm_kmail_PART_SRCS})
-target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion)
+target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
 
 ########### kmailpart ###############
 
