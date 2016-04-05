@@ -61,7 +61,7 @@ MiscPage::MiscPage(QWidget *parent)
     addTab(printingTab, i18n("Printing"));
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-    Q_FOREACH(MessageViewer::NetworkPluginUrlInterceptor *plugin, MessageViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
+    Q_FOREACH (MessageViewer::NetworkPluginUrlInterceptor *plugin, MessageViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
             MessageViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
 

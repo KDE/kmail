@@ -1017,9 +1017,9 @@ void KMMainWidget::createWidgets()
                 this, &KMMainWidget::slotReplaceMsgByUnencryptedVersion);
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-    connect(mMsgView->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMMainWidget::slotMessagePopup);
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMMainWidget::slotMessagePopup);
 #else
-    connect(mMsgView->viewer(), &MessageViewer::Viewer::popupMenu, this, &KMMainWidget::slotMessagePopup);
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::popupMenu, this, &KMMainWidget::slotMessagePopup);
 #endif
         connect(mMsgView->viewer(), &MessageViewer::Viewer::moveMessageToTrash,
                 this, &KMMainWidget::slotMoveMessageToTrash);
