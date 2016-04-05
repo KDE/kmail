@@ -233,6 +233,7 @@ AddonsPluginTab::AddonsPluginTab(MessageViewer::NetworkPluginUrlInterceptorConfi
     QHBoxLayout *l = new QHBoxLayout(this);
     l->setContentsMargins(0, 0, 0, 0);
     l->addWidget(mConfigureWidget);
+    connect(configureWidget, &MessageViewer::NetworkPluginUrlInterceptorConfigureWidget::configureChanged, this, &AddonsPluginTab::slotEmitChanged);
 }
 
 AddonsPluginTab::~AddonsPluginTab()
