@@ -674,6 +674,11 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mMsgActions->debugBalooAction());
         }
     }
+#ifdef QTWEBENGINE_SUPPORT_OPTION
+    //TODO use interceptorUrlActions
+    //QList<QAction *> mMsgActions->interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const;
+#endif
+
     if (menu) {
         KAcceleratorManager::manage(menu);
         menu->exec(aPoint, Q_NULLPTR);
