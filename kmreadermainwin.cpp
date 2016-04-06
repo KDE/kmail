@@ -59,7 +59,7 @@
 #include <Akonadi/Contact/ContactSearchJob>
 #include <KEmailAddress>
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-#include <MessageViewer/WebHitTestResult>
+#include <WebEngineViewer/WebHitTestResult>
 #endif
 #include <kmime/kmime_message.h>
 
@@ -453,7 +453,7 @@ void KMReaderMainWin::slotCopyMoveResult(KJob *job)
 }
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const MessageViewer::WebHitTestResult &result, const QPoint &aPoint)
+void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint)
 #else
 void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint)
 #endif

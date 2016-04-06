@@ -58,7 +58,7 @@ public:
 
 private Q_SLOTS:
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-    void slotMessagePopup(const Akonadi::Item &aMsg, const MessageViewer::WebHitTestResult &result, const QPoint &aPoint);
+    void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint);
 #else
     void slotMessagePopup(const Akonadi::Item &aMsg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint);
 #endif

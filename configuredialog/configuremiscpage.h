@@ -35,7 +35,7 @@ class PrintingSettings;
 class ConfigureAgentsWidget;
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-namespace MessageViewer
+namespace WebEngineViewer
 {
 class NetworkPluginUrlInterceptorConfigureWidget;
 }
@@ -111,7 +111,7 @@ class AddonsPluginTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AddonsPluginTab(MessageViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent = Q_NULLPTR);
+    explicit AddonsPluginTab(WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent = Q_NULLPTR);
     ~AddonsPluginTab();
 
     void save() Q_DECL_OVERRIDE;
@@ -122,7 +122,7 @@ private:
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
-    MessageViewer::NetworkPluginUrlInterceptorConfigureWidget *mConfigureWidget;
+    WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *mConfigureWidget;
 };
 #endif
 

@@ -34,9 +34,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QHBoxLayout>
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-#include <MessageViewer/NetworkPluginUrlInterceptorConfigureWidget>
-#include <MessageViewer/NetworkUrlInterceptorPluginManager>
-#include <MessageViewer/NetworkPluginUrlInterceptor>
+#include <WebEngineViewer/NetworkPluginUrlInterceptorConfigureWidget>
+#include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
+#include <WebEngineViewer/NetworkPluginUrlInterceptor>
 #endif
 
 using namespace MailCommon;
@@ -61,9 +61,9 @@ MiscPage::MiscPage(QWidget *parent)
     addTab(printingTab, i18n("Printing"));
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-    Q_FOREACH (MessageViewer::NetworkPluginUrlInterceptor *plugin, MessageViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
+    Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
-            MessageViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
+            WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
 
             AddonsPluginTab *tab = new AddonsPluginTab(settings.configureWidget, this);
             addTab(tab, settings.name);
@@ -226,14 +226,14 @@ void MiscPagePrintingTab::save()
 //----------------------------
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-AddonsPluginTab::AddonsPluginTab(MessageViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent)
+AddonsPluginTab::AddonsPluginTab(WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent)
     : ConfigModuleTab(parent),
       mConfigureWidget(configureWidget)
 {
     QHBoxLayout *l = new QHBoxLayout(this);
     l->setContentsMargins(0, 0, 0, 0);
     l->addWidget(mConfigureWidget);
-    connect(configureWidget, &MessageViewer::NetworkPluginUrlInterceptorConfigureWidget::configureChanged, this, &AddonsPluginTab::slotEmitChanged);
+    connect(configureWidget, &WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget::configureChanged, this, &AddonsPluginTab::slotEmitChanged);
 }
 
 AddonsPluginTab::~AddonsPluginTab()

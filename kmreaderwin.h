@@ -179,7 +179,7 @@ public:
     QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-    QList<QAction *> interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const;
+    QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
 #endif
 
 Q_SIGNALS:

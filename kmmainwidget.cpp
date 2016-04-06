@@ -186,7 +186,7 @@ using KSieveUi::SieveDebugDialog;
 #include <QTextDocument>
 #include <QDir>
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-#include <MessageViewer/WebHitTestResult>
+#include <WebEngineViewer/WebHitTestResult>
 #endif
 // System includes
 #include <AkonadiWidgets/standardactionmanager.h>
@@ -2646,7 +2646,7 @@ void KMMainWidget::slotSelectAllMessages()
 }
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
-void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const MessageViewer::WebHitTestResult &result, const QPoint &aPoint)
+void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint)
 #else
 void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint)
 #endif
