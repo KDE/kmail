@@ -278,7 +278,9 @@ kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
 
 add_library(kmailprivate ${kmailprivate_LIB_SRCS})
 generate_export_header(kmailprivate BASE_NAME kmail)
-
+if (QTWEBENGINE_SUPPORT_OPTION)
+    set(libmailprivate_webengine KF5::WebEngineViewer)
+endif()
 target_link_libraries(kmailprivate
     PRIVATE
     KF5::TextWidgets
@@ -318,7 +320,7 @@ target_link_libraries(kmailprivate
     KF5::Completion
     KF5::Ldap
     KF5::AkonadiSearchDebug
-    KF5::WebEngineViewer
+    ${libmailprivate_webengine}
     )
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
