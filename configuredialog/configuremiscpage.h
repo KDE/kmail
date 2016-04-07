@@ -91,6 +91,7 @@ private:
     ConfigureAgentsWidget *mConfigureAgent;
 };
 
+#ifndef QTWEBENGINE_SUPPORT_OPTION
 class MiscPagePrintingTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -105,6 +106,7 @@ private:
 private:
     MessageViewer::PrintingSettings *mPrintingUi;
 };
+#endif
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
 class AddonsPluginTab : public ConfigModuleTab

@@ -56,10 +56,10 @@ MiscPage::MiscPage(QWidget *parent)
 
     MiscPageAgentSettingsTab *agentSettingsTab = new MiscPageAgentSettingsTab();
     addTab(agentSettingsTab, i18n("Plugins Settings"));
-
+#ifndef QTWEBENGINE_SUPPORT_OPTION
     MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
     addTab(printingTab, i18n("Printing"));
-
+#endif
 #ifdef QTWEBENGINE_SUPPORT_OPTION
     Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
@@ -197,7 +197,7 @@ void MiscPage::InviteTab::doResetToDefaultsOther()
 {
     mInvitationUi->doResetToDefaultsOther();
 }
-
+#ifndef QTWEBENGINE_SUPPORT_OPTION
 MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
@@ -222,7 +222,7 @@ void MiscPagePrintingTab::save()
 {
     mPrintingUi->save();
 }
-
+#endif
 //----------------------------
 
 #ifdef QTWEBENGINE_SUPPORT_OPTION
