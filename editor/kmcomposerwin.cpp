@@ -339,8 +339,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mLblFrom = new QLabel(i18nc("sender address field", "&From:"), mHeadersArea);
     mLblReplyTo = new QLabel(i18n("&Reply to:"), mHeadersArea);
     mLblSubject = new QLabel(i18nc("@label:textbox Subject of email.", "S&ubject:"), mHeadersArea);
-    QString sticky = i18nc("@option:check Sticky identity.", "Sticky");
-
     mShowHeaders = KMailSettings::self()->headers();
     mDone = false;
     mGrid = Q_NULLPTR;
