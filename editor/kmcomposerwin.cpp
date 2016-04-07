@@ -3050,11 +3050,9 @@ void KMComposerWin::slotOverwriteModeChanged()
 void KMComposerWin::slotCursorPositionChanged()
 {
     // Change Line/Column info in status bar
-    int col, line;
-    QString temp;
-    line = mComposerBase->editor()->linePosition();
-    col = mComposerBase->editor()->columnNumber();
-    temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line + 1);
+    int line = mComposerBase->editor()->linePosition();
+    int col = mComposerBase->editor()->columnNumber();
+    QString temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line + 1);
     mStatusBarLabelList.at(1)->setText(temp);
     temp = i18n(" Column: %1 ", col + 1);
     mStatusBarLabelList.at(2)->setText(temp);
