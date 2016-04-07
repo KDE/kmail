@@ -49,7 +49,7 @@ KMComposerEditorNg::~KMComposerEditorNg()
 void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {
     Q_UNUSED(pos);
-    Q_FOREACH (QAction *a, mComposerWin->pluginToolsList()) {
+    Q_FOREACH (QAction *a, mComposerWin->pluginToolsActionListForPopupMenu()) {
         menu->addSeparator();
         menu->addAction(a);
     }

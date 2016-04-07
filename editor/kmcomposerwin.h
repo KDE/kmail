@@ -425,7 +425,7 @@ public: // kmcommand
 
     uint currentIdentity() const;
     QList<KToggleAction *> customToolsList() const;
-    QList<QAction *> pluginToolsList() const;
+    QList<QAction *> pluginToolsActionListForPopupMenu() const;
 private:
     QUrl insertFile();
     /**

@@ -3194,7 +3194,7 @@ QList<KToggleAction *> KMComposerWin::customToolsList() const
     return mCustomToolsWidget->actionList();
 }
 
-QList<QAction *> KMComposerWin::pluginToolsList() const
+QList<QAction *> KMComposerWin::pluginToolsActionListForPopupMenu() const
 {
     return mPluginEditorManagerInterface->actionsType(MessageComposer::ActionType::PopupMenu);
 }
