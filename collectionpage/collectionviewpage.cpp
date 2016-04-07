@@ -42,7 +42,7 @@
 #include "messagelist/themecombobox.h"
 #include "messagelist/themeconfigbutton.h"
 
-#include "MailCommon/FolderCollection"
+#include <MailCommon/FolderCollection>
 
 using namespace MailCommon;
 

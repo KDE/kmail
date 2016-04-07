@@ -51,7 +51,7 @@
 #include "messageactions.h"
 #include "util.h"
 #include "mailcommon/mailkernel.h"
-#include "MailCommon/FolderCollection"
+#include <MailCommon/FolderCollection>
 #include "messageviewer/headerstyleplugin.h"
 #include "messageviewer/headerstyle.h"
 

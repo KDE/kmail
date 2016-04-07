@@ -20,7 +20,7 @@
 
 #include "kmkernel.h"
 #include "mailcommon/mailkernel.h"
-#include "MailCommon/FolderCollection"
+#include <MailCommon/FolderCollection>
 #include "TemplateParser/TemplatesConfiguration"
 #include "templatesconfiguration_kfg.h"
 #include <AkonadiCore/collection.h>

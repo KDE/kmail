@@ -23,7 +23,7 @@
 #include "attachmentcontroller.h"
 
 #include "attachmentview.h"
-#include "MailCommon/FolderCollection"
+#include <MailCommon/FolderCollection>
 #include "settings/kmailsettings.h"
 #include "kmcommands.h"
 #include "editor/kmcomposerwin.h"

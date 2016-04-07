@@ -41,7 +41,7 @@
 #include <QWidget>
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/Collection>
-#include "MailCommon/FolderCollection"
+#include <MailCommon/FolderCollection>
 
 namespace KMail
 {

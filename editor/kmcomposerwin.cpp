@@ -26,7 +26,7 @@
 // KMail includes
 #include "job/addressvalidationjob.h"
 #include "attachment/attachmentcontroller.h"
-#include "MessageComposer/AttachmentModel"
+#include <MessageComposer/AttachmentModel>
 #include "attachment/attachmentview.h"
 #include "codec/codecaction.h"
 #include "MessageComposer/Kleo_Util"
@@ -34,7 +34,7 @@
 #include "editor/kmcomposereditorng.h"
 #include "KPIMTextEdit/RichTextComposerControler"
 #include "MessageComposer/RichTextComposerSignatures"
-#include "KPIMTextEdit/RichTextComposerActions"
+#include <KPIMTextEdit/RichTextComposerActions>
 #include "KPIMTextEdit/RichTextComposerImages"
 #include "KPIMTextEdit/RichTextExternalComposer"
 #include <KPIMTextEdit/RichTextEditorWidget>

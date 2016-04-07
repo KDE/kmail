@@ -22,7 +22,7 @@
 #define COLLECTIONMAILINGLISTPAGE_H
 
 #include "MessageCore/MailingList"
-#include "MailCommon/FolderCollection"
+#include <MailCommon/FolderCollection>
 
 #include <AkonadiWidgets/collectionpropertiespage.h>
 #include <AkonadiCore/collection.h>
