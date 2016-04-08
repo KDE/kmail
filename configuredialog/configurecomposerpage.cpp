@@ -1288,11 +1288,13 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     label = new QLabel(i18n("Offer to share for files larger than:"), this);
     label->setAlignment(Qt::AlignLeft);
     layAttachment->addWidget(label);
+    label->hide();
 
     mMaximumAttachmentSize = new QSpinBox(this);
     mMaximumAttachmentSize->setRange(-1, 99999);
     mMaximumAttachmentSize->setSingleStep(100);
     mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
+    mMaximumAttachmentSize->hide();
     connect(mMaximumAttachmentSize, SIGNAL(valueChanged(int)),
             this, SLOT(slotEmitChanged()));
     mMaximumAttachmentSize->setSpecialValueText(i18n("No limit"));
@@ -1303,7 +1305,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     //Laurent disable until we fix it.
     mStorageServiceWidget->hide();
     vlay->addWidget(mStorageServiceWidget);
-    connect(mStorageServiceWidget, &ConfigureStorageServiceWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
+    //Disable it connect(mStorageServiceWidget, &ConfigureStorageServiceWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
 void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
