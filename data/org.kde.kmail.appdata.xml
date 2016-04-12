@@ -382,7 +382,7 @@
       <li xml:lang="ast">Integración colos comprobadores d'spam populares exem. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="ca">Integració amb els comprovadors de correu brossa més populars, p. ex., SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="ca-valencia">Integració amb els comprovadors de correu brossa més populars, p. ex., SpamAssaren, Bogofilter, etc.</li>
-      <li xml:lang="de">Integration von bekannten Spam-Filtern wie SpamAssassin, Bogofilter, usw.</li>
+      <li xml:lang="de">Integration von bekannten Spam-Filtern wie SpamAssassin, Bogofilter usw.</li>
       <li xml:lang="en-GB">Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="es">Integración con verificadores de correo basura populares, p. ej., SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="fi">Integroituu suosittuihin roskapostitarkistimiin kuten SpamAssassiniin, Bogofilteriin jne.</li>
@@ -414,6 +414,7 @@
       <li xml:lang="ast">Pue amosase un mididor de probabilidá d'spam adicional</li>
       <li xml:lang="ca">Es pot mostrar un mesurador de la probabilitat que es tracti de correu brossa</li>
       <li xml:lang="ca-valencia">Es pot mostrar un mesurador de la probabilitat que es tracti de correu brossa</li>
+      <li xml:lang="de">Es kann eine Anzeige der SPAM-Wahrscheinlichkeit einer E-Mail eingeblendet werden</li>
       <li xml:lang="en-GB">An optional spam probability meter can be displayed</li>
       <li xml:lang="es">Se puede mostrar un medidor opcional de probabilidad de correo basura</li>
       <li xml:lang="fi">Haluttaessa osaa näyttää roskapostin todennäköisyysarvion</li>
@@ -543,6 +544,7 @@
       <li xml:lang="ast">Altamente integráu colos otros componentes de Kontact</li>
       <li xml:lang="ca">Altament integrat amb els altres components del Kontact</li>
       <li xml:lang="ca-valencia">Altament integrat amb els altres components del Kontact</li>
+      <li xml:lang="de">Gut in andere Kontact-Componenten integriert</li>
       <li xml:lang="en-GB">Highly integrated with other Kontact components</li>
       <li xml:lang="es">Altamente integrado con otros componentes de Kontact</li>
       <li xml:lang="fi">Integroituu erinomaisesti muihin Kontactin osiin</li>
@@ -606,6 +608,7 @@
       <li xml:lang="ast">Marcáu y etiquetáu de mensaxes p'ayudar nel orde y la recuperación d'información</li>
       <li xml:lang="ca">Marca i etiqueta els missatges per ajudar a la classificació i recuperació de la informació</li>
       <li xml:lang="ca-valencia">Marca i etiqueta els missatges per ajudar a la classificació i recuperació de la informació</li>
+      <li xml:lang="de">Nachrichten können markiert werden, um das Sortieren und Auffinden von Informationen zu erleichtern</li>
       <li xml:lang="en-GB">Flagging and tagging of messages to aid sorting and recovery of information</li>
       <li xml:lang="es">Marcado y etiquetado de mensajes para ayudar a la ordenación y recuperación de información</li>
       <li xml:lang="fi">Sisältää viestien merkintä ja luokittelu lajittelun ja tiedon palautuksen helpottamiseksi</li>
