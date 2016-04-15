@@ -151,7 +151,9 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     const bool canChange = mParentCollection.isValid() ? (bool)(mParentCollection.rights() & Akonadi::Collection::CanDeleteItem) : false;
     mTrashAction->setEnabled(canChange);
 
-    mReaderWin->viewer()->headerStylePlugin()->headerStyle()->setReadOnlyMessage(!canChange);
+    if (mReaderWin->viewer() && mReaderWin->viewer()->headerStylePlugin() && mReaderWin->viewer()->headerStylePlugin()->headerStyle()) {
+        mReaderWin->viewer()->headerStylePlugin()->headerStyle()->setReadOnlyMessage(!canChange);
+    }
 
     menuBar()->show();
     toolBar(QStringLiteral("mainToolBar"))->show();
