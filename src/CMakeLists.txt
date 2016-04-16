@@ -208,11 +208,11 @@ set(kmailprivate_LIB_SRCS
 
 qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
+    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
     )
 
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml kmkernel.h KMKernel
+    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmail.xml kmkernel.h KMKernel
     )
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${MAILTRANSPORT_DBUS_SERVICE} mailserviceimpl.h
@@ -220,7 +220,7 @@ qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     )
 
 qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
+    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmail.xml
     )
 qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${CMAKE_SOURCE_DIR}/agents/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
@@ -331,9 +331,9 @@ target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion KF5:
 set(kmailpart_PART_SRCS kmail_part.cpp ${kmail_common_SRCS})
 qt5_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
 qt5_add_dbus_adaptor(kmailpart_PART_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
+    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
     )
-qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml)
+qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmailpart.xml)
 add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
 
 target_link_libraries(kmailpart
@@ -405,8 +405,8 @@ install(TARGETS
     DESTINATION ${KDE_INSTALL_PLUGINDIR}
     )
 install(FILES
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmailpart.xml
-    ${CMAKE_BINARY_DIR}/kmail/org.kde.kmail.kmail.xml
+    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmailpart.xml
+    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmail.xml
     DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR}
     )
 
