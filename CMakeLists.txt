@@ -166,9 +166,10 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
     find_package(KF5LibKSieve ${LIBKSIEVE_LIB_VERSION_LIB} CONFIG REQUIRED)
     find_package(MailTransportDBusService CONFIG REQUIRED)
 
-    include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
-
 endif()
+
+include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
+configure_file(kmail-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
 
 add_definitions( -DQT_NO_CAST_FROM_ASCII )
 add_definitions( -DQT_NO_CAST_TO_ASCII )

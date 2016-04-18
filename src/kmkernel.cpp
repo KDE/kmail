@@ -30,7 +30,7 @@ using KPIM::RecentAddresses;
 #include "storageservice/storageservicesettingsjob.h"
 
 // kdepim includes
-#include "kdepim-version.h"
+#include "kmail-version.h"
 
 // kdepimlibs includes
 #include <KIdentityManagement/kidentitymanagement/identity.h>

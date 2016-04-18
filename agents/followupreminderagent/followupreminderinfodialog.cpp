@@ -18,7 +18,7 @@
 #include "followupreminderinfodialog.h"
 #include "followupreminderinfowidget.h"
 
-#include "kdepim-version.h"
+#include "kmail-version.h"
 
 #include <KLocalizedString>
 #include <KAboutData>

@@ -31,7 +31,7 @@
 
 #include "aboutdata.h"
 
-#include "kdepim-version.h"
+#include "kmail-version.h"
 
 #include <KLocalizedString>
 

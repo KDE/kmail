@@ -19,7 +19,7 @@
 #include "addarchivemaildialog.h"
 #include "archivemailagentutil.h"
 
-#include "kdepim-version.h"
+#include "kmail-version.h"
 
 #include <MailCommon/MailUtil>
 

@@ -4,7 +4,7 @@
 #define KMReaderMainWin_h
 
 #include "kmail_export.h"
-#include "config-kdepim.h"
+#include "config-kmail.h"
 
 #include "secondarywindow.h"
 

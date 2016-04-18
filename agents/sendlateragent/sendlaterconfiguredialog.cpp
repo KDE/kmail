@@ -17,7 +17,7 @@
 
 #include "sendlaterconfiguredialog.h"
 #include "sendlaterconfigurewidget.h"
-#include "kdepim-version.h"
+#include "kmail-version.h"
 
 #include <KConfigGroup>
 #include <KLocalizedString>

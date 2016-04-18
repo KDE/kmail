@@ -79,7 +79,7 @@ using KSieveUi::SieveDebugDialog;
 #include "kmmainwidget.h"
 
 // Other PIM includes
-#include "kdepim-version.h"
+#include "kmail-version.h"
 
 #include "messageviewer/messageviewersettings.h"
 #include "messageviewer/viewer.h"
