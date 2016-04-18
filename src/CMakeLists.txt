@@ -226,18 +226,18 @@ qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmail.xml
     )
 qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ${CMAKE_SOURCE_DIR}/agents/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
+    ../agents/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
     )
 qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ${CMAKE_SOURCE_DIR}/agents/sendlateragent/org.freedesktop.Akonadi.SendLaterAgent.xml
-    )
-
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ${CMAKE_SOURCE_DIR}/kmail/src/dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
+    ../agents/sendlateragent/org.freedesktop.Akonadi.SendLaterAgent.xml
     )
 
 qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ${CMAKE_SOURCE_DIR}/agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
+    dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
+    )
+
+qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ../agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
     )
 
 
