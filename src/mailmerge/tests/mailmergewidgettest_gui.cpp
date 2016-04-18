@@ -15,7 +15,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "kmail/src/mailmerge/widgets/mailmergewidget.h"
+#include "../widgets/mailmergewidget.h"
 
 #include <KLocalizedString>
 #include <QApplication>

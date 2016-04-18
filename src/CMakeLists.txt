@@ -336,9 +336,9 @@ target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion KF5:
 set(kmailpart_PART_SRCS kmail_part.cpp ${kmail_common_SRCS})
 qt5_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
 qt5_add_dbus_adaptor(kmailpart_PART_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
+    ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
     )
-qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmailpart.xml)
+qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
 add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
 
 target_link_libraries(kmailpart
@@ -410,8 +410,8 @@ install(TARGETS
     DESTINATION ${KDE_INSTALL_PLUGINDIR}
     )
 install(FILES
-    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmailpart.xml
-    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmail.xml
+    ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml
+    ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
     DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR}
     )
 

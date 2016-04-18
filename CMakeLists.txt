@@ -5,6 +5,9 @@ include(CheckIncludeFiles)
 
 if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
     cmake_minimum_required(VERSION 2.8.12)
+    if (POLICY CMP0063)
+        cmake_policy(SET CMP0063 NEW)
+    endif()
     find_package(ECM 5.20.0 REQUIRED NO_MODULE)
     set(CMAKE_MODULE_PATH ${kmail_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
     include(ECMOptionalAddSubdirectory)
@@ -95,6 +98,9 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
         set(WEBENGINE_TYPE "QtWebKit")
     endif()
 
+    find_package(KF5AkonadiSearch "5.2.40" CONFIG REQUIRED)
+    set_package_properties(KF5AkonadiSearch PROPERTIES DESCRIPTION "The Akonadi Search libraries" URL "http://www.kde.org" TYPE REQUIRED PURPOSE "Provides search capabilities in KMail and Akonadi")
+
     # Find KF5 package
     find_package(KF5KDELibs4Support ${KF5_VERSION} CONFIG REQUIRED)
     find_package(KF5Wallet ${KF5_VERSION} CONFIG REQUIRED)
@@ -165,6 +171,8 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
     find_package(KF5KdepimDBusInterfaces ${KDEPIM_APPS_LIB_VERSION_LIB} CONFIG REQUIRED)
     find_package(KF5LibKSieve ${LIBKSIEVE_LIB_VERSION_LIB} CONFIG REQUIRED)
     find_package(MailTransportDBusService CONFIG REQUIRED)
+    # config-enterprise.h is needed for both ENTERPRISE_BUILD and BUILD_EVERYTHING
+    configure_file(config-enterprise.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
 
 endif()
 
