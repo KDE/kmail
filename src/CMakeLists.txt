@@ -1,3 +1,5 @@
+add_definitions(-DTRANSLATION_DOMAIN=\"kmail\")
+
 qt5_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
 qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
@@ -22,6 +24,7 @@ add_subdirectory(pics)
 add_subdirectory(icons)
 add_subdirectory(kcm_kpimidentities)
 add_subdirectory(kconf_update)
+add_subdirectory(kontactplugin)
 
 ########### kmailprivate ###############
 
