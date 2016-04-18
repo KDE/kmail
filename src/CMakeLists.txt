@@ -4,8 +4,8 @@ qt5_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
 qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.kmail.xml
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.mailcomposer.xml
+    DEPENDS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
+    DEPENDS ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml
     COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
     )
 
@@ -211,11 +211,11 @@ set(kmailprivate_LIB_SRCS
 
 qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
+    ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
     )
 
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmail.xml kmkernel.h KMKernel
+    ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml kmkernel.h KMKernel
     )
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${MAILTRANSPORT_DBUS_SERVICE} mailserviceimpl.h
@@ -223,7 +223,7 @@ qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     )
 
 qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ${CMAKE_BINARY_DIR}/kmail/src/org.kde.kmail.kmail.xml
+    ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
     )
 qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
