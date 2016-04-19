@@ -21,7 +21,7 @@
 
 #include "summaryview_plugin.h"
 #include "summaryview_part.h"
-#include "kdepim-version.h"
+#include "kmail-version.h"
 #include "kmailinterface.h"
 
 #include <KontactInterface/Core>
