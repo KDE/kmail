@@ -214,7 +214,7 @@ KontactInterface::Summary *KMailPlugin::createSummaryWidget(QWidget *parent)
 
 ////
 
-#include "../kmail_options.h"
+#include "../../kmail_options.h"
 void KMailUniqueAppHandler::loadCommandLineOptions(QCommandLineParser *parser)
 {
     kmail_options(parser);
