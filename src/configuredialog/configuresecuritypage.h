@@ -139,27 +139,6 @@ private:
     Kleo::CryptoConfig *mConfig;
 };
 
-#ifndef QTWEBENGINE_SUPPORT_OPTION
-class SecurityPageAdBlockTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit SecurityPageAdBlockTab(QWidget *parent = Q_NULLPTR);
-    ~SecurityPageAdBlockTab();
-
-    QString helpAnchor() const;
-
-    void save() Q_DECL_OVERRIDE;
-
-private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
-
-private:
-    MessageViewer::AdBlockSettingWidget *mWidget;
-};
-#endif
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 {
     Q_OBJECT

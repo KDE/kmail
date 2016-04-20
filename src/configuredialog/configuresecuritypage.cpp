@@ -71,10 +71,6 @@ SecurityPage::SecurityPage(QWidget *parent)
     //
     SMimeTab *sMimeTab = new SMimeTab();
     addTab(sMimeTab, i18n("S/MIME Validation"));
-#ifndef QTWEBENGINE_SUPPORT_OPTION
-    SecurityPageAdBlockTab *adBlockTab = new SecurityPageAdBlockTab;
-    addTab(adBlockTab, i18n("Ad block"));
-#endif
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const
@@ -145,51 +141,6 @@ void SecurityPage::GeneralTab::save()
     saveCheckBox(mSGTab.mScamDetection, MessageViewer::MessageViewerSettings::self()->scamDetectionEnabledItem());
     saveSimpleStringListEditor(mSGTab.scamWhiteList, MessageViewer::MessageViewerSettings::self()->scamDetectionWhiteListItem());
 }
-
-//Adblock
-#ifndef QTWEBENGINE_SUPPORT_OPTION
-
-QString SecurityPageAdBlockTab::helpAnchor() const
-{
-    return QString();
-}
-
-SecurityPageAdBlockTab::SecurityPageAdBlockTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    QHBoxLayout *lay = new QHBoxLayout;
-    lay->setMargin(0);
-
-    mWidget = new MessageViewer::AdBlockSettingWidget;
-    lay->addWidget(mWidget);
-    connect(mWidget, SIGNAL(changed(bool)), SLOT(slotEmitChanged()));
-    setLayout(lay);
-}
-
-SecurityPageAdBlockTab::~SecurityPageAdBlockTab()
-{
-}
-
-void SecurityPageAdBlockTab::save()
-{
-    mWidget->save();
-}
-
-void SecurityPageAdBlockTab::doLoadFromGlobalSettings()
-{
-    mWidget->doLoadFromGlobalSettings();
-}
-
-void SecurityPageAdBlockTab::doLoadOther()
-{
-
-}
-
-void SecurityPageAdBlockTab::doResetToDefaultsOther()
-{
-    mWidget->doResetToDefaultsOther();
-}
-#endif
 
 QString SecurityPage::MDNTab::helpAnchor() const
 {

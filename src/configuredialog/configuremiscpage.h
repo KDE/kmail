@@ -34,12 +34,10 @@ class PrintingSettings;
 }
 class ConfigureAgentsWidget;
 
-#ifdef QTWEBENGINE_SUPPORT_OPTION
 namespace WebEngineViewer
 {
 class NetworkPluginUrlInterceptorConfigureWidget;
 }
-#endif
 
 class MiscPageFolderTab : public ConfigModuleTab
 {
@@ -91,24 +89,6 @@ private:
     ConfigureAgentsWidget *mConfigureAgent;
 };
 
-#ifndef QTWEBENGINE_SUPPORT_OPTION
-class MiscPagePrintingTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit MiscPagePrintingTab(QWidget *parent = Q_NULLPTR);
-    void save() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
-
-private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-
-private:
-    MessageViewer::PrintingSettings *mPrintingUi;
-};
-#endif
-
-#ifdef QTWEBENGINE_SUPPORT_OPTION
 class AddonsPluginTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -126,7 +106,6 @@ private:
 private:
     WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *mConfigureWidget;
 };
-#endif
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
 {

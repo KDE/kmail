@@ -185,9 +185,7 @@ using KSieveUi::SieveDebugDialog;
 #include <QDBusConnection>
 #include <QTextDocument>
 #include <QDir>
-#ifdef QTWEBENGINE_SUPPORT_OPTION
 #include <WebEngineViewer/WebHitTestResult>
-#endif
 // System includes
 #include <AkonadiWidgets/standardactionmanager.h>
 #include <KHelpClient>
@@ -1016,11 +1014,7 @@ void KMMainWidget::createWidgets()
         connect(mMsgView->viewer(), &MessageViewer::Viewer::replaceMsgByUnencryptedVersion,
                 this, &KMMainWidget::slotReplaceMsgByUnencryptedVersion);
 
-#ifdef QTWEBENGINE_SUPPORT_OPTION
         connect(mMsgView->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMMainWidget::slotMessagePopup);
-#else
-        connect(mMsgView->viewer(), &MessageViewer::Viewer::popupMenu, this, &KMMainWidget::slotMessagePopup);
-#endif
         connect(mMsgView->viewer(), &MessageViewer::Viewer::moveMessageToTrash,
                 this, &KMMainWidget::slotMoveMessageToTrash);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::executeMailAction,
@@ -2645,16 +2639,10 @@ void KMMainWidget::slotSelectAllMessages()
     updateMessageActions();
 }
 
-#ifdef QTWEBENGINE_SUPPORT_OPTION
 void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint)
-#else
-void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint)
-#endif
 {
-#ifdef QTWEBENGINE_SUPPORT_OPTION
     QUrl aUrl = result.linkUrl();
     QUrl imageUrl = result.imageUrl();
-#endif
     updateMessageMenu();
 
     const QString email =  KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
@@ -2809,12 +2797,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu->addAction(mMsgView->toggleMimePartTreeAction());
         }
         menu->addSeparator();
-#ifdef QTWEBENGINE_SUPPORT_OPTION
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-        menu->addAction(mMsgActions->printPreviewAction());
-        menu->addAction(mMsgActions->printAction());
-#endif
-#else
         menu->addAction(mMsgActions->printPreviewAction());
         menu->addAction(mMsgActions->printAction());
 #endif
@@ -2849,10 +2832,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
     }
 
-#ifdef QTWEBENGINE_SUPPORT_OPTION
     //TODO use interceptorUrlActions
     //QList<QAction *> mMsgActions->interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const;
-#endif
 
     KAcceleratorManager::manage(menu);
     menu->exec(aPoint, Q_NULLPTR);

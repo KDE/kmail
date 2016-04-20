@@ -33,11 +33,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KConfigGroup>
 #include <QHBoxLayout>
 
-#ifdef QTWEBENGINE_SUPPORT_OPTION
 #include <WebEngineViewer/NetworkPluginUrlInterceptorConfigureWidget>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
-#endif
 
 using namespace MailCommon;
 QString MiscPage::helpAnchor() const
@@ -56,11 +54,6 @@ MiscPage::MiscPage(QWidget *parent)
 
     MiscPageAgentSettingsTab *agentSettingsTab = new MiscPageAgentSettingsTab();
     addTab(agentSettingsTab, i18n("Plugins Settings"));
-#ifndef QTWEBENGINE_SUPPORT_OPTION
-    MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
-    addTab(printingTab, i18n("Printing"));
-#endif
-#ifdef QTWEBENGINE_SUPPORT_OPTION
     Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
             WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
@@ -69,7 +62,6 @@ MiscPage::MiscPage(QWidget *parent)
             addTab(tab, settings.name);
         }
     }
-#endif
 }
 
 QString MiscPageFolderTab::helpAnchor() const
@@ -197,35 +189,8 @@ void MiscPage::InviteTab::doResetToDefaultsOther()
 {
     mInvitationUi->doResetToDefaultsOther();
 }
-#ifndef QTWEBENGINE_SUPPORT_OPTION
-MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    mPrintingUi = new MessageViewer::PrintingSettings(this);
-    QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
-    l->addWidget(mPrintingUi);
-    connect(mPrintingUi, &MessageViewer::PrintingSettings::changed, this, &MiscPagePrintingTab::slotEmitChanged);
-}
-
-void MiscPagePrintingTab::doLoadFromGlobalSettings()
-{
-    mPrintingUi->doLoadFromGlobalSettings();
-}
-
-void MiscPagePrintingTab::doResetToDefaultsOther()
-{
-    mPrintingUi->doResetToDefaultsOther();
-}
-
-void MiscPagePrintingTab::save()
-{
-    mPrintingUi->save();
-}
-#endif
 //----------------------------
 
-#ifdef QTWEBENGINE_SUPPORT_OPTION
 AddonsPluginTab::AddonsPluginTab(WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent)
     : ConfigModuleTab(parent),
       mConfigureWidget(configureWidget)
@@ -260,4 +225,3 @@ void AddonsPluginTab::doResetToDefaultsOther()
 {
     mConfigureWidget->resetSettings();
 }
-#endif

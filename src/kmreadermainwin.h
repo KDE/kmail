@@ -57,11 +57,7 @@ public:
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound);
 
 private Q_SLOTS:
-#ifdef QTWEBENGINE_SUPPORT_OPTION
     void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint);
-#else
-    void slotMessagePopup(const Akonadi::Item &aMsg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint);
-#endif
     void slotContactSearchJobForMessagePopupDone(KJob *);
     void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
     void slotTrashMessage();

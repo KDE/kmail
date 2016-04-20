@@ -274,9 +274,7 @@ kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
 
 add_library(kmailprivate ${kmailprivate_LIB_SRCS})
 generate_export_header(kmailprivate BASE_NAME kmail)
-if (QTWEBENGINE_SUPPORT_OPTION)
-    set(libmailprivate_webengine KF5::WebEngineViewer)
-endif()
+set(libmailprivate_webengine KF5::WebEngineViewer)
 target_link_libraries(kmailprivate
     PRIVATE
     KF5::TextWidgets
