@@ -540,10 +540,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 menu->addAction(mReaderWin->copyImageLocation());
                 menu->addAction(mReaderWin->downloadImageToDiskAction());
                 menu->addAction(mReaderWin->shareImage());
-                if (mReaderWin->adblockEnabled()) {
-                    menu->addSeparator();
-                    menu->addAction(mReaderWin->blockImage());
-                }
             }
             urlMenuAdded = true;
         }
@@ -611,10 +607,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 menu->addAction(mReaderWin->downloadImageToDiskAction());
                 menu->addAction(mReaderWin->shareImage());
                 menu->addSeparator();
-                if (mReaderWin->adblockEnabled()) {
-                    menu->addAction(mReaderWin->blockImage());
-                    menu->addSeparator();
-                }
             }
 
             menu->addAction(mReaderWin->viewSourceAction());
@@ -642,10 +634,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             if (!mReaderWin->mimePartTreeIsEmpty()) {
                 menu->addAction(mReaderWin->toggleMimePartTreeAction());
             }
-        }
-        if (mReaderWin->adblockEnabled()) {
-            menu->addSeparator();
-            menu->addAction(mReaderWin->openBlockableItems());
         }
         if (msg.isValid()) {
             menu->addAction(mMsgActions->addFollowupReminderAction());

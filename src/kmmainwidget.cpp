@@ -2724,10 +2724,6 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
                 menu->addAction(mMsgView->copyImageLocation());
                 menu->addAction(mMsgView->downloadImageToDiskAction());
                 menu->addAction(mMsgView->shareImage());
-                if (mMsgView->adblockEnabled()) {
-                    menu->addSeparator();
-                    menu->addAction(mMsgView->blockImage());
-                }
             }
             urlMenuAdded = true;
         }
@@ -2787,10 +2783,6 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
                 menu->addAction(mMsgView->downloadImageToDiskAction());
                 menu->addAction(mMsgView->shareImage());
                 menu->addSeparator();
-                if (mMsgView->adblockEnabled()) {
-                    menu->addAction(mMsgView->blockImage());
-                    menu->addSeparator();
-                }
             }
             menu->addAction(mMsgView->viewSourceAction());
             menu->addAction(mMsgView->toggleFixFontAction());
@@ -2820,10 +2812,6 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
         menu->addAction(mMsgActions->annotateAction());
 
-        if (mMsgView && mMsgView->adblockEnabled()) {
-            menu->addSeparator();
-            menu->addAction(mMsgView->openBlockableItems());
-        }
         menu->addSeparator();
         menu->addAction(mMsgActions->addFollowupReminderAction());
         if (kmkernel->allowToDebugBalooSupport()) {

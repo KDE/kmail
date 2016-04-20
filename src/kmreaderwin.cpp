@@ -862,21 +862,6 @@ QAction *KMReaderWin::resetMessageDisplayFormatAction() const
     return mViewer->resetMessageDisplayFormatAction();
 }
 
-QAction *KMReaderWin::blockImage() const
-{
-    return mViewer->blockImage();
-}
-
-bool KMReaderWin::adblockEnabled() const
-{
-    return mViewer->adblockEnabled();
-}
-
-QAction *KMReaderWin::openBlockableItems() const
-{
-    return mViewer->openBlockableItems();
-}
-
 QAction *KMReaderWin::editContactAction() const
 {
     return mEditContactAction;

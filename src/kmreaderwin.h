@@ -148,9 +148,6 @@ public:
     QAction *saveAsAction() const;
     QAction *saveMessageDisplayFormatAction() const;
     QAction *resetMessageDisplayFormatAction() const;
-    QAction *blockImage() const;
-    QAction *openBlockableItems() const;
-
     QAction *editContactAction() const;
 
     QMenu *viewHtmlOption() const;
@@ -171,7 +168,6 @@ public:
 
     void setContactItem(const Akonadi::Item &contact, const KContacts::Addressee &address);
     void clearContactItem();
-    bool adblockEnabled() const;
 
     bool mimePartTreeIsEmpty() const;
     KActionMenu *shareServiceUrlMenu() const;
