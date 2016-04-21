@@ -463,9 +463,10 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const WebEngin
         job->setProperty("point", aPoint);
         job->setProperty("imageUrl", imageUrl);
         job->setProperty("url", aUrl);
+        job->setProperty("webhitresult", QVariant::fromValue(result));
         connect(job, &Akonadi::ItemCopyJob::result, this, &KMReaderMainWin::slotContactSearchJobForMessagePopupDone);
     } else {
-        showMessagePopup(mMsg, aUrl, imageUrl, aPoint, false, false);
+        showMessagePopup(mMsg, aUrl, imageUrl, aPoint, false, false, result);
     }
 }
 
@@ -486,11 +487,12 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
     const QPoint aPoint = job->property("point").toPoint();
     const QUrl imageUrl = job->property("imageUrl").toUrl();
     const QUrl url = job->property("url").toUrl();
+    const WebEngineViewer::WebHitTestResult result = job->property("webhitresult").value<WebEngineViewer::WebHitTestResult>();
 
-    showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound);
+    showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound, result);
 }
 
-void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
+void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result)
 {
     QMenu *menu = Q_NULLPTR;
 
@@ -647,13 +649,11 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mMsgActions->debugBalooAction());
         }
     }
-#if 0
     const QList<QAction *> interceptorUrlActions = mReaderWin->interceptorUrlActions(result);
     if (!interceptorUrlActions.isEmpty()) {
         menu->addSeparator();
         menu->addActions(interceptorUrlActions);
     }
-#endif
 
     if (menu) {
         KAcceleratorManager::manage(menu);

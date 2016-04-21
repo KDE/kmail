@@ -2654,9 +2654,10 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const WebEngineVie
         job->setProperty("point", aPoint);
         job->setProperty("imageUrl", imageUrl);
         job->setProperty("url", aUrl);
+        job->setProperty("webhitresult", QVariant::fromValue(result));
         connect(job, &Akonadi::ContactSearchJob::result, this, &KMMainWidget::slotContactSearchJobForMessagePopupDone);
     } else {
-        showMessagePopup(msg, aUrl, imageUrl, aPoint, false, false);
+        showMessagePopup(msg, aUrl, imageUrl, aPoint, false, false, result);
     }
 }
 
@@ -2676,11 +2677,12 @@ void KMMainWidget::slotContactSearchJobForMessagePopupDone(KJob *job)
     const QPoint aPoint = job->property("point").toPoint();
     const QUrl imageUrl = job->property("imageUrl").toUrl();
     const QUrl url = job->property("url").toUrl();
+    const WebEngineViewer::WebHitTestResult result = job->property("webhitresult").value<WebEngineViewer::WebHitTestResult>();
 
-    showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound);
+    showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound, result);
 }
 
-void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound)
+void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result)
 {
     QMenu *menu = new QMenu;
 
@@ -2819,13 +2821,11 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu->addAction(mMsgActions->debugBalooAction());
         }
     }
-#if 0
     const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
     if (!interceptorUrlActions.isEmpty()) {
         menu->addSeparator();
         menu->addActions(interceptorUrlActions);
     }
-#endif
 
     KAcceleratorManager::manage(menu);
     menu->exec(aPoint, Q_NULLPTR);
