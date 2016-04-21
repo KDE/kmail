@@ -2819,9 +2819,13 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu->addAction(mMsgActions->debugBalooAction());
         }
     }
-
-    //TODO use interceptorUrlActions
-    //QList<QAction *> mMsgActions->interceptorUrlActions(const MessageViewer::WebHitTestResult &result) const;
+#if 0
+    const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
+    if (!interceptorUrlActions.isEmpty()) {
+        menu->addSeparator();
+        menu->addActions(interceptorUrlActions);
+    }
+#endif
 
     KAcceleratorManager::manage(menu);
     menu->exec(aPoint, Q_NULLPTR);
