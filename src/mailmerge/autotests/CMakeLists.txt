@@ -1,7 +1,3 @@
-include_directories(
-  ${CMAKE_SOURCE_DIR}/kmail/mailmerge
-)
-
 # convenience macro to add qtest unit tests
 macro(add_kmail_unittest _source _additionalsource)
   set(_test ${_source} ${_additionalsource})
