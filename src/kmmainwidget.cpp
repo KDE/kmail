@@ -3594,11 +3594,11 @@ void KMMainWidget::slotReadOn()
     if (!mMsgView) {
         return;
     }
-    if (!mMsgView->viewer()->atBottom()) {
+    if (mMsgView->viewer()->atBottom()) {
+        slotSelectNextUnreadMessage();
+    } else {
         mMsgView->viewer()->slotJumpDown();
-        return;
     }
-    slotSelectNextUnreadMessage();
 }
 
 void KMMainWidget::slotNextUnreadFolder()
