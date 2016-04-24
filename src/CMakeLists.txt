@@ -64,7 +64,6 @@ set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configureaccountpage.cpp
     configuredialog/colorlistbox.cpp
     configuredialog/configureagentswidget.cpp
-    configuredialog/configurestorageservicewidget.cpp
     configuredialog/configureagents/configureagentlistmodel.cpp
     configuredialog/configureagents/configureagentlistdelegate.cpp
     configuredialog/configureagents/configureagentlistview.cpp
@@ -78,9 +77,6 @@ set(kmailprivate_searchdialog_LIB_SRCS
     searchdialog/kmailsearchpatternedit.cpp
     searchdialog/searchwindow.cpp
     searchdialog/searchdescriptionattribute.cpp
-    )
-set(kmailprivate_storageservice_LIB_SRCS
-    storageservice/storageservicesettingsjob.cpp
     )
 set(kmailprivate_identity_LIB_SRCS
     identity/identitylistview.cpp
@@ -103,7 +99,6 @@ set(kmailprivate_editor_LIB_SRCS
     editor/attachment/attachmentcontroller.cpp
     editor/attachment/attachmentview.cpp
     editor/widgets/cryptostateindicatorwidget.cpp
-    editor/storageservice/kmstorageservice.cpp
     editor/validatesendmailshortcut.cpp
     editor/kmcomposerglobalaction.cpp
     )
@@ -203,7 +198,6 @@ set(kmailprivate_LIB_SRCS
     ${kmailprivate_collectionpage_LIB_SRCS}
     ${kmailprivate_configuredialog_LIB_SRCS}
     ${kmailprivate_searchdialog_LIB_SRCS}
-    ${kmailprivate_storageservice_LIB_SRCS}
     ${kmailprivate_identity_LIB_SRCS}
     ${kmailprivate_editor_LIB_SRCS}
     ${kmailprivate_editor_potentialphishingemail_SRCS}

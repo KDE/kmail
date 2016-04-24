@@ -61,7 +61,6 @@
 #include "widgets/cryptostateindicatorwidget.h"
 #include "validatesendmailshortcut.h"
 #include "job/saveasfilejob.h"
-#include "editor/storageservice/kmstorageservice.h"
 #include "messagecomposer/followupreminderselectdatedialog.h"
 #include "messagecomposer/followupremindercreatejob.h"
 #include "FollowupReminder/FollowUpReminderUtil"
@@ -241,7 +240,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
       mCheckForForgottenAttachments(true),
       mWasModified(false),
       mCryptoStateIndicatorWidget(Q_NULLPTR),
-      mStorageService(new KMStorageService(this, this)),
       mSendNowByShortcutUsed(false),
       mFollowUpToggleAction(Q_NULLPTR),
       mStatusBarLabelToggledOverrideMode(Q_NULLPTR),
@@ -477,8 +475,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mDummyComposer = new MessageComposer::Composer(this);
     mDummyComposer->globalPart()->setParentWidgetForGui(this);
-
-    connect(mStorageService, &KMStorageService::insertShareLink, this, &KMComposerWin::slotShareLinkDone);
 }
 
 KMComposerWin::~KMComposerWin()
@@ -1289,7 +1285,6 @@ void KMComposerWin::setupActions(void)
 
     mComposerBase->editor()->createActions(actionCollection());
     //actionCollection()->addActions(mComposerBase->editor()->createActions());
-    actionCollection()->addAction(QStringLiteral("shared_link"), mStorageService->menuShareLinkServices());
 
     mFollowUpToggleAction = new KToggleAction(i18n("Follow Up Mail..."), this);
     actionCollection()->addAction(QStringLiteral("follow_up_mail"), mFollowUpToggleAction);
@@ -2376,12 +2371,6 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
 void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
                            MessageComposer::MessageSender::SaveIn saveIn)
 {
-    if (mStorageService->numProgressUpdateFile() > 0) {
-        KMessageBox::sorry(this, i18np("There is %1 file upload in progress.",
-                                       "There are %1 file uploads in progress.",
-                                       mStorageService->numProgressUpdateFile()));
-        return;
-    }
     // TODO integrate with MDA online status
     if (method == MessageComposer::MessageSender::SendImmediate) {
         if (!MessageComposer::Util::sendMailDispatcherIsOnline()) {

@@ -30,7 +30,6 @@ class QLineEdit;
 class ListView;
 class QPushButton;
 class QLabel;
-class ConfigureStorageServiceWidget;
 class KPluralHandlingSpinBox;
 namespace TemplateParser
 {
@@ -230,7 +229,6 @@ private:
     QCheckBox   *mMissingAttachmentDetectionCheck;
     PimCommon::SimpleStringListEditor *mAttachWordsListEditor;
     QSpinBox *mMaximumAttachmentSize;
-    ConfigureStorageServiceWidget *mStorageServiceWidget;
 };
 
 class ComposerPageAutoCorrectionTab : public ConfigModuleTab

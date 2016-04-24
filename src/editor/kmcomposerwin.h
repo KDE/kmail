@@ -105,7 +105,6 @@ namespace PimCommon
 class CustomToolsWidgetNg;
 class LineEditWithAutoCorrection;
 }
-class KMStorageService;
 //-----------------------------------------------------------------------------
 class KMComposerWin : public KMail::Composer
 {
@@ -616,7 +615,6 @@ private:
     bool mCheckForForgottenAttachments;
     bool mWasModified;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
-    KMStorageService *mStorageService;
     bool mSendNowByShortcutUsed;
     QList<QLabel *> mStatusBarLabelList;
     KSplitterCollapserButton *mSnippetSplitterCollapser;
