@@ -93,9 +93,6 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
     find_package(KF5DBusAddons ${KF5_VERSION} CONFIG REQUIRED)
     find_package(KF5Auth ${KF5_VERSION} CONFIG REQUIRED)
     find_package(KF5DocTools REQUIRED)
-    #find_package(KF5TextEditor ${KF5_VERSION} CONFIG REQUIRED)
-    #find_package(KF5Sonnet ${KF5_VERSION} CONFIG REQUIRED)
-    #find_package(KF5GlobalAccel ${KF5_VERSION} CONFIG REQUIRED)
     find_package(KF5Codecs ${KF5_VERSION} CONFIG REQUIRED)
 
     # Find KdepimLibs Package
