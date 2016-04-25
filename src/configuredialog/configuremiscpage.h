@@ -19,7 +19,6 @@
 #define CONFIGUREMISCPAGE_H
 
 #include "kmail_export.h"
-#include "config-kmail.h"
 #include "ui_miscpagemaintab.h"
 #include "configuredialog_p.h"
 

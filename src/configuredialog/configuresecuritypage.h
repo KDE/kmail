@@ -19,7 +19,6 @@
 #define CONFIGURESECURITYPAGE_H
 
 #include "kmail_export.h"
-#include "config-kmail.h"
 #include "configuredialog_p.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_securitypagemdntab.h"
