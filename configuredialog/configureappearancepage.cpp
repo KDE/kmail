@@ -966,7 +966,10 @@ void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings()
 {
     loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
     loadWidget(mSystemTrayShowUnreadMail, KMailSettings::self()->systemTrayShowUnreadItem());
-    mSystemTrayGroup->button(KMailSettings::self()->systemTrayPolicy())->setChecked(true);
+    QAbstractButton *button = mSystemTrayGroup->button(KMailSettings::self()->systemTrayPolicy());
+    if (button) {
+        button->setChecked(true);
+    }
     mSystemTrayGroupBox->setEnabled(mSystemTrayCheck->isChecked());
 }
 
