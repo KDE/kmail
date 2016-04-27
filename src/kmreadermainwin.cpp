@@ -211,6 +211,7 @@ void KMReaderMainWin::slotExecuteMailAction(MessageViewer::Viewer::MailAction ac
         slotCustomReplyToMsg(QString());
         break;
     case MessageViewer::Viewer::ReplyToAll:
+        slotCustomReplyAllToMsg(QString());
         break;
     case MessageViewer::Viewer::Forward:
         slotRedirectMessage();
