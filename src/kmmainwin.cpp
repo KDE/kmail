@@ -122,6 +122,7 @@ void KMMainWin::displayStatusMsg(const QString &aText)
     //  text.replace("<", "&lt;");
     //  text.replace(">", "&gt;");
     mMessageLabel->setText(text);
+    mMessageLabel->setToolTip(aText);
 }
 
 void KMMainWin::slotToggleMenubar(bool dontShowWarning)
