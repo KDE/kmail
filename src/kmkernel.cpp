@@ -1858,7 +1858,9 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                     const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
                     if (grp.isValid()) {
                         const QString imapSafety = grp.readEntry(QStringLiteral("Safety"));
-                        if ((imapSafety == QLatin1String("SSL") || imapSafety == QLatin1String("STARTTLS"))) {
+                        if (imapSafety == QLatin1String("None")) {
+                            cryptoStatus = KPIM::ProgressItem::Unencrypted;
+                        } else {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
                         }
 
