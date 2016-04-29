@@ -67,6 +67,7 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
 {
     setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
     QHBoxLayout *hbox = new QHBoxLayout;
+    hbox->setMargin(0);
     mTreeWidget = new QTreeWidget;
     mTreeWidget->setObjectName(QStringLiteral("treewidget"));
     QStringList headers;
