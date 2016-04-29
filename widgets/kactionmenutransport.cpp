@@ -47,10 +47,18 @@ void KActionMenuTransport::updateTransportMenu()
     if (mInitialized) {
         menu()->clear();
         const QList<MailTransport::Transport *> transports = MailTransport::TransportManager::self()->transports();
-        Q_FOREACH (MailTransport::Transport *transport, transports) {
+        QMap<QString, int> menuTransportLst;
+
+
+        Q_FOREACH (MailTransport::Transport *transport, transports) {    
             const QString name = transport->name().replace(QLatin1Char('&'), QStringLiteral("&&"));
-            QAction *action = new QAction(name, this);
-            action->setData(transport->id());
+            menuTransportLst.insert(name, transport->id());
+        }
+        QMapIterator<QString, int> i(menuTransportLst);
+        while (i.hasNext()) {
+            i.next();
+            QAction *action = new QAction(i.key(), this);
+            action->setData(i.value());
             menu()->addAction(action);
         }
     }
