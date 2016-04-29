@@ -116,16 +116,6 @@ set(kmailprivate_dialogs_LIB_SRCS
     dialog/addemailtoexistingcontactdialog.cpp
     dialog/kmknotify.cpp
     )
-set(kmailprivate_mailmerge_LIB_SRCS
-    mailmerge/widgets/mailmergewidget.cpp
-    mailmerge/widgets/attachmentlistwidget.cpp
-    mailmerge/widgets/addressbookwidget.cpp
-    mailmerge/mailmergedialog.cpp
-    mailmerge/widgets/csvwidget.cpp
-    mailmerge/widgets/selectattachmentdialog.cpp
-    mailmerge/job/mailmergejob.cpp
-    )
-
 set(kmailprivate_job_LIB_SRCS
     job/addressvalidationjob.cpp
     job/createnewcontactjob.cpp
@@ -189,7 +179,6 @@ set(kmailprivate_LIB_SRCS
     ${kmailprivate_tag_LIB_SRCS}
     ${kmailprivate_job_LIB_SRCS}
     ${kmailprivate_widgets_LIB_SRCS}
-    ${kmailprivate_mailmerge_LIB_SRCS}
     ${kmailprivate_dialogs_LIB_SRCS}
     ${kmailprivate_warningwidgets_LIB_SRCS}
     ${kmailprivate_folderarchive_LIB_SRCS}
@@ -358,8 +347,6 @@ target_link_libraries(kmail
 if(BUILD_TESTING)
     add_subdirectory(autotests)
     add_subdirectory(tests)
-    add_subdirectory(mailmerge/tests/)
-    add_subdirectory(mailmerge/autotests/)
     add_subdirectory(folderarchive/autotests/)
     add_subdirectory(editor/potentialphishingemail/autotests)
 endif()

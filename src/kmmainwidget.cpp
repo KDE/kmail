@@ -4411,13 +4411,10 @@ void KMMainWidget::itemsFetchDone(KJob *job)
         const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(resource);
         if (!agentInstance.isOnline()) {
             // The resource is offline
+            mMessagePane->show();
             if (mMsgView) {
                 mMsgView->viewer()->enableMessageDisplay();
                 mMsgView->clear(true);
-            }
-            mMessagePane->show();
-
-            if (mMsgView) {
                 if (kmkernel->isOffline()) {
                     showOfflinePage();
                 } else {
