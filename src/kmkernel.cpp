@@ -1400,8 +1400,17 @@ void KMKernel::cleanup(void)
     the_msgSender = Q_NULLPTR;
     delete the_undoStack;
     the_undoStack = Q_NULLPTR;
+    delete mConfigureDialog;
+    mConfigureDialog = Q_NULLPTR;
+    // do not delete, because mWin may point to an existing window
+    // delete mWin;
+    mWin = Q_NULLPTR;
 
     KSharedConfig::Ptr config =  KMKernel::config();
+    if (RecentAddresses::exists()) {
+        RecentAddresses::self(config.data())->save(config.data());
+    }
+
     Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
     if (trashCollection.isValid()) {
         if (KMailSettings::self()->emptyTrashOnExit()) {
@@ -1412,15 +1421,6 @@ void KMKernel::cleanup(void)
                 }
             }
         }
-    }
-    delete mConfigureDialog;
-    mConfigureDialog = Q_NULLPTR;
-    // do not delete, because mWin may point to an existing window
-    // delete mWin;
-    mWin = Q_NULLPTR;
-
-    if (RecentAddresses::exists()) {
-        RecentAddresses::self(config.data())->save(config.data());
     }
 }
 
