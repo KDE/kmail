@@ -63,7 +63,7 @@ protected:
 
 };
 
-void KMailApplication::commitData(QSessionManager &sm)
+void KMailApplication::commitData(QSessionManager &)
 {
     kmkernel->dumpDeadLetters();
     kmkernel->setShuttingDown(true);   // Prevent further dumpDeadLetters calls
