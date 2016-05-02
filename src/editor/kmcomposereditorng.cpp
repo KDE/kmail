@@ -32,6 +32,12 @@
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
 #include <sonnet/dictionarycombobox.h>
 
+namespace {
+inline QString textSnippetMimeType() {
+    return QStringLiteral("text/x-kmail-textsnippet");
+}
+}
+
 KMComposerEditorNg::KMComposerEditorNg(KMComposerWin *win, QWidget *parent)
     : MessageComposer::RichTextComposerNg(parent),
       mComposerWin(win)
@@ -65,7 +71,7 @@ bool KMComposerEditorNg::canInsertFromMimeData(const QMimeData *source) const
     if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         return true;
     }
-    if (source->hasFormat(QStringLiteral("text/x-kmail-textsnippet"))) {
+    if (source->hasFormat(textSnippetMimeType())) {
         return true;
     }
     if (source->hasUrls()) {
@@ -77,7 +83,7 @@ bool KMComposerEditorNg::canInsertFromMimeData(const QMimeData *source) const
 
 void KMComposerEditorNg::insertFromMimeData(const QMimeData *source)
 {
-    if (source->hasFormat(QStringLiteral("text/x-kmail-textsnippet"))) {
+    if (source->hasFormat(textSnippetMimeType())) {
         Q_EMIT insertSnippet();
         return;
     }

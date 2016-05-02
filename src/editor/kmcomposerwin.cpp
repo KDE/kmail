@@ -2031,8 +2031,9 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                     }
                 } else {
                     QMenu p;
-                    const QAction *addAsTextAction = p.addAction(i18np("Add URL into Message", "Add URLs into Message", urlList.size()));
-                    const QAction *addAsAttachmentAction = p.addAction(i18np("Add File as &Attachment", "Add Files as &Attachment", urlList.size()));
+                    const int sizeUrl(urlList.size());
+                    const QAction *addAsTextAction = p.addAction(i18np("Add URL into Message", "Add URLs into Message", sizeUrl));
+                    const QAction *addAsAttachmentAction = p.addAction(i18np("Add File as &Attachment", "Add Files as &Attachment", sizeUrl));
                     const QAction *selectedAction = p.exec(QCursor::pos());
 
                     if (selectedAction == addAsTextAction) {
@@ -2054,6 +2055,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                     connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMComposerWin::slotFetchJob);
                 }
                 if (!collections.isEmpty()) {
+                    qCDebug(KMAIL_LOG) << "Collection dnd not supported";
                     //TODO
                 }
                 return true;
