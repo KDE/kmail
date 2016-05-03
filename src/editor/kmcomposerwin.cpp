@@ -2056,7 +2056,6 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                 }
                 if (!collections.isEmpty()) {
                     qCDebug(KMAIL_LOG) << "Collection dnd not supported";
-                    //TODO
                 }
                 return true;
             }
