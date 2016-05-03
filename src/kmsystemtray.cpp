@@ -60,7 +60,7 @@ namespace KMail
 {
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent),
-      mIcon(QIcon::fromTheme(QStringLiteral("mail-unread-new"))),
+      mIcon(QIcon::fromTheme(QStringLiteral("mail-mark-unread-new"))),
       mDesktopOfMainWin(0),
       mMode(KMailSettings::EnumSystemTrayPolicy::ShowOnUnread),
       mCount(0),
