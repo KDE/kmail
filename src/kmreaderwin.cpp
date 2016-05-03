@@ -96,9 +96,8 @@ using namespace MailCommon;
 
 KMReaderWin::KMReaderWin(QWidget *aParent,
                          QWidget *mainWindow,
-                         KActionCollection *actionCollection,
-                         Qt::WindowFlags aFlags)
-    : QWidget(aParent, aFlags),
+                         KActionCollection *actionCollection)
+    : QWidget(aParent),
       mMainWindow(mainWindow),
       mActionCollection(actionCollection),
       mMailToComposeAction(Q_NULLPTR),

@@ -56,7 +56,7 @@ class KMAIL_EXPORT KMReaderWin: public QWidget
 
 public:
     explicit KMReaderWin(QWidget *parent, QWidget *mainWindow,
-                         KActionCollection *actionCollection, Qt::WindowFlags f = Q_NULLPTR);
+                         KActionCollection *actionCollection);
     virtual ~KMReaderWin();
 
     /** Read settings from app's config file. */
