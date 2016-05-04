@@ -23,7 +23,6 @@
 #include <QDialog>
 #include <Collection>
 class QUrl;
-class KComboBox;
 class QCheckBox;
 class KUrlRequester;
 class QSpinBox;

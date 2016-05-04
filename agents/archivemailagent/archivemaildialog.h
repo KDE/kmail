@@ -20,8 +20,6 @@
 
 #include "archivemailinfo.h"
 #include <QDialog>
-class QTreeWidget;
-class KAboutData;
 class ArchiveMailWidget;
 class ArchiveMailDialog : public QDialog
 {

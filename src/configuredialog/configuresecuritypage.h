@@ -29,7 +29,6 @@
 class QButtonGroup;
 namespace MessageViewer
 {
-class AdBlockSettingWidget;
 }
 
 class SecurityPageGeneralTab : public ConfigModuleTab

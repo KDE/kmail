@@ -29,7 +29,6 @@ class FolderRequester;
 namespace MessageViewer
 {
 class InvitationSettings;
-class PrintingSettings;
 }
 class ConfigureAgentsWidget;
 

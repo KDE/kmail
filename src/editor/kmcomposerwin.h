@@ -49,7 +49,6 @@ class QUrl;
 class QByteArray;
 class QGridLayout;
 class QLabel;
-class QPushButton;
 class QSplitter;
 class KSplitterCollapserButton;
 class CodecAction;
