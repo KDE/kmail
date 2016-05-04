@@ -545,10 +545,14 @@ private:
     QMap<QByteArray, QString> mExtraHeaders;
 
     QWidget   *mMainWidget;
-    MessageComposer::ComposerLineEdit *mEdtFrom, *mEdtReplyTo;
+    MessageComposer::ComposerLineEdit *mEdtFrom;
+    MessageComposer::ComposerLineEdit *mEdtReplyTo;
     PimCommon::LineEditWithAutoCorrection *mEdtSubject;
-    QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
-    QLabel    *mLblFrom, *mLblReplyTo;
+    QLabel    *mLblIdentity;
+    QLabel *mLblTransport;
+    QLabel *mLblFcc;
+    QLabel    *mLblFrom;
+    QLabel *mLblReplyTo;
     QLabel    *mLblSubject;
     QLabel    *mDictionaryLabel;
     bool mDone;
@@ -557,8 +561,11 @@ private:
     QGridLayout *mGrid;
     QString mTextSelection;
     QString mCustomTemplate;
-    bool mLastSignActionState, mLastEncryptActionState, mSigningAndEncryptionExplicitlyDisabled;
-    bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
+    bool mLastSignActionState;
+    bool mLastEncryptActionState;
+    bool mSigningAndEncryptionExplicitlyDisabled;
+    bool mLastIdentityHasSigningKey;
+    bool mLastIdentityHasEncryptionKey;
     Akonadi::Collection mFolder;
     long mShowHeaders;
     bool mForceDisableHtml;     // Completely disable any HTML. Useful when sending invitations in the
@@ -570,13 +577,22 @@ private:
 
     KRecentFilesAction *mRecentAction;
 
-    KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
-    KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;
+    KToggleAction *mSignAction;
+    KToggleAction *mEncryptAction;
+    KToggleAction *mRequestMDNAction;
+    KToggleAction *mUrgentAction;
+    KToggleAction *mAllFieldsAction;
+    KToggleAction *mFromAction;
     KToggleAction *mReplyToAction;
     KToggleAction *mSubjectAction;
-    KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
-    KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
-    KToggleAction *mDictionaryAction, *mSnippetAction;
+    KToggleAction *mIdentityAction;
+    KToggleAction *mTransportAction;
+    KToggleAction *mFccAction;
+    KToggleAction *mWordWrapAction;
+    KToggleAction *mFixedFontAction;
+    KToggleAction *mAutoSpellCheckingAction;
+    KToggleAction *mDictionaryAction;
+    KToggleAction *mSnippetAction;
     QAction *mAppendSignature;
     QAction *mPrependSignature;
     QAction *mInsertSignatureAtCursorPosition;
@@ -586,7 +602,10 @@ private:
     CodecAction *mCodecAction;
     KSelectAction *mCryptoModuleAction;
 
-    QAction *mFindText, *mFindNextText, *mReplaceText, *mSelectAll;
+    QAction *mFindText;
+    QAction *mFindNextText;
+    QAction *mReplaceText;
+    QAction *mSelectAll;
 
     QSplitter *mHeadersToEditorSplitter;
     QWidget *mHeadersArea;
