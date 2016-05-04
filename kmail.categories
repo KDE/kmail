@@ -1,0 +1,7 @@
+log_kmail kmail (kmail)
+log_sendlateragent kmail (sendlateragent)
+log_archivemailagent kmail (archivemailagent)
+log_followupreminderagent kmail (followupreminderagent)
+log_kmail_plugin kmail (kmail kontact plugins)
+log_mailfilteragent kmail (mailfilter agent)
+
