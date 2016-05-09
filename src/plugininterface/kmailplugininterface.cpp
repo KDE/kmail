@@ -61,6 +61,5 @@ void KMailPluginInterface::initializeInterfaceRequires(PimCommon::GenericPluginI
     }
     if (requires & PimCommon::GenericPluginInterface::Collections) {
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Collection not implemented";
-        //TODO
     }
 }
