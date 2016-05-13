@@ -268,7 +268,7 @@
 
     <group name="Geometry">
       <entry name="ComposerSize" type="Size" key="composer">
-        <default>QSize(480,510)</default>
+        <default>QSize(800,600)</default>
       </entry>
       <entry name="IdentityDialogSize" type="Size" key="Identity Dialog size">
         <label>The size of the identity dialog (for internal use only)</label>
