@@ -67,11 +67,11 @@ public:
 
     void setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy);
 
-    /** Get selected override character encoding.
+    /** Get selected Q_DECL_OVERRIDE character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
       is selected. */
     QString overrideEncoding() const;
-    /** Set the override character encoding. */
+    /** Set the Q_DECL_OVERRIDE character encoding. */
     void setOverrideEncoding(const QString &encoding);
     virtual void setPrinting(bool enable);
 
@@ -93,18 +93,18 @@ public:
 
     /** Override default html mail setting */
     bool htmlOverride() const;
-    void setHtmlOverride(bool override);
+    void setHtmlOverride(bool Q_DECL_OVERRIDE);
     MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
     void setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format);
 
     /** Override default load external references setting */
     bool htmlLoadExtOverride() const;
-    void setHtmlLoadExtOverride(bool override);
+    void setHtmlLoadExtOverride(bool Q_DECL_OVERRIDE);
 
-    /** Is html mail to be supported? Takes into account override */
+    /** Is html mail to be supported? Takes into account Q_DECL_OVERRIDE */
     bool htmlMail() const;
 
-    /** Is loading ext. references to be supported? Takes into account override */
+    /** Is loading ext. references to be supported? Takes into account Q_DECL_OVERRIDE */
     bool htmlLoadExternal();
 
     /** Returns the MD5 hash for the list of new features */

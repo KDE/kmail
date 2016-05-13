@@ -120,7 +120,7 @@ void SecurityPage::GeneralTab::save()
 {
     if (MessageViewer::MessageViewerSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked()) {
         if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
-                                               "HTML setting will override all folder specific values."), QString(),
+                                               "HTML setting will Q_DECL_OVERRIDE all folder specific values."), QString(),
                                                KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("htmlMailOverride")) == KMessageBox::Continue) {
             saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
             if (kmkernel) {

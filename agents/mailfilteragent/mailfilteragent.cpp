@@ -170,7 +170,7 @@ void MailFilterAgent::clearMessage()
 
 void MailFilterAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection)
 {
-    /* The monitor mimetype filter would override the collection filter, therefor we have to check
+    /* The monitor mimetype filter would Q_DECL_OVERRIDE the collection filter, therefor we have to check
     * for the mimetype of the item here.
     */
     if (item.mimeType() != KMime::Message::mimeType()) {
