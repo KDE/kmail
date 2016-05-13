@@ -450,7 +450,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMComposerWin::slotFolderRemoved);
     connect(kmkernel, &KMKernel::configChanged, this, &KMComposerWin::slotConfigChanged);
 
-    mMainWidget->resize(480, 510);
+    mMainWidget->resize(800, 600);
     setCentralWidget(mMainWidget);
 
     if (KMailSettings::self()->useHtmlMarkup()) {
