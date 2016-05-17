@@ -3268,7 +3268,7 @@ void KMMainWidget::setupActions()
     {
         QAction *action = new QAction(i18n("&Next Message"), this);
         actionCollection()->addAction(QStringLiteral("go_next_message"), action);
-        actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("N; Right")));
+        actionCollection()->setDefaultShortcuts(action, QList<QKeySequence> { QKeySequence(Qt::Key_N), QKeySequence(Qt::Key_Right) });
         KMail::Util::addQActionHelpText(action, i18n("Go to the next message"));
         connect(action, &QAction::triggered, this, &KMMainWidget::slotSelectNextMessage);
     }
@@ -3289,7 +3289,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(i18n("&Previous Message"), this);
         actionCollection()->addAction(QStringLiteral("go_prev_message"), action);
         KMail::Util::addQActionHelpText(action, i18n("Go to the previous message"));
-        actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("P; Left")));
+        actionCollection()->setDefaultShortcuts(action, QList<QKeySequence> { QKeySequence(Qt::Key_P), QKeySequence(Qt::Key_Left) });
         connect(action, &QAction::triggered, this, &KMMainWidget::slotSelectPreviousMessage);
     }
     {
