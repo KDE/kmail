@@ -32,8 +32,10 @@
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
 #include <sonnet/dictionarycombobox.h>
 
-namespace {
-inline QString textSnippetMimeType() {
+namespace
+{
+inline QString textSnippetMimeType()
+{
     return QStringLiteral("text/x-kmail-textsnippet");
 }
 }
