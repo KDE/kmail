@@ -143,7 +143,7 @@ void ConfigAgentDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
         cg = QPalette::Inactive;
     }
 
-    QStyleOptionViewItemV4 opt(option);
+    QStyleOptionViewItem opt(option);
     opt.showDecorationSelected = true;
     QApplication::style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter);
     painter->save();
