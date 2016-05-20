@@ -119,9 +119,7 @@ void KMLaunchExternalComponent::slotAddrBook()
 
 void KMLaunchExternalComponent::slotImport()
 {
-    QStringList lst;
-    lst.append(QStringLiteral("--mode"));
-    lst.append(QStringLiteral("manual"));
+    const QStringList lst = {QStringLiteral("--mode"), QStringLiteral("manual")};
     const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
     if (!QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the ImportWizard. "
@@ -132,9 +130,7 @@ void KMLaunchExternalComponent::slotImport()
 
 void KMLaunchExternalComponent::slotAccountWizard()
 {
-    QStringList lst;
-    lst.append(QStringLiteral("--type"));
-    lst.append(QStringLiteral("message/rfc822"));
+    const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822") };
 
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
     if (!QProcess::startDetached(path, lst)) {
