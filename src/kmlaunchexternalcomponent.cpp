@@ -78,7 +78,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
 {
     if (!QProcess::startDetached(QStringLiteral("kleopatra"))) {
         KMessageBox::error(mParentWidget, i18n("Could not start certificate manager; "
-                                               "please check your installation."),
+                                               "please make sure you have Kleopatra properly installed."),
                            i18n("KMail Error"));
     }
 }
@@ -97,7 +97,7 @@ void KMLaunchExternalComponent::slotImportWizard()
     const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
     if (!QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the import wizard. "
-                                               "Please check your installation."),
+                                               "please make sure you have ImportWizard properly installed."),
                            i18n("Unable to start import wizard"));
     }
 }
@@ -125,7 +125,7 @@ void KMLaunchExternalComponent::slotImport()
     const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
     if (!QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the ImportWizard. "
-                                               "Please check your installation."),
+                                               "please make sure you have ImportWizard properly installed."),
                            i18n("Unable to start ImportWizard"));
     }
 }
@@ -139,7 +139,7 @@ void KMLaunchExternalComponent::slotAccountWizard()
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
     if (!QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the account wizard. "
-                                               "Please check your installation."),
+                                               "please make sure you have AccountWizard properly installed."),
                            i18n("Unable to start account wizard"));
     }
 }
