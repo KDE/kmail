@@ -266,7 +266,7 @@ void CollectionViewPage::load(const Akonadi::Collection &col)
     // message list theme
     slotSelectFolderTheme();
 
-    MessageViewer::Viewer::DisplayFormatMessage formatMessage = mFolderCollection->formatMessage();
+    const MessageViewer::Viewer::DisplayFormatMessage formatMessage = mFolderCollection->formatMessage();
     switch (formatMessage) {
     case MessageViewer::Viewer::Html:
         mPreferHtmlToText->setChecked(true);
