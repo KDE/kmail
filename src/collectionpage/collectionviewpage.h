@@ -21,6 +21,7 @@
 
 #include <AkonadiWidgets/collectionpropertiespage.h>
 #include <AkonadiCore/collection.h>
+#include <MailCommon/FolderCollection>
 class QCheckBox;
 class QLabel;
 class KComboBox;
@@ -56,6 +57,7 @@ private Q_SLOTS:
 
 private:
     void init(const Akonadi::Collection &);
+    QSharedPointer<MailCommon::FolderCollection> mFolderCollection;
     QCheckBox   *mIconsCheckBox;
     QLabel      *mNormalIconLabel;
     KIconButton *mNormalIconButton;

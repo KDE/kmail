@@ -60,8 +60,8 @@ CollectionViewPage::~CollectionViewPage()
 void CollectionViewPage::init(const Akonadi::Collection &col)
 {
     mCurrentCollection = col;
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(col, false);
-    mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || fd->isStructural() || Kernel::folderIsInbox(col, true);
+    mFolderCollection = FolderCollection::forCollection(col);
+    mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || mFolderCollection->isStructural() || Kernel::folderIsInbox(col, true);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     // Musn't be able to edit details for non-resource, system folder.
@@ -266,9 +266,7 @@ void CollectionViewPage::load(const Akonadi::Collection &col)
     // message list theme
     slotSelectFolderTheme();
 
-    KSharedConfig::Ptr config = KMKernel::self()->config();
-    KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(col));
-    MessageViewer::Viewer::DisplayFormatMessage formatMessage = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(group.readEntry("displayFormatOverride", static_cast<int>(MessageViewer::Viewer::UseGlobalSetting)));
+    MessageViewer::Viewer::DisplayFormatMessage formatMessage = mFolderCollection->formatMessage();
     switch (formatMessage) {
     case MessageViewer::Viewer::Html:
         mPreferHtmlToText->setChecked(true);
@@ -316,10 +314,7 @@ void CollectionViewPage::save(Akonadi::Collection &col)
     const bool usePrivateAggregation = !mUseDefaultAggregationCheckBox->isChecked();
     mAggregationComboBox->writeStorageModelConfig(mCurrentCollection, usePrivateAggregation);
 
-    KSharedConfig::Ptr config = KMKernel::self()->config();
-    KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(col));
     MessageViewer::Viewer::DisplayFormatMessage formatMessage = MessageViewer::Viewer::Unknown;
-
     if (mPreferHtmlToText->isChecked()) {
         formatMessage = MessageViewer::Viewer::Html;
     } else if (mPreferTextToHtml->isChecked()) {
@@ -329,12 +324,6 @@ void CollectionViewPage::save(Akonadi::Collection &col)
     } else {
         qCDebug(KMAIL_LOG) << "No settings defined";
     }
-    if (formatMessage != MessageViewer::Viewer::Unknown) {
-        if (formatMessage == MessageViewer::Viewer::UseGlobalSetting) {
-            group.deleteEntry("displayFormatOverride");
-        } else {
-            group.writeEntry("displayFormatOverride", static_cast<int>(formatMessage));
-        }
-    }
+    mFolderCollection->setFormatMessage(formatMessage);
 }
 
