@@ -1162,9 +1162,9 @@ void KMMainWidget::updateMoveAction(bool hasUnreadMails, bool hasMails)
     const bool enable_goto_unread = hasUnreadMails
                                     || (KMailSettings::self()->loopOnGotoUnread() == KMailSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
                                     || (KMailSettings::self()->loopOnGotoUnread() == KMailSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
-    actionCollection()->action(QStringLiteral("go_next_message"))->setEnabled(hasMails);
+    //actionCollection()->action(QStringLiteral("go_next_message"))->setEnabled(hasMails);
     actionCollection()->action(QStringLiteral("go_next_unread_message"))->setEnabled(enable_goto_unread);
-    actionCollection()->action(QStringLiteral("go_prev_message"))->setEnabled(hasMails);
+    //actionCollection()->action(QStringLiteral("go_prev_message"))->setEnabled(hasMails);
     actionCollection()->action(QStringLiteral("go_prev_unread_message"))->setEnabled(enable_goto_unread);
     if (mAkonadiStandardActionManager && mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkAllMailAsRead)) {
         mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkAllMailAsRead)->setEnabled(hasUnreadMails);
