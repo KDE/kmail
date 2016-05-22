@@ -129,6 +129,7 @@ void SecurityPage::GeneralTab::save()
                     //Old config
                     config.deleteEntry("htmlMailOverride");
                     config.deleteEntry("displayFormatOverride");
+                    MailCommon::FolderCollection::resetHtmlFormat();
                 }
             }
         }
