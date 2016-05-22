@@ -100,7 +100,7 @@ void KActionMenuAccount::updateAccountMenu()
             const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")), index);
             agentIdentifierList << id;
         }
-        qSort(agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);
+        std::sort(agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);
         const int numberOfAccount(agentIdentifierList.size());
         for (int i = 0; i < numberOfAccount; ++i) {
             const AgentIdentifier id = agentIdentifierList.at(i);

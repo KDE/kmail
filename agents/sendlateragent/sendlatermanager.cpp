@@ -82,7 +82,7 @@ void SendLaterManager::load(bool forcereload)
 void SendLaterManager::createSendInfoList()
 {
     mCurrentInfo = Q_NULLPTR;
-    qSort(mListSendLaterInfo.begin(), mListSendLaterInfo.end(), SendLater::SendLaterUtil::compareSendLaterInfo);
+    std::sort(mListSendLaterInfo.begin(), mListSendLaterInfo.end(), SendLater::SendLaterUtil::compareSendLaterInfo);
 
     //Look at QQueue
     if (mSendLaterQueue.isEmpty()) {

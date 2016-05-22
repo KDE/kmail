@@ -152,7 +152,7 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
         mTagList.append(MailCommon::Tag::fromAkonadi(akonadiTag));
     }
 
-    qSort(mTagList.begin(), mTagList.end(), MailCommon::Tag::compare);
+    std::sort(mTagList.begin(), mTagList.end(), MailCommon::Tag::compare);
 
     foreach (const MailCommon::Tag::Ptr &tag, mTagList) {
         QListWidgetItem *item = new QListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mListTag);

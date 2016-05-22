@@ -171,7 +171,7 @@ void TagActionManager::finishedTagListing(KJob *job)
         mTags.append(MailCommon::Tag::fromAkonadi(result));
     }
     mTagFetchInProgress = false;
-    qSort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
+    std::sort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
     createTagActions(mTags);
 }
 
@@ -281,7 +281,7 @@ void TagActionManager::onTagAdded(const Akonadi::Tag &akonadiTag)
 
     clearActions();
     mTags.append(MailCommon::Tag::fromAkonadi(akonadiTag));
-    qSort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
+    std::sort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
     createTagActions(mTags);
 
     checkTags(checked);
@@ -316,7 +316,7 @@ void TagActionManager::fillTagList()
     const QList<qint64> checked = checkedTags();
 
     clearActions();
-    qSort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
+    std::sort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
     createTagActions(mTags);
 
     checkTags(checked);

@@ -1387,7 +1387,7 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
         msgTagList.append(tag);
     }
 
-    qSort(msgTagList.begin(), msgTagList.end(), MailCommon::Tag::compare);
+    std::sort(msgTagList.begin(), msgTagList.end(), MailCommon::Tag::compare);
 
     foreach (const MailCommon::Tag::Ptr &tag, msgTagList) {
         TagListWidgetItem *newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mTagListBox);
