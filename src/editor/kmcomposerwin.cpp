@@ -917,7 +917,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
     case Forward:
         mode = TemplateParser::TemplateParser::Forward;
         break;
-    default:
+    case NoTemplate:
         return;
     }
 
@@ -3040,8 +3040,8 @@ void KMComposerWin::slotOverwriteModeChanged()
 void KMComposerWin::slotCursorPositionChanged()
 {
     // Change Line/Column info in status bar
-    int line = mComposerBase->editor()->linePosition();
-    int col = mComposerBase->editor()->columnNumber();
+    const int line = mComposerBase->editor()->linePosition();
+    const int col = mComposerBase->editor()->columnNumber();
     QString temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line + 1);
     mStatusBarLabelList.at(1)->setText(temp);
     temp = i18n(" Column: %1 ", col + 1);
