@@ -109,7 +109,7 @@
 #include <MessageComposer/InsertTextFileJob>
 #include <MessageComposer/ComposerLineEdit>
 #include <MessageCore/AttachmentPart>
-#include "MessageCore/MessageCoreSettings"
+#include <MessageCore/MessageCoreSettings>
 #include <templateparser.h>
 #include <TemplateParser/TemplatesConfiguration>
 #include <MessageCore/NodeHelper>
@@ -532,7 +532,6 @@ void KMComposerWin::send(int how)
 
 void KMComposerWin::addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how)
 {
-    qCDebug(KMAIL_LOG) << "addAttachment and sending!";
     const int nbUrl = urls.count();
     for (int i = 0; i < nbUrl; ++i) {
         mComposerBase->addAttachment(urls.at(i), comment, true);
@@ -617,8 +616,7 @@ void KMComposerWin::writeConfig(void)
     KMailSettings::self()->setPreviousIdentity(mComposerBase->identityCombo()->currentIdentity());
     KMailSettings::self()->setPreviousFcc(QString::number(mFccFolder->collection().id()));
     KMailSettings::self()->setPreviousDictionary(mComposerBase->dictionary()->currentDictionaryName());
-    KMailSettings::self()->setAutoSpellChecking(
-        mAutoSpellCheckingAction->isChecked());
+    KMailSettings::self()->setAutoSpellChecking(mAutoSpellCheckingAction->isChecked());
     MessageViewer::MessageViewerSettings::self()->setUseFixedFont(mFixedFontAction->isChecked());
     if (!mForceDisableHtml) {
         KMailSettings::self()->setUseHtmlMarkup(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
@@ -876,6 +874,7 @@ QWidget *KMComposerWin::connectFocusMoving(QWidget *prev, QWidget *next)
 
     return next;
 }
+
 void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
                                       QLabel *aLbl, QWidget *aCbx)
 {
@@ -1105,8 +1104,9 @@ void KMComposerWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("addressbook"), action);
     if (QStandardPaths::findExecutable(QStringLiteral("kaddressbook")).isEmpty()) {
         action->setEnabled(false);
+    } else {
+        connect(action, &QAction::triggered, this, &KMComposerWin::slotAddressBook);
     }
-    connect(action, &QAction::triggered, this, &KMComposerWin::slotAddressBook);
     action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18n("&New Composer"), this);
     actionCollection()->addAction(QStringLiteral("new_composer"), action);
 
@@ -1284,7 +1284,6 @@ void KMComposerWin::setupActions(void)
     mCryptoModuleAction->setItems(listCryptoFormat);
 
     mComposerBase->editor()->createActions(actionCollection());
-    //actionCollection()->addActions(mComposerBase->editor()->createActions());
 
     mFollowUpToggleAction = new KToggleAction(i18n("Follow Up Mail..."), this);
     actionCollection()->addAction(QStringLiteral("follow_up_mail"), mFollowUpToggleAction);
