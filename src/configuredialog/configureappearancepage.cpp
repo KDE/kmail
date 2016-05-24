@@ -38,7 +38,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messageviewer/messageviewersettings.h"
 
 #include "messagelist/messagelistutil.h"
-#include "MessageCore/MessageCoreSettings"
+#include <MessageCore/MessageCoreSettings>
 #include "MessageCore/MessageCoreUtil"
 #include "settings/kmailsettings.h"
 

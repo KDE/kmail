@@ -28,7 +28,7 @@
 #include <TemplateParser/CustomTemplatesMenu>
 
 #include "PimCommon/AnnotationDialog"
-#include "MessageCore/MessageCoreSettings"
+#include <MessageCore/MessageCoreSettings>
 #include "MessageCore/MailingList"
 #include "messagecore/messagehelpers.h"
 #include "MessageViewer/CSSHelper"

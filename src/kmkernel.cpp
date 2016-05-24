@@ -41,7 +41,7 @@ using KPIM::RecentAddresses;
 using KMail::MailServiceImpl;
 #include "mailcommon/jobscheduler.h"
 
-#include "MessageCore/MessageCoreSettings"
+#include <MessageCore/MessageCoreSettings>
 #include "messagelistsettings.h"
 #include "gravatarsettings.h"
 #include "messagelist/messagelistutil.h"

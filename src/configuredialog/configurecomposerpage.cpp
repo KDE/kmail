@@ -23,7 +23,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "PimCommon/AutoCorrectionWidget"
 #include "MessageComposer/ImageScalingWidget"
 #include "MessageComposer/MessageComposerSettings"
-#include "MessageCore/MessageCoreSettings"
+#include <MessageCore/MessageCoreSettings>
 #include "settings/kmailsettings.h"
 #include "configuredialog/configuredialoglistview.h"
 #include "PimCommon/SimpleStringlistEditor"
