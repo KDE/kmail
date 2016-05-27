@@ -1153,18 +1153,15 @@ void KMMainWidget::createWidgets()
 void KMMainWidget::updateMoveAction(const Akonadi::CollectionStatistics &statistic)
 {
     const bool hasUnreadMails = (statistic.unreadCount() > 0);
-    const bool hasMails = (statistic.count() > 0);
-    updateMoveAction(hasUnreadMails, hasMails);
+    updateMoveAction(hasUnreadMails);
 }
 
-void KMMainWidget::updateMoveAction(bool hasUnreadMails, bool hasMails)
+void KMMainWidget::updateMoveAction(bool hasUnreadMails)
 {
     const bool enable_goto_unread = hasUnreadMails
                                     || (KMailSettings::self()->loopOnGotoUnread() == KMailSettings::EnumLoopOnGotoUnread::LoopInAllFolders)
                                     || (KMailSettings::self()->loopOnGotoUnread() == KMailSettings::EnumLoopOnGotoUnread::LoopInAllMarkedFolders);
-    //actionCollection()->action(QStringLiteral("go_next_message"))->setEnabled(hasMails);
     actionCollection()->action(QStringLiteral("go_next_unread_message"))->setEnabled(enable_goto_unread);
-    //actionCollection()->action(QStringLiteral("go_prev_message"))->setEnabled(hasMails);
     actionCollection()->action(QStringLiteral("go_prev_unread_message"))->setEnabled(enable_goto_unread);
     if (mAkonadiStandardActionManager && mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkAllMailAsRead)) {
         mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkAllMailAsRead)->setEnabled(hasUnreadMails);
@@ -3837,7 +3834,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     if ((mCurrentFolder && mCurrentFolder->isValid())) {
         updateMoveAction(mCurrentFolder->statistics());
     } else {
-        updateMoveAction(false, false);
+        updateMoveAction(false);
     }
 
     const qint64 nbMsgOutboxCollection = MailCommon::Util::updatedCollection(CommonKernel->outboxCollectionFolder()).statistics().count();

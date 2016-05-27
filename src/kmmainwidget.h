@@ -461,7 +461,7 @@ private:
     void updateHtmlMenuEntry();
 
     void updateMoveAction(const Akonadi::CollectionStatistics &statistic);
-    void updateMoveAction(bool hasUnreadMails, bool hasMails);
+    void updateMoveAction(bool hasUnreadMails);
 
     void updateAllToTrashAction(int statistics);
 
