@@ -2819,10 +2819,12 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu->addAction(mMsgActions->debugBalooAction());
         }
     }
-    const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
-    if (!interceptorUrlActions.isEmpty()) {
-        menu->addSeparator();
-        menu->addActions(interceptorUrlActions);
+    if (!selectedText.isEmpty()) {
+        const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
+        if (!interceptorUrlActions.isEmpty()) {
+            menu->addSeparator();
+            menu->addActions(interceptorUrlActions);
+        }
     }
 
     KAcceleratorManager::manage(menu);

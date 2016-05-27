@@ -648,10 +648,12 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mMsgActions->debugBalooAction());
         }
     }
-    const QList<QAction *> interceptorUrlActions = mReaderWin->interceptorUrlActions(result);
-    if (!interceptorUrlActions.isEmpty()) {
-        menu->addSeparator();
-        menu->addActions(interceptorUrlActions);
+    if (!selectedText.isEmpty()) {
+        const QList<QAction *> interceptorUrlActions = mReaderWin->interceptorUrlActions(result);
+        if (!interceptorUrlActions.isEmpty()) {
+            menu->addSeparator();
+            menu->addActions(interceptorUrlActions);
+        }
     }
 
     if (menu) {
