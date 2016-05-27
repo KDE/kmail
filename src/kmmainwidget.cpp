@@ -2791,10 +2791,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu->addAction(mMsgView->toggleMimePartTreeAction());
         }
         menu->addSeparator();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
         menu->addAction(mMsgActions->printPreviewAction());
         menu->addAction(mMsgActions->printAction());
-#endif
         menu->addAction(mSaveAsAction);
         menu->addAction(mSaveAttachmentsAction);
         menu->addSeparator();
