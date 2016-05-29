@@ -143,7 +143,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     ac->addAction(QStringLiteral("annotate"), mAnnotateAction);
     connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);
 
-    mPrintAction = KStandardAction::print(this, SLOT(slotPrintMsg()), ac);
+    mPrintAction = KStandardAction::print(this, SLOT(slotPrintMessage()), ac);
     mPrintPreviewAction = KStandardAction::printPreview(this, SLOT(slotPrintPreviewMsg()), ac);
 
     mForwardActionMenu  = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this);
@@ -595,7 +595,7 @@ void MessageActions::slotPrintPreviewMsg()
     printMessage(true);
 }
 
-void MessageActions::slotPrintMsg()
+void MessageActions::slotPrintMessage()
 {
     printMessage(false);
 }

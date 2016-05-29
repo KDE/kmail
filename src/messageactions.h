@@ -129,7 +129,7 @@ private Q_SLOTS:
     void slotReplyAllToMsg();
     void slotNoQuoteReplyToMsg();
     void slotRunUrl(QAction *urlAction);
-    void slotPrintMsg();
+    void slotPrintMessage();
     void slotPrintPreviewMsg();
 
     void slotUpdateActionsFetchDone(KJob *job);
