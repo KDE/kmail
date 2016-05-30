@@ -3392,7 +3392,7 @@ void KMMainWidget::setupActions()
     }
 
     {
-        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("kmail")), i18n("Import/Export KMail Data..."), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("kontact")), i18n("Import/Export KMail Data..."), this);
         actionCollection()->addAction(QStringLiteral("kmail_export_data"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotExportData);
     }
