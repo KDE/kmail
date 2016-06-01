@@ -162,6 +162,7 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>labelWarning</tabstop>
   <tabstop>radioIgnore</tabstop>
   <tabstop>radioAsk</tabstop>
   <tabstop>radioDeny</tabstop>
