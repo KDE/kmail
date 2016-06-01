@@ -150,6 +150,7 @@ set(kmailprivate_plugininterface_LIB_SRCS
 
 set(kmailprivate_editor_plugininterface_LIB_SRCS
     editor/plugininterface/kmailplugineditormanagerinterface.cpp
+    editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.cpp
     )
 
 set(kmail_common_SRCS)
