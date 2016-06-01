@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>757</width>
-    <height>401</height>
+    <height>508</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -99,7 +99,7 @@
        </widget>
       </item>
       <item>
-       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList" native="true"/>
+       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList"/>
       </item>
      </layout>
     </widget>
@@ -154,13 +154,14 @@
   <customwidget>
    <class>PimCommon::SimpleStringListEditor</class>
    <extends>QWidget</extends>
-   <header>PimCommon/SimpleStringlistEditor</header>
+   <header>pimcommon/simplestringlisteditor.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>mHtmlMailCheck</tabstop>
   <tabstop>mExternalReferences</tabstop>
   <tabstop>mScamDetection</tabstop>
+  <tabstop>scamWhiteList</tabstop>
   <tabstop>mAlwaysDecrypt</tabstop>
   <tabstop>mAutomaticallyImportAttachedKeysCheck</tabstop>
  </tabstops>
