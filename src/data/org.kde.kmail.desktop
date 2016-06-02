@@ -191,3 +191,14 @@ X-KDE-ServiceTypes=DBUS/Mailer
 Categories=Qt;KDE;Office;Network;Email;
 MimeType=x-scheme-handler/mailto;
 InitialPreference=10
+Actions=Composer;CheckMail;
+
+[Desktop Action Composer]
+Name=New Message
+Icon=mail-message-new
+Exec=kmail --composer
+
+[Desktop Action CheckMail]
+Name=Check Mail
+Icon=mail-receive
+Exec=kmail --check
