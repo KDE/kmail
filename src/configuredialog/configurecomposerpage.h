@@ -265,6 +265,26 @@ private:
     MessageComposer::ImageScalingWidget *autoResizeWidget;
 };
 
+#if 0 //TODO
+class ComposerPluginTab : public ConfigModuleTab
+{
+    Q_OBJECT
+public:
+    explicit ComposerPluginTab(WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent = Q_NULLPTR);
+    ~ComposerPluginTab();
+
+    void save() Q_DECL_OVERRIDE;
+
+private:
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+
+private:
+    WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *mConfigureWidget;
+};
+#endif
+
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
