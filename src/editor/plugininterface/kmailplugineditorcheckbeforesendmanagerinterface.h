@@ -37,6 +37,7 @@ public:
 
 
     void initializePlugins();
+    bool execute() const;
 private:
     QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
     QWidget *mParentWidget;
