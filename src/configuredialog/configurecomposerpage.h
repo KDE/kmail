@@ -39,15 +39,12 @@ class TemplatesConfiguration;
 namespace PimCommon
 {
 class AutoCorrectionWidget;
+class SimpleStringListEditor;
 }
 namespace MessageComposer
 {
 class ImageScalingWidget;
-}
-
-namespace PimCommon
-{
-class SimpleStringListEditor;
+class PluginEditorCheckBeforeSendConfigureWidget;
 }
 
 class ComposerPageGeneralTab : public ConfigModuleTab
@@ -265,12 +262,11 @@ private:
     MessageComposer::ImageScalingWidget *autoResizeWidget;
 };
 
-#if 0 //TODO
 class ComposerPluginTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPluginTab(WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent = Q_NULLPTR);
+    explicit ComposerPluginTab(MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *configureWidget, QWidget *parent = Q_NULLPTR);
     ~ComposerPluginTab();
 
     void save() Q_DECL_OVERRIDE;
@@ -281,9 +277,8 @@ private:
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private:
-    WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *mConfigureWidget;
+    MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *mConfigureWidget;
 };
-#endif
 
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 {

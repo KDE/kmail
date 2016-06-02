@@ -59,6 +59,8 @@ using KPIM::RecentAddresses;
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 
+#include <MessageComposer/PluginEditorCheckBeforeSendConfigureWidget>
+
 #include <libkdepim/blacklistbalooemailcompletiondialog.h>
 
 #include <libkdepim/completionconfiguredialog.h>
@@ -131,6 +133,20 @@ ComposerPage::ComposerPage(QWidget *parent)
     // "external editor" tab:
     ExternalEditorTab *externalEditorTab = new ExternalEditorTab();
     addTab(externalEditorTab, i18n("External Editor"));
+
+#if 0 //FIXME
+    MiscPageAgentSettingsTab *agentSettingsTab = new MiscPageAgentSettingsTab();
+    addTab(agentSettingsTab, i18n("Plugins Settings"));
+    Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
+        if (plugin->hasConfigureSupport()) {
+            WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
+
+            AddonsPluginTab *tab = new AddonsPluginTab(settings.configureWidget, this);
+            addTab(tab, settings.name);
+        }
+    }
+#endif
+
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const
@@ -1405,4 +1421,39 @@ void ComposerPageAutoImageResizeTab::doLoadFromGlobalSettings()
 void ComposerPageAutoImageResizeTab::doResetToDefaultsOther()
 {
     autoResizeWidget->resetToDefault();
+}
+
+ComposerPluginTab::ComposerPluginTab(MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *configureWidget, QWidget *parent)
+    : ConfigModuleTab(parent),
+      mConfigureWidget(configureWidget)
+{
+    QHBoxLayout *l = new QHBoxLayout(this);
+    l->setContentsMargins(0, 0, 0, 0);
+    l->addWidget(mConfigureWidget);
+    connect(mConfigureWidget, &MessageComposer::PluginEditorCheckBeforeSendConfigureWidget::configureChanged, this, &ComposerPluginTab::slotEmitChanged);
+}
+
+ComposerPluginTab::~ComposerPluginTab()
+{
+
+}
+
+void ComposerPluginTab::save()
+{
+    mConfigureWidget->saveSettings();
+}
+
+void ComposerPluginTab::doLoadFromGlobalSettings()
+{
+    //TODO
+}
+
+void ComposerPluginTab::doLoadOther()
+{
+    mConfigureWidget->loadSettings();
+}
+
+void ComposerPluginTab::doResetToDefaultsOther()
+{
+    mConfigureWidget->resetSettings();
 }
