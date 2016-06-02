@@ -20,6 +20,11 @@
 
 #include <QObject>
 
+namespace MessageComposer
+{
+class PluginEditorCheckBeforeSendInterface;
+}
+
 class KMailPluginEditorCheckBeforeSendManagerInterface : public QObject
 {
     Q_OBJECT
@@ -27,6 +32,14 @@ public:
     explicit KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent = Q_NULLPTR);
     ~KMailPluginEditorCheckBeforeSendManagerInterface();
 
+    QWidget *parentWidget() const;
+    void setParentWidget(QWidget *parentWidget);
+
+
+    void initializePlugins();
+private:
+    QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
+    QWidget *mParentWidget;
 };
 
 #endif // KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H

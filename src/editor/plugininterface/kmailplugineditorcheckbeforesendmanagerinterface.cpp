@@ -17,9 +17,14 @@
 
 
 #include "kmailplugineditorcheckbeforesendmanagerinterface.h"
+#include "kmail_debug.h"
+#include <MessageComposer/PluginEditorCheckBeforeSendInterface>
+#include <MessageComposer/PluginEditorCheckBeforeSend>
+#include <MessageComposer/PluginEditorCheckBeforeSendManager>
 
 KMailPluginEditorCheckBeforeSendManagerInterface::KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      mParentWidget(Q_NULLPTR)
 {
 
 }
@@ -27,4 +32,28 @@ KMailPluginEditorCheckBeforeSendManagerInterface::KMailPluginEditorCheckBeforeSe
 KMailPluginEditorCheckBeforeSendManagerInterface::~KMailPluginEditorCheckBeforeSendManagerInterface()
 {
 
+}
+
+QWidget *KMailPluginEditorCheckBeforeSendManagerInterface::parentWidget() const
+{
+    return mParentWidget;
+}
+
+void KMailPluginEditorCheckBeforeSendManagerInterface::setParentWidget(QWidget *parentWidget)
+{
+    mParentWidget = parentWidget;
+}
+
+void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
+{
+    if (!mListPluginInterface.isEmpty()) {
+        qCDebug(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
+        return;
+    }
+    const QVector<MessageComposer::PluginEditorCheckBeforeSend *> lstPlugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList();
+    Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, lstPlugin) {
+        MessageComposer::PluginEditorCheckBeforeSendInterface *interface = plugin->createInterface(this);
+        interface->setParentWidget(mParentWidget);
+        mListPluginInterface.append(interface);
+    }
 }
