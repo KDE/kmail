@@ -60,6 +60,8 @@ using KPIM::RecentAddresses;
 #include <QRegularExpressionValidator>
 
 #include <MessageComposer/PluginEditorCheckBeforeSendConfigureWidget>
+#include <MessageComposer/PluginEditorCheckBeforeSendManager>
+#include <MessageComposer/PluginEditorCheckBeforeSend>
 
 #include <libkdepim/blacklistbalooemailcompletiondialog.h>
 
@@ -134,19 +136,13 @@ ComposerPage::ComposerPage(QWidget *parent)
     ExternalEditorTab *externalEditorTab = new ExternalEditorTab();
     addTab(externalEditorTab, i18n("External Editor"));
 
-#if 0 //FIXME
-    MiscPageAgentSettingsTab *agentSettingsTab = new MiscPageAgentSettingsTab();
-    addTab(agentSettingsTab, i18n("Plugins Settings"));
-    Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
-        if (plugin->hasConfigureSupport()) {
-            WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
-
-            AddonsPluginTab *tab = new AddonsPluginTab(settings.configureWidget, this);
+    Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
+        if (plugin->hasConfigureDialog()) {
+            MessageComposer::PluginEditorCheckBeforeSendConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
+            ComposerPluginTab *tab = new ComposerPluginTab(settings.configureWidget, this);
             addTab(tab, settings.name);
         }
     }
-#endif
-
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const

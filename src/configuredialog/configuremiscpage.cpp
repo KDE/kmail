@@ -54,6 +54,7 @@ MiscPage::MiscPage(QWidget *parent)
 
     MiscPageAgentSettingsTab *agentSettingsTab = new MiscPageAgentSettingsTab();
     addTab(agentSettingsTab, i18n("Plugins Settings"));
+
     Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
             WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
