@@ -137,7 +137,7 @@ ComposerPage::ComposerPage(QWidget *parent)
     addTab(externalEditorTab, i18n("External Editor"));
 
     Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
-        if (plugin->hasConfigureDialog()) {
+        if (plugin->hasConfigureSupport()) {
             MessageComposer::PluginEditorCheckBeforeSendConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
             ComposerPluginTab *tab = new ComposerPluginTab(settings.configureWidget, this);
             addTab(tab, settings.name);
