@@ -77,6 +77,7 @@
 #include "PimCommon/StorageServiceProgressManager"
 #include "plugineditorinterface.h"
 #include "editor/plugininterface/kmailplugineditormanagerinterface.h"
+#include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
 
 #include "MessageComposer/Util"
 
@@ -108,6 +109,7 @@
 #include <MessageComposer/SignatureController>
 #include <MessageComposer/InsertTextFileJob>
 #include <MessageComposer/ComposerLineEdit>
+
 #include <MessageCore/AttachmentPart>
 #include <MessageCore/MessageCoreSettings>
 #include <templateparser.h>
@@ -251,6 +253,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mComposerBase->setIdentityManager(kmkernel->identityManager());
 
     mPluginEditorManagerInterface = new KMailPluginEditorManagerInterface(this);
+    mPluginEditorCheckBeforeSendManagerInterface = new KMailPluginEditorCheckBeforeSendManagerInterface(this);
 
     connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposerWin::disableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposerWin::enableHtml);
@@ -429,6 +432,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPluginEditorManagerInterface->setParentWidget(this);
     mPluginEditorManagerInterface->setRichTextEditor(mRichTextEditorwidget->editor());
     mPluginEditorManagerInterface->setActionCollection(actionCollection());
+
+    mPluginEditorCheckBeforeSendManagerInterface->setParentWidget(this);
+    //TODO add more settings ?
 
     setupStatusBar(attachmentView->widget());
     setupActions();
@@ -1291,6 +1297,7 @@ void KMComposerWin::setupActions(void)
     mFollowUpToggleAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
 
     mPluginEditorManagerInterface->initializePlugins();
+    mPluginEditorCheckBeforeSendManagerInterface->initializePlugins();
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
@@ -2431,6 +2438,10 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
         const MessageComposer::ComposerViewBase::MissingAttachment forgotAttachment = userForgotAttachment();
         if ((forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndAddedAttachment) ||
                 (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndCancel)) {
+            return;
+        }
+
+        if (!mPluginEditorCheckBeforeSendManagerInterface->execute()) {
             return;
         }
 

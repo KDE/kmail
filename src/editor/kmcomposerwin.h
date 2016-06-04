@@ -68,6 +68,7 @@ class StatusBarLabelToggledState;
 class PotentialPhishingEmailWarning;
 class KMComposerGlobalAction;
 class KMailPluginEditorManagerInterface;
+class KMailPluginEditorCheckBeforeSendManagerInterface;
 namespace MailTransport
 {
 class Transport;
@@ -644,6 +645,7 @@ private:
     KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget;
 
     KMailPluginEditorManagerInterface *mPluginEditorManagerInterface;
+    KMailPluginEditorCheckBeforeSendManagerInterface *mPluginEditorCheckBeforeSendManagerInterface;
 };
 
 #endif
