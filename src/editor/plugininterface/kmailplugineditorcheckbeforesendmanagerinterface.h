@@ -35,6 +35,9 @@ public:
     QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
+    //TODO add Identity
+    //TODO add Emails
+    //TODO add body ? or editor
 
     void initializePlugins();
     bool execute() const;
