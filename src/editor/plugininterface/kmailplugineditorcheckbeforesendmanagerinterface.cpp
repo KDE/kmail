@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #include "kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "kmail_debug.h"
 #include <MessageComposer/PluginEditorCheckBeforeSendInterface>
