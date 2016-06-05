@@ -78,7 +78,7 @@
 #include "plugineditorinterface.h"
 #include "editor/plugininterface/kmailplugineditormanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
-
+#include <MessageComposer/PluginEditorCheckBeforeSendParams>
 #include "MessageComposer/Util"
 
 #include <kcontacts/vcardconverter.h>
@@ -2440,8 +2440,9 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
                 (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndCancel)) {
             return;
         }
-
-        if (!mPluginEditorCheckBeforeSendManagerInterface->execute()) {
+        //TODO
+        MessageComposer::PluginEditorCheckBeforeSendParams params;
+        if (!mPluginEditorCheckBeforeSendManagerInterface->execute(params)) {
             return;
         }
 

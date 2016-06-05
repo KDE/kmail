@@ -23,6 +23,7 @@
 namespace MessageComposer
 {
 class PluginEditorCheckBeforeSendInterface;
+class PluginEditorCheckBeforeSendParams;
 }
 
 class KMailPluginEditorCheckBeforeSendManagerInterface : public QObject
@@ -40,7 +41,7 @@ public:
     //TODO add body ? or editor
 
     void initializePlugins();
-    bool execute() const;
+    bool execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const;
 private:
     QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
     QWidget *mParentWidget;

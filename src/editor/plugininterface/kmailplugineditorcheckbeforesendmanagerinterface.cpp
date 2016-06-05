@@ -57,10 +57,10 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
     }
 }
 
-bool KMailPluginEditorCheckBeforeSendManagerInterface::execute() const
+bool KMailPluginEditorCheckBeforeSendManagerInterface::execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const
 {
     Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSendInterface *interface, mListPluginInterface) {
-        if (!interface->exec()) {
+        if (!interface->exec(params)) {
             return false;
         }
     }
