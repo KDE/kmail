@@ -196,6 +196,7 @@ Actions=Composer;CheckMail;
 [Desktop Action Composer]
 Name=New Message
 Name[ca]=Missatge nou
+Name[ca@valencia]=Missatge nou
 Name[de]=Neue Nachricht
 Name[nl]=Nieuw bericht
 Name[pl]=Nowa wiadomość
@@ -209,6 +210,7 @@ Exec=kmail --composer
 [Desktop Action CheckMail]
 Name=Check Mail
 Name[ca]=Comprova el correu
+Name[ca@valencia]=Comprova el correu
 Name[de]=Nach E-Mail sehen
 Name[nl]=E-mail controleren
 Name[pl]=Sprawdź pocztę
