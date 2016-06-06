@@ -121,8 +121,8 @@
       <li>Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="ar">يدعم ميفاقات البريد القياسيّة IMAP، وPOP3 وSMTP.</li>
       <li xml:lang="ast">Sofita los protocolos de correu estándar IMAP, POP3 y SMTP.</li>
-      <li xml:lang="ca">Implementa els protocols de correu estàndards: IMAP, POP3 i SMTP.</li>
-      <li xml:lang="ca-valencia">Implementa els protocols de correu estàndards: IMAP, POP3 i SMTP.</li>
+      <li xml:lang="ca">Permet els protocols de correu estàndards: IMAP, POP3 i SMTP.</li>
+      <li xml:lang="ca-valencia">Permet els protocols de correu estàndards: IMAP, POP3 i SMTP.</li>
       <li xml:lang="de">Unterstützt die E-Mail-Standardprotokoll IMAP, POP3 und SMTP.</li>
       <li xml:lang="en-GB">Supports the standard mail protocols IMAP, POP3 and SMTP.</li>
       <li xml:lang="es">Implementa los protocolos estándar de correo IMAP, POP3 y SMTP.</li>
@@ -154,8 +154,8 @@
       <li>Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
       <li xml:lang="ar">يدعم الاستيثاق عبر NTLM (مايكروسوفت وندوز) وGSSAPI (كيربيروس)</li>
       <li xml:lang="ast">Sofita l'autenticación per NTLM (Microsoft Windows) y GSSAPI (Kerberos)</li>
-      <li xml:lang="ca">Implementa l'autenticació a través de NTLM (Microsoft Windows) i GSSAPI (Kerberos)</li>
-      <li xml:lang="ca-valencia">Implementa l'autenticació a través de NTLM (Microsoft Windows) i GSSAPI (Kerberos)</li>
+      <li xml:lang="ca">Permet l'autenticació a través de NTLM (Microsoft Windows) i GSSAPI (Kerberos)</li>
+      <li xml:lang="ca-valencia">Permet l'autenticació a través de NTLM (Microsoft Windows) i GSSAPI (Kerberos)</li>
       <li xml:lang="de">Unterstützt Authentifizierung mit NTLM (Microsoft Windows) und GSSAPI (Kerberos)</li>
       <li xml:lang="en-GB">Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
       <li xml:lang="es">Implementa la autenticación vía NTLM (Microsoft Windows) y GSSAPI (Kerberos)</li>
@@ -186,8 +186,8 @@
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="ar">يدعم النّصوص الصّرفة والولوجات الآمنة، باستخدام SSL وTLS.</li>
       <li xml:lang="ast">Sofita testu planu y anicios de sesión seguros, usando SSL y TLS.</li>
-      <li xml:lang="ca">Implementa accés en text pla i segur, usant SSL i TLS.</li>
-      <li xml:lang="ca-valencia">Implementa accés en text pla i segur, usant SSL i TLS.</li>
+      <li xml:lang="ca">Permet accés en text pla i segur, usant SSL i TLS.</li>
+      <li xml:lang="ca-valencia">Permet accés en text pla i segur, usant SSL i TLS.</li>
       <li xml:lang="de">Unterstützt einfachen Text und sichere Anmeldung durch SSL und TLS.</li>
       <li xml:lang="en-GB">Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="es">Implementa inicios de sesión con texto sin formato y cifrado SSL y TLS.</li>
@@ -732,8 +732,8 @@
       <li>Supports X-Face (b/w pictures in messages)</li>
       <li xml:lang="ar">يدعم X-Face (صور بالأبيض والأسود في الرّسائل)</li>
       <li xml:lang="ast">Sofita X-Face (b/w semeyes en mensaxes)</li>
-      <li xml:lang="ca">Implementa X-Face (imatges en b/n als missatges)</li>
-      <li xml:lang="ca-valencia">Implementa X-Face (imatges en b/n als missatges)</li>
+      <li xml:lang="ca">Permet X-Face (imatges en b/n als missatges)</li>
+      <li xml:lang="ca-valencia">Permet X-Face (imatges en b/n als missatges)</li>
       <li xml:lang="de">Unterstützt X-Face (Schwarzweiß-Bilder in Nachrichten)</li>
       <li xml:lang="en-GB">Supports X-Face (b/w pictures in messages)</li>
       <li xml:lang="es">Implementa X-Face (imágenes en blanco y negro en los mensajes)</li>
@@ -795,8 +795,8 @@
       <li>KMail supports Groupware functionality.</li>
       <li xml:lang="ar">يدعم «بريدك» وظيفة البرمجيّات التّعاونيّة.</li>
       <li xml:lang="ast">KMail sofita la funcionalidá de grupu d'aplicaciones.</li>
-      <li xml:lang="ca">El KMail implementa el treball en grup (groupware).</li>
-      <li xml:lang="ca-valencia">El KMail implementa el treball en grup (groupware).</li>
+      <li xml:lang="ca">El KMail permet el treball en grup (groupware).</li>
+      <li xml:lang="ca-valencia">El KMail permet el treball en grup (groupware).</li>
       <li xml:lang="de">KMail unterstützt Groupware-Funktionalität.</li>
       <li xml:lang="en-GB">KMail supports Groupware functionality.</li>
       <li xml:lang="es">KMail implementa funcionalidades de colaboración.</li>
