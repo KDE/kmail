@@ -53,7 +53,7 @@
 
 #include "job/addressvalidationjob.h"
 #include "MessageComposer/Kleo_Util"
-#include "MessageCore/StringUtil"
+#include <MessageCore/StringUtil>
 #include "TemplateParser/TemplatesConfiguration"
 #include "templatesconfiguration_kfg.h"
 // other kdepim headers:

@@ -35,8 +35,8 @@
 #include "KPIMTextEdit/RichTextComposerControler"
 #include "MessageComposer/RichTextComposerSignatures"
 #include <KPIMTextEdit/RichTextComposerActions>
-#include "KPIMTextEdit/RichTextComposerImages"
-#include "KPIMTextEdit/RichTextExternalComposer"
+#include <KPIMTextEdit/RichTextComposerImages>
+#include <KPIMTextEdit/RichTextExternalComposer>
 #include <KPIMTextEdit/RichTextEditorWidget>
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
@@ -45,7 +45,7 @@
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "messageviewer/stl_util.h"
 #include "messagecomposer/util.h"
-#include "MessageCore/StringUtil"
+#include <MessageCore/StringUtil>
 #include "util.h"
 #include "editor/widgets/snippetwidget.h"
 #include "templatesconfiguration_kfg.h"
@@ -69,17 +69,15 @@
 #include "widgets/kactionmenutransport.h"
 #include "pimcommon/kactionmenuchangecase.h"
 
-#include "Libkdepim/StatusbarProgressWidget"
-#include "Libkdepim/ProgressStatusBarWidget"
+#include <Libkdepim/StatusbarProgressWidget>
+#include <Libkdepim/ProgressStatusBarWidget>
 
 #include "KPIMTextEdit/EditorUtil"
-#include "PimCommon/StorageServiceManager"
-#include "PimCommon/StorageServiceProgressManager"
 #include "plugineditorinterface.h"
 #include "editor/plugininterface/kmailplugineditormanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include <MessageComposer/PluginEditorCheckBeforeSendParams>
-#include "MessageComposer/Util"
+#include <MessageComposer/Util>
 
 #include <kcontacts/vcardconverter.h>
 #include "SendLater/SendLaterUtil"
@@ -1354,7 +1352,7 @@ void KMComposerWin::changeCryptoAction()
 
 void KMComposerWin::setupStatusBar(QWidget *w)
 {
-    KPIM::ProgressStatusBarWidget *progressStatusBarWidget = new KPIM::ProgressStatusBarWidget(statusBar(), this, PimCommon::StorageServiceProgressManager::progressTypeValue());
+    //KPIM::ProgressStatusBarWidget *progressStatusBarWidget = new KPIM::ProgressStatusBarWidget(statusBar(), this, PimCommon::StorageServiceProgressManager::progressTypeValue());
     statusBar()->addWidget(w);
     QLabel *lab = new QLabel(this);
     lab->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
@@ -1381,7 +1379,7 @@ void KMComposerWin::setupStatusBar(QWidget *w)
     statusBar()->addPermanentWidget(mStatusBarLabelSpellCheckingChangeMode, 0);
     connect(mStatusBarLabelSpellCheckingChangeMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
 
-    statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
+    //statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
 
 }
 

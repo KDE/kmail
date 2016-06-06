@@ -21,7 +21,7 @@
 #include "sendlaterjob.h"
 
 #include "MessageComposer/AkonadiSender"
-#include "MessageComposer/Util"
+#include <MessageComposer/Util>
 
 #include <KSharedConfig>
 #include <KConfigGroup>

@@ -44,7 +44,7 @@
 #include "MessageViewer/CSSHelper"
 using MessageViewer::CSSHelper;
 #include "util.h"
-#include "MessageCore/StringUtil"
+#include <MessageCore/StringUtil>
 #include <QCryptographicHash>
 #include <kmime/kmime_mdn.h>
 #include <akonadi/kmime/messageflags.h>

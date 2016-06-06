@@ -20,8 +20,8 @@
 
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "Libkdepim/ProgressStatusBarWidget"
-#include "Libkdepim/StatusbarProgressWidget"
+#include <Libkdepim/ProgressStatusBarWidget>
+#include <Libkdepim/StatusbarProgressWidget>
 #include "libkdepim/broadcaststatus.h"
 #include "util.h"
 #include "tag/tagactionmanager.h"

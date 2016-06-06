@@ -19,9 +19,9 @@
 #include "sendlaterinfo.h"
 
 #include "MessageComposer/AkonadiSender"
-#include "MessageComposer/Util"
+#include <MessageComposer/Util>
 #include "messagecore/messagehelpers.h"
-#include "MessageCore/StringUtil"
+#include <MessageCore/StringUtil>
 
 #include <MailTransport/mailtransport/transportattribute.h>
 #include <MailTransport/mailtransport/sentbehaviourattribute.h>
