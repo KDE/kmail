@@ -432,7 +432,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPluginEditorManagerInterface->setActionCollection(actionCollection());
 
     mPluginEditorCheckBeforeSendManagerInterface->setParentWidget(this);
-    //TODO add more settings ?
 
     setupStatusBar(attachmentView->widget());
     setupActions();
