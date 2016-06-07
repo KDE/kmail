@@ -2437,8 +2437,11 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
                 (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndCancel)) {
             return;
         }
-        //TODO
         MessageComposer::PluginEditorCheckBeforeSendParams params;
+        params.setSubject(subject());
+        params.setHtmlMail(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
+        //TODO add more
+
         if (!mPluginEditorCheckBeforeSendManagerInterface->execute(params)) {
             return;
         }
