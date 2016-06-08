@@ -2441,16 +2441,16 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
         params.setSubject(subject());
         params.setHtmlMail(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
         params.setIdentity(mComposerBase->identityCombo()->currentIdentity());
-        //TODO add more
+        const QStringList recipients = { mComposerBase->to().trimmed(), mComposerBase->cc().trimmed(), mComposerBase->bcc().trimmed()};
+        params.setAddresses(recipients);
 
         if (!mPluginEditorCheckBeforeSendManagerInterface->execute(params)) {
             return;
         }
 
         setEnabled(false);
-        // Validate the To:, CC: and BCC fields
-        const QStringList recipients = QStringList() << mComposerBase->to().trimmed() << mComposerBase->cc().trimmed() << mComposerBase->bcc().trimmed();
 
+        // Validate the To:, CC: and BCC fields
         AddressValidationJob *job = new AddressValidationJob(recipients.join(QStringLiteral(", ")), this, this);
         const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
         QString defaultDomainName;
