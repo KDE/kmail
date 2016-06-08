@@ -2440,6 +2440,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
         MessageComposer::PluginEditorCheckBeforeSendParams params;
         params.setSubject(subject());
         params.setHtmlMail(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
+        params.setIdentity(mComposerBase->identityCombo()->currentIdentity());
         //TODO add more
 
         if (!mPluginEditorCheckBeforeSendManagerInterface->execute(params)) {
