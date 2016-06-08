@@ -246,7 +246,7 @@ void SummaryViewPart::updateWidgets()
 
 void SummaryViewPart::summaryWidgetMoved(QWidget *target, QObject *obj, int alignment)
 {
-    QWidget *widget = dynamic_cast<QWidget *>(obj);
+    QWidget *widget = qobject_cast<QWidget *>(obj);
     if (!widget || (target == widget)) {
         return;
     }

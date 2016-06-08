@@ -104,7 +104,7 @@ void CodecAction::setAutoCharset()
 static QString selectCharset(KSelectAction *root, const QString &encoding)
 {
     foreach (QAction *action, root->actions()) {
-        KSelectAction *subMenu = dynamic_cast<KSelectAction *>(action);
+        KSelectAction *subMenu = qobject_cast<KSelectAction *>(action);
         if (subMenu) {
             const QString codecNameToSet = selectCharset(subMenu, encoding);
             if (!codecNameToSet.isEmpty()) {
