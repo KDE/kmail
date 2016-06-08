@@ -2091,7 +2091,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
     if (showErrorMessage(job)) {
         return;
     }
-    Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob *>(job);
+    Akonadi::ItemFetchJob *fjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     if (!fjob) {
         return;
     }

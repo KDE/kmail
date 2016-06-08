@@ -213,7 +213,7 @@ void CollectionMailingListPage::slotFetchDone(KJob *job)
     if (MailCommon::Util::showJobErrorMessage(job)) {
         return;
     }
-    Akonadi::ItemFetchJob *fjob = dynamic_cast<Akonadi::ItemFetchJob *>(job);
+    Akonadi::ItemFetchJob *fjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     Q_ASSERT(fjob);
     Akonadi::Item::List items = fjob->items();
     const int maxchecks = 5;
