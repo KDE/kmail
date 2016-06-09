@@ -309,10 +309,10 @@ void CollectionViewPage::save(Akonadi::Collection &col)
     }
     // message list theme
     const bool usePrivateTheme = !mUseDefaultThemeCheckBox->isChecked();
-    mThemeComboBox->writeStorageModelConfig(mCurrentCollection, usePrivateTheme);
+    mThemeComboBox->writeStorageModelConfig(QString::number(mCurrentCollection.id()), usePrivateTheme);
     // message list aggregation
     const bool usePrivateAggregation = !mUseDefaultAggregationCheckBox->isChecked();
-    mAggregationComboBox->writeStorageModelConfig(mCurrentCollection, usePrivateAggregation);
+    mAggregationComboBox->writeStorageModelConfig(QString::number(mCurrentCollection.id()), usePrivateAggregation);
 
     MessageViewer::Viewer::DisplayFormatMessage formatMessage = MessageViewer::Viewer::Unknown;
     if (mPreferHtmlToText->isChecked()) {
