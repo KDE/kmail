@@ -33,7 +33,6 @@
 #define __KMAIL_IDENTITYDIALOG_H__
 
 #include <QDialog>
-#include <AkonadiCore/Item>
 class QCheckBox;
 
 class KEditListWidget;

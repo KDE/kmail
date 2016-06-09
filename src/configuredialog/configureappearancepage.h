@@ -22,8 +22,6 @@
 #include "MailCommon/Tag"
 #include <QListWidgetItem>
 
-#include <AkonadiCore/TagFetchJob>
-
 class QPushButton;
 class QCheckBox;
 class KComboBox;
@@ -34,6 +32,7 @@ class QGroupBox;
 class QSpinBox;
 class KLineEdit;
 class QModelIndex;
+class KJob;
 namespace MessageViewer
 {
 class ConfigureWidget;
