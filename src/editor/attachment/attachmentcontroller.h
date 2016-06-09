@@ -24,7 +24,7 @@
 #define KMAIL_ATTACHMENTCONTROLLER_H
 
 #include "messagecomposer/attachmentcontrollerbase.h"
-
+#include <AkonadiCore/Item>
 class KMComposerWin;
 class QModelIndex;
 namespace MessageComposer
