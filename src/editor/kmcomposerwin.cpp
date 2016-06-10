@@ -2441,8 +2441,14 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
         params.setSubject(subject());
         params.setHtmlMail(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
         params.setIdentity(mComposerBase->identityCombo()->currentIdentity());
+        const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
+        QString defaultDomainName;
+        if (!ident.isNull()) {
+            defaultDomainName = ident.defaultDomainName();
+        }
         const QStringList recipients = { mComposerBase->to().trimmed(), mComposerBase->cc().trimmed(), mComposerBase->bcc().trimmed()};
         params.setAddresses(recipients);
+        params.setDefaultDomain(defaultDomainName);
 
         if (!mPluginEditorCheckBeforeSendManagerInterface->execute(params)) {
             return;
@@ -2452,11 +2458,6 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
 
         // Validate the To:, CC: and BCC fields
         AddressValidationJob *job = new AddressValidationJob(recipients.join(QStringLiteral(", ")), this, this);
-        const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
-        QString defaultDomainName;
-        if (!ident.isNull()) {
-            defaultDomainName = ident.defaultDomainName();
-        }
         job->setDefaultDomain(defaultDomainName);
         job->setProperty("method", static_cast<int>(method));
         job->setProperty("saveIn", static_cast<int>(saveIn));
