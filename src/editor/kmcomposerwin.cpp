@@ -2442,6 +2442,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
         params.setHtmlMail(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
         params.setIdentity(mComposerBase->identityCombo()->currentIdentity());
         params.setHasAttachment(mComposerBase->attachmentModel()->rowCount() > 0);
+        params.setTransportId(mComposerBase->transportComboBox()->currentTransportId());
         const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
         QString defaultDomainName;
         if (!ident.isNull()) {
