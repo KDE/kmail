@@ -2384,7 +2384,6 @@ void KMMainWidget::showResourceOfflinePage()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
-    qCDebug(KMAIL_LOG);
     Akonadi::Item oldMsg = mMessagePane->currentItem();
     if (oldMsg.isValid()) {
 #if 0

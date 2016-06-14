@@ -241,7 +241,6 @@ KMKernel::~KMKernel()
 
     delete mAutoCorrection;
     mySelf = Q_NULLPTR;
-    qCDebug(KMAIL_LOG);
 }
 
 Akonadi::ChangeRecorder *KMKernel::folderCollectionMonitor() const
@@ -484,7 +483,6 @@ QStringList KMKernel::accounts()
 
 void KMKernel::checkAccount(const QString &account)   //might create a new reader but won't show!!
 {
-    qCDebug(KMAIL_LOG);
     if (account.isEmpty()) {
         checkMail();
     } else {
@@ -501,7 +499,6 @@ void KMKernel::openReader(bool onlyCheck)
 {
     mWin = Q_NULLPTR;
     KMainWindow *ktmw = Q_NULLPTR;
-    qCDebug(KMAIL_LOG);
 
     foreach (KMainWindow *window, KMainWindow::memberList()) {
         if (::qobject_cast<KMMainWin *>(window)) {
@@ -540,7 +537,6 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
                            const QStringList &customHeaders,
                            const QString &replyTo, const QString &inReplyTo)
 {
-    qCDebug(KMAIL_LOG);
     KMail::Composer::TemplateContext context = KMail::Composer::New;
     KMime::Message::Ptr msg(new KMime::Message);
     MessageHelper::initHeader(msg, identityManager());
@@ -1561,7 +1557,6 @@ void KMKernel::updateSystemTray()
 KIdentityManagement::IdentityManager *KMKernel::identityManager()
 {
     if (!mIdentityManager) {
-        qCDebug(KMAIL_LOG);
         mIdentityManager = new KIdentityManagement::IdentityManager(false, this, "mIdentityManager");
     }
     return mIdentityManager;

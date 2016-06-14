@@ -117,8 +117,6 @@ void KMailPart::updateQuickSearchText()
 
 bool KMailPart::openFile()
 {
-    qCDebug(KMAIL_LOG);
-
     mainWidget->show();
     return true;
 }
@@ -127,7 +125,6 @@ bool KMailPart::openFile()
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
-    qCDebug(KMAIL_LOG);
     KParts::ReadOnlyPart::guiActivateEvent(e);
     mainWidget->initializeFilterActions();
     mainWidget->tagActionManager()->createActions();

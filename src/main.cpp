@@ -76,8 +76,6 @@ void KMailApplication::setEventLoopReached()
 
 int KMailApplication::activate(const QStringList &args, const QString &workindDir)
 {
-    qCDebug(KMAIL_LOG);
-
     // If the event loop hasn't been reached yet, the kernel is probably not
     // fully initialized. Creating an instance would therefore fail, this is why
     // that is delayed until delayedInstanceCreation() is called.

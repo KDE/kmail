@@ -768,7 +768,6 @@ void KMComposerWin::rethinkFields(bool fromSlot)
     mGrid->setRowStretch(mNumHeaders + 1, 100);
 
     row = 0;
-    qCDebug(KMAIL_LOG);
 
     mLabelWidth = mComposerBase->recipientsEditor()->setFirstColumnWidth(0) + 2;
     if (std::abs(mShowHeaders)&HDR_IDENTITY) {
@@ -1906,7 +1905,6 @@ void KMComposerWin::slotSelectCryptoModule(bool init)
 
 void KMComposerWin::slotUpdateFont()
 {
-    qCDebug(KMAIL_LOG);
     if (!mFixedFontAction) {
         return;
     }
