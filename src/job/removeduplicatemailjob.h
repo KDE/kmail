@@ -21,8 +21,7 @@
 #define REMOVEDUPLICATEMAILJOB_H
 
 #include <QObject>
-//fix it. Remove this include.
-#include "kmmainwidget.h"
+class QWidget;
 class QItemSelectionModel;
 namespace KPIM
 {
