@@ -157,7 +157,7 @@ void CollectionMaintenancePage::load(const Collection &col)
 
 void CollectionMaintenancePage::onIndexedItemsReceived(qint64 num)
 {
-    qCDebug(KMAIL_LOG) << num;
+    //qCDebug(KMAIL_LOG) << num;
     if (num == 0) {
         mLastIndexed->clear();
     } else {
