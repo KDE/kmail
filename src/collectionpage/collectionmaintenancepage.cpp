@@ -95,8 +95,28 @@ void CollectionMaintenancePage::init(const Akonadi::Collection &col)
     mLastIndexed = new QLabel(i18n("Still not indexed."));
 
     indexingLayout->addWidget(mLastIndexed);
+
+    mReindexCollection = new QPushButton(i18n("Reindex current Collection"), this);
+    connect(mReindexCollection, &QPushButton::clicked, this, &CollectionMaintenancePage::slotReindexCollection);
+    mReindexCollection->setObjectName(QStringLiteral("reindexbutton"));
+    indexingLayout->addWidget(mReindexCollection);
+
     topLayout->addWidget(indexingGroup);
     topLayout->addStretch(100);
+}
+
+void CollectionMaintenancePage::slotReindexCollection()
+{
+    if (mCurrentCollection.isValid()) {
+        //Don't allow to reindex twice.
+        mReindexCollection->setEnabled(false);
+        QDBusInterface interfaceBalooIndexer(QStringLiteral("org.freedesktop.Akonadi.Agent.akonadi_indexing_agent"), QStringLiteral("/"));
+        if (interfaceBalooIndexer.isValid()) {
+            interfaceBalooIndexer.call(QStringLiteral("reindexCollection"), QList<QVariant>() << (qlonglong)mCurrentCollection.id());
+        } else {
+            qCWarning(KMAIL_LOG) << "indexer interface not valid";
+        }
+    }
 }
 
 void CollectionMaintenancePage::load(const Collection &col)
