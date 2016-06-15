@@ -67,8 +67,7 @@
 using namespace KPIM;
 using namespace MailCommon;
 
-namespace KMail
-{
+using namespace KMail;
 
 SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &collection)
     : QDialog(Q_NULLPTR),
@@ -604,10 +603,12 @@ void SearchWindow::slotCollectionStatisticsRetrieved(KJob *job)
 
     const Akonadi::Collection::List cols = fetch->collections();
     if (cols.isEmpty()) {
+        mUi.mStatusLbl->clear();
         return;
     }
 
-    updateCollectionStatistic(cols[0].id(), cols[0].statistics());
+    const Akonadi::Collection col = cols.at(0);
+    updateCollectionStatistic(col.id(), col.statistics());
 }
 
 void SearchWindow::slotStop()
@@ -884,6 +885,3 @@ void SearchWindow::slotJumpToFolder()
         mKMMainWidget->slotSelectCollectionFolder(selectedMessage().parentCollection());
     }
 }
-
-}
-
