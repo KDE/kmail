@@ -143,6 +143,7 @@ private Q_SLOTS:
     void slotPrintMsg();
 
     /** GUI cleanup after search */
+    void slotCollectionStatisticsRetrieved(KJob *job);
     void searchDone(KJob *);
     void enableGUI();
 

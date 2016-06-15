@@ -578,6 +578,9 @@ void SearchWindow::searchDone(KJob *job)
         searchDescription->setRecursive(mUi.mChkSubFolders->isChecked());
         new Akonadi::CollectionModifyJob(mFolder, this);
         mSearchJob = Q_NULLPTR;
+        Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mFolder, Akonadi::CollectionFetchJob::Base, this);
+        fetch->fetchScope().setIncludeStatistics(true);
+        connect(fetch, SIGNAL(result(KJob*)), this, SLOT(slotCollectionStatisticsRetrieved(KJob*)));
 
         mUi.mStatusLbl->setText(i18n("Search complete."));
         createSearchModel();
@@ -591,6 +594,21 @@ void SearchWindow::searchDone(KJob *job)
 
         mUi.mSearchFolderEdt->setEnabled(true);
     }
+}
+
+void SearchWindow::slotCollectionStatisticsRetrieved(KJob *job)
+{
+    Akonadi::CollectionFetchJob *fetch = qobject_cast<Akonadi::CollectionFetchJob*>(job);
+    if (!fetch || fetch->error()) {
+        return;
+    }
+
+    const Akonadi::Collection::List cols = fetch->collections();
+    if (cols.isEmpty()) {
+        return;
+    }
+
+    updateCollectionStatistic(cols[0].id(), cols[0].statistics());
 }
 
 void SearchWindow::slotStop()
