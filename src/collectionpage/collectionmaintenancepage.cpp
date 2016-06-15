@@ -107,7 +107,10 @@ void CollectionMaintenancePage::init(const Akonadi::Collection &col)
     }
 
     mIndexedInfo = new QLabel(this);
-    indexingLayout->addWidget(mIndexedInfo);
+    QFont f = mIndexedInfo->font();
+    f.setBold(true);
+    mIndexedInfo->setFont(f);
+    indexingLayout->addWidget(mIndexedInfo, Qt::AlignHCenter);
 
     topLayout->addWidget(indexingGroupBox);
     topLayout->addStretch(100);
