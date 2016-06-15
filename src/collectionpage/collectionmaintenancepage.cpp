@@ -39,8 +39,10 @@
 #include <QFormLayout>
 #include <QCheckBox>
 #include <AkonadiCore/indexpolicyattribute.h>
+#include <AkonadiCore/CachePolicy>
 #include <KFormat>
 #include <KConfigGroup>
+#include <PimCommon/PimUtil>
 
 using namespace Akonadi;
 
@@ -87,8 +89,8 @@ void CollectionMaintenancePage::init(const Akonadi::Collection &col)
     box->addRow(new QLabel(i18n("Unread messages:"), messagesGroup), mCollectionUnread);
 
     topLayout->addWidget(messagesGroup);
-    QGroupBox *indexingGroup = new QGroupBox(i18n("Indexing"), this);
-    QVBoxLayout *indexingLayout = new QVBoxLayout(indexingGroup);
+    indexingGroupBox = new QGroupBox(i18n("Indexing"), this);
+    QVBoxLayout *indexingLayout = new QVBoxLayout(indexingGroupBox);
     mIndexingEnabled = new QCheckBox(i18n("Enable Full Text Indexing"));
     indexingLayout->addWidget(mIndexingEnabled);
 
@@ -100,8 +102,12 @@ void CollectionMaintenancePage::init(const Akonadi::Collection &col)
     connect(mReindexCollection, &QPushButton::clicked, this, &CollectionMaintenancePage::slotReindexCollection);
     mReindexCollection->setObjectName(QStringLiteral("reindexbutton"));
     indexingLayout->addWidget(mReindexCollection);
+    if (PimCommon::Util::isImapResource(col.resource()) && !col.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
+        indexingGroupBox->hide();
+    }
 
-    topLayout->addWidget(indexingGroup);
+
+    topLayout->addWidget(indexingGroupBox);
     topLayout->addStretch(100);
 }
 

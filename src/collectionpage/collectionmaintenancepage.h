@@ -25,6 +25,7 @@
 class QCheckBox;
 class QLabel;
 class QPushButton;
+class QGroupBox;
 namespace Akonadi
 {
 class CollectionStatistics;
@@ -59,6 +60,7 @@ private:
     QCheckBox *mIndexingEnabled;
     QLabel *mLastIndexed;
     QPushButton *mReindexCollection;
+    QGroupBox *indexingGroupBox;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMaintenancePageFactory, CollectionMaintenancePage)
