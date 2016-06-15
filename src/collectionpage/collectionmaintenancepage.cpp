@@ -89,7 +89,7 @@ void CollectionMaintenancePage::init(const Akonadi::Collection &col)
     box->addRow(new QLabel(i18n("Unread messages:"), messagesGroup), mCollectionUnread);
 
     topLayout->addWidget(messagesGroup);
-    indexingGroupBox = new QGroupBox(i18n("Indexing"), this);
+    QGroupBox *indexingGroupBox = new QGroupBox(i18n("Indexing"), this);
     QVBoxLayout *indexingLayout = new QVBoxLayout(indexingGroupBox);
     mIndexingEnabled = new QCheckBox(i18n("Enable Full Text Indexing"));
     indexingLayout->addWidget(mIndexingEnabled);
