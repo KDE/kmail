@@ -106,6 +106,8 @@ void CollectionMaintenancePage::init(const Akonadi::Collection &col)
         indexingGroupBox->hide();
     }
 
+    mIndexedInfo = new QLabel(this);
+    indexingLayout->addWidget(mIndexedInfo);
 
     topLayout->addWidget(indexingGroupBox);
     topLayout->addStretch(100);
