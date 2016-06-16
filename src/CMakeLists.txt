@@ -153,6 +153,11 @@ set(kmailprivate_editor_plugininterface_LIB_SRCS
     editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.cpp
     )
 
+set(kmailprivate_checkindexing_LIB_SRCS
+    search/checkindexingmanager.cpp
+    search/checkindexingjob.cpp
+    )
+
 set(kmail_common_SRCS)
 ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME log_kmail)
 set(kmailprivate_LIB_SRCS
@@ -191,6 +196,7 @@ set(kmailprivate_LIB_SRCS
     ${kmailprivate_editor_potentialphishingemail_SRCS}
     ${kmailprivate_plugininterface_LIB_SRCS}
     ${kmailprivate_editor_plugininterface_LIB_SRCS}
+    ${kmailprivate_checkindexing_LIB_SRCS}
     )
 
 qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
