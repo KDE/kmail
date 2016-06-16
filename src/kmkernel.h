@@ -82,6 +82,7 @@ class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
 class FolderArchiveManager;
+class CheckIndexingManager;
 
 /**
  * @short Central point of coordination in KMail
@@ -593,6 +594,7 @@ private:
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
     PimCommon::AutoCorrection *mAutoCorrection;
     FolderArchiveManager *mFolderArchiveManager;
+    CheckIndexingManager *mCheckIndexingManager;
     bool mDebugBaloo;
 };
 

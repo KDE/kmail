@@ -12,6 +12,7 @@ using KPIM::BroadcastStatus;
 #include "undostack.h"
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
+#include "search/checkindexingmanager.h"
 #include "libkdepim/recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
@@ -227,6 +228,7 @@ KMKernel::KMKernel(QObject *parent) :
     CommonKernel->registerSettingsIf(this);
     CommonKernel->registerFilterIf(this);
     mFolderArchiveManager = new FolderArchiveManager(this);
+    mCheckIndexingManager = new CheckIndexingManager(this);
 }
 
 KMKernel::~KMKernel()
@@ -1679,6 +1681,7 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
         mFolderCollectionMonitor->expireAllFolders(false /*scheduled, not immediate*/, entityTreeModel());
     }
 
+    mCheckIndexingManager->start(entityTreeModel());
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
     mBackgroundTasksTimer->start(60 * 1000);   // check again in 1 minute
 #else
