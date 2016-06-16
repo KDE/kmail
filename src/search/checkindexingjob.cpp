@@ -40,10 +40,10 @@ CheckIndexingJob::~CheckIndexingJob()
 
 }
 
-void CheckIndexingJob::askForNextCheck()
+void CheckIndexingJob::askForNextCheck(quint64 id)
 {
     deleteLater();
-    Q_EMIT finished();
+    Q_EMIT finished(id);
 }
 
 void CheckIndexingJob::setCollection(const Akonadi::Collection &col)
@@ -60,7 +60,7 @@ void CheckIndexingJob::start()
         connect(fetch, &KJob::result, this, &CheckIndexingJob::slotCollectionPropertiesFinished);
     } else {
         qCWarning(KMAIL_LOG) << "Collection was not valid";
-        askForNextCheck();
+        askForNextCheck(-1);
     }
 }
 
@@ -70,7 +70,7 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
     Q_ASSERT(fetch);
     if (fetch->collections().isEmpty()) {
         qCWarning(KMAIL_LOG) << "No collection fetched";
-        askForNextCheck();
+        askForNextCheck(-1);
         return;
     }
 
@@ -84,7 +84,7 @@ void CheckIndexingJob::indexerStatsFetchFinished(KJob* job)
 {
     if (job->error()) {
         qCWarning(KMAIL_LOG) << "CheckIndexingJob::indexerStatsFetchFinished error :" << job->errorString();
-        askForNextCheck();
+        askForNextCheck(-1);
         return;
     }
 
@@ -92,11 +92,11 @@ void CheckIndexingJob::indexerStatsFetchFinished(KJob* job)
     //qDebug()<<" stats "<< stats;
     qCDebug(KMAIL_LOG) << " mCollection.statistics().count() "<< mCollection.statistics().count() << "stats.value(mCollection.id())" << stats.value(mCollection.id());
     if (mCollection.statistics().count() != stats.value(mCollection.id())) {
-        QDBusInterface interfaceBalooIndexer(QStringLiteral("org.freedesktop.Akonadi.Agent.akonadi_indexing_agent"), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+        QDBusInterface interfaceBalooIndexer(PimCommon::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceBalooIndexer.isValid()) {
             qCDebug(KMAIL_LOG) << "Reindex collection :"<< mCollection.id() << "name :"<< mCollection.name();
             interfaceBalooIndexer.call(QStringLiteral("reindexCollection"), (qlonglong)mCollection.id());
         }
     }
-    askForNextCheck();
+    askForNextCheck(mCollection.id());
 }

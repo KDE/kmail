@@ -23,6 +23,8 @@
 #include "checkindexingjob.h"
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/CachePolicy>
+#include <KSharedConfig>
+#include <KConfigGroup>
 #include <MailCommon/MailUtil>
 #include <PimCommon/PimUtil>
 #include <QTimer>
@@ -41,7 +43,9 @@ CheckIndexingManager::CheckIndexingManager(QObject *parent)
 
 CheckIndexingManager::~CheckIndexingManager()
 {
-
+    const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
+    KConfigGroup grp = cfg->group(QStringLiteral("General"));
+    grp.writeEntry(QStringLiteral("collectionsIndexed"), mCollectionsIndexed);
 }
 
 void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
@@ -49,12 +53,20 @@ void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
     if(mIsReady) {
         mIndex = 0;
         mListCollection.clear();
-        if (collectionModel) {
-            initializeCollectionList(collectionModel);
-            if (!mListCollection.isEmpty()) {
-                qCDebug(KMAIL_LOG) << "Number of collection to check " << mListCollection.count();
-                mIsReady = false;
-                mTimer->start();
+        const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
+        KConfigGroup grp = cfg->group(QStringLiteral("General"));
+        const QDateTime lastDateTime = grp.readEntry(QStringLiteral("lastCheck"), QDateTime());
+        //Check each 7 days
+        QDateTime today = QDateTime::currentDateTime();
+        if (lastDateTime.isValid() || today > lastDateTime.addDays(7)) {
+            mCollectionsIndexed = grp.readEntry(QStringLiteral("collectionsIndexed"), QList<qint64>());
+            if (collectionModel) {
+                initializeCollectionList(collectionModel);
+                if (!mListCollection.isEmpty()) {
+                    qCDebug(KMAIL_LOG) << "Number of collection to check " << mListCollection.count();
+                    mIsReady = false;
+                    mTimer->start();
+                }
             }
         }
     }
@@ -64,7 +76,7 @@ void CheckIndexingManager::createJob()
 {
     CheckIndexingJob *job = new CheckIndexingJob(this);
     job->setCollection(mListCollection.at(mIndex));
-    connect(job, &CheckIndexingJob::finished, this, &CheckIndexingManager::slotRestartTimer);
+    connect(job, &CheckIndexingJob::finished, this, &CheckIndexingManager::indexingFinished);
     job->start();
 }
 
@@ -75,8 +87,13 @@ void CheckIndexingManager::checkNextCollection()
     }
 }
 
-void CheckIndexingManager::slotRestartTimer()
+void CheckIndexingManager::indexingFinished(qint64 index)
 {
+    if (index != -1) {
+        if (!mCollectionsIndexed.contains(index)) {
+            mCollectionsIndexed.append(index);
+        }
+    }
     mIndex++;
     if (mIndex < mListCollection.count()) {
         mTimer->start();
@@ -84,6 +101,10 @@ void CheckIndexingManager::slotRestartTimer()
         mIsReady = true;
         mIndex = 0;
         mListCollection.clear();
+        const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
+        KConfigGroup grp = cfg->group(QStringLiteral("General"));
+        grp.writeEntry(QStringLiteral("lastCheck"), QDateTime::currentDateTime());
+        grp.deleteEntry(QStringLiteral("collectionsIndexed"));
     }
 }
 
@@ -111,7 +132,9 @@ void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, c
         if (PimCommon::Util::isImapResource(collection.resource()) && !collection.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
             continue;
         }
-        mListCollection.append(collection);
+        if (!mCollectionsIndexed.contains(collection.id())) {
+            mListCollection.append(collection);
+        }
         if (model->rowCount(index) > 0) {
             initializeCollectionList(model, index);
         }

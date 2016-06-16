@@ -38,13 +38,14 @@ public:
 private Q_SLOTS:
     void checkNextCollection();
 
-    void slotRestartTimer();
+    void indexingFinished(qint64 index);
 private:
     void initializeCollectionList(QAbstractItemModel *model, const QModelIndex &parentIndex = QModelIndex());
     void createJob();
 
     Akonadi::Collection::List mListCollection;
     QTimer *mTimer;
+    QList<qint64> mCollectionsIndexed;
     int mIndex;
     bool mIsReady;
 };

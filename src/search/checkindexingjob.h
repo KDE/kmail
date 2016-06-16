@@ -35,13 +35,13 @@ public:
     void start();
 
 Q_SIGNALS:
-    void finished();
+    void finished(Akonadi::Collection::Id id);
 
 private Q_SLOTS:
     void slotCollectionPropertiesFinished(KJob *job);
     void indexerStatsFetchFinished(KJob *job);
 private:
-    void askForNextCheck();
+    void askForNextCheck(quint64 id);
     Akonadi::Collection mCollection;
 };
 
