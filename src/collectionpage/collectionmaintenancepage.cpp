@@ -125,7 +125,7 @@ void CollectionMaintenancePage::slotReindexCollection()
         QDBusInterface interfaceBalooIndexer(QStringLiteral("org.freedesktop.Akonadi.Agent.akonadi_indexing_agent"), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceBalooIndexer.isValid()) {
             interfaceBalooIndexer.call(QStringLiteral("reindexCollection"), (qlonglong)mCurrentCollection.id());
-            mIndexedInfo->setText(i18n("Becareful indexing can take some minutes."));
+            mIndexedInfo->setText(i18n("Remember that indexing can take some minutes."));
         } else {
             qCWarning(KMAIL_LOG) << "indexer interface not valid";
         }
