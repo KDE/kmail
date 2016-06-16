@@ -1680,8 +1680,9 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
     if (KMailSettings::self()->autoExpiring()) {
         mFolderCollectionMonitor->expireAllFolders(false /*scheduled, not immediate*/, entityTreeModel());
     }
-
-    mCheckIndexingManager->start(entityTreeModel());
+    if (KMailSettings::self()->checkCollectionsIndexing()) {
+        mCheckIndexingManager->start(entityTreeModel());
+    }
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
     mBackgroundTasksTimer->start(60 * 1000);   // check again in 1 minute
 #else

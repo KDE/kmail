@@ -127,6 +127,9 @@
         <label>Ask for confirmation before moving all messages to trash</label>
         <default>true</default>
       </entry>
+      <entry name="CheckCollectionsIndexing" type="Bool" key="check-collections-indexing">
+        <default>true</default>
+      </entry>
       <entry name="AutoExpiring" type="Bool" key="auto-expiring">
         <label>Specifies whether the folders will expire in the background (for internal use only)</label>
         <default>true</default>
