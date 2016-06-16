@@ -48,6 +48,7 @@ void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
 {
     if(mIsReady) {
         mIndex = 0;
+        mListCollection.clear();
         if (collectionModel) {
             initializeCollectionList(collectionModel);
             if (!mListCollection.isEmpty()) {
@@ -64,6 +65,7 @@ void CheckIndexingManager::createJob()
     CheckIndexingJob *job = new CheckIndexingJob(this);
     job->setCollection(mListCollection.at(mIndex));
     connect(job, &CheckIndexingJob::finished, this, &CheckIndexingManager::slotRestartTimer);
+    job->start();
 }
 
 void CheckIndexingManager::checkNextCollection()
@@ -92,7 +94,6 @@ bool CheckIndexingManager::isReady() const
 
 void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, const QModelIndex &parentIndex)
 {
-    mListCollection.clear();
 
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
