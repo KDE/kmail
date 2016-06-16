@@ -89,11 +89,12 @@ void CheckIndexingJob::indexerStatsFetchFinished(KJob* job)
     }
 
     QMap<qint64, qint64> stats = qobject_cast<PimCommon::CollectionIndexStatusJob*>(job)->resultStats();
-    qDebug()<<" stats "<< stats;
+    //qDebug()<<" stats "<< stats;
+    qCDebug(KMAIL_LOG) << " mCollection.statistics().count() "<< mCollection.statistics().count() << "stats.value(mCollection.id())" << stats.value(mCollection.id());
     if (mCollection.statistics().count() != stats.value(mCollection.id())) {
         QDBusInterface interfaceBalooIndexer(QStringLiteral("org.freedesktop.Akonadi.Agent.akonadi_indexing_agent"), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceBalooIndexer.isValid()) {
-            qCDebug(KMAIL_LOG) << "Reindex collection :"<< mCollection.id();
+            qCDebug(KMAIL_LOG) << "Reindex collection :"<< mCollection.id() << "name :"<< mCollection.name();
             interfaceBalooIndexer.call(QStringLiteral("reindexCollection"), (qlonglong)mCollection.id());
         }
     }
