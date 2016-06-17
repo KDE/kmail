@@ -75,6 +75,7 @@ set(kmailprivate_searchdialog_LIB_SRCS
     searchdialog/kmailsearchpatternedit.cpp
     searchdialog/searchwindow.cpp
     searchdialog/searchdescriptionattribute.cpp
+    searchdialog/incompleteindexdialog.cpp
     )
 set(kmailprivate_identity_LIB_SRCS
     identity/identitylistview.cpp
@@ -241,6 +242,7 @@ ki18n_wrap_ui(kmailprivate_LIB_SRCS
     ui/identitypage.ui
     ui/accountspagereceivingtab.ui
     ui/searchwindow.ui
+    ui/incompleteindexdialog.ui
     )
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put

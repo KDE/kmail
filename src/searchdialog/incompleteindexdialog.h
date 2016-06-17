@@ -20,15 +20,15 @@
 #ifndef INCOMPLETEINDEXDIALOG_H
 #define INCOMPLETEINDEXDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
 #include <AkonadiCore/Collection>
 #include <QVector>
 
-class KProgressDialog;
+class QProgressDialog;
 class QDBusInterface;
 
 class Ui_IncompleteIndexDialog;
-class IncompleteIndexDialog : public KDialog
+class IncompleteIndexDialog : public QDialog
 {
     Q_OBJECT
 
@@ -51,7 +51,7 @@ private:
     void updateAllSelection(bool select);
 
     QScopedPointer<Ui_IncompleteIndexDialog> mUi;
-    KProgressDialog *mProgressDialog;
+    QProgressDialog *mProgressDialog;
     QDBusInterface *mIndexer;
     QVector<qint64> mIndexingQueue;
 };

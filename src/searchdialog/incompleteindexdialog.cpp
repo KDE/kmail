@@ -20,10 +20,11 @@
 #include "incompleteindexdialog.h"
 #include "ui_incompleteindexdialog.h"
 #include "kmkernel.h"
-#include "pimcommon/util/indexerutils.h"
+//#include "pimcommon/util/indexerutils.h"
 
-#include <KProgressDialog>
+#include <QProgressDialog>
 #include <KDescendantsProxyModel>
+#include <KLocalizedString>
 
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
@@ -32,6 +33,7 @@
 #include <QDBusReply>
 #include <QDBusMetaType>
 #include <QTimer>
+#include <QHBoxLayout>
 
 Q_DECLARE_METATYPE(Qt::CheckState)
 Q_DECLARE_METATYPE(QVector<qint64>)
@@ -39,7 +41,7 @@ Q_DECLARE_METATYPE(QVector<qint64>)
 class SearchCollectionProxyModel : public QSortFilterProxyModel
 {
 public:
-    SearchCollectionProxyModel(const QVector<qint64> &unindexedCollections, QObject *parent = Q_NULLPTR)
+    explicit SearchCollectionProxyModel(const QVector<qint64> &unindexedCollections, QObject *parent = Q_NULLPTR)
         : QSortFilterProxyModel(parent)
     {
         mFilterCollections.reserve(unindexedCollections.size());
@@ -48,7 +50,7 @@ public:
         }
     }
 
-    QVariant data(const QModelIndex &index, int role) const
+    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE
     {
         if (role == Qt::CheckStateRole) {
             if (index.isValid() && index.column() == 0) {
@@ -60,7 +62,7 @@ public:
         return QSortFilterProxyModel::data(index, role);
     }
 
-    bool setData(const QModelIndex &index, const QVariant &data, int role)
+    bool setData(const QModelIndex &index, const QVariant &data, int role) Q_DECL_OVERRIDE
     {
         if (role == Qt::CheckStateRole) {
             if (index.isValid() && index.column() == 0) {
@@ -73,7 +75,7 @@ public:
         return QSortFilterProxyModel::setData(index, data, role);
     }
 
-    Qt::ItemFlags flags(const QModelIndex &index) const
+    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE
     {
         if (index.isValid() && index.column() == 0) {
             return QSortFilterProxyModel::flags(index) | Qt::ItemIsUserCheckable;
@@ -83,7 +85,7 @@ public:
     }
 
 protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const Q_DECL_OVERRIDE
     {
         const QModelIndex source_idx = sourceModel()->index(source_row, 0, source_parent);
         const qint64 colId = sourceModel()->data(source_idx, Akonadi::EntityTreeModel::CollectionIdRole).toLongLong();
@@ -101,14 +103,18 @@ private:
 };
 
 IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
     , mUi(new Ui::IncompleteIndexDialog)
     , mProgressDialog(0)
     , mIndexer(0)
 {
+    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    mainLayout->setMargin(0);
+    QWidget *w = new QWidget(this);
+    mainLayout->addWidget(w);
     qDBusRegisterMetaType<QVector<qint64> >();
 
-    mUi->setupUi(mainWidget());
+    mUi->setupUi(w);
 
     Akonadi::EntityTreeModel *etm = KMKernel::self()->entityTreeModel();
     Akonadi::EntityMimeTypeFilterModel *mimeProxy = new Akonadi::EntityMimeTypeFilterModel(this);
@@ -117,7 +123,7 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
 
     KDescendantsProxyModel *flatProxy = new KDescendantsProxyModel(this);
     flatProxy->setDisplayAncestorData(true);
-    flatProxy->setAncestorSeparator(QLatin1String(" / "));
+    flatProxy->setAncestorSeparator(QStringLiteral(" / "));
     flatProxy->setSourceModel(mimeProxy);
 
     SearchCollectionProxyModel *proxy = new SearchCollectionProxyModel(unindexedCollections, this);
@@ -128,9 +134,8 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
     connect(mUi->selectAllBtn, SIGNAL(clicked(bool)), this, SLOT(selectAll()));
     connect(mUi->unselectAllBtn, SIGNAL(clicked(bool)), this, SLOT(unselectAll()));
 
-    setButtons(Ok | Cancel);
-    setButtonText(Ok, tr("&Reindex"));
-    setButtonText(Cancel, tr("Search &Anyway"));
+    //setButtonText(Ok, tr("&Reindex"));
+    //setButtonText(Cancel, tr("Search &Anyway"));
 }
 
 IncompleteIndexDialog::~IncompleteIndexDialog()
@@ -139,11 +144,13 @@ IncompleteIndexDialog::~IncompleteIndexDialog()
 
 void IncompleteIndexDialog::slotButtonClicked(int btn)
 {
+#if 0
     if (btn == Ok) {
         waitForIndexer();
     } else {
         KDialog::slotButtonClicked(btn);
     }
+#endif
 }
 
 void IncompleteIndexDialog::selectAll()
@@ -182,6 +189,7 @@ Akonadi::Collection::List IncompleteIndexDialog::collectionsToReindex() const
 
 void IncompleteIndexDialog::waitForIndexer()
 {
+#if 0
     mIndexer = new QDBusInterface(PimCommon::indexerServiceName(), QLatin1String("/"),
                                   QLatin1String("org.freedesktop.Akonadi.BalooIndexer"),
                                   QDBusConnection::sessionBus(), this);
@@ -210,6 +218,7 @@ void IncompleteIndexDialog::waitForIndexer()
     }
 
     mProgressDialog->show();
+#endif
 }
 
 void IncompleteIndexDialog::slotStopIndexing()
@@ -220,6 +229,7 @@ void IncompleteIndexDialog::slotStopIndexing()
 
 void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong colId)
 {
+#if 0
     const int idx = mIndexingQueue.indexOf(colId);
     if (idx > -1) {
         mIndexingQueue.remove(idx);
@@ -230,4 +240,5 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
     if (mIndexingQueue.isEmpty()) {
         QTimer::singleShot(1000, this, SLOT(accept()));
     }
+#endif
 }
