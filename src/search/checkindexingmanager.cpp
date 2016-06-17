@@ -107,6 +107,7 @@ void CheckIndexingManager::indexingFinished(qint64 index)
         KConfigGroup grp = cfg->group(QStringLiteral("General"));
         grp.writeEntry(QStringLiteral("lastCheck"), QDateTime::currentDateTime());
         grp.deleteEntry(QStringLiteral("collectionsIndexed"));
+        grp.sync();
     }
 }
 
