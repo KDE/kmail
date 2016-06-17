@@ -31,9 +31,9 @@
 #include <QTimer>
 #include <AkonadiCore/entityhiddenattribute.h>
 
-CheckIndexingManager::CheckIndexingManager(QObject *parent)
+CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
     : QObject(parent),
-      mIndexedItems(new Akonadi::Search::PIM::IndexedItems(this)),
+      mIndexedItems(indexer),
       mIndex(0),
       mIsReady(true)
 {

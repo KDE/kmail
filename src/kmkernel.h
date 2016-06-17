@@ -30,6 +30,17 @@ class EntityTreeModel;
 class EntityMimeTypeFilterModel;
 }
 
+namespace Akonadi
+{
+namespace Search
+{
+namespace PIM
+{
+class IndexedItems;
+}
+}
+}
+
 namespace KIO
 {
 class Job;
@@ -471,6 +482,8 @@ public:
 
     bool allowToDebugBalooSupport() const;
 
+    Akonadi::Search::PIM::IndexedItems *indexedItems() const;
+
 protected:
     void agentInstanceBroken(const Akonadi::AgentInstance &instance);
 
@@ -595,6 +608,7 @@ private:
     PimCommon::AutoCorrection *mAutoCorrection;
     FolderArchiveManager *mFolderArchiveManager;
     CheckIndexingManager *mCheckIndexingManager;
+    Akonadi::Search::PIM::IndexedItems *mIndexedItems;
     bool mDebugBaloo;
 };
 

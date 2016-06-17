@@ -4,6 +4,7 @@
 
 #include "settings/kmailsettings.h"
 #include "libkdepim/broadcaststatus.h"
+#include <AkonadiSearch/PIM/indexeditems.h>
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmainwin.h"
@@ -228,7 +229,8 @@ KMKernel::KMKernel(QObject *parent) :
     CommonKernel->registerSettingsIf(this);
     CommonKernel->registerFilterIf(this);
     mFolderArchiveManager = new FolderArchiveManager(this);
-    mCheckIndexingManager = new CheckIndexingManager(this);
+    mIndexedItems = new Akonadi::Search::PIM::IndexedItems(this);
+    mCheckIndexingManager = new CheckIndexingManager(mIndexedItems, this);
 }
 
 KMKernel::~KMKernel()
@@ -1748,6 +1750,11 @@ QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
         folder = widget->currentFolder();
     }
     return folder;
+}
+
+Akonadi::Search::PIM::IndexedItems *KMKernel::indexedItems() const
+{
+    return mIndexedItems;
 }
 
 // can't be inline, since KMSender isn't known to implement

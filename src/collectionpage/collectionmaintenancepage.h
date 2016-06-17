@@ -44,7 +44,6 @@ protected:
 
 private Q_SLOTS:
     void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
-    void onIndexedItemsReceived(qint64 num);
 
     void slotReindexCollection();
 private:

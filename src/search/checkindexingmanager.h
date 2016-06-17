@@ -38,7 +38,7 @@ class CheckIndexingManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit CheckIndexingManager(QObject *parent = Q_NULLPTR);
+    explicit CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent = Q_NULLPTR);
     ~CheckIndexingManager();
 
     void start(QAbstractItemModel *collectionModel);
