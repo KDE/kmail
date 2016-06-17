@@ -18,7 +18,6 @@
 */
 
 #include "collectionviewpage.h"
-#include "kmkernel.h"
 #include "mailcommon/mailkernel.h"
 
 #include <AkonadiCore/collection.h>

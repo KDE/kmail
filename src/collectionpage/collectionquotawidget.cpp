@@ -32,8 +32,6 @@
 
 #include "collectionquotawidget.h"
 
-#include "kmkernel.h"
-
 #include <KLocalizedString>
 #include <QDialog>
 

@@ -19,7 +19,6 @@
 
 #include "collectiontemplatespage.h"
 
-#include "kmkernel.h"
 #include "mailcommon/mailkernel.h"
 #include <MailCommon/FolderCollection>
 #include "TemplateParser/TemplatesConfiguration"
