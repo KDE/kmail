@@ -78,11 +78,11 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
 
     mCollection = fetch->collections().first();
     const qlonglong result = mIndexedItems->indexedItems(mCollection.id());
-    qCDebug(KMAIL_LOG) << " mCollection.statistics().count() "<< mCollection.statistics().count() << "stats.value(mCollection.id())" << result;
+    qCDebug(KMAIL_LOG) << "name :"<< mCollection.name() << " mCollection.statistics().count() "<< mCollection.statistics().count() << "stats.value(mCollection.id())" << result;
     if (mCollection.statistics().count() != result) {
         QDBusInterface interfaceBalooIndexer(PimCommon::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceBalooIndexer.isValid()) {
-            qCDebug(KMAIL_LOG) << "Reindex collection :"<< mCollection.id() << "name :"<< mCollection.name();
+            qCDebug(KMAIL_LOG) << "Reindex collection :" << "name :" << mCollection.name();
             interfaceBalooIndexer.call(QStringLiteral("reindexCollection"), (qlonglong)mCollection.id());
         }
     }
