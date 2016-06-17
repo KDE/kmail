@@ -100,7 +100,6 @@ private:
     QHash<qint64, bool> mFilterCollections;
 };
 
-
 IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent)
     : KDialog(parent)
     , mUi(new Ui::IncompleteIndexDialog)
@@ -141,9 +140,9 @@ IncompleteIndexDialog::~IncompleteIndexDialog()
 void IncompleteIndexDialog::slotButtonClicked(int btn)
 {
     if (btn == Ok) {
-      waitForIndexer();
+        waitForIndexer();
     } else {
-      KDialog::slotButtonClicked(btn);
+        KDialog::slotButtonClicked(btn);
     }
 }
 
@@ -187,10 +186,9 @@ void IncompleteIndexDialog::waitForIndexer()
                                   QLatin1String("org.freedesktop.Akonadi.BalooIndexer"),
                                   QDBusConnection::sessionBus(), this);
     if (!mIndexer->isValid()) {
-      accept();
-      return;
+        accept();
+        return;
     }
-
 
     mProgressDialog = new KProgressDialog(this);
     mProgressDialog->progressBar()->setMaximum(mIndexingQueue.size());
@@ -207,8 +205,8 @@ void IncompleteIndexDialog::waitForIndexer()
     }
 
     if (mIndexingQueue.isEmpty()) {
-      accept();
-      return;
+        accept();
+        return;
     }
 
     mProgressDialog->show();
@@ -224,12 +222,12 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
 {
     const int idx = mIndexingQueue.indexOf(colId);
     if (idx > -1) {
-      mIndexingQueue.remove(idx);
+        mIndexingQueue.remove(idx);
     }
 
     mProgressDialog->progressBar()->setValue(mProgressDialog->progressBar()->maximum() - mIndexingQueue.size());
 
     if (mIndexingQueue.isEmpty()) {
-      QTimer::singleShot(1000, this, SLOT(accept()));
+        QTimer::singleShot(1000, this, SLOT(accept()));
     }
 }

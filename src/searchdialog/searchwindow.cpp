@@ -144,7 +144,6 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
 
     connect(KMKernel::self()->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &SearchWindow::updateCollectionStatistic);
 
-
     connect(mUi.mSearchFolderEdt, &KLineEdit::textChanged, this, &SearchWindow::scheduleRename);
     connect(&mRenameTimer, &QTimer::timeout, this, &SearchWindow::renameSearchFolder);
     connect(mUi.mSearchFolderOpenBtn, &QPushButton::clicked, this, &SearchWindow::openSearchFolder);
@@ -367,16 +366,16 @@ void SearchWindow::activateFolder(const Akonadi::Collection &collection)
     }
 
     mUi.mPatternEdit->setSearchPattern(&mSearchPattern);
-    if ( currentFolderIsSearchFolder ) {
+    if (currentFolderIsSearchFolder) {
         mFolder = collection;
-        mUi.mSearchFolderEdt->setText( collection.name() );
+        mUi.mSearchFolderEdt->setText(collection.name());
         createSearchModel();
-    } else if ( mUi.mSearchFolderEdt->text().isEmpty() ) {
-        mUi.mSearchFolderEdt->setText( i18n( "Last Search" ) );
+    } else if (mUi.mSearchFolderEdt->text().isEmpty()) {
+        mUi.mSearchFolderEdt->setText(i18n("Last Search"));
         // find last search and reuse it if possible
-        mFolder = CommonKernel->collectionFromId( KMailSettings::lastSearchCollectionId() );
+        mFolder = CommonKernel->collectionFromId(KMailSettings::lastSearchCollectionId());
         // when the last folder got renamed, create a new one
-        if ( mFolder.isValid() && mFolder.name() != mUi.mSearchFolderEdt->text() ) {
+        if (mFolder.isValid() && mFolder.name() != mUi.mSearchFolderEdt->text()) {
             mFolder = Akonadi::Collection();
         }
     }
@@ -596,7 +595,7 @@ void SearchWindow::searchDone(KJob *job)
 
 void SearchWindow::slotCollectionStatisticsRetrieved(KJob *job)
 {
-    Akonadi::CollectionFetchJob *fetch = qobject_cast<Akonadi::CollectionFetchJob*>(job);
+    Akonadi::CollectionFetchJob *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
     if (!fetch || fetch->error()) {
         return;
     }

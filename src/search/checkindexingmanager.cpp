@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "checkindexingmanager.h"
 #include "kmail_debug.h"
 #include "checkindexingjob.h"
@@ -54,7 +53,7 @@ CheckIndexingManager::~CheckIndexingManager()
 
 void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
 {
-    if(mIsReady) {
+    if (mIsReady) {
         const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
         KConfigGroup grp = cfg->group(QStringLiteral("General"));
         const QDateTime lastDateTime = grp.readEntry(QStringLiteral("lastCheck"), QDateTime());

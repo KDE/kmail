@@ -56,5 +56,4 @@ private:
     QVector<qint64> mIndexingQueue;
 };
 
-
 #endif
