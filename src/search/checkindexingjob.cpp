@@ -27,9 +27,6 @@
 
 #include <PimCommon/PimUtil>
 
-#include <QDBusInterface>
-#include <QDebug>
-
 CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent)
     : QObject(parent),
       mIndexedItems(indexedItems)
@@ -42,10 +39,10 @@ CheckIndexingJob::~CheckIndexingJob()
 
 }
 
-void CheckIndexingJob::askForNextCheck(quint64 id)
+void CheckIndexingJob::askForNextCheck(quint64 id, bool needToReindex)
 {
     deleteLater();
-    Q_EMIT finished(id);
+    Q_EMIT finished(id, needToReindex);
 }
 
 void CheckIndexingJob::setCollection(const Akonadi::Collection &col)
@@ -78,13 +75,11 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
 
     mCollection = fetch->collections().first();
     const qlonglong result = mIndexedItems->indexedItems(mCollection.id());
+    bool needToReindex = false;
     qCDebug(KMAIL_LOG) << "name :"<< mCollection.name() << " mCollection.statistics().count() "<< mCollection.statistics().count() << "stats.value(mCollection.id())" << result;
     if (mCollection.statistics().count() != result) {
-        QDBusInterface interfaceBalooIndexer(PimCommon::Util::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
-        if (interfaceBalooIndexer.isValid()) {
-            qCDebug(KMAIL_LOG) << "Reindex collection :" << "name :" << mCollection.name();
-            interfaceBalooIndexer.call(QStringLiteral("reindexCollection"), (qlonglong)mCollection.id());
-        }
+        needToReindex = true;
+        qCDebug(KMAIL_LOG) << "Reindex collection :" << "name :" << mCollection.name();
     }
-    askForNextCheck(mCollection.id());
+    askForNextCheck(mCollection.id(), needToReindex);
 }

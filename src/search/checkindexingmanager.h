@@ -46,15 +46,17 @@ public:
 private Q_SLOTS:
     void checkNextCollection();
 
-    void indexingFinished(qint64 index);
+    void indexingFinished(qint64 index, bool reindexCollection);
 private:
     void initializeCollectionList(QAbstractItemModel *model, const QModelIndex &parentIndex = QModelIndex());
     void createJob();
+    void callToReindexCollection();
 
     Akonadi::Search::PIM::IndexedItems *mIndexedItems;
     Akonadi::Collection::List mListCollection;
     QTimer *mTimer;
     QList<qint64> mCollectionsIndexed;
+    QList<qint64> mCollectionsNeedToBeReIndexed;
     int mIndex;
     bool mIsReady;
 };

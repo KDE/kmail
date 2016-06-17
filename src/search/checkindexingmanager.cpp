@@ -29,6 +29,7 @@
 #include <PimCommon/PimUtil>
 #include <AkonadiSearch/PIM/indexeditems.h>
 #include <QTimer>
+#include <QDBusInterface>
 #include <AkonadiCore/entityhiddenattribute.h>
 
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
@@ -45,6 +46,7 @@ CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *i
 
 CheckIndexingManager::~CheckIndexingManager()
 {
+    callToReindexCollection();
     const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
     KConfigGroup grp = cfg->group(QStringLiteral("General"));
     grp.writeEntry(QStringLiteral("collectionsIndexed"), mCollectionsIndexed);
@@ -89,11 +91,31 @@ void CheckIndexingManager::checkNextCollection()
     }
 }
 
-void CheckIndexingManager::indexingFinished(qint64 index)
+void CheckIndexingManager::callToReindexCollection()
+{
+    if (!mCollectionsNeedToBeReIndexed.isEmpty()) {
+        QDBusInterface interfaceBalooIndexer(PimCommon::Util::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+        if (interfaceBalooIndexer.isValid()) {
+            qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
+            interfaceBalooIndexer.call(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));
+        }
+    }
+}
+
+void CheckIndexingManager::indexingFinished(qint64 index, bool reindexCollection)
 {
     if (index != -1) {
         if (!mCollectionsIndexed.contains(index)) {
             mCollectionsIndexed.append(index);
+        }
+    }
+    if (reindexCollection) {
+        if (mCollectionsNeedToBeReIndexed.contains(index)) {
+            mCollectionsNeedToBeReIndexed.append(index);
+        }
+        if (mCollectionsNeedToBeReIndexed.count() > 30) {
+            callToReindexCollection();
+            mCollectionsNeedToBeReIndexed.clear();
         }
     }
     mIndex++;
@@ -102,7 +124,9 @@ void CheckIndexingManager::indexingFinished(qint64 index)
     } else {
         mIsReady = true;
         mIndex = 0;
+        callToReindexCollection();
         mListCollection.clear();
+        mCollectionsNeedToBeReIndexed.clear();
         const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
         KConfigGroup grp = cfg->group(QStringLiteral("General"));
         grp.writeEntry(QStringLiteral("lastCheck"), QDateTime::currentDateTime());
