@@ -72,7 +72,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
     find_package(KF5WebEngineViewer ${MESSAGELIB_LIB_VERSION_LIB} CONFIG REQUIRED)
     set(WEBENGINE_TYPE "QtWebEngine")
 
-    find_package(KF5AkonadiSearch "5.2.40" CONFIG REQUIRED)
+    find_package(KF5AkonadiSearch "5.2.41" CONFIG REQUIRED)
     set_package_properties(KF5AkonadiSearch PROPERTIES DESCRIPTION "The Akonadi Search libraries" URL "http://www.kde.org" TYPE REQUIRED PURPOSE "Provides search capabilities in KMail and Akonadi")
 
     # Find KF5 package
