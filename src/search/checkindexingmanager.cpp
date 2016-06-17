@@ -108,14 +108,8 @@ void CheckIndexingManager::indexingFinished(qint64 index)
     }
 }
 
-bool CheckIndexingManager::isReady() const
-{
-    return mIsReady;
-}
-
 void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, const QModelIndex &parentIndex)
 {
-
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
         const QModelIndex index = model->index(row, 0, parentIndex);

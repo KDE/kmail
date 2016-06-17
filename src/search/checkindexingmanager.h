@@ -33,8 +33,6 @@ public:
 
     void start(QAbstractItemModel *collectionModel);
 
-    bool isReady() const;
-
 private Q_SLOTS:
     void checkNextCollection();
 
