@@ -27,11 +27,13 @@
 #include <KConfigGroup>
 #include <MailCommon/MailUtil>
 #include <PimCommon/PimUtil>
+#include <AkonadiSearch/PIM/indexeditems.h>
 #include <QTimer>
 #include <AkonadiCore/entityhiddenattribute.h>
 
 CheckIndexingManager::CheckIndexingManager(QObject *parent)
     : QObject(parent),
+      mIndexedItems(new Akonadi::Search::PIM::IndexedItems(this)),
       mIndex(0),
       mIsReady(true)
 {
@@ -74,7 +76,7 @@ void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
 
 void CheckIndexingManager::createJob()
 {
-    CheckIndexingJob *job = new CheckIndexingJob(this);
+    CheckIndexingJob *job = new CheckIndexingJob(mIndexedItems, this);
     job->setCollection(mListCollection.at(mIndex));
     connect(job, &CheckIndexingJob::finished, this, &CheckIndexingManager::indexingFinished);
     job->start();

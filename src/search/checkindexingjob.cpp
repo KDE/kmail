@@ -19,6 +19,7 @@
 
 #include "checkindexingjob.h"
 #include "kmail_debug.h"
+#include <AkonadiSearch/PIM/indexeditems.h>
 
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionFetchScope>
@@ -29,8 +30,9 @@
 #include <QDBusInterface>
 #include <QDebug>
 
-CheckIndexingJob::CheckIndexingJob(QObject *parent)
-    : QObject(parent)
+CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent)
+    : QObject(parent),
+      mIndexedItems(indexedItems)
 {
 
 }
@@ -75,23 +77,9 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
     }
 
     mCollection = fetch->collections().first();
-    PimCommon::CollectionIndexStatusJob *indexerJob = new PimCommon::CollectionIndexStatusJob(Akonadi::Collection::List() << mCollection, this);
-    connect(indexerJob, &PimCommon::CollectionIndexStatusJob::finished, this, &CheckIndexingJob::indexerStatsFetchFinished);
-    indexerJob->start();
-}
-
-void CheckIndexingJob::indexerStatsFetchFinished(KJob* job)
-{
-    if (job->error()) {
-        qCWarning(KMAIL_LOG) << "CheckIndexingJob::indexerStatsFetchFinished error :" << job->errorString();
-        askForNextCheck(-1);
-        return;
-    }
-
-    QMap<qint64, qint64> stats = qobject_cast<PimCommon::CollectionIndexStatusJob*>(job)->resultStats();
-    //qDebug()<<" stats "<< stats;
-    qCDebug(KMAIL_LOG) << " mCollection.statistics().count() "<< mCollection.statistics().count() << "stats.value(mCollection.id())" << stats.value(mCollection.id());
-    if (mCollection.statistics().count() != stats.value(mCollection.id())) {
+    const qlonglong result = mIndexedItems->indexedItems(mCollection.id());
+    qCDebug(KMAIL_LOG) << " mCollection.statistics().count() "<< mCollection.statistics().count() << "stats.value(mCollection.id())" << result;
+    if (mCollection.statistics().count() != result) {
         QDBusInterface interfaceBalooIndexer(PimCommon::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceBalooIndexer.isValid()) {
             qCDebug(KMAIL_LOG) << "Reindex collection :"<< mCollection.id() << "name :"<< mCollection.name();

@@ -23,6 +23,16 @@
 #include <QObject>
 #include <AkonadiCore/Collection>
 #include <QAbstractItemModel>
+namespace Akonadi
+{
+namespace Search
+{
+namespace PIM
+{
+class IndexedItems;
+}
+}
+}
 class QTimer;
 class CheckIndexingManager : public QObject
 {
@@ -41,6 +51,7 @@ private:
     void initializeCollectionList(QAbstractItemModel *model, const QModelIndex &parentIndex = QModelIndex());
     void createJob();
 
+    Akonadi::Search::PIM::IndexedItems *mIndexedItems;
     Akonadi::Collection::List mListCollection;
     QTimer *mTimer;
     QList<qint64> mCollectionsIndexed;
