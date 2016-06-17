@@ -51,14 +51,14 @@ CheckIndexingManager::~CheckIndexingManager()
 void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
 {
     if(mIsReady) {
-        mIndex = 0;
-        mListCollection.clear();
         const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
         KConfigGroup grp = cfg->group(QStringLiteral("General"));
         const QDateTime lastDateTime = grp.readEntry(QStringLiteral("lastCheck"), QDateTime());
         //Check each 7 days
         QDateTime today = QDateTime::currentDateTime();
-        if (lastDateTime.isValid() || today > lastDateTime.addDays(7)) {
+        if (!lastDateTime.isValid() || today > lastDateTime.addDays(7)) {
+            mIndex = 0;
+            mListCollection.clear();
             mCollectionsIndexed = grp.readEntry(QStringLiteral("collectionsIndexed"), QList<qint64>());
             if (collectionModel) {
                 initializeCollectionList(collectionModel);
