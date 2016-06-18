@@ -21,10 +21,32 @@
 #include "searchdbustest.h"
 
 #include <QApplication>
+#include <QDBusInterface>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <PimCommon/PimUtil>
+#include <QDebug>
 
 searchdbustest::searchdbustest(QWidget *parent)
     : QWidget(parent)
 {
+    QVBoxLayout *mainlayout = new QVBoxLayout(this);
+    QPushButton *button = new QPushButton(QStringLiteral("reindex collections"), this);
+    mainlayout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, &searchdbustest::slotReindexCollections);
+}
+
+void searchdbustest::slotReindexCollections()
+{
+    QDBusInterface interfaceBalooIndexer(PimCommon::Util::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+    if (interfaceBalooIndexer.isValid()) {
+        const QList<qlonglong> lst = {100,300};
+        qDebug() << "reindex "<< lst;
+        //qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
+        interfaceBalooIndexer.call(QStringLiteral("reindexCollections"), QVariant::fromValue(lst));
+    } else {
+        qDebug()<<" interface is not valid";
+    }
 
 }
 

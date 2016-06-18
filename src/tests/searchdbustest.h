@@ -28,6 +28,8 @@ class searchdbustest : public QWidget
 public:
     explicit searchdbustest(QWidget *parent = Q_NULLPTR);
     ~searchdbustest() = default;
+private Q_SLOTS:
+    void slotReindexCollections();
 };
 
 #endif // SEARCHDBUSTEST_H
