@@ -109,7 +109,7 @@ void CheckIndexingManager::indexingFinished(qint64 index, bool reindexCollection
         }
     }
     if (reindexCollection) {
-        if (mCollectionsNeedToBeReIndexed.contains(index)) {
+        if (!mCollectionsNeedToBeReIndexed.contains(index)) {
             mCollectionsNeedToBeReIndexed.append(index);
         }
         if (mCollectionsNeedToBeReIndexed.count() > 30) {
