@@ -64,9 +64,9 @@ public:
         return QSortFilterProxyModel::data(index, role);
     }
 
-    bool setData(const QModelIndex &index, const QVariant &data, int role) Q_DECL_OVERRIDE
-    {
-        if (role == Qt::CheckStateRole) {
+    bool setData(const QModelIndex &index, const QVariant &data, int role) Q_DECL_OVERRIDE {
+        if (role == Qt::CheckStateRole)
+        {
             if (index.isValid() && index.column() == 0) {
                 const qint64 colId = collectionIdForIndex(index);
                 mFilterCollections[colId] = data.value<Qt::CheckState>();

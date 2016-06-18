@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "searchdbustest.h"
 
 #include <QApplication>
@@ -41,12 +40,12 @@ void searchdbustest::slotReindexCollections()
 {
     QDBusInterface interfaceBalooIndexer(PimCommon::Util::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
     if (interfaceBalooIndexer.isValid()) {
-        const QList<qlonglong> lst = {100,300};
-        qDebug() << "reindex "<< lst;
+        const QList<qlonglong> lst = {100, 300};
+        qDebug() << "reindex " << lst;
         //qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
         interfaceBalooIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(lst));
     } else {
-        qDebug()<<" interface is not valid";
+        qDebug() << " interface is not valid";
     }
 
 }
