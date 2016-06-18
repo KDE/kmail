@@ -29,6 +29,7 @@
 #include <AkonadiSearch/PIM/indexeditems.h>
 #include <QTimer>
 #include <QDBusInterface>
+#include <QDBusPendingCall>
 #include <AkonadiCore/entityhiddenattribute.h>
 
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
@@ -96,7 +97,7 @@ void CheckIndexingManager::callToReindexCollection()
         QDBusInterface interfaceBalooIndexer(PimCommon::Util::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceBalooIndexer.isValid()) {
             qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
-            interfaceBalooIndexer.call(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));
+            interfaceBalooIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));
         }
     }
 }
