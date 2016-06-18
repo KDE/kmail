@@ -41,8 +41,8 @@ CheckIndexingJob::~CheckIndexingJob()
 
 void CheckIndexingJob::askForNextCheck(quint64 id, bool needToReindex)
 {
-    deleteLater();
     Q_EMIT finished(id, needToReindex);
+    deleteLater();
 }
 
 void CheckIndexingJob::setCollection(const Akonadi::Collection &col)
