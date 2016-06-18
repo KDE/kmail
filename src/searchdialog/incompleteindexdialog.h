@@ -36,24 +36,22 @@ public:
     explicit IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent = Q_NULLPTR);
     ~IncompleteIndexDialog();
 
-    Akonadi::Collection::List collectionsToReindex() const;
-
-    void slotButtonClicked(int button);
-
 private Q_SLOTS:
     void selectAll();
     void unselectAll();
 
     void slotCurrentlyIndexingCollectionChanged(qlonglong colId);
     void slotStopIndexing();
+
 private:
+    QList<qlonglong> collectionsToReindex() const;
     void waitForIndexer();
     void updateAllSelection(bool select);
 
     QScopedPointer<Ui_IncompleteIndexDialog> mUi;
     QProgressDialog *mProgressDialog;
     QDBusInterface *mIndexer;
-    QVector<qint64> mIndexingQueue;
+    QList<qlonglong> mIndexingQueue;
 };
 
 #endif

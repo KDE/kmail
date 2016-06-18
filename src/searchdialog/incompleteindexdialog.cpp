@@ -20,7 +20,6 @@
 #include "incompleteindexdialog.h"
 #include "ui_incompleteindexdialog.h"
 #include "kmkernel.h"
-//#include "pimcommon/util/indexerutils.h"
 
 #include <QProgressDialog>
 #include <KDescendantsProxyModel>
@@ -29,11 +28,14 @@
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 
+#include <PimCommon/PimUtil>
+
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QDBusMetaType>
 #include <QTimer>
 #include <QHBoxLayout>
+#include <QDialogButtonBox>
 
 Q_DECLARE_METATYPE(Qt::CheckState)
 Q_DECLARE_METATYPE(QVector<qint64>)
@@ -131,26 +133,16 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
 
     mUi->collectionView->setModel(proxy);
 
-    connect(mUi->selectAllBtn, SIGNAL(clicked(bool)), this, SLOT(selectAll()));
-    connect(mUi->unselectAllBtn, SIGNAL(clicked(bool)), this, SLOT(unselectAll()));
-
-    //setButtonText(Ok, tr("&Reindex"));
-    //setButtonText(Cancel, tr("Search &Anyway"));
+    connect(mUi->selectAllBtn, &QPushButton::clicked, this, &IncompleteIndexDialog::selectAll);
+    connect(mUi->unselectAllBtn, &QPushButton::clicked, this, &IncompleteIndexDialog::unselectAll);
+    mUi->buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("Reindex"));
+    mUi->buttonBox->button(QDialogButtonBox::Cancel)->setText(i18n("Search Anyway"));
+    connect(mUi->buttonBox, &QDialogButtonBox::accepted, this, &IncompleteIndexDialog::waitForIndexer);
+    connect(mUi->buttonBox, &QDialogButtonBox::rejected, this, &IncompleteIndexDialog::reject);
 }
 
 IncompleteIndexDialog::~IncompleteIndexDialog()
 {
-}
-
-void IncompleteIndexDialog::slotButtonClicked(int btn)
-{
-#if 0
-    if (btn == Ok) {
-        waitForIndexer();
-    } else {
-        KDialog::slotButtonClicked(btn);
-    }
-#endif
 }
 
 void IncompleteIndexDialog::selectAll()
@@ -172,15 +164,15 @@ void IncompleteIndexDialog::updateAllSelection(bool select)
     }
 }
 
-Akonadi::Collection::List IncompleteIndexDialog::collectionsToReindex() const
+QList<qlonglong> IncompleteIndexDialog::collectionsToReindex() const
 {
-    Akonadi::Collection::List res;
+    QList<qlonglong> res;
 
     QAbstractItemModel *model = mUi->collectionView->model();
     for (int i = 0, cnt = model->rowCount(); i < cnt; ++i) {
         const QModelIndex idx = model->index(i, 0, QModelIndex());
         if (model->data(idx, Qt::CheckStateRole).toInt() == Qt::Checked) {
-            res.push_back(model->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>());
+            res.push_back(model->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>().id());
         }
     }
 
@@ -189,36 +181,31 @@ Akonadi::Collection::List IncompleteIndexDialog::collectionsToReindex() const
 
 void IncompleteIndexDialog::waitForIndexer()
 {
-#if 0
-    mIndexer = new QDBusInterface(PimCommon::indexerServiceName(), QLatin1String("/"),
-                                  QLatin1String("org.freedesktop.Akonadi.BalooIndexer"),
+    mIndexer = new QDBusInterface(PimCommon::Util::indexerServiceName(), QLatin1String("/"),
+                                  QStringLiteral("org.freedesktop.Akonadi.Indexer"),
                                   QDBusConnection::sessionBus(), this);
+
     if (!mIndexer->isValid()) {
         accept();
         return;
     }
-
-    mProgressDialog = new KProgressDialog(this);
-    mProgressDialog->progressBar()->setMaximum(mIndexingQueue.size());
-    mProgressDialog->progressBar()->setValue(0);
-    mProgressDialog->setLabelText(i18n("Indexing Collections..."));
-    connect(mProgressDialog, SIGNAL(rejected()),
-            this, SLOT(slotStopIndexing()));
-
-    connect(mIndexer, SIGNAL(currentCollectionChanged(qlonglong)),
-            this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
-    Q_FOREACH (const Akonadi::Collection &col, collectionsToReindex()) {
-        mIndexer->asyncCall(QLatin1String("reindexCollection"), col.id());
-        mIndexingQueue.push_back(col.id());
-    }
-
+    mIndexingQueue = collectionsToReindex();
     if (mIndexingQueue.isEmpty()) {
         accept();
         return;
     }
 
+    mProgressDialog = new QProgressDialog(this);
+    mProgressDialog->setMaximum(mIndexingQueue.size());
+    mProgressDialog->setValue(0);
+    mProgressDialog->setLabelText(i18n("Indexing Collections..."));
+    connect(mProgressDialog, SIGNAL(rejected()), this, SLOT(slotStopIndexing()));
+
+    connect(mIndexer, SIGNAL(currentCollectionChanged(qlonglong)),
+            this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
+
+    mIndexer->asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mIndexingQueue));
     mProgressDialog->show();
-#endif
 }
 
 void IncompleteIndexDialog::slotStopIndexing()
@@ -229,16 +216,14 @@ void IncompleteIndexDialog::slotStopIndexing()
 
 void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong colId)
 {
-#if 0
     const int idx = mIndexingQueue.indexOf(colId);
     if (idx > -1) {
-        mIndexingQueue.remove(idx);
+        mIndexingQueue.removeAll(idx);
     }
 
-    mProgressDialog->progressBar()->setValue(mProgressDialog->progressBar()->maximum() - mIndexingQueue.size());
+    mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
 
     if (mIndexingQueue.isEmpty()) {
         QTimer::singleShot(1000, this, SLOT(accept()));
     }
-#endif
 }
