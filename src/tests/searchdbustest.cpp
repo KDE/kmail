@@ -24,6 +24,7 @@
 #include <QDBusInterface>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QDBusPendingCall>
 #include <PimCommon/PimUtil>
 #include <QDebug>
 
@@ -43,7 +44,7 @@ void searchdbustest::slotReindexCollections()
         const QList<qlonglong> lst = {100,300};
         qDebug() << "reindex "<< lst;
         //qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
-        interfaceBalooIndexer.call(QStringLiteral("reindexCollections"), QVariant::fromValue(lst));
+        interfaceBalooIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(lst));
     } else {
         qDebug()<<" interface is not valid";
     }
