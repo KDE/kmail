@@ -31,7 +31,6 @@
 
 #include <KAboutData>
 #include <KAcceleratorManager>
-#include <KCheckableProxyModel>
 #include "kmailplugin_debug.h"
 #include <QDialog>
 #include <KLocalizedString>
