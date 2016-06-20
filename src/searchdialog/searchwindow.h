@@ -158,6 +158,8 @@ private Q_SLOTS:
     void slotJumpToFolder();
 private:
     void doSearch();
+    QVector<qint64> checkIncompleteIndex(const Akonadi::Collection::List &searchCols, bool recursive);
+    Akonadi::Collection::List searchCollectionsRecursive(const Akonadi::Collection::List &cols) const;
     QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
     QVector<Akonadi::Collection> mCollectionId;
     Akonadi::SearchQuery mQuery;
