@@ -127,6 +127,7 @@ void CheckIndexingManager::indexingFinished(qint64 index, bool reindexCollection
         callToReindexCollection();
         mListCollection.clear();
         mCollectionsNeedToBeReIndexed.clear();
+
         const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
         KConfigGroup grp = cfg->group(QStringLiteral("General"));
         grp.writeEntry(QStringLiteral("lastCheck"), QDateTime::currentDateTime());

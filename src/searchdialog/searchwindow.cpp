@@ -55,6 +55,7 @@
 #include <KStandardGuiItem>
 #include <KWindowSystem>
 #include <KMessageBox>
+#include <AkonadiSearch/PIM/indexeditems.h>
 
 
 #include <QCheckBox>
@@ -900,7 +901,7 @@ void SearchWindow::slotJumpToFolder()
 
 QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::List &searchCols, bool recursive)
 {
-#if 0
+    QVector<qint64> results;
     Akonadi::Collection::List cols;
     if (recursive) {
         cols = searchCollectionsRecursive(searchCols);
@@ -909,6 +910,7 @@ QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::Li
             QAbstractItemModel *etm = KMKernel::self()->collectionModel();
             const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(etm, col);
             const Akonadi::Collection modelCol = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+            //FIXME
             // Only index offline IMAP collections
             if (modelCol.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
               cols.push_back(modelCol);
@@ -916,32 +918,17 @@ QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::Li
         }
     }
 
-    PimCommon::CollectionIndexStatusJob *statsJob = new PimCommon::CollectionIndexStatusJob(cols, this);
-    {
-        mSearchJob = statsJob;
-        enableGUI();
-        mUi.mProgressIndicator->start();
-        mUi.mStatusLbl->setText(i18n("Checking index status..."));
-
-        // TODO: No blocking jobs!
-        statsJob->exec();
-
-        mSearchJob = 0;
-    }
-
-    QVector<qint64> results;
-    const QMap<qint64, qint64> stats = statsJob->resultStats();
+    enableGUI();
+    mUi.mProgressIndicator->start();
+    mUi.mStatusLbl->setText(i18n("Checking index status..."));
+    //Fetch collection ?
     Q_FOREACH (const Akonadi::Collection &col, cols) {
-        kDebug() << "Collection:" << col.displayName() << "(" << col.id() << "), count:" << col.statistics().count() << ", index:" << stats.value(col.id());
-        if (col.statistics().count() != stats.value(col.id())) {
+        const qlonglong num = KMKernel::self()->indexedItems()->indexedItems((qlonglong)col.id());
+        if (col.statistics().count() != num) {
             results.push_back(col.id());
         }
     }
-
     return results;
-#else
-    return {};
-#endif
 }
 
 Akonadi::Collection::List SearchWindow::searchCollectionsRecursive(const Akonadi::Collection::List &cols) const
