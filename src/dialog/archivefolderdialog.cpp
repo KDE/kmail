@@ -171,7 +171,7 @@ void ArchiveFolderDialog::setFolder(const Akonadi::Collection &defaultCollection
 {
     mFolderRequester->setCollection(defaultCollection);
     // TODO: what if the file already exists?
-    mUrlRequester->setUrl(standardArchivePath(defaultCollection.name()));
+    mUrlRequester->setUrl(QUrl::fromLocalFile(standardArchivePath(defaultCollection.name())));
     const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection(defaultCollection, false);
     mDeleteCheckBox->setEnabled(allowToDeleteFolders(defaultCollection));
     mOkButton->setEnabled(defaultCollection.isValid() && folder && !folder->isStructural());
@@ -218,7 +218,7 @@ void ArchiveFolderDialog::slotFixFileExtension()
 
     // Now, we've got a filename without an extension, simply append the correct one
     fileName += QLatin1String(extensions[mFormatComboBox->currentIndex()]);
-    mUrlRequester->setUrl(fileName);
+    mUrlRequester->setUrl(QUrl::fromLocalFile(fileName));
 }
 
 void ArchiveFolderDialog::slotUrlChanged(const QString &url)

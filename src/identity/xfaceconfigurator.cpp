@@ -223,7 +223,7 @@ void XFaceConfigurator::slotSelectFile()
     Q_FOREACH (const QByteArray &mime, mimeTypes) {
         filter += QString::fromLatin1(mime);
     }
-    const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QString(), i18n("Image (%1)", filter));
+    const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QUrl(), i18n("Image (%1)", filter));
     if (!url.isEmpty()) {
         setXfaceFromFile(url);
     }
@@ -263,7 +263,7 @@ void XFaceConfigurator::slotDelayedSelectFromAddressbook(KJob *job)
         }
 
     } else {
-        const QUrl url = contact.photo().url();
+        const QUrl url(contact.photo().url());
         if (!url.isEmpty()) {
             setXfaceFromFile(url);
         } else {
