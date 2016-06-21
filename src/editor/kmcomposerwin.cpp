@@ -2446,13 +2446,15 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
         if (!ident.isNull()) {
             defaultDomainName = ident.defaultDomainName();
         }
-        const QStringList recipients = { mComposerBase->to().trimmed(), mComposerBase->cc().trimmed(), mComposerBase->bcc().trimmed()};
-        params.setAddresses(recipients);
+        params.setBccAddresses(mComposerBase->bcc().trimmed());
+        params.setToAddresses(mComposerBase->to().trimmed());
+        params.setCcAddresses(mComposerBase->cc().trimmed());
         params.setDefaultDomain(defaultDomainName);
 
         if (!mPluginEditorCheckBeforeSendManagerInterface->execute(params)) {
             return;
         }
+        const QStringList recipients = { mComposerBase->to().trimmed(), mComposerBase->cc().trimmed(), mComposerBase->bcc().trimmed()};
 
         setEnabled(false);
 
