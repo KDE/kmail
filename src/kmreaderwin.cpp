@@ -289,8 +289,8 @@ static const char *const kmailNewFeatures[] = {
     I18N_NOOP("Support for adding notes (annotations) to mails"),
     I18N_NOOP("Tag folders"),
     I18N_NOOP("Less GUI freezes, mail checks happen in the background"),
-    I18N_NOOP("Add Plugins supports"),
-    I18N_NOOP("Use new HTML renderer (QtWebEngine)")
+    I18N_NOOP("Plugins support"),
+    I18N_NOOP("New HTML renderer (QtWebEngine)")
 };
 static const int numKMailNewFeatures =
     sizeof kmailNewFeatures / sizeof * kmailNewFeatures;
