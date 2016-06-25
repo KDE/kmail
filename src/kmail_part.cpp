@@ -36,7 +36,6 @@
 #include <kparts/statusbarextension.h>
 #include <kparts/mainwindow.h>
 #include <kpluginfactory.h>
-#include <kpluginloader.h>
 #include "kmail_debug.h"
 #include <ksettings/dispatcher.h>
 #include <kmailpartadaptor.h>
