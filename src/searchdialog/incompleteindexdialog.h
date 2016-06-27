@@ -21,7 +21,6 @@
 #define INCOMPLETEINDEXDIALOG_H
 
 #include <QDialog>
-#include <AkonadiCore/Collection>
 #include <QVector>
 
 class QProgressDialog;
