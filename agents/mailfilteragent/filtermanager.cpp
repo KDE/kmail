@@ -263,14 +263,16 @@ void FilterManager::Private::beginFiltering(const Akonadi::Item &item) const
 {
     if (FilterLog::instance()->isLogging()) {
         FilterLog::instance()->addSeparator();
-        KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-        const QString subject = msg->subject()->asUnicodeString();
-        const QString from = msg->from()->asUnicodeString();
-        const QDateTime dateTime = msg->date()->dateTime();
-        const QString date = QLocale().toString(dateTime, QLocale::LongFormat);
-        const QString logText(i18n("<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>",
-                                   subject, from, date));
-        FilterLog::instance()->add(logText, FilterLog::PatternDescription);
+        if (item.hasPayload<KMime::Message::Ptr>()) {
+            KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+            const QString subject = msg->subject()->asUnicodeString();
+            const QString from = msg->from()->asUnicodeString();
+            const QDateTime dateTime = msg->date()->dateTime();
+            const QString date = QLocale().toString(dateTime, QLocale::LongFormat);
+            const QString logText(i18n("<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>",
+                                       subject, from, date));
+            FilterLog::instance()->add(logText, FilterLog::PatternDescription);
+        }
     }
 }
 

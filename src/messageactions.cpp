@@ -399,6 +399,9 @@ void MessageActions::clearMailingListActions()
 
 void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
 {
+    if (!messageItem.hasPayload<KMime::Message::Ptr>()) {
+        return;
+    }
     KMime::Message::Ptr message = messageItem.payload<KMime::Message::Ptr>();
     const MessageCore::MailingList mailList = MessageCore::MailingList::detect(message);
 
