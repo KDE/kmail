@@ -50,9 +50,9 @@ void ListView::resizeColums()
 void ListView::slotContextMenu(const QPoint &pos)
 {
     QMenu *menu = new QMenu(this);
-    menu->addAction(i18n("Add"), this, SIGNAL(addHeader()));
+    menu->addAction(i18n("Add"), this, &ListView::addHeader);
     if (currentItem()) {
-        menu->addAction(i18n("Remove"), this, SIGNAL(removeHeader()));
+        menu->addAction(i18n("Remove"), this, &ListView::removeHeader);
     }
     menu->exec(viewport()->mapToGlobal(pos));
     delete menu;
