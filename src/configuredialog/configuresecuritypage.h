@@ -26,6 +26,8 @@
 #include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
 
+#include <KCMultiDialog>
+
 class QButtonGroup;
 namespace MessageViewer
 {
@@ -135,6 +137,18 @@ private:
 private:
     Ui::SMimeConfiguration *mWidget;
     Kleo::CryptoConfig *mConfig;
+};
+
+
+class GpgSettingsDialog : public KCMultiDialog
+{
+    Q_OBJECT
+public:
+    explicit GpgSettingsDialog(QWidget *parent = Q_NULLPTR);
+    ~GpgSettingsDialog();
+private:
+    void readConfig();
+    void saveConfig();
 };
 
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs

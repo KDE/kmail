@@ -365,7 +365,7 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
 
 void SecurityPage::WarningTab::slotConfigureGnupg()
 {
-    QPointer<KCMultiDialog> dlg(new KCMultiDialog(this));
+    QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
     KPageWidgetItem *page = dlg->addModule(QStringLiteral("kleopatra_config_gnupgsystem"));
     if (!page) {
         QLabel *info = new QLabel(i18n("The module is missing. Please verify your installation. This module is provided by Kleopatra."), this);
@@ -682,4 +682,31 @@ Kleo::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &co
         return Q_NULLPTR;
     }
     return entry;
+}
+
+GpgSettingsDialog::GpgSettingsDialog(QWidget *parent)
+    : KCMultiDialog(parent)
+{
+    readConfig();
+}
+
+GpgSettingsDialog::~GpgSettingsDialog()
+{
+    saveConfig();
+}
+
+void GpgSettingsDialog::readConfig()
+{
+    KConfigGroup group(KSharedConfig::openConfig(), "GpgSettingsDialog");
+    const QSize size = group.readEntry("Size", QSize(600, 400));
+    if (size.isValid()) {
+        resize(size);
+    }
+}
+
+void GpgSettingsDialog::saveConfig()
+{
+    KConfigGroup group(KSharedConfig::openConfig(), "GpgSettingsDialog");
+    group.writeEntry("Size", size());
+    group.sync();
 }
