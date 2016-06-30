@@ -1413,12 +1413,7 @@ void KMKernel::cleanup(void)
     Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
     if (trashCollection.isValid()) {
         if (KMailSettings::self()->emptyTrashOnExit()) {
-            Akonadi::CollectionStatisticsJob *jobStatistics = new Akonadi::CollectionStatisticsJob(trashCollection);
-            if (jobStatistics->exec()) {
-                if (jobStatistics->statistics().count() > 0) {
-                    mFolderCollectionMonitor->expunge(trashCollection, true /*sync*/);
-                }
-            }
+            mFolderCollectionMonitor->expunge(trashCollection, true /*sync*/);
         }
     }
     delete mConfigureDialog;
