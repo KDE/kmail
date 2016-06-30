@@ -51,7 +51,7 @@ public:
     ~VacationLabel();
 
 Q_SIGNALS:
-    void clicked();
+    void vacationLabelClicked();
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
@@ -71,8 +71,10 @@ public:
     bool hasVacationScriptActive() const;
 
 Q_SIGNALS:
-    void clicked(const QString &serverName = QString());
+    void clicked(const QString &serverName);
 
+private Q_SLOTS:
+    void slotVacationLabelClicked();
 private:
     void createIndicator();
     QStringList mServerActive;

@@ -270,7 +270,7 @@ public Q_SLOTS:
     void initializeFilterActions();
 
     /** Trigger the dialog for editing out-of-office scripts.  */
-    void slotEditVacation(const QString &serverName = QString());
+    void slotEditVacation(const QString &serverName);
 
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
@@ -560,6 +560,7 @@ private Q_SLOTS:
     void slotRemoveDuplicateRecursive();
     void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
     void slotRedirectCurrentMessage();
+    void slotEditCurrentVacation();
 private:
     void printCurrentMessage(bool preview);
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);

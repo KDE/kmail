@@ -2233,7 +2233,12 @@ void KMMainWidget::slotCheckVacation()
 
     mVacationManager->checkVacation();
     connect(mVacationManager, SIGNAL(updateVacationScriptStatus(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)));
-    connect(mVacationManager, SIGNAL(editVacation()), SLOT(slotEditVacation()));
+    connect(mVacationManager, &KSieveUi::VacationManager::editVacation, this, &KMMainWidget::slotEditCurrentVacation);
+}
+
+void KMMainWidget::slotEditCurrentVacation()
+{
+    slotEditVacation(QString());
 }
 
 void KMMainWidget::slotEditVacation(const QString &serverName)
@@ -2956,7 +2961,7 @@ void KMMainWidget::setupActions()
     if (KSieveUi::Util::allowOutOfOfficeSettings()) {
         QAction *action = new QAction(i18n("Edit \"Out of Office\" Replies..."), this);
         actionCollection()->addAction(QStringLiteral("tools_edit_vacation"), action);
-        connect(action, SIGNAL(triggered(bool)), SLOT(slotEditVacation()));
+        connect(action, &QAction::triggered, this, &KMMainWidget::slotEditCurrentVacation);
     }
 
     {

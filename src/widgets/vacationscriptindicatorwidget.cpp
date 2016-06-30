@@ -63,7 +63,7 @@ VacationLabel::~VacationLabel()
 
 void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
 {
-    Q_EMIT clicked();
+    Q_EMIT vacationLabelClicked();
     QLabel::mouseReleaseEvent(event);
 }
 
@@ -101,7 +101,7 @@ void VacationScriptIndicatorWidget::createIndicator()
     mBoxLayout->setMargin(0);
     mBoxLayout->setSpacing(0);
     mInfo = new VacationLabel(i18np("Out of office reply active on server", "Out of office reply active on servers", mServerActive.count()));
-    connect(mInfo, SIGNAL(clicked()), this, SIGNAL(clicked()));
+    connect(mInfo, &VacationLabel::vacationLabelClicked, this, &VacationScriptIndicatorWidget::slotVacationLabelClicked);
     mBoxLayout->addWidget(mInfo);
     Q_FOREACH (const QString &server, mServerActive) {
         ServerLabel *lab = new ServerLabel(server);
@@ -109,6 +109,11 @@ void VacationScriptIndicatorWidget::createIndicator()
         mBoxLayout->addWidget(lab);
     }
     setLayout(mBoxLayout);
+}
+
+void VacationScriptIndicatorWidget::slotVacationLabelClicked()
+{
+    Q_EMIT clicked(QString());
 }
 
 void VacationScriptIndicatorWidget::updateIndicator()
