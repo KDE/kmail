@@ -118,10 +118,6 @@ public: // callback
 
 public Q_SLOTS: // kmkernel, callback
     virtual void slotSendNow() = 0;
-    /**
-     * Switch wordWrap on/off
-     */
-    virtual void slotWordWrapToggled(bool) = 0;
     virtual void setModified(bool modified) = 0;
 public Q_SLOTS: // kmkernel
     virtual void autoSaveMessage(bool force = false) = 0;

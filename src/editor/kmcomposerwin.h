@@ -237,7 +237,7 @@ public Q_SLOTS: // kmkernel, callback
     /**
      * Switch wordWrap on/off
      */
-    void slotWordWrapToggled(bool) Q_DECL_OVERRIDE;
+    void slotWordWrapToggled(bool);
 
     void slotToggleMarkup();
     void slotTextModeChanged(MessageComposer::RichTextComposerNg::Mode mode);
