@@ -1437,6 +1437,11 @@ ComposerPluginTab::~ComposerPluginTab()
 void ComposerPluginTab::save()
 {
     mConfigureWidget->saveSettings();
+    Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
+        if (plugin->hasConfigureSupport()) {
+            plugin->emitConfigChanged();
+        }
+    }
 }
 
 void ComposerPluginTab::doLoadFromGlobalSettings()
