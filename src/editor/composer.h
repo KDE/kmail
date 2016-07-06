@@ -122,7 +122,7 @@ public Q_SLOTS: // kmkernel, callback
 public Q_SLOTS: // kmkernel
     virtual void autoSaveMessage(bool force = false) = 0;
 
-public: // kmkernel, attachmentlistview
+public: // kmkernel
     virtual void disableWordWrap() = 0;
 
     virtual void forceDisableHtml() = 0;
