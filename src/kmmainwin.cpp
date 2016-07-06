@@ -67,15 +67,15 @@ KMMainWin::KMMainWin(QWidget *)
     }
     setStandardToolBarMenuEnabled(true);
 
-    KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()),
+    KStandardAction::configureToolbars(this, &KMMainWin::slotEditToolbars,
                                        actionCollection());
 
-    KStandardAction::keyBindings(this, SLOT(slotConfigureShortcuts()),
+    KStandardAction::keyBindings(this, &KMMainWin::slotConfigureShortcuts,
                                  actionCollection());
 
-    mHideMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotToggleMenubar()), actionCollection());
+    mHideMenuBarAction = KStandardAction::showMenubar(this, &KMMainWin::slotToggleMenubar, actionCollection());
 
-    KStandardAction::quit(this, SLOT(slotQuit()), actionCollection());
+    KStandardAction::quit(this, &KMMainWin::slotQuit, actionCollection());
     createGUI(QStringLiteral("kmmainwin.rc"));
 
     //must be after createGUI, otherwise e.g toolbar settings are not loaded

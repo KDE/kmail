@@ -1243,8 +1243,8 @@ void KMComposerWin::setupActions(void)
 
     setStandardToolBarMenuEnabled(true);
 
-    KStandardAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
-    KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+    KStandardAction::keyBindings(this, &KMComposerWin::slotEditKeys, actionCollection());
+    KStandardAction::configureToolbars(this, &KMComposerWin::slotEditToolbars, actionCollection());
     KStandardAction::preferences(kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection());
 
     action = new QAction(i18n("&Spellchecker..."), this);

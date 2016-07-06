@@ -364,7 +364,7 @@ void KMReaderMainWin::setupAccel()
     actionCollection()->setDefaultShortcut(mTrashAction, QKeySequence(Qt::Key_Delete));
     connect(mTrashAction, &QAction::triggered, this, &KMReaderMainWin::slotTrashMessage);
 
-    QAction *closeAction = KStandardAction::close(this, SLOT(close()), actionCollection());
+    QAction *closeAction = KStandardAction::close(this, &KMReaderMainWin::close, actionCollection());
     QList<QKeySequence> closeShortcut = closeAction->shortcuts();
     closeAction->setShortcuts(closeShortcut << QKeySequence(Qt::Key_Escape));
 
@@ -374,7 +374,7 @@ void KMReaderMainWin::setupAccel()
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::itemRemoved, this, &QWidget::close);
 
     setStandardToolBarMenuEnabled(true);
-    KStandardAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+    KStandardAction::configureToolbars(this, &KMReaderMainWin::slotEditToolbars, actionCollection());
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::moveMessageToTrash, this, &KMReaderMainWin::slotTrashMessage);
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::executeMailAction, this, &KMReaderMainWin::slotExecuteMailAction);
 }

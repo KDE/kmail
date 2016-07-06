@@ -2846,10 +2846,10 @@ void KMMainWidget::setupActions()
     connect(mSaveAsAction, &QAction::triggered, this, &KMMainWidget::slotSaveMsg);
     actionCollection()->setDefaultShortcut(mSaveAsAction, KStandardShortcut::save().first());
 
-    mOpenAction = KStandardAction::open(this, SLOT(slotOpenMsg()),
+    mOpenAction = KStandardAction::open(this, &KMMainWidget::slotOpenMsg,
                                         actionCollection());
 
-    mOpenRecentAction = KStandardAction::openRecent(this, SLOT(slotOpenRecentMsg(QUrl)),
+    mOpenRecentAction = KStandardAction::openRecent(this, &KMMainWidget::slotOpenRecentMsg,
                         actionCollection());
     KConfigGroup grp = mConfig->group(QStringLiteral("Recent Files"));
     mOpenRecentAction->loadEntries(grp);
