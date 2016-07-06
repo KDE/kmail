@@ -378,7 +378,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     connect(dictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposerWin::slotSpellCheckingLanguage);
 
-    connect(editor, &KMComposerEditorNg::languageChanged, this, &KMComposerWin::slotLanguageChanged);
+    connect(editor, &KMComposerEditorNg::languageChanged, this, &KMComposerWin::slotDictionaryLanguageChanged);
     connect(editor, &KMComposerEditorNg::spellCheckStatus, this, &KMComposerWin::slotSpellCheckingStatus);
     connect(editor, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
     connect(editor, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotCheckSendNow);
@@ -3077,7 +3077,7 @@ void KMComposerWin::updateSignatureAndEncryptionStateIndicators()
     mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(mSignAction->isChecked(), mEncryptAction->isChecked());
 }
 
-void KMComposerWin::slotLanguageChanged(const QString &language)
+void KMComposerWin::slotDictionaryLanguageChanged(const QString &language)
 {
     mComposerBase->dictionary()->setCurrentByDictionary(language);
 }

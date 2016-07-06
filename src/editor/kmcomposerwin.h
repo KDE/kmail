@@ -285,7 +285,7 @@ private Q_SLOTS:
     void slotHelp();
     void slotPasteAsAttachment();
     void slotFolderRemoved(const Akonadi::Collection &);
-    void slotLanguageChanged(const QString &language);
+    void slotDictionaryLanguageChanged(const QString &language);
     void slotFccFolderChanged(const Akonadi::Collection &);
     void slotEditorTextChanged();
     void slotOverwriteModeChanged();
