@@ -88,11 +88,6 @@ public: // kmkernel, kmcommands, callback
     virtual bool isComposing() const = 0;
 
     /**
-     * Set the text selection the message is a response to.
-     */
-    virtual void setTextSelection(const QString &selection) = 0;
-
-    /**
      * Set custom template to be used for the message.
      */
     virtual void setCustomTemplate(const QString &customTemplate) = 0;

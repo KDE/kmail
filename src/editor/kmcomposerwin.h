@@ -193,12 +193,6 @@ public: // kmkernel, kmcommands, callback
       * Returns @c true while the message composing is in progress.
       */
     bool isComposing() const Q_DECL_OVERRIDE;
-
-    /**
-      * Set the text selection the message is a response to.
-      */
-    void setTextSelection(const QString &selection) Q_DECL_OVERRIDE;
-
     /**
       * Set custom template to be used for the message.
       */

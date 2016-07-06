@@ -1610,11 +1610,6 @@ void KMComposerWin::setAutoSaveFileName(const QString &fileName)
     mComposerBase->setAutoSaveFileName(fileName);
 }
 
-void KMComposerWin::setTextSelection(const QString &selection)
-{
-    mTextSelection = selection;
-}
-
 void KMComposerWin::setCustomTemplate(const QString &customTemplate)
 {
     mCustomTemplate = customTemplate;
