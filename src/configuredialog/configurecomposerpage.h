@@ -45,6 +45,7 @@ namespace MessageComposer
 {
 class ImageScalingWidget;
 class PluginEditorCheckBeforeSendConfigureWidget;
+class PluginEditorCheckBeforeSend;
 }
 
 class ComposerPageGeneralTab : public ConfigModuleTab
@@ -266,7 +267,7 @@ class ComposerPluginTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPluginTab(MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *configureWidget, QWidget *parent = Q_NULLPTR);
+    explicit ComposerPluginTab(MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *configureWidget, MessageComposer::PluginEditorCheckBeforeSend *plugin, QWidget *parent = Q_NULLPTR);
     ~ComposerPluginTab();
 
     void save() Q_DECL_OVERRIDE;
@@ -278,6 +279,7 @@ private:
 
 private:
     MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *mConfigureWidget;
+    MessageComposer::PluginEditorCheckBeforeSend *mPlugin;
 };
 
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs

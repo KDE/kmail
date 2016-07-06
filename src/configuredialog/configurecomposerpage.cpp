@@ -139,7 +139,7 @@ ComposerPage::ComposerPage(QWidget *parent)
     Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
             MessageComposer::PluginEditorCheckBeforeSendConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
-            ComposerPluginTab *tab = new ComposerPluginTab(settings.configureWidget, this);
+            ComposerPluginTab *tab = new ComposerPluginTab(settings.configureWidget, plugin, this);
             addTab(tab, settings.name);
         }
     }
@@ -1419,9 +1419,10 @@ void ComposerPageAutoImageResizeTab::doResetToDefaultsOther()
     autoResizeWidget->resetToDefault();
 }
 
-ComposerPluginTab::ComposerPluginTab(MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *configureWidget, QWidget *parent)
+ComposerPluginTab::ComposerPluginTab(MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *configureWidget, MessageComposer::PluginEditorCheckBeforeSend *plugin, QWidget *parent)
     : ConfigModuleTab(parent),
-      mConfigureWidget(configureWidget)
+      mConfigureWidget(configureWidget),
+      mPlugin(plugin)
 {
     QHBoxLayout *l = new QHBoxLayout(this);
     l->setContentsMargins(0, 0, 0, 0);
@@ -1437,11 +1438,7 @@ ComposerPluginTab::~ComposerPluginTab()
 void ComposerPluginTab::save()
 {
     mConfigureWidget->saveSettings();
-    Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
-        if (plugin->hasConfigureSupport()) {
-            plugin->emitConfigChanged();
-        }
-    }
+    mPlugin->emitConfigChanged();
 }
 
 void ComposerPluginTab::doLoadFromGlobalSettings()
