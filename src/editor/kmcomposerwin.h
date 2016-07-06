@@ -193,10 +193,6 @@ public: // kmkernel, kmcommands, callback
       * Returns @c true while the message composing is in progress.
       */
     bool isComposing() const Q_DECL_OVERRIDE;
-    /**
-      * Set custom template to be used for the message.
-      */
-    void setCustomTemplate(const QString &customTemplate) Q_DECL_OVERRIDE;
 
     /** Disabled signing and encryption completely for this composer window. */
     void setSigningAndEncryptionDisabled(bool v) Q_DECL_OVERRIDE;
@@ -222,8 +218,6 @@ public: // kmkernel, kmcommands, callback
     void setCollectionForNewMessage(const Akonadi::Collection &folder) Q_DECL_OVERRIDE;
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) Q_DECL_OVERRIDE;
-
-    void setCurrentIdentity(uint identity) Q_DECL_OVERRIDE;
 
 private:
     /**

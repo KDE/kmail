@@ -87,16 +87,10 @@ public: // kmkernel, kmcommands, callback
      */
     virtual bool isComposing() const = 0;
 
-    /**
-     * Set custom template to be used for the message.
-     */
-    virtual void setCustomTemplate(const QString &customTemplate) = 0;
-
     virtual void setAutoSaveFileName(const QString &fileName) = 0;
     virtual void setCollectionForNewMessage(const Akonadi::Collection &folder) = 0;
 
     virtual void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) = 0;
-    virtual void setCurrentIdentity(uint identity) = 0;
 
 public: // kmcommand
     /**

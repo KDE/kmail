@@ -1610,11 +1610,6 @@ void KMComposerWin::setAutoSaveFileName(const QString &fileName)
     mComposerBase->setAutoSaveFileName(fileName);
 }
 
-void KMComposerWin::setCustomTemplate(const QString &customTemplate)
-{
-    mCustomTemplate = customTemplate;
-}
-
 void KMComposerWin::setSigningAndEncryptionDisabled(bool v)
 {
     mSigningAndEncryptionExplicitlyDisabled = v;
@@ -3127,11 +3122,6 @@ void KMComposerWin::slotExplicitClosedMissingAttachment()
 void KMComposerWin::addExtraCustomHeaders(const QMap<QByteArray, QString> &headers)
 {
     mExtraHeaders = headers;
-}
-
-void KMComposerWin::setCurrentIdentity(uint identity)
-{
-    mComposerBase->identityCombo()->setCurrentIdentity(identity);
 }
 
 void KMComposerWin::slotExternalEditorStarted()
