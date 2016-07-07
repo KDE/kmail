@@ -275,16 +275,16 @@ void IdentityPage::slotRenameIdentity(KMail::IdentityListViewItem *item, const Q
 void IdentityPage::slotContextMenu(IdentityListViewItem *item, const QPoint &pos)
 {
     QMenu *menu = new QMenu(this);
-    menu->addAction(i18n("Add..."), this, SLOT(slotNewIdentity()));
+    menu->addAction(i18n("Add..."), this, &IdentityPage::slotNewIdentity);
     if (item) {
-        menu->addAction(i18n("Modify..."), this, SLOT(slotModifyIdentity()));
+        menu->addAction(i18n("Modify..."), this, &IdentityPage::slotModifyIdentity);
         menu->addAction(i18n("Rename"), this, SLOT(slotRenameIdentity()));
         if (mIPage.mIdentityList->topLevelItemCount() > 1) {
-            menu->addAction(i18n("Remove"), this, SLOT(slotRemoveIdentity()));
+            menu->addAction(i18n("Remove"), this, &IdentityPage::slotRemoveIdentity);
         }
         if (!item->identity().isDefault()) {
             menu->addSeparator();
-            menu->addAction(i18n("Set as Default"), this, SLOT(slotSetAsDefault()));
+            menu->addAction(i18n("Set as Default"), this, &IdentityPage::slotSetAsDefault);
         }
     }
     menu->exec(pos);

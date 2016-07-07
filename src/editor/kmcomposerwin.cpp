@@ -1124,9 +1124,9 @@ void KMComposerWin::setupActions(void)
     connect(action, &QAction::triggered,
             mComposerBase->recipientsEditor(), &MessageComposer::RecipientsEditor::saveDistributionList);
 
-    KStandardAction::print(this, SLOT(slotPrint()), actionCollection());
-    KStandardAction::printPreview(this, SLOT(slotPrintPreview()), actionCollection());
-    KStandardAction::close(this, SLOT(slotClose()), actionCollection());
+    KStandardAction::print(this, &KMComposerWin::slotPrint, actionCollection());
+    KStandardAction::printPreview(this, &KMComposerWin::slotPrintPreview, actionCollection());
+    KStandardAction::close(this, &KMComposerWin::slotClose, actionCollection());
 
     KStandardAction::undo(mGlobalAction, SLOT(slotUndo()), actionCollection());
     KStandardAction::redo(mGlobalAction, SLOT(slotRedo()), actionCollection());

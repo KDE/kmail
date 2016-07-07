@@ -199,7 +199,7 @@ void IncompleteIndexDialog::waitForIndexer()
     mProgressDialog->setMaximum(mIndexingQueue.size());
     mProgressDialog->setValue(0);
     mProgressDialog->setLabelText(i18n("Indexing Collections..."));
-    connect(mProgressDialog, SIGNAL(rejected()), this, SLOT(slotStopIndexing()));
+    connect(mProgressDialog, &QDialog::rejected, this, &IncompleteIndexDialog::slotStopIndexing);
 
     connect(mIndexer, SIGNAL(currentCollectionChanged(qlonglong)),
             this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
