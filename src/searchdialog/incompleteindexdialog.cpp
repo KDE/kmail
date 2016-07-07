@@ -224,6 +224,6 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
     mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
 
     if (mIndexingQueue.isEmpty()) {
-        QTimer::singleShot(1000, this, SLOT(accept()));
+        QTimer::singleShot(1000, this, &IncompleteIndexDialog::accept);
     }
 }

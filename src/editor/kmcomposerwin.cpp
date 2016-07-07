@@ -1128,12 +1128,12 @@ void KMComposerWin::setupActions(void)
     KStandardAction::printPreview(this, &KMComposerWin::slotPrintPreview, actionCollection());
     KStandardAction::close(this, &KMComposerWin::slotClose, actionCollection());
 
-    KStandardAction::undo(mGlobalAction, SLOT(slotUndo()), actionCollection());
-    KStandardAction::redo(mGlobalAction, SLOT(slotRedo()), actionCollection());
-    KStandardAction::cut(mGlobalAction, SLOT(slotCut()), actionCollection());
-    KStandardAction::copy(mGlobalAction, SLOT(slotCopy()), actionCollection());
-    KStandardAction::pasteText(mGlobalAction, SLOT(slotPaste()), actionCollection());
-    mSelectAll = KStandardAction::selectAll(mGlobalAction, SLOT(slotMarkAll()), actionCollection());
+    KStandardAction::undo(mGlobalAction, &KMComposerGlobalAction::slotUndo, actionCollection());
+    KStandardAction::redo(mGlobalAction, &KMComposerGlobalAction::slotRedo, actionCollection());
+    KStandardAction::cut(mGlobalAction, &KMComposerGlobalAction::slotCut, actionCollection());
+    KStandardAction::copy(mGlobalAction, &KMComposerGlobalAction::slotCopy, actionCollection());
+    KStandardAction::pasteText(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
+    mSelectAll = KStandardAction::selectAll(mGlobalAction, &KMComposerGlobalAction::slotMarkAll, actionCollection());
 
     mFindText = KStandardAction::find(mRichTextEditorwidget, SLOT(slotFind()), actionCollection());
     mFindNextText = KStandardAction::findNext(mRichTextEditorwidget, SLOT(slotFindNext()), actionCollection());
