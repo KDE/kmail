@@ -250,6 +250,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
     mFavoritesModel = Q_NULLPTR;
     mVacationManager = new KSieveUi::VacationManager(this);
+    connect(mVacationManager, SIGNAL(updateVacationScriptStatus(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)));
 
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);
@@ -2232,8 +2233,6 @@ void KMMainWidget::slotCheckVacation()
     }
 
     mVacationManager->checkVacation();
-    connect(mVacationManager, SIGNAL(updateVacationScriptStatus(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)));
-    connect(mVacationManager, &KSieveUi::VacationManager::editVacation, this, &KMMainWidget::slotEditCurrentVacation);
 }
 
 void KMMainWidget::slotEditCurrentVacation()
