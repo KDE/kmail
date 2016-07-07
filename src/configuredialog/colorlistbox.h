@@ -51,10 +51,8 @@ protected:
     void dragMoveEvent(QDragMoveEvent *e) Q_DECL_OVERRIDE;
     void dropEvent(QDropEvent *e) Q_DECL_OVERRIDE;
 
-private Q_SLOTS:
-    void newColor(const QModelIndex &index);
-
 private:
+    void newColor(const QModelIndex &index);
     QTreeWidgetItem *mCurrentOnDragEnter;
 };
 

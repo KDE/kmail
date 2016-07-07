@@ -34,10 +34,8 @@ public:
 
     void start();
 
-private Q_SLOTS:
-    void slotItemDeleteDone(KJob *job);
-
 private:
+    void slotItemDeleteDone(KJob *job);
     void deleteItem();
     QList<Akonadi::Item::Id> mListItems;
     int mIndex;

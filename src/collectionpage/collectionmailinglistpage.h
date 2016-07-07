@@ -55,7 +55,7 @@ protected:
 protected Q_SLOTS:
     void slotFetchDone(KJob *job);
 
-private Q_SLOTS:
+private:
     /*
     * Detects mailing-list related stuff
     */
@@ -65,8 +65,6 @@ private Q_SLOTS:
     void slotHoldsML(bool holdsML);
     void slotAddressChanged(int addr);
     void slotConfigChanged();
-
-private:
     void fillMLFromWidgets();
     void fillEditBox();
 

@@ -40,12 +40,12 @@ public:
     void updateItemWidgets(const QList<QWidget *> widgets,
                            const QStyleOptionViewItem &option,
                            const QPersistentModelIndex &index) const Q_DECL_OVERRIDE;
-private Q_SLOTS:
+Q_SIGNALS:
+    void requestConfiguration(const QModelIndex &index);
+private:
     void slotCheckboxClicked(bool checked);
 
     void slotConfigure();
-Q_SIGNALS:
-    void requestConfiguration(const QModelIndex &index);
 };
 
 #endif // CONFIGUREAGENTLISTDELEGATE_H

@@ -38,10 +38,8 @@ public:
     void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
     void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
 
-private Q_SLOTS:
-    void slotShortcutChanged();
-
 private:
+    void slotShortcutChanged();
     void init(const Akonadi::Collection &);
     QSharedPointer<MailCommon::FolderCollection> mFolder;
     KKeySequenceWidget *mKeySeqWidget;

@@ -59,15 +59,13 @@ public:
 Q_SIGNALS:
     void accountListChanged(const QStringList &);
 
-private Q_SLOTS:
+private:
     void slotEditNotifications();
     void slotShowMailCheckMenu(const QString &, const QPoint &);
     void slotCustomizeAccountOrder();
     void slotIncludeInCheckChanged(bool checked);
     void slotOfflineOnShutdownChanged(bool checked);
     void slotCheckOnStatupChanged(bool checked);
-
-private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
 
     struct RetrievalOptions {

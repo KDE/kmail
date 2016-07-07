@@ -72,11 +72,9 @@ Q_SIGNALS:
 public Q_SLOTS:
     void load(bool forcereload = false);
 
-private Q_SLOTS:
+private:
     void slotCreateJob();
     void createSendInfoList();
-
-private:
     QString infoToStr(SendLater::SendLaterInfo *info);
     void removeLaterInfo(SendLater::SendLaterInfo *info);
     SendLater::SendLaterInfo *searchInfo(Akonadi::Item::Id id);

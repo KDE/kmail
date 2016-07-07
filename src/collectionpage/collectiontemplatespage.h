@@ -40,13 +40,9 @@ public:
     void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
     bool canHandle(const Akonadi::Collection &collection) const Q_DECL_OVERRIDE;
 
-private Q_SLOTS:
-    void slotCopyGlobal();
-
-private Q_SLOTS:
-    void slotChanged();
-
 private:
+    void slotCopyGlobal();
+    void slotChanged();
     void init();
     QCheckBox *mCustom;
     TemplateParser::TemplatesConfiguration *mWidget;

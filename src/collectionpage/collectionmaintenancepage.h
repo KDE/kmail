@@ -42,14 +42,11 @@ public:
 protected:
     void init(const Akonadi::Collection &);
 
-private Q_SLOTS:
+private:
     void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
 
     void slotReindexCollection();
-private:
     void updateLabel(qint64 nbMail, qint64 nbUnreadMail, qint64 size);
-
-private:
     Akonadi::Collection mCurrentCollection;
     bool mIsNotAVirtualCollection;
     QLabel *mFolderSizeLabel;

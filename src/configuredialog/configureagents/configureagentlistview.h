@@ -33,15 +33,13 @@ public:
     void save();
     void resetToDefault();
 
-private Q_SLOTS:
-    void slotConfigureAgent(const QModelIndex &index);
-    void slotAgentClicked(const QModelIndex &index);
-
 Q_SIGNALS:
     void descriptionChanged(const QString &desc);
     void agentChanged();
 
 private:
+    void slotConfigureAgent(const QModelIndex &index);
+    void slotAgentClicked(const QModelIndex &index);
     void changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable);
 };
 

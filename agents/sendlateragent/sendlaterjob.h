@@ -41,14 +41,12 @@ public:
     ~SendLaterJob();
     void start();
 
-private Q_SLOTS:
+private:
     void sendDone();
     void sendError(const QString &error, SendLaterManager::ErrorType type);
     void slotMessageTransfered(const Akonadi::Item::List &);
     void slotJobFinished(KJob *);
     void slotDeleteItem(KJob *);
-
-private:
     void updateAndCleanMessageBeforeSending(const KMime::Message::Ptr &msg);
     Akonadi::ItemFetchScope mFetchScope;
     SendLaterManager *mManager;
