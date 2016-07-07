@@ -40,13 +40,12 @@ public:
     void checkFollowUp(const Akonadi::Item &item, const Akonadi::Collection &col);
 
     QString printDebugInfo();
-private Q_SLOTS:
+private:
     void slotCheckFollowUpFinished(const QString &messageId, Akonadi::Item::Id id);
 
     void slotFinishTaskDone();
     void slotFinishTaskFailed();
     void slotReparseConfiguration();
-private:
     void answerReceived(const QString &from);
     QString infoToStr(FollowUpReminder::FollowUpReminderInfo *info);
 

@@ -38,10 +38,8 @@ public:
 Q_SIGNALS:
     void needToReparseConfiguration();
 
-private Q_SLOTS:
-    void slotSave();
-
 private:
+    void slotSave();
     void readConfig();
     void writeConfig();
     FollowUpReminderInfoWidget *mWidget;

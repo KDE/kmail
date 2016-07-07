@@ -65,17 +65,15 @@ public:
     void needToReload();
     QList<Akonadi::Item::Id> messagesToRemove() const;
 
-private Q_SLOTS:
+Q_SIGNALS:
+    void sendNow(Akonadi::Item::Id);
+
+private:
     void slotRemoveItem();
     void slotModifyItem();
     void updateButtons();
     void customContextMenuRequested(const QPoint &);
     void slotSendNow();
-
-Q_SIGNALS:
-    void sendNow(Akonadi::Item::Id);
-
-private:
     void createOrUpdateItem(SendLater::SendLaterInfo *info, SendLaterItem *item = Q_NULLPTR);
     void load();
     QList<Akonadi::Item::Id> mListMessagesToRemove;

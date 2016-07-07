@@ -65,7 +65,7 @@ private:
     bool verifyExistingArchive(ArchiveMailInfo *info) const;
     void updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *info);
 
-private Q_SLOTS:
+private:
     void slotRemoveItem();
     void slotModifyItem();
     void slotAddItem();
@@ -74,8 +74,6 @@ private Q_SLOTS:
     void customContextMenuRequested(const QPoint &);
     void slotArchiveNow();
     void slotItemChanged(QTreeWidgetItem *item, int);
-
-private:
     bool mChanged;
     Ui::ArchiveMailWidget *mWidget;
 };

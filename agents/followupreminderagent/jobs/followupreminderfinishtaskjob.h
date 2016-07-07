@@ -36,11 +36,9 @@ Q_SIGNALS:
     void finishTaskDone();
     void finishTaskFailed();
 
-private Q_SLOTS:
+private:
     void slotItemFetchJobDone(KJob *job);
     void slotItemModifiedResult(KJob *job);
-
-private:
     void closeTodo();
     Akonadi::Item::Id mTodoId;
 };

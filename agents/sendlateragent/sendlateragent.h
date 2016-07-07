@@ -46,16 +46,14 @@ public Q_SLOTS:
     void reload();
     void configure(WId windowId) Q_DECL_OVERRIDE;
 
-private Q_SLOTS:
-    void slotSendNow(Akonadi::Item::Id id);
-
-    void slotStartAgent();
 protected:
     void itemsRemoved(const Akonadi::Item::List &item) Q_DECL_OVERRIDE;
     void itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection &sourceCollection, const Akonadi::Collection &destinationCollection) Q_DECL_OVERRIDE;
     void doSetOnline(bool online) Q_DECL_OVERRIDE;
 
 private:
+    void slotSendNow(Akonadi::Item::Id id);
+    void slotStartAgent();
     bool mAgentInitialized;
     SendLaterManager *mManager;
 };

@@ -107,10 +107,10 @@ void SendLaterWidget::customContextMenuRequested(const QPoint &)
     if (!listItems.isEmpty()) {
         QMenu menu;
         if (listItems.count() == 1) {
-            menu.addAction(i18n("Send now"), this, SLOT(slotSendNow()));
+            menu.addAction(i18n("Send now"), this, &SendLaterWidget::slotSendNow);
         }
         menu.addSeparator();
-        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, SLOT(slotRemoveItem()));
+        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &SendLaterWidget::slotRemoveItem);
         menu.exec(QCursor::pos());
     }
 }

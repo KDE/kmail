@@ -38,10 +38,8 @@ public:
 Q_SIGNALS:
     void finished(const QString &messageId, Akonadi::Item::Id id);
 
-private Q_SLOTS:
-    void slotItemFetchJobDone(KJob *job);
-
 private:
+    void slotItemFetchJobDone(KJob *job);
     Akonadi::Item mItem;
 };
 

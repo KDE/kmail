@@ -36,10 +36,9 @@ public:
     void execute() Q_DECL_OVERRIDE;
     void kill() Q_DECL_OVERRIDE;
 
-private Q_SLOTS:
+private:
     void slotBackupDone(const QString &info);
     void slotError(const QString &error);
-private:
     QPixmap mPixmap;
     ArchiveMailInfo *mInfo;
     ArchiveMailManager *mManager;

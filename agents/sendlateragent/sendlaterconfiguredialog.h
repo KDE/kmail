@@ -35,13 +35,11 @@ public:
 public Q_SLOTS:
     void slotNeedToReloadConfig();
 
-private Q_SLOTS:
-    void slotSave();
-
 Q_SIGNALS:
     void sendNow(Akonadi::Item::Id);
 
 private:
+    void slotSave();
     void readConfig();
     void writeConfig();
     SendLaterWidget *mWidget;

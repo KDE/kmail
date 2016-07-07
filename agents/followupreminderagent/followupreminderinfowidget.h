@@ -61,10 +61,8 @@ public:
 
     QList<qint32> listRemoveId() const;
 
-private Q_SLOTS:
-    void customContextMenuRequested(const QPoint &pos);
-
 private:
+    void customContextMenuRequested(const QPoint &pos);
     void createOrUpdateItem(FollowUpReminder::FollowUpReminderInfo *info, FollowUpReminderInfoItem *item = Q_NULLPTR);
     void removeItem(const QList<QTreeWidgetItem *> &mailItem);
     void openShowMessage(Akonadi::Item::Id id);
