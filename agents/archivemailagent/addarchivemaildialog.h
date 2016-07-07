@@ -62,11 +62,9 @@ public:
 
     int maximumArchiveCount() const;
 
-private Q_SLOTS:
+private:
     void slotFolderChanged(const Akonadi::Collection &);
     void slotUpdateOkButton();
-
-private:
     void load(ArchiveMailInfo *info);
     MailCommon::FolderRequester *mFolderRequester;
     FormatComboBox *mFormatComboBox;

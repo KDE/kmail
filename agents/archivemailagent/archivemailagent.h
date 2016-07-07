@@ -54,13 +54,12 @@ public Q_SLOTS:
     void pause();
     void resume();
 
-private Q_SLOTS:
-    void mailCollectionRemoved(const Akonadi::Collection &collection);
 
 protected:
     void doSetOnline(bool online) Q_DECL_OVERRIDE;
 
 private:
+    void mailCollectionRemoved(const Akonadi::Collection &collection);
     QTimer *mTimer;
     ArchiveMailManager *mArchiveManager;
 };
