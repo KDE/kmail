@@ -632,13 +632,13 @@ void KMMainWidget::layoutSplitters()
     mSplitter1 = new QSplitter(this);
     mSplitter2 = new QSplitter(mSplitter1);
 
-    QWidget *folderTreeWidget = mSearchAndTree;
+    QWidget *folderTreeWidget = mFolderTreeWidget;
     if (mFavoriteCollectionsView) {
         mFolderViewSplitter = new QSplitter(Qt::Vertical);
         mFolderViewSplitter->setChildrenCollapsible(false);
         mFolderViewSplitter->addWidget(mFavoriteCollectionsView);
         mFavoriteCollectionsView->setParent(mFolderViewSplitter);
-        mFolderViewSplitter->addWidget(mSearchAndTree);
+        mFolderViewSplitter->addWidget(mFolderTreeWidget);
         folderTreeWidget = mFolderViewSplitter;
     }
 
@@ -955,7 +955,6 @@ void KMMainWidget::deleteWidgets()
     mAkonadiStandardActionManager = Q_NULLPTR;
     delete mSplitter1;
     mMsgView = Q_NULLPTR;
-    mSearchAndTree = Q_NULLPTR;
     mFolderViewSplitter = Q_NULLPTR;
     mFavoriteCollectionsView = Q_NULLPTR;
     mSplitter1 = Q_NULLPTR;
@@ -970,13 +969,14 @@ void KMMainWidget::createWidgets()
     // They will be properly reparented in layoutSplitters()
 
     //
-    // Create header view and search bar
+    // Create the folder tree
     //
     FolderTreeWidget::TreeViewOptions opt = FolderTreeWidget::ShowUnreadCount;
     opt |= FolderTreeWidget::UseLineEditForFiltering;
     opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
     opt |= FolderTreeWidget::DontKeyFilter;
     mFolderTreeWidget = new FolderTreeWidget(this, mGUIClient, opt);
+    mFolderTreeWidget->filterFolderLineEdit()->hide();
 
     connect(mFolderTreeWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)));
 
@@ -985,6 +985,10 @@ void KMMainWidget::createWidgets()
     connect(mFolderTreeWidget->folderTreeView(), &FolderTreeView::prefereCreateNewTab, this, &KMMainWidget::slotCreateNewTab);
 
     mFolderTreeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+    //
+    // Create the message pane
+    //
     mMessagePane = new CollectionPane(!KMailSettings::self()->startSpecificFolderAtStartup(), KMKernel::self()->entityTreeModel(),
                                       mFolderTreeWidget->folderTreeView()->selectionModel(),
                                       this);
@@ -1032,18 +1036,6 @@ void KMMainWidget::createWidgets()
         }
     }
 
-    //
-    // Create the folder tree
-    // the "folder tree" consists of a quicksearch input field and the tree itself
-    //
-
-    mSearchAndTree = new QWidget(this);
-    QVBoxLayout *vboxlayout = new QVBoxLayout;
-    vboxlayout->setMargin(0);
-    mSearchAndTree->setLayout(vboxlayout);
-
-    vboxlayout->addWidget(mFolderTreeWidget);
-    mFolderTreeWidget->filterFolderLineEdit()->hide();
     //
     // Create the favorite folder view
     //

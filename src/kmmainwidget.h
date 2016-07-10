@@ -598,7 +598,6 @@ private:
 
     MailCommon::FavoriteCollectionWidget *mFavoriteCollectionsView;
     Akonadi::FavoriteCollectionsModel *mFavoritesModel;
-    QWidget      *mSearchAndTree;
     KMReaderWin  *mMsgView;
     QSplitter    *mSplitter1;
     QSplitter *mSplitter2;
