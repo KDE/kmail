@@ -559,6 +559,8 @@ void KMMainWidget::readPreConfig()
     mHtmlLoadExtGlobalSetting = MessageViewer::MessageViewerSettings::self()->htmlLoadExternal();
 
     mEnableFavoriteFolderView = (MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode);
+    mEnableFolderQuickSearch = KMailSettings::self()->enableFolderQuickSearch();
+
     readFolderConfig();
     updateHtmlMenuEntry();
     if (mMsgView) {
@@ -811,6 +813,7 @@ void KMMainWidget::readConfig()
     const bool oldReaderWindowActive = mReaderWindowActive;
     const bool oldReaderWindowBelow = mReaderWindowBelow;
     const bool oldFavoriteFolderView = mEnableFavoriteFolderView;
+    const bool oldFolderQuickSearch = mEnableFolderQuickSearch;
 
     // on startup, the layout is always new and we need to relayout the widgets
     bool layoutChanged = !mStartupDone;
@@ -828,6 +831,11 @@ void KMMainWidget::readConfig()
             createWidgets();
             restoreCollectionFolderViewConfig();
             Q_EMIT recreateGui();
+        } else if ( oldFolderQuickSearch != mEnableFolderQuickSearch ) {
+            if ( mEnableFolderQuickSearch )
+                mFolderTreeWidget->filterFolderLineEdit()->show();
+            else
+                mFolderTreeWidget->filterFolderLineEdit()->hide();
         }
     }
 
@@ -976,7 +984,6 @@ void KMMainWidget::createWidgets()
     opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
     opt |= FolderTreeWidget::DontKeyFilter;
     mFolderTreeWidget = new FolderTreeWidget(this, mGUIClient, opt);
-    mFolderTreeWidget->filterFolderLineEdit()->hide();
 
     connect(mFolderTreeWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)));
 
@@ -1034,6 +1041,9 @@ void KMMainWidget::createWidgets()
         if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(false);
         }
+    }
+    if ( !KMailSettings::self()->enableFolderQuickSearch() ) {
+        mFolderTreeWidget->filterFolderLineEdit()->hide();
     }
 
     //

@@ -612,6 +612,7 @@ private:
     bool mReaderWindowActive;
     bool mReaderWindowBelow;
     bool mEnableFavoriteFolderView;
+    bool mEnableFolderQuickSearch;
 
     QPointer<KMail::SearchWindow> mSearchWin;
 

@@ -128,6 +128,7 @@ private: // data
     QGroupBox     *mFolderToolTipsGroupBox;
     QButtonGroup  *mFavoriteFoldersViewGroup;
     QGroupBox     *mFavoriteFoldersViewGroupBox;
+    QCheckBox     *mFolderQuickSearchCB;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab

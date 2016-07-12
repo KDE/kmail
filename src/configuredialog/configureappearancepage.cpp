@@ -518,6 +518,13 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     connect(mFolderListGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(slotEmitChanged()));
 
+    QHBoxLayout* folderCBHLayout = new QHBoxLayout;
+    mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
+    connect(mFolderQuickSearchCB, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
+    folderCBHLayout->addWidget( mFolderQuickSearchCB );
+    vlay->addLayout( folderCBHLayout );
+
+
     // "favorite folders view mode" radio buttons:
     mFavoriteFoldersViewGroupBox = new QGroupBox(this);
     mFavoriteFoldersViewGroupBox->setTitle(i18n("Show Favorite Folders View"));
@@ -574,6 +581,7 @@ void AppearancePage::LayoutTab::doLoadOther()
     loadWidget(mFolderListGroupBox, mFolderListGroup, KMailSettings::self()->folderListItem());
     loadWidget(mReaderWindowModeGroupBox, mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
     loadWidget(mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem());
+    loadWidget(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
     const int checkedFolderToolTipsPolicy = KMailSettings::self()->toolTipDisplayPolicy();
     if (checkedFolderToolTipsPolicy >= 0) {
         mFolderToolTipsGroup->button(checkedFolderToolTipsPolicy)->setChecked(true);
@@ -585,6 +593,7 @@ void AppearancePage::LayoutTab::save()
     saveButtonGroup(mFolderListGroup, KMailSettings::self()->folderListItem());
     saveButtonGroup(mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
     saveButtonGroup(mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem());
+    saveCheckBox(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
     KMailSettings::self()->setToolTipDisplayPolicy(mFolderToolTipsGroup->checkedId());
 }
 

@@ -159,6 +159,12 @@
       </entry>
     </group>
 
+    <group name="UserInterface">
+      <entry name="EnableFolderQuickSearch" type="Bool">
+        <label>Show folder quick search line edit</label>
+        <default>false</default>
+      </entry>
+    </group>
 
     <group name="Composer">
       <entry name="ForwardingInlineByDefault" type="Bool">
