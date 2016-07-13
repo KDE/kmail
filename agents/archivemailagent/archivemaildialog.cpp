@@ -50,12 +50,11 @@ ArchiveMailDialog::ArchiveMailDialog(QWidget *parent)
     setWindowTitle(i18n("Configure Archive Mail Agent"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     setModal(true);
-    QWidget *mainWidget = new QWidget(this);
-    QVBoxLayout *vlay = new QVBoxLayout;
-    vlay->addWidget(mainWidget);
-    setLayout(vlay);
+    QVBoxLayout *vlay = new QVBoxLayout(this);
 
-    QHBoxLayout *mainLayout = new QHBoxLayout(mainWidget);
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->setMargin(0);
+    vlay->addLayout(mainLayout);
     mWidget = new ArchiveMailWidget(this);
     connect(mWidget, &ArchiveMailWidget::archiveNow, this, &ArchiveMailDialog::archiveNow);
     mWidget->setObjectName(QStringLiteral("archivemailwidget"));
