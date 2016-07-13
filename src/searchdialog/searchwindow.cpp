@@ -452,10 +452,13 @@ void SearchWindow::doSearch()
         }
     } else if (mUi.mChkMultiFolders->isChecked()) {
         if (!mSelectMultiCollectionDialog) {
-            mSearchPatternWidget->showWarningPattern(QStringList() << i18n("You forgot to select collections."));
-            return;
+            if (mCollectionId.isEmpty()) {
+                mSearchPatternWidget->showWarningPattern(QStringList() << i18n("You forgot to select collections."));
+                return;
+            }
+        } else {
+            mCollectionId = mSelectMultiCollectionDialog->selectedCollection();
         }
-        mCollectionId = mSelectMultiCollectionDialog->selectedCollection();
         searchCollections.reserve(mCollectionId.count());
         Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
             searchCollections << col;
@@ -466,6 +469,7 @@ void SearchWindow::doSearch()
             mQuery = Akonadi::SearchQuery();
             return;
         }
+
     }
 
     mUi.mPatternEdit->updateSearchPattern();
