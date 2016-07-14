@@ -351,6 +351,7 @@ target_link_libraries(kmail
     KF5::I18n
     KF5::TemplateParser
     KF5::Libkdepim
+    KF5::Crash
     )
 
 if(BUILD_TESTING)

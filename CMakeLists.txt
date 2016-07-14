@@ -77,6 +77,8 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
     set_package_properties(KF5AkonadiSearch PROPERTIES DESCRIPTION "The Akonadi Search libraries" URL "http://www.kde.org" TYPE REQUIRED PURPOSE "Provides search capabilities in KMail and Akonadi")
 
     # Find KF5 package
+    find_package(KF5Crash ${KF5_VERSION} REQUIRED)
+
     find_package(KF5Bookmarks ${KF5_VERSION} CONFIG REQUIRED)
     find_package(KF5Codecs ${KF5_VERSION} CONFIG REQUIRED)
     find_package(KF5Config ${KF5_VERSION} CONFIG REQUIRED)

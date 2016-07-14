@@ -41,6 +41,7 @@
 #include <QDir>
 #include <QApplication>
 #include <QSessionManager>
+#include <KCrash>
 
 //-----------------------------------------------------------------------------
 
@@ -114,6 +115,7 @@ int main(int argc, char *argv[])
     app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     app.setAttribute(Qt::AA_EnableHighDpiScaling);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    KCrash::initialize();
     KMail::AboutData about;
     app.setAboutData(about);
 
