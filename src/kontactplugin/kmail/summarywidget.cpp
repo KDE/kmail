@@ -142,7 +142,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent,
                     // Construct the full path string.
                     parentTreeNames.insert(parentTreeNames.size(), col.name());
                     urlLabel = new KUrlLabel(QString::number(col.id()),
-                                             parentTreeNames.join(QStringLiteral("/")), this);
+                                             parentTreeNames.join(QLatin1Char('/')), this);
                     parentTreeNames.removeLast();
                 } else {
                     urlLabel = new KUrlLabel(QString::number(col.id()), col.name(), this);
