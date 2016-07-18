@@ -152,7 +152,7 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
     if (!collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))) {
         if (role == Qt::DisplayRole)
             return i18nc("@label", "This model can only handle email folders. The current collection holds mimetypes: %1",
-                         collection().contentMimeTypes().join(QStringLiteral(",")));
+                         collection().contentMimeTypes().join(QLatin1Char(',')));
         else {
             return QVariant();
         }
