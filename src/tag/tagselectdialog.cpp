@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "tagselectdialog.h"
 #include "tag.h"
 #include "kmkernel.h"
