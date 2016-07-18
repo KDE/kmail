@@ -831,11 +831,12 @@ void KMMainWidget::readConfig()
             createWidgets();
             restoreCollectionFolderViewConfig();
             Q_EMIT recreateGui();
-        } else if ( oldFolderQuickSearch != mEnableFolderQuickSearch ) {
-            if ( mEnableFolderQuickSearch )
+        } else if (oldFolderQuickSearch != mEnableFolderQuickSearch) {
+            if (mEnableFolderQuickSearch) {
                 mFolderTreeWidget->filterFolderLineEdit()->show();
-            else
+            } else {
                 mFolderTreeWidget->filterFolderLineEdit()->hide();
+            }
         }
     }
 
@@ -1042,7 +1043,7 @@ void KMMainWidget::createWidgets()
             mShowIntroductionAction->setEnabled(false);
         }
     }
-    if ( !KMailSettings::self()->enableFolderQuickSearch() ) {
+    if (!KMailSettings::self()->enableFolderQuickSearch()) {
         mFolderTreeWidget->filterFolderLineEdit()->hide();
     }
 

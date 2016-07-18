@@ -139,7 +139,6 @@ private:
     Kleo::CryptoConfig *mConfig;
 };
 
-
 class GpgSettingsDialog : public KCMultiDialog
 {
     Q_OBJECT

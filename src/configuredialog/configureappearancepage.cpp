@@ -518,12 +518,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     connect(mFolderListGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(slotEmitChanged()));
 
-    QHBoxLayout* folderCBHLayout = new QHBoxLayout;
-    mFolderQuickSearchCB = new QCheckBox( i18n("Show folder quick search field"), this );
+    QHBoxLayout *folderCBHLayout = new QHBoxLayout;
+    mFolderQuickSearchCB = new QCheckBox(i18n("Show folder quick search field"), this);
     connect(mFolderQuickSearchCB, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
-    folderCBHLayout->addWidget( mFolderQuickSearchCB );
-    vlay->addLayout( folderCBHLayout );
-
+    folderCBHLayout->addWidget(mFolderQuickSearchCB);
+    vlay->addLayout(folderCBHLayout);
 
     // "favorite folders view mode" radio buttons:
     mFavoriteFoldersViewGroupBox = new QGroupBox(this);

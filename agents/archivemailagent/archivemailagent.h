@@ -54,7 +54,6 @@ public Q_SLOTS:
     void pause();
     void resume();
 
-
 protected:
     void doSetOnline(bool online) Q_DECL_OVERRIDE;
 
