@@ -1441,6 +1441,11 @@ void ComposerPluginTab::save()
     mPlugin->emitConfigChanged();
 }
 
+QString ComposerPluginTab::helpAnchor() const
+{
+    return mConfigureWidget->helpAnchor();
+}
+
 void ComposerPluginTab::doLoadFromGlobalSettings()
 {
     //TODO
