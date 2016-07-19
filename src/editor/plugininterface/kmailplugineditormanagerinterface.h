@@ -53,10 +53,8 @@ public:
     QHash<MessageComposer::ActionType::Type, QList<QAction *> > actionsType();
     QList<QAction *> actionsType(MessageComposer::ActionType::Type type);
 
-private Q_SLOTS:
-    void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
-
 private:
+    void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
     KPIMTextEdit::RichTextEditor *mRichTextEditor;
     QWidget *mParentWidget;
     KActionCollection *mActionCollection;
