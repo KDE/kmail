@@ -271,6 +271,7 @@ public:
     ~ComposerPluginTab();
 
     void save() Q_DECL_OVERRIDE;
+    QString helpAnchor() const;
 
 private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;

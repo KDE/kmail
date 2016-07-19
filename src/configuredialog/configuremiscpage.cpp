@@ -212,6 +212,11 @@ void AddonsPluginTab::save()
     mConfigureWidget->saveSettings();
 }
 
+QString AddonsPluginTab::helpAnchor() const
+{
+    return mConfigureWidget->helpAnchor();
+}
+
 void AddonsPluginTab::doLoadFromGlobalSettings()
 {
     //TODO ?
