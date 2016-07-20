@@ -25,6 +25,7 @@
 
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
+#include <PimCommon/PimUtil>
 #include <KComboBox>
 #include <KLineEdit>
 #include <KLocalizedString>
@@ -123,7 +124,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
 
 void NewIdentityDialog::slotHelp()
 {
-    KHelpClient::invokeHelp(QStringLiteral("configure-identity-newidentitydialog"), QStringLiteral("kmail"));
+    PimCommon::Util::invokeHelp(QStringLiteral("kmail/configure-identity.html"), QStringLiteral("configure-identity-newidentitydialog"));
 }
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
