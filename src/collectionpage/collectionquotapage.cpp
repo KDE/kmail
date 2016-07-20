@@ -37,7 +37,6 @@
 
 #include <qlayout.h>
 #include <KLocalizedString>
-#include <assert.h>
 
 CollectionQuotaPage::CollectionQuotaPage(QWidget *parent)
     : CollectionPropertiesPage(parent)

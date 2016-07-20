@@ -46,7 +46,6 @@
 
 // other headers
 #include <algorithm>
-#include <assert.h>
 #include <boost/bind.hpp>
 #include <errno.h>
 #include <KSharedConfig>
