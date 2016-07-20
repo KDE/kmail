@@ -31,10 +31,6 @@
 #include <QPushButton>
 #include <KHelpClient>
 
-// other headers:
-#include <assert.h>
-#include <stdlib.h>
-
 ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     : KCMultiDialog(parent)
 {
@@ -53,7 +49,7 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
     connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);
-    connect(button(QDialogButtonBox::Help), &QPushButton::clicked, this, &ConfigureDialog::slotHelp);
+    connect(button(QDialogButtonBox::Help), &QPushButton::clicked, this, &ConfigureDialog::slotHelpClicked);
     connect(button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &ConfigureDialog::slotUser1Clicked);
     connect(button(QDialogButtonBox::RestoreDefaults), &QPushButton::clicked, this, &ConfigureDialog::slotDefaultClicked);
     connect(button(QDialogButtonBox::Reset), &QPushButton::clicked, this, &ConfigureDialog::slotUser1Clicked);
@@ -96,9 +92,4 @@ void ConfigureDialog::slotOk()
         KMKernel::self()->slotRequestConfigSync();
     }
     Q_EMIT configChanged();
-}
-
-void ConfigureDialog::slotHelp()
-{
-    KHelpClient::invokeHelp(QStringLiteral("configure-identity"), QStringLiteral("kmail"));
 }
