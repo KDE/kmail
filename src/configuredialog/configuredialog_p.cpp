@@ -16,7 +16,6 @@
 #include <QVBoxLayout>
 
 // Other headers:
-#include <assert.h>
 #include <KConfigGroup>
 
 ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent)

@@ -61,6 +61,7 @@
 #include <KIdentityManagement/kidentitymanagement/signatureconfigurator.h>
 
 #include "PimCommon/AutoCorrectionLanguage"
+#include <PimCommon/PimUtil>
 
 #include <Libkdepim/AddresseeLineEdit>
 // libkleopatra:
@@ -596,7 +597,7 @@ IdentityDialog::~IdentityDialog()
 
 void IdentityDialog::slotHelp()
 {
-    KHelpClient::invokeHelp(QStringLiteral("configure-identity"), QStringLiteral("kmail"));
+    PimCommon::Util::invokeHelp(QStringLiteral("kmail/configure-identity.html"));
 }
 
 void IdentityDialog::slotAboutToShow(int index)
