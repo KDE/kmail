@@ -2727,11 +2727,6 @@ bool KMComposerWin::checkRecipientNumber() const
     return true;
 }
 
-void KMComposerWin::slotHelp()
-{
-    KHelpClient::invokeHelp();
-}
-
 void KMComposerWin::enableHtml()
 {
     if (mForceDisableHtml) {
