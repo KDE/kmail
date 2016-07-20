@@ -1273,11 +1273,6 @@ bool KMMainWidget::slotSearch()
     return true;
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotHelp()
-{
-    KHelpClient::invokeHelp();
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilter()

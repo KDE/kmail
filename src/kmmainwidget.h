@@ -334,7 +334,6 @@ protected:
 
 protected Q_SLOTS:
     void updateFileMenu();
-    void slotHelp();
     void slotFilter();
     void slotManageSieveScripts();
     void slotCompose();
