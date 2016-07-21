@@ -370,6 +370,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     glay->addWidget(mAutoSign, row, 0);
 
     ++row;
+    mAutoEncrypt = new QCheckBox(i18n("Automatically encrypt messages when possible"));
+    glay->addWidget(mAutoEncrypt, row, 0);
+
+    ++row;
     glay->setRowStretch(row, 1);
 
     //
@@ -797,6 +801,7 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(
                 Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
     mAutoSign->setChecked(ident.pgpAutoSign());
+    mAutoEncrypt->setChecked(ident.pgpAutoEncrypt());
 
     // "Advanced" tab:
     mReplyToEdit->setText(ident.replyToAddr());
@@ -895,6 +900,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setPreferredCryptoMessageFormat(
         QLatin1String(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
     ident.setPgpAutoSign(mAutoSign->isChecked());
+    ident.setPgpAutoEncrypt(mAutoEncrypt->isChecked());
     // "Advanced" tab:
     ident.setReplyToAddr(mReplyToEdit->text());
     ident.setBcc(mBccEdit->text());

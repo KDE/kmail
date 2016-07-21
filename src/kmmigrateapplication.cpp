@@ -18,7 +18,9 @@
 */
 
 #include "kmmigrateapplication.h"
-
+#include <MessageComposer/MessageComposerSettings>
+#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagement/Identity>
 #include <Kdelibs4ConfigMigrator>
 
 KMMigrateApplication::KMMigrateApplication()
@@ -41,6 +43,9 @@ void KMMigrateApplication::migrate()
     if (mMigrator.checkIfNecessary()) {
         mMigrator.start();
     }
+
+    // Migrate global "Always encrypt" option to per-identity options
+    migrateAlwaysEncrypt();
 }
 
 void KMMigrateApplication::initializeMigrator()
@@ -101,4 +106,29 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoVCardFromIdentity.setFilePatterns(QStringList() << QStringLiteral("*.vcf"));
     migrateInfoVCardFromIdentity.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoVCardFromIdentity);
+}
+
+void KMMigrateApplication::migrateAlwaysEncrypt()
+{
+    KConfig cfg(QStringLiteral("kmail2rc"));
+    if (!cfg.hasGroup("Composer")) {
+        return;
+    }
+
+    KConfigGroup grp = cfg.group("Composer");
+    if (!grp.hasKey("pgp-auto-encrypt")) {
+        return;
+    }
+
+    const bool pgpAutoEncrypt = grp.readEntry("pgp-auto-encrypt", false);
+    grp.deleteEntry("pgp-auto-encrypt");
+
+    // Only update the per-identity flag to true
+    if (pgpAutoEncrypt) {
+        KIdentityManagement::IdentityManager mgr;
+        for (auto iter = mgr.modifyBegin(), end = mgr.modifyEnd(); iter != end; ++iter) {
+            iter->setPgpAutoEncrypt(pgpAutoEncrypt);
+        }
+        mgr.commit();
+    }
 }

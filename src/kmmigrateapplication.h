@@ -30,6 +30,8 @@ public:
     void migrate();
 private:
     void initializeMigrator();
+    void migrateAlwaysEncrypt();
+
     PimCommon::MigrateApplicationFiles mMigrator;
 };
 

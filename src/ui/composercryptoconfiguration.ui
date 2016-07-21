@@ -59,16 +59,6 @@ However, there may be local rules that require you to turn this option on. When 
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="mAutoEncrypt">
-        <property name="whatsThis">
-         <string>When this option is enabled, every message you send will be encrypted whenever encryption is possible and desired; of course, it is still possible to disable the automatic encryption for each message individually.</string>
-        </property>
-        <property name="text">
-         <string>Automatically encrypt &amp;messages whenever possible</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="mNeverEncryptWhenSavingInDrafts">
         <property name="text">
          <string>Never sign/encrypt when sa&amp;ving as draft</string>
