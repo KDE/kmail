@@ -368,6 +368,7 @@ public:
     void init();
     void setupDBus();
 
+    void expunge(Akonadi::Collection::Id col, bool sync) Q_DECL_OVERRIDE;
     Akonadi::ChangeRecorder *folderCollectionMonitor() const Q_DECL_OVERRIDE;
 
     /**
