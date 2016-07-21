@@ -35,6 +35,7 @@ public:
     Akonadi::Collection::Id lastSelectedFolder() Q_DECL_OVERRIDE;
     void setLastSelectedFolder(Akonadi::Collection::Id col) Q_DECL_OVERRIDE;
     bool showPopupAfterDnD() Q_DECL_OVERRIDE;
+    void expunge(Akonadi::Collection::Id col, bool sync) Q_DECL_OVERRIDE;
 
 private:
     KIdentityManagement::IdentityManager *mIdentityManager;
