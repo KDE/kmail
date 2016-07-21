@@ -29,6 +29,7 @@
 class FilterLogDialog;
 class FilterManager;
 class KJob;
+class DummyKernel;
 
 class MailFilterAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
 {
@@ -52,6 +53,7 @@ public:
 
     void showConfigureDialog(qlonglong windowId = 0);
 
+    void expunge(qint64 collectionId);
 protected:
     void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) Q_DECL_OVERRIDE;
 
@@ -74,6 +76,7 @@ private:
 
     FilterLogDialog *m_filterLogDialog;
     QTimer *mProgressTimer;
+    DummyKernel *mMailFilterKernel;
     int mProgressCounter;
 };
 

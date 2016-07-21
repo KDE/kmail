@@ -69,9 +69,9 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     migrate.migrate();
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::Pop3ResourceAttribute>();
-    DummyKernel *kernel = new DummyKernel(this);
-    CommonKernel->registerKernelIf(kernel);   //register KernelIf early, it is used by the Filter classes
-    CommonKernel->registerSettingsIf(kernel);   //SettingsIf is used in FolderTreeWidget
+    mMailFilterKernel = new DummyKernel(this);
+    CommonKernel->registerKernelIf(mMailFilterKernel);   //register KernelIf early, it is used by the Filter classes
+    CommonKernel->registerSettingsIf(mMailFilterKernel);   //SettingsIf is used in FolderTreeWidget
 
     m_filterManager = new FilterManager(this);
 
@@ -347,6 +347,11 @@ QString MailFilterAgent::printCollectionMonitored()
 void MailFilterAgent::showConfigureDialog(qlonglong windowId)
 {
     //TODO
+}
+
+void MailFilterAgent::expunge(qint64 collectionId)
+{
+    mMailFilterKernel->expunge(collectionId, false);
 }
 
 AKONADI_AGENT_MAIN(MailFilterAgent)
