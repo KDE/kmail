@@ -231,6 +231,9 @@ qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
     )
 
+qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ../agents/mailfilteragent/org.freedesktop.Akonadi.MailFilterAgent.xml
+    )
 
 ki18n_wrap_ui(kmailprivate_LIB_SRCS
     ui/composercryptoconfiguration.ui

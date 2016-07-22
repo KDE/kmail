@@ -33,6 +33,9 @@
     <method name="printCollectionMonitored">
      <arg direction="out" type="s"/>
     </method>
+    <method name="expunge">
+      <arg name="collectionId" type="x" direction="in"/>
+    </method>
     <signal name="filtersChanged"/>
   </interface>
 </node>

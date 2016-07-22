@@ -25,6 +25,7 @@ using KPIM::RecentAddresses;
 #include "MailCommon/FolderTreeView"
 #include "MailCommon/KMFilterDialog"
 #include "mailcommonsettings_base.h"
+#include "mailfilteragentinterface.h"
 #include "PimCommon/PimUtil"
 #include "folderarchive/folderarchivemanager.h"
 // kdepim includes
@@ -1414,7 +1415,12 @@ void KMKernel::cleanup(void)
     Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
     if (trashCollection.isValid()) {
         if (KMailSettings::self()->emptyTrashOnExit()) {
-            mFolderCollectionMonitor->expunge(trashCollection, true /*sync*/);
+            OrgFreedesktopAkonadiMailFilterAgentInterface mailFilterInterface(QStringLiteral("org.freedesktop.Akonadi.MailFilterAgent"), QStringLiteral("/MailFilterAgent"), QDBusConnection::sessionBus(), this);
+            if (mailFilterInterface.isValid()) {
+                mailFilterInterface.expunge((qlonglong)trashCollection.id());
+            } else {
+                qCWarning(KMAIL_LOG) << "Mailfilter is not actif";
+            }
         }
     }
 }
