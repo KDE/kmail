@@ -1419,7 +1419,7 @@ void KMKernel::cleanup(void)
             if (mailFilterInterface.isValid()) {
                 mailFilterInterface.expunge((qlonglong)trashCollection.id());
             } else {
-                qCWarning(KMAIL_LOG) << "Mailfilter is not actif";
+                qCWarning(KMAIL_LOG) << "Mailfilter is not active";
             }
         }
     }
