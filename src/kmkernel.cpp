@@ -2208,7 +2208,6 @@ void KMKernel::setShuttingDown(bool flag)
     the_shuttingDown = flag;
 }
 
-
 void KMKernel::expunge(Akonadi::Collection::Id col, bool sync)
 {
     Q_UNUSED(col);
