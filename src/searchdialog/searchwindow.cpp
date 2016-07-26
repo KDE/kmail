@@ -35,6 +35,7 @@
 #include "kmsearchfilterproxymodel.h"
 #include "searchpatternwarning.h"
 #include "PimCommon/SelectMultiCollectionDialog"
+#include <PimCommon/PimUtil>
 
 #include <AkonadiCore/CollectionModifyJob>
 #include <AkonadiCore/CollectionFetchJob>
@@ -910,9 +911,10 @@ QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::Li
             QAbstractItemModel *etm = KMKernel::self()->collectionModel();
             const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(etm, col);
             const Akonadi::Collection modelCol = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-            //FIXME
             // Only index offline IMAP collections
-            if (modelCol.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
+            if (PimCommon::Util::isImapResource(modelCol.resource()) && !modelCol.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
+                continue;
+            } else {
                 cols.push_back(modelCol);
             }
         }
