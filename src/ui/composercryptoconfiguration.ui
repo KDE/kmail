@@ -97,7 +97,6 @@ However, there may be local rules that require you to turn this option on. When 
   <tabstop>mEncToSelf</tabstop>
   <tabstop>mStoreEncrypted</tabstop>
   <tabstop>mShowKeyApprovalDlg</tabstop>
-  <tabstop>mAutoEncrypt</tabstop>
   <tabstop>mNeverEncryptWhenSavingInDrafts</tabstop>
  </tabstops>
  <resources/>
