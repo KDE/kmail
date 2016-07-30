@@ -62,6 +62,7 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
         MessageComposer::PluginEditorCheckBeforeSendInterface *interface = plugin->createInterface(this);
         interface->setParentWidget(mParentWidget);
         interface->setIdentityManagement(mIdentityManagement);
+        interface->reloadConfig();
         mListPluginInterface.append(interface);
     }
 }
