@@ -373,7 +373,8 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         // not called with "-session foo"
         for (const QString &arg : parser.positionalArguments()) {
             if (arg.startsWith(QStringLiteral("mailto:"), Qt::CaseInsensitive)) {
-                QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(QUrl::fromUserInput(arg));
+                const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
+                QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
                 if (!values.value(QStringLiteral("to")).isEmpty()) {
                     to += values.value(QStringLiteral("to")) + QStringLiteral(", ");
                 }
