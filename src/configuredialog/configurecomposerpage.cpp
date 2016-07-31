@@ -138,10 +138,7 @@ ComposerPage::ComposerPage(QWidget *parent)
 
     Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
-            MessageComposer::PluginEditorCheckBeforeSendConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
-            if (KMKernel::self()) {
-                settings.configureWidget->setIdentityManagement(KMKernel::self()->identityManager());
-            }
+            MessageComposer::PluginEditorCheckBeforeSendConfigureWidgetSetting settings = plugin->createConfigureWidget(KMKernel::self() ? KMKernel::self()->identityManager() : Q_NULLPTR, this);
             ComposerPluginTab *tab = new ComposerPluginTab(settings.configureWidget, plugin, this);
             addTab(tab, settings.name);
         }
