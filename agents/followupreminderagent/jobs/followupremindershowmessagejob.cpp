@@ -46,7 +46,7 @@ void FollowUpReminderShowMessageJob::start()
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(kmailInterface)) {
         // Program is not already running, so start it
         QString errmsg;
-        if (KToolInvocation::startServiceByDesktopName(QStringLiteral("kmail2"), QString(), &errmsg)) {
+        if (KToolInvocation::startServiceByDesktopName(QStringLiteral("org.kde.kmail"), QString(), &errmsg)) {
             qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Can not start kmail" << errmsg;
             deleteLater();
             return;
