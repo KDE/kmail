@@ -31,7 +31,7 @@
 ArchiveMailKernel::ArchiveMailKernel(QObject *parent)
     : QObject(parent)
 {
-    mIdentityManager = new KIdentityManagement::IdentityManager(false, this);
+    mIdentityManager = new KIdentityManagement::IdentityManager(true, this);
     Akonadi::Session *session = new Akonadi::Session("Archive Mail Kernel ETM", this);
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
 
