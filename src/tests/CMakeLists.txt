@@ -16,3 +16,8 @@ target_link_libraries(dbustest KF5::KIOCore KF5::I18n Qt5::DBus)
 set(searchdbustest_SRCS searchdbustest.cpp)
 add_executable(searchdbustest ${searchdbustest_SRCS})
 target_link_libraries(searchdbustest Qt5::DBus Qt5::Widgets KF5::PimCommon)
+
+#####
+set(ktoolinvocationtest_SRCS ktoolinvocationtest.cpp)
+add_executable(ktoolinvocationtest ${ktoolinvocationtest_SRCS})
+target_link_libraries(ktoolinvocationtest Qt5::DBus KF5::Service KF5::I18n)
