@@ -25,6 +25,7 @@
 #include <KLocalizedString>
 #include <QCommandLineParser>
 #include <KToolInvocation>
+#include <QStandardPaths>
 
 int main(int argc, char **argv)
 {
@@ -44,6 +45,11 @@ int main(int argc, char **argv)
     QString errmsg;
     if (KToolInvocation::startServiceByDesktopName(QStringLiteral("org.kde.kmail"), QString(), &errmsg)) {
         qDebug() << " Can not start kmail" << errmsg;
+    }
+
+    const QString desktopFile = QStandardPaths::locate(QStandardPaths::ApplicationsLocation, QStringLiteral("org.kde.korganizer.desktop"));
+    if (KToolInvocation::startServiceByDesktopPath(desktopFile) > 0) {
+        qDebug() << " Can not start korganizer";
     }
 
     qDebug() << "kinvocation done.";
