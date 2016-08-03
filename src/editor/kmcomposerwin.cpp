@@ -1136,10 +1136,10 @@ void KMComposerWin::setupActions(void)
     KStandardAction::pasteText(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
     mSelectAll = KStandardAction::selectAll(mGlobalAction, &KMComposerGlobalAction::slotMarkAll, actionCollection());
 
-    mFindText = KStandardAction::find(mRichTextEditorwidget, SLOT(slotFind()), actionCollection());
-    mFindNextText = KStandardAction::findNext(mRichTextEditorwidget, SLOT(slotFindNext()), actionCollection());
+    mFindText = KStandardAction::find(mRichTextEditorwidget, &KPIMTextEdit::RichTextEditorWidget::slotFind, actionCollection());
+    mFindNextText = KStandardAction::findNext(mRichTextEditorwidget, &KPIMTextEdit::RichTextEditorWidget::slotFindNext, actionCollection());
 
-    mReplaceText = KStandardAction::replace(mRichTextEditorwidget, SLOT(slotReplace()), actionCollection());
+    mReplaceText = KStandardAction::replace(mRichTextEditorwidget, &KPIMTextEdit::RichTextEditorWidget::slotReplace, actionCollection());
     actionCollection()->addAction(KStandardAction::Spelling, QStringLiteral("spellcheck"),
                                   mComposerBase->editor(), SLOT(slotCheckSpelling()));
 
