@@ -2151,7 +2151,6 @@ void KMKernel::toggleSystemTray()
         // Set mode of systemtray. If mode has changed, tray will handle this.
         if (mSystemTray) {
             mSystemTray->setMode(KMailSettings::self()->systemTrayPolicy());
-            mSystemTray->setShowUnreadCount(KMailSettings::self()->systemTrayShowUnread());
         }
 
     }

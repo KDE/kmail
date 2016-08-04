@@ -92,10 +92,6 @@
         </choices>
         <default>ShowOnUnread</default>
       </entry>
-      <entry name="SystemTrayShowUnread" type="Bool">
-        <label>Show unread mail in system tray</label>
-        <default>true</default>
-      </entry>
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
         <default>kwrite %f</default>

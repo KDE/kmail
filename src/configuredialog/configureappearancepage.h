@@ -197,9 +197,8 @@ public:
 private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
 
-private: // data
+private:
     QCheckBox    *mSystemTrayCheck;
-    QCheckBox    *mSystemTrayShowUnreadMail;
     QButtonGroup *mSystemTrayGroup;
     QGroupBox    *mSystemTrayGroupBox;
 };

@@ -56,15 +56,14 @@ using namespace MailCommon;
  * with its count of unread messages, allowing the user to jump
  * to the first unread message in each folder.
  */
-namespace KMail
-{
+using namespace KMail;
+
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent),
       mIcon(QIcon::fromTheme(QStringLiteral("mail-mark-unread-new"))),
       mDesktopOfMainWin(0),
       mMode(KMailSettings::EnumSystemTrayPolicy::ShowOnUnread),
       mCount(0),
-      mShowUnreadMailCount(true),
       mIconNotificationsEnabled(true),
       mNewMessagesPopup(Q_NULLPTR),
       mSendQueued(Q_NULLPTR)
@@ -146,15 +145,6 @@ KMSystemTray::~KMSystemTray()
 {
 }
 
-void KMSystemTray::setShowUnreadCount(bool showUnreadCount)
-{
-    if (mShowUnreadMailCount == showUnreadCount) {
-        return;
-    }
-    mShowUnreadMailCount = showUnreadCount;
-    updateSystemTray();
-}
-
 void KMSystemTray::setMode(int newMode)
 {
     if (newMode == mMode) {
@@ -200,50 +190,8 @@ void KMSystemTray::slotGeneralPaletteChanged()
  */
 void KMSystemTray::updateCount()
 {
-    if (mCount == 0 || !mIconNotificationsEnabled) {
+    if (mCount == 0) {
         setIconByName(QStringLiteral("kmail"));
-        return;
-    }
-    if (mShowUnreadMailCount) {
-        const int overlaySize = IconSize(KIconLoader::Panel);
-
-        const QString countString = QString::number(mCount);
-        QFont countFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
-        countFont.setBold(true);
-
-        // decrease the size of the font for the number of unread messages if the
-        // number doesn't fit into the available space
-        float countFontSize = countFont.pointSizeF();
-        QFontMetrics qfm(countFont);
-        const int width = qfm.width(countString);
-        if (width > (overlaySize - 2)) {
-            countFontSize *= float(overlaySize - 2) / float(width);
-            countFont.setPointSizeF(countFontSize);
-        }
-
-        // Paint the number in a pixmap
-        QPixmap overlayPixmap(overlaySize, overlaySize);
-        overlayPixmap.fill(Qt::transparent);
-
-        QPainter p(&overlayPixmap);
-        p.setFont(countFont);
-        if (!mTextColor.isValid()) {
-            slotGeneralPaletteChanged();
-        }
-
-        p.setBrush(Qt::NoBrush);
-        p.setPen(mTextColor);
-        p.setOpacity(1.0);
-        p.drawText(overlayPixmap.rect(), Qt::AlignCenter, countString);
-        p.end();
-
-        QPixmap iconPixmap = mIcon.pixmap(overlaySize, overlaySize);
-
-        QPainter pp(&iconPixmap);
-        pp.drawPixmap(0, 0, overlayPixmap);
-        pp.end();
-
-        setIconByPixmap(iconPixmap);
     } else {
         setIconByPixmap(mIcon);
     }
@@ -488,6 +436,4 @@ bool KMSystemTray::ignoreNewMailInFolder(const Akonadi::Collection &collection)
         }
     }
     return false;
-}
-
 }

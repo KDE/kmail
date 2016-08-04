@@ -939,14 +939,6 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
     connect(mSystemTrayCheck, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
-    mSystemTrayShowUnreadMail = new QCheckBox(i18n("Show unread mail in tray icon"), this);
-    vlay->addWidget(mSystemTrayShowUnreadMail);
-    mSystemTrayShowUnreadMail->setEnabled(false);
-    connect(mSystemTrayShowUnreadMail, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-    connect(mSystemTrayCheck, &QAbstractButton::toggled,
-            mSystemTrayShowUnreadMail, &QWidget::setEnabled);
-
     // System tray modes
     mSystemTrayGroup = new QButtonGroup(this);
     mSystemTrayGroup->setExclusive(true);
@@ -973,7 +965,6 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
 void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings()
 {
     loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
-    loadWidget(mSystemTrayShowUnreadMail, KMailSettings::self()->systemTrayShowUnreadItem());
     QAbstractButton *button = mSystemTrayGroup->button(KMailSettings::self()->systemTrayPolicy());
     if (button) {
         button->setChecked(true);
@@ -985,7 +976,6 @@ void AppearancePage::SystemTrayTab::save()
 {
     saveCheckBox(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
     KMailSettings::self()->setSystemTrayPolicy(mSystemTrayGroup->checkedId());
-    saveCheckBox(mSystemTrayShowUnreadMail, KMailSettings::self()->systemTrayShowUnreadItem());
     KMailSettings::self()->save();
 }
 
