@@ -527,6 +527,7 @@ private:
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
     bool showErrorMessage(KJob *job);
+    void slotInsertNonBreakingSpace();
     int validateLineWrapWidth();
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
