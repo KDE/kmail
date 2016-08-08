@@ -143,6 +143,7 @@
 #include <kdescendantsproxymodel.h>
 #include <kedittoolbar.h>
 
+#include <QShortcut>
 #include <kmessagebox.h>
 #include <krecentfilesaction.h>
 #include <kshortcutsdialog.h>
@@ -1295,6 +1296,11 @@ void KMComposerWin::setupActions(void)
 
     mPluginEditorManagerInterface->initializePlugins();
     mPluginEditorCheckBeforeSendManagerInterface->initializePlugins();
+
+    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Space), this);
+    connect(shortcut, &QShortcut::activated, this, &KMComposerWin::slotInsertNonBreakingSpace);
+
+
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
@@ -3183,4 +3189,10 @@ QList<KToggleAction *> KMComposerWin::customToolsList() const
 QList<QAction *> KMComposerWin::pluginToolsActionListForPopupMenu() const
 {
     return mPluginEditorManagerInterface->actionsType(MessageComposer::ActionType::PopupMenu);
+}
+
+void KMComposerWin::slotInsertNonBreakingSpace()
+{
+    qDebug()<<" void KMComposerWin::slotInsertNonBreakingSpace() :";
+    mComposerBase->editor()->insertPlainText(QChar(0x000A0));
 }
