@@ -32,11 +32,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
       mIsSign(false),
       mIsEncrypted(false)
 {
-    // Get the colors for the label
-    KColorScheme scheme(QPalette::Active, KColorScheme::View);
-
-    QHBoxLayout *hbox = new QHBoxLayout;
-    setLayout(hbox);
+    QHBoxLayout *hbox = new QHBoxLayout(this);
     hbox->setMargin(0);
     mSignatureStateIndicator = new QLabel(this);
     mSignatureStateIndicator->setAlignment(Qt::AlignHCenter);
@@ -57,6 +53,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     mEncryptionStateIndicator->setPalette(p);
     mEncryptionStateIndicator->setAutoFillBackground(true);
     mEncryptionStateIndicator->setObjectName(QStringLiteral("encryptionindicator"));
+    hide();
 }
 
 CryptoStateIndicatorWidget::~CryptoStateIndicatorWidget()
@@ -76,9 +73,15 @@ void CryptoStateIndicatorWidget::updateShowAlwaysIndicator()
     if (mShowAlwaysIndicator) {
         mSignatureStateIndicator->setVisible(mIsSign);
         mEncryptionStateIndicator->setVisible(mIsEncrypted);
+        if (mIsSign || mIsEncrypted) {
+            show();
+        } else {
+            hide();
+        }
     } else {
         mSignatureStateIndicator->setVisible(false);
         mEncryptionStateIndicator->setVisible(false);
+        hide();
     }
 }
 
