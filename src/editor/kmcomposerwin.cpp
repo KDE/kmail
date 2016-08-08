@@ -3193,6 +3193,5 @@ QList<QAction *> KMComposerWin::pluginToolsActionListForPopupMenu() const
 
 void KMComposerWin::slotInsertNonBreakingSpace()
 {
-    qDebug()<<" void KMComposerWin::slotInsertNonBreakingSpace() :";
     mComposerBase->editor()->insertPlainText(QChar(0x000A0));
 }
