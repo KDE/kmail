@@ -42,10 +42,9 @@ class KLineEdit;
 class QPushButton;
 class QTabWidget;
 
-namespace Kleo
+namespace GpgME
 {
-class EncryptionKeyRequester;
-class SigningKeyRequester;
+class Key;
 }
 namespace KIdentityManagement
 {
@@ -85,6 +84,8 @@ namespace KMail
 {
 class IdentityFolderRequester;
 class IdentityInvalidFolder;
+class KeySelectionCombo;
+
 class IdentityDialog : public QDialog
 {
     Q_OBJECT
@@ -110,6 +111,7 @@ private Q_SLOTS:
     void slotVCardRemoved();
     void slotHelp();
 private:
+    bool keyMatchesEmailAddress(const GpgME::Key &key, const QString &email);
     bool checkFolderExists(const QString &folder);
     bool validateAddresses(const QString &addresses);
     void updateVcardButton();
@@ -123,10 +125,10 @@ private:
     KEditListWidget       *mAliasEdit;
     // "cryptography" tab:
     QWidget                      *mCryptographyTab;
-    Kleo::SigningKeyRequester    *mPGPSigningKeyRequester;
-    Kleo::EncryptionKeyRequester *mPGPEncryptionKeyRequester;
-    Kleo::SigningKeyRequester    *mSMIMESigningKeyRequester;
-    Kleo::EncryptionKeyRequester *mSMIMEEncryptionKeyRequester;
+    KeySelectionCombo            *mPGPSigningKeyRequester;
+    KeySelectionCombo            *mPGPEncryptionKeyRequester;
+    KeySelectionCombo            *mSMIMESigningKeyRequester;
+    KeySelectionCombo            *mSMIMEEncryptionKeyRequester;
     KComboBox                    *mPreferredCryptoMessageFormat;
     QCheckBox *mAutoSign;
     QCheckBox *mAutoEncrypt;

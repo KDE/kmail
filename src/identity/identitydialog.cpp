@@ -65,8 +65,14 @@
 
 #include <Libkdepim/AddresseeLineEdit>
 // libkleopatra:
-#include "Libkleo/KeyRequester"
-#include "Libkleo/CryptoBackendFactory"
+#include <Libkleo/KeySelectionCombo>
+#include <Libkleo/CryptoBackendFactory>
+#include <Libkleo/DefaultKeyFilter>
+#include <Libkleo/KeyGenerationJob>
+#include <Libkleo/ProgressDialog>
+
+// gpgme++
+#include <gpgme++/keygenerationresult.h>
 
 #include <KEmailAddress>
 #include <Libkdepim/EmailValidator>
@@ -116,6 +122,173 @@ using namespace MailCommon;
 
 namespace KMail
 {
+
+class KeySelectionCombo : public Kleo::KeySelectionCombo
+{
+    Q_OBJECT
+
+public:
+    enum KeyType {
+        SigningKey,
+        EncryptionKey
+    };
+
+    KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, QWidget *parent);
+    ~KeySelectionCombo();
+
+    void setIdentity(const QString &name, const QString &email);
+
+    void init() Q_DECL_OVERRIDE;
+
+private Q_SLOTS:
+    void onCustomItemSelected(const QVariant &type);
+
+private:
+    QString mEmail;
+    QString mName;
+    KeyType mKeyType;
+    GpgME::Protocol mProtocol;
+};
+
+
+class KeyGenerationJob : public Kleo::Job
+{
+    Q_OBJECT
+
+public:
+    KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
+    ~KeyGenerationJob();
+
+    void slotCancel() Q_DECL_OVERRIDE;
+    void start();
+
+private Q_SLOTS:
+    void keyGenerated(const GpgME::KeyGenerationResult &result);
+
+private:
+    QString mName;
+    QString mEmail;
+    Kleo::Job *mJob;
+};
+
+
+
+KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent)
+    : Kleo::Job(parent)
+    , mName(name)
+    , mEmail(email)
+    , mJob(Q_NULLPTR)
+{
+}
+
+KeyGenerationJob::~KeyGenerationJob()
+{
+}
+
+void KeyGenerationJob::slotCancel()
+{
+    if (mJob) {
+        mJob->slotCancel();
+    }
+}
+
+void KeyGenerationJob::start()
+{
+    const QString args = QStringLiteral("<GnupgKeyParms format=\"internal\">\n"
+                                        "%ask-passphrase\n"
+                                        "key-type:      RSA\n"
+                                        "key-length:    2048\n"
+                                        "key-usage:     sign\n"
+                                        "subkey-type:   RSA\n"
+                                        "subkey-length: 2048\n"
+                                        "subkey-usage:  encrypt\n"
+                                        "name-email:    %1\n"
+                                        "name-real:     %2\n"
+                                        "</GnupgKeyParms>").arg(mEmail, mName);
+
+    auto job = Kleo::CryptoBackendFactory::instance()->openpgp()->keyGenerationJob();
+    connect(job, &Kleo::KeyGenerationJob::result,
+            this, &KeyGenerationJob::keyGenerated);
+    job->start(args);
+    mJob = job;
+}
+
+void KeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
+{
+    mJob = Q_NULLPTR;
+    if (result.error()) {
+        KMessageBox::error(qobject_cast<QWidget*>(parent()),
+                           i18n("Error while generating new key pair: %1", QString::fromUtf8(result.error().asString())),
+                           i18n("Key Generation Error"));
+        Q_EMIT done();
+        return;
+    }
+
+    KeySelectionCombo *combo = qobject_cast<KeySelectionCombo*>(parent());
+    combo->setDefaultKey(QLatin1String(result.fingerprint()));
+    connect(combo, &KeySelectionCombo::keyListingFinished,
+            this, &KeyGenerationJob::done);
+    combo->refreshKeys();
+}
+
+KeySelectionCombo::KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, QWidget *parent)
+    : Kleo::KeySelectionCombo(parent)
+    , mKeyType(keyType)
+    , mProtocol(protocol)
+{
+}
+
+KeySelectionCombo::~KeySelectionCombo()
+{
+}
+
+void KeySelectionCombo::setIdentity(const QString &name, const QString &email)
+{
+    mName = name;
+    mEmail = email;
+    setIdFilter(email);
+}
+
+void KeySelectionCombo::init()
+{
+    Kleo::KeySelectionCombo::init();
+
+    boost::shared_ptr<Kleo::DefaultKeyFilter> keyFilter(new Kleo::DefaultKeyFilter);
+    keyFilter->setIsOpenPGP(mProtocol == GpgME::OpenPGP ? Kleo::DefaultKeyFilter::Set : Kleo::DefaultKeyFilter::NotSet);
+    if (mKeyType == SigningKey) {
+        keyFilter->setCanSign(Kleo::DefaultKeyFilter::Set);
+    } else {
+        keyFilter->setCanEncrypt(Kleo::DefaultKeyFilter::Set);
+    }
+    keyFilter->setHasSecret(Kleo::DefaultKeyFilter::Set);
+    setKeyFilter(keyFilter);
+
+    prependCustomItem(QIcon(), i18n("No key"), QStringLiteral("no-key"));
+    if (mProtocol == GpgME::OpenPGP) {
+        appendCustomItem(QIcon::fromTheme(QStringLiteral("password-generate")),
+                        i18n("Generate a new key pair"), QStringLiteral("generate-new-key"));
+    }
+
+    connect(this, &KeySelectionCombo::customItemSelected,
+            this, &KeySelectionCombo::onCustomItemSelected);
+}
+
+void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
+{
+    const QString typeStr = type.toString();
+    if (type == QLatin1String("no-key")) {
+        return;
+    }  else if (type == QLatin1String("generate-new-key")) {
+        auto job = new KeyGenerationJob(mName, mEmail, this);
+        new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
+        setEnabled(false);
+        connect(job, &KeyGenerationJob::done,
+                this, [this]() { setEnabled(true); });
+        job->start();
+    }
+}
+
+
 
 IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
@@ -247,20 +420,13 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "OpenPGP Signature Key" requester and label:
     ++row;
-    mPGPSigningKeyRequester = new Kleo::SigningKeyRequester(false, Kleo::SigningKeyRequester::OpenPGP, tab);
-    mPGPSigningKeyRequester->dialogButton()->setText(i18n("Chang&e..."));
-    mPGPSigningKeyRequester->setDialogCaption(i18n("Your OpenPGP Signature Key"));
-    msg = i18n("Select the OpenPGP key which should be used to "
-               "digitally sign your messages.");
-    mPGPSigningKeyRequester->setDialogMessage(msg);
-
+    mPGPSigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::OpenPGP, tab);
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
                "to digitally sign messages. You can also use GnuPG keys.</p>"
                "<p>You can leave this blank, but KMail will not be able "
                "to digitally sign emails using OpenPGP; "
                "normal mail functions will not be affected.</p>"
                "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
-
     label = new QLabel(i18n("OpenPGP signing key:"), tab);
     label->setBuddy(mPGPSigningKeyRequester);
     mPGPSigningKeyRequester->setWhatsThis(msg);
@@ -271,14 +437,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "OpenPGP Encryption Key" requester and label:
     ++row;
-    mPGPEncryptionKeyRequester = new Kleo::EncryptionKeyRequester(false, Kleo::EncryptionKeyRequester::OpenPGP, tab);
-    mPGPEncryptionKeyRequester->dialogButton()->setText(i18n("Chang&e..."));
-    mPGPEncryptionKeyRequester->setDialogCaption(i18n("Your OpenPGP Encryption Key"));
-    msg = i18n("Select the OpenPGP key which should be used when encrypting "
-               "to yourself and for the \"Attach My Public Key\" "
-               "feature in the composer.");
-    mPGPEncryptionKeyRequester->setDialogMessage(msg);
-
+    mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, tab);
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
                "to encrypt messages to yourself and for the \"Attach My Public Key\" "
                "feature in the composer. You can also use GnuPG keys.</p>"
@@ -296,13 +455,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "S/MIME Signature Key" requester and label:
     ++row;
-    mSMIMESigningKeyRequester = new Kleo::SigningKeyRequester(false, Kleo::SigningKeyRequester::SMIME, tab);
-    mSMIMESigningKeyRequester->dialogButton()->setText(i18n("Chang&e..."));
-    mSMIMESigningKeyRequester->setDialogCaption(i18n("Your S/MIME Signature Certificate"));
-    msg = i18n("Select the S/MIME certificate which should be used to "
-               "digitally sign your messages.");
-    mSMIMESigningKeyRequester->setDialogMessage(msg);
-
+    mSMIMESigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::CMS, tab);
     msg = i18n("<qt><p>The S/MIME (X.509) certificate you choose here will be used "
                "to digitally sign messages.</p>"
                "<p>You can leave this blank, but KMail will not be able "
@@ -323,14 +476,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "S/MIME Encryption Key" requester and label:
     ++row;
-    mSMIMEEncryptionKeyRequester = new Kleo::EncryptionKeyRequester(false, Kleo::EncryptionKeyRequester::SMIME, tab);
-    mSMIMEEncryptionKeyRequester->dialogButton()->setText(i18n("Chang&e..."));
-    mSMIMEEncryptionKeyRequester->setDialogCaption(i18n("Your S/MIME Encryption Certificate"));
-    msg = i18n("Select the S/MIME certificate which should be used when encrypting "
-               "to yourself and for the \"Attach My Certificate\" "
-               "feature in the composer.");
-    mSMIMEEncryptionKeyRequester->setDialogMessage(msg);
-
+    mSMIMEEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::CMS, tab);
     msg = i18n("<qt><p>The S/MIME certificate you choose here will be used "
                "to encrypt messages to yourself and for the \"Attach My Certificate\" "
                "feature in the composer.</p>"
@@ -610,60 +756,19 @@ void IdentityDialog::slotAboutToShow(int index)
     if (w == mCryptographyTab) {
         // set the configured email address as initial query of the key
         // requesters:
+        const QString name = mNameEdit->text().trimmed();
         const QString email = mEmailEdit->text().trimmed();
-        mPGPEncryptionKeyRequester->setInitialQuery(email);
-        mPGPSigningKeyRequester->setInitialQuery(email);
-        mSMIMEEncryptionKeyRequester->setInitialQuery(email);
-        mSMIMESigningKeyRequester->setInitialQuery(email);
+
+        mPGPEncryptionKeyRequester->setIdentity(name, email);
+        mPGPSigningKeyRequester->setIdentity(name, email);
+        mSMIMEEncryptionKeyRequester->setIdentity(name, email);
+        mSMIMESigningKeyRequester->setIdentity(name, email);
     }
 }
 
 void IdentityDialog::slotCopyGlobal()
 {
     mWidget->loadFromGlobal();
-}
-
-namespace
-{
-struct DoesntMatchEMailAddress {
-    explicit DoesntMatchEMailAddress(const QString &s)
-        : email(s.trimmed().toLower()) {}
-    bool operator()(const GpgME::Key &key) const;
-private:
-    bool checkForEmail(const char *email) const;
-    static QString extractEmail(const char *email);
-    const QString email;
-};
-
-bool DoesntMatchEMailAddress::operator()(const GpgME::Key &key) const
-{
-    const std::vector<GpgME::UserID> uids = key.userIDs();
-    std::vector<GpgME::UserID>::const_iterator end = uids.end();
-    for (std::vector<GpgME::UserID>::const_iterator it = uids.begin(); it != end; ++it)
-        if (checkForEmail(it->email() ? it->email() : it->id())) {
-            return false;
-        }
-    return true; // note the negation!
-}
-
-bool DoesntMatchEMailAddress::checkForEmail(const char *e) const
-{
-    const QString em = extractEmail(e);
-    return !em.isEmpty() && email.toLower() == em.toLower();
-}
-
-QString DoesntMatchEMailAddress::extractEmail(const char *e)
-{
-    if (!e || !*e) {
-        return QString();
-    }
-    const QString em = QString::fromUtf8(e);
-    if (e[0] == '<') {
-        return em.mid(1, em.length() - 2);
-    } else {
-        return em;
-    }
-}
 }
 
 void IdentityDialog::slotRefreshDefaultDomainName()
@@ -700,6 +805,29 @@ void IdentityDialog::slotAccepted()
     job->start();
 }
 
+bool IdentityDialog::keyMatchesEmailAddress(const GpgME::Key &key, const QString &email_)
+{
+    if (key.isNull()) {
+        return true;
+    }
+    const QString email = email_.trimmed().toLower();
+    const auto uids = key.userIDs();
+    for (const auto &uid : uids) {
+        QString em = QString::fromUtf8(uid.email() ? uid.email() : uid.id());
+        if (em.isEmpty()) {
+            continue;
+        }
+        if (em[0] == QLatin1Char('<')) {
+            em = em.mid(1, em.length() - 2);
+        }
+        if (em.toLower() == email) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void IdentityDialog::slotDelayedButtonClicked(KJob *job)
 {
     const AddressValidationJob *validationJob = qobject_cast<AddressValidationJob *>(job);
@@ -711,41 +839,33 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
 
     const QString email = validationJob->property("email").toString();
 
-    const std::vector<GpgME::Key> &pgpSigningKeys =
-        mPGPSigningKeyRequester->keys();
-    const std::vector<GpgME::Key> &pgpEncryptionKeys =
-        mPGPEncryptionKeyRequester->keys();
-    const std::vector<GpgME::Key> &smimeSigningKeys =
-        mSMIMESigningKeyRequester->keys();
-    const std::vector<GpgME::Key> &smimeEncryptionKeys =
-        mSMIMEEncryptionKeyRequester->keys();
+    const GpgME::Key &pgpSigningKey = mPGPSigningKeyRequester->currentKey();
+    const GpgME::Key &pgpEncryptionKey = mPGPEncryptionKeyRequester->currentKey();
+    const GpgME::Key &smimeSigningKey = mSMIMESigningKeyRequester->currentKey();
+    const GpgME::Key &smimeEncryptionKey = mSMIMEEncryptionKeyRequester->currentKey();
 
     QString msg;
     bool err = false;
-    if (std::find_if(pgpSigningKeys.begin(), pgpSigningKeys.end(),
-                     DoesntMatchEMailAddress(email)) != pgpSigningKeys.end()) {
+    if (!keyMatchesEmailAddress(pgpSigningKey, email)) {
         msg = i18n("One of the configured OpenPGP signing keys does not contain "
                    "any user ID with the configured email address for this "
                    "identity (%1).\n"
                    "This might result in warning messages on the receiving side "
                    "when trying to verify signatures made with this configuration.", email);
         err = true;
-    } else if (std::find_if(pgpEncryptionKeys.begin(), pgpEncryptionKeys.end(),
-                            DoesntMatchEMailAddress(email)) != pgpEncryptionKeys.end()) {
+    } else if (!keyMatchesEmailAddress(pgpEncryptionKey, email)) {
         msg = i18n("One of the configured OpenPGP encryption keys does not contain "
                    "any user ID with the configured email address for this "
                    "identity (%1).", email);
         err = true;
-    } else if (std::find_if(smimeSigningKeys.begin(), smimeSigningKeys.end(),
-                            DoesntMatchEMailAddress(email)) != smimeSigningKeys.end()) {
+    } else if (!keyMatchesEmailAddress(smimeSigningKey, email)) {
         msg = i18n("One of the configured S/MIME signing certificates does not contain "
                    "the configured email address for this "
                    "identity (%1).\n"
                    "This might result in warning messages on the receiving side "
                    "when trying to verify signatures made with this configuration.", email);
         err = true;
-    } else if (std::find_if(smimeEncryptionKeys.begin(), smimeEncryptionKeys.end(),
-                            DoesntMatchEMailAddress(email)) != smimeEncryptionKeys.end()) {
+    } else if (!keyMatchesEmailAddress(smimeEncryptionKey, email)) {
         msg = i18n("One of the configured S/MIME encryption certificates does not contain "
                    "the configured email address for this "
                    "identity (%1).", email);
@@ -793,10 +913,10 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mAliasEdit->insertStringList(ident.emailAliases());
 
     // "Cryptography" tab:
-    mPGPSigningKeyRequester->setFingerprint(QLatin1String(ident.pgpSigningKey()));
-    mPGPEncryptionKeyRequester->setFingerprint(QLatin1String(ident.pgpEncryptionKey()));
-    mSMIMESigningKeyRequester->setFingerprint(QLatin1String(ident.smimeSigningKey()));
-    mSMIMEEncryptionKeyRequester->setFingerprint(QLatin1String(ident.smimeEncryptionKey()));
+    mPGPSigningKeyRequester->setDefaultKey(QLatin1String(ident.pgpSigningKey()));
+    mPGPEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.pgpEncryptionKey()));
+    mSMIMESigningKeyRequester->setDefaultKey(QLatin1String(ident.smimeSigningKey()));
+    mSMIMEEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.smimeEncryptionKey()));
 
     mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(
                 Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
@@ -893,10 +1013,10 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setPrimaryEmailAddress(email);
     ident.setEmailAliases(mAliasEdit->items());
     // "Cryptography" tab:
-    ident.setPGPSigningKey(mPGPSigningKeyRequester->fingerprint().toLatin1());
-    ident.setPGPEncryptionKey(mPGPEncryptionKeyRequester->fingerprint().toLatin1());
-    ident.setSMIMESigningKey(mSMIMESigningKeyRequester->fingerprint().toLatin1());
-    ident.setSMIMEEncryptionKey(mSMIMEEncryptionKeyRequester->fingerprint().toLatin1());
+    ident.setPGPSigningKey(mPGPSigningKeyRequester->currentKey().primaryFingerprint());
+    ident.setPGPEncryptionKey(mPGPEncryptionKeyRequester->currentKey().primaryFingerprint());
+    ident.setSMIMESigningKey(mSMIMESigningKeyRequester->currentKey().primaryFingerprint());
+    ident.setSMIMEEncryptionKey(mSMIMEEncryptionKeyRequester->currentKey().primaryFingerprint());
     ident.setPreferredCryptoMessageFormat(
         QLatin1String(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
     ident.setPgpAutoSign(mAutoSign->isChecked());
@@ -1028,3 +1148,4 @@ void IdentityDialog::updateVcardButton()
 
 }
 
+#include "identitydialog.moc"
