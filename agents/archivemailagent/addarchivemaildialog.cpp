@@ -47,28 +47,21 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     } else {
         setWindowTitle(i18n("Add Archive Mail"));
     }
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    QVBoxLayout *topLayout = new QVBoxLayout;
-    setLayout(topLayout);
-    mOkButton = buttonBox->button(QDialogButtonBox::Ok);
-    mOkButton->setDefault(true);
-    mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &AddArchiveMailDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &AddArchiveMailDialog::reject);
-    mOkButton->setDefault(true);
     setModal(true);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
-    QWidget *mainWidget = new QWidget(this);
-    QGridLayout *mainLayout = new QGridLayout(mainWidget);
+
+    QVBoxLayout *topLayout = new QVBoxLayout(this);
+
+    QGridLayout *mainLayout = new QGridLayout;
     mainLayout->setMargin(0);
-    topLayout->addWidget(mainWidget);
-    topLayout->addWidget(buttonBox);
+
+
 
     int row = 0;
 
-    QLabel *folderLabel = new QLabel(i18n("&Folder:"), mainWidget);
+    QLabel *folderLabel = new QLabel(i18n("&Folder:"), this);
     mainLayout->addWidget(folderLabel, row, 0);
-    mFolderRequester = new MailCommon::FolderRequester(mainWidget);
+    mFolderRequester = new MailCommon::FolderRequester(this);
     mFolderRequester->setObjectName(QStringLiteral("folder_requester"));
     mFolderRequester->setMustBeReadWrite(false);
     mFolderRequester->setNotAllowToCreateNewFolder(true);
@@ -80,49 +73,49 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->addWidget(mFolderRequester, row, 1);
     ++row;
 
-    QLabel *formatLabel = new QLabel(i18n("Format:"), mainWidget);
+    QLabel *formatLabel = new QLabel(i18n("Format:"), this);
     formatLabel->setObjectName(QStringLiteral("label_format"));
     mainLayout->addWidget(formatLabel, row, 0);
 
-    mFormatComboBox = new FormatComboBox(mainWidget);
+    mFormatComboBox = new FormatComboBox(this);
     mainLayout->addWidget(mFormatComboBox, row, 1);
     ++row;
 
-    mRecursiveCheckBox = new QCheckBox(i18n("Archive all subfolders"), mainWidget);
+    mRecursiveCheckBox = new QCheckBox(i18n("Archive all subfolders"), this);
     mRecursiveCheckBox->setObjectName(QStringLiteral("recursive_checkbox"));
     mainLayout->addWidget(mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft);
     mRecursiveCheckBox->setChecked(true);
     ++row;
 
-    QLabel *pathLabel = new QLabel(i18n("Path:"), mainWidget);
+    QLabel *pathLabel = new QLabel(i18n("Path:"), this);
     mainLayout->addWidget(pathLabel, row, 0);
     pathLabel->setObjectName(QStringLiteral("path_label"));
-    mPath = new KUrlRequester(mainWidget);
+    mPath = new KUrlRequester(this);
     mPath->lineEdit()->setTrapReturnKey(true);
     connect(mPath, &KUrlRequester::textChanged, this, &AddArchiveMailDialog::slotUpdateOkButton);
     mPath->setMode(KFile::Directory);
     mainLayout->addWidget(mPath);
     ++row;
 
-    QLabel *dateLabel = new QLabel(i18n("Backup each:"), mainWidget);
+    QLabel *dateLabel = new QLabel(i18n("Backup each:"), this);
     dateLabel->setObjectName(QStringLiteral("date_label"));
     mainLayout->addWidget(dateLabel, row, 0);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
-    mDays = new QSpinBox(mainWidget);
+    mDays = new QSpinBox(this);
     mDays->setMinimum(1);
     mDays->setMaximum(3600);
     hlayout->addWidget(mDays);
 
-    mUnits = new UnitComboBox(mainWidget);
+    mUnits = new UnitComboBox(this);
     hlayout->addWidget(mUnits);
 
     mainLayout->addLayout(hlayout, row, 1);
     ++row;
 
-    QLabel *maxCountlabel = new QLabel(i18n("Maximum number of archive:"), mainWidget);
+    QLabel *maxCountlabel = new QLabel(i18n("Maximum number of archive:"), this);
     mainLayout->addWidget(maxCountlabel, row, 0);
-    mMaximumArchive = new QSpinBox(mainWidget);
+    mMaximumArchive = new QSpinBox(this);
     mMaximumArchive->setMinimum(0);
     mMaximumArchive->setMaximum(9999);
     mMaximumArchive->setSpecialValueText(i18n("unlimited"));
@@ -134,11 +127,22 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->setColumnStretch(1, 1);
     mainLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), row, 0);
 
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    mOkButton = buttonBox->button(QDialogButtonBox::Ok);
+    mOkButton->setDefault(true);
+    mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &AddArchiveMailDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &AddArchiveMailDialog::reject);
+    mOkButton->setDefault(true);
+
+
     if (mInfo) {
         load(mInfo);
     } else {
         mOkButton->setEnabled(false);
     }
+    topLayout->addLayout(mainLayout);
+    topLayout->addWidget(buttonBox);
 
     // Make it a bit bigger, else the folder requester cuts off the text too early
     resize(500, minimumSize().height());

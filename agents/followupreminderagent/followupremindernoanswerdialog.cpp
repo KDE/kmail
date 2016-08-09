@@ -35,23 +35,23 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
 {
     setWindowTitle(i18n("Follow Up Mail"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
+    setAttribute(Qt::WA_DeleteOnClose);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+
+    QLabel *lab = new QLabel(i18n("You still wait an answer about this mail:"), this);
+    mainLayout->addWidget(lab);
+    mWidget = new FollowUpReminderInfoWidget(this);
+    mWidget->setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
+    mainLayout->addWidget(mWidget);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &FollowUpReminderNoAnswerDialog::slotSave);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FollowUpReminderNoAnswerDialog::reject);
-    setAttribute(Qt::WA_DeleteOnClose);
-    QWidget *w = new QWidget(this);
-    QVBoxLayout *vbox = new QVBoxLayout(w);
-    QLabel *lab = new QLabel(i18n("You still wait an answer about this mail:"));
-    vbox->addWidget(lab);
-    mWidget = new FollowUpReminderInfoWidget;
-    mWidget->setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
-    vbox->addWidget(mWidget);
-    mainLayout->addWidget(w);
+
     mainLayout->addWidget(buttonBox);
 
     readConfig();
