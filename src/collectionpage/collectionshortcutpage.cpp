@@ -59,19 +59,15 @@ void CollectionShortcutPage::init(const Akonadi::Collection &col)
     label->setWordWrap(true);
     topLayout->addWidget(label);
 
-    QWidget *hb = new QWidget(this);
-    QHBoxLayout *hbHBoxLayout = new QHBoxLayout(hb);
-    hbHBoxLayout->setMargin(0);
+    QHBoxLayout *hbHBoxLayout = new QHBoxLayout;
 
-    new QWidget(hb);
-    mKeySeqWidget = new KKeySequenceWidget(hb);
+    mKeySeqWidget = new KKeySequenceWidget(this);
     hbHBoxLayout->addWidget(mKeySeqWidget);
     mKeySeqWidget->setObjectName(QStringLiteral("FolderShortcutSelector"));
     connect(mKeySeqWidget, &KKeySequenceWidget::keySequenceChanged, this, &CollectionShortcutPage::slotShortcutChanged);
-    new QWidget(hb);
 
     topLayout->addItem(new QSpacerItem(0, 10));
-    topLayout->addWidget(hb);
+    topLayout->addLayout(hbHBoxLayout);
     topLayout->addStretch(1);
 
     mKeySeqWidget->setCheckActionCollections(KMKernel::self()->getKMMainWidget()->actionCollections());
