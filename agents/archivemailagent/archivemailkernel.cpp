@@ -122,8 +122,6 @@ void ArchiveMailKernel::setLastSelectedFolder(Akonadi::Collection::Id col)
     Q_UNUSED(col);
 }
 
-
-
 void ArchiveMailKernel::expunge(Akonadi::Collection::Id col, bool sync)
 {
     Q_UNUSED(col);

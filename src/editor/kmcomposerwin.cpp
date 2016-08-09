@@ -1300,7 +1300,6 @@ void KMComposerWin::setupActions(void)
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Space), this);
     connect(shortcut, &QShortcut::activated, this, &KMComposerWin::slotInsertNonBreakingSpace);
 
-
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
