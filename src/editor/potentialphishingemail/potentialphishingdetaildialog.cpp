@@ -31,29 +31,23 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18n("Details"));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    setModal(true);
+
+    mPotentialPhishingDetailWidget = new PotentialPhishingDetailWidget(this);
+    mPotentialPhishingDetailWidget->setObjectName(QStringLiteral("potentialphising_widget"));
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    connect(okButton, &QAbstractButton::clicked, this, &PotentialPhishingDetailDialog::slotSave);
     okButton->setDefault(true);
 
-    QVBoxLayout *topLayout = new QVBoxLayout;
-    setLayout(topLayout);
+    topLayout->addWidget(mPotentialPhishingDetailWidget);
+    topLayout->addWidget(buttonBox);
 
-    setModal(true);
-
-    QWidget *mainWidget = new QWidget(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
-    mPotentialPhishingDetailWidget = new PotentialPhishingDetailWidget(this);
-    mPotentialPhishingDetailWidget->setObjectName(QStringLiteral("potentialphising_widget"));
-
-    mainLayout->addWidget(mPotentialPhishingDetailWidget);
-
-    mainLayout->addWidget(buttonBox);
-
-    connect(okButton, &QAbstractButton::clicked, this, &PotentialPhishingDetailDialog::slotSave);
-    topLayout->addWidget(mainWidget);
     readConfig();
 }
 

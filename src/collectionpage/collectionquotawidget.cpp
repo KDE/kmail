@@ -44,24 +44,21 @@
 CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
     : QWidget(parent)
 {
-    QVBoxLayout *box = new QVBoxLayout(this);
-    QWidget *stuff = new QWidget(this);
-    QGridLayout *layout = new QGridLayout(stuff);
+    QGridLayout *layout = new QGridLayout(this);
 
-    QLabel *lab = new QLabel(i18n("Usage:"));
+    QLabel *lab = new QLabel(i18n("Usage:"), this);
     layout->addWidget(lab, 0, 0);
 
-    mUsage = new QLabel;
+    mUsage = new QLabel(this);
     layout->addWidget(mUsage, 0, 1);
 
-    QLabel *Status = new QLabel(i18n("Status:"));
+    QLabel *Status = new QLabel(i18n("Status:"), this);
     layout->addWidget(Status, 1, 0);
-    mProgressBar = new QProgressBar(stuff);
+    mProgressBar = new QProgressBar(this);
     // xgettext: no-c-format
     mProgressBar->setFormat(i18n("%p% full"));
     layout->addWidget(mProgressBar, 1, 1);
-    box->addWidget(stuff);
-    box->addStretch(2);
+    layout->setRowStretch(2, 1);
 }
 
 void CollectionQuotaWidget::setQuotaInfo(qint64 current, qint64 maxValue)

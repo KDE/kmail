@@ -34,14 +34,19 @@
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
     : QDialog(parent)
 {
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    setModal(true);
+
+
+    mContactEditor = new Akonadi::ContactEditor(Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityEditVcardDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityEditVcardDialog::reject);
-    QVBoxLayout *topLayout = new QVBoxLayout;
-    setLayout(topLayout);
+    okButton->setDefault(true);
 
     if (QFile(fileName).exists()) {
         setWindowTitle(i18n("Edit own vCard"));
@@ -53,15 +58,8 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
         setWindowTitle(i18n("Create own vCard"));
     }
 
-    okButton->setDefault(true);
-    setModal(true);
-    QWidget *mainWidget = new QWidget(this);
-    topLayout->addWidget(mainWidget);
+    topLayout->addWidget(mContactEditor);
     topLayout->addWidget(buttonBox);
-    QHBoxLayout *mainLayout = new QHBoxLayout(mainWidget);
-
-    mContactEditor = new Akonadi::ContactEditor(Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this);
-    mainLayout->addWidget(mContactEditor);
     loadVcard(fileName);
 }
 
