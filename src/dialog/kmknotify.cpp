@@ -41,6 +41,16 @@ KMKnotify::KMKnotify(QWidget *parent)
     setWindowTitle(i18n("Notification"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
+    m_comboNotify = new KComboBox(false, this);
+    m_comboNotify->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    mainLayout->addWidget(m_comboNotify);
+
+    m_notifyWidget = new KNotifyConfigWidget(this);
+    mainLayout->addWidget(m_notifyWidget);
+    m_comboNotify->setFocus();
+
+    mainLayout->addWidget(new KSeparator);
+
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
@@ -48,25 +58,8 @@ KMKnotify::KMKnotify(QWidget *parent)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &KMKnotify::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &KMKnotify::reject);
 
-    QWidget *page = new QWidget(this);
-    mainLayout->addWidget(page);
-
-    QVBoxLayout *layout = new QVBoxLayout(page);
-    layout->setMargin(0);
-    m_comboNotify = new KComboBox(false);
-    m_comboNotify->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-
-    QHBoxLayout *hbox = new QHBoxLayout();
-    layout->addLayout(hbox);
-    hbox->addWidget(m_comboNotify, 10);
-
-    m_notifyWidget = new KNotifyConfigWidget(page);
-    layout->addWidget(m_notifyWidget);
-    m_comboNotify->setFocus();
-
-    layout->addWidget(new KSeparator);
-
     mainLayout->addWidget(buttonBox);
+
     connect(m_comboNotify, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &KMKnotify::slotComboChanged);
     connect(okButton, &QPushButton::clicked, this, &KMKnotify::slotOk);
     connect(m_notifyWidget, &KNotifyConfigWidget::changed, this, &KMKnotify::slotConfigChanged);
