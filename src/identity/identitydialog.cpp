@@ -68,7 +68,7 @@
 #include <Libkleo/KeySelectionCombo>
 #include <Libkleo/CryptoBackendFactory>
 #include <Libkleo/DefaultKeyFilter>
-#include <Libkleo/KeyGenerationJob>
+#include <Libkleo/DefaultKeyGenerationJob>
 #include <Libkleo/ProgressDialog>
 
 // gpgme++
@@ -194,22 +194,10 @@ void KeyGenerationJob::slotCancel()
 
 void KeyGenerationJob::start()
 {
-    const QString args = QStringLiteral("<GnupgKeyParms format=\"internal\">\n"
-                                        "%ask-passphrase\n"
-                                        "key-type:      RSA\n"
-                                        "key-length:    2048\n"
-                                        "key-usage:     sign\n"
-                                        "subkey-type:   RSA\n"
-                                        "subkey-length: 2048\n"
-                                        "subkey-usage:  encrypt\n"
-                                        "name-email:    %1\n"
-                                        "name-real:     %2\n"
-                                        "</GnupgKeyParms>").arg(mEmail, mName);
-
-    auto job = Kleo::CryptoBackendFactory::instance()->openpgp()->keyGenerationJob();
-    connect(job, &Kleo::KeyGenerationJob::result,
+    auto job = new Kleo::DefaultKeyGenerationJob(this);
+    connect(job, &Kleo::DefaultKeyGenerationJob::result,
             this, &KeyGenerationJob::keyGenerated);
-    job->start(args);
+    job->start(mName, mEmail);
     mJob = job;
 }
 
