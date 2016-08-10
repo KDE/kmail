@@ -197,7 +197,7 @@ void KeyGenerationJob::start()
     auto job = new Kleo::DefaultKeyGenerationJob(this);
     connect(job, &Kleo::DefaultKeyGenerationJob::result,
             this, &KeyGenerationJob::keyGenerated);
-    job->start(mName, mEmail);
+    job->start(mEmail, mName);
     mJob = job;
 }
 
