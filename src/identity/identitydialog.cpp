@@ -294,18 +294,15 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18n("Edit Identity"));
-    QDialogButtonBox *buttonBox = Q_NULLPTR;
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
     connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &IdentityDialog::slotHelp);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityDialog::slotAccepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityDialog::reject);
-
     okButton->setDefault(true);
 
     // tmp. vars:
