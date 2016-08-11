@@ -250,7 +250,6 @@ void KeySelectionCombo::init()
     }
     keyFilter->setHasSecret(Kleo::DefaultKeyFilter::Set);
     setKeyFilter(keyFilter);
-
     prependCustomItem(QIcon(), i18n("No key"), QStringLiteral("no-key"));
     if (mProtocol == GpgME::OpenPGP) {
         appendCustomItem(QIcon::fromTheme(QStringLiteral("password-generate")),
@@ -263,7 +262,6 @@ void KeySelectionCombo::init()
 
 void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 {
-    const QString typeStr = type.toString();
     if (type == QLatin1String("no-key")) {
         return;
     }  else if (type == QLatin1String("generate-new-key")) {
