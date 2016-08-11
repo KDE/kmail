@@ -18,6 +18,7 @@
 */
 
 #include "followupremindermanager.h"
+#include "followupreminderagent_debug.h"
 #include "FollowupReminder/FollowUpReminderInfo"
 #include "FollowupReminder/FollowUpReminderUtil"
 #include "followupremindernoanswerdialog.h"
@@ -121,7 +122,7 @@ void FollowUpReminderManager::checkFollowUp(const Akonadi::Item &item, const Ako
 void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId, Akonadi::Item::Id id)
 {
     Q_FOREACH (FollowUpReminderInfo *info, mFollowUpReminderInfoList) {
-        qDebug() << "FollowUpReminderManager::slotCheckFollowUpFinished info:" << info;
+        qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderManager::slotCheckFollowUpFinished info:" << info;
         if (!info) {
             continue;
         }
