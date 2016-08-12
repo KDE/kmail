@@ -64,15 +64,15 @@ IdentityPage::IdentityPage(QWidget *parent)
     connect(mIPage.mIdentityList, &QTreeWidget::itemSelectionChanged, this, &IdentityPage::slotIdentitySelectionChanged);
     connect(this, SIGNAL(changed(bool)),
             SLOT(slotIdentitySelectionChanged()));
-    connect(mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),  SLOT(slotRenameIdentity(KMail::IdentityListViewItem*,QString)));
+    connect(mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),  SLOT(slotRenameIdentityFromItem(KMail::IdentityListViewItem*,QString)));
     connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked,  this, &IdentityPage::slotModifyIdentity);
     connect(mIPage.mIdentityList, &IdentityListView::contextMenu, this, &IdentityPage::slotContextMenu);
     // ### connect dragged(...), ...
 
     connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityPage::slotNewIdentity);
     connect(mIPage.mModifyButton, &QPushButton::clicked, this, &IdentityPage::slotModifyIdentity);
-    connect(mIPage.mRenameButton, SIGNAL(clicked()),
-            this, SLOT(slotRenameIdentity()));
+    connect(mIPage.mRenameButton, &QPushButton::clicked,
+            this, &IdentityPage::slotRenameIdentity);
     connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityPage::slotRemoveIdentity);
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityPage::slotSetAsDefault);
 }
@@ -256,7 +256,7 @@ void IdentityPage::slotRenameIdentity()
     mIPage.mIdentityList->editItem(item);
 }
 
-void IdentityPage::slotRenameIdentity(KMail::IdentityListViewItem *item, const QString &text)
+void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item, const QString &text)
 {
     if (!item) {
         return;

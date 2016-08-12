@@ -60,7 +60,7 @@ private Q_SLOTS:
     void slotRenameIdentity();
     /** connected to @p mIdentityList's renamed() signal. Validates the
       new name and sets it in the KIdentityManagement::IdentityManager */
-    void slotRenameIdentity(KMail::IdentityListViewItem *, const QString &);
+    void slotRenameIdentityFromItem(KMail::IdentityListViewItem *, const QString &);
     void slotContextMenu(KMail::IdentityListViewItem *, const QPoint &);
     void slotSetAsDefault();
     void slotIdentitySelectionChanged();

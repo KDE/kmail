@@ -168,7 +168,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
     mOrigQuoteGroup->addButton(mUi.radioHeaders, 2);
 
     connect(mUi.mNoMDNsWhenEncryptedCheck, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
-    connect(mUi.labelWarning, SIGNAL(linkActivated(QString)), SLOT(slotLinkClicked(QString)));
+    connect(mUi.labelWarning, &QLabel::linkActivated, this, &SecurityPageMDNTab::slotLinkClicked);
 }
 
 void SecurityPageMDNTab::slotLinkClicked(const QString &link)
