@@ -110,6 +110,10 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args, const QS
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_UNIX
+    // enforce xcb plugin fix bug Bug 367598
+    setenv("QT_QPA_PLATFORM", "xcb", true);
+#endif
     KMailApplication app(argc, &argv);
     KLocalizedString::setApplicationDomain("kmail");
     app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
