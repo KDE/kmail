@@ -346,6 +346,7 @@ QString MailFilterAgent::printCollectionMonitored()
 
 void MailFilterAgent::showConfigureDialog(qlonglong windowId)
 {
+    Q_UNUSED(windowId);
     //TODO
 }
 
