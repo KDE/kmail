@@ -1985,7 +1985,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         // Ask for the filename first.
         bool ok;
         const QString attName =
-            QInputDialog::getText(this, i18n("KMail"), i18n("Name of the attachment:"), QLineEdit::Normal, QString(), &ok);
+                QInputDialog::getText(this, i18n("KMail"), i18n("Name of the attachment:"), QLineEdit::Normal, QString(), &ok);
         if (!ok) {
             return true;
         }
@@ -1997,65 +1997,62 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
     // but do not offer this if we are pasting plain text containing an url, e.g. from a browser
     const QList<QUrl> urlList = source->urls();
     if (!urlList.isEmpty()) {
-        if (source->hasFormat(QStringLiteral("text/plain"))) {
-            insertUrls(source, urlList);
-            return true;
-        } else {
-            //Search if it's message items.
-            Akonadi::Item::List items;
-            Akonadi::Collection::List collections;
-            bool allLocalURLs = true;
 
-            foreach (const QUrl &url, urlList) {
-                if (!url.isLocalFile()) {
-                    allLocalURLs = false;
-                }
-                const Akonadi::Item item = Akonadi::Item::fromUrl(url);
-                if (item.isValid()) {
-                    items << item;
-                } else {
-                    const Akonadi::Collection collection = Akonadi::Collection::fromUrl(url);
-                    if (collection.isValid()) {
-                        collections << collection;
-                    }
+        //Search if it's message items.
+        Akonadi::Item::List items;
+        Akonadi::Collection::List collections;
+        bool allLocalURLs = true;
+
+        foreach (const QUrl &url, urlList) {
+            if (!url.isLocalFile()) {
+                allLocalURLs = false;
+            }
+            const Akonadi::Item item = Akonadi::Item::fromUrl(url);
+            if (item.isValid()) {
+                items << item;
+            } else {
+                const Akonadi::Collection collection = Akonadi::Collection::fromUrl(url);
+                if (collection.isValid()) {
+                    collections << collection;
                 }
             }
+        }
 
-            if (items.isEmpty() && collections.isEmpty()) {
-                if (allLocalURLs || forceAttachment) {
+        if (items.isEmpty() && collections.isEmpty()) {
+            if (allLocalURLs || forceAttachment) {
+                foreach (const QUrl &url, urlList) {
+                    addAttachment(url, QString());
+                }
+            } else {
+                QMenu p;
+                const int sizeUrl(urlList.size());
+                const QAction *addAsTextAction = p.addAction(i18np("Add URL into Message", "Add URLs into Message", sizeUrl));
+                const QAction *addAsAttachmentAction = p.addAction(i18np("Add File as &Attachment", "Add Files as &Attachment", sizeUrl));
+                const QAction *selectedAction = p.exec(QCursor::pos());
+
+                if (selectedAction == addAsTextAction) {
+                    insertUrls(source, urlList);
+                } else if (selectedAction == addAsAttachmentAction) {
                     foreach (const QUrl &url, urlList) {
-                        addAttachment(url, QString());
-                    }
-                } else {
-                    QMenu p;
-                    const int sizeUrl(urlList.size());
-                    const QAction *addAsTextAction = p.addAction(i18np("Add URL into Message", "Add URLs into Message", sizeUrl));
-                    const QAction *addAsAttachmentAction = p.addAction(i18np("Add File as &Attachment", "Add Files as &Attachment", sizeUrl));
-                    const QAction *selectedAction = p.exec(QCursor::pos());
-
-                    if (selectedAction == addAsTextAction) {
-                        insertUrls(source, urlList);
-                    } else if (selectedAction == addAsAttachmentAction) {
-                        foreach (const QUrl &url, urlList) {
-                            if (url.isValid()) {
-                                addAttachment(url, QString());
-                            }
+                        if (url.isValid()) {
+                            addAttachment(url, QString());
                         }
                     }
                 }
-                return true;
-            } else {
-                if (!items.isEmpty()) {
-                    Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
-                    itemFetchJob->fetchScope().fetchFullPayload(true);
-                    itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-                    connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMComposerWin::slotFetchJob);
-                }
-                if (!collections.isEmpty()) {
-                    qCDebug(KMAIL_LOG) << "Collection dnd not supported";
-                }
-                return true;
             }
+            return true;
+        } else {
+            if (!items.isEmpty()) {
+                Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
+                itemFetchJob->fetchScope().fetchFullPayload(true);
+                itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+                connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMComposerWin::slotFetchJob);
+            }
+            if (!collections.isEmpty()) {
+                qCDebug(KMAIL_LOG) << "Collection dnd not supported";
+            }
+            return true;
+
         }
     }
     return false;
