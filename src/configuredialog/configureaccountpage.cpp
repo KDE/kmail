@@ -257,7 +257,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         connect(manualMailCheck, &QAction::toggled, this, &AccountsPageReceivingTab::slotIncludeInCheckChanged);
     }
 
-    if (!MailCommon::Util::isLocalCollection(ident)) {
+    if (/*!MailCommon::Util::isLocalCollection(ident)*/1) {
         QAction *switchOffline = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown"), menu);
         switchOffline->setCheckable(true);
         switchOffline->setChecked(OfflineOnShutdown);
