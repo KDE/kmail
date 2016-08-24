@@ -45,10 +45,10 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     mSplitter->setChildrenCollapsible(false);
     lay->addWidget(mSplitter);
 
-    mConfigureAgentListView = new ConfigureAgentListView;
+    mConfigureAgentListView = new ConfigureAgentListView(this);
 
     mSplitter->addWidget(mConfigureAgentListView);
-    mDescription = new KTextEdit;
+    mDescription = new KTextEdit(this);
     mDescription->setReadOnly(true);
     mDescription->enableFindReplace(false);
     mSplitter->addWidget(mDescription);

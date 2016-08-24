@@ -136,8 +136,8 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
 
     find_package(Boost 1.34.0)
     set_package_properties(Boost PROPERTIES DESCRIPTION "Boost C++ Libraries" URL "http://www.boost.org" TYPE REQUIRED PURPOSE "Boost is required for building most KDEPIM applications")
-    add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 endif()
+add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 configure_file(config-enterprise.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
 
