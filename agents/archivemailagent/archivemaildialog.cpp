@@ -68,7 +68,6 @@ ArchiveMailDialog::ArchiveMailDialog(QWidget *parent)
     connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ArchiveMailDialog::slotSave);
 
     vlay->addWidget(buttonBox);
-    okButton->setDefault(true);
 
     readConfig();
 

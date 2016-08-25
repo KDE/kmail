@@ -133,7 +133,6 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &AddArchiveMailDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AddArchiveMailDialog::reject);
-    mOkButton->setDefault(true);
 
 
     if (mInfo) {

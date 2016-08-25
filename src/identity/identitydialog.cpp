@@ -133,8 +133,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityDialog::slotAccepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityDialog::reject);
 
-    okButton->setDefault(true);
-
     // tmp. vars:
     QWidget *tab;
     QLabel   *label;

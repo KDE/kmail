@@ -43,7 +43,6 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
     connect(okButton, &QAbstractButton::clicked, this, &PotentialPhishingDetailDialog::slotSave);
-    okButton->setDefault(true);
 
     topLayout->addWidget(mPotentialPhishingDetailWidget);
     topLayout->addWidget(buttonBox);
