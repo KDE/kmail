@@ -42,7 +42,6 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityAddVcardDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityAddVcardDialog::reject);
-    okButton->setDefault(true);
     setModal(true);
 
     QWidget *mainWidget = new QWidget(this);

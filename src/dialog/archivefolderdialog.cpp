@@ -61,11 +61,9 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 {
     setObjectName(QStringLiteral("archive_folder_dialog"));
     setWindowTitle(i18nc("@title:window for archiving a folder", "Archive Folder"));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    QVBoxLayout *topLayout = new QVBoxLayout;
-    setLayout(topLayout);
+    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
-    mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &ArchiveFolderDialog::slotAccepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &ArchiveFolderDialog::reject);

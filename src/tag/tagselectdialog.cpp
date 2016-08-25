@@ -46,10 +46,9 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
       mSelectedItem(selectedItem)
 {
     setWindowTitle(i18n("Select Tags"));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -58,7 +57,6 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &TagSelectDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &TagSelectDialog::reject);
     user1Button->setText(i18n("Add New Tag..."));
-    okButton->setDefault(true);
     setModal(true);
 
     QWidget *mainWidget = new QWidget(this);

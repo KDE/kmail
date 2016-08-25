@@ -46,7 +46,6 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityEditVcardDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityEditVcardDialog::reject);
-    okButton->setDefault(true);
 
     if (QFile(fileName).exists()) {
         setWindowTitle(i18n("Edit own vCard"));
