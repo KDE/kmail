@@ -359,6 +359,16 @@ void FilterManager::mailCollectionRemoved(const Akonadi::Collection &collection)
     }
 }
 
+void FilterManager::agentRemoved(const QString &identifier)
+{
+    QList<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
+    for (QList<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
+            it != end; ++it) {
+        //TODO remove identifier in list of account
+        //(*it)->agentRemoved(identifier);
+    }
+}
+
 void FilterManager::filter(const Akonadi::Item &item, FilterManager::FilterSet set, const QString &resourceId)
 {
     Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(item, this);

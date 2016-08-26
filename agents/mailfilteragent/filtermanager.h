@@ -126,6 +126,7 @@ public:
     MailCommon::SearchRule::RequiredPart requiredPart(const QString &id) const;
 
     void mailCollectionRemoved(const Akonadi::Collection &collection);
+    void agentRemoved(const QString &identifier);
 
 #ifndef NDEBUG
     /**

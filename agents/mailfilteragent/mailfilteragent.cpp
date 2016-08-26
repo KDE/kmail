@@ -89,6 +89,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
             this, SLOT(mailCollectionChanged(Akonadi::Collection)));
 
     connect(collectionMonitor, &Akonadi::Monitor::collectionRemoved, this, &MailFilterAgent::mailCollectionRemoved);
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &MailFilterAgent::slotInstanceRemoved);
 
     QTimer::singleShot(0, this, &MailFilterAgent::initializeCollections);
 
@@ -353,6 +354,11 @@ void MailFilterAgent::showConfigureDialog(qlonglong windowId)
 void MailFilterAgent::expunge(qint64 collectionId)
 {
     mMailFilterKernel->expunge(collectionId, false);
+}
+
+void MailFilterAgent::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
+{
+    m_filterManager->agentRemoved(instance.identifier());
 }
 
 AKONADI_AGENT_MAIN(MailFilterAgent)
