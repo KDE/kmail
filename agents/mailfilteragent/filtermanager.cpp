@@ -364,8 +364,7 @@ void FilterManager::agentRemoved(const QString &identifier)
     QList<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
     for (QList<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
             it != end; ++it) {
-        //TODO remove identifier in list of account
-        //(*it)->agentRemoved(identifier);
+        (*it)->agentRemoved(identifier);
     }
 }
 
