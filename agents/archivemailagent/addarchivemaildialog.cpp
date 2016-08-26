@@ -55,8 +55,6 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->setMargin(0);
 
-
-
     int row = 0;
 
     QLabel *folderLabel = new QLabel(i18n("&Folder:"), this);
@@ -133,7 +131,6 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &AddArchiveMailDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AddArchiveMailDialog::reject);
-
 
     if (mInfo) {
         load(mInfo);

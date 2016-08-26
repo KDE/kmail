@@ -150,7 +150,6 @@ private:
     GpgME::Protocol mProtocol;
 };
 
-
 class KeyGenerationJob : public Kleo::Job
 {
     Q_OBJECT
@@ -170,8 +169,6 @@ private:
     QString mEmail;
     Kleo::Job *mJob;
 };
-
-
 
 KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent)
     : Kleo::Job(parent)
@@ -205,14 +202,14 @@ void KeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
 {
     mJob = Q_NULLPTR;
     if (result.error()) {
-        KMessageBox::error(qobject_cast<QWidget*>(parent()),
+        KMessageBox::error(qobject_cast<QWidget *>(parent()),
                            i18n("Error while generating new key pair: %1", QString::fromUtf8(result.error().asString())),
                            i18n("Key Generation Error"));
         Q_EMIT done();
         return;
     }
 
-    KeySelectionCombo *combo = qobject_cast<KeySelectionCombo*>(parent());
+    KeySelectionCombo *combo = qobject_cast<KeySelectionCombo *>(parent());
     combo->setDefaultKey(QLatin1String(result.fingerprint()));
     connect(combo, &KeySelectionCombo::keyListingFinished,
             this, &KeyGenerationJob::done);
@@ -253,7 +250,7 @@ void KeySelectionCombo::init()
     prependCustomItem(QIcon(), i18n("No key"), QStringLiteral("no-key"));
     if (mProtocol == GpgME::OpenPGP) {
         appendCustomItem(QIcon::fromTheme(QStringLiteral("password-generate")),
-                        i18n("Generate a new key pair"), QStringLiteral("generate-new-key"));
+                         i18n("Generate a new key pair"), QStringLiteral("generate-new-key"));
     }
 
     connect(this, &KeySelectionCombo::customItemSelected,
@@ -269,12 +266,12 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
         new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
         setEnabled(false);
         connect(job, &KeyGenerationJob::done,
-                this, [this]() { setEnabled(true); });
+        this, [this]() {
+            setEnabled(true);
+        });
         job->start();
     }
 }
-
-
 
 IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)

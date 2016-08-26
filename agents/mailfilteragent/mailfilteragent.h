@@ -68,7 +68,7 @@ private Q_SLOTS:
     void emitProgress(int percent = 0);
     void emitProgressMessage(const QString &message);
     void itemsReceiviedForFiltering(const Akonadi::Item::List &items);
-    void clearMessage();    
+    void clearMessage();
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
 public Q_SLOTS:
     void configure(WId windowId) Q_DECL_OVERRIDE;

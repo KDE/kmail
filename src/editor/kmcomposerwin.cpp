@@ -1982,7 +1982,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         // Ask for the filename first.
         bool ok;
         const QString attName =
-                QInputDialog::getText(this, i18n("KMail"), i18n("Name of the attachment:"), QLineEdit::Normal, QString(), &ok);
+            QInputDialog::getText(this, i18n("KMail"), i18n("Name of the attachment:"), QLineEdit::Normal, QString(), &ok);
         if (!ok) {
             return true;
         }
