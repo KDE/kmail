@@ -822,7 +822,6 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
     if (isICalInvitation) {
         cWin->disableWordWrap();
         cWin->forceDisableHtml();
-        //cWin->disableRecipientNumberCheck();
         cWin->disableForgottenAttachmentsCheck();
     }
     return iCalAutoSend;
