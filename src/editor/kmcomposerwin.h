@@ -587,7 +587,7 @@ private:
     QAction *mPrependSignature;
     QAction *mInsertSignatureAtCursorPosition;
 
-    KToggleAction *markupAction;
+    KToggleAction *mMarkupAction;
 
     CodecAction *mCodecAction;
     KSelectAction *mCryptoModuleAction;
@@ -618,7 +618,7 @@ private:
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget;
     AttachmentMissingWarning *mAttachmentMissing;
     ExternalEditorWarning *mExternalEditorWarning;
-    QTimer *m_verifyMissingAttachment;
+    QTimer *mVerifyMissingAttachment;
     MailCommon::FolderRequester *mFccFolder;
     bool mPreventFccOverwrite;
     bool mCheckForForgottenAttachments;

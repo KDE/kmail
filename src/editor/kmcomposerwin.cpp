@@ -239,7 +239,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
       mDummyComposer(Q_NULLPTR),
       mLabelWidth(0),
       mComposerBase(Q_NULLPTR),
-      m_verifyMissingAttachment(Q_NULLPTR),
+      mVerifyMissingAttachment(Q_NULLPTR),
       mPreventFccOverwrite(false),
       mCheckForForgottenAttachments(true),
       mWasModified(false),
@@ -422,10 +422,10 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     v->addWidget(mPotentialPhishingEmailWarning);
 
     if (KMailSettings::self()->showForgottenAttachmentWarning()) {
-        m_verifyMissingAttachment = new QTimer(this);
-        m_verifyMissingAttachment->setSingleShot(true);
-        m_verifyMissingAttachment->setInterval(1000 * 5);
-        connect(m_verifyMissingAttachment, &QTimer::timeout, this, &KMComposerWin::slotVerifyMissingAttachmentTimeout);
+        mVerifyMissingAttachment = new QTimer(this);
+        mVerifyMissingAttachment->setSingleShot(true);
+        mVerifyMissingAttachment->setInterval(1000 * 5);
+        connect(mVerifyMissingAttachment, &QTimer::timeout, this, &KMComposerWin::slotVerifyMissingAttachmentTimeout);
     }
     connect(attachmentController, &KMail::AttachmentController::fileAttached, mAttachmentMissing, &AttachmentMissingWarning::slotFileAttached);
 
@@ -518,8 +518,8 @@ void KMComposerWin::slotEditorTextChanged()
     mFindNextText->setEnabled(textIsNotEmpty);
     mReplaceText->setEnabled(textIsNotEmpty);
     mSelectAll->setEnabled(textIsNotEmpty);
-    if (m_verifyMissingAttachment && !m_verifyMissingAttachment->isActive()) {
-        m_verifyMissingAttachment->start();
+    if (mVerifyMissingAttachment && !mVerifyMissingAttachment->isActive()) {
+        mVerifyMissingAttachment->start();
     }
 }
 
@@ -1198,12 +1198,12 @@ void KMComposerWin::setupActions(void)
     connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::externalEditorClosed, this, &KMComposerWin::slotExternalEditorClosed);
     connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::externalEditorStarted, this, &KMComposerWin::slotExternalEditorStarted);
     //these are checkable!!!
-    markupAction = new KToggleAction(i18n("Rich Text Editing"), this);
-    markupAction->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-font")));
-    markupAction->setIconText(i18n("Rich Text"));
-    markupAction->setToolTip(i18n("Toggle rich text editing mode"));
-    actionCollection()->addAction(QStringLiteral("html"), markupAction);
-    connect(markupAction, &KToggleAction::triggered, this, &KMComposerWin::slotToggleMarkup);
+    mMarkupAction = new KToggleAction(i18n("Rich Text Editing"), this);
+    mMarkupAction->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-font")));
+    mMarkupAction->setIconText(i18n("Rich Text"));
+    mMarkupAction->setToolTip(i18n("Toggle rich text editing mode"));
+    actionCollection()->addAction(QStringLiteral("html"), mMarkupAction);
+    connect(mMarkupAction, &KToggleAction::triggered, this, &KMComposerWin::slotToggleMarkup);
 
     mAllFieldsAction = new KToggleAction(i18n("&All Fields"), this);
     actionCollection()->addAction(QStringLiteral("show_all_fields"), mAllFieldsAction);
@@ -2296,7 +2296,7 @@ void KMComposerWin::forceDisableHtml()
 {
     mForceDisableHtml = true;
     disableHtml(MessageComposer::ComposerViewBase::NoConfirmationNeeded);
-    markupAction->setEnabled(false);
+    mMarkupAction->setEnabled(false);
     // FIXME: Remove the toggle toolbar action somehow
 }
 
@@ -2742,8 +2742,8 @@ void KMComposerWin::enableHtml()
         // signal, so wait one event loop run for that.
         QTimer::singleShot(0, toolBar(QStringLiteral("htmlToolBar")), &QWidget::show);
     }
-    if (!markupAction->isChecked()) {
-        markupAction->setChecked(true);
+    if (!mMarkupAction->isChecked()) {
+        mMarkupAction->setChecked(true);
     }
 
     mComposerBase->editor()->composerActions()->updateActionStates();
@@ -2780,14 +2780,14 @@ void KMComposerWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation 
         // See the comment in enableHtml() why we use a singleshot timer, similar situation here.
         QTimer::singleShot(0, toolBar(QStringLiteral("htmlToolBar")), &QWidget::hide);
     }
-    if (markupAction->isChecked()) {
-        markupAction->setChecked(false);
+    if (mMarkupAction->isChecked()) {
+        mMarkupAction->setChecked(false);
     }
 }
 
 void KMComposerWin::slotToggleMarkup()
 {
-    htmlToolBarVisibilityChanged(markupAction->isChecked());
+    htmlToolBarVisibilityChanged(mMarkupAction->isChecked());
 }
 
 void KMComposerWin::slotTextModeChanged(MessageComposer::RichTextComposerNg::Mode mode)
@@ -3106,10 +3106,10 @@ void KMComposerWin::slotVerifyMissingAttachmentTimeout()
 
 void KMComposerWin::slotExplicitClosedMissingAttachment()
 {
-    if (m_verifyMissingAttachment) {
-        m_verifyMissingAttachment->stop();
-        delete m_verifyMissingAttachment;
-        m_verifyMissingAttachment = Q_NULLPTR;
+    if (mVerifyMissingAttachment) {
+        mVerifyMissingAttachment->stop();
+        delete mVerifyMissingAttachment;
+        mVerifyMissingAttachment = Q_NULLPTR;
     }
 }
 
