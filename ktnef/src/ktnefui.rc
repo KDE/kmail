@@ -1,0 +1,36 @@
+<!DOCTYPE kpartgui>
+<kpartgui name="kups" version="2">
+<MenuBar>
+  <Menu name="action"><text>&amp;Action</text>
+    <Action name="view_file" />
+    <Action name="view_file_as" />
+    <Separator/>
+    <Action name="extract_file" />
+    <Action name="extract_file_to" />
+    <Separator/>
+    <Action name="extract_all_files" />
+    <Separator/>
+    <Action name="properties_file" />
+	<Separator/>
+	<Action name="msg_properties" />
+	<Action name="msg_text" />
+	<Action name="msg_save" />
+  </Menu>
+  <Menu name="settings"><text>&amp;Settings</text>
+    <Action name="options_default_dir" append="save_merge"/>
+  </Menu>
+</MenuBar>
+<ToolBar name="mainToolBar" noMerge="1">
+  <text>Main Toolbar</text>
+  <Action name="file_open" />
+  <Separator/>
+  <Action name="view_file" />
+  <Action name="properties_file" />
+  <Separator/>
+  <Action name="extract_file_to" />
+  <Action name="extract_all_files" />
+  <Separator/>
+  <Action name="msg_properties" />
+  <Action name="msg_text" />
+</ToolBar>
+</kpartgui>

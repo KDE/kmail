@@ -1,0 +1,7 @@
+EXTRA camelcase,defines,kdebug,null,qenums,tipsandthis
+
+#these are borrowed from calligra but have been around forever. skip them.
+SKIP /qwmf\.cpp\|/qwmf\.h\|/metafuncs\.h\|/wmfstruct\.h
+
+STRICT super
+PRIORITY all
