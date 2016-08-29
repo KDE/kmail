@@ -21,6 +21,8 @@
 #include "kmail_export.h"
 #include "ui_miscpagemaintab.h"
 #include "configuredialog_p.h"
+#include "config-kmail.h"
+
 
 namespace MailCommon
 {
@@ -29,6 +31,7 @@ class FolderRequester;
 namespace MessageViewer
 {
 class InvitationSettings;
+class PrintingSettings;
 }
 class ConfigureAgentsWidget;
 
@@ -116,5 +119,22 @@ public:
     typedef MiscPageFolderTab FolderTab;
     typedef MiscPageInviteTab InviteTab;
 };
+
+#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
+class MiscPagePrintingTab : public ConfigModuleTab
+{
+    Q_OBJECT
+public:
+    explicit MiscPagePrintingTab(QWidget *parent = Q_NULLPTR);
+    void save() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+
+private:
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+
+private:
+    MessageViewer::PrintingSettings *mPrintingUi;
+};
+#endif
 
 #endif // CONFIGUREMISCPAGE_H

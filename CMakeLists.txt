@@ -139,7 +139,13 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${kmail_SOURCE_DIR})
 endif()
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_USE_QSTRINGBUILDER)
+
+if (Qt5WebEngineWidgets_VERSION VERSION_GREATER "5.7.99")
+    set(WEBENGINEVIEWER_PRINT_SUPPORT true)
+endif()
+
 configure_file(config-enterprise.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
+configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 
 include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
 configure_file(kmail-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)

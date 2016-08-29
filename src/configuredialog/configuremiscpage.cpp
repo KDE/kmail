@@ -26,6 +26,10 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "MessageViewer/PrintingSettings"
 #include "messageviewer/messageviewersettings.h"
 
+#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
+#include "MessageViewer/PrintingSettings"
+#endif
+
 #include <KCModuleProxy>
 #include <KCModuleInfo>
 #include <KLocalizedString>
@@ -54,6 +58,11 @@ MiscPage::MiscPage(QWidget *parent)
 
     MiscPageAgentSettingsTab *agentSettingsTab = new MiscPageAgentSettingsTab();
     addTab(agentSettingsTab, i18n("Plugins Settings"));
+
+#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
+    MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
+    addTab(printingTab, i18n("Printing"));
+#endif
 
     Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
@@ -231,3 +240,30 @@ void AddonsPluginTab::doResetToDefaultsOther()
 {
     mConfigureWidget->resetSettings();
 }
+
+#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
+MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
+    : ConfigModuleTab(parent)
+{
+    mPrintingUi = new MessageViewer::PrintingSettings(this);
+    QHBoxLayout *l = new QHBoxLayout(this);
+    l->setContentsMargins(0, 0, 0, 0);
+    l->addWidget(mPrintingUi);
+    connect(mPrintingUi, &MessageViewer::PrintingSettings::changed, this, &MiscPagePrintingTab::slotEmitChanged);
+}
+
+void MiscPagePrintingTab::doLoadFromGlobalSettings()
+{
+    mPrintingUi->doLoadFromGlobalSettings();
+}
+
+void MiscPagePrintingTab::doResetToDefaultsOther()
+{
+    mPrintingUi->doResetToDefaultsOther();
+}
+
+void MiscPagePrintingTab::save()
+{
+    mPrintingUi->save();
+}
+#endif
