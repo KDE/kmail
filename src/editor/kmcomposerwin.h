@@ -542,6 +542,9 @@ private:
     QLabel *mLblReplyTo;
     QLabel    *mLblSubject;
     QLabel    *mDictionaryLabel;
+    QLabel    *mCursorLineLabel;
+    QLabel    *mCursorColumnLabel;
+    QLabel    *mStatusbarLabel;
     bool mDone;
 
     KMime::Message::Ptr mMsg;
@@ -622,7 +625,6 @@ private:
     bool mWasModified;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
     bool mSendNowByShortcutUsed;
-    QList<QLabel *> mStatusBarLabelList;
     KSplitterCollapserButton *mSnippetSplitterCollapser;
     KToggleAction *mFollowUpToggleAction;
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;

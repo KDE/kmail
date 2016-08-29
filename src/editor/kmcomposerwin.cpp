@@ -212,6 +212,9 @@ int KMComposerWin::s_composerNumber = 0;
 KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint id,
                              const QString &textSelection, const QString &customTemplate)
     : KMail::Composer("kmail-composer#"),
+      mCursorLineLabel(Q_NULLPTR),
+      mCursorColumnLabel(Q_NULLPTR),
+      mStatusbarLabel(Q_NULLPTR),
       mDone(false),
       mTextSelection(textSelection),
       mCustomTemplate(customTemplate),
@@ -1355,20 +1358,17 @@ void KMComposerWin::setupStatusBar(QWidget *w)
 {
     //KPIM::ProgressStatusBarWidget *progressStatusBarWidget = new KPIM::ProgressStatusBarWidget(statusBar(), this, PimCommon::StorageServiceProgressManager::progressTypeValue());
     statusBar()->addWidget(w);
-    QLabel *lab = new QLabel(this);
-    lab->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    statusBar()->addPermanentWidget(lab);
-    mStatusBarLabelList.append(lab);
+    mStatusbarLabel = new QLabel(this);
+    mStatusbarLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    statusBar()->addPermanentWidget(mStatusbarLabel);
 
-    lab = new QLabel(this);
-    lab->setText(i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
+    mCursorLineLabel = new QLabel(this);
+    mCursorLineLabel->setText(i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
                        , QStringLiteral("     ")));
-    statusBar()->addPermanentWidget(lab);
-    mStatusBarLabelList.append(lab);
+    statusBar()->addPermanentWidget(mCursorLineLabel);
 
-    lab = new QLabel(i18n(" Column: %1 ", QStringLiteral("     ")));
-    statusBar()->addPermanentWidget(lab);
-    mStatusBarLabelList.append(lab);
+    mCursorColumnLabel = new QLabel(i18n(" Column: %1 ", QStringLiteral("     ")));
+    statusBar()->addPermanentWidget(mCursorColumnLabel);
 
     mStatusBarLabelToggledOverrideMode = new StatusBarLabelToggledState(this);
     mStatusBarLabelToggledOverrideMode->setStateString(i18n("OVR"), i18n("INS"));
@@ -2822,13 +2822,13 @@ void KMComposerWin::slotAutoSpellCheckingToggled(bool on)
 
 void KMComposerWin::slotSpellCheckingStatus(const QString &status)
 {
-    mStatusBarLabelList.at(0)->setText(status);
+    mStatusbarLabel->setText(status);
     QTimer::singleShot(2000, this, &KMComposerWin::slotSpellcheckDoneClearStatus);
 }
 
 void KMComposerWin::slotSpellcheckDoneClearStatus()
 {
-    mStatusBarLabelList.at(0)->clear();
+    mStatusbarLabel->clear();
 }
 
 void KMComposerWin::slotIdentityChanged(uint uoid, bool initalChange)
@@ -3043,17 +3043,16 @@ void KMComposerWin::slotCursorPositionChanged()
     const int line = mComposerBase->editor()->linePosition();
     const int col = mComposerBase->editor()->columnNumber();
     QString temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line + 1);
-    mStatusBarLabelList.at(1)->setText(temp);
+    mCursorLineLabel->setText(temp);
     temp = i18n(" Column: %1 ", col + 1);
-    mStatusBarLabelList.at(2)->setText(temp);
+    mCursorColumnLabel->setText(temp);
 
     // Show link target in status bar
     if (mComposerBase->editor()->textCursor().charFormat().isAnchor()) {
-        const QString text = mComposerBase->editor()->composerControler()->currentLinkText();
-        const QString url = mComposerBase->editor()->composerControler()->currentLinkUrl();
-        mStatusBarLabelList.at(0)->setText(text + QLatin1String(" -> ") + url);
+        const QString text = mComposerBase->editor()->composerControler()->currentLinkText() + QLatin1String(" -> ") + mComposerBase->editor()->composerControler()->currentLinkUrl();
+        mStatusbarLabel->setText(text);
     } else {
-        mStatusBarLabelList.at(0)->clear();
+        mStatusbarLabel->clear();
     }
 }
 
