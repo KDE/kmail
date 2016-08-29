@@ -1,0 +1,201 @@
+<chapter id="troubleshooting">
+
+<chapterinfo>
+<authorgroup>
+<author>
+<personname>
+      <firstname>This chapter was converted from the KDE UserBase <ulink url="http://userbase.kde.org/KMail/FAQs Hints and Tips">KMail/FAQs Hints and Tips</ulink> page.</firstname>
+<surname></surname>
+</personname>
+      </author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+      </authorgroup>
+<date>2012-07-28</date>
+      <releaseinfo>&kde; SC 4.9</releaseinfo>
+</chapterinfo>
+
+<title>&kmail; Troubleshooting</title>
+
+<sect1 id="kmail2-doesnt-send-mail"><title>KMail doesn't send mail</title>
+<para>Some users find that mail does not go out, and it appears that &SMTP; is missing, even though the <guilabel>Settings</guilabel> page looks correct.  It has been reported that this is cured by opening <application>akonadiconsole</application> and adding Mail Dispatcher Agent.
+</para>
+<para>If the computer was suddenly turned off in suspend mode (&eg; by a power cut) sometimes e-mails simply stay in the outbox without being sent, but no error message is generated either. This may be due to the fact that the Mail Dispatcher Agent is set to <quote>offline</quote> in the configuration file during suspend and is not changed back due to the crash. Edit the following file:
+</para>
+<para><filename>~/.config/akonadi/agent_config_akonadi_maildispatcher_agent</filename>
+</para>
+<para>and change
+</para>
+<para><screen>
+[Agent]
+Online=false</screen>
+</para>
+<para>to
+</para>
+<para><screen>
+[Agent]
+Online=true</screen>
+</para>
+</sect1>
+<sect1 id="clean-start-after-a-failed-migration"><title>Clean start after a failed migration</title>
+<para>In case migration from &kmail; 1 to &kmail; 2 fails or you have weird problems after it, you can try to do a clean import of your data, instead of migrating the existing settings. Be warned, this needs more manual setup, so do only if you are confident of setting up your &kmail; accounts again; it can generate a large amount of network traffic for &imap; resources.
+</para>
+<orderedlist>
+<listitem><para>Stop Akonadi and related applications</para>
+<para>quit &kmail;/&kontact;/&korganizer;, and issue this command:
+</para>
+<para><userinput><command>akonadictl stop</command></userinput>
+</para>
+<para>Make sure no <application>Akonadi</application> or <application>MySQL</application> process is running:
+</para>
+<para><userinput><command>ps ux | grep mysql</command></userinput>
+</para>
+<para><userinput><command>ps ux | grep akonadi</command></userinput>
+</para>
+<para>They should not show anything else but the <application>grep</application> process itself.
+</para>
+</listitem>
+<listitem><para>Remove old Akonadi database and config</para>
+<para>Delete the following folders
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      <filename role="directory">~/.local/share/akonadi</filename>
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      <filename role="directory">~/.config/akonadi</filename>
+    </para>
+  </listitem>
+</itemizedlist>
+<para>Delete also the files starting with <emphasis>akonadi</emphasis> from <filename role="directory">~/.kde4/share/config</filename>
+</para>
+</listitem>
+<listitem>
+<para>Restart Akonadi server
+</para>
+<para><userinput><command>akonadictl start</command></userinput>
+</para>
+</listitem>
+<listitem>
+<para>Add back the accounts
+</para>
+<para>Now it is time to add your account back. You can use &kmail; (&kontact;) for it, or you can use the <application>akonadiconsole</application> tool.
+</para>
+<para>In &kmail;: <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Accounts</guimenuitem></menuchoice> and use <guilabel>Add</guilabel>.
+</para>
+<para>If you use &imap;, add a new <guimenuitem>&imap; E-Mail server</guimenuitem>. If you want disconnected mode (so you can read the mails offline), enable it on the <guilabel>Advanced</guilabel> tab. Be sure to check that you are subscribed to all your important folders.
+</para>
+<para>You might already see a <guilabel>Local folder</guilabel> resource. This points to a local maildir folder. You can either modify this to point to your existing maildir folders or you can add a new resource for local mails.
+</para>
+<para>When adding a maildir resource you can choose between <guilabel>&kmail; Mail Folder</guilabel> or <guilabel>Maildir</guilabel>. Unless you have a mixed folder containing <emphasis>both</emphasis> maildir folders and mbox files, you should choose <guilabel>Maildir</guilabel>. For independent mbox files, like the one in the <filename role="directory">/var/spool/mail</filename>, you can set up a new <emphasis>MBox</emphasis>  folder.
+</para>
+<para>Add the POP3 accounts as well. If you have multiple Local Folders set up, on the <guilabel>Advanced</guilabel> tab, choose the destination folder where the newly downloaded mails are put.
+</para>
+<para>For all accounts, configure the mail check interval. For Local folders disable interval checking and also disable <guilabel>Include in manual mail check</guilabel> in the <guilabel>Retrieval options</guilabel>.
+</para>
+<para>Add the sending (SMTP) accounts.
+</para>
+</listitem>
+<listitem>
+<para>Fix your filters, identities and favorite folders
+</para>
+<para>If you have client side filtering (common with POP3 mails), go to <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Filters</guimenuitem></menuchoice> and fix the destination folder for the filters, they most probably are wrong. Otherwise mails will end up in folders you don't expect.
+</para>
+<para>Spam filter (at least in version 4.7.3 and earlier) does not work as expected in that the rule that the wizard creates does not send spam to the folder you have defined.
+</para>
+<para>The workaround for this is to change the <quote>spam</quote> and <quote>spam unsure</quote> (if the spam filter you use supports that) from looking at Status-fields in the header <literal>X-Spam-Status</literal> to look <guimenuitem>Anywhere in headers</guimenuitem> for X-<replaceable>your spam filter</replaceable>-Classification: <quote>SPAM or unsure</quote>. Look at the filters the wizard creates and copy the <quote>contains</quote> part. Example for <application>Spambayes</application>: <quote>X-Spambayes-Classification: spam</quote> and <quote>X-Spambayes-Classification: unsure</quote>.
+</para>
+<para>You also need to verify the identity settings and set the sent-mail, drafts and templates folders to point to the right folders. To do that go to <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Identities</guimenuitem></menuchoice>, modify the identity, go to the  <guilabel>Advanced</guilabel> tab and modify the above mentioned folder settings.
+</para>
+<para>Check also that your <guilabel>Favorite Folders</guilabel> are the ones you have chosen before.
+</para>
+</listitem>
+<listitem>
+<para>Initiate a mail check
+</para>
+<para>Start a mail check for your accounts. It is suggested doing it per account.
+</para>
+<para>First check for &imap;, if you have it.
+</para>
+<para>Next check (import) your local mails. One solution is to do a full check in one go <menuchoice><guimenu>File</guimenu><guimenuitem>Check Mail In</guimenuitem></menuchoice> and select the local account; the other is to click one by one on the folders, that should initiate the check for that folder (alternatively right click on the folder name and select <guilabel>Update Folder</guilabel>).
+</para>
+<para>The initial import might be slow and could use a lot of memory, especially if you have folders with a large amount of mail. In that case per-folder check is preferred. If the check (complete or for one folder) is finished and the memory usage is still high, you could restart the Akonadi server &mdash; as seen above &mdash; or just the maildir agent, if you use <varname>akonadiconsole</varname>. Do not worry, this high memory usage is <emphasis>only</emphasis> for initial import.
+</para>
+<para>Initiate a check mail for POP3 resources.
+</para>
+</listitem>
+</orderedlist>
+<para>Hopefully after these steps, you will have a much nicer &kmail; experience.
+</para>
+</sect1>
+
+<sect1 id="local-folders-is-added-over-and-over"><title>Local Folders is added over and over</title>
+<para>In some cases you might end up with a maildir account pointing to a certain place (like <filename>$HOME/Mail</filename>), but you still see a <guilabel>Local Folders</guilabel> folder in the folder list with Inbox/Outbox/Trash/Drafts/&etc; subfolders and &kmail; keeps putting mails there, especially sent mails.
+</para>
+<para>The problem is that certain folders are marked as special folders (system folders) and if you don't have them, &kmail; cannot operate correctly. That is the reason why it keeps re-creating that folder.
+</para>
+<para>At this time there is no easy way to change this in the UI for all types of special folders. Here is what you can do:
+</para>
+<orderedlist>
+<listitem><para>The <emphasis>Sent-Mail, Drafts and Templates</emphasis> folder is configurable for each identity. Go to  <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Identities</guimenuitem></menuchoice>, select your identity, click on <guilabel>Modify</guilabel>, go to the <guilabel>Advanced</guilabel> tab and set the folders to point to the right place.</para></listitem>
+<listitem><para>The default <emphasis>Inbox</emphasis> is configurable for each POP3 account. Go to  <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Account</guimenuitem></menuchoice>, select your POP3 account, click on <guilabel>Modify</guilabel> go to the <guilabel>Advanced</guilabel> tab and set the <guilabel>Destination folder</guilabel>.</para></listitem>
+<listitem><para>For IMAP accounts you can configure the <emphasis>Trash</emphasis> folder. Do as above. The setting name is <emphasis>Trash folder</emphasis>.</para></listitem>
+<listitem><para>The most problematic part is the <emphasis>Outbox</emphasis>. First, locate <filename>specialmailcollectionsrc</filename> in your &kde; configuration directory (<filename>$HOME/.kde4/share/config</filename> or similar). It contains something like this:</para></listitem>
+</orderedlist>
+<para><userinput>
+[SpecialCollections]
+DefaultResourceId=akonadi_maildir_resource_0</userinput>
+</para>
+<para>Now start <application>akonadiconsole</application>, on the <guilabel>Agents</guilabel> tab locate your local account for your <emphasis>Outbox</emphasis> folder, click on it and note the identifier that appears in the lower part (<replaceable>akonadi_maildir_resource_XXX</replaceable> or similar). Put this identifier in the above shown <filename>specialmailcollectionsrc</filename>, by replacing the existing one.
+</para>
+<para>After that restart <application>akonadi</application> (you can do from the <application>akonadiconsole</application>, <menuchoice><guimenu>Server</guimenu><guimenuitem>Restart Server</guimenuitem></menuchoice> or from command line with:
+</para>
+<para><userinput>akonadictl restart</userinput>
+</para>
+<para>Now remove the <guilabel>Local Folders</guilabel> that you don't want to use anymore.
+</para>
+<para>If it keeps reappearing and the <guilabel>Mail Dispatcher Agent</guilabel> still crashes, you need to do one more thing in <application>akonadiconsole</application>. Go to the <guilabel>Browser</guilabel> tab, find the outbox you <emphasis>want</emphasis> to use, right click on it, select <guilabel>Folder Properties</guilabel>, <guilabel>Attributes</guilabel> tab, enter <userinput>SpecialCollectionAttribute</userinput> then click <guilabel>Add</guilabel>, double click on the <guilabel>Value</guilabel> near the <guilabel>SpecialCollectionAttribute</guilabel> and enter <userinput>outbox</userinput>. Add also another attribute, the attribute name has to be <guilabel>ENTITYDISPLAY</guilabel> and the value <userinput>("outbox" "mail-folder-outbox" "" ())</userinput> (just copy paste from here). Restart <application>akonadi</application> and now you should be able to remove completely the unneeded local folder account.
+</para>
+</sect1>
+
+<sect1 id="you-get-the-error-unable-to-fetch-item-from-backend-when-entering-imap-folder"><title>You get the error Unable to fetch item from backend when entering IMAP folder</title>
+<para>There are a number of possible reasons for this and it is something the &kmail; team hopes to tackle in time. Meanwhile, there are some workarounds:
+</para>
+<variablelist>
+  <varlistentry>
+    <term>Workaround 1</term>
+    <listitem>
+      <itemizedlist>
+        <listitem><para>edit <filename>~/.local/share/akonadi/mysql.conf</filename></para></listitem>
+        <listitem><para>Under the <guilabel>[mysql]</guilabel> section, add: <userinput>binlog_format=row</userinput></para></listitem>
+      </itemizedlist>
+      <para>If this does not work, try workaround 2 (below).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Workaround 2</term>
+    <listitem>
+      <para>This one is mostly a matter of restarting so &kmail; can fetch those pesky items... Some possible steps:</para>
+      <para>Use <keycombo>&Alt;<keycap>F2</keycap></keycombo> or &konsole; to type: <userinput><command>kquitapp kmail</command></userinput>, then wait a minute, then <userinput><command>akonadictl stop</command></userinput>, wait a minute, type <userinput><command>akonadictl start</command></userinput>, wait a minute, type <userinput><command>kmail</command></userinput>. This stops &kmail; (closing <emphasis>all</emphasis> windows), stops the &kmail; backend, starts the &kmail; backend, starts &kmail;. Having a working internet connection increases the chances of success. Sometimes, you can also just do <userinput><command>kquitapp kmail</command></userinput>, wait a minute, and start &kmail; again. Often, a few restarts seem to be needed. It is unclear what is the reason for this, but on bad network connections it is more likely to happen.
+      </para>
+    </listitem>
+  </varlistentry>
+</variablelist>
+<para>See also the below item for how <application>akonadiconsole</application> can be helpful.
+</para>
+</sect1>
+
+<sect1 id="your-mails-are-not-being-sent-without-error-messages"><title>Your mails are not being sent, without error messages</title>
+<para>If &kmail; does not send mail without saying anything, the <quote>agent</quote> responsible for dispatching the messages can be stuck. Of course, you need to ensure you have proper network connectivity for mail to be sent!
+</para>
+<para>To remedy this, it might help to abort the current action and restart it. First, quit &kmail; by using &krunner; (<keycombo>&Alt;<keycap>F2</keycap></keycombo>) or &konsole; and typing: <userinput><command>kquitapp kmail</command></userinput>. Note that a normal <keycombo>&Alt;<keycap>F4</keycap></keycombo> or <menuchoice><guimenu>File</guimenu><guimenuitem>Quit</guimenuitem></menuchoice> does <emphasis>not</emphasis> do the trick! Wait a minute, then start &kmail; again. Now start <application>akonadiconsole</application> using &krunner; (<keycombo>&Alt;<keycap>F2</keycap></keycombo>) or &konsole;. Go to the <guilabel>Mail Dispatcher Agent</guilabel>, do a right-click and abort the current action. You will most likely get some error messages popping up.
+ Go back to &kmail; and choose <menuchoice><guimenu>File</guimenu><guimenuitem>Send Queued Messages</guimenuitem></menuchoice>. Now it might work. If not, instead of aborting the current action, try toggling the offline/online status of the <guilabel>Mail Dispatcher Agent</guilabel> or restarting things as mentioned in workaround 2 of the problem above this one.
+</para>
+<para><note><para>akonadiconsole can be quite helpful for a number of situations as it shows all the <quote>agents</quote>, the separate components of the &kmail; backend. You can stop and start them, put them in offline mode, abort ongoing actions &etc; It can be very helpful when things get stuck.</para></note>
+</para>
+</sect1>
+
+</chapter>

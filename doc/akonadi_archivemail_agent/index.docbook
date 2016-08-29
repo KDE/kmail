@@ -1,0 +1,150 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application>Archive Mail Agent</application>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE"> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title>The &i18n-archivemailagent; Handbook</title>
+
+<authorgroup>
+<author>
+<personname>
+<firstname>Laurent</firstname>
+<surname>Montel</surname>
+</personname>
+<email>montel@kde.org</email>
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2013</year>
+<holder>Laurent Montel</holder>
+</copyright>
+
+<legalnotice>&FDLNotice;</legalnotice>
+
+<date>2013-08-30</date>
+<releaseinfo>&kde; 4.11</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title>Introduction</title>
+
+<para>
+&i18n-archivemailagent; is an Akonadi agent which allows to archive mail folders automatically.
+</para>
+
+<sect2 id="using-kapp">
+<title>Using &i18n-archivemailagent;</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para>Use <menuchoice><guimenu>Tools</guimenu><guimenuitem>Configure Automatic Archiving...</guimenuitem>
+</menuchoice><action> in &kmail;'s reader window to open a dialog to set up automatic archiving of mail folders.</action>
+</para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para>This is a powerful tool that can be used to assist in backing up your email. To use this, click
+the <guibutton>Add...</guibutton> button, and the <guilabel>Add Archive Mail</guilabel> dialog will pop up.</para>
+
+<screenshot>
+<screeninfo>Add Archive Mail dialog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>Add Archive Mail dialog</phrase>
+    </textobject>
+    <caption>
+      <para>Add Archive Mail dialog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem><para>First select the folder you would like to archive.</para></listitem>
+<listitem><para>Select the format you would like to save it in. &eg; <literal role="extension">.tar.bz2</literal>
+ in the drop down list. The archive filename will consist of the prefix <userinput>Archive_</userinput>,
+the path of the selected folder in &kmail;'s folder list, the date in format <userinput>year-month-day</userinput> 
+and the selected file extension &eg; <filename>Archive_Local Folder_inbox_2013-09-03.tar.bz2</filename>.
+</para></listitem>
+<listitem><para>By default <guilabel>Archive all subfolders</guilabel> is enabled. 
+Uncheck this if you only want the parent folder archived.</para></listitem>
+<listitem><para>You can type in the location you would like to save your archive, or click 
+the <guibutton>Open File Dialog</guibutton> button to select the folder.</para></listitem>
+<listitem><para>Select how often you wish to backup through the dropdown menus next to 
+<guilabel>Backup each:</guilabel>.</para></listitem>
+<listitem><para>If you are limited on drive space you will want to set a limit on 
+<guilabel>Maximum number of archive:</guilabel></para></listitem>
+</itemizedlist>
+<para>If you have added or modified an archive job it will be executed automatically after closing the dialog.
+</para>
+
+<para>If you have already added mail archive jobs the <guilabel>Configure Archive Mail 
+Agent</guilabel> dialog will list and allow to modify them.
+</para>
+<screenshot>
+<screeninfo>Configure Archive Mail Agent</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>Configure Archive Mail Agent</phrase>
+    </textobject>
+    <caption>
+      <para>Configure Archive Mail Agent</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>You can use the checkbox at the left of each entry in the list to enable or disable 
+archiving of this job.
+</para>
+<para>Using the context menu launched with a &RMB; click on an archive job you can open the 
+folder containing the archives or start the archive job immediately. This will overwrite an existing 
+archive created earlier at the same day without notification.
+</para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title>Credits and License</title>
+
+<para>&i18n-archivemailagent;</para>
+<para>
+Program copyright 2013 Laurent Montel montel@kde.org 
+</para>
+<para>
+Documentation Copyright &copy; 2013 Laurent Montel montel@kde.org
+</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;               <!-- FDL: do not remove -->
+&underGPL;        	 <!-- GPL License -->
+</sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

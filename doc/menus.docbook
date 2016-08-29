@@ -1,0 +1,1763 @@
+<chapter id="menus">
+
+<chapterinfo>
+<authorgroup>
+<author>
+<firstname>Daniel</firstname>
+<surname>Naber</surname>
+<affiliation><address>
+&Daniel.Naber.mail;
+</address></affiliation>
+</author>
+<author>
+<firstname>David</firstname>
+<surname>Rugge</surname>
+<affiliation><address>
+&David.Rugge.mail;
+</address></affiliation>
+</author>
+<author>
+<firstname>Michel</firstname>
+<surname>Boyer de la Giroday</surname>
+<affiliation><address>
+<email>michel@klaralvdalens-datakonsult.se</email>
+</address></affiliation>
+</author>
+<author>
+<firstname>Laurent</firstname>
+<surname>Montel</surname>
+<affiliation><address>
+&Laurent.Montel.mail;
+</address></affiliation>
+</author>
+<author>
+<firstname>Scarlett</firstname>
+<surname>Clark</surname>
+<affiliation><address>
+&Scarlett.Clark.mail;
+</address></affiliation>
+</author>
+
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+<date>2013-11-25</date>
+<releaseinfo>&kde; 4.11</releaseinfo>
+</chapterinfo>
+
+<title>Command and Menu Reference</title>
+<para>Each &kmail; specific menu item is discussed below. When there is a keyboard shortcut that
+performs a menu item function, the default shortcut is listed with the menu item.</para>
+
+<sect1 id="reader-menu-items">
+<title>The &kmail; Reader Window</title>
+
+<sect2 id="reader-file-menu">
+<title>File Menu</title>
+<variablelist>
+<varlistentry id="file-new">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guisubmenu>New</guisubmenu>
+</menuchoice></term>
+<listitem><para>Here you can create several new items as follows:</para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-new-newmessage">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guisubmenu>New</guisubmenu>
+<guimenuitem>New Message...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Compose a new message.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-new-message-from-template">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guisubmenu>New</guisubmenu>
+<guisubmenu>Message from Template</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Creates a new message from a selected template.</action> Please see <link linkend="new-compose-from-templates">Compose From Templates</link> for additional information on creating templates.</para>
+<para>If you do not have any templates saved, you will see <menuchoice><guimenu>Message</guimenu><guisubmenu>Message from Template</guisubmenu><guimenuitem>(no templates)</guimenuitem></menuchoice>.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-add-folder">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guisubmenu>New</guisubmenu>
+<guimenuitem>Add Folder...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Create a new folder.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-new-addressbook-contact">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guisubmenu>New</guisubmenu>
+<guimenuitem>New AddressBook Contact...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up the <guilabel>New Contact</guilabel> dialog.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-open">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Open...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Open email messages or mailboxes.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-open-recent">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Open Recent</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens recently used messages.</action> Only messages that have been saved and then opened will show up on this list.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-save-as">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Save As...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Saves the currently displayed message to a <filename role="extension">.mbox</filename>.</action> This includes all the headers and attachments.</para>
+<para>If you would like to save it to a different format &eg; <filename role="extension">.txt</filename>, deselect <guilabel>Automatically select filename extension (.mbox)</guilabel>, and be sure to change the file extension while naming the file.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-import-messages">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Import Messages...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Starts up <application>KMailCVT</application></action>. This application lets you import messages from several email clients into &kmail;.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-print-preview">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Print Preview...</guimenuitem></menuchoice></term>
+<listitem>
+<para><action>Display a dialog which shows how your email will be printed.</action></para>
+<note><para>This will only be enabled if a printer has been configured and is online available for use.</para></note></listitem>
+</varlistentry>
+<varlistentry id="file-print">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>P</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Print...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Display a dialog that lets you print the currently displayed message.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-expire-all-folders">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Expire All Folders</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Delete old messages from all folders.</action> Deletion will occur according to the rules in each folder's
+<link linkend="folders-properties-window">Properties dialog</link> (the default is not to delete old messages at all).</para>
+</listitem>
+</varlistentry>
+<varlistentry id="reader-empty-all-trash-folders">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Empty All Trash Folders</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Use this to empty all trash folders,</action> &ie; the local trash folder and all trash folders that you might have on &imap; servers.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-work-offline">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Work Offline</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Sets &kmail; to offline mode.</action>
+This turns off all network jobs. This is useful when working with messages without a network connection.
+This selection will become <menuchoice><guimenu>File</guimenu><guimenuitem>Work Online</guimenuitem></menuchoice>,
+which needs to be selected to go back online (required to send and receive).</para></listitem>
+</varlistentry>
+<varlistentry id="reader-check-mail">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Check Mail</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Checks for new messages in all your accounts.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-check-mail-in">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guisubmenu>Check Mail In</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Check for new messages from a particular account,</action> these accounts will be listed in the submenu.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-update-folder">
+<term><menuchoice>
+<shortcut>
+<keycap>F5</keycap>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Update Folder</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Checks whether new mail arrived in the currently selected folder.</action></para>
+<note><para> This is only available for &imap; folders.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-update-this-folder-and-all-subfolders">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>F5</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Update This Folder and All Its Subfolders</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Checks whether new mail arrived in the currently selected folder and all of its subfolders.</action></para>
+<para>You can also select multiple folders and the menu item will turn into <menuchoice><guimenu>File</guimenu><guimenuitem>Update These Folders and All Their Subfolders</guimenuitem></menuchoice></para>
+<note><para> This is only available for &imap; folders.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-send-queued-messages">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Send Queued Messages</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Sends the messages that are in your outbox.</action> Messages can end up in your outbox by selecting <guibutton>Queue</guibutton> in the composer menu,
+composing a message in offline mode, and sending while you have no Internet connection.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-send-queued-messages-via">
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Send Queued Messages Via</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Sends the messages that are in your outbox via a specific outgoing account.</action>
+This allows you to choose which server to send your queued messages from. They must be configured in Configure &kmail; dialog, under the <menuchoice><guiicon>Accounts</guiicon><guilabel>Sending</guilabel></menuchoice> tab to show up here.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-file-quit">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Quit</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Exits &kmail;.</action></para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-edit-menu">
+<title>Edit Menu</title>
+<para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/ui.html#menus-edit">Edit Menu</ulink> of the &kde; Fundamentals.
+  The items listed here are &kmail; specific.</para>
+<variablelist>
+<varlistentry id="reader-edit-move-to-trash">
+<term><menuchoice>
+<shortcut>
+<keycap>Del</keycap>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Move to Trash</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Moves the selected messages to the trash folder.</action>
+If the selected messages are already in the trash folder, they will be permanently deleted.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-move-thread-to-trash">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>Del</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Move Thread to Trash</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Moves the selected thread to the trash folder,</action> &eg; a conversation in a mailing list.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-find-messages">
+<term><menuchoice>
+<shortcut>
+<keycap>S</keycap></shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Find Messages...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up a search window</action> that lets you search for messages with certain characteristics,
+&eg; a certain subject. Please see <link linkend="filter-criteria">Filter Criteria</link> for details on search options.</para>
+<para>Your search results will display in the text area, at which point you can open the <guibutton>Open Search Folder</guibutton> or highlight the desired message and select <guibutton>Open Message</guibutton>.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-find-in-message">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Find in Message...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Searches the current message text for a string entered into the <guilabel>Find:</guilabel> textbox.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-select-all-messages">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>A</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Select All Messages</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Selects all messages in the current folder.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-select-all-text">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>T</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Select All Text</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Selects the text of the currently displayed message.</action></para></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-view-menu">
+<title>View Menu</title>
+
+<variablelist>
+<varlistentry id="reader-view-message-list">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guisubmenu>Message List</guisubmenu>
+</menuchoice></term>
+<listitem><para>This menu has the following options to change the view of your message list.</para>
+<variablelist>
+<varlistentry id="reader-view-messagelist-sorting">
+<term><menuchoice>
+<guisubmenu>Sorting</guisubmenu>
+</menuchoice></term>
+<listitem><para>Contains options to customize your sort order as follows:</para>
+<itemizedlist>
+  <listitem><para><guilabel>Message Sort Order</guilabel> has several options, most are self explanatory.
+The following options may not be immediately obvious, therefore deserve an explanation.</para>
+  <itemizedlist>
+    <listitem><para><guilabel>By Smart Sender/Receiver</guilabel> will display the sender when you are reading in your outbox folder/template folder, and display the receiver when you are in your inbox/inbox subfolders.</para></listitem>
+    <listitem><para><guilabel>By Action Item Status</guilabel> and <guilabel>By Important Status</guilabel> need to be set before they can be sorted. Please see <link linkend="reader-mark-messages">Mark Messages</link> for more information on marking your messages.</para></listitem>
+  </itemizedlist></listitem>
+  <listitem><para><guilabel>Message Sort Direction</guilabel> and <guilabel>Group Sort Direction</guilabel> allow you to change the direction of your messages/groups sort respectively.</para></listitem>
+  <listitem><para><guilabel>Folder always Uses this Sort Order</guilabel> allows you to keep your sort settings per folder.</para></listitem>
+</itemizedlist></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-aggregation">
+<term><menuchoice>
+<guisubmenu>Aggregation</guisubmenu>
+</menuchoice></term>
+<listitem><para>Allows you to set your aggregation view.</para>
+<para><guilabel>Configure...</guilabel> Allows you to configure aggregation, please see <link linkend="configure-appearance-message-list">Configure Appearance Message List</link> for more information on aggregation.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-theme">
+<term><menuchoice>
+<guisubmenu>Theme</guisubmenu>
+</menuchoice></term>
+<listitem><para>Allows you to select a theme.</para>
+<para><guilabel>Configure...</guilabel> Allows you to configure themes, please see <link linkend="configure-appearance-message-list">Configure Appearance Message List</link> for more information on themes.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-create-new-tab">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;&Shift;<keycap>O</keycap></keycombo>
+</shortcut>
+<guisubmenu>Create New Tab</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Creates a new tab,</action> then select the folder you would like to display in the tab.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-close-tab">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;&Shift;<keycap>W</keycap></keycombo>
+</shortcut>
+<guisubmenu>Close Tab</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Closes the currently selected tab.</action></para></listitem>
+</varlistentry>
+</variablelist></listitem>
+</varlistentry>
+<varlistentry id="reader-view-headers">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guisubmenu>Headers</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Select your headers view.</action> Please see <link linkend="using-header-options">Header Options</link> for details on headers.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-attachments">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guimenuitem>Attachments</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Changes the way attachments appear in the <guilabel>Message Preview Pane</guilabel></action>
+(independent of the &MIME; Tree). Please see <link linkend="using-attachment-view-options">Attachment Options</link> for details on attachments.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-expand-thread-or-group">
+<term><menuchoice>
+<shortcut>
+<keycap>.</keycap></shortcut>
+<guimenu>View</guimenu>
+<guimenuitem>Expand Thread / Group</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>This will display the thread of the current message,</action> &ie; all messages that are replies to the current message.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-collapse-thread-or-group">
+<term><menuchoice>
+<shortcut>
+<keycap>,</keycap>
+</shortcut>
+<guimenu>View</guimenu>
+<guimenuitem>Collapse Thread / Group</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>This will hide the thread of the current message,</action> &ie; it will hide all messages that are replies to the current message.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-expand-all-threads">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>.</keycap></keycombo>
+</shortcut>
+<guimenu>View</guimenu>
+<guimenuitem>Expand All Threads</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Expands all threads in the current folder.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-collapse-all-threads">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>,</keycap></keycombo>
+</shortcut>
+<guimenu>View</guimenu>
+<guimenuitem>Collapse All Threads</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Collapses all threads in the current folder.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-viewsource">
+<term><menuchoice>
+<shortcut>
+<keycap>V</keycap>
+</shortcut>
+<guimenu>View</guimenu>
+<guimenuitem>View Source</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Shows the message and its complete headers in plain text format in a new window.</action>
+This can be useful to find out the origin of a mail. </para>
+<note><para>You should know that it is easy to fake the <literal>From:</literal> header of a mail, but one can still find out which mail
+servers have been used to send the message by looking at the <literal>Received:</literal> lines in the header.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-view-show-message-structure">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guimenuitem>Show Message Structure</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Display the structure viewer,</action> which is a part of the main window that lets you access all parts of a message.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-use-fixed-font">
+<term><menuchoice>
+<shortcut>
+<keycap>X</keycap>
+</shortcut>
+<guimenu>View</guimenu>
+<guimenuitem>Use Fixed Font</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Uses a fixed width (Monospace) font to display the messages in the current folder.</action>
+ The font to be used can be configured in the <link linkend="configure-appearance-fonts">Fonts</link> tab on the <guilabel>Appearance</guilabel> page of the &kmail; configuration dialog.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-set-encoding">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guisubmenu>Set Encoding</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Lets you choose the character encoding to be used in the Message Pane.</action>
+ The default, <guilabel>Auto</guilabel>, should work in almost all cases.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-view-zoom">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guisubmenu>Zoom</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Allows to zoom message in the Message Pane.</action></para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-go-menu">
+<title>Go Menu</title>
+
+<variablelist>
+<varlistentry id="reader-go-jump-to-folder">
+<term><menuchoice>
+<shortcut>
+<keycap>J</keycap>
+</shortcut>
+<guimenu>Go</guimenu>
+<guimenuitem>Jump to Folder...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Show a dialog box with a list of all your folders.</action>
+ Click on the folder you wish to view and it will display it in the message view pane.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-message">
+<term><menuchoice>
+<shortcut>
+<keycap>N</keycap>
+</shortcut>
+<guimenu>Go</guimenu>
+<guimenuitem>Next Message</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Selects the next message in the message list.</action>
+ The keyboard shortcut <keycap>Right Arrow</keycap> also performs this action.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-message">
+<term><menuchoice>
+<shortcut>
+<keycap>+</keycap>
+</shortcut>
+<guimenu>Go</guimenu>
+<guimenuitem>Next Unread Message</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Selects the next unread message in the message list.</action>
+ If there are not any unread messages below the currently selected message, then the behavior depends on the value of the <xref linkend="configure-misc-folders-go-unread"/> option.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-message">
+<term><menuchoice>
+<shortcut>
+<keycap>P</keycap>
+</shortcut>
+<guimenu>Go</guimenu>
+<guimenuitem>Previous Message</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Selects the previous message in the message list.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-unread">
+<term><menuchoice>
+<shortcut>
+<keycap>-</keycap>
+</shortcut>
+<guimenu>Go</guimenu>
+<guimenuitem>Previous Unread Message</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Selects the previous unread message in the message list.</action>
+ If there is not an unread message above the currently selected message, then the behavior depends on the value of the
+<xref linkend="configure-misc-folders-go-unread"/> option.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-folder">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Alt;<keycap>+</keycap></keycombo>
+</shortcut>
+<guimenu>Go</guimenu>
+<guimenuitem>Next Unread Folder</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Jumps to the next folder with unread messages.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-unread-folder">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Alt;<keycap>-</keycap></keycombo>
+</shortcut>
+<guimenu>Go</guimenu>
+<guimenuitem>Previous Unread Folder</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Jumps to the previous folder with unread messages.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-text">
+<term><menuchoice>
+<shortcut>
+<keycap>Space</keycap>
+</shortcut>
+<guimenu>Go</guimenu>
+<guimenuitem>Next Unread Text</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Scrolls down if you are not yet at the bottom of a message, otherwise jumps to the next unread message.</action></para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-folder-menu">
+<title>Folder Menu</title>
+<variablelist>
+<varlistentry id="reader-folder-add-folder">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Add Folder...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens the <link linkend="folders-properties-window">Folder Properties</link> dialog</action> that lets you create a new folder.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-mark-all-messages-as-read">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Mark All Messages as Read</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Sets the status of all new and unread messages in the current folder to read.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-update-folder">
+<term><menuchoice>
+<shortcut>
+<keycap>F5</keycap>
+</shortcut>
+<guimenu>Folder</guimenu>
+<guimenuitem>Update Folder</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Checks whether new mail arrived in the currently selected folder.</action></para>
+<note><para>This is only available for &imap; folders.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-update-folder-and-all-its-subfolders">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>F5</keycap></keycombo>
+</shortcut>
+<guimenu>Folder</guimenu>
+<guimenuitem>Update Folder and All Its Subfolders</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Checks whether new mail arrived in the currently selected folder and all of its subfolders.</action></para>
+<note><para>This is only available for &imap; folders.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-move-all-messages-to-trash">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Move All to Trash</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Moves all of the messages in the selected folder into the trash folder.</action></para>
+<note><para>This is only available if the currently selected folder is not a trash folder. If the currently selected folder is a trash folder, you will see <guilabel>Empty Trash</guilabel>.
+Please see next section for details.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-empty-trash">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Empty Trash</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Permanently deletes all messages.</action></para>
+<note><para>This is only available if the currently selected folder is a trash folder.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-archive-folder">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Archive Folder...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up a dialog to allow you to create an archive of the currently selected folder.</action> Please see
+    <link linkend="folder-archive">Folder Archive</link> for details.</para>
+ </listitem>
+</varlistentry>
+<varlistentry id="reader-folder-delete-folder">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Delete Folder</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Removes the selected folder and all its contents, including subfolders.</action></para>
+<warning><para>Please note that there is no way to access the contents of a folder after it has been removed.</para></warning></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-remove-duplicate-messages">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>*</keycap></keycombo>
+</shortcut>
+<guimenu>Folder</guimenu>
+<guimenuitem>Remove Duplicate Messages</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Searches the folder for duplicate messages and deletes them.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-apply-all-filters-on-folder">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Apply All Filters On Folder</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Applies all configured filters on the currently selected folder.</action>
+ Please see <link linkend="filter-dialog-id">Filter dialog</link> for more information on filters.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-prefer-html-to-plain-text">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Prefer HTML to Plain Text</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>If enabled then &html; messages in this folder will be shown using &html; rendering.</action></para>
+<warning><para>For security reasons, we recommend to only activate this for folders which only contain trusted messages.</para></warning></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-load-external-references">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Load External References</guimenuitem>
+</menuchoice></term>
+<listitem><para>If you have &html; messages enabled (see above), then you have the option to enable this to have <action>images and resources linked from the web will load automatically.</action></para>
+<warning><para>For security reasons, we recommend to only activate this for folders which only contain trusted messages.</para></warning></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-mailing-list-management">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Mailing List Management...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>This opens up the mailing list management dialog.</action>
+ Please see <link linkend="folders-properties-mailinglist">Mailing List dialog</link> for more information on mailing lists.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-assign-shortcut">
+<term><menuchoice>
+<guimenu>Folder</guimenu>
+<guimenuitem>Assign Shortcut...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>This allows you to assign a keyboard shortcut to the currently selected folder.</action></para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-message-menu">
+<title>Message Menu</title>
+
+<variablelist>
+<varlistentry id="reader-message-new-message">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>New Message...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens the <link linkend="the-composer-window">composer window</link></action>
+ so you can write a new message.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-new-message-to-mailing-list">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;&Shift;<keycap>N</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>New Message to Mailing-List...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens the composer window so you can write a new mail.</action>
+ If the current folder holds a mailing list and has a posting address defined,
+ this address will be the default <guilabel>To:</guilabel> address.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply">
+<term><menuchoice>
+<shortcut>
+<keycap>R</keycap></shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>Reply...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up the composer window, inserts the quoted text of the currently selected message and presets the
+ <guilabel>To:</guilabel> field either with the mailing-list address (if you reply to a mailing-list message) or with the preferred reply address of the sender.</action>
+ If you want to control which address the <guilabel>To:</guilabel> field is preset with then you should use <link linkend="reader-message-reply-special">Reply Special</link>.
+ Your identity will automatically be set to the identity this message was originally sent to.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-all">
+<term><menuchoice>
+<shortcut>
+<keycap>A</keycap>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>Reply to All...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up the composer window, inserts the quoted text of the currently
+ selected message and presets the <guilabel>To:</guilabel> field either with
+ the mailing-list address (if you reply to a mailing-list message) or with the
+ preferred reply address of the sender. The <guilabel>Copy to (CC):</guilabel>
+ field is preset with the addresses of all other recipients of the currently
+ selected message excluding your own address.</action>
+ Your identity will automatically be set to the identity this message was originally sent to.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Shift;<keycap>A</keycap></keycombo>
+</shortcut><guimenu>Message</guimenu>
+<guisubmenu>Reply Special</guisubmenu>
+<guimenuitem>Reply to Author...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up the composer window, inserts the quoted text of the currently
+ selected message and presets the <guilabel>To:</guilabel> field with the
+ preferred reply address of the sender.</action> Your identity will automatically be set to the identity this message was originally sent to.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-to-mailinglist">
+<term><menuchoice>
+<shortcut>
+<keycap>L</keycap>
+</shortcut>
+<guimenu>Message</guimenu>
+<guisubmenu>Reply Special</guisubmenu>
+<guimenuitem>Reply to Mailing-List...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up the composer window, inserts the quoted text of the currently
+ selected message and presets the <guilabel>To:</guilabel> field with the mailing-list address.</action>
+ If you did not specify a mailing-list address for the currently selected folder and &kmail; cannot determine the posting address
+ from the currently selected message then the <guilabel>To:</guilabel> field will be empty. Your identity will automatically be set to the identity this message was originally sent to.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-without-quote">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Shift;<keycap>R</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guisubmenu>Reply Special</guisubmenu>
+<guimenuitem>Reply Without Quote...</guimenuitem>
+</menuchoice></term>
+<listitem><para>Works just like <guimenuitem>Reply...</guimenuitem> except that the text of the currently selected message is not quoted.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-with-custom-template">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guisubmenu>Reply Special</guisubmenu>
+<guimenuitem>Reply With Custom Template</guimenuitem>
+</menuchoice></term>
+<listitem><para>Works just like <guimenuitem>Reply...</guimenuitem> with the option to select a custom template that has been configured in <link linkend="configure-composer-custom-templates">Custom Templates</link>.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-to-all-with-custom-template">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guisubmenu>Reply Special</guisubmenu>
+<guimenuitem>Reply to All With Custom Template</guimenuitem>
+</menuchoice></term>
+<listitem><para>Works just like <guimenuitem>Reply to All...</guimenuitem> with the option to select a custom template that has
+ been configured in <link linkend="configure-composer-custom-templates">Custom Templates</link>.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-as-attachment">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Shift;<keycap>F</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guisubmenu>Forward</guisubmenu>
+<guimenuitem>As Attachment</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Forwards the message to a new recipient.</action> The message and its attachments will become an attachment of the new message.
+ The original message headers will be included in the forwarded message as well.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-inline">
+<term><menuchoice>
+<shortcut>
+<keycap>F</keycap></shortcut>
+<guimenu>Message</guimenu>
+<guisubmenu>Forward</guisubmenu>
+<guimenuitem>Inline</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>The message's text and some important header fields will be copied to the body of the new message with text marking the forwarded part.</action>
+ Attachments will be forwarded as attachments of the new message.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-redirect">
+<term><menuchoice>
+<shortcut>
+<keycap>E</keycap>
+</shortcut>
+<guimenu>Message</guimenu>
+<guisubmenu>Forward</guisubmenu>
+<guimenuitem>Redirect</guimenuitem>
+</menuchoice></term>
+<listitem><para>This works like forward, except that the message stays the same (even the <guilabel>From:</guilabel> field).
+ The user who redirected the message is added in special header fields (<literal>Redirect-From</literal>, <literal>Redirect-Date</literal>, <literal>Redirect-To</literal>, &etc;).</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-with-custom-template">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guisubmenu>Forward</guisubmenu>
+<guimenuitem>With Custom Template</guimenuitem>
+</menuchoice></term>
+<listitem><para>Works just like forward with the option to select a custom template that has been configured in the composer custom templates tab in <link linkend="configure-composer-custom-templates">Custom Templates</link>.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-send-again">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Send Again...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens a composer window with the currently selected message so it can be sent again.</action></para>
+<note><para>This is only available for messages which you have sent or, more precisely, for messages which have the <guilabel>sent</guilabel> status.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-message-edit-message">
+<term><menuchoice>
+<shortcut>
+<keycap>T</keycap>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>Edit Message</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Edits the selected message if it is editable.</action></para>
+<note><para>Only messages in the <guilabel>outbox</guilabel> and <guilabel>drafts</guilabel> folder can be edited.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-message-mailing-list">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Mailing List</guimenuitem>
+</menuchoice></term>
+<listitem><para>Offers several options for mailing list messages.</para>
+<note><para>The current working folder must be configured as a mailing list for this to be available. Please see <link linkend="folders-properties-mailinglist">Folder Properties Mailing List</link> for information on setting up mailing lists.</para></note>
+<para>The following options are available to mailing list folders:</para>
+<itemizedlist>
+  <listitem><para><guimenuitem>Post New Message(email)</guimenuitem> will presets the <guilabel>To:</guilabel> with the address configured in Post to List.</para></listitem>
+  <listitem><para><guimenuitem>Request Help(email)</guimenuitem> will presets the <guilabel>To:</guilabel> with the address configured in Post to List and <literal>help</literal> word in the <guilabel>Subject:</guilabel> field.</para></listitem>
+  <listitem><para><guimenuitem>Subscribe to List(web)</guimenuitem> will open your default web browser to the subscribe website of the configured mailing list.</para></listitem>
+  <listitem><para><guimenuitem>Subscribe to List(email)</guimenuitem> will presets the <guilabel>To:</guilabel> with the mailing list subscription address and <literal>subscribe</literal> word in the <guilabel>Subject:</guilabel> field.</para></listitem>
+  <listitem><para><guimenuitem>Unsubscribe from List(web)</guimenuitem> will open your default web browser to the unsubscribe website of the configured mailing list.</para></listitem>
+  <listitem><para><guimenuitem>Unsubscribe from List(email)</guimenuitem> will presets the <guilabel>To:</guilabel> with the mailing list subscription address and <literal>unsubscribe</literal> word in the <guilabel>Subject:</guilabel> field.</para></listitem>
+</itemizedlist></listitem>
+</varlistentry>
+<varlistentry id="reader-message-copy-message-to">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guisubmenu>Copy Message To</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Copies the selected messages to a specified folder,</action> you can choose from recent folders, local folders, or a specific account folder.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-move-message-to">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guisubmenu>Move Message To</guisubmenu>
+</menuchoice></term>
+<listitem><para>The same as copy message to, except you <action>permanently move the selected messages to a specified folder.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-mark-messages">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guisubmenu>Mark Message</guisubmenu>
+</menuchoice></term>
+<listitem><para>Allows you to change the status of the selected message to one of the following states:</para>
+<informaltable><tgroup cols="2">
+<thead><row><entry>Status</entry><entry>Symbol</entry><entry>Meaning</entry></row></thead>
+<tbody>
+<row>
+<entry><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo>
+</shortcut>
+<guimenuitem>Mark Message as Read</guimenuitem>
+</menuchoice></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>The message has been read.</entry></row>
+<row>
+<entry><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>U</keycap></keycombo>
+</shortcut>
+<guimenuitem>Mark Message as Unread</guimenuitem>
+</menuchoice></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>The message has not been read yet.</entry></row>
+<row>
+<entry><guimenuitem>Mark Message as Important</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>This status will not automatically be set by &kmail;.
+ You can use it freely to mark messages that are in some way important to you.</entry></row>
+<row>
+<entry><guimenuitem>Remove Important Mark</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>Remove a previously set important flag from the message.</entry></row>
+<row>
+<entry><guimenuitem>Mark Message as Action Item</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>This status will not automatically be set by &kmail;. Use this to mark messages that are action items &eg; To-do list.</entry></row>
+<row><entry><guimenuitem>Remove Action Item Mark</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>Remove a previously set action item mark from the message.</entry></row>
+</tbody>
+</tgroup></informaltable></listitem>
+</varlistentry>
+<varlistentry id="reader-mark-thread">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guisubmenu>Mark Thread</guisubmenu>
+</menuchoice></term>
+<listitem><para>Allows you to change the status of all messages in a thread as follows:</para>
+<informaltable><tgroup cols="2">
+<thead><row><entry>Status</entry><entry>Symbol</entry><entry>Meaning</entry></row></thead>
+<tbody>
+<row>
+<entry><guimenuitem>Mark Thread as Read</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>The entire thread has been read.</entry></row>
+<row>
+<entry><guimenuitem>Mark Thread as Unread</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>The thread has not been read yet.</entry></row>
+<row>
+<entry><guimenuitem>Mark Thread as Important</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>This status will not automatically be set by &kmail;. You can use it freely to mark threads that are in some way important to you.</entry></row>
+<row>
+<entry><guimenuitem>Remove Important Thread Mark</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>Remove a previously set important flag from the thread.</entry></row>
+<row>
+<entry><guimenuitem>Mark Thread as Action Item</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>This status will not automatically be set by &kmail;. Use this to mark threads that are action items &eg; To-do list.</entry></row>
+<row>
+<entry><guimenuitem>Remove Action Item Thread Mark</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>Remove a previously set action item mark from the thread.</entry></row>
+<row>
+<entry><guimenuitem>Watch Thread</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-thread-watch.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>Set the watched thread status, which allows you to easily view threads your interested in by selecting <guimenu>Watched</guimenu> status in the drop down box found into Quick Search Bar.</entry></row>
+<row>
+<entry><guimenuitem>Ignore Thread</guimenuitem></entry>
+<entry><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-thread-ignored.png" format="PNG"/></imageobject>
+</inlinemediaobject></entry>
+<entry>Allows you to ignore entire threads.</entry></row>
+</tbody></tgroup></informaltable></listitem>
+</varlistentry>
+<varlistentry id="message-create-filter">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guisubmenu>Create Filter</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Opens up the <link linkend="filter-dialog-id">Filter dialog</link> with a new filter added.</action>
+ This new filter is based on fields of the current mail, depending on which sub menu item you select from:</para>
+<simplelist>
+  <member>Filter on Subject...</member>
+  <member>Filter on From...</member>
+  <member>Filter on To...</member>
+  <member>Filter on Mailing-List...(currently selected mail must be a mailing list for this to be available)</member>
+</simplelist></listitem>
+</varlistentry>
+<varlistentry id="reader-message-apply-filter">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Apply Filter</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Allows you to <guimenuitem>Apply all Filters</guimenuitem>.</action> If you have spam filtering set up through
+ <link linkend="the-anti-spam-wizard">Anti-Spam Wizard</link> the options <guimenuitem>Classify as Spam</guimenuitem> and <guimenuitem>Classify as NOT Spam</guimenuitem> will be available for spam filtering.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-create-to-do-reminder">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Create To-do/Reminder</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up the &kontact; To-do/Reminder dialog</action> with options to add the selected email as a link, inline, or inline without attachments.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-message-add-note">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Add Note...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up the &kontact; Note dialog to add a note to the selected email.</action></para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-tools-menu">
+<title>Tools Menu</title>
+<variablelist>
+<varlistentry id="reader-tools-find-messages">
+<term><menuchoice>
+<shortcut>
+<keycap>S</keycap>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>Find Messages...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up a search window</action> that lets you search for messages with certain characteristics,
+&eg; a certain subject. Please see <link linkend="filter-criteria">Filter Criteria</link> for details on search options.</para>
+<para>Your search results will display in the text area, at which point you can open the <guibutton>Open Search Folder</guibutton> or highlight the desired message and select <guibutton>Open Message</guibutton>.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-certificate-manager">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>Certificate Manager...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Starts <ulink url="help:kleopatra">&kleopatra;</ulink>, the &kde; certificate manager.</action></para></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-gnupg-log-viewer">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>GnuPG Log Viewer</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Starts <ulink url="help:kwatchgnupg"><application>KWatchGnuPG</application></ulink>,</action> a tool to present the debug output of the <application>GnuPG</application> application.
+ If signing, encryption, or verification mysteriously stop working, you might find out why by looking at this log.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-edit-out-of-office-replies">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guisubmenu>Edit "Out of Office" Replies...</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Launch the <guilabel>Configure "Out of Office" Replies</guilabel> dialog,</action> which allows you to set-up vacation notifications.</para>
+<note><para><guilabel>Out of Office reply</guilabel> functionality relies on server-side filtering. To be able to use it you need to configure the <link linkend="receiving-mail">Filtering tab</link> (see option relevant to kolab server) of your &imap; account set-up.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-debug-sieve">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guisubmenu>Debug Sieve...</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Launch the <guilabel>Sieve Diagnostics</guilabel> dialog.</action> This is useful to debug sieve if you are having problems with it.</para>
+<note><para>You must have sieve support on your email server.</para></note></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-filter-log-viewer">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guisubmenu>Filter Log Viewer...</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Opens up the viewer window for the filter log;</action> there you find some options to
+ control the logging of the filtering process.  In the log you will find valuable
+ information about what filter rules were used, what was the result of the evaluation of those rules, and which filter actions were applied to a message.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-import-wizard">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guisubmenu>Import Wizard...</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Brings up the Import Wizard dialog</action> which assists in easily importing settings and email.
+ Please see <ulink url="help:/importwizard">Import Wizard</ulink> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-export-data">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guisubmenu>Export &kmail; Data...</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Brings up the PIM Setting Exporter dialog</action> which assists in easily exporting your settings and email.
+ Please see <ulink url="help:/pimsettingexporter">pimsettingexporter</ulink> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-account-wizard">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guisubmenu>Account Wizard...</guisubmenu>
+</menuchoice></term>
+<listitem><para><action>Brings up the Account Wizard dialog</action> which assists in easily setting up accounts.
+ Please see <link linkend="account-wizard">Account Wizard</link> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-anti-spam-wizard">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>Anti-Spam Wizard...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up the Anti-Spam Wizard</action> which can help you to set up spam filtering.
+ Please see <link linkend="the-anti-spam-wizard">Anti-Spam Wizard</link> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-anti-virus-wizard">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>Anti-Virus Wizard...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up the Anti-Virus Wizard</action> which can help you to set up scanning messages for viruses.
+ Please see <link linkend="the-anti-virus-wizard">Anti-Virus Wizard</link> for details.</para></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-settings-menu">
+<title>Settings Menu</title>
+<para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/ui.html#menus-settings">Settings Menu</ulink> of the &kde; Fundamentals.
+  The items listed here are &kmail; specific.</para>
+<variablelist>
+<varlistentry id="reader-settings-show-quick-search-bar">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>H</keycap></keycombo>
+</shortcut>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Quick Search bar</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Allows you to enable the Quick Search bar,</action> which allows you to quickly search for messages matching a search text, is visible.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-filters">
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Filters...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens the <link linkend="filters">Message Filters</link> window.</action></para></listitem>
+</varlistentry>
+<!--FIXME http://www.aegiap.eu/kdeblog/2013/08/new-in-kdepim-4-12-sieve-12/ -->
+<varlistentry id="settings-manage-sieve-scripts">
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Manage Sieve Scripts...</guimenuitem>
+</menuchoice></term>
+<listitem><para>If your mail server supports sieve (server side filtering), you would <action>configure your scripts here</action>.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-automatic-archiving">
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Automatic Archiving...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up the dialog to set up automatic archiving.</action> Please see <ulink url="help:/akonadi_archivemail_agent">Automatic Archiving</ulink> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-send-later-agent">
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Send Later Agent...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up a dialog that allows you to modify and remove emails that have been sent using the send later feature.</action>
+ Please see <ulink url="help:/akonadi_sendlater_agent">Send Later Agent</ulink> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-folder-archive-agent">
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Folder Archive Agent...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up a dialog that allows you to configure accounts to use the folder archive agent feature with.</action>
+ Please see <ulink url="help:/akonadi_folderarchive_agent">Folder Archive Agent</ulink> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-notifications">
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Notifications...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens a dialog that lets you configure what happens when new mail arrives,</action> &eg; play a sound, display a popup, &etc;</para></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+<sect2>
+<title>Help Menu</title>
+<para><ulink url="help:/fundamentals/ui.html#menus-help">
+Help Menu</ulink> of the &kde; Fundamentals.</para>
+</sect2>
+</sect1>
+
+<sect1 id="composer-window-menus">
+<title>The &kmail; Composer Window</title>
+
+<sect2 id="composer-file-menu">
+<title>Message Menu</title>
+<variablelist>
+<varlistentry id="composer-message-new-composer">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>New Composer</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up a new composer window.</action></para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-new-main-window">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>New Main Window</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Creates a new main window.</action></para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-new-addressbook-contact">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>New AddressBook Contact</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up the &kontact; New Contact Dialog</action> to add a new contact your addressbook.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-mail">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>Return</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>Send Mail</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Sends the message immediately.</action> If you use &SMTP; to send your
+ messages and the &SMTP; server is not reachable, the message will be put into the outbox and you will get an error message.
+ After the connection issues are resolved, you can send the messages in the outbox using <menuchoice><guimenu>File</guimenu><guimenuitem>Send Queued Messages</guimenuitem></menuchoice>.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-mail-via">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Send Mail Via</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to select which outgoing mail server you wish to use to send the message.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-later">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Send Later</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Brings up the send later dialog.</action>
+ Please see <link linkend="send-later">Send Later</link> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-later-via">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Send Later Via</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to choose which outgoing account to send your send later configured message.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-file">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Save as File</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Saves the message as a text document.</action></para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-draft">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>Save as Draft</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Save the message in the <guilabel>drafts</guilabel> folder</action> so you can later edit and send it.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-template">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Save as Template</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to <action>save your message as a template.</action>
+ Please see <link linkend="new-compose-from-templates">Compose from templates</link> for details on templates.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-insert-text-file">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Insert Text File...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Inserts a text file into the message text,</action> starting at the cursor position.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-insert-recent-text-file">
+<term><menuchoice>
+<guimenu>Message</guimenu>
+<guimenuitem>Insert Recent Text File...</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to choose from a list of recently inserted text files to insert into your message. Select <guimenuitem>Clear List</guimenuitem> to clear the list.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-print">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>P</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>Print...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Prints the current text.</action></para></listitem>
+</varlistentry>
+<varlistentry id="composer-message-close">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;<keycap>W</keycap></keycombo>
+</shortcut>
+<guimenu>Message</guimenu>
+<guimenuitem>Close</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Closes this composer window.</action></para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-edit-menu">
+<title>Edit Menu</title>
+<para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/ui.html#menus-edit">Edit Menu</ulink> of the &kde; Fundamentals.
+  The items listed here are &kmail; specific.</para>
+<variablelist>
+<varlistentry id="composer-edit-paste-quotation">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;&Shift;<keycap>O</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Paste as Quotation</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Pastes the text from the clipboard</action> marked as quotation.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-paste-attachment">
+<term><menuchoice>
+<guimenu>Edit</guimenu>
+<guimenuitem>Paste as Attachment</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Pastes the text from the clipboard</action> as an attachment.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-paste-without-formatting">
+<term><menuchoice>
+<shortcut>
+<keycombo action="simul">&Ctrl;&Shift;<keycap>V</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Paste Without Formatting</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Pastes the text from the clipboard</action> exactly as is, with no formatting.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-clean-spaces">
+<term><menuchoice>
+<guimenu>Edit</guimenu>
+<guimenuitem>Clean Spaces</guimenuitem>
+</menuchoice></term>
+<listitem><para>This replaces multiple line breaks or spaces with single line breaks or spaces.
+It works on the current selection or the complete message text if there is no selection.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-add-quote-characters">
+<term><menuchoice>
+<guimenu>Edit</guimenu>
+<guimenuitem>Add Quote Characters</guimenuitem>
+</menuchoice></term>
+<listitem><para>Prepends the selected text with quotation marks.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-remove-quote-characters">
+<term><menuchoice>
+<guimenu>Edit</guimenu>
+<guimenuitem>Remove Quote Characters</guimenuitem>
+</menuchoice></term>
+<listitem><para>Removes the left-most quotation marks from the selected text.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-uppercase">
+<term><menuchoice>
+<guimenu>Edit</guimenu>
+<guimenuitem>Uppercase</guimenuitem>
+</menuchoice></term>
+<listitem><para>Convert the selected text to uppercase.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-lowercase">
+<term><menuchoice>
+<guimenu>Edit</guimenu>
+<guimenuitem>Lowercase</guimenuitem>
+</menuchoice></term>
+<listitem><para>Convert the selected text to lowercase.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-insert-special-characters">
+<term><menuchoice>
+<guimenu>Edit</guimenu>
+<guimenuitem>Insert Special Characters</guimenuitem>
+</menuchoice></term>
+<listitem><para>It allows you to insert special character in composer.</para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-view-menu">
+<title>View Menu</title>
+
+<para>This menu lets you toggle the display of the header fields and other
+options in the composer window.</para>
+<para>Currently visible items will have a checkmark shown next to their name in the
+menu.</para>
+
+<para>Options available are:</para>
+
+<itemizedlist>
+  <listitem>
+    <para><guimenuitem>All Fields</guimenuitem></para>
+  </listitem>
+  <listitem>
+    <para><guimenuitem>Identity</guimenuitem></para>
+  </listitem>
+  <listitem>
+    <para><guimenuitem>Dictionary</guimenuitem></para>
+  </listitem>
+  <listitem>
+    <para><guimenuitem>Sent-Mail folder</guimenuitem></para>
+  </listitem>
+  <listitem>
+    <para><guimenuitem>Mail Transport</guimenuitem></para>
+  </listitem>
+  <listitem>
+    <para><guimenuitem>From</guimenuitem></para>
+  </listitem>
+  <listitem>
+    <para><guimenuitem>Reply To</guimenuitem></para>
+  </listitem>
+  <listitem>
+    <para><guimenuitem>Subject</guimenuitem></para>
+  </listitem>
+</itemizedlist>
+
+<para>Please see <link linkend="composer-headers">Composer Headers</link> for details on these options.</para>
+
+<variablelist>
+<varlistentry id="composer-view-use-fixed-font">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guimenuitem>Use Fixed Font</guimenuitem>
+</menuchoice></term>
+<listitem><para>Uses a fixed width (monospaced) font to display the currently
+edited message. The font to be used can be configured in the
+<guilabel>Appearance</guilabel> section of &kmail;'s configuration dialog.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-view-snippets">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guimenuitem>Snippets</guimenuitem>
+</menuchoice></term>
+<listitem><para>Displays a column on the right side of the composer window that allows you to use and create snippets.
+Please see <link linkend="setup-text-snippets">Snippets</link> for more information.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-view-translator">
+<term><menuchoice>
+<guimenu>View</guimenu>
+<guimenuitem>Translator</guimenuitem>
+</menuchoice></term>
+<listitem><para>Displays the translator tool at the bottom of the composer window. Please see
+<link linkend="using-the-translator">Using the Translator</link> for more information.</para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-options-menu">
+<title>Options Menu</title>
+<para>This menu lets you toggle various options for the current message.</para>
+<para>Currently used options will have a checkmark shown next to their name in the
+menu.</para>
+<variablelist>
+
+<varlistentry id="composer-options-urgent">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guimenuitem>Urgent</guimenuitem>
+</menuchoice></term>
+<listitem><para>Sets the priority of the message to Urgent. The receiver's email client has to support
+this or it will have no effect. &kmail; itself does not support priorities for incoming messages.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-options-request-mdn">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guimenuitem>Request Disposition Notification</guimenuitem>
+</menuchoice></term>
+<listitem><para>If you choose this option, you request a confirmation
+email once your message is downloaded and read by its
+recipient. This has to be supported and enabled by the
+receiver's email client in order to work.</para>
+<para>See <xref linkend="configure-security-reading-mdns"/>
+for background information and ways to customize the
+read receipts that &kmail; itself sends.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-options-sign-message">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guisubmenu>Sign Message</guisubmenu>
+</menuchoice></term>
+<listitem><para>Digitally sign the message using <application>OpenPGP</application>.
+You can learn more about this in the <link linkend="pgp">chapter on OpenPGP</link>.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-options-encrypt-message">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guisubmenu>Encrypt Message</guisubmenu>
+</menuchoice></term>
+<listitem><para>Encrypt the message using <application>OpenPGP</application>.
+You can learn more about this in the <link linkend="pgp">chapter on OpenPGP</link>.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-options-select-crypto-message-format">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guisubmenu>Cryptographic Message Format</guisubmenu>
+</menuchoice></term>
+<listitem><para>Choose the cryptographic message format to use to
+digitally sign and/or encrypt the message in. Please see <link linkend="cryptographic-message-formats">
+Cryptographic Message Formats</link> for more information.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-options-rich-text-editing">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guisubmenu>Rich Text Editing</guisubmenu>
+</menuchoice></term>
+<listitem><para>Enables Rich Text/&html; editing.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-options-encoding">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guisubmenu>Encoding</guisubmenu>
+</menuchoice></term>
+<listitem><para>Set the charset encoding of this message. The chosen encoding will appear in the header of
+the outgoing mail. You can use <guilabel>Auto</guilabel> for almost all
+cases, &kmail; will tell you if you need to select a different encoding manually.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-options-wordwrap">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guimenuitem>Wordwrap</guimenuitem>
+</menuchoice></term>
+<listitem><para>Toggles the automatic wordwrap. It may be useful to turn it off if you want
+to paste long lines that should not wrap.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-options-automatic-spellchecking">
+<term><menuchoice>
+<guimenu>Options</guimenu>
+<guimenuitem>Automatic Spellchecking</guimenuitem>
+</menuchoice></term>
+<listitem><para>Toggles automatic spellchecking.</para></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-attach-menu">
+<title>Attach Menu</title>
+
+<para>This menu lets you select attachment options.</para>
+
+<variablelist>
+
+<varlistentry id="composer-attach-append-signature">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guimenuitem>Append Signature</guimenuitem>
+</menuchoice></term>
+<listitem><para>Appends your signature (<quote>footer</quote>) to the end of the message. Please see
+<link linkend="configure-identity-signature">Configure Identity Signature</link> for details on
+configuring your signature.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-prepend-signature">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guimenuitem>Prepend Signature</guimenuitem>
+</menuchoice></term>
+<listitem><para>Prepends your signature (<quote>header</quote>) to the beginning of the message. Please see
+<link linkend="configure-identity-signature">Configure Identity Signature</link> for details on
+configuring your signature.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-cursor-signature">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guimenuitem>Append Signature At Cursor Position</guimenuitem>
+</menuchoice></term>
+<listitem><para>Appends your signature to the current location  of your cursor to the message. Please see
+<link linkend="configure-identity-signature">Configure Identity Signature</link> for details on
+configuring your signature.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-public-key">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guimenuitem>Attach Public Key...</guimenuitem>
+</menuchoice></term>
+<listitem><para>Opens the <guilabel>Attach Public OpenPGP Key</guilabel> dialog. Please see
+<link linkend="configure-identity-cryptography-openpgp-sign">Configure Identity Cryptography OpenPGP Signing</link> for details.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-attach-my-public-key">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guimenuitem>Attach My Public Key</guimenuitem>
+</menuchoice></term>
+<listitem><para>Attaches your <application>GnuPG</application> public key to your message.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-file">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guisubmenu>Attach</guisubmenu>
+<guimenuitem>Attach File...</guimenuitem>
+</menuchoice></term>
+<listitem><para>Attaches one or more files to the current message. By default attachments are not
+encrypted, please see <link linkend="cryptographic-message-formats">Cryptographic Message Formats</link> for information
+on encryption and attachments.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-vcard">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guisubmenu>Attach</guisubmenu>
+<guimenuitem>Attach Own vCard</guimenuitem>
+</menuchoice></term>
+<listitem><para>Attaches your vCard to the current message.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-remove-attachment">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guimenuitem>Remove Attachment</guimenuitem>
+</menuchoice></term>
+<listitem><para>Removes the attachment that is selected in the attachment part of the composer.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-save-attachment">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guimenuitem>Save Attachment As...</guimenuitem>
+</menuchoice></term>
+<listitem><para>Saves the attachment that is selected in the attachment window to a file.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-attachment-properties">
+<term><menuchoice>
+<guimenu>Attach</guimenu>
+<guimenuitem>Attachment Properties</guimenuitem>
+</menuchoice>
+</term>
+<listitem>
+<para>Displays the <link linkend="attachments">properties of the attachment</link> that is selected in the
+attachment window. It also allows you to sign/encrypt the attachment. Please see <link linkend="configure-security-composing">Configure Security Composing</link> to set
+up encryption.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-tools-menu">
+<title>Tools Menu</title>
+<para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/ui.html#menus-tools">Tools Menu</ulink> of the &kde; Fundamentals.
+  The items listed here are &kmail; specific.</para>
+<variablelist>
+<varlistentry id="composer-tools-select-recipients">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>Select Recipients...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up the <guilabel>Select Recipient</guilabel> dialog</action> with your personal contacts to select from.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-tools-addressbook">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>Addressbook...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens up <ulink url="help:/kaddressbook">&kaddressbook;</ulink></action>.</para></listitem>
+</varlistentry>
+<varlistentry id="composer-tools-save-distribution-list">
+<term><menuchoice>
+<guimenu>Tools</guimenu>
+<guimenuitem>Save Distribution List...</guimenuitem>
+</menuchoice></term>
+<listitem><para><action>Opens a dialog</action> that allows you to save groups of contacts.</para></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-settings-menu">
+<title>Settings Menu</title>
+<para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/ui.html#menus-settings">Settings Menu</ulink> of the &kde; Fundamentals.
+  The items listed here are &kmail; specific.</para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Spellchecker...</guimenuitem>
+</menuchoice></term>
+<listitem>
+<para>Allows you to configure <ulink url="help:/sonnet/">&sonnet;</ulink>, &kde;'s spellchecker.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2>
+<title>Help Menu</title>
+<para>
+<ulink url="help:/fundamentals/ui.html#menus-help">Help Menu</ulink> of the &kde; Fundamentals.</para>
+</sect2>
+</sect1>
+
+</chapter>

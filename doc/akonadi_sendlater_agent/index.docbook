@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application>Send Later Agent</application>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE"> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title>The &i18n-sendlateragent; Handbook</title>
+<authorgroup>
+<author>
+<personname>
+<firstname>Laurent</firstname>
+<surname>Montel</surname>
+</personname>
+&Laurent.Montel.mail;
+</author>
+<author>
+<firstname>Scarlett</firstname>
+<surname>Clark</surname>
+<affiliation><address>
+&Scarlett.Clark.mail;
+</address></affiliation>
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2013</year>
+<holder>&Laurent.Montel;</holder>
+</copyright>
+
+<date>2013-11-30</date>
+<releaseinfo>&kde; 4.12</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title>Introduction</title>
+
+<para>
+&i18n-sendlateragent; is an akonadi agent which allows you to send scheduled mails once or repeatedly.
+</para>
+
+<sect2 id="using-kapp">
+<title>Using &i18n-sendlateragent;</title>
+
+<para>Use <menuchoice><guimenu>Message</guimenu><guimenuitem>Send Later</guimenuitem></menuchoice>
+in &kmail;'s composer window to open a dialog which allows you to schedule your emails to send 
+at a specific date and time.</para>
+
+<screenshot>
+<screeninfo>&i18n-sendlateragent; Dialog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>&i18n-sendlateragent; Dialog</phrase>
+    </textobject>
+    <caption>
+      <para>&i18n-sendlateragent; Dialog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para>Say you have constructed a brilliant email outlining tasks you wish your employees to complete while you are at the conference, but you will be
+on an airplane when you wish the email to be sent. Use this feature to send the email at a precise date and time. To schedule the email to send later, first check the <guilabel>Delay</guilabel> box and then select the date and time on the <guilabel>Send at:</guilabel>
+menu.</para>
+<para>
+If you need to send a weekly reminder email to your employees, you can configure it to repeat sending the message by checking <guilabel>Repeat every</guilabel>
+checkbox and selecting the desired intervals.</para>
+<para> You can put the message in your queued messages by selecting the <guibutton>Send Later</guibutton> button to schedule the message immediately.
+</para>
+<para>This agent works independent from &kmail; and does not need a running &kmail; instance or &kmail; being
+in online mode to send scheduled emails.</para>
+<para>If you have no network connection when a scheduled message should be sent, the agent will report an error
+and ask if you want to resend it later.</para>
+<para>At login to a &kde; session the agent checks the scheduled messages and sends all 
+messages overdue since the last logout if necessary.
+</para>
+<para>To change the options for emails you have scheduled to send later, use <menuchoice><guimenu>Settings</guimenu>
+<guimenuitem>Configure Send Later Agent...</guimenuitem></menuchoice> in &kmail;.
+</para>
+
+<screenshot>
+<screeninfo>Configure &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>Configure &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para>Configure &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para><action>This brings up a dialog that allows you to modify the schedule and remove emails 
+that have been sent using the send later feature.</action>
+</para>
+<para>It is not possible to change the content (body, headers &etc;) of a scheduled message.
+</para>
+</sect2>
+
+<sect2 id="credits">
+
+<title>Credits and License</title>
+
+<para>&i18n-sendlateragent;</para>
+<para>
+Program copyright 2013 &Laurent.Montel; &Laurent.Montel.mail;
+</para>
+<para>
+Documentation Copyright &copy; 2013 &Laurent.Montel; &Laurent.Montel.mail;
+</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;               <!-- FDL: do not remove -->
+&underGPL;        	 <!-- GPL License -->
+</sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application>Follow Up Reminder Agent</application>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE"> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title>The &i18n-followupreminderagent; Handbook</title>
+<authorgroup>
+<author>
+<personname>
+<firstname>Laurent</firstname>
+<surname>Montel</surname>
+</personname>
+&Laurent.Montel.mail;
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>2014</year>
+<holder>&Laurent.Montel;</holder>
+</copyright>
+
+<date>2014-06-10</date>
+<releaseinfo>&kde; 4.14</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title>Introduction</title>
+
+<para>
+&i18n-followupreminderagent; is an akonadi agent which follow up reminder mail
+</para>
+
+<sect2 id="credits">
+
+<title>Credits and License</title>
+
+<para>&i18n-followupreminderagent;</para>
+<para>
+Program copyright 2014 &Laurent.Montel; &Laurent.Montel.mail;
+</para>
+<para>
+Documentation Copyright &copy; 2014 &Laurent.Montel; &Laurent.Montel.mail;
+</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;               <!-- FDL: do not remove -->
+&underGPL;        	 <!-- GPL License -->
+</sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

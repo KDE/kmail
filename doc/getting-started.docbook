@@ -1,0 +1,384 @@
+<chapter id="getting-started">
+
+<chapterinfo>
+<authorgroup>
+<author>
+<firstname>Daniel</firstname>
+<surname>Naber</surname>
+<affiliation><address>
+<email>daniel.naber@t-online.de</email>
+</address></affiliation>
+</author>
+<author>
+<firstname>David</firstname>
+<surname>Rugge</surname>
+<affiliation><address>
+<email>davidrugge@mediaone.net</email>
+</address></affiliation>
+</author>
+<author>
+<firstname>Michel</firstname>
+<surname>Boyer de la Giroday</surname>
+<affiliation><address>
+<email>michel@klaralvdalens-datakonsult.se</email>
+</address></affiliation>
+</author>
+<author>
+<firstname>Scarlett</firstname>
+<surname>Clark</surname>
+<affiliation><address>
+&Scarlett.Clark.mail;
+</address></affiliation>
+</author>
+
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+<date>2013-12-11</date>
+<releaseinfo>&kde; 4.12</releaseinfo>
+</chapterinfo>
+
+
+<title>Getting Started</title>
+
+<para>This is a short introduction to &kmail; and its usage so you can
+start working with it right away. For more in-depth information see the
+<link linkend="using-kmail">Using &kmail;</link> section. Note that
+&kmail;'s installation is described in <link linkend="installation">the
+appendix</link>.</para>
+
+<sect1 id="account-wizard">
+<title>Account Wizard</title>
+
+<screenshot>
+<screeninfo>Account Wizard</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accountwizard.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>Account Wizard</phrase>
+    </textobject>
+    <caption>
+      <para>Account Wizard</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para>The first time you run &kmail; you will be greeted with the Account Wizard.</para>
+<note><para>If at anytime you need to run the account wizard again, you can find it under
+<menuchoice><guimenu>Tools</guimenu><guimenuitem>Account Wizard</guimenuitem></menuchoice>.</para></note>
+<para>The wizard will take you through the process of creating your email accounts. Your screens will vary depending
+    on how much the wizard can determine on its own. Below is an outline of the screens you may encounter while using this wizard.</para>
+<itemizedlist>
+  <listitem>
+    <para><guilabel>Provide personal data</guilabel> is the first screen of the wizard. It will prompt you for your basic account information: <guilabel>Full name:</guilabel>, <guilabel>E-mail address</guilabel>, and <guilabel>Password:</guilabel>.
+      By default, the <guilabel>Find provider settings on the Internet</guilabel> option is checked, the wizard will attempt to retrieve the necessary
+      information from the server. Uncheck this option if you are an expert user and you need to set up advanced configuration.  Click the <guibutton>Next</guibutton> button once finished.
+     <note><para>If you use GMail 2-step verification you will need to generate an application-specific password within gmail security settings and enter that password
+     in the password text box.</para></note>
+    </para>
+  </listitem>
+  <listitem>
+    <para>The <guilabel>Select Account Type</guilabel> screen will be next if the wizard cannot determine your account type. Select your account type from the
+      list (if you do not know, you will need to contact your email provider). If your account type is not listed, click the <guibutton>Check for more on Internet</guibutton> button.
+      Once your account type has been selected, click the <guibutton>Next</guibutton> button, and you will be presented with the <guilabel>Personal Settings</guilabel> screen.
+    </para>
+    <para>The <guilabel>Provide personal data</guilabel> screen will show again with the server details it found if the wizard was successful at determining the account type.
+
+      Click the <guibutton>Create Account</guibutton> button, and it will set up the account. Click the <guibutton>Finish</guibutton> to complete the wizard and close the window.
+    </para>
+  </listitem>
+  <listitem>
+    <para>The <guilabel>Personal Settings</guilabel> screen will show if you had to enter your account type.
+      Verify that your information is correct on this page. Select <guilabel>Download all messages for offline use</guilabel>
+      if you want your messages available when you do not have an Internet connection (&imap; only).
+      Click the <guibutton>Next</guibutton> button once finished.</para>
+    </listitem>
+    <listitem>
+      <para>Your account will then be set up, and you can click the <guibutton>Finish</guibutton> button to complete the wizard and close the window.</para>
+    </listitem>
+  </itemizedlist>
+  <para>For manually creating accounts please continue reading the rest of this document.</para>
+
+</sect1>
+
+<sect1 id="manual-configuration-quickstart">
+  <title>Manual Configuration Quickstart</title>
+<para>The Configure window consists of six sections:
+<guilabel>Identities</guilabel>, <guilabel>Accounts</guilabel>,
+<guilabel>Appearance</guilabel>, <guilabel>Composer</guilabel>,
+<guilabel>Security</guilabel>, and
+<guilabel>Misc</guilabel>.</para>
+
+<para>To begin sending and receiving messages you will only have to
+change some settings in the <guilabel>Identities</guilabel> and
+<guilabel>Accounts</guilabel> pages.</para>
+
+  <sect2 id="setting-your-identity">
+    <title>
+      Setting your Identity
+    </title>
+
+    <para>
+      The settings in the <guilabel>Identities</guilabel> page are
+      fairly straightforward. Select your default identity and click
+      <guibutton>Modify</guibutton>.  Fill in the <guilabel>Your
+      name</guilabel> field with your full name (&eg; <userinput>John
+      Doe</userinput>) and the <guilabel>Organization</guilabel> field
+      (optional) with the appropriate information.
+    </para>
+    <para>
+      Next, fill in the <guilabel>Email address</guilabel> field with
+      your email address (&eg; <userinput>john@example.net</userinput>).
+    </para>
+    <para>
+      If you are using <application>PGP</application> or
+      <application>GnuPG</application> you can set your &openpgp; keys
+      and/or &smime; certificates in the <link
+      linkend="configure-identity-cryptography"><guilabel>Cryptography</guilabel></link>
+      tab.
+    </para>
+    <para>
+      Optionally, go to the <guilabel>Signature</guilabel> tab and
+      enter your signature. This is a short text that will be
+      automatically appended to all your messages. It has nothing to
+      do with <emphasis>digital signatures</emphasis>.
+    </para>
+
+  </sect2>
+
+<sect2 id="setting-up-your-account">
+<title>Setting up your Account</title>
+
+<para>The <guilabel>Accounts</guilabel> page contains the settings that
+tell &kmail; how to send and receive your email messages. Many of these settings
+can vary greatly depending on the setup of your system and on the kind
+of network that your mail server is located in. If you do not know what
+setting to choose or what to put in a field, consult your Internet
+Service Provider (<acronym>ISP</acronym>) or system
+administrator.</para>
+
+<sect3 id="sending-mail">
+<title>Sending Messages</title>
+
+<para>The <guilabel>Sending</guilabel> tab provides a list of
+ways to send messages. The first item in the list is the default
+way to send messages. Using the <guibutton>Add...</guibutton>
+button you can choose between two different ways of sending messages:
+<guilabel>SMTP</guilabel> and
+<guilabel>Sendmail</guilabel>. &Sendmail; here
+means a local software installation -- this has a
+reputation of being difficult to set up, so if you do not already have a
+working &Sendmail; configuration, choose
+<guilabel>SMTP</guilabel> and fill in the <guilabel>Name</guilabel>
+field with a descriptive name
+(&eg; <userinput>My Mail Account</userinput>). Click the <guibutton>Create and Configure</guibutton>
+and fill the <guilabel>Outgoing mail server</guilabel>
+field with the name and domain of your mail server
+(&eg; <userinput>smtp.provider.com</userinput>). You will probably
+not need to change the <guilabel>Port</guilabel> setting (the default is
+<userinput>25</userinput>).</para>
+
+<!-- TODO: more specific link -->
+<para>If you do want to use &Sendmail; and you are using a dial-up
+connection, follow the instructions for setting up sendmail for a
+dial-up connection in the <link linkend="faq">&FAQ;</link>
+section.</para>
+
+<para>The way of sending messages configured here will be used for
+your default identity and for all other identities that do not have their own
+way of sending messages. You can use different ways of sending
+messages for different identities by selecting the <guilabel>Outgoing
+Account</guilabel> check box in the <guilabel>Advanced</guilabel>
+tab of the <guilabel>Identities</guilabel> page.</para>
+
+<para>A description of the other options can be found
+in the <link linkend="configure-accounts-sending">Configuration</link>
+chapter.</para>
+</sect3>
+
+<sect3 id="sending-mail-kolab">
+<title>Options relevant to <acronym>Kolab</acronym> server</title>
+
+<para>When configuring an <guilabel>SMTP</guilabel> account with a <guilabel>Kolab</guilabel> server Host, you need to check the <guilabel>Server requires authentication</guilabel> option and to fill in your <guilabel>Kolab</guilabel> user's email address and password in the <guilabel>Login</guilabel> and <guilabel>Password</guilabel> fields. Then select the <guilabel>Security</guilabel> tab and click on the <guibutton>Check What the Server Supports</guibutton> for automated setup of your <guilabel>Security</guilabel> configuration. The default should be <guilabel>TLS/PLAIN</guilabel>. The <guilabel>Kolab</guilabel> server supports  <guilabel>SSL/PLAIN</guilabel> as well. These settings may of course be configured manually.</para>
+</sect3>
+</sect2>
+
+<sect2 id="receiving-mail">
+<title>Receiving Messages</title>
+<!-- review - changed to akonadi ressources? lueck 31.05.2011-->
+<para>To set up an account so you can receive mail, press the
+<guibutton>Add...</guibutton> button in the <guilabel>Receiving</guilabel>
+tab. You will then be prompted for the type of your email account.  Most users should
+select <guilabel>POP3</guilabel> or <guilabel>IMAP E-Mail Server</guilabel>. If
+you want to use a local mailbox file, please see the <link linkend="faq-file-locking">FAQ
+about file locking</link>.</para>
+
+<para>You will then be presented with
+the <guilabel>Akonadi Resource</guilabel> window. First, fill in the
+<guilabel>Account name</guilabel> field to name your account. You can choose any name
+you like.  <guilabel>Username</guilabel>, <guilabel>Password</guilabel>, and
+<guilabel>Incoming mail server</guilabel> should be filled in with the appropriate information
+from your <acronym>ISP</acronym> or system administrator. You should not
+need to change the <guilabel>Port</guilabel> setting (the default for POP3 is
+<userinput>110</userinput>, the default for <acronym>IMAP</acronym> is
+<userinput>143</userinput>).</para>
+
+<sect3 id="receiving-mail-kolab"><!-- review - still relevant? remove? lueck 31.05.2011-->
+<title>Options relevant to <acronym>Kolab</acronym> server</title>
+<para>
+Select <guilabel>Disconnected IMAP</guilabel> when choosing your <guilabel>Account Type</guilabel>. Fill in the <guilabel>Login</guilabel> and <guilabel>Password</guilabel> fields with respectively your user email address and password on the <guilabel>Kolab</guilabel> server. In the <guilabel>Security</guilabel> section click on the <guilabel>Check What the Server Supports</guilabel> button for automated set-up of your <guilabel>Security</guilabel> configuration. The default should be <guilabel>TLS/PLAIN</guilabel>. The <guilabel>Kolab</guilabel> server supports <guilabel>SSL/PLAIN</guilabel> as well. These settings may of course be configured manually.</para>
+<para>
+If you want to use the <guilabel>"Out of Office" Replies</guilabel> functionality of the <guilabel>Kolab</guilabel> server, set-up the <guilabel>Filtering</guilabel> section of you <guilabel>DIMAP</guilabel> account by checking the <guilabel>Server supports Sieve</guilabel> option as well as <guilabel>Reuse host and login configuration</guilabel>, <guilabel>Managesieve port</guilabel> should be set to 2000 as default.
+</para>
+</sect3>
+
+<sect3 id="receiving-mail-dimap-misc"><!-- review - still relevant? remove? lueck 31.05.2011-->
+<title>Options only relevant to DIMAP (<acronym>Kolab</acronym> server)</title>
+<para>
+After having configured your <guilabel>Disconnect IMAP</guilabel> account, you
+need to activate the <guilabel>Groupware</guilabel> functionalities and set-up
+the <guilabel>Misc</guilabel> page for <guilabel>KMail</guilabel>.
+</para>
+<para>
+In the <guilabel>Misc</guilabel> page, of the <guilabel>Configure</guilabel> dialog, choose the <guilabel>Groupware</guilabel> tab. Check the <guilabel>Enable IMAP resource functionality</guilabel> option and select <guilabel>Kolab (XML)</guilabel> as <guilabel>Format used for the groupware folders</guilabel>. The <guilabel>Resource folders are in account</guilabel> combo-box should be set on the <guilabel>Receiving</guilabel> (kolab user) account of your choice (if you happen to have several accounts). You may if you wish hide the groupware folder by checking this option. It is recommended to check both <guilabel>Groupware Compatibility and Legacy Options</guilabel> for compatibility with an eventual <guilabel>Kolab</guilabel> Microsoft Outlook client for sending invitations and replies from a <guilabel>Kolab</guilabel> KDE client.
+</para>
+</sect3>
+
+<sect3 id="receiving-mail-imap">
+<title>Options only relevant to <acronym>IMAP</acronym></title>
+<para>If you are using <acronym>IMAP</acronym>, you can optionally
+specify a path in the <guilabel>Prefix to folders</guilabel> field. This
+tells &kmail; where it can find your folders on the server. If you also
+have a shell account on the server and the messages are stored in your home
+folder it might be useful to store the messages in a subfolder
+<filename class="directory">Mail</filename>. Use this as a value in
+the <guilabel>Prefix to folders</guilabel> field so that &kmail; does
+not mix up mailbox files and other files. If you are not interested in
+this feature, simple leave the field blank.</para>
+
+<para>If you check <guilabel>Automatically compact folders</guilabel>
+&kmail; removes the messages you deleted from the
+server as soon as you leave a folder. Otherwise the messages are
+only marked as deleted and it is up to you to compact the folders
+manually by using the menu item <menuchoice><guimenu>File</guimenu><guimenuitem>Compact All
+Folders</guimenuitem></menuchoice>.</para>
+<para>If you check <guilabel>Show hidden folders</guilabel>,
+folders whose name starts with a dot are also displayed.</para>
+</sect3>
+
+
+<sect3 id="receiving-mail-pop3">
+<title>Options only relevant to POP3</title>
+
+<para>Select <guilabel>Leave fetched messages on the server</guilabel> if you want to
+leave your messages on the server after you downloaded them.</para>
+
+<para>Select <guilabel>Include in Manual Mail Check</guilabel> if you
+want to check this account whenever you use <menuchoice><guimenu>File</guimenu><guimenuitem>Check
+Mail</guimenuitem></menuchoice>.  If you unselect this option you can still check for new messages on this account
+with <menuchoice><guimenu>File</guimenu><guimenuitem>Check Mail
+In</guimenuitem></menuchoice>.</para>
+
+<para>Select <guilabel>Enable interval mail checking</guilabel> if you want
+&kmail; to check for new messages automatically. The interval can be specified below
+under <guilabel>Check mail interval</guilabel>.</para>
+
+<para><guilabel>inbox</guilabel> is the default folder for incoming
+messages. If you want to change that for some reason, you can do so with
+<guilabel>Destination folder</guilabel>. But what you probably want is a
+<link linkend="filters">filter</link>, which has nothing to do with this
+option.</para>
+
+<para>With <guilabel>Pre-command</guilabel> you can specify any program that &kmail;
+will execute just before fetching mail. Please specify the full path
+(do not use <quote>~</quote>) and note that &kmail; will not continue
+until the program returns.</para>
+
+<para>In the <guilabel>POP Settings</guilabel> group you can select <guilabel>Use
+pipelining for faster mail download</guilabel> if this is supported by your
+server. You should carefully test this to make sure it works safely.</para>
+</sect3>
+
+<sect3 id="receiving-mail-imap-pop3">
+<title>Options for both <acronym>IMAP</acronym> and POP3</title>
+<!-- removed in 4.8
+<para>If you select <guilabel>Store POP password</guilabel> or 
+<guilabel>Store IMAP Password</guilabel> &kmail; will remember 
+your password so you will not have to
+type it every time you start &kmail; and fetch new mail.</para>
+
+<warning><para>Be warned that &kmail; cannot really encrypt your password, so
+people who can access your configuration files (&eg; system
+administrators) can easily get your password if you select this
+option.</para></warning>
+-->
+<para>&kmail; supports encryption via <guilabel>SSL/TLS</guilabel> and
+<guilabel>STARTTLS</guilabel> (<guilabel>SSL/TLS</guilabel> should be preferred
+if it is available).</para>
+
+<para>For POP3 &kmail; supports:</para>
+
+<itemizedlist>
+<listitem><para><guilabel>Clear text</guilabel>, </para></listitem>
+<listitem><para><guilabel>PLAIN</guilabel>, </para></listitem>
+<listitem><para><guilabel>LOGIN</guilabel>, </para></listitem>
+<listitem><para><guilabel>CRAM-MD5</guilabel> (recommended
+if <guilabel>DIGEST-MD5</guilabel> is not available),</para></listitem>
+<listitem><para><guilabel>DIGEST-MD5</guilabel> (recommended) and</para></listitem>
+<listitem><para><guilabel>APOP</guilabel> authentication.</para></listitem>
+</itemizedlist>
+
+<para><guilabel>DIGEST-MD5</guilabel>, <guilabel>CRAM-MD5</guilabel> and
+<guilabel>APOP</guilabel> are secure on their own, the other
+options are only secure when used together with <guilabel>SSL</guilabel>
+or <guilabel>TLS</guilabel>.  You should only use <guilabel>Clear
+text</guilabel> if your server does not support any of the other
+authentication methods. Additionally, for <acronym>IMAP</acronym>
+<guilabel>Anonymous</guilabel> is supported, but <guilabel>APOP</guilabel>
+is not. Use the <guibutton>Check what the server supports</guibutton> button
+on the <guilabel>Security</guilabel> tab
+to automatically select the most secure settings supported by your server.</para>
+
+<para>You are now ready to send and receive mail. For
+<acronym>IMAP</acronym>, just open your folders in the
+folder tree in &kmail;'s main window. &kmail; then connects to your
+server and displays the messages it finds. For POP3 use
+<menuchoice><guimenu>File</guimenu><guimenuitem>Check
+Mail</guimenuitem></menuchoice>.</para>
+
+</sect3>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="testing-your-setup">
+<title>Testing your Setup</title>
+
+<para>First, you should send yourself a message to test your
+configuration. To send a message, either hit <keycombo
+action="simul">&Ctrl;<keycap>N</keycap></keycombo>, select the
+<guiicon>New Message</guiicon> icon  or select
+the <menuchoice><guimenu>Message</guimenu><guimenuitem>New
+Message...</guimenuitem></menuchoice> menu item.  The
+<link linkend="the-composer-window">composer window</link> will appear. Fill in the
+<guilabel>To:</guilabel> field with your email address and type
+something in the <guilabel>Subject</guilabel> field. Send the message by
+selecting <menuchoice><guimenu>Message</guimenu> <guimenuitem>Send Mail</guimenuitem>
+</menuchoice>.</para>
+
+<para>To check your email, select
+<menuchoice><guimenu>File</guimenu><guimenuitem>Check
+Mail</guimenuitem></menuchoice>. In the lower right corner of the main
+window, a progress bar will indicate how many messages are being
+downloaded. If you receive the message you just sent, then
+congratulations!  If, however, you receive any error messages while
+testing your setup, make sure that your network connection is working
+and recheck your settings at
+<menuchoice><guimenu>Settings</guimenu> <guimenuitem>Configure
+&kmail;...</guimenuitem></menuchoice>.</para>
+
+</sect1>
+
+</chapter>

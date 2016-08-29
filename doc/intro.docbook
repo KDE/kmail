@@ -1,0 +1,94 @@
+<chapter id="intro">
+
+<chapterinfo>
+<authorgroup>
+<author>
+<firstname>Daniel</firstname>
+<surname>Naber</surname>
+<affiliation><address>
+<email>daniel.naber@t-online.de</email>
+</address></affiliation>
+</author>
+<author>
+<firstname>Scarlett</firstname>
+<surname>Clark</surname>
+<affiliation><address>
+&Scarlett.Clark.mail;
+</address></affiliation>
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+<date>2013-12-12</date>
+<releaseinfo>&kde; 4.12</releaseinfo>
+</chapterinfo>
+
+
+<title>Introduction</title>
+
+<screenshot>
+<screeninfo>&kmail; Welcome Screen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="kmailwelcome.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>&kmail; Welcome Screen</phrase>
+    </textobject>
+    <caption>
+      <para>&kmail; Welcome Screen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para>The &kmail; Team welcomes you to &kmail;, a user-friendly email client by &kde;.
+Our goal is to make &kmail; a program that is beautiful and intuitive without sacrificing power. </para>
+
+<para>If you have never set up an email client on a &UNIX; system
+before, we suggest that you read through the <link linkend="getting-started">Getting Started</link>
+section first.</para>
+<sect1 id="features">
+<title>Some &kmail; Features</title>
+<para>Some links to the great features available in &kmail;</para>
+<itemizedlist>
+<listitem>
+<para>You do not have to use your mouse to use &kmail;. Everything can
+be done by using <link linkend="keyboard-shortcuts">Keyboard Shortcuts</link>.</para>
+</listitem>
+<listitem>
+<para>Although &kmail; can be considered reliable you should keep 
+backups of your messages, &ie; use one of the export/archive options listed in <link
+linkend="backups">Backup Options</link> to backup your settings and email to a safe place.</para>
+</listitem>
+<listitem>
+<para>&kmail; is capable of importing email in several formats from your previous email applications using
+options in <link linkend="import-restore">Restore and Import in &kmail;</link>.</para>
+</listitem>
+<listitem>
+<para>Organize your folders with ease using &kmail;s extensive <link linkend="folders">Folders</link> options.
+Some of the features include handling per folder: mailing lists, acl (&imap; only), and archiving.</para>
+</listitem>
+<listitem>
+<para>Compliment your folder setup with highly configurable <link linkend="filters">filters</link>.</para>
+</listitem>
+<listitem>
+<para>By default &kmail; will detect common email <link linkend="configure-security-email-scams">scams</link>.
+You can also fight SPAM and viruses with built in wizards to work with external programs to scan email as it comes in.
+See <link linkend="the-anti-spam-wizard">Anti Spam Wizard</link> and <link linkend="the-anti-virus-wizard">Anti-Virus-Wizard</link>
+for details.</para>
+</listitem>
+<listitem>
+<para>Easily manage per-account settings using multiple <link linkend="configure-identity">identities</link>.</para>
+</listitem>
+</itemizedlist>
+<para>We hope you will enjoy &kmail;!</para>
+<sect2 id="getting-help">
+<title>Getting Help</title>
+<note><para>If you experience any problems migrating to &kmail; 2 please read the chapter <link linkend="troubleshooting">Troubleshooting</link>.
+</para></note>
+<para>&kmail;'s homepage can be found at <ulink url="http://userbase.kde.org/KMail">http://userbase.kde.org/KMail</ulink>. There you will
+find useful links, &eg; to the user and developer mailing lists. Please report bugs in &kmail; using
+<menuchoice><guimenu>Help</guimenu><guimenuitem>Report Bug...</guimenuitem></menuchoice>.</para>
+</sect2>
+
+</sect1>
+</chapter>

@@ -1,0 +1,186 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kappname "&kmail;">
+  <!ENTITY package "kdepim">
+  <!ENTITY kmail-intro SYSTEM "intro.docbook">
+  <!ENTITY kmail-getting-started SYSTEM "getting-started.docbook">
+  <!ENTITY kmail-using-kmail SYSTEM "using-kmail.docbook">
+  <!ENTITY kmail-configure SYSTEM "configure.docbook">
+  <!ENTITY kmail-menus SYSTEM "menus.docbook">
+  <!ENTITY kmail-faq SYSTEM "faq.docbook">
+  <!ENTITY kmail-troubleshooting SYSTEM "troubleshooting.docbook">
+  <!ENTITY kmail-credits-and-licenses SYSTEM "credits-and-licenses.docbook">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
+  <!ENTITY html "<acronym>HTML</acronym>">
+  <!ENTITY gpg "<application>GPG</application>">
+  <!ENTITY gpgsm "<application>GpgSM</application>">
+  <!ENTITY mdn "<acronym>MDN</acronym>">
+  <!ENTITY acl "<acronym>ACL</acronym>">
+  <!ENTITY imap "<acronym>IMAP</acronym>">
+  <!ENTITY nntp "<acronym>NNTP</acronym>">
+  <!ENTITY openpgp "<acronym>OpenPGP</acronym>">
+  <!ENTITY smime "<acronym>S/MIME</acronym>">
+  <!ENTITY kolab "<acronym>Kolab</acronym>">
+  <!ENTITY Laurent.Montel '<personname><firstname>Laurent</firstname><surname>Montel</surname></personname>'>
+  <!ENTITY Laurent.Montel.mail '<email>montel@kde.org</email>'>
+  <!ENTITY Scarlett.Clark '<personname><firstname>Scarlett</firstname><surname>Clark</surname></personname>'>
+  <!ENTITY Scarlett.Clark.mail '<email>scarlett@scarlettgatelyclark.com</email>'>
+]>
+<book id="kmail" lang="&language;">
+<bookinfo>
+<title>The &kmail; Handbook</title>
+
+ <!-- Note:
+* please do not mix up the formatting more than necessary so that
+  "cvs diff" makes useful output
+* no short forms
+* use <warning> instead of <caution>
+-->
+
+<!-- TODO:
+*index (see kdegames/kpat/)
+
+* guisubmenu vs. guititem ??
+* more about security?
+
+* Configure KMail: "page" or "tab", but no mix of both!
+* add section for drag'n'drop?
+* "Using other mailbox..." -> sounds strange?
+
+* use better markup instead of 'quote'?
+* fix my adverb vs. adjective mistakes
+
+* coherent wording for section / tab / ...
+* <menuchoice><guimenu>xxx , or is <guimenu>xxx enough?
+* <guiicon> vs. <guibutton>
+* spelling:  popup vs pop up, frontend vs front end
+
+* message vs. mail vs. email -> using "message" everywhere
+* window vs. dialog: a dialog is modal, a window is not (I think)
+
+* in KMail: kmail vs. KMail
+-->
+
+<authorgroup>
+<author>
+<firstname>Daniel</firstname>
+<surname>Naber</surname>
+<affiliation><address>
+&Daniel.Naber.mail;
+</address></affiliation>
+</author>
+
+<author>
+<firstname>David</firstname>
+<surname>Rugge</surname>
+<affiliation><address>
+&David.Rugge.mail;
+</address></affiliation>
+</author>
+
+<author>
+<firstname>Laurent</firstname>
+<surname>Montel</surname>
+<affiliation><address>
+&Laurent.Montel.mail;
+</address></affiliation>
+</author>
+
+<author>
+<firstname>Scarlett</firstname>
+<surname>Clark</surname>
+<affiliation><address>
+&Scarlett.Clark.mail;
+</address></affiliation>
+</author>
+
+
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<copyright>
+<year>1999</year>
+<year>2000</year>
+<year>2001</year>
+<year>2002</year>
+<holder>&David.Rugge;</holder>
+</copyright>
+<copyright>
+<year>2003</year>
+<holder>&Daniel.Naber;</holder>
+</copyright>
+<copyright>
+<year>2004</year>
+<holder>&Daniel.Naber;</holder>
+<holder>Ingo Kl&ouml;cker</holder>
+</copyright>
+<copyright>
+<year>2013</year>
+<holder>&Laurent.Montel;</holder>
+</copyright>
+
+<legalnotice>&FDLNotice;</legalnotice>
+<date>2013-06-26</date>
+<releaseinfo>(&kde; 4.12)</releaseinfo>
+
+<abstract>
+
+<para>&kmail; is &kde;'s powerful and user friendly email client.</para>
+
+</abstract>
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>Mail</keyword>
+<keyword>email</keyword>
+<keyword>Client</keyword>
+<keyword>POP3</keyword>
+<keyword>IMAP</keyword>
+<keyword>PGP</keyword>
+<keyword>GnuPG</keyword>
+<keyword>GPG</keyword>
+<keyword>Kolab</keyword>
+</keywordset>
+</bookinfo>
+
+ &kmail-intro; <!-- 4.7-->
+&kmail-getting-started; <!-- 4.7-->
+&kmail-using-kmail; <!-- 4.11 -->
+&kmail-configure;  <!-- 4.11 -->
+&kmail-menus;  <!-- 4.7 except missing menu items and Mark Message table-->
+&kmail-faq;  <!-- updated by Yuri with topics from userbase -->
+&kmail-troubleshooting; <!-- exported from UserBase -->
+&kmail-credits-and-licenses;
+
+<appendix id="installation">
+<title>Installation</title>
+
+<sect1 id="getting-kmail">
+<title>How to obtain &kmail;</title>
+
+&install.intro.documentation;
+
+</sect1>
+
+<sect1 id="compilation">
+<title>Compilation and Installation</title>
+
+&install.compile.documentation;
+
+</sect1>
+
+</appendix>
+</book>
+
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+// vim:ts=0:sw=2:tw=78:noet
+-->
