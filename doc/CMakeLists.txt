@@ -1,4 +1,4 @@
-kdoctools_create_handbook(index.docbook INSTALL_DESTINATION ${KDE_INSTALL_DOCBUNDLEDIR}/en SUBDIR kmail)
+add_subdirectory(kmail)
 add_subdirectory(akonadi_archivemail_agent)
 add_subdirectory(akonadi_sendlater_agent)
 add_subdirectory(akonadi_followupreminder_agent)
