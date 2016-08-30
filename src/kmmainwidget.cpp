@@ -966,6 +966,7 @@ void KMMainWidget::deleteWidgets()
     mMsgView = Q_NULLPTR;
     mFolderViewSplitter = Q_NULLPTR;
     mFavoriteCollectionsView = Q_NULLPTR;
+    mFolderTreeWidget = Q_NULLPTR;
     mSplitter1 = Q_NULLPTR;
     mSplitter2 = Q_NULLPTR;
     mFavoritesModel = Q_NULLPTR;
@@ -1064,7 +1065,7 @@ void KMMainWidget::createWidgets()
 
         mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
             mFolderTreeWidget->folderTreeView()->model(),
-            KMKernel::self()->config()->group("FavoriteCollections"), this);
+            KMKernel::self()->config()->group("FavoriteCollections"), mFavoriteCollectionsView);
 
         mFavoriteCollectionsView->setModel(mFavoritesModel);
 
