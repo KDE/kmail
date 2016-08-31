@@ -48,6 +48,10 @@ static void kmail_options(QCommandLineParser *parser)
                 QStringLiteral("composer"),
                 i18n("Only open composer window"))
             << QCommandLineOption(
+                QStringLiteral("identity"),
+                i18n("Set identity"),
+                QStringLiteral("identity"))
+            << QCommandLineOption(
                 QStringLiteral("view"),
                 i18n("View the given message file"),
                 QStringLiteral("url"));

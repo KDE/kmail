@@ -281,6 +281,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     QStringList customHeaders;
     QUrl messageFile;
     QList<QUrl> attachURLs;
+    QString identity;
     bool mailto = false;
     bool checkMail = false;
     bool viewOnly = false;
@@ -357,6 +358,10 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         checkMail = true;
     }
 
+    if (parser.isSet(QStringLiteral("identity"))) {
+        identity = parser.value(QStringLiteral("identity"));
+    }
+
     if (parser.isSet(QStringLiteral("view"))) {
         viewOnly = true;
         const QString filename =
@@ -426,7 +431,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         viewMessage(messageFile);
     } else
         action(mailto, checkMail, to, cc, bcc, subj, body, messageFile,
-               attachURLs, customHeaders, replyTo, inReplyTo);
+               attachURLs, customHeaders, replyTo, inReplyTo, identity);
     return true;
 }
 
@@ -541,7 +546,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
                            const QString &messageFile,
                            const QStringList &attachmentPaths,
                            const QStringList &customHeaders,
-                           const QString &replyTo, const QString &inReplyTo)
+                           const QString &replyTo, const QString &inReplyTo, const QString &identity)
 {
     KMail::Composer::TemplateContext context = KMail::Composer::New;
     KMime::Message::Ptr msg(new KMime::Message);
@@ -596,7 +601,15 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     }
 
     msg->assemble();
-    KMail::Composer *cWin = KMail::makeComposer(msg, false, false, context);
+
+    uint identityId = 0;
+    if (!identity.isEmpty()) {
+        if (KMKernel::self()->identityManager()->identities().contains(identity)) {
+            const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(identity);
+            identityId = id.uoid();
+        }
+    }
+    KMail::Composer *cWin = KMail::makeComposer(msg, false, false, context, identityId);
     if (!to.isEmpty()) {
         cWin->setFocusToSubject();
     }
@@ -1451,12 +1464,13 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
                       const QList<QUrl> &attachURLs,
                       const QStringList &customHeaders,
                       const QString &replyTo,
-                      const QString &inReplyTo)
+                      const QString &inReplyTo,
+                      const QString &identity)
 {
     if (mailto) {
         openComposer(to, cc, bcc, subj, body, 0,
                      messageFile.toLocalFile(), QUrl::toStringList(attachURLs),
-                     customHeaders, replyTo, inReplyTo);
+                     customHeaders, replyTo, inReplyTo, identity);
     } else {
         openReader(check);
     }
