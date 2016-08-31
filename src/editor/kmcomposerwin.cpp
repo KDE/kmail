@@ -1364,7 +1364,7 @@ void KMComposerWin::setupStatusBar(QWidget *w)
 
     mCursorLineLabel = new QLabel(this);
     mCursorLineLabel->setText(i18nc("Shows the linenumber of the cursor position.", " Line: %1 "
-                       , QStringLiteral("     ")));
+                                    , QStringLiteral("     ")));
     statusBar()->addPermanentWidget(mCursorLineLabel);
 
     mCursorColumnLabel = new QLabel(i18n(" Column: %1 ", QStringLiteral("     ")));
