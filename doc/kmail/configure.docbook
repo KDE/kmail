@@ -640,12 +640,6 @@ Queued Messages</guimenuitem></menuchoice> command or automatically when you
 check your mail, depending on the setting of
 <guilabel>Send messages in outbox folder</guilabel> above.</para>
 
-<para><guilabel>Default domain</guilabel> lets you specify which domain name
-should be used to complete email addresses that only consist of the recipient's user
-name. For example when you set the default domain to <replaceable>kde.org</replaceable>
-then messages you send to <replaceable>johndoe</replaceable> will be sent to
-<replaceable>johndoe@kde.org</replaceable>.</para>
-
 </sect2>
 
 <sect2 id="configure-accounts-receiving">
