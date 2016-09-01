@@ -91,8 +91,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
                             qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),
                                     IconSize(KIconLoader::Small)));
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     QWidget *topWidget = new QWidget;
     QVBoxLayout *lay = new QVBoxLayout;

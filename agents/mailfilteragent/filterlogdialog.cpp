@@ -60,12 +60,11 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     : QDialog(parent), mIsInitialized(false)
 {
     setWindowTitle(i18n("Filter Log Viewer"));
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
-    mUser1Button = new QPushButton;
+    mUser1Button = new QPushButton(this);
     buttonBox->addButton(mUser1Button, QDialogButtonBox::ActionRole);
-    mUser2Button = new QPushButton;
+    mUser2Button = new QPushButton(this);
     buttonBox->addButton(mUser2Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FilterLogDialog::reject);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("view-filter")));
