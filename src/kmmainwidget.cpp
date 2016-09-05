@@ -2985,10 +2985,6 @@ void KMMainWidget::setupActions()
 
     //----- Edit Menu
 
-    /* The delete action is nowhere in the gui, by default, so we need to make
-    * sure it is plugged into the KAccel now, since that won't happen on
-    * XMLGui construction or manual ->plug(). This is only a problem when run
-    * as a part, though. */
     mDeleteAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action Hard delete, bypassing trash", "&Delete"), this);
     actionCollection()->addAction(QStringLiteral("delete"), mDeleteAction);
     connect(mDeleteAction, &QAction::triggered, this, &KMMainWidget::slotDeleteMessages);
