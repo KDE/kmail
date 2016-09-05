@@ -120,6 +120,7 @@ QString KMComposerEditorNg::smartQuote(const QString &msg)
 
 void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
 {
+    Q_UNUSED(configFileName);
     Sonnet::ConfigDialog dialog(this);
     if (!spellCheckingLanguage().isEmpty()) {
         dialog.setLanguage(spellCheckingLanguage());
