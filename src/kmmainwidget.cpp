@@ -3549,9 +3549,9 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("archive_mails"), mArchiveAction);
     connect(mArchiveAction, &QAction::triggered, this, &KMMainWidget::slotArchiveMails);
 
-    mLowBandwithAction = new KToggleAction(i18n("Low Bandwidth"), this);
-    actionCollection()->addAction(QStringLiteral("low_bandwidth"), mLowBandwithAction);
-    connect(mLowBandwithAction, &KToggleAction::triggered, this, &KMMainWidget::slotBandwidth);
+    mUseLessBandwidth = new KToggleAction(i18n("Use Less Bandwidth"), this);
+    actionCollection()->addAction(QStringLiteral("low_bandwidth"), mUseLessBandwidth);
+    connect(mUseLessBandwidth, &KToggleAction::triggered, this, &KMMainWidget::slotBandwidth);
 
     mMarkAllMessageAsReadAndInAllSubFolder = new QAction(i18n("Mark All Messages As Read in This Folder and All its Subfolder"), this);
     mMarkAllMessageAsReadAndInAllSubFolder->setIcon(QIcon::fromTheme(QStringLiteral("mail-mark-read")));
