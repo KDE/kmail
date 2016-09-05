@@ -535,10 +535,12 @@ bool KMReaderWin::htmlLoadExtOverride() const
 {
     return mViewer->htmlLoadExtOverride();
 }
+
 void KMReaderWin::setDecryptMessageOverwrite(bool overwrite)
 {
     mViewer->setDecryptMessageOverwrite(overwrite);
 }
+
 const MimeTreeParser::AttachmentStrategy *KMReaderWin::attachmentStrategy() const
 {
     return mViewer->attachmentStrategy();
