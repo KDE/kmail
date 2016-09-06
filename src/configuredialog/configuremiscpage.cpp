@@ -18,7 +18,7 @@
 #include "configuremiscpage.h"
 #include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include "configureagentswidget.h"
+#include "configureagents/configureagentswidget.h"
 #include "settings/kmailsettings.h"
 
 #include <MailCommon/FolderRequester>

@@ -61,11 +61,16 @@ set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configureappearancepage.cpp
     configuredialog/configureaccountpage.cpp
     configuredialog/colorlistbox.cpp
-    configuredialog/configureagentswidget.cpp
+    configuredialog/configureagents/configureagentswidget.cpp
     configuredialog/configureagents/configureagentlistmodel.cpp
     configuredialog/configureagents/configureagentlistdelegate.cpp
     configuredialog/configureagents/configureagentlistview.cpp
     configuredialog/configureagents/configureagentitem.cpp
+    )
+
+set(kmailprivate_configureplugins_LIB_SRCS
+    configuredialog/configureplugins/configurepluginswidget.cpp
+    configuredialog/configureplugins/configurepluginslistwidget.cpp
     )
 
 set(kmailprivate_searchdialog_LIB_SRCS
@@ -182,6 +187,7 @@ set(kmailprivate_LIB_SRCS
     kmlaunchexternalcomponent.cpp
     manageshowcollectionproperties.cpp
     kmmigrateapplication.cpp
+    ${kmailprivate_configureplugins_LIB_SRCS}
     ${kmailprivate_attributes_LIB_SRCS}
     ${kmailprivate_tag_LIB_SRCS}
     ${kmailprivate_job_LIB_SRCS}
