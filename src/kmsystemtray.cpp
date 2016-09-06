@@ -62,7 +62,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent),
       mIcon(QIcon::fromTheme(QStringLiteral("mail-mark-unread-new"))),
       mDesktopOfMainWin(0),
-      mMode(KMailSettings::EnumSystemTrayPolicy::ShowOnUnread),
       mCount(0),
       mIconNotificationsEnabled(true),
       mNewMessagesPopup(Q_NULLPTR),
@@ -143,32 +142,6 @@ bool KMSystemTray::buildPopupMenu()
 
 KMSystemTray::~KMSystemTray()
 {
-}
-
-void KMSystemTray::setMode(int newMode)
-{
-    if (newMode == mMode) {
-        return;
-    }
-
-    qCDebug(KMAIL_LOG) << "Setting systray mMode to" << newMode;
-    mMode = newMode;
-
-    switch (mMode) {
-    case KMailSettings::EnumSystemTrayPolicy::ShowAlways:
-        setStatus(KStatusNotifierItem::Active);
-        break;
-    case KMailSettings::EnumSystemTrayPolicy::ShowOnUnread:
-        setStatus(mCount > 0 ? KStatusNotifierItem::Active : KStatusNotifierItem::Passive);
-        break;
-    default:
-        qCDebug(KMAIL_LOG) << "Unknown systray mode" << mMode;
-    }
-}
-
-int KMSystemTray::mode() const
-{
-    return mMode;
 }
 
 void KMSystemTray::slotGeneralFontChanged()
@@ -327,12 +300,10 @@ void KMSystemTray::initListOfCollection()
     }
     unreadMail(model);
 
-    if (mMode == KMailSettings::EnumSystemTrayPolicy::ShowOnUnread) {
-        if (status() == KStatusNotifierItem::Passive && (mCount > 0)) {
-            setStatus(KStatusNotifierItem::Active);
-        } else if (status() == KStatusNotifierItem::Active && (mCount == 0)) {
-            setStatus(KStatusNotifierItem::Passive);
-        }
+    if (status() == KStatusNotifierItem::Passive && (mCount > 0)) {
+        setStatus(KStatusNotifierItem::Active);
+    } else if (status() == KStatusNotifierItem::Active && (mCount == 0)) {
+        setStatus(KStatusNotifierItem::Passive);
     }
 
     //qCDebug(KMAIL_LOG)<<" mCount :"<<mCount;

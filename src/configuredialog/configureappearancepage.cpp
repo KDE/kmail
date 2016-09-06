@@ -939,43 +939,17 @@ AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
     connect(mSystemTrayCheck, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
-    // System tray modes
-    mSystemTrayGroup = new QButtonGroup(this);
-    mSystemTrayGroup->setExclusive(true);
-    mSystemTrayGroupBox = new QGroupBox(this);
-    mSystemTrayGroupBox->setTitle(i18n("System Tray Mode"));
-    QVBoxLayout *gvlay = new QVBoxLayout(mSystemTrayGroupBox);
-
-    connect(mSystemTrayGroup, SIGNAL(buttonClicked(int)),
-            this, SLOT(slotEmitChanged()));
-    connect(mSystemTrayCheck, &QAbstractButton::toggled,
-            mSystemTrayGroupBox, &QWidget::setEnabled);
-
-    auto button = new QRadioButton(i18n("Always show KMail in system tray"), mSystemTrayGroupBox);
-    gvlay->addWidget(button);
-    mSystemTrayGroup->addButton(button, KMailSettings::EnumSystemTrayPolicy::ShowAlways);
-    button = new QRadioButton(i18n("Only show KMail in system tray if there are unread messages"), mSystemTrayGroupBox);
-    gvlay->addWidget(button);
-    mSystemTrayGroup->addButton(button, KMailSettings::EnumSystemTrayPolicy::ShowOnUnread);
-
-    vlay->addWidget(mSystemTrayGroupBox);
-    vlay->addStretch(10);   // spacer
+    vlay->addStretch(10);
 }
 
 void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings()
 {
     loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
-    QAbstractButton *button = mSystemTrayGroup->button(KMailSettings::self()->systemTrayPolicy());
-    if (button) {
-        button->setChecked(true);
-    }
-    mSystemTrayGroupBox->setEnabled(mSystemTrayCheck->isChecked());
 }
 
 void AppearancePage::SystemTrayTab::save()
 {
     saveCheckBox(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
-    KMailSettings::self()->setSystemTrayPolicy(mSystemTrayGroup->checkedId());
     KMailSettings::self()->save();
 }
 

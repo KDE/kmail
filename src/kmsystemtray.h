@@ -49,9 +49,6 @@ public:
      */
     void setSystrayIconNotificationsEnabled(bool enable);
 
-    void setMode(int mode);
-    int mode() const;
-
     void hideKMail();
     bool hasUnreadMail() const;
 
@@ -80,7 +77,6 @@ private:
     QIcon mIcon;
     int mDesktopOfMainWin;
 
-    int mMode;
     int mCount;
 
     bool mIconNotificationsEnabled;

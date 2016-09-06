@@ -1744,17 +1744,11 @@ bool KMKernel::canQueryClose()
     if (!mSystemTray) {
         return true;
     }
-    if (mSystemTray->mode() == KMailSettings::EnumSystemTrayPolicy::ShowAlways) {
-        mSystemTray->hideKMail();
-        return false;
-    } else if ((mSystemTray->mode() == KMailSettings::EnumSystemTrayPolicy::ShowOnUnread)) {
-        if (mSystemTray->hasUnreadMail()) {
-            mSystemTray->setStatus(KStatusNotifierItem::Active);
-        }
-        mSystemTray->hideKMail();
-        return false;
+    if (mSystemTray->hasUnreadMail()) {
+        mSystemTray->setStatus(KStatusNotifierItem::Active);
     }
-    return true;
+    mSystemTray->hideKMail();
+    return false;
 }
 
 QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
@@ -2160,12 +2154,6 @@ void KMKernel::toggleSystemTray()
             delete mSystemTray;
             mSystemTray = Q_NULLPTR;
         }
-
-        // Set mode of systemtray. If mode has changed, tray will handle this.
-        if (mSystemTray) {
-            mSystemTray->setMode(KMailSettings::self()->systemTrayPolicy());
-        }
-
     }
 }
 

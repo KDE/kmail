@@ -84,14 +84,6 @@
         <label>Enable system tray icon</label>
         <default>false</default>
       </entry>
-      <entry name="SystemTrayPolicy" type="Enum">
-        <label>Policy for showing the system tray icon</label>
-        <choices>
-          <choice name="ShowAlways"/>
-          <choice name="ShowOnUnread"/>
-        </choices>
-        <default>ShowOnUnread</default>
-      </entry>
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
         <default>kwrite %f</default>

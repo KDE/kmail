@@ -199,8 +199,6 @@ private:
 
 private:
     QCheckBox    *mSystemTrayCheck;
-    QButtonGroup *mSystemTrayGroup;
-    QGroupBox    *mSystemTrayGroupBox;
 };
 
 class TagListWidgetItem : public QListWidgetItem
