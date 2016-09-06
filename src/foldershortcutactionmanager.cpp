@@ -82,8 +82,9 @@ void FolderShortcutActionManager::createActions()
     connect(KernelIf->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved,
             this, &FolderShortcutActionManager::slotCollectionRemoved, Qt::UniqueConnection);
 
-    if (model->rowCount() > 0) {
-        updateShortcutsForIndex(QModelIndex(), 0, model->rowCount() - 1);
+    const int rowCount(model->rowCount());
+    if (rowCount > 0) {
+        updateShortcutsForIndex(QModelIndex(), 0, rowCount - 1);
     }
 }
 
