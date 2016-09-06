@@ -404,6 +404,11 @@ MessageViewer::Viewer::DisplayFormatMessage KMReaderWin::displayFormatMessageOve
     return mViewer->displayFormatMessageOverwrite();
 }
 
+void KMReaderWin::setPrintElementBackground(bool printElementBackground)
+{
+    mViewer->setPrintElementBackground(printElementBackground);
+}
+
 void KMReaderWin::setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format)
 {
     mViewer->setDisplayFormatMessageOverwrite(format);

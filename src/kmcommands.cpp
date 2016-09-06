@@ -1172,6 +1172,7 @@ KMCommand::Result KMPrintCommand::execute()
     KMReaderWin *printerWin = new KMReaderWin(Q_NULLPTR, kmkernel->mainWin(), Q_NULLPTR);
     printerWin->setPrinting(true);
     printerWin->readConfig();
+    printerWin->setPrintElementBackground(MessageViewer::MessageViewerSettings::self()->printBackgroundColorImages());
     if (mHeaderStylePlugin) {
         printerWin->viewer()->setPluginName(mHeaderStylePlugin->name());
     }
