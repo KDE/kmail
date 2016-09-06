@@ -19,7 +19,7 @@
 #define CONFIGUREAGENTSWIDGET_H
 
 #include <QWidget>
-#include "configureagents/configureagentitem.h"
+#include "configureagentitem.h"
 
 namespace Akonadi
 {

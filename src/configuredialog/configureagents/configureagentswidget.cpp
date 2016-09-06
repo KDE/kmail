@@ -16,7 +16,7 @@
 */
 
 #include "configureagentswidget.h"
-#include "configureagents/configureagentlistview.h"
+#include "configureagentlistview.h"
 
 #include "SendLater/SendLaterUtil"
 
@@ -40,7 +40,7 @@
 ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     : QWidget(parent)
 {
-    QHBoxLayout *lay = new QHBoxLayout;
+    QHBoxLayout *lay = new QHBoxLayout(this);
     mSplitter = new QSplitter;
     mSplitter->setChildrenCollapsible(false);
     lay->addWidget(mSplitter);
@@ -56,7 +56,6 @@ ConfigureAgentsWidget::ConfigureAgentsWidget(QWidget *parent)
     connect(mConfigureAgentListView, &ConfigureAgentListView::descriptionChanged, mDescription, &QTextEdit::setText);
     connect(mConfigureAgentListView, &ConfigureAgentListView::agentChanged, this, &ConfigureAgentsWidget::changed);
 
-    setLayout(lay);
     initialize();
     readConfig();
 }
