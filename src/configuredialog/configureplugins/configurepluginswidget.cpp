@@ -23,12 +23,21 @@
 #include <KConfigGroup>
 #include <KTextEdit>
 #include <KSharedConfig>
+#include <KMessageWidget>
 #include <QSplitter>
 
 ConfigurePluginsWidget::ConfigurePluginsWidget(QWidget *parent)
     : QWidget(parent)
 {
-    QHBoxLayout *layout = new QHBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(this);
+
+    KMessageWidget *messageWidget = new KMessageWidget(this);
+    messageWidget->setObjectName(QStringLiteral("messagewidget"));
+    messageWidget->setText(i18n("Restart is necessary for applying the changes."));
+    messageWidget->setCloseButtonVisible(false);
+    layout->addWidget(messageWidget);
+
+
     mSplitter = new QSplitter(this);
     mSplitter->setObjectName(QStringLiteral("splitter"));
     mSplitter->setChildrenCollapsible(false);
@@ -46,7 +55,9 @@ ConfigurePluginsWidget::ConfigurePluginsWidget(QWidget *parent)
     mSplitter->addWidget(mDescription);
 
     connect(mConfigureListWidget, &ConfigurePluginsListWidget::descriptionChanged, mDescription, &KTextEdit::setText);
+    connect(mConfigureListWidget, &ConfigurePluginsListWidget::changed, this, &ConfigurePluginsWidget::changed);
 
+    initialize();
     readConfig();
 }
 
@@ -58,7 +69,6 @@ ConfigurePluginsWidget::~ConfigurePluginsWidget()
 void ConfigurePluginsWidget::save()
 {
     mConfigureListWidget->save();
-    //TODO
 }
 
 QString ConfigurePluginsWidget::helpAnchor() const
@@ -69,12 +79,12 @@ QString ConfigurePluginsWidget::helpAnchor() const
 
 void ConfigurePluginsWidget::doLoadFromGlobalSettings()
 {
-    //TODO
+    mConfigureListWidget->doLoadFromGlobalSettings();
 }
 
 void ConfigurePluginsWidget::doResetToDefaultsOther()
 {
-    //TODO
+    mConfigureListWidget->doResetToDefaultsOther();
 }
 
 void ConfigurePluginsWidget::readConfig()
@@ -94,5 +104,5 @@ void ConfigurePluginsWidget::writeConfig()
 
 void ConfigurePluginsWidget::initialize()
 {
-
+    mConfigureListWidget->initialize();
 }

@@ -20,6 +20,7 @@
 #include "../configurepluginslistwidget.h"
 
 #include <KTextEdit>
+#include <KMessageWidget>
 #include <QSplitter>
 #include <QTest>
 
@@ -38,6 +39,12 @@ ConfigurePluginsWidgetTest::~ConfigurePluginsWidgetTest()
 void ConfigurePluginsWidgetTest::shouldHaveDefaultValue()
 {
     ConfigurePluginsWidget w;
+
+    KMessageWidget *messageWidget = w.findChild<KMessageWidget *>(QStringLiteral("messagewidget"));
+    QVERIFY(messageWidget);
+    QVERIFY(!messageWidget->isCloseButtonVisible());
+    QVERIFY(!messageWidget->text().isEmpty());
+
     QSplitter *mSplitter = w.findChild<QSplitter *>(QStringLiteral("splitter"));
     QVERIFY(mSplitter);
     QCOMPARE(mSplitter->count(), 2);

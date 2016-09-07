@@ -19,7 +19,7 @@
 #define CONFIGUREPLUGINSLISTWIDGET_H
 
 #include <QWidget>
-
+class QTreeWidget;
 class ConfigurePluginsListWidget : public QWidget
 {
     Q_OBJECT
@@ -28,8 +28,16 @@ public:
     ~ConfigurePluginsListWidget();
 
     void save();
+    void doLoadFromGlobalSettings();
+    void doResetToDefaultsOther();
+    void initialize();
+
 Q_SIGNALS:
     void descriptionChanged(const QString &description);
+    void changed();
+
+private:
+    QTreeWidget *mListWidget;
 };
 
 #endif // CONFIGUREPLUGINSLISTWIDGET_H

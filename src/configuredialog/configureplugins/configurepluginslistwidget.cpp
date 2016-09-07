@@ -23,12 +23,18 @@
 
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QTreeWidget>
 
 
 ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
     : QWidget(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setMargin(0);
+
+    mListWidget = new QTreeWidget(this);
+    mListWidget->setObjectName(QStringLiteral("listwidget"));
+    mainLayout->addWidget(mListWidget);
 }
 
 ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
@@ -38,5 +44,24 @@ ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
 
 void ConfigurePluginsListWidget::save()
 {
+    //TODO
+}
+
+void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
+{
+    //TODO
+}
+
+void ConfigurePluginsListWidget::doResetToDefaultsOther()
+{
+    //TODO
+}
+
+void ConfigurePluginsListWidget::initialize()
+{
+    mListWidget->clear();
+    //Load plugin editor
+    //Load messageviewer plugin
+    //Load webengineplugin
     //TODO
 }
