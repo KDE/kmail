@@ -25,6 +25,17 @@
 #include <QLabel>
 #include <QTreeWidget>
 
+class PluginItem : public QTreeWidgetItem
+{
+public:
+    PluginItem(QTreeWidget *parent)
+        : QTreeWidgetItem(parent)
+    {
+
+    }
+    QString mIdentifier;
+    QString mDescription;
+};
 
 ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
     : QWidget(parent)
@@ -35,6 +46,7 @@ ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
     mListWidget = new QTreeWidget(this);
     mListWidget->setObjectName(QStringLiteral("listwidget"));
     mainLayout->addWidget(mListWidget);
+
 }
 
 ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
