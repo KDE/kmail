@@ -21,6 +21,7 @@
 
 #include <QWidget>
 class QSplitter;
+class KTextEdit;
 class ConfigurePluginsListWidget;
 class ConfigurePluginsWidget : public QWidget
 {
@@ -42,6 +43,7 @@ private:
 
     QSplitter *mSplitter;
     ConfigurePluginsListWidget *mConfigureListWidget;
+    KTextEdit *mDescription;
 };
 
 #endif // CONFIGUREPLUGINSWIDGET_H

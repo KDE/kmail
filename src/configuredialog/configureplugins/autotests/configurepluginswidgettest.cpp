@@ -17,8 +17,12 @@
 
 #include "configurepluginswidgettest.h"
 #include "../configurepluginswidget.h"
+#include "../configurepluginslistwidget.h"
 
+#include <KTextEdit>
+#include <QSplitter>
 #include <QTest>
+
 
 ConfigurePluginsWidgetTest::ConfigurePluginsWidgetTest(QObject *parent)
     : QObject(parent)
@@ -29,6 +33,22 @@ ConfigurePluginsWidgetTest::ConfigurePluginsWidgetTest(QObject *parent)
 ConfigurePluginsWidgetTest::~ConfigurePluginsWidgetTest()
 {
 
+}
+
+void ConfigurePluginsWidgetTest::shouldHaveDefaultValue()
+{
+    ConfigurePluginsWidget w;
+    QSplitter *mSplitter = w.findChild<QSplitter *>(QStringLiteral("splitter"));
+    QVERIFY(mSplitter);
+    QCOMPARE(mSplitter->count(), 2);
+
+    ConfigurePluginsListWidget *mConfigureListWidget = mSplitter->findChild<ConfigurePluginsListWidget *>(QStringLiteral("configureListWidget"));
+    QVERIFY(mConfigureListWidget);
+
+
+    KTextEdit *mDescription = mSplitter->findChild<KTextEdit *>(QStringLiteral("description"));
+    QVERIFY(mDescription);
+    QVERIFY(mDescription->isReadOnly());
 }
 
 QTEST_MAIN(ConfigurePluginsWidgetTest)

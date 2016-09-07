@@ -27,6 +27,8 @@ class ConfigurePluginsWidgetTest : public QObject
 public:
     explicit ConfigurePluginsWidgetTest(QObject *parent = Q_NULLPTR);
     ~ConfigurePluginsWidgetTest();
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
 };
 
 #endif // CONFIGUREPLUGINSWIDGETTEST_H

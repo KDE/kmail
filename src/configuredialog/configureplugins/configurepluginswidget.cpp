@@ -21,6 +21,7 @@
 #include <QVBoxLayout>
 #include <KLocalizedString>
 #include <KConfigGroup>
+#include <KTextEdit>
 #include <KSharedConfig>
 #include <QSplitter>
 
@@ -37,6 +38,12 @@ ConfigurePluginsWidget::ConfigurePluginsWidget(QWidget *parent)
     mConfigureListWidget->setObjectName(QStringLiteral("configureListWidget"));
     mSplitter->addWidget(mConfigureListWidget);
 
+    mDescription = new KTextEdit(this);
+    mDescription->setObjectName(QStringLiteral("description"));
+    mDescription->setReadOnly(true);
+    mDescription->enableFindReplace(false);
+
+    mSplitter->addWidget(mDescription);
 
     readConfig();
 }
