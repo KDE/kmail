@@ -45,6 +45,8 @@ ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
 
     mListWidget = new QTreeWidget(this);
     mListWidget->setObjectName(QStringLiteral("listwidget"));
+    mListWidget->setHeaderHidden(true);
+
     mainLayout->addWidget(mListWidget);
 
 }
@@ -61,12 +63,12 @@ void ConfigurePluginsListWidget::save()
 
 void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
 {
-    //TODO
+    initialize();
 }
 
 void ConfigurePluginsListWidget::doResetToDefaultsOther()
 {
-    //TODO
+    //TODO disable all ?
 }
 
 void ConfigurePluginsListWidget::initialize()
