@@ -1,0 +1,5 @@
+set( kmail_configureplugins_source_SRCS configurepluginswidgettest.cpp ../configurepluginswidget.cpp ../configurepluginslistwidget.cpp )
+add_executable( configurepluginswidgettest ${kmail_configureplugins_source_SRCS} )
+add_test( configurepluginswidgettest configurepluginswidgettest )
+ecm_mark_as_test(kmail-configurepluginswidgettest)
+target_link_libraries( configurepluginswidgettest Qt5::Test KF5::I18n Qt5::Widgets KF5::ConfigCore)
