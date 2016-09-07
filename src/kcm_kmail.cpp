@@ -28,6 +28,7 @@
 #include "configuredialog/configurecomposerpage.h"
 #include "configuredialog/configureappearancepage.h"
 #include "configuredialog/configureaccountpage.h"
+#include "configuredialog/configurepluginpage.h"
 #include "identity/identitypage.h"
 #include <kcmodule.h>
 
@@ -91,6 +92,16 @@ extern "C"
     {
         SecurityPage *page = new SecurityPage(parent);
         page->setObjectName(QStringLiteral("kcmkmail_config_security"));
+        return page;
+    }
+}
+
+extern "C"
+{
+    Q_DECL_EXPORT KCModule *create_kmail_config_plugins(QWidget *parent, const char *)
+    {
+        ConfigurePluginPage *page = new ConfigurePluginPage(parent);
+        page->setObjectName(QStringLiteral("kcmkmail_config_plugins"));
         return page;
     }
 }

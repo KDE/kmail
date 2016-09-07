@@ -29,7 +29,7 @@
 class PluginItem : public QTreeWidgetItem
 {
 public:
-    PluginItem(QTreeWidget *parent)
+    PluginItem(QTreeWidgetItem *parent)
         : QTreeWidgetItem(parent)
     {
 
@@ -86,6 +86,21 @@ void ConfigurePluginsListWidget::initialize()
     //Load plugin editor
     //Load messageviewer plugin
     const QVector<MessageViewer::ViewerPluginManager::ViewerPluginData> lstMessageViewerPluginData = MessageViewer::ViewerPluginManager::self()->pluginsDataList();
+    if (!lstMessageViewerPluginData.isEmpty()) {
+        QTreeWidgetItem *topLevel = new QTreeWidgetItem(mListWidget, QStringList() << i18n("Message Viewer"));
+        topLevel->setFlags(topLevel->flags() & ~Qt::ItemIsSelectable);
+        Q_FOREACH(const MessageViewer::ViewerPluginManager::ViewerPluginData &data, lstMessageViewerPluginData) {
+            PluginItem *subItem = new PluginItem(topLevel);
+            subItem->setText(0, data.mName);
+            subItem->mIdentifier = data.mIdentifier;
+            subItem->mDescription = data.mDescription;
+            //TODO
+            subItem->setCheckState(0, Qt::Checked);
+            //TODO
+        }
+    }
+
     //Load webengineplugin
     //TODO
+    mListWidget->expandAll();
 }

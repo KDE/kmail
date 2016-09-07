@@ -60,6 +60,7 @@ set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configurecomposerpage.cpp
     configuredialog/configureappearancepage.cpp
     configuredialog/configureaccountpage.cpp
+    configuredialog/configurepluginpage.cpp
     configuredialog/colorlistbox.cpp
     configuredialog/configureagents/configureagentswidget.cpp
     configuredialog/configureagents/configureagentlistmodel.cpp
@@ -389,6 +390,7 @@ install(FILES
     data/kmail_config_accounts.desktop
     data/kmail_config_composer.desktop
     data/kmail_config_security.desktop
+    data/kmail_config_plugins.desktop
     DESTINATION ${KDE_INSTALL_KSERVICES5DIR}
     )
 install(FILES

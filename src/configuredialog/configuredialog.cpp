@@ -46,6 +46,7 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     addModule(QStringLiteral("kmail_config_composer"));
     addModule(QStringLiteral("kmail_config_security"));
     addModule(QStringLiteral("kmail_config_misc"));
+    addModule(QStringLiteral("kmail_config_plugins"));
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
     connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);

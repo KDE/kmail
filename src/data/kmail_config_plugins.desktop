@@ -1,0 +1,18 @@
+[Desktop Entry]
+Icon=preferences-plugin
+Type=Service
+X-KDE-ServiceTypes=KCModule
+
+X-KDE-ModuleType=Library
+X-KDE-Library=kcm_kmail
+X-KDE-FactoryName=kmail_config_plugins
+X-KDE-HasReadOnlyMode=false
+X-KDE-ParentApp=kmail
+X-KDE-ParentComponents=kmail,kontact_kmailplugin
+X-KDE-CfgDlgHierarchy=KMail
+X-KDE-Weight=600
+X-DocPath=kmail/index.html
+
+Name=Plugins
+Comment=Settings Plugins
+X-KDE-Keywords=kmail,plugins
