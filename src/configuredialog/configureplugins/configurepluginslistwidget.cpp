@@ -16,6 +16,7 @@
 */
 
 #include "configurepluginslistwidget.h"
+#include <MessageViewer/ViewerPluginManager>
 
 #include <KConfigGroup>
 #include <KSharedConfig>
@@ -84,6 +85,7 @@ void ConfigurePluginsListWidget::initialize()
     mListWidget->clear();
     //Load plugin editor
     //Load messageviewer plugin
+    const QVector<MessageViewer::ViewerPluginManager::ViewerPluginData> lstMessageViewerPluginData = MessageViewer::ViewerPluginManager::self()->pluginsDataList();
     //Load webengineplugin
     //TODO
 }
