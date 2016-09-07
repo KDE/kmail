@@ -15,28 +15,18 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "configurepluginslistwidget.h"
 
-#include <KConfigGroup>
-#include <KSharedConfig>
-#include <KLocalizedString>
+#ifndef CONFIGUREPLUGINSLISTWIDGETTEST_H
+#define CONFIGUREPLUGINSLISTWIDGETTEST_H
 
-#include <QHBoxLayout>
-#include <QLabel>
+#include <QObject>
 
-
-ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
-    : QWidget(parent)
+class ConfigurePluginsListWidgetTest : public QObject
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-}
+    Q_OBJECT
+public:
+    explicit ConfigurePluginsListWidgetTest(QObject *parent = Q_NULLPTR);
+    ~ConfigurePluginsListWidgetTest();
+};
 
-ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
-{
-
-}
-
-void ConfigurePluginsListWidget::save()
-{
-    //TODO
-}
+#endif // CONFIGUREPLUGINSLISTWIDGETTEST_H
