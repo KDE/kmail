@@ -37,6 +37,7 @@ Q_SIGNALS:
     void changed();
 
 private:
+    void slotItemSelectionChanged();
     QTreeWidget *mListWidget;
 };
 

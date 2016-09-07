@@ -41,11 +41,14 @@ ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
     : QWidget(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setObjectName(QStringLiteral("mainlayout"));
     mainLayout->setMargin(0);
 
     mListWidget = new QTreeWidget(this);
     mListWidget->setObjectName(QStringLiteral("listwidget"));
     mListWidget->setHeaderHidden(true);
+    mListWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    connect(mListWidget, &QTreeWidget::itemSelectionChanged, this, &ConfigurePluginsListWidget::slotItemSelectionChanged);
 
     mainLayout->addWidget(mListWidget);
 
@@ -54,6 +57,11 @@ ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
 ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
 {
 
+}
+
+void ConfigurePluginsListWidget::slotItemSelectionChanged()
+{
+    //TODO emit description changes.
 }
 
 void ConfigurePluginsListWidget::save()

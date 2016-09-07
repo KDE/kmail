@@ -17,7 +17,10 @@
 
 
 #include "configurepluginslistwidgettest.h"
+#include "../configurepluginslistwidget.h"
+#include <QHBoxLayout>
 #include <QTest>
+#include <QTreeWidget>
 
 ConfigurePluginsListWidgetTest::ConfigurePluginsListWidgetTest(QObject *parent)
     : QObject(parent)
@@ -28,6 +31,18 @@ ConfigurePluginsListWidgetTest::ConfigurePluginsListWidgetTest(QObject *parent)
 ConfigurePluginsListWidgetTest::~ConfigurePluginsListWidgetTest()
 {
 
+}
+
+void ConfigurePluginsListWidgetTest::shouldHaveDefaultValue()
+{
+    ConfigurePluginsListWidget w;
+
+    QVBoxLayout *mainLayout = w.findChild<QVBoxLayout *>(QStringLiteral("mainlayout"));
+    QVERIFY(mainLayout);
+    QCOMPARE(mainLayout->margin(), 0);
+
+    QTreeWidget *mListWidget = w.findChild<QTreeWidget *>(QStringLiteral("listwidget"));
+    QVERIFY(mListWidget);
 }
 
 QTEST_MAIN(ConfigurePluginsListWidgetTest)
