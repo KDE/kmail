@@ -35,6 +35,8 @@ public:
     void doLoadFromGlobalSettings();
     void doResetToDefaultsOther();
 
+Q_SIGNALS:
+    void changed();
 
 private:
     void initialize();

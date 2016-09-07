@@ -49,6 +49,7 @@ void ConfigurePluginsWidgetTest::shouldHaveDefaultValue()
     KTextEdit *mDescription = mSplitter->findChild<KTextEdit *>(QStringLiteral("description"));
     QVERIFY(mDescription);
     QVERIFY(mDescription->isReadOnly());
+    QVERIFY(mDescription->document()->isEmpty());
 }
 
 QTEST_MAIN(ConfigurePluginsWidgetTest)

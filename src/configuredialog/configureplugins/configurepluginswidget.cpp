@@ -45,6 +45,8 @@ ConfigurePluginsWidget::ConfigurePluginsWidget(QWidget *parent)
 
     mSplitter->addWidget(mDescription);
 
+    connect(mConfigureListWidget, &ConfigurePluginsListWidget::descriptionChanged, mDescription, &KTextEdit::setText);
+
     readConfig();
 }
 
@@ -55,6 +57,7 @@ ConfigurePluginsWidget::~ConfigurePluginsWidget()
 
 void ConfigurePluginsWidget::save()
 {
+    mConfigureListWidget->save();
     //TODO
 }
 

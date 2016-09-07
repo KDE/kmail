@@ -26,6 +26,10 @@ class ConfigurePluginsListWidget : public QWidget
 public:
     explicit ConfigurePluginsListWidget(QWidget *parent = Q_NULLPTR);
     ~ConfigurePluginsListWidget();
+
+    void save();
+Q_SIGNALS:
+    void descriptionChanged(const QString &description);
 };
 
 #endif // CONFIGUREPLUGINSLISTWIDGET_H

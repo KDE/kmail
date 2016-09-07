@@ -17,6 +17,9 @@
 
 #include "configurepluginslistwidget.h"
 
+#include <KConfigGroup>
+#include <KSharedConfig>
+
 ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -26,4 +29,9 @@ ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
 ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
 {
 
+}
+
+void ConfigurePluginsListWidget::save()
+{
+    //TODO
 }
