@@ -31,8 +31,6 @@ public:
     void doLoadFromGlobalSettings();
     void doResetToDefaultsOther();
     void initialize();
-
-    static bool isActivate(const QStringList &enabledPluginsList, const QStringList &disabledPluginsList, bool isEnabledByDefault, const QString &pluginId);
 Q_SIGNALS:
     void descriptionChanged(const QString &description);
     void changed();

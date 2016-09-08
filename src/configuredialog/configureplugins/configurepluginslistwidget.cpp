@@ -18,6 +18,7 @@
 #include "configurepluginslistwidget.h"
 #include <MessageViewer/ViewerPluginManager>
 
+#include <PimCommon/PluginUtil>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <KLocalizedString>
@@ -78,20 +79,6 @@ void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
 void ConfigurePluginsListWidget::doResetToDefaultsOther()
 {
     //TODO disable all ?
-}
-
-bool ConfigurePluginsListWidget::isActivate(const QStringList &enabledPluginsList, const QStringList &disabledPluginsList, bool isEnabledByDefault, const QString &pluginId)
-{
-    if (pluginId.isEmpty()) {
-        return false;
-    }
-    const bool pluginEnabledByUser = enabledPluginsList.contains(pluginId);
-    const bool pluginDisabledByUser = disabledPluginsList.contains(pluginId);
-    if ((isEnabledByDefault && !pluginDisabledByUser)
-            || (!isEnabledByDefault && pluginEnabledByUser)) {
-        return true;
-    }
-    return false;
 }
 
 void ConfigurePluginsListWidget::initialize()
