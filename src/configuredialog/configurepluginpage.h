@@ -21,7 +21,10 @@
 #include "configuredialog_p.h"
 
 #include <QWidget>
+namespace PimCommon
+{
 class ConfigurePluginsWidget;
+}
 class KMAIL_EXPORT ConfigurePluginPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
@@ -45,7 +48,7 @@ private:
     void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
     void doLoadOther() Q_DECL_OVERRIDE;
 private:
-    ConfigurePluginsWidget *mConfigurePlugins;
+    PimCommon::ConfigurePluginsWidget *mConfigurePlugins;
 };
 
 #endif // CONFIGUREPLUGINPAGE_H

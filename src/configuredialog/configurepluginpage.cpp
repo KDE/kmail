@@ -16,7 +16,8 @@
 */
 
 #include "configurepluginpage.h"
-#include "configureplugins/configurepluginswidget.h"
+#include "configureplugins/configurepluginslistwidget.h"
+#include <PimCommon/ConfigurePluginsWidget>
 
 #include <KLocalizedString>
 #include <QHBoxLayout>
@@ -43,10 +44,10 @@ ConfigurePluginTab::ConfigurePluginTab(QWidget *parent)
 {
     QHBoxLayout *l = new QHBoxLayout(this);
     l->setContentsMargins(0, 0, 0, 0);
-    mConfigurePlugins = new ConfigurePluginsWidget(this);
+    mConfigurePlugins = new PimCommon::ConfigurePluginsWidget(new ConfigurePluginsListWidget(this), this);
     l->addWidget(mConfigurePlugins);
 
-    connect(mConfigurePlugins, &ConfigurePluginsWidget::changed, this, &ConfigurePluginTab::slotEmitChanged);
+    connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::changed, this, &ConfigurePluginTab::slotEmitChanged);
 }
 
 void ConfigurePluginTab::save()

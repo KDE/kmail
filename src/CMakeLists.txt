@@ -70,7 +70,6 @@ set(kmailprivate_configuredialog_LIB_SRCS
     )
 
 set(kmailprivate_configureplugins_LIB_SRCS
-    configuredialog/configureplugins/configurepluginswidget.cpp
     configuredialog/configureplugins/configurepluginslistwidget.cpp
     )
 
@@ -369,7 +368,6 @@ if(BUILD_TESTING)
     add_subdirectory(tests)
     add_subdirectory(folderarchive/autotests/)
     add_subdirectory(editor/potentialphishingemail/autotests)
-    add_subdirectory(configuredialog/configureplugins/autotests/)
 endif()
 ########### install files ###############
 

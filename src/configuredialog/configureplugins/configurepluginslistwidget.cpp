@@ -17,6 +17,8 @@
 
 #include "configurepluginslistwidget.h"
 #include <MessageViewer/ViewerPluginManager>
+#include <MessageComposer/PluginEditorCheckBeforeSendManager>
+#include <PimCommon/GenericPluginManager>
 
 #include <PimCommon/PluginUtil>
 #include <KConfigGroup>
@@ -27,72 +29,44 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QTreeWidget>
+#include <QDebug>
 
 ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
-    : QWidget(parent)
+    : PimCommon::ConfigurePluginsListWidget(parent)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    mainLayout->setObjectName(QStringLiteral("mainlayout"));
-    mainLayout->setMargin(0);
-
-    mListWidget = new QTreeWidget(this);
-    mListWidget->setObjectName(QStringLiteral("listwidget"));
-    mListWidget->setHeaderHidden(true);
-    mListWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-    connect(mListWidget, &QTreeWidget::itemSelectionChanged, this, &ConfigurePluginsListWidget::slotItemSelectionChanged);
-    connect(mListWidget, &QTreeWidget::itemChanged, this, &ConfigurePluginsListWidget::slotItemChanged);
-
-    mainLayout->addWidget(mListWidget);
-
 }
 
 ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
 {
 }
 
-void ConfigurePluginsListWidget::slotItemChanged(QTreeWidgetItem *item, int column)
+void ConfigurePluginsListWidget::savePlugins(const QString &groupName, const QString &prefixSettingKey, const QList<PluginItem *> &listItems)
 {
-    Q_UNUSED(item);
-    if (column == 0) {
-        Q_EMIT changed();
+    QStringList enabledPlugins;
+    QStringList disabledPlugins;
+    Q_FOREACH (PluginItem *item, listItems) {
+        if (item->checkState(0) == Qt::Checked) {
+            enabledPlugins << item->mIdentifier;
+        } else {
+            disabledPlugins << item->mIdentifier;
+        }
     }
-}
-
-void ConfigurePluginsListWidget::slotItemSelectionChanged()
-{
-    QTreeWidgetItem *item = mListWidget->currentItem();
-    if (PluginItem *pluginItem = dynamic_cast<PluginItem *>(item)) {
-        Q_EMIT descriptionChanged(pluginItem->mDescription);
-    }
+    PimCommon::PluginUtil::savePluginSettings(groupName,
+            prefixSettingKey,
+            enabledPlugins, disabledPlugins);
 }
 
 void ConfigurePluginsListWidget::save()
 {
-    QStringList enabledPlugins;
-    QStringList disabledPlugins;
-    Q_FOREACH (PluginItem *item, mPluginEditorItems) {
-        if (item->checkState(0) == Qt::Checked) {
-            enabledPlugins << item->mIdentifier;
-        } else {
-            disabledPlugins << item->mIdentifier;
-        }
-    }
-    PimCommon::PluginUtil::savePluginSettings(MessageComposer::PluginEditorManager::self()->configGroupName(),
-            MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
-            enabledPlugins, disabledPlugins);
-
-    enabledPlugins.clear();
-    disabledPlugins.clear();
-    Q_FOREACH (PluginItem *item, mPluginMessageViewerItems) {
-        if (item->checkState(0) == Qt::Checked) {
-            enabledPlugins << item->mIdentifier;
-        } else {
-            disabledPlugins << item->mIdentifier;
-        }
-    }
-    PimCommon::PluginUtil::savePluginSettings(MessageViewer::ViewerPluginManager::self()->configGroupName(),
-            MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
-            enabledPlugins, disabledPlugins);
+    savePlugins(MessageComposer::PluginEditorManager::self()->configGroupName(),
+                MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
+                mPluginEditorItems);
+    savePlugins(MessageViewer::ViewerPluginManager::self()->configGroupName(),
+                MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
+                mPluginMessageViewerItems);
+    savePlugins(MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
+                MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
+                mPluginSendBeforeSendItems);
 }
 
 void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
@@ -109,6 +83,10 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     Q_FOREACH (PluginItem *item, mPluginMessageViewerItems) {
         item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
     }
+
+    Q_FOREACH (PluginItem *item, mPluginSendBeforeSendItems) {
+        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
+    }
 }
 
 void ConfigurePluginsListWidget::initialize()
@@ -116,8 +94,28 @@ void ConfigurePluginsListWidget::initialize()
     mListWidget->clear();
     mPluginMessageViewerItems.clear();
     mPluginEditorItems.clear();
+    mPluginSendBeforeSendItems.clear();
 
+    //Load CheckBeforeSend
+    const QVector<PimCommon::PluginUtilData> lstPluginCheckBeforeSend = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList();
+    if (!lstPluginCheckBeforeSend.isEmpty()) {
+        QTreeWidgetItem *topLevel = new QTreeWidgetItem(mListWidget, QStringList() << i18n("Check Before Send Plugins"));
+        topLevel->setFlags(topLevel->flags() & ~Qt::ItemIsSelectable);
+        const QPair<QStringList, QStringList> pair = PimCommon::PluginUtil::loadPluginSetting(MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
+                MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey());
+        Q_FOREACH (const PimCommon::PluginUtilData &data, lstPluginCheckBeforeSend) {
+            PluginItem *subItem = new PluginItem(topLevel);
+            subItem->setText(0, data.mName);
+            subItem->mIdentifier = data.mIdentifier;
+            subItem->mDescription = data.mDescription;
+            subItem->mEnableByDefault = data.mEnableByDefault;
+            const bool isPluginActivated = PimCommon::PluginUtil::isPluginActivated(pair.first, pair.second, data.mEnableByDefault, data.mIdentifier);
+            subItem->setCheckState(0, isPluginActivated ? Qt::Checked : Qt::Unchecked);
+            mPluginSendBeforeSendItems.append(subItem);
+        }
+    }
     //Load generic plugins
+    //TODO PimCommon::GenericPluginManager::self()->pluginsDataList()
 
     //Load plugin editor
     const QVector<PimCommon::PluginUtilData> lstPluginEditor = MessageComposer::PluginEditorManager::self()->pluginsDataList();

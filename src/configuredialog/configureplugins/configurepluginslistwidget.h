@@ -15,46 +15,29 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef CONFIGUREPLUGINSLISTWIDGET_H
-#define CONFIGUREPLUGINSLISTWIDGET_H
+#ifndef KMAILCONFIGUREPLUGINSLISTWIDGET_H
+#define KMAILCONFIGUREPLUGINSLISTWIDGET_H
 
-#include <QWidget>
-#include <QTreeWidgetItem>
-class QTreeWidget;
-class ConfigurePluginsListWidget : public QWidget
+#include <QList>
+#include <PimCommon/ConfigurePluginsListWidget>
+
+class ConfigurePluginsListWidget : public PimCommon::ConfigurePluginsListWidget
 {
     Q_OBJECT
 public:
     explicit ConfigurePluginsListWidget(QWidget *parent = Q_NULLPTR);
     ~ConfigurePluginsListWidget();
 
-    void save();
-    void doLoadFromGlobalSettings();
-    void doResetToDefaultsOther();
-    void initialize();
-Q_SIGNALS:
-    void descriptionChanged(const QString &description);
-    void changed();
+    void save() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+    void initialize() Q_DECL_OVERRIDE;
 
 private:
-    void slotItemSelectionChanged();
-    void slotItemChanged(QTreeWidgetItem *item, int column);
-    class PluginItem : public QTreeWidgetItem
-    {
-    public:
-        PluginItem(QTreeWidgetItem *parent)
-            : QTreeWidgetItem(parent),
-              mEnableByDefault(false)
-        {
-
-        }
-        QString mIdentifier;
-        QString mDescription;
-        bool mEnableByDefault;
-    };
+    void savePlugins(const QString &groupName, const QString &prefixSettingKey, const QList<PluginItem *> &listItems);
     QList<PluginItem *> mPluginEditorItems;
     QList<PluginItem *> mPluginMessageViewerItems;
-    QTreeWidget *mListWidget;
+    QList<PluginItem *> mPluginSendBeforeSendItems;
 };
 
-#endif // CONFIGUREPLUGINSLISTWIDGET_H
+#endif // KMAILCONFIGUREPLUGINSLISTWIDGET_H
