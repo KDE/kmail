@@ -15,7 +15,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 #ifndef CONFIGUREPLUGINPAGE_H
 #define CONFIGUREPLUGINPAGE_H
 
@@ -32,7 +31,6 @@ public:
 
     QString helpAnchor() const Q_DECL_OVERRIDE;
 };
-
 
 class ConfigurePluginTab : public ConfigModuleTab
 {

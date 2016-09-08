@@ -33,7 +33,6 @@ ConfigurePluginPage::~ConfigurePluginPage()
 
 }
 
-
 QString ConfigurePluginPage::helpAnchor() const
 {
     return {};

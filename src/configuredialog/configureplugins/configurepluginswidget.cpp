@@ -37,7 +37,6 @@ ConfigurePluginsWidget::ConfigurePluginsWidget(QWidget *parent)
     messageWidget->setCloseButtonVisible(false);
     layout->addWidget(messageWidget);
 
-
     mSplitter = new QSplitter(this);
     mSplitter->setObjectName(QStringLiteral("splitter"));
     mSplitter->setChildrenCollapsible(false);

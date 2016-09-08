@@ -24,7 +24,6 @@
 #include <QSplitter>
 #include <QTest>
 
-
 ConfigurePluginsWidgetTest::ConfigurePluginsWidgetTest(QObject *parent)
     : QObject(parent)
 {
@@ -51,7 +50,6 @@ void ConfigurePluginsWidgetTest::shouldHaveDefaultValue()
 
     ConfigurePluginsListWidget *mConfigureListWidget = mSplitter->findChild<ConfigurePluginsListWidget *>(QStringLiteral("configureListWidget"));
     QVERIFY(mConfigureListWidget);
-
 
     KTextEdit *mDescription = mSplitter->findChild<KTextEdit *>(QStringLiteral("description"));
     QVERIFY(mDescription);
