@@ -101,7 +101,6 @@ void ConfigurePluginsWidget::writeConfig()
     group.writeEntry("splitter", mSplitter->sizes());
 }
 
-
 void ConfigurePluginsWidget::initialize()
 {
     mConfigureListWidget->initialize();

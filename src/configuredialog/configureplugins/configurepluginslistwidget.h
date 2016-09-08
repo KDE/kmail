@@ -19,6 +19,7 @@
 #define CONFIGUREPLUGINSLISTWIDGET_H
 
 #include <QWidget>
+#include <QTreeWidgetItem>
 class QTreeWidget;
 class ConfigurePluginsListWidget : public QWidget
 {
@@ -37,6 +38,22 @@ Q_SIGNALS:
 
 private:
     void slotItemSelectionChanged();
+    void slotItemChanged(QTreeWidgetItem *item, int column);
+    class PluginItem : public QTreeWidgetItem
+    {
+    public:
+        PluginItem(QTreeWidgetItem *parent)
+            : QTreeWidgetItem(parent),
+              mEnableByDefault(false)
+        {
+
+        }
+        QString mIdentifier;
+        QString mDescription;
+        bool mEnableByDefault;
+    };
+    QList<PluginItem *> mPluginEditorItems;
+    QList<PluginItem *> mPluginMessageViewerItems;
     QTreeWidget *mListWidget;
 };
 
