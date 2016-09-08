@@ -29,6 +29,9 @@ public:
     ~ConfigurePluginsListWidgetTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();
+
+    void shouldTestIsEnabled_data();
+    void shouldTestIsEnabled();
 };
 
 #endif // CONFIGUREPLUGINSLISTWIDGETTEST_H
