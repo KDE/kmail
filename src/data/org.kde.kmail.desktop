@@ -2,6 +2,7 @@
 Name=KMail
 Name[af]=KMail
 Name[ar]=برنامج البريد KMail
+Name[ast]=KMail
 Name[be]=KMail
 Name[bg]=KMail
 Name[br]=KMail
@@ -196,6 +197,7 @@ Actions=Composer;CheckMail;
 
 [Desktop Action Composer]
 Name=New Message
+Name[ast]=Mensaxe nuevu
 Name[ca]=Missatge nou
 Name[ca@valencia]=Missatge nou
 Name[cs]=Nová zpráva
