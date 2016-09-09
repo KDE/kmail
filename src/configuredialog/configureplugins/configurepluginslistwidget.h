@@ -34,8 +34,6 @@ public:
     void initialize() Q_DECL_OVERRIDE;
 
 private:
-    void savePlugins(const QString &groupName, const QString &prefixSettingKey, const QList<PluginItem *> &listItems);
-    void fillTopItems(const QVector<PimCommon::PluginUtilData> &lst, const QString &topLevelItemName, const QString &groupName, const QString &prefixKey, QList<PluginItem *> &itemsList);
     QList<PluginItem *> mPluginEditorItems;
     QList<PluginItem *> mPluginMessageViewerItems;
     QList<PluginItem *> mPluginSendBeforeSendItems;

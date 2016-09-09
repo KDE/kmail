@@ -41,34 +41,18 @@ ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
 {
 }
 
-void ConfigurePluginsListWidget::savePlugins(const QString &groupName, const QString &prefixSettingKey, const QList<PluginItem *> &listItems)
-{
-    QStringList enabledPlugins;
-    QStringList disabledPlugins;
-    Q_FOREACH (PluginItem *item, listItems) {
-        if (item->checkState(0) == Qt::Checked) {
-            enabledPlugins << item->mIdentifier;
-        } else {
-            disabledPlugins << item->mIdentifier;
-        }
-    }
-    PimCommon::PluginUtil::savePluginSettings(groupName,
-            prefixSettingKey,
-            enabledPlugins, disabledPlugins);
-}
-
 void ConfigurePluginsListWidget::save()
 {
-    savePlugins(MessageComposer::PluginEditorManager::self()->configGroupName(),
+    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorManager::self()->configGroupName(),
                 MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
                 mPluginEditorItems);
-    savePlugins(MessageViewer::ViewerPluginManager::self()->configGroupName(),
+    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::ViewerPluginManager::self()->configGroupName(),
                 MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
                 mPluginMessageViewerItems);
-    savePlugins(MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
+    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
                 MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
                 mPluginSendBeforeSendItems);
-    savePlugins(KMailPluginInterface::self()->configGroupName(),
+    PimCommon::ConfigurePluginsListWidget::savePlugins(KMailPluginInterface::self()->configGroupName(),
                 KMailPluginInterface::self()->configPrefixSettingKey(),
                 mPluginGenericItems);
 }
@@ -96,48 +80,27 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     }
 }
 
-void ConfigurePluginsListWidget::fillTopItems(const QVector<PimCommon::PluginUtilData> &lst, const QString &topLevelItemName,
-                                              const QString &groupName, const QString &prefixKey, QList<PluginItem *> &itemsList)
-{
-    itemsList.clear();
-    if (!lst.isEmpty()) {
-        QTreeWidgetItem *topLevel = new QTreeWidgetItem(mListWidget, QStringList() << topLevelItemName);
-        topLevel->setFlags(topLevel->flags() & ~Qt::ItemIsSelectable);
-        const QPair<QStringList, QStringList> pair = PimCommon::PluginUtil::loadPluginSetting(groupName, prefixKey);
-        Q_FOREACH (const PimCommon::PluginUtilData &data, lst) {
-            PluginItem *subItem = new PluginItem(topLevel);
-            subItem->setText(0, data.mName);
-            subItem->mIdentifier = data.mIdentifier;
-            subItem->mDescription = data.mDescription;
-            subItem->mEnableByDefault = data.mEnableByDefault;
-            const bool isPluginActivated = PimCommon::PluginUtil::isPluginActivated(pair.first, pair.second, data.mEnableByDefault, data.mIdentifier);
-            subItem->setCheckState(0, isPluginActivated ? Qt::Checked : Qt::Unchecked);
-            itemsList.append(subItem);
-        }
-    }
-}
-
 void ConfigurePluginsListWidget::initialize()
 {
     mListWidget->clear();
 
     //Load CheckBeforeSend
-    fillTopItems(MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList(), i18n("Check Before Send Plugins"),
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList(), i18n("Check Before Send Plugins"),
                  MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
                  MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(), mPluginSendBeforeSendItems);
 
     //Load generic plugins
-    fillTopItems(KMailPluginInterface::self()->pluginsDataList(), i18n("Tools Plugins"),
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(KMailPluginInterface::self()->pluginsDataList(), i18n("Tools Plugins"),
                  KMailPluginInterface::self()->configGroupName(),
                  KMailPluginInterface::self()->configPrefixSettingKey(), mPluginGenericItems);
 
     //Load plugin editor
-    fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(), i18n("Composer Plugins"),
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(), i18n("Composer Plugins"),
                  MessageComposer::PluginEditorManager::self()->configGroupName(),
                  MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(), mPluginEditorItems);
 
     //Load messageviewer plugin
-    fillTopItems(MessageViewer::ViewerPluginManager::self()->pluginsDataList(), i18n("Message Viewer"),
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::ViewerPluginManager::self()->pluginsDataList(), i18n("Message Viewer"),
                  MessageViewer::ViewerPluginManager::self()->configGroupName(),
                  MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(), mPluginMessageViewerItems);
 
