@@ -90,6 +90,8 @@ void ConfigurePluginsListWidget::initialize()
                  MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(), mPluginSendBeforeSendItems);
 
     //Load generic plugins
+    //Necessary to initialize pluging when we load it outside kmail
+    KMailPluginInterface::self()->initializePlugins();
     PimCommon::ConfigurePluginsListWidget::fillTopItems(KMailPluginInterface::self()->pluginsDataList(), i18n("Tools Plugins"),
                  KMailPluginInterface::self()->configGroupName(),
                  KMailPluginInterface::self()->configPrefixSettingKey(), mPluginGenericItems);
