@@ -67,7 +67,6 @@ class KRecentFilesAction;
 class ManageShowCollectionProperties;
 class KActionMenuTransport;
 class KActionMenuAccount;
-class KMailPluginInterface;
 template <typename T, typename S> class QMap;
 
 namespace KIO
@@ -672,7 +671,6 @@ private:
     QAction *mMarkAllMessageAsReadAndInAllSubFolder;
     KActionMenuAccount *mAccountActionMenu;
     QAction *mRemoveDuplicateRecursiveAction;
-    KMailPluginInterface *mPluginInterface;
 };
 
 #endif

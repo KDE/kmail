@@ -28,11 +28,12 @@ class KMailPluginInterface : public PimCommon::PluginInterface
 {
     Q_OBJECT
 public:
-    explicit KMailPluginInterface(KActionCollection *ac, QObject *parent = Q_NULLPTR);
+    explicit KMailPluginInterface(QObject *parent = Q_NULLPTR);
     ~KMailPluginInterface();
 
     void setMainWidget(KMMainWidget *mainwindow);
     void initializeInterfaceRequires(PimCommon::GenericPluginInterface *interface) Q_DECL_OVERRIDE;
+    static KMailPluginInterface *self();
 private:
     KMMainWidget *mMainWindow;
 };

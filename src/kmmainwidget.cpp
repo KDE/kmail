@@ -255,8 +255,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);
 
-    mPluginInterface = new KMailPluginInterface(mActionCollection, this);
-    mPluginInterface->setMainWidget(this);
+    KMailPluginInterface::self()->setActionCollection(mActionCollection);
+    KMailPluginInterface::self()->initializePlugins();
+    KMailPluginInterface::self()->setMainWidget(this);
 
     theMainWidgetList->append(this);
 
@@ -2832,8 +2833,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
 
 void KMMainWidget::setupActions()
 {
-    mPluginInterface->setParentWidget(this);
-    mPluginInterface->createPluginInterface();
+    KMailPluginInterface::self()->setParentWidget(this);
+    KMailPluginInterface::self()->createPluginInterface();
     mMsgActions = new KMail::MessageActions(actionCollection(), this);
     mMsgActions->setMessageView(mMsgView);
 
@@ -4148,7 +4149,7 @@ void KMMainWidget::clearFilterActions()
 
 void KMMainWidget::initializePluginActions()
 {
-    mPluginInterface->initializePluginActions(QStringLiteral("kmail"), mGUIClient);
+    KMailPluginInterface::self()->initializePluginActions(QStringLiteral("kmail"), mGUIClient);
 }
 
 //-----------------------------------------------------------------------------

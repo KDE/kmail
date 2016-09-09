@@ -22,18 +22,39 @@
 #include <kmmainwidget.h>
 #include "kmail_debug.h"
 
-KMailPluginInterface::KMailPluginInterface(KActionCollection *ac, QObject *parent)
-    : PimCommon::PluginInterface(ac, parent),
+class KMailPluginInterfacePrivate
+{
+public:
+    KMailPluginInterfacePrivate()
+        : kmailPluginInterface(new KMailPluginInterface)
+    {
+    }
+
+    ~KMailPluginInterfacePrivate()
+    {
+        delete kmailPluginInterface;
+    }
+    KMailPluginInterface *kmailPluginInterface;
+};
+
+Q_GLOBAL_STATIC(KMailPluginInterfacePrivate, sInstance)
+
+KMailPluginInterface::KMailPluginInterface(QObject *parent)
+    : PimCommon::PluginInterface(parent),
       mMainWindow(Q_NULLPTR)
 {
     setPluginName(QStringLiteral("kmail"));
     setServiceTypeName(QStringLiteral("KMail/MainViewPlugin"));
-    initializePlugins();
 }
 
 KMailPluginInterface::~KMailPluginInterface()
 {
 
+}
+
+KMailPluginInterface *KMailPluginInterface::self()
+{
+    return sInstance->kmailPluginInterface;
 }
 
 void KMailPluginInterface::setMainWidget(KMMainWidget *mainwindow)
