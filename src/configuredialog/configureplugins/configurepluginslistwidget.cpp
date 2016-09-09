@@ -19,6 +19,7 @@
 #include "../../plugininterface/kmailplugininterface.h"
 #include <MessageViewer/ViewerPluginManager>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
+#include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 #include <PimCommon/GenericPluginManager>
 
 #include <PimCommon/PluginUtil>
@@ -55,6 +56,9 @@ void ConfigurePluginsListWidget::save()
     PimCommon::ConfigurePluginsListWidget::savePlugins(KMailPluginInterface::self()->configGroupName(),
                 KMailPluginInterface::self()->configPrefixSettingKey(),
                 mPluginGenericItems);
+    PimCommon::ConfigurePluginsListWidget::savePlugins(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
+                WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
+                mPluginWebEngineItems);
 }
 
 void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
@@ -76,6 +80,9 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
         item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
     }
     Q_FOREACH (PluginItem *item, mPluginGenericItems) {
+        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
+    }
+    Q_FOREACH (PluginItem *item, mPluginWebEngineItems) {
         item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
     }
 }
@@ -107,7 +114,9 @@ void ConfigurePluginsListWidget::initialize()
                  MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(), mPluginMessageViewerItems);
 
     //Load webengineplugin
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsDataList(), i18n("Webengine Plugins"),
+                 WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
+                 WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(), mPluginWebEngineItems);
 
-    //TODO
     mListWidget->expandAll();
 }
