@@ -20,7 +20,7 @@
 
 #include <QList>
 #include <PimCommon/ConfigurePluginsListWidget>
-
+#include <PimCommon/PluginUtil>
 class ConfigurePluginsListWidget : public PimCommon::ConfigurePluginsListWidget
 {
     Q_OBJECT
@@ -35,9 +35,11 @@ public:
 
 private:
     void savePlugins(const QString &groupName, const QString &prefixSettingKey, const QList<PluginItem *> &listItems);
+    void fillTopItems(const QVector<PimCommon::PluginUtilData> &lst, const QString &topLevelItemName, const QString &groupName, const QString &prefixKey, QList<PluginItem *> &itemsList);
     QList<PluginItem *> mPluginEditorItems;
     QList<PluginItem *> mPluginMessageViewerItems;
     QList<PluginItem *> mPluginSendBeforeSendItems;
+    QList<PluginItem *> mPluginGenericItems;
 };
 
 #endif // KMAILCONFIGUREPLUGINSLISTWIDGET_H
