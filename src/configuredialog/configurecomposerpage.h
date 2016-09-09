@@ -86,23 +86,6 @@ private:
 #endif
 };
 
-class ComposerPageExternalEditorTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit ComposerPageExternalEditorTab(QWidget *parent = Q_NULLPTR);
-    QString helpAnchor() const;
-
-    void save() Q_DECL_OVERRIDE;
-
-private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-
-private:
-    QCheckBox     *mExternalEditorCheck;
-    KUrlRequester *mEditorRequester;
-};
-
 class ComposerPageTemplatesTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -301,7 +284,6 @@ public:
     typedef ComposerPageAttachmentsTab AttachmentsTab;
     typedef ComposerPageAutoCorrectionTab AutoCorrectionTab;
     typedef ComposerPageAutoImageResizeTab AutoImageResizeTab;
-    typedef ComposerPageExternalEditorTab ExternalEditorTab;
 };
 
 #endif // CONFIGURECOMPOSERPAGE_H

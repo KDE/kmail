@@ -131,11 +131,6 @@ ComposerPage::ComposerPage(QWidget *parent)
     AutoImageResizeTab *autoImageResizeTab = new AutoImageResizeTab();
     addTab(autoImageResizeTab, i18n("Auto Resize Image"));
 
-    //
-    // "external editor" tab:
-    ExternalEditorTab *externalEditorTab = new ExternalEditorTab();
-    addTab(externalEditorTab, i18n("External Editor"));
-
     Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
         if (plugin->hasConfigureSupport()) {
             MessageComposer::PluginEditorCheckBeforeSendConfigureWidgetSetting settings = plugin->createConfigureWidget(KMKernel::self() ? KMKernel::self()->identityManager() : Q_NULLPTR, this);
@@ -643,75 +638,6 @@ void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
         }
     }
 
-}
-
-QString ComposerPage::ExternalEditorTab::helpAnchor() const
-{
-    return QStringLiteral("configure-composer-externaleditor");
-}
-
-ComposerPageExternalEditorTab::ComposerPageExternalEditorTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    QVBoxLayout *layout = new QVBoxLayout(this);
-
-    mExternalEditorCheck = new QCheckBox(
-        KMailSettings::self()->useExternalEditorItem()->label(), this);
-    mExternalEditorCheck->setObjectName(QStringLiteral("kcfg_UseExternalEditor"));
-    connect(mExternalEditorCheck, &QAbstractButton::toggled,
-            this, &ConfigModuleTab::slotEmitChanged);
-
-    QWidget *hbox = new QWidget(this);
-    QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
-    hboxHBoxLayout->setMargin(0);
-    QLabel *label = new QLabel(KMailSettings::self()->externalEditorItem()->label(),
-                               hbox);
-    mEditorRequester = new KUrlRequester(hbox);
-    hboxHBoxLayout->addWidget(mEditorRequester);
-    //Laurent 25/10/2011 fix #Bug 256655 - A "save changes?" dialog appears ALWAYS when leaving composer settings, even when unchanged.
-    //mEditorRequester->setObjectName( "kcfg_ExternalEditor" );
-    connect(mEditorRequester, &KUrlRequester::urlSelected,
-            this, &ConfigModuleTab::slotEmitChanged);
-    connect(mEditorRequester, &KUrlRequester::textChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-
-    hboxHBoxLayout->setStretchFactor(mEditorRequester, 1);
-    label->setBuddy(mEditorRequester);
-    label->setEnabled(false);   // since !mExternalEditorCheck->isChecked()
-    // ### FIXME: allow only executables (x-bit when available..)
-    mEditorRequester->setFilter(QStringLiteral("application/x-executable "
-                                "application/x-shellscript "
-                                "application/x-desktop"));
-    mEditorRequester->setMode(KFile::File | KFile::ExistingOnly | KFile::LocalOnly);
-    mEditorRequester->setEnabled(false);   // !mExternalEditorCheck->isChecked()
-    connect(mExternalEditorCheck, &QAbstractButton::toggled,
-            label, &QWidget::setEnabled);
-    connect(mExternalEditorCheck, &QAbstractButton::toggled,
-            mEditorRequester, &QWidget::setEnabled);
-
-    label = new QLabel(i18n("<b>%f</b> will be replaced with the "
-                            "filename to edit.<br />"
-                            "<b>%w</b> will be replaced with the window id.<br />"
-                            "<b>%l</b> will be replaced with the line number."), this);
-    label->setEnabled(false);   // see above
-    connect(mExternalEditorCheck, &QAbstractButton::toggled,
-            label, &QWidget::setEnabled);
-    layout->addWidget(mExternalEditorCheck);
-    layout->addWidget(hbox);
-    layout->addWidget(label);
-    layout->addStretch();
-}
-
-void ComposerPage::ExternalEditorTab::doLoadFromGlobalSettings()
-{
-    loadWidget(mExternalEditorCheck, KMailSettings::self()->useExternalEditorItem());
-    loadWidget(mEditorRequester, KMailSettings::self()->externalEditorItem());
-}
-
-void ComposerPage::ExternalEditorTab::save()
-{
-    saveCheckBox(mExternalEditorCheck, KMailSettings::self()->useExternalEditorItem());
-    saveUrlRequester(mEditorRequester, KMailSettings::self()->externalEditorItem());
 }
 
 QString ComposerPage::TemplatesTab::helpAnchor() const
