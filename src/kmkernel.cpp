@@ -128,7 +128,6 @@ static QNetworkConfigurationManager *s_networkConfigMgr = 0;
 /********************************************************************/
 KMKernel::KMKernel(QObject *parent) :
     QObject(parent),
-    mIdentityManager(Q_NULLPTR),
     mConfigureDialog(Q_NULLPTR),
     mMailService(Q_NULLPTR),
     mSystemNetworkStatus(true),
@@ -1575,10 +1574,7 @@ void KMKernel::updateSystemTray()
 
 KIdentityManagement::IdentityManager *KMKernel::identityManager()
 {
-    if (!mIdentityManager) {
-        mIdentityManager = new KIdentityManagement::IdentityManager(false, this, "mIdentityManager");
-    }
-    return mIdentityManager;
+    return KIdentityManagement::IdentityManager::self();
 }
 
 KMainWindow *KMKernel::mainWin()
