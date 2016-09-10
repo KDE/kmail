@@ -1139,9 +1139,7 @@ void KMMainWidget::createWidgets()
     mAkonadiStandardActionManager->interceptAction(Akonadi::StandardMailActionManager::RemoveDuplicates);
     connect(mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::RemoveDuplicates), &QAction::triggered, this, &KMMainWidget::slotRemoveDuplicates);
 
-    {
-        mCollectionProperties = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::CollectionProperties);
-    }
+    mCollectionProperties = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::CollectionProperties);
     connect(kmkernel->folderCollectionMonitor(), &Monitor::collectionRemoved,
             this, &KMMainWidget::slotCollectionRemoved);
     connect(kmkernel->folderCollectionMonitor(), &Monitor::itemAdded,
