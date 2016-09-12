@@ -82,7 +82,12 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     Q_FOREACH (PluginItem *item, mPluginGenericItems) {
         item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
     }
+
     Q_FOREACH (PluginItem *item, mPluginWebEngineItems) {
+        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
+    }
+
+    Q_FOREACH (PluginItem *item, mPluginHeaderStyleItems) {
         item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
     }
 }

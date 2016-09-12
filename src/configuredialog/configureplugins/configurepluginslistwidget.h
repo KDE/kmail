@@ -39,6 +39,7 @@ private:
     QList<PluginItem *> mPluginSendBeforeSendItems;
     QList<PluginItem *> mPluginGenericItems;
     QList<PluginItem *> mPluginWebEngineItems;
+    QList<PluginItem *> mPluginHeaderStyleItems;
 };
 
 #endif // KMAILCONFIGUREPLUGINSLISTWIDGET_H
