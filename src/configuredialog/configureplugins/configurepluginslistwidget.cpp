@@ -18,6 +18,7 @@
 #include "configurepluginslistwidget.h"
 #include "../../plugininterface/kmailplugininterface.h"
 #include <MessageViewer/ViewerPluginManager>
+#include <MessageViewer/HeaderStylePluginManager>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 #include <PimCommon/GenericPluginManager>
@@ -59,6 +60,9 @@ void ConfigurePluginsListWidget::save()
     PimCommon::ConfigurePluginsListWidget::savePlugins(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
                 WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
                 mPluginWebEngineItems);
+    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
+                MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
+                mPluginHeaderStyleItems);
 }
 
 void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
@@ -123,5 +127,9 @@ void ConfigurePluginsListWidget::initialize()
                  WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
                  WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(), mPluginWebEngineItems);
 
+    //Load headerstyle
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::HeaderStylePluginManager::self()->pluginsDataList(), i18n("Header Style Plugins"),
+                                                        MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
+                 MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(), mPluginHeaderStyleItems);
     mListWidget->expandAll();
 }
