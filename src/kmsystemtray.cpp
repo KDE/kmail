@@ -149,13 +149,6 @@ void KMSystemTray::slotGeneralFontChanged()
     updateSystemTray();
 }
 
-void KMSystemTray::slotGeneralPaletteChanged()
-{
-    const KColorScheme scheme(QPalette::Active, KColorScheme::View);
-    mTextColor = scheme.foreground(KColorScheme::LinkText).color();
-    updateSystemTray();
-}
-
 /**
  * Update the count of unread messages.  If there are unread messages,
  * overlay the count on top of a transparent version of the KMail icon.
