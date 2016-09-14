@@ -27,7 +27,6 @@
 #include <AkonadiCore/NewMailNotifierAttribute>
 
 #include <kiconloader.h>
-#include <kcolorscheme.h>
 #include <kwindowsystem.h>
 #include "kmail_debug.h"
 #include <QMenu>
@@ -40,7 +39,6 @@
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/EntityTreeModel>
-#include <QFontDatabase>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 
 using namespace MailCommon;
