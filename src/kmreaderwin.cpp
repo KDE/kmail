@@ -41,7 +41,7 @@
 #include "messageviewer/headerstrategy.h"
 #include "messageviewer/markmessagereadhandler.h"
 #include "messageviewer/messageviewersettings.h"
-#include "MessageViewer/CSSHelper"
+#include <MessageViewer/CSSHelper>
 using MessageViewer::CSSHelper;
 #include "util.h"
 #include <MessageCore/StringUtil>
@@ -54,8 +54,8 @@ using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 
 #include <MimeTreeParser/AttachmentStrategy>
-#include "MessageComposer/MessageSender"
-#include "MessageComposer/MessageFactory"
+#include <MessageComposer/MessageSender>
+#include <MessageComposer/MessageFactory>
 #include "MessageComposer/Composer"
 #include "MessageComposer/TextPart"
 #include "MessageComposer/InfoPart"

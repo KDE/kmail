@@ -92,7 +92,7 @@ using KSieveUi::SieveDebugDialog;
 #include "Libkdepim/KCursorSaver"
 #endif
 
-#include "MessageComposer/MessageSender"
+#include <MessageComposer/MessageSender>
 #include "MessageComposer/MessageHelper"
 
 #include "TemplateParser/TemplateParser"

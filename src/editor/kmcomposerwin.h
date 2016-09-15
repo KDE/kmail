@@ -36,7 +36,7 @@
 // LIBKDEPIM includes
 #include "MessageComposer/RichTextComposerNg"
 
-#include "MessageComposer/MessageSender"
+#include <MessageComposer/MessageSender>
 
 // KDEPIMLIBS includes
 #include <kmime/kmime_message.h>
