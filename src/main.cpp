@@ -114,10 +114,10 @@ int main(int argc, char *argv[])
     // enforce xcb plugin fix bug Bug 367598
     setenv("QT_QPA_PLATFORM", "xcb", true);
 #endif
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     KMailApplication app(argc, &argv);
     KLocalizedString::setApplicationDomain("kmail");
     app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-    app.setAttribute(Qt::AA_EnableHighDpiScaling);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     KCrash::initialize();
     KMail::AboutData about;
