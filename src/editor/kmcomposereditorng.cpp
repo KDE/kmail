@@ -106,7 +106,6 @@ void KMComposerEditorNg::setHighlighterColors(KPIMTextEdit::RichTextComposerEmai
         color1 = MessageCore::MessageCoreSettings::self()->quotedText1();
         color2 = MessageCore::MessageCoreSettings::self()->quotedText2();
         color3 = MessageCore::MessageCoreSettings::self()->quotedText3();
-        misspelled = MessageCore::MessageCoreSettings::self()->misspelledColor();
     }
 
     highlighter->setQuoteColor(Qt::black /* ignored anyway */,
