@@ -72,28 +72,12 @@ void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
 
 void ConfigurePluginsListWidget::doResetToDefaultsOther()
 {
-    Q_FOREACH (PluginItem *item, mPluginEditorItems) {
-        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
-    }
-
-    Q_FOREACH (PluginItem *item, mPluginMessageViewerItems) {
-        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
-    }
-
-    Q_FOREACH (PluginItem *item, mPluginSendBeforeSendItems) {
-        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
-    }
-    Q_FOREACH (PluginItem *item, mPluginGenericItems) {
-        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
-    }
-
-    Q_FOREACH (PluginItem *item, mPluginWebEngineItems) {
-        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
-    }
-
-    Q_FOREACH (PluginItem *item, mPluginHeaderStyleItems) {
-        item->setCheckState(0, item->mEnableByDefault ? Qt::Checked : Qt::Unchecked);
-    }
+    changeState(mPluginEditorItems);
+    changeState(mPluginMessageViewerItems);
+    changeState(mPluginSendBeforeSendItems);
+    changeState(mPluginGenericItems);
+    changeState(mPluginWebEngineItems);
+    changeState(mPluginHeaderStyleItems);
 }
 
 void ConfigurePluginsListWidget::initialize()
