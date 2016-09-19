@@ -634,13 +634,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     connect(mDisplayMessageToolTips, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
-    mHideTabBarWithSingleTab = new QCheckBox(
-        MessageList::MessageListSettings::self()->autoHideTabBarWithSingleTabItem()->label(), group);
-    gvlay->addWidget(mHideTabBarWithSingleTab);
-
-    connect(mHideTabBarWithSingleTab, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-
     mTabsHaveCloseButton = new QCheckBox(
         MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem()->label(), group);
     gvlay->addWidget(mTabsHaveCloseButton);
@@ -804,7 +797,6 @@ void AppearancePage::HeadersTab::doLoadOther()
 {
     // "General Options":
     loadWidget(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
-    loadWidget(mHideTabBarWithSingleTab, MessageList::MessageListSettings::self()->autoHideTabBarWithSingleTabItem());
     loadWidget(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
 
     // "Aggregation":
@@ -821,7 +813,6 @@ void AppearancePage::HeadersTab::doLoadOther()
 void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
 {
     loadWidget(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
-    loadWidget(mHideTabBarWithSingleTab, MessageList::MessageListSettings::self()->autoHideTabBarWithSingleTabItem());
     loadWidget(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
     // "Aggregation":
     slotSelectDefaultAggregation();
@@ -855,7 +846,6 @@ void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
 void AppearancePage::HeadersTab::save()
 {
     saveCheckBox(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
-    saveCheckBox(mHideTabBarWithSingleTab, MessageList::MessageListSettings::self()->autoHideTabBarWithSingleTabItem());
     saveCheckBox(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
 
     KMKernel::self()->savePaneSelection();
