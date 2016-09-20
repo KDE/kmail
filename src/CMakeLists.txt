@@ -165,7 +165,7 @@ set(kmailprivate_checkindexing_LIB_SRCS
     )
 
 set(kmail_common_SRCS)
-ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME log_kmail)
+ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail)
 set(kmailprivate_LIB_SRCS
     ${kmail_common_SRCS}
     kmmainwin.cpp

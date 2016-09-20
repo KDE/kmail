@@ -15,7 +15,7 @@ set(akonadi_mailfilter_agent_SRCS
 
 qt5_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS org.freedesktop.Akonadi.MailFilterAgent.xml mailfilteragent.h MailFilterAgent)
 
-ecm_qt_declare_logging_category(akonadi_mailfilter_agent_SRCS HEADER mailfilteragent_debug.h IDENTIFIER MAILFILTERAGENT_LOG CATEGORY_NAME log_mailfilteragent)
+ecm_qt_declare_logging_category(akonadi_mailfilter_agent_SRCS HEADER mailfilteragent_debug.h IDENTIFIER MAILFILTERAGENT_LOG CATEGORY_NAME org.kde.pim.mailfilteragent)
 
 add_executable(akonadi_mailfilter_agent ${akonadi_mailfilter_agent_SRCS})
 

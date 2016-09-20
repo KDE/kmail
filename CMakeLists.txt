@@ -154,7 +154,7 @@ add_definitions( -DQT_NO_CAST_TO_ASCII )
 add_subdirectory(src)
 add_subdirectory(agents)
 
-install( FILES kmail.categories DESTINATION ${KDE_INSTALL_CONFDIR} )
+install( FILES kmail.renamecategories kmail.categories DESTINATION ${KDE_INSTALL_CONFDIR} )
 
 add_subdirectory(doc)
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

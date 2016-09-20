@@ -23,7 +23,7 @@ kconfig_add_kcfg_files(archivemailagent_SRCS
 
 qt5_add_dbus_adaptor(archivemailagent_SRCS org.freedesktop.Akonadi.ArchiveMailAgent.xml archivemailagent.h ArchiveMailAgent)
 
-ecm_qt_declare_logging_category(archivemailagent_SRCS HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME log_archivemailagent)
+ecm_qt_declare_logging_category(archivemailagent_SRCS HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME org.kde.pim.archivemailagent)
 
 
 ki18n_wrap_ui(archivemailagent_SRCS ui/archivemailwidget.ui )

@@ -8,7 +8,7 @@ if(BUILD_TESTING)
 endif()
 
 set(sendlater_common_SRCS)
-ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debug.h IDENTIFIER SENDLATERAGENT_LOG CATEGORY_NAME log_sendlateragent)
+ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debug.h IDENTIFIER SENDLATERAGENT_LOG CATEGORY_NAME org.kde.pim.sendlateragent)
 
 set(sendlateragent_SRCS
     ${sendlater_common_SRCS}

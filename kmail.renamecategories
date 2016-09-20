@@ -1,0 +1,7 @@
+log_kmail org.kde.pim.kmail
+log_sendlateragent org.kde.pim.sendlateragent
+log_archivemailagent org.kde.pim.archivemailagent
+log_followupreminderagent org.kde.pim.followupreminderagent
+log_kmail_plugin org.kde.pim.kmail_plugin
+log_mailfilteragent org.kde.pim.mailfilteragent
+

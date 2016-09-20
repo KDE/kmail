@@ -6,7 +6,7 @@ include_directories(
 set(interface_SRCS)
 
 set(kontact_kmail_plugins_interface_common_SRCS)
-ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEADER kmailplugin_debug.h IDENTIFIER KMAILPLUGIN_LOG CATEGORY_NAME log_kmail_plugin)
+ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEADER kmailplugin_debug.h IDENTIFIER KMAILPLUGIN_LOG CATEGORY_NAME org.kde.pim.kmail_plugin)
 
 set(kontact_kmail_plugins_interface_SRCS ${interface_SRCS})
 qt5_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
