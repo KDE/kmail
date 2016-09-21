@@ -342,8 +342,7 @@ static const struct {
     { "ColorbarBackgroundPlain", I18N_NOOP("HTML Status Bar Background - No HTML Message") },
     { "ColorbarForegroundPlain", I18N_NOOP("HTML Status Bar Foreground - No HTML Message") },
     { "ColorbarBackgroundHTML",  I18N_NOOP("HTML Status Bar Background - HTML Message") },
-    { "ColorbarForegroundHTML",  I18N_NOOP("HTML Status Bar Foreground - HTML Message") },
-    { "BrokenAccountColor",  I18N_NOOP("Broken Account - Folder Text Color") }
+    { "ColorbarForegroundHTML",  I18N_NOOP("HTML Status Bar Foreground - HTML Message") }
 };
 static const int numColorNames = sizeof colorNames / sizeof * colorNames;
 
@@ -429,8 +428,7 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
             Qt::lightGray, // colorbar plain bg
             Qt::black,     // colorbar plain fg
             Qt::black,     // colorbar html  bg
-            Qt::white,     // colorbar html  fg
-            scheme.foreground(KColorScheme::NegativeText).color()  //Broken Account Color
+            Qt::white     // colorbar html  fg
         };
 
         for (int i = 0; i < numColorNames; ++i) {
@@ -442,8 +440,6 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
                     mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->importantMessageColor());
                 } else if (configName == QLatin1String("TodoMessageColor")) {
                     mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->todoMessageColor());
-                } else if (configName == QLatin1String("BrokenAccountColor")) {
-                    mColorList->setColorSilently(i, collectionFolderView.readEntry(configName, defaultColor[i]));
                 } else {
                     mColorList->setColorSilently(i, reader.readEntry(configName, defaultColor[i]));
                 }
@@ -484,10 +480,6 @@ void AppearancePage::ColorsTab::save()
             MessageList::MessageListSettings::self()->setImportantMessageColor(mColorList->color(i));
         } else if (customColors && configName == QLatin1String("TodoMessageColor")) {
             MessageList::MessageListSettings::self()->setTodoMessageColor(mColorList->color(i));
-        } else if (configName == QLatin1String("BrokenAccountColor")) {
-            if (customColors || collectionFolderView.hasKey(configName)) {
-                collectionFolderView.writeEntry(configName, mColorList->color(i));
-            }
         } else {
             if (customColors || reader.hasKey(configName)) {
                 reader.writeEntry(configName, mColorList->color(i));
