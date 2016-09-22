@@ -132,7 +132,7 @@ ComposerPage::ComposerPage(QWidget *parent)
     addTab(autoImageResizeTab, i18n("Auto Resize Image"));
 
     Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
-        if (plugin->hasConfigureSupport()) {
+        if (plugin->hasConfigureDialog()) {
             MessageComposer::PluginEditorCheckBeforeSendConfigureWidgetSetting settings = plugin->createConfigureWidget(KMKernel::self() ? KMKernel::self()->identityManager() : Q_NULLPTR, this);
             ComposerPluginTab *tab = new ComposerPluginTab(settings.configureWidget, plugin, this);
             addTab(tab, settings.name);
