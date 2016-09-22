@@ -115,7 +115,7 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
             } else {
                 mActionHash.insert(type, QList<QAction *>() << actionType.action());
             }
-            if (interface->hasPopupMenuSupport()) {
+            if (interface->plugin()->hasPopupMenuSupport()) {
                 type = MessageComposer::ActionType::PopupMenu;
                 if (mActionHash.contains(type)) {
                     QList<QAction *> lst = mActionHash.value(type);
@@ -127,7 +127,7 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
                     mActionHash.insert(type, QList<QAction *>() << actionType.action());
                 }
             }
-            if (interface->hasToolBarSupport()) {
+            if (interface->plugin()->hasToolBarSupport()) {
                 type = MessageComposer::ActionType::ToolBar;
                 if (mActionHash.contains(type)) {
                     QList<QAction *> lst = mActionHash.value(type);
