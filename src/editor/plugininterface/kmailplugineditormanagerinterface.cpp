@@ -74,6 +74,7 @@ void KMailPluginEditorManagerInterface::initializePlugins()
         MessageComposer::PluginEditorInterface *interface = plugin->createInterface(mActionCollection, this);
         interface->setRichTextEditor(mRichTextEditor);
         interface->setParentWidget(mParentWidget);
+        interface->setPlugin(plugin);
         connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
         mListPluginInterface.append(interface);
     }
