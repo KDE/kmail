@@ -32,7 +32,7 @@ public:
     ~KMailPluginInterface();
 
     void setMainWidget(KMMainWidget *mainwindow);
-    void initializeInterfaceRequires(PimCommon::GenericPluginInterface *interface) Q_DECL_OVERRIDE;
+    void initializeInterfaceRequires(PimCommon::AbstractGenericPluginInterface *interface) Q_DECL_OVERRIDE;
     static KMailPluginInterface *self();
 private:
     KMMainWidget *mMainWindow;
