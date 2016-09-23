@@ -71,12 +71,14 @@ void KMailPluginEditorManagerInterface::initializePlugins()
     }
     const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
     Q_FOREACH (MessageComposer::PluginEditor *plugin, lstPlugin) {
-        MessageComposer::PluginEditorInterface *interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(mActionCollection, this));
-        interface->setRichTextEditor(mRichTextEditor);
-        interface->setParentWidget(mParentWidget);
-        interface->setPlugin(plugin);
-        connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
-        mListPluginInterface.append(interface);
+        if (plugin->isEnabled()) {
+            MessageComposer::PluginEditorInterface *interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(mActionCollection, this));
+            interface->setRichTextEditor(mRichTextEditor);
+            interface->setParentWidget(mParentWidget);
+            interface->setPlugin(plugin);
+            connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
+            mListPluginInterface.append(interface);
+        }
     }
 }
 
