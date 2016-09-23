@@ -133,5 +133,7 @@ void ConfigurePluginsListWidget::initialize()
 
 void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)
 {
-    //TODO
+    if (!configureGroupName.isEmpty() && !identifier.isEmpty()) {
+        //TODO
+    }
 }
