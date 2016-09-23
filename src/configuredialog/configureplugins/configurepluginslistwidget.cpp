@@ -34,6 +34,7 @@
 #include <QLabel>
 #include <QTreeWidget>
 #include <QDebug>
+#include <NetworkPluginUrlInterceptor>
 
 namespace {
 QString pluginEditorGroupName()
@@ -114,31 +115,6 @@ void ConfigurePluginsListWidget::initialize()
 {
     mListWidget->clear();
 
-#if 0
-    QString pluginEditorGroupName()
-    {
-        return QStringLiteral("plugineditorgroupname");
-    }
-    QString viewerPluginGroupName()
-    {
-        return QStringLiteral("viewerplugingroupname");
-    }
-    QString pluginEditorCheckBeforeGroupName()
-    {
-        return QStringLiteral("plugineditorcheckbeforegroupname");
-    }
-
-    QString kmailPluginToolsGroupName()
-    {
-        return QStringLiteral("kmailplugintoolsgroupname");
-    }
-    QString networkUrlInterceptorGroupName()
-    {
-        return QStringLiteral("networkurlinterceptorgroupname");
-    }
-    QString headerStyleGroupName()
-#endif
-
     //Load CheckBeforeSend
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList(),
                                                         i18n("Check Before Send Plugins"),
@@ -197,7 +173,8 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
         if (configureGroupName == headerStyleGroupName()) {
 
         } else if (configureGroupName == networkUrlInterceptorGroupName()) {
-
+            WebEngineViewer::NetworkPluginUrlInterceptor *plugin = WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
         } else if (configureGroupName == viewerPluginGroupName()) {
 
         } else if (configureGroupName == pluginEditorGroupName()) {
