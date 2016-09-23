@@ -59,11 +59,13 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
     }
     const QVector<MessageComposer::PluginEditorCheckBeforeSend *> lstPlugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList();
     Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, lstPlugin) {
-        MessageComposer::PluginEditorCheckBeforeSendInterface *interface = plugin->createInterface(this);
-        interface->setParentWidget(mParentWidget);
-        interface->setIdentityManagement(mIdentityManagement);
-        interface->reloadConfig();
-        mListPluginInterface.append(interface);
+        if (plugin->isEnabled()) {
+            MessageComposer::PluginEditorCheckBeforeSendInterface *interface = plugin->createInterface(this);
+            interface->setParentWidget(mParentWidget);
+            interface->setIdentityManagement(mIdentityManagement);
+            interface->reloadConfig();
+            mListPluginInterface.append(interface);
+        }
     }
 }
 
