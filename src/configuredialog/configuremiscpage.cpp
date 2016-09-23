@@ -65,7 +65,7 @@ MiscPage::MiscPage(QWidget *parent)
 #endif
 
     Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
-        if (plugin->hasConfigureDialog()) {
+        if (plugin->hasConfigureDialog() && plugin->isEnabled()) {
             WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
 
             AddonsPluginTab *tab = new AddonsPluginTab(settings.configureWidget, this);
