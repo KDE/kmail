@@ -37,6 +37,7 @@
 ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
     : PimCommon::ConfigurePluginsListWidget(parent)
 {
+    connect(this, &ConfigurePluginsListWidget::configureClicked, this, &ConfigurePluginsListWidget::slotConfigureClicked);
 }
 
 ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
@@ -128,4 +129,9 @@ void ConfigurePluginsListWidget::initialize()
                                                         MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
                                                         mPluginHeaderStyleItems);
     mListWidget->expandAll();
+}
+
+void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)
+{
+    //TODO
 }
