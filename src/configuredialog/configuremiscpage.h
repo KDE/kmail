@@ -89,25 +89,6 @@ private:
     ConfigureAgentsWidget *mConfigureAgent;
 };
 
-class AddonsPluginTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit AddonsPluginTab(WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent = Q_NULLPTR);
-    ~AddonsPluginTab();
-
-    void save() Q_DECL_OVERRIDE;
-    QString helpAnchor() const;
-
-private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
-
-private:
-    WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *mConfigureWidget;
-};
-
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
 {
     Q_OBJECT

@@ -63,15 +63,6 @@ MiscPage::MiscPage(QWidget *parent)
     MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
     addTab(printingTab, i18n("Printing"));
 #endif
-
-    Q_FOREACH (WebEngineViewer::NetworkPluginUrlInterceptor *plugin, WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsList()) {
-        if (plugin->hasConfigureDialog() && plugin->isEnabled()) {
-            WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidgetSetting settings = plugin->createConfigureWidget(this);
-
-            AddonsPluginTab *tab = new AddonsPluginTab(settings.configureWidget, this);
-            addTab(tab, settings.name);
-        }
-    }
 }
 
 QString MiscPageFolderTab::helpAnchor() const
@@ -198,47 +189,6 @@ void MiscPage::InviteTab::save()
 void MiscPage::InviteTab::doResetToDefaultsOther()
 {
     mInvitationUi->doResetToDefaultsOther();
-}
-//----------------------------
-
-AddonsPluginTab::AddonsPluginTab(WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget *configureWidget, QWidget *parent)
-    : ConfigModuleTab(parent),
-      mConfigureWidget(configureWidget)
-{
-    QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
-    l->addWidget(mConfigureWidget);
-    connect(configureWidget, &WebEngineViewer::NetworkPluginUrlInterceptorConfigureWidget::configureChanged, this, &AddonsPluginTab::slotEmitChanged);
-}
-
-AddonsPluginTab::~AddonsPluginTab()
-{
-
-}
-
-void AddonsPluginTab::save()
-{
-    mConfigureWidget->saveSettings();
-}
-
-QString AddonsPluginTab::helpAnchor() const
-{
-    return mConfigureWidget->helpAnchor();
-}
-
-void AddonsPluginTab::doLoadFromGlobalSettings()
-{
-    //TODO ?
-}
-
-void AddonsPluginTab::doLoadOther()
-{
-    mConfigureWidget->loadSettings();
-}
-
-void AddonsPluginTab::doResetToDefaultsOther()
-{
-    mConfigureWidget->resetSettings();
 }
 
 #ifdef WEBENGINEVIEWER_PRINT_SUPPORT

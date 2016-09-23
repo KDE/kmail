@@ -59,10 +59,6 @@ using KPIM::RecentAddresses;
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 
-#include <MessageComposer/PluginEditorCheckBeforeSendConfigureWidget>
-#include <MessageComposer/PluginEditorCheckBeforeSendManager>
-#include <MessageComposer/PluginEditorCheckBeforeSend>
-
 #include <libkdepim/blacklistbalooemailcompletiondialog.h>
 
 #include <libkdepim/completionconfiguredialog.h>
@@ -130,14 +126,6 @@ ComposerPage::ComposerPage(QWidget *parent)
     //
     AutoImageResizeTab *autoImageResizeTab = new AutoImageResizeTab();
     addTab(autoImageResizeTab, i18n("Auto Resize Image"));
-
-    Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSend *plugin, MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList()) {
-        if (plugin->hasConfigureDialog() && plugin->isEnabled()) {
-            MessageComposer::PluginEditorCheckBeforeSendConfigureWidgetSetting settings = plugin->createConfigureWidget(KMKernel::self() ? KMKernel::self()->identityManager() : Q_NULLPTR, this);
-            ComposerPluginTab *tab = new ComposerPluginTab(settings.configureWidget, plugin, this);
-            addTab(tab, settings.name);
-        }
-    }
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const
@@ -1345,44 +1333,3 @@ void ComposerPageAutoImageResizeTab::doResetToDefaultsOther()
     autoResizeWidget->resetToDefault();
 }
 
-ComposerPluginTab::ComposerPluginTab(MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *configureWidget, MessageComposer::PluginEditorCheckBeforeSend *plugin, QWidget *parent)
-    : ConfigModuleTab(parent),
-      mConfigureWidget(configureWidget),
-      mPlugin(plugin)
-{
-    QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
-    l->addWidget(mConfigureWidget);
-    connect(mConfigureWidget, &MessageComposer::PluginEditorCheckBeforeSendConfigureWidget::configureChanged, this, &ComposerPluginTab::slotEmitChanged);
-}
-
-ComposerPluginTab::~ComposerPluginTab()
-{
-
-}
-
-void ComposerPluginTab::save()
-{
-    mConfigureWidget->saveSettings();
-    mPlugin->emitConfigChanged();
-}
-
-QString ComposerPluginTab::helpAnchor() const
-{
-    return mConfigureWidget->helpAnchor();
-}
-
-void ComposerPluginTab::doLoadFromGlobalSettings()
-{
-    //TODO
-}
-
-void ComposerPluginTab::doLoadOther()
-{
-    mConfigureWidget->loadSettings();
-}
-
-void ComposerPluginTab::doResetToDefaultsOther()
-{
-    mConfigureWidget->resetSettings();
-}

@@ -25,8 +25,7 @@
 
 KMailPluginEditorCheckBeforeSendManagerInterface::KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent)
     : QObject(parent),
-      mParentWidget(Q_NULLPTR),
-      mIdentityManagement(Q_NULLPTR)
+      mParentWidget(Q_NULLPTR)
 {
 
 }
@@ -46,11 +45,6 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::setParentWidget(QWidget *
     mParentWidget = parentWidget;
 }
 
-void KMailPluginEditorCheckBeforeSendManagerInterface::setIdentityManagement(KIdentityManagement::IdentityManager *identityManagement)
-{
-    mIdentityManagement = identityManagement;
-}
-
 void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
 {
     if (!mListPluginInterface.isEmpty()) {
@@ -62,7 +56,6 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
         if (plugin->isEnabled()) {
             MessageComposer::PluginEditorCheckBeforeSendInterface *interface = plugin->createInterface(this);
             interface->setParentWidget(mParentWidget);
-            interface->setIdentityManagement(mIdentityManagement);
             interface->reloadConfig();
             mListPluginInterface.append(interface);
         }

@@ -44,8 +44,6 @@ class SimpleStringListEditor;
 namespace MessageComposer
 {
 class ImageScalingWidget;
-class PluginEditorCheckBeforeSendConfigureWidget;
-class PluginEditorCheckBeforeSend;
 }
 
 class ComposerPageGeneralTab : public ConfigModuleTab
@@ -244,26 +242,6 @@ private:
 
 private:
     MessageComposer::ImageScalingWidget *autoResizeWidget;
-};
-
-class ComposerPluginTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit ComposerPluginTab(MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *configureWidget, MessageComposer::PluginEditorCheckBeforeSend *plugin, QWidget *parent = Q_NULLPTR);
-    ~ComposerPluginTab();
-
-    void save() Q_DECL_OVERRIDE;
-    QString helpAnchor() const;
-
-private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
-
-private:
-    MessageComposer::PluginEditorCheckBeforeSendConfigureWidget *mConfigureWidget;
-    MessageComposer::PluginEditorCheckBeforeSend *mPlugin;
 };
 
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs

@@ -22,11 +22,6 @@
 
 #include <QObject>
 
-namespace KIdentityManagement
-{
-class IdentityManager;
-}
-
 namespace MessageComposer
 {
 class PluginEditorCheckBeforeSendInterface;
@@ -42,7 +37,6 @@ public:
 
     QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
-    void setIdentityManagement(KIdentityManagement::IdentityManager *identityManagement);
 
     //TODO add Identity
     //TODO add Emails
@@ -53,7 +47,6 @@ public:
 private:
     QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
     QWidget *mParentWidget;
-    KIdentityManagement::IdentityManager *mIdentityManagement;
 };
 
 #endif // KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H

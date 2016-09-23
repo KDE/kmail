@@ -34,7 +34,8 @@
 #include <QLabel>
 #include <QTreeWidget>
 #include <QDebug>
-#include <NetworkPluginUrlInterceptor>
+#include <WebEngineViewer/NetworkPluginUrlInterceptor>
+#include <MessageComposer/PluginEditorCheckBeforeSend>
 
 namespace {
 QString pluginEditorGroupName()
@@ -182,7 +183,8 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
         } else if (configureGroupName == kmailPluginToolsGroupName()) {
 
         } else if (configureGroupName == pluginEditorCheckBeforeGroupName()) {
-
+            MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
         } else {
             qCWarning(KMAIL_LOG) << "Unknown configureGroupName" << configureGroupName;
         }
