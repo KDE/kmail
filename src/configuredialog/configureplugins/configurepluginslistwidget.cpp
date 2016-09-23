@@ -85,35 +85,47 @@ void ConfigurePluginsListWidget::initialize()
     mListWidget->clear();
 
     //Load CheckBeforeSend
-    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList(), i18n("Check Before Send Plugins"),
-            MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
-            MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(), mPluginSendBeforeSendItems);
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList(),
+                                                        i18n("Check Before Send Plugins"),
+                                                        MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
+                                                        MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
+                                                        mPluginSendBeforeSendItems);
 
     //Load generic plugins
     //Necessary to initialize pluging when we load it outside kmail
     KMailPluginInterface::self()->initializePlugins();
-    PimCommon::ConfigurePluginsListWidget::fillTopItems(KMailPluginInterface::self()->pluginsDataList(), i18n("Tools Plugins"),
-            KMailPluginInterface::self()->configGroupName(),
-            KMailPluginInterface::self()->configPrefixSettingKey(), mPluginGenericItems);
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(KMailPluginInterface::self()->pluginsDataList(),
+                                                        i18n("Tools Plugins"),
+                                                        KMailPluginInterface::self()->configGroupName(),
+                                                        KMailPluginInterface::self()->configPrefixSettingKey(),
+                                                        mPluginGenericItems);
 
     //Load plugin editor
-    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(), i18n("Composer Plugins"),
-            MessageComposer::PluginEditorManager::self()->configGroupName(),
-            MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(), mPluginEditorItems);
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(),
+                                                        i18n("Composer Plugins"),
+                                                        MessageComposer::PluginEditorManager::self()->configGroupName(),
+                                                        MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
+                                                        mPluginEditorItems);
 
     //Load messageviewer plugin
-    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::ViewerPluginManager::self()->pluginsDataList(), i18n("Message Viewer"),
-            MessageViewer::ViewerPluginManager::self()->configGroupName(),
-            MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(), mPluginMessageViewerItems);
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::ViewerPluginManager::self()->pluginsDataList(),
+                                                        i18n("Message Viewer"),
+                                                        MessageViewer::ViewerPluginManager::self()->configGroupName(),
+                                                        MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
+                                                        mPluginMessageViewerItems);
 
     //Load webengineplugin
-    PimCommon::ConfigurePluginsListWidget::fillTopItems(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsDataList(), i18n("Webengine Plugins"),
-            WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
-            WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(), mPluginWebEngineItems);
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsDataList(),
+                                                        i18n("Webengine Plugins"),
+                                                        WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
+                                                        WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
+                                                        mPluginWebEngineItems);
 
     //Load headerstyle
-    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::HeaderStylePluginManager::self()->pluginsDataList(), i18n("Header Style Plugins"),
-            MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
-            MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(), mPluginHeaderStyleItems);
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::HeaderStylePluginManager::self()->pluginsDataList(),
+                                                        i18n("Header Style Plugins"),
+                                                        MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
+                                                        MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
+                                                        mPluginHeaderStyleItems);
     mListWidget->expandAll();
 }
