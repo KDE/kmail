@@ -39,6 +39,7 @@
 #include <MessageViewer/ViewerPlugin>
 #include <PimCommon/GenericPlugin>
 #include <MessageComposer/PluginEditor>
+#include <MessageViewer/HeaderStylePlugin>
 
 namespace {
 QString pluginEditorGroupName()
@@ -175,7 +176,8 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
 {
     if (!configureGroupName.isEmpty() && !identifier.isEmpty()) {
         if (configureGroupName == headerStyleGroupName()) {
-
+            MessageViewer::HeaderStylePlugin *plugin = MessageViewer::HeaderStylePluginManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
         } else if (configureGroupName == networkUrlInterceptorGroupName()) {
             WebEngineViewer::NetworkPluginUrlInterceptor *plugin = WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
