@@ -36,6 +36,9 @@
 #include <QDebug>
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
+#include <MessageViewer/ViewerPlugin>
+#include <PimCommon/GenericPlugin>
+#include <MessageComposer/PluginEditor>
 
 namespace {
 QString pluginEditorGroupName()
@@ -177,11 +180,14 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
             WebEngineViewer::NetworkPluginUrlInterceptor *plugin = WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
         } else if (configureGroupName == viewerPluginGroupName()) {
-
+            MessageViewer::ViewerPlugin *plugin = MessageViewer::ViewerPluginManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
         } else if (configureGroupName == pluginEditorGroupName()) {
-
+            MessageComposer::PluginEditor *plugin = MessageComposer::PluginEditorManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
         } else if (configureGroupName == kmailPluginToolsGroupName()) {
-
+            PimCommon::GenericPlugin *plugin = KMailPluginInterface::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
         } else if (configureGroupName == pluginEditorCheckBeforeGroupName()) {
             MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
