@@ -107,6 +107,12 @@ void ConfigurePluginsListWidget::save()
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
             MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
             mPluginHeaderStyleItems);
+    saveAkonadiAgent();
+}
+
+void ConfigurePluginsListWidget::saveAkonadiAgent()
+{
+    //TODO
 }
 
 void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
@@ -122,6 +128,7 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     changeState(mPluginGenericItems);
     changeState(mPluginWebEngineItems);
     changeState(mPluginHeaderStyleItems);
+    changeState(mAgentPluginsItems);
 }
 
 void ConfigurePluginsListWidget::initialize()
@@ -184,15 +191,13 @@ void ConfigurePluginsListWidget::initialize()
 
 void ConfigurePluginsListWidget::initializeAgentPlugins()
 {
-    QVector<PimCommon::PluginUtilData> pluginData;
+    mPluginUtilDataList.clear();
+    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"));
+    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"));
+    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
+    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"));
 
-    PimCommon::PluginUtilData data;
-    pluginData << createAgentPluginData(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"));
-    pluginData << createAgentPluginData(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"));
-    pluginData << createAgentPluginData(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
-    pluginData << createAgentPluginData(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"));
-
-    PimCommon::ConfigurePluginsListWidget::fillTopItems(pluginData,
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(mPluginUtilDataList,
                                                         i18n("Akonadi Agents"),
                                                         QString(),
                                                         QString(),
@@ -257,8 +262,6 @@ void ConfigurePluginsListWidget::changeAgentActiveState(const QString &interface
 
 void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)
 {
-    qDebug()<<" void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)";
-    qDebug()<<" configureGroupName"<<configureGroupName << " identifier"<<identifier;
     if (!configureGroupName.isEmpty() && !identifier.isEmpty()) {
         if (configureGroupName == headerStyleGroupName()) {
             MessageViewer::HeaderStylePlugin *plugin = MessageViewer::HeaderStylePluginManager::self()->pluginFromIdentifier(identifier);
@@ -279,7 +282,17 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
             MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
         } else if (configureGroupName == agentAkonadiGroupName()) {
-            //TODO
+            Q_FOREACH(const PimCommon::PluginUtilData &data, mPluginUtilDataList) {
+                if(data.mIdentifier == identifier) {
+                    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + data.mExtraInfo.at(0), data.mExtraInfo.at(1));
+                    if (interface.isValid()) {
+                        interface.call(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
+                    } else {
+                        qCDebug(KMAIL_LOG) << " interface does not exist ";
+                    }
+                    break;
+                }
+            }
         } else {
             qCWarning(KMAIL_LOG) << "Unknown configureGroupName" << configureGroupName;
         }

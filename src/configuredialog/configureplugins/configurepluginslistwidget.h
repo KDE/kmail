@@ -41,6 +41,7 @@ private:
     PimCommon::PluginUtilData createAgentPluginData(const QString &interfaceName, const QString &path);
     bool agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed);
     void changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable);
+    void saveAkonadiAgent();
     QList<PluginItem *> mPluginEditorItems;
     QList<PluginItem *> mPluginMessageViewerItems;
     QList<PluginItem *> mPluginSendBeforeSendItems;
@@ -48,6 +49,7 @@ private:
     QList<PluginItem *> mPluginWebEngineItems;
     QList<PluginItem *> mPluginHeaderStyleItems;
     QList<PluginItem *> mAgentPluginsItems;
+    QVector<PimCommon::PluginUtilData> mPluginUtilDataList;
 };
 
 #endif // KMAILCONFIGUREPLUGINSLISTWIDGET_H
