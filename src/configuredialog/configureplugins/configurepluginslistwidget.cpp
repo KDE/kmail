@@ -112,7 +112,14 @@ void ConfigurePluginsListWidget::save()
 
 void ConfigurePluginsListWidget::saveAkonadiAgent()
 {
-    //TODO
+    Q_FOREACH(PluginItem *item, mAgentPluginsItems) {
+        Q_FOREACH(const PimCommon::PluginUtilData &data, mPluginUtilDataList) {
+            if (item->mIdentifier == data.mIdentifier) {
+                changeAgentActiveState(data.mExtraInfo.at(0), data.mExtraInfo.at(1), item->checkState(0) == Qt::Checked);
+                break;
+            }
+        }
+    }
 }
 
 void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
@@ -258,7 +265,6 @@ void ConfigurePluginsListWidget::changeAgentActiveState(const QString &interface
         }
     }
 }
-
 
 void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)
 {
