@@ -70,7 +70,6 @@ set(LIBKDEPIM_LIB_VERSION_LIB "5.3.42")
 set(LIBKSIEVE_LIB_VERSION_LIB "5.3.42")
 
 find_package(KF5WebEngineViewer ${MESSAGELIB_LIB_VERSION_LIB} CONFIG REQUIRED)
-set(WEBENGINE_TYPE "QtWebEngine")
 
 find_package(KF5AkonadiSearch "5.3.40" CONFIG REQUIRED)
 set_package_properties(KF5AkonadiSearch PROPERTIES DESCRIPTION "The Akonadi Search libraries" URL "http://www.kde.org" TYPE REQUIRED PURPOSE "Provides search capabilities in KMail and Akonadi")
