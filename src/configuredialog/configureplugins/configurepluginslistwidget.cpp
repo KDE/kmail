@@ -34,6 +34,8 @@
 #include <QLabel>
 #include <QTreeWidget>
 #include <QDebug>
+#include <QDBusInterface>
+#include <QDBusReply>
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
 #include <MessageViewer/ViewerPlugin>
@@ -68,6 +70,11 @@ QString headerStyleGroupName()
 {
     return QStringLiteral("headerstylegroupname");
 }
+QString agentAkonadiGroupName()
+{
+    return QStringLiteral("agentakonadigroupname");
+}
+
 }
 
 ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
@@ -184,6 +191,14 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
     pluginData << createAgentPluginData(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"));
     pluginData << createAgentPluginData(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
     pluginData << createAgentPluginData(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"));
+
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(pluginData,
+                                                        i18n("Akonadi Agents"),
+                                                        QString(),
+                                                        QString(),
+                                                        mAgentPluginsItems,
+                                                        agentAkonadiGroupName());
+
 }
 
 PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(const QString &interfaceName, const QString &path)
@@ -191,30 +206,59 @@ PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(cons
     PimCommon::PluginUtilData data;
     data.mEnableByDefault = true;
     data.mHasConfigureDialog = true;
-#if 0
     Q_FOREACH (const Akonadi::AgentType &type, Akonadi::AgentManager::self()->types()) {
         if (type.identifier() == interfaceName) {
-            ConfigureAgentItem item;
-            item.setInterfaceName(interfaceName);
-            item.setPath(path);
+            data.mExtraInfo << interfaceName;
+            data.mExtraInfo << path;
             bool failed = false;
             const bool enabled = agentActivateState(interfaceName, path, failed);
-            item.setChecked(enabled);
-            item.setFailed(failed);
-            item.setAgentName(type.name());
-            const QString descriptionStr = QLatin1String("<b>") + i18n("Description:") + QLatin1String("</b><br>") + type.description();
-            item.setDescription(descriptionStr);
-            listItem.append(item);
+            data.mEnableByDefault = enabled;
+            data.mName = type.name();
+            data.mDescription = type.description();
+            data.mIdentifier = type.identifier();
             break;
         }
     }
-#endif
     return data;
+}
+
+bool ConfigurePluginsListWidget::agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed)
+{
+    failed = false;
+    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName);
+    if (interface.isValid()) {
+        QDBusReply<bool> enabled = interface.call(QStringLiteral("enabledAgent"));
+        if (enabled.isValid()) {
+            return enabled;
+        } else {
+            qCDebug(KMAIL_LOG) << interfaceName << "doesn't have enabledAgent function";
+            failed = true;
+            return false;
+        }
+    } else {
+        failed = true;
+        qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
+    }
+    return false;
+}
+
+void ConfigurePluginsListWidget::changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable)
+{
+    if (!interfaceName.isEmpty() && !path.isEmpty()) {
+        QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path);
+        if (interface.isValid()) {
+            interface.call(QStringLiteral("setEnableAgent"), enable);
+        } else {
+            qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
+        }
+    }
 }
 
 
 void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)
 {
+    qDebug()<<" void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)";
+    qDebug()<<" configureGroupName"<<configureGroupName << " identifier"<<identifier;
     if (!configureGroupName.isEmpty() && !identifier.isEmpty()) {
         if (configureGroupName == headerStyleGroupName()) {
             MessageViewer::HeaderStylePlugin *plugin = MessageViewer::HeaderStylePluginManager::self()->pluginFromIdentifier(identifier);
@@ -234,6 +278,8 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
         } else if (configureGroupName == pluginEditorCheckBeforeGroupName()) {
             MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
+        } else if (configureGroupName == agentAkonadiGroupName()) {
+            //TODO
         } else {
             qCWarning(KMAIL_LOG) << "Unknown configureGroupName" << configureGroupName;
         }

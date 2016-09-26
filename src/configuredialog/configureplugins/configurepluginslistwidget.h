@@ -39,6 +39,8 @@ private Q_SLOTS:
 private:
     void initializeAgentPlugins();
     PimCommon::PluginUtilData createAgentPluginData(const QString &interfaceName, const QString &path);
+    bool agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed);
+    void changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable);
     QList<PluginItem *> mPluginEditorItems;
     QList<PluginItem *> mPluginMessageViewerItems;
     QList<PluginItem *> mPluginSendBeforeSendItems;
