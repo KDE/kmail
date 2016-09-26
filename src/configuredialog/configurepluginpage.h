@@ -25,7 +25,7 @@ namespace PimCommon
 {
 class ConfigurePluginsWidget;
 }
-class KMAIL_EXPORT ConfigurePluginPage : public ConfigModuleWithTabs
+class KMAIL_EXPORT ConfigurePluginPage : public ConfigModule
 {
     Q_OBJECT
 public:
@@ -33,21 +33,10 @@ public:
     ~ConfigurePluginPage();
 
     QString helpAnchor() const Q_DECL_OVERRIDE;
-};
-
-class ConfigurePluginTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit ConfigurePluginTab(QWidget *parent = Q_NULLPTR);
-
+    void load() Q_DECL_OVERRIDE;
     void save() Q_DECL_OVERRIDE;
-    QString helpAnchor() const;
-
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
-private:
+    void slotConfigureChanged();
     PimCommon::ConfigurePluginsWidget *mConfigurePlugins;
 };
 

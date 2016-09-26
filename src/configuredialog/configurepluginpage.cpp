@@ -23,10 +23,14 @@
 #include <QHBoxLayout>
 
 ConfigurePluginPage::ConfigurePluginPage(QWidget *parent)
-    : ConfigModuleWithTabs(parent)
+    : ConfigModule(parent)
 {
-    ConfigurePluginTab *pluginTab = new ConfigurePluginTab();
-    addTab(pluginTab, i18n("Plugins"));
+    QHBoxLayout *l = new QHBoxLayout(this);
+    l->setContentsMargins(0, 0, 0, 0);
+    mConfigurePlugins = new PimCommon::ConfigurePluginsWidget(new ConfigurePluginsListWidget(this), this);
+    l->addWidget(mConfigurePlugins);
+
+    connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::changed, this, &ConfigurePluginPage::slotConfigureChanged);
 }
 
 ConfigurePluginPage::~ConfigurePluginPage()
@@ -34,37 +38,22 @@ ConfigurePluginPage::~ConfigurePluginPage()
 
 }
 
+void ConfigurePluginPage::save()
+{
+    mConfigurePlugins->save();
+}
+
 QString ConfigurePluginPage::helpAnchor() const
 {
     return {};
 }
 
-ConfigurePluginTab::ConfigurePluginTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
-    mConfigurePlugins = new PimCommon::ConfigurePluginsWidget(new ConfigurePluginsListWidget(this), this);
-    l->addWidget(mConfigurePlugins);
-
-    connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::changed, this, &ConfigurePluginTab::slotEmitChanged);
-}
-
-void ConfigurePluginTab::save()
-{
-    mConfigurePlugins->save();
-}
-
-QString ConfigurePluginTab::helpAnchor() const
-{
-    return {};
-}
-
-void ConfigurePluginTab::doLoadFromGlobalSettings()
+void ConfigurePluginPage::load()
 {
     mConfigurePlugins->doLoadFromGlobalSettings();
 }
 
-void ConfigurePluginTab::doLoadOther()
+void ConfigurePluginPage::slotConfigureChanged()
 {
+    Q_EMIT changed(true);
 }
