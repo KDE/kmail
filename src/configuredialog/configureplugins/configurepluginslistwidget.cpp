@@ -40,6 +40,7 @@
 #include <PimCommon/GenericPlugin>
 #include <MessageComposer/PluginEditor>
 #include <MessageViewer/HeaderStylePlugin>
+#include <AkonadiCore/AgentManager>
 
 namespace {
 QString pluginEditorGroupName()
@@ -169,8 +170,48 @@ void ConfigurePluginsListWidget::initialize()
                                                         MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
                                                         mPluginHeaderStyleItems,
                                                         headerStyleGroupName());
+    //Load Agent Plugin
+    initializeAgentPlugins();
     mListWidget->expandAll();
 }
+
+void ConfigurePluginsListWidget::initializeAgentPlugins()
+{
+    QVector<PimCommon::PluginUtilData> pluginData;
+
+    PimCommon::PluginUtilData data;
+    pluginData << createAgentPluginData(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"));
+    pluginData << createAgentPluginData(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"));
+    pluginData << createAgentPluginData(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
+    pluginData << createAgentPluginData(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"));
+}
+
+PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(const QString &interfaceName, const QString &path)
+{
+    PimCommon::PluginUtilData data;
+    data.mEnableByDefault = true;
+    data.mHasConfigureDialog = true;
+#if 0
+    Q_FOREACH (const Akonadi::AgentType &type, Akonadi::AgentManager::self()->types()) {
+        if (type.identifier() == interfaceName) {
+            ConfigureAgentItem item;
+            item.setInterfaceName(interfaceName);
+            item.setPath(path);
+            bool failed = false;
+            const bool enabled = agentActivateState(interfaceName, path, failed);
+            item.setChecked(enabled);
+            item.setFailed(failed);
+            item.setAgentName(type.name());
+            const QString descriptionStr = QLatin1String("<b>") + i18n("Description:") + QLatin1String("</b><br>") + type.description();
+            item.setDescription(descriptionStr);
+            listItem.append(item);
+            break;
+        }
+    }
+#endif
+    return data;
+}
+
 
 void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)
 {

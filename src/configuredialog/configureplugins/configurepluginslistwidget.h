@@ -37,12 +37,15 @@ private Q_SLOTS:
     void slotConfigureClicked(const QString &configureGroupName, const QString &identifier);
 
 private:
+    void initializeAgentPlugins();
+    PimCommon::PluginUtilData createAgentPluginData(const QString &interfaceName, const QString &path);
     QList<PluginItem *> mPluginEditorItems;
     QList<PluginItem *> mPluginMessageViewerItems;
     QList<PluginItem *> mPluginSendBeforeSendItems;
     QList<PluginItem *> mPluginGenericItems;
     QList<PluginItem *> mPluginWebEngineItems;
     QList<PluginItem *> mPluginHeaderStyleItems;
+    QList<PluginItem *> mAgentPluginsItems;
 };
 
 #endif // KMAILCONFIGUREPLUGINSLISTWIDGET_H
