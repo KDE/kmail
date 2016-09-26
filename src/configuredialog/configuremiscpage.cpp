@@ -18,7 +18,6 @@
 #include "configuremiscpage.h"
 #include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include "configureagents/configureagentswidget.h"
 #include "settings/kmailsettings.h"
 
 #include <MailCommon/FolderRequester>
@@ -55,9 +54,6 @@ MiscPage::MiscPage(QWidget *parent)
 
     InviteTab *inviteTab = new InviteTab();
     addTab(inviteTab, i18n("Invitations"));
-
-    MiscPageAgentSettingsTab *agentSettingsTab = new MiscPageAgentSettingsTab();
-    addTab(agentSettingsTab, i18n("Plugins Settings"));
 
 #ifdef WEBENGINEVIEWER_PRINT_SUPPORT
     MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
@@ -133,37 +129,6 @@ void MiscPage::FolderTab::save()
     saveCheckBox(mMMTab.mExcludeImportantFromExpiry, KMailSettings::self()->excludeImportantMailFromExpiryItem());
     saveCheckBox(mMMTab.mShowPopupAfterDnD, KMailSettings::self()->showPopupAfterDnDItem());
     saveCheckBox(mMMTab.mStartUpFolderCheck, KMailSettings::self()->startSpecificFolderAtStartupItem());
-}
-
-MiscPageAgentSettingsTab::MiscPageAgentSettingsTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
-    mConfigureAgent = new ConfigureAgentsWidget;
-    l->addWidget(mConfigureAgent);
-
-    connect(mConfigureAgent, &ConfigureAgentsWidget::changed, this, &MiscPageAgentSettingsTab::slotEmitChanged);
-}
-
-void MiscPageAgentSettingsTab::doLoadFromGlobalSettings()
-{
-    mConfigureAgent->doLoadFromGlobalSettings();
-}
-
-void MiscPageAgentSettingsTab::save()
-{
-    mConfigureAgent->save();
-}
-
-void MiscPageAgentSettingsTab::doResetToDefaultsOther()
-{
-    mConfigureAgent->doResetToDefaultsOther();
-}
-
-QString MiscPageAgentSettingsTab::helpAnchor() const
-{
-    return mConfigureAgent->helpAnchor();
 }
 
 MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)

@@ -62,11 +62,6 @@ set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configureaccountpage.cpp
     configuredialog/configurepluginpage.cpp
     configuredialog/colorlistbox.cpp
-    configuredialog/configureagents/configureagentswidget.cpp
-    configuredialog/configureagents/configureagentlistmodel.cpp
-    configuredialog/configureagents/configureagentlistdelegate.cpp
-    configuredialog/configureagents/configureagentlistview.cpp
-    configuredialog/configureagents/configureagentitem.cpp
     )
 
 set(kmailprivate_configureplugins_LIB_SRCS

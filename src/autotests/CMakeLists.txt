@@ -41,20 +41,6 @@ add_test(kactionmenutransporttest kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt5::Test  KF5::MailTransport KF5::WidgetsAddons KF5::I18n KF5::ConfigGui)
 
-set( kmail_configureagentlistviewtest_source configureagentlistviewtest.cpp ../configuredialog/configureagents/configureagentitem.cpp
-    ../configuredialog/configureagents/configureagentlistmodel.cpp ../configuredialog/configureagents/configureagentlistview.cpp
-    ../configuredialog/configureagents/configureagentlistdelegate.cpp ../kmail_debug.cpp)
-add_executable( configureagentlistviewtest ${kmail_configureagentlistviewtest_source})
-add_test(configureagentlistviewtest configureagentlistviewtest)
-ecm_mark_as_test(configureagentlistviewtest)
-target_link_libraries( configureagentlistviewtest Qt5::Test Qt5::Widgets KF5::ItemViews Qt5::DBus)
-
-set( kmail_configureagentitemtest_source configureagentitemtest.cpp ../configuredialog/configureagents/configureagentitem.cpp)
-add_executable( configureagentitemtest ${kmail_configureagentitemtest_source})
-add_test(configureagentitemtest configureagentitemtest)
-ecm_mark_as_test(configureagentitemtest)
-target_link_libraries( configureagentitemtest Qt5::Test Qt5::Widgets KF5::ItemViews)
-
 set(KDEPIMLIBS_RUN_ISOLATED_TESTS TRUE)
 set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
 

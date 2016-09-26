@@ -72,23 +72,6 @@ private:
     MessageViewer::InvitationSettings *mInvitationUi;
 };
 
-class MiscPageAgentSettingsTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit MiscPageAgentSettingsTab(QWidget *parent = Q_NULLPTR);
-    void save() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
-
-    QString helpAnchor() const;
-
-private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-
-private:
-    ConfigureAgentsWidget *mConfigureAgent;
-};
-
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
