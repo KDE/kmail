@@ -44,7 +44,8 @@
 #include <MessageViewer/HeaderStylePlugin>
 #include <AkonadiCore/AgentManager>
 
-namespace {
+namespace
+{
 QString pluginEditorGroupName()
 {
     return QStringLiteral("plugineditorgroupname");
@@ -112,8 +113,8 @@ void ConfigurePluginsListWidget::save()
 
 void ConfigurePluginsListWidget::saveAkonadiAgent()
 {
-    Q_FOREACH(PluginItem *item, mAgentPluginsItems) {
-        Q_FOREACH(const PimCommon::PluginUtilData &data, mPluginUtilDataList) {
+    Q_FOREACH (PluginItem *item, mAgentPluginsItems) {
+        Q_FOREACH (const PimCommon::PluginUtilData &data, mPluginUtilDataList) {
             if (item->mIdentifier == data.mIdentifier) {
                 changeAgentActiveState(data.mExtraInfo.at(0), data.mExtraInfo.at(1), item->checkState(0) == Qt::Checked);
                 break;
@@ -144,53 +145,53 @@ void ConfigurePluginsListWidget::initialize()
 
     //Load CheckBeforeSend
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList(),
-                                                        i18n("Check Before Send Plugins"),
-                                                        MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
-                                                        MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
-                                                        mPluginSendBeforeSendItems,
-                                                        pluginEditorCheckBeforeGroupName());
+            i18n("Check Before Send Plugins"),
+            MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
+            MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
+            mPluginSendBeforeSendItems,
+            pluginEditorCheckBeforeGroupName());
 
     //Load generic plugins
     //Necessary to initialize pluging when we load it outside kmail
     KMailPluginInterface::self()->initializePlugins();
     PimCommon::ConfigurePluginsListWidget::fillTopItems(KMailPluginInterface::self()->pluginsDataList(),
-                                                        i18n("Tools Plugins"),
-                                                        KMailPluginInterface::self()->configGroupName(),
-                                                        KMailPluginInterface::self()->configPrefixSettingKey(),
-                                                        mPluginGenericItems,
-                                                        kmailPluginToolsGroupName());
+            i18n("Tools Plugins"),
+            KMailPluginInterface::self()->configGroupName(),
+            KMailPluginInterface::self()->configPrefixSettingKey(),
+            mPluginGenericItems,
+            kmailPluginToolsGroupName());
 
     //Load plugin editor
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(),
-                                                        i18n("Composer Plugins"),
-                                                        MessageComposer::PluginEditorManager::self()->configGroupName(),
-                                                        MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
-                                                        mPluginEditorItems,
-                                                        pluginEditorGroupName());
+            i18n("Composer Plugins"),
+            MessageComposer::PluginEditorManager::self()->configGroupName(),
+            MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
+            mPluginEditorItems,
+            pluginEditorGroupName());
 
     //Load messageviewer plugin
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::ViewerPluginManager::self()->pluginsDataList(),
-                                                        i18n("Message Viewer"),
-                                                        MessageViewer::ViewerPluginManager::self()->configGroupName(),
-                                                        MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
-                                                        mPluginMessageViewerItems,
-                                                        viewerPluginGroupName());
+            i18n("Message Viewer"),
+            MessageViewer::ViewerPluginManager::self()->configGroupName(),
+            MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
+            mPluginMessageViewerItems,
+            viewerPluginGroupName());
 
     //Load webengineplugin
     PimCommon::ConfigurePluginsListWidget::fillTopItems(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsDataList(),
-                                                        i18n("Webengine Plugins"),
-                                                        WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
-                                                        WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
-                                                        mPluginWebEngineItems,
-                                                        networkUrlInterceptorGroupName());
+            i18n("Webengine Plugins"),
+            WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
+            WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
+            mPluginWebEngineItems,
+            networkUrlInterceptorGroupName());
 
     //Load headerstyle
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::HeaderStylePluginManager::self()->pluginsDataList(),
-                                                        i18n("Header Style Plugins"),
-                                                        MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
-                                                        MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
-                                                        mPluginHeaderStyleItems,
-                                                        headerStyleGroupName());
+            i18n("Header Style Plugins"),
+            MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
+            MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
+            mPluginHeaderStyleItems,
+            headerStyleGroupName());
     //Load Agent Plugin
     initializeAgentPlugins();
     mListWidget->expandAll();
@@ -205,11 +206,11 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"));
 
     PimCommon::ConfigurePluginsListWidget::fillTopItems(mPluginUtilDataList,
-                                                        i18n("Akonadi Agents"),
-                                                        QString(),
-                                                        QString(),
-                                                        mAgentPluginsItems,
-                                                        agentAkonadiGroupName());
+            i18n("Akonadi Agents"),
+            QString(),
+            QString(),
+            mAgentPluginsItems,
+            agentAkonadiGroupName());
 
 }
 
@@ -288,8 +289,8 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
             MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
         } else if (configureGroupName == agentAkonadiGroupName()) {
-            Q_FOREACH(const PimCommon::PluginUtilData &data, mPluginUtilDataList) {
-                if(data.mIdentifier == identifier) {
+            Q_FOREACH (const PimCommon::PluginUtilData &data, mPluginUtilDataList) {
+                if (data.mIdentifier == identifier) {
                     QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + data.mExtraInfo.at(0), data.mExtraInfo.at(1));
                     if (interface.isValid()) {
                         interface.call(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
