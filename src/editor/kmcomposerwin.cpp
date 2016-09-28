@@ -1957,7 +1957,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         return true;
     } else if (source->hasHtml() && mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Plain && source->hasText()) {
         mComposerBase->editor()->insertPlainText(source->text());
-        return true
+        return true;
     } else if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         // Get the image data before showing the dialog, since that processes events which can delete
         // the QMimeData object behind our back
