@@ -1951,14 +1951,14 @@ void KMComposerWin::insertUrls(const QMimeData *source, const QList<QUrl> &urlLi
 bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttachment)
 {
     // If this is a PNG image, either add it as an attachment or as an inline image
-#if 0
     if (source->hasHtml() && mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich ) {
         const QString html = QString::fromUtf8(source->data(QStringLiteral("text/html")));
         mComposerBase->editor()->insertHtml(html);
         return true;
-    } else
-#endif
-        if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
+    } else if (source->hasHtml() && mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Plain && source->hasText()) {
+        mComposerBase->editor()->insertPlainText(source->text());
+        return true
+    } else if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         // Get the image data before showing the dialog, since that processes events which can delete
         // the QMimeData object behind our back
         const QByteArray imageData = source->data(QStringLiteral("image/png"));
