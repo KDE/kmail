@@ -365,11 +365,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         viewOnly = true;
         const QString filename =
             parser.value(QStringLiteral("view"));
-        messageFile = QUrl::fromLocalFile(filename);
-        if (!messageFile.isValid()) {
-            messageFile = QUrl();
-            messageFile.setPath(filename);
-        }
+        messageFile = QUrl::fromUserInput(filename, workingDir);
     }
 
     if (!calledWithSession) {
