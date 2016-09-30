@@ -309,11 +309,11 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
 
 void ConfigurePluginsListWidget::defaults()
 {
-    changeState(mPluginEditorItems);
-    changeState(mPluginMessageViewerItems);
-    changeState(mPluginSendBeforeSendItems);
-    changeState(mPluginGenericItems);
-    changeState(mPluginWebEngineItems);
-    changeState(mPluginHeaderStyleItems);
-    changeState(mAgentPluginsItems);
+    resetToUserSettings(mPluginEditorItems);
+    resetToUserSettings(mPluginMessageViewerItems);
+    resetToUserSettings(mPluginSendBeforeSendItems);
+    resetToUserSettings(mPluginGenericItems);
+    resetToUserSettings(mPluginWebEngineItems);
+    resetToUserSettings(mPluginHeaderStyleItems);
+    resetToUserSettings(mAgentPluginsItems);
 }
