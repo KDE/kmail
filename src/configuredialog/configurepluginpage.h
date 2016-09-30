@@ -35,6 +35,7 @@ public:
     QString helpAnchor() const Q_DECL_OVERRIDE;
     void load() Q_DECL_OVERRIDE;
     void save() Q_DECL_OVERRIDE;
+    void defaults() Q_DECL_OVERRIDE;
 private:
     void slotConfigureChanged();
     PimCommon::ConfigurePluginsWidget *mConfigurePlugins;

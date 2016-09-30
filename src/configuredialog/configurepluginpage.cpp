@@ -43,6 +43,11 @@ void ConfigurePluginPage::save()
     mConfigurePlugins->save();
 }
 
+void ConfigurePluginPage::defaults()
+{
+    mConfigurePlugins->defaults();
+}
+
 QString ConfigurePluginPage::helpAnchor() const
 {
     return {};

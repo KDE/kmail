@@ -305,3 +305,15 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
         }
     }
 }
+
+
+void ConfigurePluginsListWidget::defaults()
+{
+    changeState(mPluginEditorItems);
+    changeState(mPluginMessageViewerItems);
+    changeState(mPluginSendBeforeSendItems);
+    changeState(mPluginGenericItems);
+    changeState(mPluginWebEngineItems);
+    changeState(mPluginHeaderStyleItems);
+    changeState(mAgentPluginsItems);
+}
