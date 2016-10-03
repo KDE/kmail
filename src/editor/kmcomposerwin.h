@@ -416,6 +416,7 @@ private Q_SLOTS:
     void slotRecipientEditorFocusChanged();
     void slotRecipientAdded(MessageComposer::RecipientLineNG *line);
     void slotRecipientLineIconClicked(MessageComposer::RecipientLineNG *line);
+    void slotRecipientFocusLost(MessageComposer::RecipientLineNG *line);
     void slotKeyForMailBoxResult(const GpgME::KeyListResult &result, const GpgME::Key &key, const GpgME::UserID &userID);
 
 public: // kmcommand
@@ -541,6 +542,13 @@ private:
     inline bool encryptToSelf() const;
 
 private:
+    enum CryptoKeyState {
+        NoState = 0,
+        InProgress,
+        KeyOk,
+        NoKey
+    };
+
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
     bool showErrorMessage(KJob *job);

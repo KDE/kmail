@@ -339,11 +339,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::sizeHintChanged, this, &KMComposerWin::recipientEditorSizeHintChanged);
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::lineAdded, this, &KMComposerWin::slotRecipientEditorLineAdded);
-    connect(recipientsEditor, &MessageComposer::RecipientsEditor::focusUp, this, &KMComposerWin::slotRecipientEditorFocusChanged);
-    connect(recipientsEditor, &MessageComposer::RecipientsEditor::focusDown, this, &KMComposerWin::slotRecipientEditorFocusChanged);
-    Q_FOREACH (KPIM::MultiplyingLine *line, recipientsEditor->lines()) {
-        slotRecipientEditorLineAdded(line);
-    }
     mComposerBase->setRecipientsEditor(recipientsEditor);
 
     mEdtSubject = new PimCommon::LineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
@@ -484,6 +479,10 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     if (KMailSettings::self()->useExternalEditor()) {
         editor->setUseExternalEditor(true);
         editor->setExternalEditorPath(KMailSettings::self()->externalEditor());
+    }
+
+    Q_FOREACH (KPIM::MultiplyingLine *line, recipientsEditor->lines()) {
+        slotRecipientEditorLineAdded(line);
     }
 
     if (aMsg) {
@@ -3236,11 +3235,21 @@ void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
             this, [this, line]() {
                 this->slotRecipientLineIconClicked(line);
             });
+    connect(line, &MessageComposer::RecipientLineNG::destroyed,
+            this, &KMComposerWin::slotRecipientEditorFocusChanged,
+            Qt::QueuedConnection);
+    connect(line, &MessageComposer::RecipientLineNG::activeChanged,
+            this, [this, line]() {
+                this->slotRecipientFocusLost(line);
+            });
+
+    slotRecipientEditorFocusChanged();
 }
 
 void KMComposerWin::slotRecipientEditorFocusChanged()
 {
-    if (!mEncryptAction->isChecked() || mEncryptAction->property("setByUser").toBool()) {
+    // Already disabled
+    if (mEncryptAction->property("setByUser").toBool()) {
         return;
     }
 
@@ -3248,22 +3257,31 @@ void KMComposerWin::slotRecipientEditorFocusChanged()
     // If we have at least one recipient that does not have a key, disable encryption
     // (unless user enabled it manually), because we want to encrypt by default,
     // but not by force
+    bool encrypt = false;
     Q_FOREACH (auto line_, mComposerBase->recipientsEditor()->lines()) {
         auto line = qobject_cast<MessageComposer::RecipientLineNG*>(line_);
+
         // There's still a lookup job running, so wait, slotKeyForMailBoxResult()
         // will call us if the job returns empty key
         if (line->property("keyLookupJob").isValid()) {
             return;
         }
-        // skip active line - active line is very likely not complete yet.
-        if (line->isActive()) {
+
+        const auto keyStatus = static_cast<CryptoKeyState>(line->property("keyStatus").toInt());
+        if (keyStatus == NoState) {
             continue;
         }
 
-        if (line->recipient()->encryptionAction() == Kleo::Impossible) {
-            slotEncryptToggled(false);
-            break;
+        if (!line->recipient()->isEmpty() && keyStatus != KeyOk) {
+            setEncryption(false, false);
+            return;
         }
+
+        encrypt = true;
+    }
+
+    if (encrypt) {
+        setEncryption(true, false);
     }
 }
 
@@ -3312,17 +3330,46 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
     const auto protocol = Kleo::CryptoBackendFactory::instance()->openpgp();
     Kleo::KeyForMailboxJob *job = protocol->keyForMailboxJob();
     if (!job) {
+        line->setProperty("keyStatus", NoKey);
         recipient->setEncryptionAction(Kleo::Impossible);
         return;
     }
 
+    QString dummy, addrSpec;
+    if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
+        addrSpec = recipient->email();
+    }
     line->setProperty("keyLookupJob", QVariant::fromValue(QPointer<Kleo::KeyForMailboxJob>(job)));
     job->setProperty("recipient", QVariant::fromValue(recipient));
     job->setProperty("line", QVariant::fromValue(QPointer<MessageComposer::RecipientLineNG>(line)));
     connect(job, &Kleo::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
-    job->start(recipient->email(), true);
+    job->start(addrSpec, true);
 }
 
+void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *line)
+{
+    if (mEncryptAction->property("setByUser").toBool()) {
+        return;
+    }
+
+    // Same if auto-encryption is not enabled in current identity settings
+    if (!identity().pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
+        return;
+    }
+
+    if (line->recipientsCount() == 0) {
+        return;
+    }
+
+    if (line->property("keyLookupJob").toBool()) {
+        return;
+    }
+
+    if (static_cast<CryptoKeyState>(line->property("keyStatus").toInt()) != KeyOk) {
+        line->setProperty("keyStatus", NoKey);
+        setEncryption(false, false);
+    }
+}
 
 void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const GpgME::Key &key, const GpgME::UserID &userID)
 {
@@ -3334,7 +3381,6 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
         return;
     }
 
-
     auto recipient = job->property("recipient").value<MessageComposer::Recipient::Ptr>();
     auto line = job->property("line").value<QPointer<MessageComposer::RecipientLineNG>>();
 
@@ -3343,19 +3389,10 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
     }
 
     line->setProperty("keyLookupJob", QVariant());
-
     if (key.isNull()) {
         recipient->setEncryptionAction(Kleo::Impossible); // no key
         line->setIcon(QIcon());
-
-        // We found no key and the line no longer has focus. We take that as a sign
-        // that the user has moved on to another field and thus this was the final
-        // address - that's the best way I can think of how to distinguish between
-        // getting no key because the address is incomplete or getting no key because
-        // the address is complete, but we don't have the key in keychain.
-        if (!line->isActive()) {
-            slotRecipientEditorFocusChanged();
-        }
+        line->setProperty("keyStatus", InProgress);
     } else {
         recipient->setEncryptionAction(Kleo::DoIt);
         recipient->setKey(key);
@@ -3389,11 +3426,9 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
             break;
         }
 
+        line->setProperty("keyStatus", KeyOk);
         line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
 
-        // Enable encryption for the message
-        if (!mEncryptAction->isChecked() && !mEncryptAction->property("setByUser").toBool()) {
-            setEncryption(true, false);
-        }
+        slotRecipientEditorFocusChanged();
     }
 }
