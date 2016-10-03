@@ -107,6 +107,14 @@ namespace PimCommon
 class CustomToolsWidgetNg;
 class LineEditWithAutoCorrection;
 }
+
+namespace GpgME
+{
+class KeyListResult;
+class Key;
+class UserID;
+}
+
 //-----------------------------------------------------------------------------
 class KMComposerWin : public KMail::Composer
 {
@@ -403,6 +411,13 @@ private Q_SLOTS:
     void slotCheckSendNowStep2();
     void slotPotentialPhishingEmailsFound(const QStringList &list);
     void slotInsertTextFile(KJob *job);
+
+    void slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line);
+    void slotRecipientEditorFocusChanged();
+    void slotRecipientAdded(MessageComposer::RecipientLineNG *line);
+    void slotRecipientLineIconClicked(MessageComposer::RecipientLineNG *line);
+    void slotKeyForMailBoxResult(const GpgME::KeyListResult &result, const GpgME::Key &key, const GpgME::UserID &userID);
+
 public: // kmcommand
     void addAttach(KMime::Content *msgPart) Q_DECL_OVERRIDE;
 

@@ -90,6 +90,7 @@
 #include <Libkleo/CryptoBackendFactory>
 #include <Libkleo/ExportJob>
 #include <Libkleo/SpecialJob>
+#include <Libkleo/KeyForMailboxJob>
 
 #ifndef QT_NO_CURSOR
 #include <Libkdepim/KCursorSaver>
@@ -162,6 +163,7 @@
 #include <KCharsets>
 #include <KConfigGroup>
 #include <KXMLGUIFactory>
+#include <KIconUtils>
 
 // Qt includes
 #include <QMenu>
@@ -179,6 +181,11 @@
 #include <QFontDatabase>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QPointer>
+
+// GPGME
+#include <gpgme++/keylistresult.h>
+#include <gpgme++/key.h>
 
 // System includes
 #include <stdlib.h>
@@ -192,6 +199,8 @@
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
+
+Q_DECLARE_METATYPE(MessageComposer::Recipient::Ptr)
 
 KMail::Composer *KMail::makeComposer(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context,
                                      uint identity, const QString &textSelection,
@@ -329,6 +338,12 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     recipientsEditor->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::sizeHintChanged, this, &KMComposerWin::recipientEditorSizeHintChanged);
+    connect(recipientsEditor, &MessageComposer::RecipientsEditor::lineAdded, this, &KMComposerWin::slotRecipientEditorLineAdded);
+    connect(recipientsEditor, &MessageComposer::RecipientsEditor::focusUp, this, &KMComposerWin::slotRecipientEditorFocusChanged);
+    connect(recipientsEditor, &MessageComposer::RecipientsEditor::focusDown, this, &KMComposerWin::slotRecipientEditorFocusChanged);
+    Q_FOREACH (KPIM::MultiplyingLine *line, recipientsEditor->lines()) {
+        slotRecipientEditorLineAdded(line);
+    }
     mComposerBase->setRecipientsEditor(recipientsEditor);
 
     mEdtSubject = new PimCommon::LineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
@@ -2212,14 +2227,33 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
 
     // make sure the mEncryptAction is in the right state
     mEncryptAction->setChecked(encrypt);
+    mEncryptAction->setProperty("setByUser", setByUser);
     if (!setByUser) {
         updateSignatureAndEncryptionStateIndicators();
     }
+
     // show the appropriate icon
     if (encrypt) {
         mEncryptAction->setIcon(QIcon::fromTheme(QStringLiteral("document-encrypt")));
     } else {
         mEncryptAction->setIcon(QIcon::fromTheme(QStringLiteral("document-decrypt")));
+    }
+
+    if (setByUser) {
+        // User has toggled encryption, go over all recipients
+        Q_FOREACH (auto line, mComposerBase->recipientsEditor()->lines()) {
+            if (encrypt) {
+                // Encryption was enabled, update encryption status of all recipients
+                slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG*>(line));
+            } else {
+                // Encryption was disabled, remove the encryption indicator
+                auto edit = qobject_cast<MessageComposer::RecipientLineNG*>(line);
+                edit->setIcon(QIcon());
+                auto recipient = edit->data().dynamicCast<MessageComposer::Recipient>();
+                recipient->setEncryptionAction(Kleo::Impossible);
+                recipient->setKey(GpgME::Key());
+            }
+        }
     }
 
     // mark the attachments for (no) encryption
@@ -3187,4 +3221,179 @@ QList<KToggleAction *> KMComposerWin::customToolsList() const
 QList<QAction *> KMComposerWin::pluginToolsActionListForPopupMenu() const
 {
     return mPluginEditorManagerInterface->actionsType(MessageComposer::ActionType::PopupMenu);
+}
+
+void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
+{
+    auto line = qobject_cast<MessageComposer::RecipientLineNG*>(line_);
+    Q_ASSERT(line);
+
+    connect(line, &MessageComposer::RecipientLineNG::countChanged,
+            this, [this, line]() {
+                this->slotRecipientAdded(line);
+            });
+    connect(line, &MessageComposer::RecipientLineNG::iconClicked,
+            this, [this, line]() {
+                this->slotRecipientLineIconClicked(line);
+            });
+}
+
+void KMComposerWin::slotRecipientEditorFocusChanged()
+{
+    if (!mEncryptAction->isChecked() || mEncryptAction->property("setByUser").toBool()) {
+        return;
+    }
+
+    // Focus changed, which basically means that user "committed" a new recipient.
+    // If we have at least one recipient that does not have a key, disable encryption
+    // (unless user enabled it manually), because we want to encrypt by default,
+    // but not by force
+    Q_FOREACH (auto line_, mComposerBase->recipientsEditor()->lines()) {
+        auto line = qobject_cast<MessageComposer::RecipientLineNG*>(line_);
+        // There's still a lookup job running, so wait, slotKeyForMailBoxResult()
+        // will call us if the job returns empty key
+        if (line->property("keyLookupJob").isValid()) {
+            return;
+        }
+        // skip active line - active line is very likely not complete yet.
+        if (line->isActive()) {
+            continue;
+        }
+
+        if (line->recipient()->encryptionAction() == Kleo::Impossible) {
+            slotEncryptToggled(false);
+            break;
+        }
+    }
+}
+
+
+void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineNG *line)
+{
+    const auto data = line->data().dynamicCast<MessageComposer::Recipient>();
+
+    if (!data->key().isNull()) {
+        QProcess::startDetached(QStringLiteral("kleopatra"),
+                                { QStringLiteral("--query"),
+                                  QString::fromLatin1(data->key().primaryFingerprint()),
+                                  QStringLiteral("--parent-windowid"),
+                                  QString::number(winId())
+                                });
+    }
+}
+
+void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
+{
+    // User has disabled encryption, don't bother checking the key...
+    if (!mEncryptAction->isChecked() && mEncryptAction->property("setByUser").toBool()) {
+        return;
+    }
+
+    // Same if auto-encryption is not enabled in current identity settings
+    if (!identity().pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
+        return;
+    }
+
+    if (line->recipientsCount() == 0) {
+        return;
+    }
+
+    auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
+    // check if is an already running key lookup job and if so, cancel it
+    // this is to prevent a slower job overwriting results of the job that we
+    // are about to start now.
+    const auto runningJob = line->property("keyLookupJob").value<QPointer<Kleo::KeyForMailboxJob>>();
+    if (runningJob) {
+        disconnect(runningJob, &Kleo::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
+        runningJob->slotCancel();
+        line->setProperty("keyLookupJob", QVariant());
+    }
+
+    const auto protocol = Kleo::CryptoBackendFactory::instance()->openpgp();
+    Kleo::KeyForMailboxJob *job = protocol->keyForMailboxJob();
+    if (!job) {
+        recipient->setEncryptionAction(Kleo::Impossible);
+        return;
+    }
+
+    line->setProperty("keyLookupJob", QVariant::fromValue(QPointer<Kleo::KeyForMailboxJob>(job)));
+    job->setProperty("recipient", QVariant::fromValue(recipient));
+    job->setProperty("line", QVariant::fromValue(QPointer<MessageComposer::RecipientLineNG>(line)));
+    connect(job, &Kleo::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
+    job->start(recipient->email(), true);
+}
+
+
+void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const GpgME::Key &key, const GpgME::UserID &userID)
+{
+    QObject *job = sender();
+    Q_ASSERT(job);
+
+    // Check if the encryption was explicitly disabled while the job was running
+    if (!mEncryptAction->isChecked() && mEncryptAction->property("setByUser").toBool()) {
+        return;
+    }
+
+
+    auto recipient = job->property("recipient").value<MessageComposer::Recipient::Ptr>();
+    auto line = job->property("line").value<QPointer<MessageComposer::RecipientLineNG>>();
+
+    if (!recipient || !line) {
+        return;
+    }
+
+    line->setProperty("keyLookupJob", QVariant());
+
+    if (key.isNull()) {
+        recipient->setEncryptionAction(Kleo::Impossible); // no key
+        line->setIcon(QIcon());
+
+        // We found no key and the line no longer has focus. We take that as a sign
+        // that the user has moved on to another field and thus this was the final
+        // address - that's the best way I can think of how to distinguish between
+        // getting no key because the address is incomplete or getting no key because
+        // the address is complete, but we don't have the key in keychain.
+        if (!line->isActive()) {
+            slotRecipientEditorFocusChanged();
+        }
+    } else {
+        recipient->setEncryptionAction(Kleo::DoIt);
+        recipient->setKey(key);
+
+        QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
+        QIcon overlay;
+        QString tooltip;
+        switch (userID.validity()) {
+        case GpgME::UserID::Ultimate:
+        case GpgME::UserID::Full:
+            overlay = QIcon::fromTheme(QStringLiteral("emblem-favorite"));
+            tooltip = i18n("High security encryption will be used for this recipient (they encryption key is fully trusted). "
+                           "Click the icon for details.");
+            break;
+        case GpgME::UserID::Marginal:
+            overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
+            tooltip = i18n("Medium security encryption will be used for this recipient (the encryption key is marginally trusted). "
+                           "Click the icon for details.");
+            break;
+        case GpgME::UserID::Never:
+            overlay = QIcon::fromTheme(QStringLiteral("emblem-error"));
+            tooltip = i18n("Low security encryption will be used for this recipient (the encryption key is untrusted). "
+                           "Click the icon for details.");
+            break;
+        case GpgME::UserID::Undefined:
+        case GpgME::UserID::Unknown:
+        default:
+            overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
+            tooltip = i18n("The email to this recipient will be encrypted, but the security of the encryption is unknown "
+                           "(the encryption key could not be verified). Click the icon for details.");
+            break;
+        }
+
+        line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
+
+        // Enable encryption for the message
+        if (!mEncryptAction->isChecked() && !mEncryptAction->property("setByUser").toBool()) {
+            setEncryption(true, false);
+        }
+    }
 }
