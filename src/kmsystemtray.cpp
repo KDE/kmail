@@ -129,8 +129,8 @@ bool KMSystemTray::buildPopupMenu()
     contextMenu()->addSeparator();
     if ((action = mainWidget->action(QStringLiteral("akonadi_work_offline")))) {
         contextMenu()->addAction(action);
+        contextMenu()->addSeparator();
     }
-    contextMenu()->addSeparator();
 
     if ((action = mainWidget->action(QStringLiteral("file_quit")))) {
         contextMenu()->addAction(action);
