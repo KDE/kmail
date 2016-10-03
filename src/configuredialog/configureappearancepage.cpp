@@ -337,7 +337,6 @@ static const struct {
     { "UnreadMessageColor", I18N_NOOP("Unread Message") },
     { "ImportantMessageColor", I18N_NOOP("Important Message") },
     { "TodoMessageColor", I18N_NOOP("Action Item Message") },
-    { "HTMLWarningColor", I18N_NOOP("Border Around Warning Prepending HTML Messages") },
     { "CloseToQuotaColor", I18N_NOOP("Folder Name and Size When Close to Quota") },
     { "ColorbarBackgroundPlain", I18N_NOOP("HTML Status Bar Background - No HTML Message") },
     { "ColorbarForegroundPlain", I18N_NOOP("HTML Status Bar Foreground - No HTML Message") },
@@ -423,7 +422,6 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
             MessageList::Util::unreadDefaultMessageColor(), // unread mgs
             MessageList::Util::importantDefaultMessageColor(), // important msg
             MessageList::Util::todoDefaultMessageColor(), // action item mgs
-            QColor(0xFF, 0x40, 0x40),   // warning text color
             MailCommon::Util::defaultQuotaColor(), // close to quota
             Qt::lightGray, // colorbar plain bg
             Qt::black,     // colorbar plain fg
