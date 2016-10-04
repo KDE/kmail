@@ -3404,7 +3404,7 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
         case GpgME::UserID::Ultimate:
         case GpgME::UserID::Full:
             overlay = QIcon::fromTheme(QStringLiteral("emblem-favorite"));
-            tooltip = i18n("High security encryption will be used for this recipient (they encryption key is fully trusted). "
+            tooltip = i18n("High security encryption will be used for this recipient (the encryption key is fully trusted). "
                            "Click the icon for details.");
             break;
         case GpgME::UserID::Marginal:
