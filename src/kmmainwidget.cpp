@@ -2790,6 +2790,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         menu->addSeparator();
         menu->addAction(mMsgActions->printPreviewAction());
         menu->addAction(mMsgActions->printAction());
+        menu->addSeparator();
         menu->addAction(mSaveAsAction);
         menu->addAction(mSaveAttachmentsAction);
         menu->addSeparator();
