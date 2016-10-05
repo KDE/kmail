@@ -560,6 +560,7 @@ private Q_SLOTS:
     void slotRedirectCurrentMessage();
     void slotEditCurrentVacation();
 private:
+    void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
     // Message actions
