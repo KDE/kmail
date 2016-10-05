@@ -39,8 +39,8 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     hbox->addWidget(mSignatureStateIndicator);
     mSignatureStateIndicator->setObjectName(QStringLiteral("signatureindicator"));
     QPalette p(mSignatureStateIndicator->palette());
-    p.setColor(QPalette::Window, MessageCore::Util::pgpSignedTrustedMessageColor());
-    p.setColor(QPalette::Text, MessageCore::Util::pgpSignedTrustedTextColor());
+    p.setColor(QPalette::Window, MessageCore::ColorUtil::self()->pgpSignedTrustedMessageColor());
+    p.setColor(QPalette::Text, MessageCore::ColorUtil::self()->pgpSignedTrustedTextColor());
     mSignatureStateIndicator->setPalette(p);
     mSignatureStateIndicator->setAutoFillBackground(true);
 
@@ -48,8 +48,8 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     mEncryptionStateIndicator->setAlignment(Qt::AlignHCenter);
     hbox->addWidget(mEncryptionStateIndicator);
     p = mEncryptionStateIndicator->palette();
-    p.setColor(QPalette::Window, MessageCore::Util::pgpEncryptedMessageColor());
-    p.setColor(QPalette::Text, MessageCore::Util::pgpEncryptedTextColor());
+    p.setColor(QPalette::Window, MessageCore::ColorUtil::self()->pgpEncryptedMessageColor());
+    p.setColor(QPalette::Text, MessageCore::ColorUtil::self()->pgpEncryptedTextColor());
     mEncryptionStateIndicator->setPalette(p);
     mEncryptionStateIndicator->setAutoFillBackground(true);
     mEncryptionStateIndicator->setObjectName(QStringLiteral("encryptionindicator"));

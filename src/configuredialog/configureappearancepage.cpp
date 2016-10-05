@@ -415,9 +415,9 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
         KConfigGroup collectionFolderView(KMKernel::self()->config(), "CollectionFolderView");
 
         static const QColor defaultColor[ numColorNames ] = {
-            MessageCore::Util::quoteLevel1DefaultTextColor(),
-            MessageCore::Util::quoteLevel2DefaultTextColor(),
-            MessageCore::Util::quoteLevel3DefaultTextColor(),
+            MessageCore::ColorUtil::self()->quoteLevel1DefaultTextColor(),
+            MessageCore::ColorUtil::self()->quoteLevel2DefaultTextColor(),
+            MessageCore::ColorUtil::self()->quoteLevel3DefaultTextColor(),
             scheme.foreground(KColorScheme::LinkText).color(),   // link
             MessageList::Util::unreadDefaultMessageColor(), // unread mgs
             MessageList::Util::importantDefaultMessageColor(), // important msg
