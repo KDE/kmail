@@ -1478,17 +1478,15 @@ void KMMainWidget::slotEmptyFolder()
         return;
     }
     const bool isTrash = CommonKernel->folderIsTrash(mCurrentFolder->collection());
-    if (KMailSettings::self()->confirmBeforeEmpty()) {
-        const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
-        const QString text = (isTrash) ?
-                             i18n("Are you sure you want to empty the trash folder?") :
-                             i18n("<qt>Are you sure you want to move all messages from "
-                                  "folder <b>%1</b> to the trash?</qt>", mCurrentFolder->name().toHtmlEscaped());
+    const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
+    const QString text = (isTrash) ?
+                i18n("Are you sure you want to empty the trash folder?") :
+                i18n("<qt>Are you sure you want to move all messages from "
+                     "folder <b>%1</b> to the trash?</qt>", mCurrentFolder->name().toHtmlEscaped());
 
-        if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QStringLiteral("user-trash")))
-                != KMessageBox::Continue) {
-            return;
-        }
+    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QStringLiteral("user-trash")))
+            != KMessageBox::Continue) {
+        return;
     }
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());

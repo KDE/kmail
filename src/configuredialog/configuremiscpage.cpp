@@ -80,7 +80,6 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
         i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8()));
 
-    connect(mMMTab.mEmptyFolderConfirmCheck, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mExcludeImportantFromExpiry, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mLoopOnGotoUnread, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mActionEnterFolder, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
@@ -112,13 +111,11 @@ void MiscPage::FolderTab::doLoadOther()
 {
     loadWidget(mMMTab.mEmptyTrashCheck, KMailSettings::self()->emptyTrashOnExitItem());
     mOnStartupOpenFolder->setCollection(Akonadi::Collection(KMailSettings::self()->startupFolder()));
-    loadWidget(mMMTab.mEmptyFolderConfirmCheck, KMailSettings::self()->confirmBeforeEmptyItem());
 }
 
 void MiscPage::FolderTab::save()
 {
     saveCheckBox(mMMTab.mEmptyTrashCheck, KMailSettings::self()->emptyTrashOnExitItem());
-    saveCheckBox(mMMTab.mEmptyFolderConfirmCheck, KMailSettings::self()->confirmBeforeEmptyItem());
     saveComboBox(mMMTab.mActionEnterFolder, KMailSettings::self()->actionEnterFolderItem());
     KMailSettings::self()->setStartupFolder(mOnStartupOpenFolder->collection().id());
 

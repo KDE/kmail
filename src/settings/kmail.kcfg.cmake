@@ -111,10 +111,6 @@
         <label>Specify the folder to open when the program is started</label>
         <default>-1</default>
       </entry>
-      <entry name="ConfirmBeforeEmpty" type="Bool" key="confirm-before-empty">
-        <label>Ask for confirmation before moving all messages to trash</label>
-        <default>true</default>
-      </entry>
       <entry name="CheckCollectionsIndexing" type="Bool" key="check-collections-indexing">
         <default>true</default>
       </entry>

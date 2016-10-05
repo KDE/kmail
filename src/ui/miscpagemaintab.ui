@@ -14,20 +14,13 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0" colspan="2">
-      <widget class="QCheckBox" name="mEmptyFolderConfirmCheck">
-       <property name="text">
-        <string comment="Corresponds to Folder-&gt;Move All Messages to Trash">Ask for co&amp;nfirmation before moving all messages to trash</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="2">
       <widget class="QCheckBox" name="mExcludeImportantFromExpiry">
        <property name="text">
         <string>E&amp;xclude important messages from expiry</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="mLoopLabel">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -36,17 +29,17 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string comment="to be continued with &quot;do not loop&quot;, &quot;loop in current folder&quot;, and &quot;loop in all folders&quot;">&amp;When trying to find unread messages:</string>
+        <string comment="to be continued with &quot;do not loop&quot;, &quot;loop in current folder&quot;, and &quot;loop in all folders&quot;">When &amp;trying to find unread messages:</string>
        </property>
        <property name="buddy">
         <cstring>mLoopOnGotoUnread</cstring>
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="6" column="1">
       <widget class="QWidget" name="mOnStartupOpenFolder" native="true"/>
      </item>
-     <item row="2" column="1">
+     <item row="1" column="1">
       <widget class="KComboBox" name="mLoopOnGotoUnread">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -88,7 +81,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="mEnterFolderLabel">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -104,7 +97,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="KComboBox" name="mActionEnterFolder">
        <item>
         <property name="text">
@@ -128,7 +121,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QCheckBox" name="mDelayedMarkAsRead">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -141,7 +134,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1">
       <widget class="QSpinBox" name="mDelayedMarkTime">
        <property name="enabled">
         <bool>false</bool>
@@ -154,21 +147,21 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="5" column="0" colspan="2">
+     <item row="4" column="0" colspan="2">
       <widget class="QCheckBox" name="mShowPopupAfterDnD">
        <property name="text">
         <string>&amp;Ask for action after dragging messages to another folder</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="0" colspan="2">
+     <item row="7" column="0" colspan="2">
       <widget class="QCheckBox" name="mEmptyTrashCheck">
        <property name="text">
         <string>Empty local &amp;trash folder on program exit</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="6" column="0">
       <widget class="QCheckBox" name="mStartUpFolderCheck">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
