@@ -612,7 +612,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 menu->addSeparator();
             }
 
-            menu->addAction(mReaderWin->viewSourceAction());
             menu->addAction(mReaderWin->toggleFixFontAction());
             if (!mReaderWin->mimePartTreeIsEmpty()) {
                 menu->addAction(mReaderWin->toggleMimePartTreeAction());

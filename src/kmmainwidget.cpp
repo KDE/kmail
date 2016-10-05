@@ -2783,7 +2783,6 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
                 menu->addAction(mMsgView->shareImage());
                 menu->addSeparator();
             }
-            menu->addAction(mMsgView->viewSourceAction());
             menu->addAction(mMsgView->toggleFixFontAction());
             menu->addAction(mMsgView->toggleMimePartTreeAction());
         }
