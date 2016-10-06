@@ -408,8 +408,6 @@ void AppearancePage::ColorsTab::doLoadOther()
 void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
 {
     if (KMKernel::self()) {
-        KColorScheme scheme(QPalette::Active, KColorScheme::View);
-
         KConfigGroup reader(KMKernel::self()->config(), "Reader");
 
         KConfigGroup collectionFolderView(KMKernel::self()->config(), "CollectionFolderView");
@@ -418,7 +416,7 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
             MessageCore::ColorUtil::self()->quoteLevel1DefaultTextColor(),
             MessageCore::ColorUtil::self()->quoteLevel2DefaultTextColor(),
             MessageCore::ColorUtil::self()->quoteLevel3DefaultTextColor(),
-            scheme.foreground(KColorScheme::LinkText).color(),   // link
+            MessageCore::ColorUtil::self()->linkColor(),   // link
             MessageList::Util::unreadDefaultMessageColor(), // unread mgs
             MessageList::Util::importantDefaultMessageColor(), // important msg
             MessageList::Util::todoDefaultMessageColor(), // action item mgs
