@@ -620,13 +620,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     connect(mDisplayMessageToolTips, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
-    mTabsHaveCloseButton = new QCheckBox(
-        MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem()->label(), group);
-    gvlay->addWidget(mTabsHaveCloseButton);
-
-    connect(mTabsHaveCloseButton, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-
     // "Aggregation"
     using MessageList::Utils::AggregationComboBox;
     mAggregationComboBox = new AggregationComboBox(group);
@@ -783,7 +776,6 @@ void AppearancePage::HeadersTab::doLoadOther()
 {
     // "General Options":
     loadWidget(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
-    loadWidget(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
 
     // "Aggregation":
     slotSelectDefaultAggregation();
@@ -799,7 +791,6 @@ void AppearancePage::HeadersTab::doLoadOther()
 void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
 {
     loadWidget(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
-    loadWidget(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
     // "Aggregation":
     slotSelectDefaultAggregation();
 
@@ -832,7 +823,6 @@ void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
 void AppearancePage::HeadersTab::save()
 {
     saveCheckBox(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
-    saveCheckBox(mTabsHaveCloseButton, MessageList::MessageListSettings::self()->tabsHaveCloseButtonItem());
 
     KMKernel::self()->savePaneSelection();
     // "Aggregation"

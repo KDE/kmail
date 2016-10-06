@@ -149,7 +149,6 @@ private: // methods
 
 private: // data
     QCheckBox    *mDisplayMessageToolTips;
-    QCheckBox    *mTabsHaveCloseButton;
     MessageList::Utils::AggregationComboBox *mAggregationComboBox;
     MessageList::Utils::ThemeComboBox *mThemeComboBox;
     QButtonGroup *mDateDisplay;
