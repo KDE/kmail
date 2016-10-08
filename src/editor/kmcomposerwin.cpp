@@ -3322,7 +3322,7 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
     // are about to start now.
     const auto runningJob = line->property("keyLookupJob").value<QPointer<Kleo::KeyForMailboxJob>>();
     if (runningJob) {
-        disconnect(runningJob, &Kleo::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
+        disconnect(runningJob.data(), &Kleo::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
         runningJob->slotCancel();
         line->setProperty("keyLookupJob", QVariant());
     }
