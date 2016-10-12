@@ -109,12 +109,8 @@
 #include <Libkdepim/KCursorSaver>
 #endif
 
-#include <Libkleo/CryptoBackend>
-#include <Libkleo/CryptoBackendFactory>
-
 #include <gpgme++/error.h>
 
-#include <boost/bind.hpp>
 #include <algorithm>
 #include <memory>
 #include <unistd.h> // link()
@@ -1508,8 +1504,10 @@ KMCommand::Result KMMoveCommand::execute()
             connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
 
             // group by source folder for undo
-            std::sort(retrievedList.begin(), retrievedList.end(), boost::bind(&Akonadi::Item::storageCollectionId, _1) <
-                      boost::bind(&Akonadi::Item::storageCollectionId, _2));
+            std::sort(retrievedList.begin(), retrievedList.end(), 
+                      [](const Akonadi::Item &lhs, const Akonadi::Item &rhs) {
+                          return lhs.storageCollectionId() < rhs.storageCollectionId();
+                      });
             Akonadi::Collection parent;
             int undoId = -1;
             foreach (const Akonadi::Item &item, retrievedList) {

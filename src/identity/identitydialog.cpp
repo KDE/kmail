@@ -66,10 +66,12 @@
 #include <Libkdepim/AddresseeLineEdit>
 // libkleopatra:
 #include <Libkleo/KeySelectionCombo>
-#include <Libkleo/CryptoBackendFactory>
 #include <Libkleo/DefaultKeyFilter>
 #include <Libkleo/DefaultKeyGenerationJob>
 #include <Libkleo/ProgressDialog>
+
+#include <QGpgME/Protocol>
+#include <QGpgME/Job>
 
 // gpgme++
 #include <gpgme++/keygenerationresult.h>
@@ -150,7 +152,7 @@ private:
     GpgME::Protocol mProtocol;
 };
 
-class KeyGenerationJob : public Kleo::Job
+class KeyGenerationJob : public QGpgME::Job
 {
     Q_OBJECT
 
@@ -167,11 +169,11 @@ private Q_SLOTS:
 private:
     QString mName;
     QString mEmail;
-    Kleo::Job *mJob;
+    QGpgME::Job *mJob;
 };
 
 KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent)
-    : Kleo::Job(parent)
+    : QGpgME::Job(parent)
     , mName(name)
     , mEmail(email)
     , mJob(Q_NULLPTR)
@@ -238,7 +240,7 @@ void KeySelectionCombo::init()
 {
     Kleo::KeySelectionCombo::init();
 
-    boost::shared_ptr<Kleo::DefaultKeyFilter> keyFilter(new Kleo::DefaultKeyFilter);
+    std::shared_ptr<Kleo::DefaultKeyFilter> keyFilter(new Kleo::DefaultKeyFilter);
     keyFilter->setIsOpenPGP(mProtocol == GpgME::OpenPGP ? Kleo::DefaultKeyFilter::Set : Kleo::DefaultKeyFilter::NotSet);
     if (mKeyType == SigningKey) {
         keyFilter->setCanSign(Kleo::DefaultKeyFilter::Set);
@@ -447,8 +449,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     glay->addWidget(label, row, 0);
     glay->addWidget(mSMIMESigningKeyRequester, row, 1);
 
-    const Kleo::CryptoBackend::Protocol *smimeProtocol
-        = Kleo::CryptoBackendFactory::instance()->smime();
+    const QGpgME::Protocol *smimeProtocol = QGpgME::smime();
 
     label->setEnabled(smimeProtocol);
     mSMIMESigningKeyRequester->setEnabled(smimeProtocol);

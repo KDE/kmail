@@ -87,10 +87,9 @@
 // KDEPIM includes
 #include <Libkleo/ProgressDialog>
 #include <Libkleo/KeySelectionDialog>
-#include <Libkleo/CryptoBackendFactory>
-#include <Libkleo/ExportJob>
-#include <Libkleo/SpecialJob>
-#include <Libkleo/KeyForMailboxJob>
+#include <QGpgME/Protocol>
+#include <QGpgME/ExportJob>
+#include <QGpgME/KeyForMailboxJob>
 
 #ifndef QT_NO_CURSOR
 #include <Libkdepim/KCursorSaver>
@@ -1349,16 +1348,16 @@ void KMComposerWin::changeCryptoAction()
     const KIdentityManagement::Identity &ident =
         KMKernel::self()->identityManager()->identityForUoidOrDefault(mComposerBase->identityCombo()->currentIdentity());
 
-    if (!Kleo::CryptoBackendFactory::instance()->openpgp() && !Kleo::CryptoBackendFactory::instance()->smime()) {
+    if (!QGpgME::openpgp() && !QGpgME::smime()) {
         // no crypto whatsoever
         mEncryptAction->setEnabled(false);
         setEncryption(false);
         mSignAction->setEnabled(false);
         setSigning(false);
     } else {
-        const bool canOpenPGPSign = Kleo::CryptoBackendFactory::instance()->openpgp() &&
+        const bool canOpenPGPSign = QGpgME::openpgp() &&
                                     !ident.pgpSigningKey().isEmpty();
-        const bool canSMIMESign = Kleo::CryptoBackendFactory::instance()->smime() &&
+        const bool canSMIMESign = QGpgME::smime() &&
                                   !ident.smimeSigningKey().isEmpty();
 
         setEncryption(false);
@@ -1547,11 +1546,9 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
     mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
-    if (Kleo::CryptoBackendFactory::instance()->openpgp() || Kleo::CryptoBackendFactory::instance()->smime()) {
-        const bool canOpenPGPSign = Kleo::CryptoBackendFactory::instance()->openpgp() &&
-                                    !ident.pgpSigningKey().isEmpty();
-        const bool canSMIMESign = Kleo::CryptoBackendFactory::instance()->smime() &&
-                                  !ident.smimeSigningKey().isEmpty();
+    if (QGpgME::openpgp() || QGpgME::smime()) {
+        const bool canOpenPGPSign = QGpgME::openpgp() && !ident.pgpSigningKey().isEmpty();
+        const bool canSMIMESign = QGpgME::smime() && !ident.smimeSigningKey().isEmpty();
 
         setEncryption(mLastEncryptActionState);
         setSigning((canOpenPGPSign || canSMIMESign) && mLastSignActionState);
@@ -3320,15 +3317,15 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
     // check if is an already running key lookup job and if so, cancel it
     // this is to prevent a slower job overwriting results of the job that we
     // are about to start now.
-    const auto runningJob = line->property("keyLookupJob").value<QPointer<Kleo::KeyForMailboxJob>>();
+    const auto runningJob = line->property("keyLookupJob").value<QPointer<QGpgME::KeyForMailboxJob>>();
     if (runningJob) {
-        disconnect(runningJob.data(), &Kleo::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
+        disconnect(runningJob.data(), &QGpgME::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
         runningJob->slotCancel();
         line->setProperty("keyLookupJob", QVariant());
     }
 
-    const auto protocol = Kleo::CryptoBackendFactory::instance()->openpgp();
-    Kleo::KeyForMailboxJob *job = protocol->keyForMailboxJob();
+    const auto protocol = QGpgME::openpgp();
+    QGpgME::KeyForMailboxJob *job = protocol->keyForMailboxJob();
     if (!job) {
         line->setProperty("keyStatus", NoKey);
         recipient->setEncryptionAction(Kleo::Impossible);
@@ -3339,10 +3336,10 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
     if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
         addrSpec = recipient->email();
     }
-    line->setProperty("keyLookupJob", QVariant::fromValue(QPointer<Kleo::KeyForMailboxJob>(job)));
+    line->setProperty("keyLookupJob", QVariant::fromValue(QPointer<QGpgME::KeyForMailboxJob>(job)));
     job->setProperty("recipient", QVariant::fromValue(recipient));
     job->setProperty("line", QVariant::fromValue(QPointer<MessageComposer::RecipientLineNG>(line)));
-    connect(job, &Kleo::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
+    connect(job, &QGpgME::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
     job->start(addrSpec, true);
 }
 

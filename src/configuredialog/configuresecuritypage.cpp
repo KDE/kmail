@@ -25,10 +25,10 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "kmkernel.h"
 
-#include "Libkleo/CryptoConfig"
-#include "Libkleo/CryptoBackendFactory"
-#include "Libkleo/KeyRequester"
-#include "Libkleo/KeySelectionDialog"
+#include <QGpgME/Protocol>
+#include <QGpgME/CryptoConfig>
+#include <Libkleo/KeyRequester>
+#include <Libkleo/KeySelectionDialog>
 
 #include <KLocalizedString>
 #include <KCMultiDialog>
@@ -400,7 +400,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
         | Kleo::KeySelectionDialog::PublicKeys);
     mWidget->OCSPResponderSignature->setMultipleKeysEnabled(false);
 
-    mConfig = Kleo::CryptoBackendFactory::instance()->config();
+    mConfig = QGpgME::cryptoConfig();
 
     connect(mWidget->CRLRB, &QRadioButton::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
     connect(mWidget->OCSPRB, &QRadioButton::toggled, this, &SecurityPageSMimeTab::slotEmitChanged);
@@ -442,7 +442,7 @@ static void disableDirmngrWidget(QWidget *w)
     w->setWhatsThis(i18n("This option requires dirmngr >= 0.9.0"));
 }
 
-static void initializeDirmngrCheckbox(QCheckBox *cb, Kleo::CryptoConfigEntry *entry)
+static void initializeDirmngrCheckbox(QCheckBox *cb, QGpgME::CryptoConfigEntry *entry)
 {
     if (entry) {
         cb->setChecked(entry->boolValue());
@@ -452,56 +452,56 @@ static void initializeDirmngrCheckbox(QCheckBox *cb, Kleo::CryptoConfigEntry *en
 }
 
 struct SMIMECryptoConfigEntries {
-    SMIMECryptoConfigEntries(Kleo::CryptoConfig *config)
+    SMIMECryptoConfigEntries(QGpgME::CryptoConfig *config)
         : mConfig(config)
     {
 
         // Checkboxes
-        mCheckUsingOCSPConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("enable-ocsp"), Kleo::CryptoConfigEntry::ArgType_None, false);
-        mEnableOCSPsendingConfigEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("allow-ocsp"), Kleo::CryptoConfigEntry::ArgType_None, false);
-        mDoNotCheckCertPolicyConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("disable-policy-checks"), Kleo::CryptoConfigEntry::ArgType_None, false);
-        mNeverConsultConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("disable-crl-checks"), Kleo::CryptoConfigEntry::ArgType_None, false);
-        mFetchMissingConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("auto-issuer-key-retrieve"), Kleo::CryptoConfigEntry::ArgType_None, false);
+        mCheckUsingOCSPConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("enable-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mEnableOCSPsendingConfigEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("allow-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDoNotCheckCertPolicyConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("disable-policy-checks"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mNeverConsultConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("disable-crl-checks"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mFetchMissingConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("auto-issuer-key-retrieve"), QGpgME::CryptoConfigEntry::ArgType_None, false);
         // dirmngr-0.9.0 options
-        mIgnoreServiceURLEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ignore-ocsp-service-url"), Kleo::CryptoConfigEntry::ArgType_None, false);
-        mIgnoreHTTPDPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("ignore-http-dp"), Kleo::CryptoConfigEntry::ArgType_None, false);
-        mDisableHTTPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("disable-http"), Kleo::CryptoConfigEntry::ArgType_None, false);
-        mHonorHTTPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("honor-http-proxy"), Kleo::CryptoConfigEntry::ArgType_None, false);
+        mIgnoreServiceURLEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ignore-ocsp-service-url"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mIgnoreHTTPDPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("ignore-http-dp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDisableHTTPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("disable-http"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mHonorHTTPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("honor-http-proxy"), QGpgME::CryptoConfigEntry::ArgType_None, false);
 
-        mIgnoreLDAPDPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ignore-ldap-dp"), Kleo::CryptoConfigEntry::ArgType_None, false);
-        mDisableLDAPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("disable-ldap"), Kleo::CryptoConfigEntry::ArgType_None, false);
+        mIgnoreLDAPDPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ignore-ldap-dp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDisableLDAPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("disable-ldap"), QGpgME::CryptoConfigEntry::ArgType_None, false);
         // Other widgets
-        mOCSPResponderURLConfigEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-responder"), Kleo::CryptoConfigEntry::ArgType_String, false);
-        mOCSPResponderSignature = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-signer"), Kleo::CryptoConfigEntry::ArgType_String, false);
-        mCustomHTTPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("http-proxy"), Kleo::CryptoConfigEntry::ArgType_String, false);
-        mCustomLDAPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ldap-proxy"), Kleo::CryptoConfigEntry::ArgType_String, false);
+        mOCSPResponderURLConfigEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-responder"), QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mOCSPResponderSignature = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-signer"), QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mCustomHTTPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("http-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mCustomLDAPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ldap-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
     }
 
-    Kleo::CryptoConfigEntry *configEntry(const QString &componentName,
+    QGpgME::CryptoConfigEntry *configEntry(const QString &componentName,
                                          const QString &groupName,
                                          const QString &entryName,
                                          int argType,
                                          bool isList);
 
     // Checkboxes
-    Kleo::CryptoConfigEntry *mCheckUsingOCSPConfigEntry;
-    Kleo::CryptoConfigEntry *mEnableOCSPsendingConfigEntry;
-    Kleo::CryptoConfigEntry *mDoNotCheckCertPolicyConfigEntry;
-    Kleo::CryptoConfigEntry *mNeverConsultConfigEntry;
-    Kleo::CryptoConfigEntry *mFetchMissingConfigEntry;
-    Kleo::CryptoConfigEntry *mIgnoreServiceURLEntry;
-    Kleo::CryptoConfigEntry *mIgnoreHTTPDPEntry;
-    Kleo::CryptoConfigEntry *mDisableHTTPEntry;
-    Kleo::CryptoConfigEntry *mHonorHTTPProxy;
-    Kleo::CryptoConfigEntry *mIgnoreLDAPDPEntry;
-    Kleo::CryptoConfigEntry *mDisableLDAPEntry;
+    QGpgME::CryptoConfigEntry *mCheckUsingOCSPConfigEntry;
+    QGpgME::CryptoConfigEntry *mEnableOCSPsendingConfigEntry;
+    QGpgME::CryptoConfigEntry *mDoNotCheckCertPolicyConfigEntry;
+    QGpgME::CryptoConfigEntry *mNeverConsultConfigEntry;
+    QGpgME::CryptoConfigEntry *mFetchMissingConfigEntry;
+    QGpgME::CryptoConfigEntry *mIgnoreServiceURLEntry;
+    QGpgME::CryptoConfigEntry *mIgnoreHTTPDPEntry;
+    QGpgME::CryptoConfigEntry *mDisableHTTPEntry;
+    QGpgME::CryptoConfigEntry *mHonorHTTPProxy;
+    QGpgME::CryptoConfigEntry *mIgnoreLDAPDPEntry;
+    QGpgME::CryptoConfigEntry *mDisableLDAPEntry;
     // Other widgets
-    Kleo::CryptoConfigEntry *mOCSPResponderURLConfigEntry;
-    Kleo::CryptoConfigEntry *mOCSPResponderSignature;
-    Kleo::CryptoConfigEntry *mCustomHTTPProxy;
-    Kleo::CryptoConfigEntry *mCustomLDAPProxy;
+    QGpgME::CryptoConfigEntry *mOCSPResponderURLConfigEntry;
+    QGpgME::CryptoConfigEntry *mOCSPResponderSignature;
+    QGpgME::CryptoConfigEntry *mCustomHTTPProxy;
+    QGpgME::CryptoConfigEntry *mCustomLDAPProxy;
 
-    Kleo::CryptoConfig *mConfig;
+    QGpgME::CryptoConfig *mConfig;
 };
 
 void SecurityPage::SMimeTab::doLoadOther()
@@ -596,7 +596,7 @@ void SecurityPage::SMimeTab::slotUpdateHTTPActions()
     }
 }
 
-static void saveCheckBoxToKleoEntry(QCheckBox *cb, Kleo::CryptoConfigEntry *entry)
+static void saveCheckBoxToKleoEntry(QCheckBox *cb, QGpgME::CryptoConfigEntry *entry)
 {
     const bool b = cb->isChecked();
     if (entry && entry->boolValue() != b) {
@@ -662,13 +662,13 @@ void SecurityPage::SMimeTab::save()
     mConfig->sync(true);
 }
 
-Kleo::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &componentName,
+QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &componentName,
         const QString &groupName,
         const QString &entryName,
         int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
         bool isList)
 {
-    Kleo::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
+    QGpgME::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
     if (!entry) {
         qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3").arg(componentName, groupName, entryName);
         return Q_NULLPTR;

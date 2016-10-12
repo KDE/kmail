@@ -28,9 +28,9 @@
 
 #include <KCMultiDialog>
 
-class QButtonGroup;
-namespace MessageViewer
+namespace QGpgME
 {
+class CryptoConfig;
 }
 
 class SecurityPageGeneralTab : public ConfigModuleTab
@@ -136,7 +136,7 @@ private:
 
 private:
     Ui::SMimeConfiguration *mWidget;
-    Kleo::CryptoConfig *mConfig;
+    QGpgME::CryptoConfig *mConfig;
 };
 
 class GpgSettingsDialog : public KCMultiDialog

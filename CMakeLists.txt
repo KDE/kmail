@@ -48,7 +48,6 @@ set(CALENDARUTILS_LIB_VERSION "5.3.40")
 set(IDENTITYMANAGEMENT_LIB_VERSION "5.3.41")
 set(KLDAP_LIB_VERSION "5.3.40")
 set(KMAILTRANSPORT_LIB_VERSION "5.3.40")
-set(GPGMEPP_LIB_VERSION "5.3.40")
 set(KONTACTINTERFACE_LIB_VERSION "5.3.40")
 set(KMIME_LIB_VERSION "5.3.40")
 set(KPIMTEXTEDIT_LIB_VERSION "5.3.43")
@@ -64,7 +63,7 @@ set(LIBGRAVATAR_VERSION_LIB "5.3.40")
 set(MAILCOMMON_LIB_VERSION_LIB "5.3.42")
 set(KDEPIM_APPS_LIB_VERSION_LIB "5.3.40")
 set(MESSAGELIB_LIB_VERSION_LIB "5.3.72")
-set(LIBKLEO_LIB_VERSION_LIB "5.3.44")
+set(LIBKLEO_LIB_VERSION_LIB "5.3.46")
 set(PIMCOMMON_LIB_VERSION_LIB "5.3.59")
 set(LIBKDEPIM_LIB_VERSION_LIB "5.3.42")
 set(LIBKSIEVE_LIB_VERSION_LIB "5.3.42")
@@ -73,6 +72,9 @@ find_package(KF5WebEngineViewer ${MESSAGELIB_LIB_VERSION_LIB} CONFIG REQUIRED)
 
 find_package(KF5AkonadiSearch "5.3.40" CONFIG REQUIRED)
 set_package_properties(KF5AkonadiSearch PROPERTIES DESCRIPTION "The Akonadi Search libraries" URL "http://www.kde.org" TYPE REQUIRED PURPOSE "Provides search capabilities in KMail and Akonadi")
+
+set(GPGMEPP_LIB_VERSION "1.7.1")
+find_package(Gpgmepp ${GPGMEPP_LIB_VERSION} CONFIG REQUIRED)
 
 # Find KF5 package
 find_package(KF5Crash ${KF5_VERSION} REQUIRED)
@@ -112,7 +114,6 @@ find_package(KF5Ldap ${KLDAP_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5MailTransport ${KMAILTRANSPORT_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5PimTextEdit ${KPIMTEXTEDIT_LIB_VERSION} CONFIG REQUIRED)
 
-find_package(KF5Gpgmepp ${GPGMEPP_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5KontactInterface ${KONTACTINTERFACE_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5Mime ${KMIME_LIB_VERSION} CONFIG REQUIRED)
 
@@ -132,8 +133,6 @@ find_package(KF5SendLater ${KDEPIM_APPS_LIB_VERSION_LIB} CONFIG REQUIRED)
 find_package(KF5TemplateParser ${MESSAGELIB_LIB_VERSION_LIB} CONFIG REQUIRED)
 find_package(MailTransportDBusService CONFIG REQUIRED)
 
-find_package(Boost 1.34.0)
-set_package_properties(Boost PROPERTIES DESCRIPTION "Boost C++ Libraries" URL "http://www.boost.org" TYPE REQUIRED PURPOSE "Boost is required for building most KDEPIM applications")
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_USE_QSTRINGBUILDER)
 

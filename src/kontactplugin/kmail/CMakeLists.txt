@@ -1,7 +1,3 @@
-include_directories(
-  ${Boost_INCLUDE_DIRS}
-)
-
 ########### next target ###############
 set(interface_SRCS)
 

@@ -34,7 +34,8 @@
 #include <AkonadiCore/itemfetchjob.h>
 #include <kcontacts/addressee.h>
 #include "kmail_debug.h"
-#include <Libkleo/CryptoBackendFactory>
+
+#include <QGpgME/Protocol>
 
 #include <MessageComposer/AttachmentModel>
 #include <MessageCore/AttachmentPart>
@@ -79,11 +80,11 @@ void AttachmentController::identityChanged()
     const KIdentityManagement::Identity &identity = mComposer->identity();
 
     // "Attach public key" is only possible if OpenPGP support is available:
-    enableAttachPublicKey(Kleo::CryptoBackendFactory::instance()->openpgp());
+    enableAttachPublicKey(QGpgME::openpgp());
 
     // "Attach my public key" is only possible if OpenPGP support is
     // available and the user specified his key for the current identity:
-    enableAttachMyPublicKey(Kleo::CryptoBackendFactory::instance()->openpgp() && !identity.pgpEncryptionKey().isEmpty());
+    enableAttachMyPublicKey(QGpgME::openpgp() && !identity.pgpEncryptionKey().isEmpty());
 }
 
 void AttachmentController::attachMyPublicKey()

@@ -46,7 +46,6 @@
 
 // other headers
 #include <algorithm>
-#include <boost/bind.hpp>
 #include <errno.h>
 #include <KSharedConfig>
 #include <QLocale>
@@ -336,16 +335,17 @@ void FilterManager::readConfig()
         foreach (const Akonadi::AgentInstance &agent, agents) {
             const QString id = agent.identifier();
 
-            QList<MailFilter *>::const_iterator it = std::max_element(d->mFilters.constBegin(), d->mFilters.constEnd(),
-                    boost::bind(&MailCommon::MailFilter::requiredPart, _1, id)
-                    < boost::bind(&MailCommon::MailFilter::requiredPart, _2, id));
+            auto it = std::max_element(d->mFilters.constBegin(), d->mFilters.constEnd(),
+                    [id](MailCommon::MailFilter *lhs, MailCommon::MailFilter *rhs) {
+                        return lhs->requiredPart(id) < rhs->requiredPart(id);
+                    });
             d->mRequiredParts[id] = (*it)->requiredPart(id);
             d->mRequiredPartsBasedOnAll = qMax(d->mRequiredPartsBasedOnAll, d->mRequiredParts[id]);
         }
     }
     // check if at least one filter is to be applied on inbound mail
     d->mInboundFiltersExist = std::find_if(d->mFilters.constBegin(), d->mFilters.constEnd(),
-                                           boost::bind(&MailCommon::MailFilter::applyOnInbound, _1)) != d->mFilters.constEnd();
+                                           std::mem_fn(&MailCommon::MailFilter::applyOnInbound)) != d->mFilters.constEnd();
 
     Q_EMIT filterListUpdated();
 }
