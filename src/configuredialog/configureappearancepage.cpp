@@ -148,7 +148,6 @@ static const struct {
     { "UnreadMessageFont", I18N_NOOP("Message List - Unread Messages"), false, false },
     { "ImportantMessageFont", I18N_NOOP("Message List - Important Messages"), false, false },
     { "TodoMessageFont", I18N_NOOP("Message List - Action Item Messages"), false, false },
-    { "folder-font", I18N_NOOP("Folder List"), true, false },
     { "fixed-font", I18N_NOOP("Fixed Width Font"), true, true },
     { "composer-font", I18N_NOOP("Composer"), true, false },
     { "print-font",  I18N_NOOP("Printing Output"), true, false },
