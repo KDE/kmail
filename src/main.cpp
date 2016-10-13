@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 {
 #ifdef Q_OS_UNIX
     // enforce xcb plugin fix bug Bug 367598
-    setenv("QT_QPA_PLATFORM", "xcb", true);
+    qputenv("QT_QPA_PLATFORM", "xcb");
 #endif
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     KMailApplication app(argc, &argv);
