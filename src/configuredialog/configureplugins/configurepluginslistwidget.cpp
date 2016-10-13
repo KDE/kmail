@@ -306,7 +306,6 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
     }
 }
 
-
 void ConfigurePluginsListWidget::defaults()
 {
     resetToUserSettings(mPluginEditorItems);

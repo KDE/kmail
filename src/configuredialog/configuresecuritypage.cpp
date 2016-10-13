@@ -478,10 +478,10 @@ struct SMIMECryptoConfigEntries {
     }
 
     QGpgME::CryptoConfigEntry *configEntry(const QString &componentName,
-                                         const QString &groupName,
-                                         const QString &entryName,
-                                         int argType,
-                                         bool isList);
+                                           const QString &groupName,
+                                           const QString &entryName,
+                                           int argType,
+                                           bool isList);
 
     // Checkboxes
     QGpgME::CryptoConfigEntry *mCheckUsingOCSPConfigEntry;

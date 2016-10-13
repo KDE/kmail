@@ -1962,7 +1962,7 @@ void KMComposerWin::insertUrls(const QMimeData *source, const QList<QUrl> &urlLi
 bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttachment)
 {
     // If this is a PNG image, either add it as an attachment or as an inline image
-    if (source->hasHtml() && mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich ) {
+    if (source->hasHtml() && mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich) {
         const QString html = QString::fromUtf8(source->data(QStringLiteral("text/html")));
         mComposerBase->editor()->insertHtml(html);
         return true;
@@ -2240,10 +2240,10 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
         Q_FOREACH (auto line, mComposerBase->recipientsEditor()->lines()) {
             if (encrypt) {
                 // Encryption was enabled, update encryption status of all recipients
-                slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG*>(line));
+                slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG *>(line));
             } else {
                 // Encryption was disabled, remove the encryption indicator
-                auto edit = qobject_cast<MessageComposer::RecipientLineNG*>(line);
+                auto edit = qobject_cast<MessageComposer::RecipientLineNG *>(line);
                 edit->setIcon(QIcon());
                 auto recipient = edit->data().dynamicCast<MessageComposer::Recipient>();
                 recipient->setEncryptionAction(Kleo::Impossible);
@@ -3221,24 +3221,24 @@ QList<QAction *> KMComposerWin::pluginToolsActionListForPopupMenu() const
 
 void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
 {
-    auto line = qobject_cast<MessageComposer::RecipientLineNG*>(line_);
+    auto line = qobject_cast<MessageComposer::RecipientLineNG *>(line_);
     Q_ASSERT(line);
 
     connect(line, &MessageComposer::RecipientLineNG::countChanged,
-            this, [this, line]() {
-                this->slotRecipientAdded(line);
-            });
+    this, [this, line]() {
+        this->slotRecipientAdded(line);
+    });
     connect(line, &MessageComposer::RecipientLineNG::iconClicked,
-            this, [this, line]() {
-                this->slotRecipientLineIconClicked(line);
-            });
+    this, [this, line]() {
+        this->slotRecipientLineIconClicked(line);
+    });
     connect(line, &MessageComposer::RecipientLineNG::destroyed,
             this, &KMComposerWin::slotRecipientEditorFocusChanged,
             Qt::QueuedConnection);
     connect(line, &MessageComposer::RecipientLineNG::activeChanged,
-            this, [this, line]() {
-                this->slotRecipientFocusLost(line);
-            });
+    this, [this, line]() {
+        this->slotRecipientFocusLost(line);
+    });
 
     slotRecipientEditorFocusChanged();
 }
@@ -3256,7 +3256,7 @@ void KMComposerWin::slotRecipientEditorFocusChanged()
     // but not by force
     bool encrypt = false;
     Q_FOREACH (auto line_, mComposerBase->recipientsEditor()->lines()) {
-        auto line = qobject_cast<MessageComposer::RecipientLineNG*>(line_);
+        auto line = qobject_cast<MessageComposer::RecipientLineNG *>(line_);
 
         // There's still a lookup job running, so wait, slotKeyForMailBoxResult()
         // will call us if the job returns empty key
@@ -3282,18 +3282,17 @@ void KMComposerWin::slotRecipientEditorFocusChanged()
     }
 }
 
-
 void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineNG *line)
 {
     const auto data = line->data().dynamicCast<MessageComposer::Recipient>();
 
     if (!data->key().isNull()) {
-        QProcess::startDetached(QStringLiteral("kleopatra"),
-                                { QStringLiteral("--query"),
-                                  QString::fromLatin1(data->key().primaryFingerprint()),
-                                  QStringLiteral("--parent-windowid"),
-                                  QString::number(winId())
-                                });
+        QProcess::startDetached(QStringLiteral("kleopatra"), {
+            QStringLiteral("--query"),
+            QString::fromLatin1(data->key().primaryFingerprint()),
+            QStringLiteral("--parent-windowid"),
+            QString::number(winId())
+        });
     }
 }
 

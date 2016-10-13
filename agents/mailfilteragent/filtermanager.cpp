@@ -336,9 +336,9 @@ void FilterManager::readConfig()
             const QString id = agent.identifier();
 
             auto it = std::max_element(d->mFilters.constBegin(), d->mFilters.constEnd(),
-                    [id](MailCommon::MailFilter *lhs, MailCommon::MailFilter *rhs) {
-                        return lhs->requiredPart(id) < rhs->requiredPart(id);
-                    });
+            [id](MailCommon::MailFilter * lhs, MailCommon::MailFilter * rhs) {
+                return lhs->requiredPart(id) < rhs->requiredPart(id);
+            });
             d->mRequiredParts[id] = (*it)->requiredPart(id);
             d->mRequiredPartsBasedOnAll = qMax(d->mRequiredPartsBasedOnAll, d->mRequiredParts[id]);
         }
