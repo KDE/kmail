@@ -2801,9 +2801,6 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         if (mMsgView) {
             menu->addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             menu->addSeparator();
-            menu->addAction(mMsgView->saveMessageDisplayFormatAction());
-            menu->addAction(mMsgView->resetMessageDisplayFormatAction());
-            menu->addSeparator();
         }
         menu->addAction(mMsgActions->annotateAction());
 

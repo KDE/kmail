@@ -620,9 +620,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             if (msg.isValid()) {
                 menu->addSeparator();
                 menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
-                menu->addSeparator();
-                menu->addAction(mReaderWin->saveMessageDisplayFormatAction());
-                menu->addAction(mReaderWin->resetMessageDisplayFormatAction());
             }
         } else {
             menu->addAction(mReaderWin->toggleFixFontAction());
