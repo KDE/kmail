@@ -425,11 +425,6 @@ public:
     bool shuttingDown() const;
     void setShuttingDown(bool flag);
 
-    /** Returns the full path of the user's local data directory for KMail.
-      The path ends with '/'.
-    */
-    static QString localDataPath();
-
     /** Returns true if we have a system tray applet. This is needed in order
     *  to know whether the application should be allowed to exit in case the
     *  last visible composer or separate message window is closed.

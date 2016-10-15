@@ -1238,13 +1238,13 @@ void KMKernel::slotSenderFinished()
 // Open a composer for each message found in the dead.letter folder
 void KMKernel::recoverDeadLetters()
 {
-    const QString pathName = localDataPath();
+    const QString pathName = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kmail2/");
     QDir dir(pathName);
     if (!dir.exists(QStringLiteral("autosave"))) {
         return;
     }
 
-    dir.cd(localDataPath() + QLatin1String("autosave"));
+    dir.cd(pathName + QLatin1String("autosave"));
     const QFileInfoList autoSaveFiles = dir.entryInfoList();
     foreach (const QFileInfo &file, autoSaveFiles) {
         // Disregard the '.' and '..' folders
@@ -1547,12 +1547,6 @@ void KMKernel::slotConfigChanged()
     Q_EMIT configChanged();
 }
 
-//-------------------------------------------------------------------------------
-//static
-QString KMKernel::localDataPath()
-{
-    return QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kmail2/");
-}
 
 //-------------------------------------------------------------------------------
 
