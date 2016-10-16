@@ -1547,7 +1547,6 @@ void KMKernel::slotConfigChanged()
     Q_EMIT configChanged();
 }
 
-
 //-------------------------------------------------------------------------------
 
 bool KMKernel::haveSystemTrayApplet() const
