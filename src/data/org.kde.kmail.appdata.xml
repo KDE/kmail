@@ -79,6 +79,7 @@
     <p xml:lang="tr">KMail, Kontact'ın e-posta bileşeni ve aynı zamanda KDE'den tümleşik kişisel bilgi yöneticisidir.</p>
     <p xml:lang="uk">KMail — компонент для роботи з електронною поштою комплексу програм Kontact, інтегрованого рішення для роботи з особистими даними у KDE.</p>
     <p xml:lang="x-test">xxKMail is the email component of Kontact, the integrated personal information manager from KDE.xx</p>
+    <p xml:lang="zh-CN">Kmail 是 KDE 集成个人信息管理器 Kontact 的电子邮件组件。</p>
     <p xml:lang="zh-TW">KMail 是 Kontact 的電子郵件組件。Kontact 是 KDE 中的一套整合個人資訊管理員。</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
@@ -154,6 +155,7 @@
       <li xml:lang="tr">IMAP, POP3 ve SMTP standart posta protokollerini destekler.</li>
       <li xml:lang="uk">підтримка роботи зі стандартними протоколами обміну електронною поштою, IMAP, POP3 та SMTP.</li>
       <li xml:lang="x-test">xxSupports the standard mail protocols IMAP, POP3 and SMTP.xx</li>
+      <li xml:lang="zh-CN">支持标准邮件协议 IMAP、POP3 和 SMTP。</li>
       <li xml:lang="zh-TW">支持標準郵件協定，如 IMAP, POP3 與 SMTP</li>
       <li>Supports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)</li>
       <li xml:lang="ar">يدعم الاستيثاق عبر NTLM (مايكروسوفت وندوز) وGSSAPI (كيربيروس)</li>
@@ -187,6 +189,7 @@
       <li xml:lang="tr">NTLM (Microsoft Windows) ve GSSAPI (Kerberos) aracılığıyla kimlik doğrulamayı destekler</li>
       <li xml:lang="uk">підтримка можливостей розпізнавання за допомогою NTLM (Microsoft Windows) та GSSAPI (Kerberos);</li>
       <li xml:lang="x-test">xxSupports authentication via NTLM (Microsoft Windows) and GSSAPI (Kerberos)xx</li>
+      <li xml:lang="zh-CN">支持使用 NTLM（Microsoft Windows）和 GSSAPI（Kerberos）的验证。</li>
       <li xml:lang="zh-TW">支援透過 NTLM（Microsoft Windows）與 GSSAPI（Kerberos）認證</li>
       <li>Supports plain text and secure logins, using SSL and TLS.</li>
       <li xml:lang="ar">يدعم النّصوص الصّرفة والولوجات الآمنة، باستخدام SSL وTLS.</li>
@@ -220,6 +223,7 @@
       <li xml:lang="tr">Düz metin ve SSL ile TLS kullanarak güvenli girişleri destekler.</li>
       <li xml:lang="uk">підтримка передавання реєстраційних даних звичайним текстом та шифрованими даними за допомогою SSL та TLS;</li>
       <li xml:lang="x-test">xxSupports plain text and secure logins, using SSL and TLS.xx</li>
+      <li xml:lang="zh-CN">支持纯文本和安全登录，使用 SSL 和 TLS。</li>
       <li xml:lang="zh-TW">支援純文字與透過 SSL 與 TLS安全登入</li>
       <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
       <li xml:lang="ar">تكامل أطقم المحارف العالميّة وتدقيق الهجاء (عند الكتابة وعند الطّلب)</li>
@@ -253,6 +257,7 @@
       <li xml:lang="tr">Uluslararası karakter kümeleri ve yazım denetimi (yazarken veya isteğe bağlı) tümleştirmesi</li>
       <li xml:lang="uk">вбудована можливість роботи з даними у різних кодуваннях та перевірки правопису (інтерактивної та на вимогу);</li>
       <li xml:lang="x-test">xxIntegration of international character sets and spell-checking (as-you-type and on demand)xx</li>
+      <li xml:lang="zh-CN">集成国际字符集支持和拼写检查（输入即检查，可以按照需求配置）</li>
       <li xml:lang="zh-TW">整合國際字元集與拼字檢查（輸入時即時檢查）</li>
       <li>Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
       <li xml:lang="ar">دعم أصيل ل‍OpenPGP، وPGP/MIME وS/MIME ضمن السّياق.</li>
@@ -286,6 +291,7 @@
       <li xml:lang="tr">Satıriçi OpenPGP, PGP/MIME ve S/MIME için doğal destek.</li>
       <li xml:lang="uk">вбудована підтримка OpenPGP, PGP/MIME та S/MIME.</li>
       <li xml:lang="x-test">xxNative support for inline OpenPGP, PGP/MIME, and S/MIME.xx</li>
+      <li xml:lang="zh-CN">对内联 OpenPGP、PGP/MIME 和 S/MIME 的原生支持。</li>
       <li xml:lang="zh-TW">支援內含式 OpenPGP, PGP/MIME 與  S/MIME</li>
       <li>Reading and writing of HTML mail.</li>
       <li xml:lang="ar">قراءة بريد HTML وكتابته.</li>
@@ -320,6 +326,7 @@
       <li xml:lang="tr">HTML posta yazma ve okuma.</li>
       <li xml:lang="uk">можливість читання та створення повідомлень з використанням коду HTML;</li>
       <li xml:lang="x-test">xxReading and writing of HTML mail.xx</li>
+      <li xml:lang="zh-CN">阅读、撰写 HTML 邮件。</li>
       <li xml:lang="zh-TW">讀寫 HTML 郵件。</li>
       <li>Ability to display plain text only from an HTML mail.</li>
       <li xml:lang="ar">إمكانيّة عرض النّصّ الصّرف فقط من بريد HTML.</li>
@@ -353,6 +360,7 @@
       <li xml:lang="tr">Bir HTML postasından sadece düz metni gösterebilme.</li>
       <li xml:lang="uk">можливість перегляду лише текстової частини з повідомлень у форматі HTML;</li>
       <li xml:lang="x-test">xxAbility to display plain text only from an HTML mail.xx</li>
+      <li xml:lang="zh-CN">可以以纯文本的方式展示 HTML 邮件。</li>
       <li xml:lang="zh-TW">可以只顯示 HTML 郵件中的純文字部份。</li>
       <li>Allows you to receive and accept invitations.</li>
       <li xml:lang="ar">يسمح لك باستقبال الدّعوات وقبولها.</li>
@@ -387,6 +395,7 @@
       <li xml:lang="tr">Davetleri alma ve kabul etmenize izin verir.</li>
       <li xml:lang="uk">можливість отримувати та приймати запрошення;</li>
       <li xml:lang="x-test">xxAllows you to receive and accept invitations.xx</li>
+      <li xml:lang="zh-CN">允许您接收并接受邀请。</li>
       <li xml:lang="zh-TW">可以接收與接受邀請。</li>
       <li>Integration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.</li>
       <li xml:lang="ar">التّكامل مع فاحصات السّخام مثل سفّاح السّخام/SpamAssassin، وبوغوفلتر/Bogofilter وغيرها</li>
@@ -420,6 +429,7 @@
       <li xml:lang="tr">Yaygın gereksiz posta (spam) denetleicileri ile tümleşik. Örn. SpamAssassin, Bogofilter, vb.</li>
       <li xml:lang="uk">інтеграція з популярними системами захисту від небажаної кореспонденції, зокрема SpamAssassin, Bogofilter тощо;</li>
       <li xml:lang="x-test">xxIntegration with popular spam checkers, e.g. SpamAssassin, Bogofilter, etc.xx</li>
+      <li xml:lang="zh-CN">与流行垃圾邮件检查器的集成，如 SpamAssassin 和 Bogofilter 等。</li>
       <li xml:lang="zh-TW">與常用的垃圾信檢查機制，如 SpamAssassin，Bogofilter 等整合。</li>
       <li>An optional spam probability meter can be displayed</li>
       <li xml:lang="ar">إمكانيّة اختياريّة لعرض عدّاد لاحتماليّة السّخام</li>
@@ -453,6 +463,7 @@
       <li xml:lang="tr">Görüntülenebilir, isteğe bağlı gereksiz posta ihtimali ölçümü</li>
       <li xml:lang="uk">можливість показу оцінки ймовірності небажаності повідомлення;</li>
       <li xml:lang="x-test">xxAn optional spam probability meter can be displayedxx</li>
+      <li xml:lang="zh-CN">可以显示一个可选的垃圾邮件可能性计量表。</li>
       <li xml:lang="zh-TW">可以選擇顯示垃圾信指數</li>
       <li>Powerful search and filter abilities</li>
       <li xml:lang="ar">إمكانيّات بحث وترشيح قويّة</li>
@@ -487,6 +498,7 @@
       <li xml:lang="tr">Güçlü arama ve filtreleme yetenekleri</li>
       <li xml:lang="uk">потужні можливості з пошуку та фільтрування;</li>
       <li xml:lang="x-test">xxPowerful search and filter abilitiesxx</li>
+      <li xml:lang="zh-CN">强大的搜索过滤能力</li>
       <li xml:lang="zh-TW">強大的搜尋與過濾功能</li>
       <li>Can import mail from many other clients</li>
       <li xml:lang="ar">إمكانيّة استيراد البريد من عدّة عملاء بريد</li>
@@ -521,6 +533,7 @@
       <li xml:lang="tr">Diğer birçok istemciden postaları içe aktarabilme</li>
       <li xml:lang="uk">можливість імпортувати дані пошти з багатьох інших програм для роботи з електронною поштою;</li>
       <li xml:lang="x-test">xxCan import mail from many other clientsxx</li>
+      <li xml:lang="zh-CN">可以从许多其它客户端导入邮件</li>
       <li xml:lang="zh-TW">可以從其它郵件程式中匯入信件</li>
       <li>Searching in IMAP folders fully supported</li>
       <li xml:lang="ar">البحث في مجلّدات IMAP مدعوم بالكامل</li>
@@ -554,6 +567,7 @@
       <li xml:lang="tr">IMAP klasörlerinde arama tamamen desteklenmektedir</li>
       <li xml:lang="uk">підтримка повноцінного пошуку у теках IMAP;</li>
       <li xml:lang="x-test">xxSearching in IMAP folders fully supportedxx</li>
+      <li xml:lang="zh-CN">完全支持在 IMAP 文件夹内进行搜索</li>
       <li xml:lang="zh-TW">完整支援在 IMAP 資料夾中搜尋</li>
       <li>Highly integrated with other Kontact components</li>
       <li xml:lang="ar">متكامل مع مكوّنات «تراسلك» الأخرى</li>
@@ -587,6 +601,7 @@
       <li xml:lang="tr">Diğer Kontact bileşenleri ile yüksek derecede tümleşik</li>
       <li xml:lang="uk">високий рівень інтеграції з іншими компонентами Kontact;</li>
       <li xml:lang="x-test">xxHighly integrated with other Kontact componentsxx</li>
+      <li xml:lang="zh-CN">与其它 Kontact 组件高度集成</li>
       <li xml:lang="zh-TW">與其他 Kontact 組件高度整合</li>
       <li>Encrypted password saving in KWallet</li>
       <li xml:lang="ar">حفظ كلمات المرور معمّاة في «محفظتك»</li>
@@ -620,6 +635,7 @@
       <li xml:lang="tr">KWallet (KDE Cüzdan) içerisine şifreli parola kaydetme</li>
       <li xml:lang="uk">зберігання зашифрованих реєстраційних даних за допомогою KWallet;</li>
       <li xml:lang="x-test">xxEncrypted password saving in KWalletxx</li>
+      <li xml:lang="zh-CN">在 Kwallet 中保存加密密码</li>
       <li xml:lang="zh-TW">將密碼加密並儲存在 KWallet</li>
       <li>Flagging and tagging of messages to aid sorting and recovery of information</li>
       <li xml:lang="ar">تعليم الرّسائل ووسمها للمساعدة في فرز المعلومات واستعادتها</li>
@@ -653,6 +669,7 @@
       <li xml:lang="tr">Sıralama ve bilgi kurtarımı yardımı için ileti bayraklama ve etiketleme</li>
       <li xml:lang="uk">можливість додавання прапорців і міток до повідомлень з метою спрощення упорядковування та відновлення інформації;</li>
       <li xml:lang="x-test">xxFlagging and tagging of messages to aid sorting and recovery of informationxx</li>
+      <li xml:lang="zh-CN">可以对邮件做标记、打标签以协助进行信息的排序和恢复</li>
       <li xml:lang="zh-TW">對信件加上旗標或標籤，以便排序與找到資訊</li>
       <li>Supports mailing list management features</li>
       <li xml:lang="ar">يدعم ميزات إدارة القوائم البريديّة</li>
@@ -686,6 +703,7 @@
       <li xml:lang="tr">Posta listesi yönetim özelliklerini destekler</li>
       <li xml:lang="uk">підтримка можливостей з керування повідомленнями зі списків листування;</li>
       <li xml:lang="x-test">xxSupports mailing list management featuresxx</li>
+      <li xml:lang="zh-CN">支持邮件列表管理功能</li>
       <li xml:lang="zh-TW">支援郵件論壇管理功能</li>
       <li>Can replace text smilies with emoticons</li>
       <li xml:lang="ar">يمكنه استبدال الابتسامات النّصيّة بأخرى رسوميّة</li>
@@ -718,6 +736,7 @@
       <li xml:lang="tr">Metin yüz ifadelerini simgelere dönüştürebilir</li>
       <li xml:lang="uk">можливість заміни текстових емоційок (смайликів) зображеннями;</li>
       <li xml:lang="x-test">xxCan replace text smilies with emoticonsxx</li>
+      <li xml:lang="zh-CN">可以使用表情符号替换文字 smilies</li>
       <li xml:lang="zh-TW">可以用表情符號取代文字式的表情符號</li>
       <li>Displays the sender's picture or avatar if present in the address book</li>
       <li xml:lang="ar">عرض صورة المرسل أو صورة أفاتار إن وُجدت في دفتر العناوين</li>
@@ -750,6 +769,7 @@
       <li xml:lang="tr">Adres defterinde mevcutsa gönderenin fotoğrafı veya profil resmi gösterilir</li>
       <li xml:lang="uk">можливість показу знімка або аватара відправника, якщо його визначено у адресній книзі;</li>
       <li xml:lang="x-test">xxDisplays the sender's picture or avatar if present in the address bookxx</li>
+      <li xml:lang="zh-CN">如果在地址簿中存在的话，显示发送者的图片或者 avatar。</li>
       <li xml:lang="zh-TW">如果通訊錄裡有的話，可以顯示發信者的頭像</li>
       <li>Supports X-Face (b/w pictures in messages)</li>
       <li xml:lang="ar">يدعم X-Face (صور بالأبيض والأسود في الرّسائل)</li>
@@ -782,6 +802,7 @@
       <li xml:lang="tr">X-Face (iletilerde siyah beyaz resimler) desteği</li>
       <li xml:lang="uk">підтримка X-Face (чорно-білих зображень у повідомленнях);</li>
       <li xml:lang="x-test">xxSupports X-Face (b/w pictures in messages)xx</li>
+      <li xml:lang="zh-CN">支持 X-Face（邮件信息中的头像）</li>
       <li xml:lang="zh-TW">支援 X-Face（信件裡顯示黑白頭像）</li>
       <li>Compression of attachments</li>
       <li xml:lang="ar">ضغط المرفقات</li>
@@ -815,6 +836,7 @@
       <li xml:lang="tr">Eklerin sıkıştırılması</li>
       <li xml:lang="uk">можливість стискання долучень безпосередньо з вікна програми;</li>
       <li xml:lang="x-test">xxCompression of attachmentsxx</li>
+      <li xml:lang="zh-CN">附件的压缩</li>
       <li xml:lang="zh-TW">附件壓縮</li>
       <li>KMail supports Groupware functionality.</li>
       <li xml:lang="ar">يدعم «بريدك» وظيفة البرمجيّات التّعاونيّة.</li>
@@ -848,6 +870,7 @@
       <li xml:lang="tr">KMail, Groupware işlevselliğini destekler.</li>
       <li xml:lang="uk">підтримка роботи у групах.</li>
       <li xml:lang="x-test">xxKMail supports Groupware functionality.xx</li>
+      <li xml:lang="zh-CN">Kmail 支持 Groupware 功能。</li>
       <li xml:lang="zh-TW">KMail 支援群組功能。</li>
     </ul>
   </description>
