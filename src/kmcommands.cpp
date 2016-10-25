@@ -929,7 +929,10 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
     }
     KMime::Message::Ptr fwdMsg = factory.createForward();
 
-    uint id = msg->headerByType("X-KMail-Identity") ?  msg->headerByType("X-KMail-Identity")->asUnicodeString().trimmed().toUInt() : 0;
+    uint id = 0;
+    if (auto hrd = msg->headerByType("X-KMail-Identity")) {
+        id = hrd->asUnicodeString().trimmed().toUInt();
+    }
     qCDebug(KMAIL_LOG) << "mail" << msg->encodedContent();
     bool lastEncrypt = false;
     bool lastSign = false;

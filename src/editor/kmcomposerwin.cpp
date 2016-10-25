@@ -954,9 +954,9 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
         return;
     }
 
-    if (mMsg->headerByType("X-KMail-Link-Message")) {
+    if (auto hrd = mMsg->headerByType("X-KMail-Link-Message")) {
         Akonadi::Item::List items;
-        const QStringList serNums = mMsg->headerByType("X-KMail-Link-Message")->asUnicodeString().split(QLatin1Char(','));
+        const QStringList serNums = hrd->asUnicodeString().split(QLatin1Char(','));
         items.reserve(serNums.count());
         foreach (const QString &serNumStr, serNums) {
             items << Akonadi::Item(serNumStr.toLongLong());
@@ -1011,7 +1011,10 @@ void KMComposerWin::setCollectionForNewMessage(const Akonadi::Collection &folder
 
 void KMComposerWin::setQuotePrefix(uint uoid)
 {
-    QString quotePrefix = mMsg->headerByType("X-KMail-QuotePrefix") ? mMsg->headerByType("X-KMail-QuotePrefix")->asUnicodeString() : QString();
+    QString quotePrefix;
+    if (auto hrd = mMsg->headerByType("X-KMail-QuotePrefix")) {
+        quotePrefix = hrd->asUnicodeString();
+    }
     if (quotePrefix.isEmpty()) {
         // no quote prefix header, set quote prefix according in identity
         // TODO port templates to ComposerViewBase
@@ -1477,9 +1480,11 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
     }
 
-    if (newMsg->headerByType("X-KMail-Identity") &&
-            !newMsg->headerByType("X-KMail-Identity")->asUnicodeString().isEmpty()) {
-        mId = newMsg->headerByType("X-KMail-Identity")->asUnicodeString().toUInt();
+    if (auto hrd = newMsg->headerByType("X-KMail-Identity")) {
+        const QString identityStr = hrd->asUnicodeString();
+        if (!identityStr.isEmpty()) {
+            mId = identityStr.toUInt();
+        }
     }
 
     // don't overwrite the header values with identity specific values
