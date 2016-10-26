@@ -637,7 +637,10 @@ KMCommand::Result KMEditItemCommand::execute()
     if (transportAttribute) {
         win->setCurrentTransport(transportAttribute->transportId());
     } else {
-        int transportId = msg->headerByType("X-KMail-Transport") ? msg->headerByType("X-KMail-Transport")->asUnicodeString().toInt() : -1;
+        int transportId = -1;
+        if (auto hrd = msg->headerByType("X-KMail-Transport")) {
+            transportId = hrd->asUnicodeString().toInt();
+        }
         if (transportId != -1) {
             win->setCurrentTransport(transportId);
         }
