@@ -3806,6 +3806,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     // "View Source" will act on the current message: it will ignore any hidden selection
     if (mMsgView) {
         mMsgView->viewSourceAction()->setEnabled(singleVisibleMessageSelected);
+        mMsgView->selectAllAction()->setEnabled(count);
     }
     MessageStatus status;
     status.setStatusFromFlags(currentMessage.flags());
