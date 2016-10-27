@@ -525,8 +525,6 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
         slotIntro();
     }
 
-    updateMessageActions();
-    updateFolderMenu();
 
     // The message pane uses the selection model of the folder view to load the correct aggregation model and theme
     //  settings. At this point the selection model hasn't been updated yet to the user's new choice, so it would load
@@ -539,6 +537,8 @@ void KMMainWidget::slotShowSelectedFolderInPane()
     if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
         mMessagePane->setCurrentFolder(mCurrentFolder->collection(), false, mPreSelectionMode);
     }
+    updateMessageActions();
+    updateFolderMenu();
 }
 
 void KMMainWidget::clearViewer()
