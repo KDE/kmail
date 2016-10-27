@@ -3842,8 +3842,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMessageNewList->setEnabled(newPostToMailingList);
 
     slotUpdateOnlineStatus(static_cast<GlobalSettingsBase::EnumNetworkState::type>(KMailSettings::self()->networkState()));
-    if (action(QStringLiteral("kmail_undo"))) {
-        action(QStringLiteral("kmail_undo"))->setEnabled(kmkernel->undoStack()->size() > 0);
+    if (QAction *act = action(QStringLiteral("kmail_undo"))) {
+        act->setEnabled(kmkernel->undoStack()->size() > 0);
     }
 
     // Enable / disable all filters.
