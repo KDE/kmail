@@ -3002,12 +3002,10 @@ void KMMainWidget::setupActions()
     connect(mSearchMessages, &QAction::triggered, this, &KMMainWidget::slotRequestFullSearchFromQuickSearch);
     actionCollection()->setDefaultShortcut(mSearchMessages, QKeySequence(Qt::Key_S));
 
-    {
-        QAction *action = new QAction(i18n("Select &All Messages"), this);
-        actionCollection()->addAction(QStringLiteral("mark_all_messages"), action);
-        connect(action, &QAction::triggered, this, &KMMainWidget::slotSelectAllMessages);
-        actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_A));
-    }
+    mSelectAllMessages = new QAction(i18n("Select &All Messages"), this);
+    actionCollection()->addAction(QStringLiteral("mark_all_messages"), mSelectAllMessages);
+    connect(mSelectAllMessages, &QAction::triggered, this, &KMMainWidget::slotSelectAllMessages);
+    actionCollection()->setDefaultShortcut(mSelectAllMessages, QKeySequence(Qt::CTRL + Qt::Key_A));
 
     //----- Folder Menu
 
@@ -3854,6 +3852,7 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     mApplyAllFiltersAction->setEnabled(count);
     mApplyFilterActionsMenu->setEnabled(count);
+    mSelectAllMessages->setEnabled(count);
 }
 
 void KMMainWidget::slotAkonadiStandardActionUpdated()

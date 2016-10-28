@@ -577,6 +577,7 @@ private:
     QAction *mCollectionProperties;
     QAction *mSendQueued;
     QAction *mArchiveAction;
+    QAction *mSelectAllMessages;
     KActionMenuTransport *mSendActionMenu;
     // Filter actions
     KActionMenu *mFilterMenu;
