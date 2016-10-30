@@ -55,7 +55,7 @@
 
 static bool isFilterableCollection(const Akonadi::Collection &collection)
 {
-    return MailCommon::Kernel::folderIsInbox(collection);
+    return MailCommon::Kernel::folderIsInbox(collection, true);
 
     //TODO: check got filter attribute here
 }
@@ -154,9 +154,20 @@ void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
 
     Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
 
+    const QMap<QString, Akonadi::Collection::Id> pop3ResourceMap = MailCommon::Kernel::pop3ResourceTargetCollection();
+
     foreach (const Akonadi::Collection &collection, fetchJob->collections()) {
         if (isFilterableCollection(collection)) {
             changeRecorder()->setCollectionMonitored(collection, true);
+        } else {
+            QMapIterator<QString, Akonadi::Collection::Id> i(pop3ResourceMap);
+            while (i.hasNext()) {
+                i.next();
+                if (collection.id() == i.value()) {
+                    changeRecorder()->setCollectionMonitored(collection, true);
+                    break;
+                }
+            }
         }
     }
     Q_EMIT status(AgentBase::Idle, i18n("Ready"));
