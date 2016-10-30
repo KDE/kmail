@@ -55,7 +55,7 @@
 
 static bool isFilterableCollection(const Akonadi::Collection &collection)
 {
-    return MailCommon::Kernel::folderIsInbox(collection, true);
+    return MailCommon::Kernel::folderIsInbox(collection);
 
     //TODO: check got filter attribute here
 }

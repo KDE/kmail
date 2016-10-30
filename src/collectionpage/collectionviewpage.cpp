@@ -61,7 +61,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
 {
     mCurrentCollection = col;
     mFolderCollection = FolderCollection::forCollection(col);
-    mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || mFolderCollection->isStructural() || Kernel::folderIsInbox(col, true);
+    mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || mFolderCollection->isStructural() || Kernel::folderIsInbox(col);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     // Musn't be able to edit details for non-resource, system folder.
