@@ -1274,7 +1274,10 @@ void AppearancePage::MessageTagTab::slotAddLineTextChanged(const QString &aText)
 
 void AppearancePage::MessageTagTab::slotAddNewTag()
 {
-    const QString newTagName = mTagAddLineEdit->text();
+    const QString newTagName = mTagAddLineEdit->text().trimmed();
+    if (newTagName.isEmpty()) {
+        return;
+    }
     const int count = mTagListBox->count();
     for (int i = 0; i < count; ++i) {
         if (mTagListBox->item(i)->text() == newTagName) {
