@@ -55,6 +55,7 @@ using KMail::MailServiceImpl;
 #include "MessageComposer/MessageComposerSettings"
 #include "PimCommon/PimCommonSettings"
 #include "PimCommon/AutoCorrection"
+#include <PimCommon/NetworkManager>
 
 #include "TemplateParser/TemplateParser"
 #include "globalsettings_templateparser.h"
@@ -122,7 +123,6 @@ using namespace MailCommon;
 
 static KMKernel *mySelf = Q_NULLPTR;
 static bool s_askingToGoOnline = false;
-static QNetworkConfigurationManager *s_networkConfigMgr = 0;
 /********************************************************************/
 /*                     Constructor and destructor                   */
 /********************************************************************/
@@ -136,10 +136,7 @@ KMKernel::KMKernel(QObject *parent) :
 {
     mDebugBaloo = !qEnvironmentVariableIsEmpty("KDEPIM_BALOO_DEBUG");
 
-    if (!s_networkConfigMgr) {
-        s_networkConfigMgr = new QNetworkConfigurationManager(QCoreApplication::instance());
-    }
-    mSystemNetworkStatus = s_networkConfigMgr->isOnline();
+    mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
     QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.kmail"));
@@ -217,7 +214,7 @@ KMKernel::KMKernel(QObject *parent) :
 
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KMKernel::slotInstanceRemoved);
 
-    connect(s_networkConfigMgr, &QNetworkConfigurationManager::onlineStateChanged,
+    connect(PimCommon::NetworkManager::self()->networkConfigureManager(), &QNetworkConfigurationManager::onlineStateChanged,
             this, &KMKernel::slotSystemNetworkStatusChanged);
 
     connect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCompleted,
@@ -1079,7 +1076,8 @@ void KMKernel::resumeNetworkJobs()
 
 bool KMKernel::isOffline()
 {
-    if ((KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) || !s_networkConfigMgr->isOnline()) {
+    if ((KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) ||
+            !PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline()) {
         return true;
     } else {
         return false;
