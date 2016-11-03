@@ -559,6 +559,7 @@ private Q_SLOTS:
     void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
     void slotRedirectCurrentMessage();
     void slotEditCurrentVacation();
+    void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
 private:
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);

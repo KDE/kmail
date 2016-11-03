@@ -1035,6 +1035,8 @@ void KMMainWidget::createWidgets()
                 this, &KMMainWidget::slotExecuteMailAction);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::pageIsScrolledToBottom,
                 this, &KMMainWidget::slotPageIsScrolledToBottom);
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::replyMessageTo,
+                this, &KMMainWidget::slotReplyMessageTo);
         if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(true);
         }
@@ -4642,4 +4644,15 @@ void KMMainWidget::replyCurrentMessageCommand(MessageComposer::ReplyStrategy str
         KMCommand *command = new KMReplyCommand(this, currentItem, strategy, text);
         command->start();
     }
+}
+
+void KMMainWidget::slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll)
+{
+    Akonadi::Item item;
+
+    item.setPayload<KMime::Message::Ptr>(message);
+    Akonadi::MessageFlags::copyMessageFlags(*message, item);
+    item.setMimeType(KMime::Message::mimeType());
+    KMCommand *command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
+    command->start();
 }

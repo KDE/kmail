@@ -114,13 +114,18 @@ void KMReaderMainWin::initKMReaderMainWin()
         toolBar(QStringLiteral("mainToolBar"))->hide();
     }
     connect(kmkernel, &KMKernel::configChanged, this, &KMReaderMainWin::slotConfigChanged);
-    connect(mReaderWin, SIGNAL(showStatusBarMessage(QString)), statusBar(), SLOT(showMessage(QString)));
+    connect(mReaderWin, &KMReaderWin::showStatusBarMessage, this, &KMReaderMainWin::slotShowMessageStatusBar);
 }
 
 KMReaderMainWin::~KMReaderMainWin()
 {
     KConfigGroup grp(KMKernel::self()->config()->group("Separate Reader Window"));
     saveMainWindowSettings(grp);
+}
+
+void KMReaderMainWin::slotShowMessageStatusBar(const QString &msg)
+{
+    statusBar()->showMessage(msg);
 }
 
 void KMReaderMainWin::setUseFixedFont(bool useFixedFont)
@@ -297,12 +302,12 @@ void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = new KMReplyCommand(this,
+    KMReplyCommand *command = new KMReplyCommand(this,
                                             currentItem,
                                             MessageComposer::ReplySmart,
                                             mReaderWin->copyText(),
                                             false, tmpl);
-    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
+    connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
@@ -312,12 +317,12 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = new KMReplyCommand(this,
+    KMReplyCommand *command = new KMReplyCommand(this,
                                             currentItem,
                                             MessageComposer::ReplyAll,
                                             mReaderWin->copyText(),
                                             false, tmpl);
-    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
+    connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();
 }
@@ -328,10 +333,10 @@ void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = new KMForwardCommand(this,
+    KMForwardCommand *command = new KMForwardCommand(this,
             currentItem,
             0, tmpl);
-    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
+    connect(command, &KMForwardCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();
 }

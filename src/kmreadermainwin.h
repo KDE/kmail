@@ -78,6 +78,7 @@ private Q_SLOTS:
     void slotCopyMoveResult(KJob *job);
     void slotMoveItem(QAction *action);
 
+    void slotShowMessageStatusBar(const QString &msg);
 private:
     void copyOrMoveItem(const Akonadi::Collection &collection, bool move);
     Akonadi::Collection parentCollection() const;
