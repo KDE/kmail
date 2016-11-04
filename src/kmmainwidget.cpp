@@ -4641,7 +4641,7 @@ void KMMainWidget::replyCurrentMessageCommand(MessageComposer::ReplyStrategy str
             return;
         }
         const QString text = messageView()->copyText();
-        KMCommand *command = new KMReplyCommand(this, currentItem, strategy, text);
+        KMReplyCommand *command = new KMReplyCommand(this, currentItem, strategy, text);
         command->start();
     }
 }
@@ -4651,8 +4651,7 @@ void KMMainWidget::slotReplyMessageTo(const KMime::Message::Ptr &message, bool r
     Akonadi::Item item;
 
     item.setPayload<KMime::Message::Ptr>(message);
-    Akonadi::MessageFlags::copyMessageFlags(*message, item);
     item.setMimeType(KMime::Message::mimeType());
-    KMCommand *command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
+    KMReplyCommand *command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
     command->start();
 }
