@@ -1170,7 +1170,6 @@ void KMPrintCommand::setPrintPreview(bool preview)
 
 KMCommand::Result KMPrintCommand::execute()
 {
-    // the window will be deleted after printout is performed, in KMReaderWin::slotPrintMsg()
     KMReaderWin *printerWin = new KMReaderWin(Q_NULLPTR, kmkernel->mainWin(), Q_NULLPTR);
     printerWin->setPrinting(true);
     printerWin->readConfig();

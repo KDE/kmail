@@ -67,13 +67,13 @@ public:
 
     void setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy);
 
-    /** Get selected Q_DECL_OVERRIDE character encoding.
+    /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
       is selected. */
     QString overrideEncoding() const;
-    /** Set the Q_DECL_OVERRIDE character encoding. */
+    /** Set the override character encoding. */
     void setOverrideEncoding(const QString &encoding);
-    virtual void setPrinting(bool enable);
+    void setPrinting(bool enable);
 
     void setMessage(const Akonadi::Item &item, MimeTreeParser::UpdateMode updateMode = MimeTreeParser::Delayed);
 
@@ -214,6 +214,7 @@ public Q_SLOTS:
     void slotContactHtmlOptions();
     void slotShareImage();
     void slotMailToAddToExistingContact();
+    void slotPrintingFinished();
 
 protected:
     QUrl urlClicked() const;

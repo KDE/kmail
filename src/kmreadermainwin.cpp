@@ -291,8 +291,8 @@ void KMReaderMainWin::slotRedirectMessage()
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = new KMRedirectCommand(this, currentItem);
-    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
+    KMRedirectCommand *command = new KMRedirectCommand(this, currentItem);
+    connect(command, &KMRedirectCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 

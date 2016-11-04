@@ -119,6 +119,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     connect(mViewer, &MessageViewer::Viewer::showReader, this, &KMReaderWin::slotShowReader);
     connect(mViewer, &MessageViewer::Viewer::showMessage, this, &KMReaderWin::slotShowMessage);
     connect(mViewer, &MessageViewer::Viewer::showStatusBarMessage, this, &KMReaderWin::showStatusBarMessage);
+    connect(mViewer, &MessageViewer::Viewer::printingFinished, this, &KMReaderWin::slotPrintingFinished);
     connect(mViewer, SIGNAL(deleteMessage(Akonadi::Item)), this, SLOT(slotDeleteMessage(Akonadi::Item)));
 
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
@@ -414,9 +415,9 @@ void KMReaderWin::setDisplayFormatMessageOverwrite(MessageViewer::Viewer::Displa
     mViewer->setDisplayFormatMessageOverwrite(format);
 }
 
-void KMReaderWin::setHtmlLoadExtOverride(bool Q_DECL_OVERRIDE)
+void KMReaderWin::setHtmlLoadExtOverride(bool override)
 {
-    mViewer->setHtmlLoadExtOverride(Q_DECL_OVERRIDE);
+    mViewer->setHtmlLoadExtOverride(override);
 }
 
 bool KMReaderWin::htmlMail() const
@@ -895,4 +896,11 @@ void KMReaderWin::slotShareImage()
 QList<QAction *> KMReaderWin::interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const
 {
     return mViewer->interceptorUrlActions(result);
+}
+
+void KMReaderWin::slotPrintingFinished()
+{
+    if (mViewer->printingMode()) {
+        deleteLater();
+    }
 }
