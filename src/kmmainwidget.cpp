@@ -1619,8 +1619,9 @@ void KMMainWidget::slotForwardInlineMsg()
     if (selectedMessages.isEmpty()) {
         return;
     }
+    const QString text = mMsgView ? mMsgView->copyText() : QString();
     KMForwardCommand *command = new KMForwardCommand(
-        this, selectedMessages, mCurrentFolder->identity()
+        this, selectedMessages, mCurrentFolder->identity(), QString(), text
     );
 
     command->start();
@@ -2093,10 +2094,10 @@ void KMMainWidget::slotCustomForwardMsg(const QString &tmpl)
     if (selectedMessages.isEmpty()) {
         return;
     }
-
+    const QString text = mMsgView ? mMsgView->copyText() : QString();
     qCDebug(KMAIL_LOG) << "Forward with template:" << tmpl;
     KMForwardCommand *command = new KMForwardCommand(
-        this, selectedMessages, mCurrentFolder->identity(), tmpl
+        this, selectedMessages, mCurrentFolder->identity(), tmpl, text
     );
 
     command->start();

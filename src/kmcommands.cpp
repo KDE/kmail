@@ -896,20 +896,22 @@ KMCommand::Result KMReplyCommand::execute()
 }
 
 KMForwardCommand::KMForwardCommand(QWidget *parent,
-                                   const Akonadi::Item::List &msgList, uint identity, const QString &templateName)
+                                   const Akonadi::Item::List &msgList, uint identity, const QString &templateName, const QString &selection)
     : KMCommand(parent, msgList),
       mIdentity(identity),
-      mTemplate(templateName)
+      mTemplate(templateName),
+      mSelection(selection)
 {
     fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
 
 KMForwardCommand::KMForwardCommand(QWidget *parent, const Akonadi::Item &msg,
-                                   uint identity, const QString &templateName)
+                                   uint identity, const QString &templateName, const QString &selection)
     : KMCommand(parent, msg),
       mIdentity(identity),
-      mTemplate(templateName)
+      mTemplate(templateName),
+      mSelection(selection)
 {
     fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
@@ -927,6 +929,7 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
     MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
+    factory.setSelection(mSelection);
     if (!mTemplate.isEmpty()) {
         factory.setTemplate(mTemplate);
     }

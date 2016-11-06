@@ -338,9 +338,9 @@ class  KMForwardCommand : public KMCommand
 
 public:
     KMForwardCommand(QWidget *parent, const Akonadi::Item::List &msgList,
-                     uint identity = 0, const QString &templateName = QString());
+                     uint identity = 0, const QString &templateName = QString(), const QString &selection = QString());
     KMForwardCommand(QWidget *parent, const Akonadi::Item &msg,
-                     uint identity = 0, const QString &templateName = QString());
+                     uint identity = 0, const QString &templateName = QString(), const QString &selection = QString());
 
 private:
     KMCommand::Result createComposer(const Akonadi::Item &item);
@@ -349,6 +349,7 @@ private:
 private:
     uint mIdentity;
     QString mTemplate;
+    QString mSelection;
 };
 
 class  KMForwardAttachedCommand : public KMCommand

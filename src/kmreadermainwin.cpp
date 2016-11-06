@@ -251,12 +251,12 @@ void KMReaderMainWin::slotForwardInlineMsg()
         QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCol, false);
         if (fd)
             command = new KMForwardCommand(this, mReaderWin->message(),
-                                           fd->identity());
+                                           fd->identity(), QString(), mReaderWin->copyText());
         else {
-            command = new KMForwardCommand(this, mReaderWin->message());
+            command = new KMForwardCommand(this, mReaderWin->message(), 0, QString(), mReaderWin->copyText());
         }
     } else {
-        command = new KMForwardCommand(this, mReaderWin->message());
+        command = new KMForwardCommand(this, mReaderWin->message(), 0, QString(), mReaderWin->copyText());
     }
     connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
@@ -335,7 +335,7 @@ void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
     }
     KMForwardCommand *command = new KMForwardCommand(this,
             currentItem,
-            0, tmpl);
+            0, tmpl, mReaderWin->copyText());
     connect(command, &KMForwardCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();
