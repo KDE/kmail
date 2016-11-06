@@ -11,7 +11,6 @@ using KPIM::BroadcastStatus;
 #include "editor/composer.h"
 #include "kmreadermainwin.h"
 #include "undostack.h"
-#include "kmreaderwin.h"
 #include "kmmainwidget.h"
 #include "search/checkindexingmanager.h"
 #include "libkdepim/recentaddresses.h"
