@@ -1186,7 +1186,7 @@ KMCommand::Result KMPrintCommand::execute()
     printerWin->setOverrideEncoding(mEncoding);
     printerWin->cssHelper()->setPrintFont(mOverrideFont);
     printerWin->setDecryptMessageOverwrite(true);
-    if (mAttachmentStrategy != Q_NULLPTR) {
+    if (mAttachmentStrategy) {
         printerWin->setAttachmentStrategy(mAttachmentStrategy);
     }
     if (mPrintPreview) {
