@@ -92,6 +92,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
 
     connect(mSGTab.mScamDetection, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
 
+    connect(mSGTab.mCheckUrl, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
     connect(mSGTab.scamWhiteList, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     mSGTab.scamWhiteList->setAddDialogLabel(i18n("Email Address:"));
 }
@@ -114,6 +115,7 @@ void SecurityPage::GeneralTab::doLoadOther()
 
     loadWidget(mSGTab.mScamDetection, MessageViewer::MessageViewerSettings::self()->scamDetectionEnabledItem());
     loadWidget(mSGTab.scamWhiteList, MessageViewer::MessageViewerSettings::self()->scamDetectionWhiteListItem());
+    loadWidget(mSGTab.mCheckUrl, MessageViewer::MessageViewerSettings::self()->checkPhishingUrlItem());
 }
 
 void SecurityPage::GeneralTab::save()
@@ -140,6 +142,7 @@ void SecurityPage::GeneralTab::save()
     saveCheckBox(mSGTab.mAlwaysDecrypt, MessageViewer::MessageViewerSettings::self()->alwaysDecryptItem());
     saveCheckBox(mSGTab.mScamDetection, MessageViewer::MessageViewerSettings::self()->scamDetectionEnabledItem());
     saveSimpleStringListEditor(mSGTab.scamWhiteList, MessageViewer::MessageViewerSettings::self()->scamDetectionWhiteListItem());
+    saveCheckBox(mSGTab.mCheckUrl, MessageViewer::MessageViewerSettings::self()->checkPhishingUrlItem());
 }
 
 QString SecurityPage::MDNTab::helpAnchor() const

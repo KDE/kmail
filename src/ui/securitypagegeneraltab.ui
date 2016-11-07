@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>757</width>
-    <height>508</height>
+    <width>818</width>
+    <height>602</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -104,7 +104,7 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -126,7 +126,7 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="3" column="1">
     <widget class="QGroupBox" name="groupBox_4">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -142,6 +142,22 @@
        <widget class="QCheckBox" name="mAutomaticallyImportAttachedKeysCheck">
         <property name="text">
          <string>Automatically import keys and certificate</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="title">
+      <string>Safe Browsing</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="mCheckUrl">
+        <property name="text">
+         <string>Check Url</string>
         </property>
        </widget>
       </item>
