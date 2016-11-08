@@ -78,7 +78,6 @@ KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage for
     : KMail::SecondaryWindow(name ? name : "readerwindow#")
 {
     mReaderWin = new KMReaderWin(this, this, actionCollection());
-    //mReaderWin->setShowCompleteMessage( true );
     mReaderWin->setDisplayFormatMessageOverwrite(format);
     mReaderWin->setHtmlLoadExtOverride(htmlLoadExtOverride);
     mReaderWin->setDecryptMessageOverwrite(true);
