@@ -283,13 +283,12 @@ static const int numKMailChanges =
 // automatically below:
 static const char *const kmailNewFeatures[] = {
     I18N_NOOP("Push email (IMAP IDLE)"),
-    I18N_NOOP("Improved virtual folders"),
     I18N_NOOP("Improved searches"),
     I18N_NOOP("Support for adding notes (annotations) to mails"),
-    I18N_NOOP("Tag folders"),
     I18N_NOOP("Less GUI freezes, mail checks happen in the background"),
     I18N_NOOP("Plugins support"),
-    I18N_NOOP("New HTML renderer (QtWebEngine)")
+    I18N_NOOP("New HTML renderer (QtWebEngine)"),
+    I18N_NOOP("Check Phishing Url added"),
 };
 static const int numKMailNewFeatures =
     sizeof kmailNewFeatures / sizeof * kmailNewFeatures;
