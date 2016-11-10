@@ -110,6 +110,10 @@ bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCom
         if (!cc.isEmpty()) {
             msg->cc()->fromUnicodeString(cc, "utf-8");
         }
+        const QString bcc = fields.value(QStringLiteral("bcc"));
+        if (!bcc.isEmpty()) {
+            msg->bcc()->fromUnicodeString(bcc, "utf-8");
+        }
         const QString attach = fields.value(QStringLiteral("attach"));
         if (!attach.isEmpty()) {
             //TODO
