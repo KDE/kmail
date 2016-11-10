@@ -98,14 +98,21 @@ bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCom
         QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl(url);
 
         msg->to()->fromUnicodeString(fields.value(QStringLiteral("to")), "utf-8");
-        if (!fields.value(QStringLiteral("subject")).isEmpty()) {
-            msg->subject()->fromUnicodeString(fields.value(QStringLiteral("subject")), "utf-8");
+        const QString subject = fields.value(QStringLiteral("subject"));
+        if (!subject.isEmpty()) {
+            msg->subject()->fromUnicodeString(subject, "utf-8");
         }
-        if (!fields.value(QStringLiteral("body")).isEmpty()) {
-            msg->setBody(fields.value(QStringLiteral("body")).toUtf8());
+        const QString body = fields.value(QStringLiteral("body"));
+        if (!body.isEmpty()) {
+            msg->setBody(body.toUtf8());
         }
-        if (!fields.value(QStringLiteral("cc")).isEmpty()) {
-            msg->cc()->fromUnicodeString(fields.value(QStringLiteral("cc")), "utf-8");
+        const QString cc = fields.value(QStringLiteral("cc"));
+        if (!cc.isEmpty()) {
+            msg->cc()->fromUnicodeString(cc, "utf-8");
+        }
+        const QString attach = fields.value(QStringLiteral("attach"));
+        if (!attach.isEmpty()) {
+            //TODO
         }
 
         if (!folder.isNull()) {
