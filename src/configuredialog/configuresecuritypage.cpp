@@ -20,6 +20,7 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messageviewer/messageviewersettings.h"
 #include "MessageComposer/MessageComposerSettings"
+#include <WebEngineViewer/CheckPhishingUrlCache>
 #include <MailCommon/FolderCollection>
 #include "settings/kmailsettings.h"
 
@@ -143,6 +144,9 @@ void SecurityPage::GeneralTab::save()
     saveCheckBox(mSGTab.mScamDetection, MessageViewer::MessageViewerSettings::self()->scamDetectionEnabledItem());
     saveSimpleStringListEditor(mSGTab.scamWhiteList, MessageViewer::MessageViewerSettings::self()->scamDetectionWhiteListItem());
     saveCheckBox(mSGTab.mCheckUrl, MessageViewer::MessageViewerSettings::self()->checkPhishingUrlItem());
+    if (!mSGTab.mCheckUrl->isChecked()) {
+        WebEngineViewer::CheckPhishingUrlCache::self()->clearCache();
+    }
 }
 
 QString SecurityPage::MDNTab::helpAnchor() const
