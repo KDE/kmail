@@ -341,7 +341,6 @@ void FilterLogDialog::slotUser1()
 
 void FilterLogDialog::slotUser2()
 {
-    QUrl url;
     QScopedPointer<QFileDialog> fdlg(new QFileDialog(this));
 
     fdlg->setAcceptMode(QFileDialog::AcceptSave);

@@ -415,7 +415,7 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
 void KMReaderMainWin::slotMoveItem(QAction *action)
 {
     if (action) {
-        const QModelIndex index = action->data().value<QModelIndex>();
+        const QModelIndex index = action->data().toModelIndex();
         const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         copyOrMoveItem(collection, true);
     }
@@ -440,7 +440,7 @@ void KMReaderMainWin::copyOrMoveItem(const Akonadi::Collection &collection, bool
 void KMReaderMainWin::slotCopyItem(QAction *action)
 {
     if (action) {
-        const QModelIndex index = action->data().value<QModelIndex>();
+        const QModelIndex index = action->data().toModelIndex();
         const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         copyOrMoveItem(collection, false);
     }
