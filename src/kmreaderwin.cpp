@@ -288,7 +288,7 @@ static const char *const kmailNewFeatures[] = {
     I18N_NOOP("Less GUI freezes, mail checks happen in the background"),
     I18N_NOOP("Plugins support"),
     I18N_NOOP("New HTML renderer (QtWebEngine)"),
-    I18N_NOOP("Check Phishing Url added"),
+    I18N_NOOP("Added Check for Phishing URL"),
 };
 static const int numKMailNewFeatures =
     sizeof kmailNewFeatures / sizeof * kmailNewFeatures;
