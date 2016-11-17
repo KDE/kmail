@@ -394,7 +394,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(editor, &KMComposerEditorNg::languageChanged, this, &KMComposerWin::slotDictionaryLanguageChanged);
     connect(editor, &KMComposerEditorNg::spellCheckStatus, this, &KMComposerWin::slotSpellCheckingStatus);
     connect(editor, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
-    connect(editor, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotCheckSendNow);
+    connect(editor, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
     mSnippetWidget = new SnippetWidget(editor, actionCollection(), mSnippetSplitter);
     mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
@@ -2723,6 +2723,11 @@ void KMComposerWin::slotCheckSendNowStep2()
         }
         doSend(MessageComposer::MessageSender::SendImmediate);
     }
+}
+
+void KMComposerWin::slotDelayedCheckSendNow()
+{
+    QTimer::singleShot(0, this, &KMComposerWin::slotCheckSendNow);
 }
 
 void KMComposerWin::slotCheckSendNow()
