@@ -394,7 +394,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(editor, &KMComposerEditorNg::languageChanged, this, &KMComposerWin::slotDictionaryLanguageChanged);
     connect(editor, &KMComposerEditorNg::spellCheckStatus, this, &KMComposerWin::slotSpellCheckingStatus);
     connect(editor, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
-    connect(editor, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotCheckSendNow);
+    connect(editor, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
     mSnippetWidget = new SnippetWidget(editor, actionCollection(), mSnippetSplitter);
     mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
@@ -2725,6 +2725,11 @@ void KMComposerWin::slotCheckSendNowStep2()
     }
 }
 
+void KMComposerWin::slotDelayedCheckSendNow()
+{
+    QTimer::singleShot(0, this, &KMComposerWin::slotCheckSendNow);
+}
+
 void KMComposerWin::slotCheckSendNow()
 {
     PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob(this);
@@ -3317,6 +3322,12 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
         return;
     }
 
+    const auto protocol = QGpgME::openpgp();
+    // If we don't have gnupg we can't look for keys
+    if (!protocol) {
+        return;
+    }
+
     auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
     // check if is an already running key lookup job and if so, cancel it
     // this is to prevent a slower job overwriting results of the job that we
@@ -3328,7 +3339,6 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
         line->setProperty("keyLookupJob", QVariant());
     }
 
-    const auto protocol = QGpgME::openpgp();
     QGpgME::KeyForMailboxJob *job = protocol->keyForMailboxJob();
     if (!job) {
         line->setProperty("keyStatus", NoKey);

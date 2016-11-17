@@ -419,6 +419,7 @@ private Q_SLOTS:
     void slotRecipientFocusLost(MessageComposer::RecipientLineNG *line);
     void slotKeyForMailBoxResult(const GpgME::KeyListResult &result, const GpgME::Key &key, const GpgME::UserID &userID);
 
+    void slotDelayedCheckSendNow();
 public: // kmcommand
     void addAttach(KMime::Content *msgPart) Q_DECL_OVERRIDE;
 

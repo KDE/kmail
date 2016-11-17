@@ -196,7 +196,7 @@
    <item row="3" column="0" colspan="2">
     <widget class="QLabel" name="mMimeLabel">
      <property name="text">
-      <string>Mime type:</string>
+      <string>MIME type:</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
