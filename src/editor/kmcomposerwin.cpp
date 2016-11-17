@@ -3317,6 +3317,12 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
         return;
     }
 
+    const auto protocol = QGpgME::openpgp();
+    // If we don't have gnupg we can't look for keys
+    if (!protocol) {
+        return;
+    }
+
     auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
     // check if is an already running key lookup job and if so, cancel it
     // this is to prevent a slower job overwriting results of the job that we
@@ -3328,7 +3334,6 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
         line->setProperty("keyLookupJob", QVariant());
     }
 
-    const auto protocol = QGpgME::openpgp();
     QGpgME::KeyForMailboxJob *job = protocol->keyForMailboxJob();
     if (!job) {
         line->setProperty("keyStatus", NoKey);
