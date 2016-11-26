@@ -63,13 +63,13 @@ void FolderArchiveAgentJob::start()
         } else {
             FolderArchiveAgentCheckCollection *checkCol = new FolderArchiveAgentCheckCollection(mInfo, this);
             connect(checkCol, &FolderArchiveAgentCheckCollection::collectionIdFound, this, &FolderArchiveAgentJob::slotCollectionIdFound);
-            connect(checkCol, &FolderArchiveAgentCheckCollection::checkFailed, this, &FolderArchiveAgentJob::slotCheckFailder);
+            connect(checkCol, &FolderArchiveAgentCheckCollection::checkFailed, this, &FolderArchiveAgentJob::slotCheckFailed);
             checkCol->start();
         }
     }
 }
 
-void FolderArchiveAgentJob::slotCheckFailder(const QString &message)
+void FolderArchiveAgentJob::slotCheckFailed(const QString &message)
 {
     sendError(i18n("Cannot fetch collection. %1", message));
 }
