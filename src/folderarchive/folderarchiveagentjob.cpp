@@ -97,9 +97,13 @@ void FolderArchiveAgentJob::slotCollectionIdFound(const Akonadi::Collection &col
 
 void FolderArchiveAgentJob::sloMoveMailsToCollection(const Akonadi::Collection &col)
 {
-    KMMoveCommand *command = new KMMoveCommand(col, mListItem, -1);
-    connect(command, &KMMoveCommand::moveDone, this, &FolderArchiveAgentJob::slotMoveMessages);
-    command->start();
+    if (Akonadi::Collection::CanCreateItem & col.rights()) {
+        KMMoveCommand *command = new KMMoveCommand(col, mListItem, -1);
+        connect(command, &KMMoveCommand::moveDone, this, &FolderArchiveAgentJob::slotMoveMessages);
+        command->start();
+    } else {
+        sendError(i18n("This folder %1 is read only. Please verify the configuration of account %2", col.name(), mInfo->instanceName()));
+    }
 }
 
 void FolderArchiveAgentJob::sendError(const QString &error)
