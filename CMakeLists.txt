@@ -28,7 +28,6 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMAddAppIcon)
 include(ECMQtDeclareLoggingCategory)
 include(ECMCoverageOption)
-include(ECMEnableSanitizers)
 
 # Do NOT add quote
 set(KDEPIM_DEV_VERSION )
