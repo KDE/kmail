@@ -265,7 +265,8 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
         return;
     }  else if (type == QLatin1String("generate-new-key")) {
         auto job = new KeyGenerationJob(mName, mEmail, this);
-        new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
+        auto dlg = new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
+        dlg->setModal(true);
         setEnabled(false);
         connect(job, &KeyGenerationJob::done,
         this, [this]() {
