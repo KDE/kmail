@@ -80,7 +80,8 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
     if (!mMainWidget->currentFolder()) {
         return;
     }
-    const Akonadi::Collection::Id id = mMainWidget->currentFolder()->collection().id();
+    const Akonadi::Collection col = mMainWidget->currentFolder()->collection();
+    const Akonadi::Collection::Id id = col.id();
     QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id);
     if (dlg) {
         if (!pageToShow.isEmpty()) {
@@ -91,7 +92,7 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
         return;
     }
     if (!KMKernel::self()->isOffline()) {
-        const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(mMainWidget->currentFolder()->collection().resource());
+        const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(col.resource());
         bool isOnline = agentInstance.isOnline();
         if (!isOnline) {
             showCollectionPropertiesContinued(pageToShow, QPointer<KPIM::ProgressItem>());
@@ -101,7 +102,7 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
             progressItem->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
             Akonadi::CollectionAttributesSynchronizationJob *sync
-                = new Akonadi::CollectionAttributesSynchronizationJob(mMainWidget->currentFolder()->collection());
+                = new Akonadi::CollectionAttributesSynchronizationJob(col);
             sync->setProperty("collectionId", id);
             sync->setProperty("pageToShow", pageToShow);          // note for dialog later
             sync->setProperty("progressItem", QVariant::fromValue(progressItem));
