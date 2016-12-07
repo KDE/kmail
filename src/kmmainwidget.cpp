@@ -1880,14 +1880,16 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
 
     // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
     // And stuff them into a KMTrashMsgCommand :)
-    KMCommand *command = new KMTrashMsgCommand(mCurrentFolder->collection(), select, ref);
+    KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentFolder->collection(), select, ref);
 
     QObject::connect(
         command, SIGNAL(moveDone(KMMoveCommand*)),
         this, SLOT(slotTrashMessagesCompleted(KMMoveCommand*))
     );
     command->start();
-    BroadcastStatus::instance()->setStatusMsg(i18n("Moving messages to trash..."));
+    bool moveToTrash = command->destFolder().isValid();
+    BroadcastStatus::instance()->setStatusMsg(moveToTrash ? i18n("Moving messages to trash...") : i18n("Deleting messages..."));
+
 }
 
 void KMMainWidget::slotTrashMessagesCompleted(KMMoveCommand *command)
@@ -1895,13 +1897,14 @@ void KMMainWidget::slotTrashMessagesCompleted(KMMoveCommand *command)
     Q_ASSERT(command);
     mMessagePane->markMessageItemsAsAboutToBeRemoved(command->refSet(), false);
     mMessagePane->deletePersistentSet(command->refSet());
+    bool moveToTrash = command->destFolder().isValid();
     if (command->result() == KMCommand::OK) {
-        BroadcastStatus::instance()->setStatusMsg(i18n("Messages moved to trash successfully."));
+        BroadcastStatus::instance()->setStatusMsg(moveToTrash ? i18n("Messages moved to trash successfully.") : i18n("Messages deleted successfully."));
     } else {
         if (command->result() == KMCommand::Failed) {
-            BroadcastStatus::instance()->setStatusMsg(i18n("Moving messages to trash failed."));
+            BroadcastStatus::instance()->setStatusMsg(moveToTrash ? i18n("Moving messages to trash failed.") : i18n("Deleting messages failed."));
         } else {
-            BroadcastStatus::instance()->setStatusMsg(i18n("Moving messages to trash canceled."));
+            BroadcastStatus::instance()->setStatusMsg(moveToTrash ? i18n("Moving messages to trash canceled.") : i18n("Deleting messages canceled."));
         }
     }
 
