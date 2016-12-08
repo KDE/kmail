@@ -53,6 +53,7 @@ set(KONTACTINTERFACE_LIB_VERSION "5.4.40")
 set(KMIME_LIB_VERSION "5.4.40")
 set(KPIMTEXTEDIT_LIB_VERSION "5.4.40")
 set(AKONADI_VERSION "5.4.40")
+set(KTNEF_LIB_VERSION "5.4.40")
 
 set(KDEPIM_LIB_VERSION "${KDEPIM_VERSION_NUMBER}")
 set(KDEPIM_LIB_SOVERSION "5")
@@ -132,6 +133,7 @@ find_package(KF5MessageViewer ${MESSAGELIB_LIB_VERSION_LIB} CONFIG REQUIRED)
 find_package(KF5PimCommon ${PIMCOMMON_LIB_VERSION_LIB} CONFIG REQUIRED)
 find_package(KF5SendLater ${KDEPIM_APPS_LIB_VERSION_LIB} CONFIG REQUIRED)
 find_package(KF5TemplateParser ${MESSAGELIB_LIB_VERSION_LIB} CONFIG REQUIRED)
+find_package(KF5Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
 find_package(MailTransportDBusService CONFIG REQUIRED)
 
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
@@ -152,6 +154,7 @@ add_definitions( -DQT_NO_CAST_TO_ASCII )
 
 add_subdirectory(src)
 add_subdirectory(agents)
+add_subdirectory(ktnef)
 
 install( FILES kmail.renamecategories kmail.categories DESTINATION ${KDE_INSTALL_CONFDIR} )
 
