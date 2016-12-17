@@ -220,7 +220,7 @@ void XFaceConfigurator::slotSelectFile()
 {
     const QList<QByteArray> mimeTypes = QImageReader::supportedImageFormats();
     QString filter;
-    Q_FOREACH (const QByteArray &mime, mimeTypes) {
+    for (const QByteArray &mime : mimeTypes) {
         filter += QString::fromLatin1(mime);
     }
     const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QUrl(), i18n("Image (%1)", filter));

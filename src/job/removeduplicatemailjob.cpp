@@ -50,10 +50,10 @@ void RemoveDuplicateMailJob::start()
     item->setUsesBusyIndicator(true);
     item->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
-    QModelIndexList indexes = mSelectionModel->selectedIndexes();
+    const QModelIndexList indexes = mSelectionModel->selectedIndexes();
     Akonadi::Collection::List collections;
 
-    Q_FOREACH (const QModelIndex &index, indexes) {
+    for (const QModelIndex &index : indexes) {
         const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         if (collection.isValid()) {
             collections << collection;

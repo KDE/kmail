@@ -227,7 +227,7 @@ void FollowUpReminderInfoWidget::removeItem(const QList<QTreeWidgetItem *> &mail
         qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "Not item selected";
     } else {
         if (KMessageBox::Yes == KMessageBox::warningYesNo(this, i18n("Do you want to remove selected item?"))) {
-            Q_FOREACH (QTreeWidgetItem *item, mailItemLst) {
+            for (QTreeWidgetItem *item : mailItemLst) {
                 FollowUpReminderInfoItem *mailItem = static_cast<FollowUpReminderInfoItem *>(item);
                 mListRemoveId << mailItem->info()->uniqueIdentifier();
                 delete mailItem;

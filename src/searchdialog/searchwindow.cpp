@@ -347,7 +347,7 @@ void SearchWindow::activateFolder(const Akonadi::Collection &collection)
             if (!lst.isEmpty()) {
                 mUi.mChkMultiFolders->setChecked(true);
                 mCollectionId.clear();
-                Q_FOREACH (Akonadi::Collection::Id col, lst) {
+                for (Akonadi::Collection::Id col : lst) {
                     mCollectionId.append(Akonadi::Collection(col));
                 }
             } else {

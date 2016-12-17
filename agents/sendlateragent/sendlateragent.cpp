@@ -166,7 +166,7 @@ void SendLaterAgent::showConfigureDialog(qlonglong windowId)
 
 void SendLaterAgent::itemsRemoved(const Akonadi::Item::List &items)
 {
-    Q_FOREACH (const Akonadi::Item &item, items) {
+    for (const Akonadi::Item &item : items) {
         mManager->itemRemoved(item.id());
     }
 }

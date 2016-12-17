@@ -805,7 +805,7 @@ void KMReaderWin::updateHtmlActions()
         mViewAsHtml->setChecked(false);
     } else {
         const QStringList customs = mSearchedAddress.customs();
-        Q_FOREACH (const QString &custom, customs) {
+        for (const QString &custom : customs) {
             if (custom.contains(QStringLiteral("MailPreferedFormatting"))) {
                 const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailPreferedFormatting"));
                 mViewAsHtml->setChecked(value == QLatin1String("HTML"));

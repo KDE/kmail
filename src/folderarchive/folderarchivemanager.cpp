@@ -165,7 +165,7 @@ void FolderArchiveManager::load()
 
     KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     const QStringList accountList = config.groupList().filter(QRegularExpression(FolderArchive::FolderArchiveUtil::groupConfigPattern()));
-    Q_FOREACH (const QString &account, accountList) {
+    for (const QString &account : accountList) {
         KConfigGroup group = config.group(account);
         FolderArchiveAccountInfo *info = new FolderArchiveAccountInfo(group);
         if (info->enabled()) {

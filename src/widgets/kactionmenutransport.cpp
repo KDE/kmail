@@ -51,7 +51,7 @@ void KActionMenuTransport::updateTransportMenu()
         const QList<MailTransport::Transport *> transports = MailTransport::TransportManager::self()->transports();
         QMap<QString, int> menuTransportLst;
 
-        Q_FOREACH (MailTransport::Transport *transport, transports) {
+        for (MailTransport::Transport *transport : transports) {
             const QString name = transport->name().replace(QLatin1Char('&'), QStringLiteral("&&"));
             menuTransportLst.insert(name, transport->id());
         }

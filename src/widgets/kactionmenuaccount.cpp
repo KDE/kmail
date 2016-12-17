@@ -94,7 +94,7 @@ void KActionMenuAccount::updateAccountMenu()
         QVector<AgentIdentifier> agentIdentifierList;
         agentIdentifierList.reserve(lst.count());
 
-        Q_FOREACH (const Akonadi::AgentInstance &type, lst) {
+        for (const Akonadi::AgentInstance &type : lst) {
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
             const QString identifierName = type.identifier();

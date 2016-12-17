@@ -49,7 +49,7 @@ void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
 {
     mListWidget->clear();
     QStringList emailsAdded;
-    Q_FOREACH (const QString &mail, lst) {
+    for (const QString &mail : lst) {
         if (!emailsAdded.contains(mail)) {
             QListWidgetItem *item = new QListWidgetItem(mListWidget);
             item->setCheckState(Qt::Unchecked);

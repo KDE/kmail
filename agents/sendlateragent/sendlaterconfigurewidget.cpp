@@ -225,7 +225,7 @@ void SendLaterWidget::slotRemoveItem()
         removeMessage = true;
     }
 
-    Q_FOREACH (QTreeWidgetItem *item, listItems) {
+    for (QTreeWidgetItem *item : listItems) {
         if (removeMessage) {
             SendLaterItem *mailItem = static_cast<SendLaterItem *>(item);
             if (mailItem->info()) {
