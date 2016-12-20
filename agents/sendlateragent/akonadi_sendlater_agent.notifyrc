@@ -41,7 +41,6 @@ Comment[zh_TW]=稍後傳送代理程式
 
 [Event/mailsend]
 Name=Mail is sent
-Name[ast]=Unvióse'l corréu
 Name[bs]=Pošta je poslana
 Name[ca]=S'ha enviat el correu
 Name[ca@valencia]=S'ha enviat el correu
