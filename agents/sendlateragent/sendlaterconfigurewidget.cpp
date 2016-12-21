@@ -192,7 +192,7 @@ void SendLaterWidget::save()
     // first, delete all filter groups:
     const QStringList filterGroups = config->groupList().filter(QRegularExpression(sendLaterItemPattern()));
 
-    foreach (const QString &group, filterGroups) {
+    for (const QString &group : filterGroups) {
         config->deleteGroup(group);
     }
 

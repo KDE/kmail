@@ -1319,7 +1319,7 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
     QList<MailCommon::TagPtr> msgTagList;
     const Akonadi::Tag::List tagList = fetchJob->tags();
     msgTagList.reserve(tagList.count());
-    foreach (const Akonadi::Tag &akonadiTag, tagList) {
+    for (const Akonadi::Tag &akonadiTag : tagList) {
         MailCommon::Tag::Ptr tag = MailCommon::Tag::fromAkonadi(akonadiTag);
         msgTagList.append(tag);
     }

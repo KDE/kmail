@@ -1117,18 +1117,17 @@ void KMMainWidget::createWidgets()
         }
     }
 
-    QList<StandardMailActionManager::Type> mailActions;
-    mailActions << StandardMailActionManager::MarkAllMailAsRead
-                << StandardMailActionManager::MoveToTrash
-                << StandardMailActionManager::MoveAllToTrash
-                << StandardMailActionManager::RemoveDuplicates
-                << StandardMailActionManager::EmptyAllTrash
-                << StandardMailActionManager::MarkMailAsRead
-                << StandardMailActionManager::MarkMailAsUnread
-                << StandardMailActionManager::MarkMailAsImportant
-                << StandardMailActionManager::MarkMailAsActionItem;
+    const QList<StandardMailActionManager::Type> mailActions = { StandardMailActionManager::MarkAllMailAsRead
+                , StandardMailActionManager::MoveToTrash
+                , StandardMailActionManager::MoveAllToTrash
+                , StandardMailActionManager::RemoveDuplicates
+                , StandardMailActionManager::EmptyAllTrash
+                , StandardMailActionManager::MarkMailAsRead
+                , StandardMailActionManager::MarkMailAsUnread
+                , StandardMailActionManager::MarkMailAsImportant
+                , StandardMailActionManager::MarkMailAsActionItem };
 
-    Q_FOREACH (StandardMailActionManager::Type mailAction, mailActions) {
+    for (StandardMailActionManager::Type mailAction : mailActions) {
         mAkonadiStandardActionManager->createAction(mailAction);
     }
 
@@ -4284,8 +4283,8 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             searchStringVal = "<message>";
         }
         pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, searchString));
-        QList<MessageStatus> statusList = mMessagePane->currentFilterStatus();
-        Q_FOREACH (MessageStatus status, statusList) {
+        const QList<MessageStatus> statusList = mMessagePane->currentFilterStatus();
+        for (MessageStatus status : statusList) {
             if (status.hasAttachment()) {
                 pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, searchString));
                 status.setHasAttachment(false);

@@ -77,7 +77,7 @@ void CodecManager::updatePreferredCharsets()
 {
     const QStringList prefCharsets = MessageComposer::MessageComposerSettings::self()->preferredCharsets();
     d->preferredCharsets.clear();
-    foreach (const QString &str, prefCharsets) {
+    for (const QString &str : prefCharsets) {
         QByteArray charset = str.toLatin1().toLower();
 
         if (charset == "locale") {

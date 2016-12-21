@@ -1945,7 +1945,7 @@ QString KMComposerWin::smartQuote(const QString &msg)
 void KMComposerWin::insertUrls(const QMimeData *source, const QList<QUrl> &urlList)
 {
     QStringList urlAdded;
-    foreach (const QUrl &url, urlList) {
+    for (const QUrl &url : urlList) {
         QString urlStr;
         if (url.scheme() == QLatin1String("mailto")) {
             urlStr = KEmailAddress::decodeMailtoUrl(url);

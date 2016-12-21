@@ -116,7 +116,7 @@ void AttachmentController::selectionChanged()
     const QModelIndexList selectedRows = mView->selectionModel()->selectedRows();
     AttachmentPart::List selectedParts;
     selectedParts.reserve(selectedRows.count());
-    foreach (const QModelIndex &index, selectedRows) {
+    for (const QModelIndex &index : selectedRows) {
         AttachmentPart::Ptr part = mView->model()->data(
                                        index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
         selectedParts.append(part);

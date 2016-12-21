@@ -613,7 +613,7 @@ void MessageActions::slotPrintMessage()
  */
 void MessageActions::addMailingListActions(const QString &item, const QList<QUrl> &list)
 {
-    foreach (const QUrl &url, list) {
+    for (const QUrl &url : list) {
         addMailingListAction(item, url);
     }
 }

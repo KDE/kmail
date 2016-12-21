@@ -271,7 +271,8 @@ QString MailFilterAgent::createUniqueName(const QString &nameTemplate)
 void MailFilterAgent::filterItems(const QList< qint64 > &itemIds, int filterSet)
 {
     Akonadi::Item::List items;
-    foreach (qint64 id, itemIds) {
+    items.reserve(itemIds.count());
+    for (qint64 id : itemIds) {
         items << Akonadi::Item(id);
     }
 
@@ -281,7 +282,8 @@ void MailFilterAgent::filterItems(const QList< qint64 > &itemIds, int filterSet)
 void MailFilterAgent::applySpecificFilters(const QList< qint64 > &itemIds, int requires, const QStringList &listFilters)
 {
     Akonadi::Item::List items;
-    foreach (qint64 id, itemIds) {
+    items.reserve(itemIds.count());
+    for (qint64 id : itemIds) {
         items << Akonadi::Item(id);
     }
 
@@ -300,8 +302,8 @@ void MailFilterAgent::filter(qint64 item, const QString &filterIdentifier, const
 
 void MailFilterAgent::reload()
 {
-    Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored();
-    foreach (const Akonadi::Collection &collection, collections) {
+    const Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored();
+    for (const Akonadi::Collection &collection : collections) {
         changeRecorder()->setCollectionMonitored(collection, false);
     }
     initializeCollections();
@@ -341,11 +343,11 @@ void MailFilterAgent::emitProgressMessage(const QString &message)
 QString MailFilterAgent::printCollectionMonitored()
 {
     QString printDebugCollection;
-    Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored();
+    const Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored();
     if (collections.isEmpty()) {
         printDebugCollection = QStringLiteral("No collection is monitored!");
     } else {
-        foreach (const Akonadi::Collection &collection, collections) {
+        for (const Akonadi::Collection &collection : collections) {
             if (!printDebugCollection.isEmpty()) {
                 printDebugCollection += QLatin1Char('\n');
             }

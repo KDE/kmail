@@ -336,7 +336,7 @@ void TagActionManager::newTagActionClicked()
 
 void TagActionManager::checkTags(const QList<qint64> &tags)
 {
-    foreach (const qint64 &id, tags) {
+    for (const qint64 id : tags) {
         if (mTagActions.contains(id)) {
             mTagActions[id]->setChecked(true);
         }

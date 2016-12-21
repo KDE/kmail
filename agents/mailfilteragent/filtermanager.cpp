@@ -99,7 +99,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
     if (q->sender()->property("listFilters").isValid()) {
         const QStringList listFilters = q->sender()->property("listFilters").toStringList();
         //TODO improve it
-        foreach (const QString &filterId, listFilters) {
+        for (const QString &filterId : listFilters) {
             foreach (MailCommon::MailFilter *filter, mFilters) {
                 if (filter->identifier() == filterId) {
                     listMailFilters << filter;

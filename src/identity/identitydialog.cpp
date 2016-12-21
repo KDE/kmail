@@ -760,7 +760,7 @@ void IdentityDialog::slotRefreshDefaultDomainName()
 void IdentityDialog::slotAccepted()
 {
     const QStringList aliases = mAliasEdit->items();
-    foreach (const QString &alias, aliases) {
+    for (const QString &alias : aliases) {
         if (!KEmailAddress::isValidSimpleAddress(alias)) {
             const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
             KMessageBox::sorry(this, errorMsg, i18n("Invalid Email Alias \"%1\"", alias));

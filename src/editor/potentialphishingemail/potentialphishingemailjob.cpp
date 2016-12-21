@@ -72,7 +72,7 @@ bool PotentialPhishingEmailJob::start()
                         if (lst.count() > 1) {
                             const QString firstName = lst.at(0);
 
-                            Q_FOREACH (const QString &n, lst) {
+                            for (const QString &n : lst) {
                                 if (n != firstName) {
                                     mPotentialPhisingEmails.append(addr);
                                     break;

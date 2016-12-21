@@ -906,7 +906,7 @@ QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::Li
     if (recursive) {
         cols = searchCollectionsRecursive(searchCols);
     } else {
-        Q_FOREACH (const Akonadi::Collection &col, searchCols) {
+        for (const Akonadi::Collection &col : searchCols) {
             QAbstractItemModel *etm = KMKernel::self()->collectionModel();
             const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(etm, col);
             const Akonadi::Collection modelCol = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
@@ -937,7 +937,7 @@ Akonadi::Collection::List SearchWindow::searchCollectionsRecursive(const Akonadi
     QAbstractItemModel *etm = KMKernel::self()->collectionModel();
     Akonadi::Collection::List result;
 
-    Q_FOREACH (const Akonadi::Collection &col, cols) {
+    for (const Akonadi::Collection &col : cols) {
         const QModelIndex colIdx = Akonadi::EntityTreeModel::modelIndexForCollection(etm, col);
         if (col.statistics().count() > -1) {
             if (col.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {

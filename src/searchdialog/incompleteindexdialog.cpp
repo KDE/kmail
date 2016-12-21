@@ -47,7 +47,7 @@ public:
         : QSortFilterProxyModel(parent)
     {
         mFilterCollections.reserve(unindexedCollections.size());
-        Q_FOREACH (qint64 col, unindexedCollections) {
+        for (qint64 col : unindexedCollections) {
             mFilterCollections.insert(col, true);
         }
     }

@@ -102,7 +102,7 @@ FollowUpReminderInfoWidget::~FollowUpReminderInfoWidget()
 void FollowUpReminderInfoWidget::setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &infoList)
 {
     mTreeWidget->clear();
-    Q_FOREACH (FollowUpReminder::FollowUpReminderInfo *info, infoList) {
+    for (FollowUpReminder::FollowUpReminderInfo *info : infoList) {
         if (info->isValid()) {
             createOrUpdateItem(info);
         }
@@ -167,7 +167,7 @@ bool FollowUpReminderInfoWidget::save()
     // first, delete all filter groups:
     const QStringList filterGroups = config->groupList().filter(QRegularExpression(followUpItemPattern()));
 
-    foreach (const QString &group, filterGroups) {
+    for (const QString &group : filterGroups) {
         config->deleteGroup(group);
     }
 

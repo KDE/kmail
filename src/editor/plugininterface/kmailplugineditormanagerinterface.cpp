@@ -70,7 +70,7 @@ void KMailPluginEditorManagerInterface::initializePlugins()
         return;
     }
     const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
-    Q_FOREACH (MessageComposer::PluginEditor *plugin, lstPlugin) {
+    for (MessageComposer::PluginEditor *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
             MessageComposer::PluginEditorInterface *interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(mActionCollection, this));
             interface->setRichTextEditor(mRichTextEditor);

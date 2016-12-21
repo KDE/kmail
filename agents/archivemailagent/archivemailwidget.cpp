@@ -203,7 +203,7 @@ void ArchiveMailWidget::save()
     // first, delete all filter groups:
     const QStringList filterGroups = config->groupList().filter(QRegularExpression(archiveMailCollectionPattern()));
 
-    foreach (const QString &group, filterGroups) {
+    for (const QString &group : filterGroups) {
         config->deleteGroup(group);
     }
 

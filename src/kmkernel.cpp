@@ -438,7 +438,7 @@ void KMKernel::checkMail()  //might create a new reader but won't show!!
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    foreach (Akonadi::AgentInstance type, lst) {
+    for (Akonadi::AgentInstance type : lst) {
         const QString id = type.identifier();
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(id));
         if (group.readEntry("IncludeInManualChecks", true)) {
@@ -475,7 +475,7 @@ QStringList KMKernel::accounts()
     QStringList accountLst;
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     accountLst.reserve(lst.count());
-    foreach (const Akonadi::AgentInstance &type, lst) {
+    for (const Akonadi::AgentInstance &type : lst) {
         // Explicitly make a copy, as we're not changing values of the list but only
         // the local copy which is passed to action.
         accountLst << type.identifier();
@@ -1021,7 +1021,7 @@ void KMKernel::stopNetworkJobs()
 void KMKernel::setAccountStatus(bool goOnline)
 {
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances(false);
-    foreach (Akonadi::AgentInstance type, lst) {
+    for (Akonadi::AgentInstance type : lst) {
         const QString identifier(type.identifier());
         if (PimCommon::Util::isImapResource(identifier) ||
                 identifier.contains(POP3_RESOURCE_IDENTIFIER) ||
@@ -1088,7 +1088,7 @@ void KMKernel::verifyAccount()
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    foreach (Akonadi::AgentInstance type, lst) {
+    for (Akonadi::AgentInstance type : lst) {
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(type.identifier()));
         if (group.readEntry("CheckOnStartup", false)) {
             if (!type.isOnline()) {
@@ -1996,7 +1996,7 @@ void KMKernel::createFilter(const QByteArray &field, const QString &value)
 void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collectionList)
 {
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    foreach (const Akonadi::AgentInstance &type, lst) {
+    for (const Akonadi::AgentInstance &type : lst) {
         if (type.status() == Akonadi::AgentInstance::Broken) {
             continue;
         }
@@ -2005,7 +2005,7 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
             OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(typeIdentifier);
             if (iface && iface->isValid()) {
                 const Akonadi::Collection::Id imapTrashId = iface->trashCollection();
-                foreach (const Akonadi::Collection &collection, collectionList) {
+                for (const Akonadi::Collection &collection : collectionList) {
                     const Akonadi::Collection::Id collectionId = collection.id();
                     if (imapTrashId == collectionId) {
                         //Use default trash
