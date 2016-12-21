@@ -1,5 +1,3 @@
-project(archivemailagent)
-
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_archivemail_agent\")
 
 set(archivemailagent_SRCS

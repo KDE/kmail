@@ -1,5 +1,3 @@
-project(sendlateragent)
-
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_sendlater_agent\")
 
 if(BUILD_TESTING)

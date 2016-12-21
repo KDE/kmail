@@ -1,4 +1,3 @@
-project(akonadi_mailfilter_agent)
 
 add_subdirectory( kconf_update )
 

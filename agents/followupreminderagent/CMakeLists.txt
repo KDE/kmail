@@ -1,5 +1,3 @@
-project(followupreminderagent)
-
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_followupreminder_agent\")
 
 set(followupreminderagent_job_SRCS
