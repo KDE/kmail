@@ -991,7 +991,7 @@ void KMMainWidget::createWidgets()
 
     connect(mFolderTreeWidget->folderTreeView()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &KMMainWidget::updateFolderMenu);
 
-    connect(mFolderTreeWidget->folderTreeView(), &FolderTreeView::prefereCreateNewTab, this, &KMMainWidget::slotCreateNewTab);
+    connect(mFolderTreeWidget->folderTreeView(), &FolderTreeView::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
 
     mFolderTreeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
@@ -1066,7 +1066,7 @@ void KMMainWidget::createWidgets()
         mFavoriteCollectionsView = new FavoriteCollectionWidget(mGUIClient, this);
         refreshFavoriteFoldersViewProperties();
         connect(mFavoriteCollectionsView, SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)));
-        connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::prefereCreateNewTab, this, &KMMainWidget::slotCreateNewTab);
+        connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
         mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
             mFolderTreeWidget->folderTreeView()->model(),
             KMKernel::self()->config()->group("FavoriteCollections"), mFavoriteCollectionsView);
