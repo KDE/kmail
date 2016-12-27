@@ -1066,7 +1066,7 @@ void KMMainWidget::createWidgets()
         mFavoriteCollectionsView = new FavoriteCollectionWidget(mGUIClient, this);
         refreshFavoriteFoldersViewProperties();
         connect(mFavoriteCollectionsView, SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)));
-
+        connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::prefereCreateNewTab, this, &KMMainWidget::slotCreateNewTab);
         mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
             mFolderTreeWidget->folderTreeView()->model(),
             KMKernel::self()->config()->group("FavoriteCollections"), mFavoriteCollectionsView);
