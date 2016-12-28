@@ -954,12 +954,12 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
     updateVcardButton();
     if (mVcardFilename.isEmpty()) {
-        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
+        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
         QFileInfo fileInfo(mVcardFilename);
         QDir().mkpath(fileInfo.absolutePath());
     } else {
         //Convert path.
-        const QString path = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
+        const QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
         if (QFile(path).exists() && (mVcardFilename != path)) {
             mVcardFilename = path;
         }

@@ -118,7 +118,7 @@ void KMKnotify::initCombobox()
             QString appname = fullPath.right(fullPath.length() - slash - 1);
             appname.remove(QStringLiteral(".notifyrc"));
             if (!appname.isEmpty()) {
-                KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::DataLocation);
+                KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::AppLocalDataLocation);
                 KConfigGroup globalConfig(&config, QStringLiteral("Global"));
                 const QString icon = globalConfig.readEntry(QStringLiteral("IconName"), QStringLiteral("misc"));
                 const QString description = globalConfig.readEntry(QStringLiteral("Comment"), appname);
