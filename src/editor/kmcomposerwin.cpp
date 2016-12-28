@@ -2022,7 +2022,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         Akonadi::Collection::List collections;
         bool allLocalURLs = true;
 
-        foreach (const QUrl &url, urlList) {
+        for (const QUrl &url : urlList) {
             if (!url.isLocalFile()) {
                 allLocalURLs = false;
             }
@@ -2039,7 +2039,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
 
         if (items.isEmpty() && collections.isEmpty()) {
             if (allLocalURLs || forceAttachment) {
-                foreach (const QUrl &url, urlList) {
+                for (const QUrl &url : urlList) {
                     addAttachment(url, QString());
                 }
             } else {
@@ -2052,7 +2052,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                 if (selectedAction == addAsTextAction) {
                     insertUrls(source, urlList);
                 } else if (selectedAction == addAsAttachmentAction) {
-                    foreach (const QUrl &url, urlList) {
+                    for (const QUrl &url : urlList) {
                         if (url.isValid()) {
                             addAttachment(url, QString());
                         }
@@ -2122,7 +2122,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
         KMCommand *command = new KMForwardAttachedCommand(this, items, identity, this);
         command->start();
     } else {
-        foreach (const Akonadi::Item &item, items) {
+        for (const Akonadi::Item &item : items) {
             QString attachmentName = QStringLiteral("attachment");
             if (item.hasPayload<KContacts::Addressee>()) {
                 const KContacts::Addressee contact = item.payload<KContacts::Addressee>();

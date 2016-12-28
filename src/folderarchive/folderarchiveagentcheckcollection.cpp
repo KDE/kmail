@@ -102,7 +102,8 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelD
 
     Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
 
-    foreach (const Akonadi::Collection &collection, fetchJob->collections()) {
+    const Akonadi::Collection::List cols = fetchJob->collections();
+    for (const Akonadi::Collection &collection : cols) {
         if (collection.name() == folderName) {
             Q_EMIT collectionIdFound(collection);
             return;

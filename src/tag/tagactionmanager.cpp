@@ -167,7 +167,8 @@ void TagActionManager::finishedTagListing(KJob *job)
         qCWarning(KMAIL_LOG) << job->errorString();
     }
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
-    foreach (const Akonadi::Tag &result, fetchJob->tags()) {
+    const Akonadi::Tag::List lstTags = fetchJob->tags();
+    for (const Akonadi::Tag &result : lstTags) {
         mTags.append(MailCommon::Tag::fromAkonadi(result));
     }
     mTagFetchInProgress = false;
@@ -193,7 +194,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
     bool needToAddMoreAction = false;
     const int numberOfTag(tags.size());
     //It is assumed the tags are sorted
-    foreach (const MailCommon::Tag::Ptr &tag, tags) {
+    for (const MailCommon::Tag::Ptr &tag : tags) {
         if (i < s_numberMaxTag) {
             createTagAction(tag, true);
         } else {

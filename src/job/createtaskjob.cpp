@@ -85,7 +85,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
     }
 
     Akonadi::Item::List itemsToModify;
-    foreach (const Akonadi::Item &it, lst) {
+    for (const Akonadi::Item &it : lst) {
         //qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
         if (it.isValid()) {
             bool myStatus;
