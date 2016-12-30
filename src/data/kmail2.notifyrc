@@ -469,6 +469,7 @@ Name[sv]=Arkivering av e-post i korg klar
 Name[tr]=Dizindeki Postaları Arşivle tamamlandı
 Name[uk]=Архівування пошти до теки завершено
 Name[x-test]=xxArchive Mails in Folder donexx
+Name[zh_CN]=文件夹中的邮件归档完成
 Name[zh_TW]=資料夾中的郵件已歸檔完成
 Action=None
 

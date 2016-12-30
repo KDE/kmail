@@ -90,6 +90,7 @@ GenericName[sv]=TNEF-filvisare (tillverkarspecifikt format använt av Outlook)
 GenericName[tr]=TNEF Dosya Görüntüleyici (Outlook tarafından kullanılan sahipli biçim)
 GenericName[uk]=Засіб перегляду файлів TNEF (закритого формату даних, що використовується Outlook)
 GenericName[x-test]=xxTNEF File Viewer (proprietary format used by outlook)xx
+GenericName[zh_CN]=TNEF 文件查看器 (Outlook 使用的专有格式)
 GenericName[zh_TW]=TNEF 檔案檢視器（outlook 所使用的私有格式）
 Exec=ktnef %f
 Icon=ktnef
