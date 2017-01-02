@@ -24,7 +24,7 @@ class TagSelectDialogTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit TagSelectDialogTest(QObject *parent = Q_NULLPTR);
+    explicit TagSelectDialogTest(QObject *parent = nullptr);
     ~TagSelectDialogTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();

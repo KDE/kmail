@@ -58,7 +58,7 @@ void DummyKernel::syncConfig()
 MailCommon::JobScheduler *DummyKernel::jobScheduler() const
 {
     Q_ASSERT(false);
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 Akonadi::ChangeRecorder *DummyKernel::folderCollectionMonitor() const

@@ -601,7 +601,7 @@ static const int numDateDisplayConfig =
 
 AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent),
-      mCustomDateFormatEdit(Q_NULLPTR)
+      mCustomDateFormatEdit(nullptr)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
 
@@ -921,12 +921,12 @@ QString AppearancePage::MessageTagTab::helpAnchor() const
 }
 
 TagListWidgetItem::TagListWidgetItem(QListWidget *parent)
-    : QListWidgetItem(parent), mTag(Q_NULLPTR)
+    : QListWidgetItem(parent), mTag(nullptr)
 {
 }
 
 TagListWidgetItem::TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent)
-    : QListWidgetItem(icon, text, parent), mTag(Q_NULLPTR)
+    : QListWidgetItem(icon, text, parent), mTag(nullptr)
 {
 }
 

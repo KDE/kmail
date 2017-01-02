@@ -25,7 +25,7 @@ class ConfigureWidgetTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit ConfigureWidgetTest(QObject *parent = Q_NULLPTR);
+    explicit ConfigureWidgetTest(QObject *parent = nullptr);
     ~ConfigureWidgetTest();
 };
 

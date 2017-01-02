@@ -51,12 +51,12 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
     : QObject(parent),
       mActionCollection(actionCollection),
       mMessageActions(messageActions),
-      mMessageTagToggleMapper(Q_NULLPTR),
+      mMessageTagToggleMapper(nullptr),
       mGUIClient(guiClient),
-      mSeparatorMoreAction(Q_NULLPTR),
-      mSeparatorNewTagAction(Q_NULLPTR),
-      mMoreAction(Q_NULLPTR),
-      mNewTagAction(Q_NULLPTR),
+      mSeparatorMoreAction(nullptr),
+      mSeparatorNewTagAction(nullptr),
+      mMoreAction(nullptr),
+      mNewTagAction(nullptr),
       mNewTagId(-1),
       mTagFetchInProgress(false),
       mMonitor(new Akonadi::Monitor(this))
@@ -111,7 +111,7 @@ void TagActionManager::clearActions()
 
     mTagActions.clear();
     delete mMessageTagToggleMapper;
-    mMessageTagToggleMapper = Q_NULLPTR;
+    mMessageTagToggleMapper = nullptr;
 }
 
 void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu)
@@ -325,7 +325,7 @@ void TagActionManager::fillTagList()
 
 void TagActionManager::newTagActionClicked()
 {
-    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection *>() << mActionCollection, Q_NULLPTR);
+    QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection *>() << mActionCollection, nullptr);
     dialog->setTags(mTags);
     if (dialog->exec() == QDialog::Accepted) {
         mNewTagId = dialog->tag().id();

@@ -59,7 +59,7 @@ public:
      *
      * @param parent The parent object.
      */
-    explicit FilterManager(QObject *parent = Q_NULLPTR);
+    explicit FilterManager(QObject *parent = nullptr);
 
     /**
      * Destroys the filter manager.

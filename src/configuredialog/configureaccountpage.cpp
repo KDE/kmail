@@ -178,7 +178,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     if (!mNewMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
         delete mNewMailNotifierInterface;
-        mNewMailNotifierInterface = Q_NULLPTR;
+        mNewMailNotifierInterface = nullptr;
     }
     mAccountsReceiving.setupUi(this);
 
@@ -224,7 +224,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
         KConfigGroup group;
-        KConfig *conf = Q_NULLPTR;
+        KConfig *conf = nullptr;
         if (KMKernel::self()) {
             group = KConfigGroup(KMKernel::self()->config(), resourceGroupPattern.arg(ident));
         } else {
@@ -336,7 +336,7 @@ void AccountsPage::ReceivingTab::save()
     while (it.hasNext()) {
         it.next();
         KConfigGroup group;
-        KConfig *conf = Q_NULLPTR;
+        KConfig *conf = nullptr;
         if (KMKernel::self()) {
             group = KConfigGroup(KMKernel::self()->config(), resourceGroupPattern.arg(it.key()));
         } else {

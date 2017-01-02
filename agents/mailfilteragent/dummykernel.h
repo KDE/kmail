@@ -17,7 +17,7 @@ class FolderCollectionMonitor;
 class DummyKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings
 {
 public:
-    explicit DummyKernel(QObject *parent = Q_NULLPTR);
+    explicit DummyKernel(QObject *parent = nullptr);
 
     KIdentityManagement::IdentityManager *identityManager() Q_DECL_OVERRIDE;
     MessageComposer::MessageSender *msgSender() Q_DECL_OVERRIDE;

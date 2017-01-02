@@ -97,7 +97,7 @@ void SendLaterJob::slotJobFinished(KJob *job)
         sendError(i18n("Cannot fetch message. %1", job->errorString()), SendLaterManager::CanNotFetchItem);
         return;
     }
-    if (!MailTransport::TransportManager::self()->showTransportCreationDialog(Q_NULLPTR, MailTransport::TransportManager::IfNoTransportExists)) {
+    if (!MailTransport::TransportManager::self()->showTransportCreationDialog(nullptr, MailTransport::TransportManager::IfNoTransportExists)) {
         qCDebug(SENDLATERAGENT_LOG) << " we can't create transport ";
         sendError(i18n("We can't create transport"), SendLaterManager::CanNotCreateTransport);
         return;
@@ -146,7 +146,7 @@ void SendLaterJob::sendDone()
     KNotification::event(QStringLiteral("mailsend"),
                          i18n("Message sent"),
                          pixmap,
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_sendlater_agent"));
     mManager->sendDone(mInfo);
@@ -159,7 +159,7 @@ void SendLaterJob::sendError(const QString &error, SendLaterManager::ErrorType t
     KNotification::event(QStringLiteral("mailsendfailed"),
                          error,
                          pixmap,
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_sendlater_agent"));
     mManager->sendError(mInfo, type);

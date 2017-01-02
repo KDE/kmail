@@ -38,7 +38,7 @@
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
     : QObject(parent),
-      mCurrentJob(Q_NULLPTR)
+      mCurrentJob(nullptr)
 {
     mFolderArchiveCache = new FolderArchiveCache(this);
     load();
@@ -73,7 +73,7 @@ FolderArchiveAccountInfo *FolderArchiveManager::infoFromInstanceName(const QStri
             return info;
         }
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void FolderArchiveManager::setArchiveItem(qlonglong itemId)
@@ -183,7 +183,7 @@ void FolderArchiveManager::moveDone()
     KNotification::event(QStringLiteral("folderarchivedone"),
                          i18n("Messages archived"),
                          pixmap,
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("kmail2"));
     nextJob();
@@ -196,7 +196,7 @@ void FolderArchiveManager::moveFailed(const QString &msg)
     KNotification::event(QStringLiteral("folderarchiveerror"),
                          msg,
                          pixmap,
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("kmail2"));
     nextJob();
@@ -206,7 +206,7 @@ void FolderArchiveManager::nextJob()
 {
     mCurrentJob->deleteLater();
     if (mJobQueue.isEmpty()) {
-        mCurrentJob = Q_NULLPTR;
+        mCurrentJob = nullptr;
     } else {
         mCurrentJob = mJobQueue.dequeue();
         mCurrentJob->start();

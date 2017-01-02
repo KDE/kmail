@@ -62,8 +62,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
       mDesktopOfMainWin(0),
       mCount(0),
       mIconNotificationsEnabled(true),
-      mNewMessagesPopup(Q_NULLPTR),
-      mSendQueued(Q_NULLPTR)
+      mNewMessagesPopup(nullptr),
+      mSendQueued(nullptr)
 {
     qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
@@ -217,10 +217,10 @@ void KMSystemTray::slotContextMenuAboutToShow()
         return;
     }
 
-    if (mNewMessagesPopup != Q_NULLPTR) {
+    if (mNewMessagesPopup != nullptr) {
         contextMenu()->removeAction(mNewMessagesPopup->menuAction());
         delete mNewMessagesPopup;
-        mNewMessagesPopup = Q_NULLPTR;
+        mNewMessagesPopup = nullptr;
     }
     mNewMessagesPopup = new QMenu();
     fillFoldersMenu(mNewMessagesPopup, kmkernel->treeviewModelSelection());

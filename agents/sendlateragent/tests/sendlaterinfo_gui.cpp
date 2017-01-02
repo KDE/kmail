@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     aboutData.setupCommandLine(&parser);
     parser.process(app);
     aboutData.processCommandLine(&parser);
-    SendLater::SendLaterDialog *dialog = new SendLater::SendLaterDialog(Q_NULLPTR);
+    SendLater::SendLaterDialog *dialog = new SendLater::SendLaterDialog(nullptr);
     dialog->exec();
     delete dialog;
     return 0;

@@ -41,7 +41,7 @@ Q_GLOBAL_STATIC(KMailPluginInterfacePrivate, sInstance)
 
 KMailPluginInterface::KMailPluginInterface(QObject *parent)
     : PimCommon::PluginInterface(parent),
-      mMainWindow(Q_NULLPTR)
+      mMainWindow(nullptr)
 {
     setPluginName(QStringLiteral("kmail"));
     setServiceTypeName(QStringLiteral("KMail/MainViewPlugin"));

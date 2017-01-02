@@ -75,14 +75,14 @@ using namespace MailCommon;
 using namespace KMail;
 
 SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &collection)
-    : QDialog(Q_NULLPTR),
+    : QDialog(nullptr),
       mCloseRequested(false),
       mSortColumn(0),
       mSortOrder(Qt::AscendingOrder),
-      mSearchJob(Q_NULLPTR),
-      mResultModel(Q_NULLPTR),
+      mSearchJob(nullptr),
+      mResultModel(nullptr),
       mKMMainWidget(widget),
-      mAkonadiStandardAction(Q_NULLPTR)
+      mAkonadiStandardAction(nullptr)
 {
     setWindowTitle(i18n("Find Messages"));
 
@@ -423,7 +423,7 @@ void SearchWindow::doSearch()
         mHeaderState = mUi.mLbxMatches->header()->saveState();
     }
 
-    mUi.mLbxMatches->setModel(Q_NULLPTR);
+    mUi.mLbxMatches->setModel(nullptr);
 
     mSortColumn = mUi.mLbxMatches->header()->sortIndicatorSection();
     mSortOrder = mUi.mLbxMatches->header()->sortIndicatorOrder();
@@ -432,7 +432,7 @@ void SearchWindow::doSearch()
     if (mSearchJob) {
         mSearchJob->kill(KJob::Quietly);
         mSearchJob->deleteLater();
-        mSearchJob = Q_NULLPTR;
+        mSearchJob = nullptr;
     }
 
     mUi.mSearchFolderEdt->setEnabled(false);
@@ -547,7 +547,7 @@ void SearchWindow::searchDone(KJob *job)
         qCDebug(KMAIL_LOG) << job->errorString();
         KMessageBox::sorry(this, i18n("Cannot get search result. %1", job->errorString()));
         if (mSearchJob) {
-            mSearchJob = Q_NULLPTR;
+            mSearchJob = nullptr;
         }
         enableGUI();
         mUi.mSearchFolderEdt->setEnabled(true);
@@ -588,7 +588,7 @@ void SearchWindow::searchDone(KJob *job)
         }
         searchDescription->setRecursive(mUi.mChkSubFolders->isChecked());
         new Akonadi::CollectionModifyJob(mFolder, this);
-        mSearchJob = Q_NULLPTR;
+        mSearchJob = nullptr;
         Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mFolder, Akonadi::CollectionFetchJob::Base, this);
         fetch->fetchScope().setIncludeStatistics(true);
         connect(fetch, SIGNAL(result(KJob*)), this, SLOT(slotCollectionStatisticsRetrieved(KJob*)));
@@ -630,7 +630,7 @@ void SearchWindow::slotStop()
     if (mSearchJob) {
         mSearchJob->kill(KJob::Quietly);
         mSearchJob->deleteLater();
-        mSearchJob = Q_NULLPTR;
+        mSearchJob = nullptr;
         mUi.mStatusLbl->setText(i18n("Search stopped."));
     }
 
@@ -649,7 +649,7 @@ void SearchWindow::closeEvent(QCloseEvent *event)
         //Cancel search in progress
         mSearchJob->kill(KJob::Quietly);
         mSearchJob->deleteLater();
-        mSearchJob = Q_NULLPTR;
+        mSearchJob = nullptr;
         QTimer::singleShot(0, this, &SearchWindow::slotClose);
     } else {
         QDialog::closeEvent(event);
@@ -724,7 +724,7 @@ void SearchWindow::slotCurrentChanged(const Akonadi::Item &item)
 
 void SearchWindow::enableGUI()
 {
-    const bool searching = (mSearchJob != Q_NULLPTR);
+    const bool searching = (mSearchJob != nullptr);
 
     KGuiItem::assign(mSearchButton, searching ? mStopSearchGuiItem : mStartSearchGuiItem);
     if (searching) {
@@ -803,7 +803,7 @@ void SearchWindow::slotContextMenuRequested(const QPoint &)
     menu->addAction(mPrintAction);
     menu->addSeparator();
     menu->addAction(mClearAction);
-    menu->exec(QCursor::pos(), Q_NULLPTR);
+    menu->exec(QCursor::pos(), nullptr);
 
     delete menu;
 }

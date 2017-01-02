@@ -52,311 +52,311 @@ struct about_data {
 static const about_data authors[] = {
     {
         "Laurent Montel", I18N_NOOP("Maintainer"),
-        "montel@kde.org", Q_NULLPTR
+        "montel@kde.org", nullptr
     },
     {
         "Thomas McGuire", I18N_NOOP("Former maintainer"),
-        "mcguire@kde.org", Q_NULLPTR
+        "mcguire@kde.org", nullptr
     },
     {
         "Stefan Taferner", I18N_NOOP("Original author"),
-        "taferner@kde.org", Q_NULLPTR
+        "taferner@kde.org", nullptr
     },
     {
         "Michael H\303\244ckel", I18N_NOOP("Former maintainer"),
-        "haeckel@kde.org", Q_NULLPTR
+        "haeckel@kde.org", nullptr
     },
     {
         "Ingo Kl\303\266cker", I18N_NOOP("Former maintainer"),
-        "kloecker@kde.org", Q_NULLPTR
+        "kloecker@kde.org", nullptr
     },
     {
         "Don Sanders", I18N_NOOP("Former co-maintainer"),
-        "sanders@kde.org", Q_NULLPTR
+        "sanders@kde.org", nullptr
     },
 
     {
         "Till Adam", I18N_NOOP("Core developer"),
-        "adam@kde.org", Q_NULLPTR
+        "adam@kde.org", nullptr
     },
     {
         "Volker Krause", I18N_NOOP("Core developer"),
-        "vkrause@kde.org", Q_NULLPTR
+        "vkrause@kde.org", nullptr
     },
     {
         "Carsten Burghardt", I18N_NOOP("Former core developer"),
-        "burghardt@kde.org", Q_NULLPTR
+        "burghardt@kde.org", nullptr
     },
     {
         "Marc Mutz", I18N_NOOP("Former core developer"),
-        "mutz@kde.org", Q_NULLPTR
+        "mutz@kde.org", nullptr
     },
     {
         "Zack Rusin", I18N_NOOP("Former core developer"),
-        "zack@kde.org", Q_NULLPTR
+        "zack@kde.org", nullptr
     },
     {
         "Daniel Naber", I18N_NOOP("Documentation"),
-        "daniel.naber@t-online.de", Q_NULLPTR
+        "daniel.naber@t-online.de", nullptr
     },
 
     {
-        "Toyohiro Asukai", Q_NULLPTR,
-        "toyohiro@ksmplus.com", Q_NULLPTR
+        "Toyohiro Asukai", nullptr,
+        "toyohiro@ksmplus.com", nullptr
     },
     {
-        "Waldo Bastian", Q_NULLPTR,
-        "bastian@kde.org", Q_NULLPTR
+        "Waldo Bastian", nullptr,
+        "bastian@kde.org", nullptr
     },
     {
         "Ryan Breen", I18N_NOOP("System tray notification"),
-        "ryan@ryanbreen.com", Q_NULLPTR
+        "ryan@ryanbreen.com", nullptr
     },
     {
-        "Steven Brown", Q_NULLPTR,
-        "swbrown@ucsd.edu", Q_NULLPTR
+        "Steven Brown", nullptr,
+        "swbrown@ucsd.edu", nullptr
     },
     {
-        "Matthias Kalle Dalheimer", Q_NULLPTR,
-        "kalle@kde.org", Q_NULLPTR
+        "Matthias Kalle Dalheimer", nullptr,
+        "kalle@kde.org", nullptr
     },
     {
-        "Matt Douhan", Q_NULLPTR,
-        "matt@fruitsalad.org", Q_NULLPTR
+        "Matt Douhan", nullptr,
+        "matt@fruitsalad.org", nullptr
     },
     {
-        "Cristi Dumitrescu", Q_NULLPTR,
-        "cristid@chip.ro", Q_NULLPTR
+        "Cristi Dumitrescu", nullptr,
+        "cristid@chip.ro", nullptr
     },
     {
-        "David Faure", Q_NULLPTR,
-        "faure@kde.org", Q_NULLPTR
+        "David Faure", nullptr,
+        "faure@kde.org", nullptr
     },
     {
-        "Philippe Fremy", Q_NULLPTR,
-        "pfremy@chez.com", Q_NULLPTR
+        "Philippe Fremy", nullptr,
+        "pfremy@chez.com", nullptr
     },
     {
-        "Kurt Granroth", Q_NULLPTR,
-        "granroth@kde.org", Q_NULLPTR
+        "Kurt Granroth", nullptr,
+        "granroth@kde.org", nullptr
     },
     {
         "Andreas Gungl", I18N_NOOP("PGP 6 support and further enhancements of the encryption support"),
-        "a.gungl@gmx.de", Q_NULLPTR
+        "a.gungl@gmx.de", nullptr
     },
     {
-        "Steffen Hansen", Q_NULLPTR,
-        "hansen@kde.org", Q_NULLPTR
+        "Steffen Hansen", nullptr,
+        "hansen@kde.org", nullptr
     },
     {
-        "Igor Janssen", Q_NULLPTR,
-        "rm@linux.ru.net", Q_NULLPTR
+        "Igor Janssen", nullptr,
+        "rm@linux.ru.net", nullptr
     },
     {
-        "Matt Johnston", Q_NULLPTR,
-        "matt@caifex.org", Q_NULLPTR
+        "Matt Johnston", nullptr,
+        "matt@caifex.org", nullptr
     },
     {
-        "Christer Kaivo-oja", Q_NULLPTR,
-        "whizkid@telia.com", Q_NULLPTR
+        "Christer Kaivo-oja", nullptr,
+        "whizkid@telia.com", nullptr
     },
     {
         "Lars Knoll", I18N_NOOP("Original encryption support<br/>"
         "PGP 2 and PGP 5 support"),
-        "knoll@kde.org", Q_NULLPTR
+        "knoll@kde.org", nullptr
     },
     {
         "J. Nick Koston", I18N_NOOP("GnuPG support"),
-        "bdraco@darkorb.net", Q_NULLPTR
+        "bdraco@darkorb.net", nullptr
     },
     {
-        "Stephan Kulow", Q_NULLPTR,
-        "coolo@kde.org", Q_NULLPTR
+        "Stephan Kulow", nullptr,
+        "coolo@kde.org", nullptr
     },
     {
-        "Guillaume Laurent", Q_NULLPTR,
-        "glaurent@telegraph-road.org", Q_NULLPTR
+        "Guillaume Laurent", nullptr,
+        "glaurent@telegraph-road.org", nullptr
     },
     {
-        "Sam Magnuson", Q_NULLPTR,
-        "sam@trolltech.com", Q_NULLPTR
+        "Sam Magnuson", nullptr,
+        "sam@trolltech.com", nullptr
     },
     {
-        "Matt Newell", Q_NULLPTR,
-        "newellm@proaxis.com", Q_NULLPTR
+        "Matt Newell", nullptr,
+        "newellm@proaxis.com", nullptr
     },
     {
-        "Denis Perchine", Q_NULLPTR,
-        "dyp@perchine.com", Q_NULLPTR
+        "Denis Perchine", nullptr,
+        "dyp@perchine.com", nullptr
     },
     {
-        "Samuel Penn", Q_NULLPTR,
-        "sam@bifrost.demon.co.uk", Q_NULLPTR
+        "Samuel Penn", nullptr,
+        "sam@bifrost.demon.co.uk", nullptr
     },
     {
-        "Carsten Pfeiffer", Q_NULLPTR,
-        "pfeiffer@kde.org", Q_NULLPTR
+        "Carsten Pfeiffer", nullptr,
+        "pfeiffer@kde.org", nullptr
     },
     {
-        "Sven Radej", Q_NULLPTR,
-        "radej@kde.org", Q_NULLPTR
+        "Sven Radej", nullptr,
+        "radej@kde.org", nullptr
     },
     {
-        "Mark Roberts", Q_NULLPTR,
-        "mark@taurine.demon.co.uk", Q_NULLPTR
+        "Mark Roberts", nullptr,
+        "mark@taurine.demon.co.uk", nullptr
     },
     {
-        "Wolfgang Rohdewald", Q_NULLPTR,
-        "wolfgang@rohdewald.de", Q_NULLPTR
+        "Wolfgang Rohdewald", nullptr,
+        "wolfgang@rohdewald.de", nullptr
     },
     {
-        "Espen Sand", Q_NULLPTR,
-        "espen@kde.org", Q_NULLPTR
+        "Espen Sand", nullptr,
+        "espen@kde.org", nullptr
     },
     {
-        "Aaron J. Seigo", Q_NULLPTR,
-        "aseigo@olympusproject.org", Q_NULLPTR
+        "Aaron J. Seigo", nullptr,
+        "aseigo@olympusproject.org", nullptr
     },
     {
-        "George Staikos", Q_NULLPTR,
-        "staikos@kde.org", Q_NULLPTR
+        "George Staikos", nullptr,
+        "staikos@kde.org", nullptr
     },
     {
         "Szymon Stefanek", I18N_NOOP("New message list and new folder tree"),
-        "pragma@kvirc.net", Q_NULLPTR
+        "pragma@kvirc.net", nullptr
     },
     {
-        "Jason Stephenson", Q_NULLPTR,
-        "panda@mis.net", Q_NULLPTR
+        "Jason Stephenson", nullptr,
+        "panda@mis.net", nullptr
     },
     {
-        "Jacek Stolarczyk", Q_NULLPTR,
-        "jacek@mer.chemia.polsl.gliwice.pl", Q_NULLPTR
+        "Jacek Stolarczyk", nullptr,
+        "jacek@mer.chemia.polsl.gliwice.pl", nullptr
     },
     {
-        "Roberto S. Teixeira", Q_NULLPTR,
-        "maragato@kde.org", Q_NULLPTR
+        "Roberto S. Teixeira", nullptr,
+        "maragato@kde.org", nullptr
     },
     {
-        "Bo Thorsen", Q_NULLPTR,
-        "bo@sonofthor.dk", Q_NULLPTR
+        "Bo Thorsen", nullptr,
+        "bo@sonofthor.dk", nullptr
     },
     {
-        "Ronen Tzur", Q_NULLPTR,
-        "rtzur@shani.net", Q_NULLPTR
+        "Ronen Tzur", nullptr,
+        "rtzur@shani.net", nullptr
     },
     {
-        "Mario Weilguni", Q_NULLPTR,
-        "mweilguni@sime.com", Q_NULLPTR
+        "Mario Weilguni", nullptr,
+        "mweilguni@sime.com", nullptr
     },
     {
-        "Wynn Wilkes", Q_NULLPTR,
-        "wynnw@calderasystems.com", Q_NULLPTR
+        "Wynn Wilkes", nullptr,
+        "wynnw@calderasystems.com", nullptr
     },
     {
-        "Robert D. Williams", Q_NULLPTR,
-        "rwilliams@kde.org", Q_NULLPTR
+        "Robert D. Williams", nullptr,
+        "rwilliams@kde.org", nullptr
     },
     {
-        "Markus W\303\274bben", Q_NULLPTR,
-        "markus.wuebben@kde.org", Q_NULLPTR
+        "Markus W\303\274bben", nullptr,
+        "markus.wuebben@kde.org", nullptr
     },
     {
-        "Karl-Heinz Zimmer", Q_NULLPTR,
-        "khz@kde.org", Q_NULLPTR
+        "Karl-Heinz Zimmer", nullptr,
+        "khz@kde.org", nullptr
     }
 };
 
 static const about_data credits[] = {
-    { "Sam Abed", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // KConfigXT porting, smileys->emoticons replacement
-    { "Joern Ahrens", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // implement wish 77182 (Add some separators to "Mark Message as" popup menu)
-    { "Tom Albers", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // small fixes, bugzilla maintenance
-    { "Jaime Torres Amate", Q_NULLPTR, "jtamate@gmail.com", Q_NULLPTR },
-    { "Albert Cervera Areny", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // implemented wish 88309 (optional compression of attachments)
-    { "Jonathan Armond", Q_NULLPTR, "jon.armond@gmail.com", Q_NULLPTR },
-    { "Patrick Audley", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // add optional graphical spam status to fancy headers
-    { "Benjamin Azan", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // implemented todo status handling
-    { "Davide Bettio", Q_NULLPTR, "davide.bettio@kdemail.net", Q_NULLPTR },
-    { "Pradeepto Bhattacharya", Q_NULLPTR, "pradeepto@kde.org", Q_NULLPTR },
-    { "Bruno Bigras", Q_NULLPTR, "bigras.bruno@gmail.com", Q_NULLPTR },
-    { "Bertjan Broeksema", Q_NULLPTR, "broeksema@kde.org", Q_NULLPTR },
-    { "Albert Astals Cid", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // fix for bug:95441 (folder tree context menu doesn't show shortcuts assigned to the actions)
-    { "Cornelius Schumacher", Q_NULLPTR, "schumacher@kde.org", Q_NULLPTR }, // implemented the new recipients editor and picker
+    { "Sam Abed", nullptr, nullptr, nullptr }, // KConfigXT porting, smileys->emoticons replacement
+    { "Joern Ahrens", nullptr, nullptr, nullptr }, // implement wish 77182 (Add some separators to "Mark Message as" popup menu)
+    { "Tom Albers", nullptr, nullptr, nullptr }, // small fixes, bugzilla maintenance
+    { "Jaime Torres Amate", nullptr, "jtamate@gmail.com", nullptr },
+    { "Albert Cervera Areny", nullptr, nullptr, nullptr }, // implemented wish 88309 (optional compression of attachments)
+    { "Jonathan Armond", nullptr, "jon.armond@gmail.com", nullptr },
+    { "Patrick Audley", nullptr, nullptr, nullptr }, // add optional graphical spam status to fancy headers
+    { "Benjamin Azan", nullptr, nullptr, nullptr }, // implemented todo status handling
+    { "Davide Bettio", nullptr, "davide.bettio@kdemail.net", nullptr },
+    { "Pradeepto Bhattacharya", nullptr, "pradeepto@kde.org", nullptr },
+    { "Bruno Bigras", nullptr, "bigras.bruno@gmail.com", nullptr },
+    { "Bertjan Broeksema", nullptr, "broeksema@kde.org", nullptr },
+    { "Albert Astals Cid", nullptr, nullptr, nullptr }, // fix for bug:95441 (folder tree context menu doesn't show shortcuts assigned to the actions)
+    { "Cornelius Schumacher", nullptr, "schumacher@kde.org", nullptr }, // implemented the new recipients editor and picker
     {
         "Frederick Emmott", I18N_NOOP("Anti-virus support"),
-        "fred87@users.sf.net", Q_NULLPTR
+        "fred87@users.sf.net", nullptr
     },
-    { "Christophe Giboudeaux", Q_NULLPTR, "cgiboudeaux@gmail.com", Q_NULLPTR },
-    { "Sandro Giessl", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // frame width fixes for widget styles
-    { "Olivier Goffart", Q_NULLPTR, "ogoffart@kde.org", Q_NULLPTR },
-    { "Severin Greimel", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // several patches
-    { "Shaheed Haque", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // fix for bug:69744 (Resource folders: "Journals" should be "Journal")
-    { "Ingo Heeskens", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // implemented wish 34857 (per folder option for loading external references)
-    { "Kurt Hindenburg", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // implemented wish 89003 (delete whole thread)
+    { "Christophe Giboudeaux", nullptr, "cgiboudeaux@gmail.com", nullptr },
+    { "Sandro Giessl", nullptr, nullptr, nullptr }, // frame width fixes for widget styles
+    { "Olivier Goffart", nullptr, "ogoffart@kde.org", nullptr },
+    { "Severin Greimel", nullptr, nullptr, nullptr }, // several patches
+    { "Shaheed Haque", nullptr, nullptr, nullptr }, // fix for bug:69744 (Resource folders: "Journals" should be "Journal")
+    { "Ingo Heeskens", nullptr, nullptr, nullptr }, // implemented wish 34857 (per folder option for loading external references)
+    { "Kurt Hindenburg", nullptr, nullptr, nullptr }, // implemented wish 89003 (delete whole thread)
     {
         "Heiko Hund", I18N_NOOP("POP filters"),
-        "heiko@ist.eigentlich.net", Q_NULLPTR
+        "heiko@ist.eigentlich.net", nullptr
     },
-    { "Torsten Kasch", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // crash fix for Solaris (cf. bug:68801)
-    { "Jason 'vanRijn' Kasper", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // implemented wish 79938 (configurable font for new/unread/important messages)
-    { "Martijn Klingens", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // fix keyboard navigation in the Status combo of the quick search
-    { "Christoph Kl\303\274nter", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // fix for bug:88216 (drag&drop from KAddressBook to the To: field)
-    { "Martin Koller", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // optional columns in the message list
-    { "Tobias K\303\266nig", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // edit recent addresses, store email<->OpenPGP key association in address book
-    { "Nikolai Kosjar", Q_NULLPTR, "klebezettel@gmx.net", Q_NULLPTR },
-    { "Francois Kritzinger", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // fix bug in configuration dialog
-    { "Danny Kukawka", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // DCOP enhancements for better message importing
-    { "Roger Larsson", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // add name of checked account to status bar message
-    { "Michael Leupold", Q_NULLPTR, "lemma@confuego.org", Q_NULLPTR },
-    { "Thiago Macieira", Q_NULLPTR, "thiago@kde.org", Q_NULLPTR },
-    { "Andras Mantia", Q_NULLPTR, "amantia@kde.org", Q_NULLPTR },
-    { "Jonathan Marten", Q_NULLPTR, "jjm@keelhaul.me.uk", Q_NULLPTR },
-    { "Sergio Luis Martins", Q_NULLPTR, "iamsergio@gmail.com", Q_NULLPTR },
-    { "Jeffrey McGee", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // fix for bug:64251
-    { "Thomas Moenicke", Q_NULLPTR, "tm@php-qt.org", Q_NULLPTR },
-    { "Dirk M\303\274ller", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // QUrl() fixes and qt_cast optimizations
-    { "Torgny Nyblom", Q_NULLPTR, "nyblom@kde.org", Q_NULLPTR },
-    { "OpenUsability", I18N_NOOP("Usability tests and improvements"), Q_NULLPTR, "http://www.openusability.org" },
-    { "Mario Teijeiro Otero", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // various vendor annotations fixes
-    { "Kevin Ottens", Q_NULLPTR, "ervin@kde.org", Q_NULLPTR },
-    { "Simon Perreault", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // make the composer remember its "Use Fixed Font" setting (bug 49481)
-    { "Jakob Petsovits", Q_NULLPTR, "jpetso@gmx.at", Q_NULLPTR },
-    { "Romain Pokrzywka", Q_NULLPTR, "romain@kdab.net", Q_NULLPTR },
+    { "Torsten Kasch", nullptr, nullptr, nullptr }, // crash fix for Solaris (cf. bug:68801)
+    { "Jason 'vanRijn' Kasper", nullptr, nullptr, nullptr }, // implemented wish 79938 (configurable font for new/unread/important messages)
+    { "Martijn Klingens", nullptr, nullptr, nullptr }, // fix keyboard navigation in the Status combo of the quick search
+    { "Christoph Kl\303\274nter", nullptr, nullptr, nullptr }, // fix for bug:88216 (drag&drop from KAddressBook to the To: field)
+    { "Martin Koller", nullptr, nullptr, nullptr }, // optional columns in the message list
+    { "Tobias K\303\266nig", nullptr, nullptr, nullptr }, // edit recent addresses, store email<->OpenPGP key association in address book
+    { "Nikolai Kosjar", nullptr, "klebezettel@gmx.net", nullptr },
+    { "Francois Kritzinger", nullptr, nullptr, nullptr }, // fix bug in configuration dialog
+    { "Danny Kukawka", nullptr, nullptr, nullptr }, // DCOP enhancements for better message importing
+    { "Roger Larsson", nullptr, nullptr, nullptr }, // add name of checked account to status bar message
+    { "Michael Leupold", nullptr, "lemma@confuego.org", nullptr },
+    { "Thiago Macieira", nullptr, "thiago@kde.org", nullptr },
+    { "Andras Mantia", nullptr, "amantia@kde.org", nullptr },
+    { "Jonathan Marten", nullptr, "jjm@keelhaul.me.uk", nullptr },
+    { "Sergio Luis Martins", nullptr, "iamsergio@gmail.com", nullptr },
+    { "Jeffrey McGee", nullptr, nullptr, nullptr }, // fix for bug:64251
+    { "Thomas Moenicke", nullptr, "tm@php-qt.org", nullptr },
+    { "Dirk M\303\274ller", nullptr, nullptr, nullptr }, // QUrl() fixes and qt_cast optimizations
+    { "Torgny Nyblom", nullptr, "nyblom@kde.org", nullptr },
+    { "OpenUsability", I18N_NOOP("Usability tests and improvements"), nullptr, "http://www.openusability.org" },
+    { "Mario Teijeiro Otero", nullptr, nullptr, nullptr }, // various vendor annotations fixes
+    { "Kevin Ottens", nullptr, "ervin@kde.org", nullptr },
+    { "Simon Perreault", nullptr, nullptr, nullptr }, // make the composer remember its "Use Fixed Font" setting (bug 49481)
+    { "Jakob Petsovits", nullptr, "jpetso@gmx.at", nullptr },
+    { "Romain Pokrzywka", nullptr, "romain@kdab.net", nullptr },
     {
         "Bernhard Reiter", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
-        "bernhard@intevation.de", Q_NULLPTR
+        "bernhard@intevation.de", nullptr
     },
-    { "Darío Andrés Rodríguez", Q_NULLPTR, "andresbajotierra@gmail.com", Q_NULLPTR },
-    { "Edwin Schepers", I18N_NOOP("Improved HTML support"), "yez@familieschepers.nl", Q_NULLPTR },   // composition of HTML messages
-    { "Jakob Schr\303\266ter", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // implemented wish 28319 (X-Face support)
+    { "Darío Andrés Rodríguez", nullptr, "andresbajotierra@gmail.com", nullptr },
+    { "Edwin Schepers", I18N_NOOP("Improved HTML support"), "yez@familieschepers.nl", nullptr },   // composition of HTML messages
+    { "Jakob Schr\303\266ter", nullptr, nullptr, nullptr }, // implemented wish 28319 (X-Face support)
     {
         "Jan Simonson", I18N_NOOP("Beta testing of PGP 6 support"),
-        "jan@simonson.pp.se", Q_NULLPTR
+        "jan@simonson.pp.se", nullptr
     },
-    { "Paul Sprakes", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // fix for bug:63619 (filter button in toolbar doesn't work), context menu clean up
-    { "Jarosław Staniek", Q_NULLPTR, "staniek@kde.org", Q_NULLPTR }, // MS Windows porting
-    { "Will Stephenson", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // added IM status indicator
-    { "Hasso Tepper", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }, // improve layout of recipients editor
-    { "Frank Thieme", Q_NULLPTR, "frank@fthieme.net", Q_NULLPTR },
+    { "Paul Sprakes", nullptr, nullptr, nullptr }, // fix for bug:63619 (filter button in toolbar doesn't work), context menu clean up
+    { "Jarosław Staniek", nullptr, "staniek@kde.org", nullptr }, // MS Windows porting
+    { "Will Stephenson", nullptr, nullptr, nullptr }, // added IM status indicator
+    { "Hasso Tepper", nullptr, nullptr, nullptr }, // improve layout of recipients editor
+    { "Frank Thieme", nullptr, "frank@fthieme.net", nullptr },
     {
         "Patrick S. Vogt", I18N_NOOP("Timestamp for 'Transmission completed' status messages"),
-        "patrick.vogt@unibas.ch", Q_NULLPTR
+        "patrick.vogt@unibas.ch", nullptr
     },
     {
         "Jan-Oliver Wagner", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
-        "jan@intevation.de", Q_NULLPTR
+        "jan@intevation.de", nullptr
     },
     {
         "Wolfgang Westphal", I18N_NOOP("Multiple encryption keys per address"),
-        "wolfgang.westphal@gmx.de", Q_NULLPTR
+        "wolfgang.westphal@gmx.de", nullptr
     },
-    { "Allen Winter", Q_NULLPTR, "winter@kde.org", Q_NULLPTR },
-    { "Urs Wolfer", Q_NULLPTR, "uwolfer@kde.org", Q_NULLPTR },
+    { "Allen Winter", nullptr, "winter@kde.org", nullptr },
+    { "Urs Wolfer", nullptr, "uwolfer@kde.org", nullptr },
     {
         "Thorsten Zachmann", I18N_NOOP("POP filters"),
-        "t.zachmann@zagge.de", Q_NULLPTR
+        "t.zachmann@zagge.de", nullptr
     },
-    { "Thomas Zander", Q_NULLPTR, Q_NULLPTR, Q_NULLPTR }
+    { "Thomas Zander", nullptr, nullptr, nullptr }
 };
 
 AboutData::AboutData()

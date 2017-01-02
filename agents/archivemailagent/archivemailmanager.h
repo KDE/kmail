@@ -32,7 +32,7 @@ class ArchiveMailManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit ArchiveMailManager(QObject *parent = Q_NULLPTR);
+    explicit ArchiveMailManager(QObject *parent = nullptr);
     ~ArchiveMailManager();
     void removeCollection(const Akonadi::Collection &collection);
     void backupDone(ArchiveMailInfo *info);

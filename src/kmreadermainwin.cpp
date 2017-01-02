@@ -244,7 +244,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = Q_NULLPTR;
+    KMCommand *command = nullptr;
     const Akonadi::Collection parentCol = mReaderWin->message().parentCollection();
     if (parentCol.isValid()) {
         QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCol, false);
@@ -266,7 +266,7 @@ void KMReaderMainWin::slotForwardAttachedMessage()
     if (!mReaderWin->message().hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = Q_NULLPTR;
+    KMCommand *command = nullptr;
     const Akonadi::Collection parentCol = mReaderWin->message().parentCollection();
     if (parentCol.isValid()) {
         QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCol, false);
@@ -394,7 +394,7 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
         connect(action->menu(), &QMenu::triggered, this, &KMReaderMainWin::slotCopyItem);
         return action;
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
@@ -408,7 +408,7 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
 
         return action;
     }
-    return Q_NULLPTR;
+    return nullptr;
 
 }
 
@@ -499,7 +499,7 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
 
 void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result)
 {
-    QMenu *menu = Q_NULLPTR;
+    QMenu *menu = nullptr;
 
     bool urlMenuAdded = false;
     bool copyAdded = false;
@@ -653,7 +653,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
 
     if (menu) {
         KAcceleratorManager::manage(menu);
-        menu->exec(aPoint, Q_NULLPTR);
+        menu->exec(aPoint, nullptr);
         delete menu;
     }
 }

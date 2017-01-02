@@ -42,7 +42,7 @@ namespace KMail
 
 //---------------------------------------------------------------------------
 SecondaryWindow::SecondaryWindow(const char *name)
-    : KXmlGuiWindow(Q_NULLPTR)
+    : KXmlGuiWindow(nullptr)
 {
     setObjectName(QLatin1String(name));
     // Set this to be the group leader for all subdialogs - this means

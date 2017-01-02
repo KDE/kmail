@@ -27,7 +27,7 @@ class SendLaterConfigureDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit SendLaterConfigureDialog(QWidget *parent = Q_NULLPTR);
+    explicit SendLaterConfigureDialog(QWidget *parent = nullptr);
     ~SendLaterConfigureDialog();
 
     QList<Akonadi::Item::Id> messagesToRemove() const;

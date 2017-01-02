@@ -37,7 +37,7 @@ class JobScheduler;
 class ArchiveMailKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings
 {
 public:
-    explicit  ArchiveMailKernel(QObject *parent = Q_NULLPTR);
+    explicit  ArchiveMailKernel(QObject *parent = nullptr);
 
     KIdentityManagement::IdentityManager *identityManager() Q_DECL_OVERRIDE;
     MessageComposer::MessageSender *msgSender() Q_DECL_OVERRIDE;

@@ -43,7 +43,7 @@ Q_DECLARE_METATYPE(QVector<qint64>)
 class SearchCollectionProxyModel : public QSortFilterProxyModel
 {
 public:
-    explicit SearchCollectionProxyModel(const QVector<qint64> &unindexedCollections, QObject *parent = Q_NULLPTR)
+    explicit SearchCollectionProxyModel(const QVector<qint64> &unindexedCollections, QObject *parent = nullptr)
         : QSortFilterProxyModel(parent)
     {
         mFilterCollections.reserve(unindexedCollections.size());

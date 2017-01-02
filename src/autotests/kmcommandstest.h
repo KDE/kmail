@@ -27,7 +27,7 @@ class KMCommandsTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMCommandsTest(QObject *parent = Q_NULLPTR);
+    explicit KMCommandsTest(QObject *parent = nullptr);
     ~KMCommandsTest();
 private Q_SLOTS:
     void testMailtoReply();

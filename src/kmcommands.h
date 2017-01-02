@@ -55,7 +55,7 @@ public:
     enum Result { Undefined, OK, Canceled, Failed };
 
     // Trival constructor, don't retrieve any messages
-    explicit KMCommand(QWidget *parent = Q_NULLPTR);
+    explicit KMCommand(QWidget *parent = nullptr);
     KMCommand(QWidget *parent, const Akonadi::Item &);
     // Retrieve all messages in msgList when start is called.
     KMCommand(QWidget *parent, const Akonadi::Item::List &msgList);
@@ -276,7 +276,7 @@ class  KMOpenMsgCommand : public KMCommand
 
 public:
     explicit KMOpenMsgCommand(QWidget *parent, const QUrl &url = QUrl(),
-                              const QString &encoding = QString(), KMMainWidget *main = Q_NULLPTR);
+                              const QString &encoding = QString(), KMMainWidget *main = nullptr);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -358,9 +358,9 @@ class  KMForwardAttachedCommand : public KMCommand
 
 public:
     KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item::List &msgList,
-                             uint identity = 0, KMail::Composer *win = Q_NULLPTR);
+                             uint identity = 0, KMail::Composer *win = nullptr);
     KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item &msg,
-                             uint identity = 0, KMail::Composer *win = Q_NULLPTR);
+                             uint identity = 0, KMail::Composer *win = nullptr);
 
 private:
     Result execute() Q_DECL_OVERRIDE;
@@ -387,7 +387,7 @@ class  KMPrintCommand : public KMCommand
 
 public:
     KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
-                   MessageViewer::HeaderStylePlugin *plugin = Q_NULLPTR,
+                   MessageViewer::HeaderStylePlugin *plugin = nullptr,
                    MessageViewer::Viewer::DisplayFormatMessage format = MessageViewer::Viewer::UseGlobalSetting,
                    bool htmlLoadExtOverride = false,
                    bool useFixedFont = false,

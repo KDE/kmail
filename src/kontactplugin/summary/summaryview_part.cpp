@@ -55,7 +55,7 @@ using KPIM::BroadcastStatus;
 
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core,
                                  const KAboutData &aboutData, QObject *parent)
-    : KParts::ReadOnlyPart(parent), mCore(core), mFrame(Q_NULLPTR), mConfigAction(Q_NULLPTR)
+    : KParts::ReadOnlyPart(parent), mCore(core), mFrame(nullptr), mConfigAction(nullptr)
 {
     loadLayout();
 

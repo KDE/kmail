@@ -26,7 +26,7 @@ class ArchiveMailDialogTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit ArchiveMailDialogTest(QObject *parent = Q_NULLPTR);
+    explicit ArchiveMailDialogTest(QObject *parent = nullptr);
     ~ArchiveMailDialogTest();
 
 private Q_SLOTS:

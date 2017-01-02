@@ -220,9 +220,9 @@ int KMComposerWin::s_composerNumber = 0;
 KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint id,
                              const QString &textSelection, const QString &customTemplate)
     : KMail::Composer("kmail-composer#"),
-      mCursorLineLabel(Q_NULLPTR),
-      mCursorColumnLabel(Q_NULLPTR),
-      mStatusbarLabel(Q_NULLPTR),
+      mCursorLineLabel(nullptr),
+      mCursorColumnLabel(nullptr),
+      mStatusbarLabel(nullptr),
       mDone(false),
       mTextSelection(textSelection),
       mCustomTemplate(customTemplate),
@@ -231,32 +231,32 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
       mForceDisableHtml(false),
       mId(id),
       mContext(context),
-      mSignAction(Q_NULLPTR), mEncryptAction(Q_NULLPTR), mRequestMDNAction(Q_NULLPTR),
-      mUrgentAction(Q_NULLPTR), mAllFieldsAction(Q_NULLPTR), mFromAction(Q_NULLPTR),
-      mReplyToAction(Q_NULLPTR), mSubjectAction(Q_NULLPTR),
-      mIdentityAction(Q_NULLPTR), mTransportAction(Q_NULLPTR), mFccAction(Q_NULLPTR),
-      mWordWrapAction(Q_NULLPTR), mFixedFontAction(Q_NULLPTR), mAutoSpellCheckingAction(Q_NULLPTR),
-      mDictionaryAction(Q_NULLPTR), mSnippetAction(Q_NULLPTR),
-      mAppendSignature(Q_NULLPTR), mPrependSignature(Q_NULLPTR), mInsertSignatureAtCursorPosition(Q_NULLPTR),
-      mCodecAction(Q_NULLPTR),
-      mCryptoModuleAction(Q_NULLPTR),
-      mFindText(Q_NULLPTR),
-      mFindNextText(Q_NULLPTR),
-      mReplaceText(Q_NULLPTR),
-      mSelectAll(Q_NULLPTR),
-      mDummyComposer(Q_NULLPTR),
+      mSignAction(nullptr), mEncryptAction(nullptr), mRequestMDNAction(nullptr),
+      mUrgentAction(nullptr), mAllFieldsAction(nullptr), mFromAction(nullptr),
+      mReplyToAction(nullptr), mSubjectAction(nullptr),
+      mIdentityAction(nullptr), mTransportAction(nullptr), mFccAction(nullptr),
+      mWordWrapAction(nullptr), mFixedFontAction(nullptr), mAutoSpellCheckingAction(nullptr),
+      mDictionaryAction(nullptr), mSnippetAction(nullptr),
+      mAppendSignature(nullptr), mPrependSignature(nullptr), mInsertSignatureAtCursorPosition(nullptr),
+      mCodecAction(nullptr),
+      mCryptoModuleAction(nullptr),
+      mFindText(nullptr),
+      mFindNextText(nullptr),
+      mReplaceText(nullptr),
+      mSelectAll(nullptr),
+      mDummyComposer(nullptr),
       mLabelWidth(0),
-      mComposerBase(Q_NULLPTR),
-      mVerifyMissingAttachment(Q_NULLPTR),
+      mComposerBase(nullptr),
+      mVerifyMissingAttachment(nullptr),
       mPreventFccOverwrite(false),
       mCheckForForgottenAttachments(true),
       mWasModified(false),
-      mCryptoStateIndicatorWidget(Q_NULLPTR),
+      mCryptoStateIndicatorWidget(nullptr),
       mSendNowByShortcutUsed(false),
-      mFollowUpToggleAction(Q_NULLPTR),
-      mStatusBarLabelToggledOverrideMode(Q_NULLPTR),
-      mStatusBarLabelSpellCheckingChangeMode(Q_NULLPTR),
-      mPluginEditorManagerInterface(Q_NULLPTR)
+      mFollowUpToggleAction(nullptr),
+      mStatusBarLabelToggledOverrideMode(nullptr),
+      mStatusBarLabelSpellCheckingChangeMode(nullptr),
+      mPluginEditorManagerInterface(nullptr)
 {
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
@@ -353,8 +353,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mLblSubject = new QLabel(i18nc("@label:textbox Subject of email.", "S&ubject:"), mHeadersArea);
     mShowHeaders = KMailSettings::self()->headers();
     mDone = false;
-    mGrid = Q_NULLPTR;
-    mFixedFontAction = Q_NULLPTR;
+    mGrid = nullptr;
+    mFixedFontAction = nullptr;
     // the attachment view is separated from the editor by a splitter
     mSplitter = new QSplitter(Qt::Vertical, mMainWidget);
     mSplitter->setObjectName(QStringLiteral("mSplitter"));
@@ -2391,7 +2391,7 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().first()), printItem);
         const bool isHtml = mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
-        KMPrintCommand *command = new KMPrintCommand(this, printItem, Q_NULLPTR,
+        KMPrintCommand *command = new KMPrintCommand(this, printItem, nullptr,
                 format, isHtml);
         command->setPrintPreview(preview);
         command->start();
@@ -2595,7 +2595,7 @@ void KMComposerWin::slotSendLater()
     if (mComposerBase->editor()->checkExternalEditorFinished()) {
         const bool wasRegistered = (SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled());
         if (wasRegistered) {
-            SendLater::SendLaterInfo *info = Q_NULLPTR;
+            SendLater::SendLaterInfo *info = nullptr;
             QPointer<SendLater::SendLaterDialog> dlg = new SendLater::SendLaterDialog(info, this);
             if (dlg->exec()) {
                 info = dlg->info();
@@ -2879,7 +2879,7 @@ void KMComposerWin::slotSpellcheckDoneClearStatus()
 
 void KMComposerWin::slotIdentityChanged(uint uoid, bool initalChange)
 {
-    if (mMsg == Q_NULLPTR) {
+    if (mMsg == nullptr) {
         qCDebug(KMAIL_LOG) << "Trying to change identity but mMsg == 0!";
         return;
     }
@@ -3155,7 +3155,7 @@ void KMComposerWin::slotExplicitClosedMissingAttachment()
     if (mVerifyMissingAttachment) {
         mVerifyMissingAttachment->stop();
         delete mVerifyMissingAttachment;
-        mVerifyMissingAttachment = Q_NULLPTR;
+        mVerifyMissingAttachment = nullptr;
     }
 }
 

@@ -25,7 +25,7 @@
 
 KMailPluginEditorCheckBeforeSendManagerInterface::KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent)
     : QObject(parent),
-      mParentWidget(Q_NULLPTR)
+      mParentWidget(nullptr)
 {
 
 }

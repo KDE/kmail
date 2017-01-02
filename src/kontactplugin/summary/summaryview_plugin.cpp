@@ -37,7 +37,7 @@
 EXPORT_KONTACT_PLUGIN(SummaryView, summary)
 
 SummaryView::SummaryView(KontactInterface::Core *core, const QVariantList &)
-    : KontactInterface::Plugin(core, core, Q_NULLPTR), mPart(Q_NULLPTR)
+    : KontactInterface::Plugin(core, core, nullptr), mPart(nullptr)
 {
     mSyncAction = new KSelectAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Sync All"), this);
     actionCollection()->addAction(QStringLiteral("kontact_summary_sync"), mSyncAction);

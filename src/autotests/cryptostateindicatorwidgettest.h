@@ -24,7 +24,7 @@ class CryptoStateIndicatorWidgetTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit CryptoStateIndicatorWidgetTest(QObject *parent = Q_NULLPTR);
+    explicit CryptoStateIndicatorWidgetTest(QObject *parent = nullptr);
     ~CryptoStateIndicatorWidgetTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();

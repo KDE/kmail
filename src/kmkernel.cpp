@@ -120,17 +120,17 @@ using KMail::MailServiceImpl;
 
 using namespace MailCommon;
 
-static KMKernel *mySelf = Q_NULLPTR;
+static KMKernel *mySelf = nullptr;
 static bool s_askingToGoOnline = false;
 /********************************************************************/
 /*                     Constructor and destructor                   */
 /********************************************************************/
 KMKernel::KMKernel(QObject *parent) :
     QObject(parent),
-    mConfigureDialog(Q_NULLPTR),
-    mMailService(Q_NULLPTR),
+    mConfigureDialog(nullptr),
+    mMailService(nullptr),
     mSystemNetworkStatus(true),
-    mSystemTray(Q_NULLPTR),
+    mSystemTray(nullptr),
     mDebugBaloo(false)
 {
     mDebugBaloo = !qEnvironmentVariableIsEmpty("KDEPIM_BALOO_DEBUG");
@@ -144,10 +144,10 @@ KMKernel::KMKernel(QObject *parent) :
     mySelf = this;
     the_firstInstance = true;
 
-    the_undoStack = Q_NULLPTR;
-    the_msgSender = Q_NULLPTR;
-    mFilterEditDialog = Q_NULLPTR;
-    mWin = Q_NULLPTR;
+    the_undoStack = nullptr;
+    the_msgSender = nullptr;
+    mFilterEditDialog = nullptr;
+    mWin = nullptr;
     // make sure that we check for config updates before doing anything else
     KMKernel::config();
     // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
@@ -232,15 +232,15 @@ KMKernel::KMKernel(QObject *parent) :
 KMKernel::~KMKernel()
 {
     delete mMailService;
-    mMailService = Q_NULLPTR;
+    mMailService = nullptr;
 
-    mSystemTray = Q_NULLPTR;
+    mSystemTray = nullptr;
 
     stopAgentInstance();
     slotSyncConfig();
 
     delete mAutoCorrection;
-    mySelf = Q_NULLPTR;
+    mySelf = nullptr;
 }
 
 Akonadi::ChangeRecorder *KMKernel::folderCollectionMonitor() const
@@ -499,8 +499,8 @@ void KMKernel::checkAccount(const QString &account)   //might create a new reade
 
 void KMKernel::openReader(bool onlyCheck)
 {
-    mWin = Q_NULLPTR;
-    KMainWindow *ktmw = Q_NULLPTR;
+    mWin = nullptr;
+    KMainWindow *ktmw = nullptr;
 
     foreach (KMainWindow *window, KMainWindow::memberList()) {
         if (::qobject_cast<KMMainWin *>(window)) {
@@ -609,7 +609,7 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
         if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
-            if (KMessageBox::questionYesNo(Q_NULLPTR, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder")) == KMessageBox::No) {
+            if (KMessageBox::questionYesNo(nullptr, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder")) == KMessageBox::No) {
                 continue;
             }
         }
@@ -734,7 +734,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
 {
     KMail::Composer::TemplateContext context = KMail::Composer::New;
     KMime::Message::Ptr msg(new KMime::Message);
-    KMime::Content *msgPart = Q_NULLPTR;
+    KMime::Content *msgPart = nullptr;
     MessageHelper::initHeader(msg, identityManager());
     msg->contentType()->setCharset("utf-8");
     if (!cc.isEmpty()) {
@@ -934,14 +934,14 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
 
 void KMKernel::viewMessage(const QUrl &url)
 {
-    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(Q_NULLPTR, url);
+    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(nullptr, url);
 
     openCommand->start();
 }
 
 int KMKernel::viewMessage(const QString &messageFile)
 {
-    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(Q_NULLPTR, QUrl::fromLocalFile(messageFile));
+    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(nullptr, QUrl::fromLocalFile(messageFile));
 
     openCommand->start();
     return 1;
@@ -963,7 +963,7 @@ void KMKernel::raise()
 
 bool KMKernel::showMail(qint64 serialNumber)
 {
-    KMMainWidget *mainWidget = Q_NULLPTR;
+    KMMainWidget *mainWidget = nullptr;
 
     // First look for a KMainWindow.
     foreach (KMainWindow *window, KMainWindow::memberList()) {
@@ -1266,7 +1266,7 @@ void KMKernel::recoverDeadLetters()
             autoSaveWin->show();
             autoSaveFile.close();
         } else {
-            KMessageBox::sorry(Q_NULLPTR, i18n("Failed to open autosave file at %1.\nReason: %2",
+            KMessageBox::sorry(nullptr, i18n("Failed to open autosave file at %1.\nReason: %2",
                                                file.absoluteFilePath(), autoSaveFile.errorString()),
                                i18n("Opening Autosave File Failed"));
         }
@@ -1403,14 +1403,14 @@ void KMKernel::cleanup(void)
 
     // Write the config while all other managers are alive
     delete the_msgSender;
-    the_msgSender = Q_NULLPTR;
+    the_msgSender = nullptr;
     delete the_undoStack;
-    the_undoStack = Q_NULLPTR;
+    the_undoStack = nullptr;
     delete mConfigureDialog;
-    mConfigureDialog = Q_NULLPTR;
+    mConfigureDialog = nullptr;
     // do not delete, because mWin may point to an existing window
     // delete mWin;
-    mWin = Q_NULLPTR;
+    mWin = nullptr;
 
     KSharedConfig::Ptr config =  KMKernel::config();
     if (RecentAddresses::exists()) {
@@ -1511,7 +1511,7 @@ void KMKernel::updateConfig()
 
 void KMKernel::slotShowConfigurationDialog()
 {
-    if (KMKernel::getKMMainWidget() == Q_NULLPTR) {
+    if (KMKernel::getKMMainWidget() == nullptr) {
         // ensure that there is a main widget available
         // as parts of the configure dialog (identity) rely on this
         // and this slot can be called when there is only a KMComposeWin showing
@@ -1521,7 +1521,7 @@ void KMKernel::slotShowConfigurationDialog()
     }
 
     if (!mConfigureDialog) {
-        mConfigureDialog = new ConfigureDialog(Q_NULLPTR, false);
+        mConfigureDialog = new ConfigureDialog(nullptr, false);
         mConfigureDialog->setObjectName(QStringLiteral("configure"));
         connect(mConfigureDialog, &ConfigureDialog::configChanged, this, &KMKernel::slotConfigChanged);
     }
@@ -1548,7 +1548,7 @@ void KMKernel::slotConfigChanged()
 
 bool KMKernel::haveSystemTrayApplet() const
 {
-    return (mSystemTray != Q_NULLPTR);
+    return (mSystemTray != nullptr);
 }
 
 void KMKernel::updateSystemTray()
@@ -1669,7 +1669,7 @@ KMMainWidget *KMKernel::getKMMainWidget()
             return l2.first();
         }
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void KMKernel::slotRunBackgroundTasks() // called regularly by timer
@@ -1781,7 +1781,7 @@ void KMKernel::transportRemoved(int id, const QString &name)
                                     "These %1 identities have been changed to use the default transport:",
                                     changedIdents.count());
         //Don't set parent otherwise we will swith to current KMail and we configure it. So not good
-        KMessageBox::informationList(Q_NULLPTR, information, changedIdents);
+        KMessageBox::informationList(nullptr, information, changedIdents);
         im->commit();
     }
 }
@@ -1806,7 +1806,7 @@ void KMKernel::transportRenamed(int id, const QString &oldName, const QString &n
                   "These %1 identities have been changed to use the modified transport:",
                   changedIdents.count());
         //Don't set parent otherwise we will swith to current KMail and we configure it. So not good
-        KMessageBox::informationList(Q_NULLPTR, information, changedIdents);
+        KMessageBox::informationList(nullptr, information, changedIdents);
         im->commit();
     }
 }
@@ -1814,7 +1814,7 @@ void KMKernel::transportRenamed(int id, const QString &oldName, const QString &n
 void KMKernel::itemDispatchStarted()
 {
     // Watch progress of the MDA.
-    KPIM::ProgressManager::createProgressItem(Q_NULLPTR,
+    KPIM::ProgressManager::createProgressItem(nullptr,
             MailTransport::DispatcherInterface().dispatcherInstance(),
             QStringLiteral("Sender"),
             i18n("Sending messages"),
@@ -1827,7 +1827,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
     if (instance.identifier() == QLatin1String("akonadi_mailfilter_agent")) {
         // Creating a progress item twice is ok, it will simply return the already existing
         // item
-        KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem(Q_NULLPTR, instance,
+        KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem(nullptr, instance,
                                         instance.identifier(), instance.name(), instance.statusMessage(),
                                         false, KPIM::ProgressItem::Encrypted);
         progress->setProperty("AgentIdentifier", instance.identifier());
@@ -1877,7 +1877,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 
             // Creating a progress item twice is ok, it will simply return the already existing
             // item
-            KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem(Q_NULLPTR, instance,
+            KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem(nullptr, instance,
                                             instance.identifier(), instance.name(), instance.statusMessage(),
                                             true, cryptoStatus);
             progress->setProperty("AgentIdentifier", instance.identifier());
@@ -1893,7 +1893,7 @@ void KMKernel::agentInstanceBroken(const Akonadi::AgentInstance &instance)
     KNotification::event(QStringLiteral("akonadi-resource-broken"),
                          summary,
                          QPixmap(),
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout);
 }
 
@@ -1979,7 +1979,7 @@ QStringList KMKernel::customTemplates()
 void KMKernel::openFilterDialog(bool createDummyFilter)
 {
     if (!mFilterEditDialog) {
-        mFilterEditDialog = new MailCommon::KMFilterDialog(getKMMainWidget()->actionCollections(), Q_NULLPTR, createDummyFilter);
+        mFilterEditDialog = new MailCommon::KMFilterDialog(getKMMainWidget()->actionCollections(), nullptr, createDummyFilter);
         mFilterEditDialog->setObjectName(QStringLiteral("filterdialog"));
     }
     mFilterEditDialog->show();
@@ -2049,7 +2049,7 @@ void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance, const
     KNotification::event(QStringLiteral("akonadi-instance-warning"),
                          summary,
                          QPixmap(),
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout);
 }
 
@@ -2059,7 +2059,7 @@ void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const Q
     KNotification::event(QStringLiteral("akonadi-instance-error"),
                          summary,
                          QPixmap(),
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout);
 }
 
@@ -2134,7 +2134,7 @@ void KMKernel::toggleSystemTray()
             // Get rid of system tray on user's request
             qCDebug(KMAIL_LOG) << "deleting systray";
             delete mSystemTray;
-            mSystemTray = Q_NULLPTR;
+            mSystemTray = nullptr;
         }
     }
 }

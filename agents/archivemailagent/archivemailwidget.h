@@ -27,7 +27,7 @@
 class ArchiveMailItem : public QTreeWidgetItem
 {
 public:
-    explicit ArchiveMailItem(QTreeWidget *parent = Q_NULLPTR);
+    explicit ArchiveMailItem(QTreeWidget *parent = nullptr);
     ~ArchiveMailItem();
 
     void setInfo(ArchiveMailInfo *info);
@@ -41,7 +41,7 @@ class ArchiveMailWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ArchiveMailWidget(QWidget *parent = Q_NULLPTR);
+    explicit ArchiveMailWidget(QWidget *parent = nullptr);
     ~ArchiveMailWidget();
 
     enum ArchiveMailColumn {
@@ -61,7 +61,7 @@ Q_SIGNALS:
 
 private:
     void load();
-    void createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item = Q_NULLPTR);
+    void createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item = nullptr);
     bool verifyExistingArchive(ArchiveMailInfo *info) const;
     void updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *info);
 

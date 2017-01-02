@@ -176,7 +176,7 @@ KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, Ke
     : QGpgME::Job(parent)
     , mName(name)
     , mEmail(email)
-    , mJob(Q_NULLPTR)
+    , mJob(nullptr)
 {
 }
 
@@ -202,7 +202,7 @@ void KeyGenerationJob::start()
 
 void KeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
 {
-    mJob = Q_NULLPTR;
+    mJob = nullptr;
     if (result.error()) {
         KMessageBox::error(qobject_cast<QWidget *>(parent()),
                            i18n("Error while generating new key pair: %1", QString::fromUtf8(result.error().asString())),

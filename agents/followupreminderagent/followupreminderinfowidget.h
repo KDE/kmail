@@ -33,7 +33,7 @@ class FollowUpReminderInfo;
 class FollowUpReminderInfoItem : public QTreeWidgetItem
 {
 public:
-    explicit FollowUpReminderInfoItem(QTreeWidget *parent = Q_NULLPTR);
+    explicit FollowUpReminderInfoItem(QTreeWidget *parent = nullptr);
     ~FollowUpReminderInfoItem();
 
     void setInfo(FollowUpReminder::FollowUpReminderInfo *info);
@@ -47,7 +47,7 @@ class FollowUpReminderInfoWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderInfoWidget(QWidget *parent = Q_NULLPTR);
+    explicit FollowUpReminderInfoWidget(QWidget *parent = nullptr);
     ~FollowUpReminderInfoWidget();
 
     void restoreTreeWidgetHeader(const QByteArray &data);
@@ -63,7 +63,7 @@ public:
 
 private:
     void customContextMenuRequested(const QPoint &pos);
-    void createOrUpdateItem(FollowUpReminder::FollowUpReminderInfo *info, FollowUpReminderInfoItem *item = Q_NULLPTR);
+    void createOrUpdateItem(FollowUpReminder::FollowUpReminderInfo *info, FollowUpReminderInfoItem *item = nullptr);
     void removeItem(const QList<QTreeWidgetItem *> &mailItem);
     void openShowMessage(Akonadi::Item::Id id);
     enum ItemData {

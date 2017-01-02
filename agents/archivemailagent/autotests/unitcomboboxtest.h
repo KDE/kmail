@@ -26,7 +26,7 @@ class UnitComboBoxTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit UnitComboBoxTest(QObject *parent = Q_NULLPTR);
+    explicit UnitComboBoxTest(QObject *parent = nullptr);
     ~UnitComboBoxTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();

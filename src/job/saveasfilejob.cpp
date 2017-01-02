@@ -30,8 +30,8 @@
 SaveAsFileJob::SaveAsFileJob(QObject *parent)
     : QObject(parent),
       mHtmlMode(false),
-      mTextDocument(Q_NULLPTR),
-      mParentWidget(Q_NULLPTR)
+      mTextDocument(nullptr),
+      mParentWidget(nullptr)
 {
 
 }

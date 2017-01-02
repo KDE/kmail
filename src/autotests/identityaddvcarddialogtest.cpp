@@ -30,7 +30,7 @@ identityaddvcarddialogtest::identityaddvcarddialogtest()
 
 void identityaddvcarddialogtest::shouldHaveDefaultValue()
 {
-    IdentityAddVcardDialog dlg(QStringList(), Q_NULLPTR);
+    IdentityAddVcardDialog dlg(QStringList(), nullptr);
     KComboBox *identityComboBox = dlg.findChild<KComboBox *>(QStringLiteral("identity_combobox"));
     QVERIFY(identityComboBox);
     QCOMPARE(identityComboBox->isEnabled(), false);
@@ -50,7 +50,7 @@ void identityaddvcarddialogtest::shouldHaveDefaultValue()
 
 void identityaddvcarddialogtest::shouldEnabledUrlRequesterWhenSelectFromExistingVCard()
 {
-    IdentityAddVcardDialog dlg(QStringList(), Q_NULLPTR);
+    IdentityAddVcardDialog dlg(QStringList(), nullptr);
     QButtonGroup *buttonGroup = dlg.findChild<QButtonGroup *>(QStringLiteral("buttongroup"));
     buttonGroup->button(IdentityAddVcardDialog::FromExistingVCard)->toggle();
     QCOMPARE(dlg.duplicateMode(), IdentityAddVcardDialog::FromExistingVCard);
@@ -64,7 +64,7 @@ void identityaddvcarddialogtest::shouldEnabledUrlRequesterWhenSelectFromExisting
 
 void identityaddvcarddialogtest::shouldEnabledComboboxWhenSelectDuplicateVCard()
 {
-    IdentityAddVcardDialog dlg(QStringList(), Q_NULLPTR);
+    IdentityAddVcardDialog dlg(QStringList(), nullptr);
     QButtonGroup *buttonGroup = dlg.findChild<QButtonGroup *>(QStringLiteral("buttongroup"));
     buttonGroup->button(IdentityAddVcardDialog::ExistingEntry)->toggle();
     QCOMPARE(dlg.duplicateMode(), IdentityAddVcardDialog::ExistingEntry);
@@ -78,7 +78,7 @@ void identityaddvcarddialogtest::shouldEnabledComboboxWhenSelectDuplicateVCard()
 
 void identityaddvcarddialogtest::shouldEnabledComboboxWhenSelectFromExistingVCardAndAfterDuplicateVCard()
 {
-    IdentityAddVcardDialog dlg(QStringList(), Q_NULLPTR);
+    IdentityAddVcardDialog dlg(QStringList(), nullptr);
     QButtonGroup *buttonGroup = dlg.findChild<QButtonGroup *>(QStringLiteral("buttongroup"));
     buttonGroup->button(IdentityAddVcardDialog::FromExistingVCard)->toggle();
     QCOMPARE(dlg.duplicateMode(), IdentityAddVcardDialog::FromExistingVCard);

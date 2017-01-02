@@ -43,7 +43,7 @@ class KCMKontactSummary : public KCModule
     Q_OBJECT
 
 public:
-    explicit KCMKontactSummary(QWidget *parent = Q_NULLPTR);
+    explicit KCMKontactSummary(QWidget *parent = nullptr);
 
     void load() Q_DECL_OVERRIDE;
     void save() Q_DECL_OVERRIDE;

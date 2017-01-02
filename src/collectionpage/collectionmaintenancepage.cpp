@@ -51,8 +51,8 @@ using namespace Akonadi;
 CollectionMaintenancePage::CollectionMaintenancePage(QWidget *parent) :
     CollectionPropertiesPage(parent),
     mIsNotAVirtualCollection(true),
-    mFolderSizeLabel(Q_NULLPTR),
-    mCollectionCount(Q_NULLPTR)
+    mFolderSizeLabel(nullptr),
+    mCollectionCount(nullptr)
 {
     setObjectName(QStringLiteral("KMail::CollectionMaintenancePage"));
     setPageTitle(i18n("Maintenance"));

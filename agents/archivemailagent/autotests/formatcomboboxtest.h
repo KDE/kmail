@@ -26,7 +26,7 @@ class FormatComboBoxTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit FormatComboBoxTest(QObject *parent = Q_NULLPTR);
+    explicit FormatComboBoxTest(QObject *parent = nullptr);
     ~FormatComboBoxTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();

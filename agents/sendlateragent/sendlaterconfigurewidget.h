@@ -34,7 +34,7 @@ class SendLaterInfo;
 class SendLaterItem : public QTreeWidgetItem
 {
 public:
-    explicit SendLaterItem(QTreeWidget *parent = Q_NULLPTR);
+    explicit SendLaterItem(QTreeWidget *parent = nullptr);
     ~SendLaterItem();
 
     void setInfo(SendLater::SendLaterInfo *info);
@@ -48,7 +48,7 @@ class SendLaterWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SendLaterWidget(QWidget *parent = Q_NULLPTR);
+    explicit SendLaterWidget(QWidget *parent = nullptr);
     ~SendLaterWidget();
 
     enum SendLaterColumn {
@@ -74,7 +74,7 @@ private:
     void updateButtons();
     void customContextMenuRequested(const QPoint &);
     void slotSendNow();
-    void createOrUpdateItem(SendLater::SendLaterInfo *info, SendLaterItem *item = Q_NULLPTR);
+    void createOrUpdateItem(SendLater::SendLaterInfo *info, SendLaterItem *item = nullptr);
     void load();
     QList<Akonadi::Item::Id> mListMessagesToRemove;
     bool mChanged;

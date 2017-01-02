@@ -33,7 +33,7 @@ class FollowUpReminderManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderManager(QObject *parent = Q_NULLPTR);
+    explicit FollowUpReminderManager(QObject *parent = nullptr);
     ~FollowUpReminderManager();
 
     void load(bool forceReloadConfig = false);

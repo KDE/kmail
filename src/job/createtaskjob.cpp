@@ -117,7 +117,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
     }
 
     if (itemsToModify.isEmpty()) {
-        slotModifyItemDone(Q_NULLPTR);
+        slotModifyItemDone(nullptr);
     } else {
         Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
         modifyJob->disableRevisionCheck();

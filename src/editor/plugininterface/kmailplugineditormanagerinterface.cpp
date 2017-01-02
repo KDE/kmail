@@ -27,9 +27,9 @@
 
 KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
     : QObject(parent),
-      mRichTextEditor(Q_NULLPTR),
-      mParentWidget(Q_NULLPTR),
-      mActionCollection(Q_NULLPTR)
+      mRichTextEditor(nullptr),
+      mParentWidget(nullptr),
+      mActionCollection(nullptr)
 {
 
 }

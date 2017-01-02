@@ -27,7 +27,7 @@ class ArchiveMailDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ArchiveMailDialog(QWidget *parent = Q_NULLPTR);
+    explicit ArchiveMailDialog(QWidget *parent = nullptr);
     ~ArchiveMailDialog();
 
 Q_SIGNALS:

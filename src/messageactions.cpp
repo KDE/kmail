@@ -68,12 +68,12 @@ using namespace KMail;
 MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     : QObject(parent),
       mParent(parent),
-      mMessageView(Q_NULLPTR),
-      mRedirectAction(Q_NULLPTR),
-      mPrintPreviewAction(Q_NULLPTR),
-      mCustomTemplatesMenu(Q_NULLPTR),
-      mAddFollowupReminderAction(Q_NULLPTR),
-      mDebugBalooAction(Q_NULLPTR)
+      mMessageView(nullptr),
+      mRedirectAction(nullptr),
+      mPrintPreviewAction(nullptr),
+      mCustomTemplatesMenu(nullptr),
+      mAddFollowupReminderAction(nullptr),
+      mDebugBalooAction(nullptr)
 {
     mWebShortcutMenuManager = new KIO::KUriFilterSearchProviderActions(this);
     mReplyActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this);
@@ -487,7 +487,7 @@ void MessageActions::setMessageView(KMReaderWin *msgView)
 
 void MessageActions::setupForwardActions(KActionCollection *ac)
 {
-    disconnect(mForwardActionMenu, SIGNAL(triggered(bool)), Q_NULLPTR, Q_NULLPTR);
+    disconnect(mForwardActionMenu, SIGNAL(triggered(bool)), nullptr, nullptr);
     mForwardActionMenu->removeAction(mForwardInlineAction);
     mForwardActionMenu->removeAction(mForwardAttachedAction);
 
@@ -643,7 +643,7 @@ void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
 
 void MessageActions::editCurrentMessage()
 {
-    KMCommand *command = Q_NULLPTR;
+    KMCommand *command = nullptr;
     if (mCurrentItem.isValid()) {
         Akonadi::Collection col = mCurrentItem.parentCollection();
         qCDebug(KMAIL_LOG) << " mCurrentItem.parentCollection()" << mCurrentItem.parentCollection();

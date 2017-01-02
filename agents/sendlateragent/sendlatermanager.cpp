@@ -37,8 +37,8 @@
 
 SendLaterManager::SendLaterManager(QObject *parent)
     : QObject(parent),
-      mCurrentInfo(Q_NULLPTR),
-      mCurrentJob(Q_NULLPTR),
+      mCurrentInfo(nullptr),
+      mCurrentJob(nullptr),
       mSender(new MessageComposer::AkonadiSender)
 {
     mConfig = KSharedConfig::openConfig();
@@ -57,7 +57,7 @@ void SendLaterManager::stopAll()
     stopTimer();
     qDeleteAll(mListSendLaterInfo);
     mListSendLaterInfo.clear();
-    mCurrentJob = Q_NULLPTR;
+    mCurrentJob = nullptr;
 }
 
 void SendLaterManager::load(bool forcereload)
@@ -83,7 +83,7 @@ void SendLaterManager::load(bool forcereload)
 
 void SendLaterManager::createSendInfoList()
 {
-    mCurrentInfo = Q_NULLPTR;
+    mCurrentInfo = nullptr;
     std::sort(mListSendLaterInfo.begin(), mListSendLaterInfo.end(), SendLater::SendLaterUtil::compareSendLaterInfo);
 
     //Look at QQueue
@@ -128,7 +128,7 @@ SendLater::SendLaterInfo *SendLaterManager::searchInfo(Akonadi::Item::Id id)
             return info;
         }
     }
-    return Q_NULLPTR;
+    return nullptr;
 }
 
 void SendLaterManager::sendNow(Akonadi::Item::Id id)
@@ -186,14 +186,14 @@ void SendLaterManager::sendError(SendLater::SendLaterInfo *info, ErrorType type)
         case MailDispatchDoesntWork:
             //Force to make online maildispatcher
             //Don't remove it.
-            MessageComposer::Util::sendMailDispatcherIsOnline(Q_NULLPTR);
+            MessageComposer::Util::sendMailDispatcherIsOnline(nullptr);
             //Remove item which create error ?
             if (!info->isRecurrence()) {
                 removeLaterInfo(info);
             }
             break;
         default:
-            if (KMessageBox::No == KMessageBox::questionYesNo(Q_NULLPTR, i18n("An error was found. Do you want to resend it?"), i18n("Error found"))) {
+            if (KMessageBox::No == KMessageBox::questionYesNo(nullptr, i18n("An error was found. Do you want to resend it?"), i18n("Error found"))) {
                 removeLaterInfo(info);
             }
             break;
@@ -204,7 +204,7 @@ void SendLaterManager::sendError(SendLater::SendLaterInfo *info, ErrorType type)
 
 void SendLaterManager::recreateSendList()
 {
-    mCurrentJob = Q_NULLPTR;
+    mCurrentJob = nullptr;
     Q_EMIT needUpdateConfigDialogBox();
     QTimer::singleShot(1000 * 60, this, &SendLaterManager::createSendInfoList);
 }

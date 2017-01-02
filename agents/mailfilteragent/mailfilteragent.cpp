@@ -62,7 +62,7 @@ static bool isFilterableCollection(const Akonadi::Collection &collection)
 
 MailFilterAgent::MailFilterAgent(const QString &id)
     : Akonadi::AgentBase(id),
-      m_filterLogDialog(Q_NULLPTR)
+      m_filterLogDialog(nullptr)
 {
     Kdelibs4ConfigMigrator migrate(QStringLiteral("mailfilteragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_mailfilter_agentrc") << QStringLiteral("akonadi_mailfilter_agent.notifyrc"));
@@ -105,7 +105,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
         KConfigGroup group(config, "FilterLog");
         if (group.hasKey("Enabled")) {
             if (group.readEntry("Enabled", false)) {
-                m_filterLogDialog = new FilterLogDialog(Q_NULLPTR);
+                m_filterLogDialog = new FilterLogDialog(nullptr);
                 const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("view-filter")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
                 KNotification *notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
                 notify->setComponentName(QApplication::applicationDisplayName());
@@ -312,7 +312,7 @@ void MailFilterAgent::reload()
 void MailFilterAgent::showFilterLogDialog(qlonglong windowId)
 {
     if (!m_filterLogDialog) {
-        m_filterLogDialog = new FilterLogDialog(Q_NULLPTR);
+        m_filterLogDialog = new FilterLogDialog(nullptr);
     }
 #ifndef Q_OS_WIN
     KWindowSystem::setMainWindow(m_filterLogDialog, windowId);

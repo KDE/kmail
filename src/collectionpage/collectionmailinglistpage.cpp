@@ -46,7 +46,7 @@
 using namespace MailCommon;
 
 CollectionMailingListPage::CollectionMailingListPage(QWidget *parent) :
-    CollectionPropertiesPage(parent), mGroupWidget(Q_NULLPTR), mLastItem(0), changed(false)
+    CollectionPropertiesPage(parent), mGroupWidget(nullptr), mLastItem(0), changed(false)
 {
     setObjectName(QStringLiteral("KMail::CollectionMailingListPage"));
     setPageTitle(i18nc("@title:tab Mailing list settings for a folder.", "Mailing List"));

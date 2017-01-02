@@ -550,7 +550,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
     }
 
     if (fileExists) {
-        if (KMessageBox::warningContinueCancel(Q_NULLPTR,
+        if (KMessageBox::warningContinueCancel(nullptr,
                                                xi18nc("@info", "File <filename>%1</filename> exists.<nl/>Do you want to replace it?",
                                                        saveUrl.toDisplayString()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
                 != KMessageBox::Continue) {
@@ -734,7 +734,7 @@ KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url,
                                    const QString &encoding, KMMainWidget *main)
     : KMCommand(parent),
       mUrl(url),
-      mJob(Q_NULLPTR),
+      mJob(nullptr),
       mEncoding(encoding),
       mMainWidget(main)
 {
@@ -823,7 +823,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
         msg->parse();
         if (!msg->hasContent()) {
-            delete msg; msg = Q_NULLPTR;
+            delete msg; msg = nullptr;
             doesNotContainMessage();
             return;
         }
@@ -1141,7 +1141,7 @@ KMPrintCommand::KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
                                bool useFixedFont, const QString &encoding)
     : KMCommand(parent, msg),
       mHeaderStylePlugin(plugin),
-      mAttachmentStrategy(Q_NULLPTR),
+      mAttachmentStrategy(nullptr),
       mEncoding(encoding),
       mFormat(format),
       mHtmlLoadExtOverride(htmlLoadExtOverride),
@@ -1173,7 +1173,7 @@ void KMPrintCommand::setPrintPreview(bool preview)
 
 KMCommand::Result KMPrintCommand::execute()
 {
-    KMReaderWin *printerWin = new KMReaderWin(Q_NULLPTR, kmkernel->mainWin(), Q_NULLPTR);
+    KMReaderWin *printerWin = new KMReaderWin(nullptr, kmkernel->mainWin(), nullptr);
     printerWin->setPrinting(true);
     printerWin->readConfig();
     printerWin->setPrintElementBackground(MessageViewer::MessageViewerSettings::self()->printBackgroundColorImages());
@@ -1199,7 +1199,7 @@ KMCommand::Result KMPrintCommand::execute()
 
 KMSetStatusCommand::KMSetStatusCommand(const MessageStatus &status,
                                        const Akonadi::Item::List &items, bool invert)
-    : KMCommand(Q_NULLPTR, items), mStatus(status), mInvertMark(invert)
+    : KMCommand(nullptr, items), mStatus(status), mInvertMark(invert)
 {
     setDeletesItself(true);
 }
@@ -1257,7 +1257,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     }
 
     if (itemsToModify.isEmpty()) {
-        slotModifyItemDone(Q_NULLPTR);   // pretend we did something
+        slotModifyItemDone(nullptr);   // pretend we did something
     } else {
         Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
         modifyJob->disableRevisionCheck();
@@ -1396,7 +1396,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     }
 
     progressItem->setComplete();
-    progressItem = Q_NULLPTR;
+    progressItem = nullptr;
     return OK;
 }
 
@@ -1440,12 +1440,12 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 
 KMCopyCommand::KMCopyCommand(const Akonadi::Collection &destFolder,
                              const Akonadi::Item::List &msgList)
-    : KMCommand(Q_NULLPTR, msgList), mDestFolder(destFolder)
+    : KMCommand(nullptr, msgList), mDestFolder(destFolder)
 {
 }
 
 KMCopyCommand::KMCopyCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg)
-    : KMCommand(Q_NULLPTR, msg), mDestFolder(destFolder)
+    : KMCommand(nullptr, msg), mDestFolder(destFolder)
 {
 }
 
@@ -1474,7 +1474,7 @@ void KMCopyCommand::slotCopyResult(KJob *job)
 KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder,
                              const Akonadi::Item::List &msgList,
                              MessageList::Core::MessageItemSetReference ref)
-    : KMCommand(Q_NULLPTR, msgList), mDestFolder(destFolder), mProgressItem(Q_NULLPTR), mRef(ref)
+    : KMCommand(nullptr, msgList), mDestFolder(destFolder), mProgressItem(nullptr), mRef(ref)
 {
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
@@ -1482,7 +1482,7 @@ KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder,
 KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder,
                              const Akonadi::Item &msg,
                              MessageList::Core::MessageItemSetReference ref)
-    : KMCommand(Q_NULLPTR, msg), mDestFolder(destFolder), mProgressItem(Q_NULLPTR), mRef(ref)
+    : KMCommand(nullptr, msg), mDestFolder(destFolder), mProgressItem(nullptr), mRef(ref)
 {
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
@@ -1551,7 +1551,7 @@ void KMMoveCommand::completeMove(Result result)
 {
     if (mProgressItem) {
         mProgressItem->setComplete();
-        mProgressItem = Q_NULLPTR;
+        mProgressItem = nullptr;
     }
     setResult(result);
     Q_EMIT moveDone(this);
@@ -1597,7 +1597,7 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonad
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs)
     : KMCommand(parent, msgs),
-      mViewer(Q_NULLPTR)
+      mViewer(nullptr)
 {
     fetchScope().fetchFullPayload(true);
 }

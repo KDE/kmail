@@ -28,7 +28,7 @@ class FollowUpReminderConfigTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderConfigTest(QObject *parent = Q_NULLPTR);
+    explicit FollowUpReminderConfigTest(QObject *parent = nullptr);
     ~FollowUpReminderConfigTest();
 private Q_SLOTS:
     void init();

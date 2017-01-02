@@ -42,7 +42,7 @@ inline QString sendLaterItemPattern()
 
 SendLaterItem::SendLaterItem(QTreeWidget *parent)
     : QTreeWidgetItem(parent),
-      mInfo(Q_NULLPTR)
+      mInfo(nullptr)
 {
 }
 

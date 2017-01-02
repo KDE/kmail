@@ -44,7 +44,7 @@ inline QString followUpItemPattern()
 
 FollowUpReminderInfoItem::FollowUpReminderInfoItem(QTreeWidget *parent)
     : QTreeWidgetItem(parent),
-      mInfo(Q_NULLPTR)
+      mInfo(nullptr)
 {
 }
 
@@ -194,8 +194,8 @@ void FollowUpReminderInfoWidget::customContextMenuRequested(const QPoint &pos)
     const int nbElementSelected = listItems.count();
     if (nbElementSelected > 0) {
         QMenu menu;
-        QAction *showMessage = Q_NULLPTR;
-        FollowUpReminderInfoItem *mailItem = Q_NULLPTR;
+        QAction *showMessage = nullptr;
+        FollowUpReminderInfoItem *mailItem = nullptr;
         if ((nbElementSelected == 1)) {
             mailItem = static_cast<FollowUpReminderInfoItem *>(listItems.at(0));
             if (mailItem->data(0, AnswerItemFound).toBool()) {

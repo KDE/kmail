@@ -50,7 +50,7 @@ using namespace KCalCore;
 EXPORT_KONTACT_PLUGIN(KMailPlugin, kmail)
 
 KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
-    : KontactInterface::Plugin(core, core, "kmail2"), m_instance(Q_NULLPTR)
+    : KontactInterface::Plugin(core, core, "kmail2"), m_instance(nullptr)
 {
     setComponentName(QStringLiteral("kmail2"), QStringLiteral("kmail2"));
 
@@ -171,7 +171,7 @@ void KMailPlugin::slotSyncFolders()
 KMailPlugin::~KMailPlugin()
 {
     delete m_instance;
-    m_instance = Q_NULLPTR;
+    m_instance = nullptr;
 }
 
 bool KMailPlugin::createDBUSInterface(const QString &serviceType)
@@ -188,7 +188,7 @@ KParts::ReadOnlyPart *KMailPlugin::createPart()
 {
     KParts::ReadOnlyPart *part = loadPart();
     if (!part) {
-        return Q_NULLPTR;
+        return nullptr;
     }
 
     m_instance = new OrgKdeKmailKmailInterface(

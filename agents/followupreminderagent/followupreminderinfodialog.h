@@ -31,7 +31,7 @@ class FollowUpReminderInfoDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderInfoDialog(QWidget *parent = Q_NULLPTR);
+    explicit FollowUpReminderInfoDialog(QWidget *parent = nullptr);
     ~FollowUpReminderInfoDialog();
 
     void load();

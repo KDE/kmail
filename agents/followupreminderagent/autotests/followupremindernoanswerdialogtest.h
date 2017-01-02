@@ -26,7 +26,7 @@ class FollowupReminderNoAnswerDialogTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit FollowupReminderNoAnswerDialogTest(QObject *parent = Q_NULLPTR);
+    explicit FollowupReminderNoAnswerDialogTest(QObject *parent = nullptr);
     ~FollowupReminderNoAnswerDialogTest();
 private Q_SLOTS:
     void shouldHaveDefaultValues();

@@ -24,7 +24,7 @@ class KActionMenuTransportTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit KActionMenuTransportTest(QObject *parent = Q_NULLPTR);
+    explicit KActionMenuTransportTest(QObject *parent = nullptr);
     ~KActionMenuTransportTest();
 private Q_SLOTS:
     void shouldHaveDefaultValue();

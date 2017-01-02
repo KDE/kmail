@@ -25,7 +25,7 @@ class FolderArchiveAccountInfoTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit FolderArchiveAccountInfoTest(QObject *parent = Q_NULLPTR);
+    explicit FolderArchiveAccountInfoTest(QObject *parent = nullptr);
     ~FolderArchiveAccountInfoTest();
 
 private Q_SLOTS:

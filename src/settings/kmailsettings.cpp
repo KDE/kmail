@@ -24,7 +24,7 @@
 #include "settings/kmailsettings.h"
 #include <QTimer>
 
-KMailSettings *KMailSettings::mSelf = Q_NULLPTR;
+KMailSettings *KMailSettings::mSelf = nullptr;
 
 KMailSettings *KMailSettings::self()
 {

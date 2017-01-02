@@ -25,7 +25,7 @@ class ConfigureWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ConfigureWidget(QWidget *parent = Q_NULLPTR);
+    explicit ConfigureWidget(QWidget *parent = nullptr);
     ~ConfigureWidget();
 };
 

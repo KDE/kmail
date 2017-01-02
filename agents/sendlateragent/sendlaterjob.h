@@ -37,7 +37,7 @@ class SendLaterJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit SendLaterJob(SendLaterManager *manager, SendLater::SendLaterInfo *info, QObject *parent = Q_NULLPTR);
+    explicit SendLaterJob(SendLaterManager *manager, SendLater::SendLaterInfo *info, QObject *parent = nullptr);
     ~SendLaterJob();
     void start();
 

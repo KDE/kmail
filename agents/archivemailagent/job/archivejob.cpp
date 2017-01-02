@@ -69,7 +69,7 @@ void ArchiveJob::execute()
             KNotification::event(QStringLiteral("archivemailfolderdoesntexist"),
                                  i18n("Directory does not exist. Please verify settings. Archive postponed."),
                                  mPixmap,
-                                 Q_NULLPTR,
+                                 nullptr,
                                  KNotification::CloseOnTimeout,
                                  QStringLiteral("akonadi_archivemail_agent"));
             deleteLater();
@@ -89,7 +89,7 @@ void ArchiveJob::execute()
         KNotification::event(QStringLiteral("archivemailstarted"),
                              summary,
                              mPixmap,
-                             Q_NULLPTR,
+                             nullptr,
                              KNotification::CloseOnTimeout,
                              QStringLiteral("akonadi_archivemail_agent"));
         connect(backupJob, &MailCommon::BackupJob::backupDone, this, &ArchiveJob::slotBackupDone);
@@ -103,7 +103,7 @@ void ArchiveJob::slotError(const QString &error)
     KNotification::event(QStringLiteral("archivemailerror"),
                          error,
                          mPixmap,
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_archivemail_agent"));
     mManager->backupDone(mInfo);
@@ -115,7 +115,7 @@ void ArchiveJob::slotBackupDone(const QString &info)
     KNotification::event(QStringLiteral("archivemailfinished"),
                          info,
                          mPixmap,
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_archivemail_agent"));
     mManager->backupDone(mInfo);
@@ -129,6 +129,6 @@ void ArchiveJob::kill()
 
 MailCommon::ScheduledJob *ScheduledArchiveTask::run()
 {
-    return folder().isValid() ? new ArchiveJob(mManager, mInfo, folder(), isImmediate()) : Q_NULLPTR;
+    return folder().isValid() ? new ArchiveJob(mManager, mInfo, folder(), isImmediate()) : nullptr;
 }
 

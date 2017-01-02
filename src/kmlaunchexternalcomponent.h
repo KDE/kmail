@@ -25,7 +25,7 @@ class KMLaunchExternalComponent : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent = Q_NULLPTR);
+    explicit KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent = nullptr);
     ~KMLaunchExternalComponent();
 
 public Q_SLOTS:

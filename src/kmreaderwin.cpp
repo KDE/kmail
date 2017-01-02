@@ -100,14 +100,14 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     : QWidget(aParent),
       mMainWindow(mainWindow),
       mActionCollection(actionCollection),
-      mMailToComposeAction(Q_NULLPTR),
-      mMailToReplyAction(Q_NULLPTR),
-      mMailToForwardAction(Q_NULLPTR),
-      mAddAddrBookAction(Q_NULLPTR),
-      mOpenAddrBookAction(Q_NULLPTR),
-      mUrlSaveAsAction(Q_NULLPTR),
-      mAddBookmarksAction(Q_NULLPTR),
-      mAddEmailToExistingContactAction(Q_NULLPTR)
+      mMailToComposeAction(nullptr),
+      mMailToReplyAction(nullptr),
+      mMailToForwardAction(nullptr),
+      mAddAddrBookAction(nullptr),
+      mOpenAddrBookAction(nullptr),
+      mUrlSaveAsAction(nullptr),
+      mAddBookmarksAction(nullptr),
+      mAddEmailToExistingContactAction(nullptr)
 {
     createActions();
     QVBoxLayout *vlay = new QVBoxLayout(this);

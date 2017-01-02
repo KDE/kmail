@@ -26,7 +26,7 @@ class FollowupReminderInfoDialogTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit FollowupReminderInfoDialogTest(QObject *parent = Q_NULLPTR);
+    explicit FollowupReminderInfoDialogTest(QObject *parent = nullptr);
     ~FollowupReminderInfoDialogTest();
 
 private Q_SLOTS:

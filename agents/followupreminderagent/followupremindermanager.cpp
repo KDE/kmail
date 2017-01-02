@@ -159,7 +159,7 @@ void FollowUpReminderManager::answerReceived(const QString &from)
     KNotification::event(QStringLiteral("mailreceived"),
                          i18n("Answer from %1 received", from),
                          pixmap,
-                         Q_NULLPTR,
+                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_followupreminder_agent"));
 
