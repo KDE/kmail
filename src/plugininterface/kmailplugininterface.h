@@ -22,7 +22,6 @@
 
 #include <QObject>
 #include <pimcommon/plugininterface.h>
-class KActionCollection;
 class KMMainWidget;
 class KMailPluginInterface : public PimCommon::PluginInterface
 {

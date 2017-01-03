@@ -32,12 +32,6 @@ namespace MessageViewer
 class InvitationSettings;
 class PrintingSettings;
 }
-class ConfigureAgentsWidget;
-
-namespace WebEngineViewer
-{
-class NetworkPluginUrlInterceptorConfigureWidget;
-}
 
 class MiscPageFolderTab : public ConfigModuleTab
 {
