@@ -3,7 +3,7 @@
  * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  * Copyright (c) 2001 Aaron J. Seigo <aseigo@kde.org>
  * Copyright (c) 2010 Till Adam <adam@kde.org>
- * Copyright (C) 2011-2016 Laurent Montel <montel@kde.org>
+ * Copyright (C) 2011-2017 Laurent Montel <montel@kde.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

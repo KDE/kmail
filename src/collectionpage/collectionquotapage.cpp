@@ -2,7 +2,7 @@
 /**
  *
  * Copyright (c) 2006 Till Adam <adam@kde.org>
- * Copyright (c) 2009-2016 Laurent Montel <montel@kde.org>
+ * Copyright (c) 2009-2017 Laurent Montel <montel@kde.org>
  *
  *
  *  This program is free software; you can redistribute it and/or modify
