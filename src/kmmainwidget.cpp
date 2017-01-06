@@ -171,7 +171,6 @@ using KSieveUi::SieveDebugDialog;
 #include <kxmlguiclient.h>
 #include <QStatusBar>
 #include <QAction>
-#include <ktreewidgetsearchline.h>
 #include <KRecentFilesAction>
 
 // Qt includes
