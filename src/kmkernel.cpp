@@ -371,23 +371,29 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
             if (arg.startsWith(QStringLiteral("mailto:"), Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
                 QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
-                if (!values.value(QStringLiteral("to")).isEmpty()) {
-                    to += values.value(QStringLiteral("to")) + QStringLiteral(", ");
+                QString str = values.value(QStringLiteral("to"));
+                if (!str.isEmpty()) {
+                    to += str + QStringLiteral(", ");
                 }
-                if (!values.value(QStringLiteral("cc")).isEmpty()) {
-                    cc += values.value(QStringLiteral("cc")) + QStringLiteral(", ");
+                str = values.value(QStringLiteral("cc"));
+                if (!str.isEmpty()) {
+                    cc += str + QStringLiteral(", ");
                 }
-                if (!values.value(QStringLiteral("bcc")).isEmpty()) {
-                    bcc += values.value(QStringLiteral("bcc")) + QStringLiteral(", ");
+                str = values.value(QStringLiteral("bcc"));
+                if (!str.isEmpty()) {
+                    bcc += str + QStringLiteral(", ");
                 }
-                if (!values.value(QStringLiteral("subject")).isEmpty()) {
-                    subj = values.value(QStringLiteral("subject"));
+                str = values.value(QStringLiteral("subject"));
+                if (!str.isEmpty()) {
+                    subj = str;
                 }
-                if (!values.value(QStringLiteral("body")).isEmpty()) {
-                    body = values.value(QStringLiteral("body"));
+                str = values.value(QStringLiteral("body"));
+                if (!str.isEmpty()) {
+                    body = str;
                 }
-                if (!values.value(QStringLiteral("in-reply-to")).isEmpty()) {
-                    inReplyTo = values.value(QStringLiteral("in-reply-to"));
+                str = values.value(QStringLiteral("in-reply-to"));
+                if (!str.isEmpty()) {
+                    inReplyTo = str;
                 }
                 QString attach = values.value(QStringLiteral("attachment"));
                 if (!attach.isEmpty()) {
