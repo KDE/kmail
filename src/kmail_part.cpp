@@ -63,7 +63,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     migrate.migrate();
 
     // import i18n data and icons from libraries:
-    KMail::insertLibraryCataloguesAndIcons();
+    KMail::insertLibraryIcons();
 
     //local, do the init
     KMKernel *mKMailKernel = new KMKernel();

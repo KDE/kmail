@@ -23,9 +23,9 @@
 namespace KMail
 {
 
-void insertLibraryCataloguesAndIcons()
+void insertLibraryIcons()
 {
-    static const char *const catalogs[] = {
+    static const char *const iconPath[] = {
         "libkleopatra",
         "libmessagelist",
         "libmessageviewer",
@@ -33,9 +33,9 @@ void insertLibraryCataloguesAndIcons()
     };
 
     KIconLoader *il = KIconLoader::global();
-    unsigned int catalogSize = (sizeof catalogs / sizeof * catalogs);
+    unsigned int catalogSize = (sizeof iconPath / sizeof * iconPath);
     for (unsigned int i = 0; i < catalogSize; ++i) {
-        il->addAppDir(QLatin1String(catalogs[i]));
+        il->addAppDir(QLatin1String(iconPath[i]));
     }
 
 }

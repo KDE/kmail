@@ -22,7 +22,7 @@
 
 namespace KMail
 {
-KMAIL_EXPORT void insertLibraryCataloguesAndIcons();
+KMAIL_EXPORT void insertLibraryIcons();
 }
 
 #endif

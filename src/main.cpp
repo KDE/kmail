@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
     migrate.migrate();
 
     // import i18n data and icons from libraries:
-    KMail::insertLibraryCataloguesAndIcons();
+    KMail::insertLibraryIcons();
 
     //local, do the init
     KMKernel kmailKernel;
