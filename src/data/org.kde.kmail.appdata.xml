@@ -850,7 +850,7 @@
       <li xml:lang="zh-TW">KMail 支援群組功能。</li>
     </ul>
   </description>
-  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kmail</url>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kmail2</url>
   <url type="help">http://docs.kde.org/stable/en/kdepim/kmail2/index.html</url>
   <screenshots>
     <screenshot type="default">
