@@ -269,7 +269,7 @@ void KMCommand::start()
     }
 
     // we can only retrieve items with a valid id
-    foreach (const Akonadi::Item &item, mMsgList) {
+    for (const Akonadi::Item &item : qAsConst(mMsgList)) {
         if (!item.isValid()) {
             Q_EMIT messagesTransfered(Failed);
             return;
@@ -1286,7 +1286,7 @@ KMSetTagCommand::KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-    Q_FOREACH (const Akonadi::Tag &tag, mTags) {
+    for (const Akonadi::Tag &tag : qAsConst(mTags)) {
         if (!tag.isValid()) {
             Akonadi::TagCreateJob *createJob = new Akonadi::TagCreateJob(tag, this);
             connect(createJob, &Akonadi::TagCreateJob::result, this, &KMSetTagCommand::slotModifyItemDone);
@@ -1308,7 +1308,7 @@ void KMSetTagCommand::setTags()
 {
     Akonadi::Item::List itemsToModify;
     itemsToModify.reserve(mItem.count());
-    Q_FOREACH (const Akonadi::Item &i, mItem) {
+    for (const Akonadi::Item &i : qAsConst(mItem)) {
         Akonadi::Item item(i);
         if (mMode == CleanExistingAndAddNew) {
             //WorkAround. ClearTags doesn't work.
@@ -1381,7 +1381,7 @@ KMCommand::Result KMFilterActionCommand::execute()
             i18n("Filtering messages"), QString(), true, KPIM::ProgressItem::Unknown);
     progressItem->setTotalItems(msgCountToFilter);
 
-    foreach (const qlonglong &id, mMsgListId) {
+    for (const qlonglong &id : qAsConst(mMsgListId)) {
         int diff = msgCountToFilter - ++msgCount;
         if (diff < 10 || !(msgCount % 10) || msgCount <= 10) {
             progressItem->updateProgress();
@@ -1518,7 +1518,7 @@ KMCommand::Result KMMoveCommand::execute()
             });
             Akonadi::Collection parent;
             int undoId = -1;
-            foreach (const Akonadi::Item &item, retrievedList) {
+            for (const Akonadi::Item &item : qAsConst(retrievedList)) {
                 if (item.storageCollectionId() <= 0) {
                     continue;
                 }

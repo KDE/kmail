@@ -1326,7 +1326,7 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
 
     std::sort(msgTagList.begin(), msgTagList.end(), MailCommon::Tag::compare);
 
-    foreach (const MailCommon::Tag::Ptr &tag, msgTagList) {
+    for (const MailCommon::Tag::Ptr &tag : qAsConst(msgTagList)) {
         TagListWidgetItem *newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mTagListBox);
         newItem->setKMailTag(tag);
         if (tag->priority == -1) {
@@ -1347,7 +1347,7 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
 
     // Save the original list
     mOriginalMsgTagList.clear();
-    foreach (const MailCommon::TagPtr &tag, msgTagList) {
+    for (const MailCommon::TagPtr &tag : qAsConst(msgTagList)) {
         mOriginalMsgTagList.append(MailCommon::TagPtr(new MailCommon::Tag(*tag)));
     }
 

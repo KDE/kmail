@@ -404,7 +404,8 @@ void SearchWindow::slotSearchCollectionsFetched(KJob *job)
         qCWarning(KMAIL_LOG) << job->errorString();
     }
     Akonadi::CollectionFetchJob *fetchJob = static_cast<Akonadi::CollectionFetchJob *>(job);
-    Q_FOREACH (const Akonadi::Collection &col, fetchJob->collections()) {
+    const Akonadi::Collection::List lstCol = fetchJob->collections();
+    for (const Akonadi::Collection &col : lstCol) {
         if (col.name() == mUi.mSearchFolderEdt->text()) {
             mFolder = col;
         }

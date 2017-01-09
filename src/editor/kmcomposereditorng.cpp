@@ -57,13 +57,15 @@ KMComposerEditorNg::~KMComposerEditorNg()
 void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {
     Q_UNUSED(pos);
-    Q_FOREACH (QAction *a, mComposerWin->pluginToolsActionListForPopupMenu()) {
+    const QList<QAction *> lstAct = mComposerWin->pluginToolsActionListForPopupMenu();
+    for (QAction *a : lstAct) {
         menu->addSeparator();
         menu->addAction(a);
     }
 
     menu->addSeparator();
-    Q_FOREACH (KToggleAction *ta, mComposerWin->customToolsList()) {
+    const QList<KToggleAction *> lstTa = mComposerWin->customToolsList();
+    for (KToggleAction *ta : lstTa) {
         menu->addAction(ta);
     }
 }

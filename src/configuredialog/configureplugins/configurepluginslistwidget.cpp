@@ -17,6 +17,7 @@
 
 #include "configurepluginslistwidget.h"
 #include "kmail_debug.h"
+#include "util.h"
 #include "../../plugininterface/kmailplugininterface.h"
 #include <MessageViewer/ViewerPluginManager>
 #include <MessageViewer/HeaderStylePluginManager>
@@ -113,8 +114,8 @@ void ConfigurePluginsListWidget::save()
 
 void ConfigurePluginsListWidget::saveAkonadiAgent()
 {
-    Q_FOREACH (PluginItem *item, mAgentPluginsItems) {
-        Q_FOREACH (const PimCommon::PluginUtilData &data, mPluginUtilDataList) {
+    for (PluginItem *item : qAsConst(mAgentPluginsItems)) {
+        for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {
             if (item->mIdentifier == data.mIdentifier) {
                 changeAgentActiveState(data.mExtraInfo.at(0), data.mExtraInfo.at(1), item->checkState(0) == Qt::Checked);
                 break;
@@ -219,7 +220,8 @@ PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(cons
     PimCommon::PluginUtilData data;
     data.mEnableByDefault = true;
     data.mHasConfigureDialog = true;
-    Q_FOREACH (const Akonadi::AgentType &type, Akonadi::AgentManager::self()->types()) {
+    const Akonadi::AgentType::List lstAgent = Akonadi::AgentManager::self()->types();
+    for (const Akonadi::AgentType &type : lstAgent) {
         if (type.identifier() == interfaceName) {
             data.mExtraInfo << interfaceName;
             data.mExtraInfo << path;
@@ -289,7 +291,7 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
             MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
         } else if (configureGroupName == agentAkonadiGroupName()) {
-            Q_FOREACH (const PimCommon::PluginUtilData &data, mPluginUtilDataList) {
+            for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {
                 if (data.mIdentifier == identifier) {
                     QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + data.mExtraInfo.at(0), data.mExtraInfo.at(1));
                     if (interface.isValid()) {

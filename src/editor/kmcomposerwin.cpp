@@ -958,7 +958,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
         Akonadi::Item::List items;
         const QStringList serNums = hrd->asUnicodeString().split(QLatin1Char(','));
         items.reserve(serNums.count());
-        foreach (const QString &serNumStr, serNums) {
+        for (const QString &serNumStr : serNums) {
             items << Akonadi::Item(serNumStr.toLongLong());
         }
 

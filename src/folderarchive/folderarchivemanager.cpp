@@ -21,6 +21,7 @@
 #include "folderarchiveaccountinfo.h"
 #include "folderarchivecache.h"
 #include "folderarchiveutil.h"
+#include "util.h"
 
 #include <AkonadiCore/AgentManager>
 #include <AkonadiCore/ItemFetchJob>
@@ -56,7 +57,7 @@ void FolderArchiveManager::slotCollectionRemoved(const Akonadi::Collection &coll
 {
     KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     mFolderArchiveCache->clearCacheWithContainsCollection(collection.id());
-    Q_FOREACH (FolderArchiveAccountInfo *info, mListAccountInfo) {
+    for (FolderArchiveAccountInfo *info : qAsConst(mListAccountInfo)) {
         if (info->archiveTopLevel() == collection.id()) {
             info->setArchiveTopLevel(-1);
             KConfigGroup group = config.group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + info->instanceName());
@@ -68,7 +69,7 @@ void FolderArchiveManager::slotCollectionRemoved(const Akonadi::Collection &coll
 
 FolderArchiveAccountInfo *FolderArchiveManager::infoFromInstanceName(const QString &instanceName) const
 {
-    Q_FOREACH (FolderArchiveAccountInfo *info, mListAccountInfo) {
+    for (FolderArchiveAccountInfo *info : qAsConst(mListAccountInfo)) {
         if (info->instanceName() == instanceName) {
             return info;
         }
@@ -139,7 +140,7 @@ void FolderArchiveManager::setArchiveItems(const Akonadi::Item::List &items, con
 void FolderArchiveManager::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
 {
     const QString instanceName = instance.name();
-    Q_FOREACH (FolderArchiveAccountInfo *info, mListAccountInfo) {
+    for (FolderArchiveAccountInfo *info : qAsConst(mListAccountInfo)) {
         if (info->instanceName() == instanceName) {
             mListAccountInfo.removeAll(info);
             removeInfo(instanceName);

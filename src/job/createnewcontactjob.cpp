@@ -69,7 +69,8 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
 
     Akonadi::Collection::List canCreateItemCollections;
 
-    foreach (const Akonadi::Collection &collection, addressBookJob->collections()) {
+    const Akonadi::Collection::List lstAddressCollection = addressBookJob->collections();
+    for (const Akonadi::Collection &collection : lstAddressCollection ) {
         if (Akonadi::Collection::CanCreateItem & collection.rights()) {
             canCreateItemCollections.append(collection);
         }

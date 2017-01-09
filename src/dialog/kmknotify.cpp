@@ -99,18 +99,17 @@ void KMKnotify::setCurrentNotification(const QString &name)
 void KMKnotify::initCombobox()
 {
 
-    QStringList lstNotify;
-    lstNotify << QStringLiteral("kmail2.notifyrc");
-    lstNotify << QStringLiteral("akonadi_maildispatcher_agent.notifyrc");
-    lstNotify << QStringLiteral("akonadi_mailfilter_agent.notifyrc");
-    lstNotify << QStringLiteral("akonadi_archivemail_agent.notifyrc");
-    lstNotify << QStringLiteral("akonadi_sendlater_agent.notifyrc");
-    lstNotify << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc");
-    lstNotify << QStringLiteral("akonadi_followupreminder_agent.notifyrc");
-    lstNotify << QStringLiteral("messageviewer.notifyrc");
+    const QStringList lstNotify = QStringList() << QStringLiteral("kmail2.notifyrc")
+                                                << QStringLiteral("akonadi_maildispatcher_agent.notifyrc")
+                                                << QStringLiteral("akonadi_mailfilter_agent.notifyrc")
+                                                << QStringLiteral("akonadi_archivemail_agent.notifyrc")
+                                                << QStringLiteral("akonadi_sendlater_agent.notifyrc")
+                                                << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc")
+                                                << QStringLiteral("akonadi_followupreminder_agent.notifyrc")
+                                                << QStringLiteral("messageviewer.notifyrc");
     //TODO add other notifyrc here if necessary
 
-    Q_FOREACH (const QString &notify, lstNotify) {
+    for (const QString &notify : lstNotify) {
         const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("knotifications5/") + notify);
 
         if (!fullPath.isEmpty()) {

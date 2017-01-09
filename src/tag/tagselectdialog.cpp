@@ -20,6 +20,7 @@
 #include "tagselectdialog.h"
 #include "tag.h"
 #include "kmkernel.h"
+#include "util.h"
 
 #include <MailCommon/AddTagDialog>
 
@@ -143,7 +144,7 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
 
     std::sort(mTagList.begin(), mTagList.end(), MailCommon::Tag::compare);
 
-    foreach (const MailCommon::Tag::Ptr &tag, mTagList) {
+    for (const MailCommon::Tag::Ptr &tag : qAsConst(mTagList)) {
         QListWidgetItem *item = new QListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mListTag);
         item->setData(UrlTag, tag->tag().url().url());
         item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);

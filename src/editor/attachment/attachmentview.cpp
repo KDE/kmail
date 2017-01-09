@@ -27,6 +27,7 @@
 
 #include <MessageComposer/AttachmentModel>
 #include "kmkernel.h"
+#include "util.h"
 
 #include <QContextMenuEvent>
 #include <QHeaderView>
@@ -143,7 +144,7 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
                                            index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
             toRemove.append(part);
         }
-        foreach (const AttachmentPart::Ptr &part, toRemove) {
+        for (const AttachmentPart::Ptr &part : qAsConst(toRemove)) {
             d->model->removeAttachment(part);
         }
     }

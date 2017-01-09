@@ -18,6 +18,7 @@
 */
 
 #include "vacationscriptindicatorwidget.h"
+#include "util.h"
 #include <QIcon>
 #include <KLocalizedString>
 
@@ -103,7 +104,7 @@ void VacationScriptIndicatorWidget::createIndicator()
     mInfo = new VacationLabel(i18np("Out of office reply active on server", "Out of office reply active on servers", mServerActive.count()));
     connect(mInfo, &VacationLabel::vacationLabelClicked, this, &VacationScriptIndicatorWidget::slotVacationLabelClicked);
     mBoxLayout->addWidget(mInfo);
-    Q_FOREACH (const QString &server, mServerActive) {
+    for (const QString &server : qAsConst(mServerActive)) {
         ServerLabel *lab = new ServerLabel(server);
         connect(lab, &ServerLabel::clicked, this, &VacationScriptIndicatorWidget::clicked);
         mBoxLayout->addWidget(lab);
