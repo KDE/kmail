@@ -108,8 +108,8 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
         Q_FOREACH (MessageComposer::PluginEditorInterface *interface, mListPluginInterface) {
             MessageComposer::ActionType actionType = interface->actionType();
             MessageComposer::ActionType::Type type = actionType.type();
-            if (mActionHash.contains(type)) {
-                QList<QAction *> lst = mActionHash.value(type);
+            QList<QAction *> lst = mActionHash.value(type);
+            if (!lst.isEmpty()) {
                 QAction *act = new QAction(this);
                 act->setSeparator(true);
                 lst << act << actionType.action();
@@ -119,8 +119,8 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
             }
             if (interface->plugin()->hasPopupMenuSupport()) {
                 type = MessageComposer::ActionType::PopupMenu;
-                if (mActionHash.contains(type)) {
-                    QList<QAction *> lst = mActionHash.value(type);
+                QList<QAction *> lst = mActionHash.value(type);
+                if (!lst.isEmpty()) {
                     QAction *act = new QAction(this);
                     act->setSeparator(true);
                     lst << act << actionType.action();
@@ -131,8 +131,8 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
             }
             if (interface->plugin()->hasToolBarSupport()) {
                 type = MessageComposer::ActionType::ToolBar;
-                if (mActionHash.contains(type)) {
-                    QList<QAction *> lst = mActionHash.value(type);
+                QList<QAction *> lst = mActionHash.value(type);
+                if (!lst.isEmpty()) {
                     QAction *act = new QAction(this);
                     act->setSeparator(true);
                     lst << act << actionType.action();
