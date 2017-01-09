@@ -37,6 +37,7 @@ Comment[tr]=Sonra Gönder Aracı
 Comment[uk]=Агент відкладеного надсилання
 Comment[wa]=Adjint evoyî pus tård
 Comment[x-test]=xxSend Later Agentxx
+Comment[zh_CN]=延迟发送助手
 Comment[zh_TW]=稍後傳送代理程式
 
 [Event/mailsend]
@@ -79,6 +80,7 @@ Name[tr]=Posta gönderildi
 Name[uk]=Пошту надіслано
 Name[wa]=L' emile est evoyî
 Name[x-test]=xxMail is sentxx
+Name[zh_CN]=邮件已发送
 Name[zh_TW]=郵件已送出
 Action=Popup
 
@@ -121,6 +123,7 @@ Name[tr]=Posta gönderilemedi
 Name[uk]=Спроба надсилання зазнала невдачі
 Name[wa]=L' evoyaedje di l' emil a fwait berwete
 Name[x-test]=xxSend mail failedxx
+Name[zh_CN]=发送邮件失败
 Name[zh_TW]=傳送郵件失敗
 Action=Popup
 

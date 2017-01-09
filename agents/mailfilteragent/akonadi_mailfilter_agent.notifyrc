@@ -160,5 +160,6 @@ Name[sv]=Ett fel uppstod vid filtrering
 Name[tr]=Filtreleme sırasında bir hata oluştu
 Name[uk]=Під час фільтрування сталася помилка
 Name[x-test]=xxAn error occurred during filteringxx
+Name[zh_CN]=过滤时出错
 Name[zh_TW]=過濾時發生錯誤
 Action=None

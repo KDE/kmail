@@ -34,6 +34,7 @@ Comment[sv]=Påminnelseuppföljningsmodul
 Comment[tr]=Takip hatırlatma aracı
 Comment[uk]=Агент стеження за нагадуваннями
 Comment[x-test]=xxFollowup reminder agentxx
+Comment[zh_CN]=后续提醒代理
 Comment[zh_TW]=回覆提醒代理程式
 
 [Event/mailreceived]
@@ -69,6 +70,7 @@ Name[sv]=Uppföljningsbrev mottaget
 Name[tr]=Posta Takibi Alındı
 Name[uk]=Отримано відповідь на повідомлення
 Name[x-test]=xxMail Follow Up Receivedxx
+Name[zh_CN]=收到的后续邮件
 Name[zh_TW]=接收到回覆郵件
 Action=Popup
 
