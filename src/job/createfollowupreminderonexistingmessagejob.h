@@ -29,7 +29,7 @@ class CreateFollowupReminderOnExistingMessageJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit CreateFollowupReminderOnExistingMessageJob(QObject *parent = Q_NULLPTR);
+    explicit CreateFollowupReminderOnExistingMessageJob(QObject *parent = nullptr);
     ~CreateFollowupReminderOnExistingMessageJob();
 
     void start();

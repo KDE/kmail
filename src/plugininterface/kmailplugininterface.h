@@ -27,7 +27,7 @@ class KMailPluginInterface : public PimCommon::PluginInterface
 {
     Q_OBJECT
 public:
-    explicit KMailPluginInterface(QObject *parent = Q_NULLPTR);
+    explicit KMailPluginInterface(QObject *parent = nullptr);
     ~KMailPluginInterface();
 
     void setMainWidget(KMMainWidget *mainwindow);

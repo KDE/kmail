@@ -26,7 +26,7 @@ class KMailSearchPatternEdit : public MailCommon::SearchPatternEdit
 {
     Q_OBJECT
 public:
-    explicit KMailSearchPatternEdit(QWidget *parent = Q_NULLPTR);
+    explicit KMailSearchPatternEdit(QWidget *parent = nullptr);
     ~KMailSearchPatternEdit();
 };
 }

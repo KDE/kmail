@@ -36,7 +36,7 @@ class FolderArchiveManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit FolderArchiveManager(QObject *parent = Q_NULLPTR);
+    explicit FolderArchiveManager(QObject *parent = nullptr);
     ~FolderArchiveManager();
 
     void load();

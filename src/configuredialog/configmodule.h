@@ -30,7 +30,7 @@
 class ConfigModule : public KCModule
 {
 public:
-    explicit ConfigModule(QWidget *parent = Q_NULLPTR)
+    explicit ConfigModule(QWidget *parent = nullptr)
         : KCModule(parent)
     {}
     ~ConfigModule() {}

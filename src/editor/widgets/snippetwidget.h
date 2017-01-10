@@ -33,7 +33,7 @@ class SnippetWidget : public QTreeView
 {
     Q_OBJECT
 public:
-    explicit SnippetWidget(KMComposerEditorNg *editor, KActionCollection *actionCollection, QWidget *parent = Q_NULLPTR);
+    explicit SnippetWidget(KMComposerEditorNg *editor, KActionCollection *actionCollection, QWidget *parent = nullptr);
     ~SnippetWidget();
 
 protected:

@@ -33,7 +33,7 @@ public:
         FromExistingVCard
     };
 
-    explicit IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent = Q_NULLPTR);
+    explicit IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent = nullptr);
     ~IdentityAddVcardDialog();
 
     DuplicateMode duplicateMode() const;

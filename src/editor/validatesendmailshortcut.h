@@ -23,7 +23,7 @@ class KActionCollection;
 class ValidateSendMailShortcut
 {
 public:
-    ValidateSendMailShortcut(KActionCollection *actionCollection, QWidget *parent = Q_NULLPTR);
+    ValidateSendMailShortcut(KActionCollection *actionCollection, QWidget *parent = nullptr);
     ~ValidateSendMailShortcut();
 
     bool validate();

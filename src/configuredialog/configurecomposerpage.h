@@ -49,7 +49,7 @@ class ComposerPageGeneralTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageGeneralTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageGeneralTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -87,7 +87,7 @@ class ComposerPageTemplatesTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageTemplatesTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageTemplatesTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -103,7 +103,7 @@ class ComposerPageCustomTemplatesTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageCustomTemplatesTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageCustomTemplatesTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -119,7 +119,7 @@ class ComposerPageSubjectTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageSubjectTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageSubjectTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -139,7 +139,7 @@ class ComposerPageCharsetTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageCharsetTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageCharsetTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -160,7 +160,7 @@ class ComposerPageHeadersTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageHeadersTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageHeadersTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -191,7 +191,7 @@ class ComposerPageAttachmentsTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageAttachmentsTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageAttachmentsTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -213,7 +213,7 @@ class ComposerPageAutoCorrectionTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageAutoCorrectionTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageAutoCorrectionTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -230,7 +230,7 @@ class ComposerPageAutoImageResizeTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit ComposerPageAutoImageResizeTab(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPageAutoImageResizeTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -247,7 +247,7 @@ class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit ComposerPage(QWidget *parent = Q_NULLPTR);
+    explicit ComposerPage(QWidget *parent = nullptr);
 
     QString helpAnchor() const Q_DECL_OVERRIDE;
 

@@ -66,7 +66,7 @@ class AppearancePageFontsTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageFontsTab(QWidget *parent = Q_NULLPTR);
+    explicit AppearancePageFontsTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
     void save() Q_DECL_OVERRIDE;
 
@@ -91,7 +91,7 @@ class AppearancePageColorsTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageColorsTab(QWidget *parent = Q_NULLPTR);
+    explicit AppearancePageColorsTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
     void save() Q_DECL_OVERRIDE;
 
@@ -111,7 +111,7 @@ class AppearancePageLayoutTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageLayoutTab(QWidget *parent = Q_NULLPTR);
+    explicit AppearancePageLayoutTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -135,7 +135,7 @@ class AppearancePageHeadersTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageHeadersTab(QWidget *parent = Q_NULLPTR);
+    explicit AppearancePageHeadersTab(QWidget *parent = nullptr);
 
     QString helpAnchor() const;
 
@@ -166,7 +166,7 @@ class AppearancePageReaderTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageReaderTab(QWidget *parent = Q_NULLPTR);
+    explicit AppearancePageReaderTab(QWidget *parent = nullptr);
 
     QString helpAnchor() const;
 
@@ -186,7 +186,7 @@ class AppearancePageSystemTrayTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageSystemTrayTab(QWidget *parent = Q_NULLPTR);
+    explicit AppearancePageSystemTrayTab(QWidget *parent = nullptr);
 
     QString helpAnchor() const;
 
@@ -202,8 +202,8 @@ private:
 class TagListWidgetItem : public QListWidgetItem
 {
 public:
-    explicit TagListWidgetItem(QListWidget *parent = Q_NULLPTR);
-    explicit TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent = Q_NULLPTR);
+    explicit TagListWidgetItem(QListWidget *parent = nullptr);
+    explicit TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent = nullptr);
 
     ~TagListWidgetItem();
     void setKMailTag(const MailCommon::Tag::Ptr &tag);
@@ -218,7 +218,7 @@ class AppearancePageMessageTagTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageMessageTagTab(QWidget *parent = Q_NULLPTR);
+    explicit AppearancePageMessageTagTab(QWidget *parent = nullptr);
     ~AppearancePageMessageTagTab();
 
     QString helpAnchor() const;
@@ -298,7 +298,7 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AppearancePage(QWidget *parent = Q_NULLPTR);
+    explicit AppearancePage(QWidget *parent = nullptr);
 
     QString helpAnchor() const Q_DECL_OVERRIDE;
 

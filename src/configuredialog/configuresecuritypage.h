@@ -37,7 +37,7 @@ class SecurityPageGeneralTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageGeneralTab(QWidget *parent = Q_NULLPTR);
+    explicit SecurityPageGeneralTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -58,7 +58,7 @@ class SecurityPageMDNTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageMDNTab(QWidget *parent = Q_NULLPTR);
+    explicit SecurityPageMDNTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
     void save() Q_DECL_OVERRIDE;
@@ -79,7 +79,7 @@ class SecurityPageComposerCryptoTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageComposerCryptoTab(QWidget *parent = Q_NULLPTR);
+    explicit SecurityPageComposerCryptoTab(QWidget *parent = nullptr);
     ~SecurityPageComposerCryptoTab();
 
     QString helpAnchor() const;
@@ -98,7 +98,7 @@ class SecurityPageWarningTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageWarningTab(QWidget *parent = Q_NULLPTR);
+    explicit SecurityPageWarningTab(QWidget *parent = nullptr);
     ~SecurityPageWarningTab();
 
     QString helpAnchor() const;
@@ -121,7 +121,7 @@ class SecurityPageSMimeTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageSMimeTab(QWidget *parent = Q_NULLPTR);
+    explicit SecurityPageSMimeTab(QWidget *parent = nullptr);
     ~SecurityPageSMimeTab();
 
     QString helpAnchor() const;
@@ -143,7 +143,7 @@ class GpgSettingsDialog : public KCMultiDialog
 {
     Q_OBJECT
 public:
-    explicit GpgSettingsDialog(QWidget *parent = Q_NULLPTR);
+    explicit GpgSettingsDialog(QWidget *parent = nullptr);
     ~GpgSettingsDialog();
 private:
     void readConfig();
@@ -154,7 +154,7 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit SecurityPage(QWidget *parent = Q_NULLPTR);
+    explicit SecurityPage(QWidget *parent = nullptr);
 
     QString helpAnchor() const Q_DECL_OVERRIDE;
 

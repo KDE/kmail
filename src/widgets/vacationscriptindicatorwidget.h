@@ -30,7 +30,7 @@ class ServerLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit ServerLabel(const QString &toolTip, QWidget *parent = Q_NULLPTR);
+    explicit ServerLabel(const QString &toolTip, QWidget *parent = nullptr);
     ~ServerLabel();
 
 Q_SIGNALS:
@@ -47,7 +47,7 @@ class VacationLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit VacationLabel(const QString &text, QWidget *parent = Q_NULLPTR);
+    explicit VacationLabel(const QString &text, QWidget *parent = nullptr);
     ~VacationLabel();
 
 Q_SIGNALS:
@@ -61,7 +61,7 @@ class VacationScriptIndicatorWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit VacationScriptIndicatorWidget(QWidget *parent = Q_NULLPTR);
+    explicit VacationScriptIndicatorWidget(QWidget *parent = nullptr);
     ~VacationScriptIndicatorWidget();
 
     void setVacationScriptActive(bool active, const QString &serverName);

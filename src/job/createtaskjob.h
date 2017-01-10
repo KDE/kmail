@@ -28,7 +28,7 @@ class CreateTaskJob : public KJob
 {
     Q_OBJECT
 public:
-    explicit CreateTaskJob(const Akonadi::Item::List &items, QObject *parent = Q_NULLPTR);
+    explicit CreateTaskJob(const Akonadi::Item::List &items, QObject *parent = nullptr);
     ~CreateTaskJob();
 
     void start() Q_DECL_OVERRIDE;

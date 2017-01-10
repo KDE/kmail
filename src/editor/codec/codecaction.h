@@ -40,7 +40,7 @@ public:
         ///  and detect any charset.
     };
 
-    explicit CodecAction(Mode mode, QObject *parent = Q_NULLPTR);
+    explicit CodecAction(Mode mode, QObject *parent = nullptr);
     ~CodecAction();
 
     /**

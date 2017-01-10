@@ -39,7 +39,7 @@ class KMAIL_EXPORT Composer : public KMail::SecondaryWindow
 {
     Q_OBJECT
 protected:
-    Composer(const char *name = Q_NULLPTR) : KMail::SecondaryWindow(name) {}
+    Composer(const char *name = nullptr) : KMail::SecondaryWindow(name) {}
 
 public:
     enum TemplateContext { New, Reply, ReplyToAll, Forward, NoTemplate };

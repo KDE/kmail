@@ -27,7 +27,7 @@ class AddEmailToExistingContactJob : public KJob
 {
     Q_OBJECT
 public:
-    explicit AddEmailToExistingContactJob(const Akonadi::Item &item, const QString &email, QObject *parent = Q_NULLPTR);
+    explicit AddEmailToExistingContactJob(const Akonadi::Item &item, const QString &email, QObject *parent = nullptr);
     ~AddEmailToExistingContactJob();
 
     void start() Q_DECL_OVERRIDE;

@@ -32,7 +32,7 @@ class CollectionShortcutPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionShortcutPage(QWidget *parent = Q_NULLPTR);
+    explicit CollectionShortcutPage(QWidget *parent = nullptr);
     ~CollectionShortcutPage();
 
     void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;

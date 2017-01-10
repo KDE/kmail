@@ -35,7 +35,7 @@ class ColorListBox : public QTreeWidget
     Q_OBJECT
 
 public:
-    explicit ColorListBox(QWidget *parent = Q_NULLPTR);
+    explicit ColorListBox(QWidget *parent = nullptr);
     void addColor(const QString &text, const QColor &color = Qt::black);
     void setColor(int index, const QColor &color);
     // like setColor, but does not Q_EMIT changed()

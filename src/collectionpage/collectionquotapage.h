@@ -42,7 +42,7 @@ class CollectionQuotaPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionQuotaPage(QWidget *parent = Q_NULLPTR);
+    explicit CollectionQuotaPage(QWidget *parent = nullptr);
     void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
     void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
     bool canHandle(const Akonadi::Collection &collection) const Q_DECL_OVERRIDE;

@@ -30,7 +30,7 @@ class MarkAllMessagesAsReadInFolderAndSubFolderJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit MarkAllMessagesAsReadInFolderAndSubFolderJob(QObject *parent = Q_NULLPTR);
+    explicit MarkAllMessagesAsReadInFolderAndSubFolderJob(QObject *parent = nullptr);
     ~MarkAllMessagesAsReadInFolderAndSubFolderJob();
 
     void setTopLevelCollection(const Akonadi::Collection &topLevelCollection);

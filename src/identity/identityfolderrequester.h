@@ -26,7 +26,7 @@ class IdentityFolderRequester : public MailCommon::FolderRequester
 {
     Q_OBJECT
 public:
-    explicit IdentityFolderRequester(QWidget *parent = Q_NULLPTR);
+    explicit IdentityFolderRequester(QWidget *parent = nullptr);
     ~IdentityFolderRequester();
 
     void setIsInvalidFolder();

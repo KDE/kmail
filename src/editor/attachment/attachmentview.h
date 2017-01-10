@@ -43,7 +43,7 @@ class AttachmentView : public QTreeView
 
 public:
     /// can't change model afterwards.
-    explicit AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent = Q_NULLPTR);
+    explicit AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent = nullptr);
     ~AttachmentView();
 
     QWidget *widget() const;

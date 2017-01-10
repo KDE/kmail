@@ -41,7 +41,7 @@ class FolderArchiveCache : public QObject
 {
     Q_OBJECT
 public:
-    explicit FolderArchiveCache(QObject *parent = Q_NULLPTR);
+    explicit FolderArchiveCache(QObject *parent = nullptr);
     ~FolderArchiveCache();
 
     void addToCache(const QString &resourceName, Akonadi::Collection::Id id);

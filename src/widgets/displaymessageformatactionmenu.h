@@ -27,7 +27,7 @@ class DisplayMessageFormatActionMenu : public KActionMenu
 {
     Q_OBJECT
 public:
-    explicit DisplayMessageFormatActionMenu(QObject *parent = Q_NULLPTR);
+    explicit DisplayMessageFormatActionMenu(QObject *parent = nullptr);
     ~DisplayMessageFormatActionMenu();
 
     MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat() const;

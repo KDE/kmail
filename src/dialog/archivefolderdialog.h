@@ -44,7 +44,7 @@ class ArchiveFolderDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ArchiveFolderDialog(QWidget *parent = Q_NULLPTR);
+    explicit ArchiveFolderDialog(QWidget *parent = nullptr);
     void setFolder(const Akonadi::Collection &defaultCollection);
 
 private Q_SLOTS:

@@ -37,7 +37,7 @@ class MiscPageFolderTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit MiscPageFolderTab(QWidget *parent = Q_NULLPTR);
+    explicit MiscPageFolderTab(QWidget *parent = nullptr);
 
     void save() Q_DECL_OVERRIDE;
     QString helpAnchor() const;
@@ -55,7 +55,7 @@ class MiscPageInviteTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit MiscPageInviteTab(QWidget *parent = Q_NULLPTR);
+    explicit MiscPageInviteTab(QWidget *parent = nullptr);
     void save() Q_DECL_OVERRIDE;
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
@@ -70,7 +70,7 @@ class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit MiscPage(QWidget *parent = Q_NULLPTR);
+    explicit MiscPage(QWidget *parent = nullptr);
     QString helpAnchor() const Q_DECL_OVERRIDE;
 
     typedef MiscPageFolderTab FolderTab;
@@ -82,7 +82,7 @@ class MiscPagePrintingTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit MiscPagePrintingTab(QWidget *parent = Q_NULLPTR);
+    explicit MiscPagePrintingTab(QWidget *parent = nullptr);
     void save() Q_DECL_OVERRIDE;
     void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 

@@ -26,7 +26,7 @@ class ExternalEditorWarning : public KMessageWidget
 {
     Q_OBJECT
 public:
-    explicit ExternalEditorWarning(QWidget *parent = Q_NULLPTR);
+    explicit ExternalEditorWarning(QWidget *parent = nullptr);
     ~ExternalEditorWarning();
 };
 

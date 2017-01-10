@@ -36,7 +36,7 @@ class KMailPluginEditorManagerInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMailPluginEditorManagerInterface(QObject *parent = Q_NULLPTR);
+    explicit KMailPluginEditorManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorManagerInterface();
 
     KPIMTextEdit::RichTextEditor *richTextEditor() const;

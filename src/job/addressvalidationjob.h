@@ -30,7 +30,7 @@ class AddressValidationJob : public KJob
     Q_OBJECT
 
 public:
-    explicit AddressValidationJob(const QString &emailAddresses, QWidget *parentWidget, QObject *parent = Q_NULLPTR);
+    explicit AddressValidationJob(const QString &emailAddresses, QWidget *parentWidget, QObject *parent = nullptr);
     ~AddressValidationJob();
 
     void start() Q_DECL_OVERRIDE;

@@ -32,7 +32,7 @@ class IncompleteIndexDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent = Q_NULLPTR);
+    explicit IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent = nullptr);
     ~IncompleteIndexDialog();
 
 private Q_SLOTS:

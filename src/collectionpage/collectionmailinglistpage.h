@@ -41,7 +41,7 @@ class CollectionMailingListPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
-    explicit CollectionMailingListPage(QWidget *parent = Q_NULLPTR);
+    explicit CollectionMailingListPage(QWidget *parent = nullptr);
     ~CollectionMailingListPage();
 
     void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;

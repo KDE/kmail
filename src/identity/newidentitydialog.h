@@ -49,7 +49,7 @@ public:
         ExistingEntry
     };
 
-    explicit NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent = Q_NULLPTR);
+    explicit NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent = nullptr);
 
     QString identityName() const;
     QString duplicateIdentity() const;

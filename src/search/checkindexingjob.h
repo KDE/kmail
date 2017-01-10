@@ -37,7 +37,7 @@ class CheckIndexingJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent = Q_NULLPTR);
+    explicit CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent = nullptr);
     ~CheckIndexingJob();
 
     void setCollection(const Akonadi::Collection &col);

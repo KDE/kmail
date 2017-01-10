@@ -47,7 +47,7 @@ class KActionMenuAccount : public KActionMenu
 {
     Q_OBJECT
 public:
-    explicit KActionMenuAccount(QObject *parent = Q_NULLPTR);
+    explicit KActionMenuAccount(QObject *parent = nullptr);
     ~KActionMenuAccount();
 
     void setAccountOrder(const QStringList &identifier);

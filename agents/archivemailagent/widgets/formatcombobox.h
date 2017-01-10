@@ -27,7 +27,7 @@ class FormatComboBox : public QComboBox
 {
     Q_OBJECT
 public:
-    explicit FormatComboBox(QWidget *parent = Q_NULLPTR);
+    explicit FormatComboBox(QWidget *parent = nullptr);
     ~FormatComboBox();
 
     MailCommon::BackupJob::ArchiveType format() const;

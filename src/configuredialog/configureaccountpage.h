@@ -31,7 +31,7 @@ class AccountsPageSendingTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AccountsPageSendingTab(QWidget *parent = Q_NULLPTR);
+    explicit AccountsPageSendingTab(QWidget *parent = nullptr);
     virtual ~AccountsPageSendingTab();
     QString helpAnchor() const;
     void save() Q_DECL_OVERRIDE;
@@ -51,7 +51,7 @@ class AccountsPageReceivingTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AccountsPageReceivingTab(QWidget *parent = Q_NULLPTR);
+    explicit AccountsPageReceivingTab(QWidget *parent = nullptr);
     ~AccountsPageReceivingTab();
     QString helpAnchor() const;
     void save() Q_DECL_OVERRIDE;
@@ -89,7 +89,7 @@ class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AccountsPage(QWidget *parent = Q_NULLPTR);
+    explicit AccountsPage(QWidget *parent = nullptr);
     QString helpAnchor() const Q_DECL_OVERRIDE;
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:

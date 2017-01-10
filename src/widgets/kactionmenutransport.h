@@ -30,7 +30,7 @@ class KActionMenuTransport : public KActionMenu
 {
     Q_OBJECT
 public:
-    explicit KActionMenuTransport(QObject *parent = Q_NULLPTR);
+    explicit KActionMenuTransport(QObject *parent = nullptr);
     ~KActionMenuTransport();
 
 Q_SIGNALS:

@@ -28,7 +28,7 @@ class RemoveDuplicateMessageInFolderAndSubFolderJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent = Q_NULLPTR);
+    explicit RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent = nullptr);
     ~RemoveDuplicateMessageInFolderAndSubFolderJob();
 
     void start();

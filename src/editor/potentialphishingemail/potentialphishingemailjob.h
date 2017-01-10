@@ -28,7 +28,7 @@ class PotentialPhishingEmailJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit PotentialPhishingEmailJob(QObject *parent = Q_NULLPTR);
+    explicit PotentialPhishingEmailJob(QObject *parent = nullptr);
     ~PotentialPhishingEmailJob();
 
     void setEmailWhiteList(const QStringList &emails);

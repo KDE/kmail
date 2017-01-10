@@ -29,7 +29,7 @@ class SaveDraftJob : public KJob
 {
     Q_OBJECT
 public:
-    explicit SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent = Q_NULLPTR);
+    explicit SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent = nullptr);
     ~SaveDraftJob();
 
     void start() Q_DECL_OVERRIDE;

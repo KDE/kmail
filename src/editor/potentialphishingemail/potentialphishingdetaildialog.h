@@ -27,7 +27,7 @@ class PotentialPhishingDetailDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit PotentialPhishingDetailDialog(QWidget *parent = Q_NULLPTR);
+    explicit PotentialPhishingDetailDialog(QWidget *parent = nullptr);
     ~PotentialPhishingDetailDialog();
 
     void fillList(const QStringList &lst);

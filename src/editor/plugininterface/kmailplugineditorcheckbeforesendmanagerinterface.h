@@ -32,7 +32,7 @@ class KMailPluginEditorCheckBeforeSendManagerInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent = Q_NULLPTR);
+    explicit KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorCheckBeforeSendManagerInterface();
 
     QWidget *parentWidget() const;
