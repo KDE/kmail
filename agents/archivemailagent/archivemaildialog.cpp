@@ -77,7 +77,7 @@ ArchiveMailDialog::ArchiveMailDialog(QWidget *parent)
                                QStringLiteral(KDEPIM_VERSION),
                                i18n("Archive emails automatically."),
                                KAboutLicense::GPL_V2,
-                               i18n("Copyright (C) 2012-2016 Laurent Montel"));
+                               i18n("Copyright (C) 2012-2017 Laurent Montel"));
 
     aboutData.addAuthor(i18n("Laurent Montel"),
                         i18n("Maintainer"), QStringLiteral("montel@kde.org"));

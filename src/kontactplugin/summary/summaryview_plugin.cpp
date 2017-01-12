@@ -112,7 +112,7 @@ const KAboutData SummaryView::aboutData()
                                QStringLiteral(KDEPIM_VERSION),
                                i18n("Kontact Summary View"),
                                KAboutLicense::LGPL,
-                               i18n("(c) 2003-2016 The Kontact developers"));
+                               i18n("(c) 2003-2017 The Kontact developers"));
 
     aboutData.addAuthor(i18n("Sven Lueppken"),
                         QString(), QStringLiteral("sven@kde.org"));
