@@ -160,13 +160,13 @@ void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
         if (isFilterableCollection(collection)) {
             changeRecorder()->setCollectionMonitored(collection, true);
         } else {
-            QMapIterator<QString, Akonadi::Collection::Id> i(pop3ResourceMap);
-            while (i.hasNext()) {
-                i.next();
+            QMap<QString, Akonadi::Collection::Id>::const_iterator i = pop3ResourceMap.constBegin();
+            while (i != pop3ResourceMap.constEnd()) {
                 if (collection.id() == i.value()) {
                     changeRecorder()->setCollectionMonitored(collection, true);
                     break;
                 }
+                i++;
             }
         }
     }

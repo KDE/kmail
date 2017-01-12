@@ -2574,10 +2574,10 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
         customHeader.insert(customMimeHeader.custHeaderName().toLatin1(), customMimeHeader.custHeaderValue());
     }
 
-    QMapIterator<QByteArray, QString> extraCustomHeader(mExtraHeaders);
-    while (extraCustomHeader.hasNext()) {
-        extraCustomHeader.next();
+    QMap<QByteArray, QString>::const_iterator extraCustomHeader = mExtraHeaders.constBegin();
+    while (extraCustomHeader != mExtraHeaders.constEnd()) {
         customHeader.insert(extraCustomHeader.key(), extraCustomHeader.value());
+        extraCustomHeader++;
     }
 
     mComposerBase->setCustomHeader(customHeader);
