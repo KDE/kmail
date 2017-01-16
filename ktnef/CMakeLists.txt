@@ -1,4 +1,3 @@
-project(ktnef)
 
 include(TestBigEndian)
 test_big_endian(CMAKE_WORDS_BIGENDIAN)
