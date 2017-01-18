@@ -88,8 +88,8 @@ void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const Q
             updateIndicator();
         }
     } else {
-        if (mServerActive.contains(serverName)) {
-            mServerActive.removeAll(serverName);
+        int countRemoveServerName = mServerActive.removeAll(serverName);
+        if (countRemoveServerName > 0) {
             updateIndicator();
         }
     }
