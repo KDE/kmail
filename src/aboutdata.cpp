@@ -161,8 +161,7 @@ static const about_data authors[] = {
         "whizkid@telia.com", nullptr
     },
     {
-        "Lars Knoll", I18N_NOOP("Original encryption support<br/>"
-        "PGP 2 and PGP 5 support"),
+        "Lars Knoll", I18N_NOOP("Original encryption support PGP 2 and PGP 5 support"),
         "knoll@kde.org", nullptr
     },
     {
