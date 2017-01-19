@@ -226,7 +226,7 @@ void ArchiveMailWidget::slotRemoveItem()
         return;
     }
 
-    Q_FOREACH (QTreeWidgetItem *item, listItems) {
+    for (QTreeWidgetItem *item : listItems) {
         delete item;
     }
     mChanged = true;

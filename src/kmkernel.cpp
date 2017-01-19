@@ -1926,7 +1926,7 @@ void KMKernel::stopAgentInstance()
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    foreach (Akonadi::AgentInstance type, lst) {
+    for (Akonadi::AgentInstance type : lst) {
         const QString identifier = type.identifier();
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(identifier));
 
