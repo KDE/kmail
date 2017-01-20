@@ -83,7 +83,8 @@ void DisplayMessageFormatActionMenu::setDisplayMessageFormat(MessageViewer::View
 
 void DisplayMessageFormatActionMenu::updateMenu()
 {
-    Q_FOREACH (QAction *act, menu()->actions()) {
+    const QList<QAction *> actList = menu()->actions();
+    for (QAction *act : actList) {
         MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
         if (format == mDisplayMessageFormat) {
             act->setChecked(true);

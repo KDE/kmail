@@ -19,6 +19,7 @@
 
 #include "kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "kmail_debug.h"
+#include "helper_p.h"
 #include <MessageComposer/PluginEditorCheckBeforeSendInterface>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
@@ -64,7 +65,7 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
 
 bool KMailPluginEditorCheckBeforeSendManagerInterface::execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const
 {
-    Q_FOREACH (MessageComposer::PluginEditorCheckBeforeSendInterface *interface, mListPluginInterface) {
+    for (MessageComposer::PluginEditorCheckBeforeSendInterface *interface : qAsConst(mListPluginInterface)) {
         if (!interface->exec(params)) {
             return false;
         }

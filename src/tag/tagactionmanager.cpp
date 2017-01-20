@@ -1,4 +1,5 @@
-/* Copyright 2010 Thomas McGuire <mcguire@kde.org>
+/*
+   Copyright 2010 Thomas McGuire <mcguire@kde.org>
    Copyright 2011-2017 Laurent Montel <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
@@ -20,6 +21,7 @@
 #include "tagactionmanager.h"
 
 #include "messageactions.h"
+#include "helper_p.h"
 
 #include "MailCommon/AddTagDialog"
 
@@ -86,7 +88,7 @@ void TagActionManager::clearActions()
 
     //Remove the tag actions from the status menu and the action collection,
     //then delete them.
-    foreach (KToggleAction *action, mTagActions) {
+    for (KToggleAction *action : qAsConst(mTagActions)) {
         mMessageActions->messageStatusMenu()->removeAction(action);
 
         // This removes and deletes the action at the same time
@@ -252,7 +254,7 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages,
         for (; it != end; ++it) {
             //FIXME Not very performant tag label retrieval
             QString label(QStringLiteral("not found"));
-            foreach (const MailCommon::Tag::Ptr &tag, mTags) {
+            for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
                 if (tag->id() == it.key()) {
                     label = tag->name();
                     break;
@@ -290,7 +292,7 @@ void TagActionManager::onTagAdded(const Akonadi::Tag &akonadiTag)
 
 void TagActionManager::onTagRemoved(const Akonadi::Tag &akonadiTag)
 {
-    foreach (const MailCommon::Tag::Ptr &tag, mTags) {
+    for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
         if (tag->id() == akonadiTag.id()) {
             mTags.removeAll(tag);
             break;
@@ -302,7 +304,7 @@ void TagActionManager::onTagRemoved(const Akonadi::Tag &akonadiTag)
 
 void TagActionManager::onTagChanged(const Akonadi::Tag &akonadiTag)
 {
-    foreach (const MailCommon::Tag::Ptr &tag, mTags) {
+    for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
         if (tag->id() == akonadiTag.id()) {
             mTags.removeAll(tag);
             break;

@@ -23,6 +23,7 @@
 
 #include "incompleteindexdialog.h"
 #include "searchwindow.h"
+#include "helper_p.h"
 
 #include "MailCommon/FolderRequester"
 #include "kmcommands.h"
@@ -228,7 +229,8 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     connect(mUi.mCbxFolders, &MailCommon::FolderRequester::folderChanged, this, &SearchWindow::slotFolderActivated);
 
     ac->addAssociatedWidget(this);
-    foreach (QAction *action, ac->actions()) {
+    const QList<QAction *> actList = ac->actions();
+    for (QAction *action : actList) {
         action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
     }
 }
@@ -461,7 +463,7 @@ void SearchWindow::doSearch()
             mCollectionId = mSelectMultiCollectionDialog->selectedCollection();
         }
         searchCollections.reserve(mCollectionId.count());
-        Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
+        for (const Akonadi::Collection &col : qAsConst(mCollectionId)) {
             searchCollections << col;
         }
         if (searchCollections.isEmpty()) {
@@ -577,7 +579,7 @@ void SearchWindow::searchDone(KJob *job)
             searchDescription->setBaseCollection(Akonadi::Collection());
             QList<Akonadi::Collection::Id> lst;
             lst.reserve(mCollectionId.count());
-            Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
+            for (const Akonadi::Collection &col : qAsConst(mCollectionId)) {
                 lst << col.id();
             }
             searchDescription->setListCollection(lst);
@@ -741,7 +743,8 @@ Akonadi::Item::List SearchWindow::selectedMessages() const
 {
     Akonadi::Item::List messages;
 
-    foreach (const QModelIndex &index, mUi.mLbxMatches->selectionModel()->selectedRows()) {
+    const QModelIndexList lst = mUi.mLbxMatches->selectionModel()->selectedRows();
+    for (const QModelIndex &index : lst) {
         const Akonadi::Item item = index.data(Akonadi::ItemModel::ItemRole).value<Akonadi::Item>();
         if (item.isValid()) {
             messages.append(item);
@@ -885,7 +888,7 @@ void SearchWindow::slotSelectMultipleFolders()
     if (!mSelectMultiCollectionDialog)  {
         QList<Akonadi::Collection::Id> lst;
         lst.reserve(mCollectionId.count());
-        Q_FOREACH (const Akonadi::Collection &col, mCollectionId) {
+        for (const Akonadi::Collection &col : qAsConst(mCollectionId)) {
             lst << col.id();
         }
         mSelectMultiCollectionDialog = new PimCommon::SelectMultiCollectionDialog(KMime::Message::mimeType(), lst, this);
@@ -924,7 +927,7 @@ QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::Li
     mUi.mProgressIndicator->start();
     mUi.mStatusLbl->setText(i18n("Checking index status..."));
     //Fetch collection ?
-    Q_FOREACH (const Akonadi::Collection &col, cols) {
+    for (const Akonadi::Collection &col : qAsConst(cols)) {
         const qlonglong num = KMKernel::self()->indexedItems()->indexedItems((qlonglong)col.id());
         if (col.statistics().count() != num) {
             results.push_back(col.id());

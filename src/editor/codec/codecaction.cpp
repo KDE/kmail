@@ -19,6 +19,7 @@
 
 // Own
 #include "codecaction.h"
+#include "helper_p.h"
 
 // KMail
 #include "codecmanager.h"
@@ -58,7 +59,7 @@ CodecAction::CodecAction(Mode mode, QObject *parent)
         removeAllActions();
         addAction(oldActions.takeFirst());   // 'Default'
         addAction(i18nc("Encodings menu", "us-ascii"));
-        foreach (QAction *a, oldActions) {
+        for (QAction *a : qAsConst(oldActions)) {
             addAction(a);
         }
     } else if (mode == ReaderMode) {
@@ -103,7 +104,8 @@ void CodecAction::setAutoCharset()
 // use fixEncoding().
 static QString selectCharset(KSelectAction *root, const QString &encoding)
 {
-    foreach (QAction *action, root->actions()) {
+    const QList<QAction *> lstActs = root->actions();
+    for (QAction *action : lstActs) {
         KSelectAction *subMenu = qobject_cast<KSelectAction *>(action);
         if (subMenu) {
             const QString codecNameToSet = selectCharset(subMenu, encoding);

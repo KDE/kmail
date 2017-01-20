@@ -480,7 +480,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
         editor->setExternalEditorPath(KMailSettings::self()->externalEditor());
     }
 
-    Q_FOREACH (KPIM::MultiplyingLine *line, recipientsEditor->lines()) {
+    const QList<KPIM::MultiplyingLine *> lstLines = recipientsEditor->lines();
+    for (KPIM::MultiplyingLine *line : lstLines) {
         slotRecipientEditorLineAdded(line);
     }
 
@@ -986,7 +987,7 @@ void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
     parser.setAllowDecryption(true);
     parser.setWordWrap(MessageComposer::MessageComposerSettings::self()->wordWrap(), MessageComposer::MessageComposerSettings::self()->lineWrapWidth());
     parser.setIdentityManager(KMKernel::self()->identityManager());
-    foreach (const Akonadi::Item &item, items) {
+    for (const Akonadi::Item &item : items) {
         if (!mCustomTemplate.isEmpty()) {
             parser.process(mCustomTemplate, MessageCore::Util::message(item));
         } else {

@@ -332,9 +332,9 @@ void AccountsPage::ReceivingTab::save()
     }
 
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
-    QHashIterator<QString, QSharedPointer<RetrievalOptions> > it(mRetrievalHash);
-    while (it.hasNext()) {
-        it.next();
+    QHash<QString, QSharedPointer<RetrievalOptions> >::const_iterator it = mRetrievalHash.cbegin();
+    const QHash<QString, QSharedPointer<RetrievalOptions> >::const_iterator itEnd = mRetrievalHash.cend();
+    for (; it != itEnd; ++it) {
         KConfigGroup group;
         KConfig *conf = nullptr;
         if (KMKernel::self()) {

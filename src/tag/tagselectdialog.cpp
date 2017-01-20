@@ -138,7 +138,8 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
     Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
     bool updatelist = fetchJob->property("updatelist").toBool();
 
-    foreach (const Akonadi::Tag &akonadiTag, fetchJob->tags()) {
+    const Akonadi::Tag::List lstTags = fetchJob->tags();
+    for (const Akonadi::Tag &akonadiTag : lstTags) {
         mTagList.append(MailCommon::Tag::fromAkonadi(akonadiTag));
     }
 

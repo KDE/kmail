@@ -49,6 +49,7 @@
 #include "util.h"
 #include "settings/kmailsettings.h"
 #include "kmail_debug.h"
+#include "helper_p.h"
 
 #include "editor/composer.h"
 #include "kmmainwidget.h"
@@ -1034,7 +1035,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     if (!mWin) {
         mWin = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity);
     }
-    foreach (KMime::Content *attach, fwdMsg.second) {
+    for (KMime::Content *attach : qAsConst(fwdMsg.second)) {
         mWin->addAttach(attach);
     }
     mWin->show();
@@ -1088,7 +1089,8 @@ KMCommand::Result KMRedirectCommand::execute()
     const QString to = dlg->to();
     const QString cc = dlg->cc();
     const QString bcc = dlg->bcc();
-    foreach (const Akonadi::Item &item, retrievedMsgs()) {
+    const Akonadi::Item::List lstItems = retrievedMsgs();
+    for (const Akonadi::Item &item : lstItems) {
         const KMime::Message::Ptr msg = MessageCore::Util::message(item);
         if (!msg) {
             return Failed;
@@ -1221,7 +1223,8 @@ KMCommand::Result KMSetStatusCommand::execute()
     }
 
     Akonadi::Item::List itemsToModify;
-    foreach (const Akonadi::Item &it, retrievedMsgs()) {
+    const Akonadi::Item::List lstItems = retrievedMsgs();
+    for (const Akonadi::Item &it : lstItems) {
         if (mInvertMark) {
             //qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
             if (it.isValid()) {
@@ -1312,14 +1315,15 @@ void KMSetTagCommand::setTags()
         Akonadi::Item item(i);
         if (mMode == CleanExistingAndAddNew) {
             //WorkAround. ClearTags doesn't work.
-            Q_FOREACH (const Akonadi::Tag &tag, item.tags()) {
+            const Akonadi::Tag::List lstTags = item.tags();
+            for (const Akonadi::Tag &tag : lstTags) {
                 item.clearTag(tag);
             }
             //item.clearTags();
         }
 
         if (mMode == KMSetTagCommand::Toggle) {
-            Q_FOREACH (const Akonadi::Tag &tag, mCreatedTags) {
+            for (const Akonadi::Tag &tag : qAsConst(mCreatedTags)) {
                 if (item.hasTag(tag)) {
                     item.clearTag(tag);
                 } else {
@@ -1342,7 +1346,7 @@ void KMSetTagCommand::setTags()
         KConfigGroup tag(KMKernel::self()->config(), "MessageListView");
         const QString oldTagList = tag.readEntry("TagSelected");
         QStringList lst = oldTagList.split(QLatin1Char(','));
-        Q_FOREACH (const Akonadi::Tag &tag, mCreatedTags) {
+        for (const Akonadi::Tag &tag : qAsConst(mCreatedTags)) {
             const QString url = tag.url().url();
             if (!lst.contains(url)) {
                 lst.append(url);
@@ -1605,7 +1609,8 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonad
 KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
     KMime::Content::List contentsToSave;
-    foreach (const Akonadi::Item &item, retrievedMsgs()) {
+    const Akonadi::Item::List lstItems = retrievedMsgs();
+    for (const Akonadi::Item &item : lstItems) {
         if (item.hasPayload<KMime::Message::Ptr>()) {
             contentsToSave += item.payload<KMime::Message::Ptr>()->attachments();
         } else {

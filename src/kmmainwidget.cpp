@@ -32,6 +32,7 @@
 #include "MailCommon/FolderSelectionDialog"
 #include "MailCommon/FolderTreeWidget"
 #include "util.h"
+#include "helper_p.h"
 #include "mailcommon/mailutil.h"
 #include "mailcommon/mailkernel.h"
 #include "dialog/archivefolderdialog.h"
@@ -3849,7 +3850,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     }
 
     // Enable / disable all filters.
-    foreach (QAction *filterAction, mFilterMenuActions) {
+    for (QAction *filterAction : qAsConst(mFilterMenuActions)) {
         filterAction->setEnabled(count > 0);
     }
 
@@ -4136,7 +4137,7 @@ void KMMainWidget::clearFilterActions()
             mGUIClient->unplugActionList(QStringLiteral("menu_filter_actions"));
         }
 
-    foreach (QAction *a, mFilterMenuActions) {
+    for (QAction *a : qAsConst(mFilterMenuActions)) {
         actionCollection()->removeAction(a);
     }
 
@@ -4160,7 +4161,8 @@ void KMMainWidget::initializeFilterActions()
     mApplyFilterActionsMenu->menu()->addAction(mApplyAllFiltersAction);
     bool addedSeparator = false;
 
-    foreach (MailFilter *filter, MailCommon::FilterManager::instance()->filters()) {
+    const QList<MailFilter *> lstFilters = MailCommon::FilterManager::instance()->filters();
+    for (MailFilter *filter : lstFilters) {
         if (!filter->isEmpty() && filter->configureShortcut() && filter->isEnabled()) {
             QString filterName = QStringLiteral("Filter %1").arg(filter->name());
             QString normalizedName = filterName.replace(QLatin1Char(' '), QLatin1Char('_'));

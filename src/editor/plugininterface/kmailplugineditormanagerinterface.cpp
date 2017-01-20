@@ -21,6 +21,7 @@
 #include "messagecomposer/plugineditormanager.h"
 #include "messagecomposer/plugineditor.h"
 #include "kmail_debug.h"
+#include "helper_p.h"
 
 #include <QAction>
 #include <QVector>
@@ -105,7 +106,7 @@ QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer:
 QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType()
 {
     if (mActionHash.isEmpty()) {
-        Q_FOREACH (MessageComposer::PluginEditorInterface *interface, mListPluginInterface) {
+        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
             MessageComposer::ActionType actionType = interface->actionType();
             MessageComposer::ActionType::Type type = actionType.type();
             QList<QAction *> lst = mActionHash.value(type);

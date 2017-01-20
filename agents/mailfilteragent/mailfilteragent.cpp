@@ -156,8 +156,8 @@ void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
 
     const QMap<QString, Akonadi::Collection::Id> pop3ResourceMap = MailCommon::Kernel::pop3ResourceTargetCollection();
 
-
-    foreach (const Akonadi::Collection &collection, fetchJob->collections()) {
+    const Akonadi::Collection::List lstCols = fetchJob->collections();
+    for (const Akonadi::Collection &collection : lstCols) {
         if (isFilterableCollection(collection)) {
             changeRecorder()->setCollectionMonitored(collection, true);
         } else {

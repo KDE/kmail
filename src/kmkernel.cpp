@@ -1249,7 +1249,7 @@ void KMKernel::recoverDeadLetters()
 
     dir.cd(pathName + QLatin1String("autosave"));
     const QFileInfoList autoSaveFiles = dir.entryInfoList();
-    foreach (const QFileInfo &file, autoSaveFiles) {
+    for (const QFileInfo &file : autoSaveFiles) {
         // Disregard the '.' and '..' folders
         const QString filename = file.fileName();
         if (filename == QLatin1String(".") ||
