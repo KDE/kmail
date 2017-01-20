@@ -43,6 +43,7 @@
   <name xml:lang="x-test">xxKMailxx</name>
   <name xml:lang="zh-CN">KMail</name>
   <name xml:lang="zh-TW">KMail</name>
+  <summary>Email application.</summary>
   <description>
     <p>
       KMail is the email component of Kontact, the integrated personal information manager from KDE.
