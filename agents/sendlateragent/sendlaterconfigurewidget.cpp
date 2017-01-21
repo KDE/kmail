@@ -216,12 +216,12 @@ void SendLaterWidget::slotRemoveItem()
         return;
     }
     const int numberOfItems(listItems.count());
-    if (KMessageBox::warningYesNo(this, i18np("Do you want to delete selected item? Do you want to continue?", "Do you want to delete selected items? Do you want to continue?", numberOfItems), i18n("Remove items")) == KMessageBox::No) {
+    if (KMessageBox::warningYesNo(this, i18np("Do you want to delete the selected item?", "Do you want to delete the selected items?", numberOfItems), i18n("Remove items")) == KMessageBox::No) {
         return;
     }
 
     bool removeMessage = false;
-    if (KMessageBox::warningYesNo(this, i18n("Do you want to remove messages as well?"), i18n("Remove messages")) == KMessageBox::Yes) {
+    if (KMessageBox::warningYesNo(this, i18n("Do you want to remove the messages as well?"), i18n("Remove messages")) == KMessageBox::Yes) {
         removeMessage = true;
     }
 

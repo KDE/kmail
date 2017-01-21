@@ -222,7 +222,7 @@ void ArchiveMailWidget::save()
 void ArchiveMailWidget::slotRemoveItem()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
-    if (KMessageBox::warningYesNo(this, i18n("Do you want to delete selected items? Do you want to continue?"), i18n("Remove items")) == KMessageBox::No) {
+    if (KMessageBox::warningYesNo(this, i18n("Do you want to delete the selected items?"), i18n("Remove items")) == KMessageBox::No) {
         return;
     }
 
