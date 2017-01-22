@@ -44,6 +44,13 @@
   <name xml:lang="zh-CN">KMail</name>
   <name xml:lang="zh-TW">KMail</name>
   <summary>Email application.</summary>
+  <summary xml:lang="ca">Aplicació de correu electrònic.</summary>
+  <summary xml:lang="es">Aplicación de correo.</summary>
+  <summary xml:lang="nl">E-mailtoepassing.</summary>
+  <summary xml:lang="pt">Aplicação de e-mail.</summary>
+  <summary xml:lang="sv">E-postprogram.</summary>
+  <summary xml:lang="uk">Програма для роботи з електронної пошти.</summary>
+  <summary xml:lang="x-test">xxEmail application.xx</summary>
   <description>
     <p>
       KMail is the email component of Kontact, the integrated personal information manager from KDE.
