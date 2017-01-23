@@ -45,7 +45,10 @@
   <name xml:lang="zh-TW">KMail</name>
   <summary>Email application.</summary>
   <summary xml:lang="ca">Aplicació de correu electrònic.</summary>
+  <summary xml:lang="ca-valencia">Aplicació de correu electrònic.</summary>
+  <summary xml:lang="en-GB">Email application.</summary>
   <summary xml:lang="es">Aplicación de correo.</summary>
+  <summary xml:lang="it">Programma di posta elettronica.</summary>
   <summary xml:lang="nl">E-mailtoepassing.</summary>
   <summary xml:lang="pt">Aplicação de e-mail.</summary>
   <summary xml:lang="sv">E-postprogram.</summary>
