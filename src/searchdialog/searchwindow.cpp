@@ -594,7 +594,7 @@ void SearchWindow::searchDone(KJob *job)
         mSearchJob = nullptr;
         Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mFolder, Akonadi::CollectionFetchJob::Base, this);
         fetch->fetchScope().setIncludeStatistics(true);
-        connect(fetch, SIGNAL(result(KJob*)), this, SLOT(slotCollectionStatisticsRetrieved(KJob*)));
+        connect(fetch, &KJob::result, this, &SearchWindow::slotCollectionStatisticsRetrieved);
 
         mUi.mStatusLbl->setText(i18n("Search complete."));
         createSearchModel();

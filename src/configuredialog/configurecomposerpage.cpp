@@ -19,6 +19,7 @@
 #include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
+#include "helper_p.h"
 #include "kmmainwidget.h"
 #include "PimCommon/AutoCorrectionWidget"
 #include "MessageComposer/ImageScalingWidget"
@@ -262,8 +263,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     connect(mWordWrapCheck, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
-    connect(mWrapColumnSpin, SIGNAL(valueChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mWrapColumnSpin, QOverload<int>::of(&QSpinBox::valueChanged),
+            this, &ComposerPageGeneralTab::slotEmitChanged);
     // only enable the spinbox if the checkbox is checked
     connect(mWordWrapCheck, &QAbstractButton::toggled,
             mWrapColumnSpin, &QWidget::setEnabled);
