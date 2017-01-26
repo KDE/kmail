@@ -70,7 +70,7 @@ void IdentityEditVcardDialog::slotDeleteCurrentVCard()
     if (mVcardFileName.isEmpty()) {
         return;
     }
-    if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure to want to delete this vCard?"), i18n("Delete vCard"))) {
+    if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure you want to delete this vCard?"), i18n("Delete vCard"))) {
         if (mVcardFileName.startsWith(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation))) {
             deleteCurrentVcard(true);
         } else {
