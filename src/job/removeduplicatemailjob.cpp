@@ -22,7 +22,6 @@
 #include "libkdepim/progressmanager.h"
 #include <KLocalizedString>
 #include <KMessageBox>
-
 #include <AkonadiCore/Collection>
 #include <akonadi/kmime/removeduplicatesjob.h>
 #include <AkonadiCore/EntityTreeModel>
@@ -36,7 +35,6 @@ RemoveDuplicateMailJob::RemoveDuplicateMailJob(QItemSelectionModel *selectionMod
       mParent(widget),
       mSelectionModel(selectionModel)
 {
-
 }
 
 RemoveDuplicateMailJob::~RemoveDuplicateMailJob()
@@ -77,7 +75,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
         item = nullptr;
     }
     if (job && (job->error() != KJob::KilledJobError)) {
-        KMessageBox::error(mParent, job->errorText(), i18n("Error while removing duplicates"));
+        KMessageBox::error(mParent, i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()), i18n("Error while removing duplicates"));
     }
     deleteLater();
 }
