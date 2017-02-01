@@ -177,7 +177,6 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
 
     mainLayout->addWidget(buttonBox);
 
-    resize(QSize(500, 500));
     connect(mUser1Button, &QPushButton::clicked, this, &FilterLogDialog::slotUser1);
     connect(mUser2Button, &QPushButton::clicked, this, &FilterLogDialog::slotUser2);
     connect(mTextEdit->editor(), SIGNAL(textChanged()), this, SLOT(slotTextChanged()));
@@ -225,8 +224,8 @@ void FilterLogDialog::readConfig()
     }
 
     KConfigGroup geometryGroup(config, "Geometry");
-    const QSize size = geometryGroup.readEntry("filterLogSize", QSize());
-    if (size != QSize()) {
+    const QSize size = geometryGroup.readEntry("filterLogSize", QSize(600, 400));
+    if (size.isValid()) {
         resize(size);
     } else {
         adjustSize();
