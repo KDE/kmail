@@ -150,6 +150,8 @@ using KSieveUi::SieveDebugDialog;
 #include <ksieveui/managesievescriptsdialog.h>
 #include <ksieveui/util.h>
 
+#include <PimCommon/LogActivitiesManager>
+
 // KDELIBS includes
 #include <kwindowsystem.h>
 #include <kmessagebox.h>
@@ -1508,6 +1510,7 @@ void KMMainWidget::slotEmptyFolder()
 
     if (!isTrash) {
         BroadcastStatus::instance()->setStatusMsg(i18n("Moved all messages to the trash"));
+        PimCommon::LogActivitiesManager::self()->appendLog(i18n("Moved all messages to the trash"));
     }
 
     updateMessageActions();
@@ -1714,27 +1717,30 @@ void KMMainWidget::slotMoveMessagesCompleted(KMMoveCommand *command)
     // Bleah :D
     const bool moveWasReallyADelete = !command->destFolder().isValid();
 
+    QString str;
     if (command->result() == KMCommand::OK) {
         if (moveWasReallyADelete) {
-            BroadcastStatus::instance()->setStatusMsg(i18n("Messages deleted successfully."));
+            str = i18n("Messages deleted successfully.");
         } else {
-            BroadcastStatus::instance()->setStatusMsg(i18n("Messages moved successfully."));
+            str = i18n("Messages moved successfully.");
         }
     } else {
         if (moveWasReallyADelete) {
             if (command->result() == KMCommand::Failed) {
-                BroadcastStatus::instance()->setStatusMsg(i18n("Deleting messages failed."));
+                str = i18n("Deleting messages failed.");
             } else {
-                BroadcastStatus::instance()->setStatusMsg(i18n("Deleting messages canceled."));
+                str = i18n("Deleting messages canceled.");
             }
         } else {
             if (command->result() == KMCommand::Failed) {
-                BroadcastStatus::instance()->setStatusMsg(i18n("Moving messages failed."));
+                str = i18n("Moving messages failed.");
             } else {
-                BroadcastStatus::instance()->setStatusMsg(i18n("Moving messages canceled."));
+                str = i18n("Moving messages canceled.");
             }
         }
     }
+    BroadcastStatus::instance()->setStatusMsg(str);
+    PimCommon::LogActivitiesManager::self()->appendLog(str);
     // The command will autodelete itself and will also kill the set.
 }
 
@@ -1832,15 +1838,18 @@ void KMMainWidget::copyMessageSelected(const Akonadi::Item::List &selectMsg, con
 void KMMainWidget::slotCopyMessagesCompleted(KMCommand *command)
 {
     Q_ASSERT(command);
+    QString str;
     if (command->result() == KMCommand::OK) {
-        BroadcastStatus::instance()->setStatusMsg(i18n("Messages copied successfully."));
+        str = i18n("Messages copied successfully.");
     } else {
         if (command->result() == KMCommand::Failed) {
-            BroadcastStatus::instance()->setStatusMsg(i18n("Copying messages failed."));
+            str = i18n("Copying messages failed.");
         } else {
-            BroadcastStatus::instance()->setStatusMsg(i18n("Copying messages canceled."));
+            str = i18n("Copying messages canceled.");
         }
     }
+    PimCommon::LogActivitiesManager::self()->appendLog(str);
+    BroadcastStatus::instance()->setStatusMsg(str);
     // The command will autodelete itself and will also kill the set.
 }
 
