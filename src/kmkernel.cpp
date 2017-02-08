@@ -4,6 +4,7 @@
 
 #include "settings/kmailsettings.h"
 #include "libkdepim/broadcaststatus.h"
+#include "job/opencomposerjob.h"
 #include <AkonadiSearch/PIM/indexeditems.h>
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
@@ -545,113 +546,16 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
                            const QStringList &customHeaders,
                            const QString &replyTo, const QString &inReplyTo, const QString &identity)
 {
-    KMail::Composer::TemplateContext context = KMail::Composer::New;
-    KMime::Message::Ptr msg(new KMime::Message);
-    MessageHelper::initHeader(msg, identityManager());
-    msg->contentType()->setCharset("utf-8");
-    if (!to.isEmpty()) {
-        msg->to()->fromUnicodeString(to, "utf-8");
-    }
-
-    if (!cc.isEmpty()) {
-        msg->cc()->fromUnicodeString(cc, "utf-8");
-    }
-
-    if (!bcc.isEmpty()) {
-        msg->bcc()->fromUnicodeString(bcc, "utf-8");
-    }
-
-    if (!subject.isEmpty()) {
-        msg->subject()->fromUnicodeString(subject, "utf-8");
-    }
-
-    if (!messageFile.isEmpty() && QFile::exists(messageFile)) {
-        QFile f(messageFile);
-        QByteArray str;
-        if (!f.open(QIODevice::ReadOnly)) {
-            qCWarning(KMAIL_LOG) << "Failed to load message: " << f.errorString();
-        } else {
-            str = f.readAll();
-            f.close();
-        }
-        if (!str.isEmpty()) {
-            context = KMail::Composer::NoTemplate;
-            msg->setBody(QString::fromLocal8Bit(str.data(), str.size()).toUtf8());
-        } else {
-            TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-            parser.setIdentityManager(KMKernel::self()->identityManager());
-            parser.process(msg);
-        }
-    } else if (!body.isEmpty()) {
-        context = KMail::Composer::NoTemplate;
-        msg->setBody(body.toUtf8());
-    } else {
-        TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
-        parser.process(msg);
-    }
-
-    if (!inReplyTo.isEmpty()) {
-        KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo;
-        header->fromUnicodeString(inReplyTo, "utf-8");
-        msg->setHeader(header);
-    }
-
-    msg->assemble();
-
-    uint identityId = 0;
-    if (!identity.isEmpty()) {
-        if (KMKernel::self()->identityManager()->identities().contains(identity)) {
-            const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(identity);
-            identityId = id.uoid();
-        }
-    }
-    KMail::Composer *cWin = KMail::makeComposer(msg, false, false, context, identityId);
-    if (!to.isEmpty()) {
-        cWin->setFocusToSubject();
-    }
-    QList<QUrl> attachURLs = QUrl::fromStringList(attachmentPaths);
-    QList<QUrl>::ConstIterator endAttachment(attachURLs.constEnd());
-    for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
-        QMimeDatabase mimeDb;
-        if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
-            if (KMessageBox::questionYesNo(nullptr, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder")) == KMessageBox::No) {
-                continue;
-            }
-        }
-        cWin->addAttachment((*it), QString());
-    }
-    if (!replyTo.isEmpty()) {
-        cWin->setCurrentReplyTo(replyTo);
-    }
-
-    if (!customHeaders.isEmpty()) {
-        QMap<QByteArray, QString> extraCustomHeaders;
-        QStringList::ConstIterator end = customHeaders.constEnd();
-        for (QStringList::ConstIterator it = customHeaders.constBegin(); it != end; ++it) {
-            if (!(*it).isEmpty()) {
-                const int pos = (*it).indexOf(QLatin1Char(':'));
-                if (pos > 0) {
-                    const QString header = (*it).left(pos).trimmed();
-                    const QString value = (*it).mid(pos + 1).trimmed();
-                    if (!header.isEmpty() && !value.isEmpty()) {
-                        extraCustomHeaders.insert(header.toUtf8(), value);
-                    }
-                }
-            }
-        }
-        if (!extraCustomHeaders.isEmpty()) {
-            cWin->addExtraCustomHeaders(extraCustomHeaders);
-        }
-    }
-    if (!hidden) {
-        cWin->show();
-        // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_OS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
-    }
+    const OpenComposerSettings settings(to, cc,
+                                        bcc, subject,
+                                        body, hidden,
+                                        messageFile,
+                                        attachmentPaths,
+                                        customHeaders,
+                                        replyTo, inReplyTo, identity);
+    OpenComposerJob *job = new OpenComposerJob(this);
+    job->setOpenComposerSettings(settings);
+    job->start();
     return 1;
 }
 

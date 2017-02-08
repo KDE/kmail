@@ -130,6 +130,7 @@ set(kmailprivate_job_LIB_SRCS
     job/removeduplicatemessageinfolderandsubfolderjob.cpp
     job/handleclickedurljob.cpp
     job/composenewmessagejob.cpp
+    job/opencomposerjob.cpp
     )
 
 set(kmailprivate_widgets_LIB_SRCS
