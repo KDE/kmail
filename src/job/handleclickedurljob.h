@@ -38,6 +38,7 @@ public:
 private:
     QUrl mUrl;
     QSharedPointer<MailCommon::FolderCollection> mFolder;
+    uint mIdentity;
 };
 
 #endif // HANDLECLICKEDURLJOB_H

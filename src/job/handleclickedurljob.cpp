@@ -18,6 +18,7 @@
 */
 
 #include "handleclickedurljob.h"
+#include "config-kmail.h"
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
@@ -27,7 +28,8 @@
 #include <MessageComposer/MessageHelper>
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      mIdentity(0)
 {
 }
 
@@ -38,11 +40,11 @@ HandleClickedUrlJob::~HandleClickedUrlJob()
 void HandleClickedUrlJob::start()
 {
     KMime::Message::Ptr msg(new KMime::Message);
-    uint identity = !mFolder.isNull() ? mFolder->identity() : 0;
-    MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), identity);
+    mIdentity = !mFolder.isNull() ? mFolder->identity() : 0;
+    MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), mIdentity);
     msg->contentType()->setCharset("utf-8");
 
-    QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl(mUrl);
+    const QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl(mUrl);
 
     msg->to()->fromUnicodeString(fields.value(QStringLiteral("to")), "utf-8");
     const QString subject = fields.value(QStringLiteral("subject"));
@@ -72,7 +74,7 @@ void HandleClickedUrlJob::start()
         parser.process(msg, mFolder->collection());
     }
 
-    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, identity);
+    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, mIdentity);
     win->setFocusToSubject();
     if (!mFolder.isNull()) {
         win->setCollectionForNewMessage(mFolder->collection());
