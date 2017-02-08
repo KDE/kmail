@@ -1311,33 +1311,23 @@ void KMMainWidget::slotCheckMailOnStartup()
 
 void KMMainWidget::slotCompose()
 {
-    KMail::Composer *win;
     KMime::Message::Ptr msg(new KMime::Message());
 
     bool forceCursorPosition = false;
+    const uint identity = mCurrentFolder ? mCurrentFolder->identity() : 0;
+    MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), identity);
+    TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
+    parser.setIdentityManager(KMKernel::self()->identityManager());
     if (mCurrentFolder) {
-        MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), mCurrentFolder->identity());
-        //Laurent: bug 289905
-        /*
-        if ( mCurrentFolder->collection().isValid() && mCurrentFolder->putRepliesInSameFolder() ) {
-        KMime::Headers::Generic *header = new KMime::Headers::Generic( "X-KMail-Fcc", msg.get(), QString::number( mCurrentFolder->collection().id() ), "utf-8" );
-        msg->setHeader( header );
-        }
-        */
-        TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
         parser.process(msg, mCurrentFolder->collection());
-        win = KMail::makeComposer(msg, false, false, KMail::Composer::New, mCurrentFolder->identity());
-        win->setCollectionForNewMessage(mCurrentFolder->collection());
-        forceCursorPosition = parser.cursorPositionWasSet();
     } else {
-        MessageHelper::initHeader(msg, KMKernel::self()->identityManager());
-        TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
         parser.process(KMime::Message::Ptr(), Akonadi::Collection());
-        win = KMail::makeComposer(msg, false, false, KMail::Composer::New);
-        forceCursorPosition = parser.cursorPositionWasSet();
     }
+    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, identity);
+    if (mCurrentFolder) {
+        win->setCollectionForNewMessage(mCurrentFolder->collection());
+    }
+    forceCursorPosition = parser.cursorPositionWasSet();
     if (forceCursorPosition) {
         win->setFocusToEditor();
     }
