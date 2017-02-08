@@ -40,6 +40,7 @@
 
 #include <MessageCore/StringUtil>
 #include "MessageComposer/MessageHelper"
+#include "job/handleclickedurljob.h"
 
 #include "TemplateParser/TemplateParser"
 
@@ -90,47 +91,10 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
 bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder)
 {
     if (url.scheme() == QLatin1String("mailto")) {
-        KMime::Message::Ptr msg(new KMime::Message);
-        uint identity = !folder.isNull() ? folder->identity() : 0;
-        MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), identity);
-        msg->contentType()->setCharset("utf-8");
-
-        QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl(url);
-
-        msg->to()->fromUnicodeString(fields.value(QStringLiteral("to")), "utf-8");
-        const QString subject = fields.value(QStringLiteral("subject"));
-        if (!subject.isEmpty()) {
-            msg->subject()->fromUnicodeString(subject, "utf-8");
-        }
-        const QString body = fields.value(QStringLiteral("body"));
-        if (!body.isEmpty()) {
-            msg->setBody(body.toUtf8());
-        }
-        const QString cc = fields.value(QStringLiteral("cc"));
-        if (!cc.isEmpty()) {
-            msg->cc()->fromUnicodeString(cc, "utf-8");
-        }
-        const QString bcc = fields.value(QStringLiteral("bcc"));
-        if (!bcc.isEmpty()) {
-            msg->bcc()->fromUnicodeString(bcc, "utf-8");
-        }
-        const QString attach = fields.value(QStringLiteral("attach"));
-        if (!attach.isEmpty()) {
-            //TODO
-        }
-
-        if (!folder.isNull()) {
-            TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-            parser.setIdentityManager(KMKernel::self()->identityManager());
-            parser.process(msg, folder->collection());
-        }
-
-        KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, identity);
-        win->setFocusToSubject();
-        if (!folder.isNull()) {
-            win->setCollectionForNewMessage(folder->collection());
-        }
-        win->show();
+        HandleClickedUrlJob *job = new HandleClickedUrlJob;
+        job->setUrl(url);
+        job->setFolder(folder);
+        job->start();
         return true;
     } else {
         qCWarning(KMAIL_LOG) << "Can't handle URL:" << url;

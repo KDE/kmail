@@ -46,5 +46,5 @@ set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
 
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "../tag/tagselectdialog.cpp;../kmail_debug.cpp" "${KDEPIMLIBS_AKONADI_LIBS};kmailprivate;KF5::MailCommon;KF5::Libkdepim;KF5::ItemViews;KF5::TemplateParser;KF5::XmlGui;KF5::Completion;KF5::I18n")
 
-add_akonadi_isolated_test_advanced(kmcommandstest.cpp "../kmcommands.cpp;../util.cpp;../secondarywindow.cpp;../undostack.cpp;../kmail_debug.cpp"
+add_akonadi_isolated_test_advanced(kmcommandstest.cpp "../kmcommands.cpp;../util.cpp;../secondarywindow.cpp;../undostack.cpp;../kmail_debug.cpp;../job/handleclickedurljob.cpp"
     "Qt5::Test;Qt5::Widgets;KF5::AkonadiCore;KF5::Bookmarks;KF5::ConfigWidgets;KF5::Contacts;KF5::I18n;KF5::IconThemes;KF5::IdentityManagement;KF5::KIOCore;KF5::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KF5::MailCommon;KF5::MailTransport;KF5::Libkdepim;KF5::TemplateParser;kmailprivate")
