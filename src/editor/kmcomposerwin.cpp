@@ -2166,14 +2166,13 @@ void KMComposerWin::slotClose()
 
 void KMComposerWin::slotNewComposer()
 {
-    KMComposerWin *win;
     KMime::Message::Ptr msg(new KMime::Message());
 
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), currentIdentity());
     TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
     parser.setIdentityManager(KMKernel::self()->identityManager());
     parser.process(msg, mCollectionForNewMessage);
-    win = new KMComposerWin(msg, false, false, KMail::Composer::New, currentIdentity());
+    KMComposerWin *win = new KMComposerWin(msg, false, false, KMail::Composer::New, currentIdentity());
     win->setCollectionForNewMessage(mCollectionForNewMessage);
     bool forceCursorPosition = parser.cursorPositionWasSet();
     if (forceCursorPosition) {
