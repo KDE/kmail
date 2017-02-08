@@ -941,7 +941,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
     }
 
     if (mode == TemplateParser::TemplateParser::NewMessage) {
-        TemplateParser::TemplateParser parser(mMsg, mode);
+        TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
         parser.setSelection(mTextSelection);
         parser.setAllowDecryption(true);
         parser.setIdentityManager(KMKernel::self()->identityManager());
