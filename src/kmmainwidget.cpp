@@ -21,6 +21,7 @@
 
 // KMail includes
 #include "kmreadermainwin.h"
+#include "job/composenewmessagejob.h"
 #include "editor/composer.h"
 #include "searchdialog/searchwindow.h"
 #include "widgets/vacationscriptindicatorwidget.h"
@@ -1311,28 +1312,9 @@ void KMMainWidget::slotCheckMailOnStartup()
 
 void KMMainWidget::slotCompose()
 {
-    KMime::Message::Ptr msg(new KMime::Message());
-
-    bool forceCursorPosition = false;
-    const uint identity = mCurrentFolder ? mCurrentFolder->identity() : 0;
-    MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), identity);
-    TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-    parser.setIdentityManager(KMKernel::self()->identityManager());
-    if (mCurrentFolder) {
-        parser.process(msg, mCurrentFolder->collection());
-    } else {
-        parser.process(KMime::Message::Ptr(), Akonadi::Collection());
-    }
-    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, identity);
-    if (mCurrentFolder) {
-        win->setCollectionForNewMessage(mCurrentFolder->collection());
-    }
-    forceCursorPosition = parser.cursorPositionWasSet();
-    if (forceCursorPosition) {
-        win->setFocusToEditor();
-    }
-    win->show();
-
+    ComposeNewMessageJob *job = new ComposeNewMessageJob;
+    job->setFolder(mCurrentFolder);
+    job->start();
 }
 
 //-----------------------------------------------------------------------------
