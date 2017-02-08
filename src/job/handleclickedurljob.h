@@ -36,9 +36,11 @@ public:
     void setUrl(const QUrl &url);
     void setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder);
 private:
+    void slotOpenComposer();
     QUrl mUrl;
     QSharedPointer<MailCommon::FolderCollection> mFolder;
     uint mIdentity;
+    KMime::Message::Ptr mMsg;
 };
 
 #endif // HANDLECLICKEDURLJOB_H

@@ -24,12 +24,17 @@
 #include "editor/kmcomposerwin.h"
 #include <KMime/Message>
 #include <MessageCore/StringUtil>
+#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
+#include <TemplateParser/TemplateParserJob>
+#else
 #include <TemplateParser/TemplateParser>
+#endif
 #include <MessageComposer/MessageHelper>
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
     : QObject(parent),
-      mIdentity(0)
+      mIdentity(0),
+      mMsg(nullptr)
 {
 }
 
@@ -39,29 +44,29 @@ HandleClickedUrlJob::~HandleClickedUrlJob()
 
 void HandleClickedUrlJob::start()
 {
-    KMime::Message::Ptr msg(new KMime::Message);
+    mMsg = KMime::Message::Ptr(new KMime::Message);
     mIdentity = !mFolder.isNull() ? mFolder->identity() : 0;
-    MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), mIdentity);
-    msg->contentType()->setCharset("utf-8");
+    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
+    mMsg->contentType()->setCharset("utf-8");
 
     const QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl(mUrl);
 
-    msg->to()->fromUnicodeString(fields.value(QStringLiteral("to")), "utf-8");
+    mMsg->to()->fromUnicodeString(fields.value(QStringLiteral("to")), "utf-8");
     const QString subject = fields.value(QStringLiteral("subject"));
     if (!subject.isEmpty()) {
-        msg->subject()->fromUnicodeString(subject, "utf-8");
+        mMsg->subject()->fromUnicodeString(subject, "utf-8");
     }
     const QString body = fields.value(QStringLiteral("body"));
     if (!body.isEmpty()) {
-        msg->setBody(body.toUtf8());
+        mMsg->setBody(body.toUtf8());
     }
     const QString cc = fields.value(QStringLiteral("cc"));
     if (!cc.isEmpty()) {
-        msg->cc()->fromUnicodeString(cc, "utf-8");
+        mMsg->cc()->fromUnicodeString(cc, "utf-8");
     }
     const QString bcc = fields.value(QStringLiteral("bcc"));
     if (!bcc.isEmpty()) {
-        msg->bcc()->fromUnicodeString(bcc, "utf-8");
+        mMsg->bcc()->fromUnicodeString(bcc, "utf-8");
     }
     const QString attach = fields.value(QStringLiteral("attach"));
     if (!attach.isEmpty()) {
@@ -69,12 +74,22 @@ void HandleClickedUrlJob::start()
     }
 
     if (!mFolder.isNull()) {
-        TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
+#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
+        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &HandleClickedUrlJob::slotOpenComposer);
+        parser->setIdentityManager(KMKernel::self()->identityManager());
+        parser->process(mMsg, mFolder->collection());
+#else
+        TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
         parser.setIdentityManager(KMKernel::self()->identityManager());
-        parser.process(msg, mFolder->collection());
+        parser.process(mMsg, mFolder->collection());
+#endif
     }
-
-    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, mIdentity);
+    slotOpenComposer();
+}
+void HandleClickedUrlJob::slotOpenComposer()
+{
+    KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);
     win->setFocusToSubject();
     if (!mFolder.isNull()) {
         win->setCollectionForNewMessage(mFolder->collection());
