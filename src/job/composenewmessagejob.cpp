@@ -18,6 +18,7 @@
 */
 
 #include "composenewmessagejob.h"
+#include "config-kmail.h"
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
@@ -59,6 +60,7 @@ void ComposeNewMessageJob::start()
         win->setFocusToEditor();
     }
     win->show();
+    deleteLater();
 }
 
 void ComposeNewMessageJob::setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder)
