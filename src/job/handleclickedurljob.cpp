@@ -85,7 +85,9 @@ void HandleClickedUrlJob::start()
         parser.process(mMsg, mFolder->collection());
 #endif
     }
+#ifndef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     slotOpenComposer();
+#endif
 }
 void HandleClickedUrlJob::slotOpenComposer()
 {

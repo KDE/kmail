@@ -25,7 +25,11 @@
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
+#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
+#include <TemplateParser/TemplateParserJob>
+#else
 #include <TemplateParser/TemplateParser>
+#endif
 
 ComposeNewMessageJob::ComposeNewMessageJob(QObject *parent)
     : QObject(parent),
@@ -46,6 +50,16 @@ void ComposeNewMessageJob::start()
 
     mIdentity = mFolder ? mFolder->identity() : 0;
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
+#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
+    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &ComposeNewMessageJob::slotOpenComposer);
+    parser->setIdentityManager(KMKernel::self()->identityManager());
+    if (mFolder) {
+        parser->process(mMsg, mFolder->collection());
+    } else {
+        parser->process(KMime::Message::Ptr(), Akonadi::Collection());
+    }
+#else
     TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
     parser.setIdentityManager(KMKernel::self()->identityManager());
     if (mFolder) {
@@ -55,6 +69,7 @@ void ComposeNewMessageJob::start()
     }
     const bool forceCursorPosition = parser.cursorPositionWasSet();
     slotOpenComposer(forceCursorPosition);
+#endif
 }
 
 void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
