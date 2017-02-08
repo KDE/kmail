@@ -34,7 +34,10 @@ public:
     void setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder);
 
 private:
+    void slotOpenComposer(bool forceCursorPosition);
     QSharedPointer<MailCommon::FolderCollection> mFolder;
+    uint mIdentity;
+    KMime::Message::Ptr mMsg;
 };
 
 #endif // COMPOSENEWMESSAGEJOB_H

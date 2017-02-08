@@ -28,7 +28,9 @@
 #include <TemplateParser/TemplateParser>
 
 ComposeNewMessageJob::ComposeNewMessageJob(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      mIdentity(0),
+      mMsg(nullptr)
 {
 
 }
@@ -40,22 +42,28 @@ ComposeNewMessageJob::~ComposeNewMessageJob()
 
 void ComposeNewMessageJob::start()
 {
-    KMime::Message::Ptr msg(new KMime::Message());
+    mMsg = KMime::Message::Ptr(new KMime::Message());
 
-    const uint identity = mFolder ? mFolder->identity() : 0;
-    MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), identity);
-    TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
+    mIdentity = mFolder ? mFolder->identity() : 0;
+    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
+    TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
     parser.setIdentityManager(KMKernel::self()->identityManager());
     if (mFolder) {
-        parser.process(msg, mFolder->collection());
+        parser.process(mMsg, mFolder->collection());
     } else {
         parser.process(KMime::Message::Ptr(), Akonadi::Collection());
     }
-    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, identity);
+    const bool forceCursorPosition = parser.cursorPositionWasSet();
+    slotOpenComposer(forceCursorPosition);
+}
+
+void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
+{
+    KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);
     if (mFolder) {
         win->setCollectionForNewMessage(mFolder->collection());
     }
-    bool forceCursorPosition = parser.cursorPositionWasSet();
+
     if (forceCursorPosition) {
         win->setFocusToEditor();
     }
