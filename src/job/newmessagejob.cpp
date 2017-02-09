@@ -25,11 +25,11 @@
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
-//#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
-//#include <TemplateParser/TemplateParserJob>
-//#else
+#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
+#include <TemplateParser/TemplateParserJob>
+#else
 #include <TemplateParser/TemplateParser>
-//#endif
+#endif
 
 NewMessageJob::NewMessageJob(QObject *parent)
     : QObject(parent),
@@ -45,7 +45,7 @@ NewMessageJob::~NewMessageJob()
 
 void NewMessageJob::start()
 {
-    QUrl attachURL = QUrl::fromLocalFile(mNewMessageJobSettings.mAttachURL);
+    mAttachURL = QUrl::fromLocalFile(mNewMessageJobSettings.mAttachURL);
     mMsg = KMime::Message::Ptr(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mNewMessageJobSettings.mIdentity);
     mMsg->contentType()->setCharset("utf-8");
@@ -61,17 +61,29 @@ void NewMessageJob::start()
     }
 
     mMsg->assemble();
+
+    mCollection = mNewMessageJobSettings.mFolder ? mNewMessageJobSettings.mFolder->collection() : Akonadi::Collection();
+#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
+    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &NewMessageJob::slotOpenComposer);
+    parser->setIdentityManager(KMKernel::self()->identityManager());
+    parser->process(mMsg, mCollection);
+#else
     TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
     parser.setIdentityManager(KMKernel::self()->identityManager());
-    Akonadi::Collection col = mNewMessageJobSettings.mFolder ? mNewMessageJobSettings.mFolder->collection() : Akonadi::Collection();
-    parser.process(mMsg, col);
+    parser.process(mMsg, mCollection);
+    slotOpenComposer();
+#endif
+}
 
+void NewMessageJob::slotOpenComposer()
+{
     KMail::Composer *win = makeComposer(mMsg, false, false, KMail::Composer::New, mNewMessageJobSettings.mIdentity);
 
-    win->setCollectionForNewMessage(col);
+    win->setCollectionForNewMessage(mCollection);
     //Add the attachment if we have one
-    if (!attachURL.isEmpty() && attachURL.isValid()) {
-        win->addAttachment(attachURL, QString());
+    if (!mAttachURL.isEmpty() && mAttachURL.isValid()) {
+        win->addAttachment(mAttachURL, QString());
     }
 
     //only show window when required

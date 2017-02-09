@@ -70,7 +70,10 @@ public:
     void setNewMessageJobSettings(const NewMessageJobSettings &newMessageJobSettings);
 
 private:
+    void slotOpenComposer();
     NewMessageJobSettings mNewMessageJobSettings;
+    Akonadi::Collection mCollection;
+    QUrl mAttachURL;
     KMime::Message::Ptr mMsg;
 };
 
