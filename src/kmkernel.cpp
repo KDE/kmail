@@ -796,16 +796,16 @@ void KMKernel::newMessage(const QString &to,
                                      const QString & /*messageFile*/,
                                      const QString &_attachURL)
 {
-    QUrl attachURL = QUrl::fromLocalFile(_attachURL);
-    KMime::Message::Ptr msg(new KMime::Message);
     QSharedPointer<FolderCollection> folder;
     uint id = 0;
-
     if (useFolderId) {
         //create message with required folder identity
         folder = currentFolderCollection();
         id = folder ? folder->identity() : 0;
     }
+
+    QUrl attachURL = QUrl::fromLocalFile(_attachURL);
+    KMime::Message::Ptr msg(new KMime::Message);
     MessageHelper::initHeader(msg, identityManager(), id);
     msg->contentType()->setCharset("utf-8");
     //set basic headers
