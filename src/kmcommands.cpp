@@ -51,6 +51,7 @@
 #include "kmail_debug.h"
 #include "helper_p.h"
 #include "job/createreplymessagejob.h"
+#include "job/createforwardmessagejob.h"
 
 #include "editor/composer.h"
 #include "kmmainwidget.h"
@@ -479,18 +480,14 @@ KMCommand::Result KMMailtoForwardCommand::execute()
     if (!msg) {
         return Failed;
     }
-    MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
-    factory.setIdentityManager(KMKernel::self()->identityManager());
-    factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
-    KMime::Message::Ptr fmsg = factory.createForward();
-    fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mUrl).toLower(), "utf-8");
-    bool lastEncrypt = false;
-    bool lastSign = false;
-    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+    CreateForwardMessageJobSettings settings;
+    settings.mItem = item;
+    settings.mMsg = msg;
+    settings.mUrl = mUrl;
 
-    KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward);
-    win->show();
-
+    CreateForwardMessageJob *job = new CreateForwardMessageJob;
+    job->setSettings(settings);
+    job->start();
     return OK;
 }
 
