@@ -741,7 +741,7 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
     return iCalAutoSend;
 }
 
-QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
+void KMKernel::openComposer(const QString &to, const QString &cc,
                                        const QString &bcc,
                                        const QString &subject,
                                        const QString &body, bool hidden)
@@ -786,11 +786,9 @@ QDBusObjectPath KMKernel::openComposer(const QString &to, const QString &cc,
         cWin->disableWordWrap();
         cWin->slotSendNow();
     }
-
-    return QDBusObjectPath(cWin->dbusObjectPath());
 }
 
-QDBusObjectPath KMKernel::newMessage(const QString &to,
+void KMKernel::newMessage(const QString &to,
                                      const QString &cc,
                                      const QString &bcc,
                                      bool hidden,
@@ -839,7 +837,6 @@ QDBusObjectPath KMKernel::newMessage(const QString &to,
     if (!hidden) {
         win->show();
     }
-    return QDBusObjectPath(win->dbusObjectPath());
 }
 
 void KMKernel::viewMessage(const QUrl &url)

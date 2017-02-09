@@ -292,7 +292,6 @@ public Q_SLOTS:
     * Opens a composer window and prefills it with different
     * message parts.
     *
-    * @returns The DBus object path for the composer.
     *
     * @param to A comma separated list of To addresses.
     * @param cc A comma separated list of CC addresses.
@@ -301,7 +300,7 @@ public Q_SLOTS:
     * @param body The message body.
     * @param hidden Whether the composer window shall initially be hidden.
     */
-    Q_SCRIPTABLE QDBusObjectPath openComposer(const QString &to,
+    Q_SCRIPTABLE void openComposer(const QString &to,
             const QString &cc,
             const QString &bcc,
             const QString &subject,
@@ -324,7 +323,7 @@ public Q_SLOTS:
     * @param messageFile A message file that will be used as message body.
     * @param attachURL The URL to the file that will be attached to the message.
     */
-    Q_SCRIPTABLE QDBusObjectPath newMessage(const QString &to,
+    Q_SCRIPTABLE void newMessage(const QString &to,
                                             const QString &cc,
                                             const QString &bcc,
                                             bool hidden,
