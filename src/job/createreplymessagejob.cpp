@@ -39,6 +39,11 @@ CreateReplyMessageJob::~CreateReplyMessageJob()
 
 }
 
+void CreateReplyMessageJob::setSettings(const CreateReplyMessageJobSettings &settings)
+{
+    mSettings = settings;
+}
+
 void CreateReplyMessageJob::start()
 {
     MessageComposer::MessageFactory factory(mSettings.mMsg, mSettings.mItem.id(), MailCommon::Util::updatedCollection(mSettings.mItem.parentCollection()));
@@ -60,7 +65,3 @@ void CreateReplyMessageJob::start()
     deleteLater();
 }
 
-void CreateReplyMessageJob::setSettings(const CreateReplyMessageJobSettings &settings)
-{
-    mSettings = settings;
-}

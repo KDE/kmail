@@ -50,6 +50,7 @@
 #include "settings/kmailsettings.h"
 #include "kmail_debug.h"
 #include "helper_p.h"
+#include "job/createreplymessagejob.h"
 
 #include "editor/composer.h"
 #include "kmmainwidget.h"
@@ -448,22 +449,15 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     if (!msg) {
         return Failed;
     }
-    MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
-    factory.setIdentityManager(KMKernel::self()->identityManager());
-    factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
-    factory.setMailingListAddresses(KMail::Util::mailingListsFromMessage(item));
-    factory.putRepliesInSameFolder(KMail::Util::putRepliesInSameFolder(item));
-    factory.setReplyStrategy(MessageComposer::ReplyNone);
-    factory.setSelection(mSelection);
-    KMime::Message::Ptr rmsg = factory.createReply().msg;
-    rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mUrl), "utf-8");
-    bool lastEncrypt = false;
-    bool lastSign = false;
-    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+    CreateReplyMessageJobSettings settings;
+    settings.mItem = item;
+    settings.mMsg = msg;
+    settings.mSelection = mSelection;
+    settings.mUrl = mUrl;
 
-    KMail::Composer *win = KMail::makeComposer(rmsg, lastSign, lastEncrypt, KMail::Composer::Reply, 0, mSelection);
-    win->setFocusToEditor();
-    win->show();
+    CreateReplyMessageJob *job = new CreateReplyMessageJob;
+    job->setSettings(settings);
+    job->start();
 
     return OK;
 }
