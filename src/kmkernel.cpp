@@ -6,6 +6,7 @@
 #include "libkdepim/broadcaststatus.h"
 #include "job/opencomposerjob.h"
 #include "job/newmessagejob.h"
+#include "job/opencomposerhiddenjob.h"
 #include <AkonadiSearch/PIM/indexeditems.h>
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
@@ -747,46 +748,13 @@ void KMKernel::openComposer(const QString &to, const QString &cc,
                                        const QString &subject,
                                        const QString &body, bool hidden)
 {
-    KMime::Message::Ptr msg(new KMime::Message);
-    MessageHelper::initHeader(msg, identityManager());
-    msg->contentType()->setCharset("utf-8");
-    if (!cc.isEmpty()) {
-        msg->cc()->fromUnicodeString(cc, "utf-8");
-    }
-    if (!bcc.isEmpty()) {
-        msg->bcc()->fromUnicodeString(bcc, "utf-8");
-    }
-    if (!subject.isEmpty()) {
-        msg->subject()->fromUnicodeString(subject, "utf-8");
-    }
-    if (!to.isEmpty()) {
-        msg->to()->fromUnicodeString(to, "utf-8");
-    }
-    if (!body.isEmpty()) {
-        msg->setBody(body.toUtf8());
-    } else {
-        TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
-        parser.process(KMime::Message::Ptr());
-    }
-
-    msg->assemble();
-    const KMail::Composer::TemplateContext context = body.isEmpty() ? KMail::Composer::New :
-            KMail::Composer::NoTemplate;
-    KMail::Composer *cWin = KMail::makeComposer(msg, false, false, context);
-    if (!hidden) {
-        cWin->show();
-        // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_OS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
-    } else {
-        // Always disable word wrap when we don't show the composer; otherwise,
-        // QTextEdit gets the widget size wrong and wraps much too early.
-        cWin->disableWordWrap();
-        cWin->slotSendNow();
-    }
+    const OpenComposerHiddenJobSettings settings(to, cc,
+                                           bcc,
+                                           subject,
+                                           body, hidden);
+    OpenComposerHiddenJob *job = new OpenComposerHiddenJob(this);
+    job->setSettings(settings);
+    job->start();
 }
 
 void KMKernel::newMessage(const QString &to,
