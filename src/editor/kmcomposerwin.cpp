@@ -918,9 +918,6 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
     if (ident.isNull()) {
         return;
     }
-    KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Templates");
-    header->fromUnicodeString(ident.templates(), "utf-8");
-    mMsg->setHeader(header);
 
     TemplateParser::TemplateParser::Mode mode;
     switch (mContext) {
@@ -940,6 +937,10 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
         return;
     }
 
+    KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Templates");
+    header->fromUnicodeString(ident.templates(), "utf-8");
+    mMsg->setHeader(header);
+
     if (mode == TemplateParser::TemplateParser::NewMessage) {
         TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
         parser.setSelection(mTextSelection);
@@ -952,24 +953,23 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
         }
         mComposerBase->updateTemplate(mMsg);
         updateSignature(uoid, uOldId);
-        return;
-    }
+    } else {
+        if (auto hrd = mMsg->headerByType("X-KMail-Link-Message")) {
+            Akonadi::Item::List items;
+            const QStringList serNums = hrd->asUnicodeString().split(QLatin1Char(','));
+            items.reserve(serNums.count());
+            for (const QString &serNumStr : serNums) {
+                items << Akonadi::Item(serNumStr.toLongLong());
+            }
 
-    if (auto hrd = mMsg->headerByType("X-KMail-Link-Message")) {
-        Akonadi::Item::List items;
-        const QStringList serNums = hrd->asUnicodeString().split(QLatin1Char(','));
-        items.reserve(serNums.count());
-        for (const QString &serNumStr : serNums) {
-            items << Akonadi::Item(serNumStr.toLongLong());
+            Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(items, this);
+            job->fetchScope().fetchFullPayload(true);
+            job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+            job->setProperty("mode", (int)mode);
+            job->setProperty("uoid", uoid);
+            job->setProperty("uOldid", uOldId);
+            connect(job, &Akonadi::ItemFetchJob::result, this, &KMComposerWin::slotDelayedApplyTemplate);
         }
-
-        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(items, this);
-        job->fetchScope().fetchFullPayload(true);
-        job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-        job->setProperty("mode", (int)mode);
-        job->setProperty("uoid", uoid);
-        job->setProperty("uOldid", uOldId);
-        connect(job, &Akonadi::ItemFetchJob::result, this, &KMComposerWin::slotDelayedApplyTemplate);
     }
 }
 
