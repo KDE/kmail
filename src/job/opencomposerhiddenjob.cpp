@@ -26,11 +26,12 @@
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
 #include <KStartupInfo>
-//#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
-//#include <TemplateParser/TemplateParserJob>
-//#else
+
+#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
+#include <TemplateParser/TemplateParserJob>
+#else
 #include <TemplateParser/TemplateParser>
-//#endif
+#endif
 
 OpenComposerHiddenJob::OpenComposerHiddenJob(QObject *parent)
     : QObject(parent),
@@ -65,10 +66,17 @@ void OpenComposerHiddenJob::start()
         mMsg->setBody(mSettings.mBody.toUtf8());
         slotOpenComposer();
     } else {
+#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
+        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &OpenComposerHiddenJob::slotOpenComposer);
+        parser->setIdentityManager(KMKernel::self()->identityManager());
+        parser->process(KMime::Message::Ptr());
+#else
         TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
         parser.setIdentityManager(KMKernel::self()->identityManager());
         parser.process(KMime::Message::Ptr());
         slotOpenComposer();
+#endif
     }
 }
 
