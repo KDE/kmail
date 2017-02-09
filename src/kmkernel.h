@@ -184,7 +184,6 @@ public Q_SLOTS:
     * Opens a composer window and prefills it with different
     * message parts.
     *
-    * @returns The id of composer if more are opened.
     *
     * @param to A comma separated list of To addresses.
     * @param cc A comma separated list of CC addresses.
@@ -196,7 +195,7 @@ public Q_SLOTS:
     * @param attachmentPaths A list of files that will be attached to the message.
     * @param customHeaders A list of custom headers.
     */
-    Q_SCRIPTABLE int openComposer(const QString &to,
+    Q_SCRIPTABLE void openComposer(const QString &to,
                                   const QString &cc,
                                   const QString &bcc,
                                   const QString &subject,
@@ -212,8 +211,6 @@ public Q_SLOTS:
     /**
     * Opens a composer window and prefills it with different
     * message parts.
-    *
-    * @returns The id of composer if more are opened.
     *
     * @param to A comma separated list of To addresses.
     * @param cc A comma separated list of CC addresses.
@@ -232,7 +229,7 @@ public Q_SLOTS:
     * @param attachCharset The charset of the attachment.
     * @param identity The identity identifier which will be used as sender identity.
     */
-    Q_SCRIPTABLE int openComposer(const QString &to,
+    Q_SCRIPTABLE void openComposer(const QString &to,
                                   const QString &cc,
                                   const QString &bcc,
                                   const QString &subject,
@@ -254,8 +251,6 @@ public Q_SLOTS:
     * message parts.
     * @since 5.0
     *
-    * @returns The id of composer if more are opened.
-    *
     * @param to A comma separated list of To addresses.
     * @param cc A comma separated list of CC addresses.
     * @param bcc A comma separated list of BCC addresses.
@@ -272,7 +267,7 @@ public Q_SLOTS:
     * @param attachCharset The charset of the attachment.
     * @param identity The identity identifier which will be used as sender identity.
     */
-    Q_SCRIPTABLE int openComposer(const QString &to,
+    Q_SCRIPTABLE void openComposer(const QString &to,
                                   const QString &cc,
                                   const QString &bcc,
                                   const QString &subject,

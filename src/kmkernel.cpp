@@ -540,7 +540,7 @@ void KMKernel::openReader(bool onlyCheck)
     }
 }
 
-int KMKernel::openComposer(const QString &to, const QString &cc,
+void KMKernel::openComposer(const QString &to, const QString &cc,
                            const QString &bcc, const QString &subject,
                            const QString &body, bool hidden,
                            const QString &messageFile,
@@ -558,10 +558,9 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
     OpenComposerJob *job = new OpenComposerJob(this);
     job->setOpenComposerSettings(settings);
     job->start();
-    return 1;
 }
 
-int KMKernel::openComposer(const QString &to, const QString &cc,
+void KMKernel::openComposer(const QString &to, const QString &cc,
                            const QString &bcc, const QString &subject,
                            const QString &body, bool hidden,
                            const QString &attachName,
@@ -596,10 +595,9 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
         cWin->disableWordWrap();
         cWin->slotSendNow();
     }
-    return 1;
 }
 
-int KMKernel::openComposer(const QString &to, const QString &cc,
+void KMKernel::openComposer(const QString &to, const QString &cc,
                            const QString &bcc, const QString &subject,
                            const QString &body,
                            const QString &attachName,
@@ -625,8 +623,6 @@ int KMKernel::openComposer(const QString &to, const QString &cc,
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
 #endif
-
-    return 1;
 }
 
 bool KMKernel::fillComposer(KMail::Composer *&cWin,
