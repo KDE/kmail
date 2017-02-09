@@ -134,6 +134,7 @@ set(kmailprivate_job_LIB_SRCS
     job/newmessagejob.cpp
     job/opencomposerhiddenjob.cpp
     job/fillcomposerjob.cpp
+    job/createreplymessagejob.cpp
     )
 
 set(kmailprivate_widgets_LIB_SRCS
