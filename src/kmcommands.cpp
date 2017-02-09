@@ -150,15 +150,6 @@ using namespace KMime;
 
 using namespace MailCommon;
 
-/// Small helper function to get the composer context from a reply
-static KMail::Composer::TemplateContext replyContext(MessageFactory::MessageReply reply)
-{
-    if (reply.replyAll) {
-        return KMail::Composer::ReplyToAll;
-    } else {
-        return KMail::Composer::Reply;
-    }
-}
 
 /// Helper to sanely show an error message for a job
 static void showJobError(KJob *job)
@@ -908,31 +899,17 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
-    MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
-    factory.setIdentityManager(KMKernel::self()->identityManager());
-    factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
-    factory.setSelection(mSelection);
-    if (!mTemplate.isEmpty()) {
-        factory.setTemplate(mTemplate);
-    }
-    KMime::Message::Ptr fwdMsg = factory.createForward();
 
-    uint id = 0;
-    if (auto hrd = msg->headerByType("X-KMail-Identity")) {
-        id = hrd->asUnicodeString().trimmed().toUInt();
-    }
-    qCDebug(KMAIL_LOG) << "mail" << msg->encodedContent();
-    bool lastEncrypt = false;
-    bool lastSign = false;
-    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+    CreateForwardMessageJobSettings settings;
+    settings.mItem = item;
+    settings.mMsg = msg;
+    settings.mIdentity = mIdentity;
+    settings.mTemplate = mTemplate;
+    settings.mSelection = mSelection;
 
-    if (id == 0) {
-        id = mIdentity;
-    }
-    {
-        KMail::Composer *win = KMail::makeComposer(fwdMsg, lastSign, lastEncrypt, KMail::Composer::Forward, id, QString(), mTemplate);
-        win->show();
-    }
+    CreateForwardMessageJob *job = new CreateForwardMessageJob;
+    job->setSettings(settings);
+    job->start();
     return OK;
 }
 

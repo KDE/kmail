@@ -7,6 +7,7 @@
 #include "job/opencomposerjob.h"
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"
+#include "job/fillcomposerjob.h"
 #include <AkonadiSearch/PIM/indexeditems.h>
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
@@ -574,27 +575,11 @@ void KMKernel::openComposer(const QString &to, const QString &cc,
                            const QByteArray &attachCharset,
                            unsigned int identity)
 {
-    KMail::Composer *cWin;
-    bool iCalAutoSend = fillComposer(cWin, to, cc, bcc,
-                                     subject, body,
-                                     attachName, attachCte, attachData,
-                                     attachType, attachSubType, attachParamAttr, attachParamValue,
-                                     attachContDisp, attachCharset, identity);
-
-    if (!hidden && !iCalAutoSend) {
-        cWin->show();
-        // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
-    } else {
-
-        // Always disable word wrap when we don't show the composer, since otherwise QTextEdit
-        // gets the widget size wrong and wraps much too early.
-        cWin->disableWordWrap();
-        cWin->slotSendNow();
-    }
+    fillComposer(hidden, to, cc, bcc,
+                 subject, body,
+                 attachName, attachCte, attachData,
+                 attachType, attachSubType, attachParamAttr, attachParamValue,
+                 attachContDisp, attachCharset, identity, false);
 }
 
 void KMKernel::openComposer(const QString &to, const QString &cc,
@@ -611,23 +596,18 @@ void KMKernel::openComposer(const QString &to, const QString &cc,
                            const QByteArray &attachCharset,
                            unsigned int identity)
 {
-    KMail::Composer *cWin;
-    fillComposer(cWin, to, cc, bcc,
+    fillComposer(false, to, cc, bcc,
                  subject, body,
                  attachName, attachCte, attachData,
                  attachType, attachSubType, attachParamAttr, attachParamValue,
-                 attachContDisp, attachCharset, identity);
-    cWin->show();
-    // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
-    // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && ! defined K_WS_QTONLY
-    KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
+                 attachContDisp, attachCharset, identity, true);
 }
 
-bool KMKernel::fillComposer(KMail::Composer *&cWin,
-                            const QString &to, const QString &cc,
-                            const QString &bcc, const QString &subject,
+void KMKernel::fillComposer(bool hidden,
+                            const QString &to,
+                            const QString &cc,
+                            const QString &bcc,
+                            const QString &subject,
                             const QString &body,
                             const QString &attachName,
                             const QByteArray &attachCte,
@@ -638,105 +618,29 @@ bool KMKernel::fillComposer(KMail::Composer *&cWin,
                             const QString &attachParamValue,
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset,
-                            unsigned int identity)
+                            unsigned int identity,
+                            bool forceShowWindow)
 {
-    KMail::Composer::TemplateContext context = KMail::Composer::New;
-    KMime::Message::Ptr msg(new KMime::Message);
-    KMime::Content *msgPart = nullptr;
-    MessageHelper::initHeader(msg, identityManager());
-    msg->contentType()->setCharset("utf-8");
-    if (!cc.isEmpty()) {
-        msg->cc()->fromUnicodeString(cc, "utf-8");
-    }
-    if (!bcc.isEmpty()) {
-        msg->bcc()->fromUnicodeString(bcc, "utf-8");
-    }
-    if (!subject.isEmpty()) {
-        msg->subject()->fromUnicodeString(subject, "utf-8");
-    }
-    if (!to.isEmpty()) {
-        msg->to()->fromUnicodeString(to, "utf-8");
-    }
-    if (identity > 0) {
-        KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity");
-        h->from7BitString(QByteArray::number(identity));
-        msg->setHeader(h);
-    }
-    if (!body.isEmpty()) {
-        msg->setBody(body.toUtf8());
-    } else {
-        TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
-        parser.process(KMime::Message::Ptr());
-    }
-
-    bool iCalAutoSend = false;
-    bool noWordWrap = false;
-    bool isICalInvitation = false;
-    if (!attachData.isEmpty()) {
-        isICalInvitation = (attachName == QLatin1String("cal.ics")) &&
-                           attachType == "text" &&
-                           attachSubType == "calendar" &&
-                           attachParamAttr == "method";
-        // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
-        if (isICalInvitation && bcc.isEmpty()) {
-            msg->removeHeader<KMime::Headers::Bcc>();
-        }
-        if (isICalInvitation &&
-                MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
-            // KOrganizer invitation caught and to be sent as body instead
-            msg->setBody(attachData);
-            msg->contentType()->from7BitString(
-                QStringLiteral("text/calendar; method=%1; "
-                               "charset=\"utf-8\"").
-                arg(attachParamValue).toLatin1());
-
-            iCalAutoSend = true; // no point in editing raw ICAL
-            noWordWrap = true; // we shant word wrap inline invitations
-        } else {
-            // Just do what we're told to do
-            msgPart = new KMime::Content;
-            msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1String(attachCte), "utf-8");
-            msgPart->setBody(attachData);   //TODO: check if was setBodyEncoded
-            msgPart->contentType()->setMimeType(attachType + '/' +  attachSubType);
-            msgPart->contentType()->setParameter(QLatin1String(attachParamAttr), attachParamValue);   //TODO: Check if the content disposition parameter needs to be set!
-            if (! MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
-                msgPart->contentDisposition()->fromUnicodeString(QLatin1String(attachContDisp), "utf-8");
-            }
-            if (!attachCharset.isEmpty()) {
-                // qCDebug(KMAIL_LOG) << "Set attachCharset to" << attachCharset;
-                msgPart->contentType()->setCharset(attachCharset);
-            }
-
-            msgPart->contentType()->setName(attachName, "utf-8");
-            msgPart->assemble();
-            // Don't show the composer window if the automatic sending is checked
-            iCalAutoSend = MessageViewer::MessageViewerSettings::self()->automaticSending();
-        }
-    }
-
-    msg->assemble();
-
-    if (!msg->body().isEmpty()) {
-        context = KMail::Composer::NoTemplate;
-    }
-
-    cWin = KMail::makeComposer(KMime::Message::Ptr(), false, false, context);
-    cWin->setMessage(msg, false, false, !isICalInvitation /* mayAutoSign */);
-    cWin->setSigningAndEncryptionDisabled(isICalInvitation
-                                          && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites());
-    if (noWordWrap) {
-        cWin->disableWordWrap();
-    }
-    if (msgPart) {
-        cWin->addAttach(msgPart);
-    }
-    if (isICalInvitation) {
-        cWin->disableWordWrap();
-        cWin->forceDisableHtml();
-        cWin->disableForgottenAttachmentsCheck();
-    }
-    return iCalAutoSend;
+    const FillComposerJobSettings settings(hidden,
+                                           to,
+                                           cc,
+                                           bcc,
+                                           subject,
+                                           body,
+                                           attachName,
+                                           attachCte,
+                                           attachData,
+                                           attachType,
+                                           attachSubType,
+                                           attachParamAttr,
+                                           attachParamValue,
+                                           attachContDisp,
+                                           attachCharset,
+                                           identity,
+                                           forceShowWindow);
+    FillComposerJob *job = new FillComposerJob;
+    job->setSettings(settings);
+    job->start();
 }
 
 void KMKernel::openComposer(const QString &to, const QString &cc,

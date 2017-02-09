@@ -540,9 +540,8 @@ private:
     /*
      * Fills a composer cWin
      *
-     * @returns true if attached message is a valid iCal message
     */
-    bool fillComposer(KMail::Composer *&cWin,
+    void fillComposer(bool hidden,
                       const QString &to, const QString &cc,
                       const QString &bcc, const QString &subject,
                       const QString &body,
@@ -555,7 +554,7 @@ private:
                       const QString &attachParamValue,
                       const QByteArray &attachContDisp,
                       const QByteArray &attachCharset,
-                      unsigned int identity);
+                      unsigned int identity, bool forceShowWindow);
 
     void verifyAccount();
     void resourceGoOnLine();

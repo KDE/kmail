@@ -28,9 +28,18 @@
 
 struct CreateForwardMessageJobSettings
 {
+    CreateForwardMessageJobSettings()
+        : mIdentity(0)
+    {
+
+    }
+
     QUrl mUrl;
     Akonadi::Item mItem;
     KMime::Message::Ptr mMsg;
+    QString mTemplate;
+    QString mSelection;
+    uint mIdentity;
 };
 
 class CreateForwardMessageJob : public QObject

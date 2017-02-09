@@ -51,14 +51,33 @@ void CreateForwardMessageJob::start()
     MessageComposer::MessageFactory factory(mSettings.mMsg, mSettings.mItem.id(), MailCommon::Util::updatedCollection(mSettings.mItem.parentCollection()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.mItem));
+    factory.setSelection(mSettings.mSelection);
+    if (!mSettings.mTemplate.isEmpty()) {
+        factory.setTemplate(mSettings.mTemplate);
+    }
+
     KMime::Message::Ptr fmsg = factory.createForward();
-    fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.mUrl).toLower(), "utf-8");
+    if (mSettings.mUrl.isValid()) {
+        fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.mUrl).toLower(), "utf-8");
+    }
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mSettings.mMsg);
 
-    KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward);
-    win->show();
+    if (mSettings.mUrl.isValid()) {
+        KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward);
+        win->show();
+    } else {
+        uint id = 0;
+        if (auto hrd = mSettings.mMsg->headerByType("X-KMail-Identity")) {
+            id = hrd->asUnicodeString().trimmed().toUInt();
+        }
+        if (id == 0) {
+            id = mSettings.mIdentity;
+        }
+        KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward, id, QString(), mSettings.mTemplate);
+        win->show();
+    }
     deleteLater();
 }
 
