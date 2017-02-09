@@ -27,6 +27,7 @@
 #include <KMime/Message>
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
+#include <MessageComposer/MessageFactory>
 #include <QUrl>
 
 CreateForwardMessageJob::CreateForwardMessageJob(QObject *parent)
@@ -42,25 +43,22 @@ CreateForwardMessageJob::~CreateForwardMessageJob()
 
 void CreateForwardMessageJob::setSettings(const CreateForwardMessageJobSettings &value)
 {
-    settings = value;
+    mSettings = value;
 }
 
 void CreateForwardMessageJob::start()
 {
-#if 0
-    MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
+    MessageComposer::MessageFactory factory(mSettings.mMsg, mSettings.mItem.id(), MailCommon::Util::updatedCollection(mSettings.mItem.parentCollection()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
-    factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
+    factory.setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.mItem));
     KMime::Message::Ptr fmsg = factory.createForward();
-    fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mUrl).toLower(), "utf-8");
+    fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.mUrl).toLower(), "utf-8");
     bool lastEncrypt = false;
     bool lastSign = false;
-    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mSettings.mMsg);
 
     KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward);
     win->show();
-
-#endif
     deleteLater();
 }
 

@@ -22,10 +22,15 @@
 #define CREATEFORWARDMESSAGEJOB_H
 
 #include <QObject>
+#include <QUrl>
+#include <KMime/Message>
+#include <AkonadiCore/Item>
 
 struct CreateForwardMessageJobSettings
 {
-
+    QUrl mUrl;
+    Akonadi::Item mItem;
+    KMime::Message::Ptr mMsg;
 };
 
 class CreateForwardMessageJob : public QObject
@@ -39,7 +44,7 @@ public:
     void setSettings(const CreateForwardMessageJobSettings &value);
 
 private:
-    CreateForwardMessageJobSettings settings;
+    CreateForwardMessageJobSettings mSettings;
 };
 
 #endif // CREATEFORWARDMESSAGEJOB_H
