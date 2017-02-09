@@ -865,28 +865,17 @@ KMCommand::Result KMReplyCommand::execute()
         return Failed;
     }
 
-    MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
-    factory.setIdentityManager(KMKernel::self()->identityManager());
-    factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
-    factory.setMailingListAddresses(KMail::Util::mailingListsFromMessage(item));
-    factory.putRepliesInSameFolder(KMail::Util::putRepliesInSameFolder(item));
-    factory.setReplyStrategy(m_replyStrategy);
-    factory.setSelection(mSelection);
-    if (!mTemplate.isEmpty()) {
-        factory.setTemplate(mTemplate);
-    }
-    if (mNoQuote) {
-        factory.setQuote(false);
-    }
-    bool lastEncrypt = false;
-    bool lastSign = false;
-    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
+    CreateReplyMessageJobSettings settings;
+    settings.mItem = item;
+    settings.mMsg = msg;
+    settings.mSelection = mSelection;
+    settings.m_replyStrategy = m_replyStrategy;
+    settings.mTemplate = mTemplate;
+    settings.mNoQuote = mNoQuote;
 
-    MessageFactory::MessageReply reply = factory.createReply();
-    KMail::Composer *win = KMail::makeComposer(KMime::Message::Ptr(reply.msg), lastSign, lastEncrypt, replyContext(reply), 0,
-                           mSelection, mTemplate);
-    win->setFocusToEditor();
-    win->show();
+    CreateReplyMessageJob *job = new CreateReplyMessageJob;
+    job->setSettings(settings);
+    job->start();
 
     return OK;
 }
