@@ -26,7 +26,7 @@
 #include <KMime/Message>
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
-#include <MessageComposer/MessageFactory>
+#include <QUrl>
 
 CreateReplyMessageJob::CreateReplyMessageJob(QObject *parent)
     : QObject(parent)
@@ -44,6 +44,16 @@ void CreateReplyMessageJob::setSettings(const CreateReplyMessageJobSettings &set
     mSettings = settings;
 }
 
+/// Small helper function to get the composer context from a reply
+static KMail::Composer::TemplateContext replyContext(MessageComposer::MessageFactory::MessageReply reply)
+{
+    if (reply.replyAll) {
+        return KMail::Composer::ReplyToAll;
+    } else {
+        return KMail::Composer::Reply;
+    }
+}
+
 void CreateReplyMessageJob::start()
 {
     MessageComposer::MessageFactory factory(mSettings.mMsg, mSettings.mItem.id(), MailCommon::Util::updatedCollection(mSettings.mItem.parentCollection()));
@@ -51,15 +61,30 @@ void CreateReplyMessageJob::start()
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.mItem));
     factory.setMailingListAddresses(KMail::Util::mailingListsFromMessage(mSettings.mItem));
     factory.putRepliesInSameFolder(KMail::Util::putRepliesInSameFolder(mSettings.mItem));
-    factory.setReplyStrategy(MessageComposer::ReplyNone);
     factory.setSelection(mSettings.mSelection);
-    KMime::Message::Ptr rmsg = factory.createReply().msg;
-    rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.mUrl), "utf-8");
+    if (!mSettings.mTemplate.isEmpty()) {
+        factory.setTemplate(mSettings.mTemplate);
+    }
+    if (mSettings.mNoQuote) {
+        factory.setQuote(false);
+    }
+    factory.setReplyStrategy(mSettings.m_replyStrategy);
+
+    MessageComposer::MessageFactory::MessageReply reply = factory.createReply();
+    KMime::Message::Ptr rmsg = reply.msg;
+    if (mSettings.mUrl.isValid()) {
+        rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.mUrl), "utf-8");
+    }
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mSettings.mMsg);
 
-    KMail::Composer *win = KMail::makeComposer(rmsg, lastSign, lastEncrypt, KMail::Composer::Reply, 0, mSettings.mSelection);
+    KMail::Composer *win = KMail::makeComposer(rmsg,
+                                               lastSign,
+                                               lastEncrypt,
+                                               (mSettings.m_replyStrategy == MessageComposer::ReplyNone) ? KMail::Composer::Reply : replyContext(reply),
+                                               0,
+                                               mSettings.mSelection, mSettings.mTemplate);
     win->setFocusToEditor();
     win->show();
     deleteLater();

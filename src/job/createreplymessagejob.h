@@ -23,13 +23,26 @@
 #include <QObject>
 #include <AkonadiCore/Item>
 #include <KMime/Message>
+#include <MessageComposer/MessageFactory>
+#include <QUrl>
+
 
 struct CreateReplyMessageJobSettings
 {
+    CreateReplyMessageJobSettings()
+        : m_replyStrategy(MessageComposer::ReplySmart),
+          mNoQuote(false)
+    {
+
+    }
+
     QUrl mUrl;
     QString mSelection;
+    QString mTemplate;
     Akonadi::Item mItem;
     KMime::Message::Ptr mMsg;
+    MessageComposer::ReplyStrategy m_replyStrategy;
+    bool mNoQuote;
 };
 
 class CreateReplyMessageJob : public QObject

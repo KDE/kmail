@@ -454,6 +454,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     settings.mMsg = msg;
     settings.mSelection = mSelection;
     settings.mUrl = mUrl;
+    settings.m_replyStrategy = MessageComposer::ReplyNone;
 
     CreateReplyMessageJob *job = new CreateReplyMessageJob;
     job->setSettings(settings);
