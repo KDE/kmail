@@ -5,6 +5,7 @@
 #include "settings/kmailsettings.h"
 #include "libkdepim/broadcaststatus.h"
 #include "job/opencomposerjob.h"
+#include "job/newmessagejob.h"
 #include <AkonadiSearch/PIM/indexeditems.h>
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
@@ -804,39 +805,15 @@ void KMKernel::newMessage(const QString &to,
         id = folder ? folder->identity() : 0;
     }
 
-    QUrl attachURL = QUrl::fromLocalFile(_attachURL);
-    KMime::Message::Ptr msg(new KMime::Message);
-    MessageHelper::initHeader(msg, identityManager(), id);
-    msg->contentType()->setCharset("utf-8");
-    //set basic headers
-    if (!cc.isEmpty()) {
-        msg->cc()->fromUnicodeString(cc, "utf-8");
-    }
-    if (!bcc.isEmpty()) {
-        msg->bcc()->fromUnicodeString(bcc, "utf-8");
-    }
-    if (!to.isEmpty()) {
-        msg->to()->fromUnicodeString(to, "utf-8");
-    }
+    const NewMessageJobSettings settings(to,
+                                         cc,
+                                         bcc,
+                                         hidden,
+                                         _attachURL, folder, id);
 
-    msg->assemble();
-    TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-    parser.setIdentityManager(identityManager());
-    Akonadi::Collection col = folder ? folder->collection() : Akonadi::Collection();
-    parser.process(msg, col);
-
-    KMail::Composer *win = makeComposer(msg, false, false, KMail::Composer::New, id);
-
-    win->setCollectionForNewMessage(col);
-    //Add the attachment if we have one
-    if (!attachURL.isEmpty() && attachURL.isValid()) {
-        win->addAttachment(attachURL, QString());
-    }
-
-    //only show window when required
-    if (!hidden) {
-        win->show();
-    }
+    NewMessageJob *job = new NewMessageJob(this);
+    job->setNewMessageJobSettings(settings);
+    job->start();
 }
 
 void KMKernel::viewMessage(const QUrl &url)
