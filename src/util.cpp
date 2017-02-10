@@ -42,8 +42,6 @@
 #include "MessageComposer/MessageHelper"
 #include "job/handleclickedurljob.h"
 
-#include "TemplateParser/TemplateParser"
-
 #include <kmime/kmime_message.h>
 #include <kmessagebox.h>
 #include <KLocalizedString>

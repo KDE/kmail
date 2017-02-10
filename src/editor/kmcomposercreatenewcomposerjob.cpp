@@ -17,7 +17,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "composenewmessagejob.h"
+
+#include "kmcomposercreatenewcomposerjob.h"
+#include "config-kmail.h"
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
@@ -26,42 +28,34 @@
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
-ComposeNewMessageJob::ComposeNewMessageJob(QObject *parent)
+KMComposerCreateNewComposerJob::KMComposerCreateNewComposerJob(QObject *parent)
     : QObject(parent),
-      mIdentity(0),
-      mMsg(nullptr)
+      mMsg(nullptr),
+      mCurrentIdentity(0)
 {
 
 }
 
-ComposeNewMessageJob::~ComposeNewMessageJob()
+KMComposerCreateNewComposerJob::~KMComposerCreateNewComposerJob()
 {
 
 }
 
-void ComposeNewMessageJob::start()
+void KMComposerCreateNewComposerJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message());
 
-    mIdentity = mFolder ? mFolder->identity() : 0;
-    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
+    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mCurrentIdentity);
     TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
-    connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &ComposeNewMessageJob::slotOpenComposer);
+    connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &KMComposerCreateNewComposerJob::slotCreateNewComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
-    if (mFolder) {
-        parser->process(mMsg, mFolder->collection());
-    } else {
-        parser->process(KMime::Message::Ptr(), Akonadi::Collection());
-    }
+    parser->process(mMsg, mCollectionForNewMessage);
 }
 
-void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
+void KMComposerCreateNewComposerJob::slotCreateNewComposer(bool forceCursorPosition)
 {
-    KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);
-    if (mFolder) {
-        win->setCollectionForNewMessage(mFolder->collection());
-    }
-
+    KMail::Composer *win = KMComposerWin::create(mMsg, false, false, KMail::Composer::New, mCurrentIdentity);
+    win->setCollectionForNewMessage(mCollectionForNewMessage);
     if (forceCursorPosition) {
         win->setFocusToEditor();
     }
@@ -69,7 +63,12 @@ void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
     deleteLater();
 }
 
-void ComposeNewMessageJob::setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder)
+void KMComposerCreateNewComposerJob::setCurrentIdentity(const uint &currentIdentity)
 {
-    mFolder = folder;
+    mCurrentIdentity = currentIdentity;
+}
+
+void KMComposerCreateNewComposerJob::setCollectionForNewMessage(const Akonadi::Collection &collectionForNewMessage)
+{
+    mCollectionForNewMessage = collectionForNewMessage;
 }

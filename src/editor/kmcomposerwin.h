@@ -420,6 +420,7 @@ private Q_SLOTS:
     void slotKeyForMailBoxResult(const GpgME::KeyListResult &result, const GpgME::Key &key, const GpgME::UserID &userID);
 
     void slotDelayedCheckSendNow();
+    void slotUpdateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
 public: // kmcommand
     void addAttach(KMime::Content *msgPart) Q_DECL_OVERRIDE;
 
@@ -466,7 +467,7 @@ private:
     /**
      * Apply template to new or unmodified message.
      */
-    void applyTemplate(uint uoid, uint uOldId);
+    void applyTemplate(uint uoid, uint uOldId, const KIdentityManagement::Identity &ident, bool wasModified);
 
     /**
      * Set the quote prefix according to identity.
@@ -549,6 +550,8 @@ private:
         KeyOk,
         NoKey
     };
+
+    void updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified);
 
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();

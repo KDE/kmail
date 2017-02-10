@@ -60,7 +60,6 @@ using KMail::MailServiceImpl;
 #include "PimCommon/AutoCorrection"
 #include <PimCommon/NetworkManager>
 
-#include "TemplateParser/TemplateParser"
 #include "globalsettings_templateparser.h"
 #include "TemplateParser/TemplatesUtil"
 

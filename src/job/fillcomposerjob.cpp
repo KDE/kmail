@@ -18,7 +18,6 @@
 */
 
 #include "fillcomposerjob.h"
-#include "config-kmail.h"
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
@@ -26,11 +25,7 @@
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
-//#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
-//#include <TemplateParser/TemplateParserJob>
-//#else
-#include <TemplateParser/TemplateParser>
-//#endif
+#include <TemplateParser/TemplateParserJob>
 
 FillComposerJob::FillComposerJob(QObject *parent)
     : QObject(parent),
@@ -70,10 +65,10 @@ void FillComposerJob::start()
         mMsg->setBody(mSettings.mBody.toUtf8());
         slotOpenComposer();
     } else {
-        TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
-        parser.process(KMime::Message::Ptr());
-        slotOpenComposer();
+        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &FillComposerJob::slotOpenComposer);
+        parser->setIdentityManager(KMKernel::self()->identityManager());
+        parser->process(KMime::Message::Ptr());
     }
 }
 

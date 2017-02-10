@@ -25,6 +25,7 @@
 
 // KMail includes
 #include "job/addressvalidationjob.h"
+#include "kmcomposercreatenewcomposerjob.h"
 #include "attachment/attachmentcontroller.h"
 #include <MessageComposer/AttachmentModel>
 #include "attachment/attachmentview.h"
@@ -38,6 +39,8 @@
 #include <KPIMTextEdit/RichTextComposerImages>
 #include <KPIMTextEdit/RichTextExternalComposer>
 #include <KPIMTextEdit/RichTextEditorWidget>
+#include "kmcomposerupdatetemplatejob.h"
+#include <TemplateParser/TemplateParserJob>
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
 #include "kmmainwin.h"
@@ -110,7 +113,6 @@
 
 #include <MessageCore/AttachmentPart>
 #include <MessageCore/MessageCoreSettings>
-#include <templateparser.h>
 #include <TemplateParser/TemplatesConfiguration>
 #include <MessageCore/NodeHelper>
 #include <Akonadi/KMime/MessageStatus>
@@ -912,28 +914,31 @@ void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow,
     }
 }
 
-void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
+void KMComposerWin::slotUpdateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified)
 {
-    const KIdentityManagement::Identity &ident = kmkernel->identityManager()->identityForUoid(uoid);
-    if (ident.isNull()) {
-        return;
-    }
+    mComposerBase->updateTemplate(msg);
+    updateSignature(uoid, uoldId);
+    updateComposerAfterIdentityChanged(ident, uoid, wasModified);
+}
 
-    TemplateParser::TemplateParser::Mode mode;
+void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagement::Identity &ident, bool wasModified)
+{
+    TemplateParser::TemplateParserJob::Mode mode;
     switch (mContext) {
     case New:
-        mode = TemplateParser::TemplateParser::NewMessage;
+        mode = TemplateParser::TemplateParserJob::NewMessage;
         break;
     case Reply:
-        mode = TemplateParser::TemplateParser::Reply;
+        mode = TemplateParser::TemplateParserJob::Reply;
         break;
     case ReplyToAll:
-        mode = TemplateParser::TemplateParser::ReplyAll;
+        mode = TemplateParser::TemplateParserJob::ReplyAll;
         break;
     case Forward:
-        mode = TemplateParser::TemplateParser::Forward;
+        mode = TemplateParser::TemplateParserJob::Forward;
         break;
     case NoTemplate:
+        updateComposerAfterIdentityChanged(ident, uoid, wasModified);
         return;
     }
 
@@ -941,18 +946,17 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
     header->fromUnicodeString(ident.templates(), "utf-8");
     mMsg->setHeader(header);
 
-    if (mode == TemplateParser::TemplateParser::NewMessage) {
-        TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
-        parser.setSelection(mTextSelection);
-        parser.setAllowDecryption(true);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
-        if (!mCustomTemplate.isEmpty()) {
-            parser.process(mCustomTemplate, mMsg, mCollectionForNewMessage);
-        } else {
-            parser.processWithIdentity(uoid, mMsg, mCollectionForNewMessage);
-        }
-        mComposerBase->updateTemplate(mMsg);
-        updateSignature(uoid, uOldId);
+    if (mode == TemplateParser::TemplateParserJob::NewMessage) {
+        KMComposerUpdateTemplateJob *job = new KMComposerUpdateTemplateJob;
+        connect(job, &KMComposerUpdateTemplateJob::updateComposer, this, &KMComposerWin::slotUpdateComposer);
+        job->setMsg(mMsg);
+        job->setCustomTemplate(mCustomTemplate);
+        job->setTextSelection(mTextSelection);
+        job->setWasModified(wasModified);
+        job->setUoldId(uOldId);
+        job->setUoid(uoid);
+        job->setIdent(ident);
+        job->start();
     } else {
         if (auto hrd = mMsg->headerByType("X-KMail-Link-Message")) {
             Akonadi::Item::List items;
@@ -970,18 +974,19 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId)
             job->setProperty("uOldid", uOldId);
             connect(job, &Akonadi::ItemFetchJob::result, this, &KMComposerWin::slotDelayedApplyTemplate);
         }
+        updateComposerAfterIdentityChanged(ident, uoid, wasModified);
     }
 }
 
 void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
 {
+#if 0 //FIXME
     const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     const Akonadi::Item::List items = fetchJob->items();
 
-    const TemplateParser::TemplateParser::Mode mode = static_cast<TemplateParser::TemplateParser::Mode>(fetchJob->property("mode").toInt());
+    const TemplateParser::TemplateParserJob::Mode mode = static_cast<TemplateParser::TemplateParserJob::Mode>(fetchJob->property("mode").toInt());
     const uint uoid = fetchJob->property("uoid").toUInt();
     const uint uOldId = fetchJob->property("uOldid").toUInt();
-
     TemplateParser::TemplateParser parser(mMsg, mode);
     parser.setSelection(mTextSelection);
     parser.setAllowDecryption(true);
@@ -996,6 +1001,7 @@ void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
     }
     mComposerBase->updateTemplate(mMsg);
     updateSignature(uoid, uOldId);
+#endif
 }
 
 void KMComposerWin::updateSignature(uint uoid, uint uOldId)
@@ -2166,19 +2172,11 @@ void KMComposerWin::slotClose()
 
 void KMComposerWin::slotNewComposer()
 {
-    KMime::Message::Ptr msg(new KMime::Message());
+    KMComposerCreateNewComposerJob *job = new KMComposerCreateNewComposerJob;
+    job->setCollectionForNewMessage(mCollectionForNewMessage);
 
-    MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), currentIdentity());
-    TemplateParser::TemplateParser parser(msg, TemplateParser::TemplateParser::NewMessage);
-    parser.setIdentityManager(KMKernel::self()->identityManager());
-    parser.process(msg, mCollectionForNewMessage);
-    KMComposerWin *win = new KMComposerWin(msg, false, false, KMail::Composer::New, currentIdentity());
-    win->setCollectionForNewMessage(mCollectionForNewMessage);
-    bool forceCursorPosition = parser.cursorPositionWasSet();
-    if (forceCursorPosition) {
-        win->setFocusToEditor();
-    }
-    win->show();
+    job->setCurrentIdentity(currentIdentity());
+    job->start();
 }
 
 void KMComposerWin::slotUpdateWindowTitle()
@@ -2958,12 +2956,16 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initalChange)
     // if unmodified, apply new template, if one is set
     if (!wasModified && !(ident.templates().isEmpty() && mCustomTemplate.isEmpty()) &&
             !initalChange) {
-        applyTemplate(uoid, mId);
+        applyTemplate(uoid, mId, ident, wasModified);
     } else {
         mComposerBase->identityChanged(ident, oldIdentity, false);
         mEdtSubject->setAutocorrectionLanguage(ident.autocorrectionLanguage());
+        updateComposerAfterIdentityChanged(ident, uoid, wasModified);
     }
+}
 
+void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified)
+{
     // disable certain actions if there is no PGP user identity set
     // for this profile
     bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();

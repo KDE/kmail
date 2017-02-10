@@ -99,6 +99,8 @@ set(kmailprivate_editor_LIB_SRCS
     editor/widgets/cryptostateindicatorwidget.cpp
     editor/validatesendmailshortcut.cpp
     editor/kmcomposerglobalaction.cpp
+    editor/kmcomposerupdatetemplatejob.cpp
+    editor/kmcomposercreatenewcomposerjob.cpp
     )
 
 set(kmailprivate_warningwidgets_LIB_SRCS

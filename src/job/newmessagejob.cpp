@@ -18,18 +18,13 @@
 */
 
 #include "newmessagejob.h"
-#include "config-kmail.h"
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
 #include <TemplateParser/TemplateParserJob>
-#else
-#include <TemplateParser/TemplateParser>
-#endif
 
 NewMessageJob::NewMessageJob(QObject *parent)
     : QObject(parent),
@@ -63,17 +58,10 @@ void NewMessageJob::start()
     mMsg->assemble();
 
     mCollection = mNewMessageJobSettings.mFolder ? mNewMessageJobSettings.mFolder->collection() : Akonadi::Collection();
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &NewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     parser->process(mMsg, mCollection);
-#else
-    TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
-    parser.setIdentityManager(KMKernel::self()->identityManager());
-    parser.process(mMsg, mCollection);
-    slotOpenComposer();
-#endif
 }
 
 void NewMessageJob::slotOpenComposer()

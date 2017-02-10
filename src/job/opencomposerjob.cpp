@@ -20,17 +20,12 @@
 
 #include "opencomposerjob.h"
 #include "kmail_debug.h"
-#include "config-kmail.h"
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
 #include <KMime/Message>
 #include <MessageCore/StringUtil>
-//#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
-//#include <TemplateParser/TemplateParserJob>
-//#else
-#include <TemplateParser/TemplateParser>
-//#endif
+#include <TemplateParser/TemplateParserJob>
 #include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Identity>
 #include <MessageComposer/MessageHelper>
@@ -42,7 +37,8 @@
 
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent),
-      mMsg(nullptr)
+      mMsg(nullptr),
+      mContext(KMail::Composer::New)
 {
 
 }
@@ -59,7 +55,6 @@ OpenComposerJob::~OpenComposerJob()
 
 void OpenComposerJob::start()
 {
-    KMail::Composer::TemplateContext context = KMail::Composer::New;
     mMsg = KMime::Message::Ptr(new KMime::Message);
     MessageHelper::initHeader(mMsg, KIdentityManagement::IdentityManager::self());
     mMsg->contentType()->setCharset("utf-8");
@@ -89,22 +84,29 @@ void OpenComposerJob::start()
             f.close();
         }
         if (!str.isEmpty()) {
-            context = KMail::Composer::NoTemplate;
+            mContext = KMail::Composer::NoTemplate;
             mMsg->setBody(QString::fromLocal8Bit(str.data(), str.size()).toUtf8());
+            slotOpenComposer();
         } else {
-            TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
-            parser.setIdentityManager(KMKernel::self()->identityManager());
-            parser.process(mMsg);
+            TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+            connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &OpenComposerJob::slotOpenComposer);
+            parser->setIdentityManager(KMKernel::self()->identityManager());
+            parser->process(mMsg);
         }
     } else if (!mOpenComposerSettings.mBody.isEmpty()) {
-        context = KMail::Composer::NoTemplate;
+        mContext = KMail::Composer::NoTemplate;
         mMsg->setBody(mOpenComposerSettings.mBody.toUtf8());
+        slotOpenComposer();
     } else {
-        TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
-        parser.process(mMsg);
+        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &OpenComposerJob::slotOpenComposer);
+        parser->setIdentityManager(KMKernel::self()->identityManager());
+        parser->process(mMsg);
     }
+}
 
+void OpenComposerJob::slotOpenComposer()
+{
     if (!mOpenComposerSettings.mInReplyTo.isEmpty()) {
         KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo;
         header->fromUnicodeString(mOpenComposerSettings.mInReplyTo, "utf-8");
@@ -120,7 +122,7 @@ void OpenComposerJob::start()
             identityId = id.uoid();
         }
     }
-    KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, context, identityId);
+    KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, mContext, identityId);
     if (!mOpenComposerSettings.mTo.isEmpty()) {
         cWin->setFocusToSubject();
     }
@@ -168,3 +170,4 @@ void OpenComposerJob::start()
     }
     deleteLater();
 }
+

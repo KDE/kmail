@@ -97,7 +97,6 @@ using KSieveUi::SieveDebugDialog;
 #include <MessageComposer/MessageSender>
 #include "MessageComposer/MessageHelper"
 
-#include "TemplateParser/TemplateParser"
 
 #include <MessageCore/MessageCoreSettings>
 #include "MessageCore/MailingList"

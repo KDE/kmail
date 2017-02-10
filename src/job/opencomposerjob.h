@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <KMime/Message>
+#include "editor/kmcomposerwin.h"
 struct OpenComposerSettings
 {
     OpenComposerSettings()
@@ -79,8 +80,10 @@ public:
     void setOpenComposerSettings(const OpenComposerSettings &openComposerSettings);
 
 private:
+    void slotOpenComposer();
     OpenComposerSettings mOpenComposerSettings;
     KMime::Message::Ptr mMsg;
+    KMail::Composer::TemplateContext mContext;
 };
 
 #endif // OPENCOMPOSERJOB_H

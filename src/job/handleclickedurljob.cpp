@@ -18,17 +18,12 @@
 */
 
 #include "handleclickedurljob.h"
-#include "config-kmail.h"
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
 #include <KMime/Message>
 #include <MessageCore/StringUtil>
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
 #include <TemplateParser/TemplateParserJob>
-#else
-#include <TemplateParser/TemplateParser>
-#endif
 #include <MessageComposer/MessageHelper>
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
@@ -74,20 +69,11 @@ void HandleClickedUrlJob::start()
     }
 
     if (!mFolder.isNull()) {
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
         TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
         connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &HandleClickedUrlJob::slotOpenComposer);
         parser->setIdentityManager(KMKernel::self()->identityManager());
         parser->process(mMsg, mFolder->collection());
-#else
-        TemplateParser::TemplateParser parser(mMsg, TemplateParser::TemplateParser::NewMessage);
-        parser.setIdentityManager(KMKernel::self()->identityManager());
-        parser.process(mMsg, mFolder->collection());
-#endif
     }
-#ifndef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
-    slotOpenComposer();
-#endif
 }
 void HandleClickedUrlJob::slotOpenComposer()
 {
