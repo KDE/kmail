@@ -55,13 +55,11 @@ using namespace MessageViewer;
 
 #include <MimeTreeParser/AttachmentStrategy>
 #include <MessageComposer/MessageSender>
-#include <MessageComposer/MessageFactory>
 #include "MessageComposer/Composer"
 #include "MessageComposer/TextPart"
 #include "MessageComposer/InfoPart"
 
 #include <KIO/JobUiDelegate>
-using MessageComposer::MessageFactory;
 
 #include "messagecore/messagehelpers.h"
 
