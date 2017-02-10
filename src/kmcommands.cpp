@@ -141,11 +141,7 @@
 
 using KMail::SecondaryWindow;
 using MailTransport::TransportManager;
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
 using MessageComposer::MessageFactoryNG;
-#else
-using MessageComposer::MessageFactory;
-#endif
 
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
@@ -933,11 +929,7 @@ KMCommand::Result KMForwardCommand::execute()
 
         if (answer == KMessageBox::Yes) {
             Akonadi::Item firstItem(msgList.first());
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
             MessageFactoryNG factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(), MailCommon::Util::updatedCollection(firstItem.parentCollection()));
-#else
-            MessageFactory factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(), MailCommon::Util::updatedCollection(firstItem.parentCollection()));
-#endif
             factory.setIdentityManager(KMKernel::self()->identityManager());
             factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
@@ -992,11 +984,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 {
     Akonadi::Item::List msgList = retrievedMsgs();
     Akonadi::Item firstItem(msgList.first());
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     MessageFactoryNG factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(), MailCommon::Util::updatedCollection(firstItem.parentCollection()));
-#else
-    MessageFactory factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(), MailCommon::Util::updatedCollection(firstItem.parentCollection()));
-#endif
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
@@ -1064,11 +1052,7 @@ KMCommand::Result KMRedirectCommand::execute()
         if (!msg) {
             return Failed;
         }
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
         MessageFactoryNG factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
-#else
-        MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
-#endif
         factory.setIdentityManager(KMKernel::self()->identityManager());
         factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
 
@@ -1614,11 +1598,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     if (!msg) {
         return Failed;
     }
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     MessageFactoryNG factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
-#else
-    MessageFactory factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
-#endif
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
     KMime::Message::Ptr newMsg = factory.createResend();

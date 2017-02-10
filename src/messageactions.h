@@ -19,12 +19,7 @@
 #ifndef KMAIL_MESSAGEACTIONS_H
 #define KMAIL_MESSAGEACTIONS_H
 
-#include "config-kmail.h"
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
 #include <MessageComposer/MessageFactoryNG>
-#else
-#include <MessageComposer/MessageFactory>
-#endif
 #include <QUrl>
 
 #include <qobject.h>

@@ -22,15 +22,10 @@
 #define CREATEFORWARDMESSAGEJOB_H
 
 #include <QObject>
-#include "config-kmail.h"
 #include <QUrl>
 #include <KMime/Message>
 #include <AkonadiCore/Item>
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
 #include <MessageComposer/MessageFactoryNG>
-#else
-#include <MessageComposer/MessageFactory>
-#endif
 
 struct CreateForwardMessageJobSettings
 {
@@ -59,10 +54,8 @@ public:
     void setSettings(const CreateForwardMessageJobSettings &value);
 
 private:
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     MessageComposer::MessageFactoryNG *mMessageFactory;
     void slotCreateForwardDone(const KMime::Message::Ptr &msg);
-#endif
     CreateForwardMessageJobSettings mSettings;
 };
 

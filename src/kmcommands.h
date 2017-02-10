@@ -3,11 +3,7 @@
 #ifndef KMCommands_h
 #define KMCommands_h
 #include "config-kmail.h"
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
 #include <MessageComposer/MessageFactoryNG>
-#else
-#include <MessageComposer/MessageFactory>
-#endif
 #include "MessageList/View"
 #include "mailcommon/searchpattern.h"
 #include "messageviewer/viewer.h"

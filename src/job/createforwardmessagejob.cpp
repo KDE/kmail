@@ -30,18 +30,14 @@
 
 CreateForwardMessageJob::CreateForwardMessageJob(QObject *parent)
     : QObject(parent)
-    #ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     , mMessageFactory(nullptr)
-    #endif
 {
 
 }
 
 CreateForwardMessageJob::~CreateForwardMessageJob()
 {
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     delete mMessageFactory;
-#endif
 }
 
 void CreateForwardMessageJob::setSettings(const CreateForwardMessageJobSettings &value)
@@ -51,7 +47,6 @@ void CreateForwardMessageJob::setSettings(const CreateForwardMessageJobSettings 
 
 void CreateForwardMessageJob::start()
 {
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.mMsg, mSettings.mItem.id(), MailCommon::Util::updatedCollection(mSettings.mItem.parentCollection()));
     connect(mMessageFactory, &MessageComposer::MessageFactoryNG::createForwardDone, this, &CreateForwardMessageJob::slotCreateForwardDone);
     mMessageFactory->setIdentityManager(KMKernel::self()->identityManager());
@@ -61,42 +56,8 @@ void CreateForwardMessageJob::start()
         mMessageFactory->setTemplate(mSettings.mTemplate);
     }
     mMessageFactory->createForwardAsync();
-#else
-    MessageComposer::MessageFactory factory(mSettings.mMsg, mSettings.mItem.id(), MailCommon::Util::updatedCollection(mSettings.mItem.parentCollection()));
-    factory.setIdentityManager(KMKernel::self()->identityManager());
-    factory.setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.mItem));
-    factory.setSelection(mSettings.mSelection);
-    if (!mSettings.mTemplate.isEmpty()) {
-        factory.setTemplate(mSettings.mTemplate);
-    }
-
-    KMime::Message::Ptr fmsg = factory.createForward();
-    if (mSettings.mUrl.isValid()) {
-        fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.mUrl).toLower(), "utf-8");
-    }
-    bool lastEncrypt = false;
-    bool lastSign = false;
-    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mSettings.mMsg);
-
-    if (mSettings.mUrl.isValid()) {
-        KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward);
-        win->show();
-    } else {
-        uint id = 0;
-        if (auto hrd = mSettings.mMsg->headerByType("X-KMail-Identity")) {
-            id = hrd->asUnicodeString().trimmed().toUInt();
-        }
-        if (id == 0) {
-            id = mSettings.mIdentity;
-        }
-        KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward, id, QString(), mSettings.mTemplate);
-        win->show();
-    }
-    deleteLater();
-#endif
 }
 
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
 void CreateForwardMessageJob::slotCreateForwardDone(const KMime::Message::Ptr &fmsg)
 {
     if (mSettings.mUrl.isValid()) {
@@ -121,6 +82,4 @@ void CreateForwardMessageJob::slotCreateForwardDone(const KMime::Message::Ptr &f
         win->show();
     }
     deleteLater();
-
 }
-#endif

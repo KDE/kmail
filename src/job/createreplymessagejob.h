@@ -21,14 +21,9 @@
 #define CREATEREPLYMESSAGEJOB_H
 
 #include <QObject>
-#include "config-kmail.h"
 #include <AkonadiCore/Item>
 #include <KMime/Message>
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
 #include <MessageComposer/MessageFactoryNG>
-#else
-#include <MessageComposer/MessageFactory>
-#endif
 #include <QUrl>
 
 
@@ -62,10 +57,8 @@ public:
     void setSettings(const CreateReplyMessageJobSettings &settings);
 
 private:
-#ifdef KDEPIM_TEMPLATEPARSER_ASYNC_BUILD
     MessageComposer::MessageFactoryNG *mMessageFactory;
     void slotCreateReplyDone(const MessageComposer::MessageFactoryNG::MessageReply &reply);
-#endif
     CreateReplyMessageJobSettings mSettings;
 };
 
