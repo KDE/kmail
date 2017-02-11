@@ -46,7 +46,7 @@ void CreateReplyMessageJob::setSettings(const CreateReplyMessageJobSettings &set
 }
 
 /// Small helper function to get the composer context from a reply
-static KMail::Composer::TemplateContext replyContext(MessageComposer::MessageFactoryNG::MessageReply reply)
+inline KMail::Composer::TemplateContext replyContext(MessageComposer::MessageFactoryNG::MessageReply reply)
 {
     if (reply.replyAll) {
         return KMail::Composer::ReplyToAll;
