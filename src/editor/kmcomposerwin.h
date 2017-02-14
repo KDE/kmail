@@ -400,8 +400,6 @@ private Q_SLOTS:
 
     void slotInsertShortUrl(const QString &url);
 
-    void slotShareLinkDone(const QString &fileName);
-
     void slotTransportChanged();
     void slotFollowUpMail(bool toggled);
     void slotSendNowByShortcut();

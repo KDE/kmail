@@ -459,7 +459,7 @@ static void initializeDirmngrCheckbox(QCheckBox *cb, QGpgME::CryptoConfigEntry *
 }
 
 struct SMIMECryptoConfigEntries {
-    SMIMECryptoConfigEntries(QGpgME::CryptoConfig *config)
+    explicit SMIMECryptoConfigEntries(QGpgME::CryptoConfig *config)
         : mConfig(config)
     {
 

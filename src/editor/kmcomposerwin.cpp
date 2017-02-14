@@ -2575,7 +2575,7 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
     QMap<QByteArray, QString>::const_iterator extraCustomHeader = mExtraHeaders.constBegin();
     while (extraCustomHeader != mExtraHeaders.constEnd()) {
         customHeader.insert(extraCustomHeader.key(), extraCustomHeader.value());
-        extraCustomHeader++;
+        ++extraCustomHeader;
     }
 
     mComposerBase->setCustomHeader(customHeader);
@@ -3181,11 +3181,6 @@ void KMComposerWin::slotExternalEditorClosed()
 void KMComposerWin::slotInsertShortUrl(const QString &url)
 {
     mComposerBase->editor()->composerControler()->insertLink(url);
-}
-
-void KMComposerWin::slotShareLinkDone(const QString &link)
-{
-    mComposerBase->editor()->composerControler()->insertShareLink(link);
 }
 
 void KMComposerWin::slotTransportChanged()
