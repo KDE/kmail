@@ -980,7 +980,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
 
 void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
 {
-#if 0 //FIXME
+#if 0 //FIXME template
     const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     const Akonadi::Item::List items = fetchJob->items();
 
