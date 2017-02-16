@@ -168,7 +168,7 @@ void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
                     changeRecorder()->setCollectionMonitored(collection, true);
                     break;
                 }
-                i++;
+                ++i;
             }
         }
     }
