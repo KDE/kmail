@@ -62,7 +62,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KMessageBox>
 #include <KKeySequenceWidget>
 #include <KLineEdit>
-#include <QDialog>
 #include <QIcon>
 #include "kmail_debug.h"
 

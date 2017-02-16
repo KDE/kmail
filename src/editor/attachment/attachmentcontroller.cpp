@@ -25,7 +25,6 @@
 #include "attachmentview.h"
 #include <MailCommon/FolderCollection>
 #include "settings/kmailsettings.h"
-#include "kmcommands.h"
 #include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
 #include "kmreadermainwin.h"
@@ -33,6 +32,7 @@
 #include <KIdentityManagement/Identity>
 #include <AkonadiCore/itemfetchjob.h>
 #include <kcontacts/addressee.h>
+#include <AkonadiCore/ItemFetchScope>
 #include "kmail_debug.h"
 
 #include <QGpgME/Protocol>

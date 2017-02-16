@@ -118,8 +118,7 @@ void FolderArchiveManager::slotFetchCollection(KJob *job)
         return;
     }
 
-    Akonadi::Item::List itemIds;
-    itemIds << Akonadi::Item(jobCol->property("itemId").toLongLong());
+    const Akonadi::Item::List itemIds = {Akonadi::Item(jobCol->property("itemId").toLongLong())};
     setArchiveItems(itemIds, jobCol->collections().first().resource());
 }
 

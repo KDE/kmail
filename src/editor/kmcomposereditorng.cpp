@@ -20,7 +20,6 @@
 #include "kmkernel.h"
 #include "util.h"
 #include "kmail_debug.h"
-#include "pimcommon/kactionmenuchangecase.h"
 
 #include <qmenu.h>
 #include <KToggleAction>

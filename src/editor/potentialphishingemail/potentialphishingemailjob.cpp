@@ -19,6 +19,7 @@
 */
 
 #include "potentialphishingemailjob.h"
+#include "../../helper_p.h"
 #include <KEmailAddress>
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)
@@ -53,7 +54,7 @@ bool PotentialPhishingEmailJob::start()
         deleteLater();
         return false;
     }
-    Q_FOREACH (const QString &addr, mEmails) {
+    for (const QString &addr : qAsConst(mEmails)) {
         if (!mEmailWhiteList.contains(addr.trimmed())) {
             QString tname, temail;
             KEmailAddress::extractEmailAddressAndName(addr, temail, tname);    // ignore return value

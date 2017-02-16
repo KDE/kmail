@@ -36,12 +36,9 @@ Q_SIGNALS:
     void collectionIdFound(const Akonadi::Collection &col);
     void checkFailed(const QString &message);
 
-private Q_SLOTS:
-    //void slotInitialCollectionFetchingDone(KJob*);
+private:
     void slotInitialCollectionFetchingFirstLevelDone(KJob *job);
     void slotCreateNewFolder(KJob *);
-
-private:
     void createNewFolder(const QString &name);
     QDate mCurrentDate;
     FolderArchiveAccountInfo *mInfo;

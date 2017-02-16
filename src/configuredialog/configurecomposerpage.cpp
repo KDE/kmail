@@ -38,7 +38,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "libkdepim/completionordereditor.h"
 using KPIM::RecentAddresses;
 
-#include <QDialog>
 #include <KLocalizedString>
 #include <KSeparator>
 #include <KCharsets>

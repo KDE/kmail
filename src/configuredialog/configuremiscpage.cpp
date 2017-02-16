@@ -32,7 +32,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KCModuleProxy>
 #include <KCModuleInfo>
 #include <KLocalizedString>
-#include <QDialog>
 #include <KConfigGroup>
 #include <QHBoxLayout>
 

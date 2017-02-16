@@ -40,38 +40,9 @@ FolderArchiveAgentCheckCollection::~FolderArchiveAgentCheckCollection()
 void FolderArchiveAgentCheckCollection::start()
 {
     Akonadi::Collection col(mInfo->archiveTopLevel());
-#if 0
-    if (mInfo->keepExistingStructure()) {
-        Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::Recursive);
-        connect(job, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone);
-    } else {
-#endif
-        Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::FirstLevel);
-        connect(job, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelDone);
-#if 0
-    }
-#endif
+    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::FirstLevel);
+    connect(job, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelDone);
 }
-
-#if 0
-void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingDone(KJob *job)
-{
-#if 0
-    if (job->error()) {
-        qCWarning(KMAIL_LOG) << job->errorString();
-        Q_EMIT checkFailed(QString());
-        return;
-    }
-
-    //TODO
-    Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
-
-    foreach (const Akonadi::Collection &collection, fetchJob->collections()) {
-
-    }
-#endif
-}
-#endif
 
 void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelDone(KJob *job)
 {

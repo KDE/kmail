@@ -1378,7 +1378,6 @@ void KMComposerWin::changeCryptoAction()
 
 void KMComposerWin::setupStatusBar(QWidget *w)
 {
-    //KPIM::ProgressStatusBarWidget *progressStatusBarWidget = new KPIM::ProgressStatusBarWidget(statusBar(), this, PimCommon::StorageServiceProgressManager::progressTypeValue());
     statusBar()->addWidget(w);
     mStatusbarLabel = new QLabel(this);
     mStatusbarLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
@@ -1401,9 +1400,6 @@ void KMComposerWin::setupStatusBar(QWidget *w)
     mStatusBarLabelSpellCheckingChangeMode->setStateString(i18n("Spellcheck: on"), i18n("Spellcheck: off"));
     statusBar()->addPermanentWidget(mStatusBarLabelSpellCheckingChangeMode, 0);
     connect(mStatusBarLabelSpellCheckingChangeMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
-
-    //statusBar()->addPermanentWidget(progressStatusBarWidget->littleProgress());
-
 }
 
 void KMComposerWin::setupEditor(void)

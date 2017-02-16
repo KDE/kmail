@@ -31,7 +31,6 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <KLocalizedString>
-#include <QDialog>
 #include <KIconButton>
 #include <KConfigGroup>
 #include <QRadioButton>

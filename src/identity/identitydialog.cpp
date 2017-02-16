@@ -282,7 +282,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     setWindowTitle(i18n("Edit Identity"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
     connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &IdentityDialog::slotHelp);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
@@ -290,17 +290,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityDialog::slotAccepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityDialog::reject);
 
-    // tmp. vars:
-    QWidget *tab;
-    QLabel   *label;
-    int row;
-    QGridLayout *glay;
-    QString msg;
-
     //
     // Tab Widget: General
     //
-    row = -1;
+    int row = -1;
     QWidget *page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
@@ -310,9 +303,9 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mTabWidget->setObjectName(QStringLiteral("config-identity-tab"));
     vlay->addWidget(mTabWidget);
 
-    tab = new QWidget(mTabWidget);
+    QWidget *tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18nc("@title:tab General identity settings.", "General"));
-    glay = new QGridLayout(tab);
+    QGridLayout *glay = new QGridLayout(tab);
     glay->setRowStretch(3, 1);
     glay->setColumnStretch(1, 1);
 
@@ -320,10 +313,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mNameEdit = new KLineEdit(tab);
     glay->addWidget(mNameEdit, row, 1);
-    label = new QLabel(i18n("&Your name:"), tab);
+    QLabel   *label = new QLabel(i18n("&Your name:"), tab);
     label->setBuddy(mNameEdit);
     glay->addWidget(label, row, 0);
-    msg = i18n("<qt><h3>Your name</h3>"
+    QString msg = i18n("<qt><h3>Your name</h3>"
                "<p>This field should contain your name as you would like "
                "it to appear in the email header that is sent out;</p>"
                "<p>if you leave this blank your real name will not "

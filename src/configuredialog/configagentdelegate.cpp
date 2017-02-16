@@ -168,7 +168,7 @@ QSize ConfigAgentDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     return QSize(1, qMax(iconHeight, textHeight));    //any width,the view will give us the whole thing in list mode
 }
 
-QWidget   *ConfigAgentDelegate::createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const
+QWidget* ConfigAgentDelegate::createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const
 {
     return nullptr;
 }

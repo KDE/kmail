@@ -37,7 +37,6 @@ CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, QObject *parent)
 
 CreateTaskJob::~CreateTaskJob()
 {
-
 }
 
 void CreateTaskJob::start()
@@ -63,12 +62,14 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
     if (job->error()) {
         qCDebug(KMAIL_LOG) << job->errorString();
         Q_EMIT emitResult();
+        deleteLater();
         return;
     }
     Akonadi::ItemFetchJob *fetchjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     const Akonadi::Item::List lst = fetchjob->items();
     if (lst.isEmpty()) {
         Q_EMIT emitResult();
+        deleteLater();
         return;
     }
 

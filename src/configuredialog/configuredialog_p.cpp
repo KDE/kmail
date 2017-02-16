@@ -9,7 +9,6 @@
 
 // other KDE headers:
 #include <QTabWidget>
-#include <QDialog>
 
 // Qt headers:
 #include <QShowEvent>
