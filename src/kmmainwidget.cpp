@@ -1017,7 +1017,7 @@ void KMMainWidget::createWidgets()
             this, &KMMainWidget::slotMessageStatusChangeRequest);
 
     connect(mMessagePane, &MessageList::Pane::statusMessage,
-            BroadcastStatus::instance(), &KPIM::BroadcastStatus::setStatusMsg);
+            this, &KMMainWidget::showMessageActivities);
 
     //
     // Create the reader window
@@ -1804,7 +1804,7 @@ void KMMainWidget::copyMessageSelected(const Akonadi::Item::List &selectMsg, con
         this, &KMMainWidget::slotCopyMessagesCompleted
     );
     command->start();
-    BroadcastStatus::instance()->setStatusMsg(i18n("Copying messages..."));
+    showMessageActivities(i18n("Copying messages..."));
 }
 
 void KMMainWidget::slotCopyMessagesCompleted(KMCommand *command)
@@ -1867,7 +1867,7 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
     );
     command->start();
     bool moveToTrash = command->destFolder().isValid();
-    BroadcastStatus::instance()->setStatusMsg(moveToTrash ? i18n("Moving messages to trash...") : i18n("Deleting messages..."));
+    showMessageActivities(moveToTrash ? i18n("Moving messages to trash...") : i18n("Deleting messages..."));
 
 }
 
@@ -1878,12 +1878,12 @@ void KMMainWidget::slotTrashMessagesCompleted(KMMoveCommand *command)
     mMessagePane->deletePersistentSet(command->refSet());
     bool moveToTrash = command->destFolder().isValid();
     if (command->result() == KMCommand::OK) {
-        BroadcastStatus::instance()->setStatusMsg(moveToTrash ? i18n("Messages moved to trash successfully.") : i18n("Messages deleted successfully."));
+        showMessageActivities(moveToTrash ? i18n("Messages moved to trash successfully.") : i18n("Messages deleted successfully."));
     } else {
         if (command->result() == KMCommand::Failed) {
-            BroadcastStatus::instance()->setStatusMsg(moveToTrash ? i18n("Moving messages to trash failed.") : i18n("Deleting messages failed."));
+            showMessageActivities(moveToTrash ? i18n("Moving messages to trash failed.") : i18n("Deleting messages failed."));
         } else {
-            BroadcastStatus::instance()->setStatusMsg(moveToTrash ? i18n("Moving messages to trash canceled.") : i18n("Deleting messages canceled."));
+            showMessageActivities(moveToTrash ? i18n("Moving messages to trash canceled.") : i18n("Deleting messages canceled."));
         }
     }
 
@@ -4401,7 +4401,7 @@ void KMMainWidget::itemsFetchDone(KJob *job)
             }
         } else {
             // Some other error
-            BroadcastStatus::instance()->setStatusMsg(job->errorString());
+            showMessageActivities(job->errorString());
         }
     }
 }
