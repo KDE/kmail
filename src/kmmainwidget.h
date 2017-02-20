@@ -561,6 +561,7 @@ private Q_SLOTS:
     void slotEditCurrentVacation();
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
 private:
+    void showMessageActivities(const QString &str);
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);

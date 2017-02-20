@@ -1480,8 +1480,8 @@ void KMMainWidget::slotEmptyFolder()
     }
 
     if (!isTrash) {
-        BroadcastStatus::instance()->setStatusMsg(i18n("Moved all messages to the trash"));
-        PimCommon::LogActivitiesManager::self()->appendLog(i18n("Moved all messages to the trash"));
+        const QString str = i18n("Moved all messages to the trash");
+        showMessageActivities(str);
     }
 
     updateMessageActions();
@@ -1490,6 +1490,8 @@ void KMMainWidget::slotEmptyFolder()
     // all folder contents.
     mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)->setEnabled(false);
 }
+
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotArchiveFolder()
@@ -1674,9 +1676,9 @@ void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReferenc
     command->start();
 
     if (dest.isValid()) {
-        BroadcastStatus::instance()->setStatusMsg(i18n("Moving messages..."));
+        showMessageActivities(i18n("Moving messages..."));
     } else {
-        BroadcastStatus::instance()->setStatusMsg(i18n("Deleting messages..."));
+        showMessageActivities(i18n("Deleting messages..."));
     }
 }
 
@@ -1710,8 +1712,7 @@ void KMMainWidget::slotMoveMessagesCompleted(KMMoveCommand *command)
             }
         }
     }
-    BroadcastStatus::instance()->setStatusMsg(str);
-    PimCommon::LogActivitiesManager::self()->appendLog(str);
+    showMessageActivities(str);
     // The command will autodelete itself and will also kill the set.
 }
 
@@ -1819,8 +1820,7 @@ void KMMainWidget::slotCopyMessagesCompleted(KMCommand *command)
             str = i18n("Copying messages canceled.");
         }
     }
-    PimCommon::LogActivitiesManager::self()->appendLog(str);
-    BroadcastStatus::instance()->setStatusMsg(str);
+    showMessageActivities(str);
     // The command will autodelete itself and will also kill the set.
 }
 
@@ -4638,4 +4638,10 @@ void KMMainWidget::slotReplyMessageTo(const KMime::Message::Ptr &message, bool r
     item.setMimeType(KMime::Message::mimeType());
     KMReplyCommand *command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
     command->start();
+}
+
+void KMMainWidget::showMessageActivities(const QString &str)
+{
+    BroadcastStatus::instance()->setStatusMsg(str);
+    PimCommon::LogActivitiesManager::self()->appendLog(str);
 }

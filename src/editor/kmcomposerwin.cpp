@@ -923,6 +923,7 @@ void KMComposerWin::slotUpdateComposer(const KIdentityManagement::Identity &iden
 
 void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagement::Identity &ident, bool wasModified)
 {
+    qDebug() << " void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagement::Identity &ident, bool wasModified)";
     TemplateParser::TemplateParserJob::Mode mode;
     switch (mContext) {
     case New:
@@ -980,6 +981,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
 
 void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
 {
+    qDebug() << " void KMComposerWin::slotDelayedApplyTemplate(KJob *job)";
 #if 0 //FIXME template
     const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     const Akonadi::Item::List items = fetchJob->items();
@@ -1456,6 +1458,7 @@ uint KMComposerWin::currentIdentity() const
 void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,
                                bool allowDecryption, bool isModified)
 {
+    qDebug() << " void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState, bool lastEncryptState, bool mayAutoSign,";
     if (!newMsg) {
         qCDebug(KMAIL_LOG) << "newMsg == 0!";
         return;
@@ -1610,6 +1613,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         // Not user friendy if this modal fileseletor opens before the
         // composer.
         //
+        qDebug() << "MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String(auto) ";
         if (MessageComposer::MessageComposerSettings::self()->prependSignature()) {
             QTimer::singleShot(0, mComposerBase->signatureController(), &MessageComposer::SignatureController::prependSignature);
         } else {
@@ -2873,6 +2877,7 @@ void KMComposerWin::slotSpellcheckDoneClearStatus()
 
 void KMComposerWin::slotIdentityChanged(uint uoid, bool initalChange)
 {
+    qDebug() << " void KMComposerWin::slotIdentityChanged(uint uoid, bool initalChange)";
     if (mMsg == nullptr) {
         qCDebug(KMAIL_LOG) << "Trying to change identity but mMsg == 0!";
         return;
