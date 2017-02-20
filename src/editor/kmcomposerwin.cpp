@@ -221,7 +221,7 @@ int KMComposerWin::s_composerNumber = 0;
 
 KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint id,
                              const QString &textSelection, const QString &customTemplate)
-    : KMail::Composer("kmail-composer#"),
+    : KMail::Composer(QStringLiteral("kmail-composer#")),
       mCursorLineLabel(nullptr),
       mCursorColumnLabel(nullptr),
       mStatusbarLabel(nullptr),
@@ -1932,7 +1932,7 @@ QUrl KMComposerWin::insertFile()
             i18nc("@title:window", "Insert File"));
     QUrl url;
     if (!result.URLs.isEmpty()) {
-        url = result.URLs.first();
+        url = result.URLs.constFirst();
         if (url.isValid()) {
             MessageCore::StringUtil::setEncodingFile(url, MimeTreeParser::NodeHelper::fixEncoding(result.encoding));
         }

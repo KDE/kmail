@@ -74,8 +74,8 @@
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride,
-                                 char *name)
-    : KMail::SecondaryWindow(name ? name : "readerwindow#")
+                                 const QString &name)
+    : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
 {
     mReaderWin = new KMReaderWin(this, this, actionCollection());
     mReaderWin->setDisplayFormatMessageOverwrite(format);
@@ -84,15 +84,15 @@ KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage for
     initKMReaderMainWin();
 }
 
-KMReaderMainWin::KMReaderMainWin(char *name)
-    : KMail::SecondaryWindow(name ? name : "readerwindow#")
+KMReaderMainWin::KMReaderMainWin(const QString &name)
+    : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
 {
     mReaderWin = new KMReaderWin(this, this, actionCollection());
     initKMReaderMainWin();
 }
 
-KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, char *name)
-    : KMail::SecondaryWindow(name ? name : "readerwindow#")
+KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, const QString &name)
+    : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
 {
     mReaderWin = new KMReaderWin(this, this, actionCollection());
     mReaderWin->setOverrideEncoding(encoding);

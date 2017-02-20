@@ -47,7 +47,7 @@ class SecondaryWindow : public KXmlGuiWindow
     Q_OBJECT
 
 public:
-    explicit SecondaryWindow(const char *name = nullptr);
+    explicit SecondaryWindow(const QString &name = QString());
     ~SecondaryWindow();
     using KMainWindow::setCaption;
 public Q_SLOTS:

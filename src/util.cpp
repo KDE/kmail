@@ -114,7 +114,7 @@ bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPoi
         }
     }
     if (urlToHandle.isEmpty() && !lst.empty()) {
-        urlToHandle = lst.first();
+        urlToHandle = lst.constFirst();
     }
 
     if (!urlToHandle.isEmpty()) {

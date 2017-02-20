@@ -41,10 +41,10 @@ namespace KMail
 {
 
 //---------------------------------------------------------------------------
-SecondaryWindow::SecondaryWindow(const char *name)
+SecondaryWindow::SecondaryWindow(const QString &name)
     : KXmlGuiWindow(nullptr)
 {
-    setObjectName(QLatin1String(name));
+    setObjectName(name);
     // Set this to be the group leader for all subdialogs - this means
     // modal subdialogs will only affect this window, not the other windows
     setAttribute(Qt::WA_GroupLeader);

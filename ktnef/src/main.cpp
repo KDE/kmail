@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     const QStringList &args = parser.positionalArguments();
 
     if (!args.isEmpty()) {
-        tnef->loadFile(args.first());
+        tnef->loadFile(args.constFirst());
     }
 
     return app.exec();

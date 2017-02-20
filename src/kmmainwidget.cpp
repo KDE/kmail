@@ -314,7 +314,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
         }
     }
 
-    KMainWindow *mainWin = dynamic_cast<KMainWindow *>(window());
+    KMainWindow *mainWin = qobject_cast<KMainWindow *>(window());
     QStatusBar *sb =  mainWin ? mainWin->statusBar() : nullptr;
     mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget(sb);
     mVacationScriptIndicator->hide();
