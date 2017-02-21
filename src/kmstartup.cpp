@@ -27,7 +27,7 @@ void insertLibraryIcons()
 {
     static const char *const iconPath[] = {
         "libkleopatra",
-        "libmessagelist",
+        "messagelist",
         "libmessageviewer",
         "kmail2"
     };
