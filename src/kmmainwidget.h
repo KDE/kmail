@@ -67,7 +67,6 @@ class KRecentFilesAction;
 class ManageShowCollectionProperties;
 class KActionMenuTransport;
 class KActionMenuAccount;
-template <typename T, typename S> class QMap;
 
 namespace KIO
 {
