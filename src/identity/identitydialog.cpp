@@ -721,7 +721,7 @@ IdentityDialog::~IdentityDialog()
 
 void IdentityDialog::slotHelp()
 {
-    PimCommon::Util::invokeHelp(QStringLiteral("kmail/configure-identity.html"));
+    PimCommon::Util::invokeHelp(QStringLiteral("kmail2/configure-identity.html"));
 }
 
 void IdentityDialog::slotAboutToShow(int index)

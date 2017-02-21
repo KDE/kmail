@@ -123,7 +123,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
 
 void NewIdentityDialog::slotHelp()
 {
-    PimCommon::Util::invokeHelp(QStringLiteral("kmail/configure-identity.html"), QStringLiteral("configure-identity-newidentitydialog"));
+    PimCommon::Util::invokeHelp(QStringLiteral("kmail2/configure-identity.html"), QStringLiteral("configure-identity-newidentitydialog"));
 }
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
