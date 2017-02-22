@@ -127,7 +127,7 @@ void SecurityPage::GeneralTab::save()
                                                KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("htmlMailOverride")) == KMessageBox::Continue) {
             saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
             if (kmkernel) {
-                foreach (const Akonadi::Collection &collection, kmkernel->allFolders()) {
+                for (const Akonadi::Collection &collection : kmkernel->allFolders()) {
                     KConfigGroup config(KMKernel::self()->config(), MailCommon::FolderCollection::configGroupName(collection));
                     //Old config
                     config.deleteEntry("htmlMailOverride");
