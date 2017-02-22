@@ -18,6 +18,8 @@
 */
 
 #include "tagselectdialog.h"
+#include "helper_p.h"
+#include "kmail_debug.h"
 #include "tag.h"
 #include "kmkernel.h"
 #include "util.h"
@@ -27,7 +29,6 @@
 #include <KListWidgetSearchLine>
 #include <KLocalizedString>
 #include <QIcon>
-#include "kmail_debug.h"
 
 #include <QGridLayout>
 #include <QListWidget>

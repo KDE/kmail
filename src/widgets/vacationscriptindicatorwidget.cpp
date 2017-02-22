@@ -18,6 +18,7 @@
 */
 
 #include "vacationscriptindicatorwidget.h"
+#include "helper_p.h"
 #include "util.h"
 #include <QIcon>
 #include <KLocalizedString>

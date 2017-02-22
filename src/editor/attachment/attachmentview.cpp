@@ -24,10 +24,11 @@
  */
 
 #include "attachmentview.h"
-
-#include <MessageComposer/AttachmentModel>
+#include "helper_p.h"
 #include "kmkernel.h"
 #include "util.h"
+
+#include <MessageComposer/AttachmentModel>
 
 #include <QContextMenuEvent>
 #include <QHeaderView>
@@ -229,4 +230,3 @@ void AttachmentView::slotShowHideAttchementList(bool show)
         d->toolButton->setToolTip(i18n("Show attachment list"));
     }
 }
-

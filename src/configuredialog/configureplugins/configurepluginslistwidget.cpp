@@ -16,6 +16,7 @@
 */
 
 #include "configurepluginslistwidget.h"
+#include "helper_p.h"
 #include "kmail_debug.h"
 #include "util.h"
 #include "../../plugininterface/kmailplugininterface.h"
