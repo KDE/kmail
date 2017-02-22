@@ -57,6 +57,7 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core,
                                  const KAboutData &aboutData, QObject *parent)
     : KParts::ReadOnlyPart(parent), mCore(core), mFrame(nullptr), mConfigAction(nullptr)
 {
+    Q_UNUSED(aboutData);
     loadLayout();
 
     initGUI(core);
@@ -558,4 +559,3 @@ QString SummaryViewPart::widgetName(QWidget *widget) const
 
     return QString();
 }
-

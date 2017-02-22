@@ -1001,6 +1001,8 @@ void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
     }
     mComposerBase->updateTemplate(mMsg);
     updateSignature(uoid, uOldId);
+#else
+    Q_UNUSED(job);
 #endif
 }
 
