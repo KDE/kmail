@@ -229,7 +229,7 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption(const QStyleOptionViewItem 
     QRect buttonRect = option.rect;
     int height = option.rect.height() / 2;
     int width = 22 + option.fontMetrics.width(label) + 40;   // icon size + label size + arrow and padding
-    buttonRect.setTop(0/*( option.rect.height() /2  ) - height / 2)*/);    // center the button vertically
+    buttonRect.setTop(0);
     buttonRect.setHeight(height);
     buttonRect.setLeft(option.rect.right() - width);
     buttonRect.setWidth(width);
