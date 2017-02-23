@@ -469,7 +469,7 @@
       <li xml:lang="ar">إمكانيّات بحث وترشيح قويّة</li>
       <li xml:lang="ast">Habilidaes poderoses de gueta y peñera</li>
       <li xml:lang="ca">Poderoses habilitats per a la cerca i filtratge</li>
-      <li xml:lang="ca-valencia">Poderoses habilitats per a la cerca i filtratge</li>
+      <li xml:lang="ca-valencia">Poderoses habilitats per a la busca i filtratge</li>
       <li xml:lang="de">Leistungsfähige Such- und Filtermöglichkeiten</li>
       <li xml:lang="en-GB">Powerful search and filter abilities</li>
       <li xml:lang="es">Potentes capacidades de búsqueda y filtrado</li>
@@ -539,7 +539,7 @@
       <li xml:lang="ar">البحث في مجلّدات IMAP مدعوم بالكامل</li>
       <li xml:lang="ast">Sofítase la gueta en carpetes IMAP dafechu</li>
       <li xml:lang="ca">La cerca a les carpetes IMAP està totalment implementada</li>
-      <li xml:lang="ca-valencia">La cerca a les carpetes IMAP està totalment implementada</li>
+      <li xml:lang="ca-valencia">La busca a les carpetes IMAP està totalment implementada</li>
       <li xml:lang="de">Suche in IMAP-Ordnern wird vollständig unterstützt</li>
       <li xml:lang="en-GB">Searching in IMAP folders fully supported</li>
       <li xml:lang="es">Búsqueda en carpetas IMAP completamente implementada</li>
