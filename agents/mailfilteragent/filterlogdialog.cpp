@@ -188,7 +188,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
 
 void FilterLogDialog::slotTextChanged()
 {
-    const bool hasText = !mTextEdit->toPlainText().isEmpty();
+    const bool hasText = !mTextEdit->isEmpty();
     mUser2Button->setEnabled(hasText);
     mUser1Button->setEnabled(hasText);
 }
