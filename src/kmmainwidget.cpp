@@ -641,7 +641,6 @@ void KMMainWidget::layoutSplitters()
         mFolderViewSplitter = new QSplitter(Qt::Vertical);
         mFolderViewSplitter->setChildrenCollapsible(false);
         mFolderViewSplitter->addWidget(mFavoriteCollectionsView);
-        mFavoriteCollectionsView->setParent(mFolderViewSplitter);
         mFolderViewSplitter->addWidget(mFolderTreeWidget);
         folderTreeWidget = mFolderViewSplitter;
     }
