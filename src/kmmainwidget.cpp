@@ -2795,10 +2795,12 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
     }
     if (!selectedText.isEmpty()) {
-        const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
-        if (!interceptorUrlActions.isEmpty()) {
-            menu->addSeparator();
-            menu->addActions(interceptorUrlActions);
+        if (mMsgView) {
+            const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
+            if (!interceptorUrlActions.isEmpty()) {
+                menu->addSeparator();
+                menu->addActions(interceptorUrlActions);
+            }
         }
     }
 
