@@ -1052,7 +1052,6 @@ void KMComposerWin::setupActions(void)
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::Key_Return));
         connect(action, &QAction::triggered, this, &KMComposerWin::slotSendNowByShortcut);
 
-        // FIXME: change to mail_send_via icon when this exist.
         actActionNowMenu = new KActionMenuTransport(this);
         actActionNowMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send")));
         actActionNowMenu->setText(i18n("&Send Mail Via"));
@@ -1087,7 +1086,6 @@ void KMComposerWin::setupActions(void)
         actionCollection()->addAction(QStringLiteral("send_alternative"), action);
         connect(action, &QAction::triggered, this, &KMComposerWin::slotSendNow);
 
-        // FIXME: change to mail_send_via icon when this exits.
         actActionNowMenu = new KActionMenuTransport(this);
         actActionNowMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send")));
         actActionNowMenu->setText(i18n("&Send Mail Via"));
