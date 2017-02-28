@@ -370,10 +370,7 @@ void KMSystemTray::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, c
 
 bool KMSystemTray::excludeFolder(const Akonadi::Collection &collection) const
 {
-    if (!collection.isValid()) {
-        return true;
-    }
-    if (!collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
+    if (!collection.isValid() || !collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
         return true;
     }
     if (CommonKernel->outboxCollectionFolder() == collection ||
