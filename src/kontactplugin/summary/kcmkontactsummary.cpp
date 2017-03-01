@@ -130,7 +130,9 @@ void KCMKontactSummary::load()
 
     KConfig config(QStringLiteral("kontact_summaryrc"));
     KConfigGroup grp(&config, QString());
-    if (!grp.hasKey("ActiveSummaries")) {
+    if (grp.hasKey("ActiveSummaries")) {
+        activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
+    } else {
         activeSummaries << QStringLiteral("kontact_kaddressbookplugin");
         activeSummaries << QStringLiteral("kontact_specialdatesplugin");
         activeSummaries << QStringLiteral("kontact_korganizerplugin");
@@ -140,8 +142,6 @@ void KCMKontactSummary::load()
         activeSummaries << QStringLiteral("kontact_weatherplugin");
         activeSummaries << QStringLiteral("kontact_newstickerplugin");
         activeSummaries << QStringLiteral("kontact_plannerplugin");
-    } else {
-        activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
     }
 
     mPluginView->clear();

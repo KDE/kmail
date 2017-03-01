@@ -135,14 +135,15 @@ void SummaryViewPart::updateWidgets()
 
     KConfig config(QStringLiteral("kontact_summaryrc"));
     KConfigGroup grp(&config, QString());
-    if (!grp.hasKey("ActiveSummaries")) {
+    activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
+    if (grp.hasKey("ActiveSummaries")) {
+        activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
+    } else {
         activeSummaries << QStringLiteral("kontact_korganizerplugin");
         activeSummaries << QStringLiteral("kontact_todoplugin");
         activeSummaries << QStringLiteral("kontact_specialdatesplugin");
         activeSummaries << QStringLiteral("kontact_kmailplugin");
         activeSummaries << QStringLiteral("kontact_knotesplugin");
-    } else {
-        activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
     }
 
     // Collect all summary widgets with a summaryHeight > 0
@@ -520,19 +521,19 @@ void SummaryViewPart::loadLayout()
     KConfig config(QStringLiteral("kontact_summaryrc"));
     KConfigGroup grp(&config, QString());
 
-    if (!grp.hasKey("LeftColumnSummaries")) {
+    if (grp.hasKey("LeftColumnSummaries")) {
+        mLeftColumnSummaries = grp.readEntry("LeftColumnSummaries", QStringList());
+    } else {
         mLeftColumnSummaries << QStringLiteral("kontact_korganizerplugin");
         mLeftColumnSummaries << QStringLiteral("kontact_todoplugin");
         mLeftColumnSummaries << QStringLiteral("kontact_specialdatesplugin");
-    } else {
-        mLeftColumnSummaries = grp.readEntry("LeftColumnSummaries", QStringList());
     }
 
-    if (!grp.hasKey("RightColumnSummaries")) {
+    if (grp.hasKey("RightColumnSummaries")) {
+        mRightColumnSummaries = grp.readEntry("RightColumnSummaries", QStringList());
+    } else {
         mRightColumnSummaries << QStringLiteral("kontact_kmailplugin");
         mRightColumnSummaries << QStringLiteral("kontact_knotesplugin");
-    } else {
-        mRightColumnSummaries = grp.readEntry("RightColumnSummaries", QStringList());
     }
 }
 
