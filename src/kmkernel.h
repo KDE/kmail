@@ -593,7 +593,7 @@ private:
     Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
 
     /// List of Akonadi resources that are currently being checked.
-    QList<QString> mResourcesBeingChecked;
+    QStringList mResourcesBeingChecked;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
     PimCommon::AutoCorrection *mAutoCorrection;
