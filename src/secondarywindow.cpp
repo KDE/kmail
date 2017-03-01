@@ -37,9 +37,7 @@
 
 #include <QCloseEvent>
 
-namespace KMail
-{
-
+using namespace KMail;
 //---------------------------------------------------------------------------
 SecondaryWindow::SecondaryWindow(const QString &name)
     : KXmlGuiWindow(nullptr)
@@ -90,6 +88,4 @@ void SecondaryWindow::setCaption(const QString &userCaption)
 
     setWindowTitle(captionString);
 }
-
-} // namespace KMail
 
