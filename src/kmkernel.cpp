@@ -31,6 +31,7 @@ using KPIM::RecentAddresses;
 #include "mailfilteragentinterface.h"
 #include "PimCommon/PimUtil"
 #include "folderarchive/folderarchivemanager.h"
+#include "sieveimapinterface/kmailsieveimapinstanceinterface.h"
 // kdepim includes
 #include "kmail-version.h"
 
@@ -41,6 +42,7 @@ using KPIM::RecentAddresses;
 #include <MailTransport/mailtransport/transportmanager.h>
 #include <MailTransport/mailtransport/dispatcherinterface.h>
 #include <AkonadiCore/servermanager.h>
+#include <KSieveUi/SieveImapInstanceInterfaceManager>
 
 #include <kwindowsystem.h>
 #include "mailserviceimpl.h"
@@ -136,6 +138,8 @@ KMKernel::KMKernel(QObject *parent) :
     mSystemTray(nullptr),
     mDebugBaloo(false)
 {
+    //Initialize kmail sieveimap interface
+    KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     mDebugBaloo = !qEnvironmentVariableIsEmpty("KDEPIM_BALOO_DEBUG");
 
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();

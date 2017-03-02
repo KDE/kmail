@@ -167,6 +167,10 @@ set(kmailprivate_checkindexing_LIB_SRCS
     search/checkindexingmanager.cpp
     search/checkindexingjob.cpp
     )
+    
+set(kmailprivate_sieveimapinstanceinterface_LIB_SRCS
+    sieveimapinterface/kmailsieveimapinstanceinterface.cpp
+    )
 
 set(kmail_common_SRCS)
 ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail)
@@ -208,6 +212,7 @@ set(kmailprivate_LIB_SRCS
     ${kmailprivate_plugininterface_LIB_SRCS}
     ${kmailprivate_editor_plugininterface_LIB_SRCS}
     ${kmailprivate_checkindexing_LIB_SRCS}
+    ${kmailprivate_sieveimapinstanceinterface_LIB_SRCS}
     )
 
 qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
