@@ -1,5 +1,6 @@
 set(vacation_multi_server_SRCS
   main.cpp
+  ../../../sieveimapinterface/kmailsieveimapinstanceinterface.cpp
 )
 
 add_executable(vacationmultiservertest ${vacation_multi_server_SRCS} )

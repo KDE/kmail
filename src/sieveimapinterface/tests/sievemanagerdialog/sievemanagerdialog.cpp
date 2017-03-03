@@ -18,7 +18,8 @@
 */
 
 #include <KSieveUi/ManageSieveScriptsDialog>
-
+#include <KSieveUi/SieveImapInstanceInterfaceManager>
+#include "../../../sieveimapinterface/kmailsieveimapinstanceinterface.h"
 #include <QApplication>
 
 int main(int argc, char **argv)
@@ -27,6 +28,7 @@ int main(int argc, char **argv)
     QApplication::setApplicationName(QStringLiteral("managersievescriptsdialogtest"));
     QApplication::setApplicationVersion(QStringLiteral("1.0"));
 
+    KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     KSieveUi::ManageSieveScriptsDialog *dlg = new KSieveUi::ManageSieveScriptsDialog;
     dlg->show();
     return app.exec();

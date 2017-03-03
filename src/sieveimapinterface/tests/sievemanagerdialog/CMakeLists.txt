@@ -1,4 +1,4 @@
-add_executable(sievemanagerdialog sievemanagerdialog.cpp)
+add_executable(sievemanagerdialog sievemanagerdialog.cpp ../../../sieveimapinterface/kmailsieveimapinstanceinterface.cpp)
 
 target_link_libraries(sievemanagerdialog
   KF5::KSieve

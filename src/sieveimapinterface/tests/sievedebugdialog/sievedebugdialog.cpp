@@ -18,6 +18,8 @@
 */
 
 #include <KSieveUi/SieveDebugDialog>
+#include <KSieveUi/SieveImapInstanceInterfaceManager>
+#include "../../../sieveimapinterface/kmailsieveimapinstanceinterface.h"
 
 #include <QApplication>
 
@@ -28,6 +30,7 @@ int main(int argc, char **argv)
     QApplication::setApplicationName(QStringLiteral("sievedebugdialog"));
     QApplication::setApplicationVersion(QStringLiteral("1.0"));
 
+    KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     KSieveUi::SieveDebugDialog *dlg = new KSieveUi::SieveDebugDialog;
     dlg->exec();
     delete dlg;
