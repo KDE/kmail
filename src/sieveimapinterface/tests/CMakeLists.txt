@@ -1,0 +1,3 @@
+add_subdirectory(vacation)
+add_subdirectory(sievedebugdialog)
+add_subdirectory(sievemanagerdialog)
