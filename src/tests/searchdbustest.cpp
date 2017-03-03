@@ -24,7 +24,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QDBusPendingCall>
-#include <PimCommon/PimUtil>
+#include <PimCommonAkonadi/MailUtil>
 #include <QDebug>
 
 searchdbustest::searchdbustest(QWidget *parent)
@@ -38,7 +38,7 @@ searchdbustest::searchdbustest(QWidget *parent)
 
 void searchdbustest::slotReindexCollections()
 {
-    QDBusInterface interfaceBalooIndexer(PimCommon::Util::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+    QDBusInterface interfaceBalooIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
     if (interfaceBalooIndexer.isValid()) {
         const QList<qlonglong> lst = {100, 300};
         qDebug() << "reindex " << lst;

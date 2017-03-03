@@ -24,9 +24,9 @@
 #include <MessageViewer/HeaderStylePluginManager>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
-#include <PimCommon/GenericPluginManager>
+#include <PimCommonAkonadi/GenericPluginManager>
 
-#include <PimCommon/PluginUtil>
+#include <PimCommonAkonadi/PluginUtil>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <KLocalizedString>
@@ -41,7 +41,7 @@
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
 #include <MessageViewer/ViewerPlugin>
-#include <PimCommon/GenericPlugin>
+#include <PimCommonAkonadi/GenericPlugin>
 #include <MessageComposer/PluginEditor>
 #include <MessageViewer/HeaderStylePlugin>
 #include <AkonadiCore/AgentManager>

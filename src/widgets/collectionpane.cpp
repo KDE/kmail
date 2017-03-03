@@ -22,7 +22,7 @@
 #include "mailcommon/mailkernel.h"
 
 #include <MailCommon/FolderCollection>
-#include "PimCommon/PimUtil"
+#include <PimCommonAkonadi/MailUtil>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <Akonadi/KMime/MessageFolderAttribute>
@@ -72,7 +72,7 @@ bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) cons
 
         bool isOnline = false;
         if (CommonKernel->isSystemFolderCollection(c) &&
-                !PimCommon::Util::isImapFolder(c, isOnline)) {
+                !PimCommon::MailUtil::isImapFolder(c, isOnline)) {
             // local system folders
             if (c == CommonKernel->inboxCollectionFolder() ||
                     c == CommonKernel->trashCollectionFolder()) {

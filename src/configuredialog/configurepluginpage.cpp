@@ -17,7 +17,7 @@
 
 #include "configurepluginpage.h"
 #include "configureplugins/configurepluginslistwidget.h"
-#include <PimCommon/ConfigurePluginsWidget>
+#include <PimCommonAkonadi/ConfigurePluginsWidget>
 
 #include <KLocalizedString>
 #include <QHBoxLayout>

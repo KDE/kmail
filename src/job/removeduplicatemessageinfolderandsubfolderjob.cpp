@@ -19,7 +19,7 @@
 */
 
 #include "removeduplicatemessageinfolderandsubfolderjob.h"
-#include <PimCommon/FetchRecursiveCollectionsJob>
+#include <PimCommonAkonadi/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
 #include <Akonadi/KMime/RemoveDuplicatesJob>
 

@@ -21,7 +21,7 @@
 #define KMAILPLUGININTERFACE_H
 
 #include <QObject>
-#include <pimcommon/plugininterface.h>
+#include <PimCommonAkonadi/PluginInterface>
 class KMMainWidget;
 class KMailPluginInterface : public PimCommon::PluginInterface
 {

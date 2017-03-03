@@ -35,7 +35,7 @@
 #include "kmsearchmessagemodel.h"
 #include "kmsearchfilterproxymodel.h"
 #include "searchpatternwarning.h"
-#include "PimCommon/SelectMultiCollectionDialog"
+#include "PimCommonAkonadi/SelectMultiCollectionDialog"
 #include <PimCommon/PimUtil>
 
 #include <AkonadiCore/CollectionModifyJob>

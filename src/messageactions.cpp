@@ -27,7 +27,7 @@
 #include "kmcommands.h"
 #include <TemplateParser/CustomTemplatesMenu>
 
-#include "PimCommon/AnnotationDialog"
+#include <PimCommonAkonadi/AnnotationDialog>
 #include <MessageCore/MessageCoreSettings>
 #include "MessageCore/MailingList"
 #include "messagecore/messagehelpers.h"

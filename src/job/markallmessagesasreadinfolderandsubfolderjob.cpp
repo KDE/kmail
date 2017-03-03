@@ -19,7 +19,7 @@
 */
 
 #include "markallmessagesasreadinfolderandsubfolderjob.h"
-#include <PimCommon/FetchRecursiveCollectionsJob>
+#include <PimCommonAkonadi/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
 
 MarkAllMessagesAsReadInFolderAndSubFolderJob::MarkAllMessagesAsReadInFolderAndSubFolderJob(QObject *parent)

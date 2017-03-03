@@ -29,6 +29,7 @@
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 
 #include <PimCommon/PimUtil>
+#include <PimCommonAkonadi/MailUtil>
 
 #include <QDBusInterface>
 #include <QDBusReply>
@@ -181,7 +182,7 @@ QList<qlonglong> IncompleteIndexDialog::collectionsToReindex() const
 
 void IncompleteIndexDialog::waitForIndexer()
 {
-    mIndexer = new QDBusInterface(PimCommon::Util::indexerServiceName(), QLatin1String("/"),
+    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(), QLatin1String("/"),
                                   QStringLiteral("org.freedesktop.Akonadi.Indexer"),
                                   QDBusConnection::sessionBus(), this);
 

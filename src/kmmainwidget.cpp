@@ -32,6 +32,7 @@
 #include <TemplateParser/CustomTemplatesMenu>
 #include "MailCommon/FolderSelectionDialog"
 #include "MailCommon/FolderTreeWidget"
+#include "PimCommonAkonadi/MailUtil"
 #include "util.h"
 #include "helper_p.h"
 #include "mailcommon/mailutil.h"
@@ -67,7 +68,7 @@ using KSieveUi::SieveDebugDialog;
 #include "folderarchive/folderarchiveutil.h"
 #include "folderarchive/folderarchivemanager.h"
 
-#include "PimCommon/CollectionAclPage"
+#include <PimCommonAkonadi/CollectionAclPage>
 #include "PimCommon/PimUtil"
 #include "MailCommon/CollectionGeneralPage"
 #include "MailCommon/CollectionExpiryPage"
@@ -193,7 +194,7 @@ using KSieveUi::SieveDebugDialog;
 #include <KHelpClient>
 #include <QStandardPaths>
 
-#include "PimCommon/ManageServerSideSubscriptionJob"
+#include "PimCommonAkonadi/ManageServerSideSubscriptionJob"
 #include <job/removeduplicatemailjob.h>
 #include <job/removecollectionjob.h>
 
@@ -4015,7 +4016,7 @@ void KMMainWidget::updateFolderMenu()
 
     actionlist << akonadiStandardAction(Akonadi::StandardActionManager::ManageLocalSubscriptions);
     bool imapFolderIsOnline = false;
-    if (mCurrentFolder && PimCommon::Util::isImapFolder(mCurrentFolder->collection(), imapFolderIsOnline)) {
+    if (mCurrentFolder && PimCommon::MailUtil::isImapFolder(mCurrentFolder->collection(), imapFolderIsOnline)) {
         if (imapFolderIsOnline) {
             actionlist << mServerSideSubscription;
         }
