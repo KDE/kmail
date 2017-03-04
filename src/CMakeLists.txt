@@ -308,7 +308,7 @@ target_link_libraries(kmailprivate
     KF5::KCMUtils
     KF5::Libkleo
     KF5::KSieveUi
-    KF5::Libkdepim
+    KF5::LibkdepimAkonadi
     KF5::KIOCore
     KF5::Contacts
     KF5::PimTextEdit
@@ -350,7 +350,7 @@ add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
 target_link_libraries(kmailpart
     kmailprivate
     KF5::PimCommon
-    KF5::Libkdepim
+    KF5::LibkdepimAkonadi
     KF5::KCMUtils
     KF5::Parts
     KF5::IconThemes
@@ -369,7 +369,7 @@ target_link_libraries(kmail
     KF5::PimCommon
     KF5::I18n
     KF5::TemplateParser
-    KF5::Libkdepim
+    KF5::LibkdepimAkonadi
     KF5::Crash
     )
 

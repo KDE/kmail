@@ -31,9 +31,9 @@
 
 #include "kmail-version.h"
 #include <KEmailAddress>
-#include <Libkdepim/AddEmailAddressJob>
-#include <Libkdepim/OpenEmailAddressJob>
-#include <Libkdepim/AddEmailDisplayJob>
+#include <LibkdepimAkonadi/AddEmailAddressJob>
+#include <LibkdepimAkonadi/OpenEmailAddressJob>
+#include <LibkdepimAkonadi/AddEmailDisplayJob>
 #include <Libkdepim/BroadcastStatus>
 #include "kmcommands.h"
 #include "MailCommon/SendMdnHandler"
