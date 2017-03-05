@@ -33,9 +33,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "templateparser/customtemplates.h"
 #include "globalsettings_templateparser.h"
 
-#include "libkdepim/recentaddresses.h"
+#include "libkdepimakonadi/recentaddresses.h"
 #include <Libkdepim/LdapClientSearch>
-#include "libkdepim/completionordereditor.h"
+#include "libkdepimakonadi/completionordereditor.h"
 using KPIM::RecentAddresses;
 
 #include <KLocalizedString>
@@ -59,9 +59,9 @@ using KPIM::RecentAddresses;
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 
-#include <libkdepim/blacklistbalooemailcompletiondialog.h>
+#include <libkdepimakonadi/blacklistbalooemailcompletiondialog.h>
 
-#include <libkdepim/completionconfiguredialog.h>
+#include <libkdepimakonadi/completionconfiguredialog.h>
 
 QString ComposerPage::helpAnchor() const
 {

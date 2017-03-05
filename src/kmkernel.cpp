@@ -17,7 +17,7 @@ using KPIM::BroadcastStatus;
 #include "undostack.h"
 #include "kmmainwidget.h"
 #include "search/checkindexingmanager.h"
-#include "libkdepim/recentaddresses.h"
+#include "libkdepimakonadi/recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"

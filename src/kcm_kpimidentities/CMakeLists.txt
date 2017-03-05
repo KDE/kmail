@@ -33,7 +33,7 @@ target_link_libraries(kcm_kpimidentities
   KF5::TemplateParser
   KF5::PimCommon
   KF5::Libkleo
-  KF5::Libkdepim
+  KF5::LibkdepimAkonadi
   KF5::I18n
   KF5::SonnetUi
 )

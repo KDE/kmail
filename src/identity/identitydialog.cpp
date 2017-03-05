@@ -63,7 +63,7 @@
 #include "PimCommon/AutoCorrectionLanguage"
 #include <PimCommon/PimUtil>
 
-#include <Libkdepim/AddresseeLineEdit>
+#include <LibkdepimAkonadi/AddresseeLineEdit>
 // libkleopatra:
 #include <Libkleo/KeySelectionCombo>
 #include <Libkleo/DefaultKeyFilter>
