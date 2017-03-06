@@ -101,8 +101,8 @@
 #include <MimeTreeParser/NodeHelper>
 #include <MimeTreeParser/ObjectTreeParser>
 
-#include <MailTransport/TransportAttribute>
-#include <MailTransport/SentBehaviourAttribute>
+#include <MailTransportAkonadi/TransportAttribute>
+#include <MailTransportAkonadi/SentBehaviourAttribute>
 #include <MailTransport/TransportManager>
 
 #include <Libkdepim/ProgressManager>

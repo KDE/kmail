@@ -304,7 +304,7 @@ target_link_libraries(kmailprivate
     KF5::Bookmarks
     KF5::KIOFileWidgets
     KF5::NotifyConfig
-    KF5::MailTransport
+    KF5::MailTransportAkonadi
     KF5::KCMUtils
     KF5::Libkleo
     KF5::KSieveUi

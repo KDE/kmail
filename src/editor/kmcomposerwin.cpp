@@ -130,9 +130,9 @@
 #include <KIdentityManagement/kidentitymanagement/identitycombo.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/signature.h>
-#include <MailTransport/mailtransport/transportcombobox.h>
-#include <MailTransport/mailtransport/transportmanager.h>
-#include <MailTransport/mailtransport/transport.h>
+#include <mailtransport/transportcombobox.h>
+#include <mailtransport/transportmanager.h>
+#include <mailtransport/transport.h>
 #include <Akonadi/KMime/MessageFlags>
 #include <kmime/kmime_message.h>
 #include <kpimtextedit/selectspecialchardialog.h>

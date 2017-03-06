@@ -25,10 +25,10 @@
 #include "messagecore/messagehelpers.h"
 #include <MessageCore/StringUtil>
 
-#include <MailTransport/mailtransport/transportattribute.h>
-#include <MailTransport/mailtransport/sentbehaviourattribute.h>
-#include <MailTransport/mailtransport/transport.h>
-#include <MailTransport/mailtransport/transportmanager.h>
+#include <mailtransportakonadi/transportattribute.h>
+#include <mailtransportakonadi/sentbehaviourattribute.h>
+#include <mailtransport/transport.h>
+#include <mailtransport/transportmanager.h>
 
 #include <ItemFetchJob>
 #include <ItemDeleteJob>

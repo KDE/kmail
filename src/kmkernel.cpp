@@ -39,9 +39,9 @@ using KPIM::RecentAddresses;
 // kdepimlibs includes
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include <MailTransport/mailtransport/transport.h>
-#include <MailTransport/mailtransport/transportmanager.h>
-#include <MailTransport/mailtransport/dispatcherinterface.h>
+#include <mailtransport/transport.h>
+#include <mailtransport/transportmanager.h>
+#include <mailtransportakonadi/dispatcherinterface.h>
 #include <AkonadiCore/servermanager.h>
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
 
