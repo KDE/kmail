@@ -369,7 +369,6 @@ target_link_libraries(kmail
     KF5::PimCommon
     KF5::I18n
     KF5::TemplateParser
-    KF5::LibkdepimAkonadi
     KF5::Crash
     )
 
