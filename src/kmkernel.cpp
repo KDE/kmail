@@ -9,6 +9,7 @@
 #include "job/opencomposerhiddenjob.h"
 #include "job/fillcomposerjob.h"
 #include <AkonadiSearch/PIM/indexeditems.h>
+#include <LibkdepimAkonadi/ProgressManagerAkonadi>
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
 #include "kmmainwin.h"
@@ -1569,12 +1570,12 @@ void KMKernel::transportRenamed(int id, const QString &oldName, const QString &n
 void KMKernel::itemDispatchStarted()
 {
     // Watch progress of the MDA.
-    KPIM::ProgressManager::createProgressItem(nullptr,
+    KPIM::ProgressManagerAkonadi::createProgressItem(nullptr,
             MailTransport::DispatcherInterface().dispatcherInstance(),
             QStringLiteral("Sender"),
             i18n("Sending messages"),
             i18n("Initiating sending process..."),
-            true);
+            true, KPIM::ProgressItem::Unknown);
 }
 
 void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
@@ -1582,7 +1583,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
     if (instance.identifier() == QLatin1String("akonadi_mailfilter_agent")) {
         // Creating a progress item twice is ok, it will simply return the already existing
         // item
-        KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem(nullptr, instance,
+        KPIM::ProgressItem *progress =  KPIM::ProgressManagerAkonadi::createProgressItem(nullptr, instance,
                                         instance.identifier(), instance.name(), instance.statusMessage(),
                                         false, KPIM::ProgressItem::Encrypted);
         progress->setProperty("AgentIdentifier", instance.identifier());
@@ -1632,7 +1633,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 
             // Creating a progress item twice is ok, it will simply return the already existing
             // item
-            KPIM::ProgressItem *progress =  KPIM::ProgressManager::createProgressItem(nullptr, instance,
+            KPIM::ProgressItem *progress =  KPIM::ProgressManagerAkonadi::createProgressItem(nullptr, instance,
                                             instance.identifier(), instance.name(), instance.statusMessage(),
                                             true, cryptoStatus);
             progress->setProperty("AgentIdentifier", instance.identifier());
