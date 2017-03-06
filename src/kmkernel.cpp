@@ -1607,7 +1607,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                 cryptoStatus = mResourceCryptoSettingCache.value(identifier);
             } else {
                 if (PimCommon::Util::isImapResource(identifier)) {
-                    PimCommon::ResourceReadConfigFile resourceFile(identifier);
+                    MailCommon::ResourceReadConfigFile resourceFile(identifier);
                     const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
                     if (grp.isValid()) {
                         const QString imapSafety = grp.readEntry(QStringLiteral("Safety"));
@@ -1620,7 +1620,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                         mResourceCryptoSettingCache.insert(identifier, cryptoStatus);
                     }
                 } else if (identifier.contains(POP3_RESOURCE_IDENTIFIER)) {
-                    PimCommon::ResourceReadConfigFile resourceFile(identifier);
+                    MailCommon::ResourceReadConfigFile resourceFile(identifier);
                     const KConfigGroup grp = resourceFile.group(QStringLiteral("General"));
                     if (grp.isValid()) {
                         if (grp.readEntry(QStringLiteral("useSSL"), false) || grp.readEntry(QStringLiteral("useTLS"), false)) {
