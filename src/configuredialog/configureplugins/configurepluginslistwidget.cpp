@@ -26,7 +26,7 @@
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 #include <PimCommonAkonadi/GenericPluginManager>
 
-#include <PimCommonAkonadi/PluginUtil>
+#include <PimCommon/PluginUtil>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <KLocalizedString>

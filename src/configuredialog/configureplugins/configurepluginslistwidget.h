@@ -19,8 +19,8 @@
 #define KMAILCONFIGUREPLUGINSLISTWIDGET_H
 
 #include <QList>
-#include <PimCommonAkonadi/ConfigurePluginsListWidget>
-#include <PimCommonAkonadi/PluginUtil>
+#include <PimCommon/ConfigurePluginsListWidget>
+#include <PimCommon/PluginUtil>
 class ConfigurePluginsListWidget : public PimCommon::ConfigurePluginsListWidget
 {
     Q_OBJECT
