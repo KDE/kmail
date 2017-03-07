@@ -30,7 +30,6 @@
 #include <kedittoolbar.h>
 #include <KLocalizedString>
 #include <kstandardshortcut.h>
-#include <kwindowsystem.h>
 #include <QAction>
 #include <kfontaction.h>
 #include <kstandardaction.h>

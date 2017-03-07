@@ -45,7 +45,6 @@ using KPIM::RecentAddresses;
 #include <AkonadiCore/servermanager.h>
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
 
-#include <kwindowsystem.h>
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "mailcommon/jobscheduler.h"

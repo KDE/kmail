@@ -40,7 +40,6 @@ using MailTransport::TransportManagementWidget;
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KComboBox>
-#include <KWindowSystem>
 #include "kmail_debug.h"
 
 #include <QVBoxLayout>
