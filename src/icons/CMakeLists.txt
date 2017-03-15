@@ -11,10 +11,11 @@ set(icons
     hisc-apps-kmail.svgz
 )
 
-file(GLOB icons "*.svg")
+file(GLOB icons_svg "*.svg")
 
+set(all_icons ${icons} ${icons_svg})
 
-ecm_install_icons(ICONS ${icons}
+ecm_install_icons(ICONS ${all_icons}
     DESTINATION ${KDE_INSTALL_ICONDIR}
     THEME hicolor
 )
