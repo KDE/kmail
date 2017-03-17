@@ -67,7 +67,7 @@ void KActionMenuTransport::updateTransportMenu()
 
 void KActionMenuTransport::slotSelectTransport(QAction *act)
 {
-    const QList<int> availTransports = MailTransport::TransportManager::self()->transportIds();
+    const QVector<int> availTransports = MailTransport::TransportManager::self()->transportIds();
     const int transportId = act->data().toInt();
     if (availTransports.contains(transportId)) {
         MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById(transportId);
