@@ -124,7 +124,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
 {
     QMap<int, KTNEFProperty *>::ConstIterator end(props.constEnd());
     for (QMap<int, KTNEFProperty *>::ConstIterator it = props.begin(); it != end; ++it) {
-        QTreeWidgetItem *newItem = 0;
+        QTreeWidgetItem *newItem = nullptr;
         if (lv) {
             newItem = new QTreeWidgetItem(lv, QStringList((*it)->keyString()));
         } else if (item) {
