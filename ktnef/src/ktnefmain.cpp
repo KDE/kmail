@@ -419,7 +419,7 @@ void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
         return;
     }
 
-    QAction *prop = 0;
+    QAction *prop = nullptr;
     QMenu *menu = new QMenu();
     if (list.count() == 1) {
         createOpenWithMenu(menu);
