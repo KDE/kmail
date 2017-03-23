@@ -63,7 +63,7 @@ KMMainWin::KMMainWin(QWidget *)
     setCentralWidget(mKMMainWidget);
     setupStatusBar();
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
-        setComponentName(kmkernel->xmlGuiInstanceName(), i18n("KMail"));
+        setComponentName(kmkernel->xmlGuiInstanceName(), i18n("KMail2"));
     }
     setStandardToolBarMenuEnabled(true);
 

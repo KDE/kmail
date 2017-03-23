@@ -349,7 +349,7 @@ void KMReaderMainWin::slotConfigChanged()
 void KMReaderMainWin::setupAccel()
 {
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
-        setComponentName(kmkernel->xmlGuiInstanceName(), i18n("kmail2"));
+        setComponentName(kmkernel->xmlGuiInstanceName(), i18n("KMail2"));
     }
     mMsgActions = new KMail::MessageActions(actionCollection(), this);
     mMsgActions->setMessageView(mReaderWin);

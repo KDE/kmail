@@ -46,6 +46,7 @@
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 #include "kmmigrateapplication.h"
+#include <KLocalizedString>
 
 #include <KSharedConfig>
 
@@ -57,7 +58,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KParts::ReadOnlyPart(parent),
     mParentWidget(parentWidget)
 {
-    setComponentName(QStringLiteral("kmail2"), QStringLiteral("kmail2"));
+    setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 
     KMMigrateApplication migrate;
     migrate.migrate();
