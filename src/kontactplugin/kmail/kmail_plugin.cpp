@@ -52,7 +52,7 @@ EXPORT_KONTACT_PLUGIN(KMailPlugin, kmail)
 KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
     : KontactInterface::Plugin(core, core, "kmail2"), m_instance(nullptr)
 {
-    setComponentName(QStringLiteral("kmail2"), QStringLiteral("kmail2"));
+    setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 
     QAction *action =
         new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")),
