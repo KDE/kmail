@@ -52,7 +52,7 @@
 #include "mailcommon/mailkernel.h"
 
 #include "job/addressvalidationjob.h"
-#include "MessageComposer/Kleo_Util"
+#include <MessageComposer/Kleo_Util>
 #include <MessageCore/StringUtil>
 #include "TemplateParser/TemplatesConfiguration"
 #include "templatesconfiguration_kfg.h"

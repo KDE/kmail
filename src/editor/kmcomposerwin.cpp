@@ -30,7 +30,7 @@
 #include <MessageComposer/AttachmentModel>
 #include "attachment/attachmentview.h"
 #include "codec/codecaction.h"
-#include "MessageComposer/Kleo_Util"
+#include <MessageComposer/Kleo_Util>
 #include "kmcommands.h"
 #include "editor/kmcomposereditorng.h"
 #include "KPIMTextEdit/RichTextComposerControler"
@@ -293,8 +293,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mHeadersArea->setSizePolicy(mHeadersToEditorSplitter->sizePolicy().horizontalPolicy(),
                                 QSizePolicy::Expanding);
     mHeadersToEditorSplitter->addWidget(mHeadersArea);
-    QList<int> defaultSizes;
-    defaultSizes << 0;
+    const QList<int> defaultSizes{0};
     mHeadersToEditorSplitter->setSizes(defaultSizes);
 
     QVBoxLayout *v = new QVBoxLayout(mMainWidget);
@@ -3084,11 +3083,11 @@ void KMComposerWin::slotOverwriteModeChanged()
 void KMComposerWin::slotCursorPositionChanged()
 {
     // Change Line/Column info in status bar
-    const int line = mComposerBase->editor()->linePosition();
-    const int col = mComposerBase->editor()->columnNumber();
-    QString temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line + 1);
+    const int line = mComposerBase->editor()->linePosition() + 1;
+    const int col = mComposerBase->editor()->columnNumber() + 1;
+    QString temp = i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", line);
     mCursorLineLabel->setText(temp);
-    temp = i18n(" Column: %1 ", col + 1);
+    temp = i18n(" Column: %1 ", col);
     mCursorColumnLabel->setText(temp);
 
     // Show link target in status bar
