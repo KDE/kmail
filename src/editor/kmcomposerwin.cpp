@@ -2470,15 +2470,18 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
         if (!ident.isNull()) {
             defaultDomainName = ident.defaultDomainName();
         }
-        params.setBccAddresses(mComposerBase->bcc().trimmed());
-        params.setToAddresses(mComposerBase->to().trimmed());
-        params.setCcAddresses(mComposerBase->cc().trimmed());
+        const QString composerBaseBccTrimmed = mComposerBase->bcc().trimmed();
+        const QString composerBaseToTrimmed = mComposerBase->to().trimmed();
+        const QString composerBaseCcTrimmed = mComposerBase->cc().trimmed();
+        params.setBccAddresses(composerBaseBccTrimmed);
+        params.setToAddresses(composerBaseToTrimmed);
+        params.setCcAddresses(composerBaseCcTrimmed);
         params.setDefaultDomain(defaultDomainName);
 
         if (!mPluginEditorCheckBeforeSendManagerInterface->execute(params)) {
             return;
         }
-        const QStringList recipients = { mComposerBase->to().trimmed(), mComposerBase->cc().trimmed(), mComposerBase->bcc().trimmed()};
+        const QStringList recipients = { composerBaseToTrimmed, composerBaseCcTrimmed, composerBaseBccTrimmed};
 
         setEnabled(false);
 
