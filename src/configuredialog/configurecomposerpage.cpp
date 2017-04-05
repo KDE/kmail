@@ -1213,16 +1213,14 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
             mAttachWordsListEditor, &QWidget::setEnabled);
 
     QHBoxLayout *layAttachment = new QHBoxLayout;
-    label = new QLabel(i18n("Offer to share for files larger than:"), this);
+    label = new QLabel(i18n("Maximum Attachment Size:"), this);
     label->setAlignment(Qt::AlignLeft);
     layAttachment->addWidget(label);
-    label->hide();
 
     mMaximumAttachmentSize = new QSpinBox(this);
     mMaximumAttachmentSize->setRange(-1, 99999);
     mMaximumAttachmentSize->setSingleStep(100);
     mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
-    mMaximumAttachmentSize->hide();
     connect(mMaximumAttachmentSize, SIGNAL(valueChanged(int)),
             this, SLOT(slotEmitChanged()));
     mMaximumAttachmentSize->setSpecialValueText(i18n("No limit"));
