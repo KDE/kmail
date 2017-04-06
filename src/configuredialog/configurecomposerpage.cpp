@@ -835,12 +835,11 @@ void ComposerPage::CharsetTab::slotVerifyCharset(QString &charset)
 
     // KCharsets::codecForName("us-ascii") returns "iso-8859-1" (cf. Bug #49812)
     // therefore we have to treat this case specially
-    if (charset.toLower() == QLatin1String("us-ascii")) {
+    const QString charsetLower = charset.toLower();
+    if (charsetLower == QLatin1String("us-ascii")) {
         charset = QStringLiteral("us-ascii");
         return;
-    }
-
-    if (charset.toLower() == QLatin1String("locale")) {
+    } else if (charsetLower == QLatin1String("locale")) {
         charset =  QStringLiteral("%1 (locale)")
                    .arg(QString::fromLatin1(kmkernel->networkCodec()->name()).toLower());
         return;

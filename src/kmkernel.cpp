@@ -179,9 +179,10 @@ KMKernel::KMKernel(QObject *parent) :
     // EUC-JP is the de-facto standard for UNIX systems, ISO 2022-JP
     // is the standard for Internet, and Shift-JIS is the encoding
     // for Windows and Macintosh.
-    if (mNetCodec->name().toLower() == "eucjp"
+    const QByteArray netCodecLower = mNetCodec->name().toLower();
+    if (netCodecLower == "eucjp"
 #if defined Q_OS_WIN || defined Q_OS_MACX
-            || netCodec->name().toLower() == "shift-jis" // OK?
+            || netCodecLower == "shift-jis" // OK?
 #endif
        ) {
         mNetCodec = QTextCodec::codecForName("jis7");
