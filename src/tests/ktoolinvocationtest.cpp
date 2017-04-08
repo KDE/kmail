@@ -41,7 +41,7 @@ int main(int argc, char **argv)
     aboutData.processCommandLine(&parser);
 
     QString errmsg;
-    if (KToolInvocation::startServiceByDesktopName(QStringLiteral("org.kde.kmail"), QString(), &errmsg)) {
+    if (KToolInvocation::startServiceByDesktopName(QStringLiteral("org.kde.kmail2"), QString(), &errmsg)) {
         qDebug() << " Can not start kmail" << errmsg;
     }
 
