@@ -121,7 +121,7 @@ const KAboutData SummaryView::aboutData()
                         QString(), QStringLiteral("schumacher@kde.org"));
     aboutData.addAuthor(i18n("Tobias Koenig"),
                         QString(), QStringLiteral("tokoe@kde.org"));
-    aboutData.setProductName("kontact/summary");
+    aboutData.setProductName(QByteArrayLiteral("kontact/summary"));
     return aboutData;
 }
 
