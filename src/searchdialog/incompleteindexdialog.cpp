@@ -202,7 +202,7 @@ void IncompleteIndexDialog::waitForIndexer()
     mProgressDialog->setLabelText(i18n("Indexing Collections..."));
     connect(mProgressDialog, &QDialog::rejected, this, &IncompleteIndexDialog::slotStopIndexing);
 
-    connect(mIndexer, SIGNAL(currentCollectionChanged(qlonglong)),
+    connect(mIndexer, SIGNAL(collectionIndexingFinished(qlonglong)),
             this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
 
     mIndexer->asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mIndexingQueue));
