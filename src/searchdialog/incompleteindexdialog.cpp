@@ -21,6 +21,7 @@
 #include "ui_incompleteindexdialog.h"
 #include "kmkernel.h"
 
+#include <QAbstractItemView>
 #include <QProgressDialog>
 #include <KDescendantsProxyModel>
 #include <KLocalizedString>
@@ -134,6 +135,7 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
 
     mUi->collectionView->setModel(proxy);
 
+    mUi->collectionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(mUi->selectAllBtn, &QPushButton::clicked, this, &IncompleteIndexDialog::selectAll);
     connect(mUi->unselectAllBtn, &QPushButton::clicked, this, &IncompleteIndexDialog::unselectAll);
     mUi->buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("Reindex"));
