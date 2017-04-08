@@ -108,8 +108,8 @@ private:
 IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent)
     : QDialog(parent)
     , mUi(new Ui::IncompleteIndexDialog)
-    , mProgressDialog(0)
-    , mIndexer(0)
+    , mProgressDialog(nullptr)
+    , mIndexer(nullptr)
 {
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setMargin(0);
@@ -220,11 +220,10 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
     const int idx = mIndexingQueue.indexOf(colId);
     if (idx > -1) {
         mIndexingQueue.removeAll(idx);
-    }
+        mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
 
-    mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
-
-    if (mIndexingQueue.isEmpty()) {
-        QTimer::singleShot(1000, this, &IncompleteIndexDialog::accept);
+        if (mIndexingQueue.isEmpty()) {
+            QTimer::singleShot(1000, this, &IncompleteIndexDialog::accept);
+        }
     }
 }
