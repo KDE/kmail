@@ -253,7 +253,7 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages,
         Q_ASSERT(selectedItem.isValid());
         for (; it != end; ++it) {
             //FIXME Not very performant tag label retrieval
-            QString label(QStringLiteral("not found"));
+            QString label(i18n("Tag not Found"));
             for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
                 if (tag->id() == it.key()) {
                     label = tag->name();
