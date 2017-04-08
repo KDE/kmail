@@ -220,11 +220,10 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
     const int idx = mIndexingQueue.indexOf(colId);
     if (idx > -1) {
         mIndexingQueue.removeAll(idx);
-    }
+        mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
 
-    mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
-
-    if (mIndexingQueue.isEmpty()) {
-        QTimer::singleShot(1000, this, &IncompleteIndexDialog::accept);
+        if (mIndexingQueue.isEmpty()) {
+            QTimer::singleShot(1000, this, &IncompleteIndexDialog::accept);
+        }
     }
 }
