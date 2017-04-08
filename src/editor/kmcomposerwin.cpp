@@ -1001,6 +1001,7 @@ void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
     mComposerBase->updateTemplate(mMsg);
     updateSignature(uoid, uOldId);
 #else
+    qCWarning(KMAIL_LOG) << " void KMComposerWin::slotDelayedApplyTemplate(KJob *job) is not implemented after removing qtwebkit";
     Q_UNUSED(job);
 #endif
 }
