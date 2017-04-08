@@ -17,6 +17,7 @@ using KPIM::BroadcastStatus;
 #include "kmreadermainwin.h"
 #include "undostack.h"
 #include "kmmainwidget.h"
+#include "helper_p.h"
 #include "search/checkindexingmanager.h"
 #include "libkdepimakonadi/recentaddresses.h"
 using KPIM::RecentAddresses;
@@ -1775,7 +1776,7 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
         } else if (typeIdentifier.contains(POP3_RESOURCE_IDENTIFIER)) {
             OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier);
             if (iface->isValid()) {
-                foreach (const Akonadi::Collection &collection, collectionList) {
+                for (const Akonadi::Collection &collection : qAsConst(collectionList)) {
                     const Akonadi::Collection::Id collectionId = collection.id();
                     if (iface->targetCollection() == collectionId) {
                         //Use default inbox

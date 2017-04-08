@@ -121,7 +121,7 @@ void FollowUpReminderManager::checkFollowUp(const Akonadi::Item &item, const Ako
 
 void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId, Akonadi::Item::Id id)
 {
-    Q_FOREACH (FollowUpReminderInfo *info, mFollowUpReminderInfoList) {
+    for (FollowUpReminderInfo *info : qAsConst(mFollowUpReminderInfoList)) {
         qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderManager::slotCheckFollowUpFinished info:" << info;
         if (!info) {
             continue;
@@ -171,7 +171,7 @@ QString FollowUpReminderManager::printDebugInfo()
     if (mFollowUpReminderInfoList.isEmpty()) {
         infoStr = QStringLiteral("No mail");
     } else {
-        Q_FOREACH (FollowUpReminder::FollowUpReminderInfo *info, mFollowUpReminderInfoList) {
+        for (FollowUpReminder::FollowUpReminderInfo *info : qAsConst(mFollowUpReminderInfoList)) {
             if (!infoStr.isEmpty()) {
                 infoStr += QLatin1Char('\n');
             }

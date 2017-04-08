@@ -22,7 +22,7 @@
 #include "job/archivejob.h"
 #include "archivemailkernel.h"
 #include "archivemailagentutil.h"
-
+#include "helper_p.h"
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
@@ -166,7 +166,7 @@ QString ArchiveMailManager::printCurrentListInfo()
     if (mListArchiveInfo.isEmpty()) {
         infoStr = QStringLiteral("No archive in queue");
     } else {
-        Q_FOREACH (ArchiveMailInfo *info, mListArchiveInfo) {
+        for (ArchiveMailInfo *info : qAsConst(mListArchiveInfo)) {
             if (!infoStr.isEmpty()) {
                 infoStr += QLatin1Char('\n');
             }

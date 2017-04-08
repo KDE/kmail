@@ -49,6 +49,7 @@
 #include <errno.h>
 #include <KSharedConfig>
 #include <QLocale>
+#include "helper_p.h"
 
 using namespace MailCommon;
 
@@ -100,7 +101,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
         const QStringList listFilters = q->sender()->property("listFilters").toStringList();
         //TODO improve it
         for (const QString &filterId : listFilters) {
-            foreach (MailCommon::MailFilter *filter, mFilters) {
+            for (MailCommon::MailFilter *filter : qAsConst(mFilters)) {
                 if (filter->identifier() == filterId) {
                     listMailFilters << filter;
                     break;
@@ -115,7 +116,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
 
     bool needsFullPayload = q->sender()->property("needsFullPayload").toBool();
 
-    foreach (const Akonadi::Item &item, items) {
+    for (const Akonadi::Item &item : qAsConst(items)) {
         ++mCurrentProgressCount;
 
         if ((mTotalProgressCount > 0) && (mCurrentProgressCount != mTotalProgressCount)) {
@@ -172,7 +173,7 @@ void FilterManager::Private::itemFetchJobForFilterDone(KJob *job)
 
         // find correct filter object
         MailCommon::MailFilter *wantedFilter = nullptr;
-        foreach (MailCommon::MailFilter *filter, mFilters) {
+        for (MailCommon::MailFilter *filter : qAsConst(mFilters)) {
             if (filter->identifier() == filterId) {
                 wantedFilter = filter;
                 break;
@@ -280,7 +281,7 @@ void FilterManager::Private::endFiltering(const Akonadi::Item &/*item*/) const
 
 bool FilterManager::Private::atLeastOneFilterAppliesTo(const QString &accountId) const
 {
-    foreach (const MailCommon::MailFilter *filter, mFilters) {
+    for (const MailCommon::MailFilter *filter : qAsConst(mFilters)) {
         if (filter->applyOnAccount(accountId)) {
             return true;
         }
@@ -291,7 +292,7 @@ bool FilterManager::Private::atLeastOneFilterAppliesTo(const QString &accountId)
 
 bool FilterManager::Private::atLeastOneIncomingFilterAppliesTo(const QString &accountId) const
 {
-    foreach (const MailCommon::MailFilter *filter, mFilters) {
+    for (const MailCommon::MailFilter *filter : qAsConst(mFilters)) {
         if (filter->applyOnInbound() && filter->applyOnAccount(accountId)) {
             return true;
         }
@@ -331,8 +332,8 @@ void FilterManager::readConfig()
 
     d->mRequiredPartsBasedOnAll = SearchRule::Envelope;
     if (!d->mFilters.isEmpty()) {
-        Akonadi::AgentInstance::List agents = Akonadi::AgentManager::self()->instances();
-        foreach (const Akonadi::AgentInstance &agent, agents) {
+        const Akonadi::AgentInstance::List agents = Akonadi::AgentManager::self()->instances();
+        for (const Akonadi::AgentInstance &agent : agents) {
             const QString id = agent.identifier();
 
             auto it = std::max_element(d->mFilters.constBegin(), d->mFilters.constEnd(),
@@ -577,7 +578,7 @@ MailCommon::SearchRule::RequiredPart FilterManager::requiredPart(const QString &
 #ifndef NDEBUG
 void FilterManager::dump() const
 {
-    foreach (const MailCommon::MailFilter *filter, d->mFilters) {
+    for (const MailCommon::MailFilter *filter : qAsConst(d->mFilters)) {
         qCDebug(MAILFILTERAGENT_LOG) << filter->asString();
     }
 }

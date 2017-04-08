@@ -21,6 +21,7 @@
 #include "sendlaterinfo.h"
 #include "sendlaterutil.h"
 #include "sendlaterjob.h"
+#include "helper_p.h"
 
 #include "MessageComposer/AkonadiSender"
 #include <MessageComposer/Util>
@@ -123,7 +124,7 @@ void SendLaterManager::stopTimer()
 
 SendLater::SendLaterInfo *SendLaterManager::searchInfo(Akonadi::Item::Id id)
 {
-    Q_FOREACH (SendLater::SendLaterInfo *info, mListSendLaterInfo) {
+    for (SendLater::SendLaterInfo *info : qAsConst(mListSendLaterInfo)) {
         if (info->itemId() == id) {
             return info;
         }
@@ -233,7 +234,7 @@ QString SendLaterManager::printDebugInfo()
     if (mListSendLaterInfo.isEmpty()) {
         infoStr = QStringLiteral("No mail");
     } else {
-        Q_FOREACH (SendLater::SendLaterInfo *info, mListSendLaterInfo) {
+        for (SendLater::SendLaterInfo *info : qAsConst(mListSendLaterInfo)) {
             if (!infoStr.isEmpty()) {
                 infoStr += QLatin1Char('\n');
             }
