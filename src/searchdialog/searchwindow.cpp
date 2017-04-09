@@ -33,7 +33,6 @@
 #include "searchdescriptionattribute.h"
 #include "MailCommon/FolderTreeView"
 #include "kmsearchmessagemodel.h"
-#include "kmsearchfilterproxymodel.h"
 #include "searchpatternwarning.h"
 #include "PimCommonAkonadi/SelectMultiCollectionDialog"
 #include <PimCommon/PimUtil>
@@ -51,6 +50,7 @@
 #include <KActionMenu>
 #include "kmail_debug.h"
 #include <QIcon>
+#include <QSortFilterProxyModel>
 #include <KIconLoader>
 #include <kmime/kmime_message.h>
 #include <KStandardAction>
@@ -270,7 +270,10 @@ void SearchWindow::createSearchModel()
     }
     mResultModel = new KMSearchMessageModel(this);
     mResultModel->setCollection(mFolder);
-    KMSearchFilterProxyModel *sortproxy = new KMSearchFilterProxyModel(mResultModel);
+    QSortFilterProxyModel *sortproxy = new QSortFilterProxyModel(mResultModel);
+    sortproxy->setDynamicSortFilter(true);
+    sortproxy->setSortRole(Qt::EditRole);
+    sortproxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
     sortproxy->setSourceModel(mResultModel);
     mUi.mLbxMatches->setModel(sortproxy);
 

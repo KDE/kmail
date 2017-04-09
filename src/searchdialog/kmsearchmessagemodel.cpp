@@ -57,7 +57,7 @@ KMSearchMessageModel::~KMSearchMessageModel()
 {
 }
 
-QString toolTip(const Akonadi::Item &item)
+static QString toolTip(const Akonadi::Item &item)
 {
     KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
 
@@ -134,10 +134,20 @@ int KMSearchMessageModel::columnCount(const QModelIndex &parent) const
     }
 
     if (!parent.isValid()) {
-        return 8;    // keep in sync with the column type enum
+        return 6;    // keep in sync with the column type enum
     }
 
     return 0;
+}
+
+QString KMSearchMessageModel::fullCollectionPath(Akonadi::Collection::Id id) const
+{
+    QString path = m_collectionFullPathCache.value(id);
+    if (path.isEmpty()) {
+        path = MailCommon::Util::fullCollectionPath(Akonadi::Collection(id));
+        m_collectionFullPathCache.insert(id, path);
+    }
+    return path;
 }
 
 QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
@@ -159,17 +169,21 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
     }
 
     Akonadi::Item item = itemForIndex(index);
+
+    // Handle the most common case first, before calling payload().
+    if ((role == Qt::DisplayRole || role == Qt::EditRole) && index.column() == Collection) {
+        if (item.storageCollectionId() >= 0) {
+            return fullCollectionPath(item.storageCollectionId());
+        }
+        return fullCollectionPath(item.parentCollection().id());
+    }
+
     if (!item.hasPayload<KMime::Message::Ptr>()) {
         return QVariant();
     }
     KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
-        case Collection:
-            if (item.storageCollectionId() >= 0) {
-                return MailCommon::Util::fullCollectionPath(Akonadi::Collection(item.storageCollectionId()));
-            }
-            return MailCommon::Util::fullCollectionPath(item.parentCollection());
         case Subject:
             return msg->subject()->asUnicodeString();
         case Sender:
@@ -184,20 +198,11 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
             } else {
                 return KFormat().formatByteSize(item.size());
             }
-        case SizeNotLocalized:
-            return item.size();
-        case DateNotTranslated:
-            return msg->date()->dateTime();
         default:
             return QVariant();
         }
-    } else if (role == Qt::EditRole) {
+    } else if (role == Qt::EditRole) { // used for sorting
         switch (index.column()) {
-        case Collection:
-            if (item.storageCollectionId() >= 0) {
-                return MailCommon::Util::fullCollectionPath(Akonadi::Collection(item.storageCollectionId()));
-            }
-            return MailCommon::Util::fullCollectionPath(item.parentCollection());
         case Subject:
             return msg->subject()->asUnicodeString();
         case Sender:
@@ -206,11 +211,8 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
             return msg->to()->asUnicodeString();
         case Date:
             return msg->date()->dateTime();
-        case SizeNotLocalized:
         case Size:
             return item.size();
-        case DateNotTranslated:
-            return msg->date()->dateTime();
         default:
             return QVariant();
         }
