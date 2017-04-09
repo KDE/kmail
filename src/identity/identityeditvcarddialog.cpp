@@ -25,7 +25,7 @@
 #include <QStandardPaths>
 
 #include <QHBoxLayout>
-#include <QFile>
+#include <QFileInfo>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -46,7 +46,7 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
     connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityEditVcardDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityEditVcardDialog::reject);
 
-    if (QFile(fileName).exists()) {
+    if (QFileInfo::exists(fileName)) {
         setWindowTitle(i18n("Edit own vCard"));
         QPushButton *user1Button = new QPushButton;
         buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
