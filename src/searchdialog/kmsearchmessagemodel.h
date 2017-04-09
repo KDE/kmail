@@ -29,6 +29,7 @@
 #define KMSEARCHMESSAGEMODEL_H
 
 #include <Akonadi/KMime/MessageModel>
+#include <QHash>
 
 class KMSearchMessageModel : public Akonadi::MessageModel
 {
@@ -41,9 +42,7 @@ public:
         Sender,
         Receiver,
         Date,
-        Size,
-        DateNotTranslated,
-        SizeNotLocalized
+        Size
     };
     explicit KMSearchMessageModel(QObject *parent = nullptr);
     ~KMSearchMessageModel();
@@ -52,6 +51,11 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+
+private:
+    QString fullCollectionPath(Akonadi::Collection::Id id) const;
+
+    mutable QHash<Akonadi::Collection::Id, QString> m_collectionFullPathCache;
 
 };
 

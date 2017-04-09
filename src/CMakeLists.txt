@@ -69,7 +69,6 @@ set(kmailprivate_configureplugins_LIB_SRCS
 
 set(kmailprivate_searchdialog_LIB_SRCS
     searchdialog/kmsearchmessagemodel.cpp
-    searchdialog/kmsearchfilterproxymodel.cpp
     searchdialog/searchpatternwarning.cpp
     searchdialog/kmailsearchpatternedit.cpp
     searchdialog/searchwindow.cpp
