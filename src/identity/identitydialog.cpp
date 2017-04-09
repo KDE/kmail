@@ -953,7 +953,7 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     } else {
         //Convert path.
         const QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
-        if (QFile(path).exists() && (mVcardFilename != path)) {
+        if (QFileInfo::exists(path) && (mVcardFilename != path)) {
             mVcardFilename = path;
         }
     }
@@ -1056,7 +1056,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
 }
 void IdentityDialog::slotEditVcard()
 {
-    if (QFile(mVcardFilename).exists()) {
+    if (QFileInfo::exists(mVcardFilename)) {
         editVcard(mVcardFilename);
     } else {
         if (!MailCommon::Kernel::self()->kernelIsRegistered()) {
@@ -1113,7 +1113,7 @@ void IdentityDialog::slotVCardRemoved()
 
 void IdentityDialog::updateVcardButton()
 {
-    if (mVcardFilename.isEmpty() || !QFile(mVcardFilename).exists()) {
+    if (mVcardFilename.isEmpty() || !QFileInfo::exists(mVcardFilename)) {
         mEditVCard->setText(i18n("Create..."));
     } else {
         mEditVCard->setText(i18n("Edit..."));
