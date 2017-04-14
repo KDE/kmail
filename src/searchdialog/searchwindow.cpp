@@ -947,13 +947,13 @@ Akonadi::Collection::List SearchWindow::searchCollectionsRecursive(const Akonadi
     for (const Akonadi::Collection &col : cols) {
         const QModelIndex colIdx = Akonadi::EntityTreeModel::modelIndexForCollection(etm, col);
         if (col.statistics().count() > -1) {
-            if (col.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
+            if (col.cachePolicy().localParts().contains(QStringLiteral("RFC822"))) {
                 result.push_back(col);
             }
         } else {
             const Akonadi::Collection collection = etm->data(colIdx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
             if (!collection.hasAttribute<Akonadi::EntityHiddenAttribute>()
-                    && collection.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
+                    && collection.cachePolicy().localParts().contains(QStringLiteral("RFC822"))) {
                 result.push_back(collection);
             }
         }
@@ -965,7 +965,7 @@ Akonadi::Collection::List SearchWindow::searchCollectionsRecursive(const Akonadi
             for (int i = 0; i < childrenCount; ++i) {
                 const QModelIndex idx = etm->index(i, 0, colIdx);
                 const Akonadi::Collection child = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-                if (child.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
+                if (child.cachePolicy().localParts().contains(QStringLiteral("RFC822"))) {
                     subCols.push_back(child);
                 }
             }
