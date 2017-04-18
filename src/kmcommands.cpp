@@ -49,7 +49,7 @@
 #include "util.h"
 #include "settings/kmailsettings.h"
 #include "kmail_debug.h"
-#include "helper_p.h"
+
 #include "job/createreplymessagejob.h"
 #include "job/createforwardmessagejob.h"
 

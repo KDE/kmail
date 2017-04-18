@@ -24,7 +24,7 @@
  */
 
 #include "attachmentview.h"
-#include "helper_p.h"
+
 #include "kmkernel.h"
 #include "util.h"
 

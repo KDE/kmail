@@ -49,7 +49,7 @@
 #include <errno.h>
 #include <KSharedConfig>
 #include <QLocale>
-#include "helper_p.h"
+
 
 using namespace MailCommon;
 

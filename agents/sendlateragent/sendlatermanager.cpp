@@ -21,7 +21,7 @@
 #include "sendlaterinfo.h"
 #include "sendlaterutil.h"
 #include "sendlaterjob.h"
-#include "helper_p.h"
+
 
 #include "MessageComposer/AkonadiSender"
 #include <MessageComposer/Util>

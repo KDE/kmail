@@ -19,7 +19,7 @@
 #include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
-#include "helper_p.h"
+
 #include "kmmainwidget.h"
 #include "PimCommon/AutoCorrectionWidget"
 #include "MessageComposer/ImageScalingWidget"

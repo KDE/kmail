@@ -21,7 +21,7 @@
 #include "messagecomposer/plugineditormanager.h"
 #include "messagecomposer/plugineditor.h"
 #include "kmail_debug.h"
-#include "helper_p.h"
+
 
 #include <QAction>
 #include <QVector>

@@ -22,7 +22,7 @@
 #include "job/archivejob.h"
 #include "archivemailkernel.h"
 #include "archivemailagentutil.h"
-#include "helper_p.h"
+
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 

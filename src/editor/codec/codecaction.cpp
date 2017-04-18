@@ -19,7 +19,7 @@
 
 // Own
 #include "codecaction.h"
-#include "helper_p.h"
+
 
 // KMail
 #include "codecmanager.h"

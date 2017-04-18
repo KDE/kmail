@@ -19,7 +19,7 @@
 
 #include "kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "kmail_debug.h"
-#include "helper_p.h"
+
 #include <MessageComposer/PluginEditorCheckBeforeSendInterface>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>

@@ -27,7 +27,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "MailCommon/TagWidget"
 #include "MailCommon/Tag"
 #include "kmkernel.h"
-#include "helper_p.h"
+
 #include "util.h"
 #include "MailCommon/FolderTreeWidget"
 

@@ -23,7 +23,7 @@
 
 #include "incompleteindexdialog.h"
 #include "searchwindow.h"
-#include "helper_p.h"
+
 
 #include "MailCommon/FolderRequester"
 #include "kmcommands.h"

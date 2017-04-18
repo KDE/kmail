@@ -21,7 +21,7 @@
 #include "folderarchiveaccountinfo.h"
 #include "folderarchivecache.h"
 #include "folderarchiveutil.h"
-#include "helper_p.h"
+
 #include "util.h"
 
 #include <AkonadiCore/AgentManager>

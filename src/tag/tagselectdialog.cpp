@@ -18,7 +18,7 @@
 */
 
 #include "tagselectdialog.h"
-#include "helper_p.h"
+
 #include "kmail_debug.h"
 #include "tag.h"
 #include "kmkernel.h"

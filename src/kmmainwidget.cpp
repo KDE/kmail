@@ -34,7 +34,7 @@
 #include "MailCommon/FolderTreeWidget"
 #include "PimCommonAkonadi/MailUtil"
 #include "util.h"
-#include "helper_p.h"
+
 #include "mailcommon/mailutil.h"
 #include "mailcommon/mailkernel.h"
 #include "dialog/archivefolderdialog.h"

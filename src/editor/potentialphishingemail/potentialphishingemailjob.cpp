@@ -19,7 +19,6 @@
 */
 
 #include "potentialphishingemailjob.h"
-#include "../../helper_p.h"
 #include <KEmailAddress>
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)

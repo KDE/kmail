@@ -21,7 +21,7 @@
 #include "tagactionmanager.h"
 
 #include "messageactions.h"
-#include "helper_p.h"
+
 
 #include "MailCommon/AddTagDialog"
 
