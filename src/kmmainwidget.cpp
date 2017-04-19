@@ -2926,11 +2926,6 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotFilterLogViewer);
     }
     {
-        QAction *action = new QAction(i18n("&Account Wizard..."), this);
-        actionCollection()->addAction(QStringLiteral("accountWizard"), action);
-        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAccountWizard);
-    }
-    {
         QAction *action = new QAction(i18n("&Import from another Email Client..."), this);
         actionCollection()->addAction(QStringLiteral("importWizard"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImportWizard);
@@ -3313,6 +3308,11 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(i18n("Manage &Sieve Scripts..."), this);
         actionCollection()->addAction(QStringLiteral("sieveFilters"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotManageSieveScripts);
+    }
+    {
+        QAction *action = new QAction(i18n("&Add Account..."), this);
+        actionCollection()->addAction(QStringLiteral("accountWizard"), action);
+        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAccountWizard);
     }
     {
         mShowIntroductionAction = new QAction(QIcon::fromTheme(QStringLiteral("kmail")), i18n("KMail &Introduction"), this);
