@@ -11,7 +11,7 @@ X-KDE-ParentApp=kmail
 X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 X-KDE-Weight=600
-X-DocPath=kmail/index.html#configure-misc
+X-DocPath=kmail2/index.html#configure-misc
 
 Name=Misc
 Name[af]=Allerlei

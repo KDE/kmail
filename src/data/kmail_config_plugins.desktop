@@ -11,7 +11,7 @@ X-KDE-ParentApp=kmail
 X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 X-KDE-Weight=600
-X-DocPath=kmail/index.html
+X-DocPath=kmail2/index.html
 
 Name=Plugins
 Name[af]=Inprop modules

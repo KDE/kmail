@@ -11,7 +11,7 @@ X-KDE-ParentApp=kmail
 X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 X-KDE-Weight=200
-X-DocPath=kmail/index.html#configure-accounts
+X-DocPath=kmail2/index.html#configure-accounts
 
 Name=Accounts
 Name[af]=Rekeninge

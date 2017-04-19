@@ -11,7 +11,7 @@ X-KDE-ParentApp=kmail
 X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 X-KDE-Weight=400
-X-DocPath=kmail/index.html#configure-composer
+X-DocPath=kmail2/index.html#configure-composer
 
 Name=Composer
 Name[af]=Composer

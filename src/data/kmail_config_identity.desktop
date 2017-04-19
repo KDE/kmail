@@ -11,7 +11,7 @@ X-KDE-ParentApp=kmail
 X-KDE-ParentComponents=kmail,kontact_kmailplugin
 X-KDE-CfgDlgHierarchy=KMail
 X-KDE-Weight=100
-X-DocPath=kmail/index.html#configure-identity
+X-DocPath=kmail2/index.html#configure-identity
 
 Name=Identities
 Name[af]=Identities
