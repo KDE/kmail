@@ -213,9 +213,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // "Only quote selected text when replying" checkbox
     mQuoteSelectionOnlyCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(),
             this);
-#if QT_VERSION < QT_VERSION_CHECK(5, 6, 1)
     mQuoteSelectionOnlyCheck->setEnabled(false);
-#endif
     helpText = i18n("When replying, only quote the selected text\n"
                     "(instead of the complete message), if\n"
                     "there is text selected in the message window.");
