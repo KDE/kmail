@@ -212,7 +212,7 @@ void ArchiveFolderDialog::slotFixFileExtension()
     QMimeDatabase db;
     const QString extension = db.suffixForFileName(fileName);
     if (!extension.isEmpty()) {
-        fileName = fileName.left(fileName.length() - extension.length() - 1);
+        fileName.truncate(fileName.length() - extension.length() - 1);
     }
 
     // Now, we've got a filename without an extension, simply append the correct one
