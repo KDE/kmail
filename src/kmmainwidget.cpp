@@ -57,7 +57,7 @@
 using KSieveUi::SieveDebugDialog;
 #endif
 
-#include "collectionpage/collectionmaintenancepage.h"
+#include <AkonadiWidgets/CollectionMaintenancePage>
 #include "collectionpage/collectionquotapage.h"
 #include "collectionpage/collectiontemplatespage.h"
 #include "collectionpage/collectionshortcutpage.h"
