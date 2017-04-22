@@ -46,7 +46,7 @@ ManageShowCollectionProperties::ManageShowCollectionProperties(KMMainWidget *mai
              << QStringLiteral("KMail::CollectionMailingListPage")
              << QStringLiteral("KMail::CollectionQuotaPage")
              << QStringLiteral("KMail::CollectionShortcutPage")
-             << QStringLiteral("KMail::CollectionMaintenancePage");
+             << QStringLiteral("Akonadi::CollectionMaintenancePage");
 
 }
 
