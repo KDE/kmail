@@ -183,8 +183,7 @@ QString FollowUpReminderManager::printDebugInfo()
 
 QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInfo *info)
 {
-    QString infoStr;
-    infoStr = QStringLiteral("****************************************");
+    QString infoStr = QStringLiteral("****************************************");
     infoStr += QStringLiteral("Akonadi Item id :%1\n").arg(info->originalMessageItemId());
     infoStr += QStringLiteral("MessageId :%1\n").arg(info->messageId());
     infoStr += QStringLiteral("Subject :%1\n").arg(info->subject());
