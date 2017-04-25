@@ -72,7 +72,7 @@ void ArchiveMailManager::load()
         ArchiveMailInfo *info = new ArchiveMailInfo(group);
 
         if (ArchiveMailAgentUtil::needToArchive(info)) {
-            Q_FOREACH (ArchiveMailInfo *oldInfo, mListArchiveInfo) {
+            for (ArchiveMailInfo *oldInfo : qAsConst(mListArchiveInfo)) {
                 if (oldInfo->saveCollectionId() == info->saveCollectionId()) {
                     //already in jobscheduler
                     delete info;

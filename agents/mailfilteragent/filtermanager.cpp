@@ -552,7 +552,7 @@ QString FilterManager::createUniqueName(const QString &name) const
 
     while (found) {
         found = false;
-        foreach (const MailCommon::MailFilter *filter, d->mFilters) {
+        for (const MailCommon::MailFilter *filter : qAsConst(d->mFilters)) {
             if (!filter->name().compare(uniqueName)) {
                 found = true;
                 ++counter;
