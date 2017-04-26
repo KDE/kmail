@@ -16,7 +16,7 @@
 */
 
 #include "identityfolderrequester.h"
-
+#include <AkonadiCore/Collection>
 #include <KColorScheme>
 
 using namespace KMail;
@@ -32,8 +32,17 @@ IdentityFolderRequester::~IdentityFolderRequester()
 
 }
 
-void IdentityFolderRequester::setIsInvalidFolder()
+void IdentityFolderRequester::setIsInvalidFolder(const Akonadi::Collection &col)
 {
     const KStatefulBrush bgBrush(KColorScheme::View, KColorScheme::NegativeBackground);
     setStyleSheet(QStringLiteral("QLineEdit{ background-color:%1 }").arg(bgBrush.brush(this).color().name()));
+    setCollection(col);
+    connect(this, &IdentityFolderRequester::folderChanged, this, &IdentityFolderRequester::slotFolderChanged, Qt::UniqueConnection);
+}
+
+void IdentityFolderRequester::slotFolderChanged(const Akonadi::Collection &col)
+{
+    if (col.isValid()) {
+        setStyleSheet(QString());
+    }
 }

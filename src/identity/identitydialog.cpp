@@ -916,16 +916,14 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     if (ident.fcc().isEmpty() ||
             !checkFolderExists(ident.fcc())) {
         foundNoExistingFolder = true;
-        mFccFolderRequester->setIsInvalidFolder();
-        mFccFolderRequester->setCollection(CommonKernel->sentCollectionFolder());
+        mFccFolderRequester->setIsInvalidFolder(CommonKernel->sentCollectionFolder());
     } else {
         mFccFolderRequester->setCollection(Akonadi::Collection(ident.fcc().toLongLong()));
     }
     if (ident.drafts().isEmpty() ||
             !checkFolderExists(ident.drafts())) {
         foundNoExistingFolder = true;
-        mDraftsFolderRequester->setIsInvalidFolder();
-        mDraftsFolderRequester->setCollection(CommonKernel->draftsCollectionFolder());
+        mDraftsFolderRequester->setIsInvalidFolder(CommonKernel->draftsCollectionFolder());
     } else {
         mDraftsFolderRequester->setCollection(Akonadi::Collection(ident.drafts().toLongLong()));
     }
@@ -933,8 +931,7 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     if (ident.templates().isEmpty() ||
             !checkFolderExists(ident.templates())) {
         foundNoExistingFolder = true;
-        mTemplatesFolderRequester->setIsInvalidFolder();
-        mTemplatesFolderRequester->setCollection(CommonKernel->templatesCollectionFolder());
+        mTemplatesFolderRequester->setIsInvalidFolder(CommonKernel->templatesCollectionFolder());
 
     } else {
         mTemplatesFolderRequester->setCollection(Akonadi::Collection(ident.templates().toLongLong()));
