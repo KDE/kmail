@@ -20,6 +20,11 @@
 
 #include <MailCommon/FolderRequester>
 
+namespace Akonadi
+{
+class Collection;
+}
+
 namespace KMail
 {
 class IdentityFolderRequester : public MailCommon::FolderRequester
@@ -29,7 +34,9 @@ public:
     explicit IdentityFolderRequester(QWidget *parent = nullptr);
     ~IdentityFolderRequester();
 
-    void setIsInvalidFolder();
+    void setIsInvalidFolder(const Akonadi::Collection &col);
+private:
+    void slotFolderChanged(const Akonadi::Collection &col);
 };
 }
 #endif // IDENTITYFOLDERREQUESTER_H
