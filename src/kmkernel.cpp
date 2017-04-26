@@ -293,7 +293,28 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     // process args:
     QCommandLineParser parser;
     kmail_options(&parser);
-    parser.process(args);
+    QStringList newargs;
+    bool addAttachmentAttribute = false;
+    for (const QString &argument : qAsConst(args)) {
+        if (argument == QLatin1String("--attach")) {
+            addAttachmentAttribute = true;
+        } else {
+            if (argument.startsWith(QLatin1String("--"))) {
+                addAttachmentAttribute = false;
+            }
+            if (argument.contains(QLatin1Char('@')) || argument.startsWith(QLatin1String("mailto:"))) { //address mustn't be trade as a attachment
+                addAttachmentAttribute = false;
+            }
+            if (addAttachmentAttribute) {
+                newargs.append(QStringLiteral("--attach"));
+                newargs.append(argument);
+            } else {
+                newargs.append(argument);
+            }
+        }
+    }
+
+    parser.process(newargs);
     if (parser.isSet(QStringLiteral("subject"))) {
         subj = parser.value(QStringLiteral("subject"));
         // if kmail is called with 'kmail -session abc' then this doesn't mean
