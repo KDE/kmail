@@ -44,6 +44,7 @@ public:
 private:
     KPIMTextEdit::RichTextEditor *mRichTextEditor;
     QWidget *mParentWidget;
+    bool mWasInitialized;
     //QList<MessageComposer::PluginEditorInterface *> mListPluginInterface;
 };
 

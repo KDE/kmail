@@ -19,11 +19,16 @@
 
 
 #include "kmailplugineditorinitmanagerinterface.h"
+#include "kmail_debug.h"
+#include <MessageComposer/PluginEditorInitManager>
+#include <MessageComposer/PluginEditorInit>
+#include <MessageComposer/PluginEditorInitInterface>
 
 KMailPluginEditorInitManagerInterface::KMailPluginEditorInitManagerInterface(QObject *parent)
     : QObject(parent),
       mRichTextEditor(nullptr),
-      mParentWidget(nullptr)
+      mParentWidget(nullptr),
+      mWasInitialized(false)
 {
 
 }
@@ -50,5 +55,20 @@ void KMailPluginEditorInitManagerInterface::setParentWidget(QWidget *parentWidge
 
 void KMailPluginEditorInitManagerInterface::initializePlugins()
 {
-    //TODO
+    if (mWasInitialized) {
+        qCDebug(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Plugin was already initialized. This is a bug";
+    }
+    const QVector<MessageComposer::PluginEditorInit *> lstPlugin = MessageComposer::PluginEditorInitManager::self()->pluginsList();
+    for (MessageComposer::PluginEditorInit *plugin : lstPlugin) {
+        if (plugin->isEnabled()) {
+            MessageComposer::PluginEditorInitInterface *interface = plugin->createInterface(this);
+            interface->setParentWidget(mParentWidget);
+            interface->setRichTextEditor(mRichTextEditor);
+            interface->reloadConfig();
+            if (!interface->exec()) {
+                qCWarning(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface::initializePlugins: error during execution of plugin:" << interface;
+            }
+        }
+    }
+    mWasInitialized = true;
 }
