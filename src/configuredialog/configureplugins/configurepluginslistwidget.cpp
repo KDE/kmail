@@ -23,6 +23,7 @@
 #include <MessageViewer/ViewerPluginManager>
 #include <MessageViewer/HeaderStylePluginManager>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
+#include <MessageComposer/PluginEditorInitManager>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 #include <PimCommon/GenericPluginManager>
 
@@ -38,6 +39,7 @@
 #include <QDebug>
 #include <QDBusInterface>
 #include <QDBusReply>
+#include <MessageComposer/PluginEditorInit>
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
 #include <MessageViewer/ViewerPlugin>
@@ -52,32 +54,41 @@ QString pluginEditorGroupName()
 {
     return QStringLiteral("plugineditorgroupname");
 }
+
 QString viewerPluginGroupName()
 {
     return QStringLiteral("viewerplugingroupname");
 }
+
 QString pluginEditorCheckBeforeGroupName()
 {
     return QStringLiteral("plugineditorcheckbeforegroupname");
+}
+
+QString pluginEditorInitGroupName()
+{
+    return QStringLiteral("plugineditorinitgroupname");
 }
 
 QString kmailPluginToolsGroupName()
 {
     return QStringLiteral("kmailplugintoolsgroupname");
 }
+
 QString networkUrlInterceptorGroupName()
 {
     return QStringLiteral("networkurlinterceptorgroupname");
 }
+
 QString headerStyleGroupName()
 {
     return QStringLiteral("headerstylegroupname");
 }
+
 QString agentAkonadiGroupName()
 {
     return QStringLiteral("agentakonadigroupname");
 }
-
 }
 
 ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
@@ -98,9 +109,12 @@ void ConfigurePluginsListWidget::save()
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::ViewerPluginManager::self()->configGroupName(),
             MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
             mPluginMessageViewerItems);
+    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorInitManager::self()->configGroupName(),
+            MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
+            mPluginEditorInitItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
             MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
-            mPluginSendBeforeSendItems);
+            mPluginCheckBeforeSendItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(KMailPluginInterface::self()->configGroupName(),
             KMailPluginInterface::self()->configPrefixSettingKey(),
             mPluginGenericItems);
@@ -134,11 +148,12 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
 {
     changeState(mPluginEditorItems);
     changeState(mPluginMessageViewerItems);
-    changeState(mPluginSendBeforeSendItems);
+    changeState(mPluginCheckBeforeSendItems);
     changeState(mPluginGenericItems);
     changeState(mPluginWebEngineItems);
     changeState(mPluginHeaderStyleItems);
     changeState(mAgentPluginsItems);
+    changeState(mPluginEditorInitItems);
 }
 
 void ConfigurePluginsListWidget::initialize()
@@ -150,8 +165,15 @@ void ConfigurePluginsListWidget::initialize()
             i18n("Check Before Send Plugins"),
             MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
             MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
-            mPluginSendBeforeSendItems,
+            mPluginCheckBeforeSendItems,
             pluginEditorCheckBeforeGroupName());
+
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorInitManager::self()->pluginsDataList(),
+            i18n("Check Before Send Plugins"),
+            MessageComposer::PluginEditorInitManager::self()->configGroupName(),
+            MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
+            mPluginEditorInitItems,
+            pluginEditorInitGroupName());
 
     //Load generic plugins
     //Necessary to initialize pluging when we load it outside kmail
@@ -289,6 +311,9 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
         } else if (configureGroupName == kmailPluginToolsGroupName()) {
             PimCommon::GenericPlugin *plugin = KMailPluginInterface::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
+        } else if (configureGroupName == pluginEditorInitGroupName()) {
+            MessageComposer::PluginEditorInit *plugin = MessageComposer::PluginEditorInitManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
         } else if (configureGroupName == pluginEditorCheckBeforeGroupName()) {
             MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
@@ -314,7 +339,7 @@ void ConfigurePluginsListWidget::defaults()
 {
     resetToUserSettings(mPluginEditorItems);
     resetToUserSettings(mPluginMessageViewerItems);
-    resetToUserSettings(mPluginSendBeforeSendItems);
+    resetToUserSettings(mPluginCheckBeforeSendItems);
     resetToUserSettings(mPluginGenericItems);
     resetToUserSettings(mPluginWebEngineItems);
     resetToUserSettings(mPluginHeaderStyleItems);

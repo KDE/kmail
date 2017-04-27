@@ -45,7 +45,8 @@ private:
     void saveAkonadiAgent();
     QList<PluginItem *> mPluginEditorItems;
     QList<PluginItem *> mPluginMessageViewerItems;
-    QList<PluginItem *> mPluginSendBeforeSendItems;
+    QList<PluginItem *> mPluginCheckBeforeSendItems;
+    QList<PluginItem *> mPluginEditorInitItems;
     QList<PluginItem *> mPluginGenericItems;
     QList<PluginItem *> mPluginWebEngineItems;
     QList<PluginItem *> mPluginHeaderStyleItems;
