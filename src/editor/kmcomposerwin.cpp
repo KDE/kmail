@@ -79,6 +79,7 @@
 #include "plugineditorinterface.h"
 #include "editor/plugininterface/kmailplugineditormanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
+#include "editor/plugininterface/kmailplugineditorinitmanagerinterface.h"
 #include <MessageComposer/PluginEditorCheckBeforeSendParams>
 #include <MessageComposer/Util>
 
@@ -266,6 +267,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mPluginEditorManagerInterface = new KMailPluginEditorManagerInterface(this);
     mPluginEditorCheckBeforeSendManagerInterface = new KMailPluginEditorCheckBeforeSendManagerInterface(this);
+    mPluginEditorInitManagerInterface = new KMailPluginEditorInitManagerInterface(this);
 
     connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposerWin::disableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposerWin::enableHtml);
@@ -446,6 +448,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPluginEditorManagerInterface->setActionCollection(actionCollection());
 
     mPluginEditorCheckBeforeSendManagerInterface->setParentWidget(this);
+
+    mPluginEditorInitManagerInterface->setParent(this);
+    mPluginEditorInitManagerInterface->setRichTextEditor(mRichTextEditorwidget->editor());
 
     setupStatusBar(attachmentView->widget());
     setupActions();
@@ -1321,6 +1326,7 @@ void KMComposerWin::setupActions(void)
 
     mPluginEditorManagerInterface->initializePlugins();
     mPluginEditorCheckBeforeSendManagerInterface->initializePlugins();
+    mPluginEditorInitManagerInterface->initializePlugins();
 
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();

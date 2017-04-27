@@ -71,6 +71,7 @@ class PotentialPhishingEmailWarning;
 class KMComposerGlobalAction;
 class KMailPluginEditorManagerInterface;
 class KMailPluginEditorCheckBeforeSendManagerInterface;
+class KMailPluginEditorInitManagerInterface;
 namespace MailTransport
 {
 class Transport;
@@ -662,6 +663,7 @@ private:
 
     KMailPluginEditorManagerInterface *mPluginEditorManagerInterface;
     KMailPluginEditorCheckBeforeSendManagerInterface *mPluginEditorCheckBeforeSendManagerInterface;
+    KMailPluginEditorInitManagerInterface *mPluginEditorInitManagerInterface;
 };
 
 #endif
