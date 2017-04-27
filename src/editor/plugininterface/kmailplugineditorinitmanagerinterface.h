@@ -24,7 +24,7 @@
 #include <QObject>
 namespace KPIMTextEdit
 {
-class RichTextEditor;
+class RichTextComposer;
 }
 
 class KMailPluginEditorInitManagerInterface : public QObject
@@ -34,18 +34,17 @@ public:
     explicit KMailPluginEditorInitManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorInitManagerInterface() = default;
 
-    KPIMTextEdit::RichTextEditor *richTextEditor() const;
-    void setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor);
+    KPIMTextEdit::RichTextComposer *richTextEditor() const;
+    void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);
 
     QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
     void initializePlugins();
 private:
-    KPIMTextEdit::RichTextEditor *mRichTextEditor;
+    KPIMTextEdit::RichTextComposer *mRichTextEditor;
     QWidget *mParentWidget;
     bool mWasInitialized;
-    //QList<MessageComposer::PluginEditorInterface *> mListPluginInterface;
 };
 
 #endif // KMAILPLUGINEDITORINITMANAGERINTERFACE_H

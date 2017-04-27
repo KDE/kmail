@@ -373,32 +373,32 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setMargin(0);
 
-    KMComposerEditorNg *editor = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
-    mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(editor, mCryptoStateIndicatorWidget);
+    KMComposerEditorNg *composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
+    mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
 
     //Don't use new connect api here. It crashs
-    connect(editor, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
+    connect(composerEditorNg, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
     //connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
-    mComposerBase->setEditor(editor);
+    mComposerBase->setEditor(composerEditorNg);
     vbox->addWidget(mCryptoStateIndicatorWidget);
     vbox->addWidget(mRichTextEditorwidget);
 
     mSnippetSplitter->insertWidget(0, editorAndCryptoStateIndicators);
     mSnippetSplitter->setOpaqueResize(true);
-    sigController->setEditor(editor);
+    sigController->setEditor(composerEditorNg);
 
     mHeadersToEditorSplitter->addWidget(mSplitter);
-    editor->setAcceptDrops(true);
+    composerEditorNg->setAcceptDrops(true);
     connect(sigController, &MessageComposer::SignatureController::signatureAdded,
             mComposerBase->editor()->externalComposer(), &KPIMTextEdit::RichTextExternalComposer::startExternalEditor);
 
     connect(dictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposerWin::slotSpellCheckingLanguage);
 
-    connect(editor, &KMComposerEditorNg::languageChanged, this, &KMComposerWin::slotDictionaryLanguageChanged);
-    connect(editor, &KMComposerEditorNg::spellCheckStatus, this, &KMComposerWin::slotSpellCheckingStatus);
-    connect(editor, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
-    connect(editor, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
-    mSnippetWidget = new SnippetWidget(editor, actionCollection(), mSnippetSplitter);
+    connect(composerEditorNg, &KMComposerEditorNg::languageChanged, this, &KMComposerWin::slotDictionaryLanguageChanged);
+    connect(composerEditorNg, &KMComposerEditorNg::spellCheckStatus, this, &KMComposerWin::slotSpellCheckingStatus);
+    connect(composerEditorNg, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
+    connect(composerEditorNg, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
+    mSnippetWidget = new SnippetWidget(composerEditorNg, actionCollection(), mSnippetSplitter);
     mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
     mSnippetSplitter->setCollapsible(0, false);
@@ -450,7 +450,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPluginEditorCheckBeforeSendManagerInterface->setParentWidget(this);
 
     mPluginEditorInitManagerInterface->setParent(this);
-    mPluginEditorInitManagerInterface->setRichTextEditor(mRichTextEditorwidget->editor());
+    mPluginEditorInitManagerInterface->setRichTextEditor(composerEditorNg);
 
     setupStatusBar(attachmentView->widget());
     setupActions();
@@ -482,8 +482,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     }
 
     if (KMailSettings::self()->useExternalEditor()) {
-        editor->setUseExternalEditor(true);
-        editor->setExternalEditorPath(KMailSettings::self()->externalEditor());
+        composerEditorNg->setUseExternalEditor(true);
+        composerEditorNg->setExternalEditorPath(KMailSettings::self()->externalEditor());
     }
 
     const QList<KPIM::MultiplyingLine *> lstLines = recipientsEditor->lines();
@@ -496,7 +496,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     }
 
     mComposerBase->recipientsEditor()->setFocus();
-    editor->composerActions()->updateActionStates(); // set toolbar buttons to correct values
+    composerEditorNg->composerActions()->updateActionStates(); // set toolbar buttons to correct values
 
     mDone = true;
 

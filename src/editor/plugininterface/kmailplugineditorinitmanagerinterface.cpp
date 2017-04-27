@@ -33,12 +33,12 @@ KMailPluginEditorInitManagerInterface::KMailPluginEditorInitManagerInterface(QOb
 
 }
 
-KPIMTextEdit::RichTextEditor *KMailPluginEditorInitManagerInterface::richTextEditor() const
+KPIMTextEdit::RichTextComposer *KMailPluginEditorInitManagerInterface::richTextEditor() const
 {
     return mRichTextEditor;
 }
 
-void KMailPluginEditorInitManagerInterface::setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor)
+void KMailPluginEditorInitManagerInterface::setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor)
 {
     mRichTextEditor = richTextEditor;
 }
