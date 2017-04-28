@@ -169,7 +169,7 @@ void ConfigurePluginsListWidget::initialize()
             pluginEditorCheckBeforeGroupName());
 
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorInitManager::self()->pluginsDataList(),
-            i18n("Check Before Send Plugins"),
+            i18n("Composer Plugins"),
             MessageComposer::PluginEditorInitManager::self()->configGroupName(),
             MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
             mPluginEditorInitItems,
@@ -187,7 +187,7 @@ void ConfigurePluginsListWidget::initialize()
 
     //Load plugin editor
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(),
-            i18n("Composer Plugins"),
+            i18n("Editor Plugins"),
             MessageComposer::PluginEditorManager::self()->configGroupName(),
             MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
             mPluginEditorItems,
