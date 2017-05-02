@@ -363,8 +363,8 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
     //Restore startup folder
 
     Akonadi::Collection::Id id = -1;
-    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
-        id = mCurrentFolder->collection().id();
+    if (mCurrentCollection.isValid()) {
+        id = mCurrentCollection.id();
     }
 
     if (id == -1) {
@@ -403,7 +403,7 @@ void KMMainWidget::destruct()
     writeConfig(false); /* don't force kmkernel sync when close BUG: 289287 */
     writeFolderConfig();
     deleteWidgets();
-    mCurrentFolder.clear();
+    clearCurrentFolder();
     delete mMoveOrCopyToDialog;
     delete mSelectFromAllFoldersDialog;
 
@@ -414,6 +414,12 @@ void KMMainWidget::destruct()
     disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, nullptr);
 
     mDestructed = true;
+}
+
+void KMMainWidget::clearCurrentFolder()
+{
+    mCurrentFolder.clear();
+    mCurrentCollection = Akonadi::Collection();
 }
 
 void KMMainWidget::slotStartCheckMail()
@@ -444,19 +450,27 @@ void KMMainWidget::slotUpdateActionsAfterMailChecking()
     updateFolderMenu();
 }
 
+void KMMainWidget::setCurrentCollection(const Akonadi::Collection &col)
+{
+    mCurrentCollection = col;
+    if (mCurrentFolder) {
+        mCurrentFolder->setCollection(col);
+    }
+}
+
 void KMMainWidget::slotCollectionFetched(int collectionId)
 {
     // Called when a collection is fetched for the first time by the ETM.
     // This is the right time to update the caption (which still says "Loading...")
     // and to update the actions that depend on the number of mails in the folder.
-    if (mCurrentFolder && collectionId == mCurrentFolder->collection().id()) {
-        mCurrentFolder->setCollection(MailCommon::Util::updatedCollection(mCurrentFolder->collection()));
+    if (collectionId == mCurrentCollection.id()) {
+        setCurrentCollection(MailCommon::Util::updatedCollection(mCurrentCollection));
         updateMessageActions();
         updateFolderMenu();
     }
     // We call this for any collection, it could be one of our parents...
-    if (mCurrentFolder) {
-        Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(mCurrentFolder->collection()));
+    if (mCurrentCollection.isValid()) {
+        Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(mCurrentCollection));
     }
 }
 
@@ -506,7 +520,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
     if (mMsgView) {
         mMsgView->clear(true);
     }
-    const bool newFolder = mCurrentFolder && (mCurrentFolder->collection() != col);
+    const bool newFolder = mCurrentCollection != col;
 
     // Delete any pending timer, if needed it will be recreated below
     delete mShowBusySplashTimer;
@@ -517,6 +531,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
     }
 
     mCurrentFolder = FolderCollection::forCollection(col);
+    mCurrentCollection = col;
 
     readFolderConfig();
     if (mMsgView) {
@@ -536,8 +551,8 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 
 void KMMainWidget::slotShowSelectedFolderInPane()
 {
-    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
-        mMessagePane->setCurrentFolder(mCurrentFolder->collection(), false, mPreSelectionMode);
+    if (mCurrentCollection.isValid()) {
+        mMessagePane->setCurrentFolder(mCurrentCollection, false, mPreSelectionMode);
     }
     updateMessageActions();
     updateFolderMenu();
@@ -579,7 +594,7 @@ void KMMainWidget::readFolderConfig()
         return;
     }
     KSharedConfig::Ptr config = KMKernel::self()->config();
-    KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(mCurrentFolder->collection()));
+    KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(mCurrentCollection));
     if (group.hasKey("htmlMailOverride")) {
         const bool useHtml = group.readEntry("htmlMailOverride", false);
         mFolderDisplayFormatPreference = useHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
@@ -595,9 +610,9 @@ void KMMainWidget::readFolderConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::writeFolderConfig()
 {
-    if (mCurrentFolder && mCurrentFolder->isValid()) {
+    if (mCurrentCollection.isValid()) {
         KSharedConfig::Ptr config = KMKernel::self()->config();
-        KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(mCurrentFolder->collection()));
+        KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(mCurrentCollection));
         group.writeEntry("htmlLoadExternalOverride", mFolderHtmlLoadExtPreference);
         if (mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting) {
             group.deleteEntry("displayFormatOverride");
@@ -1197,10 +1212,10 @@ void KMMainWidget::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, c
         const bool enableAction = (statistic.count() > 0);
         mSendQueued->setEnabled(enableAction);
         mSendActionMenu->setEnabled(enableAction);
-    } else if (mCurrentFolder && (id == mCurrentFolder->collection().id())) {
+    } else if (id == mCurrentCollection.id()) {
         updateMoveAction(statistic);
         updateAllToTrashAction(statistic.count());
-        mCurrentFolder->setCollection(MailCommon::Util::updatedCollection(mCurrentFolder->collection()));
+        setCurrentCollection(MailCommon::Util::updatedCollection(mCurrentCollection));
     }
 }
 
@@ -1211,13 +1226,12 @@ void KMMainWidget::slotCreateNewTab(bool preferNewTab)
 
 void KMMainWidget::slotCollectionChanged(const Akonadi::Collection &collection, const QSet<QByteArray> &set)
 {
-    if (mCurrentFolder
-            && (collection == mCurrentFolder->collection())
+    if ((collection == mCurrentCollection)
             && (set.contains("MESSAGEFOLDER") || set.contains("expirationcollectionattribute"))) {
         if (set.contains("MESSAGEFOLDER")) {
             mMessagePane->resetModelStorage();
         } else {
-            mCurrentFolder->setCollection(collection);
+            setCurrentCollection(collection);
         }
     } else if (set.contains("ENTITYDISPLAY") || set.contains("NAME")) {
         const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(KMKernel::self()->collectionModel(), collection);
@@ -1265,11 +1279,11 @@ void KMMainWidget::slotFocusQuickSearch()
 bool KMMainWidget::slotSearch()
 {
     if (!mSearchWin) {
-        mSearchWin = new SearchWindow(this, mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
+        mSearchWin = new SearchWindow(this, mCurrentCollection);
         mSearchWin->setModal(false);
         mSearchWin->setObjectName(QStringLiteral("Search"));
     } else {
-        mSearchWin->activateFolder(mCurrentFolder ? mCurrentFolder->collection() : Akonadi::Collection());
+        mSearchWin->activateFolder(mCurrentCollection);
     }
 
     mSearchWin->show();
@@ -1409,7 +1423,7 @@ void KMMainWidget::slotExpireFolder()
         return;
     }
     bool mustDeleteExpirationAttribute = false;
-    MailCommon::ExpireCollectionAttribute *attr = MailCommon::Util::expirationCollectionAttribute(mCurrentFolder->collection(), mustDeleteExpirationAttribute);
+    MailCommon::ExpireCollectionAttribute *attr = MailCommon::Util::expirationCollectionAttribute(mCurrentCollection, mustDeleteExpirationAttribute);
     bool canBeExpired = true;
     if (!attr->isAutoExpire()) {
         canBeExpired = false;
@@ -1440,7 +1454,7 @@ void KMMainWidget::slotExpireFolder()
         }
     }
 
-    MailCommon::Util::expireOldMessages(mCurrentFolder->collection(), true /*immediate*/);
+    MailCommon::Util::expireOldMessages(mCurrentCollection, true /*immediate*/);
     if (mustDeleteExpirationAttribute) {
         delete attr;
     }
@@ -1449,15 +1463,15 @@ void KMMainWidget::slotExpireFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEmptyFolder()
 {
-    if (!mCurrentFolder) {
+    if (!mCurrentCollection.isValid()) {
         return;
     }
-    const bool isTrash = CommonKernel->folderIsTrash(mCurrentFolder->collection());
+    const bool isTrash = CommonKernel->folderIsTrash(mCurrentCollection);
     const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
     const QString text = (isTrash) ?
                          i18n("Are you sure you want to empty the trash folder?") :
                          i18n("<qt>Are you sure you want to move all messages from "
-                              "folder <b>%1</b> to the trash?</qt>", mCurrentFolder->name().toHtmlEscaped());
+                              "folder <b>%1</b> to the trash?</qt>", mCurrentCollection.name().toHtmlEscaped());
 
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QStringLiteral("user-trash")))
             != KMessageBox::Continue) {
@@ -1496,9 +1510,9 @@ void KMMainWidget::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotArchiveFolder()
 {
-    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
+    if (mCurrentCollection.isValid()) {
         KMail::ArchiveFolderDialog archiveDialog;
-        archiveDialog.setFolder(mCurrentFolder->collection());
+        archiveDialog.setFolder(mCurrentCollection);
         archiveDialog.exec();
     }
 }
@@ -1509,7 +1523,7 @@ void KMMainWidget::slotRemoveFolder()
     if (!mCurrentFolder) {
         return;
     }
-    if (!mCurrentFolder->collection().isValid()) {
+    if (!mCurrentCollection.isValid()) {
         return;
     }
     if (mCurrentFolder->isSystemFolder()) {
@@ -1522,13 +1536,13 @@ void KMMainWidget::slotRemoveFolder()
     RemoveCollectionJob *job = new RemoveCollectionJob(this);
     connect(job, &RemoveCollectionJob::clearCurrentFolder, this, &KMMainWidget::slotClearCurrentFolder);
     job->setMainWidget(this);
-    job->setCurrentFolder(mCurrentFolder->collection());
+    job->setCurrentFolder(mCurrentCollection);
     job->start();
 }
 
 void KMMainWidget::slotClearCurrentFolder()
 {
-    mCurrentFolder.clear();
+    clearCurrentFolder();
 }
 
 //-----------------------------------------------------------------------------
@@ -1575,7 +1589,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMessageQueuedOrDrafted()
 {
-    if (!CommonKernel->folderIsDraftOrOutbox(mCurrentFolder->collection())) {
+    if (!CommonKernel->folderIsDraftOrOutbox(mCurrentCollection)) {
         return;
     }
     if (mMsgView) {
@@ -1850,7 +1864,7 @@ void KMMainWidget::copySelectedMessagesToFolder(const Akonadi::Collection &dest)
 //
 void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReference ref)
 {
-    if (!mCurrentFolder) {
+    if (!mCurrentCollection.isValid()) {
         return;
     }
 
@@ -1859,7 +1873,7 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
 
     // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
     // And stuff them into a KMTrashMsgCommand :)
-    KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentFolder->collection(), select, ref);
+    KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentCollection, select, ref);
 
     QObject::connect(
         command, SIGNAL(moveDone(KMMoveCommand*)),
@@ -2182,8 +2196,8 @@ void KMMainWidget::slotApplyFilters()
 
 void KMMainWidget::slotApplyFiltersOnFolder()
 {
-    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
-        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mCurrentFolder->collection(), this);
+    if (mCurrentCollection.isValid()) {
+        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mCurrentCollection, this);
         connect(job, &Akonadi::ItemFetchJob::result, this, &KMMainWidget::slotFetchItemsForFolderDone);
     }
 }
@@ -2553,17 +2567,17 @@ void KMMainWidget::slotDisplayCurrentMessage()
 // Called by double-clicked or 'Enter' in the messagelist -> pop up reader window
 void KMMainWidget::slotMessageActivated(const Akonadi::Item &msg)
 {
-    if (!mCurrentFolder || !msg.isValid()) {
+    if (!mCurrentCollection.isValid() || !msg.isValid()) {
         return;
     }
 
-    if (CommonKernel->folderIsDraftOrOutbox(mCurrentFolder->collection())) {
+    if (CommonKernel->folderIsDraftOrOutbox(mCurrentCollection)) {
         mMsgActions->setCurrentMessage(msg);
         mMsgActions->editCurrentMessage();
         return;
     }
 
-    if (CommonKernel->folderIsTemplates(mCurrentFolder->collection())) {
+    if (CommonKernel->folderIsTemplates(mCurrentCollection)) {
         slotUseTemplate();
         return;
     }
@@ -3762,16 +3776,16 @@ void KMMainWidget::updateMessageActionsDelayed()
     mExpireConfigAction->setEnabled(canDeleteMessages);
 
     if (mMsgView) {
-        mMsgView->findInMessageAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
+        mMsgView->findInMessageAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
     }
-    mMsgActions->forwardInlineAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
-    mMsgActions->forwardAttachedAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
-    mMsgActions->forwardMenu()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
+    mMsgActions->forwardInlineAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
+    mMsgActions->forwardAttachedAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
+    mMsgActions->forwardMenu()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
 
     mMsgActions->editAction()->setEnabled(single_actions);
-    mNewMessageFromTemplateAction->setEnabled(single_actions && CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
+    mNewMessageFromTemplateAction->setEnabled(single_actions && CommonKernel->folderIsTemplates(mCurrentCollection));
     filterMenu()->setEnabled(single_actions);
-    mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/mass_actions && !CommonKernel->folderIsTemplates(mCurrentFolder->collection()));
+    mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
 
     if (mMsgActions->customTemplatesMenu()) {
         mMsgActions->customTemplatesMenu()->forwardActionMenu()->setEnabled(mass_actions);
@@ -3796,14 +3810,14 @@ void KMMainWidget::updateMessageActionsDelayed()
     status.setStatusFromFlags(currentMessage.flags());
 
     QList< QAction *> actionList;
-    bool statusSendAgain = single_actions && ((currentMessage.isValid() && status.isSent()) || (currentMessage.isValid() && CommonKernel->folderIsSentMailFolder(mCurrentFolder->collection())));
+    bool statusSendAgain = single_actions && ((currentMessage.isValid() && status.isSent()) || (currentMessage.isValid() && CommonKernel->folderIsSentMailFolder(mCurrentCollection)));
     if (statusSendAgain) {
         actionList << mSendAgainAction;
     } else if (single_actions) {
         actionList << messageActions()->editAction();
     }
     actionList << mSaveAttachmentsAction;
-    if (mCurrentFolder && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentFolder->collection().resource())) {
+    if (mCurrentFolder && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
         actionList << mArchiveAction;
     }
     mGUIClient->unplugActionList(QStringLiteral("messagelist_actionlist"));
@@ -3848,9 +3862,9 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
         multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
     }
     if (mCollectionProperties) {
-        if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
+        if (mCurrentCollection.isValid()) {
             const Akonadi::AgentInstance instance =
-                Akonadi::AgentManager::self()->instance(mCurrentFolder->collection().resource());
+                Akonadi::AgentManager::self()->instance(mCurrentCollection.resource());
 
             mCollectionProperties->setEnabled(!multiFolder &&
                                               !mCurrentFolder->isStructural() &&
@@ -3873,7 +3887,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 
         mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)->setEnabled(mCurrentFolder
                 && !multiFolder
-                && (mCurrentFolder->collection().rights() & Collection::CanDeleteCollection)
+                && (mCurrentCollection.rights() & Collection::CanDeleteCollection)
                 && !mCurrentFolder->isSystemFolder()
                 && folderWithContent);
     }
@@ -3883,7 +3897,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
                 && (mCurrentFolder->count() > 0)
                 && mCurrentFolder->canDeleteMessages()
                 && !multiFolder);
-        mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)->setText((mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection())) ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash"));
+        mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)->setText((mCurrentFolder && CommonKernel->folderIsTrash(mCurrentCollection)) ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash"));
     }
 
     QList< QAction * > addToFavorite;
@@ -3972,26 +3986,26 @@ void KMMainWidget::updateFolderMenu()
             !mCurrentFolder->isSystemFolder());
 
     QList< QAction * > actionlist;
-    if (mCurrentFolder && mCurrentFolder->collection().id() == CommonKernel->outboxCollectionFolder().id() && (mCurrentFolder->collection()).statistics().count() > 0) {
+    if (mCurrentCollection.id() == CommonKernel->outboxCollectionFolder().id() && (mCurrentCollection).statistics().count() > 0) {
         qCDebug(KMAIL_LOG) << "Enabling send queued";
         mSendQueued->setEnabled(true);
         actionlist << mSendQueued;
     }
-    //   if ( mCurrentFolder && mCurrentFolder->collection().id() != CommonKernel->trashCollectionFolder().id() ) {
+    //   if ( mCurrentCollection.id() != CommonKernel->trashCollectionFolder().id() ) {
     //     actionlist << mTrashAction;
     //   }
     mGUIClient->unplugActionList(QStringLiteral("outbox_folder_actionlist"));
     mGUIClient->plugActionList(QStringLiteral("outbox_folder_actionlist"), actionlist);
     actionlist.clear();
 
-    const bool isASearchFolder = mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String("akonadi_search_resource");
+    const bool isASearchFolder = mCurrentCollection.resource() == QLatin1String("akonadi_search_resource");
     if (isASearchFolder) {
         mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)->setText(i18n("&Delete Search"));
     }
 
     mArchiveFolderAction->setEnabled(mCurrentFolder && !multiFolder && folderWithContent);
 
-    bool isInTrashFolder = (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentFolder->collection()));
+    bool isInTrashFolder = (mCurrentFolder && CommonKernel->folderIsTrash(mCurrentCollection));
     QAction *moveToTrash = akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash);
     akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash)->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
     akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash)->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete"))  : QIcon::fromTheme(QStringLiteral("user-trash")));
@@ -4001,14 +4015,14 @@ void KMMainWidget::updateFolderMenu()
     mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
     mTrashThreadAction->setText(isInTrashFolder ? i18n("Delete T&hread") : i18n("M&ove Thread to Trash"));
 
-    mSearchMessages->setText((mCurrentFolder && mCurrentFolder->collection().resource() == QLatin1String("akonadi_search_resource")) ? i18n("Edit Search...") : i18n("&Find Messages..."));
+    mSearchMessages->setText((mCurrentCollection.resource() == QLatin1String("akonadi_search_resource")) ? i18n("Edit Search...") : i18n("&Find Messages..."));
 
     mExpireConfigAction->setEnabled(mCurrentFolder &&
                                     !mCurrentFolder->isStructural() &&
                                     !multiFolder &&
                                     mCurrentFolder->canDeleteMessages() &&
                                     folderWithContent &&
-                                    !MailCommon::Util::isVirtualCollection(mCurrentFolder->collection()));
+                                    !MailCommon::Util::isVirtualCollection(mCurrentCollection));
 
     updateHtmlMenuEntry();
 
@@ -4016,7 +4030,7 @@ void KMMainWidget::updateFolderMenu()
 
     actionlist << akonadiStandardAction(Akonadi::StandardActionManager::ManageLocalSubscriptions);
     bool imapFolderIsOnline = false;
-    if (mCurrentFolder && PimCommon::MailUtil::isImapFolder(mCurrentFolder->collection(), imapFolderIsOnline)) {
+    if (mCurrentFolder && PimCommon::MailUtil::isImapFolder(mCurrentCollection, imapFolderIsOnline)) {
         if (imapFolderIsOnline) {
             actionlist << mServerSideSubscription;
         }
@@ -4042,7 +4056,7 @@ void KMMainWidget::slotIntro()
     }
     mMsgView->displayAboutPage();
 
-    mCurrentFolder.clear();
+    clearCurrentFolder();
 }
 
 void KMMainWidget::slotShowStartupFolder()
@@ -4325,7 +4339,7 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 
             Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob(item);
             if (mCurrentFolder) {
-                const QString resource = mCurrentFolder->collection().resource();
+                const QString resource = mCurrentCollection.resource();
                 itemFetchJob->setProperty("_resource", QVariant::fromValue(resource));
                 connect(itemFetchJob, &ItemFetchJob::itemsReceived,
                         this, &KMMainWidget::itemsReceived);
@@ -4366,7 +4380,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
 
     Akonadi::Item copyItem(item);
     if (mCurrentFolder) {
-        copyItem.setParentCollection(mCurrentFolder->collection());
+        copyItem.setParentCollection(mCurrentCollection);
     }
 
     mMsgView->setMessage(copyItem);
@@ -4426,11 +4440,11 @@ void KMMainWidget::slotRemoveDuplicates()
 
 void KMMainWidget::slotServerSideSubscription()
 {
-    if (!mCurrentFolder) {
+    if (!mCurrentCollection.isValid()) {
         return;
     }
     PimCommon::ManageServerSideSubscriptionJob *job = new PimCommon::ManageServerSideSubscriptionJob(this);
-    job->setCurrentCollection(mCurrentFolder->collection());
+    job->setCurrentCollection(mCurrentCollection);
     job->setParentWidget(this);
     job->start();
 }
@@ -4471,17 +4485,17 @@ void KMMainWidget::addRecentFile(const QUrl &mUrl)
 
 void KMMainWidget::slotMoveMessageToTrash()
 {
-    if (messageView() && messageView()->viewer() && mCurrentFolder) {
-        KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentFolder->collection(), messageView()->viewer()->messageItem(), -1);
+    if (messageView() && messageView()->viewer() && mCurrentCollection.isValid()) {
+        KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentCollection, messageView()->viewer()->messageItem(), -1);
         command->start();
     }
 }
 
 void KMMainWidget::slotArchiveMails()
 {
-    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
+    if (mCurrentCollection.isValid()) {
         const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
-        KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentFolder->collection().resource());
+        KMKernel::self()->folderArchiveManager()->setArchiveItems(selectedMessages, mCurrentCollection.resource());
     }
 }
 
@@ -4535,18 +4549,18 @@ void KMMainWidget::slotCollectionRemoved(const Akonadi::Collection &col)
 
 void KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder()
 {
-    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
+    if (mCurrentCollection.isValid()) {
         MarkAllMessagesAsReadInFolderAndSubFolderJob *job = new MarkAllMessagesAsReadInFolderAndSubFolderJob(this);
-        job->setTopLevelCollection(mCurrentFolder->collection());
+        job->setTopLevelCollection(mCurrentCollection);
         job->start();
     }
 }
 
 void KMMainWidget::slotRemoveDuplicateRecursive()
 {
-    if (mCurrentFolder && mCurrentFolder->collection().isValid()) {
+    if (mCurrentCollection.isValid()) {
         RemoveDuplicateMessageInFolderAndSubFolderJob *job = new RemoveDuplicateMessageInFolderAndSubFolderJob(this);
-        job->setTopLevelCollection(mCurrentFolder->collection());
+        job->setTopLevelCollection(mCurrentCollection);
         job->start();
     }
 }
