@@ -560,6 +560,8 @@ private Q_SLOTS:
     void slotEditCurrentVacation();
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
 private:
+    void clearCurrentFolder();
+    void setCurrentCollection(const Akonadi::Collection &col);
     void showMessageActivities(const QString &str);
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);
@@ -674,6 +676,7 @@ private:
     QAction *mMarkAllMessageAsReadAndInAllSubFolder;
     KActionMenuAccount *mAccountActionMenu;
     QAction *mRemoveDuplicateRecursiveAction;
+    Akonadi::Collection mCurrentCollection;
 };
 
 #endif
