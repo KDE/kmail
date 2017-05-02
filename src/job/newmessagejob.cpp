@@ -57,7 +57,7 @@ void NewMessageJob::start()
 
     mMsg->assemble();
 
-    mCollection = mNewMessageJobSettings.mFolder ? mNewMessageJobSettings.mFolder->collection() : Akonadi::Collection();
+    mCollection = mNewMessageJobSettings.mCurrentCollection;
     TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &NewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());

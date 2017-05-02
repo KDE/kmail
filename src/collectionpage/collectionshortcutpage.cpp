@@ -48,6 +48,7 @@ CollectionShortcutPage::~CollectionShortcutPage()
 
 void CollectionShortcutPage::init(const Akonadi::Collection &col)
 {
+    mCurrentCollection = col;
     mFolder = FolderCollection::forCollection(col, false);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
@@ -89,7 +90,7 @@ void CollectionShortcutPage::save(Akonadi::Collection & /*col*/)
         if (mShortcutChanged) {
             mKeySeqWidget->applyStealShortcut();
             mFolder->setShortcut(mKeySeqWidget->keySequence());
-            KMKernel::self()->getKMMainWidget()->folderShortcutActionManager()->shortcutChanged(mFolder->collection());
+            KMKernel::self()->getKMMainWidget()->folderShortcutActionManager()->shortcutChanged(mCurrentCollection);
         }
     }
 }

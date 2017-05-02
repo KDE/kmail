@@ -195,7 +195,7 @@ void CollectionMailingListPage::slotDetectMailingList()
     // next try the 5 most recently added messages
     if (!(mMailingList.features() & MailingList::Post)) {
         //FIXME not load all folder
-        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mFolder->collection(), this);
+        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mCurrentCollection, this);
         job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header);
         connect(job, &Akonadi::ItemFetchJob::result, this, &CollectionMailingListPage::slotFetchDone);
         //Don't allow to reactive it
@@ -336,19 +336,19 @@ void CollectionMailingListPage::slotInvokeHandler()
     save(mCurrentCollection);
     switch (mAddressCombo->currentIndex()) {
     case 0:
-        KMail::Util::mailingListPost(mFolder);
+        KMail::Util::mailingListPost(mFolder, mCurrentCollection);
         break;
     case 1:
-        KMail::Util::mailingListSubscribe(mFolder);
+        KMail::Util::mailingListSubscribe(mFolder, mCurrentCollection);
         break;
     case 2:
-        KMail::Util::mailingListUnsubscribe(mFolder);
+        KMail::Util::mailingListUnsubscribe(mFolder, mCurrentCollection);
         break;
     case 3:
-        KMail::Util::mailingListArchives(mFolder);
+        KMail::Util::mailingListArchives(mFolder, mCurrentCollection);
         break;
     case 4:
-        KMail::Util::mailingListHelp(mFolder);
+        KMail::Util::mailingListHelp(mFolder, mCurrentCollection);
         break;
     default:
         qCWarning(KMAIL_LOG) << "Wrong entry in the mailing list entry combo!";

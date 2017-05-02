@@ -129,6 +129,7 @@ public:
     /** Access to the header list pane. */
     CollectionPane *messageListPane() const;
 
+    Akonadi::Collection currentCollection() const;
     QSharedPointer<MailCommon::FolderCollection> currentFolder() const;
 
     static void cleanup();

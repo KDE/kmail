@@ -42,6 +42,7 @@ private:
     void slotShortcutChanged();
     void init(const Akonadi::Collection &);
     QSharedPointer<MailCommon::FolderCollection> mFolder;
+    Akonadi::Collection mCurrentCollection;
     KKeySequenceWidget *mKeySeqWidget;
     bool mShortcutChanged;
 };

@@ -33,11 +33,13 @@ public:
     void start();
     void setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder);
 
+    void setCurrentCollection(const Akonadi::Collection &col);
 private:
     void slotOpenComposer(bool forceCursorPosition);
     QSharedPointer<MailCommon::FolderCollection> mFolder;
     uint mIdentity;
     KMime::Message::Ptr mMsg;
+    Akonadi::Collection mCurrentCollection;
 };
 
 #endif // COMPOSENEWMESSAGEJOB_H

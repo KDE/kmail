@@ -35,9 +35,11 @@ public:
 
     void setUrl(const QUrl &url);
     void setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder);
+    void setCurrentCollection(const Akonadi::Collection &currentCollection);
 private:
     void slotOpenComposer();
     QUrl mUrl;
+    Akonadi::Collection mCurrentCollection;
     QSharedPointer<MailCommon::FolderCollection> mFolder;
     uint mIdentity;
     KMime::Message::Ptr mMsg;

@@ -38,12 +38,14 @@ struct NewMessageJobSettings
                           bool hidden,
                           const QString &attachURL,
                           const QSharedPointer<MailCommon::FolderCollection> &folder,
-                          uint identity)
+                          uint identity,
+                          const Akonadi::Collection &currentCollection)
         : mTo(to),
           mCc(cc),
           mBcc(bcc),
           mAttachURL(attachURL),
           mFolder(folder),
+          mCurrentCollection(currentCollection),
           mHidden(hidden),
           mIdentity(identity)
 
@@ -55,6 +57,7 @@ struct NewMessageJobSettings
     QString mBcc;
     QString mAttachURL;
     QSharedPointer<MailCommon::FolderCollection> mFolder;
+    Akonadi::Collection mCurrentCollection;
     bool mHidden;
     uint mIdentity;
 };

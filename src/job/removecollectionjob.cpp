@@ -116,7 +116,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
             == KMessageBox::Continue) {
         kmkernel->checkFolderFromResources(listOfCollection << col);
 
-        if (col.id() == mMainWidget->currentFolder()->collection().id()) {
+        if (col.id() == mMainWidget->currentCollection().id()) {
             Q_EMIT clearCurrentFolder();
         }
 

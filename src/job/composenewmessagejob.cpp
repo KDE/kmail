@@ -39,6 +39,11 @@ ComposeNewMessageJob::~ComposeNewMessageJob()
 
 }
 
+void ComposeNewMessageJob::setCurrentCollection(const Akonadi::Collection &col)
+{
+    mCurrentCollection = col;
+}
+
 void ComposeNewMessageJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message());
@@ -49,7 +54,7 @@ void ComposeNewMessageJob::start()
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &ComposeNewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     if (mFolder) {
-        parser->process(mMsg, mFolder->collection());
+        parser->process(mMsg, mCurrentCollection);
     } else {
         parser->process(KMime::Message::Ptr(), Akonadi::Collection());
     }
@@ -58,9 +63,7 @@ void ComposeNewMessageJob::start()
 void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
 {
     KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);
-    if (mFolder) {
-        win->setCollectionForNewMessage(mFolder->collection());
-    }
+    win->setCollectionForNewMessage(mCurrentCollection);
 
     if (forceCursorPosition) {
         win->setFocusToEditor();

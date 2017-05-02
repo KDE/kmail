@@ -692,18 +692,23 @@ void KMKernel::newMessage(const QString &to,
                                      const QString &_attachURL)
 {
     QSharedPointer<FolderCollection> folder;
+    Akonadi::Collection col;
     uint id = 0;
     if (useFolderId) {
         //create message with required folder identity
         folder = currentFolderCollection();
         id = folder ? folder->identity() : 0;
+        col = currentCollection();
     }
 
     const NewMessageJobSettings settings(to,
                                          cc,
                                          bcc,
                                          hidden,
-                                         _attachURL, folder, id);
+                                         _attachURL,
+                                         folder,
+                                         id,
+                                         col);
 
     NewMessageJob *job = new NewMessageJob(this);
     job->setNewMessageJobSettings(settings);
@@ -1511,6 +1516,16 @@ bool KMKernel::canQueryClose()
     return false;
 }
 
+Akonadi::Collection KMKernel::currentCollection()
+{
+    KMMainWidget *widget = getKMMainWidget();
+    Akonadi::Collection col;
+    if (widget) {
+        col = widget->currentCollection();
+    }
+    return col;
+}
+
 QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
 {
     KMMainWidget *widget = getKMMainWidget();
@@ -1876,8 +1891,8 @@ void KMKernel::resourceGoOnLine()
 {
     KMMainWidget *widget = getKMMainWidget();
     if (widget) {
-        if (widget->currentFolder()) {
-            Akonadi::Collection collection = widget->currentFolder()->collection();
+        if (widget->currentCollection().isValid()) {
+            Akonadi::Collection collection = widget->currentCollection();
             Akonadi::AgentInstance instance = Akonadi::AgentManager::self()->instance(collection.resource());
             instance.setIsOnline(true);
             widget->clearViewer();

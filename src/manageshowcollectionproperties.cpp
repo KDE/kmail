@@ -77,10 +77,10 @@ void ManageShowCollectionProperties::slotShowFolderShortcutDialog()
 
 void ManageShowCollectionProperties::showCollectionProperties(const QString &pageToShow)
 {
-    if (!mMainWidget->currentFolder()) {
+    if (!mMainWidget->currentCollection().isValid()) {
         return;
     }
-    const Akonadi::Collection col = mMainWidget->currentFolder()->collection();
+    const Akonadi::Collection col = mMainWidget->currentCollection();
     const Akonadi::Collection::Id id = col.id();
     QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id);
     if (dlg) {
@@ -131,7 +131,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesContinued(KJob *job
         Akonadi::CollectionAttributesSynchronizationJob *sync
             = qobject_cast<Akonadi::CollectionAttributesSynchronizationJob *>(job);
         Q_ASSERT(sync);
-        if (sync->property("collectionId") != mMainWidget->currentFolder()->collection().id()) {
+        if (sync->property("collectionId") != mMainWidget->currentCollection().id()) {
             return;
         }
         pageToShow = sync->property("pageToShow").toString();
@@ -158,7 +158,7 @@ void ManageShowCollectionProperties::showCollectionPropertiesContinued(const QSt
                 KPIM::ProgressManager::instance(), &KPIM::ProgressManager::slotStandardCancelHandler);
     }
 
-    Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mMainWidget->currentFolder()->collection(),
+    Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mMainWidget->currentCollection(),
             Akonadi::CollectionFetchJob::Base);
     connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()));
     fetch->fetchScope().setIncludeStatistics(true);

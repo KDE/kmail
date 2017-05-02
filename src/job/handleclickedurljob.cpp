@@ -20,6 +20,7 @@
 #include "handleclickedurljob.h"
 #include "kmkernel.h"
 #include "composer.h"
+#include "kmail_debug.h"
 #include "editor/kmcomposerwin.h"
 #include <KMime/Message>
 #include <MessageCore/StringUtil>
@@ -65,23 +66,20 @@ void HandleClickedUrlJob::start()
     }
     const QString attach = fields.value(QStringLiteral("attach"));
     if (!attach.isEmpty()) {
+        qCDebug(KMAIL_LOG) << "Attachment not supported yet";
         //TODO
     }
 
-    if (!mFolder.isNull()) {
-        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
-        connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &HandleClickedUrlJob::slotOpenComposer);
-        parser->setIdentityManager(KMKernel::self()->identityManager());
-        parser->process(mMsg, mFolder->collection());
-    }
+    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &HandleClickedUrlJob::slotOpenComposer);
+    parser->setIdentityManager(KMKernel::self()->identityManager());
+    parser->process(mMsg, mCurrentCollection);
 }
 void HandleClickedUrlJob::slotOpenComposer()
 {
     KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);
     win->setFocusToSubject();
-    if (!mFolder.isNull()) {
-        win->setCollectionForNewMessage(mFolder->collection());
-    }
+    win->setCollectionForNewMessage(mCurrentCollection);
     win->show();
     deleteLater();
 }
@@ -94,4 +92,9 @@ void HandleClickedUrlJob::setUrl(const QUrl &url)
 void HandleClickedUrlJob::setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder)
 {
     mFolder = folder;
+}
+
+void HandleClickedUrlJob::setCurrentCollection(const Akonadi::Collection &currentCollection)
+{
+    mCurrentCollection = currentCollection;
 }

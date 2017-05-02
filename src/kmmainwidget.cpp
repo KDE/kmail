@@ -970,6 +970,11 @@ CollectionPane *KMMainWidget::messageListPane() const
     return mMessagePane;
 }
 
+Collection KMMainWidget::currentCollection() const
+{
+    return mCurrentCollection;
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::deleteWidgets()
 {
@@ -1327,6 +1332,7 @@ void KMMainWidget::slotCompose()
 {
     ComposeNewMessageJob *job = new ComposeNewMessageJob;
     job->setFolder(mCurrentFolder);
+    job->setCurrentCollection(mCurrentCollection);
     job->start();
 }
 
@@ -1410,7 +1416,7 @@ void KMMainWidget::newFromTemplate(const Akonadi::Item &msg)
 void KMMainWidget::slotPostToML()
 {
     if (mCurrentFolder && mCurrentFolder->isMailingListEnabled()) {
-        if (KMail::Util::mailingListPost(mCurrentFolder)) {
+        if (KMail::Util::mailingListPost(mCurrentFolder, mCurrentCollection)) {
             return;
         }
     }
