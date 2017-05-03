@@ -507,7 +507,7 @@ void QWinMetaFile::polyPolygon(long, short *parm)
             startPolygon += 2;
         }
         QRegion r(pa1);
-        region = region.eor(r);
+        region = region.xored(r);
     }
     mPainter.setClipRegion(region);
 
@@ -663,7 +663,7 @@ void QWinMetaFile::intersectClipRect(long, short *parm)
     QRegion region(bbox());
 
     QRegion newRegion(parm[ 3 ], parm[ 2 ], parm[ 1 ] - parm[ 3 ], parm[ 0 ] - parm[ 2 ]);
-    region = region.intersect(newRegion);
+    region = region.intersected(newRegion);
 
     mPainter.setClipRegion(region);
 }
@@ -679,7 +679,7 @@ void QWinMetaFile::excludeClipRect(long, short *parm)
     QRegion region(bbox());
 
     QRegion newRegion(parm[ 3 ], parm[ 2 ], parm[ 1 ] - parm[ 3 ], parm[ 0 ] - parm[ 2 ]);
-    region = region.subtract(newRegion);
+    region = region.subtracted(newRegion);
 
     mPainter.setClipRegion(region);
 }

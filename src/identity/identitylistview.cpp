@@ -126,8 +126,8 @@ IdentityListView::IdentityListView(QWidget *parent)
 #endif
     setHeaderLabels(QStringList() << i18n("Identity Name") << i18n("Email Address"));
     setRootIsDecorated(false);
-    header()->setMovable(false);
-    header()->setResizeMode(QHeaderView::ResizeToContents);
+    header()->setSectionsMovable(false);
+    header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     setAllColumnsShowFocus(true);
     setAlternatingRowColors(true);
     setSortingEnabled(true);
