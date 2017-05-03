@@ -22,7 +22,7 @@
 #define COLLECTIONMAILINGLISTPAGE_H
 
 #include "MessageCore/MailingList"
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 #include <AkonadiWidgets/collectionpropertiespage.h>
 #include <AkonadiCore/collection.h>
@@ -69,7 +69,7 @@ private:
     void fillEditBox();
 
     Akonadi::Collection mCurrentCollection;
-    QSharedPointer<MailCommon::FolderCollection> mFolder;
+    QSharedPointer<MailCommon::FolderSettings> mFolder;
 
     MailingList   mMailingList;
     QCheckBox    *mHoldsMailingList;

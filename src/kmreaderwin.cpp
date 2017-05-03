@@ -702,7 +702,7 @@ void KMReaderWin::update(bool force)
 void KMReaderWin::slotUrlClicked(const Akonadi::Item &item, const QUrl &url)
 {
     if (item.isValid() && item.parentCollection().isValid()) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(
+        QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(
                 MailCommon::Util::updatedCollection(item.parentCollection()), false);
         KMail::Util::handleClickedURL(url, fd, item.parentCollection());
         return;

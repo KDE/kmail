@@ -22,7 +22,7 @@
 
 #include <QObject>
 #include <QPointer>
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 #include <libkdepim/progressmanager.h>
 

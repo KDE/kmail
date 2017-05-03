@@ -119,7 +119,7 @@
 #include <Akonadi/KMime/MessageStatus>
 #include "messagecore/messagehelpers.h"
 #include <MailCommon/FolderRequester>
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 #include "widgets/statusbarlabeltoggledstate.h"
 
@@ -2123,7 +2123,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
     if (items.first().mimeType() == KMime::Message::mimeType()) {
         uint identity = 0;
         if (items.at(0).isValid() && items.at(0).parentCollection().isValid()) {
-            QSharedPointer<MailCommon::FolderCollection> fd(MailCommon::FolderCollection::forCollection(items.at(0).parentCollection(), false));
+            QSharedPointer<MailCommon::FolderSettings> fd(MailCommon::FolderSettings::forCollection(items.at(0).parentCollection(), false));
             if (fd) {
                 identity = fd->identity();
             }

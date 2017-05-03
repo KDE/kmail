@@ -21,7 +21,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "messageviewer/messageviewersettings.h"
 #include "MessageComposer/MessageComposerSettings"
 #include <WebEngineViewer/CheckPhishingUrlCache>
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 #include "settings/kmailsettings.h"
 
 #include "kmkernel.h"
@@ -128,11 +128,11 @@ void SecurityPage::GeneralTab::save()
             saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
             if (kmkernel) {
                 for (const Akonadi::Collection &collection : kmkernel->allFolders()) {
-                    KConfigGroup config(KMKernel::self()->config(), MailCommon::FolderCollection::configGroupName(collection));
+                    KConfigGroup config(KMKernel::self()->config(), MailCommon::FolderSettings::configGroupName(collection));
                     //Old config
                     config.deleteEntry("htmlMailOverride");
                     config.deleteEntry("displayFormatOverride");
-                    MailCommon::FolderCollection::resetHtmlFormat();
+                    MailCommon::FolderSettings::resetHtmlFormat();
                 }
             }
         }

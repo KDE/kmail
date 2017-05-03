@@ -18,7 +18,7 @@
 */
 #include "foldershortcutactionmanager.h"
 
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 #include "mailcommon/mailkernel.h"
 
 #include <AkonadiCore/ChangeRecorder>
@@ -121,7 +121,7 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
 {
     // remove the old one, no autodelete in Qt4
     slotCollectionRemoved(col);
-    const QSharedPointer<FolderCollection> folderCollection(FolderCollection::forCollection(col, false));
+    const QSharedPointer<FolderSettings> folderCollection(FolderSettings::forCollection(col, false));
     const QKeySequence shortcut(folderCollection->shortcut());
     if (shortcut.isEmpty()) {
         return;

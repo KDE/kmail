@@ -41,7 +41,7 @@
 #include <QWidget>
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/Collection>
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 namespace KMail
 {
@@ -68,15 +68,15 @@ Akonadi::Item::Id putRepliesInSameFolder(const Akonadi::Item &item);
      * Handles a clicked URL, but only in case the viewer didn't handle it.
      * Currently only support mailto.
      */
-bool handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder = QSharedPointer<MailCommon::FolderCollection>(), const Akonadi::Collection &collection = Akonadi::Collection());
+bool handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder = QSharedPointer<MailCommon::FolderSettings>(), const Akonadi::Collection &collection = Akonadi::Collection());
 
-bool mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderCollection> &folder, const Akonadi::Collection &collection);
+bool mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection);
 
-bool mailingListPost(const QSharedPointer<MailCommon::FolderCollection> &fd, const Akonadi::Collection &col);
-bool mailingListSubscribe(const QSharedPointer<MailCommon::FolderCollection> &fd, const Akonadi::Collection &col);
-bool mailingListUnsubscribe(const QSharedPointer<MailCommon::FolderCollection> &fd, const Akonadi::Collection &col);
-bool mailingListArchives(const QSharedPointer<MailCommon::FolderCollection> &fd, const Akonadi::Collection &col);
-bool mailingListHelp(const QSharedPointer<MailCommon::FolderCollection> &fd, const Akonadi::Collection &col);
+bool mailingListPost(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+bool mailingListSubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+bool mailingListUnsubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+bool mailingListArchives(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+bool mailingListHelp(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
 
 void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr &msg);
 

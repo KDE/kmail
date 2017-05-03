@@ -63,7 +63,7 @@ void CollectionMailingListPage::slotConfigChanged()
 
 bool CollectionMailingListPage::canHandle(const Akonadi::Collection &col) const
 {
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(col, false);
+    QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(col, false);
     return (!CommonKernel->isSystemFolderCollection(col) &&
             !fd->isStructural() &&
             !MailCommon::Util::isVirtualCollection(col));
@@ -72,7 +72,7 @@ bool CollectionMailingListPage::canHandle(const Akonadi::Collection &col) const
 void CollectionMailingListPage::init(const Akonadi::Collection &col)
 {
     mCurrentCollection = col;
-    mFolder = FolderCollection::forCollection(col, false);
+    mFolder = FolderSettings::forCollection(col, false);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
 

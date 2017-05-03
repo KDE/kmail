@@ -66,7 +66,7 @@ using KMail::MailServiceImpl;
 #include "globalsettings_templateparser.h"
 #include "TemplateParser/TemplatesUtil"
 
-#include "mailcommon/foldercollection.h"
+#include "mailcommon/foldersettings.h"
 #include "editor/codec/codecmanager.h"
 
 #include <kmessagebox.h>
@@ -691,7 +691,7 @@ void KMKernel::newMessage(const QString &to,
                                      const QString & /*messageFile*/,
                                      const QString &_attachURL)
 {
-    QSharedPointer<FolderCollection> folder;
+    QSharedPointer<FolderSettings> folder;
     Akonadi::Collection col;
     uint id = 0;
     if (useFolderId) {
@@ -1182,7 +1182,7 @@ void KMKernel::cleanup(void)
 
     // Flush the cache of foldercollection objects. This results
     // in configuration writes, so we need to do it early enough.
-    MailCommon::FolderCollection::clearCache();
+    MailCommon::FolderSettings::clearCache();
 
     // Write the config while all other managers are alive
     delete the_msgSender;
@@ -1526,10 +1526,10 @@ Akonadi::Collection KMKernel::currentCollection()
     return col;
 }
 
-QSharedPointer<FolderCollection> KMKernel::currentFolderCollection()
+QSharedPointer<FolderSettings> KMKernel::currentFolderCollection()
 {
     KMMainWidget *widget = getKMMainWidget();
-    QSharedPointer<FolderCollection> folder;
+    QSharedPointer<FolderSettings> folder;
     if (widget) {
         folder = widget->currentFolder();
     }
@@ -1726,7 +1726,7 @@ void KMKernel::stopAgentInstance()
 
 void KMKernel::slotCollectionRemoved(const Akonadi::Collection &col)
 {
-    KConfigGroup group(KMKernel::config(), MailCommon::FolderCollection::configGroupName(col));
+    KConfigGroup group(KMKernel::config(), MailCommon::FolderSettings::configGroupName(col));
     group.deleteGroup();
     group.sync();
     const QString colStr = QString::number(col.id());

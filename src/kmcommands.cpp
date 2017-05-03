@@ -70,7 +70,7 @@
 #include <AkonadiCore/Tag>
 #include <AkonadiCore/TagCreateJob>
 
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 #include <MailCommon/FilterAction>
 #include <MailCommon/FilterManager>
 #include <MailCommon/MailFilter>
@@ -411,7 +411,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
     uint id = 0;
 
     if (mMessage.isValid() && mMessage.parentCollection().isValid()) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(mMessage.parentCollection(), false);
+        QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(mMessage.parentCollection(), false);
         id = fd->identity();
     }
 

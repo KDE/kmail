@@ -81,7 +81,7 @@ class IdentityManager;
 namespace MailCommon
 {
 class Kernel;
-class FolderCollection;
+class FolderSettings;
 class FolderCollectionMonitor;
 class JobScheduler;
 class KMFilterDialog;
@@ -561,7 +561,7 @@ private:
     void verifyAccount();
     void resourceGoOnLine();
     void openReader(bool onlyCheck);
-    QSharedPointer<MailCommon::FolderCollection> currentFolderCollection();
+    QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
 
     UndoStack *the_undoStack;
     MessageComposer::AkonadiSender *the_msgSender;

@@ -89,7 +89,7 @@ void HandleClickedUrlJob::setUrl(const QUrl &url)
     mUrl = url;
 }
 
-void HandleClickedUrlJob::setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder)
+void HandleClickedUrlJob::setFolder(const QSharedPointer<MailCommon::FolderSettings> &folder)
 {
     mFolder = folder;
 }

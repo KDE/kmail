@@ -530,7 +530,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
         writeFolderConfig();
     }
 
-    mCurrentFolder = FolderCollection::forCollection(col);
+    mCurrentFolder = FolderSettings::forCollection(col);
     mCurrentCollection = col;
 
     readFolderConfig();
@@ -594,7 +594,7 @@ void KMMainWidget::readFolderConfig()
         return;
     }
     KSharedConfig::Ptr config = KMKernel::self()->config();
-    KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(mCurrentCollection));
+    KConfigGroup group(config, MailCommon::FolderSettings::configGroupName(mCurrentCollection));
     if (group.hasKey("htmlMailOverride")) {
         const bool useHtml = group.readEntry("htmlMailOverride", false);
         mFolderDisplayFormatPreference = useHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
@@ -612,7 +612,7 @@ void KMMainWidget::writeFolderConfig()
 {
     if (mCurrentCollection.isValid()) {
         KSharedConfig::Ptr config = KMKernel::self()->config();
-        KConfigGroup group(config, MailCommon::FolderCollection::configGroupName(mCurrentCollection));
+        KConfigGroup group(config, MailCommon::FolderSettings::configGroupName(mCurrentCollection));
         group.writeEntry("htmlLoadExternalOverride", mFolderHtmlLoadExtPreference);
         if (mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting) {
             group.deleteEntry("displayFormatOverride");
@@ -4231,7 +4231,7 @@ const KMMainWidget::PtrList *KMMainWidget::mainWidgetList()
     return theMainWidgetList;
 }
 
-QSharedPointer<FolderCollection> KMMainWidget::currentFolder() const
+QSharedPointer<FolderSettings> KMMainWidget::currentFolder() const
 {
     return mCurrentFolder;
 }

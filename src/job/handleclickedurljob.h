@@ -22,7 +22,7 @@
 
 #include <QObject>
 #include <QSharedPointer>
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 class HandleClickedUrlJob : public QObject
 {
@@ -34,13 +34,13 @@ public:
     void start();
 
     void setUrl(const QUrl &url);
-    void setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder);
+    void setFolder(const QSharedPointer<MailCommon::FolderSettings> &folder);
     void setCurrentCollection(const Akonadi::Collection &currentCollection);
 private:
     void slotOpenComposer();
     QUrl mUrl;
     Akonadi::Collection mCurrentCollection;
-    QSharedPointer<MailCommon::FolderCollection> mFolder;
+    QSharedPointer<MailCommon::FolderSettings> mFolder;
     uint mIdentity;
     KMime::Message::Ptr mMsg;
 };

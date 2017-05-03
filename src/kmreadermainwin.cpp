@@ -50,7 +50,7 @@
 #include "messageactions.h"
 #include "util.h"
 #include "mailcommon/mailkernel.h"
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 #include "messageviewer/headerstyleplugin.h"
 #include "messageviewer/headerstyle.h"
 
@@ -246,7 +246,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     KMCommand *command = nullptr;
     const Akonadi::Collection parentCol = mReaderWin->message().parentCollection();
     if (parentCol.isValid()) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCol, false);
+        QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
         if (fd)
             command = new KMForwardCommand(this, mReaderWin->message(),
                                            fd->identity(), QString(), mReaderWin->copyText());
@@ -268,7 +268,7 @@ void KMReaderMainWin::slotForwardAttachedMessage()
     KMCommand *command = nullptr;
     const Akonadi::Collection parentCol = mReaderWin->message().parentCollection();
     if (parentCol.isValid()) {
-        QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCol, false);
+        QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
         if (fd)
             command = new KMForwardAttachedCommand(this, mReaderWin->message(),
                                                    fd->identity());

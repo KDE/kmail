@@ -21,7 +21,7 @@
 
 #include <QObject>
 #include <QSharedPointer>
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 struct NewMessageJobSettings
 {
@@ -37,7 +37,7 @@ struct NewMessageJobSettings
                           const QString &bcc,
                           bool hidden,
                           const QString &attachURL,
-                          const QSharedPointer<MailCommon::FolderCollection> &folder,
+                          const QSharedPointer<MailCommon::FolderSettings> &folder,
                           uint identity,
                           const Akonadi::Collection &currentCollection)
         : mTo(to),
@@ -56,7 +56,7 @@ struct NewMessageJobSettings
     QString mCc;
     QString mBcc;
     QString mAttachURL;
-    QSharedPointer<MailCommon::FolderCollection> mFolder;
+    QSharedPointer<MailCommon::FolderSettings> mFolder;
     Akonadi::Collection mCurrentCollection;
     bool mHidden;
     uint mIdentity;

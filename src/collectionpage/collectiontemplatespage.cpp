@@ -20,7 +20,7 @@
 #include "collectiontemplatespage.h"
 
 #include "mailcommon/mailkernel.h"
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 #include "TemplateParser/TemplatesConfiguration"
 #include "templatesconfiguration_kfg.h"
 #include <AkonadiCore/collection.h>
@@ -88,7 +88,7 @@ void CollectionTemplatesPage::init()
 
 void CollectionTemplatesPage::load(const Collection &col)
 {
-    const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(col, false);
+    const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(col, false);
     if (!fd) {
         return;
     }

@@ -22,7 +22,7 @@
 
 #include <QObject>
 #include <QSharedPointer>
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 class ComposeNewMessageJob : public QObject
 {
@@ -31,12 +31,12 @@ public:
     explicit ComposeNewMessageJob(QObject *parent = nullptr);
     ~ComposeNewMessageJob();
     void start();
-    void setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder);
+    void setFolder(const QSharedPointer<MailCommon::FolderSettings> &folder);
 
     void setCurrentCollection(const Akonadi::Collection &col);
 private:
     void slotOpenComposer(bool forceCursorPosition);
-    QSharedPointer<MailCommon::FolderCollection> mFolder;
+    QSharedPointer<MailCommon::FolderSettings> mFolder;
     uint mIdentity;
     KMime::Message::Ptr mMsg;
     Akonadi::Collection mCurrentCollection;

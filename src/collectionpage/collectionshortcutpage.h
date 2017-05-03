@@ -20,7 +20,7 @@
 #ifndef COLLECTIONSHORTCUTPAGE_H
 #define COLLECTIONSHORTCUTPAGE_H
 
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 #include <AkonadiWidgets/collectionpropertiespage.h>
 
@@ -41,7 +41,7 @@ public:
 private:
     void slotShortcutChanged();
     void init(const Akonadi::Collection &);
-    QSharedPointer<MailCommon::FolderCollection> mFolder;
+    QSharedPointer<MailCommon::FolderSettings> mFolder;
     Akonadi::Collection mCurrentCollection;
     KKeySequenceWidget *mKeySeqWidget;
     bool mShortcutChanged;

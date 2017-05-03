@@ -21,7 +21,7 @@
 #include "kmkernel.h"
 #include "mailcommon/mailkernel.h"
 
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 #include <PimCommonAkonadi/MailUtil>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
@@ -63,7 +63,7 @@ bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) cons
             && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder()) {
         return true;
     }
-    QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(c, false);
+    QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(c, false);
     if (fd) {
         const QString folderId(QString::number(c.id()));
         // default setting

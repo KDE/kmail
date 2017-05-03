@@ -72,7 +72,7 @@ void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
     deleteLater();
 }
 
-void ComposeNewMessageJob::setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder)
+void ComposeNewMessageJob::setFolder(const QSharedPointer<MailCommon::FolderSettings> &folder)
 {
     mFolder = folder;
 }

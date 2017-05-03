@@ -41,7 +41,7 @@
 #include "messagelist/themecombobox.h"
 #include "messagelist/themeconfigbutton.h"
 
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
 
 using namespace MailCommon;
 
@@ -59,7 +59,7 @@ CollectionViewPage::~CollectionViewPage()
 void CollectionViewPage::init(const Akonadi::Collection &col)
 {
     mCurrentCollection = col;
-    mFolderCollection = FolderCollection::forCollection(col);
+    mFolderCollection = FolderSettings::forCollection(col);
     mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || mFolderCollection->isStructural() || Kernel::folderIsInbox(col);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);

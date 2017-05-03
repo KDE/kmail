@@ -30,7 +30,7 @@
 #include <kxmlguiclient.h>
 #include "messageactions.h"
 #include <kactioncollection.h>
-#include <mailcommon/foldercollection.h>
+#include <mailcommon/foldersettings.h>
 
 #include <QPointer>
 #include <QTimer>
@@ -130,7 +130,7 @@ public:
     CollectionPane *messageListPane() const;
 
     Akonadi::Collection currentCollection() const;
-    QSharedPointer<MailCommon::FolderCollection> currentFolder() const;
+    QSharedPointer<MailCommon::FolderSettings> currentFolder() const;
 
     static void cleanup();
     QAction *action(const QString &name)
@@ -650,7 +650,7 @@ private:
     KMail::MessageActions *mMsgActions;
     Akonadi::StandardMailActionManager *mAkonadiStandardActionManager;
     CollectionPane *mMessagePane;
-    QSharedPointer<MailCommon::FolderCollection> mCurrentFolder;
+    QSharedPointer<MailCommon::FolderSettings> mCurrentFolder;
 
     MailCommon::FolderTreeWidget *mFolderTreeWidget;
 

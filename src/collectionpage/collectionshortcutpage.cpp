@@ -49,7 +49,7 @@ CollectionShortcutPage::~CollectionShortcutPage()
 void CollectionShortcutPage::init(const Akonadi::Collection &col)
 {
     mCurrentCollection = col;
-    mFolder = FolderCollection::forCollection(col, false);
+    mFolder = FolderSettings::forCollection(col, false);
 
     QVBoxLayout *topLayout = new QVBoxLayout(this);
 
