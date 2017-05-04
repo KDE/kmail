@@ -1529,7 +1529,7 @@ void KMMainWidget::slotRemoveFolder()
     if (!mCurrentFolderSettings) {
         return;
     }
-    if (!mCurrentCollection.isValid()) {
+    if (!mCurrentFolderSettings->isValid()) {
         return;
     }
     if (mCurrentFolderSettings->isSystemFolder()) {
@@ -3823,7 +3823,7 @@ void KMMainWidget::updateMessageActionsDelayed()
         actionList << messageActions()->editAction();
     }
     actionList << mSaveAttachmentsAction;
-    if (mCurrentFolderSettings && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
+    if (mCurrentCollection.isValid() && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
         actionList << mArchiveAction;
     }
     mGUIClient->unplugActionList(QStringLiteral("messagelist_actionlist"));
