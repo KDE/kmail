@@ -4344,7 +4344,7 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
             mShowBusySplashTimer->start(1000);
 
             Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob(item);
-            if (mCurrentFolderSettings) {
+            if (mCurrentCollection.isValid()) {
                 const QString resource = mCurrentCollection.resource();
                 itemFetchJob->setProperty("_resource", QVariant::fromValue(resource));
                 connect(itemFetchJob, &ItemFetchJob::itemsReceived,
@@ -4385,7 +4385,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     }
 
     Akonadi::Item copyItem(item);
-    if (mCurrentFolderSettings) {
+    if (mCurrentCollection.isValid()) {
         copyItem.setParentCollection(mCurrentCollection);
     }
 
