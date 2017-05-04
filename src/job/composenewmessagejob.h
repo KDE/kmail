@@ -31,7 +31,7 @@ public:
     explicit ComposeNewMessageJob(QObject *parent = nullptr);
     ~ComposeNewMessageJob();
     void start();
-    void setFolder(const QSharedPointer<MailCommon::FolderSettings> &folder);
+    void setFolderSettings(const QSharedPointer<MailCommon::FolderSettings> &folder);
 
     void setCurrentCollection(const Akonadi::Collection &col);
 private:

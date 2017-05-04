@@ -650,7 +650,7 @@ private:
     KMail::MessageActions *mMsgActions;
     Akonadi::StandardMailActionManager *mAkonadiStandardActionManager;
     CollectionPane *mMessagePane;
-    QSharedPointer<MailCommon::FolderSettings> mCurrentFolder;
+    QSharedPointer<MailCommon::FolderSettings> mCurrentFolderSettings;
 
     MailCommon::FolderTreeWidget *mFolderTreeWidget;
 
