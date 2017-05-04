@@ -33,6 +33,11 @@ class FilterManager;
 class KJob;
 class DummyKernel;
 
+namespace Akonadi
+{
+class Monitor;
+}
+
 class MailFilterAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
 {
     Q_OBJECT
@@ -70,6 +75,8 @@ private Q_SLOTS:
     void itemsReceiviedForFiltering(const Akonadi::Item::List &items);
     void clearMessage();
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
+    void slotItemChanged(const Akonadi::Item &item);
+
 public Q_SLOTS:
     void configure(WId windowId) Q_DECL_OVERRIDE;
 
@@ -80,6 +87,9 @@ private:
     QTimer *mProgressTimer;
     DummyKernel *mMailFilterKernel;
     int mProgressCounter;
+    Akonadi::Monitor *itemMonitor;
+
+    void filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection);
 };
 
 #endif

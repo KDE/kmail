@@ -121,6 +121,11 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     mProgressCounter = 0;
     mProgressTimer = new QTimer(this);
     connect(mProgressTimer, SIGNAL(timeout()), this, SLOT(emitProgress()));
+
+    itemMonitor = new Akonadi::Monitor(this);
+    itemMonitor->itemFetchScope().setFetchRemoteIdentification(true);
+    itemMonitor->itemFetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+    connect(itemMonitor, &Akonadi::Monitor::itemChanged, this, &MailFilterAgent::slotItemChanged);
 }
 
 MailFilterAgent::~MailFilterAgent()
@@ -189,6 +194,26 @@ void MailFilterAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collec
         return;
     }
 
+    if (item.remoteId().isEmpty()) {
+        itemMonitor->setItemMonitored(item);
+    } else {
+        filterItem(item, collection);
+    }
+}
+
+void MailFilterAgent::slotItemChanged(const Akonadi::Item &item)
+{
+    if (item.remoteId().isEmpty()) {
+        return;
+    }
+
+    // now we have the remoteId
+    itemMonitor->setItemMonitored(item, false);
+    filterItem(item, item.parentCollection());
+}
+
+void MailFilterAgent::filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection)
+{
     MailCommon::SearchRule::RequiredPart requiredPart = m_filterManager->requiredPart(collection.resource());
 
     Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(item);
