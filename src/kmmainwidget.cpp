@@ -4390,7 +4390,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     }
 
     mMsgView->setMessage(copyItem);
-    // reset HTML Q_DECL_OVERRIDE to the folder setting
+    // reset HTML override to the folder setting
     mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
     mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPreference);
     mMsgView->setDecryptMessageOverwrite(false);
