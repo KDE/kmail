@@ -590,7 +590,7 @@ void KMMainWidget::readPreConfig()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readFolderConfig()
 {
-    if (!mCurrentFolderSettings || !mCurrentFolderSettings->isValid()) {
+    if (!mCurrentCollection.isValid()) {
         return;
     }
     KSharedConfig::Ptr config = KMKernel::self()->config();
@@ -3688,7 +3688,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     Akonadi::Item::List selectedVisibleItems;
     bool allSelectedBelongToSameThread = false;
     Akonadi::Item currentMessage;
-    if (mCurrentFolderSettings && mCurrentFolderSettings->isValid() &&
+    bool currentFolderSettingsIsValid = mCurrentFolderSettings && mCurrentFolderSettings->isValid();
+    if (currentFolderSettingsIsValid &&
             mMessagePane->getSelectionStats(selectedItems, selectedVisibleItems, &allSelectedBelongToSameThread)
        ) {
         count = selectedItems.count();
@@ -3700,7 +3701,7 @@ void KMMainWidget::updateMessageActionsDelayed()
         currentMessage = Akonadi::Item();
     }
 
-    mApplyFiltersOnFolder->setEnabled(mCurrentFolderSettings && mCurrentFolderSettings->isValid());
+    mApplyFiltersOnFolder->setEnabled(currentFolderSettingsIsValid);
 
     //
     // Here we have:
@@ -3730,7 +3731,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     //       the selection contains any.
     //
 
-    bool readOnly = mCurrentFolderSettings && mCurrentFolderSettings->isValid() && (mCurrentFolderSettings->rights() & Akonadi::Collection::ReadOnly);
+    bool readOnly = currentFolderSettingsIsValid && (mCurrentFolderSettings->rights() & Akonadi::Collection::ReadOnly);
     // can we apply strictly single message actions ? (this is false if the whole selection contains more than one message)
     bool single_actions = count == 1;
     // can we apply loosely single message actions ? (this is false if the VISIBLE selection contains more than one message)
@@ -3740,7 +3741,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     // does the selection identify a single thread ?
     bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessagePane->isThreaded();
     // can we apply flags to the selected messages ?
-    bool flags_available = KMailSettings::self()->allowLocalFlags() || !(mCurrentFolderSettings &&  mCurrentFolderSettings->isValid() ? readOnly : true);
+    bool flags_available = KMailSettings::self()->allowLocalFlags() || !(currentFolderSettingsIsValid ? readOnly : true);
 
     mThreadStatusMenu->setEnabled(thread_actions);
     // these need to be handled individually, the user might have them
@@ -3751,7 +3752,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMarkThreadAsUnreadAction->setEnabled(thread_actions);
     mToggleThreadToActAction->setEnabled(thread_actions && flags_available);
     mToggleThreadImportantAction->setEnabled(thread_actions && flags_available);
-    bool canDeleteMessages = mCurrentFolderSettings && mCurrentFolderSettings->isValid() && (mCurrentFolderSettings->rights() & Akonadi::Collection::CanDeleteItem);
+    bool canDeleteMessages =currentFolderSettingsIsValid && (mCurrentFolderSettings->rights() & Akonadi::Collection::CanDeleteItem);
 
     mTrashThreadAction->setEnabled(thread_actions && canDeleteMessages);
     mDeleteThreadAction->setEnabled(thread_actions && canDeleteMessages);
@@ -3832,7 +3833,7 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     mSaveAsAction->setEnabled(mass_actions);
 
-    if ((mCurrentFolderSettings && mCurrentFolderSettings->isValid())) {
+    if (currentFolderSettingsIsValid) {
         updateMoveAction(mCurrentFolderSettings->statistics());
     } else {
         updateMoveAction(false);
