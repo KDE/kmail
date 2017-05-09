@@ -4272,19 +4272,19 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         MessageList::Core::QuickSearchLine::SearchOptions options = mMessagePane->currentOptions();
         QByteArray searchStringVal;
         if (options & MessageList::Core::QuickSearchLine::SearchEveryWhere) {
-            searchStringVal = "<message>";
+            searchStringVal = QByteArrayLiteral("<message>");
         } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstSubject) {
-            searchStringVal = "subject";
+            searchStringVal = QByteArrayLiteral("subject");
         } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstBody) {
-            searchStringVal = "<body>";
+            searchStringVal = QByteArrayLiteral("<body>");
         } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstFrom) {
-            searchStringVal = "from";
+            searchStringVal = QByteArrayLiteral("from");
         } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstBcc) {
-            searchStringVal = "bcc";
+            searchStringVal = QByteArrayLiteral("bcc");
         } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstTo) {
-            searchStringVal = "to";
+            searchStringVal = QByteArrayLiteral("to");
         } else {
-            searchStringVal = "<message>";
+            searchStringVal = QByteArrayLiteral("<message>");
         }
         pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, searchString));
         const QList<MessageStatus> statusList = mMessagePane->currentFilterStatus();
