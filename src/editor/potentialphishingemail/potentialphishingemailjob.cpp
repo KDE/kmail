@@ -20,6 +20,7 @@
 
 #include "potentialphishingemailjob.h"
 #include <KEmailAddress>
+#include <PimCommon/PimUtil>
 #include "kmail_debug.h"
 
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
@@ -40,18 +41,7 @@ void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
 
 void PotentialPhishingEmailJob::setPotentialPhishingEmails(const QStringList &list)
 {
-    QString str;
-    for (int i = 0; i < list.count(); i++) {
-        QString tmpStr = list.at(i);
-        if (!tmpStr.trimmed().isEmpty()) {
-            if (!str.isEmpty()) {
-                str.append(QStringLiteral(", "));
-            }
-            str.append(tmpStr);
-        }
-    }
-    const QStringList emails = KEmailAddress::splitAddressList(str);
-    mEmails = emails;
+    mEmails = PimCommon::Util::generateEmailList(list);
 }
 
 QStringList PotentialPhishingEmailJob::checkEmails() const
