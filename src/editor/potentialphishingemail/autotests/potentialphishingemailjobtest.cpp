@@ -106,6 +106,10 @@ void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails_data()
 
     emails = QStringList{ QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
     QTest::newRow("emailswithquote") << emails << emails;
+
+    emails = QStringList{ QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org"), QStringLiteral(" ")};
+    createdList = QStringList{ QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    QTest::newRow("emailswithemptystr") << emails << createdList;
 }
 
 void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails()
