@@ -23,6 +23,7 @@
 #include <qtest.h>
 #include <QStringList>
 #include <QSignalSpy>
+#include <QDebug>
 
 PotentialPhishingEmailJobTest::PotentialPhishingEmailJobTest(QObject *parent)
     : QObject(parent)
@@ -90,6 +91,30 @@ void PotentialPhishingEmailJobTest::shouldEmitSignal()
     job->setPotentialPhishingEmails((QStringList() << QStringLiteral("\"bla@kde.org\" <foo@kde.org>")));
     job->start();
     QCOMPARE(spy.count(), 1);
+}
+
+void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails_data()
+{
+    QTest::addColumn<QStringList>("emails");
+    QTest::addColumn<QStringList>("createdListOfEmails");
+    QTest::newRow("emptylist") << QStringList() << QStringList();
+    QStringList emails{ QStringLiteral("foo@kde.org"), QStringLiteral("bla@kde.org")};
+    QStringList createdList{ QStringLiteral("foo@kde.org"), QStringLiteral("bla@kde.org")};
+    QTest::newRow("nonempty") << emails << createdList;
+    emails = QStringList{ QStringLiteral("\"bla\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    QTest::newRow("potentialerrors") << emails << emails;
+
+    emails = QStringList{ QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    QTest::newRow("emailswithquote") << emails << emails;
+}
+
+void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails()
+{
+    QFETCH(QStringList, emails);
+    QFETCH(QStringList, createdListOfEmails);
+    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
+    job->setPotentialPhishingEmails(emails);
+    QCOMPARE(job->checkEmails(), createdListOfEmails);
 }
 
 QTEST_MAIN(PotentialPhishingEmailJobTest)
