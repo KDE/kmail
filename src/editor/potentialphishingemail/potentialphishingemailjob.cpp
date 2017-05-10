@@ -42,11 +42,12 @@ void PotentialPhishingEmailJob::setPotentialPhishingEmails(const QStringList &li
 {
     QString str;
     for (int i = 0; i < list.count(); i++) {
-        if (!list.at(i).trimmed().isEmpty()) {
+        QString tmpStr = list.at(i);
+        if (!tmpStr.trimmed().isEmpty()) {
             if (!str.isEmpty()) {
                 str.append(QStringLiteral(", "));
             }
-            str.append(list.at(i));
+            str.append(tmpStr);
         }
     }
     const QStringList emails = KEmailAddress::splitAddressList(str);
