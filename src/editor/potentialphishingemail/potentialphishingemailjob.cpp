@@ -37,7 +37,7 @@ void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
     mEmailWhiteList = emails;
 }
 
-void PotentialPhishingEmailJob::setEmails(const QStringList &emails)
+void PotentialPhishingEmailJob::setPtentialPhishingEmails(const QStringList &emails)
 {
     mEmails = emails;
 }

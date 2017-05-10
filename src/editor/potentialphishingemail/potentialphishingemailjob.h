@@ -32,7 +32,7 @@ public:
     ~PotentialPhishingEmailJob();
 
     void setEmailWhiteList(const QStringList &emails);
-    void setEmails(const QStringList &emails);
+    void setPtentialPhishingEmails(const QStringList &emails);
 
     QStringList potentialPhisingEmails() const;
     bool start();
