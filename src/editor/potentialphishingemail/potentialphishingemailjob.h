@@ -37,6 +37,8 @@ public:
     QStringList potentialPhisingEmails() const;
     bool start();
 
+    QStringList checkEmails() const;
+
 Q_SIGNALS:
     void potentialPhishingEmailsFound(const QStringList &emails);
 
