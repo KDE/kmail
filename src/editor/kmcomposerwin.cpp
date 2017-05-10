@@ -2740,7 +2740,7 @@ void KMComposerWin::slotCheckSendNow()
     if (!mComposerBase->bcc().isEmpty()) {
         lst << mComposerBase->bcc().split(QLatin1Char(','));
     }
-    job->setPtentialPhishingEmails(lst);
+    job->setPotentialPhishingEmails(lst);
     connect(job, &PotentialPhishingEmailJob::potentialPhishingEmailsFound, this, &KMComposerWin::slotPotentialPhishingEmailsFound);
     job->start();
 }
