@@ -40,7 +40,15 @@ void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
 
 void PotentialPhishingEmailJob::setPotentialPhishingEmails(const QStringList &list)
 {
-    const QString str = list.join(QStringLiteral(", "));
+    QString str;
+    for (int i = 0; i < list.count(); i++) {
+        if (!list.at(i).trimmed().isEmpty()) {
+            if (!str.isEmpty()) {
+                str.append(QStringLiteral(", "));
+            }
+            str.append(list.at(i));
+        }
+    }
     const QStringList emails = KEmailAddress::splitAddressList(str);
     mEmails = emails;
 }
