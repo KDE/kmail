@@ -42,9 +42,7 @@
 
 <para>This is a short introduction to &kmail; and its usage so you can
 start working with it right away. For more in-depth information see the
-<link linkend="using-kmail">Using &kmail;</link> section. Note that
-&kmail;'s installation is described in <link linkend="installation">the
-appendix</link>.</para>
+<link linkend="using-kmail">Using &kmail;</link> section.</para>
 
 <sect1 id="account-wizard">
 <title>Account Wizard</title>
