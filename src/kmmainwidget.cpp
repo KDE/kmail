@@ -4144,7 +4144,10 @@ void KMMainWidget::clearFilterActions()
         actionCollection()->removeAction(a);
     }
 
-    mApplyFilterActionsMenu->menu()->clear();
+    QMenu *actMenu = mApplyFilterActionsMenu->menu();
+    if (actMenu) {
+        actMenu->clear();
+    }
     mFilterTBarActions.clear();
     mFilterMenuActions.clear();
 
