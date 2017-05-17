@@ -252,7 +252,9 @@ void KTNEFMain::viewFile()
             qCDebug(KTNEFAPPS_LOG) << "Mime type from attachment object: " << mimename;
         }
 
-        KRun::runUrl(url, mimename, this, true);
+        KRun::RunFlags flags;
+        flags |= KRun::DeleteTemporaryFiles;
+        KRun::runUrl(url, mimename, this, flags);
     } else {
         KMessageBox::information(
             this,
@@ -509,7 +511,9 @@ void KTNEFMain::slotShowMessageText()
         tmpFile->write(rtf.toLocal8Bit());
         tmpFile->close();
 
-        KRun::runUrl(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"), this, true);
+        KRun::RunFlags flags;
+        flags |= KRun::DeleteTemporaryFiles;
+        KRun::runUrl(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"), this, flags);
         delete tmpFile;
     } else {
         KMessageBox::error(
