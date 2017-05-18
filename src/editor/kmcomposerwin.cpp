@@ -2122,10 +2122,16 @@ void KMComposerWin::slotFetchJob(KJob *job)
 
     if (items.first().mimeType() == KMime::Message::mimeType()) {
         uint identity = 0;
-        if (items.at(0).isValid() && items.at(0).parentCollection().isValid()) {
-            QSharedPointer<MailCommon::FolderSettings> fd(MailCommon::FolderSettings::forCollection(items.at(0).parentCollection(), false));
-            if (fd) {
-                identity = fd->identity();
+        if (items.at(0).isValid()) {
+            const Akonadi::Collection parentCollection = items.at(0).parentCollection();
+            if (parentCollection.isValid()) {
+                const QString resourceName = parentCollection.resource();
+                if (!resourceName.isEmpty()) {
+                    QSharedPointer<MailCommon::FolderSettings> fd(MailCommon::FolderSettings::forCollection(parentCollection, false));
+                    if (fd) {
+                        identity = fd->identity();
+                    }
+                }
             }
         }
         KMCommand *command = new KMForwardAttachedCommand(this, items, identity, this);
