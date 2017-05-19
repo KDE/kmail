@@ -1,6 +1,7 @@
 /*   */
 
 #include "kmkernel.h"
+#include "helper_p.h"
 
 #include "settings/kmailsettings.h"
 #include "libkdepim/broadcaststatus.h"
