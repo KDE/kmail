@@ -60,7 +60,6 @@ set(KDEPIM_LIB_SOVERSION "5")
 
 set(QT_REQUIRED_VERSION "5.7.0")
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
-option(KDEPIM_TEMPLATEPARSER_ASYNC_BUILD "Enable it if you want to use new template parser async." FALSE)
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngine WebEngineWidgets Xml)
 set(LIBGRAVATAR_VERSION_LIB "5.5.40")
