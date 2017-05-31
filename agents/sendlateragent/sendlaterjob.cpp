@@ -109,6 +109,7 @@ void SendLaterJob::slotJobFinished(KJob *job)
             sendError(i18n("Message is not a real message"), SendLaterManager::CanNotFetchItem);
             return;
         }
+        //TODO verify encryption + signed
         updateAndCleanMessageBeforeSending(msg);
 
         if (!mManager->sender()->send(msg, MessageComposer::MessageSender::SendImmediate)) {
