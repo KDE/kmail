@@ -2408,7 +2408,7 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
 }
 
 void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
-                           MessageComposer::MessageSender::SaveIn saveIn)
+                           MessageComposer::MessageSender::SaveIn saveIn, bool willSendItWithoutReediting)
 {
     // TODO integrate with MDA online status
     if (method == MessageComposer::MessageSender::SendImmediate) {
@@ -2417,7 +2417,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method,
         }
     }
 
-    if (saveIn == MessageComposer::MessageSender::SaveInNone) {   // don't save as draft or template, send immediately
+    if (saveIn == MessageComposer::MessageSender::SaveInNone || willSendItWithoutReediting) {   // don't save as draft or template, send immediately
         if (KEmailAddress::firstEmailAddress(from()).isEmpty()) {
             if (!(mShowHeaders & HDR_FROM)) {
                 mShowHeaders |= HDR_FROM;
@@ -2623,9 +2623,9 @@ void KMComposerWin::slotSendLater()
                 case SendLater::SendLaterDialog::SendDeliveryAtTime: {
                     mComposerBase->setSendLaterInfo(info);
                     if (info->isRecurrence()) {
-                        doSend(MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates);
+                        doSend(MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates, true);
                     } else {
-                        doSend(MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInDrafts);
+                        doSend(MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInDrafts, true);
                     }
                     break;
                 }

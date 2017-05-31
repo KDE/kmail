@@ -515,7 +515,8 @@ private:
      * Send the message.
      */
     void doSend(MessageComposer::MessageSender::SendMethod method = MessageComposer::MessageSender::SendDefault,
-                MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone);
+                MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone,
+                bool willSendItWithoutReediting = false);
 
     void doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn);
 
