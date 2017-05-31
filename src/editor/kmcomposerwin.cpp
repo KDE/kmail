@@ -2601,6 +2601,7 @@ void KMComposerWin::slotSendLater()
     if (!checkRecipientNumber()) {
         return;
     }
+    mComposerBase->setSendLaterInfo(nullptr);
     if (mComposerBase->editor()->checkExternalEditorFinished()) {
         const bool wasRegistered = (SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled());
         if (wasRegistered) {
