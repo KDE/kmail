@@ -37,11 +37,11 @@ public:
     QString printDebugInfo();
 
 public Q_SLOTS:
-    void configure(WId windowId) Q_DECL_OVERRIDE;
+    void configure(WId windowId) override;
     void reload();
 
 protected:
-    void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) Q_DECL_OVERRIDE;
+    void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) override;
 
 private:
     FollowUpReminderManager *mManager;

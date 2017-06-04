@@ -63,7 +63,7 @@ public:
 class WinObjBrushHandle: public WinObjHandle
 {
 public:
-    void apply(QPainter &p) Q_DECL_OVERRIDE;
+    void apply(QPainter &p) override;
     QBrush brush;
     virtual ~WinObjBrushHandle() {}
 };
@@ -71,7 +71,7 @@ public:
 class WinObjPenHandle: public WinObjHandle
 {
 public:
-    void apply(QPainter &p) Q_DECL_OVERRIDE;
+    void apply(QPainter &p) override;
     QPen pen;
     virtual ~WinObjPenHandle() {}
 };
@@ -79,7 +79,7 @@ public:
 class WinObjPatternBrushHandle: public WinObjHandle
 {
 public:
-    void apply(QPainter &p) Q_DECL_OVERRIDE;
+    void apply(QPainter &p) override;
     QBrush brush;
     QImage image;
     virtual ~WinObjPatternBrushHandle() {}
@@ -88,7 +88,7 @@ public:
 class WinObjFontHandle: public WinObjHandle
 {
 public:
-    void apply(QPainter &p) Q_DECL_OVERRIDE;
+    void apply(QPainter &p) override;
     QFont font;
     int rotation;
     virtual ~WinObjFontHandle() {}

@@ -93,18 +93,18 @@ public:
 
     /** Override default html mail setting */
     bool htmlOverride() const;
-    void setHtmlOverride(bool Q_DECL_OVERRIDE);
+    void setHtmlOverride(bool override);
     MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
     void setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format);
 
     /** Override default load external references setting */
     bool htmlLoadExtOverride() const;
-    void setHtmlLoadExtOverride(bool Q_DECL_OVERRIDE);
+    void setHtmlLoadExtOverride(bool override);
 
-    /** Is html mail to be supported? Takes into account Q_DECL_OVERRIDE */
+    /** Is html mail to be supported? Takes into account override */
     bool htmlMail() const;
 
-    /** Is loading ext. references to be supported? Takes into account Q_DECL_OVERRIDE */
+    /** Is loading ext. references to be supported? Takes into account override */
     bool htmlLoadExternal();
 
     /** Returns the MD5 hash for the list of new features */

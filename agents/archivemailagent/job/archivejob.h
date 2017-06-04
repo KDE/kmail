@@ -33,8 +33,8 @@ public:
     explicit ArchiveJob(ArchiveMailManager *manager, ArchiveMailInfo *info, const Akonadi::Collection &folder, bool immediate);
     ~ArchiveJob();
 
-    void execute() Q_DECL_OVERRIDE;
-    void kill() Q_DECL_OVERRIDE;
+    void execute() override;
+    void kill() override;
 
 private:
     void slotBackupDone(const QString &info);
@@ -61,9 +61,9 @@ public:
     {
     }
 
-    MailCommon::ScheduledJob *run() Q_DECL_OVERRIDE;
+    MailCommon::ScheduledJob *run() override;
 
-    int taskTypeId() const Q_DECL_OVERRIDE
+    int taskTypeId() const override
     {
         return 2;
     }

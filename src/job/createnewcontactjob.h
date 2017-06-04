@@ -48,7 +48,7 @@ public:
     /**
      * @brief start the job
      */
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 
 private Q_SLOTS:
     void slotCollectionsFetched(KJob *);

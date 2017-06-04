@@ -38,7 +38,7 @@ Q_SIGNALS:
     void configChanged();
 
 protected:
-    void hideEvent(QHideEvent *i) Q_DECL_OVERRIDE;
+    void hideEvent(QHideEvent *i) override;
 
 protected Q_SLOTS:
     /** @reimplemented

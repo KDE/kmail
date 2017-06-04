@@ -30,7 +30,7 @@ public:
     explicit AddEmailToExistingContactJob(const Akonadi::Item &item, const QString &email, QObject *parent = nullptr);
     ~AddEmailToExistingContactJob();
 
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 
 private Q_SLOTS:
     void slotAddEmailDone(KJob *job);

@@ -45,8 +45,8 @@ class KCMKontactSummary : public KCModule
 public:
     explicit KCMKontactSummary(QWidget *parent = nullptr);
 
-    void load() Q_DECL_OVERRIDE;
-    void save() Q_DECL_OVERRIDE;
+    void load() override;
+    void save() override;
 
 private:
     PluginView *mPluginView;

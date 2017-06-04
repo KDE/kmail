@@ -32,7 +32,7 @@ public:
     explicit SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent = nullptr);
     ~SaveDraftJob();
 
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 private Q_SLOTS:
     void slotStoreDone(KJob *job);
 private:

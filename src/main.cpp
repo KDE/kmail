@@ -54,7 +54,7 @@ public:
         , mEventLoopReached(false)
     { }
 
-    int activate(const QStringList &args, const QString &workindDir) Q_DECL_OVERRIDE;
+    int activate(const QStringList &args, const QString &workindDir) override;
     void commitData(QSessionManager &sm);
     void setEventLoopReached();
     void delayedInstanceCreation(const QStringList &args, const QString &workindDir);

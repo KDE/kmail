@@ -317,7 +317,7 @@ protected:
     void moveSelectedMessagesToFolder(const Akonadi::Collection &dest);
     void copySelectedMessagesToFolder(const Akonadi::Collection &dest);
 
-    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *event) override;
 
     KActionCollection *actionCollection() const
     {
@@ -463,7 +463,7 @@ private:
 
     void updateAllToTrashAction(int statistics);
 
-    /** Get Q_DECL_OVERRIDE character encoding. */
+    /** Get override character encoding. */
     QString overrideEncoding() const;
 
     void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);

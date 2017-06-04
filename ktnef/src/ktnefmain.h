@@ -46,7 +46,7 @@ public:
     void loadFile(const QString &filename);
 
 protected:
-    void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
+    void contextMenuEvent(QContextMenuEvent *event) override;
 
 protected Q_SLOTS:
     void openFile();

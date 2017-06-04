@@ -56,7 +56,7 @@ public Q_SLOTS:
      * @brief setCaption
      * @param caption
      */
-    void setCaption(const QString &caption) Q_DECL_OVERRIDE;
+    void setCaption(const QString &caption) override;
 
 protected:
     /**
@@ -64,7 +64,7 @@ protected:
      *  last _visible_ secondary window is closed in case a system tray applet
      *  exists.
      */
-    void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent *) override;
 };
 
 } // namespace KMail

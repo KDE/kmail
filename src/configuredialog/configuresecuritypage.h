@@ -40,10 +40,10 @@ public:
     explicit SecurityPageGeneralTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private:
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadOther() override;
 
 private:
     Ui_SecurityPageGeneralTab mSGTab;
@@ -59,10 +59,10 @@ public:
     explicit SecurityPageMDNTab(QWidget *parent = nullptr);
     QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private:
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadOther() override;
 
 private:
     QButtonGroup *mMDNGroup;
@@ -82,11 +82,11 @@ public:
 
     QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
+    void doLoadOther() override;
 
 private:
     Ui::ComposerCryptoConfiguration *mWidget;
@@ -101,15 +101,15 @@ public:
 
     QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private Q_SLOTS:
     void slotReenableAllWarningsClicked();
     void slotConfigureGnupg();
 
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
+    void doLoadOther() override;
 
 private:
     Ui::WarningConfiguration *mWidget;
@@ -124,13 +124,13 @@ public:
 
     QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private Q_SLOTS:
     void slotUpdateHTTPActions();
 
 private:
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadOther() override;
 
 private:
     Ui::SMimeConfiguration *mWidget;
@@ -154,7 +154,7 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 public:
     explicit SecurityPage(QWidget *parent = nullptr);
 
-    QString helpAnchor() const Q_DECL_OVERRIDE;
+    QString helpAnchor() const override;
 
     typedef SecurityPageGeneralTab GeneralTab;
     typedef SecurityPageMDNTab MDNTab;

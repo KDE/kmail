@@ -28,11 +28,11 @@ public:
     explicit ConfigurePluginsListWidget(QWidget *parent = nullptr);
     ~ConfigurePluginsListWidget();
 
-    void save() Q_DECL_OVERRIDE;
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
-    void initialize() Q_DECL_OVERRIDE;
-    void defaults() Q_DECL_OVERRIDE;
+    void save() override;
+    void doLoadFromGlobalSettings() override;
+    void doResetToDefaultsOther() override;
+    void initialize() override;
+    void defaults() override;
 
 private Q_SLOTS:
     void slotConfigureClicked(const QString &configureGroupName, const QString &identifier);

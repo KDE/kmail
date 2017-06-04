@@ -35,7 +35,7 @@ public:
     {}
     ~ConfigModule() {}
 
-    void defaults() Q_DECL_OVERRIDE {}
+    void defaults() override {}
 
     /** Should return the help anchor for this page or tab */
     virtual QString helpAnchor() const = 0;

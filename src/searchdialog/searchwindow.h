@@ -111,10 +111,10 @@ public:
 
 protected:
     /** Reimplemented to react to Escape. */
-    void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent *) override;
 
     /** Reimplemented to stop searching when the window is closed */
-    void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent *) override;
 
     void createSearchModel();
 

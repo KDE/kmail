@@ -61,8 +61,8 @@ Q_SIGNALS:
     void textChanged(const QString &);
 
 protected:
-    bool openFile() Q_DECL_OVERRIDE;
-    void partActivateEvent(KParts::PartActivateEvent *event) Q_DECL_OVERRIDE;
+    bool openFile() override;
+    void partActivateEvent(KParts::PartActivateEvent *event) override;
 
 protected Q_SLOTS:
     void slotConfigure();

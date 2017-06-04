@@ -50,8 +50,8 @@ public Q_SLOTS:
     void updateQuickSearchText();
 
 protected:
-    bool openFile() Q_DECL_OVERRIDE;
-    void guiActivateEvent(KParts::GUIActivateEvent *e) Q_DECL_OVERRIDE;
+    bool openFile() override;
+    void guiActivateEvent(KParts::GUIActivateEvent *e) override;
 
 private:
     KMMainWidget *mainWidget;

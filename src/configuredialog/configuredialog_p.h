@@ -57,12 +57,12 @@ public:
     ~ConfigModuleWithTabs() {}
 
     // don't reimplement any of those methods
-    void load() Q_DECL_OVERRIDE;
-    void save() Q_DECL_OVERRIDE;
-    void defaults() Q_DECL_OVERRIDE;
+    void load() override;
+    void save() override;
+    void defaults() override;
 
 protected:
-    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *event) override;
     void addTab(ConfigModuleTab *tab, const QString &title);
 
 private:

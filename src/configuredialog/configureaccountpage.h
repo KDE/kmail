@@ -34,11 +34,11 @@ public:
     explicit AccountsPageSendingTab(QWidget *parent = nullptr);
     virtual ~AccountsPageSendingTab();
     QString helpAnchor() const;
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
+    void doLoadOther() override;
 
 private:
     QCheckBox   *mConfirmSendCheck;
@@ -54,7 +54,7 @@ public:
     explicit AccountsPageReceivingTab(QWidget *parent = nullptr);
     ~AccountsPageReceivingTab();
     QString helpAnchor() const;
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 Q_SIGNALS:
     void accountListChanged(const QStringList &);
@@ -66,7 +66,7 @@ private:
     void slotIncludeInCheckChanged(bool checked);
     void slotOfflineOnShutdownChanged(bool checked);
     void slotCheckOnStatupChanged(bool checked);
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
 
     struct RetrievalOptions {
         RetrievalOptions(bool manualCheck, bool offline, bool checkOnStartup)
@@ -90,7 +90,7 @@ class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
     Q_OBJECT
 public:
     explicit AccountsPage(QWidget *parent = nullptr);
-    QString helpAnchor() const Q_DECL_OVERRIDE;
+    QString helpAnchor() const override;
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:
     typedef AccountsPageSendingTab SendingTab;

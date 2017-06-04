@@ -32,10 +32,10 @@ public:
     explicit ConfigurePluginPage(QWidget *parent);
     ~ConfigurePluginPage();
 
-    QString helpAnchor() const Q_DECL_OVERRIDE;
-    void load() Q_DECL_OVERRIDE;
-    void save() Q_DECL_OVERRIDE;
-    void defaults() Q_DECL_OVERRIDE;
+    QString helpAnchor() const override;
+    void load() override;
+    void save() override;
+    void defaults() override;
 private:
     void slotConfigureChanged();
     PimCommon::ConfigurePluginsWidget *mConfigurePlugins;

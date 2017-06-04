@@ -35,8 +35,8 @@ public:
     explicit CollectionShortcutPage(QWidget *parent = nullptr);
     ~CollectionShortcutPage();
 
-    void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
-    void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
+    void load(const Akonadi::Collection &col) override;
+    void save(Akonadi::Collection &col) override;
 
 private:
     void slotShortcutChanged();

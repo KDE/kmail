@@ -54,7 +54,7 @@ public:
         }
     }
 
-    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE
+    QVariant data(const QModelIndex &index, int role) const override
     {
         if (role == Qt::CheckStateRole) {
             if (index.isValid() && index.column() == 0) {
@@ -66,7 +66,7 @@ public:
         return QSortFilterProxyModel::data(index, role);
     }
 
-    bool setData(const QModelIndex &index, const QVariant &data, int role) Q_DECL_OVERRIDE {
+    bool setData(const QModelIndex &index, const QVariant &data, int role) override {
         if (role == Qt::CheckStateRole)
         {
             if (index.isValid() && index.column() == 0) {
@@ -79,7 +79,7 @@ public:
         return QSortFilterProxyModel::setData(index, data, role);
     }
 
-    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE
+    Qt::ItemFlags flags(const QModelIndex &index) const override
     {
         if (index.isValid() && index.column() == 0) {
             return QSortFilterProxyModel::flags(index) | Qt::ItemIsUserCheckable;
@@ -89,7 +89,7 @@ public:
     }
 
 protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const Q_DECL_OVERRIDE
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override
     {
         const QModelIndex source_idx = sourceModel()->index(source_row, 0, source_parent);
         const qint64 colId = sourceModel()->data(source_idx, Akonadi::EntityTreeModel::CollectionIdRole).toLongLong();

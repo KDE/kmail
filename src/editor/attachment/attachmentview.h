@@ -59,11 +59,11 @@ public Q_SLOTS:
 
 protected:
     /** reimpl to avoid default drag cursor */
-    void startDrag(Qt::DropActions supportedActions) Q_DECL_OVERRIDE;
-    void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
-    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+    void startDrag(Qt::DropActions supportedActions) override;
+    void contextMenuEvent(QContextMenuEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
     /** reimpl to avoid drags from ourselves */
-    void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
+    void dragEnterEvent(QDragEnterEvent *event) override;
 
 private Q_SLOTS:
     void slotShowHideAttchementList(bool);

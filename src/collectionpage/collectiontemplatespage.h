@@ -36,9 +36,9 @@ public:
     explicit CollectionTemplatesPage(QWidget *parent = nullptr);
     ~CollectionTemplatesPage();
 
-    void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
-    void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
-    bool canHandle(const Akonadi::Collection &collection) const Q_DECL_OVERRIDE;
+    void load(const Akonadi::Collection &col) override;
+    void save(Akonadi::Collection &col) override;
+    bool canHandle(const Akonadi::Collection &collection) const override;
 
 private:
     void slotCopyGlobal();

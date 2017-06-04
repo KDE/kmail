@@ -140,7 +140,7 @@ public:
 
     void setIdentity(const QString &name, const QString &email);
 
-    void init() Q_DECL_OVERRIDE;
+    void init() override;
 
 private Q_SLOTS:
     void onCustomItemSelected(const QVariant &type);
@@ -160,7 +160,7 @@ public:
     KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
     ~KeyGenerationJob();
 
-    void slotCancel() Q_DECL_OVERRIDE;
+    void slotCancel() override;
     void start();
 
 private Q_SLOTS:

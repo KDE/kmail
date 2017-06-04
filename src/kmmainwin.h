@@ -56,9 +56,9 @@ public Q_SLOTS:
 protected:
 
     /// Reimplemented to save the docked state
-    void saveProperties(KConfigGroup &) Q_DECL_OVERRIDE;
+    void saveProperties(KConfigGroup &) override;
 
-    bool queryClose() Q_DECL_OVERRIDE;
+    bool queryClose() override;
 
 protected Q_SLOTS:
     void slotQuit();

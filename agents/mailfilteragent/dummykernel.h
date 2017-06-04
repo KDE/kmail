@@ -19,23 +19,23 @@ class DummyKernel : public QObject, public MailCommon::IKernel, public MailCommo
 public:
     explicit DummyKernel(QObject *parent = nullptr);
 
-    KIdentityManagement::IdentityManager *identityManager() Q_DECL_OVERRIDE;
-    MessageComposer::MessageSender *msgSender() Q_DECL_OVERRIDE;
+    KIdentityManagement::IdentityManager *identityManager() override;
+    MessageComposer::MessageSender *msgSender() override;
 
-    Akonadi::EntityMimeTypeFilterModel *collectionModel() const Q_DECL_OVERRIDE;
-    KSharedConfig::Ptr config() Q_DECL_OVERRIDE;
-    void syncConfig() Q_DECL_OVERRIDE;
-    MailCommon::JobScheduler *jobScheduler() const Q_DECL_OVERRIDE;
-    Akonadi::ChangeRecorder *folderCollectionMonitor() const Q_DECL_OVERRIDE;
-    void updateSystemTray() Q_DECL_OVERRIDE;
+    Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
+    KSharedConfig::Ptr config() override;
+    void syncConfig() override;
+    MailCommon::JobScheduler *jobScheduler() const override;
+    Akonadi::ChangeRecorder *folderCollectionMonitor() const override;
+    void updateSystemTray() override;
 
-    qreal closeToQuotaThreshold() Q_DECL_OVERRIDE;
-    bool excludeImportantMailFromExpiry() Q_DECL_OVERRIDE;
-    QStringList customTemplates() Q_DECL_OVERRIDE;
-    Akonadi::Collection::Id lastSelectedFolder() Q_DECL_OVERRIDE;
-    void setLastSelectedFolder(Akonadi::Collection::Id col) Q_DECL_OVERRIDE;
-    bool showPopupAfterDnD() Q_DECL_OVERRIDE;
-    void expunge(Akonadi::Collection::Id id, bool sync) Q_DECL_OVERRIDE;
+    qreal closeToQuotaThreshold() override;
+    bool excludeImportantMailFromExpiry() override;
+    QStringList customTemplates() override;
+    Akonadi::Collection::Id lastSelectedFolder() override;
+    void setLastSelectedFolder(Akonadi::Collection::Id col) override;
+    bool showPopupAfterDnD() override;
+    void expunge(Akonadi::Collection::Id id, bool sync) override;
 
 private:
     KIdentityManagement::IdentityManager *mIdentityManager;

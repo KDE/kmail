@@ -44,12 +44,12 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void reload();
-    void configure(WId windowId) Q_DECL_OVERRIDE;
+    void configure(WId windowId) override;
 
 protected:
-    void itemsRemoved(const Akonadi::Item::List &item) Q_DECL_OVERRIDE;
-    void itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection &sourceCollection, const Akonadi::Collection &destinationCollection) Q_DECL_OVERRIDE;
-    void doSetOnline(bool online) Q_DECL_OVERRIDE;
+    void itemsRemoved(const Akonadi::Item::List &item) override;
+    void itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection &sourceCollection, const Akonadi::Collection &destinationCollection) override;
+    void doSetOnline(bool online) override;
 
 private:
     void slotSendNow(Akonadi::Item::Id id);

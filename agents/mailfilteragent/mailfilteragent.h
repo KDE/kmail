@@ -62,7 +62,7 @@ public:
 
     void expunge(qint64 collectionId);
 protected:
-    void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) Q_DECL_OVERRIDE;
+    void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) override;
 
 private Q_SLOTS:
     void initializeCollections();
@@ -78,7 +78,7 @@ private Q_SLOTS:
     void slotItemChanged(const Akonadi::Item &item);
 
 public Q_SLOTS:
-    void configure(WId windowId) Q_DECL_OVERRIDE;
+    void configure(WId windowId) override;
 
 private:
     FilterManager *m_filterManager;

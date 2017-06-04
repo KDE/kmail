@@ -31,9 +31,9 @@ public:
     explicit KMComposerEditorNg(KMComposerWin *win, QWidget *parent);
     ~KMComposerEditorNg();
 
-    QString smartQuote(const QString &msg) Q_DECL_OVERRIDE;
+    QString smartQuote(const QString &msg) override;
 
-    void setHighlighterColors(KPIMTextEdit::RichTextComposerEmailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;
+    void setHighlighterColors(KPIMTextEdit::RichTextComposerEmailQuoteHighlighter *highlighter) override;
 
     void showSpellConfigDialog(const QString &configFileName);
 
@@ -41,9 +41,9 @@ Q_SIGNALS:
     void insertSnippet();
 
 protected:
-    void addExtraMenuEntry(QMenu *menu, QPoint pos) Q_DECL_OVERRIDE;
-    bool canInsertFromMimeData(const QMimeData *source) const Q_DECL_OVERRIDE;
-    void insertFromMimeData(const QMimeData *source) Q_DECL_OVERRIDE;
+    void addExtraMenuEntry(QMenu *menu, QPoint pos) override;
+    bool canInsertFromMimeData(const QMimeData *source) const override;
+    void insertFromMimeData(const QMimeData *source) override;
 
 private:
     KMComposerWin *mComposerWin;

@@ -49,13 +49,13 @@ Q_SIGNALS:
     void needUpdateConfigDialogBox();
 
 public Q_SLOTS:
-    void configure(WId windowId) Q_DECL_OVERRIDE;
+    void configure(WId windowId) override;
     void reload();
     void pause();
     void resume();
 
 protected:
-    void doSetOnline(bool online) Q_DECL_OVERRIDE;
+    void doSetOnline(bool online) override;
 
 private:
     void mailCollectionRemoved(const Akonadi::Collection &collection);
