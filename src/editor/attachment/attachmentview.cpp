@@ -67,6 +67,7 @@ public:
         lay->addWidget(toolButton);
         infoAttachment = new QLabel;
         infoAttachment->setMargin(0);
+        infoAttachment->setTextFormat(Qt::PlainText);
         lay->addWidget(infoAttachment);
     }
 

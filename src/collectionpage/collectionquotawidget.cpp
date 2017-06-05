@@ -50,6 +50,7 @@ CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
     layout->addWidget(lab, 0, 0);
 
     mUsage = new QLabel(this);
+    mUsage->setTextFormat(Qt::PlainText);
     layout->addWidget(mUsage, 0, 1);
 
     QLabel *Status = new QLabel(i18n("Status:"), this);

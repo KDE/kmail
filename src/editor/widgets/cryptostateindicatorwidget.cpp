@@ -36,6 +36,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     hbox->setMargin(0);
     mSignatureStateIndicator = new QLabel(this);
     mSignatureStateIndicator->setAlignment(Qt::AlignHCenter);
+    mSignatureStateIndicator->setTextFormat(Qt::PlainText);
     hbox->addWidget(mSignatureStateIndicator);
     mSignatureStateIndicator->setObjectName(QStringLiteral("signatureindicator"));
     QPalette p(mSignatureStateIndicator->palette());
@@ -46,6 +47,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
 
     mEncryptionStateIndicator = new QLabel(this);
     mEncryptionStateIndicator->setAlignment(Qt::AlignHCenter);
+    mEncryptionStateIndicator->setTextFormat(Qt::PlainText);
     hbox->addWidget(mEncryptionStateIndicator);
     p = mEncryptionStateIndicator->palette();
     p.setColor(QPalette::Window, MessageCore::ColorUtil::self()->pgpEncryptedMessageColor());
