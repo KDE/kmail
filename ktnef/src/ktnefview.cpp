@@ -44,7 +44,8 @@ private:
 };
 
 Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
-    : QTreeWidgetItem(parent, QStringList(attach->name())), mAttach(attach)
+    : QTreeWidgetItem(parent, QStringList(attach->name()))
+    , mAttach(attach)
 {
     setText(2, QString::number(mAttach->size()));
     if (!mAttach->fileName().isEmpty()) {
@@ -72,10 +73,10 @@ Attachment::~Attachment()
 KTNEFView::KTNEFView(QWidget *parent)
     : QTreeWidget(parent)
 {
-    const QStringList headerLabels =
-        (QStringList(i18nc("@title:column file name", "File Name"))
-         << i18nc("@title:column file type", "File Type")
-         << i18nc("@title:column file size", "Size"));
+    const QStringList headerLabels
+        = (QStringList(i18nc("@title:column file name", "File Name"))
+           << i18nc("@title:column file type", "File Type")
+           << i18nc("@title:column file size", "Size"));
     setHeaderLabels(headerLabels);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     setDragEnabled(true);
@@ -149,4 +150,3 @@ void KTNEFView::adjustColumnWidth()
     setColumnWidth(1, w / 2);
     setColumnWidth(2, w / 2);
 }
-

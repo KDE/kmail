@@ -72,8 +72,7 @@
 
 using namespace MailCommon;
 
-KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride,
-                                 const QString &name)
+KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride, const QString &name)
     : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
 {
     mReaderWin = new KMReaderWin(this, this, actionCollection());
@@ -107,7 +106,7 @@ void KMReaderMainWin::initKMReaderMainWin()
     setupGUI(Keys | StatusBar | Create, QStringLiteral("kmreadermainwin.rc"));
     mMsgActions->setupForwardingActionsList(this);
     applyMainWindowSettings(KMKernel::self()->config()->group("Separate Reader Window"));
-    if (! mReaderWin->message().isValid()) {
+    if (!mReaderWin->message().isValid()) {
         menuBar()->hide();
         toolBar(QStringLiteral("mainToolBar"))->hide();
     }
@@ -133,7 +132,6 @@ void KMReaderMainWin::setUseFixedFont(bool useFixedFont)
 
 void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection)
 {
-
     mParentCollection = parentCollection;
     mReaderWin->setOverrideEncoding(encoding);
     mReaderWin->setMessage(msg, MimeTreeParser::Force);
@@ -247,10 +245,10 @@ void KMReaderMainWin::slotForwardInlineMsg()
     const Akonadi::Collection parentCol = mReaderWin->message().parentCollection();
     if (parentCol.isValid()) {
         QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
-        if (fd)
+        if (fd) {
             command = new KMForwardCommand(this, mReaderWin->message(),
                                            fd->identity(), QString(), mReaderWin->copyText());
-        else {
+        } else {
             command = new KMForwardCommand(this, mReaderWin->message(), 0, QString(), mReaderWin->copyText());
         }
     } else {
@@ -269,10 +267,10 @@ void KMReaderMainWin::slotForwardAttachedMessage()
     const Akonadi::Collection parentCol = mReaderWin->message().parentCollection();
     if (parentCol.isValid()) {
         QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
-        if (fd)
+        if (fd) {
             command = new KMForwardAttachedCommand(this, mReaderWin->message(),
                                                    fd->identity());
-        else {
+        } else {
             command = new KMForwardAttachedCommand(this, mReaderWin->message());
         }
     } else {
@@ -285,7 +283,7 @@ void KMReaderMainWin::slotForwardAttachedMessage()
 
 void KMReaderMainWin::slotRedirectMessage()
 {
-    const Akonadi::Item currentItem  = mReaderWin->message();
+    const Akonadi::Item currentItem = mReaderWin->message();
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
@@ -296,30 +294,30 @@ void KMReaderMainWin::slotRedirectMessage()
 
 void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
 {
-    const Akonadi::Item currentItem  = mReaderWin->message();
+    const Akonadi::Item currentItem = mReaderWin->message();
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
     KMReplyCommand *command = new KMReplyCommand(this,
-                                            currentItem,
-                                            MessageComposer::ReplySmart,
-                                            mReaderWin->copyText(),
-                                            false, tmpl);
+                                                 currentItem,
+                                                 MessageComposer::ReplySmart,
+                                                 mReaderWin->copyText(),
+                                                 false, tmpl);
     connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
 void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
 {
-    const Akonadi::Item currentItem  = mReaderWin->message();
+    const Akonadi::Item currentItem = mReaderWin->message();
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
     KMReplyCommand *command = new KMReplyCommand(this,
-                                            currentItem,
-                                            MessageComposer::ReplyAll,
-                                            mReaderWin->copyText(),
-                                            false, tmpl);
+                                                 currentItem,
+                                                 MessageComposer::ReplyAll,
+                                                 mReaderWin->copyText(),
+                                                 false, tmpl);
     connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();
@@ -327,13 +325,13 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
 
 void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
 {
-    const Akonadi::Item currentItem  = mReaderWin->message();
+    const Akonadi::Item currentItem = mReaderWin->message();
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
     KMForwardCommand *command = new KMForwardCommand(this,
-            currentItem,
-            0, tmpl, mReaderWin->copyText());
+                                                     currentItem,
+                                                     0, tmpl, mReaderWin->copyText());
     connect(command, &KMForwardCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();
@@ -357,7 +355,7 @@ void KMReaderMainWin::setupAccel()
 
     //----- File Menu
 
-    mSaveAtmAction  = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments..."), actionCollection());
+    mSaveAtmAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments..."), actionCollection());
     connect(mSaveAtmAction, &QAction::triggered, mReaderWin->viewer(), &MessageViewer::Viewer::slotAttachmentSaveAll);
 
     mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("user-trash")), i18n("&Move to Trash"), this);
@@ -408,7 +406,6 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
         return action;
     }
     return nullptr;
-
 }
 
 void KMReaderMainWin::slotMoveItem(QAction *action)
@@ -458,7 +455,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const WebEngin
     QUrl imageUrl = result.imageUrl();
     mMsg = aMsg;
 
-    const QString email =  KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
+    const QString email = KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
     if (aUrl.scheme() == QLatin1String("mailto") && !email.isEmpty()) {
         Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
         job->setLimit(1);
@@ -496,7 +493,8 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound, result);
 }
 
-void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result)
+void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
+                                       const WebEngineViewer::WebHitTestResult &result)
 {
     QMenu *menu = nullptr;
 
@@ -586,9 +584,9 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             bool replyForwardMenu = false;
             Akonadi::Collection col = parentCollection();
             if (col.isValid()) {
-                if (!(CommonKernel->folderIsSentMailFolder(col) ||
-                        CommonKernel->folderIsDrafts(col) ||
-                        CommonKernel->folderIsTemplates(col))) {
+                if (!(CommonKernel->folderIsSentMailFolder(col)
+                      || CommonKernel->folderIsDrafts(col)
+                      || CommonKernel->folderIsTemplates(col))) {
                     replyForwardMenu = true;
                 }
             } else if (messageHasPayload) {
@@ -671,4 +669,3 @@ void KMReaderMainWin::slotUpdateToolbars()
     createGUI(QStringLiteral("kmreadermainwin.rc"));
     applyMainWindowSettings(KConfigGroup(KMKernel::self()->config(), "ReaderWindow"));
 }
-

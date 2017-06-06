@@ -49,4 +49,3 @@ private:
 };
 
 #endif // FOLLOWUPREMINDERCONFIGTEST_H
-

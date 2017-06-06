@@ -26,12 +26,10 @@
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 PotentialPhishingEmailJob::~PotentialPhishingEmailJob()
 {
-
 }
 
 void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)

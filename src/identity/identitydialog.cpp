@@ -122,9 +122,7 @@ using namespace KPIM;
 using namespace MailTransport;
 using namespace MailCommon;
 
-namespace KMail
-{
-
+namespace KMail {
 class KeySelectionCombo : public Kleo::KeySelectionCombo
 {
     Q_OBJECT
@@ -263,15 +261,15 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 {
     if (type == QLatin1String("no-key")) {
         return;
-    }  else if (type == QLatin1String("generate-new-key")) {
+    } else if (type == QLatin1String("generate-new-key")) {
         auto job = new KeyGenerationJob(mName, mEmail, this);
         auto dlg = new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
         dlg->setModal(true);
         setEnabled(false);
         connect(job, &KeyGenerationJob::done,
-        this, [this]() {
-            setEnabled(true);
-        });
+                this, [this]() {
+                setEnabled(true);
+            });
         job->start();
     }
 }
@@ -313,14 +311,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mNameEdit = new KLineEdit(tab);
     glay->addWidget(mNameEdit, row, 1);
-    QLabel   *label = new QLabel(i18n("&Your name:"), tab);
+    QLabel *label = new QLabel(i18n("&Your name:"), tab);
     label->setBuddy(mNameEdit);
     glay->addWidget(label, row, 0);
     QString msg = i18n("<qt><h3>Your name</h3>"
-               "<p>This field should contain your name as you would like "
-               "it to appear in the email header that is sent out;</p>"
-               "<p>if you leave this blank your real name will not "
-               "appear, only the email address.</p></qt>");
+                       "<p>This field should contain your name as you would like "
+                       "it to appear in the email header that is sent out;</p>"
+                       "<p>if you leave this blank your real name will not "
+                       "appear, only the email address.</p></qt>");
     label->setWhatsThis(msg);
     mNameEdit->setWhatsThis(msg);
 
@@ -328,7 +326,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mOrganizationEdit = new KLineEdit(tab);
     glay->addWidget(mOrganizationEdit, row, 1);
-    label =  new QLabel(i18n("Organi&zation:"), tab);
+    label = new QLabel(i18n("Organi&zation:"), tab);
     label->setBuddy(mOrganizationEdit);
     glay->addWidget(label, row, 0);
     msg = i18n("<qt><h3>Organization</h3>"
@@ -852,13 +850,13 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
                                                KStandardGuiItem::cont(),
                                                KStandardGuiItem::cancel(),
                                                QStringLiteral("warn_email_not_in_certificate"))
-                != KMessageBox::Continue) {
+            != KMessageBox::Continue) {
             return;
         }
     }
 
-    if (mSignatureConfigurator->isSignatureEnabled() &&
-            mSignatureConfigurator->signatureType() == Signature::FromFile) {
+    if (mSignatureConfigurator->isSignatureEnabled()
+        && mSignatureConfigurator->signatureType() == Signature::FromFile) {
         QFileInfo file(mSignatureConfigurator->filePath());
         if (!file.isReadable()) {
             KMessageBox::error(this, i18n("The signature file is not valid"));
@@ -877,7 +875,6 @@ bool IdentityDialog::checkFolderExists(const QString &folderID)
 
 void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
 {
-
     setWindowTitle(i18n("Edit Identity \"%1\"", ident.identityName()));
 
     // "General" tab:
@@ -893,7 +890,7 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mSMIMEEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.smimeEncryptionKey()));
 
     mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(
-                Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
+                                                       Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
     mAutoSign->setChecked(ident.pgpAutoSign());
     mAutoEncrypt->setChecked(ident.pgpAutoEncrypt());
 
@@ -913,26 +910,25 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mSentMailFolderCheck->setChecked(!ident.disabledFcc());
     mFccFolderRequester->setEnabled(mSentMailFolderCheck->isChecked());
     bool foundNoExistingFolder = false;
-    if (ident.fcc().isEmpty() ||
-            !checkFolderExists(ident.fcc())) {
+    if (ident.fcc().isEmpty()
+        || !checkFolderExists(ident.fcc())) {
         foundNoExistingFolder = true;
         mFccFolderRequester->setIsInvalidFolder(CommonKernel->sentCollectionFolder());
     } else {
         mFccFolderRequester->setCollection(Akonadi::Collection(ident.fcc().toLongLong()));
     }
-    if (ident.drafts().isEmpty() ||
-            !checkFolderExists(ident.drafts())) {
+    if (ident.drafts().isEmpty()
+        || !checkFolderExists(ident.drafts())) {
         foundNoExistingFolder = true;
         mDraftsFolderRequester->setIsInvalidFolder(CommonKernel->draftsCollectionFolder());
     } else {
         mDraftsFolderRequester->setCollection(Akonadi::Collection(ident.drafts().toLongLong()));
     }
 
-    if (ident.templates().isEmpty() ||
-            !checkFolderExists(ident.templates())) {
+    if (ident.templates().isEmpty()
+        || !checkFolderExists(ident.templates())) {
         foundNoExistingFolder = true;
         mTemplatesFolderRequester->setIsInvalidFolder(CommonKernel->templatesCollectionFolder());
-
     } else {
         mTemplatesFolderRequester->setCollection(Akonadi::Collection(ident.templates().toLongLong()));
     }
@@ -1003,7 +999,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     Akonadi::Collection collection = mFccFolderRequester->collection();
     if (collection.isValid()) {
         ident.setFcc(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("mail-folder-sent"));
         new Akonadi::CollectionModifyJob(collection);
     } else {
@@ -1013,7 +1009,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     collection = mDraftsFolderRequester->collection();
     if (collection.isValid()) {
         ident.setDrafts(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-properties"));
         new Akonadi::CollectionModifyJob(collection);
     } else {
@@ -1023,7 +1019,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     collection = mTemplatesFolderRequester->collection();
     if (collection.isValid()) {
         ident.setTemplates(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-new"));
         new Akonadi::CollectionModifyJob(collection);
     } else {
@@ -1049,8 +1045,8 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setSignature(mSignatureConfigurator->signature());
     ident.setXFace(mXFaceConfigurator->xface());
     ident.setXFaceEnabled(mXFaceConfigurator->isXFaceEnabled());
-
 }
+
 void IdentityDialog::slotEditVcard()
 {
     if (QFileInfo::exists(mVcardFilename)) {
@@ -1065,11 +1061,11 @@ void IdentityDialog::slotEditVcard()
         if (dlg->exec()) {
             IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
             switch (mode) {
-            case IdentityAddVcardDialog::Empty: {
+            case IdentityAddVcardDialog::Empty:
                 editVcard(mVcardFilename);
                 break;
-            }
-            case IdentityAddVcardDialog::ExistingEntry: {
+            case IdentityAddVcardDialog::ExistingEntry:
+            {
                 KIdentityManagement::Identity ident = manager->modifyIdentityForName(dlg->duplicateVcardFromIdentity());
                 const QString filename = ident.vCardFile();
                 if (!filename.isEmpty()) {
@@ -1078,7 +1074,8 @@ void IdentityDialog::slotEditVcard()
                 editVcard(mVcardFilename);
                 break;
             }
-            case IdentityAddVcardDialog::FromExistingVCard: {
+            case IdentityAddVcardDialog::FromExistingVCard:
+            {
                 const QString filename = dlg->existingVCard().path();
                 if (!filename.isEmpty()) {
                     mVcardFilename = filename;
@@ -1116,7 +1113,6 @@ void IdentityDialog::updateVcardButton()
         mEditVCard->setText(i18n("Edit..."));
     }
 }
-
 }
 
 #include "identitydialog.moc"

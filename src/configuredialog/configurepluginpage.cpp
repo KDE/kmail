@@ -35,7 +35,6 @@ ConfigurePluginPage::ConfigurePluginPage(QWidget *parent)
 
 ConfigurePluginPage::~ConfigurePluginPage()
 {
-
 }
 
 void ConfigurePluginPage::save()

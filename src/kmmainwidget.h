@@ -38,17 +38,14 @@
 #include <AkonadiCore/tag.h>
 #include <MessageList/View>
 
-namespace MailTransport
-{
+namespace MailTransport {
 class Transport;
 }
-namespace Akonadi
-{
+namespace Akonadi {
 class Tag;
 }
 
-namespace KMime
-{
+namespace KMime {
 class Message;
 }
 class QUrl;
@@ -68,28 +65,24 @@ class ManageShowCollectionProperties;
 class KActionMenuTransport;
 class KActionMenuAccount;
 
-namespace KIO
-{
+namespace KIO {
 class Job;
 }
 
-namespace KMail
-{
+namespace KMail {
 class SearchWindow;
 class VacationScriptIndicatorWidget;
 class TagActionManager;
 class FolderShortcutActionManager;
 }
 
-namespace KSieveUi
-{
+namespace KSieveUi {
 class SieveDebugDialog;
 class ManageSieveScriptsDialog;
 class VacationManager;
 }
 
-namespace MailCommon
-{
+namespace MailCommon {
 class FolderSelectionDialog;
 class FavoriteCollectionWidget;
 }
@@ -101,9 +94,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 public:
     typedef QList<KMMainWidget *> PtrList;
 
-    KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
-                 KActionCollection *actionCollection,
-                 KSharedConfig::Ptr config = KMKernel::self()->config());
+    KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, KSharedConfig::Ptr config = KMKernel::self()->config());
     virtual ~KMMainWidget();
     void destruct();
 
@@ -137,26 +128,32 @@ public:
     {
         return mActionCollection->action(name);
     }
+
     KActionMenu *filterMenu() const
     {
         return mFilterMenu;
     }
+
     KActionMenu *mailingListActionMenu() const
     {
         return mMsgActions->mailingListActionMenu();
     }
+
     QAction *editAction() const
     {
         return mMsgActions->editAction();
     }
+
     QAction *sendAgainAction() const
     {
         return mSendAgainAction;
     }
+
     QAction *sendQueuedAction() const
     {
         return mSendQueued;
     }
+
     KActionMenuTransport *sendQueueViaMenu() const
     {
         return mSendActionMenu;
@@ -480,10 +477,7 @@ private:
      * Set the status of the messages referenced by the specified set, eventually toggling it.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-    void setMessageSetStatus(const Akonadi::Item::List &select,
-                             const Akonadi::MessageStatus &status,
-                             bool toggle
-                            );
+    void setMessageSetStatus(const Akonadi::Item::List &select, const Akonadi::MessageStatus &status, bool toggle);
     /**
      * Toggles a tag for the messages referenced by the specified set.
      * The set parameter must not be null and the ownership is passed to this function.
@@ -517,7 +511,8 @@ private:
 
     void openFilterDialog(const QByteArray &field, const QString &value);
 
-    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
+    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
+                          const WebEngineViewer::WebHitTestResult &result);
 
 private Q_SLOTS:
     void slotMoveMessageToTrash();
@@ -602,14 +597,14 @@ private:
 
     MailCommon::FavoriteCollectionWidget *mFavoriteCollectionsView;
     Akonadi::FavoriteCollectionsModel *mFavoritesModel;
-    KMReaderWin  *mMsgView;
-    QSplitter    *mSplitter1;
+    KMReaderWin *mMsgView;
+    QSplitter *mSplitter1;
     QSplitter *mSplitter2;
     QSplitter *mFolderViewSplitter;
     Akonadi::Collection mTemplateFolder;
-    bool          mLongFolderList;
-    bool          mStartupDone;
-    bool          mWasEverShown;
+    bool mLongFolderList;
+    bool mStartupDone;
+    bool mWasEverShown;
     bool mHtmlGlobalSetting;
     bool mHtmlLoadExtGlobalSetting;
     bool mFolderHtmlLoadExtPreference;
@@ -681,4 +676,3 @@ private:
 };
 
 #endif
-

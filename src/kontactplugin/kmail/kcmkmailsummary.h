@@ -28,15 +28,13 @@
 
 #include <KCModule>
 #include <KViewStateMaintainer>
-namespace Akonadi
-{
+namespace Akonadi {
 class ETMViewStateSaver;
 }
 
 class QCheckBox;
 
-namespace PimCommon
-{
+namespace PimCommon {
 class CheckedCollectionWidget;
 }
 

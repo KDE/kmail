@@ -34,14 +34,15 @@ public:
     {
         delete kmailPluginInterface;
     }
+
     KMailPluginInterface *kmailPluginInterface;
 };
 
 Q_GLOBAL_STATIC(KMailPluginInterfacePrivate, sInstance)
 
 KMailPluginInterface::KMailPluginInterface(QObject *parent)
-    : PimCommon::PluginInterface(parent),
-      mMainWindow(nullptr)
+    : PimCommon::PluginInterface(parent)
+    , mMainWindow(nullptr)
 {
     setPluginName(QStringLiteral("kmail"));
     setServiceTypeName(QStringLiteral("KMail/MainViewPlugin"));
@@ -49,7 +50,6 @@ KMailPluginInterface::KMailPluginInterface(QObject *parent)
 
 KMailPluginInterface::~KMailPluginInterface()
 {
-
 }
 
 KMailPluginInterface *KMailPluginInterface::self()

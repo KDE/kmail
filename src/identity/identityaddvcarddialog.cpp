@@ -133,4 +133,3 @@ QUrl IdentityAddVcardDialog::existingVCard() const
 {
     return mVCardPath->url();
 }
-

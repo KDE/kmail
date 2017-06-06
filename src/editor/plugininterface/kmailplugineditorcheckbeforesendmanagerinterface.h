@@ -22,8 +22,7 @@
 
 #include <QObject>
 
-namespace MessageComposer
-{
+namespace MessageComposer {
 class PluginEditorCheckBeforeSendInterface;
 class PluginEditorCheckBeforeSendParams;
 }

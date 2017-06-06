@@ -26,8 +26,7 @@ class QTreeWidgetItem;
 class KRecentFilesAction;
 class QUrl;
 
-namespace KTnef
-{
+namespace KTnef {
 class KTNEFParser;
 class KTNEFAttach;
 }

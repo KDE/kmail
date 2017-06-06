@@ -35,11 +35,12 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     : KCMultiDialog(parent)
 {
     setFaceType(List);
-    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help |
-                       QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel |
-                       QDialogButtonBox::Apply | QDialogButtonBox::Reset);
+    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help
+                       |QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel
+                       |QDialogButtonBox::Apply | QDialogButtonBox::Reset);
     setModal(modal);
-    KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop), IconSize(KIconLoader::Desktop)), qApp->windowIcon().pixmap(IconSize(KIconLoader::Small), IconSize(KIconLoader::Small)));
+    KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop), IconSize(KIconLoader::Desktop)),
+                            qApp->windowIcon().pixmap(IconSize(KIconLoader::Small), IconSize(KIconLoader::Small)));
     addModule(QStringLiteral("kmail_config_identity"));
     addModule(QStringLiteral("kmail_config_accounts"));
     addModule(QStringLiteral("kmail_config_appearance"));
@@ -63,7 +64,6 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     if (width != 0 && height != 0) {
         resize(width, height);
     }
-
 }
 
 void ConfigureDialog::hideEvent(QHideEvent *ev)

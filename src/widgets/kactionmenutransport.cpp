@@ -22,8 +22,8 @@
 #include <mailtransport/transportmanager.h>
 
 KActionMenuTransport::KActionMenuTransport(QObject *parent)
-    : KActionMenu(parent),
-      mInitialized(false)
+    : KActionMenu(parent)
+    , mInitialized(false)
 {
     setDelayed(true);
     connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportsChanged, this, &KActionMenuTransport::updateTransportMenu);
@@ -33,7 +33,6 @@ KActionMenuTransport::KActionMenuTransport(QObject *parent)
 
 KActionMenuTransport::~KActionMenuTransport()
 {
-
 }
 
 void KActionMenuTransport::slotCheckTransportMenu()

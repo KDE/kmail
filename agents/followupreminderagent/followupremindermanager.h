@@ -24,8 +24,7 @@
 #include <KSharedConfig>
 #include <AkonadiCore/Item>
 #include <QPointer>
-namespace FollowUpReminder
-{
+namespace FollowUpReminder {
 class FollowUpReminderInfo;
 }
 class FollowUpReminderNoAnswerDialog;

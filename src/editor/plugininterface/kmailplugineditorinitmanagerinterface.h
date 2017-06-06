@@ -17,13 +17,11 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #ifndef KMAILPLUGINEDITORINITMANAGERINTERFACE_H
 #define KMAILPLUGINEDITORINITMANAGERINTERFACE_H
 
 #include <QObject>
-namespace KPIMTextEdit
-{
+namespace KPIMTextEdit {
 class RichTextComposer;
 }
 

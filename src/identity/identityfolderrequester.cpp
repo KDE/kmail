@@ -24,12 +24,10 @@ using namespace KMail;
 IdentityFolderRequester::IdentityFolderRequester(QWidget *parent)
     : MailCommon::FolderRequester(parent)
 {
-
 }
 
 IdentityFolderRequester::~IdentityFolderRequester()
 {
-
 }
 
 void IdentityFolderRequester::setIsInvalidFolder(const Akonadi::Collection &col)

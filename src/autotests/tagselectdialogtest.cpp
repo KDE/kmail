@@ -26,12 +26,10 @@
 TagSelectDialogTest::TagSelectDialogTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 TagSelectDialogTest::~TagSelectDialogTest()
 {
-
 }
 
 void TagSelectDialogTest::initTestCase()

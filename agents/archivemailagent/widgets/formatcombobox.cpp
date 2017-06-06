@@ -33,7 +33,6 @@ FormatComboBox::FormatComboBox(QWidget *parent)
 
 FormatComboBox::~FormatComboBox()
 {
-
 }
 
 void FormatComboBox::setFormat(MailCommon::BackupJob::ArchiveType type)
@@ -50,4 +49,3 @@ MailCommon::BackupJob::ArchiveType FormatComboBox::format() const
 {
     return static_cast<MailCommon::BackupJob::ArchiveType>(itemData(currentIndex()).toInt());
 }
-

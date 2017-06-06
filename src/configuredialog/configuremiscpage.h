@@ -23,12 +23,10 @@
 #include "configuredialog_p.h"
 #include "config-kmail.h"
 
-namespace MailCommon
-{
+namespace MailCommon {
 class FolderRequester;
 }
-namespace MessageViewer
-{
+namespace MessageViewer {
 class InvitationSettings;
 class PrintingSettings;
 }

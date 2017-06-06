@@ -23,9 +23,7 @@
 #include <QLabel>
 class QHBoxLayout;
 class QLabel;
-namespace KMail
-{
-
+namespace KMail {
 class ServerLabel : public QLabel
 {
     Q_OBJECT

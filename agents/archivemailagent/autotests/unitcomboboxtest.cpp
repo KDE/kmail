@@ -24,12 +24,10 @@
 UnitComboBoxTest::UnitComboBoxTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 UnitComboBoxTest::~UnitComboBoxTest()
 {
-
 }
 
 void UnitComboBoxTest::shouldHaveDefaultValue()

@@ -48,8 +48,8 @@
 #include <QLabel>
 
 KMMainWin::KMMainWin(QWidget *)
-    : KXmlGuiWindow(nullptr),
-      mReallyClose(false)
+    : KXmlGuiWindow(nullptr)
+    , mReallyClose(false)
 {
     setObjectName(QStringLiteral("kmail-mainwindow#"));
     // Set this to be the group leader for all subdialogs - this means
@@ -113,7 +113,7 @@ void KMMainWin::displayStatusMsg(const QString &aText)
                             - fontMetrics().maxWidth();
 
     const QString text = fontMetrics().elidedText(QLatin1Char(' ') + aText, Qt::ElideRight,
-                         statusWidth);
+                                                  statusWidth);
 
     // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
     // but this code would double the size of the status bar if the user hovers

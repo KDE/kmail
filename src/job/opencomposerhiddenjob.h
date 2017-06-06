@@ -28,20 +28,16 @@ struct OpenComposerHiddenJobSettings
     OpenComposerHiddenJobSettings()
         : mHidden(false)
     {
-
     }
-    OpenComposerHiddenJobSettings(const QString &to, const QString &cc,
-                                  const QString &bcc,
-                                  const QString &subject,
-                                  const QString &body, bool hidden)
-        : mTo(to),
-          mCc(cc),
-          mBcc(bcc),
-          mSubject(subject),
-          mBody(body),
-          mHidden(hidden)
-    {
 
+    OpenComposerHiddenJobSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden)
+        : mTo(to)
+        , mCc(cc)
+        , mBcc(bcc)
+        , mSubject(subject)
+        , mBody(body)
+        , mHidden(hidden)
+    {
     }
 
     QString mTo;

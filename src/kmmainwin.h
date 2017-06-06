@@ -27,8 +27,7 @@
 class KMMainWidget;
 class KToggleAction;
 class QLabel;
-namespace KPIM
-{
+namespace KPIM {
 class ProgressStatusBarWidget;
 }
 class KMAIL_EXPORT KMMainWin : public KXmlGuiWindow

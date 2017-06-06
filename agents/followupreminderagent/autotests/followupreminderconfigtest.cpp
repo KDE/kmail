@@ -27,12 +27,10 @@
 FollowUpReminderConfigTest::FollowUpReminderConfigTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 FollowUpReminderConfigTest::~FollowUpReminderConfigTest()
 {
-
 }
 
 void FollowUpReminderConfigTest::init()
@@ -155,7 +153,6 @@ void FollowUpReminderConfigTest::shouldAddSeveralItem()
     itemList = mConfig->groupList().filter(mFollowupRegExpFilter);
     QCOMPARE(itemList.count(), 4);
     QCOMPARE(infoNotHaveUniq.uniqueIdentifier(), 4);
-
 }
 
 void FollowUpReminderConfigTest::shouldRemoveItems()

@@ -26,32 +26,25 @@
 struct NewMessageJobSettings
 {
     NewMessageJobSettings()
-        : mFolder(nullptr),
-          mHidden(false),
-          mIdentity(0)
+        : mFolder(nullptr)
+        , mHidden(false)
+        , mIdentity(0)
     {
-
     }
-    NewMessageJobSettings(const QString &to,
-                          const QString &cc,
-                          const QString &bcc,
-                          bool hidden,
-                          const QString &attachURL,
-                          const QSharedPointer<MailCommon::FolderSettings> &folder,
-                          uint identity,
+
+    NewMessageJobSettings(const QString &to, const QString &cc, const QString &bcc, bool hidden, const QString &attachURL, const QSharedPointer<MailCommon::FolderSettings> &folder, uint identity,
                           const Akonadi::Collection &currentCollection)
-        : mTo(to),
-          mCc(cc),
-          mBcc(bcc),
-          mAttachURL(attachURL),
-          mFolder(folder),
-          mCurrentCollection(currentCollection),
-          mHidden(hidden),
-          mIdentity(identity)
-
+        : mTo(to)
+        , mCc(cc)
+        , mBcc(bcc)
+        , mAttachURL(attachURL)
+        , mFolder(folder)
+        , mCurrentCollection(currentCollection)
+        , mHidden(hidden)
+        , mIdentity(identity)
     {
-
     }
+
     QString mTo;
     QString mCc;
     QString mBcc;

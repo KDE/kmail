@@ -47,4 +47,3 @@ public:
 };
 
 #endif /* COLLECTIONPANE_H */
-

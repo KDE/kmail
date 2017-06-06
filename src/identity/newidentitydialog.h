@@ -30,14 +30,11 @@ class KComboBox;
 class KLineEdit;
 class QButtonGroup;
 
-namespace KIdentityManagement
-{
+namespace KIdentityManagement {
 class IdentityManager;
 }
 
-namespace KMail
-{
-
+namespace KMail {
 class NewIdentityDialog : public QDialog
 {
     Q_OBJECT
@@ -61,13 +58,12 @@ protected Q_SLOTS:
 private Q_SLOTS:
     void slotHelp();
 private:
-    KLineEdit  *mLineEdit;
-    KComboBox  *mComboBox;
+    KLineEdit *mLineEdit;
+    KComboBox *mComboBox;
     QButtonGroup *mButtonGroup;
     KIdentityManagement::IdentityManager *mIdentityManager;
     QPushButton *mOkButton;
 };
-
 }
 
 #endif

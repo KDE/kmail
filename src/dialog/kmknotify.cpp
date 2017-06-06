@@ -36,7 +36,8 @@
 using namespace KMail;
 
 KMKnotify::KMKnotify(QWidget *parent)
-    : QDialog(parent), m_changed(false)
+    : QDialog(parent)
+    , m_changed(false)
 {
     setWindowTitle(i18n("Notification"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -98,7 +99,6 @@ void KMKnotify::setCurrentNotification(const QString &name)
 
 void KMKnotify::initCombobox()
 {
-
     const QStringList lstNotify = QStringList() << QStringLiteral("kmail2.notifyrc")
                                                 << QStringLiteral("akonadi_maildispatcher_agent.notifyrc")
                                                 << QStringLiteral("akonadi_mailfilter_agent.notifyrc")
@@ -155,4 +155,3 @@ void KMKnotify::writeConfig()
     notifyDialog.writeEntry("Size", size());
     notifyDialog.sync();
 }
-

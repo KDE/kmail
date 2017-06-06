@@ -25,15 +25,13 @@
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
 
 KMailPluginEditorCheckBeforeSendManagerInterface::KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent)
-    : QObject(parent),
-      mParentWidget(nullptr)
+    : QObject(parent)
+    , mParentWidget(nullptr)
 {
-
 }
 
 KMailPluginEditorCheckBeforeSendManagerInterface::~KMailPluginEditorCheckBeforeSendManagerInterface()
 {
-
 }
 
 QWidget *KMailPluginEditorCheckBeforeSendManagerInterface::parentWidget() const

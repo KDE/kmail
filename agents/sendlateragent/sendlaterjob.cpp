@@ -40,9 +40,9 @@
 #include "sendlateragent_debug.h"
 
 SendLaterJob::SendLaterJob(SendLaterManager *manager, SendLater::SendLaterInfo *info, QObject *parent)
-    : QObject(parent),
-      mManager(manager),
-      mInfo(info)
+    : QObject(parent)
+    , mManager(manager)
+    , mInfo(info)
 {
     qCDebug(SENDLATERAGENT_LOG) << " SendLaterJob::SendLaterJob" << this;
 }
@@ -166,4 +166,3 @@ void SendLaterJob::sendError(const QString &error, SendLaterManager::ErrorType t
     mManager->sendError(mInfo, type);
     deleteLater();
 }
-

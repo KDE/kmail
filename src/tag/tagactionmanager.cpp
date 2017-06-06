@@ -22,7 +22,6 @@
 
 #include "messageactions.h"
 
-
 #include "MailCommon/AddTagDialog"
 
 #include <QAction>
@@ -48,20 +47,19 @@ using namespace KMail;
 
 static int s_numberMaxTag = 10;
 
-TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCollection,
-                                   MessageActions *messageActions, KXMLGUIClient *guiClient)
-    : QObject(parent),
-      mActionCollection(actionCollection),
-      mMessageActions(messageActions),
-      mMessageTagToggleMapper(nullptr),
-      mGUIClient(guiClient),
-      mSeparatorMoreAction(nullptr),
-      mSeparatorNewTagAction(nullptr),
-      mMoreAction(nullptr),
-      mNewTagAction(nullptr),
-      mNewTagId(-1),
-      mTagFetchInProgress(false),
-      mMonitor(new Akonadi::Monitor(this))
+TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCollection, MessageActions *messageActions, KXMLGUIClient *guiClient)
+    : QObject(parent)
+    , mActionCollection(actionCollection)
+    , mMessageActions(messageActions)
+    , mMessageTagToggleMapper(nullptr)
+    , mGUIClient(guiClient)
+    , mSeparatorMoreAction(nullptr)
+    , mSeparatorNewTagAction(nullptr)
+    , mMoreAction(nullptr)
+    , mNewTagAction(nullptr)
+    , mNewTagId(-1)
+    , mTagFetchInProgress(false)
+    , mMonitor(new Akonadi::Monitor(this))
 {
     mMessageActions->messageStatusMenu()->menu()->addSeparator();
 
@@ -121,7 +119,7 @@ void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool add
     QString cleanName(i18n("Message Tag: %1", tag->tagName));
     cleanName.replace(QLatin1Char('&'), QStringLiteral("&&"));
     KToggleAction *const tagAction = new KToggleAction(QIcon::fromTheme(tag->iconName),
-            cleanName, this);
+                                                       cleanName, this);
     tagAction->setIconText(tag->name());
     tagAction->setChecked(tag->id() == mNewTagId);
 
@@ -243,8 +241,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
     }
 }
 
-void TagActionManager::updateActionStates(int numberOfSelectedMessages,
-        const Akonadi::Item &selectedItem)
+void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
 {
     mNewTagId = -1;
     QMap<qint64, KToggleAction *>::const_iterator it = mTagActions.constBegin();

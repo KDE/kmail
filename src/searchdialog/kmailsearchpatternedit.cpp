@@ -27,6 +27,4 @@ KMailSearchPatternEdit::KMailSearchPatternEdit(QWidget *parent)
 
 KMailSearchPatternEdit::~KMailSearchPatternEdit()
 {
-
 }
-

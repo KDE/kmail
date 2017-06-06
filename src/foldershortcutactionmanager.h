@@ -31,9 +31,7 @@ class QAction;
 
 class KActionCollection;
 
-namespace KMail
-{
-
+namespace KMail {
 class FolderShortcutCommand : public QObject
 {
     Q_OBJECT
@@ -88,7 +86,6 @@ private:
     KActionCollection *mActionCollection;
     QWidget *mParent;
 };
-
 }
 
 #endif

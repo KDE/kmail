@@ -21,18 +21,18 @@
 #include <KConfigGroup>
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo()
-    : mArchiveTopLevelCollectionId(-1),
-      mArchiveType(UniqueFolder),
-      mEnabled(false),
-      mKeepExistingStructure(false)
+    : mArchiveTopLevelCollectionId(-1)
+    , mArchiveType(UniqueFolder)
+    , mEnabled(false)
+    , mKeepExistingStructure(false)
 {
 }
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo(const KConfigGroup &config)
-    : mArchiveTopLevelCollectionId(-1),
-      mArchiveType(UniqueFolder),
-      mEnabled(false),
-      mKeepExistingStructure(false)
+    : mArchiveTopLevelCollectionId(-1)
+    , mArchiveType(UniqueFolder)
+    , mEnabled(false)
+    , mKeepExistingStructure(false)
 {
     readConfig(config);
 }

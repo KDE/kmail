@@ -47,51 +47,63 @@ public:
     {
         delete next;
     }
+
     WmfCmd *next;
     unsigned short funcIndex;
-    long  numParm;
+    long numParm;
     short *parm;
 };
 
 class WinObjHandle
 {
 public:
-    virtual ~WinObjHandle() {}
+    virtual ~WinObjHandle()
+    {
+    }
+
     virtual void apply(QPainter &p) = 0;
 };
 
-class WinObjBrushHandle: public WinObjHandle
+class WinObjBrushHandle : public WinObjHandle
 {
 public:
     void apply(QPainter &p) override;
     QBrush brush;
-    virtual ~WinObjBrushHandle() {}
+    virtual ~WinObjBrushHandle()
+    {
+    }
 };
 
-class WinObjPenHandle: public WinObjHandle
+class WinObjPenHandle : public WinObjHandle
 {
 public:
     void apply(QPainter &p) override;
     QPen pen;
-    virtual ~WinObjPenHandle() {}
+    virtual ~WinObjPenHandle()
+    {
+    }
 };
 
-class WinObjPatternBrushHandle: public WinObjHandle
+class WinObjPatternBrushHandle : public WinObjHandle
 {
 public:
     void apply(QPainter &p) override;
     QBrush brush;
     QImage image;
-    virtual ~WinObjPatternBrushHandle() {}
+    virtual ~WinObjPatternBrushHandle()
+    {
+    }
 };
 
-class WinObjFontHandle: public WinObjHandle
+class WinObjFontHandle : public WinObjHandle
 {
 public:
     void apply(QPainter &p) override;
     QFont font;
     int rotation;
-    virtual ~WinObjFontHandle() {}
+    virtual ~WinObjFontHandle()
+    {
+    }
 };
 
 void WinObjBrushHandle::apply(QPainter &p)
@@ -119,10 +131,10 @@ void WinObjFontHandle::apply(QPainter &p)
 //-----------------------------------------------------------------------------
 QWinMetaFile::QWinMetaFile()
 {
-    mValid       = false;
-    mFirstCmd    = NULL;
+    mValid = false;
+    mFirstCmd = NULL;
     mObjHandleTab = NULL;
-    mDpi         = 1000;
+    mDpi = 1000;
 }
 
 //-----------------------------------------------------------------------------
@@ -346,7 +358,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
     if (mObjHandleTab) {
         delete[] mObjHandleTab;
     }
-    mObjHandleTab = new WinObjHandle* [ MAX_OBJHANDLE ];
+    mObjHandleTab = new WinObjHandle * [ MAX_OBJHANDLE ];
     for (i = MAX_OBJHANDLE - 1; i >= 0; i--) {
         mObjHandleTab[ i ] = NULL;
     }
@@ -356,7 +368,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
     mAbsoluteCoord = absolute;
 
     mPainter.begin(aTarget);
-    if (QWMF_DEBUG)  {
+    if (QWMF_DEBUG) {
         qCDebug(KTNEFAPPS_LOG) << "Bounding box :" << mBBox.left()
                                << " " << mBBox.top() << " " << mBBox.right() << " " << mBBox.bottom();
     }
@@ -370,7 +382,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
         idx = cmd->funcIndex;
         (this->*metaFuncTab[ idx ].method)(cmd->numParm, cmd->parm);
 
-        if (QWMF_DEBUG)  {
+        if (QWMF_DEBUG) {
             QString str, param;
             if (metaFuncTab[ idx ].name == NULL) {
                 str += QLatin1String("UNKNOWN ");
@@ -493,7 +505,7 @@ void QWinMetaFile::polygon(long, short *parm)
 void QWinMetaFile::polyPolygon(long, short *parm)
 {
     QRegion region;
-    int  i, j, startPolygon;
+    int i, j, startPolygon;
 
     mPainter.save();
 
@@ -701,7 +713,6 @@ void QWinMetaFile::setTextAlign(long, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::textOut(long num, short *parm)
 {
-
     short *copyParm = new short[ num + 1 ];
 
     // re-order parameters
@@ -724,9 +735,9 @@ void QWinMetaFile::extTextOut(long num, short *parm)
     int idxOffset;
 
     if (parm[ 3 ] != 0) {       // ETO_CLIPPED flag add 4 parameters
-        ptStr = (char *) & parm[ 8 ];
+        ptStr = (char *)&parm[ 8 ];
     } else {
-        ptStr = (char *) & parm[ 4 ];
+        ptStr = (char *)&parm[ 4 ];
     }
 
     QByteArray text(ptStr, parm[ 2 ] + 1);
@@ -774,7 +785,6 @@ void QWinMetaFile::extTextOut(long num, short *parm)
     }
 
     mPainter.restore();
-
 }
 
 //-----------------------------------------------------------------------------
@@ -913,16 +923,17 @@ void QWinMetaFile::createBrushIndirect(long, short *parm)
         Qt::CrossPattern,
         Qt::DiagCrossPattern
     };
-    static Qt::BrushStyle styleTab[] = { Qt::SolidPattern,
-                                         Qt::NoBrush,
-                                         Qt::FDiagPattern,   /* hatched */
-                                         Qt::Dense4Pattern,  /* should be custom bitmap pattern */
-                                         Qt::HorPattern,     /* should be BS_INDEXED (?) */
-                                         Qt::VerPattern,     /* should be device-independent bitmap */
-                                         Qt::Dense6Pattern,  /* should be device-independent packed-bitmap */
-                                         Qt::Dense2Pattern,  /* should be BS_PATTERN8x8 */
-                                         Qt::Dense3Pattern   /* should be device-independent BS_DIBPATTERN8x8 */
-                                       };
+    static Qt::BrushStyle styleTab[] = {
+        Qt::SolidPattern,
+        Qt::NoBrush,
+        Qt::FDiagPattern,                                    /* hatched */
+        Qt::Dense4Pattern,                                   /* should be custom bitmap pattern */
+        Qt::HorPattern,                                      /* should be BS_INDEXED (?) */
+        Qt::VerPattern,                                      /* should be device-independent bitmap */
+        Qt::Dense6Pattern,                                   /* should be device-independent packed-bitmap */
+        Qt::Dense2Pattern,                                   /* should be BS_PATTERN8x8 */
+        Qt::Dense3Pattern                                    /* should be device-independent BS_DIBPATTERN8x8 */
+    };
     Qt::BrushStyle style;
     short arg;
     WinObjBrushHandle *handle = new WinObjBrushHandle;
@@ -950,9 +961,10 @@ void QWinMetaFile::createBrushIndirect(long, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::createPenIndirect(long, short *parm)
 {
-    static Qt::PenStyle styleTab[] = { Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine,
-                                       Qt::NoPen, Qt::SolidLine
-                                     };
+    static Qt::PenStyle styleTab[] = {
+        Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine,
+        Qt::NoPen, Qt::SolidLine
+    };
     Qt::PenStyle style;
     WinObjPenHandle *handle = new WinObjPenHandle;
     addHandle(handle);
@@ -1018,8 +1030,8 @@ void QWinMetaFile::end(long, short *)
 //-----------------------------------------------------------------------------
 unsigned short QWinMetaFile::calcCheckSum(WmfPlaceableHeader *apmfh)
 {
-    WORD  *lpWord;
-    WORD   wResult, i;
+    WORD *lpWord;
+    WORD wResult, i;
 
     // Start with the first word
     wResult = *(lpWord = (WORD *)(apmfh));
@@ -1035,10 +1047,11 @@ int QWinMetaFile::findFunc(unsigned short aFunc) const
 {
     int i;
 
-    for (i = 0; metaFuncTab[ i ].name; ++i)
+    for (i = 0; metaFuncTab[ i ].name; ++i) {
         if (metaFuncTab[ i ].func == aFunc) {
             return i;
         }
+    }
 
     // here : unknown function
     return i;
@@ -1063,7 +1076,7 @@ unsigned int QWinMetaFile::toDWord(short *parm)
 {
     unsigned int l;
 
-#if !defined( WORDS_BIGENDIAN )
+#if !defined(WORDS_BIGENDIAN)
     l = *(unsigned int *)(parm);
 #else
     char *bytes;
@@ -1086,9 +1099,9 @@ QColor QWinMetaFile::color(short *parm)
     int red, green, blue;
 
     colorRef = toDWord(parm) & 0xffffff;
-    red      = colorRef & 255;
-    green    = (colorRef >> 8) & 255;
-    blue     = (colorRef >> 16) & 255;
+    red = colorRef & 255;
+    green = (colorRef >> 8) & 255;
+    blue = (colorRef >> 16) & 255;
 
     return QColor(red, green, blue);
 }
@@ -1113,10 +1126,11 @@ void QWinMetaFile::addHandle(WinObjHandle *handle)
 {
     int idx;
 
-    for (idx = 0; idx < MAX_OBJHANDLE; idx++)
+    for (idx = 0; idx < MAX_OBJHANDLE; idx++) {
         if (mObjHandleTab[ idx ] == NULL) {
             break;
         }
+    }
 
     if (idx < MAX_OBJHANDLE) {
         mObjHandleTab[ idx ] = handle;
@@ -1166,7 +1180,7 @@ QPainter::CompositionMode QWinMetaFile::winToQtComposition(short parm) const
 }
 
 //-----------------------------------------------------------------------------
-QPainter::CompositionMode  QWinMetaFile::winToQtComposition(long parm) const
+QPainter::CompositionMode QWinMetaFile::winToQtComposition(long parm) const
 {
     /* TODO: Ternary raster operations
     0x00C000CA  dest = (source AND pattern)
@@ -1196,10 +1210,11 @@ QPainter::CompositionMode  QWinMetaFile::winToQtComposition(long parm) const
     };
 
     int i;
-    for (i = 0; i < 15; ++i)
+    for (i = 0; i < 15; ++i) {
         if (opTab[ i ].winRasterOp == parm) {
             break;
         }
+    }
 
     if (i < 15) {
         return opTab[ i ].qtRasterOp;
@@ -1240,4 +1255,3 @@ bool QWinMetaFile::dibToBmp(QImage &bmp, const char *dib, long size)
         return true;
     }
 }
-

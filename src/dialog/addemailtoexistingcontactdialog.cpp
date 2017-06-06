@@ -117,4 +117,3 @@ Akonadi::Item AddEmailToExistingContactDialog::selectedContact() const
     }
     return item;
 }
-

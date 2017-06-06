@@ -67,38 +67,38 @@ static QString toolTip(const Akonadi::Item &item)
     const QString bckColorName = bckColor.name();
     const QString txtColorName = txtColor.name();
     const bool textIsLeftToRight = (QApplication::layoutDirection() == Qt::LeftToRight);
-    const QString textDirection =  textIsLeftToRight ? QStringLiteral("left") : QStringLiteral("right");
+    const QString textDirection = textIsLeftToRight ? QStringLiteral("left") : QStringLiteral("right");
 
     QString tip = QStringLiteral(
-                      "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
-                  );
+        "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
+        );
     tip += QStringLiteral(
-               "<tr>"                                                         \
-               "<td bgcolor=\"%1\" align=\"%4\" valign=\"middle\">"           \
-               "<div style=\"color: %2; font-weight: bold;\">"                \
-               "%3"                                                           \
-               "</div>"                                                       \
-               "</td>"                                                        \
-               "</tr>"
-           ).arg(txtColorName).arg(bckColorName).arg(msg->subject()->asUnicodeString().toHtmlEscaped()).arg(textDirection);
+        "<tr>"                                                         \
+        "<td bgcolor=\"%1\" align=\"%4\" valign=\"middle\">"           \
+        "<div style=\"color: %2; font-weight: bold;\">"                \
+        "%3"                                                           \
+        "</div>"                                                       \
+        "</td>"                                                        \
+        "</tr>"
+        ).arg(txtColorName).arg(bckColorName).arg(msg->subject()->asUnicodeString().toHtmlEscaped()).arg(textDirection);
 
     tip += QStringLiteral(
-               "<tr>"                                                              \
-               "<td align=\"center\" valign=\"middle\">"                           \
-               "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
-           );
+        "<tr>"                                                              \
+        "<td align=\"center\" valign=\"middle\">"                           \
+        "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"
+        );
 
     const QString htmlCodeForStandardRow = QStringLiteral(
-            "<tr>"                                                       \
-            "<td align=\"right\" valign=\"top\" width=\"45\">"           \
-            "<div style=\"font-weight: bold;\"><nobr>"                   \
-            "%1:"                                                        \
-            "</nobr></div>"                                              \
-            "</td>"                                                      \
-            "<td align=\"left\" valign=\"top\">"                         \
-            "%2"                                                         \
-            "</td>"                                                      \
-            "</tr>");
+        "<tr>"                                                       \
+        "<td align=\"right\" valign=\"top\" width=\"45\">"           \
+        "<div style=\"font-weight: bold;\"><nobr>"                   \
+        "%1:"                                                        \
+        "</nobr></div>"                                              \
+        "</td>"                                                      \
+        "<td align=\"left\" valign=\"top\">"                         \
+        "%2"                                                         \
+        "</td>"                                                      \
+        "</tr>");
 
     QString content = MessageList::Util::contentSummary(item);
 
@@ -118,18 +118,18 @@ static QString toolTip(const Akonadi::Item &item)
         }
     }
     tip += QLatin1String(
-               "</table"         \
-               "</td>"           \
-               "</tr>"
-           );
+        "</table"         \
+        "</td>"           \
+        "</tr>"
+        );
     return tip;
 }
 
 int KMSearchMessageModel::columnCount(const QModelIndex &parent) const
 {
     if (collection().isValid()
-            && !collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))
-            && collection().contentMimeTypes() != QStringList(QStringLiteral("inode/directory"))) {
+        && !collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))
+        && collection().contentMimeTypes() != QStringList(QStringLiteral("inode/directory"))) {
         return 1;
     }
 
@@ -224,10 +224,9 @@ QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
 
 QVariant KMSearchMessageModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-
     if (collection().isValid()
-            && !collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))
-            && collection().contentMimeTypes() != QStringList(QStringLiteral("inode/directory"))) {
+        && !collection().contentMimeTypes().contains(QStringLiteral("message/rfc822"))
+        && collection().contentMimeTypes() != QStringList(QStringLiteral("inode/directory"))) {
         return QVariant();
     }
 
@@ -241,4 +240,3 @@ QVariant KMSearchMessageModel::headerData(int section, Qt::Orientation orientati
     }
     return Akonadi::MessageModel::headerData((section - 1), orientation, role);
 }
-

@@ -26,14 +26,12 @@
 #include <MessageComposer/MessageFactoryNG>
 #include <QUrl>
 
-
 struct CreateReplyMessageJobSettings
 {
     CreateReplyMessageJobSettings()
-        : m_replyStrategy(MessageComposer::ReplySmart),
-          mNoQuote(false)
+        : m_replyStrategy(MessageComposer::ReplySmart)
+        , mNoQuote(false)
     {
-
     }
 
     QUrl mUrl;

@@ -149,7 +149,6 @@ using namespace KMime;
 
 using namespace MailCommon;
 
-
 /// Helper to sanely show an error message for a job
 static void showJobError(KJob *job)
 {
@@ -165,14 +164,20 @@ static void showJobError(KJob *job)
 }
 
 KMCommand::KMCommand(QWidget *parent)
-    : mCountMsgs(0), mResult(Undefined), mDeletesItself(false),
-      mEmitsCompletedItself(false), mParent(parent)
+    : mCountMsgs(0)
+    , mResult(Undefined)
+    , mDeletesItself(false)
+    , mEmitsCompletedItself(false)
+    , mParent(parent)
 {
 }
 
 KMCommand::KMCommand(QWidget *parent, const Akonadi::Item &msg)
-    : mCountMsgs(0), mResult(Undefined), mDeletesItself(false),
-      mEmitsCompletedItself(false), mParent(parent)
+    : mCountMsgs(0)
+    , mResult(Undefined)
+    , mDeletesItself(false)
+    , mEmitsCompletedItself(false)
+    , mParent(parent)
 {
     if (msg.isValid() || msg.hasPayload<KMime::Message::Ptr>()) {
         mMsgList.append(msg);
@@ -180,8 +185,11 @@ KMCommand::KMCommand(QWidget *parent, const Akonadi::Item &msg)
 }
 
 KMCommand::KMCommand(QWidget *parent, const Akonadi::Item::List &msgList)
-    : mCountMsgs(0), mResult(Undefined), mDeletesItself(false),
-      mEmitsCompletedItself(false), mParent(parent)
+    : mCountMsgs(0)
+    , mResult(Undefined)
+    , mDeletesItself(false)
+    , mEmitsCompletedItself(false)
+    , mParent(parent)
 {
     mMsgList = msgList;
 }
@@ -381,7 +389,7 @@ void KMCommand::slotJobFinished()
     // update the progressbar
     if (mProgressDialog.data()) {
         mProgressDialog.data()->setLabelText(i18np("Please wait while the message is transferred",
-                                             "Please wait while the %1 messages are transferred", KMCommand::mCountJobs));
+                                                   "Please wait while the %1 messages are transferred", KMCommand::mCountJobs));
     }
     if (KMCommand::mCountJobs == 0) {
         // all done
@@ -399,9 +407,9 @@ void KMCommand::slotTransferCancelled()
     Q_EMIT messagesTransfered(Canceled);
 }
 
-KMMailtoComposeCommand::KMMailtoComposeCommand(const QUrl &url,
-        const Akonadi::Item &msg)
-    : mUrl(url), mMessage(msg)
+KMMailtoComposeCommand::KMMailtoComposeCommand(const QUrl &url, const Akonadi::Item &msg)
+    : mUrl(url)
+    , mMessage(msg)
 {
 }
 
@@ -425,9 +433,10 @@ KMCommand::Result KMMailtoComposeCommand::execute()
     return OK;
 }
 
-KMMailtoReplyCommand::KMMailtoReplyCommand(QWidget *parent,
-        const QUrl &url, const Akonadi::Item &msg, const QString &selection)
-    : KMCommand(parent, msg), mUrl(url), mSelection(selection)
+KMMailtoReplyCommand::KMMailtoReplyCommand(QWidget *parent, const QUrl &url, const Akonadi::Item &msg, const QString &selection)
+    : KMCommand(parent, msg)
+    , mUrl(url)
+    , mSelection(selection)
 {
     fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
@@ -454,9 +463,9 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     return OK;
 }
 
-KMMailtoForwardCommand::KMMailtoForwardCommand(QWidget *parent,
-        const QUrl &url, const Akonadi::Item &msg)
-    : KMCommand(parent, msg), mUrl(url)
+KMMailtoForwardCommand::KMMailtoForwardCommand(QWidget *parent, const QUrl &url, const Akonadi::Item &msg)
+    : KMCommand(parent, msg)
+    , mUrl(url)
 {
     fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
@@ -482,7 +491,8 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 }
 
 KMAddBookmarksCommand::KMAddBookmarksCommand(const QUrl &url, QWidget *parent)
-    : KMCommand(parent), mUrl(url)
+    : KMCommand(parent)
+    , mUrl(url)
 {
 }
 
@@ -502,7 +512,8 @@ KMCommand::Result KMAddBookmarksCommand::execute()
 }
 
 KMUrlSaveCommand::KMUrlSaveCommand(const QUrl &url, QWidget *parent)
-    : KMCommand(parent), mUrl(url)
+    : KMCommand(parent)
+    , mUrl(url)
 {
 }
 
@@ -535,8 +546,8 @@ KMCommand::Result KMUrlSaveCommand::execute()
     if (fileExists) {
         if (KMessageBox::warningContinueCancel(nullptr,
                                                xi18nc("@info", "File <filename>%1</filename> exists.<nl/>Do you want to replace it?",
-                                                       saveUrl.toDisplayString()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
-                != KMessageBox::Continue) {
+                                                      saveUrl.toDisplayString()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
+            != KMessageBox::Continue) {
             return Canceled;
         }
     }
@@ -558,7 +569,8 @@ void KMUrlSaveCommand::slotUrlSaveResult(KJob *job)
 }
 
 KMEditMessageCommand::KMEditMessageCommand(QWidget *parent, const KMime::Message::Ptr &msg)
-    : KMCommand(parent), mMessage(msg)
+    : KMCommand(parent)
+    , mMessage(msg)
 {
 }
 
@@ -658,7 +670,7 @@ void KMEditItemCommand::slotDeleteItem(KJob *job)
     deleteLater();
 }
 
-KMUseTemplateCommand::KMUseTemplateCommand(QWidget *parent, const Akonadi::Item  &msg)
+KMUseTemplateCommand::KMUseTemplateCommand(QWidget *parent, const Akonadi::Item &msg)
     : KMCommand(parent, msg)
 {
     fetchScope().fetchFullPayload(true);
@@ -669,9 +681,9 @@ KMCommand::Result KMUseTemplateCommand::execute()
 {
     Akonadi::Item item = retrievedMessage();
     if (!item.isValid()
-            || !item.parentCollection().isValid() ||
-            !CommonKernel->folderIsTemplates(item.parentCollection())
-       ) {
+        || !item.parentCollection().isValid()
+        || !CommonKernel->folderIsTemplates(item.parentCollection())
+        ) {
         return Failed;
     }
     KMime::Message::Ptr msg = MessageCore::Util::message(item);
@@ -713,13 +725,12 @@ KMCommand::Result KMSaveMsgCommand::execute()
 
 //-----------------------------------------------------------------------------
 
-KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url,
-                                   const QString &encoding, KMMainWidget *main)
-    : KMCommand(parent),
-      mUrl(url),
-      mJob(nullptr),
-      mEncoding(encoding),
-      mMainWidget(main)
+KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url, const QString &encoding, KMMainWidget *main)
+    : KMCommand(parent)
+    , mUrl(url)
+    , mJob(nullptr)
+    , mEncoding(encoding)
+    , mMainWidget(main)
 {
     qCDebug(KMAIL_LOG) << "url :" << url;
 }
@@ -729,7 +740,7 @@ KMCommand::Result KMOpenMsgCommand::execute()
     if (mUrl.isEmpty()) {
         mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18n("Open Message"), QUrl(),
                                            i18n("Message (*.mbox)")
-                                          );
+                                           );
     }
     if (mUrl.isEmpty()) {
         return Canceled;
@@ -771,7 +782,6 @@ void KMOpenMsgCommand::doesNotContainMessage()
     win->close();
     win->deleteLater();
     deleteLater();
-
 }
 
 void KMOpenMsgCommand::slotResult(KJob *job)
@@ -806,7 +816,8 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
         msg->parse();
         if (!msg->hasContent()) {
-            delete msg; msg = nullptr;
+            delete msg;
+            msg = nullptr;
             doesNotContainMessage();
             return;
         }
@@ -814,10 +825,11 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         KMime::Message::Ptr mMsg(msg);
         win->showMessage(mEncoding, mMsg);
         win->show();
-        if (multipleMessages)
+        if (multipleMessages) {
             KMessageBox::information(win,
                                      i18n("The file contains multiple messages. "
                                           "Only the first message is shown."));
+        }
         setResult(OK);
     }
     Q_EMIT completed(this);
@@ -825,14 +837,12 @@ void KMOpenMsgCommand::slotResult(KJob *job)
 }
 
 //-----------------------------------------------------------------------------
-KMReplyCommand::KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy,
-                               const QString &selection, bool noquote, const QString &templateName)
-    : KMCommand(parent, msg),
-      mSelection(selection),
-      mTemplate(templateName),
-      m_replyStrategy(replyStrategy),
-      mNoQuote(noquote)
-
+KMReplyCommand::KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy, const QString &selection, bool noquote, const QString &templateName)
+    : KMCommand(parent, msg)
+    , mSelection(selection)
+    , mTemplate(templateName)
+    , m_replyStrategy(replyStrategy)
+    , mNoQuote(noquote)
 {
     if (!noquote) {
         fetchScope().fetchFullPayload(true);
@@ -867,23 +877,21 @@ KMCommand::Result KMReplyCommand::execute()
     return OK;
 }
 
-KMForwardCommand::KMForwardCommand(QWidget *parent,
-                                   const Akonadi::Item::List &msgList, uint identity, const QString &templateName, const QString &selection)
-    : KMCommand(parent, msgList),
-      mIdentity(identity),
-      mTemplate(templateName),
-      mSelection(selection)
+KMForwardCommand::KMForwardCommand(QWidget *parent, const Akonadi::Item::List &msgList, uint identity, const QString &templateName, const QString &selection)
+    : KMCommand(parent, msgList)
+    , mIdentity(identity)
+    , mTemplate(templateName)
+    , mSelection(selection)
 {
     fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
 
-KMForwardCommand::KMForwardCommand(QWidget *parent, const Akonadi::Item &msg,
-                                   uint identity, const QString &templateName, const QString &selection)
-    : KMCommand(parent, msg),
-      mIdentity(identity),
-      mTemplate(templateName),
-      mSelection(selection)
+KMForwardCommand::KMForwardCommand(QWidget *parent, const Akonadi::Item &msg, uint identity, const QString &templateName, const QString &selection)
+    : KMCommand(parent, msg)
+    , mIdentity(identity)
+    , mTemplate(templateName)
+    , mSelection(selection)
 {
     fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
@@ -920,12 +928,12 @@ KMCommand::Result KMForwardCommand::execute()
         // ask if they want a mime digest forward
 
         int answer = KMessageBox::questionYesNoCancel(
-                         parentWidget(),
-                         i18n("Do you want to forward the selected messages as "
-                              "attachments in one message (as a MIME digest) or as "
-                              "individual messages?"), QString(),
-                         KGuiItem(i18n("Send As Digest")),
-                         KGuiItem(i18n("Send Individually")));
+            parentWidget(),
+            i18n("Do you want to forward the selected messages as "
+                 "attachments in one message (as a MIME digest) or as "
+                 "individual messages?"), QString(),
+            KGuiItem(i18n("Send As Digest")),
+            KGuiItem(i18n("Send Individually")));
 
         if (answer == KMessageBox::Yes) {
             Akonadi::Item firstItem(msgList.first());
@@ -962,19 +970,19 @@ KMCommand::Result KMForwardCommand::execute()
     return OK;
 }
 
-KMForwardAttachedCommand::KMForwardAttachedCommand(QWidget *parent,
-        const Akonadi::Item::List &msgList, uint identity, KMail::Composer *win)
-    : KMCommand(parent, msgList), mIdentity(identity),
-      mWin(QPointer<KMail::Composer>(win))
+KMForwardAttachedCommand::KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item::List &msgList, uint identity, KMail::Composer *win)
+    : KMCommand(parent, msgList)
+    , mIdentity(identity)
+    , mWin(QPointer<KMail::Composer>(win))
 {
     fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
 
-KMForwardAttachedCommand::KMForwardAttachedCommand(QWidget *parent,
-        const Akonadi::Item &msg, uint identity, KMail::Composer *win)
-    : KMCommand(parent, msg), mIdentity(identity),
-      mWin(QPointer< KMail::Composer >(win))
+KMForwardAttachedCommand::KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item &msg, uint identity, KMail::Composer *win)
+    : KMCommand(parent, msg)
+    , mIdentity(identity)
+    , mWin(QPointer< KMail::Composer >(win))
 {
     fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
@@ -999,8 +1007,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     return OK;
 }
 
-KMRedirectCommand::KMRedirectCommand(QWidget *parent,
-                                     const Akonadi::Item::List &msgList)
+KMRedirectCommand::KMRedirectCommand(QWidget *parent, const Akonadi::Item::List &msgList)
     : KMCommand(parent, msgList)
 {
     fetchScope().fetchFullPayload(true);
@@ -1010,8 +1017,7 @@ KMRedirectCommand::KMRedirectCommand(QWidget *parent,
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
 
-KMRedirectCommand::KMRedirectCommand(QWidget *parent,
-                                     const Akonadi::Item &msg)
+KMRedirectCommand::KMRedirectCommand(QWidget *parent, const Akonadi::Item &msg)
     : KMCommand(parent, msg)
 {
     fetchScope().fetchFullPayload(true);
@@ -1024,8 +1030,8 @@ KMRedirectCommand::KMRedirectCommand(QWidget *parent,
 KMCommand::Result KMRedirectCommand::execute()
 {
     const MailCommon::RedirectDialog::SendMode sendMode = MessageComposer::MessageComposerSettings::self()->sendImmediate()
-            ? MailCommon::RedirectDialog::SendNow
-            : MailCommon::RedirectDialog::SendLater;
+                                                          ? MailCommon::RedirectDialog::SendNow
+                                                          : MailCommon::RedirectDialog::SendLater;
 
     QScopedPointer<MailCommon::RedirectDialog> dlg(new MailCommon::RedirectDialog(sendMode, parentWidget()));
     dlg->setObjectName(QStringLiteral("redirect"));
@@ -1038,8 +1044,8 @@ KMCommand::Result KMRedirectCommand::execute()
 
     //TODO use sendlateragent here too.
     const MessageComposer::MessageSender::SendMethod method = (dlg->sendMode() == MailCommon::RedirectDialog::SendNow)
-            ? MessageComposer::MessageSender::SendImmediate
-            : MessageComposer::MessageSender::SendLater;
+                                                              ? MessageComposer::MessageSender::SendImmediate
+                                                              : MessageComposer::MessageSender::SendLater;
 
     const int identity = dlg->identity();
     int transportId = dlg->transportId();
@@ -1070,7 +1076,7 @@ KMCommand::Result KMRedirectCommand::execute()
         const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
         QString fcc;
         if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
-            fcc =  QString::number(sentAttribute->moveToCollection().id());
+            fcc = QString::number(sentAttribute->moveToCollection().id());
         }
 
         const KMime::Message::Ptr newMsg = factory.createRedirect(to, cc, bcc, transportId, fcc, identity);
@@ -1093,18 +1099,16 @@ KMCommand::Result KMRedirectCommand::execute()
     return OK;
 }
 
-KMPrintCommand::KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
-                               MessageViewer::HeaderStylePlugin *plugin,
-                               MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride,
+KMPrintCommand::KMPrintCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::HeaderStylePlugin *plugin, MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride,
                                bool useFixedFont, const QString &encoding)
-    : KMCommand(parent, msg),
-      mHeaderStylePlugin(plugin),
-      mAttachmentStrategy(nullptr),
-      mEncoding(encoding),
-      mFormat(format),
-      mHtmlLoadExtOverride(htmlLoadExtOverride),
-      mUseFixedFont(useFixedFont),
-      mPrintPreview(false)
+    : KMCommand(parent, msg)
+    , mHeaderStylePlugin(plugin)
+    , mAttachmentStrategy(nullptr)
+    , mEncoding(encoding)
+    , mFormat(format)
+    , mHtmlLoadExtOverride(htmlLoadExtOverride)
+    , mUseFixedFont(useFixedFont)
+    , mPrintPreview(false)
 {
     fetchScope().fetchFullPayload(true);
     if (MessageCore::MessageCoreSettings::useDefaultFonts()) {
@@ -1155,9 +1159,10 @@ KMCommand::Result KMPrintCommand::execute()
     return OK;
 }
 
-KMSetStatusCommand::KMSetStatusCommand(const MessageStatus &status,
-                                       const Akonadi::Item::List &items, bool invert)
-    : KMCommand(nullptr, items), mStatus(status), mInvertMark(invert)
+KMSetStatusCommand::KMSetStatusCommand(const MessageStatus &status, const Akonadi::Item::List &items, bool invert)
+    : KMCommand(nullptr, items)
+    , mStatus(status)
+    , mInvertMark(invert)
 {
     setDeletesItself(true);
 }
@@ -1234,8 +1239,7 @@ void KMSetStatusCommand::slotModifyItemDone(KJob *job)
     deleteLater();
 }
 
-KMSetTagCommand::KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::Item::List &item,
-                                 SetTagMode mode)
+KMSetTagCommand::KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::Item::List &item, SetTagMode mode)
     : mTags(tags)
     , mItem(item)
     , mMode(mode)
@@ -1321,10 +1325,10 @@ void KMSetTagCommand::slotModifyItemDone(KJob *job)
     deleteLater();
 }
 
-KMFilterActionCommand::KMFilterActionCommand(QWidget *parent,
-        const QVector<qlonglong> &msgListId,
-        const QString &filterId)
-    : KMCommand(parent), mMsgListId(msgListId), mFilterId(filterId)
+KMFilterActionCommand::KMFilterActionCommand(QWidget *parent, const QVector<qlonglong> &msgListId, const QString &filterId)
+    : KMCommand(parent)
+    , mMsgListId(msgListId)
+    , mFilterId(filterId)
 {
 }
 
@@ -1335,10 +1339,10 @@ KMCommand::Result KMFilterActionCommand::execute()
 #endif
     int msgCount = 0;
     const int msgCountToFilter = mMsgListId.count();
-    ProgressItem *progressItem =
-        ProgressManager::createProgressItem(
-            QLatin1String("filter") + ProgressManager::getUniqueID(),
-            i18n("Filtering messages"), QString(), true, KPIM::ProgressItem::Unknown);
+    ProgressItem *progressItem
+        = ProgressManager::createProgressItem(
+        QLatin1String("filter") + ProgressManager::getUniqueID(),
+        i18n("Filtering messages"), QString(), true, KPIM::ProgressItem::Unknown);
     progressItem->setTotalItems(msgCountToFilter);
 
     for (const qlonglong &id : qAsConst(mMsgListId)) {
@@ -1360,10 +1364,10 @@ KMCommand::Result KMFilterActionCommand::execute()
     return OK;
 }
 
-KMMetaFilterActionCommand::KMMetaFilterActionCommand(const QString &filterId,
-        KMMainWidget *main)
-    : QObject(main),
-      mFilterId(filterId), mMainWidget(main)
+KMMetaFilterActionCommand::KMMetaFilterActionCommand(const QString &filterId, KMMainWidget *main)
+    : QObject(main)
+    , mFilterId(filterId)
+    , mMainWidget(main)
 {
 }
 
@@ -1374,8 +1378,7 @@ void KMMetaFilterActionCommand::start()
     filterCommand->start();
 }
 
-KMMailingListFilterCommand::KMMailingListFilterCommand(QWidget *parent,
-        const Akonadi::Item &msg)
+KMMailingListFilterCommand::KMMailingListFilterCommand(QWidget *parent, const Akonadi::Item &msg)
     : KMCommand(parent, msg)
 {
 }
@@ -1398,14 +1401,15 @@ KMCommand::Result KMMailingListFilterCommand::execute()
     }
 }
 
-KMCopyCommand::KMCopyCommand(const Akonadi::Collection &destFolder,
-                             const Akonadi::Item::List &msgList)
-    : KMCommand(nullptr, msgList), mDestFolder(destFolder)
+KMCopyCommand::KMCopyCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList)
+    : KMCommand(nullptr, msgList)
+    , mDestFolder(destFolder)
 {
 }
 
 KMCopyCommand::KMCopyCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg)
-    : KMCommand(nullptr, msg), mDestFolder(destFolder)
+    : KMCommand(nullptr, msg)
+    , mDestFolder(destFolder)
 {
 }
 
@@ -1431,18 +1435,20 @@ void KMCopyCommand::slotCopyResult(KJob *job)
     deleteLater();
 }
 
-KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder,
-                             const Akonadi::Item::List &msgList,
-                             MessageList::Core::MessageItemSetReference ref)
-    : KMCommand(nullptr, msgList), mDestFolder(destFolder), mProgressItem(nullptr), mRef(ref)
+KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
+    : KMCommand(nullptr, msgList)
+    , mDestFolder(destFolder)
+    , mProgressItem(nullptr)
+    , mRef(ref)
 {
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
 
-KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder,
-                             const Akonadi::Item &msg,
-                             MessageList::Core::MessageItemSetReference ref)
-    : KMCommand(nullptr, msg), mDestFolder(destFolder), mProgressItem(nullptr), mRef(ref)
+KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref)
+    : KMCommand(nullptr, msg)
+    , mDestFolder(destFolder)
+    , mProgressItem(nullptr)
+    , mRef(ref)
 {
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
@@ -1473,7 +1479,7 @@ KMCommand::Result KMMoveCommand::execute()
 
             // group by source folder for undo
             std::sort(retrievedList.begin(), retrievedList.end(),
-            [](const Akonadi::Item & lhs, const Akonadi::Item & rhs) {
+                      [](const Akonadi::Item &lhs, const Akonadi::Item &rhs) {
                 return lhs.storageCollectionId() < rhs.storageCollectionId();
             });
             Akonadi::Collection parent;
@@ -1498,9 +1504,9 @@ KMCommand::Result KMMoveCommand::execute()
     }
     // TODO set SSL state according to source and destfolder connection?
     Q_ASSERT(!mProgressItem);
-    mProgressItem =
-        ProgressManager::createProgressItem(QLatin1String("move") + ProgressManager::getUniqueID(),
-                                            mDestFolder.isValid() ? i18n("Moving messages") : i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
+    mProgressItem
+        = ProgressManager::createProgressItem(QLatin1String("move") + ProgressManager::getUniqueID(),
+                                              mDestFolder.isValid() ? i18n("Moving messages") : i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
     mProgressItem->setUsesBusyIndicator(true);
     connect(mProgressItem, &ProgressItem::progressItemCanceled,
             this, &KMMoveCommand::slotMoveCanceled);
@@ -1525,8 +1531,7 @@ void KMMoveCommand::slotMoveCanceled()
 }
 
 // srcFolder doesn't make much sense for searchFolders
-KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder,
-                                     const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
+KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
     : KMMoveCommand(findTrashFolder(srcFolder), msgList, ref)
 {
 }
@@ -1549,15 +1554,15 @@ Akonadi::Collection KMTrashMsgCommand::findTrashFolder(const Akonadi::Collection
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::Viewer *viewer)
-    : KMCommand(parent, msg),
-      mViewer(viewer)
+    : KMCommand(parent, msg)
+    , mViewer(viewer)
 {
     fetchScope().fetchFullPayload(true);
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs)
-    : KMCommand(parent, msgs),
-      mViewer(nullptr)
+    : KMCommand(parent, msgs)
+    , mViewer(nullptr)
 {
     fetchScope().fetchFullPayload(true);
 }
@@ -1583,8 +1588,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
     return Failed;
 }
 
-KMResendMessageCommand::KMResendMessageCommand(QWidget *parent,
-        const Akonadi::Item &msg)
+KMResendMessageCommand::KMResendMessageCommand(QWidget *parent, const Akonadi::Item &msg)
     : KMCommand(parent, msg)
 {
     fetchScope().fetchFullPayload(true);
@@ -1620,8 +1624,8 @@ KMCommand::Result KMResendMessageCommand::execute()
 }
 
 KMShareImageCommand::KMShareImageCommand(const QUrl &url, QWidget *parent)
-    : KMCommand(parent),
-      mUrl(url)
+    : KMCommand(parent)
+    , mUrl(url)
 {
 }
 

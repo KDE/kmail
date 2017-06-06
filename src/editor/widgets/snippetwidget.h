@@ -16,8 +16,7 @@
 
 #include <QTreeView>
 
-namespace MailCommon
-{
+namespace MailCommon {
 class SnippetsManager;
 }
 

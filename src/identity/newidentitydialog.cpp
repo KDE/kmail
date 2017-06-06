@@ -46,8 +46,8 @@
 using namespace KMail;
 
 NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent)
-    : QDialog(parent),
-      mIdentityManager(manager)
+    : QDialog(parent)
+    , mIdentityManager(manager)
 {
     setWindowTitle(i18n("New Identity"));
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
@@ -161,4 +161,3 @@ QString NewIdentityDialog::duplicateIdentity() const
 {
     return mComboBox->currentText();
 }
-

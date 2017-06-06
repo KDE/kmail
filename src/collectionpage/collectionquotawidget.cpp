@@ -68,4 +68,3 @@ void CollectionQuotaWidget::setQuotaInfo(qint64 current, qint64 maxValue)
     mProgressBar->setValue(current);
     mUsage->setText(i18n("%1 of %2 used", KFormat().formatByteSize(qMax(0LL, current)), KFormat().formatByteSize(qMax(0LL, maxValue))));
 }
-

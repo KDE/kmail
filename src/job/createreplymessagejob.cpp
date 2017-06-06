@@ -30,8 +30,8 @@
 #include <QDebug>
 
 CreateReplyMessageJob::CreateReplyMessageJob(QObject *parent)
-    : QObject(parent),
-      mMessageFactory(nullptr)
+    : QObject(parent)
+    , mMessageFactory(nullptr)
 {
 }
 
@@ -72,7 +72,6 @@ void CreateReplyMessageJob::start()
     connect(mMessageFactory, &MessageComposer::MessageFactoryNG::createReplyDone, this, &CreateReplyMessageJob::slotCreateReplyDone);
     mMessageFactory->setReplyStrategy(mSettings.m_replyStrategy);
     mMessageFactory->createReplyAsync();
-
 }
 
 void CreateReplyMessageJob::slotCreateReplyDone(const MessageComposer::MessageFactoryNG::MessageReply &reply)

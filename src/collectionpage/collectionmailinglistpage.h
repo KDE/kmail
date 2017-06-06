@@ -30,7 +30,7 @@
 class QCheckBox;
 class QPushButton;
 
-template <typename T> class QSharedPointer;
+template<typename T> class QSharedPointer;
 
 class KComboBox;
 class KJob;
@@ -71,15 +71,15 @@ private:
     Akonadi::Collection mCurrentCollection;
     QSharedPointer<MailCommon::FolderSettings> mFolder;
 
-    MailingList   mMailingList;
-    QCheckBox    *mHoldsMailingList;
-    KComboBox    *mMLHandlerCombo;
-    QPushButton  *mDetectButton;
-    KComboBox    *mAddressCombo;
+    MailingList mMailingList;
+    QCheckBox *mHoldsMailingList;
+    KComboBox *mMLHandlerCombo;
+    QPushButton *mDetectButton;
+    KComboBox *mAddressCombo;
     KEditListWidget *mEditList;
     KSqueezedTextLabel *mMLId;
     QWidget *mGroupWidget;
-    int           mLastItem;
+    int mLastItem;
     bool changed;
 };
 

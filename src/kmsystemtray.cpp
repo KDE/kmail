@@ -57,13 +57,13 @@ using namespace MailCommon;
 using namespace KMail;
 
 KMSystemTray::KMSystemTray(QObject *parent)
-    : KStatusNotifierItem(parent),
-      mIcon(QIcon::fromTheme(QStringLiteral("mail-mark-unread-new"))),
-      mDesktopOfMainWin(0),
-      mCount(0),
-      mIconNotificationsEnabled(true),
-      mNewMessagesPopup(nullptr),
-      mSendQueued(nullptr)
+    : KStatusNotifierItem(parent)
+    , mIcon(QIcon::fromTheme(QStringLiteral("mail-mark-unread-new")))
+    , mDesktopOfMainWin(0)
+    , mCount(0)
+    , mIconNotificationsEnabled(true)
+    , mNewMessagesPopup(nullptr)
+    , mSendQueued(nullptr)
 {
     qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
@@ -90,7 +90,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &KMSystemTray::initListOfCollection);
 
     initListOfCollection();
-
 }
 
 bool KMSystemTray::buildPopupMenu()
@@ -194,7 +193,7 @@ void KMSystemTray::slotActivated()
         mDesktopOfMainWin = cur.desktop();
     }
 
-    if (wasMinimized  && (currentDesktop != mDesktopOfMainWin) && (mDesktopOfMainWin == NET::OnAllDesktops)) {
+    if (wasMinimized && (currentDesktop != mDesktopOfMainWin) && (mDesktopOfMainWin == NET::OnAllDesktops)) {
         KWindowSystem::setOnDesktop(mainWin->winId(), currentDesktop);
     }
 
@@ -309,7 +308,6 @@ void KMSystemTray::unreadMail(const QAbstractItemModel *model, const QModelIndex
         const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
 
         if (!excludeFolder(collection)) {
-
             const Akonadi::CollectionStatistics statistics = collection.statistics();
             const qint64 count = qMax(0LL, statistics.unreadCount());
 
@@ -332,7 +330,7 @@ void KMSystemTray::unreadMail(const QAbstractItemModel *model, const QModelIndex
 
 bool KMSystemTray::hasUnreadMail() const
 {
-    return (mCount != 0);
+    return mCount != 0;
 }
 
 void KMSystemTray::slotSelectCollection(QAction *act)
@@ -358,11 +356,11 @@ void KMSystemTray::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, c
 {
     //Exclude sent mail folder
 
-    if (CommonKernel->outboxCollectionFolder().id() == id ||
-            CommonKernel->sentCollectionFolder().id() == id ||
-            CommonKernel->templatesCollectionFolder().id() == id ||
-            CommonKernel->trashCollectionFolder().id() == id ||
-            CommonKernel->draftsCollectionFolder().id() == id) {
+    if (CommonKernel->outboxCollectionFolder().id() == id
+        || CommonKernel->sentCollectionFolder().id() == id
+        || CommonKernel->templatesCollectionFolder().id() == id
+        || CommonKernel->trashCollectionFolder().id() == id
+        || CommonKernel->draftsCollectionFolder().id() == id) {
         return;
     }
     initListOfCollection();
@@ -373,11 +371,11 @@ bool KMSystemTray::excludeFolder(const Akonadi::Collection &collection) const
     if (!collection.isValid() || !collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
         return true;
     }
-    if (CommonKernel->outboxCollectionFolder() == collection ||
-            CommonKernel->sentCollectionFolder() == collection ||
-            CommonKernel->templatesCollectionFolder() == collection ||
-            CommonKernel->trashCollectionFolder() == collection ||
-            CommonKernel->draftsCollectionFolder() == collection) {
+    if (CommonKernel->outboxCollectionFolder() == collection
+        || CommonKernel->sentCollectionFolder() == collection
+        || CommonKernel->templatesCollectionFolder() == collection
+        || CommonKernel->trashCollectionFolder() == collection
+        || CommonKernel->draftsCollectionFolder() == collection) {
         return true;
     }
 

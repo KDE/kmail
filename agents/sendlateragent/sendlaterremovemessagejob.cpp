@@ -22,9 +22,9 @@
 #include "sendlateragent_debug.h"
 
 SendLaterRemoveMessageJob::SendLaterRemoveMessageJob(const QList<Akonadi::Item::Id> &listItem, QObject *parent)
-    : QObject(parent),
-      mListItems(listItem),
-      mIndex(0)
+    : QObject(parent)
+    , mListItems(listItem)
+    , mIndex(0)
 {
 }
 
@@ -55,4 +55,3 @@ void SendLaterRemoveMessageJob::slotItemDeleteDone(KJob *job)
     ++mIndex;
     deleteItem();
 }
-

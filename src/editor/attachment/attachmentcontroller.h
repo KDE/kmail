@@ -27,13 +27,11 @@
 #include <AkonadiCore/Item>
 class KMComposerWin;
 class QModelIndex;
-namespace MessageComposer
-{
+namespace MessageComposer {
 class AttachmentModel;
 }
 
-namespace KMail
-{
+namespace KMail {
 class AttachmentView;
 
 class AttachmentController : public MessageComposer::AttachmentControllerBase
@@ -61,7 +59,6 @@ private:
     KMComposerWin *mComposer;
     AttachmentView *mView;
 };
-
 } // namespace KMail
 
 #endif // KMAIL_ATTACHMENTCONTROLLER_H

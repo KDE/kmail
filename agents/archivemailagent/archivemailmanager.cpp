@@ -83,7 +83,7 @@ void ArchiveMailManager::load()
             if (info) {
                 //Store task started
                 mListArchiveInfo.append(info);
-                ScheduledArchiveTask *task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), /*immediate*/false);
+                ScheduledArchiveTask *task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), /*immediate*/ false);
                 mArchiveMailKernel->jobScheduler()->registerTask(task);
             }
         } else {
@@ -211,4 +211,3 @@ void ArchiveMailManager::archiveFolder(const QString &path, Akonadi::Collection:
     slotArchiveNow(info);
     delete info;
 }
-

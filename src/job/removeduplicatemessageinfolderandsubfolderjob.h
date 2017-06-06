@@ -42,7 +42,6 @@ private Q_SLOTS:
 
 private:
     Akonadi::Collection mTopLevelCollection;
-
 };
 
 #endif // REMOVEDUPLICATEMESSAGEINFOLDERANDSUBFOLDERJOB_H

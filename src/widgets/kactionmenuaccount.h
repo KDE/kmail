@@ -28,16 +28,15 @@ public:
     AgentIdentifier()
         : mIndex(-1)
     {
-
     }
 
     AgentIdentifier(const QString &identifier, const QString &name, int index = -1)
-        : mIdentifier(identifier),
-          mName(name),
-          mIndex(index)
+        : mIdentifier(identifier)
+        , mName(name)
+        , mIndex(index)
     {
-
     }
+
     QString mIdentifier;
     QString mName;
     int mIndex;

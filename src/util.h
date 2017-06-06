@@ -43,15 +43,12 @@
 #include <AkonadiCore/Collection>
 #include <MailCommon/FolderSettings>
 
-namespace KMail
-{
+namespace KMail {
 /**
      * The Util namespace contains a collection of helper functions use in
      * various places.
      */
-namespace Util
-{
-
+namespace Util {
 /**
      * Returns any mailing list post addresses set on the
      *  parent collection (the mail folder) of the item.
@@ -68,7 +65,8 @@ Akonadi::Item::Id putRepliesInSameFolder(const Akonadi::Item &item);
      * Handles a clicked URL, but only in case the viewer didn't handle it.
      * Currently only support mailto.
      */
-bool handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder = QSharedPointer<MailCommon::FolderSettings>(), const Akonadi::Collection &collection = Akonadi::Collection());
+bool handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder = QSharedPointer<MailCommon::FolderSettings>(),
+                      const Akonadi::Collection &collection = Akonadi::Collection());
 
 bool mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection);
 

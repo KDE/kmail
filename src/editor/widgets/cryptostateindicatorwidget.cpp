@@ -27,10 +27,10 @@
 #include <QLabel>
 
 CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
-    : QWidget(parent),
-      mShowAlwaysIndicator(true),
-      mIsSign(false),
-      mIsEncrypted(false)
+    : QWidget(parent)
+    , mShowAlwaysIndicator(true)
+    , mIsSign(false)
+    , mIsEncrypted(false)
 {
     QHBoxLayout *hbox = new QHBoxLayout(this);
     hbox->setMargin(0);
@@ -92,12 +92,11 @@ void CryptoStateIndicatorWidget::updateSignatureAndEncrypionStateIndicators(bool
     mIsEncrypted = isEncrypted;
     mIsSign = isSign;
 
-    mSignatureStateIndicator->setText(isSign ?
-                                      i18n("Message will be signed") :
-                                      i18n("Message will not be signed"));
-    mEncryptionStateIndicator->setText(isEncrypted ?
-                                       i18n("Message will be encrypted") :
-                                       i18n("Message will not be encrypted"));
+    mSignatureStateIndicator->setText(isSign
+                                      ? i18n("Message will be signed")
+                                      : i18n("Message will not be signed"));
+    mEncryptionStateIndicator->setText(isEncrypted
+                                       ? i18n("Message will be encrypted")
+                                       : i18n("Message will not be encrypted"));
     updateShowAlwaysIndicator();
-
 }

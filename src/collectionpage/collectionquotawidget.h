@@ -39,11 +39,12 @@ class QLabel;
 
 class CollectionQuotaWidget : public QWidget
 {
-
     Q_OBJECT
 public:
     explicit CollectionQuotaWidget(QWidget *parent);
-    ~CollectionQuotaWidget() { }
+    ~CollectionQuotaWidget()
+    {
+    }
 
     void setQuotaInfo(qint64 currentValue, qint64 maxValue);
 

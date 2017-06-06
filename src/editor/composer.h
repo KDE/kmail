@@ -27,31 +27,32 @@
 #include <kmime/kmime_message.h>
 #include <AkonadiCore/collection.h>
 
-namespace KMime
-{
+namespace KMime {
 class Content;
 }
 
-namespace KMail
-{
-
+namespace KMail {
 class KMAIL_EXPORT Composer : public KMail::SecondaryWindow
 {
     Q_OBJECT
 protected:
-    Composer(const QString &name = QString()) : KMail::SecondaryWindow(name) {}
+    Composer(const QString &name = QString()) : KMail::SecondaryWindow(name)
+    {
+    }
 
 public:
-    enum TemplateContext { New, Reply, ReplyToAll, Forward, NoTemplate };
+    enum TemplateContext {
+        New, Reply, ReplyToAll, Forward, NoTemplate
+    };
     enum VisibleHeaderFlag {
-        HDR_FROM        = 0x01,
-        HDR_REPLY_TO    = 0x02,
-        HDR_SUBJECT     = 0x20,
-        HDR_IDENTITY    = 0x100,
-        HDR_TRANSPORT   = 0x200,
-        HDR_FCC         = 0x400,
-        HDR_DICTIONARY  = 0x800,
-        HDR_ALL         = 0xfff
+        HDR_FROM = 0x01,
+        HDR_REPLY_TO = 0x02,
+        HDR_SUBJECT = 0x20,
+        HDR_IDENTITY = 0x100,
+        HDR_TRANSPORT = 0x200,
+        HDR_FCC = 0x400,
+        HDR_DICTIONARY = 0x800,
+        HDR_ALL = 0xfff
     };
     typedef QFlags<VisibleHeaderFlag> VisibleHeaderFlags;
 
@@ -60,14 +61,9 @@ public: // mailserviceimpl
      * From MailComposerIface
      */
     virtual void send(int how) = 0;
-    virtual void addAttachmentsAndSend(const QList<QUrl> &urls,
-                                       const QString &comment, int how) = 0;
+    virtual void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) = 0;
     virtual void addAttachment(const QUrl &url, const QString &comment) = 0;
-    virtual void addAttachment(const QString &name,
-                               KMime::Headers::contentEncoding cte,
-                               const QString &charset,
-                               const QByteArray &data,
-                               const QByteArray &mimeType) = 0;
+    virtual void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) = 0;
 public: // kmcommand
     virtual QString dbusObjectPath() const = 0;
 public: // kmkernel, kmcommands, callback
@@ -75,8 +71,8 @@ public: // kmkernel, kmcommands, callback
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    virtual void setMessage(const KMime::Message::Ptr &newMsg,  bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true,
-                            bool allowDecryption = false, bool isModified = false) = 0;
+    virtual void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true, bool allowDecryption = false,
+                            bool isModified = false) = 0;
     virtual void setCurrentTransport(int transportId) = 0;
 
     virtual void setCurrentReplyTo(const QString &replyTo) = 0;
@@ -136,11 +132,9 @@ public: // kmcommand
     virtual void addAttach(KMime::Content *msgPart) = 0;
 };
 
-KMAIL_EXPORT Composer *makeComposer(const KMime::Message::Ptr &msg = KMime::Message::Ptr(), bool lastSignState = false, bool lastEncryptState = false,
-                                    Composer::TemplateContext context = Composer::NoTemplate,
-                                    uint identity = 0, const QString &textSelection = QString(),
-                                    const QString &customTemplate = QString());
-
+KMAIL_EXPORT Composer *makeComposer(
+    const KMime::Message::Ptr &msg = KMime::Message::Ptr(), bool lastSignState = false, bool lastEncryptState = false, Composer::TemplateContext context = Composer::NoTemplate, uint identity = 0,
+    const QString &textSelection = QString(), const QString &customTemplate = QString());
 }
 
 #endif // __KMAIL_COMPOSER_H__

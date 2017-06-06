@@ -123,7 +123,7 @@ void SecurityPage::GeneralTab::save()
 {
     if (MessageViewer::MessageViewerSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked()) {
         if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
-                                               "HTML setting will override all folder specific values."), QString(),
+                                                          "HTML setting will override all folder specific values."), QString(),
                                                KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("htmlMailOverride")) == KMessageBox::Continue) {
             saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
             if (kmkernel) {
@@ -260,7 +260,6 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
     loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
-
 }
 
 QString SecurityPage::WarningTab::helpAnchor() const
@@ -311,7 +310,6 @@ void SecurityPage::WarningTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mWarnEncrKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnEncrChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
-
 }
 
 void SecurityPage::WarningTab::doLoadOther()
@@ -462,7 +460,6 @@ struct SMIMECryptoConfigEntries {
     explicit SMIMECryptoConfigEntries(QGpgME::CryptoConfig *config)
         : mConfig(config)
     {
-
         // Checkboxes
         mCheckUsingOCSPConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("enable-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
         mEnableOCSPsendingConfigEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("allow-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
@@ -484,11 +481,7 @@ struct SMIMECryptoConfigEntries {
         mCustomLDAPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ldap-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
     }
 
-    QGpgME::CryptoConfigEntry *configEntry(const QString &componentName,
-                                           const QString &groupName,
-                                           const QString &entryName,
-                                           int argType,
-                                           bool isList);
+    QGpgME::CryptoConfigEntry *configEntry(const QString &componentName, const QString &groupName, const QString &entryName, int argType, bool isList);
 
     // Checkboxes
     QGpgME::CryptoConfigEntry *mCheckUsingOCSPConfigEntry;
@@ -597,8 +590,8 @@ void SecurityPage::SMimeTab::slotUpdateHTTPActions()
     mWidget->honorHTTPProxyRB->setEnabled(enableProxySettings);
     mWidget->customHTTPProxy->setEnabled(enableProxySettings && mWidget->useCustomHTTPProxyRB->isChecked());
 
-    if (!mWidget->useCustomHTTPProxyRB->isChecked() &&
-            !mWidget->honorHTTPProxyRB->isChecked()) {
+    if (!mWidget->useCustomHTTPProxyRB->isChecked()
+        && !mWidget->honorHTTPProxyRB->isChecked()) {
         mWidget->honorHTTPProxyRB->setChecked(true);
     }
 }
@@ -669,11 +662,8 @@ void SecurityPage::SMimeTab::save()
     mConfig->sync(true);
 }
 
-QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &componentName,
-        const QString &groupName,
-        const QString &entryName,
-        int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
-        bool isList)
+QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &componentName, const QString &groupName, const QString &entryName, int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
+                                                                 bool isList)
 {
     QGpgME::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
     if (!entry) {

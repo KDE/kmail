@@ -28,16 +28,14 @@
 #include <AkonadiCore/item.h>
 class KJob;
 
-namespace KMail
-{
-
+namespace KMail {
 /** A class for storing Undo information. */
 class UndoInfo
 {
 public:
     UndoInfo()
-        : id(-1),
-          moveToTrash(false)
+        : id(-1)
+        , moveToTrash(false)
     {
     }
 
@@ -80,7 +78,6 @@ protected:
 Q_SIGNALS:
     void undoStackChanged();
 };
-
 }
 
 #endif

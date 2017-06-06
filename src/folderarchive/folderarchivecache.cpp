@@ -27,7 +27,6 @@ FolderArchiveCache::FolderArchiveCache(QObject *parent)
 
 FolderArchiveCache::~FolderArchiveCache()
 {
-
 }
 
 void FolderArchiveCache::clearCache()
@@ -53,10 +52,9 @@ Akonadi::Collection::Id FolderArchiveCache::collectionId(FolderArchiveAccountInf
     if (mCache.contains(info->instanceName())) {
         //qCDebug(KMAIL_LOG)<<"instance name : "<<info->instanceName();
         switch (info->folderArchiveType()) {
-        case FolderArchiveAccountInfo::UniqueFolder: {
+        case FolderArchiveAccountInfo::UniqueFolder:
             qCDebug(KMAIL_LOG) << "FolderArchiveAccountInfo::UniqueFolder has cache " << mCache.value(info->instanceName()).colId;
             return mCache.value(info->instanceName()).colId;
-        }
         case FolderArchiveAccountInfo::FolderByMonths:
             //qCDebug(KMAIL_LOG)<<"FolderArchiveAccountInfo::ByMonths has cache ?";
             if (mCache.value(info->instanceName()).date.month() != QDate::currentDate().month()) {
@@ -95,4 +93,3 @@ void FolderArchiveCache::addToCache(const QString &resourceName, Akonadi::Collec
         mCache.insert(resourceName, cache);
     }
 }
-

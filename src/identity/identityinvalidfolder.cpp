@@ -30,7 +30,6 @@ IdentityInvalidFolder::IdentityInvalidFolder(QWidget *parent)
 
 IdentityInvalidFolder::~IdentityInvalidFolder()
 {
-
 }
 
 void IdentityInvalidFolder::setErrorMessage(const QString &msg)

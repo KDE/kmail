@@ -50,9 +50,9 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(user1Button, &QPushButton::clicked, this, &MessagePropertyDialog::slotSaveProperty);
 
-    const QStringList headerLabels =
-        (QStringList(i18nc("@title:column property name", "Name"))
-         << i18nc("@title:column property value", "Value"));
+    const QStringList headerLabels
+        = (QStringList(i18nc("@title:column property name", "Name"))
+           << i18nc("@title:column property value", "Value"));
     mListView->setHeaderLabels(headerLabels);
     mListView->setAllColumnsShowFocus(true);
     mListView->setWordWrap(true);
@@ -62,7 +62,6 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     KGuiItem::assign(user1Button, KStandardGuiItem::save());
     AttachPropertyDialog::formatPropertySet(mMessage, mListView);
     readConfig();
-
 }
 
 MessagePropertyDialog::~MessagePropertyDialog()

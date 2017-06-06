@@ -41,10 +41,10 @@ private:
     void doLoadOther() override;
 
 private:
-    QCheckBox   *mConfirmSendCheck;
-    QCheckBox   *mCheckSpellingBeforeSending;
-    KComboBox   *mSendOnCheckCombo;
-    KComboBox   *mSendMethodCombo;
+    QCheckBox *mConfirmSendCheck;
+    QCheckBox *mCheckSpellingBeforeSending;
+    KComboBox *mSendOnCheckCombo;
+    KComboBox *mSendMethodCombo;
 };
 
 class AccountsPageReceivingTab : public ConfigModuleTab
@@ -72,7 +72,10 @@ private:
         RetrievalOptions(bool manualCheck, bool offline, bool checkOnStartup)
             : IncludeInManualChecks(manualCheck)
             , OfflineOnShutdown(offline)
-            , CheckOnStartup(checkOnStartup) {}
+            , CheckOnStartup(checkOnStartup)
+        {
+        }
+
         bool IncludeInManualChecks;
         bool OfflineOnShutdown;
         bool CheckOnStartup;

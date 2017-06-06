@@ -25,9 +25,7 @@
 
 #include <QByteArray>
 
-namespace Akonadi
-{
-
+namespace Akonadi {
 class SearchDescriptionAttribute : public Akonadi::Attribute
 {
 public:
@@ -53,7 +51,6 @@ private:
     Akonadi::Collection mBaseCollection;
     bool mRecursive;
 };
-
 }
 
 #endif

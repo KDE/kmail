@@ -61,9 +61,7 @@ using namespace KIO;
 using namespace KMail;
 using namespace MessageViewer;
 
-namespace KMail
-{
-
+namespace KMail {
 XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     : QWidget(parent)
 {
@@ -181,7 +179,6 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
 
 XFaceConfigurator::~XFaceConfigurator()
 {
-
 }
 
 bool XFaceConfigurator::isXFaceEnabled() const
@@ -261,7 +258,6 @@ void XFaceConfigurator::slotDelayedSelectFromAddressbook(KJob *job)
         } else {
             KMessageBox::information(this, i18n("No picture set for your address book entry."), i18n("No Picture"));
         }
-
     } else {
         const QUrl url(contact.photo().url());
         if (!url.isEmpty()) {
@@ -288,6 +284,4 @@ void XFaceConfigurator::slotUpdateXFace()
         mXFaceLabel->clear();
     }
 }
-
 } // namespace KMail
-

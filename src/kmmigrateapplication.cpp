@@ -34,11 +34,11 @@ void KMMigrateApplication::migrate()
     Kdelibs4ConfigMigrator migrate(QStringLiteral("kmail"));
 
     migrate.setConfigFiles(QStringList() << QStringLiteral("kmail2rc") << QStringLiteral("kmail2.notifyrc") << QStringLiteral("kmailsnippetrc")
-                           << QStringLiteral("customtemplatesrc") << QStringLiteral("templatesconfigurationrc") << QStringLiteral("kpimcompletionorder")
-                           << QStringLiteral("messageviewer.notifyrc") << QStringLiteral("sievetemplaterc") << QStringLiteral("foldermailarchiverc")
-                           << QStringLiteral("kpimbalooblacklist"));
+                                         << QStringLiteral("customtemplatesrc") << QStringLiteral("templatesconfigurationrc") << QStringLiteral("kpimcompletionorder")
+                                         << QStringLiteral("messageviewer.notifyrc") << QStringLiteral("sievetemplaterc") << QStringLiteral("foldermailarchiverc")
+                                         << QStringLiteral("kpimbalooblacklist"));
     migrate.setUiFiles(QStringList() << QStringLiteral("kmail_part.rc") << QStringLiteral("kmcomposerui.rc") <<  QStringLiteral("kmmainwin.rc")
-                       << QStringLiteral("kmreadermainwin.rc"));
+                                     << QStringLiteral("kmreadermainwin.rc"));
     migrate.migrate();
 
     // Migrate folders and files.

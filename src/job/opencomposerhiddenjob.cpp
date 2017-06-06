@@ -29,15 +29,13 @@
 #include <TemplateParser/TemplateParserJob>
 
 OpenComposerHiddenJob::OpenComposerHiddenJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr)
+    : QObject(parent)
+    , mMsg(nullptr)
 {
-
 }
 
 OpenComposerHiddenJob::~OpenComposerHiddenJob()
 {
-
 }
 
 void OpenComposerHiddenJob::start()
@@ -71,14 +69,14 @@ void OpenComposerHiddenJob::start()
 void OpenComposerHiddenJob::slotOpenComposer()
 {
     mMsg->assemble();
-    const KMail::Composer::TemplateContext context = mSettings.mBody.isEmpty() ? KMail::Composer::New :
-            KMail::Composer::NoTemplate;
+    const KMail::Composer::TemplateContext context = mSettings.mBody.isEmpty() ? KMail::Composer::New
+                                                     : KMail::Composer::NoTemplate;
     KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, context);
     if (!mSettings.mHidden) {
         cWin->show();
         // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_OS_X11 && ! defined K_WS_QTONLY
+#if defined Q_OS_X11 && !defined K_WS_QTONLY
         KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
 #endif
     } else {

@@ -26,8 +26,8 @@
 #include <ktoolinvocation.h>
 
 FollowUpReminderShowMessageJob::FollowUpReminderShowMessageJob(Akonadi::Item::Id id, QObject *parent)
-    : QObject(parent),
-      mId(id)
+    : QObject(parent)
+    , mId(id)
 {
 }
 

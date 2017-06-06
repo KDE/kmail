@@ -43,9 +43,9 @@
 using namespace KMail;
 
 TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
-    : QDialog(parent),
-      mNumberOfSelectedMessages(numberOfSelectedMessages),
-      mSelectedItem(selectedItem)
+    : QDialog(parent)
+    , mNumberOfSelectedMessages(numberOfSelectedMessages)
+    , mSelectedItem(selectedItem)
 {
     setWindowTitle(i18n("Select Tags"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);

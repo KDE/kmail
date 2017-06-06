@@ -37,7 +37,8 @@
 EXPORT_KONTACT_PLUGIN(SummaryView, summary)
 
 SummaryView::SummaryView(KontactInterface::Core *core, const QVariantList &)
-    : KontactInterface::Plugin(core, core, nullptr), mPart(nullptr)
+    : KontactInterface::Plugin(core, core, nullptr)
+    , mPart(nullptr)
 {
     mSyncAction = new KSelectAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Sync All"), this);
     actionCollection()->addAction(QStringLiteral("kontact_summary_sync"), mSyncAction);
@@ -89,7 +90,7 @@ void SummaryView::doSync()
     for (const KontactInterface::Plugin *i : pluginList) {
         // execute all sync actions but our own
         const QList<QAction *> actList = i->syncActions();
-        for (QAction *j : actList ) {
+        for (QAction *j : actList) {
             if (j != mSyncAction) {
                 j->trigger();
             }
@@ -108,12 +109,12 @@ KParts::ReadOnlyPart *SummaryView::createPart()
 const KAboutData SummaryView::aboutData()
 {
     KAboutData aboutData = KAboutData(
-                               QStringLiteral("kontactsummary"),
-                               i18n("Kontact Summary"),
-                               QStringLiteral(KDEPIM_VERSION),
-                               i18n("Kontact Summary View"),
-                               KAboutLicense::LGPL,
-                               i18n("(c) 2003-2017 The Kontact developers"));
+        QStringLiteral("kontactsummary"),
+        i18n("Kontact Summary"),
+        QStringLiteral(KDEPIM_VERSION),
+        i18n("Kontact Summary View"),
+        KAboutLicense::LGPL,
+        i18n("(c) 2003-2017 The Kontact developers"));
 
     aboutData.addAuthor(i18n("Sven Lueppken"),
                         QString(), QStringLiteral("sven@kde.org"));

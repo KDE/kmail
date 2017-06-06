@@ -28,12 +28,10 @@
 PotentialPhishingEmailJobTest::PotentialPhishingEmailJobTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 PotentialPhishingEmailJobTest::~PotentialPhishingEmailJobTest()
 {
-
 }
 
 void PotentialPhishingEmailJobTest::shouldNotStartIfNoEmails()
@@ -98,17 +96,29 @@ void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails_data()
     QTest::addColumn<QStringList>("emails");
     QTest::addColumn<QStringList>("createdListOfEmails");
     QTest::newRow("emptylist") << QStringList() << QStringList();
-    QStringList emails{ QStringLiteral("foo@kde.org"), QStringLiteral("bla@kde.org")};
-    QStringList createdList{ QStringLiteral("foo@kde.org"), QStringLiteral("bla@kde.org")};
+    QStringList emails{
+        QStringLiteral("foo@kde.org"), QStringLiteral("bla@kde.org")
+    };
+    QStringList createdList{
+        QStringLiteral("foo@kde.org"), QStringLiteral("bla@kde.org")
+    };
     QTest::newRow("nonempty") << emails << createdList;
-    emails = QStringList{ QStringLiteral("\"bla\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    emails = QStringList{
+        QStringLiteral("\"bla\" <foo@kde.org>"), QStringLiteral("bla@kde.org")
+    };
     QTest::newRow("potentialerrors") << emails << emails;
 
-    emails = QStringList{ QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    emails = QStringList{
+        QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")
+    };
     QTest::newRow("emailswithquote") << emails << emails;
 
-    emails = QStringList{ QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org"), QStringLiteral(" ")};
-    createdList = QStringList{ QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    emails = QStringList{
+        QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org"), QStringLiteral(" ")
+    };
+    createdList = QStringList{
+        QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")
+    };
     QTest::newRow("emailswithemptystr") << emails << createdList;
 }
 

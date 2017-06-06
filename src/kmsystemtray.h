@@ -31,8 +31,7 @@ class QMenu;
  * KMSystemTray extends KStatusNotifierItem and handles system
  * tray notification for KMail
  */
-namespace KMail
-{
+namespace KMail {
 class KMSystemTray : public KStatusNotifierItem
 {
     Q_OBJECT

@@ -22,12 +22,9 @@
 
 #include <QObject>
 #include <AkonadiCore/Collection>
-namespace Akonadi
-{
-namespace Search
-{
-namespace PIM
-{
+namespace Akonadi {
+namespace Search {
+namespace PIM {
 class IndexedItems;
 }
 }

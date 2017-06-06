@@ -35,9 +35,7 @@
 
 class QCloseEvent;
 
-namespace KMail
-{
-
+namespace KMail {
 /**
    *  Window class for secondary KMail window like the composer window and
    *  the separate message window.
@@ -66,7 +64,6 @@ protected:
      */
     void closeEvent(QCloseEvent *) override;
 };
-
 } // namespace KMail
 
 #endif // __KMAIL_SECONDARYWINDOW_H__

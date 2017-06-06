@@ -31,6 +31,4 @@ public:
     QVector<KSieveUi::SieveImapInstance> sieveImapInstances() override;
 };
 
-
-
 #endif // KMAILSIEVEIMAPINSTANCEINTERFACE_H

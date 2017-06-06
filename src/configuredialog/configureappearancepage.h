@@ -33,32 +33,26 @@ class QSpinBox;
 class KLineEdit;
 class QModelIndex;
 class KJob;
-namespace MessageViewer
-{
+namespace MessageViewer {
 class ConfigureWidget;
 }
-namespace Gravatar
-{
+namespace Gravatar {
 class GravatarConfigWidget;
 }
 
-namespace MessageList
-{
-namespace Utils
-{
+namespace MessageList {
+namespace Utils {
 class AggregationComboBox;
 class ThemeComboBox;
 }
 }
 
-namespace MailCommon
-{
+namespace MailCommon {
 class Tag;
 typedef QSharedPointer<Tag> TagPtr;
 }
 
-namespace MailCommon
-{
+namespace MailCommon {
 class TagWidget;
 }
 
@@ -79,12 +73,12 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox    *mCustomFontCheck;
-    KComboBox    *mFontLocationCombo;
+    QCheckBox *mCustomFontCheck;
+    KComboBox *mFontLocationCombo;
     KFontChooser *mFontChooser;
 
-    int          mActiveFontIndex;
-    QFont        mFont[8];
+    int mActiveFontIndex;
+    QFont mFont[8];
 };
 
 class AppearancePageColorsTab : public ConfigModuleTab
@@ -101,10 +95,10 @@ private:
     void loadColor(bool loadFromConfig);
 
 private:
-    QCheckBox    *mCustomColorCheck;
+    QCheckBox *mCustomColorCheck;
     ColorListBox *mColorList;
-    QCheckBox    *mRecycleColorCheck;
-    QSpinBox     *mCloseToQuotaThreshold;
+    QCheckBox *mRecycleColorCheck;
+    QSpinBox *mCloseToQuotaThreshold;
 };
 
 class AppearancePageLayoutTab : public ConfigModuleTab
@@ -120,15 +114,15 @@ private:
     void doLoadOther() override;
 
 private: // data
-    QButtonGroup  *mFolderListGroup;
-    QGroupBox     *mFolderListGroupBox;
-    QButtonGroup  *mReaderWindowModeGroup;
-    QGroupBox     *mReaderWindowModeGroupBox;
-    QButtonGroup  *mFolderToolTipsGroup;
-    QGroupBox     *mFolderToolTipsGroupBox;
-    QButtonGroup  *mFavoriteFoldersViewGroup;
-    QGroupBox     *mFavoriteFoldersViewGroupBox;
-    QCheckBox     *mFolderQuickSearchCB;
+    QButtonGroup *mFolderListGroup;
+    QGroupBox *mFolderListGroupBox;
+    QButtonGroup *mReaderWindowModeGroup;
+    QGroupBox *mReaderWindowModeGroupBox;
+    QButtonGroup *mFolderToolTipsGroup;
+    QGroupBox *mFolderToolTipsGroupBox;
+    QButtonGroup *mFavoriteFoldersViewGroup;
+    QGroupBox *mFavoriteFoldersViewGroupBox;
+    QCheckBox *mFolderQuickSearchCB;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab
@@ -148,13 +142,13 @@ private: // methods
     void setDateDisplay(int id, const QString &format);
 
 private: // data
-    QCheckBox    *mDisplayMessageToolTips;
+    QCheckBox *mDisplayMessageToolTips;
     MessageList::Utils::AggregationComboBox *mAggregationComboBox;
     MessageList::Utils::ThemeComboBox *mThemeComboBox;
     QButtonGroup *mDateDisplay;
-    QGroupBox    *mDateDisplayBox;
-    KLineEdit    *mCustomDateFormatEdit;
-    QString       mCustomDateWhatsThis;
+    QGroupBox *mDateDisplayBox;
+    KLineEdit *mCustomDateFormatEdit;
+    QString mCustomDateWhatsThis;
 
 private Q_SLOTS:
     void slotLinkClicked(const QString &link);
@@ -196,7 +190,7 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    QCheckBox    *mSystemTrayCheck;
+    QCheckBox *mSystemTrayCheck;
 };
 
 class TagListWidgetItem : public QListWidgetItem
@@ -263,9 +257,7 @@ private Q_SLOTS:
     since calling externally decouples the name in the list box from name edit box*/
     void slotNameLineTextChanged(const QString &);
     void slotIconNameChanged(const QString &iconName);
-    void slotRowsMoved(const QModelIndex &,
-                       int sourcestart, int sourceEnd,
-                       const QModelIndex &, int destinationRow);
+    void slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow);
     void slotTagsFetched(KJob *job);
 
     void slotDeleteTagJob(KJob *job);

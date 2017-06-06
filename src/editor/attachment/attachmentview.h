@@ -29,14 +29,11 @@
 
 class QContextMenuEvent;
 
-namespace MessageComposer
-{
+namespace MessageComposer {
 class AttachmentModel;
 }
 
-namespace KMail
-{
-
+namespace KMail {
 class AttachmentView : public QTreeView
 {
     Q_OBJECT
@@ -80,7 +77,6 @@ private:
     class Private;
     Private *const d;
 };
-
 } // namespace KMail
 
 #endif // KMAIL_ATTACHMENTVIEW_H

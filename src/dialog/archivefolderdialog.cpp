@@ -52,12 +52,14 @@ QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
     if (!dir.exists()) {
         currentPath = QDir::homePath();
     }
-    return currentPath + QLatin1Char('/') +
-           i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_') + QDate::currentDate().toString(Qt::ISODate) + QLatin1String(".tar.bz2");
+    return currentPath + QLatin1Char('/')
+           +i18nc("Start of the filename for a mail archive file",
+                  "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_') + QDate::currentDate().toString(Qt::ISODate) + QLatin1String(".tar.bz2");
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
-    : QDialog(parent), mParentWidget(parent)
+    : QDialog(parent)
+    , mParentWidget(parent)
 {
     setObjectName(QStringLiteral("archive_folder_dialog"));
     setWindowTitle(i18nc("@title:window for archiving a folder", "Archive Folder"));
@@ -205,9 +207,10 @@ void ArchiveFolderDialog::slotFixFileExtension()
     const char *extensions[numExtensions] = { ".zip", ".tar", ".tar.bz2", ".tar.gz" };
 
     QString fileName = mUrlRequester->url().path();
-    if (fileName.isEmpty())
-        fileName = standardArchivePath(mFolderRequester->hasCollection() ?
-                                       mFolderRequester->collection().name() : QString());
+    if (fileName.isEmpty()) {
+        fileName = standardArchivePath(mFolderRequester->hasCollection()
+                                       ? mFolderRequester->collection().name() : QString());
+    }
 
     QMimeDatabase db;
     const QString extension = db.suffixForFileName(fileName);
@@ -224,4 +227,3 @@ void ArchiveFolderDialog::slotUrlChanged(const QString &url)
 {
     mOkButton->setEnabled(!url.isEmpty());
 }
-

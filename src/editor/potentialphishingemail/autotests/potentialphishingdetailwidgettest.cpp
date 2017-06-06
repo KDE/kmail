@@ -27,12 +27,10 @@
 PotentialPhishingDetailWidgetTest::PotentialPhishingDetailWidgetTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 PotentialPhishingDetailWidgetTest::~PotentialPhishingDetailWidgetTest()
 {
-
 }
 
 void PotentialPhishingDetailWidgetTest::shouldHaveDefaultValue()
@@ -85,7 +83,6 @@ void PotentialPhishingDetailWidgetTest::shouldNotAddDuplicateEntries()
     lst << QStringLiteral("blo");
     dlg.fillList(lst);
     QCOMPARE(listWidget->count(), (lst.count() - 1));
-
 }
 
 QTEST_MAIN(PotentialPhishingDetailWidgetTest)

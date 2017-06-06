@@ -75,7 +75,7 @@ ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
     mSaveSubCollection = old.saveSubCollection();
     mPath = old.url();
     mIsEnabled = old.isEnabled();
-    return (*this);
+    return *this;
 }
 
 QString normalizeFolderName(const QString &folderName)
@@ -123,15 +123,15 @@ QStringList ArchiveMailInfo::listOfArchive(const QString &folderName, bool &dirE
     QDir dir(dirPath);
 
     QStringList nameFilters;
-    nameFilters << i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') +
-                normalizeFolderName(folderName) + QLatin1Char('_') + QLatin1String("*") + QString::fromLatin1(extensions[mArchiveType]);
+    nameFilters << i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_')
+        +normalizeFolderName(folderName) + QLatin1Char('_') + QLatin1String("*") + QString::fromLatin1(extensions[mArchiveType]);
     const QStringList lst = dir.entryList(nameFilters, QDir::Files | QDir::NoDotAndDotDot, QDir::Time | QDir::Reversed);
     return lst;
 }
 
 bool ArchiveMailInfo::isValid() const
 {
-    return (mSaveCollectionId != -1);
+    return mSaveCollectionId != -1;
 }
 
 void ArchiveMailInfo::setArchiveAge(int age)
@@ -266,13 +266,13 @@ void ArchiveMailInfo::setEnabled(bool b)
 
 bool ArchiveMailInfo::operator==(const ArchiveMailInfo &other) const
 {
-    return saveCollectionId() == other.saveCollectionId() &&
-           saveSubCollection() == other.saveSubCollection() &&
-           url() == other.url() &&
-           archiveType() == other.archiveType() &&
-           archiveUnit() == other.archiveUnit() &&
-           archiveAge() == other.archiveAge() &&
-           lastDateSaved() == other.lastDateSaved() &&
-           maximumArchiveCount() == other.maximumArchiveCount() &&
-           isEnabled() == other.isEnabled();
+    return saveCollectionId() == other.saveCollectionId()
+           && saveSubCollection() == other.saveSubCollection()
+           && url() == other.url()
+           && archiveType() == other.archiveType()
+           && archiveUnit() == other.archiveUnit()
+           && archiveAge() == other.archiveAge()
+           && lastDateSaved() == other.lastDateSaved()
+           && maximumArchiveCount() == other.maximumArchiveCount()
+           && isEnabled() == other.isEnabled();
 }

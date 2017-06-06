@@ -46,4 +46,3 @@ private:
 };
 
 #endif /* ARCHIVEMAILWIDGET_H */
-

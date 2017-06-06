@@ -21,8 +21,7 @@
 #define KACTIONMENUTRANSPORT_H
 
 #include <KActionMenu>
-namespace MailTransport
-{
+namespace MailTransport {
 class Transport;
 }
 

@@ -24,12 +24,10 @@
 FormatComboBoxTest::FormatComboBoxTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 FormatComboBoxTest::~FormatComboBoxTest()
 {
-
 }
 
 void FormatComboBoxTest::shouldHaveDefaultValue()

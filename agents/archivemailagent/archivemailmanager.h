@@ -62,4 +62,3 @@ private:
 };
 
 #endif /* ARCHIVEMAILMANAGER_H */
-

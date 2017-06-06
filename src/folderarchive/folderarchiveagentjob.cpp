@@ -30,10 +30,10 @@
 #include <KLocalizedString>
 
 FolderArchiveAgentJob::FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const Akonadi::Item::List &lstItem, QObject *parent)
-    : QObject(parent),
-      mListItem(lstItem),
-      mManager(manager),
-      mInfo(info)
+    : QObject(parent)
+    , mListItem(lstItem)
+    , mManager(manager)
+    , mInfo(info)
 {
 }
 
@@ -97,7 +97,7 @@ void FolderArchiveAgentJob::slotCollectionIdFound(const Akonadi::Collection &col
 
 void FolderArchiveAgentJob::sloMoveMailsToCollection(const Akonadi::Collection &col)
 {
-    if (Akonadi::Collection::CanCreateItem & col.rights()) {
+    if (Akonadi::Collection::CanCreateItem &col.rights()) {
         KMMoveCommand *command = new KMMoveCommand(col, mListItem, -1);
         connect(command, &KMMoveCommand::moveDone, this, &FolderArchiveAgentJob::slotMoveMessages);
         command->start();

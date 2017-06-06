@@ -31,15 +31,14 @@ Q_DECLARE_METATYPE(KPIM::ProgressItem *)
 Q_DECLARE_METATYPE(Akonadi::Job *)
 
 RemoveDuplicateMailJob::RemoveDuplicateMailJob(QItemSelectionModel *selectionModel, QWidget *widget, QObject *parent)
-    : QObject(parent),
-      mParent(widget),
-      mSelectionModel(selectionModel)
+    : QObject(parent)
+    , mParent(widget)
+    , mSelectionModel(selectionModel)
 {
 }
 
 RemoveDuplicateMailJob::~RemoveDuplicateMailJob()
 {
-
 }
 
 void RemoveDuplicateMailJob::start()

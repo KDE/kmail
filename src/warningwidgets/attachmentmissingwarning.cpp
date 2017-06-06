@@ -38,7 +38,6 @@ AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
     action = new QAction(QIcon::fromTheme(QStringLiteral("window-close")), i18n("&Remind me later"), this);
     connect(action, &QAction::triggered, this, &AttachmentMissingWarning::explicitlyClosed);
     addAction(action);
-
 }
 
 AttachmentMissingWarning::~AttachmentMissingWarning()
@@ -61,4 +60,3 @@ void AttachmentMissingWarning::explicitlyClosed()
     animatedHide();
     Q_EMIT explicitClosedMissingAttachment();
 }
-

@@ -31,8 +31,7 @@
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
 #include <sonnet/dictionarycombobox.h>
 
-namespace
-{
+namespace {
 inline QString textSnippetMimeType()
 {
     return QStringLiteral("text/x-kmail-textsnippet");
@@ -40,8 +39,8 @@ inline QString textSnippetMimeType()
 }
 
 KMComposerEditorNg::KMComposerEditorNg(KMComposerWin *win, QWidget *parent)
-    : MessageComposer::RichTextComposerNg(parent),
-      mComposerWin(win)
+    : MessageComposer::RichTextComposerNg(parent)
+    , mComposerWin(win)
 {
     setSpellCheckingConfigFileName(QStringLiteral("kmail2rc"));
     setAutocorrection(KMKernel::self()->composerAutoCorrection());
@@ -50,7 +49,6 @@ KMComposerEditorNg::KMComposerEditorNg(KMComposerWin *win, QWidget *parent)
 
 KMComposerEditorNg::~KMComposerEditorNg()
 {
-
 }
 
 void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, QPoint pos)

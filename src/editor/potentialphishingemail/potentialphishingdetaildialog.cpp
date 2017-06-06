@@ -80,4 +80,3 @@ void PotentialPhishingDetailDialog::slotSave()
     mPotentialPhishingDetailWidget->save();
     accept();
 }
-

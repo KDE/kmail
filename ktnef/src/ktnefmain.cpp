@@ -94,8 +94,8 @@ void KTNEFMain::setupActions()
 {
     KStandardAction::quit(this, &KTNEFMain::close, actionCollection());
 
-    QAction *action =
-        KStandardAction::keyBindings(this, &KTNEFMain::slotConfigureKeys, actionCollection());
+    QAction *action
+        = KStandardAction::keyBindings(this, &KTNEFMain::slotConfigureKeys, actionCollection());
     action->setWhatsThis(
         i18nc("@info:whatsthis",
               "You will be presented with a dialog where you can configure "
@@ -163,7 +163,6 @@ void KTNEFMain::setupActions()
     defFolderAction->setText(i18nc("@action:inmenu", "Default Folder..."));
     defFolderAction->setIcon(QIcon::fromTheme(QStringLiteral("folder-open")));
     connect(defFolderAction, &QAction::triggered, this, &KTNEFMain::optionDefaultDir);
-
 }
 
 void KTNEFMain::slotConfigureKeys()
@@ -261,7 +260,6 @@ void KTNEFMain::viewFile()
             i18nc("@info",
                   "There is no file selected. Please select a file an try again."));
     }
-
 }
 
 QString KTNEFMain::extractTemp(KTNEFAttach *att)
@@ -302,7 +300,7 @@ void KTNEFMain::extractFile()
 
 void KTNEFMain::extractFileTo()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, QString(),  mLastDir);
+    QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
     if (!dir.isEmpty()) {
         extractTo(dir);
         mLastDir = dir;
@@ -311,7 +309,7 @@ void KTNEFMain::extractFileTo()
 
 void KTNEFMain::extractAllFiles()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, QString(),  mLastDir);
+    QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
     if (!dir.isEmpty()) {
         mLastDir = dir;
         dir.append(QLatin1String("/"));
@@ -340,7 +338,7 @@ void KTNEFMain::propertiesFile()
 
 void KTNEFMain::optionDefaultDir()
 {
-    const QString dirname = QFileDialog::getExistingDirectory(this, QString(),  mDefaultDir);
+    const QString dirname = QFileDialog::getExistingDirectory(this, QString(), mDefaultDir);
     if (!dirname.isEmpty()) {
         mDefaultDir = dirname;
 
@@ -394,7 +392,7 @@ void KTNEFMain::extractTo(const QString &dirname)
     if (dir.right(1) != QLatin1String("/")) {
         dir.append(QLatin1String("/"));
     }
-    QList<KTNEFAttach *>list = mView->getSelection();
+    QList<KTNEFAttach *> list = mView->getSelection();
     QList<KTNEFAttach *>::ConstIterator it;
     QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
     for (it = list.constBegin(); it != end; ++it) {
@@ -461,7 +459,7 @@ void KTNEFMain::viewDragRequested(const QList<KTNEFAttach *> &list)
     QList<QUrl> urlList;
     QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
     for (QList<KTNEFAttach *>::ConstIterator it = list.constBegin();
-            it != end; ++it) {
+         it != end; ++it) {
         urlList << QUrl::fromLocalFile(extractTemp(*it));
     }
 

@@ -90,4 +90,3 @@ void SnippetWidget::dropEvent(QDropEvent *event)
     }
     QTreeView::dropEvent(event);
 }
-

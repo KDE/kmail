@@ -22,12 +22,11 @@
 #include <AkonadiWidgets/collectionpropertiespage.h>
 
 class QCheckBox;
-namespace TemplateParser
-{
+namespace TemplateParser {
 class TemplatesConfiguration;
 }
 
-template <typename T> class QSharedPointer;
+template<typename T> class QSharedPointer;
 
 class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
 {
@@ -55,4 +54,3 @@ private:
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage)
 
 #endif /* COLLECTIONTEMPLATESPAGE_H */
-

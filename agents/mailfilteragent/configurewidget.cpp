@@ -22,10 +22,8 @@
 ConfigureWidget::ConfigureWidget(QWidget *parent)
     : QWidget(parent)
 {
-
 }
 
 ConfigureWidget::~ConfigureWidget()
 {
-
 }

@@ -37,4 +37,3 @@ private Q_SLOTS:
 };
 
 #endif // FOLLOWUPREMINDERINFODIALOGTEST_H
-

@@ -48,10 +48,10 @@ QString IdentityPage::helpAnchor() const
 }
 
 IdentityPage::IdentityPage(QWidget *parent)
-    : ConfigModule(parent),
-      mIdentityDialog(nullptr),
-      mOldNumberOfIdentities(0),
-      mIdentityManager(nullptr)
+    : ConfigModule(parent)
+    , mIdentityDialog(nullptr)
+    , mOldNumberOfIdentities(0)
+    , mIdentityManager(nullptr)
 {
     if (!MailCommon::Kernel::self()->kernelIsRegistered()) {
         return;
@@ -64,8 +64,8 @@ IdentityPage::IdentityPage(QWidget *parent)
     connect(mIPage.mIdentityList, &QTreeWidget::itemSelectionChanged, this, &IdentityPage::slotIdentitySelectionChanged);
     connect(this, SIGNAL(changed(bool)),
             SLOT(slotIdentitySelectionChanged()));
-    connect(mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),  SLOT(slotRenameIdentityFromItem(KMail::IdentityListViewItem*,QString)));
-    connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked,  this, &IdentityPage::slotModifyIdentity);
+    connect(mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem *,QString)), SLOT(slotRenameIdentityFromItem(KMail::IdentityListViewItem *,QString)));
+    connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked, this, &IdentityPage::slotModifyIdentity);
     connect(mIPage.mIdentityList, &IdentityListView::contextMenu, this, &IdentityPage::slotContextMenu);
     // ### connect dragged(...), ...
 
@@ -131,7 +131,7 @@ void IdentityPage::slotNewIdentity()
     Q_ASSERT(!mIdentityDialog);
 
     QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(
-                mIdentityManager, this));
+                                                 mIdentityManager, this));
     dialog->setObjectName(QStringLiteral("new"));
 
     if (dialog->exec() == QDialog::Accepted && dialog) {
@@ -142,7 +142,8 @@ void IdentityPage::slotNewIdentity()
         // Construct a new Identity:
         //
         switch (dialog->duplicateMode()) {
-        case NewIdentityDialog::ExistingEntry: {
+        case NewIdentityDialog::ExistingEntry:
+        {
             KIdentityManagement::Identity &dupThis = mIdentityManager->modifyIdentityForName(dialog->duplicateIdentity());
             mIdentityManager->newFromExisting(dupThis, identityName);
             break;
@@ -152,7 +153,8 @@ void IdentityPage::slotNewIdentity()
             break;
         case NewIdentityDialog::Empty:
             mIdentityManager->newFromScratch(identityName);
-        default:;
+        default:
+            ;
         }
 
         //
@@ -227,8 +229,8 @@ void IdentityPage::slotRemoveIdentity()
                              "<b>%1</b>?</qt>", item->identity().identityName());
     if (KMessageBox::warningContinueCancel(this, msg, i18n("Remove Identity"),
                                            KGuiItem(i18n("&Remove"),
-                                                   QStringLiteral("edit-delete")))
-            == KMessageBox::Continue) {
+                                                    QStringLiteral("edit-delete")))
+        == KMessageBox::Continue) {
         if (mIdentityManager->removeIdentity(item->identity().identityName())) {
             delete item;
             if (mIPage.mIdentityList->currentItem()) {
@@ -263,8 +265,8 @@ void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item,
     }
 
     const QString newName = text.trimmed();
-    if (!newName.isEmpty() &&
-            !mIdentityManager->shadowIdentities().contains(newName)) {
+    if (!newName.isEmpty()
+        && !mIdentityManager->shadowIdentities().contains(newName)) {
         KIdentityManagement::Identity &ident = item->identity();
         ident.setIdentityName(newName);
         save();
@@ -336,4 +338,3 @@ void IdentityPage::updateButtons()
     mIPage.mRenameButton->setEnabled(item);
     mIPage.mSetAsDefaultButton->setEnabled(item && !item->identity().isDefault());
 }
-

@@ -50,18 +50,17 @@
 #include <KSharedConfig>
 #include <QLocale>
 
-
 using namespace MailCommon;
 
 class FilterManager::Private
 {
 public:
     Private(FilterManager *qq)
-        : q(qq),
-          mRequiredPartsBasedOnAll(SearchRule::Envelope),
-          mInboundFiltersExist(false),
-          mTotalProgressCount(0),
-          mCurrentProgressCount(0)
+        : q(qq)
+        , mRequiredPartsBasedOnAll(SearchRule::Envelope)
+        , mInboundFiltersExist(false)
+        , mTotalProgressCount(0)
+        , mCurrentProgressCount(0)
     {
         pixmapNotification = QIcon::fromTheme(QStringLiteral("view-filter")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
     }
@@ -120,8 +119,8 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
         ++mCurrentProgressCount;
 
         if ((mTotalProgressCount > 0) && (mCurrentProgressCount != mTotalProgressCount)) {
-            const QString statusMsg =
-                i18n("Filtering message %1 of %2", mCurrentProgressCount, mTotalProgressCount);
+            const QString statusMsg
+                = i18n("Filtering message %1 of %2", mCurrentProgressCount, mTotalProgressCount);
             Q_EMIT q->progressMessage(statusMsg);
             Q_EMIT q->percent(mCurrentProgressCount * 100 / mTotalProgressCount);
         } else {
@@ -275,7 +274,7 @@ void FilterManager::Private::beginFiltering(const Akonadi::Item &item) const
     }
 }
 
-void FilterManager::Private::endFiltering(const Akonadi::Item &/*item*/) const
+void FilterManager::Private::endFiltering(const Akonadi::Item & /*item*/) const
 {
 }
 
@@ -302,7 +301,8 @@ bool FilterManager::Private::atLeastOneIncomingFilterAppliesTo(const QString &ac
 }
 
 FilterManager::FilterManager(QObject *parent)
-    : QObject(parent), d(new Private(this))
+    : QObject(parent)
+    , d(new Private(this))
 {
     readConfig();
 }
@@ -337,7 +337,7 @@ void FilterManager::readConfig()
             const QString id = agent.identifier();
 
             auto it = std::max_element(d->mFilters.constBegin(), d->mFilters.constEnd(),
-            [id](MailCommon::MailFilter * lhs, MailCommon::MailFilter * rhs) {
+                                       [id](MailCommon::MailFilter *lhs, MailCommon::MailFilter *rhs) {
                 return lhs->requiredPart(id) < rhs->requiredPart(id);
             });
             d->mRequiredParts[id] = (*it)->requiredPart(id);
@@ -355,7 +355,7 @@ void FilterManager::mailCollectionRemoved(const Akonadi::Collection &collection)
 {
     QList<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
     for (QList<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
-            it != end; ++it) {
+         it != end; ++it) {
         (*it)->folderRemoved(collection, Akonadi::Collection());
     }
 }
@@ -364,7 +364,7 @@ void FilterManager::agentRemoved(const QString &identifier)
 {
     QList<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
     for (QList<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
-            it != end; ++it) {
+         it != end; ++it) {
         (*it)->agentRemoved(identifier);
     }
 }
@@ -384,7 +384,7 @@ void FilterManager::filter(const Akonadi::Item &item, FilterManager::FilterSet s
     }
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 
-    connect(job, SIGNAL(result(KJob*)), SLOT(itemFetchJobForFilterDone(KJob*)));
+    connect(job, SIGNAL(result(KJob *)), SLOT(itemFetchJobForFilterDone(KJob *)));
 }
 
 void FilterManager::filter(const Akonadi::Item &item, const QString &filterId, const QString &resourceId)
@@ -403,7 +403,7 @@ void FilterManager::filter(const Akonadi::Item &item, const QString &filterId, c
 
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 
-    connect(job, SIGNAL(result(KJob*)), SLOT(itemFetchJobForFilterDone(KJob*)));
+    connect(job, SIGNAL(result(KJob *)), SLOT(itemFetchJobForFilterDone(KJob *)));
 }
 
 bool FilterManager::process(const Akonadi::Item &item, bool needsFullPayload, const MailFilter *filter)
@@ -438,7 +438,6 @@ bool FilterManager::process(const Akonadi::Item &item, bool needsFullPayload, co
         if (!processContextItem(context)) {
             return false;
         }
-
     }
 
     return true;
@@ -453,7 +452,7 @@ bool FilterManager::processContextItem(ItemContext context)
     if (context.deleteItem()) {
         if (itemCanDelete) {
             Akonadi::ItemDeleteJob *deleteJob = new Akonadi::ItemDeleteJob(context.item(), this);
-            connect(deleteJob, SIGNAL(result(KJob*)), SLOT(deleteJobResult(KJob*)));
+            connect(deleteJob, SIGNAL(result(KJob *)), SLOT(deleteJobResult(KJob *)));
         } else {
             return false;
         }
@@ -461,7 +460,7 @@ bool FilterManager::processContextItem(ItemContext context)
         if (context.moveTargetCollection().isValid() && context.item().storageCollectionId() != context.moveTargetCollection().id()) {
             if (itemCanDelete) {
                 Akonadi::ItemMoveJob *moveJob = new Akonadi::ItemMoveJob(context.item(), context.moveTargetCollection(), this);
-                connect(moveJob, SIGNAL(result(KJob*)), SLOT(moveJobResult(KJob*)));
+                connect(moveJob, SIGNAL(result(KJob *)), SLOT(moveJobResult(KJob *)));
             } else {
                 return false;
             }
@@ -478,7 +477,7 @@ bool FilterManager::processContextItem(ItemContext context)
             //The below is a safety check to ignore modifying payloads if it was not requested,
             //as in that case we might change the payload to an invalid one
             modifyJob->setIgnorePayload(!context.needsFullPayload());
-            connect(modifyJob, SIGNAL(result(KJob*)), SLOT(modifyJobResult(KJob*)));
+            connect(modifyJob, SIGNAL(result(KJob *)), SLOT(modifyJobResult(KJob *)));
         }
     }
 
@@ -507,9 +506,8 @@ bool FilterManager::process(const QList< MailFilter * > &mailFilters, const Akon
     const bool applyOnOutbound = ((set & Outbound) || (set & BeforeOutbound));
 
     for (QList<MailCommon::MailFilter *>::const_iterator it = mailFilters.constBegin();
-            !stopIt && it != end; ++it) {
+         !stopIt && it != end; ++it) {
         if ((*it)->isEnabled()) {
-
             const bool inboundOk = ((set & Inbound) && (*it)->applyOnInbound());
             const bool outboundOk = ((set & Outbound) && (*it)->applyOnOutbound());
             const bool beforeOutboundOk = ((set & BeforeOutbound) && (*it)->applyBeforeOutbound());
@@ -537,10 +535,9 @@ bool FilterManager::process(const QList< MailFilter * > &mailFilters, const Akon
     return true;
 }
 
-bool FilterManager::process(const Akonadi::Item &item,  bool needsFullPayload,
-                            FilterSet set, bool account, const QString &accountId)
+bool FilterManager::process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set, bool account, const QString &accountId)
 {
-    return  process(d->mFilters, item, needsFullPayload, set, account, accountId);
+    return process(d->mFilters, item, needsFullPayload, set, account, accountId);
 }
 
 QString FilterManager::createUniqueName(const QString &name) const
@@ -582,6 +579,7 @@ void FilterManager::dump() const
         qCDebug(MAILFILTERAGENT_LOG) << filter->asString();
     }
 }
+
 #endif
 
 void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMessages, SearchRule::RequiredPart requiredPart, const QStringList &listFilters)
@@ -605,8 +603,8 @@ void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMess
 
     connect(itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
             this, SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)));
-    connect(itemFetchJob, SIGNAL(result(KJob*)),
-            SLOT(itemsFetchJobForFilterDone(KJob*)));
+    connect(itemFetchJob, SIGNAL(result(KJob *)),
+            SLOT(itemsFetchJobForFilterDone(KJob *)));
 }
 
 void FilterManager::applyFilters(const Akonadi::Item::List &selectedMessages, FilterSet filterSet)
@@ -631,8 +629,8 @@ void FilterManager::applyFilters(const Akonadi::Item::List &selectedMessages, Fi
 
     connect(itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
             this, SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)));
-    connect(itemFetchJob, SIGNAL(result(KJob*)),
-            SLOT(itemsFetchJobForFilterDone(KJob*)));
+    connect(itemFetchJob, SIGNAL(result(KJob *)),
+            SLOT(itemsFetchJobForFilterDone(KJob *)));
 }
 
 #include "moc_filtermanager.cpp"

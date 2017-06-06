@@ -58,4 +58,3 @@ private:
 };
 
 #endif /* TAGSELECTDIALOG_H */
-

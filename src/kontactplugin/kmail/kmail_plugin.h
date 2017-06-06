@@ -31,8 +31,7 @@
 #include <QUrl>
 class OrgKdeKmailKmailInterface;
 
-namespace KontactInterface
-{
+namespace KontactInterface {
 class UniqueAppWatcher;
 }
 
@@ -41,7 +40,10 @@ class KMailUniqueAppHandler : public KontactInterface::UniqueAppHandler
     Q_OBJECT
 public:
     explicit KMailUniqueAppHandler(KontactInterface::Plugin *plugin)
-        : KontactInterface::UniqueAppHandler(plugin) {}
+        : KontactInterface::UniqueAppHandler(plugin)
+    {
+    }
+
     void loadCommandLineOptions(QCommandLineParser *parser) override;
     int activate(const QStringList &args, const QString &workingDir) override;
 };

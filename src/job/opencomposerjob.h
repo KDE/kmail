@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #ifndef OPENCOMPOSERJOB_H
 #define OPENCOMPOSERJOB_H
 
@@ -29,30 +28,23 @@ struct OpenComposerSettings
     OpenComposerSettings()
         : mHidden(false)
     {
-
     }
 
-    OpenComposerSettings(const QString &to, const QString &cc,
-                         const QString &bcc, const QString &subject,
-                         const QString &body, bool hidden,
-                         const QString &messageFile,
-                         const QStringList &attachmentPaths,
-                         const QStringList &customHeaders,
-                         const QString &replyTo, const QString &inReplyTo, const QString &identity)
-        : mTo(to),
-          mCc(cc),
-          mBcc(bcc),
-          mSubject(subject),
-          mBody(body),
-          mHidden(hidden),
-          mMessageFile(messageFile),
-          mAttachmentPaths(attachmentPaths),
-          mCustomHeaders(customHeaders),
-          mReplyTo(replyTo),
-          mInReplyTo(inReplyTo),
-          mIdentity(identity)
+    OpenComposerSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile,
+                         const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity)
+        : mTo(to)
+        , mCc(cc)
+        , mBcc(bcc)
+        , mSubject(subject)
+        , mBody(body)
+        , mHidden(hidden)
+        , mMessageFile(messageFile)
+        , mAttachmentPaths(attachmentPaths)
+        , mCustomHeaders(customHeaders)
+        , mReplyTo(replyTo)
+        , mInReplyTo(inReplyTo)
+        , mIdentity(identity)
     {
-
     }
 
     QString mTo;

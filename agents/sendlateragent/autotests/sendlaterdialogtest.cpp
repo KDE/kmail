@@ -28,12 +28,10 @@
 SendLaterDialogTest::SendLaterDialogTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 SendLaterDialogTest::~SendLaterDialogTest()
 {
-
 }
 
 void SendLaterDialogTest::initTestCase()

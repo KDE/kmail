@@ -48,4 +48,3 @@ private:
 };
 
 #endif // STATUSBARLABELTOGGLEDSTATE_H
-

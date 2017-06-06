@@ -41,19 +41,14 @@
 
 #include <QDBusConnection>
 
-namespace KMail
-{
-
+namespace KMail {
 MailServiceImpl::MailServiceImpl()
 {
     new ServiceAdaptor(this);
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailTransportService"), this);
 }
 
-bool MailServiceImpl::sendMessage(const QString &from, const QString &to,
-                                  const QString &cc, const QString &bcc,
-                                  const QString &subject, const QString &body,
-                                  const QStringList &attachments)
+bool MailServiceImpl::sendMessage(const QString &from, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QStringList &attachments)
 {
     if (to.isEmpty() && cc.isEmpty() && bcc.isEmpty()) {
         return false;
@@ -96,10 +91,7 @@ bool MailServiceImpl::sendMessage(const QString &from, const QString &to,
     return true;
 }
 
-bool MailServiceImpl::sendMessage(const QString &from, const QString &to,
-                                  const QString &cc, const QString &bcc,
-                                  const QString &subject, const QString &body,
-                                  const QByteArray &attachment)
+bool MailServiceImpl::sendMessage(const QString &from, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QByteArray &attachment)
 {
     if (to.isEmpty() && cc.isEmpty() && bcc.isEmpty()) {
         return false;
@@ -137,6 +129,4 @@ bool MailServiceImpl::sendMessage(const QString &from, const QString &to,
     KMail::makeComposer(msg, false, false);
     return true;
 }
-
 }//end namespace KMail
-

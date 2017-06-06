@@ -22,8 +22,7 @@
 
 #include <KMessageWidget>
 
-namespace KMail
-{
+namespace KMail {
 class SearchPatternWarning : public KMessageWidget
 {
     Q_OBJECT

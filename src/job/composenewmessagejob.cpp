@@ -27,16 +27,14 @@
 #include <TemplateParser/TemplateParserJob>
 
 ComposeNewMessageJob::ComposeNewMessageJob(QObject *parent)
-    : QObject(parent),
-      mIdentity(0),
-      mMsg(nullptr)
+    : QObject(parent)
+    , mIdentity(0)
+    , mMsg(nullptr)
 {
-
 }
 
 ComposeNewMessageJob::~ComposeNewMessageJob()
 {
-
 }
 
 void ComposeNewMessageJob::setCurrentCollection(const Akonadi::Collection &col)

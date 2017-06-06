@@ -24,8 +24,7 @@
 class KComboBox;
 class KNotifyConfigWidget;
 
-namespace KMail
-{
+namespace KMail {
 class KMKnotify : public QDialog
 {
     Q_OBJECT
@@ -53,4 +52,3 @@ private:
 }
 
 #endif /* KMKNOTIFY_H */
-

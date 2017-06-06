@@ -28,12 +28,10 @@
 PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
 {
-
 }
 
 void PotentialPhishingDetailDialogTest::initTestCase()

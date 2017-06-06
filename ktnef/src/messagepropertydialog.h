@@ -19,8 +19,7 @@
 
 #include <QDialog>
 
-namespace KTnef
-{
+namespace KTnef {
 class KTNEFMessage;
 }
 using namespace KTnef;

@@ -28,8 +28,7 @@
 
 #include <KCMultiDialog>
 
-namespace QGpgME
-{
+namespace QGpgME {
 class CryptoConfig;
 }
 
@@ -161,7 +160,6 @@ public:
     typedef SecurityPageComposerCryptoTab ComposerCryptoTab;
     typedef SecurityPageWarningTab WarningTab;
     typedef SecurityPageSMimeTab SMimeTab;
-
 };
 
 #endif // CONFIGURESECURITYPAGE_H

@@ -39,8 +39,8 @@
 #include <QFileDialog>
 
 AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
-    : QDialog(parent),
-      mAttach(0)
+    : QDialog(parent)
+    , mAttach(0)
 {
     setModal(true);
 
@@ -86,9 +86,9 @@ void AttachPropertyDialog::writeConfig()
 
 void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
 {
-    QString s = attach->fileName().isEmpty() ?
-                attach->name() :
-                attach->fileName();
+    QString s = attach->fileName().isEmpty()
+                ? attach->name()
+                : attach->fileName();
     mUI.mFilename->setText(QLatin1String("<b>") + s + QLatin1String("</b>"));
     setWindowTitle(i18nc("@title:window", "Properties for Attachment %1", s));
     mUI.mDisplay->setText(attach->displayName());
@@ -119,8 +119,7 @@ void AttachPropertyDialog::slotSave()
     }
 }
 
-void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &props, QTreeWidget *lv,
-        QTreeWidgetItem *item, const QString &prefix)
+void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &props, QTreeWidget *lv, QTreeWidgetItem *item, const QString &prefix)
 {
     QMap<int, KTNEFProperty *>::ConstIterator end(props.constEnd());
     for (QMap<int, KTNEFProperty *>::ConstIterator it = props.begin(); it != end; ++it) {
@@ -138,12 +137,12 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
         if (value.type() == QVariant::List) {
             newItem->setExpanded(true);
             newItem->setText(0,
-                             newItem->text(0) +
-                             QLatin1String(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
+                             newItem->text(0)
+                             +QLatin1String(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
             int i = 0;
             QList<QVariant>::ConstIterator litEnd = value.toList().constEnd();
             for (QList<QVariant>::ConstIterator lit = value.toList().constBegin();
-                    lit != litEnd; ++lit, ++i) {
+                 lit != litEnd; ++lit, ++i) {
                 new QTreeWidgetItem(newItem,
                                     QStringList()
                                     << QLatin1Char('[')  + QString::number(i) + QLatin1Char(']')
@@ -161,9 +160,9 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
 void AttachPropertyDialog::formatPropertySet(KTNEFPropertySet *pSet, QTreeWidget *lv)
 {
     formatProperties(pSet->properties(), lv, 0, QStringLiteral("prop"));
-    QTreeWidgetItem *item =
-        new QTreeWidgetItem(lv,
-                            QStringList(i18nc("@label", "TNEF Attributes")));
+    QTreeWidgetItem *item
+        = new QTreeWidgetItem(lv,
+                              QStringList(i18nc("@label", "TNEF Attributes")));
     item->setExpanded(true);
     formatProperties(pSet->attributes(), 0, item, QStringLiteral("attr"));
 }
@@ -188,9 +187,9 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
     } else {
         QString tag = item->text(2);
         int key = tag.midRef(5).toInt();
-        QVariant prop = (tag.startsWith(QStringLiteral("attr_")) ?
-                         pSet->attribute(key) :
-                         pSet->property(key));
+        QVariant prop = (tag.startsWith(QStringLiteral("attr_"))
+                         ? pSet->attribute(key)
+                         : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {
             QFile f(filename);
@@ -199,7 +198,8 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
                 case QVariant::ByteArray:
                     f.write(prop.toByteArray().data(), prop.toByteArray().size());
                     break;
-                default: {
+                default:
+                {
                     QTextStream t(&f);
                     t << prop.toString();
                     break;
@@ -251,4 +251,3 @@ QPixmap AttachPropertyDialog::loadRenderingPixmap(KTNEFPropertySet *pSet, const 
     }
     return pix;
 }
-

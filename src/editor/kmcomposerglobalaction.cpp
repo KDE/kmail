@@ -25,15 +25,13 @@
 #include <editor/kmcomposereditorng.h>
 
 KMComposerGlobalAction::KMComposerGlobalAction(KMComposerWin *composerWin, QObject *parent)
-    : QObject(parent),
-      mComposerWin(composerWin)
+    : QObject(parent)
+    , mComposerWin(composerWin)
 {
-
 }
 
 KMComposerGlobalAction::~KMComposerGlobalAction()
 {
-
 }
 
 void KMComposerGlobalAction::slotUndo()

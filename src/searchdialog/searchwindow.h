@@ -39,24 +39,19 @@ class KJob;
 class KMMainWidget;
 class KMSearchMessageModel;
 
-namespace PimCommon
-{
+namespace PimCommon {
 class SelectMultiCollectionDialog;
 }
 
-namespace Akonadi
-{
+namespace Akonadi {
 class StandardMailActionManager;
 }
 
-namespace KMime
-{
+namespace KMime {
 class Message;
 }
 
-namespace KMail
-{
-
+namespace KMail {
 /**
    * The SearchWindow class provides a dialog for triggering a search on
    * folders and storing that search as a search folder. It shows the search
@@ -64,7 +59,7 @@ namespace KMail
    * or moving on them.
    */
 class SearchPatternWarning;
-class SearchWindow: public QDialog, public KXMLGUIClient
+class SearchWindow : public QDialog, public KXMLGUIClient
 {
     Q_OBJECT
 
@@ -188,7 +183,6 @@ private:
 
     Akonadi::StandardMailActionManager *mAkonadiStandardAction;
 };
-
 }
 
 #endif

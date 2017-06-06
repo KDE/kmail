@@ -25,12 +25,10 @@
 SendLaterConfigTest::SendLaterConfigTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 SendLaterConfigTest::~SendLaterConfigTest()
 {
-
 }
 
 void SendLaterConfigTest::init()

@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #ifndef CREATEFORWARDMESSAGEJOB_H
 #define CREATEFORWARDMESSAGEJOB_H
 
@@ -32,7 +31,6 @@ struct CreateForwardMessageJobSettings
     CreateForwardMessageJobSettings()
         : mIdentity(0)
     {
-
     }
 
     QUrl mUrl;

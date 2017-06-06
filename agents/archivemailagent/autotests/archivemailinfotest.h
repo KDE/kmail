@@ -36,4 +36,3 @@ private Q_SLOTS:
 };
 
 #endif // ARCHIVEMAILINFOTEST_H
-

@@ -22,14 +22,12 @@
 
 #include <MailCommon/MailInterfaces>
 
-namespace Akonadi
-{
+namespace Akonadi {
 class EntityTreeModel;
 class EntityMimeTypeFilterModel;
 }
 
-namespace MailCommon
-{
+namespace MailCommon {
 class FolderCollectionMonitor;
 class JobScheduler;
 }
@@ -37,7 +35,7 @@ class JobScheduler;
 class ArchiveMailKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings
 {
 public:
-    explicit  ArchiveMailKernel(QObject *parent = nullptr);
+    explicit ArchiveMailKernel(QObject *parent = nullptr);
 
     KIdentityManagement::IdentityManager *identityManager() override;
     MessageComposer::MessageSender *msgSender() override;

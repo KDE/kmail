@@ -64,4 +64,3 @@ private:
 };
 
 #endif /* ARCHIVEMAILAGENT_H */
-

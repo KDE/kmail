@@ -20,8 +20,7 @@
 
 #include <QDialog>
 
-namespace Akonadi
-{
+namespace Akonadi {
 class ContactEditor;
 }
 

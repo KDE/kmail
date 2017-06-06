@@ -32,10 +32,16 @@ class ConfigModule : public KCModule
 public:
     explicit ConfigModule(QWidget *parent = nullptr)
         : KCModule(parent)
-    {}
-    ~ConfigModule() {}
+    {
+    }
 
-    void defaults() override {}
+    ~ConfigModule()
+    {
+    }
+
+    void defaults() override
+    {
+    }
 
     /** Should return the help anchor for this page or tab */
     virtual QString helpAnchor() const = 0;

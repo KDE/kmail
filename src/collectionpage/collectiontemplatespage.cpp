@@ -34,8 +34,9 @@
 using namespace Akonadi;
 using namespace MailCommon;
 
-CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent) :
-    CollectionPropertiesPage(parent), mChanged(false)
+CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent)
+    : CollectionPropertiesPage(parent)
+    , mChanged(false)
 {
     setObjectName(QStringLiteral("KMail::CollectionTemplatesPage"));
     setPageTitle(i18n("Templates"));
@@ -48,8 +49,8 @@ CollectionTemplatesPage::~CollectionTemplatesPage()
 
 bool CollectionTemplatesPage::canHandle(const Collection &collection) const
 {
-    return (!CommonKernel->isSystemFolderCollection(collection) ||
-            CommonKernel->isMainFolderCollection(collection));
+    return !CommonKernel->isSystemFolderCollection(collection)
+           || CommonKernel->isMainFolderCollection(collection);
 }
 
 void CollectionTemplatesPage::init()
@@ -130,4 +131,3 @@ void CollectionTemplatesPage::slotChanged()
 {
     mChanged = true;
 }
-

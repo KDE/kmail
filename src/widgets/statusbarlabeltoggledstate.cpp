@@ -22,15 +22,14 @@
 #include "kmail_debug.h"
 
 StatusBarLabelToggledState::StatusBarLabelToggledState(QWidget *parent)
-    : QLabel(parent),
-      mToggleMode(false)
+    : QLabel(parent)
+    , mToggleMode(false)
 {
     setTextFormat(Qt::PlainText);
 }
 
 StatusBarLabelToggledState::~StatusBarLabelToggledState()
 {
-
 }
 
 void StatusBarLabelToggledState::setStateString(const QString &toggled, const QString &untoggled)

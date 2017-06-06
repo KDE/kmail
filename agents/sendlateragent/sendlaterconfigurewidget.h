@@ -26,8 +26,7 @@
 #include <QTreeWidgetItem>
 #include <KConfigGroup>
 
-namespace SendLater
-{
+namespace SendLater {
 class SendLaterInfo;
 }
 
@@ -82,4 +81,3 @@ private:
 };
 
 #endif // SENDLATERCONFIGUREWIDGET_H
-

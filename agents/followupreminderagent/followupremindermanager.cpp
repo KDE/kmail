@@ -38,8 +38,8 @@
 using namespace FollowUpReminder;
 
 FollowUpReminderManager::FollowUpReminderManager(QObject *parent)
-    : QObject(parent),
-      mInitialize(false)
+    : QObject(parent)
+    , mInitialize(false)
 {
     mConfig = KSharedConfig::openConfig();
 }
@@ -59,7 +59,6 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
     const int numberOfItems = itemList.count();
     QList<FollowUpReminder::FollowUpReminderInfo *> noAnswerList;
     for (int i = 0; i < numberOfItems; ++i) {
-
         KConfigGroup group = mConfig->group(itemList.at(i));
 
         FollowUpReminderInfo *info = new FollowUpReminderInfo(group);
@@ -162,7 +161,6 @@ void FollowUpReminderManager::answerReceived(const QString &from)
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_followupreminder_agent"));
-
 }
 
 QString FollowUpReminderManager::printDebugInfo()
@@ -193,4 +191,3 @@ QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInf
     infoStr += QStringLiteral("****************************************\n");
     return infoStr;
 }
-

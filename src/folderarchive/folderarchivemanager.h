@@ -22,8 +22,7 @@
 #include <QObject>
 #include <QQueue>
 #include <AkonadiCore/Item>
-namespace Akonadi
-{
+namespace Akonadi {
 class AgentInstance;
 class Collection;
 }

@@ -45,8 +45,9 @@
 
 using namespace MailCommon;
 
-CollectionViewPage::CollectionViewPage(QWidget *parent) :
-    CollectionPropertiesPage(parent), mIsLocalSystemFolder(false)
+CollectionViewPage::CollectionViewPage(QWidget *parent)
+    : CollectionPropertiesPage(parent)
+    , mIsLocalSystemFolder(false)
 {
     setObjectName(QStringLiteral("KMail::CollectionViewPage"));
     setPageTitle(i18nc("@title:tab View settings for a folder.", "View"));
@@ -297,10 +298,10 @@ void CollectionViewPage::save(Akonadi::Collection &col)
     const int currentIndex = mShowSenderReceiverComboBox->currentIndex();
     if (mShowSenderReceiverValue != currentIndex) {
         if (currentIndex == 1) {
-            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Collection::AddIfMissing);
+            Akonadi::MessageFolderAttribute *messageFolder = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Collection::AddIfMissing);
             messageFolder->setOutboundFolder(false);
         } else if (currentIndex == 2) {
-            Akonadi::MessageFolderAttribute *messageFolder  = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Collection::AddIfMissing);
+            Akonadi::MessageFolderAttribute *messageFolder = col.attribute<Akonadi::MessageFolderAttribute>(Akonadi::Collection::AddIfMissing);
             messageFolder->setOutboundFolder(true);
         } else {
             col.removeAttribute<Akonadi::MessageFolderAttribute>();
@@ -325,4 +326,3 @@ void CollectionViewPage::save(Akonadi::Collection &col)
     }
     mFolderCollection->setFormatMessage(formatMessage);
 }
-

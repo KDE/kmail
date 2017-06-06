@@ -24,8 +24,7 @@
 #include <QMap>
 #include <QPixmap>
 
-namespace KTnef
-{
+namespace KTnef {
 class KTNEFAttach;
 class KTNEFProperty;
 class KTNEFPropertySet;
@@ -45,8 +44,7 @@ public:
     void setAttachment(KTNEFAttach *attach);
 
     static QPixmap loadRenderingPixmap(KTNEFPropertySet *, const QColor &);
-    static void formatProperties(const QMap<int, KTNEFProperty *> &, QTreeWidget *,
-                                 QTreeWidgetItem *, const QString & = QStringLiteral("prop"));
+    static void formatProperties(const QMap<int, KTNEFProperty *> &, QTreeWidget *, QTreeWidgetItem *, const QString & = QStringLiteral("prop"));
     static void formatPropertySet(KTNEFPropertySet *, QTreeWidget *);
     static bool saveProperty(QTreeWidget *, KTNEFPropertySet *, QWidget *);
 

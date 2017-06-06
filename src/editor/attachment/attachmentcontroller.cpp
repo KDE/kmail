@@ -46,9 +46,9 @@ using namespace MailCommon;
 using namespace MessageCore;
 
 AttachmentController::AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposerWin *composer)
-    : AttachmentControllerBase(model, composer, composer->actionCollection()),
-      mComposer(composer),
-      mView(view)
+    : AttachmentControllerBase(model, composer, composer->actionCollection())
+    , mComposer(composer)
+    , mView(view)
 {
     connect(composer, &KMComposerWin::identityChanged,
             this, &AttachmentController::identityChanged);
@@ -118,7 +118,7 @@ void AttachmentController::selectionChanged()
     selectedParts.reserve(selectedRows.count());
     for (const QModelIndex &index : selectedRows) {
         AttachmentPart::Ptr part = mView->model()->data(
-                                       index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+            index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
         selectedParts.append(part);
     }
     setSelectedParts(selectedParts);
@@ -126,8 +126,8 @@ void AttachmentController::selectionChanged()
 
 void AttachmentController::onShowAttachment(KMime::Content *content, const QByteArray &charset)
 {
-    KMReaderMainWin *win =
-        new KMReaderMainWin(content, MessageViewer::Viewer::Text, QString::fromLatin1(charset));
+    KMReaderMainWin *win
+        = new KMReaderMainWin(content, MessageViewer::Viewer::Text, QString::fromLatin1(charset));
     win->show();
 }
 
@@ -141,8 +141,8 @@ void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
     // the AttachmentPart, so we must recreate the QModelIndex without the column information
     const QModelIndex &properItemClickedIndex = mView->model()->index(itemClicked.row(), 0);
     AttachmentPart::Ptr part = mView->model()->data(
-                                   properItemClickedIndex,
-                                   MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+        properItemClickedIndex,
+        MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
 
     // We can't edit encapsulated messages, but we can view them.
     if (part->isMessageOrMessageCollection()) {
@@ -151,4 +151,3 @@ void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
         editAttachment(part);
     }
 }
-

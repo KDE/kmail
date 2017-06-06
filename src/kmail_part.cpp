@@ -50,13 +50,14 @@
 
 #include <KSharedConfig>
 
-K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();)
+K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();
+                 )
 
 using namespace KMail;
 
-KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &) :
-    KParts::ReadOnlyPart(parent),
-    mParentWidget(parentWidget)
+KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &)
+    : KParts::ReadOnlyPart(parent)
+    , mParentWidget(parentWidget)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 
@@ -78,7 +79,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mKMailKernel->recoverDeadLetters();
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
-    (void) new KmailpartAdaptor(this);
+    (void)new KmailpartAdaptor(this);
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/KMailPart"), this);
 
     // create a canvas to insert our widget
@@ -93,7 +94,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     topLayout->addWidget(mainWidget);
     topLayout->setMargin(0);
     mainWidget->setFocusPolicy(Qt::ClickFocus);
-    KParts::StatusBarExtension *statusBar  = new KParts::StatusBarExtension(this);
+    KParts::StatusBarExtension *statusBar = new KParts::StatusBarExtension(this);
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
 
     setXMLFile(QStringLiteral("kmail_part.rc"), true);
@@ -148,4 +149,5 @@ void KMailPart::save()
 {
     /*TODO*/
 }
+
 #include "kmail_part.moc"

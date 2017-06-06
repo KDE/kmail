@@ -56,7 +56,6 @@ private:
     QString fullCollectionPath(Akonadi::Collection::Id id) const;
 
     mutable QHash<Akonadi::Collection::Id, QString> m_collectionFullPathCache;
-
 };
 
 #endif

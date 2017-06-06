@@ -21,8 +21,7 @@
 #define FOLLOWUPREMINDERNOANSWERDIALOG_H
 
 #include <QDialog>
-namespace FollowUpReminder
-{
+namespace FollowUpReminder {
 class FollowUpReminderInfo;
 }
 class FollowUpReminderInfoWidget;

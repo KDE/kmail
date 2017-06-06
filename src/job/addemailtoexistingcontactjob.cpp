@@ -28,8 +28,8 @@
 #include <KLocalizedString>
 
 AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &item, const QString &email, QObject *parent)
-    : KJob(parent),
-      mItem(item)
+    : KJob(parent)
+    , mItem(item)
 {
     QString name;
     KContacts::Addressee::parseEmailAddress(email, name, mEmail);
@@ -37,7 +37,6 @@ AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &
 
 AddEmailToExistingContactJob::~AddEmailToExistingContactJob()
 {
-
 }
 
 void AddEmailToExistingContactJob::start()
@@ -71,4 +70,3 @@ void AddEmailToExistingContactJob::slotAddEmailDone(KJob *job)
     }
     Q_EMIT emitResult();
 }
-

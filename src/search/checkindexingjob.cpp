@@ -28,15 +28,13 @@
 #include <PimCommon/PimUtil>
 
 CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent)
-    : QObject(parent),
-      mIndexedItems(indexedItems)
+    : QObject(parent)
+    , mIndexedItems(indexedItems)
 {
-
 }
 
 CheckIndexingJob::~CheckIndexingJob()
 {
-
 }
 
 void CheckIndexingJob::askForNextCheck(quint64 id, bool needToReindex)
@@ -54,7 +52,7 @@ void CheckIndexingJob::start()
 {
     if (mCollection.isValid()) {
         Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mCollection,
-                Akonadi::CollectionFetchJob::Base);
+                                                                             Akonadi::CollectionFetchJob::Base);
         fetch->fetchScope().setIncludeStatistics(true);
         connect(fetch, &KJob::result, this, &CheckIndexingJob::slotCollectionPropertiesFinished);
     } else {

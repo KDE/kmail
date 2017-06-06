@@ -57,4 +57,3 @@ void ListView::slotContextMenu(const QPoint &pos)
     menu->exec(viewport()->mapToGlobal(pos));
     delete menu;
 }
-

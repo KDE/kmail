@@ -22,12 +22,10 @@
 ConfigureWidgetTest::ConfigureWidgetTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 ConfigureWidgetTest::~ConfigureWidgetTest()
 {
-
 }
 
 QTEST_MAIN(ConfigureWidgetTest)

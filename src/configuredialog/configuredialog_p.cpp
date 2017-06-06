@@ -18,7 +18,8 @@
 #include <KConfigGroup>
 
 ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent)
-    : ConfigModule(parent), mWasInitialized(false)
+    : ConfigModule(parent)
+    , mWasInitialized(false)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
     vlay->setMargin(0);
@@ -99,4 +100,3 @@ void ConfigModuleTab::slotEmitChanged(void)
         Q_EMIT changed(true);
     }
 }
-

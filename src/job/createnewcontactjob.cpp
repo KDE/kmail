@@ -37,8 +37,8 @@
 #include <KMessageBox>
 
 CreateNewContactJob::CreateNewContactJob(QWidget *parentWidget, QObject *parent)
-    : KJob(parent),
-      mParentWidget(parentWidget)
+    : KJob(parent)
+    , mParentWidget(parentWidget)
 {
 }
 
@@ -48,9 +48,9 @@ CreateNewContactJob::~CreateNewContactJob()
 
 void CreateNewContactJob::start()
 {
-    Akonadi::CollectionFetchJob *const addressBookJob =
-        new Akonadi::CollectionFetchJob(Akonadi::Collection::root(),
-                                        Akonadi::CollectionFetchJob::Recursive);
+    Akonadi::CollectionFetchJob *const addressBookJob
+        = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(),
+                                          Akonadi::CollectionFetchJob::Recursive);
 
     addressBookJob->fetchScope().setContentMimeTypes(QStringList() << KContacts::Addressee::mimeType());
     connect(addressBookJob, &KJob::result, this, &CreateNewContactJob::slotCollectionsFetched);
@@ -70,8 +70,8 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
     Akonadi::Collection::List canCreateItemCollections;
 
     const Akonadi::Collection::List lstAddressCollection = addressBookJob->collections();
-    for (const Akonadi::Collection &collection : lstAddressCollection ) {
-        if (Akonadi::Collection::CanCreateItem & collection.rights()) {
+    for (const Akonadi::Collection &collection : lstAddressCollection) {
+        if (Akonadi::Collection::CanCreateItem &collection.rights()) {
             canCreateItemCollections.append(collection);
         }
     }
@@ -136,4 +136,3 @@ void CreateNewContactJob::slotContactEditorError(const QString &error)
 {
     KMessageBox::error(mParentWidget, i18n("Contact cannot be stored: %1", error), i18n("Failed to store contact"));
 }
-

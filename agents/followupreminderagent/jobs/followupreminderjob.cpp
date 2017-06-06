@@ -34,7 +34,6 @@ FollowUpReminderJob::FollowUpReminderJob(QObject *parent)
 
 FollowUpReminderJob::~FollowUpReminderJob()
 {
-
 }
 
 void FollowUpReminderJob::start()

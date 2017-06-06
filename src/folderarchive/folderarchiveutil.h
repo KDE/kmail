@@ -20,10 +20,8 @@
 #define FOLDERARCHIVEUTIL_H
 
 #include <QString>
-namespace FolderArchive
-{
-namespace FolderArchiveUtil
-{
+namespace FolderArchive {
+namespace FolderArchiveUtil {
 QString groupConfigPattern();
 bool resourceSupportArchiving(const QString &resource);
 QString configFileName();

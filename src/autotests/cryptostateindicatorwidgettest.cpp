@@ -21,12 +21,10 @@
 #include <QLabel>
 CryptoStateIndicatorWidgetTest::CryptoStateIndicatorWidgetTest(QObject *parent) : QObject(parent)
 {
-
 }
 
 CryptoStateIndicatorWidgetTest::~CryptoStateIndicatorWidgetTest()
 {
-
 }
 
 void CryptoStateIndicatorWidgetTest::shouldHaveDefaultValue()

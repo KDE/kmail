@@ -34,10 +34,10 @@
 #include <AkonadiCore/entityhiddenattribute.h>
 
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
-    : QObject(parent),
-      mIndexedItems(indexer),
-      mIndex(0),
-      mIsReady(true)
+    : QObject(parent)
+    , mIndexedItems(indexer)
+    , mIndex(0)
+    , mIsReady(true)
 {
     mTimer = new QTimer(this);
     mTimer->setSingleShot(true);
@@ -142,9 +142,9 @@ void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, c
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
         const QModelIndex index = model->index(row, 0, parentIndex);
-        const Akonadi::Collection collection =
-            model->data(
-                index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const Akonadi::Collection collection
+            = model->data(
+            index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
 
         if (!collection.isValid() || MailCommon::Util::isVirtualCollection(collection)) {
             continue;

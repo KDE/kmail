@@ -23,12 +23,9 @@
 #include <QObject>
 #include <AkonadiCore/Collection>
 #include <QAbstractItemModel>
-namespace Akonadi
-{
-namespace Search
-{
-namespace PIM
-{
+namespace Akonadi {
+namespace Search {
+namespace PIM {
 class IndexedItems;
 }
 }

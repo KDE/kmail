@@ -26,14 +26,13 @@
 #include <KCalCore/Todo>
 
 FollowUpReminderFinishTaskJob::FollowUpReminderFinishTaskJob(Akonadi::Item::Id id, QObject *parent)
-    : QObject(parent),
-      mTodoId(id)
+    : QObject(parent)
+    , mTodoId(id)
 {
 }
 
 FollowUpReminderFinishTaskJob::~FollowUpReminderFinishTaskJob()
 {
-
 }
 
 void FollowUpReminderFinishTaskJob::start()

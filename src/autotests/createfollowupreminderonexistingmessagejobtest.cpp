@@ -23,12 +23,10 @@
 CreateFollowupReminderOnExistingMessageJobTest::CreateFollowupReminderOnExistingMessageJobTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 CreateFollowupReminderOnExistingMessageJobTest::~CreateFollowupReminderOnExistingMessageJobTest()
 {
-
 }
 
 void CreateFollowupReminderOnExistingMessageJobTest::shouldHaveDefaultValue()

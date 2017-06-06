@@ -22,36 +22,29 @@
 #define kmconfig KMKernel::config()
 
 class QAbstractItemModel;
-namespace Akonadi
-{
+namespace Akonadi {
 class Collection;
 class ChangeRecorder;
 class EntityTreeModel;
 class EntityMimeTypeFilterModel;
 }
 
-namespace Akonadi
-{
-namespace Search
-{
-namespace PIM
-{
+namespace Akonadi {
+namespace Search {
+namespace PIM {
 class IndexedItems;
 }
 }
 }
 
-namespace KIO
-{
+namespace KIO {
 class Job;
 }
 
-namespace MessageComposer
-{
+namespace MessageComposer {
 class MessageSender;
 }
-namespace PimCommon
-{
+namespace PimCommon {
 class AutoCorrection;
 }
 
@@ -59,27 +52,23 @@ class AutoCorrection;
 * This is to keep them out of the way from all the other
 * un-namespaced classes in libs and the rest of PIM.
 */
-namespace KMail
-{
+namespace KMail {
 class MailServiceImpl;
 class UndoStack;
 class KMSystemTray;
 }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
-namespace MessageComposer
-{
+namespace MessageComposer {
 class AkonadiSender;
 }
 
-namespace KIdentityManagement
-{
+namespace KIdentityManagement {
 class Identity;
 class IdentityManager;
 }
 
-namespace MailCommon
-{
+namespace MailCommon {
 class Kernel;
 class FolderSettings;
 class FolderCollectionMonitor;
@@ -195,18 +184,9 @@ public Q_SLOTS:
     * @param attachmentPaths A list of files that will be attached to the message.
     * @param customHeaders A list of custom headers.
     */
-    Q_SCRIPTABLE void openComposer(const QString &to,
-                                  const QString &cc,
-                                  const QString &bcc,
-                                  const QString &subject,
-                                  const QString &body,
-                                  bool hidden,
-                                  const QString &messageFile,
-                                  const QStringList &attachmentPaths,
-                                  const QStringList &customHeaders,
-                                  const QString &replyTo = QString(),
-                                  const QString &inReplyTo = QString(),
-                                  const QString &identity = QString());
+    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile,
+                                   const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo = QString(),
+                                   const QString &inReplyTo = QString(), const QString &identity = QString());
 
     /**
     * Opens a composer window and prefills it with different
@@ -229,22 +209,9 @@ public Q_SLOTS:
     * @param attachCharset The charset of the attachment.
     * @param identity The identity identifier which will be used as sender identity.
     */
-    Q_SCRIPTABLE void openComposer(const QString &to,
-                                  const QString &cc,
-                                  const QString &bcc,
-                                  const QString &subject,
-                                  const QString &body,
-                                  bool hidden,
-                                  const QString &attachName,
-                                  const QByteArray &attachCte,
-                                  const QByteArray  &attachData,
-                                  const QByteArray &attachType,
-                                  const QByteArray &attachSubType,
-                                  const QByteArray &attachParamAttr,
-                                  const QString &attachParamValue,
-                                  const QByteArray &attachContDisp,
-                                  const QByteArray &attachCharset,
-                                  unsigned int identity);
+    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &attachName,
+                                   const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr,
+                                   const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity);
 
     /**
     * Opens a composer window and prefills it with different
@@ -267,21 +234,9 @@ public Q_SLOTS:
     * @param attachCharset The charset of the attachment.
     * @param identity The identity identifier which will be used as sender identity.
     */
-    Q_SCRIPTABLE void openComposer(const QString &to,
-                                  const QString &cc,
-                                  const QString &bcc,
-                                  const QString &subject,
-                                  const QString &body,
-                                  const QString &attachName,
-                                  const QByteArray &attachCte,
-                                  const QByteArray  &attachData,
-                                  const QByteArray &attachType,
-                                  const QByteArray &attachSubType,
-                                  const QByteArray &attachParamAttr,
-                                  const QString &attachParamValue,
-                                  const QByteArray &attachContDisp,
-                                  const QByteArray &attachCharset,
-                                  unsigned int identity);
+    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte,
+                                   const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr, const QString &attachParamValue,
+                                   const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity);
 
     /**
     * Opens a composer window and prefills it with different
@@ -295,12 +250,7 @@ public Q_SLOTS:
     * @param body The message body.
     * @param hidden Whether the composer window shall initially be hidden.
     */
-    Q_SCRIPTABLE void openComposer(const QString &to,
-            const QString &cc,
-            const QString &bcc,
-            const QString &subject,
-            const QString &body,
-            bool hidden);
+    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden);
 
     /**
     * Opens a composer window and prefills it with different
@@ -318,13 +268,7 @@ public Q_SLOTS:
     * @param messageFile A message file that will be used as message body.
     * @param attachURL The URL to the file that will be attached to the message.
     */
-    Q_SCRIPTABLE void newMessage(const QString &to,
-                                            const QString &cc,
-                                            const QString &bcc,
-                                            bool hidden,
-                                            bool useFolderId,
-                                            const QString &messageFile,
-                                            const QString &attachURL);
+    Q_SCRIPTABLE void newMessage(const QString &to, const QString &cc, const QString &bcc, bool hidden, bool useFolderId, const QString &messageFile, const QString &attachURL);
 
     Q_SCRIPTABLE bool showMail(qint64 serialNumber);
 
@@ -386,9 +330,7 @@ public:
     bool doSessionManagement();
     bool firstInstance() const;
     void setFirstInstance(bool value);
-    void action(bool mailto, bool check, const QString &to, const QString &cc,
-                const QString &bcc, const QString &subj, const QString &body,
-                const QUrl &messageFile, const QList<QUrl> &attach,
+    void action(bool mailto, bool check, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attach,
                 const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity);
 
     //sets online status for akonadi accounts. true for online, false for offline
@@ -543,20 +485,9 @@ private:
      * Fills a composer cWin
      *
     */
-    void fillComposer(bool hidden,
-                      const QString &to, const QString &cc,
-                      const QString &bcc, const QString &subject,
-                      const QString &body,
-                      const QString &attachName,
-                      const QByteArray &attachCte,
-                      const QByteArray &attachData,
-                      const QByteArray &attachType,
-                      const QByteArray &attachSubType,
-                      const QByteArray &attachParamAttr,
-                      const QString &attachParamValue,
-                      const QByteArray &attachContDisp,
-                      const QByteArray &attachCharset,
-                      unsigned int identity, bool forceShowWindow);
+    void fillComposer(bool hidden, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte,
+                      const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr, const QString &attachParamValue,
+                      const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity, bool forceShowWindow);
 
     void verifyAccount();
     void resourceGoOnLine();

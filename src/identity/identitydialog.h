@@ -42,46 +42,37 @@ class KLineEdit;
 class QPushButton;
 class QTabWidget;
 
-namespace GpgME
-{
+namespace GpgME {
 class Key;
 }
-namespace KIdentityManagement
-{
+namespace KIdentityManagement {
 class Identity;
 class SignatureConfigurator;
 }
-namespace KMail
-{
+namespace KMail {
 class XFaceConfigurator;
 }
 
-namespace MailCommon
-{
+namespace MailCommon {
 class FolderRequester;
 }
-namespace Sonnet
-{
+namespace Sonnet {
 class DictionaryComboBox;
 }
 
-namespace MailTransport
-{
+namespace MailTransport {
 class TransportComboBox;
 }
 
-namespace TemplateParser
-{
+namespace TemplateParser {
 class TemplatesConfiguration;
 }
 
-namespace PimCommon
-{
+namespace PimCommon {
 class AutoCorrectionLanguage;
 }
 
-namespace KMail
-{
+namespace KMail {
 class IdentityFolderRequester;
 class IdentityInvalidFolder;
 class KeySelectionCombo;
@@ -119,40 +110,40 @@ private:
 
 private:
     // "general" tab:
-    KLineEdit                    *mNameEdit;
-    KLineEdit                    *mOrganizationEdit;
-    KLineEdit                    *mEmailEdit;
-    KEditListWidget       *mAliasEdit;
+    KLineEdit *mNameEdit;
+    KLineEdit *mOrganizationEdit;
+    KLineEdit *mEmailEdit;
+    KEditListWidget *mAliasEdit;
     // "cryptography" tab:
-    QWidget                      *mCryptographyTab;
-    KeySelectionCombo            *mPGPSigningKeyRequester;
-    KeySelectionCombo            *mPGPEncryptionKeyRequester;
-    KeySelectionCombo            *mSMIMESigningKeyRequester;
-    KeySelectionCombo            *mSMIMEEncryptionKeyRequester;
-    KComboBox                    *mPreferredCryptoMessageFormat;
+    QWidget *mCryptographyTab;
+    KeySelectionCombo *mPGPSigningKeyRequester;
+    KeySelectionCombo *mPGPEncryptionKeyRequester;
+    KeySelectionCombo *mSMIMESigningKeyRequester;
+    KeySelectionCombo *mSMIMEEncryptionKeyRequester;
+    KComboBox *mPreferredCryptoMessageFormat;
     QCheckBox *mAutoSign;
     QCheckBox *mAutoEncrypt;
     // "advanced" tab:
-    KLineEdit                        *mReplyToEdit;
-    KLineEdit                        *mBccEdit;
-    KLineEdit                        *mCcEdit;
-    Sonnet::DictionaryComboBox       *mDictionaryCombo;
-    IdentityFolderRequester      *mFccFolderRequester;
-    QCheckBox                        *mSentMailFolderCheck;
-    IdentityFolderRequester      *mDraftsFolderRequester;
-    IdentityFolderRequester      *mTemplatesFolderRequester;
-    QCheckBox                        *mTransportCheck;
+    KLineEdit *mReplyToEdit;
+    KLineEdit *mBccEdit;
+    KLineEdit *mCcEdit;
+    Sonnet::DictionaryComboBox *mDictionaryCombo;
+    IdentityFolderRequester *mFccFolderRequester;
+    QCheckBox *mSentMailFolderCheck;
+    IdentityFolderRequester *mDraftsFolderRequester;
+    IdentityFolderRequester *mTemplatesFolderRequester;
+    QCheckBox *mTransportCheck;
     MailTransport::TransportComboBox *mTransportCombo;
-    QCheckBox                        *mAttachMyVCard;
-    QString                          mVcardFilename;
-    QPushButton                      *mEditVCard;
+    QCheckBox *mAttachMyVCard;
+    QString mVcardFilename;
+    QPushButton *mEditVCard;
     PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage;
-    KLineEdit                        *mDefaultDomainEdit;
+    KLineEdit *mDefaultDomainEdit;
 
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget;
-    QCheckBox                    *mCustom;
-    QPushButton                  *mCopyGlobal;
+    QCheckBox *mCustom;
+    QPushButton *mCopyGlobal;
     // "signature" tab:
     KIdentityManagement::SignatureConfigurator *mSignatureConfigurator;
     // "X-Face" tab:
@@ -160,7 +151,6 @@ private:
     QTabWidget *mTabWidget;
     IdentityInvalidFolder *mIdentityInvalidFolder;
 };
-
 } // namespace KMail
 
 #endif // __KMAIL_IDENTITYDIALOG_H__

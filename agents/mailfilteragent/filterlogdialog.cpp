@@ -57,7 +57,8 @@
 using namespace MailCommon;
 
 FilterLogDialog::FilterLogDialog(QWidget *parent)
-    : QDialog(parent), mIsInitialized(false)
+    : QDialog(parent)
+    , mIsInitialized(false)
 {
     setWindowTitle(i18n("Filter Log Viewer"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -87,7 +88,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     const QStringList logEntries = FilterLog::instance()->logEntries();
     QStringList::ConstIterator end(logEntries.constEnd());
     for (QStringList::ConstIterator it = logEntries.constBegin();
-            it != end; ++it) {
+         it != end; ++it) {
         mTextEdit->editor()->appendHtml(*it);
     }
 
@@ -296,25 +297,29 @@ void FilterLogDialog::slotLogStateChanged()
 
 void FilterLogDialog::slotChangeLogDetail()
 {
-    if (mLogPatternDescBox->isChecked() !=
-            FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternDescription))
+    if (mLogPatternDescBox->isChecked()
+        != FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternDescription)) {
         FilterLog::instance()->setContentTypeEnabled(FilterLog::PatternDescription,
-                mLogPatternDescBox->isChecked());
+                                                     mLogPatternDescBox->isChecked());
+    }
 
-    if (mLogRuleEvaluationBox->isChecked() !=
-            FilterLog::instance()->isContentTypeEnabled(FilterLog::RuleResult))
+    if (mLogRuleEvaluationBox->isChecked()
+        != FilterLog::instance()->isContentTypeEnabled(FilterLog::RuleResult)) {
         FilterLog::instance()->setContentTypeEnabled(FilterLog::RuleResult,
-                mLogRuleEvaluationBox->isChecked());
+                                                     mLogRuleEvaluationBox->isChecked());
+    }
 
-    if (mLogPatternResultBox->isChecked() !=
-            FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternResult))
+    if (mLogPatternResultBox->isChecked()
+        != FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternResult)) {
         FilterLog::instance()->setContentTypeEnabled(FilterLog::PatternResult,
-                mLogPatternResultBox->isChecked());
+                                                     mLogPatternResultBox->isChecked());
+    }
 
-    if (mLogFilterActionBox->isChecked() !=
-            FilterLog::instance()->isContentTypeEnabled(FilterLog::AppliedAction))
+    if (mLogFilterActionBox->isChecked()
+        != FilterLog::instance()->isContentTypeEnabled(FilterLog::AppliedAction)) {
         FilterLog::instance()->setContentTypeEnabled(FilterLog::AppliedAction,
-                mLogFilterActionBox->isChecked());
+                                                     mLogFilterActionBox->isChecked());
+    }
 }
 
 void FilterLogDialog::slotSwitchLogState()
@@ -358,4 +363,3 @@ void FilterLogDialog::slotUser2()
         }
     }
 }
-

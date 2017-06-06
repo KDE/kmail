@@ -40,17 +40,18 @@
 
 extern "C"
 {
-    Q_DECL_EXPORT KCModule *create_kontactsummary(QWidget *parent, const char *)
-    {
-        return new KCMKontactSummary(parent);
-    }
+Q_DECL_EXPORT KCModule *create_kontactsummary(QWidget *parent, const char *)
+{
+    return new KCMKontactSummary(parent);
+}
 }
 
 class PluginItem : public QTreeWidgetItem
 {
 public:
     PluginItem(const KPluginInfo &info, QTreeWidget *parent)
-        : QTreeWidgetItem(parent), mInfo(info)
+        : QTreeWidgetItem(parent)
+        , mInfo(info)
     {
         setIcon(0, QIcon::fromTheme(mInfo.icon()));
         setText(0, mInfo.name());
@@ -97,8 +98,8 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
 
-    QLabel *label =
-        new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
+    QLabel *label
+        = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
     layout->addWidget(label);
 
     mPluginView = new PluginView(this);
@@ -107,7 +108,7 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     layout->setStretchFactor(mPluginView, 1);
 
     load();
-    connect(mPluginView, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
+    connect(mPluginView, SIGNAL(itemChanged(QTreeWidgetItem *,int)),
             this, SLOT(changed()));
 
     KAboutData *about = new KAboutData(QStringLiteral("kontactsummary"),
@@ -123,8 +124,8 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
 void KCMKontactSummary::load()
 {
     KService::List offers = KServiceTypeTrader::self()->query(
-                                QStringLiteral("Kontact/Plugin"),
-                                QStringLiteral("[X-KDE-KontactPluginVersion] == %1").arg(KONTACT_PLUGIN_VERSION));
+        QStringLiteral("Kontact/Plugin"),
+        QStringLiteral("[X-KDE-KontactPluginVersion] == %1").arg(KONTACT_PLUGIN_VERSION));
 
     QStringList activeSummaries;
 
@@ -146,8 +147,8 @@ void KCMKontactSummary::load()
 
     mPluginView->clear();
 
-    KPluginInfo::List pluginList =
-        KPluginInfo::fromServices(offers, KConfigGroup(&config, "Plugins"));
+    KPluginInfo::List pluginList
+        = KPluginInfo::fromServices(offers, KConfigGroup(&config, "Plugins"));
     KPluginInfo::List::Iterator it;
     KPluginInfo::List::Iterator end(pluginList.end());
     for (it = pluginList.begin(); it != end; ++it) {
@@ -187,4 +188,3 @@ void KCMKontactSummary::save()
     KConfigGroup grp(&config, QString());
     grp.writeEntry("ActiveSummaries", activeSummaries);
 }
-

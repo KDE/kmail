@@ -45,8 +45,8 @@
 //#define DEBUG_SENDLATERAGENT 1
 
 SendLaterAgent::SendLaterAgent(const QString &id)
-    : Akonadi::AgentBase(id),
-      mAgentInitialized(false)
+    : Akonadi::AgentBase(id)
+    , mAgentInitialized(false)
 {
     Kdelibs4ConfigMigrator migrate(QStringLiteral("sendlateragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_sendlater_agentrc") << QStringLiteral("akonadi_sendlater_agent.notifyrc"));
@@ -171,7 +171,7 @@ void SendLaterAgent::itemsRemoved(const Akonadi::Item::List &items)
     }
 }
 
-void SendLaterAgent::itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection &/*sourceCollection*/, const Akonadi::Collection &destinationCollection)
+void SendLaterAgent::itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection & /*sourceCollection*/, const Akonadi::Collection &destinationCollection)
 {
     if (Akonadi::SpecialMailCollections::self()->specialCollectionType(destinationCollection) != Akonadi::SpecialMailCollections::Trash) {
         return;
@@ -185,4 +185,3 @@ QString SendLaterAgent::printDebugInfo()
 }
 
 AKONADI_AGENT_MAIN(SendLaterAgent)
-

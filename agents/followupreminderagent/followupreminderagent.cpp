@@ -147,4 +147,3 @@ QString FollowUpReminderAgent::printDebugInfo()
 }
 
 AKONADI_AGENT_MAIN(FollowUpReminderAgent)
-

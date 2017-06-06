@@ -36,19 +36,19 @@
 
 Akonadi::Item createItem(const KIdentityManagement::Identity &ident)
 {
-    QByteArray data =
-        "From: Konqui <konqui@kde.org>\n"
-        "To: Friends <friends@kde.org>\n"
-        "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
-        "Subject: Sample message\n"
-        "MIME-Version: 1.0\n"
-        "X-KMail-Identity: " + QByteArray::number(ident.uoid()) + "\n"
-        "Content-type: text/plain; charset=us-ascii\n"
-        "\n"
-        "\n"
-        "This is explicitly typed plain US-ASCII text.\n"
-        "It DOES end with a linebreak.\n"
-        "\n";
+    QByteArray data
+        = "From: Konqui <konqui@kde.org>\n"
+          "To: Friends <friends@kde.org>\n"
+          "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
+          "Subject: Sample message\n"
+          "MIME-Version: 1.0\n"
+          "X-KMail-Identity: " + QByteArray::number(ident.uoid()) + "\n"
+                                                                    "Content-type: text/plain; charset=us-ascii\n"
+                                                                    "\n"
+                                                                    "\n"
+                                                                    "This is explicitly typed plain US-ASCII text.\n"
+                                                                    "It DOES end with a linebreak.\n"
+                                                                    "\n";
 
     KMime::Message::Ptr msgPtr = KMime::Message::Ptr(new KMime::Message());
     Akonadi::Item item;
@@ -65,7 +65,6 @@ KMCommandsTest::KMCommandsTest(QObject *parent)
     : QObject(parent)
     , mKernel(new KMKernel(parent))
 {
-
 }
 
 KMCommandsTest::~KMCommandsTest()
@@ -105,7 +104,7 @@ void KMCommandsTest::resetIdentities()
 
 void KMCommandsTest::verifyEncryption(bool encrypt)
 {
-    const KMainWindow *w =  mKernel->mainWin();
+    const KMainWindow *w = mKernel->mainWin();
     QLabel *encryption = w->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(encryption);
     QCOMPARE(encryption->isVisible(), encrypt);
@@ -113,7 +112,7 @@ void KMCommandsTest::verifyEncryption(bool encrypt)
 
 void KMCommandsTest::verifySignature(bool sign)
 {
-    const KMainWindow *w =  mKernel->mainWin();
+    const KMainWindow *w = mKernel->mainWin();
     QLabel *signature = w->findChild<QLabel *>(QStringLiteral("signatureindicator"));
     QVERIFY(signature);
     QCOMPARE(signature->isVisible(), sign);

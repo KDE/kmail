@@ -140,8 +140,8 @@ QString AppearancePage::FontsTab::helpAnchor() const
 static const struct {
     const char *configName;
     const char *displayName;
-    bool   enableFamilyAndSize;
-    bool   onlyFixed;
+    bool enableFamilyAndSize;
+    bool onlyFixed;
 } fontNames[] = {
     { "body-font", I18N_NOOP("Message Body"), true, false },
     { "MessageListFont", I18N_NOOP("Message List"), true, false },
@@ -150,14 +150,15 @@ static const struct {
     { "TodoMessageFont", I18N_NOOP("Message List - Action Item Messages"), false, false },
     { "fixed-font", I18N_NOOP("Fixed Width Font"), true, true },
     { "composer-font", I18N_NOOP("Composer"), true, false },
-    { "print-font",  I18N_NOOP("Printing Output"), true, false },
+    { "print-font", I18N_NOOP("Printing Output"), true, false },
 };
-static const int numFontNames = sizeof fontNames / sizeof * fontNames;
+static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
 AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
-    : ConfigModuleTab(parent), mActiveFontIndex(-1)
+    : ConfigModuleTab(parent)
+    , mActiveFontIndex(-1)
 {
-    assert(numFontNames == sizeof mFont / sizeof * mFont);
+    assert(numFontNames == sizeof mFont / sizeof *mFont);
 
     // "Use custom fonts" checkbox, followed by <hr>
     QVBoxLayout *vlay = new QVBoxLayout(this);
@@ -218,14 +219,15 @@ void AppearancePage::FontsTab::slotFontSelectorChanged(int index)
     if (mActiveFontIndex == 0) {
         mFont[0] = mFontChooser->font();
         // hardcode the family and size of "message body" dependant fonts:
-        for (int i = 0; i < numFontNames; ++i)
+        for (int i = 0; i < numFontNames; ++i) {
             if (!fontNames[i].enableFamilyAndSize) {
                 // ### shall we copy the font and set the save and re-set
                 // {regular,italic,bold,bold italic} property or should we
                 // copy only family and pointSize?
                 mFont[i].setFamily(mFont[0].family());
-                mFont[i].setPointSize/*Float?*/(mFont[0].pointSize/*Float?*/());
+                mFont[i].setPointSize/*Float?*/ (mFont[0].pointSize/*Float?*/ ());
             }
+        }
     } else if (mActiveFontIndex > 0) {
         mFont[ mActiveFontIndex ] = mFontChooser->font();
     }
@@ -301,10 +303,9 @@ void AppearancePage::FontsTab::save()
             } else if (customFonts && configName == QLatin1String("TodoMessageFont")) {
                 MessageList::MessageListSettings::self()->setTodoMessageFont(mFont[i]);
             } else {
-                if (customFonts || fonts.hasKey(configName))
+                if (customFonts || fonts.hasKey(configName)) {
                     // Don't write font info when we use default fonts, but write
                     // if it's already there:
-                {
                     fonts.writeEntry(configName, mFont[i]);
                 }
             }
@@ -336,10 +337,10 @@ static const struct {
     { "CloseToQuotaColor", I18N_NOOP("Folder Name and Size When Close to Quota") },
     { "ColorbarBackgroundPlain", I18N_NOOP("HTML Status Bar Background - No HTML Message") },
     { "ColorbarForegroundPlain", I18N_NOOP("HTML Status Bar Foreground - No HTML Message") },
-    { "ColorbarBackgroundHTML",  I18N_NOOP("HTML Status Bar Background - HTML Message") },
-    { "ColorbarForegroundHTML",  I18N_NOOP("HTML Status Bar Foreground - HTML Message") }
+    { "ColorbarBackgroundHTML", I18N_NOOP("HTML Status Bar Background - HTML Message") },
+    { "ColorbarForegroundHTML", I18N_NOOP("HTML Status Bar Foreground - HTML Message") }
 };
-static const int numColorNames = sizeof colorNames / sizeof * colorNames;
+static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
 AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     : ConfigModuleTab(parent)
@@ -360,8 +361,8 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     vlay->addWidget(mColorList, 1);
 
     // "recycle colors" check box:
-    mRecycleColorCheck =
-        new QCheckBox(i18n("Recycle colors on deep &quoting"), this);
+    mRecycleColorCheck
+        = new QCheckBox(i18n("Recycle colors on deep &quoting"), this);
     mRecycleColorCheck->setEnabled(false);
     vlay->addWidget(mRecycleColorCheck);
     connect(mRecycleColorCheck, &QCheckBox::stateChanged,
@@ -521,7 +522,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFavoriteFoldersViewGroupBox->layout()->addWidget(favoriteFoldersViewIconsRadio);
 
     QRadioButton *favoriteFoldersViewListRadio = new QRadioButton(i18n("As list"), mFavoriteFoldersViewGroupBox);
-    mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewListRadio,  static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode));
+    mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewListRadio, static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode));
     mFavoriteFoldersViewGroupBox->layout()->addWidget(favoriteFoldersViewListRadio);
 
     vlay->addWidget(mFavoriteFoldersViewGroupBox);
@@ -532,7 +533,6 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFolderToolTipsGroupBox->setLayout(new QVBoxLayout());
     mFolderToolTipsGroup = new QButtonGroup(this);
     connect(mFolderToolTipsGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
-
 
     QRadioButton *folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), mFolderToolTipsGroupBox);
     mFolderToolTipsGroup->addButton(folderToolTipsAlwaysRadio, static_cast< int >(FolderTreeWidget::DisplayAlways));
@@ -594,12 +594,12 @@ static const struct {
     { I18N_NOOP("Smart for&mat (%1)"), KMime::DateFormatter::Fancy },
     { I18N_NOOP("C&ustom format:"), KMime::DateFormatter::Custom }
 };
-static const int numDateDisplayConfig =
-    sizeof dateDisplayConfig / sizeof * dateDisplayConfig;
+static const int numDateDisplayConfig
+    = sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
 
 AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
-    : ConfigModuleTab(parent),
-      mCustomDateFormatEdit(nullptr)
+    : ConfigModuleTab(parent)
+    , mCustomDateFormatEdit(nullptr)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
 
@@ -674,7 +674,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             buttonLabel = i18n(label);
         }
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
-
             QWidget *hbox = new QWidget(mDateDisplayBox);
             QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
             hboxHBoxLayout->setMargin(0);
@@ -699,38 +698,38 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
                     this, &AppearancePageHeadersTab::slotLinkClicked);
             hboxHBoxLayout->addWidget(formatHelp);
 
-            mCustomDateWhatsThis =
-                i18n("<qt><p><strong>These expressions may be used for the date:"
-                     "</strong></p>"
-                     "<ul>"
-                     "<li>d - the day as a number without a leading zero (1-31)</li>"
-                     "<li>dd - the day as a number with a leading zero (01-31)</li>"
-                     "<li>ddd - the abbreviated day name (Mon - Sun)</li>"
-                     "<li>dddd - the long day name (Monday - Sunday)</li>"
-                     "<li>M - the month as a number without a leading zero (1-12)</li>"
-                     "<li>MM - the month as a number with a leading zero (01-12)</li>"
-                     "<li>MMM - the abbreviated month name (Jan - Dec)</li>"
-                     "<li>MMMM - the long month name (January - December)</li>"
-                     "<li>yy - the year as a two digit number (00-99)</li>"
-                     "<li>yyyy - the year as a four digit number (0000-9999)</li>"
-                     "</ul>"
-                     "<p><strong>These expressions may be used for the time:"
-                     "</strong></p> "
-                     "<ul>"
-                     "<li>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display)</li>"
-                     "<li>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display)</li>"
-                     "<li>m - the minutes without a leading zero (0-59)</li>"
-                     "<li>mm - the minutes with a leading zero (00-59)</li>"
-                     "<li>s - the seconds without a leading zero (0-59)</li>"
-                     "<li>ss - the seconds with a leading zero (00-59)</li>"
-                     "<li>z - the milliseconds without leading zeroes (0-999)</li>"
-                     "<li>zzz - the milliseconds with leading zeroes (000-999)</li>"
-                     "<li>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\".</li>"
-                     "<li>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\".</li>"
-                     "<li>Z - time zone in numeric form (-0500)</li>"
-                     "</ul>"
-                     "<p><strong>All other input characters will be ignored."
-                     "</strong></p></qt>");
+            mCustomDateWhatsThis
+                = i18n("<qt><p><strong>These expressions may be used for the date:"
+                       "</strong></p>"
+                       "<ul>"
+                       "<li>d - the day as a number without a leading zero (1-31)</li>"
+                       "<li>dd - the day as a number with a leading zero (01-31)</li>"
+                       "<li>ddd - the abbreviated day name (Mon - Sun)</li>"
+                       "<li>dddd - the long day name (Monday - Sunday)</li>"
+                       "<li>M - the month as a number without a leading zero (1-12)</li>"
+                       "<li>MM - the month as a number with a leading zero (01-12)</li>"
+                       "<li>MMM - the abbreviated month name (Jan - Dec)</li>"
+                       "<li>MMMM - the long month name (January - December)</li>"
+                       "<li>yy - the year as a two digit number (00-99)</li>"
+                       "<li>yyyy - the year as a four digit number (0000-9999)</li>"
+                       "</ul>"
+                       "<p><strong>These expressions may be used for the time:"
+                       "</strong></p> "
+                       "<ul>"
+                       "<li>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display)</li>"
+                       "<li>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display)</li>"
+                       "<li>m - the minutes without a leading zero (0-59)</li>"
+                       "<li>mm - the minutes with a leading zero (00-59)</li>"
+                       "<li>s - the seconds without a leading zero (0-59)</li>"
+                       "<li>ss - the seconds with a leading zero (00-59)</li>"
+                       "<li>z - the milliseconds without leading zeroes (0-999)</li>"
+                       "<li>zzz - the milliseconds with leading zeroes (000-999)</li>"
+                       "<li>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\".</li>"
+                       "<li>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\".</li>"
+                       "<li>Z - time zone in numeric form (-0500)</li>"
+                       "</ul>"
+                       "<p><strong>All other input characters will be ignored."
+                       "</strong></p></qt>");
             mCustomDateFormatEdit->setWhatsThis(mCustomDateWhatsThis);
             radio->setWhatsThis(mCustomDateWhatsThis);
             gvlay->addWidget(hbox);
@@ -797,19 +796,20 @@ void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
 
 void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
 {
-    DateFormatter::FormatType dateDisplay =
-        static_cast<DateFormatter::FormatType>(num);
+    DateFormatter::FormatType dateDisplay
+        = static_cast<DateFormatter::FormatType>(num);
 
     // special case: needs text for the line edit:
     if (dateDisplay == DateFormatter::Custom) {
         mCustomDateFormatEdit->setText(format);
     }
 
-    for (int i = 0; i < numDateDisplayConfig; ++i)
+    for (int i = 0; i < numDateDisplayConfig; ++i) {
         if (dateDisplay == dateDisplayConfig[i].dateDisplay) {
             mDateDisplay->button(dateDisplay)->setChecked(true);
             return;
         }
+    }
     // fell through since none found:
     mDateDisplay->button(numDateDisplayConfig - 2)->setChecked(true);   // default
 }
@@ -919,12 +919,14 @@ QString AppearancePage::MessageTagTab::helpAnchor() const
 }
 
 TagListWidgetItem::TagListWidgetItem(QListWidget *parent)
-    : QListWidgetItem(parent), mTag(nullptr)
+    : QListWidgetItem(parent)
+    , mTag(nullptr)
 {
 }
 
 TagListWidgetItem::TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent)
-    : QListWidgetItem(icon, text, parent), mTag(nullptr)
+    : QListWidgetItem(icon, text, parent)
+    , mTag(nullptr)
 {
 }
 
@@ -1063,9 +1065,7 @@ void AppearancePage::MessageTagTab::slotEmitChangeCheck()
     slotEmitChanged();
 }
 
-void AppearancePage::MessageTagTab::slotRowsMoved(const QModelIndex &,
-        int sourcestart, int sourceEnd,
-        const QModelIndex &, int destinationRow)
+void AppearancePage::MessageTagTab::slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow)
 {
     Q_UNUSED(sourceEnd);
     Q_UNUSED(sourcestart);
@@ -1100,15 +1100,14 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
 {
     const int tmp_index = mTagListBox->currentRow();
     if ((tmp_index < 0)
-            || (tmp_index >= int(mTagListBox->count()) - 1)) {
+        || (tmp_index >= int(mTagListBox->count()) - 1)) {
         return;
     }
     swapTagsInListBox(tmp_index, tmp_index + 1);
     updateButtons();
 }
 
-void AppearancePage::MessageTagTab::swapTagsInListBox(const int first,
-        const int second)
+void AppearancePage::MessageTagTab::swapTagsInListBox(const int first, const int second)
 {
     disconnect(mTagListBox, &QListWidget::currentItemChanged,
                this, &AppearancePageMessageTagTab::slotSelectionChanged);
@@ -1176,7 +1175,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets(int aIndex)
 
     mTagWidget->keySequenceWidget()->setEnabled(true);
     mTagWidget->keySequenceWidget()->setKeySequence(tmp_desc->shortcut,
-            KKeySequenceWidget::NoValidate);
+                                                    KKeySequenceWidget::NoValidate);
 
     mTagWidget->inToolBarCheck()->setEnabled(true);
     mTagWidget->inToolBarCheck()->setChecked(tmp_desc->inToolbar);
@@ -1290,7 +1289,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
     tag->priority = tmp_priority;
 
     slotEmitChangeCheck();
-    TagListWidgetItem *newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), newTagName,  mTagListBox);
+    TagListWidgetItem *newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), newTagName, mTagListBox);
     newItem->setKMailTag(tag);
     mTagListBox->addItem(newItem);
     mTagListBox->setCurrentItem(newItem);
@@ -1348,7 +1347,6 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
     for (const MailCommon::TagPtr &tag : qAsConst(msgTagList)) {
         mOriginalMsgTagList.append(MailCommon::TagPtr(new MailCommon::Tag(*tag)));
     }
-
 }
 
 void AppearancePage::MessageTagTab::save()
@@ -1386,4 +1384,3 @@ void AppearancePage::MessageTagTab::save()
         }
     }
 }
-

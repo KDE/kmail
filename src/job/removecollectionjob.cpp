@@ -29,15 +29,13 @@
 #include "kmkernel.h"
 
 RemoveCollectionJob::RemoveCollectionJob(QObject *parent)
-    : QObject(parent),
-      mMainWidget(nullptr)
+    : QObject(parent)
+    , mMainWidget(nullptr)
 {
-
 }
 
 RemoveCollectionJob::~RemoveCollectionJob()
 {
-
 }
 
 void RemoveCollectionJob::setMainWidget(KMMainWidget *mainWidget)
@@ -113,7 +111,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
                                            KGuiItem(buttonLabel, QStringLiteral("edit-delete")),
                                            KStandardGuiItem::cancel(), QString(),
                                            KMessageBox::Notify | KMessageBox::Dangerous)
-            == KMessageBox::Continue) {
+        == KMessageBox::Continue) {
         kmkernel->checkFolderFromResources(listOfCollection << col);
 
         if (col.id() == mMainWidget->currentCollection().id()) {
@@ -134,4 +132,3 @@ void RemoveCollectionJob::slotDeletionCollectionResult(KJob *job)
     }
     deleteLater();
 }
-

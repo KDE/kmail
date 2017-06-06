@@ -67,4 +67,3 @@ void ConfigureDialog::writeConfig()
     myGroup.writeEntry("ConfigureDialog", size());
     myGroup.sync();
 }
-

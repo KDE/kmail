@@ -20,10 +20,8 @@
 
 #include "kmail_export.h"
 
-namespace KMail
-{
+namespace KMail {
 KMAIL_EXPORT void insertLibraryIcons();
 }
 
 #endif
-

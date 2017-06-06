@@ -26,8 +26,7 @@
 
 #include <libkdepim/progressmanager.h>
 
-namespace Akonadi
-{
+namespace Akonadi {
 class CollectionPropertiesDialog;
 }
 

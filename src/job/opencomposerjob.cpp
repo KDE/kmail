@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "opencomposerjob.h"
 #include "kmail_debug.h"
 #include "kmkernel.h"
@@ -36,11 +35,10 @@
 #include <KStartupInfo>
 
 OpenComposerJob::OpenComposerJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr),
-      mContext(KMail::Composer::New)
+    : QObject(parent)
+    , mMsg(nullptr)
+    , mContext(KMail::Composer::New)
 {
-
 }
 
 void OpenComposerJob::setOpenComposerSettings(const OpenComposerSettings &openComposerSettings)
@@ -50,7 +48,6 @@ void OpenComposerJob::setOpenComposerSettings(const OpenComposerSettings &openCo
 
 OpenComposerJob::~OpenComposerJob()
 {
-
 }
 
 void OpenComposerJob::start()
@@ -164,10 +161,9 @@ void OpenComposerJob::slotOpenComposer()
         cWin->show();
         // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_OS_X11 && ! defined K_WS_QTONLY
+#if defined Q_OS_X11 && !defined K_WS_QTONLY
         KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
 #endif
     }
     deleteLater();
 }
-

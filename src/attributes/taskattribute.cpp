@@ -21,18 +21,16 @@
 #include <QDataStream>
 
 TaskAttribute::TaskAttribute()
-    : Akonadi::Attribute(),
-      mId(-1)
+    : Akonadi::Attribute()
+    , mId(-1)
 {
 }
 
 TaskAttribute::TaskAttribute(Akonadi::Item::Id id)
-    : Akonadi::Attribute(),
-      mId(id)
+    : Akonadi::Attribute()
+    , mId(id)
 {
-
 }
-
 
 TaskAttribute::~TaskAttribute()
 {
@@ -72,4 +70,3 @@ QByteArray TaskAttribute::type() const
     static const QByteArray sType("TaskAttribute");
     return sType;
 }
-

@@ -28,12 +28,10 @@
 FollowupReminderNoAnswerDialogTest::FollowupReminderNoAnswerDialogTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 FollowupReminderNoAnswerDialogTest::~FollowupReminderNoAnswerDialogTest()
 {
-
 }
 
 void FollowupReminderNoAnswerDialogTest::initTestCase()

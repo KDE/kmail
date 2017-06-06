@@ -39,8 +39,8 @@
 #include <QRegularExpression>
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
-    : QObject(parent),
-      mCurrentJob(nullptr)
+    : QObject(parent)
+    , mCurrentJob(nullptr)
 {
     mFolderArchiveCache = new FolderArchiveCache(this);
     load();

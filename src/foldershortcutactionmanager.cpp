@@ -34,12 +34,11 @@
 using namespace KMail;
 using namespace MailCommon;
 
-FolderShortcutCommand::FolderShortcutCommand(QWidget *mainwidget,
-        const Akonadi::Collection &col)
-    : QObject(mainwidget),
-      mCollectionFolder(col),
-      mMainWidget(mainwidget),
-      mAction(nullptr)
+FolderShortcutCommand::FolderShortcutCommand(QWidget *mainwidget, const Akonadi::Collection &col)
+    : QObject(mainwidget)
+    , mCollectionFolder(col)
+    , mMainWidget(mainwidget)
+    , mAction(nullptr)
 {
     connect(this, SIGNAL(selectCollectionFolder(Akonadi::Collection)), mMainWidget, SLOT(slotSelectCollectionFolder(Akonadi::Collection)));
 }
@@ -62,12 +61,10 @@ void FolderShortcutCommand::setAction(QAction *action)
     mAction = action;
 }
 
-FolderShortcutActionManager::FolderShortcutActionManager(QWidget *parent,
-        KActionCollection *actionCollection
-                                                        )
-    : QObject(parent),
-      mActionCollection(actionCollection),
-      mParent(parent)
+FolderShortcutActionManager::FolderShortcutActionManager(QWidget *parent, KActionCollection *actionCollection)
+    : QObject(parent)
+    , mActionCollection(actionCollection)
+    , mParent(parent)
 {
 }
 
@@ -93,15 +90,14 @@ void FolderShortcutActionManager::slotRowsInserted(const QModelIndex &parent, in
     updateShortcutsForIndex(parent, start, end);
 }
 
-void FolderShortcutActionManager::updateShortcutsForIndex(const QModelIndex &parent,
-        int start, int end)
+void FolderShortcutActionManager::updateShortcutsForIndex(const QModelIndex &parent, int start, int end)
 {
     QAbstractItemModel *model = KernelIf->collectionModel();
     for (int i = start; i <= end; ++i) {
         if (model->hasIndex(i, 0, parent)) {
             const QModelIndex child = model->index(i, 0, parent);
-            Akonadi::Collection collection =
-                model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+            Akonadi::Collection collection
+                = model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
             if (collection.isValid()) {
                 shortcutChanged(collection);
             }
@@ -131,8 +127,8 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
     mFolderShortcutCommands.insert(col.id(), command);
 
     QIcon icon(QStringLiteral("folder"));
-    if (col.hasAttribute<Akonadi::EntityDisplayAttribute>() &&
-            !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty()) {
+    if (col.hasAttribute<Akonadi::EntityDisplayAttribute>()
+        && !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty()) {
         icon = QIcon(col.attribute<Akonadi::EntityDisplayAttribute>()->iconName());
     }
 
@@ -151,4 +147,3 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
     connect(action, &QAction::triggered, command, &FolderShortcutCommand::start);
     command->setAction(action);   // will be deleted along with the command
 }
-

@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "createforwardmessagejob.h"
 #include "kmkernel.h"
 #include "../util.h"
@@ -32,7 +31,6 @@ CreateForwardMessageJob::CreateForwardMessageJob(QObject *parent)
     : QObject(parent)
     , mMessageFactory(nullptr)
 {
-
 }
 
 CreateForwardMessageJob::~CreateForwardMessageJob()

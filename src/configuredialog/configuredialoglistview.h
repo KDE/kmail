@@ -25,7 +25,6 @@ private Q_SLOTS:
 
 private:
     void resizeColums();
-
 };
 
 #endif // configuredialoglistview_h

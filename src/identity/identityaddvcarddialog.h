@@ -23,7 +23,7 @@ class QButtonGroup;
 class KComboBox;
 class KUrlRequester;
 
-class IdentityAddVcardDialog: public QDialog
+class IdentityAddVcardDialog : public QDialog
 {
     Q_OBJECT
 public:

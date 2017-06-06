@@ -22,7 +22,6 @@
 #include "sendlaterutil.h"
 #include "sendlaterjob.h"
 
-
 #include "MessageComposer/AkonadiSender"
 #include <MessageComposer/Util>
 
@@ -37,10 +36,10 @@
 #include <QTimer>
 
 SendLaterManager::SendLaterManager(QObject *parent)
-    : QObject(parent),
-      mCurrentInfo(nullptr),
-      mCurrentJob(nullptr),
-      mSender(new MessageComposer::AkonadiSender)
+    : QObject(parent)
+    , mCurrentInfo(nullptr)
+    , mCurrentJob(nullptr)
+    , mSender(new MessageComposer::AkonadiSender)
 {
     mConfig = KSharedConfig::openConfig();
     mTimer = new QTimer(this);
@@ -259,4 +258,3 @@ MessageComposer::AkonadiSender *SendLaterManager::sender() const
 {
     return mSender;
 }
-

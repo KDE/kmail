@@ -218,8 +218,8 @@ protected:
     bool mIsPlaceable, mIsEnhanced, mValid;
 
     // coordinate system
-    bool   mAbsoluteCoord;
-    QMatrix  mInternalWorldMatrix;   // memorisation of WMF matrix transformation
+    bool mAbsoluteCoord;
+    QMatrix mInternalWorldMatrix;    // memorisation of WMF matrix transformation
     QRect mHeaderBoundingBox;
     QRect mBBox;
 

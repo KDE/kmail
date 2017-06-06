@@ -28,15 +28,13 @@
 #include <TemplateParser/TemplateParserJob>
 
 FillComposerJob::FillComposerJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr)
+    : QObject(parent)
+    , mMsg(nullptr)
 {
-
 }
 
 FillComposerJob::~FillComposerJob()
 {
-
 }
 
 void FillComposerJob::start()
@@ -80,16 +78,16 @@ void FillComposerJob::slotOpenComposer()
     bool noWordWrap = false;
     bool isICalInvitation = false;
     if (!mSettings.mAttachData.isEmpty()) {
-        isICalInvitation = (mSettings.mAttachName == QLatin1String("cal.ics")) &&
-                           mSettings.mAttachType == "text" &&
-                           mSettings.mAttachSubType == "calendar" &&
-                           mSettings.mAttachParamAttr == "method";
+        isICalInvitation = (mSettings.mAttachName == QLatin1String("cal.ics"))
+                           && mSettings.mAttachType == "text"
+                           && mSettings.mAttachSubType == "calendar"
+                           && mSettings.mAttachParamAttr == "method";
         // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
         if (isICalInvitation && mSettings.mBcc.isEmpty()) {
             mMsg->removeHeader<KMime::Headers::Bcc>();
         }
-        if (isICalInvitation &&
-                MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
+        if (isICalInvitation
+            && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
             // KOrganizer invitation caught and to be sent as body instead
             mMsg->setBody(mSettings.mAttachData);
             mMsg->contentType()->from7BitString(
@@ -106,7 +104,7 @@ void FillComposerJob::slotOpenComposer()
             msgPart->setBody(mSettings.mAttachData);   //TODO: check if was setBodyEncoded
             msgPart->contentType()->setMimeType(mSettings.mAttachType + '/' +  mSettings.mAttachSubType);
             msgPart->contentType()->setParameter(QLatin1String(mSettings.mAttachParamAttr), mSettings.mAttachParamValue);   //TODO: Check if the content disposition parameter needs to be set!
-            if (! MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
+            if (!MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
                 msgPart->contentDisposition()->fromUnicodeString(QLatin1String(mSettings.mAttachContDisp), "utf-8");
             }
             if (!mSettings.mAttachCharset.isEmpty()) {
@@ -146,10 +144,9 @@ void FillComposerJob::slotOpenComposer()
         cWin->show();
         // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
         // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+#if defined Q_WS_X11 && !defined K_WS_QTONLY
         KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
 #endif
-
     } else {
         // Always disable word wrap when we don't show the composer, since otherwise QTextEdit
         // gets the widget size wrong and wraps much too early.

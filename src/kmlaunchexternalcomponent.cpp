@@ -35,20 +35,19 @@
 #include <QStandardPaths>
 
 KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent)
-    : QObject(parent),
-      mParentWidget(parentWidget)
+    : QObject(parent)
+    , mParentWidget(parentWidget)
 {
-
 }
 
 KMLaunchExternalComponent::~KMLaunchExternalComponent()
 {
-
 }
 
 void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {
-    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent"), QStringLiteral("/ArchiveMailAgent"), QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent"), QStringLiteral("/ArchiveMailAgent"),
+                                                                        QDBusConnection::sessionBus(), this);
     if (archiveMailInterface.isValid()) {
         archiveMailInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
@@ -68,7 +67,8 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
 
 void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 {
-    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder"), QStringLiteral("/FollowUpReminder"), QDBusConnection::sessionBus(), this);
+    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder"), QStringLiteral("/FollowUpReminder"),
+                                                                          QDBusConnection::sessionBus(), this);
     if (followUpInterface.isValid()) {
         followUpInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
@@ -146,4 +146,3 @@ void KMLaunchExternalComponent::slotFilterLogViewer()
 {
     MailCommon::FilterManager::instance()->showFilterLogDialog((qlonglong)mParentWidget->winId());
 }
-

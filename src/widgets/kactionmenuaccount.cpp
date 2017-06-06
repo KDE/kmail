@@ -25,8 +25,8 @@
 #include <QMenu>
 
 KActionMenuAccount::KActionMenuAccount(QObject *parent)
-    : KActionMenu(parent),
-      mInitialized(false)
+    : KActionMenu(parent)
+    , mInitialized(false)
 {
     setDelayed(true);
     connect(menu(), &QMenu::aboutToShow, this, &KActionMenuAccount::slotCheckTransportMenu);
@@ -38,7 +38,6 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
 
 KActionMenuAccount::~KActionMenuAccount()
 {
-
 }
 
 void KActionMenuAccount::setAccountOrder(const QStringList &identifier)

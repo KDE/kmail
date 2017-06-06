@@ -27,12 +27,10 @@
 FollowupReminderInfoDialogTest::FollowupReminderInfoDialogTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 FollowupReminderInfoDialogTest::~FollowupReminderInfoDialogTest()
 {
-
 }
 
 void FollowupReminderInfoDialogTest::initTestCase()

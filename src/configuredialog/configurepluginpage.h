@@ -21,8 +21,7 @@
 #include "configuredialog_p.h"
 
 #include <QWidget>
-namespace PimCommon
-{
+namespace PimCommon {
 class ConfigurePluginsWidget;
 }
 class KMAIL_EXPORT ConfigurePluginPage : public ConfigModule

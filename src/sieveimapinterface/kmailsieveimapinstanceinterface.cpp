@@ -24,7 +24,6 @@
 
 KMailSieveImapInstanceInterface::KMailSieveImapInstanceInterface()
 {
-
 }
 
 QVector<KSieveUi::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapInstances()
@@ -39,7 +38,7 @@ QVector<KSieveUi::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapI
         sieveInstance.setIdentifier(instance.identifier());
         sieveInstance.setMimeTypes(instance.type().mimeTypes());
         sieveInstance.setName(instance.name());
-        switch(instance.status()) {
+        switch (instance.status()) {
         case Akonadi::AgentInstance::Idle:
             sieveInstance.setStatus(KSieveUi::SieveImapInstance::Idle);
             break;

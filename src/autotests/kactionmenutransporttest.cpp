@@ -22,12 +22,10 @@
 KActionMenuTransportTest::KActionMenuTransportTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 KActionMenuTransportTest::~KActionMenuTransportTest()
 {
-
 }
 
 void KActionMenuTransportTest::shouldHaveDefaultValue()

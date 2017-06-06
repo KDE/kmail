@@ -35,9 +35,7 @@
 
 #include <KLocalizedString>
 
-namespace KMail
-{
-
+namespace KMail {
 struct about_data {
     const char *name;
     const char *desc;
@@ -370,13 +368,13 @@ AboutData::AboutData()
 {
     using KMail::authors;
     using KMail::credits;
-    const unsigned int numberAuthors(sizeof authors / sizeof * authors);
+    const unsigned int numberAuthors(sizeof authors / sizeof *authors);
     for (unsigned int i = 0; i < numberAuthors; ++i) {
         addAuthor(i18n(authors[i].name), authors[i].desc ? i18n(authors[i].desc) : QString(),
                   QLatin1String(authors[i].email), QLatin1String(authors[i].web));
     }
 
-    const unsigned int numberCredits(sizeof credits / sizeof * credits);
+    const unsigned int numberCredits(sizeof credits / sizeof *credits);
     for (unsigned int i = 0; i < numberCredits; ++i) {
         addCredit(i18n(credits[i].name), credits[i].desc ? i18n(credits[i].desc) : QString(),
                   QLatin1String(credits[i].email), QLatin1String(credits[i].web));
@@ -385,7 +383,5 @@ AboutData::AboutData()
 
 AboutData::~AboutData()
 {
-
 }
-
 } // namespace KMail

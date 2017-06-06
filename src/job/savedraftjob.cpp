@@ -26,9 +26,9 @@
 #include <Akonadi/KMime/MessageFlags>
 
 SaveDraftJob::SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent)
-    : KJob(parent),
-      mMsg(msg),
-      mCollection(col)
+    : KJob(parent)
+    , mMsg(msg)
+    , mCollection(col)
 {
 }
 

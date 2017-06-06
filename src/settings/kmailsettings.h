@@ -50,7 +50,6 @@ private:
     static KMailSettings *mSelf;
 
     QTimer *mConfigSyncTimer;
-
 };
 
 #endif /* KMAIL_GLOBALSETTINGS_H */

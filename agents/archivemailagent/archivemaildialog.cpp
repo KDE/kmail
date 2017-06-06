@@ -36,11 +36,10 @@
 #include <QPushButton>
 #include <QLocale>
 
-namespace
-{
+namespace {
 inline QString archiveMailCollectionPattern()
 {
-    return  QStringLiteral("ArchiveMailCollection \\d+");
+    return QStringLiteral("ArchiveMailCollection \\d+");
 }
 }
 
@@ -72,12 +71,12 @@ ArchiveMailDialog::ArchiveMailDialog(QWidget *parent)
     readConfig();
 
     KAboutData aboutData = KAboutData(
-                               QStringLiteral("archivemailagent"),
-                               i18n("Archive Mail Agent"),
-                               QStringLiteral(KDEPIM_VERSION),
-                               i18n("Archive emails automatically."),
-                               KAboutLicense::GPL_V2,
-                               i18n("Copyright (C) 2012-2017 Laurent Montel"));
+        QStringLiteral("archivemailagent"),
+        i18n("Archive Mail Agent"),
+        QStringLiteral(KDEPIM_VERSION),
+        i18n("Archive emails automatically."),
+        KAboutLicense::GPL_V2,
+        i18n("Copyright (C) 2012-2017 Laurent Montel"));
 
     aboutData.addAuthor(i18n("Laurent Montel"),
                         i18n("Maintainer"), QStringLiteral("montel@kde.org"));
@@ -130,4 +129,3 @@ void ArchiveMailDialog::slotSave()
     mWidget->save();
     accept();
 }
-

@@ -30,8 +30,8 @@
 #include "kmail_debug.h"
 
 CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, QObject *parent)
-    : KJob(parent),
-      mListItem(items)
+    : KJob(parent)
+    , mListItem(items)
 {
 }
 

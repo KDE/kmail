@@ -34,8 +34,7 @@
 #include <KMessageBox>
 
 // #define DEBUG_MESSAGE_ID
-namespace
-{
+namespace {
 inline QString followUpItemPattern()
 {
     return QStringLiteral("FollowupReminderItem \\d+");
@@ -43,8 +42,8 @@ inline QString followUpItemPattern()
 }
 
 FollowUpReminderInfoItem::FollowUpReminderInfoItem(QTreeWidget *parent)
-    : QTreeWidgetItem(parent),
-      mInfo(nullptr)
+    : QTreeWidgetItem(parent)
+    , mInfo(nullptr)
 {
 }
 
@@ -64,8 +63,8 @@ FollowUpReminder::FollowUpReminderInfo *FollowUpReminderInfoItem::info() const
 }
 
 FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
-    : QWidget(parent),
-      mChanged(false)
+    : QWidget(parent)
+    , mChanged(false)
 {
     setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
     QHBoxLayout *hbox = new QHBoxLayout;
@@ -78,10 +77,10 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
             << i18n("Dead Line")
             << i18n("Answer")
 #ifdef DEBUG_MESSAGE_ID
-            << QStringLiteral("Message Id")
-            << QStringLiteral("Answer Message Id")
+        << QStringLiteral("Message Id")
+        << QStringLiteral("Answer Message Id")
 #endif
-            ;
+    ;
 
     mTreeWidget->setHeaderLabels(headers);
     mTreeWidget->setSortingEnabled(true);
@@ -246,4 +245,3 @@ void FollowUpReminderInfoWidget::saveTreeWidgetHeader(KConfigGroup &group)
 {
     group.writeEntry("HeaderState", mTreeWidget->header()->saveState());
 }
-

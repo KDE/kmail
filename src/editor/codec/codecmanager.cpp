@@ -41,7 +41,6 @@ public:
 
     CodecManager *instance;
     QList<QByteArray> preferredCharsets;
-
 };
 
 Q_GLOBAL_STATIC(CodecManagerPrivate, sInstance)
@@ -88,9 +87,9 @@ void CodecManager::updatePreferredCharsets()
             // EUC-JP is the de-facto standard for UNIX systems, ISO 2022-JP
             // is the standard for Internet, and Shift-JIS is the encoding
             // for Windows and Macintosh.
-            if (charset == "jisx0208.1983-0" ||
-                    charset == "eucjp" ||
-                    charset == "shift-jis") {
+            if (charset == "jisx0208.1983-0"
+                || charset == "eucjp"
+                || charset == "shift-jis") {
                 charset = "iso-2022-jp";
                 // TODO wtf is "jis7"?
             }

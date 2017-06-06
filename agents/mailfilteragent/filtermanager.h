@@ -25,13 +25,12 @@
 
 #include "MailCommon/SearchPattern"
 
-namespace MailCommon
-{
+namespace MailCommon {
 class MailFilter;
 class ItemContext;
 }
 
-class FilterManager: public QObject
+class FilterManager : public QObject
 {
     Q_OBJECT
 
@@ -94,13 +93,10 @@ public:
      *
      *  @return true if the filtering was successful, false in case of any error
      */
-    bool process(const Akonadi::Item &item, bool needsFullPayload,
-                 FilterSet set = Inbound,
-                 bool account = false, const QString &accountId = QString());
+    bool process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
 
-    bool process(const QList<MailCommon::MailFilter *> &mailFilters, const Akonadi::Item &item,
-                 bool needsFullPayload, FilterSet set = Inbound,
-                 bool account = false, const QString &accountId = QString());
+    bool process(const QList<MailCommon::MailFilter *> &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false,
+                 const QString &accountId = QString());
 
     /**
      * For ad-hoc filters.

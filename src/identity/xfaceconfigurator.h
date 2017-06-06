@@ -24,13 +24,10 @@ class QUrl;
 
 class QCheckBox;
 class QLabel;
-namespace KPIMTextEdit
-{
+namespace KPIMTextEdit {
 class PlainTextEditorWidget;
 }
-namespace KMail
-{
-
+namespace KMail {
 class XFaceConfigurator : public QWidget
 {
     Q_OBJECT
@@ -54,11 +51,10 @@ private Q_SLOTS:
     void slotUpdateXFace();
 
 private:
-    QCheckBox      *mEnableCheck;
-    KPIMTextEdit::PlainTextEditorWidget      *mTextEdit;
-    QLabel         *mXFaceLabel;
+    QCheckBox *mEnableCheck;
+    KPIMTextEdit::PlainTextEditorWidget *mTextEdit;
+    QLabel *mXFaceLabel;
 };
 } // namespace KMail
 
 #endif // __KMAIL_XFACECONFIGURATOR_H__
-

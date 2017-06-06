@@ -170,4 +170,3 @@ void ArchiveMailAgent::archiveFolder(const QString &path, Akonadi::Collection::I
 }
 
 AKONADI_AGENT_MAIN(ArchiveMailAgent)
-

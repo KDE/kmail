@@ -30,8 +30,7 @@
 #include <QIcon>
 #include <QPointer>
 
-namespace
-{
+namespace {
 inline QString sendLaterItemPattern()
 {
     return QStringLiteral("SendLaterItem \\d+");
@@ -41,8 +40,8 @@ inline QString sendLaterItemPattern()
 //#define DEBUG_MESSAGE_ID
 
 SendLaterItem::SendLaterItem(QTreeWidget *parent)
-    : QTreeWidgetItem(parent),
-      mInfo(nullptr)
+    : QTreeWidgetItem(parent)
+    , mInfo(nullptr)
 {
 }
 
@@ -62,8 +61,8 @@ SendLater::SendLaterInfo *SendLaterItem::info() const
 }
 
 SendLaterWidget::SendLaterWidget(QWidget *parent)
-    : QWidget(parent),
-      mChanged(false)
+    : QWidget(parent)
+    , mChanged(false)
 {
     mWidget = new Ui::SendLaterConfigureWidget;
     mWidget->setupUi(this);
@@ -73,9 +72,9 @@ SendLaterWidget::SendLaterWidget(QWidget *parent)
             << i18n("Send around")
             << i18n("Recurrent")
 #ifdef DEBUG_MESSAGE_ID
-            << i18n("Message Id");
+        << i18n("Message Id");
 #else
-            ;
+    ;
 #endif
 
     mWidget->treeWidget->setObjectName(QStringLiteral("treewidget"));

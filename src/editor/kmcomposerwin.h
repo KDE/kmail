@@ -72,45 +72,37 @@ class KMComposerGlobalAction;
 class KMailPluginEditorManagerInterface;
 class KMailPluginEditorCheckBeforeSendManagerInterface;
 class KMailPluginEditorInitManagerInterface;
-namespace MailTransport
-{
+namespace MailTransport {
 class Transport;
 }
 
-namespace KIdentityManagement
-{
+namespace KIdentityManagement {
 class Identity;
 }
 
-namespace KPIMTextEdit
-{
+namespace KPIMTextEdit {
 class RichTextEditorWidget;
 }
 
-namespace KIO
-{
+namespace KIO {
 class Job;
 }
 
-namespace MessageComposer
-{
+namespace MessageComposer {
 class ComposerLineEdit;
 class Composer;
 }
 
-namespace MailCommon
-{
+namespace MailCommon {
 class FolderRequester;
 }
 
-namespace PimCommon
-{
+namespace PimCommon {
 class CustomToolsWidgetNg;
 class LineEditWithAutoCorrection;
 }
 
-namespace GpgME
-{
+namespace GpgME {
 class KeyListResult;
 class Key;
 class UserID;
@@ -125,15 +117,13 @@ class KMComposerWin : public KMail::Composer
     friend class ::KMComposerEditor;
 
 private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposerWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,
-                           uint identity = 0, const QString &textSelection = QString(),
-                           const QString &customTemplate = QString());
+    explicit KMComposerWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0,
+                           const QString &textSelection = QString(), const QString &customTemplate = QString());
     ~KMComposerWin();
 
 public:
-    static Composer *create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate,
-                            uint identity = 0, const QString &textSelection = QString(),
-                            const QString &customTemplate = QString());
+    static Composer *create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0,
+                            const QString &textSelection = QString(), const QString &customTemplate = QString());
 
     QString dbusObjectPath() const override;
     QString smartQuote(const QString &msg);
@@ -147,18 +137,11 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE void send(int how) override;
 
-    Q_SCRIPTABLE void addAttachmentsAndSend(const QList<QUrl> &urls,
-                                            const QString &comment,
-                                            int how) override;
+    Q_SCRIPTABLE void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) override;
 
-    Q_SCRIPTABLE void addAttachment(const QUrl &url,
-                                    const QString &comment) override;
+    Q_SCRIPTABLE void addAttachment(const QUrl &url, const QString &comment) override;
 
-    Q_SCRIPTABLE void addAttachment(const QString &name,
-                                    KMime::Headers::contentEncoding cte,
-                                    const QString &charset,
-                                    const QByteArray &data,
-                                    const QByteArray &mimeType) override;
+    Q_SCRIPTABLE void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) override;
 
     /**
     * End of D-Bus callable stuff
@@ -172,8 +155,8 @@ public: // kmkernel, kmcommands, callback
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false,
-                    bool mayAutoSign = true, bool allowDecryption = false, bool isModified = false) override;
+    void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true, bool allowDecryption = false,
+                    bool isModified = false) override;
 
     void setCurrentTransport(int transportId) override;
 
@@ -460,8 +443,7 @@ private:
     /**
      * Show or hide header lines
      */
-    void rethinkHeaderLine(int value, int mask, int &row,
-                           QLabel *lbl, QWidget *cbx);  // krazy:exclude=qclasses
+    void rethinkHeaderLine(int value, int mask, int &row, QLabel *lbl, QWidget *cbx);  // krazy:exclude=qclasses
 
     /**
      * Apply template to new or unmodified message.
@@ -515,8 +497,7 @@ private:
      * Send the message.
      */
     void doSend(MessageComposer::MessageSender::SendMethod method = MessageComposer::MessageSender::SendDefault,
-                MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone,
-                bool willSendItWithoutReediting = false);
+                MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone, bool willSendItWithoutReediting = false);
 
     void doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn);
 
@@ -560,20 +541,20 @@ private:
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
 
-    QWidget   *mMainWidget;
+    QWidget *mMainWidget;
     MessageComposer::ComposerLineEdit *mEdtFrom;
     MessageComposer::ComposerLineEdit *mEdtReplyTo;
     PimCommon::LineEditWithAutoCorrection *mEdtSubject;
-    QLabel    *mLblIdentity;
+    QLabel *mLblIdentity;
     QLabel *mLblTransport;
     QLabel *mLblFcc;
-    QLabel    *mLblFrom;
+    QLabel *mLblFrom;
     QLabel *mLblReplyTo;
-    QLabel    *mLblSubject;
-    QLabel    *mDictionaryLabel;
-    QLabel    *mCursorLineLabel;
-    QLabel    *mCursorColumnLabel;
-    QLabel    *mStatusbarLabel;
+    QLabel *mLblSubject;
+    QLabel *mDictionaryLabel;
+    QLabel *mCursorLineLabel;
+    QLabel *mCursorColumnLabel;
+    QLabel *mStatusbarLabel;
     bool mDone;
 
     KMime::Message::Ptr mMsg;

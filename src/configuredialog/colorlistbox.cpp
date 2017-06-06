@@ -32,7 +32,8 @@
 #include <QHeaderView>
 
 ColorListBox::ColorListBox(QWidget *parent)
-    : QTreeWidget(parent), mCurrentOnDragEnter(nullptr)
+    : QTreeWidget(parent)
+    , mCurrentOnDragEnter(nullptr)
 {
     setColumnCount(1);
     setRootIsDecorated(false);
@@ -129,4 +130,3 @@ void ColorListBox::dropEvent(QDropEvent *e)
         mCurrentOnDragEnter = nullptr;
     }
 }
-

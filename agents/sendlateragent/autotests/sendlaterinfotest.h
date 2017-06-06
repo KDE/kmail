@@ -34,7 +34,6 @@ private Q_SLOTS:
     void shouldNotValidIfIdIsNotValid();
     void shouldNotValidIfDateIsNotValid();
     void shouldCopyInfo();
-
 };
 
 #endif // SENDLATERINFOTEST_H

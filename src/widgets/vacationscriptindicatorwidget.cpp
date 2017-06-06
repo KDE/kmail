@@ -28,8 +28,8 @@
 using namespace KMail;
 
 ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
-    : QLabel(parent),
-      mServerName(serverName)
+    : QLabel(parent)
+    , mServerName(serverName)
 {
     setToolTip(serverName);
     setPixmap(QIcon::fromTheme(QStringLiteral("network-server")).pixmap(16, 16));
@@ -39,7 +39,6 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
 
 ServerLabel::~ServerLabel()
 {
-
 }
 
 void ServerLabel::mouseReleaseEvent(QMouseEvent *event)
@@ -60,7 +59,6 @@ VacationLabel::VacationLabel(const QString &text, QWidget *parent)
 
 VacationLabel::~VacationLabel()
 {
-
 }
 
 void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
@@ -70,15 +68,14 @@ void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
 }
 
 VacationScriptIndicatorWidget::VacationScriptIndicatorWidget(QWidget *parent)
-    : QWidget(parent),
-      mBoxLayout(nullptr),
-      mInfo(nullptr)
+    : QWidget(parent)
+    , mBoxLayout(nullptr)
+    , mInfo(nullptr)
 {
 }
 
 VacationScriptIndicatorWidget::~VacationScriptIndicatorWidget()
 {
-
 }
 
 void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const QString &serverName)

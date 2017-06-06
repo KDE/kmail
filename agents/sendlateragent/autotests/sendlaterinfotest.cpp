@@ -61,7 +61,6 @@ void SendLaterInfoTest::shouldRestoreFromSettings()
 
     SendLater::SendLaterInfo restoreInfo(grp);
     QCOMPARE(info, restoreInfo);
-
 }
 
 void SendLaterInfoTest::shouldNotValidIfIdIsNotValid()

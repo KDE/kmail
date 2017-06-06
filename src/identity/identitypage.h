@@ -28,13 +28,11 @@
 
 #include "configuredialog/configmodule.h"
 #include "ui_identitypage.h"
-namespace KIdentityManagement
-{
+namespace KIdentityManagement {
 class IdentityManager;
 }
 
-namespace KMail
-{
+namespace KMail {
 class IdentityDialog;
 class IdentityListView;
 class IdentityListViewItem;
@@ -71,11 +69,10 @@ private: // methods
 
 private: // data members
     Ui_IdentityPage mIPage;
-    KMail::IdentityDialog   *mIdentityDialog;
-    int                      mOldNumberOfIdentities;
+    KMail::IdentityDialog *mIdentityDialog;
+    int mOldNumberOfIdentities;
     KIdentityManagement::IdentityManager *mIdentityManager;
 };
-
 }
 
 #endif

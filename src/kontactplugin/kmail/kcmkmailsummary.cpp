@@ -44,10 +44,10 @@
 
 extern "C"
 {
-    Q_DECL_EXPORT KCModule *create_kmailsummary(QWidget *parent, const char *)
-    {
-        return new KCMKMailSummary(parent);
-    }
+Q_DECL_EXPORT KCModule *create_kmailsummary(QWidget *parent, const char *)
+{
+    return new KCMKMailSummary(parent);
+}
 }
 
 KCMKMailSummary::KCMKMailSummary(QWidget *parent)
@@ -100,8 +100,8 @@ void KCMKMailSummary::initFolders()
 {
     KSharedConfigPtr _config = KSharedConfig::openConfig(QStringLiteral("kcmkmailsummaryrc"));
 
-    mModelState =
-        new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group("CheckState"), this);
+    mModelState
+        = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group("CheckState"), this);
     mModelState->setSelectionModel(mCheckedCollectionWidget->selectionModel());
 }
 
@@ -144,4 +144,3 @@ void KCMKMailSummary::defaults()
 
     Q_EMIT changed(true);
 }
-

@@ -28,8 +28,7 @@
 #include <ItemFetchScope>
 #include <Item>
 
-namespace SendLater
-{
+namespace SendLater {
 class SendLaterInfo;
 }
 class KJob;

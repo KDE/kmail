@@ -44,4 +44,3 @@ private:
 };
 
 #endif // SENDLATERCONFIGTEST_H
-

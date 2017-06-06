@@ -18,8 +18,7 @@
 #include <AkonadiCore/itemfetchscope.h>
 #include <AkonadiCore/collection.h>
 #include <QUrl>
-namespace Akonadi
-{
+namespace Akonadi {
 class Tag;
 }
 
@@ -28,31 +27,30 @@ using Akonadi::MessageStatus;
 class QProgressDialog;
 class KMMainWidget;
 
-template <typename T> class QSharedPointer;
+template<typename T> class QSharedPointer;
 
-namespace MessageViewer
-{
+namespace MessageViewer {
 class HeaderStyle;
 class AttachmentStrategy;
 }
 
-namespace KIO
-{
+namespace KIO {
 class Job;
 }
-namespace KMail
-{
+namespace KMail {
 class Composer;
 }
 typedef QMap<KMime::Content *, Akonadi::Item> PartNodeMessageMap;
 /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
 
-class  KMCommand : public QObject
+class KMCommand : public QObject
 {
     Q_OBJECT
 
 public:
-    enum Result { Undefined, OK, Canceled, Failed };
+    enum Result {
+        Undefined, OK, Canceled, Failed
+    };
 
     // Trival constructor, don't retrieve any messages
     explicit KMCommand(QWidget *parent = nullptr);
@@ -152,7 +150,7 @@ private:
     Akonadi::ItemFetchScope mFetchScope;
 };
 
-class  KMMailtoComposeCommand : public KMCommand
+class KMMailtoComposeCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -171,8 +169,7 @@ class KMMailtoReplyCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMMailtoReplyCommand(QWidget *parent, const QUrl &url,
-                         const Akonadi::Item &msg, const QString &selection);
+    KMMailtoReplyCommand(QWidget *parent, const QUrl &url, const Akonadi::Item &msg, const QString &selection);
 
 private:
     Result execute() override;
@@ -206,7 +203,7 @@ private:
     QUrl mUrl;
 };
 
-class  KMUrlSaveCommand : public KMCommand
+class KMUrlSaveCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -222,7 +219,7 @@ private:
     QUrl mUrl;
 };
 
-class  KMEditItemCommand : public KMCommand
+class KMEditItemCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -236,7 +233,7 @@ private:
     bool mDeleteFromSource;
 };
 
-class  KMEditMessageCommand : public KMCommand
+class KMEditMessageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -247,7 +244,7 @@ private:
     KMime::Message::Ptr mMessage;
 };
 
-class  KMUseTemplateCommand : public KMCommand
+class KMUseTemplateCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -258,7 +255,7 @@ private:
     Result execute() override;
 };
 
-class  KMSaveMsgCommand : public KMCommand
+class KMSaveMsgCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -267,16 +264,14 @@ public:
 
 private:
     Result execute() override;
-
 };
 
-class  KMOpenMsgCommand : public KMCommand
+class KMOpenMsgCommand : public KMCommand
 {
     Q_OBJECT
 
 public:
-    explicit KMOpenMsgCommand(QWidget *parent, const QUrl &url = QUrl(),
-                              const QString &encoding = QString(), KMMainWidget *main = nullptr);
+    explicit KMOpenMsgCommand(QWidget *parent, const QUrl &url = QUrl(), const QString &encoding = QString(), KMMainWidget *main = nullptr);
 
 private:
     Result execute() override;
@@ -295,7 +290,7 @@ private:
     KMMainWidget *mMainWidget;
 };
 
-class  KMSaveAttachmentsCommand : public KMCommand
+class KMSaveAttachmentsCommand : public KMCommand
 {
     Q_OBJECT
 public:
@@ -315,12 +310,11 @@ private:
     MessageViewer::Viewer *mViewer;
 };
 
-class  KMReplyCommand : public KMCommand
+class KMReplyCommand : public KMCommand
 {
     Q_OBJECT
 public:
-    KMReplyCommand(QWidget *parent, const Akonadi::Item &msg,
-                   MessageComposer::ReplyStrategy replyStrategy,
+    KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy,
                    const QString &selection = QString(), bool noquote = false, const QString &templateName = QString());
 private:
     Result execute() override;
@@ -332,15 +326,13 @@ private:
     bool mNoQuote;
 };
 
-class  KMForwardCommand : public KMCommand
+class KMForwardCommand : public KMCommand
 {
     Q_OBJECT
 
 public:
-    KMForwardCommand(QWidget *parent, const Akonadi::Item::List &msgList,
-                     uint identity = 0, const QString &templateName = QString(), const QString &selection = QString());
-    KMForwardCommand(QWidget *parent, const Akonadi::Item &msg,
-                     uint identity = 0, const QString &templateName = QString(), const QString &selection = QString());
+    KMForwardCommand(QWidget *parent, const Akonadi::Item::List &msgList, uint identity = 0, const QString &templateName = QString(), const QString &selection = QString());
+    KMForwardCommand(QWidget *parent, const Akonadi::Item &msg, uint identity = 0, const QString &templateName = QString(), const QString &selection = QString());
 
 private:
     KMCommand::Result createComposer(const Akonadi::Item &item);
@@ -352,15 +344,13 @@ private:
     QString mSelection;
 };
 
-class  KMForwardAttachedCommand : public KMCommand
+class KMForwardAttachedCommand : public KMCommand
 {
     Q_OBJECT
 
 public:
-    KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item::List &msgList,
-                             uint identity = 0, KMail::Composer *win = nullptr);
-    KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item &msg,
-                             uint identity = 0, KMail::Composer *win = nullptr);
+    KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item::List &msgList, uint identity = 0, KMail::Composer *win = nullptr);
+    KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item &msg, uint identity = 0, KMail::Composer *win = nullptr);
 
 private:
     Result execute() override;
@@ -369,7 +359,7 @@ private:
     QPointer<KMail::Composer> mWin;
 };
 
-class  KMRedirectCommand : public KMCommand
+class KMRedirectCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -381,16 +371,13 @@ private:
     Result execute() override;
 };
 
-class  KMPrintCommand : public KMCommand
+class KMPrintCommand : public KMCommand
 {
     Q_OBJECT
 
 public:
-    KMPrintCommand(QWidget *parent, const Akonadi::Item &msg,
-                   MessageViewer::HeaderStylePlugin *plugin = nullptr,
-                   MessageViewer::Viewer::DisplayFormatMessage format = MessageViewer::Viewer::UseGlobalSetting,
-                   bool htmlLoadExtOverride = false,
-                   bool useFixedFont = false,
+    KMPrintCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::HeaderStylePlugin *plugin = nullptr,
+                   MessageViewer::Viewer::DisplayFormatMessage format = MessageViewer::Viewer::UseGlobalSetting, bool htmlLoadExtOverride = false, bool useFixedFont = false,
                    const QString &encoding = QString());
 
     void setOverrideFont(const QFont &);
@@ -410,14 +397,13 @@ private:
     bool mPrintPreview;
 };
 
-class  KMSetStatusCommand : public KMCommand
+class KMSetStatusCommand : public KMCommand
 {
     Q_OBJECT
 
 public:
     // Serial numbers
-    KMSetStatusCommand(const MessageStatus &status, const Akonadi::Item::List &items,
-                       bool invert = false);
+    KMSetStatusCommand(const MessageStatus &status, const Akonadi::Item::List &items, bool invert = false);
 
 protected Q_SLOTS:
     void slotModifyItemDone(KJob *job);
@@ -431,15 +417,16 @@ private:
 /** This command is used to set or toggle a tag for a list of messages. If toggle is
     true then the tag is deleted if it is already applied.
  */
-class  KMSetTagCommand : public KMCommand
+class KMSetTagCommand : public KMCommand
 {
     Q_OBJECT
 
 public:
-    enum SetTagMode { AddIfNotExisting, Toggle, CleanExistingAndAddNew };
+    enum SetTagMode {
+        AddIfNotExisting, Toggle, CleanExistingAndAddNew
+    };
 
-    KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::Item::List &item,
-                    SetTagMode mode = AddIfNotExisting);
+    KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::Item::List &item, SetTagMode mode = AddIfNotExisting);
 
 protected Q_SLOTS:
     void slotModifyItemDone(KJob *job);
@@ -456,13 +443,12 @@ private:
 
 /* This command is used to apply a single filter (AKA ad-hoc filter)
     to a set of messages */
-class  KMFilterActionCommand : public KMCommand
+class KMFilterActionCommand : public KMCommand
 {
     Q_OBJECT
 
 public:
-    KMFilterActionCommand(QWidget *parent,
-                          const QVector<qlonglong> &msgListId, const QString &filterId);
+    KMFilterActionCommand(QWidget *parent, const QVector<qlonglong> &msgListId, const QString &filterId);
 
 private:
     Result execute() override;
@@ -470,7 +456,7 @@ private:
     QString mFilterId;
 };
 
-class  KMMetaFilterActionCommand : public QObject
+class KMMetaFilterActionCommand : public QObject
 {
     Q_OBJECT
 
@@ -485,7 +471,7 @@ private:
     KMMainWidget *mMainWidget;
 };
 
-class  KMMailingListFilterCommand : public KMCommand
+class KMMailingListFilterCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -496,7 +482,7 @@ private:
     Result execute() override;
 };
 
-class  KMCopyCommand : public KMCommand
+class KMCopyCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -512,11 +498,10 @@ private:
     Akonadi::Collection mDestFolder;
 };
 
-namespace KPIM
-{
+namespace KPIM {
 class ProgressItem;
 }
-class  KMMoveCommand : public KMCommand
+class KMMoveCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -554,7 +539,7 @@ private:
     MessageList::Core::MessageItemSetReference mRef;
 };
 
-class  KMTrashMsgCommand : public KMMoveCommand
+class KMTrashMsgCommand : public KMMoveCommand
 {
     Q_OBJECT
 
@@ -564,10 +549,9 @@ public:
 
 private:
     static Akonadi::Collection findTrashFolder(const Akonadi::Collection &srcFolder);
-
 };
 
-class  KMResendMessageCommand : public KMCommand
+class KMResendMessageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -578,7 +562,7 @@ private:
     Result execute() override;
 };
 
-class  KMShareImageCommand : public KMCommand
+class KMShareImageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -590,7 +574,7 @@ private:
     QUrl mUrl;
 };
 
-class  KMFetchMessageCommand : public KMCommand
+class KMFetchMessageCommand : public KMCommand
 {
     Q_OBJECT
 public:

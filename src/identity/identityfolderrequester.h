@@ -20,13 +20,11 @@
 
 #include <MailCommon/FolderRequester>
 
-namespace Akonadi
-{
+namespace Akonadi {
 class Collection;
 }
 
-namespace KMail
-{
+namespace KMail {
 class IdentityFolderRequester : public MailCommon::FolderRequester
 {
     Q_OBJECT

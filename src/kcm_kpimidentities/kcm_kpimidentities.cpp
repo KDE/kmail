@@ -24,11 +24,10 @@
 
 extern "C"
 {
-    Q_DECL_EXPORT KCModule *create_kcm_kidentitymanagement(QWidget *parent, const char *)
-    {
-        KMail::IdentityPage *page = new KMail::IdentityPage(parent);
-        page->setObjectName(QStringLiteral("kcm_kidentitymanagement"));
-        return page;
-    }
+Q_DECL_EXPORT KCModule *create_kcm_kidentitymanagement(QWidget *parent, const char *)
+{
+    KMail::IdentityPage *page = new KMail::IdentityPage(parent);
+    page->setObjectName(QStringLiteral("kcm_kidentitymanagement"));
+    return page;
 }
-
+}

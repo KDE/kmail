@@ -52,7 +52,8 @@ public:
         : KontactInterface::PimUniqueApplication(argc, argv)
         , mDelayedInstanceCreation(false)
         , mEventLoopReached(false)
-    { }
+    {
+    }
 
     int activate(const QStringList &args, const QString &workindDir) override;
     void commitData(QSessionManager &sm);
@@ -61,7 +62,6 @@ public:
 protected:
     bool mDelayedInstanceCreation;
     bool mEventLoopReached;
-
 };
 
 void KMailApplication::commitData(QSessionManager &)

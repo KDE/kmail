@@ -28,17 +28,15 @@
 #include <QTextDocument>
 
 SaveAsFileJob::SaveAsFileJob(QObject *parent)
-    : QObject(parent),
-      mHtmlMode(false),
-      mTextDocument(nullptr),
-      mParentWidget(nullptr)
+    : QObject(parent)
+    , mHtmlMode(false)
+    , mTextDocument(nullptr)
+    , mParentWidget(nullptr)
 {
-
 }
 
 SaveAsFileJob::~SaveAsFileJob()
 {
-
 }
 
 void SaveAsFileJob::start()
@@ -89,4 +87,3 @@ void SaveAsFileJob::setParentWidget(QWidget *parentWidget)
 {
     mParentWidget = parentWidget;
 }
-

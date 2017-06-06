@@ -53,7 +53,8 @@ class KMail::AttachmentView::Private
 {
 public:
     Private(AttachmentView *qq)
-        : model(nullptr), q(qq)
+        : model(nullptr)
+        , q(qq)
     {
         widget = new QWidget();
         QHBoxLayout *lay = new QHBoxLayout;
@@ -143,7 +144,7 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
         toRemove.reserve(selectedIndexes.count());
         for (const QModelIndex &index : selectedIndexes) {
             AttachmentPart::Ptr part = model()->data(
-                                           index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+                index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
             toRemove.append(part);
         }
         for (const AttachmentPart::Ptr &part : qAsConst(toRemove)) {

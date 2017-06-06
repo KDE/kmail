@@ -28,12 +28,10 @@
 SendLaterConfigureDialogTest::SendLaterConfigureDialogTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 SendLaterConfigureDialogTest::~SendLaterConfigureDialogTest()
 {
-
 }
 
 void SendLaterConfigureDialogTest::initTestCase()
@@ -51,7 +49,6 @@ void SendLaterConfigureDialogTest::shouldHaveDefaultValue()
     QVERIFY(treeWidget);
 
     QCOMPARE(treeWidget->topLevelItemCount(), 0);
-
 }
 
 QTEST_MAIN(SendLaterConfigureDialogTest)

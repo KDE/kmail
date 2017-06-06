@@ -35,17 +35,13 @@
 #include "kmail_export.h"
 #include <KAboutData>
 
-namespace KMail
-{
-
+namespace KMail {
 class KMAIL_EXPORT AboutData : public KAboutData
 {
 public:
     AboutData();
     ~AboutData();
 };
-
 } // namespace KMail
 
 #endif // __KMAIL_ABOUTDATA_H__
-

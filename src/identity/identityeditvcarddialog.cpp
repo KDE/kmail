@@ -129,4 +129,3 @@ QString IdentityEditVcardDialog::saveVcard() const
     }
     return mVcardFileName;
 }
-

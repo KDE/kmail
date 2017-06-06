@@ -47,7 +47,6 @@ void searchdbustest::slotReindexCollections()
     } else {
         qDebug() << " interface is not valid";
     }
-
 }
 
 int main(int argc, char **argv)

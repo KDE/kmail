@@ -27,15 +27,13 @@
 #include <TemplateParser/TemplateParserJob>
 
 NewMessageJob::NewMessageJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr)
+    : QObject(parent)
+    , mMsg(nullptr)
 {
-
 }
 
 NewMessageJob::~NewMessageJob()
 {
-
 }
 
 void NewMessageJob::start()

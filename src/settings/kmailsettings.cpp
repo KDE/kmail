@@ -58,4 +58,3 @@ void KMailSettings::slotSyncNow()
 KMailSettings::~KMailSettings()
 {
 }
-

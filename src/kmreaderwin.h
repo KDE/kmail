@@ -33,13 +33,11 @@ class KActionCollection;
 class QAction;
 class KToggleAction;
 class QMenu;
-namespace MessageViewer
-{
+namespace MessageViewer {
 class CSSHelper;
 }
 
-namespace MimeTreeParser
-{
+namespace MimeTreeParser {
 class AttachmentStrategy;
 }
 
@@ -50,13 +48,12 @@ class KJob;
    used for reading or viewing messages.
 */
 
-class KMAIL_EXPORT KMReaderWin: public QWidget
+class KMAIL_EXPORT KMReaderWin : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit KMReaderWin(QWidget *parent, QWidget *mainWindow,
-                         KActionCollection *actionCollection);
+    explicit KMReaderWin(QWidget *parent, QWidget *mainWindow, KActionCollection *actionCollection);
     virtual ~KMReaderWin();
 
     /** Read settings from app's config file. */
@@ -200,7 +197,7 @@ public Q_SLOTS:
     /** Save the page to a file */
     void slotUrlSave();
     void slotAddBookmarks();
-    void slotUrlClicked(const Akonadi::Item &,  const QUrl &);
+    void slotUrlClicked(const Akonadi::Item &, const QUrl &);
     void slotShowReader(KMime::Content *, bool html, const QString &);
     void slotShowMessage(const KMime::Message::Ptr &message, const QString &encoding);
     void slotDeleteMessage(const Akonadi::Item &);
@@ -250,4 +247,3 @@ private:
 };
 
 #endif
-

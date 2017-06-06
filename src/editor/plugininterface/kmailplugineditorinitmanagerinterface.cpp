@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "kmailplugineditorinitmanagerinterface.h"
 #include "kmail_debug.h"
 #include <MessageComposer/PluginEditorInitManager>
@@ -25,12 +24,11 @@
 #include <MessageComposer/PluginEditorInitInterface>
 
 KMailPluginEditorInitManagerInterface::KMailPluginEditorInitManagerInterface(QObject *parent)
-    : QObject(parent),
-      mRichTextEditor(nullptr),
-      mParentWidget(nullptr),
-      mWasInitialized(false)
+    : QObject(parent)
+    , mRichTextEditor(nullptr)
+    , mParentWidget(nullptr)
+    , mWasInitialized(false)
 {
-
 }
 
 KPIMTextEdit::RichTextComposer *KMailPluginEditorInitManagerInterface::richTextEditor() const

@@ -45,8 +45,11 @@
 
 using namespace MailCommon;
 
-CollectionMailingListPage::CollectionMailingListPage(QWidget *parent) :
-    CollectionPropertiesPage(parent), mGroupWidget(nullptr), mLastItem(0), changed(false)
+CollectionMailingListPage::CollectionMailingListPage(QWidget *parent)
+    : CollectionPropertiesPage(parent)
+    , mGroupWidget(nullptr)
+    , mLastItem(0)
+    , changed(false)
 {
     setObjectName(QStringLiteral("KMail::CollectionMailingListPage"));
     setPageTitle(i18nc("@title:tab Mailing list settings for a folder.", "Mailing List"));
@@ -64,9 +67,9 @@ void CollectionMailingListPage::slotConfigChanged()
 bool CollectionMailingListPage::canHandle(const Akonadi::Collection &col) const
 {
     QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(col, false);
-    return (!CommonKernel->isSystemFolderCollection(col) &&
-            !fd->isStructural() &&
-            !MailCommon::Util::isVirtualCollection(col));
+    return !CommonKernel->isSystemFolderCollection(col)
+           && !fd->isStructural()
+           && !MailCommon::Util::isVirtualCollection(col);
 }
 
 void CollectionMailingListPage::init(const Akonadi::Collection &col)
@@ -240,7 +243,6 @@ void CollectionMailingListPage::slotFetchDone(KJob *job)
         mMLId->setText((mMailingList.id().isEmpty() ? i18n("Not available.") : mMailingList.id()));
         fillEditBox();
     }
-
 }
 
 //----------------------------------------------------------------------------
@@ -272,8 +274,8 @@ void CollectionMailingListPage::fillMLFromWidgets()
     QStringList newList; // the correct string list
     QStringList::ConstIterator end = oldList.constEnd();
     for (QStringList::ConstIterator it = oldList.constBegin(); it != end; ++it) {
-        if (!(*it).startsWith(QStringLiteral("http:")) && !(*it).startsWith(QStringLiteral("https:")) &&
-                !(*it).startsWith(QStringLiteral("mailto:")) && ((*it).contains(QLatin1Char('@')))) {
+        if (!(*it).startsWith(QStringLiteral("http:")) && !(*it).startsWith(QStringLiteral("https:"))
+            && !(*it).startsWith(QStringLiteral("mailto:")) && ((*it).contains(QLatin1Char('@')))) {
             listChanged = true;
             newList << QStringLiteral("mailto:") + *it;
         } else {
@@ -354,4 +356,3 @@ void CollectionMailingListPage::slotInvokeHandler()
         qCWarning(KMAIL_LOG) << "Wrong entry in the mailing list entry combo!";
     }
 }
-

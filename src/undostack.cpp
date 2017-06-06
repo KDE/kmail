@@ -35,10 +35,10 @@
 using namespace KMail;
 
 UndoStack::UndoStack(int size)
-    : QObject(nullptr),
-      mSize(size),
-      mLastId(0),
-      mCachedInfo(nullptr)
+    : QObject(nullptr)
+    , mSize(size)
+    , mLastId(0)
+    , mCachedInfo(nullptr)
 {
 }
 
@@ -71,11 +71,11 @@ QString UndoStack::undoInfo() const
 int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
 {
     UndoInfo *info = new UndoInfo;
-    info->id         = ++mLastId;
-    info->srcFolder  = srcFolder;
+    info->id = ++mLastId;
+    info->srcFolder = srcFolder;
     info->destFolder = destFolder;
     info->moveToTrash = (destFolder == CommonKernel->trashCollectionFolder());
-    if ((int) mStack.count() == mSize) {
+    if ((int)mStack.count() == mSize) {
         delete mStack.last();
         mStack.removeLast();
     }
@@ -138,9 +138,9 @@ void UndoStack::folderDestroyed(const Akonadi::Collection &folder)
     QList<UndoInfo *>::iterator it = mStack.begin();
     while (it != mStack.end()) {
         UndoInfo *info = *it;
-        if (info &&
-                ((info->srcFolder == folder) ||
-                 (info->destFolder == folder))) {
+        if (info
+            && ((info->srcFolder == folder)
+                || (info->destFolder == folder))) {
             delete info;
             it = mStack.erase(it);
         } else {
@@ -149,4 +149,3 @@ void UndoStack::folderDestroyed(const Akonadi::Collection &folder)
     }
     Q_EMIT undoStackChanged();
 }
-

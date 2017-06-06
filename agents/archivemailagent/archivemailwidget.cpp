@@ -34,16 +34,16 @@
 
 #include <QHBoxLayout>
 
-namespace
-{
+namespace {
 inline QString archiveMailCollectionPattern()
 {
-    return  QStringLiteral("ArchiveMailCollection \\d+");
+    return QStringLiteral("ArchiveMailCollection \\d+");
 }
 }
 
 ArchiveMailItem::ArchiveMailItem(QTreeWidget *parent)
-    : QTreeWidgetItem(parent), mInfo(0)
+    : QTreeWidgetItem(parent)
+    , mInfo(0)
 {
 }
 
@@ -63,8 +63,8 @@ ArchiveMailInfo *ArchiveMailItem::info() const
 }
 
 ArchiveMailWidget::ArchiveMailWidget(QWidget *parent)
-    : QWidget(parent),
-      mChanged(false)
+    : QWidget(parent)
+    , mChanged(false)
 {
     mWidget = new Ui::ArchiveMailWidget;
     mWidget->setupUi(this);
@@ -333,4 +333,3 @@ void ArchiveMailWidget::slotItemChanged(QTreeWidgetItem *item, int col)
         }
     }
 }
-

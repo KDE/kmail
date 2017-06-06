@@ -55,12 +55,12 @@ FollowUpReminderInfoDialog::FollowUpReminderInfoDialog(QWidget *parent)
 
     readConfig();
     KAboutData aboutData = KAboutData(
-                               QStringLiteral("followupreminderagent"),
-                               i18n("Follow Up Reminder Agent"),
-                               QStringLiteral(KDEPIM_VERSION),
-                               i18n("Follow Up Mail."),
-                               KAboutLicense::GPL_V2,
-                               i18n("Copyright (C) 2014-2017 Laurent Montel"));
+        QStringLiteral("followupreminderagent"),
+        i18n("Follow Up Reminder Agent"),
+        QStringLiteral(KDEPIM_VERSION),
+        i18n("Follow Up Mail."),
+        KAboutLicense::GPL_V2,
+        i18n("Copyright (C) 2014-2017 Laurent Montel"));
 
     aboutData.addAuthor(i18n("Laurent Montel"),
                         i18n("Maintainer"), QStringLiteral("montel@kde.org"));
@@ -111,4 +111,3 @@ QList<qint32> FollowUpReminderInfoDialog::listRemoveId() const
 {
     return mWidget->listRemoveId();
 }
-

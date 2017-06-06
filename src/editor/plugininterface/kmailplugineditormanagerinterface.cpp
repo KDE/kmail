@@ -22,22 +22,19 @@
 #include "messagecomposer/plugineditor.h"
 #include "kmail_debug.h"
 
-
 #include <QAction>
 #include <QVector>
 
 KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
-    : QObject(parent),
-      mRichTextEditor(nullptr),
-      mParentWidget(nullptr),
-      mActionCollection(nullptr)
+    : QObject(parent)
+    , mRichTextEditor(nullptr)
+    , mParentWidget(nullptr)
+    , mActionCollection(nullptr)
 {
-
 }
 
 KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface()
 {
-
 }
 
 KPIMTextEdit::RichTextEditor *KMailPluginEditorManagerInterface::richTextEditor() const

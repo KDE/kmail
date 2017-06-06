@@ -27,12 +27,10 @@
 CreateFollowupReminderOnExistingMessageJob::CreateFollowupReminderOnExistingMessageJob(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 CreateFollowupReminderOnExistingMessageJob::~CreateFollowupReminderOnExistingMessageJob()
 {
-
 }
 
 void CreateFollowupReminderOnExistingMessageJob::start()
@@ -67,7 +65,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    KMime::Message::Ptr msg =  mMessageItem.payload<KMime::Message::Ptr>();
+    KMime::Message::Ptr msg = mMessageItem.payload<KMime::Message::Ptr>();
     if (msg) {
         MessageComposer::FollowupReminderCreateJob *reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
         KMime::Headers::MessageID *messageID = msg->messageID(false);
@@ -143,4 +141,3 @@ bool CreateFollowupReminderOnExistingMessageJob::canStart() const
 {
     return mMessageItem.isValid() && mCollection.isValid() && mDate.isValid();
 }
-

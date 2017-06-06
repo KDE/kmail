@@ -36,15 +36,12 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-namespace KIdentityManagement
-{
+namespace KIdentityManagement {
 class Identity;
 class IdentityManager;
 }
 
-namespace KMail
-{
-
+namespace KMail {
 class IdentityListView;
 
 /** @short A QWidgetTreeItem for use in IdentityListView
@@ -53,15 +50,14 @@ class IdentityListView;
 class IdentityListViewItem : public QTreeWidgetItem
 {
 public:
-    IdentityListViewItem(IdentityListView *parent,
-                         const KIdentityManagement::Identity &ident);
-    IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after,
-                         const KIdentityManagement::Identity &ident);
+    IdentityListViewItem(IdentityListView *parent, const KIdentityManagement::Identity &ident);
+    IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagement::Identity &ident);
 
     uint uoid() const
     {
         return mUOID;
     }
+
     KIdentityManagement::Identity &identity() const;
     virtual void setIdentity(const KIdentityManagement::Identity &ident);
     void redisplay();
@@ -79,7 +75,9 @@ class IdentityListView : public QTreeWidget
     Q_OBJECT
 public:
     explicit IdentityListView(QWidget *parent = nullptr);
-    virtual ~IdentityListView() {}
+    virtual ~IdentityListView()
+    {
+    }
 
 public:
     void editItem(QTreeWidgetItem *item, int column = 0);
@@ -104,7 +102,6 @@ protected:
 private:
     KIdentityManagement::IdentityManager *mIdentityManager;
 };
-
 } // namespace KMail
 
 #endif // __KMAIL_IDENTITYLISTVIEW_H__

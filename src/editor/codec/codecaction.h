@@ -28,7 +28,7 @@
 
 // TODO since the reader is now in a separate lib, we can probably have this
 // class for the composer only.  The reader can use KCodecAction directly anyway.
-class CodecAction: public KCodecAction
+class CodecAction : public KCodecAction
 {
     Q_OBJECT
 

@@ -50,13 +50,14 @@ using namespace KCalCore;
 EXPORT_KONTACT_PLUGIN(KMailPlugin, kmail)
 
 KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
-    : KontactInterface::Plugin(core, core, "kmail2"), m_instance(nullptr)
+    : KontactInterface::Plugin(core, core, "kmail2")
+    , m_instance(nullptr)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 
-    QAction *action =
-        new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")),
-                    i18nc("@action:inmenu", "New Message..."), this);
+    QAction *action
+        = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")),
+                      i18nc("@action:inmenu", "New Message..."), this);
     actionCollection()->addAction(QStringLiteral("new_mail"), action);
     actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_M));
     //action->setHelpText(
@@ -68,9 +69,9 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
     connect(action, &QAction::triggered, this, &KMailPlugin::slotNewMail);
     insertNewAction(action);
 
-    QAction *syncAction =
-        new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
-                    i18nc("@action:inmenu", "Sync Mail"), this);
+    QAction *syncAction
+        = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
+                      i18nc("@action:inmenu", "Sync Mail"), this);
     //syncAction->setHelpText(
     //            i18nc( "@info:status", "Synchronize groupware mail" ) );
     syncAction->setWhatsThis(
@@ -87,9 +88,9 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
 bool KMailPlugin::canDecodeMimeData(const QMimeData *mimeData) const
 {
     return
-        ICalDrag::canDecode(mimeData) ||
-        VCalDrag::canDecode(mimeData) ||
-        KContacts::VCardDrag::canDecode(mimeData);
+        ICalDrag::canDecode(mimeData)
+        || VCalDrag::canDecode(mimeData)
+        || KContacts::VCardDrag::canDecode(mimeData);
 }
 
 void KMailPlugin::shortcutChanged()
@@ -133,12 +134,12 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
 
 void KMailPlugin::openComposer(const QUrl &attach)
 {
-    (void) part(); // ensure part is loaded
+    (void)part();  // ensure part is loaded
     Q_ASSERT(m_instance);
     if (m_instance) {
         if (attach.isValid()) {
-            m_instance->newMessage(QString(), QString(), QString(), false, true, QString(), attach.isLocalFile() ?
-                                   attach.toLocalFile() : attach.path());
+            m_instance->newMessage(QString(), QString(), QString(), false, true, QString(), attach.isLocalFile()
+                                   ? attach.toLocalFile() : attach.path());
         } else {
             m_instance->newMessage(QString(), QString(), QString(), false, true, QString(), QString());
         }
@@ -147,7 +148,7 @@ void KMailPlugin::openComposer(const QUrl &attach)
 
 void KMailPlugin::openComposer(const QString &to)
 {
-    (void) part(); // ensure part is loaded
+    (void)part();  // ensure part is loaded
     Q_ASSERT(m_instance);
     if (m_instance) {
         m_instance->newMessage(to, QString(), QString(), false, true, QString(), QString());
@@ -161,10 +162,10 @@ void KMailPlugin::slotNewMail()
 
 void KMailPlugin::slotSyncFolders()
 {
-    QDBusMessage message =
-        QDBusMessage::createMethodCall(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"),
-                                       QStringLiteral("org.kde.kmail.kmail"),
-                                       QStringLiteral("checkMail"));
+    QDBusMessage message
+        = QDBusMessage::createMethodCall(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"),
+                                         QStringLiteral("org.kde.kmail.kmail"),
+                                         QStringLiteral("checkMail"));
     QDBusConnection::sessionBus().send(message);
 }
 
@@ -242,4 +243,5 @@ bool KMailPlugin::queryClose() const
     QDBusReply<bool> canClose = kmail.canQueryClose();
     return canClose;
 }
+
 #include "kmail_plugin.moc"

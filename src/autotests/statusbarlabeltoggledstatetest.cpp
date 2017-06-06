@@ -24,12 +24,10 @@
 StatusBarLabelToggledStateTest::StatusBarLabelToggledStateTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 StatusBarLabelToggledStateTest::~StatusBarLabelToggledStateTest()
 {
-
 }
 
 void StatusBarLabelToggledStateTest::shouldHasDefaultValue()
@@ -93,7 +91,6 @@ void StatusBarLabelToggledStateTest::shouldEmitSignalWhenClickOnLabel()
 
     QTest::mouseClick(&widget, Qt::LeftButton);
     QCOMPARE(spy.count(), 2);
-
 }
 
 void StatusBarLabelToggledStateTest::shouldChangeTestWhenStateChanged()

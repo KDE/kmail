@@ -33,7 +33,7 @@
 
 class KMMainWidget;
 
-class KMailPart: public KParts::ReadOnlyPart
+class KMailPart : public KParts::ReadOnlyPart
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmailpart")

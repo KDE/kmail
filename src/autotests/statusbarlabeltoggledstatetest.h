@@ -34,8 +34,6 @@ private Q_SLOTS:
     void shouldNotEmitSignalWhenWeDontChangeState();
     void shouldEmitSignalWhenClickOnLabel();
     void shouldChangeTestWhenStateChanged();
-
 };
 
 #endif // StatusBarLabelToggledStateTEST_H
-

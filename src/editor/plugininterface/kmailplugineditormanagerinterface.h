@@ -23,12 +23,10 @@
 #include <QObject>
 #include <QHash>
 #include "messagecomposer/plugineditorinterface.h"
-namespace KPIMTextEdit
-{
+namespace KPIMTextEdit {
 class RichTextEditor;
 }
-namespace MessageComposer
-{
+namespace MessageComposer {
 class PluginEditorInterface;
 }
 class KActionCollection;

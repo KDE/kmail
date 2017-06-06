@@ -31,7 +31,6 @@ UnitComboBox::UnitComboBox(QWidget *parent)
 
 UnitComboBox::~UnitComboBox()
 {
-
 }
 
 void UnitComboBox::setUnit(ArchiveMailInfo::ArchiveUnit unit)
@@ -48,4 +47,3 @@ ArchiveMailInfo::ArchiveUnit UnitComboBox::unit() const
 {
     return static_cast<ArchiveMailInfo::ArchiveUnit>(itemData(currentIndex()).toInt());
 }
-

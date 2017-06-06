@@ -66,14 +66,14 @@
 using namespace KMail;
 
 MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
-    : QObject(parent),
-      mParent(parent),
-      mMessageView(nullptr),
-      mRedirectAction(nullptr),
-      mPrintPreviewAction(nullptr),
-      mCustomTemplatesMenu(nullptr),
-      mAddFollowupReminderAction(nullptr),
-      mDebugBalooAction(nullptr)
+    : QObject(parent)
+    , mParent(parent)
+    , mMessageView(nullptr)
+    , mRedirectAction(nullptr)
+    , mPrintPreviewAction(nullptr)
+    , mCustomTemplatesMenu(nullptr)
+    , mAddFollowupReminderAction(nullptr)
+    , mDebugBalooAction(nullptr)
 {
     mWebShortcutMenuManager = new KIO::KUriFilterSearchProviderActions(this);
     mReplyActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this);
@@ -131,7 +131,6 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
         action = mainwin->akonadiStandardAction(Akonadi::StandardMailActionManager::MarkMailAsActionItem);
         mStatusMenu->addAction(action);
-
     }
 
     mEditAction = new QAction(QIcon::fromTheme(QStringLiteral("accessories-text-editor")), i18n("&Edit Message"), this);
@@ -146,12 +145,12 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     mPrintAction = KStandardAction::print(this, &MessageActions::slotPrintMessage, ac);
     mPrintPreviewAction = KStandardAction::printPreview(this, &MessageActions::slotPrintPreviewMsg, ac);
 
-    mForwardActionMenu  = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this);
+    mForwardActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this);
     ac->addAction(QStringLiteral("message_forward"), mForwardActionMenu);
 
     mForwardAttachedAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")),
                                          i18nc("@action:inmenu Message->Forward->",
-                                                 "As &Attachment..."),
+                                               "As &Attachment..."),
                                          this);
     connect(mForwardAttachedAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardAttachedMessage()));
 
@@ -159,7 +158,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     mForwardInlineAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")),
                                        i18nc("@action:inmenu Message->Forward->",
-                                               "&Inline..."),
+                                             "&Inline..."),
                                        this);
     connect(mForwardInlineAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardInlineMsg()));
 
@@ -167,7 +166,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     setupForwardActions(ac);
 
-    mRedirectAction  = new QAction(i18nc("Message->Forward->", "&Redirect..."), this);
+    mRedirectAction = new QAction(i18nc("Message->Forward->", "&Redirect..."), this);
     ac->addAction(QStringLiteral("message_forward_redirect"), mRedirectAction);
     connect(mRedirectAction, SIGNAL(triggered(bool)), parent, SLOT(slotRedirectMessage()));
 
@@ -309,7 +308,7 @@ void MessageActions::slotItemRemoved(const Akonadi::Item &item)
     }
 }
 
-void MessageActions::slotItemModified(const Akonadi::Item   &item, const QSet< QByteArray >   &partIdentifiers)
+void MessageActions::slotItemModified(const Akonadi::Item &item, const QSet< QByteArray > &partIdentifiers)
 {
     Q_UNUSED(partIdentifiers);
     if (item == mCurrentItem) {
@@ -383,7 +382,7 @@ void MessageActions::slotUpdateActionsFetchDone(KJob *job)
     if (fetchJob->items().isEmpty()) {
         return;
     }
-    Akonadi::Item  messageItem = fetchJob->items().first();
+    Akonadi::Item messageItem = fetchJob->items().first();
     if (messageItem == mCurrentItem) {
         mCurrentItem = messageItem;
         updateMailingListActions(messageItem);
@@ -433,9 +432,8 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
         if (!listId.isEmpty()) {
             mMailingListActionMenu->menu()->setTitle(listId);
         }
-        if (mailList.features() & MessageCore::MailingList::ArchivedAt)
+        if (mailList.features() & MessageCore::MailingList::ArchivedAt) {
             // IDEA: this may be something you want to copy - "Copy in submenu"?
-        {
             addMailingListActions(i18n("Open Message in List Archive"), mailList.archivedAtUrls());
         }
         if (mailList.features() & MessageCore::MailingList::Post) {
@@ -582,11 +580,11 @@ void MessageActions::printMessage(bool preview)
             const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
             const Akonadi::Item message = mCurrentItem;
-            KMPrintCommand *command =
-                new KMPrintCommand(mParent, message,
-                                   mMessageView->viewer()->headerStylePlugin(),
-                                   mMessageView->viewer()->displayFormatMessageOverwrite(), mMessageView->viewer()->htmlLoadExternal(),
-                                   useFixedFont, overrideEncoding);
+            KMPrintCommand *command
+                = new KMPrintCommand(mParent, message,
+                                     mMessageView->viewer()->headerStylePlugin(),
+                                     mMessageView->viewer()->displayFormatMessageOverwrite(), mMessageView->viewer()->htmlLoadExternal(),
+                                     useFixedFont, overrideEncoding);
             command->setPrintPreview(preview);
             command->start();
         }
@@ -633,7 +631,8 @@ void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
         protocol = i18n("web");
     }
     // item is a mailing list url description passed from the updateActions method above.
-    QAction *act = new QAction(i18nc("%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)",  item, protocol), this);
+    QAction *act
+        = new QAction(i18nc("%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)", item, protocol), this);
     mMailListActionList.append(act);
     const QVariant v(url);
     act->setData(v);
@@ -650,9 +649,9 @@ void MessageActions::editCurrentMessage()
         // edit, unlike send again, removes the message from the folder
         // we only want that for templates and drafts folders
         if (col.isValid()
-                && (CommonKernel->folderIsDraftOrOutbox(col) ||
-                    CommonKernel->folderIsTemplates(col))
-           ) {
+            && (CommonKernel->folderIsDraftOrOutbox(col)
+                || CommonKernel->folderIsTemplates(col))
+            ) {
             command = new KMEditItemCommand(mParent, mCurrentItem, true);
         } else {
             command = new KMEditItemCommand(mParent, mCurrentItem, false);

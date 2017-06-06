@@ -39,8 +39,8 @@
 #include <QVBoxLayout>
 
 AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *parent)
-    : QDialog(parent),
-      mInfo(info)
+    : QDialog(parent)
+    , mInfo(info)
 {
     if (info) {
         setWindowTitle(i18n("Modify Archive Mail"));
@@ -236,4 +236,3 @@ int AddArchiveMailDialog::maximumArchiveCount() const
 {
     return mMaximumArchive->value();
 }
-

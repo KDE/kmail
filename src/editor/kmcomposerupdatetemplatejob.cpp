@@ -27,18 +27,16 @@
 #include <TemplateParser/TemplateParserJob>
 
 KMComposerUpdateTemplateJob::KMComposerUpdateTemplateJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr),
-      mUoldId(0),
-      mUoid(0),
-      mWasModified(false)
+    : QObject(parent)
+    , mMsg(nullptr)
+    , mUoldId(0)
+    , mUoid(0)
+    , mWasModified(false)
 {
-
 }
 
 KMComposerUpdateTemplateJob::~KMComposerUpdateTemplateJob()
 {
-
 }
 
 void KMComposerUpdateTemplateJob::start()

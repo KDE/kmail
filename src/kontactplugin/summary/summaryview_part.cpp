@@ -53,9 +53,11 @@ using KPIM::BroadcastStatus;
 #include <QVBoxLayout>
 #include <QLocale>
 
-SummaryViewPart::SummaryViewPart(KontactInterface::Core *core,
-                                 const KAboutData &aboutData, QObject *parent)
-    : KParts::ReadOnlyPart(parent), mCore(core), mFrame(nullptr), mConfigAction(nullptr)
+SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
+    : KParts::ReadOnlyPart(parent)
+    , mCore(core)
+    , mFrame(nullptr)
+    , mConfigAction(nullptr)
 {
     Q_UNUSED(aboutData);
     loadLayout();
@@ -168,8 +170,8 @@ void SummaryViewPart::updateWidgets()
                 connect(summary, &KontactInterface::Summary::summaryWidgetDropped,
                         this, &SummaryViewPart::summaryWidgetMoved);
 
-                if (!mLeftColumnSummaries.contains(plugin->identifier()) &&
-                        !mRightColumnSummaries.contains(plugin->identifier())) {
+                if (!mLeftColumnSummaries.contains(plugin->identifier())
+                    && !mRightColumnSummaries.contains(plugin->identifier())) {
                     mLeftColumnSummaries.append(plugin->identifier());
                 }
 
@@ -258,8 +260,8 @@ void SummaryViewPart::summaryWidgetMoved(QWidget *target, QObject *obj, int alig
             return;
         }
     } else {
-        if ((mLeftColumn->indexOf(target) == -1 && mRightColumn->indexOf(target) == -1) ||
-                (mLeftColumn->indexOf(widget) == -1 && mRightColumn->indexOf(widget) == -1)) {
+        if ((mLeftColumn->indexOf(target) == -1 && mRightColumn->indexOf(target) == -1)
+            || (mLeftColumn->indexOf(widget) == -1 && mRightColumn->indexOf(widget) == -1)) {
             return;
         }
     }

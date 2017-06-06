@@ -46,7 +46,6 @@ ArchiveJob::~ArchiveJob()
 void ArchiveJob::execute()
 {
     if (mInfo) {
-
         Akonadi::Collection collection(mInfo->saveCollectionId());
         const QString realPath = MailCommon::Util::fullCollectionPath(collection);
         if (realPath.isEmpty()) {
@@ -131,4 +130,3 @@ MailCommon::ScheduledJob *ScheduledArchiveTask::run()
 {
     return folder().isValid() ? new ArchiveJob(mManager, mInfo, folder(), isImmediate()) : nullptr;
 }
-

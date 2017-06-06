@@ -24,7 +24,6 @@
 #include "incompleteindexdialog.h"
 #include "searchwindow.h"
 
-
 #include "MailCommon/FolderRequester"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
@@ -76,21 +75,21 @@ using namespace MailCommon;
 using namespace KMail;
 
 SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &collection)
-    : QDialog(nullptr),
-      mCloseRequested(false),
-      mSortColumn(0),
-      mSortOrder(Qt::AscendingOrder),
-      mSearchJob(nullptr),
-      mResultModel(nullptr),
-      mKMMainWidget(widget),
-      mAkonadiStandardAction(nullptr)
+    : QDialog(nullptr)
+    , mCloseRequested(false)
+    , mSortColumn(0)
+    , mSortOrder(Qt::AscendingOrder)
+    , mSearchJob(nullptr)
+    , mResultModel(nullptr)
+    , mKMMainWidget(widget)
+    , mAkonadiStandardAction(nullptr)
 {
     setWindowTitle(i18n("Find Messages"));
 
     KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),
-                            IconSize(KIconLoader::Desktop)),
+                                                               IconSize(KIconLoader::Desktop)),
                             qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),
-                                    IconSize(KIconLoader::Small)));
+                                                      IconSize(KIconLoader::Small)));
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
@@ -294,7 +293,6 @@ void SearchWindow::createSearchModel()
     }
     mAkonadiStandardAction->setItemSelectionModel(mUi.mLbxMatches->selectionModel());
     mAkonadiStandardAction->setCollectionSelectionModel(mKMMainWidget->folderTreeView()->selectionModel());
-
 }
 
 void SearchWindow::setEnabledSearchButton(bool)
@@ -475,7 +473,6 @@ void SearchWindow::doSearch()
             mQuery = Akonadi::SearchQuery();
             return;
         }
-
     }
 
     mUi.mPatternEdit->updateSearchPattern();
@@ -888,7 +885,7 @@ void SearchWindow::addRulesToSearchPattern(const SearchPattern &pattern)
 void SearchWindow::slotSelectMultipleFolders()
 {
     mUi.mChkMultiFolders->setChecked(true);
-    if (!mSelectMultiCollectionDialog)  {
+    if (!mSelectMultiCollectionDialog) {
         QList<Akonadi::Collection::Id> lst;
         lst.reserve(mCollectionId.count());
         for (const Akonadi::Collection &col : qAsConst(mCollectionId)) {
@@ -953,7 +950,7 @@ Akonadi::Collection::List SearchWindow::searchCollectionsRecursive(const Akonadi
         } else {
             const Akonadi::Collection collection = etm->data(colIdx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
             if (!collection.hasAttribute<Akonadi::EntityHiddenAttribute>()
-                    && collection.cachePolicy().localParts().contains(QStringLiteral("RFC822"))) {
+                && collection.cachePolicy().localParts().contains(QStringLiteral("RFC822"))) {
                 result.push_back(collection);
             }
         }

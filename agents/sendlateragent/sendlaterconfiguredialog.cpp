@@ -55,12 +55,12 @@ SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
     readConfig();
 
     KAboutData aboutData = KAboutData(
-                               QStringLiteral("sendlateragent"),
-                               i18n("Send Later Agent"),
-                               QStringLiteral(KDEPIM_VERSION),
-                               i18n("Send emails later agent."),
-                               KAboutLicense::GPL_V2,
-                               i18n("Copyright (C) 2013-2017 Laurent Montel"));
+        QStringLiteral("sendlateragent"),
+        i18n("Send Later Agent"),
+        QStringLiteral(KDEPIM_VERSION),
+        i18n("Send emails later agent."),
+        KAboutLicense::GPL_V2,
+        i18n("Copyright (C) 2013-2017 Laurent Montel"));
 
     aboutData.addAuthor(i18n("Laurent Montel"),
                         i18n("Maintainer"), QStringLiteral("montel@kde.org"));
@@ -113,4 +113,3 @@ void SendLaterConfigureDialog::writeConfig()
     group.writeEntry("Size", size());
     mWidget->saveTreeWidgetHeader(group);
 }
-

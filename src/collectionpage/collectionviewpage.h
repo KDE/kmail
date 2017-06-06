@@ -28,12 +28,10 @@ class QLabel;
 class KComboBox;
 class KIconButton;
 class QRadioButton;
-template <typename T> class QSharedPointer;
+template<typename T> class QSharedPointer;
 
-namespace MessageList
-{
-namespace Utils
-{
+namespace MessageList {
+namespace Utils {
 class AggregationComboBox;
 class ThemeComboBox;
 }
@@ -59,10 +57,10 @@ private Q_SLOTS:
 private:
     void init(const Akonadi::Collection &);
     QSharedPointer<MailCommon::FolderSettings> mFolderCollection;
-    QCheckBox   *mIconsCheckBox;
-    QLabel      *mNormalIconLabel;
+    QCheckBox *mIconsCheckBox;
+    QLabel *mNormalIconLabel;
     KIconButton *mNormalIconButton;
-    QLabel      *mUnreadIconLabel;
+    QLabel *mUnreadIconLabel;
     KIconButton *mUnreadIconButton;
     KComboBox *mShowSenderReceiverComboBox;
     QCheckBox *mUseDefaultAggregationCheckBox;
@@ -80,4 +78,3 @@ private:
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage)
 
 #endif /* COLLECTIONVIEWPAGE_H */
-

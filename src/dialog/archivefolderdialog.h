@@ -26,19 +26,15 @@ class QCheckBox;
 class KUrlRequester;
 class KComboBox;
 class QPushButton;
-namespace Akonadi
-{
+namespace Akonadi {
 class Collection;
 }
 
-namespace MailCommon
-{
+namespace MailCommon {
 class FolderRequester;
 }
 
-namespace KMail
-{
-
+namespace KMail {
 class ArchiveFolderDialog : public QDialog
 {
     Q_OBJECT
@@ -66,7 +62,6 @@ private:
     KUrlRequester *mUrlRequester;
     QPushButton *mOkButton;
 };
-
 }
 
 #endif

@@ -30,18 +30,15 @@ class ListView;
 class QPushButton;
 class QLabel;
 class KPluralHandlingSpinBox;
-namespace TemplateParser
-{
+namespace TemplateParser {
 class CustomTemplates;
 class TemplatesConfiguration;
 }
-namespace PimCommon
-{
+namespace PimCommon {
 class AutoCorrectionWidget;
 class SimpleStringListEditor;
 }
-namespace MessageComposer
-{
+namespace MessageComposer {
 class ImageScalingWidget;
 }
 
@@ -60,26 +57,26 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox     *mShowBalooSearchAddressesInComposer;
-    QCheckBox     *mAutoAppSignFileCheck;
-    QCheckBox     *mTopQuoteCheck;
-    QCheckBox     *mDashDashCheck;
-    QCheckBox     *mReplyUsingHtml;
-    QCheckBox     *mSmartQuoteCheck;
-    QCheckBox     *mStripSignatureCheck;
-    QCheckBox     *mQuoteSelectionOnlyCheck;
-    QCheckBox     *mAutoRequestMDNCheck;
-    QCheckBox        *mShowRecentAddressesInComposer;
-    QCheckBox     *mWordWrapCheck;
-    QSpinBox   *mWrapColumnSpin;
-    KPluralHandlingSpinBox   *mAutoSave;
-    QSpinBox   *mMaximumRecipients;
-    QCheckBox     *mImprovePlainTextOfHtmlMessage;
-    QSpinBox  *mMaximumRecentAddress;
+    QCheckBox *mShowBalooSearchAddressesInComposer;
+    QCheckBox *mAutoAppSignFileCheck;
+    QCheckBox *mTopQuoteCheck;
+    QCheckBox *mDashDashCheck;
+    QCheckBox *mReplyUsingHtml;
+    QCheckBox *mSmartQuoteCheck;
+    QCheckBox *mStripSignatureCheck;
+    QCheckBox *mQuoteSelectionOnlyCheck;
+    QCheckBox *mAutoRequestMDNCheck;
+    QCheckBox *mShowRecentAddressesInComposer;
+    QCheckBox *mWordWrapCheck;
+    QSpinBox *mWrapColumnSpin;
+    KPluralHandlingSpinBox *mAutoSave;
+    QSpinBox *mMaximumRecipients;
+    QCheckBox *mImprovePlainTextOfHtmlMessage;
+    QSpinBox *mMaximumRecentAddress;
 #ifdef KDEPIM_ENTERPRISE_BUILD
-    KComboBox     *mForwardTypeCombo;
-    QCheckBox     *mRecipientCheck;
-    QSpinBox   *mRecipientSpin;
+    KComboBox *mForwardTypeCombo;
+    QCheckBox *mRecipientCheck;
+    QSpinBox *mRecipientSpin;
 #endif
 };
 
@@ -130,9 +127,9 @@ private:
 
 private:
     PimCommon::SimpleStringListEditor *mReplyListEditor;
-    QCheckBox              *mReplaceReplyPrefixCheck;
+    QCheckBox *mReplaceReplyPrefixCheck;
     PimCommon::SimpleStringListEditor *mForwardListEditor;
-    QCheckBox              *mReplaceForwardPrefixCheck;
+    QCheckBox *mReplaceForwardPrefixCheck;
 };
 
 class ComposerPageCharsetTab : public ConfigModuleTab
@@ -153,7 +150,7 @@ private:
 
 private:
     PimCommon::SimpleStringListEditor *mCharsetListEditor;
-    QCheckBox              *mKeepReplyCharsetCheck;
+    QCheckBox *mKeepReplyCharsetCheck;
 };
 
 class ComposerPageHeadersTab : public ConfigModuleTab
@@ -177,14 +174,14 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox   *mCreateOwnMessageIdCheck;
-    QLineEdit   *mMessageIdSuffixEdit;
-    ListView    *mHeaderList;
+    QCheckBox *mCreateOwnMessageIdCheck;
+    QLineEdit *mMessageIdSuffixEdit;
+    ListView *mHeaderList;
     QPushButton *mRemoveHeaderButton;
-    QLineEdit   *mTagNameEdit;
-    QLineEdit   *mTagValueEdit;
-    QLabel      *mTagNameLabel;
-    QLabel      *mTagValueLabel;
+    QLineEdit *mTagNameEdit;
+    QLineEdit *mTagValueEdit;
+    QLabel *mTagNameLabel;
+    QLabel *mTagValueLabel;
 };
 
 class ComposerPageAttachmentsTab : public ConfigModuleTab
@@ -203,8 +200,8 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    QCheckBox   *mOutlookCompatibleCheck;
-    QCheckBox   *mMissingAttachmentDetectionCheck;
+    QCheckBox *mOutlookCompatibleCheck;
+    QCheckBox *mMissingAttachmentDetectionCheck;
     PimCommon::SimpleStringListEditor *mAttachWordsListEditor;
     QSpinBox *mMaximumAttachmentSize;
 };

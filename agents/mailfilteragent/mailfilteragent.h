@@ -33,8 +33,7 @@ class FilterManager;
 class KJob;
 class DummyKernel;
 
-namespace Akonadi
-{
+namespace Akonadi {
 class Monitor;
 }
 

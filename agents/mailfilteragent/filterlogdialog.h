@@ -42,8 +42,7 @@ class QPushButton;
   The filter log dialog allows a continued observation of the
   filter log of MailFilterAgent.
 */
-namespace KPIMTextEdit
-{
+namespace KPIMTextEdit {
 class PlainTextEditorWidget;
 }
 class FilterLogDialog : public QDialog
@@ -77,12 +76,11 @@ private:
     QCheckBox *mLogRuleEvaluationBox;
     QCheckBox *mLogPatternResultBox;
     QCheckBox *mLogFilterActionBox;
-    QSpinBox   *mLogMemLimitSpin;
+    QSpinBox *mLogMemLimitSpin;
     QPushButton *mUser1Button;
     QPushButton *mUser2Button;
 
     bool mIsInitialized;
-
 };
 
 #endif

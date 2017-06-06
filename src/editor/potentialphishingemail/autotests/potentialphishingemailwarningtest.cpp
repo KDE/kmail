@@ -26,12 +26,10 @@
 PotentialPhishingEmailWarningTest::PotentialPhishingEmailWarningTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 PotentialPhishingEmailWarningTest::~PotentialPhishingEmailWarningTest()
 {
-
 }
 
 void PotentialPhishingEmailWarningTest::shouldHaveDefaultValue()

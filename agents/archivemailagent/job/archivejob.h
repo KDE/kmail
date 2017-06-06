@@ -67,6 +67,7 @@ public:
     {
         return 2;
     }
+
 private:
     ArchiveMailInfo *mInfo;
     ArchiveMailManager *mManager;

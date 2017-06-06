@@ -47,26 +47,23 @@
 #include <QLineEdit>
 #include <QMimeData>
 
-namespace KMail
-{
-
+namespace KMail {
 //
 //
 // IdentityListViewItem
 //
 //
 
-IdentityListViewItem::IdentityListViewItem(IdentityListView *parent,
-        const KIdentityManagement::Identity &ident)
-    : QTreeWidgetItem(parent), mUOID(ident.uoid())
+IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, const KIdentityManagement::Identity &ident)
+    : QTreeWidgetItem(parent)
+    , mUOID(ident.uoid())
 {
     init(ident);
 }
 
-IdentityListViewItem::IdentityListViewItem(IdentityListView *parent,
-        QTreeWidgetItem *after,
-        const KIdentityManagement::Identity &ident)
-    : QTreeWidgetItem(parent, after), mUOID(ident.uoid())
+IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagement::Identity &ident)
+    : QTreeWidgetItem(parent, after)
+    , mUOID(ident.uoid())
 {
     init(ident);
 }
@@ -117,8 +114,8 @@ void IdentityListViewItem::init(const KIdentityManagement::Identity &ident)
 //
 
 IdentityListView::IdentityListView(QWidget *parent)
-    : QTreeWidget(parent),
-      mIdentityManager(nullptr)
+    : QTreeWidget(parent)
+    , mIdentityManager(nullptr)
 {
 #ifndef QT_NO_DRAGANDDROP
     setDragEnabled(true);
@@ -162,7 +159,6 @@ void IdentityListView::commitData(QWidget *editor)
     qCDebug(KMAIL_LOG) << "after editing";
 
     if (!selectedItems().isEmpty()) {
-
         QLineEdit *edit = qobject_cast<QLineEdit *>(editor);  // krazy:exclude=qclasses
         if (edit) {
             IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(selectedItems()[0]);
@@ -200,6 +196,7 @@ void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
     drag->setPixmap(QIcon::fromTheme(QStringLiteral("user-identity")).pixmap(16, 16));
     drag->start();
 }
+
 #endif
 
 KIdentityManagement::IdentityManager *IdentityListView::identityManager() const
@@ -212,6 +209,4 @@ void IdentityListView::setIdentityManager(KIdentityManagement::IdentityManager *
 {
     mIdentityManager = im;
 }
-
 } // namespace KMail
-

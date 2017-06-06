@@ -79,4 +79,3 @@ void CollectionQuotaPage::save(Akonadi::Collection &)
 {
     // nothing to do, we are read-only
 }
-

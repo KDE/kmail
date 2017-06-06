@@ -28,9 +28,9 @@
 #include <MessageComposer/MessageHelper>
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
-    : QObject(parent),
-      mIdentity(0),
-      mMsg(nullptr)
+    : QObject(parent)
+    , mIdentity(0)
+    , mMsg(nullptr)
 {
 }
 
@@ -45,7 +45,7 @@ void HandleClickedUrlJob::start()
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
     mMsg->contentType()->setCharset("utf-8");
 
-    const QMap<QString, QString> fields =  MessageCore::StringUtil::parseMailtoUrl(mUrl);
+    const QMap<QString, QString> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
 
     mMsg->to()->fromUnicodeString(fields.value(QStringLiteral("to")), "utf-8");
     const QString subject = fields.value(QStringLiteral("subject"));
@@ -75,6 +75,7 @@ void HandleClickedUrlJob::start()
     parser->setIdentityManager(KMKernel::self()->identityManager());
     parser->process(mMsg, mCurrentCollection);
 }
+
 void HandleClickedUrlJob::slotOpenComposer()
 {
     KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);

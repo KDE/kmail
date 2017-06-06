@@ -60,35 +60,34 @@ CollectionStorageModel::~CollectionStorageModel()
 bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) const
 {
     if (c.hasAttribute<Akonadi::MessageFolderAttribute>()
-            && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder()) {
+        && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder()) {
         return true;
     }
     QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(c, false);
     if (fd) {
         const QString folderId(QString::number(c.id()));
         // default setting
-        const KIdentityManagement::Identity &identity =
-            kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());
+        const KIdentityManagement::Identity &identity
+            = kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());
 
         bool isOnline = false;
-        if (CommonKernel->isSystemFolderCollection(c) &&
-                !PimCommon::MailUtil::isImapFolder(c, isOnline)) {
+        if (CommonKernel->isSystemFolderCollection(c)
+            && !PimCommon::MailUtil::isImapFolder(c, isOnline)) {
             // local system folders
-            if (c == CommonKernel->inboxCollectionFolder() ||
-                    c == CommonKernel->trashCollectionFolder()) {
+            if (c == CommonKernel->inboxCollectionFolder()
+                || c == CommonKernel->trashCollectionFolder()) {
                 return false;
             }
-            if (c == CommonKernel->outboxCollectionFolder() ||
-                    c == CommonKernel->sentCollectionFolder() ||
-                    c == CommonKernel->templatesCollectionFolder() ||
-                    c == CommonKernel->draftsCollectionFolder()) {
+            if (c == CommonKernel->outboxCollectionFolder()
+                || c == CommonKernel->sentCollectionFolder()
+                || c == CommonKernel->templatesCollectionFolder()
+                || c == CommonKernel->draftsCollectionFolder()) {
                 return true;
             }
-        } else if (identity.drafts() == folderId ||
-                   identity.templates() == folderId ||
-                   identity.fcc() == folderId)
+        } else if (identity.drafts() == folderId
+                   || identity.templates() == folderId
+                   || identity.fcc() == folderId) {
             // drafts, templates or sent of the identity
-        {
             return true;
         } else {
             return false;
@@ -97,4 +96,3 @@ bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) cons
 
     return false;
 }
-

@@ -26,12 +26,10 @@
 RemoveDuplicateMessageInFolderAndSubFolderJob::RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 RemoveDuplicateMessageInFolderAndSubFolderJob::~RemoveDuplicateMessageInFolderAndSubFolderJob()
 {
-
 }
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::start()

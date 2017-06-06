@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "kmcomposercreatenewcomposerjob.h"
 #include "config-kmail.h"
 #include "kmkernel.h"
@@ -29,16 +28,14 @@
 #include <TemplateParser/TemplateParserJob>
 
 KMComposerCreateNewComposerJob::KMComposerCreateNewComposerJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr),
-      mCurrentIdentity(0)
+    : QObject(parent)
+    , mMsg(nullptr)
+    , mCurrentIdentity(0)
 {
-
 }
 
 KMComposerCreateNewComposerJob::~KMComposerCreateNewComposerJob()
 {
-
 }
 
 void KMComposerCreateNewComposerJob::start()

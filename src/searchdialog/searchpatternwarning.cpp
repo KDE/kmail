@@ -51,4 +51,3 @@ void SearchPatternWarning::hideWarningPattern()
     setText(QString());
     animatedHide();
 }
-

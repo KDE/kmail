@@ -27,9 +27,9 @@
 #include <QDate>
 
 FolderArchiveAgentCheckCollection::FolderArchiveAgentCheckCollection(FolderArchiveAccountInfo *info, QObject *parent)
-    : QObject(parent),
-      mCurrentDate(QDate::currentDate()),
-      mInfo(info)
+    : QObject(parent)
+    , mCurrentDate(QDate::currentDate())
+    , mInfo(info)
 {
 }
 
@@ -105,4 +105,3 @@ void FolderArchiveAgentCheckCollection::slotCreateNewFolder(KJob *job)
     Akonadi::CollectionCreateJob *createJob = qobject_cast<Akonadi::CollectionCreateJob *>(job);
     Q_EMIT collectionIdFound(createJob->collection());
 }
-

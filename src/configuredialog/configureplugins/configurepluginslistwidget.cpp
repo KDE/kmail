@@ -48,8 +48,7 @@
 #include <MessageViewer/HeaderStylePlugin>
 #include <AkonadiCore/AgentManager>
 
-namespace
-{
+namespace {
 QString pluginEditorGroupName()
 {
     return QStringLiteral("plugineditorgroupname");
@@ -104,26 +103,26 @@ ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
 void ConfigurePluginsListWidget::save()
 {
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorManager::self()->configGroupName(),
-            MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
-            mPluginEditorItems);
+                                                       MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
+                                                       mPluginEditorItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::ViewerPluginManager::self()->configGroupName(),
-            MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
-            mPluginMessageViewerItems);
+                                                       MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
+                                                       mPluginMessageViewerItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorInitManager::self()->configGroupName(),
-            MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
-            mPluginEditorInitItems);
+                                                       MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
+                                                       mPluginEditorInitItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
-            MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
-            mPluginCheckBeforeSendItems);
+                                                       MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
+                                                       mPluginCheckBeforeSendItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(KMailPluginInterface::self()->configGroupName(),
-            KMailPluginInterface::self()->configPrefixSettingKey(),
-            mPluginGenericItems);
+                                                       KMailPluginInterface::self()->configPrefixSettingKey(),
+                                                       mPluginGenericItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
-            WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
-            mPluginWebEngineItems);
+                                                       WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
+                                                       mPluginWebEngineItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
-            MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
-            mPluginHeaderStyleItems);
+                                                       MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
+                                                       mPluginHeaderStyleItems);
     saveAkonadiAgent();
 }
 
@@ -162,60 +161,60 @@ void ConfigurePluginsListWidget::initialize()
 
     //Load CheckBeforeSend
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList(),
-            i18n("Check Before Send Plugins"),
-            MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
-            MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
-            mPluginCheckBeforeSendItems,
-            pluginEditorCheckBeforeGroupName());
+                                                        i18n("Check Before Send Plugins"),
+                                                        MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
+                                                        MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
+                                                        mPluginCheckBeforeSendItems,
+                                                        pluginEditorCheckBeforeGroupName());
 
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorInitManager::self()->pluginsDataList(),
-            i18n("Composer Plugins"),
-            MessageComposer::PluginEditorInitManager::self()->configGroupName(),
-            MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
-            mPluginEditorInitItems,
-            pluginEditorInitGroupName());
+                                                        i18n("Composer Plugins"),
+                                                        MessageComposer::PluginEditorInitManager::self()->configGroupName(),
+                                                        MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
+                                                        mPluginEditorInitItems,
+                                                        pluginEditorInitGroupName());
 
     //Load generic plugins
     //Necessary to initialize pluging when we load it outside kmail
     KMailPluginInterface::self()->initializePlugins();
     PimCommon::ConfigurePluginsListWidget::fillTopItems(KMailPluginInterface::self()->pluginsDataList(),
-            i18n("Tools Plugins"),
-            KMailPluginInterface::self()->configGroupName(),
-            KMailPluginInterface::self()->configPrefixSettingKey(),
-            mPluginGenericItems,
-            kmailPluginToolsGroupName());
+                                                        i18n("Tools Plugins"),
+                                                        KMailPluginInterface::self()->configGroupName(),
+                                                        KMailPluginInterface::self()->configPrefixSettingKey(),
+                                                        mPluginGenericItems,
+                                                        kmailPluginToolsGroupName());
 
     //Load plugin editor
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(),
-            i18n("Editor Plugins"),
-            MessageComposer::PluginEditorManager::self()->configGroupName(),
-            MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
-            mPluginEditorItems,
-            pluginEditorGroupName());
+                                                        i18n("Editor Plugins"),
+                                                        MessageComposer::PluginEditorManager::self()->configGroupName(),
+                                                        MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
+                                                        mPluginEditorItems,
+                                                        pluginEditorGroupName());
 
     //Load messageviewer plugin
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::ViewerPluginManager::self()->pluginsDataList(),
-            i18n("Message Viewer"),
-            MessageViewer::ViewerPluginManager::self()->configGroupName(),
-            MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
-            mPluginMessageViewerItems,
-            viewerPluginGroupName());
+                                                        i18n("Message Viewer"),
+                                                        MessageViewer::ViewerPluginManager::self()->configGroupName(),
+                                                        MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
+                                                        mPluginMessageViewerItems,
+                                                        viewerPluginGroupName());
 
     //Load webengineplugin
     PimCommon::ConfigurePluginsListWidget::fillTopItems(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsDataList(),
-            i18n("Webengine Plugins"),
-            WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
-            WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
-            mPluginWebEngineItems,
-            networkUrlInterceptorGroupName());
+                                                        i18n("Webengine Plugins"),
+                                                        WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
+                                                        WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
+                                                        mPluginWebEngineItems,
+                                                        networkUrlInterceptorGroupName());
 
     //Load headerstyle
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::HeaderStylePluginManager::self()->pluginsDataList(),
-            i18n("Header Style Plugins"),
-            MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
-            MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
-            mPluginHeaderStyleItems,
-            headerStyleGroupName());
+                                                        i18n("Header Style Plugins"),
+                                                        MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
+                                                        MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
+                                                        mPluginHeaderStyleItems,
+                                                        headerStyleGroupName());
     //Load Agent Plugin
     initializeAgentPlugins();
     mListWidget->expandAll();
@@ -231,12 +230,11 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"));
 
     PimCommon::ConfigurePluginsListWidget::fillTopItems(mPluginUtilDataList,
-            i18n("Akonadi Agents"),
-            QString(),
-            QString(),
-            mAgentPluginsItems,
-            agentAkonadiGroupName());
-
+                                                        i18n("Akonadi Agents"),
+                                                        QString(),
+                                                        QString(),
+                                                        mAgentPluginsItems,
+                                                        agentAkonadiGroupName());
 }
 
 PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(const QString &interfaceName, const QString &path)

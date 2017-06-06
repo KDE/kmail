@@ -29,8 +29,7 @@
 
 class DropWidget;
 
-namespace KontactInterface
-{
+namespace KontactInterface {
 class Core;
 class Summary;
 }
@@ -47,8 +46,7 @@ class SummaryViewPart : public KParts::ReadOnlyPart
     Q_OBJECT
 
 public:
-    SummaryViewPart(KontactInterface::Core *core,
-                    const KAboutData &aboutData, QObject *parent = nullptr);
+    SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent = nullptr);
     ~SummaryViewPart();
 
 public Q_SLOTS:
@@ -91,7 +89,6 @@ private:
     QLabel *mUsernameLabel;
     QLabel *mDateLabel;
     QAction *mConfigAction;
-
 };
 
 #endif

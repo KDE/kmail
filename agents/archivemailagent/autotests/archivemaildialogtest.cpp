@@ -26,12 +26,10 @@
 ArchiveMailDialogTest::ArchiveMailDialogTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 ArchiveMailDialogTest::~ArchiveMailDialogTest()
 {
-
 }
 
 void ArchiveMailDialogTest::shouldHaveDefaultValue()
@@ -45,7 +43,6 @@ void ArchiveMailDialogTest::shouldHaveDefaultValue()
     QVERIFY(treeWidget);
 
     QCOMPARE(treeWidget->topLevelItemCount(), 0);
-
 }
 
 QTEST_MAIN(ArchiveMailDialogTest)
