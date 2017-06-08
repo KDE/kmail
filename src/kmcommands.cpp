@@ -263,7 +263,7 @@ void KMCommand::start()
 
     // Special case of operating on message that isn't in a folder
     const Akonadi::Item mb = mMsgList.first();
-    if ((mMsgList.count() == 1) && MessageCore::Util::isStandaloneMessage(mb)) {
+    if ((mMsgList.count() == 1) && MessageComposer::Util::isStandaloneMessage(mb)) {
         mRetrievedMsgs.append(mMsgList.takeFirst());
         Q_EMIT messagesTransfered(OK);
         return;
