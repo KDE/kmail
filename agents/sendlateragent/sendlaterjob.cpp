@@ -22,7 +22,6 @@
 
 #include "MessageComposer/AkonadiSender"
 #include <MessageComposer/Util>
-#include "messagecore/messagehelpers.h"
 #include <MessageCore/StringUtil>
 
 #include <mailtransportakonadi/transportattribute.h>
@@ -104,7 +103,7 @@ void SendLaterJob::slotJobFinished(KJob *job)
     }
 
     if (mItem.isValid()) {
-        const KMime::Message::Ptr msg = MessageCore::Util::message(mItem);
+        const KMime::Message::Ptr msg = MessageComposer::Util::message(mItem);
         if (!msg) {
             sendError(i18n("Message is not a real message"), SendLaterManager::CanNotFetchItem);
             return;

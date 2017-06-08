@@ -100,7 +100,6 @@ using KSieveUi::SieveDebugDialog;
 
 #include <MessageCore/MessageCoreSettings>
 #include "MessageCore/MailingList"
-#include "messagecore/messagehelpers.h"
 
 #include "dialog/kmknotify.h"
 #include "widgets/displaymessageformatactionmenu.h"
@@ -1366,7 +1365,7 @@ void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
     const Akonadi::Item::List items = fetchJob->items();
     const int numberOfItems = items.count();
     for (int idx = 0; idx < numberOfItems; ++idx) {
-        KMime::Message::Ptr msg = MessageCore::Util::message(items.at(idx));
+        KMime::Message::Ptr msg = MessageComposer::Util::message(items.at(idx));
         if (msg) {
             QString subj = msg->subject()->asUnicodeString();
             if (subj.isEmpty()) {

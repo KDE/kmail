@@ -82,7 +82,6 @@
 #include <MessageCore/StringUtil>
 #include <MessageCore/MessageCoreSettings>
 #include <MessageCore/StringUtil>
-#include <MessageCore/MessageHelpers>
 #include <MessageCore/MailingList>
 
 #include <MessageComposer/MessageSender>
@@ -445,7 +444,7 @@ KMMailtoReplyCommand::KMMailtoReplyCommand(QWidget *parent, const QUrl &url, con
 KMCommand::Result KMMailtoReplyCommand::execute()
 {
     Akonadi::Item item = retrievedMessage();
-    KMime::Message::Ptr msg = MessageCore::Util::message(item);
+    KMime::Message::Ptr msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -475,7 +474,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 {
     //TODO : consider factoring createForward into this method.
     Akonadi::Item item = retrievedMessage();
-    KMime::Message::Ptr msg = MessageCore::Util::message(item);
+    KMime::Message::Ptr msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -610,7 +609,7 @@ KMCommand::Result KMEditItemCommand::execute()
     if (!item.isValid() || !item.parentCollection().isValid()) {
         return Failed;
     }
-    KMime::Message::Ptr msg = MessageCore::Util::message(item);
+    KMime::Message::Ptr msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -686,7 +685,7 @@ KMCommand::Result KMUseTemplateCommand::execute()
         ) {
         return Failed;
     }
-    KMime::Message::Ptr msg = MessageCore::Util::message(item);
+    KMime::Message::Ptr msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -857,7 +856,7 @@ KMCommand::Result KMReplyCommand::execute()
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
 #endif
     Akonadi::Item item = retrievedMessage();
-    KMime::Message::Ptr msg = MessageCore::Util::message(item);
+    KMime::Message::Ptr msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -899,7 +898,7 @@ KMForwardCommand::KMForwardCommand(QWidget *parent, const Akonadi::Item &msg, ui
 
 KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
 {
-    KMime::Message::Ptr msg = MessageCore::Util::message(item);
+    KMime::Message::Ptr msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -1054,7 +1053,7 @@ KMCommand::Result KMRedirectCommand::execute()
     const QString bcc = dlg->bcc();
     const Akonadi::Item::List lstItems = retrievedMsgs();
     for (const Akonadi::Item &item : lstItems) {
-        const KMime::Message::Ptr msg = MessageCore::Util::message(item);
+        const KMime::Message::Ptr msg = MessageComposer::Util::message(item);
         if (!msg) {
             return Failed;
         }
@@ -1388,7 +1387,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
     QByteArray name;
     QString value;
     Akonadi::Item item = retrievedMessage();
-    KMime::Message::Ptr msg = MessageCore::Util::message(item);
+    KMime::Message::Ptr msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -1598,7 +1597,7 @@ KMResendMessageCommand::KMResendMessageCommand(QWidget *parent, const Akonadi::I
 KMCommand::Result KMResendMessageCommand::execute()
 {
     Akonadi::Item item = retrievedMessage();
-    KMime::Message::Ptr msg = MessageCore::Util::message(item);
+    KMime::Message::Ptr msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }

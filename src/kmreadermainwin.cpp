@@ -67,7 +67,6 @@
 #include <AkonadiCore/itemmovejob.h>
 #include <Akonadi/KMime/MessageFlags>
 #include "kpimtextedit/texttospeech.h"
-#include "messagecore/messagehelpers.h"
 #include <mailcommon/mailutil.h>
 
 using namespace MailCommon;
@@ -135,7 +134,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     mParentCollection = parentCollection;
     mReaderWin->setOverrideEncoding(encoding);
     mReaderWin->setMessage(msg, MimeTreeParser::Force);
-    KMime::Message::Ptr message = MessageCore::Util::message(msg);
+    KMime::Message::Ptr message = MessageComposer::Util::message(msg);
     QString caption;
     if (message) {
         caption = message->subject()->asUnicodeString();
