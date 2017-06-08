@@ -59,8 +59,6 @@ using KPIM::RecentAddresses;
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 
-#include <libkdepimakonadi/blacklistbalooemailcompletiondialog.h>
-
 #include <libkdepimakonadi/completionconfiguredialog.h>
 
 QString ComposerPage::helpAnchor() const
