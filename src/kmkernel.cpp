@@ -102,13 +102,6 @@ using KMail::MailServiceImpl;
 #include <QtDBus/QtDBus>
 #include <QMimeDatabase>
 
-#include <sys/types.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
 #include <MailCommon/ResourceReadConfigFile>
 
 #include <kstartupinfo.h>
