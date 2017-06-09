@@ -80,12 +80,6 @@ using namespace MessageViewer;
 #undef Never
 #undef Always
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
 #include <mailcommon/mailutil.h>
 
 using namespace KMail;

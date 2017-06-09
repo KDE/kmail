@@ -112,9 +112,6 @@
 
 #include <gpgme++/error.h>
 
-#include <algorithm>
-#include <memory>
-#include <unistd.h> // link()
 #include <KBookmarkManager>
 
 #include <KDBusServiceStarter>

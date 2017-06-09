@@ -188,11 +188,6 @@
 #include <gpgme++/keylistresult.h>
 #include <gpgme++/key.h>
 
-// System includes
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <memory>
 #include <KSplitterCollapserButton>
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <editor/potentialphishingemail/potentialphishingemailjob.h>
