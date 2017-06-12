@@ -1382,10 +1382,9 @@ bool KMKernel::selectFolder(const QString &folder)
 KMMainWidget *KMKernel::getKMMainWidget()
 {
     //This could definitely use a speadup
-    QWidgetList l = QApplication::topLevelWidgets();
-    QWidget *wid;
+    const QWidgetList l = QApplication::topLevelWidgets();
 
-    Q_FOREACH (wid, l) {
+    for (QWidget *wid : l) {
         QList<KMMainWidget *> l2 = wid->window()->findChildren<KMMainWidget *>();
         if (!l2.isEmpty() && l2.first()) {
             return l2.first();
