@@ -47,9 +47,9 @@ void KMComposerUpdateTemplateJob::start()
     parser->setAllowDecryption(true);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     if (!mCustomTemplate.isEmpty()) {
-        parser->process(mCustomTemplate, mMsg, mCollectionForNewMessage);
+        parser->process(mCustomTemplate, mMsg, mCollectionForNewMessage.id());
     } else {
-        parser->processWithIdentity(mUoid, mMsg, mCollectionForNewMessage);
+        parser->processWithIdentity(mUoid, mMsg, mCollectionForNewMessage.id());
     }
 }
 

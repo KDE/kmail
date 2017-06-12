@@ -73,7 +73,7 @@ void HandleClickedUrlJob::start()
     TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &HandleClickedUrlJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
-    parser->process(mMsg, mCurrentCollection);
+    parser->process(mMsg, mCurrentCollection.id());
 }
 
 void HandleClickedUrlJob::slotOpenComposer()

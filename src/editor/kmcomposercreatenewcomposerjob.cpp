@@ -46,7 +46,7 @@ void KMComposerCreateNewComposerJob::start()
     TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &KMComposerCreateNewComposerJob::slotCreateNewComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
-    parser->process(mMsg, mCollectionForNewMessage);
+    parser->process(mMsg, mCollectionForNewMessage.id());
 }
 
 void KMComposerCreateNewComposerJob::slotCreateNewComposer(bool forceCursorPosition)

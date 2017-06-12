@@ -59,7 +59,7 @@ void NewMessageJob::start()
     TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &NewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
-    parser->process(mMsg, mCollection);
+    parser->process(mMsg, mCollection.id());
 }
 
 void NewMessageJob::slotOpenComposer()

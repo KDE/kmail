@@ -52,9 +52,9 @@ void ComposeNewMessageJob::start()
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &ComposeNewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     if (mFolder) {
-        parser->process(mMsg, mCurrentCollection);
+        parser->process(mMsg, mCurrentCollection.id());
     } else {
-        parser->process(KMime::Message::Ptr(), Akonadi::Collection());
+        parser->process(KMime::Message::Ptr());
     }
 }
 
