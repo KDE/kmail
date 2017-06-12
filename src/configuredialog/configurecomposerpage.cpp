@@ -33,7 +33,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "templateparser/customtemplates.h"
 #include "globalsettings_templateparser.h"
 
-#include "libkdepimakonadi/recentaddresses.h"
+#include "libkdepim/recentaddresses.h"
 #include <Libkdepim/LdapClientSearch>
 #include "libkdepimakonadi/completionordereditor.h"
 using KPIM::RecentAddresses;

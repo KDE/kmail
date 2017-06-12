@@ -19,7 +19,7 @@ using KPIM::BroadcastStatus;
 #include "kmmainwidget.h"
 
 #include "search/checkindexingmanager.h"
-#include "libkdepimakonadi/recentaddresses.h"
+#include "libkdepim/recentaddresses.h"
 using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
