@@ -93,3 +93,8 @@ void KMComposerUpdateTemplateJob::setIdent(const KIdentityManagement::Identity &
 {
     mIdent = ident;
 }
+
+void KMComposerUpdateTemplateJob::setCollection(const Akonadi::Collection &col)
+{
+    mCollectionForNewMessage = col;
+}

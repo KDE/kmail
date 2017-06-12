@@ -46,6 +46,7 @@ public:
 
     void setIdent(const KIdentityManagement::Identity &ident);
 
+    void setCollection(const Akonadi::Collection &col);
 Q_SIGNALS:
     void updateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
 
