@@ -950,6 +950,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
         job->setUoldId(uOldId);
         job->setUoid(uoid);
         job->setIdent(ident);
+        job->setCollection(mCollectionForNewMessage);
         job->start();
     } else {
         if (auto hrd = mMsg->headerByType("X-KMail-Link-Message")) {
