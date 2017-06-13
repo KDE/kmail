@@ -169,6 +169,7 @@ set(kmailprivate_checkindexing_LIB_SRCS
     
 set(kmailprivate_sieveimapinstanceinterface_LIB_SRCS
     sieveimapinterface/kmailsieveimapinstanceinterface.cpp
+    sieveimapinterface/kmsieveimappasswordprovider.cpp
     )
 
 set(kmail_common_SRCS)

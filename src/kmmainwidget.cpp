@@ -52,6 +52,7 @@
 #include "kpimtextedit/texttospeech.h"
 #include "job/markallmessagesasreadinfolderandsubfolderjob.h"
 #include "job/removeduplicatemessageinfolderandsubfolderjob.h"
+#include "sieveimapinterface/kmsieveimappasswordprovider.h"
 #if !defined(NDEBUG)
 #include <KSieveUi/SieveDebugDialog>
 using KSieveUi::SieveDebugDialog;
@@ -249,7 +250,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mPreferHtmlLoadExtAction = nullptr;
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
     mFavoritesModel = nullptr;
-    mVacationManager = new KSieveUi::VacationManager(this);
+    mSievePasswordProvider = new KMSieveImapPasswordProvider(winId());
+    mVacationManager = new KSieveUi::VacationManager(mSievePasswordProvider, this);
     connect(mVacationManager, SIGNAL(updateVacationScriptStatus(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)));
 
     mToolbarActionSeparator = new QAction(this);
@@ -402,6 +404,7 @@ void KMMainWidget::destruct()
     clearCurrentFolder();
     delete mMoveOrCopyToDialog;
     delete mSelectFromAllFoldersDialog;
+    delete mSievePasswordProvider;
 
     disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)), this, nullptr);
     disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), this, nullptr);
@@ -1308,7 +1311,7 @@ void KMMainWidget::slotManageSieveScripts()
         return;
     }
 
-    mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog;
+    mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog(mSievePasswordProvider);
     connect(mManageSieveDialog.data(), &KSieveUi::ManageSieveScriptsDialog::finished, this, &KMMainWidget::slotCheckVacation);
     mManageSieveDialog->show();
 }
@@ -2249,7 +2252,7 @@ void KMMainWidget::slotDebugSieve()
         return;
     }
 
-    mSieveDebugDialog = new KSieveUi::SieveDebugDialog(this);
+    mSieveDebugDialog = new KSieveUi::SieveDebugDialog(mSievePasswordProvider, this);
     mSieveDebugDialog->exec();
     delete mSieveDebugDialog;
 #endif

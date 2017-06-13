@@ -20,6 +20,7 @@
 #include <KSieveUi/SieveDebugDialog>
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
 #include "../../../sieveimapinterface/kmailsieveimapinstanceinterface.h"
+#include "../../../sieveimapinterface/kmsieveimappasswordprovider.h"
 
 #include <QApplication>
 
@@ -31,7 +32,8 @@ int main(int argc, char **argv)
     QApplication::setApplicationVersion(QStringLiteral("1.0"));
 
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
-    KSieveUi::SieveDebugDialog *dlg = new KSieveUi::SieveDebugDialog;
+    KMSieveImapPasswordProvider provider(0);
+    KSieveUi::SieveDebugDialog *dlg = new KSieveUi::SieveDebugDialog(&provider);
     dlg->exec();
     delete dlg;
     return 0;

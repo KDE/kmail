@@ -78,6 +78,7 @@ class FolderShortcutActionManager;
 
 namespace KSieveUi {
 class SieveDebugDialog;
+class SieveImapPasswordProvider;
 class ManageSieveScriptsDialog;
 class VacationManager;
 }
@@ -656,6 +657,7 @@ private:
 
     QTimer mCheckMailTimer;
 
+    KSieveUi::SieveImapPasswordProvider *mSievePasswordProvider;
     QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
     QAction *mServerSideSubscription;
