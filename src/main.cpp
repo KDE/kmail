@@ -114,6 +114,7 @@ int main(int argc, char *argv[])
     KLocalizedString::setApplicationDomain("kmail");
     app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    app.setDesktopFileName(QStringLiteral("org.kde.kmail2"));
     KCrash::initialize();
     KMail::AboutData about;
     app.setAboutData(about);
