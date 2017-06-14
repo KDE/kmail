@@ -98,7 +98,7 @@ ArchiveMailWidget::~ArchiveMailWidget()
 void ArchiveMailWidget::customContextMenuRequested(const QPoint &)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
-    QMenu menu;
+    QMenu menu(this);
     menu.addAction(i18n("Add..."), this, &ArchiveMailWidget::slotAddItem);
     if (!listItems.isEmpty()) {
         if (listItems.count() == 1) {

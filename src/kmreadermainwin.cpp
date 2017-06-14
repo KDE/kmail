@@ -503,7 +503,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
     if (!url.isEmpty()) {
         if (url.scheme() == QLatin1String("mailto")) {
             // popup on a mailto URL
-            menu = new QMenu;
+            menu = new QMenu(this);
             menu->addAction(mReaderWin->mailToComposeAction());
             if (messageHasPayload) {
                 menu->addAction(mReaderWin->mailToReplyAction());
@@ -529,7 +529,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             urlMenuAdded = true;
         } else if (url.scheme() != QLatin1String("attachment")) {
             // popup on a not-mailto URL
-            menu = new QMenu;
+            menu = new QMenu(this);
             menu->addAction(mReaderWin->urlOpenAction());
             menu->addAction(mReaderWin->addBookmarksAction());
             menu->addAction(mReaderWin->urlSaveAsAction());
@@ -550,7 +550,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
     const QString selectedText(mReaderWin->copyText());
     if (!selectedText.isEmpty()) {
         if (!menu) {
-            menu = new QMenu;
+            menu = new QMenu(this);
         }
         if (urlMenuAdded) {
             menu->addSeparator();
@@ -575,7 +575,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
         }
     } else if (!urlMenuAdded) {
         if (!menu) {
-            menu = new QMenu;
+            menu = new QMenu(this);
         }
 
         // popup somewhere else (i.e., not a URL) on the message

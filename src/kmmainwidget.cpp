@@ -2677,7 +2677,7 @@ void KMMainWidget::slotContactSearchJobForMessagePopupDone(KJob *job)
 void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
                                     const WebEngineViewer::WebHitTestResult &result)
 {
-    QMenu *menu = new QMenu;
+    QMenu *menu = new QMenu(this);
 
     bool urlMenuAdded = false;
 

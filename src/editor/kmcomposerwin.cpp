@@ -1996,7 +1996,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                 QImage image = qvariant_cast<QImage>(source->imageData());
                 QFileInfo fi(source->text());
 
-                QMenu menu;
+                QMenu menu(this);
                 const QAction *addAsInlineImageAction = menu.addAction(i18n("Add as &Inline Image"));
                 /*const QAction *addAsAttachmentAction = */ menu.addAction(i18n("Add as &Attachment"));
                 const QAction *selectedAction = menu.exec(QCursor::pos());

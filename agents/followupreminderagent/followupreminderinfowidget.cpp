@@ -192,7 +192,7 @@ void FollowUpReminderInfoWidget::customContextMenuRequested(const QPoint &pos)
     const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();
     const int nbElementSelected = listItems.count();
     if (nbElementSelected > 0) {
-        QMenu menu;
+        QMenu menu(this);
         QAction *showMessage = nullptr;
         FollowUpReminderInfoItem *mailItem = nullptr;
         if ((nbElementSelected == 1)) {

@@ -104,7 +104,7 @@ void SendLaterWidget::customContextMenuRequested(const QPoint &)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
     if (!listItems.isEmpty()) {
-        QMenu menu;
+        QMenu menu(this);
         if (listItems.count() == 1) {
             menu.addAction(i18n("Send now"), this, &SendLaterWidget::slotSendNow);
         }
