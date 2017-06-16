@@ -40,7 +40,7 @@
 
 AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
     : QDialog(parent)
-    , mAttach(0)
+    , mAttach(nullptr)
 {
     setModal(true);
 
@@ -170,7 +170,7 @@ void AttachPropertyDialog::formatPropertySet(KTNEFPropertySet *pSet, QTreeWidget
 bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet, QWidget *parent)
 {
     QList<QTreeWidgetItem *> list = lv->selectedItems();
-    if (list.isEmpty() || !list.first()) {
+    if (list.isEmpty()) {
         KMessageBox::error(
             parent,
             i18nc("@info",

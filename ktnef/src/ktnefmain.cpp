@@ -216,7 +216,7 @@ void KTNEFMain::loadFile(const QString &filename)
 
 void KTNEFMain::openFile()
 {
-    QString filename = QFileDialog::getOpenFileName(this, i18nc("@title:window", "Open TNEF File"));
+    const QString filename = QFileDialog::getOpenFileName(this, i18nc("@title:window", "Open TNEF File"));
     if (!filename.isEmpty()) {
         loadFile(filename);
     }
@@ -420,7 +420,7 @@ void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
     }
 
     QAction *prop = nullptr;
-    QMenu *menu = new QMenu();
+    QMenu *menu = new QMenu(this);
     if (list.count() == 1) {
         createOpenWithMenu(menu);
         menu->addSeparator();
