@@ -21,7 +21,7 @@
 #include <QDialog>
 
 namespace Akonadi {
-class ContactEditor;
+class AkonadiContactEditor;
 }
 
 class IdentityEditVcardDialog : public QDialog
@@ -50,7 +50,7 @@ private Q_SLOTS:
 private:
     void deleteCurrentVcard(bool deleteOnDisk);
     QString mVcardFileName;
-    Akonadi::ContactEditor *mContactEditor;
+    Akonadi::AkonadiContactEditor *mContactEditor;
 };
 
 #endif // IDENTITYEDITVCARDDIALOG_H

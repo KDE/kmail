@@ -37,7 +37,7 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     setModal(true);
 
-    mContactEditor = new Akonadi::ContactEditor(Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this);
+    mContactEditor = new Akonadi::AkonadiContactEditor(Akonadi::AkonadiContactEditor::CreateMode, Akonadi::AkonadiContactEditor::VCardMode, this);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
