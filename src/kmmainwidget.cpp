@@ -2879,7 +2879,7 @@ void KMMainWidget::setupActions()
     }
 
     mSendActionMenu = new KActionMenuTransport(this);
-    mSendActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send-via")));
+    mSendActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send")));
     mSendActionMenu->setText(i18n("Send Queued Messages Via"));
     actionCollection()->addAction(QStringLiteral("send_queued_via"), mSendActionMenu);
 
