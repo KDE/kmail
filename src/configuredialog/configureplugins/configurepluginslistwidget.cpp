@@ -26,7 +26,7 @@
 #include <MessageComposer/PluginEditorInitManager>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 #include <PimCommon/GenericPluginManager>
-
+#include <AkonadiCore/ServerManager>
 #include <PimCommon/PluginUtil>
 #include <KConfigGroup>
 #include <KSharedConfig>
@@ -243,9 +243,13 @@ PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(cons
     data.mEnableByDefault = true;
     data.mHasConfigureDialog = true;
     const Akonadi::AgentType::List lstAgent = Akonadi::AgentManager::self()->types();
+    QString service = interfaceName;
+    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
+        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
+    }
     for (const Akonadi::AgentType &type : lstAgent) {
-        if (type.identifier() == interfaceName) {
-            data.mExtraInfo << interfaceName;
+        if (type.identifier() == service) {
+            data.mExtraInfo << service;
             data.mExtraInfo << path;
             bool failed = false;
             const bool enabled = agentActivateState(interfaceName, path, failed);
