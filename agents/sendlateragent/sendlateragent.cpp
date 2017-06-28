@@ -26,6 +26,7 @@
 #include "sendlateragentsettings.h"
 #include "sendlaterremovemessagejob.h"
 #include "sendlateragent_debug.h"
+#include <AkonadiCore/ServerManager>
 #include <Akonadi/KMime/SpecialMailCollections>
 #include <AgentInstance>
 #include <AgentManager>
@@ -56,7 +57,12 @@ SendLaterAgent::SendLaterAgent(const QString &id)
     connect(mManager, &SendLaterManager::needUpdateConfigDialogBox, this, &SendLaterAgent::needUpdateConfigDialogBox);
     new SendLaterAgentAdaptor(this);
     KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/SendLaterAgent"), this, QDBusConnection::ExportAdaptors);
-    KDBusConnectionPool::threadConnection().registerService(QStringLiteral("org.freedesktop.Akonadi.SendLaterAgent"));
+    QString service = QStringLiteral("org.freedesktop.Akonadi.SendLaterAgent");
+    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
+        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
+    }
+
+    KDBusConnectionPool::threadConnection().registerService(service);
 
     changeRecorder()->setMimeTypeMonitored(KMime::Message::mimeType());
     changeRecorder()->itemFetchScope().setCacheOnly(true);

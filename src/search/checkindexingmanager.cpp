@@ -24,6 +24,7 @@
 #include <AkonadiCore/CachePolicy>
 #include <KSharedConfig>
 #include <KConfigGroup>
+#include <AkonadiCore/ServerManager>
 #include <MailCommon/MailUtil>
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>
@@ -95,7 +96,11 @@ void CheckIndexingManager::checkNextCollection()
 void CheckIndexingManager::callToReindexCollection()
 {
     if (!mCollectionsNeedToBeReIndexed.isEmpty()) {
-        QDBusInterface interfaceBalooIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+        QString service = QStringLiteral("org.freedesktop.Akonadi.Indexer");
+        if (Akonadi::ServerManager::hasInstanceIdentifier()) {
+            service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
+        }
+        QDBusInterface interfaceBalooIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), service);
         if (interfaceBalooIndexer.isValid()) {
             qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
             interfaceBalooIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));

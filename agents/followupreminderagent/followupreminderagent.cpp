@@ -33,6 +33,7 @@
 #include <Kdelibs4ConfigMigrator>
 #include <AkonadiCore/Session>
 #include <AkonadiCore/CollectionFetchScope>
+#include <AkonadiCore/ServerManager>
 
 #include <QPointer>
 #include "followupreminderagent_debug.h"
@@ -47,7 +48,12 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
 
     new FollowUpReminderAgentAdaptor(this);
     KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/FollowUpReminder"), this, QDBusConnection::ExportAdaptors);
-    KDBusConnectionPool::threadConnection().registerService(QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder"));
+    QString service = QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder");
+    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
+        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
+    }
+
+    KDBusConnectionPool::threadConnection().registerService(service);
     mManager = new FollowUpReminderManager(this);
     setNeedsNetwork(true);
 

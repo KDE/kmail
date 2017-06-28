@@ -41,6 +41,7 @@ public Q_SLOTS:
     void slotAccountWizard();
     void slotFilterLogViewer();
 private:
+    QString akonadiPath(QString service);
     QWidget *mParentWidget;
 };
 

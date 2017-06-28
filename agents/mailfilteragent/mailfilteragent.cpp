@@ -26,6 +26,7 @@
 #include "mailfilteragentadaptor.h"
 #include <AkonadiCore/Pop3ResourceAttribute>
 
+#include <AkonadiCore/ServerManager>
 #include <AkonadiCore/changerecorder.h>
 #include <AkonadiCore/collectionfetchjob.h>
 #include <AkonadiCore/collectionfetchscope.h>
@@ -98,7 +99,12 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     new MailFilterAgentAdaptor(this);
 
     KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
-    KDBusConnectionPool::threadConnection().registerService(QStringLiteral("org.freedesktop.Akonadi.MailFilterAgent"));
+    QString service = QStringLiteral("org.freedesktop.Akonadi.MailFilterAgent");
+    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
+        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
+    }
+
+    KDBusConnectionPool::threadConnection().registerService(service);
     //Enabled or not filterlogdialog
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     if (config->hasGroup("FilterLog")) {

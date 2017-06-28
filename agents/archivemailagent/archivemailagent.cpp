@@ -22,6 +22,7 @@
 #include "archivemaildialog.h"
 #include "archivemailmanager.h"
 #include "archivemailagentsettings.h"
+#include <AkonadiCore/ServerManager>
 
 #include <KLocalizedString>
 #include <MailCommon/MailKernel>
@@ -56,7 +57,12 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
 
     new ArchiveMailAgentAdaptor(this);
     KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/ArchiveMailAgent"), this, QDBusConnection::ExportAdaptors);
-    KDBusConnectionPool::threadConnection().registerService(QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent"));
+    QString service = QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent");
+    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
+        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
+    }
+
+    KDBusConnectionPool::threadConnection().registerService(service);
     connect(collectionMonitor, &Akonadi::Monitor::collectionRemoved, this, &ArchiveMailAgent::mailCollectionRemoved);
 
     if (enabledAgent()) {

@@ -44,9 +44,18 @@ KMLaunchExternalComponent::~KMLaunchExternalComponent()
 {
 }
 
+QString KMLaunchExternalComponent::akonadiPath(QString service)
+{
+    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
+        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
+    }
+    return service;
+}
+
 void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {
-    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent"), QStringLiteral("/ArchiveMailAgent"),
+    const QString service = akonadiPath(QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent"));
+    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(service, QStringLiteral("/ArchiveMailAgent"),
                                                                         QDBusConnection::sessionBus(), this);
     if (archiveMailInterface.isValid()) {
         archiveMailInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
@@ -57,7 +66,8 @@ void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 
 void KMLaunchExternalComponent::slotConfigureSendLater()
 {
-    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(QStringLiteral("org.freedesktop.Akonadi.SendLaterAgent"), QStringLiteral("/SendLaterAgent"), QDBusConnection::sessionBus(), this);
+    const QString service = akonadiPath(QStringLiteral("org.freedesktop.Akonadi.SendLaterAgent"));
+    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(service, QStringLiteral("/SendLaterAgent"), QDBusConnection::sessionBus(), this);
     if (sendLaterInterface.isValid()) {
         sendLaterInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
     } else {
@@ -67,7 +77,9 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
 
 void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 {
-    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder"), QStringLiteral("/FollowUpReminder"),
+    const QString service = akonadiPath(QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder"));
+
+    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(service, QStringLiteral("/FollowUpReminder"),
                                                                           QDBusConnection::sessionBus(), this);
     if (followUpInterface.isValid()) {
         followUpInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
