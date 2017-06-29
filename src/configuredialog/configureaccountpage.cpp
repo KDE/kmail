@@ -170,7 +170,12 @@ QString AccountsPage::ReceivingTab::helpAnchor() const
 AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QStringLiteral("org.freedesktop.Akonadi.NewMailNotifierAgent"),
+    QString service = QStringLiteral("org.freedesktop.Akonadi.NewMailNotifierAgent");
+    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
+        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
+    }
+
+    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(service,
                                                                                   QStringLiteral("/NewMailNotifierAgent"),
                                                                                   QDBusConnection::sessionBus(),
                                                                                   this);
