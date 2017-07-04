@@ -110,11 +110,7 @@ void ArchiveMailAgent::showConfigureDialog(qlonglong windowId)
 {
     QPointer<ArchiveMailDialog> dialog = new ArchiveMailDialog();
     if (windowId) {
-#ifndef Q_OS_WIN
         KWindowSystem::setMainWindow(dialog, windowId);
-#else
-        KWindowSystem::setMainWindow(dialog, (HWND)windowId);
-#endif
     }
     connect(dialog.data(), &ArchiveMailDialog::archiveNow, mArchiveManager, &ArchiveMailManager::slotArchiveNow);
     connect(this, &ArchiveMailAgent::needUpdateConfigDialogBox, dialog.data(), &ArchiveMailDialog::slotNeedReloadConfig);

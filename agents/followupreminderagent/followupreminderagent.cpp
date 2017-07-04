@@ -106,11 +106,7 @@ void FollowUpReminderAgent::showConfigureDialog(qlonglong windowId)
     QPointer<FollowUpReminderInfoDialog> dialog = new FollowUpReminderInfoDialog();
     dialog->load();
     if (windowId) {
-#ifndef Q_OS_WIN
         KWindowSystem::setMainWindow(dialog, windowId);
-#else
-        KWindowSystem::setMainWindow(dialog, (HWND)windowId);
-#endif
     }
     if (dialog->exec()) {
         const QList<qint32> lstRemoveItem = dialog->listRemoveId();
