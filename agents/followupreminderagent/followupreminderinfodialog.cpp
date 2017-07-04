@@ -58,7 +58,7 @@ FollowUpReminderInfoDialog::FollowUpReminderInfoDialog(QWidget *parent)
         QStringLiteral("followupreminderagent"),
         i18n("Follow Up Reminder Agent"),
         QStringLiteral(KDEPIM_VERSION),
-        i18n("Follow Up Mail."),
+        i18n("Follow Up Reminder"),
         KAboutLicense::GPL_V2,
         i18n("Copyright (C) 2014-2017 Laurent Montel"));
 

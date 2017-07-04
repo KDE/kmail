@@ -33,7 +33,7 @@
 FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(i18n("Follow Up Mail"));
+    setWindowTitle(i18n("Follow Up Reminder"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     setAttribute(Qt::WA_DeleteOnClose);
 

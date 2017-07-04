@@ -1321,7 +1321,7 @@ void KMComposerWin::setupActions(void)
 
     mComposerBase->editor()->createActions(actionCollection());
 
-    mFollowUpToggleAction = new KToggleAction(i18n("Follow Up Mail..."), this);
+    mFollowUpToggleAction = new KToggleAction(i18n("Create Follow Up Reminder..."), this);
     actionCollection()->addAction(QStringLiteral("follow_up_mail"), mFollowUpToggleAction);
     connect(mFollowUpToggleAction, &KToggleAction::triggered, this, &KMComposerWin::slotFollowUpMail);
     mFollowUpToggleAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
