@@ -159,11 +159,6 @@ void OpenComposerJob::slotOpenComposer()
     }
     if (!mOpenComposerSettings.mHidden) {
         cWin->show();
-        // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_OS_X11 && !defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
     }
     deleteLater();
 }

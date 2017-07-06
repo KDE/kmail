@@ -142,11 +142,6 @@ void FillComposerJob::slotOpenComposer()
     }
     if (mSettings.mForceShowWindow || (!mSettings.mHidden && !iCalAutoSend)) {
         cWin->show();
-        // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && !defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
     } else {
         // Always disable word wrap when we don't show the composer, since otherwise QTextEdit
         // gets the widget size wrong and wraps much too early.

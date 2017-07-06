@@ -2490,7 +2490,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         if (!mPluginEditorCheckBeforeSendManagerInterface->execute(params)) {
             return;
         }
-        const QStringList recipients = { composerBaseToTrimmed, composerBaseCcTrimmed, composerBaseBccTrimmed};
+        const QStringList recipients = {composerBaseToTrimmed, composerBaseCcTrimmed, composerBaseBccTrimmed};
 
         setEnabled(false);
 
@@ -2508,8 +2508,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
             && !KMailSettings::self()->neverEncryptDrafts()
             && mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty()) {
             KMessageBox::information(this, i18n("You must specify at least one receiver "
-                                                "in order to be able to encrypt a draft.")
-                                     );
+                                                "in order to be able to encrypt a draft."));
             return;
         }
         doDelayedSend(method, saveIn);

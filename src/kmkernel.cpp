@@ -551,14 +551,6 @@ void KMKernel::openReader(bool onlyCheck)
         mWin->show();
         activate = false; // new window: no explicit activation (#73591)
     }
-
-    if (activate) {
-        // Activate window - doing this instead of KWindowSystem::activateWindow(mWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_OS_X11 && !defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(mWin, KStartupInfo::startupId());
-#endif
-    }
 }
 
 void KMKernel::openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile,

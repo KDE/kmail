@@ -74,11 +74,6 @@ void OpenComposerHiddenJob::slotOpenComposer()
     KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, context);
     if (!mSettings.mHidden) {
         cWin->show();
-        // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_OS_X11 && !defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
     } else {
         // Always disable word wrap when we don't show the composer; otherwise,
         // QTextEdit gets the widget size wrong and wraps much too early.
