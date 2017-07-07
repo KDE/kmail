@@ -120,8 +120,7 @@ void SummaryViewPart::updateWidgets()
 
     delete mFrame;
 
-    KIdentityManagement::IdentityManager idm(true, this);
-    const KIdentityManagement::Identity &id = idm.defaultIdentity();
+    const KIdentityManagement::Identity &id = KIdentityManagement::IdentityManager::self()->defaultIdentity();
 
     QString currentUser = i18n("Summary for %1", id.fullName());
     mUsernameLabel->setText(QStringLiteral("<b>%1</b>").arg(currentUser));
