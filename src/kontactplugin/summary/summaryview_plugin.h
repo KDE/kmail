@@ -48,12 +48,13 @@ protected:
 private Q_SLOTS:
 
     void doSync();
-    void syncAccount(const QString &account);
+    void syncAccount(QAction *act);
     void fillSyncActionSubEntries();
 
 private:
     SummaryViewPart *mPart;
     KSelectAction *mSyncAction;
+    QAction *mAllSync;
 };
 
 #endif

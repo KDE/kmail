@@ -42,7 +42,7 @@ SummaryView::SummaryView(KontactInterface::Core *core, const QVariantList &)
 {
     mSyncAction = new KSelectAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Sync All"), this);
     actionCollection()->addAction(QStringLiteral("kontact_summary_sync"), mSyncAction);
-    connect(mSyncAction, static_cast<void (KSelectAction::*)(const QString &)>(&KSelectAction::triggered), this, &SummaryView::syncAccount);
+    connect(mSyncAction, static_cast<void (KSelectAction::*)(QAction*)>(&KSelectAction::triggered), this, &SummaryView::syncAccount);
     connect(mSyncAction->menu(), &QMenu::aboutToShow, this, &SummaryView::fillSyncActionSubEntries);
 
     insertSyncAction(mSyncAction);
@@ -51,27 +51,30 @@ SummaryView::SummaryView(KontactInterface::Core *core, const QVariantList &)
 
 void SummaryView::fillSyncActionSubEntries()
 {
-    QStringList menuItems;
-    menuItems.append(i18nc("@action:inmenu sync everything", "All"));
+    mSyncAction->clear();
 
+    mAllSync = mSyncAction->addAction(i18nc("@action:inmenu sync everything", "All"));
+
+    QStringList menuItems;
     org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
     const QDBusReply<QStringList> reply = kmail.accounts();
     if (reply.isValid()) {
         menuItems << reply.value();
     }
 
-    mSyncAction->clear();
-    mSyncAction->setItems(menuItems);
+    for (const QString &acc : menuItems) {
+        mSyncAction->addAction(acc);
+    }
 }
 
-void SummaryView::syncAccount(const QString &account)
+void SummaryView::syncAccount(QAction *act)
 {
-    if (account == i18nc("sync everything", "All")) {
+    if (act == mAllSync) {
         doSync();
     } else {
         org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"),
                                      QDBusConnection::sessionBus());
-        kmail.checkAccount(account);
+        kmail.checkAccount(act->text());
     }
     fillSyncActionSubEntries();
 }
