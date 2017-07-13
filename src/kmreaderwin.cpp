@@ -762,8 +762,8 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         command->setPrintPreview(preview);
         command->start();
     } else {
-        if (static_cast<KIO::Job *>(job)->ui()) {
-            static_cast<KIO::Job *>(job)->ui()->showErrorMessage();
+        if (static_cast<KIO::Job *>(job)->uiDelegate()) {
+            static_cast<KIO::Job *>(job)->uiDelegate()->showErrorMessage();
         } else {
             qCWarning(KMAIL_LOG) << "Composer for printing failed:" << composer->errorString();
         }

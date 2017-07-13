@@ -1897,8 +1897,8 @@ void KMComposerWin::slotInsertRecentFile(const QUrl &u)
 bool KMComposerWin::showErrorMessage(KJob *job)
 {
     if (job->error()) {
-        if (static_cast<KIO::Job *>(job)->ui()) {
-            static_cast<KIO::Job *>(job)->ui()->showErrorMessage();
+        if (static_cast<KIO::Job *>(job)->uiDelegate()) {
+            static_cast<KIO::Job *>(job)->uiDelegate()->showErrorMessage();
         } else {
             qCDebug(KMAIL_LOG) << " job->errorString() :" << job->errorString();
         }

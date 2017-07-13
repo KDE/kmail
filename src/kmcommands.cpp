@@ -152,8 +152,8 @@ static void showJobError(KJob *job)
     // we can be called from the KJob::kill, where we are no longer a KIO::Job
     // so better safe than sorry
     KIO::Job *kiojob = qobject_cast<KIO::Job *>(job);
-    if (kiojob && kiojob->ui()) {
-        kiojob->ui()->showErrorMessage();
+    if (kiojob && kiojob->uiDelegate()) {
+        kiojob->uiDelegate()->showErrorMessage();
     } else {
         qCWarning(KMAIL_LOG) << "There is no GUI delegate set for a kjob, and it failed with error:" << job->errorString();
     }
