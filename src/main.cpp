@@ -21,7 +21,6 @@
 #include <kontactinterface/pimuniqueapplication.h>
 
 #include "kmkernel.h" //control center
-#include "kmmainwidget.h"
 #include "kmail_options.h"
 #include "kmmigrateapplication.h"
 
