@@ -519,8 +519,6 @@ private:
 
     QTimer *mBackgroundTasksTimer;
     MailCommon::JobScheduler *mJobScheduler;
-    // temporary mainwin
-    KMMainWin *mWin;
     MailServiceImpl *mMailService;
 
     bool mSystemNetworkStatus;

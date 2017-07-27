@@ -148,7 +148,6 @@ KMKernel::KMKernel(QObject *parent)
     the_undoStack = nullptr;
     the_msgSender = nullptr;
     mFilterEditDialog = nullptr;
-    mWin = nullptr;
     // make sure that we check for config updates before doing anything else
     KMKernel::config();
     // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
@@ -528,7 +527,6 @@ void KMKernel::checkAccount(const QString &account)   //might create a new reade
 
 void KMKernel::openReader(bool onlyCheck)
 {
-    mWin = nullptr;
     KMainWindow *ktmw = nullptr;
 
     foreach (KMainWindow *window, KMainWindow::memberList()) {
@@ -540,14 +538,14 @@ void KMKernel::openReader(bool onlyCheck)
 
     bool activate;
     if (ktmw) {
-        mWin = static_cast<KMMainWin *>(ktmw);
+        KMMainWin *win = static_cast<KMMainWin *>(ktmw);
         activate = !onlyCheck; // existing window: only activate if not --check
         if (activate) {
-            mWin->show();
+            win->show();
         }
     } else {
-        mWin = new KMMainWin;
-        mWin->show();
+        KMMainWin *win = new KMMainWin;
+        win->show();
         activate = false; // new window: no explicit activation (#73591)
     }
 }
@@ -1128,9 +1126,6 @@ void KMKernel::cleanup(void)
     the_undoStack = nullptr;
     delete mConfigureDialog;
     mConfigureDialog = nullptr;
-    // do not delete, because mWin may point to an existing window
-    // delete mWin;
-    mWin = nullptr;
 
     KSharedConfig::Ptr config = KMKernel::config();
     if (RecentAddresses::exists()) {
@@ -1299,8 +1294,7 @@ KMainWindow *KMKernel::mainWin()
     // This could happen if we want to pop up an error message
     // while we are still doing the startup wizard and no other
     // KMainWindow is running.
-    mWin = new KMMainWin;
-    return mWin;
+    return new KMMainWin;
 }
 
 KMKernel *KMKernel::self()
