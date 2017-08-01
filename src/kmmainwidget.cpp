@@ -2707,48 +2707,47 @@ void KMMainWidget::slotContactSearchJobForMessagePopupDone(KJob *job)
 void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
                                     const WebEngineViewer::WebHitTestResult &result)
 {
-    QMenu *menu = new QMenu(this);
-
+    QMenu menu(this);
     bool urlMenuAdded = false;
 
     if (!url.isEmpty()) {
         if (url.scheme() == QLatin1String("mailto")) {
             // popup on a mailto URL
-            menu->addAction(mMsgView->mailToComposeAction());
-            menu->addAction(mMsgView->mailToReplyAction());
-            menu->addAction(mMsgView->mailToForwardAction());
+            menu.addAction(mMsgView->mailToComposeAction());
+            menu.addAction(mMsgView->mailToReplyAction());
+            menu.addAction(mMsgView->mailToForwardAction());
 
-            menu->addSeparator();
+            menu.addSeparator();
 
             if (contactAlreadyExists) {
                 if (uniqueContactFound) {
-                    menu->addAction(mMsgView->editContactAction());
+                    menu.addAction(mMsgView->editContactAction());
                 } else {
-                    menu->addAction(mMsgView->openAddrBookAction());
+                    menu.addAction(mMsgView->openAddrBookAction());
                 }
             } else {
-                menu->addAction(mMsgView->addAddrBookAction());
-                menu->addAction(mMsgView->addToExistingContactAction());
+                menu.addAction(mMsgView->addAddrBookAction());
+                menu.addAction(mMsgView->addToExistingContactAction());
             }
-            menu->addSeparator();
-            menu->addMenu(mMsgView->viewHtmlOption());
-            menu->addSeparator();
-            menu->addAction(mMsgView->copyURLAction());
+            menu.addSeparator();
+            menu.addMenu(mMsgView->viewHtmlOption());
+            menu.addSeparator();
+            menu.addAction(mMsgView->copyURLAction());
             urlMenuAdded = true;
         } else if (url.scheme() != QLatin1String("attachment")) {
             // popup on a not-mailto URL
-            menu->addAction(mMsgView->urlOpenAction());
-            menu->addAction(mMsgView->addBookmarksAction());
-            menu->addAction(mMsgView->urlSaveAsAction());
-            menu->addAction(mMsgView->copyURLAction());
-            menu->addSeparator();
-            menu->addAction(mMsgView->shareServiceUrlMenu());
-            menu->addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
+            menu.addAction(mMsgView->urlOpenAction());
+            menu.addAction(mMsgView->addBookmarksAction());
+            menu.addAction(mMsgView->urlSaveAsAction());
+            menu.addAction(mMsgView->copyURLAction());
+            menu.addSeparator();
+            menu.addAction(mMsgView->shareServiceUrlMenu());
+            menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
             if (!imageUrl.isEmpty()) {
-                menu->addSeparator();
-                menu->addAction(mMsgView->copyImageLocation());
-                menu->addAction(mMsgView->downloadImageToDiskAction());
-                menu->addAction(mMsgView->shareImage());
+                menu.addSeparator();
+                menu.addAction(mMsgView->copyImageLocation());
+                menu.addAction(mMsgView->downloadImageToDiskAction());
+                menu.addAction(mMsgView->shareImage());
             }
             urlMenuAdded = true;
         }
@@ -2757,99 +2756,97 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
     const QString selectedText = mMsgView ? mMsgView->copyText() : QString();
     if (mMsgView && !selectedText.isEmpty()) {
         if (urlMenuAdded) {
-            menu->addSeparator();
+            menu.addSeparator();
         }
-        menu->addAction(mMsgActions->replyMenu());
-        menu->addSeparator();
+        menu.addAction(mMsgActions->replyMenu());
+        menu.addSeparator();
 
-        menu->addAction(mMsgView->copyAction());
-        menu->addAction(mMsgView->selectAllAction());
-        menu->addSeparator();
-        mMsgActions->addWebShortcutsMenu(menu, selectedText);
-        menu->addSeparator();
-        menu->addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
+        menu.addAction(mMsgView->copyAction());
+        menu.addAction(mMsgView->selectAllAction());
+        menu.addSeparator();
+        mMsgActions->addWebShortcutsMenu(&menu, selectedText);
+        menu.addSeparator();
+        menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
         if (KPIMTextEdit::TextToSpeech::self()->isReady()) {
-            menu->addSeparator();
-            menu->addAction(mMsgView->speakTextAction());
+            menu.addSeparator();
+            menu.addAction(mMsgView->speakTextAction());
         }
     } else if (!urlMenuAdded) {
         // popup somewhere else (i.e., not a URL) on the message
         if (!mMessagePane->currentMessage()) {
             // no messages
-            delete menu;
             return;
         }
         Akonadi::Collection parentCol = msg.parentCollection();
         if (parentCol.isValid() && CommonKernel->folderIsTemplates(parentCol)) {
-            menu->addAction(mNewMessageFromTemplateAction);
+            menu.addAction(mNewMessageFromTemplateAction);
         } else {
-            menu->addAction(mMsgActions->replyMenu());
-            menu->addAction(mMsgActions->forwardMenu());
+            menu.addAction(mMsgActions->replyMenu());
+            menu.addAction(mMsgActions->forwardMenu());
         }
         if (parentCol.isValid() && CommonKernel->folderIsSentMailFolder(parentCol)) {
-            menu->addAction(sendAgainAction());
+            menu.addAction(sendAgainAction());
         } else {
-            menu->addAction(editAction());
+            menu.addAction(editAction());
         }
-        menu->addAction(mailingListActionMenu());
-        menu->addSeparator();
+        menu.addAction(mailingListActionMenu());
+        menu.addSeparator();
 
-        menu->addAction(mCopyActionMenu);
-        menu->addAction(mMoveActionMenu);
+        menu.addAction(mCopyActionMenu);
+        menu.addAction(mMoveActionMenu);
 
-        menu->addSeparator();
+        menu.addSeparator();
 
-        menu->addAction(mMsgActions->messageStatusMenu());
-        menu->addSeparator();
+        menu.addAction(mMsgActions->messageStatusMenu());
+        menu.addSeparator();
         if (mMsgView) {
             if (!imageUrl.isEmpty()) {
-                menu->addSeparator();
-                menu->addAction(mMsgView->copyImageLocation());
-                menu->addAction(mMsgView->downloadImageToDiskAction());
-                menu->addAction(mMsgView->shareImage());
-                menu->addSeparator();
+                menu.addSeparator();
+                menu.addAction(mMsgView->copyImageLocation());
+                menu.addAction(mMsgView->downloadImageToDiskAction());
+                menu.addAction(mMsgView->shareImage());
+                menu.addSeparator();
             }
         }
-        menu->addSeparator();
-        menu->addAction(mMsgActions->printPreviewAction());
-        menu->addAction(mMsgActions->printAction());
-        menu->addSeparator();
-        menu->addAction(mSaveAsAction);
-        menu->addAction(mSaveAttachmentsAction);
-        menu->addSeparator();
+        menu.addSeparator();
+        menu.addAction(mMsgActions->printPreviewAction());
+        menu.addAction(mMsgActions->printAction());
+        menu.addSeparator();
+        menu.addAction(mSaveAsAction);
+        menu.addAction(mSaveAttachmentsAction);
+        menu.addSeparator();
         if (parentCol.isValid() && CommonKernel->folderIsTrash(parentCol)) {
-            menu->addAction(mDeleteAction);
+            menu.addAction(mDeleteAction);
         } else {
-            menu->addAction(akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash));
+            menu.addAction(akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash));
         }
-        menu->addSeparator();
+        menu.addSeparator();
 
         if (mMsgView) {
-            menu->addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
-            menu->addSeparator();
+            menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
+            menu.addSeparator();
         }
-        menu->addAction(mMsgActions->annotateAction());
+        menu.addAction(mMsgActions->annotateAction());
 
-        menu->addSeparator();
-        menu->addAction(mMsgActions->addFollowupReminderAction());
+        menu.addSeparator();
+        menu.addAction(mMsgActions->addFollowupReminderAction());
         if (kmkernel->allowToDebugBalooSupport()) {
-            menu->addSeparator();
-            menu->addAction(mMsgActions->debugBalooAction());
+            menu.addSeparator();
+            menu.addAction(mMsgActions->debugBalooAction());
         }
     }
     if (!selectedText.isEmpty()) {
         if (mMsgView) {
             const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
             if (!interceptorUrlActions.isEmpty()) {
-                menu->addSeparator();
-                menu->addActions(interceptorUrlActions);
+                menu.addSeparator();
+                menu.addActions(interceptorUrlActions);
             }
         }
     }
 
-    KAcceleratorManager::manage(menu);
-    menu->exec(aPoint, nullptr);
-    delete menu;
+    KAcceleratorManager::manage(&menu);
+    menu.exec(aPoint, nullptr);
 }
 
 void KMMainWidget::setupActions()
