@@ -1640,8 +1640,9 @@ KMCommand::Result KMShareImageCommand::execute()
     return OK;
 }
 
-KMFetchMessageCommand::KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item)
+KMFetchMessageCommand::KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item, MessageViewer::Viewer *viewer)
     : KMCommand(parent, item)
+    , mViewer(viewer)
 {
     // Workaround KMCommand::transferSelectedMsgs() expecting non-empty fetchscope
     fetchScope().fetchFullPayload(true);
@@ -1650,7 +1651,7 @@ KMFetchMessageCommand::KMFetchMessageCommand(QWidget *parent, const Akonadi::Ite
 Akonadi::ItemFetchJob *KMFetchMessageCommand::createFetchJob(const Akonadi::Item::List &items)
 {
     Q_ASSERT(items.size() == 1);
-    Akonadi::ItemFetchJob *fetch = MessageViewer::Viewer::createFetchJob(items.first());
+    Akonadi::ItemFetchJob *fetch = mViewer->createFetchJob(items.first());
     fetchScope() = fetch->fetchScope();
     return fetch;
 }

@@ -2582,11 +2582,13 @@ void KMMainWidget::slotMessageActivated(const Akonadi::Item &msg)
         return;
     }
 
-    // Try to fetch the mail, even in offline mode, it might be cached
-    KMFetchMessageCommand *cmd = new KMFetchMessageCommand(this, msg);
-    connect(cmd, &KMCommand::completed,
-            this, &KMMainWidget::slotItemsFetchedForActivation);
-    cmd->start();
+    if (mMsgView) {
+        // Try to fetch the mail, even in offline mode, it might be cached
+        KMFetchMessageCommand *cmd = new KMFetchMessageCommand(this, msg, mMsgView->viewer());
+        connect(cmd, &KMCommand::completed,
+                this, &KMMainWidget::slotItemsFetchedForActivation);
+        cmd->start();
+    }
 }
 
 void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
@@ -4333,7 +4335,7 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
             connect(mShowBusySplashTimer, &QTimer::timeout, this, &KMMainWidget::slotShowBusySplash);
             mShowBusySplashTimer->start(1000);
 
-            Akonadi::ItemFetchJob *itemFetchJob = MessageViewer::Viewer::createFetchJob(item);
+            Akonadi::ItemFetchJob *itemFetchJob = mMsgView->viewer()->createFetchJob(item);
             if (mCurrentCollection.isValid()) {
                 const QString resource = mCurrentCollection.resource();
                 itemFetchJob->setProperty("_resource", QVariant::fromValue(resource));

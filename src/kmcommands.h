@@ -578,7 +578,7 @@ class KMFetchMessageCommand : public KMCommand
 {
     Q_OBJECT
 public:
-    explicit KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item);
+    explicit KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item, MessageViewer::Viewer *viewer);
 
     Akonadi::Item item() const;
 
@@ -587,6 +587,7 @@ private:
     Result execute() override;
 
     Akonadi::Item mItem;
+    MessageViewer::Viewer *mViewer;
 };
 
 #endif /*KMCommands_h*/
