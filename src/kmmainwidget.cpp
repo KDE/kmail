@@ -2588,6 +2588,8 @@ void KMMainWidget::slotMessageActivated(const Akonadi::Item &msg)
         connect(cmd, &KMCommand::completed,
                 this, &KMMainWidget::slotItemsFetchedForActivation);
         cmd->start();
+    } else {
+        qCWarning(KMAIL_LOG) << "There is not a msgview we can't fetch message. Bug ?";
     }
 }
 
