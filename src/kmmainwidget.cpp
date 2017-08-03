@@ -1098,45 +1098,47 @@ void KMMainWidget::createWidgets()
 
     //Don't use mMailActionManager->createAllActions() to save memory by not
     //creating actions that doesn't make sense.
-    const QList<StandardActionManager::Type> standardActions = QList<StandardActionManager::Type>()
-                                                               << StandardActionManager::CreateCollection
-                                                               << StandardActionManager::CopyCollections
-                                                               << StandardActionManager::DeleteCollections
-                                                               << StandardActionManager::SynchronizeCollections
-                                                               << StandardActionManager::CollectionProperties
-                                                               << StandardActionManager::CopyItems
-                                                               << StandardActionManager::Paste
-                                                               << StandardActionManager::DeleteItems
-                                                               << StandardActionManager::ManageLocalSubscriptions
-                                                               << StandardActionManager::CopyCollectionToMenu
-                                                               << StandardActionManager::CopyItemToMenu
-                                                               << StandardActionManager::MoveItemToMenu
-                                                               << StandardActionManager::MoveCollectionToMenu
-                                                               << StandardActionManager::CutItems
-                                                               << StandardActionManager::CutCollections
-                                                               << StandardActionManager::CreateResource
-                                                               << StandardActionManager::DeleteResources
-                                                               << StandardActionManager::ResourceProperties
-                                                               << StandardActionManager::SynchronizeResources
-                                                               << StandardActionManager::ToggleWorkOffline
-                                                               << StandardActionManager::SynchronizeCollectionsRecursive;
+    const auto standardActions = {
+        StandardActionManager::CreateCollection,
+        StandardActionManager::CopyCollections,
+        StandardActionManager::DeleteCollections,
+        StandardActionManager::SynchronizeCollections,
+        StandardActionManager::CollectionProperties,
+        StandardActionManager::CopyItems,
+        StandardActionManager::Paste,
+        StandardActionManager::DeleteItems,
+        StandardActionManager::ManageLocalSubscriptions,
+        StandardActionManager::CopyCollectionToMenu,
+        StandardActionManager::CopyItemToMenu,
+        StandardActionManager::MoveItemToMenu,
+        StandardActionManager::MoveCollectionToMenu,
+        StandardActionManager::CutItems,
+        StandardActionManager::CutCollections,
+        StandardActionManager::CreateResource,
+        StandardActionManager::DeleteResources,
+        StandardActionManager::ResourceProperties,
+        StandardActionManager::SynchronizeResources,
+        StandardActionManager::ToggleWorkOffline,
+        StandardActionManager::SynchronizeCollectionsRecursive,
+    };
 
     for (StandardActionManager::Type standardAction : standardActions) {
         mAkonadiStandardActionManager->createAction(standardAction);
     }
 
     if (mEnableFavoriteFolderView) {
-        const QList<StandardActionManager::Type> favoriteActions = QList<StandardActionManager::Type>()
-                                                                   << StandardActionManager::AddToFavoriteCollections
-                                                                   << StandardActionManager::RemoveFromFavoriteCollections
-                                                                   << StandardActionManager::RenameFavoriteCollection
-                                                                   << StandardActionManager::SynchronizeFavoriteCollections;
+        const auto favoriteActions = {
+            StandardActionManager::AddToFavoriteCollections,
+            StandardActionManager::RemoveFromFavoriteCollections,
+            StandardActionManager::RenameFavoriteCollection,
+            StandardActionManager::SynchronizeFavoriteCollections,
+        };
         for (StandardActionManager::Type favoriteAction : favoriteActions) {
             mAkonadiStandardActionManager->createAction(favoriteAction);
         }
     }
 
-    const QList<StandardMailActionManager::Type> mailActions = {
+    const auto mailActions = {
         StandardMailActionManager::MarkAllMailAsRead,
         StandardMailActionManager::MoveToTrash,
         StandardMailActionManager::MoveAllToTrash,
