@@ -544,21 +544,19 @@ void SearchWindow::doSearch()
 void SearchWindow::searchDone(KJob *job)
 {
     Q_ASSERT(job == mSearchJob);
+    mSearchJob = nullptr;
     QMetaObject::invokeMethod(this, "enableGUI", Qt::QueuedConnection);
     mUi.mProgressIndicator->stop();
     if (job->error()) {
         qCDebug(KMAIL_LOG) << job->errorString();
         KMessageBox::sorry(this, i18n("Cannot get search result. %1", job->errorString()));
-        if (mSearchJob) {
-            mSearchJob = nullptr;
-        }
         enableGUI();
         mUi.mSearchFolderEdt->setEnabled(true);
         mUi.mStatusLbl->setText(i18n("Search failed."));
     } else {
-        if (Akonadi::SearchCreateJob *searchJob = qobject_cast<Akonadi::SearchCreateJob *>(mSearchJob)) {
+        if (const auto *searchJob = qobject_cast<Akonadi::SearchCreateJob *>(job)) {
             mFolder = searchJob->createdCollection();
-        } else if (Akonadi::CollectionModifyJob *modifyJob = qobject_cast<Akonadi::CollectionModifyJob *>(mSearchJob)) {
+        } else if (const auto *modifyJob = qobject_cast<Akonadi::CollectionModifyJob *>(job)) {
             mFolder = modifyJob->collection();
         }
         /// TODO: cope better with cases where this fails
@@ -591,7 +589,6 @@ void SearchWindow::searchDone(KJob *job)
         }
         searchDescription->setRecursive(mUi.mChkSubFolders->isChecked());
         new Akonadi::CollectionModifyJob(mFolder, this);
-        mSearchJob = nullptr;
         Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mFolder, Akonadi::CollectionFetchJob::Base, this);
         fetch->fetchScope().setIncludeStatistics(true);
         connect(fetch, &KJob::result, this, &SearchWindow::slotCollectionStatisticsRetrieved);
