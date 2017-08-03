@@ -1014,8 +1014,6 @@ void KMMainWidget::createWidgets()
 
     connect(mFolderTreeWidget->folderTreeView(), &FolderTreeView::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
 
-    mFolderTreeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
-
     //
     // Create the message pane
     //
