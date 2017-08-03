@@ -771,34 +771,32 @@ void SearchWindow::slotContextMenuRequested(const QPoint &)
         return;
     }
 
-    QMenu *menu = new QMenu(this);
     updateContextMenuActions();
+    QMenu menu(this);
 
     // show most used actions
-    menu->addAction(mReplyAction);
-    menu->addAction(mReplyAllAction);
-    menu->addAction(mReplyListAction);
-    menu->addAction(mForwardActionMenu);
-    menu->addSeparator();
-    menu->addAction(mJumpToFolderAction);
-    menu->addSeparator();
+    menu.addAction(mReplyAction);
+    menu.addAction(mReplyAllAction);
+    menu.addAction(mReplyListAction);
+    menu.addAction(mForwardActionMenu);
+    menu.addSeparator();
+    menu.addAction(mJumpToFolderAction);
+    menu.addSeparator();
     QAction *act = mAkonadiStandardAction->createAction(Akonadi::StandardActionManager::CopyItems);
     mAkonadiStandardAction->setActionText(Akonadi::StandardActionManager::CopyItems, ki18np("Copy Message", "Copy %1 Messages"));
-    menu->addAction(act);
+    menu.addAction(act);
     act = mAkonadiStandardAction->createAction(Akonadi::StandardActionManager::CutItems);
     mAkonadiStandardAction->setActionText(Akonadi::StandardActionManager::CutItems, ki18np("Cut Message", "Cut %1 Messages"));
-    menu->addAction(act);
-    menu->addAction(mAkonadiStandardAction->createAction(Akonadi::StandardActionManager::CopyItemToMenu));
-    menu->addAction(mAkonadiStandardAction->createAction(Akonadi::StandardActionManager::MoveItemToMenu));
-    menu->addSeparator();
-    menu->addAction(mSaveAsAction);
-    menu->addAction(mSaveAtchAction);
-    menu->addAction(mPrintAction);
-    menu->addSeparator();
-    menu->addAction(mClearAction);
-    menu->exec(QCursor::pos(), nullptr);
-
-    delete menu;
+    menu.addAction(act);
+    menu.addAction(mAkonadiStandardAction->createAction(Akonadi::StandardActionManager::CopyItemToMenu));
+    menu.addAction(mAkonadiStandardAction->createAction(Akonadi::StandardActionManager::MoveItemToMenu));
+    menu.addSeparator();
+    menu.addAction(mSaveAsAction);
+    menu.addAction(mSaveAtchAction);
+    menu.addAction(mPrintAction);
+    menu.addSeparator();
+    menu.addAction(mClearAction);
+    menu.exec(QCursor::pos(), nullptr);
 }
 
 void SearchWindow::slotClearSelection()
