@@ -2192,15 +2192,21 @@ void KMMainWidget::slotApplyFilters()
     applyFilters(selectedMessages);
 }
 
+Akonadi::Collection::List KMMainWidget::applyFilterOnCollection(bool recursive)
+{
+    Akonadi::Collection::List cols;
+    if (recursive) {
+        cols = KMKernel::self()->subfolders(mCurrentCollection);
+    } else {
+        cols << mCurrentCollection;
+    }
+    return cols;
+}
+
 void KMMainWidget::slotApplyFiltersOnFolder(bool recursive)
 {
     if (mCurrentCollection.isValid()) {
-        Akonadi::Collection::List cols;
-        if (recursive) {
-            cols = KMKernel::self()->subfolders(mCurrentCollection);
-        } else {
-            cols << mCurrentCollection;
-        }
+        const Akonadi::Collection::List cols = applyFilterOnCollection(recursive);
         applyFilters(cols);
     }
 }
@@ -2208,13 +2214,7 @@ void KMMainWidget::slotApplyFiltersOnFolder(bool recursive)
 void KMMainWidget::slotApplyFilterOnFolder(bool recursive)
 {
     if (mCurrentCollection.isValid()) {
-        Akonadi::Collection::List cols;
-        if (recursive) {
-            cols = KMKernel::self()->subfolders(mCurrentCollection);
-        } else {
-            cols << mCurrentCollection;
-        }
-
+        const Akonadi::Collection::List cols = applyFilterOnCollection(recursive);
         QAction *action = qobject_cast<QAction*>(sender());
         applyFilter(cols, action->property("filter_id").toString());
     }

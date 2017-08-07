@@ -567,6 +567,7 @@ private:
     void printCurrentMessage(bool preview);
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
     QAction *filterToAction(MailCommon::MailFilter *filter);
+    Akonadi::Collection::List applyFilterOnCollection(bool recursive);
 
     // Message actions
     QAction *mDeleteAction;
