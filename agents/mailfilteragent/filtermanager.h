@@ -44,7 +44,8 @@ public:
         Outbound = 0x2,
         Explicit = 0x4,
         BeforeOutbound = 0x8,
-        All = Inbound | BeforeOutbound | Outbound | Explicit
+        AllFolders = 0x16,
+        All = Inbound | BeforeOutbound | Outbound | Explicit | AllFolders
     };
 
     enum FilterRequires {
@@ -123,6 +124,8 @@ public:
 
     void mailCollectionRemoved(const Akonadi::Collection &collection);
     void agentRemoved(const QString &identifier);
+
+    bool hasAllFoldersFilter() const;
 
 #ifndef NDEBUG
     /**

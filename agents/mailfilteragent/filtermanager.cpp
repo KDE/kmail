@@ -84,6 +84,7 @@ public:
     SearchRule::RequiredPart mRequiredPartsBasedOnAll;
     QPixmap pixmapNotification;
     bool mInboundFiltersExist;
+    bool mAllFoldersFiltersExist;
     int mTotalProgressCount;
     int mCurrentProgressCount;
 };
@@ -345,8 +346,17 @@ void FilterManager::readConfig()
         }
     }
     // check if at least one filter is to be applied on inbound mail
-    d->mInboundFiltersExist = std::find_if(d->mFilters.constBegin(), d->mFilters.constEnd(),
-                                           std::mem_fn(&MailCommon::MailFilter::applyOnInbound)) != d->mFilters.constEnd();
+
+    for (auto i = d->mFilters.cbegin(), e = d->mFilters.cend();
+         i != e && (!d->mInboundFiltersExist || !d->mAllFoldersFiltersExist);
+        ++i) {
+        if ((*i)->applyOnInbound()) {
+            d->mInboundFiltersExist = true;
+        }
+        if ((*i)->applyOnAllFoldersInbound()) {
+            d->mAllFoldersFiltersExist = true;
+        }
+    }
 
     Q_EMIT filterListUpdated();
 }
@@ -512,9 +522,10 @@ bool FilterManager::process(const QList< MailFilter * > &mailFilters, const Akon
             const bool outboundOk = ((set & Outbound) && (*it)->applyOnOutbound());
             const bool beforeOutboundOk = ((set & BeforeOutbound) && (*it)->applyBeforeOutbound());
             const bool explicitOk = ((set & Explicit) && (*it)->applyOnExplicit());
+            const bool allFoldersOk = ((set & AllFolders) && (*it)->applyOnAllFoldersInbound());
             const bool accountOk = (!account || (account && (*it)->applyOnAccount(accountId)));
 
-            if ((inboundOk && accountOk) || outboundOk || beforeOutboundOk || explicitOk) {
+            if ((inboundOk && accountOk) || (allFoldersOk && accountOk) || outboundOk || beforeOutboundOk || explicitOk) {
                 // filter is applicable
 
                 if (d->isMatching(context.item(), *it)) {
@@ -631,6 +642,11 @@ void FilterManager::applyFilters(const Akonadi::Item::List &selectedMessages, Fi
             this, SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)));
     connect(itemFetchJob, SIGNAL(result(KJob *)),
             SLOT(itemsFetchJobForFilterDone(KJob *)));
+}
+
+bool FilterManager::hasAllFoldersFilter() const
+{
+    return d->mAllFoldersFiltersExist;
 }
 
 #include "moc_filtermanager.cpp"

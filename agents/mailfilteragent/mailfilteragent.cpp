@@ -54,9 +54,13 @@
 
 #include <kdelibs4configmigrator.h>
 
-static bool isFilterableCollection(const Akonadi::Collection &collection)
+bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collection) const
 {
-    return MailCommon::Kernel::folderIsInbox(collection);
+    if (!collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
+        return false;
+    }
+
+    return m_filterManager->hasAllFoldersFilter() || MailCommon::Kernel::folderIsInbox(collection);
 
     //TODO: check got filter attribute here
 }
@@ -148,9 +152,12 @@ void MailFilterAgent::initializeCollections()
 {
     m_filterManager->readConfig();
 
-    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
-    job->fetchScope().setContentMimeTypes(QStringList() << KMime::Message::mimeType());
-    connect(job, &Akonadi::CollectionFetchJob::result, this, &MailFilterAgent::initialCollectionFetchingDone);
+    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(),
+                                                                       Akonadi::CollectionFetchJob::Recursive,
+                                                                       this);
+    job->fetchScope().setContentMimeTypes({ KMime::Message::mimeType() });
+    connect(job, &Akonadi::CollectionFetchJob::result,
+            this, &MailFilterAgent::initialCollectionFetchingDone);
 }
 
 void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
@@ -160,23 +167,20 @@ void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
         return; //TODO: proper error handling
     }
 
-    Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    const auto fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
 
-    const QMap<QString, Akonadi::Collection::Id> pop3ResourceMap = MailCommon::Kernel::pop3ResourceTargetCollection();
+    const auto pop3ResourceMap = MailCommon::Kernel::pop3ResourceTargetCollection();
 
-    const Akonadi::Collection::List lstCols = fetchJob->collections();
+    const auto lstCols = fetchJob->collections();
     for (const Akonadi::Collection &collection : lstCols) {
         if (isFilterableCollection(collection)) {
             changeRecorder()->setCollectionMonitored(collection, true);
         } else {
-            QMap<QString, Akonadi::Collection::Id>::const_iterator i = pop3ResourceMap.constBegin();
-            const QMap<QString, Akonadi::Collection::Id>::const_iterator end = pop3ResourceMap.constEnd();
-            while (i != end) {
-                if (collection.id() == i.value()) {
+            for (auto pop3ColId : pop3ResourceMap) {
+                if (collection.id() == pop3ColId) {
                     changeRecorder()->setCollectionMonitored(collection, true);
                     break;
                 }
-                ++i;
             }
         }
     }
