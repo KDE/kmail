@@ -50,7 +50,9 @@ public:
 
     void filterItem(qint64 item, int filterSet, const QString &resourceId);
     void filter(qint64 item, const QString &filterIdentifier, const QString &resourceId);
+    void filterCollections(const QList<qint64> &collections, int filterSet);
     void applySpecificFilters(const QList< qint64 > &itemIds, int requires, const QStringList &listFilters);
+    void applySpecificFiltersOnCollections(const QList<qint64> &colIds, const QStringList &listFilters);
 
     void reload();
 

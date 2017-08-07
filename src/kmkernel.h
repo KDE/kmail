@@ -383,6 +383,12 @@ public:
     * is empty at startup.
     */
     Akonadi::Collection::List allFolders() const;
+
+    /**
+     * Includes all subfolders of @p col, including the @p col itself.
+     */
+    Akonadi::Collection::List subfolders(const Akonadi::Collection &col) const;
+
     //
     void selectCollectionFromId(Akonadi::Collection::Id id);
 

@@ -86,6 +86,7 @@ class VacationManager;
 namespace MailCommon {
 class FolderSelectionDialog;
 class FavoriteCollectionWidget;
+class MailFilter;
 }
 
 class KMAIL_EXPORT KMMainWidget : public QWidget
@@ -359,7 +360,8 @@ protected Q_SLOTS:
     void slotCheckVacation();
     void slotDebugSieve();
     void slotApplyFilters();
-    void slotApplyFiltersOnFolder();
+    void slotApplyFiltersOnFolder(bool recursive);
+    void slotApplyFilterOnFolder(bool recursive);
     void slotExpandThread();
     void slotExpandAllThreads();
     void slotCollapseThread();
@@ -490,6 +492,8 @@ private:
     void setCurrentThreadStatus(const Akonadi::MessageStatus &status, bool toggle);
 
     void applyFilters(const Akonadi::Item::List &selectedMessages);
+    void applyFilters(const Akonadi::Collection::List &selectedCols);
+    void applyFilter(const Akonadi::Collection::List &selectedCols, const QString &filter);
 
     /**
      * Internal helper that creates the folder selection dialog used for the
@@ -540,7 +544,6 @@ private Q_SLOTS:
     void itemsFetchDone(KJob *job);
 
     void slotServerSideSubscription();
-    void slotFetchItemsForFolderDone(KJob *job);
     void slotServerStateChanged(Akonadi::ServerManager::State state);
     void slotArchiveMails();
     void slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
@@ -563,6 +566,8 @@ private:
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
+    QAction *filterToAction(MailCommon::MailFilter *filter);
+
     // Message actions
     QAction *mDeleteAction;
     QAction *mTrashThreadAction;
@@ -582,7 +587,10 @@ private:
     // Filter actions
     KActionMenu *mFilterMenu;
     QAction *mExpireConfigAction;
-    QAction *mApplyFiltersOnFolder;
+    KActionMenu *mApplyFilterFolderActionsMenu;
+    KActionMenu *mApplyFilterFolderRecursiveActionsMenu;
+    QAction *mApplyAllFiltersFolderAction;
+    QAction *mApplyAllFiltersFolderRecursiveAction;
     // Custom template actions menu
     KActionMenu *mTemplateMenu;
 
@@ -635,6 +643,8 @@ private:
     QVBoxLayout *mTopLayout;
     bool mDestructed;
     QList<QAction *> mFilterMenuActions;
+    QList<QAction *> mFilterFolderMenuActions;
+    QList<QAction *> mFilterFolderMenuRecursiveActions;
     QList<QAction *> mFilterTBarActions;
     QList<KMMetaFilterActionCommand *> mFilterCommands;
 

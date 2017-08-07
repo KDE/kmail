@@ -2192,20 +2192,32 @@ void KMMainWidget::slotApplyFilters()
     applyFilters(selectedMessages);
 }
 
-void KMMainWidget::slotApplyFiltersOnFolder()
+void KMMainWidget::slotApplyFiltersOnFolder(bool recursive)
 {
     if (mCurrentCollection.isValid()) {
-        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mCurrentCollection, this);
-        connect(job, &Akonadi::ItemFetchJob::result, this, &KMMainWidget::slotFetchItemsForFolderDone);
+        Akonadi::Collection::List cols;
+        if (recursive) {
+            cols = KMKernel::self()->subfolders(mCurrentCollection);
+        } else {
+            cols << mCurrentCollection;
+        }
+        applyFilters(cols);
     }
 }
 
-void KMMainWidget::slotFetchItemsForFolderDone(KJob *job)
+void KMMainWidget::slotApplyFilterOnFolder(bool recursive)
 {
-    Akonadi::ItemFetchJob *fjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
-    Q_ASSERT(fjob);
-    Akonadi::Item::List items = fjob->items();
-    applyFilters(items);
+    if (mCurrentCollection.isValid()) {
+        Akonadi::Collection::List cols;
+        if (recursive) {
+            cols = KMKernel::self()->subfolders(mCurrentCollection);
+        } else {
+            cols << mCurrentCollection;
+        }
+
+        QAction *action = qobject_cast<QAction*>(sender());
+        applyFilter(cols, action->property("filter_id").toString());
+    }
 }
 
 void KMMainWidget::applyFilters(const Akonadi::Item::List &selectedMessages)
@@ -2215,6 +2227,22 @@ void KMMainWidget::applyFilters(const Akonadi::Item::List &selectedMessages)
 #endif
 
     MailCommon::FilterManager::instance()->filter(selectedMessages);
+}
+
+void KMMainWidget::applyFilters(const Akonadi::Collection::List &selectedCols)
+{
+#ifndef QT_NO_CURSOR
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+    MailCommon::FilterManager::instance()->filter(selectedCols);
+}
+
+void KMMainWidget::applyFilter(const Akonadi::Collection::List &selectedCols, const QString &filter)
+{
+#ifndef QT_NO_CURSOR
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+    MailCommon::FilterManager::instance()->filter(selectedCols, { filter });
 }
 
 //-----------------------------------------------------------------------------
@@ -3375,10 +3403,27 @@ void KMMainWidget::setupActions()
     }
 
     {
-        mApplyFiltersOnFolder = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Appl&y All Filters On Folder"), this);
-        actionCollection()->addAction(QStringLiteral("apply_filters_on_folder"), mApplyFiltersOnFolder);
-        connect(mApplyFiltersOnFolder, &QAction::triggered,
-                this, &KMMainWidget::slotApplyFiltersOnFolder);
+        mApplyAllFiltersFolderAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
+        actionCollection()->addAction(QStringLiteral("apply_filters_folder"), mApplyAllFiltersFolderAction);
+        connect(mServerSideSubscription, &QAction::triggered,
+                this, [this] { slotApplyFiltersOnFolder(/* recursive */ false); });
+    }
+
+    {
+        mApplyAllFiltersFolderRecursiveAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
+        actionCollection()->addAction(QStringLiteral("apply_filters_folder_recursive"), mApplyAllFiltersFolderRecursiveAction);
+        connect(mServerSideSubscription, &QAction::triggered,
+                this, [this] { slotApplyFiltersOnFolder(/* recursive */ true); });
+    }
+
+    {
+        mApplyFilterFolderActionsMenu = new KActionMenu(i18n("Apply Filters on Folder"), this);
+        actionCollection()->addAction(QStringLiteral("apply_filters_on_folder_actions"), mApplyFilterFolderActionsMenu);
+    }
+
+    {
+        mApplyFilterFolderRecursiveActionsMenu = new KActionMenu(i18n("Apply Filters on Folder and all its Subfolders"), this);
+        actionCollection()->addAction(QStringLiteral("apply_filters_on_folder_recursive_actions"), mApplyFilterFolderRecursiveActionsMenu);
     }
 
     {
@@ -3692,7 +3737,8 @@ void KMMainWidget::updateMessageActionsDelayed()
         currentMessage = Akonadi::Item();
     }
 
-    mApplyFiltersOnFolder->setEnabled(currentFolderSettingsIsValid);
+    mApplyFilterActionsMenu->setEnabled(currentFolderSettingsIsValid);
+    mApplyFilterFolderRecursiveActionsMenu->setEnabled(currentFolderSettingsIsValid);
 
     //
     // Here we have:
@@ -3973,7 +4019,9 @@ void KMMainWidget::updateFolderMenu()
         return;
     }
 
-    const bool folderWithContent = mCurrentFolderSettings && !mCurrentFolderSettings->isStructural();
+    const bool folderWithContent = mCurrentFolderSettings
+                                    && !mCurrentFolderSettings->isStructural()
+                                    && mCurrentFolderSettings->isValid();
     bool multiFolder = false;
     if (mFolderTreeWidget) {
         multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
@@ -4024,7 +4072,6 @@ void KMMainWidget::updateFolderMenu()
     updateHtmlMenuEntry();
 
     mShowFolderShortcutDialogAction->setEnabled(!multiFolder && folderWithContent);
-
     actionlist << akonadiStandardAction(Akonadi::StandardActionManager::ManageLocalSubscriptions);
     bool imapFolderIsOnline = false;
     if (mCurrentFolderSettings && PimCommon::MailUtil::isImapFolder(mCurrentCollection, imapFolderIsOnline)) {
@@ -4035,6 +4082,17 @@ void KMMainWidget::updateFolderMenu()
 
     mGUIClient->unplugActionList(QStringLiteral("collectionview_actionlist"));
     mGUIClient->plugActionList(QStringLiteral("collectionview_actionlist"), actionlist);
+
+    const bool folderIsValid = folderWithContent && !multiFolder;
+    mApplyAllFiltersFolderAction->setEnabled(folderIsValid);
+    mApplyFilterFolderActionsMenu->setEnabled(folderIsValid);
+    mApplyFilterFolderRecursiveActionsMenu->setEnabled(folderIsValid);
+    for (auto a : qAsConst(mFilterFolderMenuActions)) {
+        a->setEnabled(folderIsValid);
+    }
+    for (auto a : qAsConst(mFilterFolderMenuRecursiveActions)) {
+        a->setEnabled(folderIsValid);
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -4119,25 +4177,38 @@ void KMMainWidget::slotUpdateUndo()
 //-----------------------------------------------------------------------------
 void KMMainWidget::clearFilterActions()
 {
-    if (!mFilterTBarActions.isEmpty()) {
-        if (mGUIClient->factory()) {
+    if (mGUIClient->factory()) {
+        if (!mFilterTBarActions.isEmpty()) {
             mGUIClient->unplugActionList(QStringLiteral("toolbar_filter_actions"));
         }
-    }
-
-    if (!mFilterMenuActions.isEmpty()) {
-        if (mGUIClient->factory()) {
+        if (!mFilterMenuActions.isEmpty()) {
             mGUIClient->unplugActionList(QStringLiteral("menu_filter_actions"));
+        }
+        if (!mFilterFolderMenuActions.isEmpty()) {
+            mGUIClient->unplugActionList(QStringLiteral("menu_filter_folder_actions"));
+        }
+        if (!mFilterFolderMenuRecursiveActions.isEmpty()) {
+            mGUIClient->unplugActionList(QStringLiteral("menu_filter_folder_recursive_actions"));
         }
     }
 
     for (QAction *a : qAsConst(mFilterMenuActions)) {
         actionCollection()->removeAction(a);
     }
+    for (QAction *a : qAsConst(mFilterFolderMenuActions)) {
+        actionCollection()->removeAction(a);
+    }
+    for (QAction *a : qAsConst(mFilterFolderMenuRecursiveActions)) {
+        actionCollection()->removeAction(a);
+    }
 
     mApplyFilterActionsMenu->menu()->clear();
+    mApplyFilterFolderActionsMenu->menu()->clear();
+    mApplyFilterFolderRecursiveActionsMenu->menu()->clear();
     mFilterTBarActions.clear();
     mFilterMenuActions.clear();
+    mFilterFolderMenuActions.clear();
+    mFilterFolderMenuRecursiveActions.clear();
 
     qDeleteAll(mFilterCommands);
     mFilterCommands.clear();
@@ -4148,11 +4219,32 @@ void KMMainWidget::initializePluginActions()
     KMailPluginInterface::self()->initializePluginActions(QStringLiteral("kmail"), mGUIClient);
 }
 
+QAction *KMMainWidget::filterToAction(MailCommon::MailFilter *filter)
+{
+    QString displayText = i18n("Filter %1", filter->name());
+    QString icon = filter->icon();
+    if (icon.isEmpty()) {
+        icon = QStringLiteral("system-run");
+    }
+    QAction *filterAction = new QAction(QIcon::fromTheme(icon), displayText, actionCollection());
+    filterAction->setProperty("filter_id", filter->identifier());
+    filterAction->setIconText(filter->toolbarName());
+
+    // The shortcut configuration is done in the filter dialog.
+    // The shortcut set in the shortcut dialog would not be saved back to
+    // the filter settings correctly.
+    actionCollection()->setShortcutsConfigurable(filterAction, false);
+
+    return filterAction;
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()
 {
     clearFilterActions();
     mApplyFilterActionsMenu->menu()->addAction(mApplyAllFiltersAction);
+    mApplyFilterFolderActionsMenu->menu()->addAction(mApplyAllFiltersFolderAction);
+    mApplyFilterFolderRecursiveActionsMenu->menu()->addAction(mApplyAllFiltersFolderRecursiveAction);
     bool addedSeparator = false;
 
     const QList<MailFilter *> lstFilters = MailCommon::FilterManager::instance()->filters();
@@ -4163,43 +4255,61 @@ void KMMainWidget::initializeFilterActions()
             if (action(normalizedName)) {
                 continue;
             }
-            KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand(filter->identifier(), this);
-            mFilterCommands.append(filterCommand);
-            QString displayText = i18n("Filter %1", filter->name());
-            QString icon = filter->icon();
-            if (icon.isEmpty()) {
-                icon = QStringLiteral("system-run");
-            }
-            QAction *filterAction = new QAction(QIcon::fromTheme(icon), displayText, actionCollection());
-            filterAction->setIconText(filter->toolbarName());
 
-            // The shortcut configuration is done in the filter dialog.
-            // The shortcut set in the shortcut dialog would not be saved back to
-            // the filter settings correctly.
-            actionCollection()->setShortcutsConfigurable(filterAction, false);
-            actionCollection()->addAction(normalizedName,
-                                          filterAction);
-            connect(filterAction, &QAction::triggered,
-                    filterCommand, &KMMetaFilterActionCommand::start);
-            actionCollection()->setDefaultShortcut(filterAction, filter->shortcut());
             if (!addedSeparator) {
                 QAction *a = mApplyFilterActionsMenu->menu()->addSeparator();
                 mFilterMenuActions.append(a);
+                a = mApplyFilterFolderActionsMenu->menu()->addSeparator();
+                mFilterFolderMenuActions.append(a);
+                a = mApplyFilterFolderRecursiveActionsMenu->menu()->addSeparator();
+                mFilterFolderMenuRecursiveActions.append(a);
                 addedSeparator = true;
             }
+
+            KMMetaFilterActionCommand *filterCommand = new KMMetaFilterActionCommand(filter->identifier(), this);
+            mFilterCommands.append(filterCommand);
+
+            auto filterAction = filterToAction(filter);
+            actionCollection()->addAction(normalizedName, filterAction);
+            connect(filterAction, &QAction::triggered,
+                    filterCommand, &KMMetaFilterActionCommand::start);
+            actionCollection()->setDefaultShortcut(filterAction, filter->shortcut());
             mApplyFilterActionsMenu->menu()->addAction(filterAction);
             mFilterMenuActions.append(filterAction);
             if (filter->configureToolbar()) {
                 mFilterTBarActions.append(filterAction);
             }
+
+            filterAction = filterToAction(filter);
+            actionCollection()->addAction(normalizedName + QStringLiteral("___folder"), filterAction);
+            connect(filterAction, &QAction::triggered,
+                    this, [this] { slotApplyFilterOnFolder(/* recursive */ false); });
+            mApplyFilterFolderActionsMenu->menu()->addAction(filterAction);
+            mFilterFolderMenuActions.append(filterAction);
+
+            filterAction = filterToAction(filter);
+            actionCollection()->addAction(normalizedName + QStringLiteral("___folder_recursive"), filterAction);
+            connect(filterAction, &QAction::triggered,
+                    this, [this] { slotApplyFilterOnFolder(/* recursive */ true); });
+            mApplyFilterFolderRecursiveActionsMenu->menu()->addAction(filterAction);
+            mFilterFolderMenuRecursiveActions.append(filterAction);
         }
     }
-    if (!mFilterMenuActions.isEmpty() && mGUIClient->factory()) {
-        mGUIClient->plugActionList(QStringLiteral("menu_filter_actions"), mFilterMenuActions);
-    }
-    if (!mFilterTBarActions.isEmpty() && mGUIClient->factory()) {
-        mFilterTBarActions.prepend(mToolbarActionSeparator);
-        mGUIClient->plugActionList(QStringLiteral("toolbar_filter_actions"), mFilterTBarActions);
+
+    if (mGUIClient->factory()) {
+        if (!mFilterMenuActions.isEmpty()) {
+            mGUIClient->plugActionList(QStringLiteral("menu_filter_actions"), mFilterMenuActions);
+        }
+        if (!mFilterTBarActions.isEmpty()) {
+            mFilterTBarActions.prepend(mToolbarActionSeparator);
+            mGUIClient->plugActionList(QStringLiteral("toolbar_filter_actions"), mFilterTBarActions);
+        }
+        if (!mFilterFolderMenuActions.isEmpty()) {
+            mGUIClient->plugActionList(QStringLiteral("menu_filter_folder_actions"), mFilterFolderMenuActions);
+        }
+        if (!mFilterFolderMenuRecursiveActions.isEmpty()) {
+            mGUIClient->plugActionList(QStringLiteral("menu_filter_folder_recursive_actions"), mFilterFolderMenuRecursiveActions);
+        }
     }
 
     // Our filters have changed, now enable/disable them

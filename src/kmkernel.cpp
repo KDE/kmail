@@ -1405,22 +1405,35 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
 static Akonadi::Collection::List collect_collections(const QAbstractItemModel *model, const QModelIndex &parent)
 {
     Akonadi::Collection::List collections;
-    const int numberOfCollection(model->rowCount(parent));
-    for (int i = 0; i < numberOfCollection; ++i) {
-        const QModelIndex child = model->index(i, 0, parent);
-        Akonadi::Collection collection
-            = model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        if (collection.isValid()) {
-            collections << collection;
+    QStack<QModelIndex> stack;
+    stack.push(parent);
+    while (!stack.isEmpty()) {
+        const auto idx = stack.pop();
+        if (idx.isValid()) {
+            collections << model->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         }
-        collections += collect_collections(model, child);
+        for (int i = model->rowCount(idx) - 1; i >= 0; --i) {
+            stack.push(idx.child(i, 0));
+        }
     }
+
     return collections;
 }
 
 Akonadi::Collection::List KMKernel::allFolders() const
 {
     return collect_collections(collectionModel(), QModelIndex());
+}
+
+Akonadi::Collection::List KMKernel::subfolders(const Akonadi::Collection &col) const
+{
+    const auto idx = collectionModel()->match({}, Akonadi::EntityTreeModel::CollectionRole,
+                                              QVariant::fromValue(col), 1, Qt::MatchExactly);
+    if (!idx.isEmpty()) {
+        return collect_collections(collectionModel(), idx[0]);
+    }
+
+    return {};
 }
 
 void KMKernel::expireAllFoldersNow() // called by the GUI

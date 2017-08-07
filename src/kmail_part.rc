@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE gui>
-<gui version="523" name="kmmainwin" translationDomain="kmail">
+<gui version="524" name="kmmainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -124,7 +124,16 @@
    <Action name="akonadi_remove_duplicates" />
    <Action name="remove_duplicate_recursive" />
    <Separator/>
-   <Action name="apply_filters_on_folder" />
+   <Menu name="apply_filters_folder_actions">
+     <text>Apply Filters on Folder</text>
+     <Action name="apply_filters_folder" />
+     <ActionList name="menu_filter_folder_actions" />
+   </Menu>
+   <Menu name="apply_filters_folder_recursive_actions">
+     <text>Apply Filters on Folder and all its Subfolders</text>
+     <Action name="apply_filters_folder_recursive" />
+     <ActionList name="menu_filter_folder_recursive_actions" />
+   </Menu>
    <Separator/>
    <Action name="display_format_message" />
    <Action name="prefer_html_external_refs" />
