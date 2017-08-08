@@ -111,8 +111,8 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     QStackedWidget *widgetStack = new QStackedWidget(this);
     widgetStack->setEnabled(false);   // since !mEnableCheck->isChecked()
     vlay->addWidget(widgetStack, 1);
-    connect(sourceCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
-    connect(sourceCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
+    connect(sourceCombo, QOverload<int>::of(&KComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
+    connect(sourceCombo, QOverload<int>::of(&KComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
     connect(mEnableCheck, &QCheckBox::toggled, sourceCombo, &KComboBox::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, widgetStack, &QStackedWidget::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, label, &QLabel::setEnabled);

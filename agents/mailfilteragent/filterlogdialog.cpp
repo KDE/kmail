@@ -164,7 +164,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     mLogMemLimitSpin->setSuffix(i18n(" KB"));
     mLogMemLimitSpin->setSpecialValueText(
         i18nc("@label:spinbox Set the size of the logfile to unlimited.", "unlimited"));
-    connect(mLogMemLimitSpin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &FilterLogDialog::slotChangeLogMemLimit);
+    connect(mLogMemLimitSpin, QOverload<int>::of(&QSpinBox::valueChanged), this, &FilterLogDialog::slotChangeLogMemLimit);
     mLogMemLimitSpin->setWhatsThis(
         i18n("Collecting log data uses memory to temporarily store the "
              "log data; here you can limit the maximum amount of memory "

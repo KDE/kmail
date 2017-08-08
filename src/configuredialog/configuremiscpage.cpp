@@ -80,9 +80,9 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
         i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8()));
 
     connect(mMMTab.mExcludeImportantFromExpiry, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.mLoopOnGotoUnread, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.mActionEnterFolder, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.mDelayedMarkTime, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mLoopOnGotoUnread, QOverload<int>::of(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mActionEnterFolder, QOverload<int>::of(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mDelayedMarkTime, QOverload<int>::of(&QSpinBox::valueChanged), this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, mMMTab.mDelayedMarkTime, &QWidget::setEnabled);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
     connect(mMMTab.mShowPopupAfterDnD, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);

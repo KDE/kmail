@@ -117,7 +117,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
                                 << i18n("On Manual Mail Checks")
                                 << i18n("On All Mail Checks"));
     glay->addWidget(mSendOnCheckCombo, 2, 1);
-    connect(mSendOnCheckCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mSendOnCheckCombo, QOverload<int>::of(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "default send method" combo:
     mSendMethodCombo = new KComboBox(group);
@@ -126,7 +126,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
                                << i18n("Send Now")
                                << i18n("Send Later"));
     glay->addWidget(mSendMethodCombo, 3, 1);
-    connect(mSendMethodCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mSendMethodCombo, QOverload<int>::of(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // labels:
     QLabel *l = new QLabel(i18n("Send &messages in outbox folder:"), group);
