@@ -331,8 +331,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     MailTransport::TransportComboBox *transport = new MailTransport::TransportComboBox(mHeadersArea);
     transport->setToolTip(i18n("Select the outgoing account to use for sending this message"));
     mComposerBase->setTransportCombo(transport);
-    connect(transport, static_cast<void (MailTransport::TransportComboBox::*)(int)>(&MailTransport::TransportComboBox::activated), this, &KMComposerWin::slotTransportChanged);
-
+    connect(transport, QOverload<int>::of(&MailTransport::TransportComboBox::activated), this, &KMComposerWin::slotTransportChanged);
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
     mEdtFrom->setObjectName(QStringLiteral("fromLine"));
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
