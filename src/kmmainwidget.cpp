@@ -1196,16 +1196,11 @@ void KMMainWidget::updateMoveAction(bool hasUnreadMails)
 
 void KMMainWidget::updateAllToTrashAction(int statistics)
 {
-    bool multiFolder = false;
-    if (mFolderTreeWidget) {
-        multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
-    }
     if (mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)) {
         const bool folderWithContent = mCurrentFolderSettings && !mCurrentFolderSettings->isStructural();
         mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)->setEnabled(folderWithContent
                                                                                                               && (statistics > 0)
-                                                                                                              && mCurrentFolderSettings->canDeleteMessages()
-                                                                                                              && !multiFolder);
+                                                                                                              && mCurrentFolderSettings->canDeleteMessages());
     }
 }
 
@@ -3901,17 +3896,12 @@ void KMMainWidget::updateMessageActionsDelayed()
 
 void KMMainWidget::slotAkonadiStandardActionUpdated()
 {
-    bool multiFolder = false;
-    if (mFolderTreeWidget) {
-        multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
-    }
     if (mCollectionProperties) {
         if (mCurrentCollection.isValid()) {
             const Akonadi::AgentInstance instance
                 = Akonadi::AgentManager::self()->instance(mCurrentCollection.resource());
 
-            mCollectionProperties->setEnabled(!multiFolder
-                                              && !mCurrentFolderSettings->isStructural()
+            mCollectionProperties->setEnabled(!mCurrentFolderSettings->isStructural()
                                               && (instance.status() != Akonadi::AgentInstance::Broken));
         } else {
             mCollectionProperties->setEnabled(false);
@@ -3928,7 +3918,6 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 
     if (mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)) {
         mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)->setEnabled(mCurrentFolderSettings
-                                                                                                             && !multiFolder
                                                                                                              && (mCurrentCollection.rights() & Collection::CanDeleteCollection)
                                                                                                              && !mCurrentFolderSettings->isSystemFolder()
                                                                                                              && folderWithContent);
@@ -3937,8 +3926,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
     if (mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)) {
         mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)->setEnabled(folderWithContent
                                                                                                               && (mCurrentFolderSettings->count() > 0)
-                                                                                                              && mCurrentFolderSettings->canDeleteMessages()
-                                                                                                              && !multiFolder);
+                                                                                                              && mCurrentFolderSettings->canDeleteMessages());
         mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)->setText((mCurrentFolderSettings
                                                                                                             && CommonKernel->folderIsTrash(mCurrentCollection)) ? i18n("E&mpty Trash") : i18n(
                                                                                                                "&Move All Messages to Trash"));
@@ -3989,25 +3977,19 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 void KMMainWidget::updateHtmlMenuEntry()
 {
     if (mDisplayMessageFormatMenu && mPreferHtmlLoadExtAction) {
-        bool multiFolder = false;
-        if (mFolderTreeWidget) {
-            multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
-        }
         // the visual ones only make sense if we are showing a message list
         const bool enabledAction = (mFolderTreeWidget
-                                    && mFolderTreeWidget->folderTreeView()->currentFolder().isValid()
-                                    && !multiFolder);
+                                    && mFolderTreeWidget->folderTreeView()->currentFolder().isValid());
 
         mDisplayMessageFormatMenu->setEnabled(enabledAction);
         const bool isEnabled = (mFolderTreeWidget
-                                && mFolderTreeWidget->folderTreeView()->currentFolder().isValid()
-                                && !multiFolder);
+                                && mFolderTreeWidget->folderTreeView()->currentFolder().isValid());
         const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html || (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
         mPreferHtmlLoadExtAction->setEnabled(isEnabled && useHtml);
 
         mDisplayMessageFormatMenu->setDisplayMessageFormat(mFolderDisplayFormatPreference);
 
-        mPreferHtmlLoadExtAction->setChecked(!multiFolder && (mHtmlLoadExtGlobalSetting ? !mFolderHtmlLoadExtPreference : mFolderHtmlLoadExtPreference));
+        mPreferHtmlLoadExtAction->setChecked((mHtmlLoadExtGlobalSetting ? !mFolderHtmlLoadExtPreference : mFolderHtmlLoadExtPreference));
     }
 }
 
@@ -4022,12 +4004,7 @@ void KMMainWidget::updateFolderMenu()
     const bool folderWithContent = mCurrentFolderSettings
                                     && !mCurrentFolderSettings->isStructural()
                                     && mCurrentFolderSettings->isValid();
-    bool multiFolder = false;
-    if (mFolderTreeWidget) {
-        multiFolder = mFolderTreeWidget->selectedCollections().count() > 1;
-    }
     mFolderMailingListPropertiesAction->setEnabled(folderWithContent
-                                                   && !multiFolder
                                                    && !mCurrentFolderSettings->isSystemFolder());
 
     QList< QAction * > actionlist;
@@ -4048,7 +4025,7 @@ void KMMainWidget::updateFolderMenu()
         mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)->setText(i18n("&Delete Search"));
     }
 
-    mArchiveFolderAction->setEnabled(mCurrentFolderSettings && !multiFolder && folderWithContent);
+    mArchiveFolderAction->setEnabled(mCurrentFolderSettings && folderWithContent);
 
     bool isInTrashFolder = (mCurrentFolderSettings && CommonKernel->folderIsTrash(mCurrentCollection));
     QAction *moveToTrash = akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash);
@@ -4064,14 +4041,13 @@ void KMMainWidget::updateFolderMenu()
 
     mExpireConfigAction->setEnabled(mCurrentFolderSettings
                                     && !mCurrentFolderSettings->isStructural()
-                                    && !multiFolder
                                     && mCurrentFolderSettings->canDeleteMessages()
                                     && folderWithContent
                                     && !MailCommon::Util::isVirtualCollection(mCurrentCollection));
 
     updateHtmlMenuEntry();
 
-    mShowFolderShortcutDialogAction->setEnabled(!multiFolder && folderWithContent);
+    mShowFolderShortcutDialogAction->setEnabled(folderWithContent);
     actionlist << akonadiStandardAction(Akonadi::StandardActionManager::ManageLocalSubscriptions);
     bool imapFolderIsOnline = false;
     if (mCurrentFolderSettings && PimCommon::MailUtil::isImapFolder(mCurrentCollection, imapFolderIsOnline)) {
@@ -4083,7 +4059,7 @@ void KMMainWidget::updateFolderMenu()
     mGUIClient->unplugActionList(QStringLiteral("collectionview_actionlist"));
     mGUIClient->plugActionList(QStringLiteral("collectionview_actionlist"), actionlist);
 
-    const bool folderIsValid = folderWithContent && !multiFolder;
+    const bool folderIsValid = folderWithContent;
     mApplyAllFiltersFolderAction->setEnabled(folderIsValid);
     mApplyFilterFolderActionsMenu->setEnabled(folderIsValid);
     mApplyFilterFolderRecursiveActionsMenu->setEnabled(folderIsValid);
