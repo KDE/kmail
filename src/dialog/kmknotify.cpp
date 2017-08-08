@@ -61,7 +61,7 @@ KMKnotify::KMKnotify(QWidget *parent)
 
     mainLayout->addWidget(buttonBox);
 
-    connect(m_comboNotify, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &KMKnotify::slotComboChanged);
+    connect(m_comboNotify, QOverload<int>::of(&KComboBox::activated), this, &KMKnotify::slotComboChanged);
     connect(okButton, &QPushButton::clicked, this, &KMKnotify::slotOk);
     connect(m_notifyWidget, &KNotifyConfigWidget::changed, this, &KMKnotify::slotConfigChanged);
     initCombobox();
