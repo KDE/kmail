@@ -328,9 +328,10 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     restoreCollectionFolderViewConfig();
 
     if (kmkernel->firstStart()) {
-        if (MailCommon::Util::foundMailer()) {
-            if (KMessageBox::questionYesNo(this, i18n("Another mailer was found on system. Do you want to import data from it?")) == KMessageBox::Yes) {
-                const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
+        QStringList listOfMailerFound = MailCommon::Util::foundMailer();
+        if (!listOfMailerFound.isEmpty()) {
+            if (KMessageBox::questionYesNoList(this, i18n("Another mailer was found on system. Do you want to import data from it?"), listOfMailerFound) == KMessageBox::Yes) {
+                const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
                 if (!QProcess::startDetached(path)) {
                     KMessageBox::error(this, i18n("Could not start the import wizard. "
                                                   "Please check your installation."),
@@ -2946,7 +2947,7 @@ void KMMainWidget::setupActions()
         QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("document-import")), i18n("&Import Messages..."), this);
         actionCollection()->addAction(QStringLiteral("import"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImport);
-        if (QStandardPaths::findExecutable(QStringLiteral("importwizard")).isEmpty()) {
+        if (QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard")).isEmpty()) {
             action->setEnabled(false);
         }
     }

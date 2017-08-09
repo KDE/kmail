@@ -108,7 +108,7 @@ void KMLaunchExternalComponent::slotStartWatchGnuPG()
 
 void KMLaunchExternalComponent::slotImportWizard()
 {
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
     if (!QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the import wizard. "
                                                "Please make sure you have ImportWizard properly installed."),
@@ -134,7 +134,7 @@ void KMLaunchExternalComponent::slotAddrBook()
 void KMLaunchExternalComponent::slotImport()
 {
     const QStringList lst = {QStringLiteral("--mode"), QStringLiteral("manual")};
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("importwizard"));
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
     if (!QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget, i18n("Could not start the ImportWizard. "
                                                "Please make sure you have ImportWizard properly installed."),
