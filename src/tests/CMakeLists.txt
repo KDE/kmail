@@ -16,3 +16,9 @@ target_link_libraries(searchdbustest Qt5::DBus Qt5::Widgets KF5::PimCommonAkonad
 set(ktoolinvocationtest_SRCS ktoolinvocationtest.cpp)
 add_executable(ktoolinvocationtest ${ktoolinvocationtest_SRCS})
 target_link_libraries(ktoolinvocationtest Qt5::DBus KF5::Service KF5::I18n)
+
+#####
+set(searchmailertest_SRCS searchmailertest.cpp)
+add_executable(searchmailertest ${searchmailertest_SRCS})
+target_link_libraries(searchmailertest KF5::MailCommon)
+
