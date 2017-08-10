@@ -126,7 +126,7 @@ void KMLaunchExternalComponent::slotExportData()
     }
 }
 
-void KMLaunchExternalComponent::slotAddrBook()
+void KMLaunchExternalComponent::slotRunAddressBook()
 {
     KRun::runCommand(QStringLiteral("kaddressbook"), mParentWidget->window());
 }

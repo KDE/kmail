@@ -328,7 +328,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     restoreCollectionFolderViewConfig();
 
     if (kmkernel->firstStart()) {
-        QStringList listOfMailerFound = MailCommon::Util::foundMailer();
+        const QStringList listOfMailerFound = MailCommon::Util::foundMailer();
         if (!listOfMailerFound.isEmpty()) {
             if (KMessageBox::questionYesNoList(this, i18n("Another mailer was found on system. Do you want to import data from it?"), listOfMailerFound) == KMessageBox::Yes) {
                 const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
@@ -2915,7 +2915,7 @@ void KMMainWidget::setupActions()
     if (parent()->inherits("KMMainWin")) {
         QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
         actionCollection()->addAction(QStringLiteral("addressbook"), action);
-        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAddrBook);
+        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotRunAddressBook);
         if (QStandardPaths::findExecutable(QStringLiteral("kaddressbook")).isEmpty()) {
             action->setEnabled(false);
         }

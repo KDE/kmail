@@ -36,7 +36,7 @@ public Q_SLOTS:
     void slotStartWatchGnuPG();
     void slotImportWizard();
     void slotExportData();
-    void slotAddrBook();
+    void slotRunAddressBook();
     void slotImport();
     void slotAccountWizard();
     void slotFilterLogViewer();
