@@ -22,24 +22,6 @@
 #include <kmmainwidget.h>
 #include "kmail_debug.h"
 
-class KMailPluginInterfacePrivate
-{
-public:
-    KMailPluginInterfacePrivate()
-        : kmailPluginInterface(new KMailPluginInterface)
-    {
-    }
-
-    ~KMailPluginInterfacePrivate()
-    {
-        delete kmailPluginInterface;
-    }
-
-    KMailPluginInterface *kmailPluginInterface;
-};
-
-Q_GLOBAL_STATIC(KMailPluginInterfacePrivate, sInstance)
-
 KMailPluginInterface::KMailPluginInterface(QObject *parent)
     : PimCommon::PluginInterface(parent)
     , mMainWindow(nullptr)
@@ -54,7 +36,8 @@ KMailPluginInterface::~KMailPluginInterface()
 
 KMailPluginInterface *KMailPluginInterface::self()
 {
-    return sInstance->kmailPluginInterface;
+    static KMailPluginInterface s_self;
+    return &s_self;
 }
 
 void KMailPluginInterface::setMainWidget(KMMainWidget *mainwindow)
