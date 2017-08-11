@@ -1411,9 +1411,9 @@ static Akonadi::Collection::List collect_collections(const QAbstractItemModel *m
         const auto idx = stack.pop();
         if (idx.isValid()) {
             collections << model->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        }
-        for (int i = model->rowCount(idx) - 1; i >= 0; --i) {
-            stack.push(idx.child(i, 0));
+            for (int i = model->rowCount(idx) - 1; i >= 0; --i) {
+                stack.push(idx.child(i, 0));
+            }
         }
     }
 
