@@ -20,7 +20,7 @@
 #include <QDialog>
 #include <QUrl>
 class QButtonGroup;
-class KComboBox;
+class QComboBox;
 class KUrlRequester;
 
 class IdentityAddVcardDialog : public QDialog
@@ -42,7 +42,7 @@ public:
 
 private:
     QButtonGroup *mButtonGroup;
-    KComboBox *mComboBox;
+    QComboBox *mComboBox;
     KUrlRequester *mVCardPath;
 };
 

@@ -17,7 +17,7 @@
 
 #include "identityaddvcarddialog.h"
 
-#include <KComboBox>
+#include <QComboBox>
 #include <KLocalizedString>
 #include <KSeparator>
 #include <KUrlRequester>
@@ -91,7 +91,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     // row 5: combobox with existing identities and label
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
-    mComboBox = new KComboBox(this);
+    mComboBox = new QComboBox(this);
     mComboBox->setObjectName(QStringLiteral("identity_combobox"));
     mComboBox->setEditable(false);
 
@@ -109,7 +109,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     // enable/disable combobox and label depending on the third radio
     // button's state:
     connect(duplicateExistingVCard, &QRadioButton::toggled, label, &QLabel::setEnabled);
-    connect(duplicateExistingVCard, &QRadioButton::toggled, mComboBox, &KComboBox::setEnabled);
+    connect(duplicateExistingVCard, &QRadioButton::toggled, mComboBox, &QComboBox::setEnabled);
     resize(350, 130);
 }
 
