@@ -25,7 +25,7 @@
 #include <Collection>
 
 #include <KLocalizedString>
-#include <KComboBox>
+#include <QComboBox>
 #include <KUrlRequester>
 #include <QSpinBox>
 #include <KSeparator>

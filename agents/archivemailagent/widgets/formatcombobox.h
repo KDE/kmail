@@ -21,7 +21,7 @@
 #define FORMATCOMBOBOX_H
 #include "MailCommon/BackupJob"
 
-#include <KComboBox>
+#include <QComboBox>
 
 class FormatComboBox : public QComboBox
 {
