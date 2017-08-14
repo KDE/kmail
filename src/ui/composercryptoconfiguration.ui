@@ -59,9 +59,9 @@ However, there may be local rules that require you to turn this option on. When 
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="mNeverEncryptWhenSavingInDrafts">
+       <widget class="QCheckBox" name="mAlwaysEncryptWhenSavingInDrafts">
         <property name="text">
-         <string>Never sign/encrypt when sa&amp;ving as draft</string>
+         <string>Always sign/encrypt when sa&amp;ving as draft</string>
         </property>
        </widget>
       </item>
@@ -97,7 +97,7 @@ However, there may be local rules that require you to turn this option on. When 
   <tabstop>mEncToSelf</tabstop>
   <tabstop>mStoreEncrypted</tabstop>
   <tabstop>mShowKeyApprovalDlg</tabstop>
-  <tabstop>mNeverEncryptWhenSavingInDrafts</tabstop>
+  <tabstop>mAlwaysEncryptWhenSavingInDrafts</tabstop>
  </tabstops>
  <resources/>
  <connections/>

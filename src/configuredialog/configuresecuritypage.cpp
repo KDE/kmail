@@ -219,7 +219,7 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab(QWidget *parent)
     mWidget->setupUi(this);
     connect(mWidget->mEncToSelf, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mShowKeyApprovalDlg, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
-    connect(mWidget->mNeverEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mAlwaysEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mStoreEncrypted, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mShowEncSignIndicator, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
 }
@@ -236,7 +236,7 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
     loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
-    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
+    loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
 
     loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
@@ -247,7 +247,7 @@ void SecurityPage::ComposerCryptoTab::save()
     saveCheckBox(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     saveCheckBox(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
-    saveCheckBox(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
+    saveCheckBox(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
     saveCheckBox(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     saveCheckBox(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }
@@ -257,7 +257,7 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
-    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
+    loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
     loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }

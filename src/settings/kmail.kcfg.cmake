@@ -174,7 +174,7 @@
       <entry name="UseHtmlMarkup" type="Bool" key="html-markup">
         <default>false</default>
       </entry>
-      <entry name="NeverEncryptDrafts" type="Bool" key="never-encrypt-drafts">
+      <entry name="AlwaysEncryptDrafts" type="Bool" key="always-encrypt-drafts">
         <default>true</default>
       </entry>
 

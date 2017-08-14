@@ -2504,7 +2504,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         // we'll call send from within slotDoDelaySend
     } else {
         if (saveIn == MessageComposer::MessageSender::SaveInDrafts && mEncryptAction->isChecked()
-            && !KMailSettings::self()->neverEncryptDrafts()
+            && KMailSettings::self()->alwaysEncryptDrafts()
             && mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty()) {
             KMessageBox::information(this, i18n("You must specify at least one receiver "
                                                 "in order to be able to encrypt a draft."));
@@ -2564,7 +2564,7 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
     bool encrypt = mEncryptAction->isChecked();
 
     mComposerBase->setCryptoOptions(sign, encrypt, cryptoMessageFormat(),
-                                    ((saveIn != MessageComposer::MessageSender::SaveInNone && KMailSettings::self()->neverEncryptDrafts())
+                                    ((saveIn != MessageComposer::MessageSender::SaveInNone && !KMailSettings::self()->alwaysEncryptDrafts())
                                      || mSigningAndEncryptionExplicitlyDisabled));
 
     const int num = KMailSettings::self()->customMessageHeadersCount();
