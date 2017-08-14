@@ -162,10 +162,3 @@ install( FILES kmail.renamecategories kmail.categories DESTINATION ${KDE_INSTALL
 add_subdirectory(doc)
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
-if (${Qt5WebEngine_VERSION} GREATER "5.7.99")
-    MESSAGE(STATUS "QtWebEngine greater or equal 5.8.0 provides printing support and dnd fix. It's a good idea to use it")
-else()
-    if (${Qt5WebEngine_VERSION} GREATER "5.6.99")
-        MESSAGE(STATUS "QtWebEngine 5.7.0 doesn't provide printing support. It has a lot of regression. Better to upgrade QtWebEngine to 5.8.0")
-    endif()
-endif()
