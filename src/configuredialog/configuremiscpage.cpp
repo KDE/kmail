@@ -25,9 +25,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "MessageViewer/PrintingSettings"
 #include "messageviewer/messageviewersettings.h"
 
-#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
 #include "MessageViewer/PrintingSettings"
-#endif
 
 #include <KCModuleProxy>
 #include <KCModuleInfo>
@@ -54,10 +52,8 @@ MiscPage::MiscPage(QWidget *parent)
     InviteTab *inviteTab = new InviteTab();
     addTab(inviteTab, i18n("Invitations"));
 
-#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
     MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
     addTab(printingTab, i18n("Printing"));
-#endif
 }
 
 QString MiscPageFolderTab::helpAnchor() const
@@ -152,7 +148,6 @@ void MiscPage::InviteTab::doResetToDefaultsOther()
     mInvitationUi->doResetToDefaultsOther();
 }
 
-#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
 MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
@@ -177,5 +172,3 @@ void MiscPagePrintingTab::save()
 {
     mPrintingUi->save();
 }
-
-#endif

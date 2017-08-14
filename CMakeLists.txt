@@ -135,11 +135,6 @@ find_package(KF5TemplateParser ${MESSAGELIB_LIB_VERSION_LIB} CONFIG REQUIRED)
 find_package(KF5Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
 find_package(MailTransportDBusService CONFIG REQUIRED)
 
-
-if (Qt5WebEngineWidgets_VERSION VERSION_GREATER "5.7.99")
-    set(WEBENGINEVIEWER_PRINT_SUPPORT true)
-endif()
-
 configure_file(config-enterprise.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
 configure_file(config-kmail.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 

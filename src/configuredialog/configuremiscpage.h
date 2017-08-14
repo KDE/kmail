@@ -75,7 +75,6 @@ public:
     typedef MiscPageInviteTab InviteTab;
 };
 
-#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
 class MiscPagePrintingTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -90,6 +89,5 @@ private:
 private:
     MessageViewer::PrintingSettings *mPrintingUi;
 };
-#endif
 
 #endif // CONFIGUREMISCPAGE_H
