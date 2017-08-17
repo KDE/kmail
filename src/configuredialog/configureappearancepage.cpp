@@ -407,8 +407,6 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
     if (KMKernel::self()) {
         KConfigGroup reader(KMKernel::self()->config(), "Reader");
 
-        KConfigGroup collectionFolderView(KMKernel::self()->config(), "CollectionFolderView");
-
         static const QColor defaultColor[ numColorNames ] = {
             MessageCore::ColorUtil::self()->quoteLevel1DefaultTextColor(),
             MessageCore::ColorUtil::self()->quoteLevel2DefaultTextColor(),
@@ -459,11 +457,9 @@ void AppearancePage::ColorsTab::save()
         return;
     }
     KConfigGroup reader(KMKernel::self()->config(), "Reader");
-    KConfigGroup collectionFolderView(KMKernel::self()->config(), "CollectionFolderView");
     bool customColors = mCustomColorCheck->isChecked();
     MessageCore::MessageCoreSettings::self()->setUseDefaultColors(!customColors);
 
-    KColorScheme scheme(QPalette::Active, KColorScheme::View);
 
     for (int i = 0; i < numColorNames; ++i) {
         const QString configName = QLatin1String(colorNames[i].configName);
