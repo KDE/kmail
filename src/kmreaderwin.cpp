@@ -361,7 +361,7 @@ void KMReaderWin::displayAboutPage()
     }
     data[QStringLiteral("importantChanges")] = changes;
 
-    displaySplashPage(QStringLiteral("introduction_kmail.html"), data);
+    displaySplashPage(QStringLiteral(":/about/introduction_kmail.html"), data);
 }
 
 void KMReaderWin::slotFind()

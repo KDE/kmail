@@ -18,7 +18,6 @@ include_directories(
 
 
 
-add_subdirectory(about)
 add_subdirectory(pics)
 add_subdirectory(icons)
 add_subdirectory(kcm_kpimidentities)
@@ -262,6 +261,8 @@ ki18n_wrap_ui(kmailprivate_LIB_SRCS
     ui/searchwindow.ui
     ui/incompleteindexdialog.ui
     )
+
+qt5_add_resources(kmailprivate_LIB_SRCS kmail.qrc)
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put
 # in the build directory.
