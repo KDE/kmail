@@ -2,20 +2,20 @@ set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
 set( kmail_potentialphishingemailjobtest_SRCS potentialphishingemailjobtest.cpp ../potentialphishingemailjob.cpp )
 add_executable( kmail_potentialphishingemailjobtest ${kmail_potentialphishingemailjobtest_SRCS})
-add_test(kmail_potentialphishingemailjobtest kmail_potentialphishingemailjobtest)
+add_test(NAME kmail_potentialphishingemailjobtest COMMAND kmail_potentialphishingemailjobtest)
 ecm_mark_as_test(kmail_potentialphishingemailjobtest)
 target_link_libraries( kmail_potentialphishingemailjobtest Qt5::Test  KF5::Codecs KF5::PimCommon)
 
 
 set( kmail_potentialphishingdetaildialogtest_SRCS potentialphishingdetaildialogtest.cpp ../potentialphishingdetaildialog.cpp ../potentialphishingdetailwidget.cpp)
 add_executable( kmail_potentialphishingdetaildialogtest ${kmail_potentialphishingdetaildialogtest_SRCS})
-add_test(kmail_potentialphishingdetaildialogtest kmail_potentialphishingdetaildialogtest)
+add_test(NAME kmail_potentialphishingdetaildialogtest COMMAND kmail_potentialphishingdetaildialogtest)
 ecm_mark_as_test(kmail_potentialphishingdetaildialogtest)
 target_link_libraries( kmail_potentialphishingdetaildialogtest Qt5::Test Qt5::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons)
 
 set( kmail_potentialphishingdetailwidgettest_SRCS potentialphishingdetailwidgettest.cpp ../potentialphishingdetailwidget.cpp)
 add_executable( kmail_potentialphishingdetailwidgettest ${kmail_potentialphishingdetailwidgettest_SRCS})
-add_test(kmail_potentialphishingdetailwidgettest kmail_potentialphishingdetailwidgettest)
+add_test(NAME kmail_potentialphishingdetailwidgettest COMMAND kmail_potentialphishingdetailwidgettest)
 ecm_mark_as_test(kmail_potentialphishingdetailwidgettest)
 target_link_libraries( kmail_potentialphishingdetailwidgettest Qt5::Test Qt5::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons KF5::PimCommon)
 
@@ -24,7 +24,7 @@ target_link_libraries( kmail_potentialphishingdetailwidgettest Qt5::Test Qt5::Wi
 
 set( kmail_potentialphishingemailwarningtest_SRCS potentialphishingemailwarningtest.cpp ../potentialphishingemailwarning.cpp ../potentialphishingdetaildialog.cpp ../potentialphishingdetailwidget.cpp)
 add_executable( kmail_potentialphishingemailwarningtest ${kmail_potentialphishingemailwarningtest_SRCS})
-add_test(kmail_potentialphishingemailwarningtest kmail_potentialphishingemailwarningtest)
+add_test(NAME kmail_potentialphishingemailwarningtest COMMAND kmail_potentialphishingemailwarningtest)
 ecm_mark_as_test(kmail_potentialphishingemailwarningtest)
 target_link_libraries( kmail_potentialphishingemailwarningtest Qt5::Test Qt5::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons)
 
