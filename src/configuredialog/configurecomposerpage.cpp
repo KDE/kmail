@@ -531,7 +531,7 @@ void ComposerPage::GeneralTab::doResetToDefaultsOther()
     mShowBalooSearchAddressesInComposer->setChecked(showBalooSearchInComposer);
     mImprovePlainTextOfHtmlMessage->setChecked(improvePlainText);
 
-    mMaximumRecentAddress->setValue(40);
+    mMaximumRecentAddress->setValue(200);
 }
 
 void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
