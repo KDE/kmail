@@ -3018,11 +3018,12 @@ void KMComposerWin::slotEditToolbars()
 {
     KConfigGroup grp(KMKernel::self()->config()->group("Composer"));
     saveMainWindowSettings(grp);
-    KEditToolBar dlg(guiFactory(), this);
+    QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
 
-    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KMComposerWin::slotUpdateToolbars);
+    connect(dlg, &KEditToolBar::newToolBarConfig, this, &KMComposerWin::slotUpdateToolbars);
 
-    dlg.exec();
+    dlg->exec();
+    delete dlg;
 }
 
 void KMComposerWin::slotUpdateToolbars()

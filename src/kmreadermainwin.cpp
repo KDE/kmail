@@ -658,9 +658,10 @@ void KMReaderMainWin::slotEditToolbars()
 {
     KConfigGroup grp(KMKernel::self()->config(), "ReaderWindow");
     saveMainWindowSettings(grp);
-    KEditToolBar dlg(guiFactory(), this);
-    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KMReaderMainWin::slotUpdateToolbars);
-    dlg.exec();
+    QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
+    connect(dlg, &KEditToolBar::newToolBarConfig, this, &KMReaderMainWin::slotUpdateToolbars);
+    dlg->exec();
+    delete dlg;
 }
 
 void KMReaderMainWin::slotUpdateToolbars()

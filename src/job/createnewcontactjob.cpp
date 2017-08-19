@@ -35,6 +35,7 @@
 
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <QPointer>
 
 CreateNewContactJob::CreateNewContactJob(QWidget *parentWidget, QObject *parent)
     : KJob(parent)
@@ -120,10 +121,11 @@ void CreateNewContactJob::slotResourceCreationDone(KJob *job)
 
 void CreateNewContactJob::createContact()
 {
-    Akonadi::ContactEditorDialog dlg(Akonadi::ContactEditorDialog::CreateMode, mParentWidget);
-    connect(&dlg, &Akonadi::ContactEditorDialog::contactStored, this, &CreateNewContactJob::contactStored);
-    connect(&dlg, &Akonadi::ContactEditorDialog::error, this, &CreateNewContactJob::slotContactEditorError);
-    dlg.exec();
+    QPointer<Akonadi::ContactEditorDialog> dlg = new Akonadi::ContactEditorDialog(Akonadi::ContactEditorDialog::CreateMode, mParentWidget);
+    connect(dlg, &Akonadi::ContactEditorDialog::contactStored, this, &CreateNewContactJob::contactStored);
+    connect(dlg, &Akonadi::ContactEditorDialog::error, this, &CreateNewContactJob::slotContactEditorError);
+    dlg->exec();
+    delete dlg;
 }
 
 void CreateNewContactJob::contactStored(const Akonadi::Item &item)

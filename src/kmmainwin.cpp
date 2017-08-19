@@ -148,10 +148,11 @@ void KMMainWin::slotEditToolbars()
 {
     KConfigGroup grp = KMKernel::self()->config()->group("Main Window");
     saveMainWindowSettings(grp);
-    KEditToolBar dlg(guiFactory(), this);
-    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KMMainWin::slotUpdateGui);
+    QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
+    connect(dlg, &KEditToolBar::newToolBarConfig, this, &KMMainWin::slotUpdateGui);
 
-    dlg.exec();
+    dlg->exec();
+    delete dlg;
 }
 
 void KMMainWin::slotUpdateGui()

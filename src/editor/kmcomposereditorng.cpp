@@ -119,32 +119,33 @@ QString KMComposerEditorNg::smartQuote(const QString &msg)
 void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
 {
     Q_UNUSED(configFileName);
-    Sonnet::ConfigDialog dialog(this);
+    QPointer<Sonnet::ConfigDialog> dialog = new Sonnet::ConfigDialog(this);
     if (!spellCheckingLanguage().isEmpty()) {
-        dialog.setLanguage(spellCheckingLanguage());
+        dialog->setLanguage(spellCheckingLanguage());
     }
     // Hackish way to hide the "Enable spell check by default" checkbox
     // Our highlighter ignores this setting, so we should not expose its UI
-    QCheckBox *enabledByDefaultCB = dialog.findChild<QCheckBox *>(QStringLiteral("m_checkerEnabledByDefaultCB"));
+    QCheckBox *enabledByDefaultCB = dialog->findChild<QCheckBox *>(QStringLiteral("m_checkerEnabledByDefaultCB"));
     if (enabledByDefaultCB) {
         enabledByDefaultCB->hide();
     } else {
         qCWarning(KMAIL_LOG) << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
     }
-    QLabel *textLabel = dialog.findChild<QLabel *>(QStringLiteral("textLabel1"));
+    QLabel *textLabel = dialog->findChild<QLabel *>(QStringLiteral("textLabel1"));
     if (textLabel) {
         textLabel->hide();
     } else {
         qCWarning(KMAIL_LOG) << "Could not find any label named 'textLabel'. Sonnet::ConfigDialog must have changed!";
     }
-    Sonnet::DictionaryComboBox *dictionaryComboBox = dialog.findChild<Sonnet::DictionaryComboBox *>(QStringLiteral("m_langCombo"));
+    Sonnet::DictionaryComboBox *dictionaryComboBox = dialog->findChild<Sonnet::DictionaryComboBox *>(QStringLiteral("m_langCombo"));
     if (dictionaryComboBox) {
         dictionaryComboBox->hide();
     } else {
         qCWarning(KMAIL_LOG) << "Could not find any Sonnet::DictionaryComboBox named 'dictionaryComboBox'. Sonnet::ConfigDialog must have changed!";
     }
 
-    if (dialog.exec()) {
-        setSpellCheckingLanguage(dialog.language());
+    if (dialog->exec()) {
+        setSpellCheckingLanguage(dialog->language());
     }
+    delete dialog;
 }

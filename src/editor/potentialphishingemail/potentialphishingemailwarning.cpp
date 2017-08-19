@@ -48,9 +48,10 @@ PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
 void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {
     if (link == QLatin1String("phishingdetails")) {
-        PotentialPhishingDetailDialog dlg(this);
-        dlg.fillList(mPotentialPhishingEmails);
-        dlg.exec();
+        QPointer<PotentialPhishingDetailDialog> dlg = new PotentialPhishingDetailDialog(this);
+        dlg->fillList(mPotentialPhishingEmails);
+        dlg->exec();
+        delete dlg;
     }
 }
 

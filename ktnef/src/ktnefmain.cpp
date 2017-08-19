@@ -331,9 +331,10 @@ void KTNEFMain::extractAllFiles()
 void KTNEFMain::propertiesFile()
 {
     KTNEFAttach *attach = mView->getSelection().at(0);
-    AttachPropertyDialog dlg(this);
-    dlg.setAttachment(attach);
-    dlg.exec();
+    QPointer<AttachPropertyDialog> dlg = new AttachPropertyDialog(this);
+    dlg->setAttachment(attach);
+    dlg->exec();
+    delete dlg;
 }
 
 void KTNEFMain::optionDefaultDir()
@@ -477,9 +478,10 @@ void KTNEFMain::slotEditToolbars()
     KConfigGroup grp = KSharedConfig::openConfig()->group("MainWindow");
     saveMainWindowSettings(grp);
 
-    KEditToolBar dlg(factory());
-    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KTNEFMain::slotNewToolbarConfig);
-    dlg.exec();
+    QPointer<KEditToolBar> dlg = new KEditToolBar(factory());
+    connect(dlg, &KEditToolBar::newToolBarConfig, this, &KTNEFMain::slotNewToolbarConfig);
+    dlg->exec();
+    delete dlg;
 }
 
 void KTNEFMain::slotNewToolbarConfig()
@@ -490,8 +492,9 @@ void KTNEFMain::slotNewToolbarConfig()
 
 void KTNEFMain::slotShowMessageProperties()
 {
-    MessagePropertyDialog dlg(this, mParser->message());
-    dlg.exec();
+    QPointer<MessagePropertyDialog> dlg = new MessagePropertyDialog(this, mParser->message());
+    dlg->exec();
+    delete dlg;
 }
 
 void KTNEFMain::slotShowMessageText()

@@ -1508,9 +1508,10 @@ void KMMainWidget::slotEmptyFolder()
 void KMMainWidget::slotArchiveFolder()
 {
     if (mCurrentCollection.isValid()) {
-        KMail::ArchiveFolderDialog archiveDialog;
-        archiveDialog.setFolder(mCurrentCollection);
-        archiveDialog.exec();
+        QPointer<KMail::ArchiveFolderDialog> archiveDialog = new KMail::ArchiveFolderDialog(this);
+        archiveDialog->setFolder(mCurrentCollection);
+        archiveDialog->exec();
+        delete archiveDialog;
     }
 }
 
@@ -1937,13 +1938,14 @@ void KMMainWidget::slotSelectMoreMessageTagList()
         return;
     }
 
-    TagSelectDialog dlg(this, selectedMessages.count(), selectedMessages.first());
-    dlg.setActionCollection(QList<KActionCollection *> { actionCollection() });
-    if (dlg.exec()) {
-        const Akonadi::Tag::List lst = dlg.selectedTag();
+    QPointer<TagSelectDialog> dlg = new TagSelectDialog(this, selectedMessages.count(), selectedMessages.first());
+    dlg->setActionCollection(QList<KActionCollection *> { actionCollection() });
+    if (dlg->exec()) {
+        const Akonadi::Tag::List lst = dlg->selectedTag();
         KMCommand *command = new KMSetTagCommand(lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew);
         command->start();
     }
+    delete dlg;
 }
 
 void KMMainWidget::slotUpdateMessageTagList(const Akonadi::Tag &tag)
@@ -3629,8 +3631,9 @@ void KMMainWidget::slotAddFavoriteFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
-    KMail::KMKnotify notifyDlg(this);
-    notifyDlg.exec();
+    QPointer<KMail::KMKnotify> notifyDlg = new KMail::KMKnotify(this);
+    notifyDlg->exec();
+    delete notifyDlg;
 }
 
 //-----------------------------------------------------------------------------
