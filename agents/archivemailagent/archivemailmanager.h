@@ -46,6 +46,8 @@ public:
 
     void archiveFolder(const QString &path, Akonadi::Collection::Id collectionId);
 
+    ArchiveMailKernel *kernel() const { return mArchiveMailKernel; }
+
 public Q_SLOTS:
     void load();
     void slotArchiveNow(ArchiveMailInfo *info);

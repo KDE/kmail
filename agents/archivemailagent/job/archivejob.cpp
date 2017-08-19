@@ -20,10 +20,14 @@
 #include "archivejob.h"
 #include "archivemailinfo.h"
 #include "archivemailmanager.h"
+#include "archivemailkernel.h"
 #include "archivemailagent_debug.h"
-#include "MailCommon/MailUtil"
 
+
+#include <MailCommon/MailUtil>
 #include <MailCommon/BackupJob>
+
+#include <AkonadiCore/EntityMimeTypeFilterModel>
 
 #include <KNotification>
 #include <KLocalizedString>
@@ -76,7 +80,7 @@ void ArchiveJob::execute()
         }
 
         MailCommon::BackupJob *backupJob = new MailCommon::BackupJob();
-        backupJob->setRootFolder(MailCommon::Util::updatedCollection(collection));
+        backupJob->setRootFolder(Akonadi::EntityTreeModel::updatedCollection(mManager->kernel()->collectionModel(), collection));
 
         backupJob->setSaveLocation(archivePath);
         backupJob->setArchiveType(mInfo->archiveType());

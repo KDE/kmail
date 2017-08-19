@@ -750,7 +750,8 @@ void KMKernel::setAccountStatus(bool goOnline)
         }
     }
     if (goOnline && MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
-        const qint64 nbMsgOutboxCollection = MailCommon::Util::updatedCollection(CommonKernel->outboxCollectionFolder()).statistics().count();
+        const auto col = CommonKernel->collectionFromId(CommonKernel->outboxCollectionFolder().id());
+        const qint64 nbMsgOutboxCollection = col.statistics().count();
         if (nbMsgOutboxCollection > 0) {
             kmkernel->msgSender()->sendQueued();
         }

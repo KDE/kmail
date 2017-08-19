@@ -29,6 +29,7 @@
 #include <QUrl>
 #include <QDebug>
 
+
 CreateReplyMessageJob::CreateReplyMessageJob(QObject *parent)
     : QObject(parent)
     , mMessageFactory(nullptr)
@@ -57,7 +58,8 @@ inline KMail::Composer::TemplateContext replyContext(MessageComposer::MessageFac
 
 void CreateReplyMessageJob::start()
 {
-    mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.mMsg, mSettings.mItem.id(), MailCommon::Util::updatedCollection(mSettings.mItem.parentCollection()));
+    const auto col = CommonKernel->collectionFromId(mSettings.mItem.parentCollection().id());
+    mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.mMsg, mSettings.mItem.id(), col);
     mMessageFactory->setIdentityManager(KMKernel::self()->identityManager());
     mMessageFactory->setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.mItem));
     mMessageFactory->setMailingListAddresses(KMail::Util::mailingListsFromMessage(mSettings.mItem));

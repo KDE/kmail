@@ -28,6 +28,8 @@
 #include <AkonadiCore/itemmodifyjob.h>
 #include <AkonadiCore/itemmovejob.h>
 #include <AkonadiCore/itemdeletejob.h>
+#include <AkonadiCore/EntityTreeModel>
+#include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <Akonadi/KMime/MessageParts>
 #include <kconfig.h>
 #include <kconfiggroup.h>
@@ -40,7 +42,7 @@
 #include <MailCommon/FilterImporterExporter>
 #include <MailCommon/FilterLog>
 #include <MailCommon/MailFilter>
-#include <MailCommon/MailUtil>
+#include <MailCommon/MailKernel>
 
 #include <QTimer>
 
@@ -458,7 +460,9 @@ bool FilterManager::processContextItem(ItemContext context)
     const KMime::Message::Ptr msg = context.item().payload<KMime::Message::Ptr>();
     msg->assemble();
 
-    const bool itemCanDelete = (MailCommon::Util::updatedCollection(context.item().parentCollection()).rights() & Akonadi::Collection::CanDeleteItem);
+    auto col = Akonadi::EntityTreeModel::updatedCollection(MailCommon::Kernel::self()->kernelIf()->collectionModel(),
+                                                           context.item().parentCollection());
+    const bool itemCanDelete = (col.rights() & Akonadi::Collection::CanDeleteItem);
     if (context.deleteItem()) {
         if (itemCanDelete) {
             Akonadi::ItemDeleteJob *deleteJob = new Akonadi::ItemDeleteJob(context.item(), this);

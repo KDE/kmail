@@ -63,7 +63,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
     const bool hasNotSubDirectory = listOfCollection.isEmpty();
 
     const Akonadi::Collection::Id id = fetchJob->property("collectionId").toLongLong();
-    Akonadi::Collection col = MailCommon::Util::updatedCollection(CommonKernel->collectionFromId(id));
+    const auto col = CommonKernel->collectionFromId(id);
     QString str;
     QString title;
     QString buttonLabel;

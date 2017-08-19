@@ -25,6 +25,7 @@
 #include <KMime/Message>
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
+
 #include <QUrl>
 
 CreateForwardMessageJob::CreateForwardMessageJob(QObject *parent)
@@ -45,7 +46,9 @@ void CreateForwardMessageJob::setSettings(const CreateForwardMessageJobSettings 
 
 void CreateForwardMessageJob::start()
 {
-    mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.mMsg, mSettings.mItem.id(), MailCommon::Util::updatedCollection(mSettings.mItem.parentCollection()));
+    const auto col = CommonKernel->collectionFromId(mSettings.mItem.parentCollection().id());
+    mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.mMsg, mSettings.mItem.id(),
+                                                            col);
     connect(mMessageFactory, &MessageComposer::MessageFactoryNG::createForwardDone, this, &CreateForwardMessageJob::slotCreateForwardDone);
     mMessageFactory->setIdentityManager(KMKernel::self()->identityManager());
     mMessageFactory->setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.mItem));

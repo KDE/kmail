@@ -464,7 +464,7 @@ void KMMainWidget::slotCollectionFetched(int collectionId)
     // This is the right time to update the caption (which still says "Loading...")
     // and to update the actions that depend on the number of mails in the folder.
     if (collectionId == mCurrentCollection.id()) {
-        setCurrentCollection(MailCommon::Util::updatedCollection(mCurrentCollection));
+        setCurrentCollection(CommonKernel->collectionFromId(mCurrentCollection.id()));
         updateMessageActions();
         updateFolderMenu();
     }
@@ -1214,7 +1214,7 @@ void KMMainWidget::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, c
     } else if (id == mCurrentCollection.id()) {
         updateMoveAction(statistic);
         updateAllToTrashAction(statistic.count());
-        setCurrentCollection(MailCommon::Util::updatedCollection(mCurrentCollection));
+        setCurrentCollection(CommonKernel->collectionFromId(mCurrentCollection.id()));
     }
 }
 
@@ -2633,8 +2633,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
                               : MessageViewer::MessageViewerSettings::self()->useFixedFont();
     win->setUseFixedFont(useFixedFont);
 
-    const Akonadi::Collection parentCollection = MailCommon::Util::parentCollectionFromItem(msg);
-    win->showMessage(overrideEncoding(), msg, parentCollection);
+    win->showMessage(overrideEncoding(), msg, CommonKernel->collectionFromId(msg.parentCollection().id()));
     win->show();
 }
 
@@ -3899,7 +3898,8 @@ void KMMainWidget::updateMessageActionsDelayed()
         updateMoveAction(false);
     }
 
-    const qint64 nbMsgOutboxCollection = MailCommon::Util::updatedCollection(CommonKernel->outboxCollectionFolder()).statistics().count();
+    const auto col = CommonKernel->collectionFromId(CommonKernel->outboxCollectionFolder().id());
+    const qint64 nbMsgOutboxCollection = col.statistics().count();
 
     mSendQueued->setEnabled(nbMsgOutboxCollection > 0);
     mSendActionMenu->setEnabled(nbMsgOutboxCollection > 0);

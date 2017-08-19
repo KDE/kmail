@@ -935,7 +935,8 @@ KMCommand::Result KMForwardCommand::execute()
 
         if (answer == KMessageBox::Yes) {
             Akonadi::Item firstItem(msgList.first());
-            MessageFactoryNG factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(), MailCommon::Util::updatedCollection(firstItem.parentCollection()));
+            MessageFactoryNG factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(),
+                                     CommonKernel->collectionFromId(firstItem.parentCollection().id()));
             factory.setIdentityManager(KMKernel::self()->identityManager());
             factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
@@ -990,7 +991,8 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 {
     Akonadi::Item::List msgList = retrievedMsgs();
     Akonadi::Item firstItem(msgList.first());
-    MessageFactoryNG factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(), MailCommon::Util::updatedCollection(firstItem.parentCollection()));
+    MessageFactoryNG factory(KMime::Message::Ptr(new KMime::Message), firstItem.id(),
+                             CommonKernel->collectionFromId(firstItem.parentCollection().id()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
@@ -1056,7 +1058,7 @@ KMCommand::Result KMRedirectCommand::execute()
         if (!msg) {
             return Failed;
         }
-        MessageFactoryNG factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
+        MessageFactoryNG factory(msg, item.id(), CommonKernel->collectionFromId(item.parentCollection().id()));
         factory.setIdentityManager(KMKernel::self()->identityManager());
         factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
 
@@ -1661,7 +1663,7 @@ KMCommand::Result KMResendMessageCommand::execute()
     if (!msg) {
         return Failed;
     }
-    MessageFactoryNG factory(msg, item.id(), MailCommon::Util::updatedCollection(item.parentCollection()));
+    MessageFactoryNG factory(msg, item.id(), CommonKernel->collectionFromId(item.parentCollection().id()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
     KMime::Message::Ptr newMsg = factory.createResend();
