@@ -498,6 +498,23 @@ private:
     Akonadi::Collection mDestFolder;
 };
 
+class KMCopyDecryptedCommand : public KMCommand
+{
+    Q_OBJECT
+public:
+    KMCopyDecryptedCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList);
+    KMCopyDecryptedCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg);
+
+protected Q_SLOTS:
+    void slotAppendResult(KJob *job);
+
+private:
+    Result execute() override;
+
+    Akonadi::Collection mDestFolder;
+    QList<KJob*> mPendingJobs;
+};
+
 namespace KPIM {
 class ProgressItem;
 }

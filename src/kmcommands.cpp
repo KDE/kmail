@@ -67,6 +67,7 @@
 #include <AkonadiCore/ItemMoveJob>
 #include <AkonadiCore/ItemCopyJob>
 #include <AkonadiCore/ItemDeleteJob>
+#include <AkonadiCore/ItemCreateJob>
 #include <AkonadiCore/Tag>
 #include <AkonadiCore/TagCreateJob>
 
@@ -78,6 +79,7 @@
 #include <MailCommon/MDNStateAttribute>
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
+#include <MailCommon/CryptoUtils>
 
 #include <MessageCore/StringUtil>
 #include <MessageCore/MessageCoreSettings>
@@ -1427,9 +1429,70 @@ void KMCopyCommand::slotCopyResult(KJob *job)
         showJobError(job);
         setResult(Failed);
     }
+
+    qobject_cast<Akonadi::ItemCopyJob*>(job);
+
     Q_EMIT completed(this);
     deleteLater();
 }
+
+KMCopyDecryptedCommand::KMCopyDecryptedCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList)
+    : KMCommand(nullptr, msgList)
+    , mDestFolder(destFolder)
+{
+    fetchScope().fetchAllAttributes();
+    fetchScope().fetchFullPayload();
+}
+
+KMCopyDecryptedCommand::KMCopyDecryptedCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg)
+    : KMCopyDecryptedCommand(destFolder, Akonadi::Item::List{ msg })
+{
+}
+
+KMCommand::Result KMCopyDecryptedCommand::execute()
+{
+    setDeletesItself(true);
+
+    const auto items = retrievedMsgs();
+    for (const auto &item : items) {
+        // Decrypt
+        if (!item.hasPayload<KMime::Message::Ptr>()) {
+            continue;
+        }
+        const auto msg = item.payload<KMime::Message::Ptr>();
+        bool wasEncrypted;
+        auto decMsg = MailCommon::CryptoUtils::decryptMessage(msg, wasEncrypted);
+        if (!wasEncrypted) {
+            decMsg = msg;
+        }
+
+        Akonadi::Item decItem;
+        decItem.setMimeType(KMime::Message::mimeType());
+        decItem.setPayload(decMsg);
+
+        auto job = new Akonadi::ItemCreateJob(decItem, mDestFolder, this);
+        connect(job, &Akonadi::Job::result, this, &KMCopyDecryptedCommand::slotAppendResult);
+        mPendingJobs << job;
+    }
+
+    if (mPendingJobs.isEmpty()) {
+        Q_EMIT completed(this);
+        deleteLater();
+    }
+
+    return KMCommand::OK;
+}
+
+void KMCopyDecryptedCommand::slotAppendResult(KJob *job)
+{
+    mPendingJobs.removeOne(job);
+    if (mPendingJobs.isEmpty()) {
+        Q_EMIT completed(this);
+        deleteLater();
+    }
+}
+
+
 
 KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
     : KMCommand(nullptr, msgList)

@@ -383,6 +383,7 @@ protected Q_SLOTS:
     bool slotSearch();
     void slotIntro();
     void slotShowStartupFolder();
+    void slotCopyDecryptedTo(QAction *action);
 
     /** Message navigation */
     void slotSelectNextMessage();
@@ -598,6 +599,7 @@ private:
     KActionMenu *mThreadStatusMenu, *mApplyFilterActionsMenu;
     QAction *mCopyActionMenu;
     QAction *mMoveActionMenu;
+    QAction *mCopyDecryptedActionMenu;
     QAction *mMarkThreadAsReadAction;
     QAction *mMarkThreadAsUnreadAction;
     KToggleAction *mToggleThreadImportantAction;

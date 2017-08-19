@@ -3227,6 +3227,11 @@ void KMMainWidget::setupActions()
 
     mCopyActionMenu = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::CopyItemToMenu);
 
+    mCopyDecryptedActionMenu = new KActionMenu(i18n("Copy Decrypted To..."), this);
+    actionCollection()->addAction(QStringLiteral("copy_decrypted_to_menu"), mCopyDecryptedActionMenu);
+    connect(mCopyDecryptedActionMenu->menu(), &QMenu::triggered,
+            this, &KMMainWidget::slotCopyDecryptedTo);
+
     mApplyAllFiltersAction
         = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Appl&y All Filters"), this);
     actionCollection()->addAction(QStringLiteral("apply_filters"), mApplyAllFiltersAction);
@@ -3915,6 +3920,15 @@ void KMMainWidget::updateMessageActionsDelayed()
     mApplyAllFiltersAction->setEnabled(count);
     mApplyFilterActionsMenu->setEnabled(count);
     mSelectAllMessages->setEnabled(count);
+
+    if (currentMessage.hasFlag(Akonadi::MessageFlags::Encrypted) || count > 1) {
+        mCopyDecryptedActionMenu->setVisible(true);
+        mAkonadiStandardActionManager->standardActionManager()->createActionFolderMenu(
+            mCopyDecryptedActionMenu->menu(),
+            Akonadi::StandardActionManager::CopyItemToMenu);
+    } else {
+        mCopyDecryptedActionMenu->setVisible(false);
+    }
 }
 
 void KMMainWidget::slotAkonadiStandardActionUpdated()
@@ -4767,4 +4781,15 @@ void KMMainWidget::showMessageActivities(const QString &str)
 {
     BroadcastStatus::instance()->setStatusMsg(str);
     PimCommon::LogActivitiesManager::self()->appendLog(str);
+}
+
+void KMMainWidget::slotCopyDecryptedTo(QAction *action)
+{
+    if (action) {
+        const auto index = action->data().toModelIndex();
+        const auto collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+
+        auto command = new KMCopyDecryptedCommand(collection, mMessagePane->selectionAsMessageItemList());
+        command->start();
+    }
 }
