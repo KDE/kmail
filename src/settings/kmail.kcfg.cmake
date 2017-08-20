@@ -77,7 +77,7 @@
     </group>
 
     <group name="General">
-      <entry name="WarnBeforeExpire" type="bool" key="warn-before-expire">
+      <entry name="WarnBeforeExpire" type="Bool" key="warn-before-expire">
         <default>true</default>
       </entry>
       <entry name="SystemTrayEnabled" type="Bool">
