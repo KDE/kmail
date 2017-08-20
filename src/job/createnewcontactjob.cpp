@@ -77,15 +77,15 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
         }
     }
     if (canCreateItemCollections.isEmpty()) {
-        Akonadi::AgentTypeDialog dlg(mParentWidget);
-        dlg.setWindowTitle(i18n("Add to Address Book"));
-        dlg.agentFilterProxyModel()->addMimeTypeFilter(KContacts::Addressee::mimeType());
-        dlg.agentFilterProxyModel()->addMimeTypeFilter(KContacts::ContactGroup::mimeType());
-        dlg.agentFilterProxyModel()->addCapabilityFilter(QStringLiteral("Resource"));
+        QPointer<Akonadi::AgentTypeDialog> dlg = new Akonadi::AgentTypeDialog(mParentWidget);
+        dlg->setWindowTitle(i18n("Add to Address Book"));
+        dlg->agentFilterProxyModel()->addMimeTypeFilter(KContacts::Addressee::mimeType());
+        dlg->agentFilterProxyModel()->addMimeTypeFilter(KContacts::ContactGroup::mimeType());
+        dlg->agentFilterProxyModel()->addCapabilityFilter(QStringLiteral("Resource"));
 
-        if (dlg.exec()) {
-            const Akonadi::AgentType agentType = dlg.agentType();
-
+        if (dlg->exec()) {
+            const Akonadi::AgentType agentType = dlg->agentType();
+            delete dlg;
             if (agentType.isValid()) {
                 Akonadi::AgentInstanceCreateJob *job = new Akonadi::AgentInstanceCreateJob(agentType, this);
                 connect(job, &Akonadi::AgentInstanceCreateJob::result, this, &CreateNewContactJob::slotResourceCreationDone);
@@ -98,6 +98,7 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
                 return;
             }
         } else { //dialog canceled => return error and finish job
+            delete dlg;
             setError(UserDefinedError);
             emitResult();
             return;
