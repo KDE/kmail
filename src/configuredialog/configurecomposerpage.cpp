@@ -603,9 +603,9 @@ void ComposerPage::GeneralTab::save()
 
 void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
 {
-    QScopedPointer<KPIM::CompletionConfigureDialog> dlg(new KPIM::CompletionConfigureDialog(this));
-    dlg->setRecentAddresses(KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     KLDAP::LdapClientSearch search;
+    QPointer<KPIM::CompletionConfigureDialog> dlg(new KPIM::CompletionConfigureDialog(this));
+    dlg->setRecentAddresses(KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     dlg->setLdapClientSearch(&search);
     KSharedConfig::Ptr config = KSharedConfig::openConfig(QStringLiteral("kpimbalooblacklist"));
     KConfigGroup group(config, "AddressLineEdit");
@@ -613,12 +613,13 @@ void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
 
     dlg->setEmailBlackList(balooBlackList);
     dlg->load();
-    if (dlg->exec() && dlg) {
+    if (dlg->exec()) {
         if (dlg->recentAddressWasChanged()) {
             KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->clear();
             dlg->storeAddresses(MessageComposer::MessageComposerSettings::self()->config());
         }
     }
+    delete dlg;
 }
 
 QString ComposerPage::TemplatesTab::helpAnchor() const
