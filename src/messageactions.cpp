@@ -337,7 +337,7 @@ void MessageActions::updateActions()
         }
     }
 
-    const bool multiVisible = mVisibleItems.count() > 0 || mCurrentItem.isValid();
+    const bool multiVisible = !mVisibleItems.isEmpty() || mCurrentItem.isValid();
     const bool uniqItem = (itemValid || hasPayload) && (mVisibleItems.count() <= 1);
     mReplyActionMenu->setEnabled(hasPayload);
     mReplyAction->setEnabled(hasPayload);

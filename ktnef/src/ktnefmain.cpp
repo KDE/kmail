@@ -209,7 +209,7 @@ void KTNEFMain::loadFile(const QString &filename)
                      "%1 attachment found", "%1 attachments found", list.count());
         statusBar()->showMessage(msg);
         mView->setAttachments(list);
-        enableExtractAll((list.count() > 0));
+        enableExtractAll(!list.isEmpty());
         enableSingleAction(false);
     }
 }
