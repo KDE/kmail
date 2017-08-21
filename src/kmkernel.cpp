@@ -157,7 +157,6 @@ KMKernel::KMKernel(QObject *parent)
     KMailSettings::self();
 
     mJobScheduler = new JobScheduler(this);
-    mXmlGuiInstance = QStringLiteral("kmail2");
 
     mAutoCorrection = new PimCommon::AutoCorrection();
     KMime::setUseOutlookAttachmentEncoding(MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments());
