@@ -22,10 +22,11 @@
 #include <qtest.h>
 #include <QTreeWidget>
 #include "../archivemailwidget.h"
-
+#include <QStandardPaths>
 ArchiveMailDialogTest::ArchiveMailDialogTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 ArchiveMailDialogTest::~ArchiveMailDialogTest()

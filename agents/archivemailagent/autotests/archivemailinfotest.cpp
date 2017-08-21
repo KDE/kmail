@@ -23,10 +23,12 @@
 #include <qtest.h>
 #include <KConfigGroup>
 #include <KSharedConfig>
+#include <QStandardPaths>
 
 ArchiveMailInfoTest::ArchiveMailInfoTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 ArchiveMailInfoTest::~ArchiveMailInfoTest()
