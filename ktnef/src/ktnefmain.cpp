@@ -479,7 +479,7 @@ void KTNEFMain::slotEditToolbars()
     saveMainWindowSettings(grp);
 
     QPointer<KEditToolBar> dlg = new KEditToolBar(factory());
-    connect(dlg, &KEditToolBar::newToolBarConfig, this, &KTNEFMain::slotNewToolbarConfig);
+    connect(dlg.data(), &KEditToolBar::newToolBarConfig, this, &KTNEFMain::slotNewToolbarConfig);
     dlg->exec();
     delete dlg;
 }
