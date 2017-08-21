@@ -431,22 +431,23 @@ void SummaryViewPart::setDate(const QDate &newDate)
 
 void SummaryViewPart::slotConfigure()
 {
-    KCMultiDialog dlg(mMainWidget);
-    dlg.setObjectName(QStringLiteral("ConfigDialog"));
-    dlg.setModal(true);
+    QPointer<KCMultiDialog> dlg = new KCMultiDialog(mMainWidget);
+    dlg->setObjectName(QStringLiteral("ConfigDialog"));
+    dlg->setModal(true);
 
     QStringList modules = configModules();
     modules.prepend(QStringLiteral("kcmkontactsummary.desktop"));
-    connect(&dlg, SIGNAL(configCommitted()),
+    connect(dlg.data(), SIGNAL(configCommitted()),
             this, SLOT(updateWidgets()));
 
     QStringList::ConstIterator strIt;
     QStringList::ConstIterator end(modules.constEnd());
     for (strIt = modules.constBegin(); strIt != end; ++strIt) {
-        dlg.addModule(*strIt);
+        dlg->addModule(*strIt);
     }
 
-    dlg.exec();
+    dlg->exec();
+    delete dlg;
 }
 
 QStringList SummaryViewPart::configModules() const
