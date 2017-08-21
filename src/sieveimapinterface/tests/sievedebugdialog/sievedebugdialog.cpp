@@ -23,6 +23,7 @@
 #include "../../../sieveimapinterface/kmsieveimappasswordprovider.h"
 
 #include <QApplication>
+#include <QStandardPaths>
 
 int main(int argc, char **argv)
 {
@@ -30,6 +31,7 @@ int main(int argc, char **argv)
     app.setQuitOnLastWindowClosed(false);
     QApplication::setApplicationName(QStringLiteral("sievedebugdialog"));
     QApplication::setApplicationVersion(QStringLiteral("1.0"));
+    QStandardPaths::setTestModeEnabled(true);
 
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     KMSieveImapPasswordProvider provider(0);
