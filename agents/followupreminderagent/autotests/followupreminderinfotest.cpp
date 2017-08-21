@@ -22,10 +22,12 @@
 #include <qtest.h>
 #include <KConfigGroup>
 #include <KSharedConfig>
+#include <QStandardPaths>
 
 FollowUpReminderInfoTest::FollowUpReminderInfoTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 void FollowUpReminderInfoTest::shouldHaveDefaultValue()

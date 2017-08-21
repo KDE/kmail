@@ -21,10 +21,12 @@
 #include <AkonadiCore/Collection>
 #include <qtest.h>
 #include <KSharedConfig>
+#include <QStandardPaths>
 
 FolderArchiveAccountInfoTest::FolderArchiveAccountInfoTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 FolderArchiveAccountInfoTest::~FolderArchiveAccountInfoTest()
