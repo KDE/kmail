@@ -23,9 +23,11 @@
 #include <QDateTime>
 #include <KConfigGroup>
 #include <KSharedConfig>
+#include <QStandardPaths>
 
 SendLaterInfoTest::SendLaterInfoTest()
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 void SendLaterInfoTest::shouldHaveDefaultValue()
