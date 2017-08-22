@@ -34,16 +34,14 @@ class UndoInfo
 {
 public:
     UndoInfo()
-        : id(-1)
-        , moveToTrash(false)
     {
     }
 
-    int id;
+    int id = -1;
     Akonadi::Item::List items;
     Akonadi::Collection srcFolder;
     Akonadi::Collection destFolder;
-    bool moveToTrash;
+    bool moveToTrash = false;
 };
 
 class UndoStack : public QObject
@@ -71,9 +69,9 @@ protected Q_SLOTS:
 
 protected:
     QList<UndoInfo *> mStack;
-    int mSize;
-    int mLastId;
-    UndoInfo *mCachedInfo;
+    int mSize = 0;
+    int mLastId = 0;
+    UndoInfo *mCachedInfo = nullptr;
 
 Q_SIGNALS:
     void undoStackChanged();

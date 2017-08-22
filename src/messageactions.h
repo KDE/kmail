@@ -134,32 +134,32 @@ private Q_SLOTS:
     void slotAddFollowupReminder();
 private:
     QList<QAction *> mMailListActionList;
-    QWidget *mParent;
+    QWidget *mParent = nullptr;
     Akonadi::Item mCurrentItem;
     Akonadi::Item::List mVisibleItems;
-    KMReaderWin *mMessageView;
+    KMReaderWin *mMessageView = nullptr;
 
-    KActionMenu *mReplyActionMenu;
-    QAction *mReplyAction;
-    QAction *mReplyAllAction;
-    QAction *mReplyAuthorAction;
-    QAction *mReplyListAction;
-    QAction *mNoQuoteReplyAction;
-    QAction *mForwardInlineAction;
-    QAction *mForwardAttachedAction;
-    QAction *mRedirectAction;
-    KActionMenu *mStatusMenu;
-    KActionMenu *mForwardActionMenu;
-    KActionMenu *mMailingListActionMenu;
-    QAction *mEditAction;
-    QAction *mAnnotateAction;
-    QAction *mPrintAction;
-    QAction *mPrintPreviewAction;
-    TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
-    QAction *mListFilterAction;
-    QAction *mAddFollowupReminderAction;
-    QAction *mDebugBalooAction;
-    KIO::KUriFilterSearchProviderActions *mWebShortcutMenuManager;
+    KActionMenu *mReplyActionMenu = nullptr;
+    QAction *mReplyAction = nullptr;
+    QAction *mReplyAllAction = nullptr;
+    QAction *mReplyAuthorAction = nullptr;
+    QAction *mReplyListAction = nullptr;
+    QAction *mNoQuoteReplyAction = nullptr;
+    QAction *mForwardInlineAction = nullptr;
+    QAction *mForwardAttachedAction = nullptr;
+    QAction *mRedirectAction = nullptr;
+    KActionMenu *mStatusMenu = nullptr;
+    KActionMenu *mForwardActionMenu = nullptr;
+    KActionMenu *mMailingListActionMenu = nullptr;
+    QAction *mEditAction = nullptr;
+    QAction *mAnnotateAction = nullptr;
+    QAction *mPrintAction = nullptr;
+    QAction *mPrintPreviewAction = nullptr;
+    TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu = nullptr;
+    QAction *mListFilterAction = nullptr;
+    QAction *mAddFollowupReminderAction = nullptr;
+    QAction *mDebugBalooAction = nullptr;
+    KIO::KUriFilterSearchProviderActions *mWebShortcutMenuManager = nullptr;
 };
 }
 

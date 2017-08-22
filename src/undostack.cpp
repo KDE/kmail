@@ -37,8 +37,6 @@ using namespace KMail;
 UndoStack::UndoStack(int size)
     : QObject(nullptr)
     , mSize(size)
-    , mLastId(0)
-    , mCachedInfo(nullptr)
 {
 }
 

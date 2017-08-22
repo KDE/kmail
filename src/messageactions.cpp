@@ -67,12 +67,6 @@ using namespace KMail;
 MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     : QObject(parent)
     , mParent(parent)
-    , mMessageView(nullptr)
-    , mRedirectAction(nullptr)
-    , mPrintPreviewAction(nullptr)
-    , mCustomTemplatesMenu(nullptr)
-    , mAddFollowupReminderAction(nullptr)
-    , mDebugBalooAction(nullptr)
 {
     mWebShortcutMenuManager = new KIO::KUriFilterSearchProviderActions(this);
     mReplyActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this);
