@@ -3409,7 +3409,7 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
         recipient->setEncryptionAction(Kleo::DoIt);
         recipient->setKey(key);
 
-        QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
+        const QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
         QIcon overlay;
         QString tooltip;
         switch (userID.validity()) {
