@@ -33,7 +33,6 @@
 
 ColorListBox::ColorListBox(QWidget *parent)
     : QTreeWidget(parent)
-    , mCurrentOnDragEnter(nullptr)
 {
     setColumnCount(1);
     setRootIsDecorated(false);

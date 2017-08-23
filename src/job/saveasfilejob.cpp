@@ -29,9 +29,6 @@
 
 SaveAsFileJob::SaveAsFileJob(QObject *parent)
     : QObject(parent)
-    , mHtmlMode(false)
-    , mTextDocument(nullptr)
-    , mParentWidget(nullptr)
 {
 }
 

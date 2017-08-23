@@ -41,10 +41,10 @@ private:
     void doLoadOther() override;
 
 private:
-    QCheckBox *mConfirmSendCheck;
-    QCheckBox *mCheckSpellingBeforeSending;
-    KComboBox *mSendOnCheckCombo;
-    KComboBox *mSendMethodCombo;
+    QCheckBox *mConfirmSendCheck = nullptr;
+    QCheckBox *mCheckSpellingBeforeSending = nullptr;
+    KComboBox *mSendOnCheckCombo = nullptr;
+    KComboBox *mSendMethodCombo = nullptr;
 };
 
 class AccountsPageReceivingTab : public ConfigModuleTab

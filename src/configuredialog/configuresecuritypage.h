@@ -64,8 +64,8 @@ private:
     void doLoadOther() override;
 
 private:
-    QButtonGroup *mMDNGroup;
-    QButtonGroup *mOrigQuoteGroup;
+    QButtonGroup *mMDNGroup = nullptr;
+    QButtonGroup *mOrigQuoteGroup = nullptr;
     Ui_SecurityPageMDNTab mUi;
 
 private Q_SLOTS:
@@ -88,7 +88,7 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui::ComposerCryptoConfiguration *mWidget;
+    Ui::ComposerCryptoConfiguration *mWidget = nullptr;
 };
 
 class SecurityPageWarningTab : public ConfigModuleTab
@@ -111,7 +111,7 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui::WarningConfiguration *mWidget;
+    Ui::WarningConfiguration *mWidget = nullptr;
 };
 
 class SecurityPageSMimeTab : public ConfigModuleTab
@@ -132,8 +132,8 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui::SMimeConfiguration *mWidget;
-    QGpgME::CryptoConfig *mConfig;
+    Ui::SMimeConfiguration *mWidget = nullptr;
+    QGpgME::CryptoConfig *mConfig = nullptr;
 };
 
 class GpgSettingsDialog : public KCMultiDialog

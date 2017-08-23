@@ -57,22 +57,22 @@ private Q_SLOTS:
 private:
     void init(const Akonadi::Collection &);
     QSharedPointer<MailCommon::FolderSettings> mFolderCollection;
-    QCheckBox *mIconsCheckBox;
-    QLabel *mNormalIconLabel;
-    KIconButton *mNormalIconButton;
-    QLabel *mUnreadIconLabel;
-    KIconButton *mUnreadIconButton;
-    KComboBox *mShowSenderReceiverComboBox;
-    QCheckBox *mUseDefaultAggregationCheckBox;
-    MessageList::Utils::AggregationComboBox *mAggregationComboBox;
-    QCheckBox *mUseDefaultThemeCheckBox;
-    MessageList::Utils::ThemeComboBox *mThemeComboBox;
-    QRadioButton *mPreferHtmlToText;
-    QRadioButton *mPreferTextToHtml;
-    QRadioButton *mUseGlobalSettings;
+    QCheckBox *mIconsCheckBox = nullptr;
+    QLabel *mNormalIconLabel = nullptr;
+    KIconButton *mNormalIconButton = nullptr;
+    QLabel *mUnreadIconLabel = nullptr;
+    KIconButton *mUnreadIconButton = nullptr;
+    KComboBox *mShowSenderReceiverComboBox = nullptr;
+    QCheckBox *mUseDefaultAggregationCheckBox = nullptr;
+    MessageList::Utils::AggregationComboBox *mAggregationComboBox = nullptr;
+    QCheckBox *mUseDefaultThemeCheckBox = nullptr;
+    MessageList::Utils::ThemeComboBox *mThemeComboBox = nullptr;
+    QRadioButton *mPreferHtmlToText = nullptr;
+    QRadioButton *mPreferTextToHtml = nullptr;
+    QRadioButton *mUseGlobalSettings = nullptr;
     Akonadi::Collection mCurrentCollection;
-    int mShowSenderReceiverValue;
-    bool mIsLocalSystemFolder;
+    int mShowSenderReceiverValue = -1;
+    bool mIsLocalSystemFolder = false;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage)

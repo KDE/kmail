@@ -73,9 +73,9 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox *mCustomFontCheck;
-    KComboBox *mFontLocationCombo;
-    KFontChooser *mFontChooser;
+    QCheckBox *mCustomFontCheck = nullptr;
+    KComboBox *mFontLocationCombo = nullptr;
+    KFontChooser *mFontChooser = nullptr;
 
     int mActiveFontIndex;
     QFont mFont[8];
@@ -95,10 +95,10 @@ private:
     void loadColor(bool loadFromConfig);
 
 private:
-    QCheckBox *mCustomColorCheck;
-    ColorListBox *mColorList;
-    QCheckBox *mRecycleColorCheck;
-    QSpinBox *mCloseToQuotaThreshold;
+    QCheckBox *mCustomColorCheck = nullptr;
+    ColorListBox *mColorList = nullptr;
+    QCheckBox *mRecycleColorCheck = nullptr;
+    QSpinBox *mCloseToQuotaThreshold = nullptr;
 };
 
 class AppearancePageLayoutTab : public ConfigModuleTab
@@ -114,15 +114,15 @@ private:
     void doLoadOther() override;
 
 private: // data
-    QButtonGroup *mFolderListGroup;
-    QGroupBox *mFolderListGroupBox;
-    QButtonGroup *mReaderWindowModeGroup;
-    QGroupBox *mReaderWindowModeGroupBox;
-    QButtonGroup *mFolderToolTipsGroup;
-    QGroupBox *mFolderToolTipsGroupBox;
-    QButtonGroup *mFavoriteFoldersViewGroup;
-    QGroupBox *mFavoriteFoldersViewGroupBox;
-    QCheckBox *mFolderQuickSearchCB;
+    QButtonGroup *mFolderListGroup = nullptr;
+    QGroupBox *mFolderListGroupBox = nullptr;
+    QButtonGroup *mReaderWindowModeGroup = nullptr;
+    QGroupBox *mReaderWindowModeGroupBox = nullptr;
+    QButtonGroup *mFolderToolTipsGroup = nullptr;
+    QGroupBox *mFolderToolTipsGroupBox = nullptr;
+    QButtonGroup *mFavoriteFoldersViewGroup = nullptr;
+    QGroupBox *mFavoriteFoldersViewGroupBox = nullptr;
+    QCheckBox *mFolderQuickSearchCB = nullptr;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab
@@ -142,12 +142,12 @@ private: // methods
     void setDateDisplay(int id, const QString &format);
 
 private: // data
-    QCheckBox *mDisplayMessageToolTips;
-    MessageList::Utils::AggregationComboBox *mAggregationComboBox;
-    MessageList::Utils::ThemeComboBox *mThemeComboBox;
-    QButtonGroup *mDateDisplay;
-    QGroupBox *mDateDisplayBox;
-    KLineEdit *mCustomDateFormatEdit;
+    QCheckBox *mDisplayMessageToolTips = nullptr;
+    MessageList::Utils::AggregationComboBox *mAggregationComboBox = nullptr;
+    MessageList::Utils::ThemeComboBox *mThemeComboBox = nullptr;
+    QButtonGroup *mDateDisplay = nullptr;
+    QGroupBox *mDateDisplayBox = nullptr;
+    KLineEdit *mCustomDateFormatEdit = nullptr;
     QString mCustomDateWhatsThis;
 
 private Q_SLOTS:
@@ -171,9 +171,9 @@ private:
     void doResetToDefaultsOther() override;
 
 private: // data
-    QCheckBox *mCloseAfterReplyOrForwardCheck;
-    MessageViewer::ConfigureWidget *mViewerSettings;
-    Gravatar::GravatarConfigWidget *mGravatarConfigWidget;
+    QCheckBox *mCloseAfterReplyOrForwardCheck = nullptr;
+    MessageViewer::ConfigureWidget *mViewerSettings = nullptr;
+    Gravatar::GravatarConfigWidget *mGravatarConfigWidget = nullptr;
 };
 
 class AppearancePageSystemTrayTab : public ConfigModuleTab
@@ -190,7 +190,7 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    QCheckBox *mSystemTrayCheck;
+    QCheckBox *mSystemTrayCheck = nullptr;
 };
 
 class TagListWidgetItem : public QListWidgetItem
@@ -267,16 +267,18 @@ private:
     void updateButtons();
 
 private: // data
+    KLineEdit *mTagAddLineEdit = nullptr;
+    QPushButton *mTagAddButton = nullptr;
+    QPushButton *mTagRemoveButton = nullptr;
+    QPushButton *mTagUpButton = nullptr;
+    QPushButton *mTagDownButton = nullptr;
 
-    KLineEdit *mTagAddLineEdit;
-    QPushButton *mTagAddButton, *mTagRemoveButton,
-                *mTagUpButton, *mTagDownButton;
+    QListWidget *mTagListBox = nullptr;
 
-    QListWidget *mTagListBox;
+    QGroupBox *mTagsGroupBox = nullptr;
+    QGroupBox *mTagSettingGroupBox = nullptr;
 
-    QGroupBox *mTagsGroupBox, *mTagSettingGroupBox;
-
-    MailCommon::TagWidget *mTagWidget;
+    MailCommon::TagWidget *mTagWidget = nullptr;
 
     // So we can compare to mMsgTagList and see if the user changed tags
     QList<MailCommon::TagPtr> mOriginalMsgTagList;

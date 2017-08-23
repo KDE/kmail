@@ -43,8 +43,8 @@ private:
     void init(const Akonadi::Collection &);
     QSharedPointer<MailCommon::FolderSettings> mFolder;
     Akonadi::Collection mCurrentCollection;
-    KKeySequenceWidget *mKeySeqWidget;
-    bool mShortcutChanged;
+    KKeySequenceWidget *mKeySeqWidget = nullptr;
+    bool mShortcutChanged = false;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionShortcutPageFactory, CollectionShortcutPage)

@@ -46,7 +46,7 @@ private:
 
 private:
     Ui_MiscMainTab mMMTab;
-    MailCommon::FolderRequester *mOnStartupOpenFolder;
+    MailCommon::FolderRequester *mOnStartupOpenFolder = nullptr;
 };
 
 class MiscPageInviteTab : public ConfigModuleTab
@@ -61,7 +61,7 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    MessageViewer::InvitationSettings *mInvitationUi;
+    MessageViewer::InvitationSettings *mInvitationUi = nullptr;
 };
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
@@ -87,7 +87,7 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    MessageViewer::PrintingSettings *mPrintingUi;
+    MessageViewer::PrintingSettings *mPrintingUi = nullptr;
 };
 
 #endif // CONFIGUREMISCPAGE_H

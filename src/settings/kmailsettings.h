@@ -49,7 +49,7 @@ private:
     virtual ~KMailSettings();
     static KMailSettings *mSelf;
 
-    QTimer *mConfigSyncTimer;
+    QTimer *mConfigSyncTimer = nullptr;
 };
 
 #endif /* KMAIL_GLOBALSETTINGS_H */

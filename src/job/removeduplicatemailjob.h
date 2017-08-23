@@ -42,8 +42,8 @@ private Q_SLOTS:
     void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);
 
 private:
-    QWidget *mParent;
-    QItemSelectionModel *mSelectionModel;
+    QWidget *mParent = nullptr;
+    QItemSelectionModel *mSelectionModel = nullptr;
 };
 
 #endif // REMOVEDUPLICATEMAILJOB_H

@@ -34,7 +34,7 @@ public:
     void initializeInterfaceRequires(PimCommon::AbstractGenericPluginInterface *interface) override;
     static KMailPluginInterface *self();
 private:
-    KMMainWidget *mMainWindow;
+    KMMainWidget *mMainWindow = nullptr;
 };
 
 #endif // KMAILPLUGININTERFACE_H

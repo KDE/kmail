@@ -52,7 +52,7 @@ public:
     void setSettings(const CreateForwardMessageJobSettings &value);
 
 private:
-    MessageComposer::MessageFactoryNG *mMessageFactory;
+    MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
     void slotCreateForwardDone(const KMime::Message::Ptr &msg);
     CreateForwardMessageJobSettings mSettings;
 };

@@ -51,7 +51,7 @@ protected:
     void init();
 
 private:
-    CollectionQuotaWidget *mQuotaWidget;
+    CollectionQuotaWidget *mQuotaWidget = nullptr;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionQuotaPageFactory, CollectionQuotaPage)

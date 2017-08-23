@@ -37,9 +37,9 @@ public:
     void setParentWidget(QWidget *parentWidget);
 
 private:
-    bool mHtmlMode;
-    QTextDocument *mTextDocument;
-    QWidget *mParentWidget;
+    bool mHtmlMode = false;
+    QTextDocument *mTextDocument = nullptr;
+    QWidget *mParentWidget = nullptr;
 };
 
 #endif // SAVEASFILEJOB_H

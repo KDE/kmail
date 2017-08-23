@@ -37,7 +37,7 @@ public:
     void defaults() override;
 private:
     void slotConfigureChanged();
-    PimCommon::ConfigurePluginsWidget *mConfigurePlugins;
+    PimCommon::ConfigurePluginsWidget *mConfigurePlugins = nullptr;
 };
 
 #endif // CONFIGUREPLUGINPAGE_H

@@ -36,7 +36,6 @@ using namespace MailCommon;
 
 CollectionShortcutPage::CollectionShortcutPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
-    , mShortcutChanged(false)
 {
     setObjectName(QStringLiteral("KMail::CollectionShortcutPage"));
     setPageTitle(i18nc("@title:tab Shortcut settings for a folder.", "Shortcut"));

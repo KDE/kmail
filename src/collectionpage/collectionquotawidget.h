@@ -49,8 +49,8 @@ public:
     void setQuotaInfo(qint64 currentValue, qint64 maxValue);
 
 private:
-    QProgressBar *mProgressBar;
-    QLabel *mUsage;
+    QProgressBar *mProgressBar = nullptr;
+    QLabel *mUsage = nullptr;
 };
 
 #endif /* COLLECTIONQUOTAPAGE_P_H */

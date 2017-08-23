@@ -43,12 +43,11 @@ private:
     void slotCopyGlobal();
     void slotChanged();
     void init();
-    QCheckBox *mCustom;
-    TemplateParser::TemplatesConfiguration *mWidget;
+    QCheckBox *mCustom = nullptr;
+    TemplateParser::TemplatesConfiguration *mWidget = nullptr;
     QString mCollectionId;
-    uint mIdentity;
-    bool mIsLocalSystemFolder;
-    bool mChanged;
+    uint mIdentity = 0;
+    bool mChanged = false;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage)

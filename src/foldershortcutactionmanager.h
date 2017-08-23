@@ -52,8 +52,8 @@ Q_SIGNALS:
 
 private:
     Akonadi::Collection mCollectionFolder;
-    QWidget *mMainWidget;
-    QAction *mAction;
+    QWidget *mMainWidget = nullptr;
+    QAction *mAction = nullptr;
 };
 
 class KMAIL_EXPORT FolderShortcutActionManager : public QObject
@@ -83,8 +83,8 @@ private Q_SLOTS:
 private:
     void updateShortcutsForIndex(const QModelIndex &parent, int start, int end);
     QHash< Akonadi::Collection::Id, FolderShortcutCommand * > mFolderShortcutCommands;
-    KActionCollection *mActionCollection;
-    QWidget *mParent;
+    KActionCollection *mActionCollection = nullptr;
+    QWidget *mParent = nullptr;
 };
 }
 

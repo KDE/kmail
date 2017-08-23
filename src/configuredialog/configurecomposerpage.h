@@ -57,26 +57,26 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox *mShowBalooSearchAddressesInComposer;
-    QCheckBox *mAutoAppSignFileCheck;
-    QCheckBox *mTopQuoteCheck;
-    QCheckBox *mDashDashCheck;
-    QCheckBox *mReplyUsingHtml;
-    QCheckBox *mSmartQuoteCheck;
-    QCheckBox *mStripSignatureCheck;
-    QCheckBox *mQuoteSelectionOnlyCheck;
-    QCheckBox *mAutoRequestMDNCheck;
-    QCheckBox *mShowRecentAddressesInComposer;
-    QCheckBox *mWordWrapCheck;
-    QSpinBox *mWrapColumnSpin;
-    KPluralHandlingSpinBox *mAutoSave;
-    QSpinBox *mMaximumRecipients;
-    QCheckBox *mImprovePlainTextOfHtmlMessage;
-    QSpinBox *mMaximumRecentAddress;
+    QCheckBox *mShowBalooSearchAddressesInComposer = nullptr;
+    QCheckBox *mAutoAppSignFileCheck = nullptr;
+    QCheckBox *mTopQuoteCheck = nullptr;
+    QCheckBox *mDashDashCheck = nullptr;
+    QCheckBox *mReplyUsingHtml = nullptr;
+    QCheckBox *mSmartQuoteCheck = nullptr;
+    QCheckBox *mStripSignatureCheck = nullptr;
+    QCheckBox *mQuoteSelectionOnlyCheck = nullptr;
+    QCheckBox *mAutoRequestMDNCheck = nullptr;
+    QCheckBox *mShowRecentAddressesInComposer = nullptr;
+    QCheckBox *mWordWrapCheck = nullptr;
+    QSpinBox *mWrapColumnSpin = nullptr;
+    KPluralHandlingSpinBox *mAutoSave = nullptr;
+    QSpinBox *mMaximumRecipients = nullptr;
+    QCheckBox *mImprovePlainTextOfHtmlMessage = nullptr;
+    QSpinBox *mMaximumRecentAddress = nullptr;
 #ifdef KDEPIM_ENTERPRISE_BUILD
-    KComboBox *mForwardTypeCombo;
-    QCheckBox *mRecipientCheck;
-    QSpinBox *mRecipientSpin;
+    KComboBox *mForwardTypeCombo = nullptr;
+    QCheckBox *mRecipientCheck = nullptr;
+    QSpinBox *mRecipientSpin = nullptr;
 #endif
 };
 

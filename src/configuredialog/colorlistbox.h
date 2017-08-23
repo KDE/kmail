@@ -53,7 +53,7 @@ protected:
 
 private:
     void newColor(const QModelIndex &index);
-    QTreeWidgetItem *mCurrentOnDragEnter;
+    QTreeWidgetItem *mCurrentOnDragEnter = nullptr;
 };
 
 #endif

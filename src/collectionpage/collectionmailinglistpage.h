@@ -72,15 +72,15 @@ private:
     QSharedPointer<MailCommon::FolderSettings> mFolder;
 
     MailingList mMailingList;
-    QCheckBox *mHoldsMailingList;
-    KComboBox *mMLHandlerCombo;
-    QPushButton *mDetectButton;
-    KComboBox *mAddressCombo;
-    KEditListWidget *mEditList;
-    KSqueezedTextLabel *mMLId;
-    QWidget *mGroupWidget;
-    int mLastItem;
-    bool changed;
+    QCheckBox *mHoldsMailingList = nullptr;
+    KComboBox *mMLHandlerCombo = nullptr;
+    QPushButton *mDetectButton = nullptr;
+    KComboBox *mAddressCombo = nullptr;
+    KEditListWidget *mEditList = nullptr;
+    KSqueezedTextLabel *mMLId = nullptr;
+    QWidget *mGroupWidget = nullptr;
+    int mLastItem = 0;
+    bool changed = false;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMailingListPageFactory, CollectionMailingListPage)

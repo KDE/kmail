@@ -60,7 +60,7 @@ private:
     void createContact();
 
 private:
-    QWidget *mParentWidget;
+    QWidget *mParentWidget = nullptr;
 };
 
 #endif // CREATENEWCONTACTJOB_H
