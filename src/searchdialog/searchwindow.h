@@ -164,24 +164,31 @@ private:
     Akonadi::Collection mFolder;
     KJob *mSearchJob;
 
-    KMSearchMessageModel *mResultModel;
+    KMSearchMessageModel *mResultModel = nullptr;
     Ui_SearchWindow mUi;
     KGuiItem mStartSearchGuiItem;
     KGuiItem mStopSearchGuiItem;
-    QPushButton *mSearchButton;
+    QPushButton *mSearchButton = nullptr;
 
-    QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
-            *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
-            *mSaveAtchAction, *mJumpToFolderAction;
-    KActionMenu *mForwardActionMenu;
+    QAction *mReplyAction = nullptr;
+    QAction *mReplyAllAction = nullptr;
+    QAction *mReplyListAction = nullptr;
+    QAction *mSaveAsAction = nullptr;
+    QAction *mForwardInlineAction = nullptr;
+    QAction *mForwardAttachedAction = nullptr;
+    QAction *mPrintAction = nullptr;
+    QAction *mClearAction = nullptr;
+    QAction *mSaveAtchAction = nullptr;
+    QAction *mJumpToFolderAction = nullptr;
+    KActionMenu *mForwardActionMenu = nullptr;
     QTimer mRenameTimer;
     QByteArray mHeaderState;
     // not owned by us
-    KMMainWidget *mKMMainWidget;
+    KMMainWidget *mKMMainWidget = nullptr;
     MailCommon::SearchPattern mSearchPattern;
-    SearchPatternWarning *mSearchPatternWidget;
+    SearchPatternWarning *mSearchPatternWidget = nullptr;
 
-    Akonadi::StandardMailActionManager *mAkonadiStandardAction;
+    Akonadi::StandardMailActionManager *mAkonadiStandardAction = nullptr;
 };
 }
 

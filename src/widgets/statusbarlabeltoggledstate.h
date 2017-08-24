@@ -44,7 +44,7 @@ private:
     void updateLabel();
     QString mToggled;
     QString mUnToggled;
-    bool mToggleMode;
+    bool mToggleMode = false;
 };
 
 #endif // STATUSBARLABELTOGGLEDSTATE_H

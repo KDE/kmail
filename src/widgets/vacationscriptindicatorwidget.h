@@ -76,8 +76,8 @@ private Q_SLOTS:
 private:
     void createIndicator();
     QStringList mServerActive;
-    QHBoxLayout *mBoxLayout;
-    VacationLabel *mInfo;
+    QHBoxLayout *mBoxLayout = nullptr;
+    VacationLabel *mInfo = nullptr;
 };
 }
 

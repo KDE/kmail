@@ -49,7 +49,7 @@ private:
     QList<Akonadi::Collection::Id> mListCollection;
     QByteArray mDescription;
     Akonadi::Collection mBaseCollection;
-    bool mRecursive;
+    bool mRecursive = false;
 };
 }
 

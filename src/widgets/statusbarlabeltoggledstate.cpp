@@ -23,7 +23,6 @@
 
 StatusBarLabelToggledState::StatusBarLabelToggledState(QWidget *parent)
     : QLabel(parent)
-    , mToggleMode(false)
 {
     setTextFormat(Qt::PlainText);
 }
