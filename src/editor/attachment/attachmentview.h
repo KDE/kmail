@@ -28,7 +28,8 @@
 #include <QTreeView>
 
 class QContextMenuEvent;
-
+class QToolButton;
+class QLabel;
 namespace MessageComposer {
 class AttachmentModel;
 }
@@ -74,8 +75,10 @@ Q_SIGNALS:
     void modified(bool);
 
 private:
-    class Private;
-    Private *const d;
+    MessageComposer::AttachmentModel *mModel = nullptr;
+    QToolButton *mToolButton = nullptr;
+    QLabel *mInfoAttachment = nullptr;
+    QWidget *mWidget = nullptr;
 };
 } // namespace KMail
 

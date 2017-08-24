@@ -49,41 +49,24 @@ using MessageCore::AttachmentPart;
 
 using namespace KMail;
 
-class KMail::AttachmentView::Private
-{
-public:
-    Private(AttachmentView *qq)
-        : model(nullptr)
-        , q(qq)
-    {
-        widget = new QWidget();
-        QHBoxLayout *lay = new QHBoxLayout;
-        lay->setMargin(0);
-        widget->setLayout(lay);
-        toolButton = new QToolButton;
-        connect(toolButton, &QAbstractButton::toggled, q, &AttachmentView::slotShowHideAttchementList);
-        toolButton->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
-        toolButton->setAutoRaise(true);
-        toolButton->setCheckable(true);
-        lay->addWidget(toolButton);
-        infoAttachment = new QLabel;
-        infoAttachment->setMargin(0);
-        infoAttachment->setTextFormat(Qt::PlainText);
-        lay->addWidget(infoAttachment);
-    }
-
-    MessageComposer::AttachmentModel *model;
-    QToolButton *toolButton;
-    QLabel *infoAttachment;
-    QWidget *widget;
-    AttachmentView *q;
-};
-
 AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent)
     : QTreeView(parent)
-    , d(new Private(this))
 {
-    d->model = model;
+    mWidget = new QWidget();
+    QHBoxLayout *lay = new QHBoxLayout(mWidget);
+    lay->setMargin(0);
+    mToolButton = new QToolButton;
+    connect(mToolButton, &QAbstractButton::toggled, this, &AttachmentView::slotShowHideAttchementList);
+    mToolButton->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
+    mToolButton->setAutoRaise(true);
+    mToolButton->setCheckable(true);
+    lay->addWidget(mToolButton);
+    mInfoAttachment = new QLabel;
+    mInfoAttachment->setMargin(0);
+    mInfoAttachment->setTextFormat(Qt::PlainText);
+    lay->addWidget(mInfoAttachment);
+
+    mModel = model;
     connect(model, &MessageComposer::AttachmentModel::encryptEnabled, this, &AttachmentView::setEncryptEnabled);
     connect(model, &MessageComposer::AttachmentModel::signEnabled, this, &AttachmentView::setSignEnabled);
 
@@ -112,7 +95,6 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
 AttachmentView::~AttachmentView()
 {
     saveHeaderState();
-    delete d;
 }
 
 void AttachmentView::restoreHeaderState()
@@ -148,7 +130,7 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
             toRemove.append(part);
         }
         for (const AttachmentPart::Ptr &part : qAsConst(toRemove)) {
-            d->model->removeAttachment(part);
+            mModel->removeAttachment(part);
         }
     }
 }
@@ -177,24 +159,24 @@ void AttachmentView::hideIfEmpty()
 {
     const bool needToShowIt = (model()->rowCount() > 0);
     setVisible(needToShowIt);
-    d->toolButton->setChecked(needToShowIt);
+    mToolButton->setChecked(needToShowIt);
     widget()->setVisible(needToShowIt);
     if (needToShowIt) {
         updateAttachmentLabel();
     } else {
-        d->infoAttachment->clear();
+        mInfoAttachment->clear();
     }
     Q_EMIT modified(true);
 }
 
 void AttachmentView::updateAttachmentLabel()
 {
-    const MessageCore::AttachmentPart::List list = d->model->attachments();
+    const MessageCore::AttachmentPart::List list = mModel->attachments();
     qint64 size = 0;
     for (const MessageCore::AttachmentPart::Ptr &part : list) {
         size += part->size();
     }
-    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)", model()->rowCount(), KFormat().formatByteSize(qMax(0LL, size))));
+    mInfoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)", model()->rowCount(), KFormat().formatByteSize(qMax(0LL, size))));
 }
 
 void AttachmentView::selectNewAttachment()
@@ -220,15 +202,15 @@ void AttachmentView::startDrag(Qt::DropActions supportedActions)
 
 QWidget *AttachmentView::widget() const
 {
-    return d->widget;
+    return mWidget;
 }
 
 void AttachmentView::slotShowHideAttchementList(bool show)
 {
     setVisible(show);
     if (show) {
-        d->toolButton->setToolTip(i18n("Hide attachment list"));
+        mToolButton->setToolTip(i18n("Hide attachment list"));
     } else {
-        d->toolButton->setToolTip(i18n("Show attachment list"));
+        mToolButton->setToolTip(i18n("Show attachment list"));
     }
 }
