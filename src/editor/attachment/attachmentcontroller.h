@@ -56,8 +56,8 @@ private Q_SLOTS:
     void slotSelectAllAttachment();
 
 private:
-    KMComposerWin *mComposer;
-    AttachmentView *mView;
+    KMComposerWin *mComposer = nullptr;
+    AttachmentView *mView = nullptr;
 };
 } // namespace KMail
 

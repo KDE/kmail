@@ -37,7 +37,6 @@ using namespace KMail;
 
 KMKnotify::KMKnotify(QWidget *parent)
     : QDialog(parent)
-    , m_changed(false)
 {
     setWindowTitle(i18n("Notification"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);

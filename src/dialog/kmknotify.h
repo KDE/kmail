@@ -45,9 +45,9 @@ private:
     void readConfig();
 
 private:
-    KComboBox *m_comboNotify;
-    KNotifyConfigWidget *m_notifyWidget;
-    bool m_changed;
+    KComboBox *m_comboNotify = nullptr;
+    KNotifyConfigWidget *m_notifyWidget = nullptr;
+    bool m_changed = false;
 };
 }
 
