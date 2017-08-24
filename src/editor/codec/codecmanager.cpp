@@ -33,49 +33,27 @@
 #include <kcodecaction.h>
 #include <messagecomposer/messagecomposersettings.h>
 
-class CodecManagerPrivate
+CodecManager::CodecManager()
 {
-public:
-    CodecManagerPrivate();
-    ~CodecManagerPrivate();
-
-    CodecManager *instance;
-    QList<QByteArray> preferredCharsets;
-};
-
-Q_GLOBAL_STATIC(CodecManagerPrivate, sInstance)
-
-CodecManagerPrivate::CodecManagerPrivate()
-    : instance(new CodecManager(this))
-{
-    instance->updatePreferredCharsets();
-}
-
-CodecManagerPrivate::~CodecManagerPrivate()
-{
-    delete instance;
-}
-
-CodecManager::CodecManager(CodecManagerPrivate *dd)
-    : d(dd)
-{
+    updatePreferredCharsets();
 }
 
 // static
 CodecManager *CodecManager::self()
 {
-    return sInstance->instance;
+    static CodecManager instance;
+    return &instance;
 }
 
 QList<QByteArray> CodecManager::preferredCharsets() const
 {
-    return d->preferredCharsets;
+    return mPreferredCharsets;
 }
 
 void CodecManager::updatePreferredCharsets()
 {
     const QStringList prefCharsets = MessageComposer::MessageComposerSettings::self()->preferredCharsets();
-    d->preferredCharsets.clear();
+    mPreferredCharsets.clear();
     for (const QString &str : prefCharsets) {
         QByteArray charset = str.toLatin1().toLower();
 
@@ -99,6 +77,6 @@ void CodecManager::updatePreferredCharsets()
                 charset = "euc-kr";
             }
         }
-        d->preferredCharsets << charset;
+        mPreferredCharsets << charset;
     }
 }

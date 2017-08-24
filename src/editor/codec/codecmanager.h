@@ -21,9 +21,7 @@
 #define CODECMANAGER_H
 
 #include <QByteArray>
-
-class CodecManagerPrivate;
-
+#include <QList>
 class CodecManager
 {
 public:
@@ -44,12 +42,11 @@ public:
     void updatePreferredCharsets();
 
 private:
-    friend class CodecManagerPrivate;
-    CodecManagerPrivate *const d;
 
     // Singleton.  The only instance lives in sInstance->instance
-    explicit CodecManager(CodecManagerPrivate *dd);
-    //~CodecManager();
+    CodecManager();
+
+    QList<QByteArray> mPreferredCharsets;
 };
 
 #endif /* CODECMANAGER_H */
