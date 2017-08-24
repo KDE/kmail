@@ -786,7 +786,7 @@ void KMKernel::resumeNetworkJobs()
     Q_EMIT onlineStatusChanged((KMailSettings::EnumNetworkState::type)KMailSettings::networkState());
     KMMainWidget *widget = getKMMainWidget();
     if (widget) {
-        widget->clearViewer();
+        widget->refreshMessageListSelection();
     }
 }
 
@@ -1828,7 +1828,7 @@ void KMKernel::resourceGoOnLine()
             Akonadi::Collection collection = widget->currentCollection();
             Akonadi::AgentInstance instance = Akonadi::AgentManager::self()->instance(collection.resource());
             instance.setIsOnline(true);
-            widget->clearViewer();
+            widget->refreshMessageListSelection();
         }
     }
 }
