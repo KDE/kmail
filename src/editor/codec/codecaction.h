@@ -54,9 +54,7 @@ public:
     void setAutoCharset();
     void setCharset(const QByteArray &charset);
 private:
-    class Private;
-    friend class Private;
-    Private *const d;
+    const CodecAction::Mode mMode;
 };
 
 #endif

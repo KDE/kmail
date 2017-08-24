@@ -34,22 +34,9 @@
 #include <KLocalizedString>
 #include <QIcon>
 
-class CodecAction::Private
-{
-public:
-    Private(CodecAction::Mode mod, CodecAction *qq)
-        : mode(mod)
-        , q(qq)
-    {
-    }
-
-    const CodecAction::Mode mode;
-    CodecAction *const q;
-};
-
 CodecAction::CodecAction(Mode mode, QObject *parent)
     : KCodecAction(parent, mode == ReaderMode)
-    , d(new Private(mode, this))
+    , mMode(mode)
 {
     if (mode == ComposerMode) {
         // Add 'us-ascii' entry.  We want it at the top, so remove then re-add everything.
@@ -72,7 +59,6 @@ CodecAction::CodecAction(Mode mode, QObject *parent)
 
 CodecAction::~CodecAction()
 {
-    delete d;
 }
 
 QList<QByteArray> CodecAction::mimeCharsets() const

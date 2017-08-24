@@ -31,35 +31,44 @@ using MessageComposer::AliasesExpandJob;
 
 #include <KEmailAddress>
 
-class AddressValidationJob::Private
+
+AddressValidationJob::AddressValidationJob(const QString &emailAddresses, QWidget *parentWidget, QObject *parent)
+    : KJob(parent)
+    , mEmailAddresses(emailAddresses)
+    , mParentWidget(parentWidget)
 {
-public:
-    Private(AddressValidationJob *qq, const QString &emailAddresses, QWidget *parentWidget)
-        : q(qq)
-        , mEmailAddresses(emailAddresses)
-        , mIsValid(false)
-        , mParentWidget(parentWidget)
-    {
-    }
+}
 
-    void slotAliasExpansionDone(KJob *);
+AddressValidationJob::~AddressValidationJob()
+{
+}
 
-    AddressValidationJob *q;
-    QString mEmailAddresses;
-    QString mDomainDefaultName;
-    bool mIsValid;
-    QWidget *mParentWidget;
-};
+void AddressValidationJob::setDefaultDomain(const QString &domainName)
+{
+    mDomainDefaultName = domainName;
+}
 
-void AddressValidationJob::Private::slotAliasExpansionDone(KJob *job)
+void AddressValidationJob::start()
+{
+    AliasesExpandJob *job = new AliasesExpandJob(mEmailAddresses, mDomainDefaultName, this);
+    connect(job, SIGNAL(result(KJob *)), SLOT(slotAliasExpansionDone(KJob *)));
+    job->start();
+}
+
+bool AddressValidationJob::isValid() const
+{
+    return mIsValid;
+}
+
+void AddressValidationJob::slotAliasExpansionDone(KJob *job)
 {
     mIsValid = true;
 
     if (job->error()) {
-        q->setError(job->error());
-        q->setErrorText(job->errorText());
+        setError(job->error());
+        setErrorText(job->errorText());
         mIsValid = false;
-        q->emitResult();
+        emitResult();
         return;
     }
 
@@ -96,35 +105,5 @@ void AddressValidationJob::Private::slotAliasExpansionDone(KJob *job)
         }
     }
 
-    q->emitResult();
+    emitResult();
 }
-
-AddressValidationJob::AddressValidationJob(const QString &emailAddresses, QWidget *parentWidget, QObject *parent)
-    : KJob(parent)
-    , d(new Private(this, emailAddresses, parentWidget))
-{
-}
-
-AddressValidationJob::~AddressValidationJob()
-{
-    delete d;
-}
-
-void AddressValidationJob::setDefaultDomain(const QString &domainName)
-{
-    d->mDomainDefaultName = domainName;
-}
-
-void AddressValidationJob::start()
-{
-    AliasesExpandJob *job = new AliasesExpandJob(d->mEmailAddresses, d->mDomainDefaultName, this);
-    connect(job, SIGNAL(result(KJob *)), SLOT(slotAliasExpansionDone(KJob *)));
-    job->start();
-}
-
-bool AddressValidationJob::isValid() const
-{
-    return d->mIsValid;
-}
-
-#include "moc_addressvalidationjob.cpp"

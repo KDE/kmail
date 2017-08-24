@@ -40,12 +40,11 @@ public:
     void setDefaultDomain(const QString &domainName);
 
 private:
-    //@cond PRIVATE
-    class Private;
-    Private *const d;
-
-    Q_PRIVATE_SLOT(d, void slotAliasExpansionDone(KJob *))
-    //@endcond
+    void slotAliasExpansionDone(KJob *);
+    QString mEmailAddresses;
+    QString mDomainDefaultName;
+    bool mIsValid = false;
+    QWidget *mParentWidget = nullptr;
 };
 
 #endif
