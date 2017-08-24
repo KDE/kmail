@@ -627,23 +627,23 @@ private:
 
     QPointer<KMail::SearchWindow> mSearchWin;
 
-    QAction *mExpireFolderAction;
-    QAction *mFolderMailingListPropertiesAction;
-    QAction *mShowFolderShortcutDialogAction;
-    QAction *mArchiveFolderAction;
-    QAction *mMessageNewList;
-    KToggleAction *mPreferHtmlLoadExtAction;
+    QAction *mExpireFolderAction = nullptr;
+    QAction *mFolderMailingListPropertiesAction = nullptr;
+    QAction *mShowFolderShortcutDialogAction = nullptr;
+    QAction *mArchiveFolderAction = nullptr;
+    QAction *mMessageNewList = nullptr;
+    KToggleAction *mPreferHtmlLoadExtAction = nullptr;
 
-    QTimer *menutimer;
-    QTimer *mShowBusySplashTimer;
+    QTimer *menutimer = nullptr;
+    QTimer *mShowBusySplashTimer = nullptr;
 
     KSieveUi::VacationManager *mVacationManager;
 #if !defined(NDEBUG)
     QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog;
 #endif
-    KActionCollection *mActionCollection;
-    QAction *mToolbarActionSeparator;
-    QVBoxLayout *mTopLayout;
+    KActionCollection *mActionCollection = nullptr;
+    QAction *mToolbarActionSeparator = nullptr;
+    QVBoxLayout *mTopLayout = nullptr;
     bool mDestructed;
     QList<QAction *> mFilterMenuActions;
     QList<QAction *> mFilterFolderMenuActions;
@@ -651,42 +651,42 @@ private:
     QList<QAction *> mFilterTBarActions;
     QList<KMMetaFilterActionCommand *> mFilterCommands;
 
-    KMail::TagActionManager *mTagActionManager;
-    KMail::FolderShortcutActionManager *mFolderShortcutActionManager;
+    KMail::TagActionManager *mTagActionManager = nullptr;
+    KMail::FolderShortcutActionManager *mFolderShortcutActionManager = nullptr;
     KSharedConfig::Ptr mConfig;
-    KXMLGUIClient *mGUIClient;
+    KXMLGUIClient *mGUIClient = nullptr;
 
-    KMail::MessageActions *mMsgActions;
-    Akonadi::StandardMailActionManager *mAkonadiStandardActionManager;
-    CollectionPane *mMessagePane;
+    KMail::MessageActions *mMsgActions = nullptr;
+    Akonadi::StandardMailActionManager *mAkonadiStandardActionManager = nullptr;
+    CollectionPane *mMessagePane = nullptr;
     QSharedPointer<MailCommon::FolderSettings> mCurrentFolderSettings;
 
-    MailCommon::FolderTreeWidget *mFolderTreeWidget;
+    MailCommon::FolderTreeWidget *mFolderTreeWidget = nullptr;
 
-    KMail::VacationScriptIndicatorWidget *mVacationScriptIndicator;
+    KMail::VacationScriptIndicatorWidget *mVacationScriptIndicator = nullptr;
     bool mVacationIndicatorActive;
     bool mGoToFirstUnreadMessageInSelectedFolder;
     MessageList::Core::PreSelectionMode mPreSelectionMode;
 
     QTimer mCheckMailTimer;
 
-    KSieveUi::SieveImapPasswordProvider *mSievePasswordProvider;
+    KSieveUi::SieveImapPasswordProvider *mSievePasswordProvider = nullptr;
     QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
     QAction *mServerSideSubscription;
     KRecentFilesAction *mOpenRecentAction;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
-    QAction *mQuickSearchAction;
-    DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu;
+    QAction *mQuickSearchAction = nullptr;
+    DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu = nullptr;
     MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference;
-    QAction *mSearchMessages;
-    KMLaunchExternalComponent *mLaunchExternalComponent;
-    ManageShowCollectionProperties *mManageShowCollectionProperties;
-    QAction *mShowIntroductionAction;
-    KToggleAction *mUseLessBandwidth;
-    QAction *mMarkAllMessageAsReadAndInAllSubFolder;
-    KActionMenuAccount *mAccountActionMenu;
-    QAction *mRemoveDuplicateRecursiveAction;
+    QAction *mSearchMessages = nullptr;
+    KMLaunchExternalComponent *mLaunchExternalComponent = nullptr;
+    ManageShowCollectionProperties *mManageShowCollectionProperties = nullptr;
+    QAction *mShowIntroductionAction = nullptr;
+    KToggleAction *mUseLessBandwidth = nullptr;
+    QAction *mMarkAllMessageAsReadAndInAllSubFolder = nullptr;
+    KActionMenuAccount *mAccountActionMenu = nullptr;
+    QAction *mRemoveDuplicateRecursiveAction = nullptr;
     Akonadi::Collection mCurrentCollection;
 };
 

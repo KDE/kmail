@@ -80,15 +80,15 @@ private:
     QMap<QString, KontactInterface::Summary *> mSummaries;
     QStringList mLeftColumnSummaries;
     QStringList mRightColumnSummaries;
-    KontactInterface::Core *mCore;
-    DropWidget *mFrame;
-    QFrame *mMainWidget;
-    QVBoxLayout *mMainLayout;
-    QVBoxLayout *mLeftColumn;
-    QVBoxLayout *mRightColumn;
-    QLabel *mUsernameLabel;
-    QLabel *mDateLabel;
-    QAction *mConfigAction;
+    KontactInterface::Core *mCore = nullptr;
+    DropWidget *mFrame = nullptr;
+    QFrame *mMainWidget = nullptr;
+    QVBoxLayout *mMainLayout = nullptr;
+    QVBoxLayout *mLeftColumn = nullptr;
+    QVBoxLayout *mRightColumn = nullptr;
+    QLabel *mUsernameLabel = nullptr;
+    QLabel *mDateLabel = nullptr;
+    QAction *mConfigAction = nullptr;
 };
 
 #endif

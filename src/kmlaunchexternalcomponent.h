@@ -42,7 +42,7 @@ public Q_SLOTS:
     void slotFilterLogViewer();
 private:
     QString akonadiPath(QString service);
-    QWidget *mParentWidget;
+    QWidget *mParentWidget = nullptr;
 };
 
 #endif // KMLAUNCHEXTERNALCOMPONENT_H

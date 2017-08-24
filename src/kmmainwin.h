@@ -67,11 +67,11 @@ private Q_SLOTS:
     void slotConfigureShortcuts();
 
 private:
-    KPIM::ProgressStatusBarWidget *mProgressBar;
-    KMMainWidget *mKMMainWidget;
-    KToggleAction *mHideMenuBarAction;
+    KPIM::ProgressStatusBarWidget *mProgressBar = nullptr;
+    KMMainWidget *mKMMainWidget = nullptr;
+    KToggleAction *mHideMenuBarAction = nullptr;
     bool mReallyClose;
-    QLabel *mMessageLabel;
+    QLabel *mMessageLabel = nullptr;
 };
 
 #endif

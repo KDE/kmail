@@ -224,26 +224,26 @@ private:
 private:
     KContacts::Addressee mSearchedAddress;
     Akonadi::Item mSearchedContact;
-    QWidget *mMainWindow;
-    KActionCollection *mActionCollection;
+    QWidget *mMainWindow = nullptr;
+    KActionCollection *mActionCollection = nullptr;
 
-    QAction *mMailToComposeAction;
-    QAction *mMailToReplyAction;
-    QAction *mMailToForwardAction;
-    QAction *mAddAddrBookAction;
-    QAction *mOpenAddrBookAction;
-    QAction *mUrlSaveAsAction;
-    QAction *mAddBookmarksAction;
-    QAction *mImageUrlSaveAsAction;
-    QAction *mEditContactAction;
-    QAction *mViewAsHtml;
-    QAction *mLoadExternalReference;
-    QAction *mShareImage;
-    QAction *mAddEmailToExistingContactAction;
+    QAction *mMailToComposeAction = nullptr;
+    QAction *mMailToReplyAction = nullptr;
+    QAction *mMailToForwardAction = nullptr;
+    QAction *mAddAddrBookAction = nullptr;
+    QAction *mOpenAddrBookAction = nullptr;
+    QAction *mUrlSaveAsAction = nullptr;
+    QAction *mAddBookmarksAction = nullptr;
+    QAction *mImageUrlSaveAsAction = nullptr;
+    QAction *mEditContactAction = nullptr;
+    QAction *mViewAsHtml = nullptr;
+    QAction *mLoadExternalReference = nullptr;
+    QAction *mShareImage = nullptr;
+    QAction *mAddEmailToExistingContactAction = nullptr;
 
-    QMenu *mViewHtmlOptions;
+    QMenu *mViewHtmlOptions = nullptr;
 
-    MessageViewer::Viewer *mViewer;
+    MessageViewer::Viewer *mViewer = nullptr;
 };
 
 #endif

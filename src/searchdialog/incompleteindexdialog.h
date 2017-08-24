@@ -48,8 +48,8 @@ private:
     void updateAllSelection(bool select);
 
     QScopedPointer<Ui_IncompleteIndexDialog> mUi;
-    QProgressDialog *mProgressDialog;
-    QDBusInterface *mIndexer;
+    QProgressDialog *mProgressDialog = nullptr;
+    QDBusInterface *mIndexer = nullptr;
     QList<qlonglong> mIndexingQueue;
 };
 

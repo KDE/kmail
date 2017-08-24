@@ -52,9 +52,9 @@ private Q_SLOTS:
     void fillSyncActionSubEntries();
 
 private:
-    SummaryViewPart *mPart;
-    KSelectAction *mSyncAction;
-    QAction *mAllSync;
+    SummaryViewPart *mPart = nullptr;
+    KSelectAction *mSyncAction = nullptr;
+    QAction *mAllSync = nullptr;
 };
 
 #endif

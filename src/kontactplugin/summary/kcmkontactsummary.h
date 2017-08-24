@@ -49,7 +49,7 @@ public:
     void save() override;
 
 private:
-    PluginView *mPluginView;
+    PluginView *mPluginView = nullptr;
 };
 
 #endif

@@ -49,7 +49,7 @@ private Q_SLOTS:
 private:
     void askForNextCheck(quint64 id, bool needToReindex = false);
     Akonadi::Collection mCollection;
-    Akonadi::Search::PIM::IndexedItems *mIndexedItems;
+    Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
 };
 
 #endif // CHECKINDEXINGJOB_H

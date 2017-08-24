@@ -26,7 +26,6 @@ class AgentIdentifier
 {
 public:
     AgentIdentifier()
-        : mIndex(-1)
     {
     }
 
@@ -39,7 +38,7 @@ public:
 
     QString mIdentifier;
     QString mName;
-    int mIndex;
+    int mIndex = -1;
 };
 
 class KActionMenuAccount : public KActionMenu

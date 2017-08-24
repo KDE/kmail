@@ -45,7 +45,7 @@ private Q_SLOTS:
     void slotDeletionCollectionResult(KJob *job);
 
 private:
-    KMMainWidget *mMainWidget;
+    KMMainWidget *mMainWidget = nullptr;
     Akonadi::Collection mCurrentCollection;
 };
 

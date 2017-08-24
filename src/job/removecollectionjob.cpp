@@ -30,7 +30,6 @@
 
 RemoveCollectionJob::RemoveCollectionJob(QObject *parent)
     : QObject(parent)
-    , mMainWidget(nullptr)
 {
 }
 

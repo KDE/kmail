@@ -29,8 +29,6 @@
 struct CreateReplyMessageJobSettings
 {
     CreateReplyMessageJobSettings()
-        : m_replyStrategy(MessageComposer::ReplySmart)
-        , mNoQuote(false)
     {
     }
 
@@ -39,8 +37,8 @@ struct CreateReplyMessageJobSettings
     QString mTemplate;
     Akonadi::Item mItem;
     KMime::Message::Ptr mMsg;
-    MessageComposer::ReplyStrategy m_replyStrategy;
-    bool mNoQuote;
+    MessageComposer::ReplyStrategy m_replyStrategy = MessageComposer::ReplySmart;
+    bool mNoQuote = false;
 };
 
 class CreateReplyMessageJob : public QObject

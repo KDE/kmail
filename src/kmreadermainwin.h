@@ -89,8 +89,9 @@ private:
     KMReaderWin *mReaderWin;
     Akonadi::Item mMsg;
     // a few actions duplicated from kmmainwidget
-    QAction *mTrashAction, *mSaveAtmAction;
-    KMail::MessageActions *mMsgActions;
+    QAction *mTrashAction = nullptr;
+    QAction *mSaveAtmAction = nullptr;
+    KMail::MessageActions *mMsgActions = nullptr;
     Akonadi::Collection mParentCollection;
 };
 

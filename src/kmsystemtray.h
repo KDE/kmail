@@ -78,8 +78,8 @@ private:
 
     bool mIconNotificationsEnabled;
 
-    QMenu *mNewMessagesPopup;
-    QAction *mSendQueued;
+    QMenu *mNewMessagesPopup = nullptr;
+    QAction *mSendQueued = nullptr;
 };
 }
 #endif

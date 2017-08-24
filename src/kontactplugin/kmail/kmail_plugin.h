@@ -59,10 +59,7 @@ public:
     bool isRunningStandalone() const override;
     bool createDBUSInterface(const QString &serviceType) override;
     KontactInterface::Summary *createSummaryWidget(QWidget *parent) override;
-    int weight() const override
-    {
-        return 200;
-    }
+    int weight() const override;
 
     QStringList invisibleToolbarActions() const override;
     bool queryClose() const override;
@@ -81,8 +78,8 @@ protected Q_SLOTS:
     void slotSyncFolders();
 
 private:
-    OrgKdeKmailKmailInterface *m_instance;
-    KontactInterface::UniqueAppWatcher *mUniqueAppWatcher;
+    OrgKdeKmailKmailInterface *m_instance = nullptr;
+    KontactInterface::UniqueAppWatcher *mUniqueAppWatcher = nullptr;
 };
 
 #endif

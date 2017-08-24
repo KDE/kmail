@@ -26,9 +26,6 @@
 struct NewMessageJobSettings
 {
     NewMessageJobSettings()
-        : mFolder(nullptr)
-        , mHidden(false)
-        , mIdentity(0)
     {
     }
 
@@ -49,10 +46,10 @@ struct NewMessageJobSettings
     QString mCc;
     QString mBcc;
     QString mAttachURL;
-    QSharedPointer<MailCommon::FolderSettings> mFolder;
+    QSharedPointer<MailCommon::FolderSettings> mFolder = nullptr;
     Akonadi::Collection mCurrentCollection;
-    bool mHidden;
-    uint mIdentity;
+    bool mHidden = false;
+    uint mIdentity = 0;
 };
 
 class NewMessageJob : public QObject

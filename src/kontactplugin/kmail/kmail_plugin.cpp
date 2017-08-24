@@ -213,6 +213,11 @@ KontactInterface::Summary *KMailPlugin::createSummaryWidget(QWidget *parent)
     return new SummaryWidget(this, parent);
 }
 
+int KMailPlugin::weight() const
+{
+    return 200;
+}
+
 ////
 
 #include "../../kmail_options.h"

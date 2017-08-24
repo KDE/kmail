@@ -96,6 +96,11 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
     QTimer::singleShot(0, this, &SummaryWidget::slotUpdateFolderList);
 }
 
+int SummaryWidget::summaryHeight() const
+{
+    return 1;
+}
+
 void SummaryWidget::slotCollectionChanged()
 {
     QTimer::singleShot(0, this, &SummaryWidget::slotUpdateFolderList);

@@ -55,10 +55,7 @@ class SummaryWidget : public KontactInterface::Summary
 public:
     SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent);
 
-    int summaryHeight() const override
-    {
-        return 1;
-    }
+    int summaryHeight() const override;
 
     QStringList configModules() const override;
 
@@ -77,13 +74,13 @@ private:
     void displayModel(const QModelIndex &, int &, const bool, QStringList);
 
     QList<QLabel *> mLabels;
-    QGridLayout *mLayout;
-    KontactInterface::Plugin *mPlugin;
-    Akonadi::ChangeRecorder *mChangeRecorder;
-    Akonadi::EntityTreeModel *mModel;
-    KViewStateMaintainer<Akonadi::ETMViewStateSaver> *mModelState;
-    KCheckableProxyModel *mModelProxy;
-    QItemSelectionModel *mSelectionModel;
+    QGridLayout *mLayout = nullptr;
+    KontactInterface::Plugin *mPlugin = nullptr;
+    Akonadi::ChangeRecorder *mChangeRecorder = nullptr;
+    Akonadi::EntityTreeModel *mModel = nullptr;
+    KViewStateMaintainer<Akonadi::ETMViewStateSaver> *mModelState = nullptr;
+    KCheckableProxyModel *mModelProxy = nullptr;
+    QItemSelectionModel *mSelectionModel = nullptr;
 };
 
 #endif
