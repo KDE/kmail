@@ -51,7 +51,7 @@ void AddressValidationJob::setDefaultDomain(const QString &domainName)
 void AddressValidationJob::start()
 {
     AliasesExpandJob *job = new AliasesExpandJob(mEmailAddresses, mDomainDefaultName, this);
-    connect(job, SIGNAL(result(KJob *)), SLOT(slotAliasExpansionDone(KJob *)));
+    connect(job, &AliasesExpandJob::result, this, &AddressValidationJob::slotAliasExpansionDone);
     job->start();
 }
 
