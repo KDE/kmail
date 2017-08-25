@@ -22,6 +22,10 @@ namespace Akonadi {
 class Tag;
 }
 
+namespace KPIM {
+class ProgressItem;
+}
+
 using Akonadi::MessageStatus;
 
 class QProgressDialog;
@@ -515,9 +519,6 @@ private:
     QList<KJob*> mPendingJobs;
 };
 
-namespace KPIM {
-class ProgressItem;
-}
 class KMMoveCommand : public KMCommand
 {
     Q_OBJECT
