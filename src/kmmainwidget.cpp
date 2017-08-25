@@ -1051,8 +1051,6 @@ void KMMainWidget::createWidgets()
         connect(mMsgView->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMMainWidget::slotMessagePopup);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::moveMessageToTrash,
                 this, &KMMainWidget::slotMoveMessageToTrash);
-        connect(mMsgView->viewer(), &MessageViewer::Viewer::executeMailAction,
-                this, &KMMainWidget::slotExecuteMailAction);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::pageIsScrolledToBottom,
                 this, &KMMainWidget::slotPageIsScrolledToBottom);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::replyMessageTo,
@@ -4692,33 +4690,6 @@ void KMMainWidget::slotUpdateConfig()
 {
     readFolderConfig();
     updateHtmlMenuEntry();
-}
-
-void KMMainWidget::slotExecuteMailAction(MessageViewer::Viewer::MailAction action)
-{
-    switch (action) {
-    case MessageViewer::Viewer::Trash:
-        slotMoveMessageToTrash();
-        break;
-    case MessageViewer::Viewer::Reply:
-        replyCurrentMessageCommand(MessageComposer::ReplySmart);
-        break;
-    case MessageViewer::Viewer::ReplyToAll:
-        replyCurrentMessageCommand(MessageComposer::ReplyAll);
-        break;
-    case MessageViewer::Viewer::Forward:
-        slotRedirectCurrentMessage();
-        break;
-    case MessageViewer::Viewer::NewMessage:
-        slotCompose();
-        break;
-    case MessageViewer::Viewer::Print:
-        printCurrentMessage(false);
-        break;
-    case MessageViewer::Viewer::PrintPreview:
-        printCurrentMessage(true);
-        break;
-    }
 }
 
 void KMMainWidget::printCurrentMessage(bool preview)

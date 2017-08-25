@@ -556,7 +556,6 @@ private Q_SLOTS:
 
     void slotMarkAllMessageAsReadInCurrentFolderAndSubfolder();
     void slotRemoveDuplicateRecursive();
-    void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
     void slotRedirectCurrentMessage();
     void slotEditCurrentVacation();
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);

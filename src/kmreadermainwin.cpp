@@ -201,30 +201,6 @@ Akonadi::Collection KMReaderMainWin::parentCollection() const
     }
 }
 
-void KMReaderMainWin::slotExecuteMailAction(MessageViewer::Viewer::MailAction action)
-{
-    switch (action) {
-    case MessageViewer::Viewer::Trash:
-        slotTrashMessage();
-        break;
-    case MessageViewer::Viewer::Reply:
-        slotCustomReplyToMsg(QString());
-        break;
-    case MessageViewer::Viewer::ReplyToAll:
-        slotCustomReplyAllToMsg(QString());
-        break;
-    case MessageViewer::Viewer::Forward:
-        slotRedirectMessage();
-        break;
-    case MessageViewer::Viewer::NewMessage:
-        break;
-    case MessageViewer::Viewer::Print:
-        break;
-    case MessageViewer::Viewer::PrintPreview:
-        break;
-    }
-}
-
 void KMReaderMainWin::slotTrashMessage()
 {
     if (!mMsg.isValid()) {
@@ -376,7 +352,6 @@ void KMReaderMainWin::setupAccel()
     setStandardToolBarMenuEnabled(true);
     KStandardAction::configureToolbars(this, &KMReaderMainWin::slotEditToolbars, actionCollection());
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::moveMessageToTrash, this, &KMReaderMainWin::slotTrashMessage);
-    connect(mReaderWin->viewer(), &MessageViewer::Viewer::executeMailAction, this, &KMReaderMainWin::slotExecuteMailAction);
 }
 
 QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
