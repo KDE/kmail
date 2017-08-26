@@ -85,7 +85,7 @@ private:
     QAction *copyActionMenu(QMenu *menu);
     QAction *moveActionMenu(QMenu *menu);
 
-    KMReaderWin *mReaderWin;
+    KMReaderWin *mReaderWin = nullptr;
     Akonadi::Item mMsg;
     // a few actions duplicated from kmmainwidget
     QAction *mTrashAction = nullptr;
