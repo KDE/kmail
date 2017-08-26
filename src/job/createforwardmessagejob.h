@@ -29,7 +29,6 @@
 struct CreateForwardMessageJobSettings
 {
     CreateForwardMessageJobSettings()
-        : mIdentity(0)
     {
     }
 
@@ -38,7 +37,7 @@ struct CreateForwardMessageJobSettings
     KMime::Message::Ptr mMsg;
     QString mTemplate;
     QString mSelection;
-    uint mIdentity;
+    uint mIdentity = 0;
 };
 
 class CreateForwardMessageJob : public QObject

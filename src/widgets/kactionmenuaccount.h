@@ -56,7 +56,7 @@ private Q_SLOTS:
     void slotSelectAccount(QAction *act);
 private:
     QStringList mOrderIdentifier;
-    bool mInitialized;
+    bool mInitialized = false;
 };
 
 #endif // KACTIONMENUACCOUNT_H

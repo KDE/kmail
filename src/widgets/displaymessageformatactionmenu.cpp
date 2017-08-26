@@ -26,7 +26,6 @@
 
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     : KActionMenu(parent)
-    , mDisplayMessageFormat(MessageViewer::Viewer::UseGlobalSetting)
 {
     setText(i18n("Message Default Format"));
     QMenu *subMenu = new QMenu;

@@ -162,7 +162,7 @@ private:
     int mSortColumn;
     Qt::SortOrder mSortOrder;
     Akonadi::Collection mFolder;
-    KJob *mSearchJob;
+    KJob *mSearchJob = nullptr;
 
     KMSearchMessageModel *mResultModel = nullptr;
     Ui_SearchWindow mUi;

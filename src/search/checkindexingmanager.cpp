@@ -37,8 +37,6 @@
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
     : QObject(parent)
     , mIndexedItems(indexer)
-    , mIndex(0)
-    , mIsReady(true)
 {
     mTimer = new QTimer(this);
     mTimer->setSingleShot(true);

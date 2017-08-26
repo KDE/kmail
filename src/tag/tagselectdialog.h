@@ -48,7 +48,7 @@ private:
     enum ItemType {
         UrlTag = Qt::UserRole + 1
     };
-    int mNumberOfSelectedMessages;
+    int mNumberOfSelectedMessages = -1;
     Akonadi::Item mSelectedItem;
 
     Akonadi::Tag::List mCurrentSelectedTags;

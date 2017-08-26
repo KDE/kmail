@@ -41,7 +41,7 @@ private Q_SLOTS:
 
 private:
     void updateMenu();
-    MessageViewer::Viewer::DisplayFormatMessage mDisplayMessageFormat;
+    MessageViewer::Viewer::DisplayFormatMessage mDisplayMessageFormat = MessageViewer::Viewer::UseGlobalSetting;
 };
 
 #endif // DisplayMessageFormatActionMenu_H

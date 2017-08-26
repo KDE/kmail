@@ -45,7 +45,7 @@ public:
     bool execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const;
 private:
     QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
-    QWidget *mParentWidget;
+    QWidget *mParentWidget = nullptr;
 };
 
 #endif // KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H

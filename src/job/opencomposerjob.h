@@ -32,33 +32,33 @@ struct OpenComposerSettings
 
     OpenComposerSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile,
                          const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity)
-        : mTo(to)
+        : mAttachmentPaths(attachmentPaths)
+        , mCustomHeaders(customHeaders)
+        , mTo(to)
         , mCc(cc)
         , mBcc(bcc)
         , mSubject(subject)
         , mBody(body)
-        , mHidden(hidden)
         , mMessageFile(messageFile)
-        , mAttachmentPaths(attachmentPaths)
-        , mCustomHeaders(customHeaders)
         , mReplyTo(replyTo)
         , mInReplyTo(inReplyTo)
         , mIdentity(identity)
+        , mHidden(hidden)
     {
     }
 
+    QStringList mAttachmentPaths;
+    QStringList mCustomHeaders;
     QString mTo;
     QString mCc;
     QString mBcc;
     QString mSubject;
     QString mBody;
-    bool mHidden;
     QString mMessageFile;
-    QStringList mAttachmentPaths;
-    QStringList mCustomHeaders;
     QString mReplyTo;
     QString mInReplyTo;
     QString mIdentity;
+    bool mHidden = false;
 };
 
 class OpenComposerJob : public QObject

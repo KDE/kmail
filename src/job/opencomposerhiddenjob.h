@@ -26,7 +26,6 @@
 struct OpenComposerHiddenJobSettings
 {
     OpenComposerHiddenJobSettings()
-        : mHidden(false)
     {
     }
 
@@ -45,7 +44,7 @@ struct OpenComposerHiddenJobSettings
     QString mBcc;
     QString mSubject;
     QString mBody;
-    bool mHidden;
+    bool mHidden = false;
 };
 
 class OpenComposerHiddenJob : public QObject

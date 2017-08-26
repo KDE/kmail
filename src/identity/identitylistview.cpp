@@ -68,6 +68,11 @@ IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, QTreeWidget
     init(ident);
 }
 
+uint IdentityListViewItem::uoid() const
+{
+    return mUOID;
+}
+
 KIdentityManagement::Identity &IdentityListViewItem::identity() const
 {
     KIdentityManagement::IdentityManager *im = qobject_cast<IdentityListView *>(treeWidget())->identityManager();

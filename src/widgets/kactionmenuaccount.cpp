@@ -26,7 +26,6 @@
 
 KActionMenuAccount::KActionMenuAccount(QObject *parent)
     : KActionMenu(parent)
-    , mInitialized(false)
 {
     setDelayed(true);
     connect(menu(), &QMenu::aboutToShow, this, &KActionMenuAccount::slotCheckTransportMenu);

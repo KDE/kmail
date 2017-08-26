@@ -40,9 +40,9 @@ public:
 
     void initializePlugins();
 private:
-    KPIMTextEdit::RichTextComposer *mRichTextEditor;
-    QWidget *mParentWidget;
-    bool mWasInitialized;
+    KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
+    QWidget *mParentWidget = nullptr;
+    bool mWasInitialized = false;
 };
 
 #endif // KMAILPLUGINEDITORINITMANAGERINTERFACE_H

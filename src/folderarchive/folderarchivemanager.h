@@ -63,9 +63,9 @@ private:
     void nextJob();
     void removeInfo(const QString &instanceName);
     QQueue<FolderArchiveAgentJob *> mJobQueue;
-    FolderArchiveAgentJob *mCurrentJob;
+    FolderArchiveAgentJob *mCurrentJob = nullptr;
     QList<FolderArchiveAccountInfo *> mListAccountInfo;
-    FolderArchiveCache *mFolderArchiveCache;
+    FolderArchiveCache *mFolderArchiveCache = nullptr;
 };
 
 #endif // FOLDERARCHIVEMANAGER_H

@@ -54,8 +54,8 @@ private:
     QTimer *mTimer = nullptr;
     QList<qint64> mCollectionsIndexed;
     QList<qint64> mCollectionsNeedToBeReIndexed;
-    int mIndex;
-    bool mIsReady;
+    int mIndex = 0;
+    bool mIsReady = true;
 };
 
 #endif // CHECKINDEXINGMANAGER_H
