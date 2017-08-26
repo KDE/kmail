@@ -115,15 +115,15 @@ private:
     void checkTags(const QList<qint64> &tags);
     QList<qint64> checkedTags() const;
 
-    KActionCollection *mActionCollection;
-    MessageActions *mMessageActions;
-    QSignalMapper *mMessageTagToggleMapper;
-    KXMLGUIClient *mGUIClient;
+    KActionCollection *mActionCollection = nullptr;
+    MessageActions *mMessageActions = nullptr;
+    QSignalMapper *mMessageTagToggleMapper = nullptr;
+    KXMLGUIClient *mGUIClient = nullptr;
 
-    QAction *mSeparatorMoreAction;
-    QAction *mSeparatorNewTagAction;
-    QAction *mMoreAction;
-    QAction *mNewTagAction;
+    QAction *mSeparatorMoreAction = nullptr;
+    QAction *mSeparatorNewTagAction = nullptr;
+    QAction *mMoreAction = nullptr;
+    QAction *mNewTagAction = nullptr;
     // Maps the id of a tag to the action of a tag.
     // Contains all existing tags
     QMap<qint64, KToggleAction *> mTagActions;
@@ -136,8 +136,8 @@ private:
 
     // Uri of a newly created tag
     qint64 mNewTagId;
-    bool mTagFetchInProgress;
-    Akonadi::Monitor *mMonitor;
+    bool mTagFetchInProgress = false;
+    Akonadi::Monitor *mMonitor = nullptr;
 };
 }
 

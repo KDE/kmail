@@ -51,9 +51,9 @@ private Q_SLOTS:
     void slotUpdateXFace();
 
 private:
-    QCheckBox *mEnableCheck;
-    KPIMTextEdit::PlainTextEditorWidget *mTextEdit;
-    QLabel *mXFaceLabel;
+    QCheckBox *mEnableCheck = nullptr;
+    KPIMTextEdit::PlainTextEditorWidget *mTextEdit = nullptr;
+    QLabel *mXFaceLabel = nullptr;
 };
 } // namespace KMail
 

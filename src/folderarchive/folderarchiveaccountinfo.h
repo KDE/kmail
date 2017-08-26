@@ -61,8 +61,8 @@ private:
     Akonadi::Collection::Id mArchiveTopLevelCollectionId;
     QString mInstanceName;
     FolderArchiveAccountInfo::FolderArchiveType mArchiveType;
-    bool mEnabled;
-    bool mKeepExistingStructure;
+    bool mEnabled = false;
+    bool mKeepExistingStructure = false;
 };
 
 #endif // FOLDERARCHIVEACCOUNTINFO_H

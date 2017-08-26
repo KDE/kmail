@@ -40,8 +40,8 @@ private Q_SLOTS:
 private:
     void readConfig();
     void writeConfig();
-    Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget;
-    QPushButton *mOkButton;
+    Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget = nullptr;
+    QPushButton *mOkButton = nullptr;
 };
 
 #endif // ADDEMAILTOEXISTINGCONTACTDIALOG_H

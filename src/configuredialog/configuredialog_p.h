@@ -81,7 +81,7 @@ protected:
     void addTab(ConfigModuleTab *tab, const QString &title);
 
 private:
-    QTabWidget *mTabWidget;
+    QTabWidget *mTabWidget = nullptr;
     bool mWasInitialized;
 };
 

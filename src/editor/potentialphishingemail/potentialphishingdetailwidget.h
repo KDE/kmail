@@ -34,7 +34,7 @@ public:
 
     void fillList(const QStringList &lst);
 private:
-    QListWidget *mListWidget;
+    QListWidget *mListWidget = nullptr;
 };
 
 #endif // POTENTIALPHISHINGDETAILWIDGET_H

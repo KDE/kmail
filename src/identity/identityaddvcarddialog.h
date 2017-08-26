@@ -41,9 +41,9 @@ public:
     QUrl existingVCard() const;
 
 private:
-    QButtonGroup *mButtonGroup;
-    QComboBox *mComboBox;
-    KUrlRequester *mVCardPath;
+    QButtonGroup *mButtonGroup = nullptr;
+    QComboBox *mComboBox = nullptr;
+    KUrlRequester *mVCardPath = nullptr;
 };
 
 #endif // IDENTITYADDVCARDDIALOG_H

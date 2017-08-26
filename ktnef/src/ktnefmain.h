@@ -88,12 +88,12 @@ private:
     QAction *createAppAction(const KService::Ptr &service, bool singleOffer, QActionGroup *actionGroup, QObject *parent);
 
 private:
-    KTNEFView *mView;
-    KTNEFParser *mParser;
     QString mFilename;
     QString mDefaultDir;
     QString mLastDir;
-    KRecentFilesAction *mOpenRecentFileAction;
+    KTNEFView *mView = nullptr;
+    KTNEFParser *mParser = nullptr;
+    KRecentFilesAction *mOpenRecentFileAction = nullptr;
 };
 Q_DECLARE_METATYPE(KService::Ptr)
 #endif

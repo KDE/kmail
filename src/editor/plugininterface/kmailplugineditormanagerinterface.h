@@ -53,9 +53,9 @@ public:
 
 private:
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
-    KPIMTextEdit::RichTextEditor *mRichTextEditor;
-    QWidget *mParentWidget;
-    KActionCollection *mActionCollection;
+    KPIMTextEdit::RichTextEditor *mRichTextEditor = nullptr;
+    QWidget *mParentWidget = nullptr;
+    KActionCollection *mActionCollection = nullptr;
     QList<MessageComposer::PluginEditorInterface *> mListPluginInterface;
     QHash<MessageComposer::ActionType::Type, QList<QAction *> > mActionHash;
 };

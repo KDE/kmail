@@ -110,46 +110,46 @@ private:
 
 private:
     // "general" tab:
-    KLineEdit *mNameEdit;
-    KLineEdit *mOrganizationEdit;
-    KLineEdit *mEmailEdit;
-    KEditListWidget *mAliasEdit;
+    KLineEdit *mNameEdit = nullptr;
+    KLineEdit *mOrganizationEdit = nullptr;
+    KLineEdit *mEmailEdit = nullptr;
+    KEditListWidget *mAliasEdit = nullptr;
     // "cryptography" tab:
-    QWidget *mCryptographyTab;
-    KeySelectionCombo *mPGPSigningKeyRequester;
-    KeySelectionCombo *mPGPEncryptionKeyRequester;
-    KeySelectionCombo *mSMIMESigningKeyRequester;
-    KeySelectionCombo *mSMIMEEncryptionKeyRequester;
-    KComboBox *mPreferredCryptoMessageFormat;
-    QCheckBox *mAutoSign;
-    QCheckBox *mAutoEncrypt;
+    QWidget *mCryptographyTab = nullptr;
+    KeySelectionCombo *mPGPSigningKeyRequester = nullptr;
+    KeySelectionCombo *mPGPEncryptionKeyRequester = nullptr;
+    KeySelectionCombo *mSMIMESigningKeyRequester = nullptr;
+    KeySelectionCombo *mSMIMEEncryptionKeyRequester = nullptr;
+    KComboBox *mPreferredCryptoMessageFormat = nullptr;
+    QCheckBox *mAutoSign = nullptr;
+    QCheckBox *mAutoEncrypt = nullptr;
     // "advanced" tab:
-    KLineEdit *mReplyToEdit;
-    KLineEdit *mBccEdit;
-    KLineEdit *mCcEdit;
-    Sonnet::DictionaryComboBox *mDictionaryCombo;
-    IdentityFolderRequester *mFccFolderRequester;
-    QCheckBox *mSentMailFolderCheck;
-    IdentityFolderRequester *mDraftsFolderRequester;
-    IdentityFolderRequester *mTemplatesFolderRequester;
-    QCheckBox *mTransportCheck;
-    MailTransport::TransportComboBox *mTransportCombo;
-    QCheckBox *mAttachMyVCard;
+    KLineEdit *mReplyToEdit = nullptr;
+    KLineEdit *mBccEdit = nullptr;
+    KLineEdit *mCcEdit = nullptr;
+    Sonnet::DictionaryComboBox *mDictionaryCombo = nullptr;
+    IdentityFolderRequester *mFccFolderRequester = nullptr;
+    QCheckBox *mSentMailFolderCheck = nullptr;
+    IdentityFolderRequester *mDraftsFolderRequester = nullptr;
+    IdentityFolderRequester *mTemplatesFolderRequester = nullptr;
+    QCheckBox *mTransportCheck = nullptr;
+    MailTransport::TransportComboBox *mTransportCombo = nullptr;
+    QCheckBox *mAttachMyVCard = nullptr;
     QString mVcardFilename;
-    QPushButton *mEditVCard;
-    PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage;
-    KLineEdit *mDefaultDomainEdit;
+    QPushButton *mEditVCard = nullptr;
+    PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+    KLineEdit *mDefaultDomainEdit = nullptr;
 
     // "templates" tab:
-    TemplateParser::TemplatesConfiguration *mWidget;
-    QCheckBox *mCustom;
-    QPushButton *mCopyGlobal;
+    TemplateParser::TemplatesConfiguration *mWidget = nullptr;
+    QCheckBox *mCustom = nullptr;
+    QPushButton *mCopyGlobal = nullptr;
     // "signature" tab:
-    KIdentityManagement::SignatureConfigurator *mSignatureConfigurator;
+    KIdentityManagement::SignatureConfigurator *mSignatureConfigurator = nullptr;
     // "X-Face" tab:
-    KMail::XFaceConfigurator *mXFaceConfigurator;
-    QTabWidget *mTabWidget;
-    IdentityInvalidFolder *mIdentityInvalidFolder;
+    KMail::XFaceConfigurator *mXFaceConfigurator = nullptr;
+    QTabWidget *mTabWidget = nullptr;
+    IdentityInvalidFolder *mIdentityInvalidFolder = nullptr;
 };
 } // namespace KMail
 

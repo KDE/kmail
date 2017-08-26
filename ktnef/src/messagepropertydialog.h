@@ -38,8 +38,8 @@ private Q_SLOTS:
 private:
     void readConfig();
     void writeConfig();
-    KTNEFMessage *mMessage;
-    QTreeWidget *mListView;
+    KTNEFMessage *mMessage = nullptr;
+    QTreeWidget *mListView = nullptr;
 };
 
 #endif

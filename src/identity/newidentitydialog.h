@@ -58,11 +58,11 @@ protected Q_SLOTS:
 private Q_SLOTS:
     void slotHelp();
 private:
-    KLineEdit *mLineEdit;
-    KComboBox *mComboBox;
-    QButtonGroup *mButtonGroup;
-    KIdentityManagement::IdentityManager *mIdentityManager;
-    QPushButton *mOkButton;
+    KLineEdit *mLineEdit = nullptr;
+    KComboBox *mComboBox = nullptr;
+    QButtonGroup *mButtonGroup = nullptr;
+    KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
+    QPushButton *mOkButton = nullptr;
 };
 }
 

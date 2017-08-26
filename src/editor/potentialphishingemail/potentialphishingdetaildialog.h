@@ -38,7 +38,7 @@ private Q_SLOTS:
 private:
     void readConfig();
     void writeConfig();
-    PotentialPhishingDetailWidget *mPotentialPhishingDetailWidget;
+    PotentialPhishingDetailWidget *mPotentialPhishingDetailWidget = nullptr;
 };
 
 #endif // POTENTIALPHISHINGDETAILDIALOG_H

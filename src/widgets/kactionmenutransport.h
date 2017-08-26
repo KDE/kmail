@@ -40,7 +40,7 @@ private Q_SLOTS:
     void slotCheckTransportMenu();
     void slotSelectTransport(QAction *act);
 private:
-    bool mInitialized;
+    bool mInitialized = false;
 };
 
 #endif // KACTIONMENUTRANSPORT_H

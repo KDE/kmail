@@ -50,7 +50,7 @@ private Q_SLOTS:
 private:
     void deleteCurrentVcard(bool deleteOnDisk);
     QString mVcardFileName;
-    Akonadi::AkonadiContactEditor *mContactEditor;
+    Akonadi::AkonadiContactEditor *mContactEditor = nullptr;
 };
 
 #endif // IDENTITYEDITVCARDDIALOG_H

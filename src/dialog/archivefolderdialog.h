@@ -54,13 +54,13 @@ private:
     bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
     QString standardArchivePath(const QString &folderName);
 
-    QWidget *mParentWidget;
-    QCheckBox *mDeleteCheckBox;
-    QCheckBox *mRecursiveCheckBox;
-    MailCommon::FolderRequester *mFolderRequester;
-    KComboBox *mFormatComboBox;
-    KUrlRequester *mUrlRequester;
-    QPushButton *mOkButton;
+    QWidget *mParentWidget = nullptr;
+    QCheckBox *mDeleteCheckBox = nullptr;
+    QCheckBox *mRecursiveCheckBox = nullptr;
+    MailCommon::FolderRequester *mFolderRequester = nullptr;
+    KComboBox *mFormatComboBox = nullptr;
+    KUrlRequester *mUrlRequester = nullptr;
+    QPushButton *mOkButton = nullptr;
 };
 }
 

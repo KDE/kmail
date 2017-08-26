@@ -43,8 +43,8 @@ private Q_SLOTS:
 private:
     void sendError(const QString &error);
     Akonadi::Item::List mListItem;
-    FolderArchiveManager *mManager;
-    FolderArchiveAccountInfo *mInfo;
+    FolderArchiveManager *mManager = nullptr;
+    FolderArchiveAccountInfo *mInfo = nullptr;
 };
 
 #endif // FOLDERARCHIVEAGENTJOB_H
