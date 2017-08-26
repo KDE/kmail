@@ -286,10 +286,7 @@ public Q_SLOTS:
 
     QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
     QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
-    Akonadi::StandardMailActionManager *standardMailActionManager() const
-    {
-        return mAkonadiStandardActionManager;
-    }
+    Akonadi::StandardMailActionManager *standardMailActionManager() const;
 
     void refreshMessageListSelection();
 
@@ -318,10 +315,7 @@ protected:
 
     void showEvent(QShowEvent *event) override;
 
-    KActionCollection *actionCollection() const
-    {
-        return mActionCollection;
-    }
+    KActionCollection *actionCollection() const;
 
     /**
       @return the correct config dialog depending on whether the parent of
@@ -570,59 +564,61 @@ private:
     Akonadi::Collection::List applyFilterOnCollection(bool recursive);
 
     // Message actions
-    QAction *mDeleteAction;
-    QAction *mTrashThreadAction;
-    QAction *mDeleteThreadAction;
-    QAction *mSaveAsAction;
-    QAction *mNewMessageFromTemplateAction;
-    QAction *mSendAgainAction;
-    QAction *mApplyAllFiltersAction;
-    QAction *mSaveAttachmentsAction;
-    QAction *mOpenAction;
-    QAction *mMoveMsgToFolderAction;
-    QAction *mCollectionProperties;
-    QAction *mSendQueued;
-    QAction *mArchiveAction;
-    QAction *mSelectAllMessages;
-    KActionMenuTransport *mSendActionMenu;
+    QAction *mDeleteAction = nullptr;
+    QAction *mTrashThreadAction = nullptr;
+    QAction *mDeleteThreadAction = nullptr;
+    QAction *mSaveAsAction = nullptr;
+    QAction *mNewMessageFromTemplateAction = nullptr;
+    QAction *mSendAgainAction = nullptr;
+    QAction *mApplyAllFiltersAction = nullptr;
+    QAction *mSaveAttachmentsAction = nullptr;
+    QAction *mOpenAction = nullptr;
+    QAction *mMoveMsgToFolderAction = nullptr;
+    QAction *mCollectionProperties = nullptr;
+    QAction *mSendQueued = nullptr;
+    QAction *mArchiveAction = nullptr;
+    QAction *mSelectAllMessages = nullptr;
+    KActionMenuTransport *mSendActionMenu = nullptr;
     // Filter actions
-    KActionMenu *mFilterMenu;
-    QAction *mExpireConfigAction;
-    KActionMenu *mApplyFilterFolderActionsMenu;
-    KActionMenu *mApplyFilterFolderRecursiveActionsMenu;
-    QAction *mApplyAllFiltersFolderAction;
-    QAction *mApplyAllFiltersFolderRecursiveAction;
+    KActionMenu *mFilterMenu = nullptr;
+    QAction *mExpireConfigAction = nullptr;
+    KActionMenu *mApplyFilterFolderActionsMenu = nullptr;
+    KActionMenu *mApplyFilterFolderRecursiveActionsMenu = nullptr;
+    QAction *mApplyAllFiltersFolderAction = nullptr;
+    QAction *mApplyAllFiltersFolderRecursiveAction = nullptr;
     // Custom template actions menu
-    KActionMenu *mTemplateMenu;
+    KActionMenu *mTemplateMenu = nullptr;
 
-    KActionMenu *mThreadStatusMenu, *mApplyFilterActionsMenu;
-    QAction *mCopyActionMenu;
-    QAction *mMoveActionMenu;
-    QAction *mCopyDecryptedActionMenu;
-    QAction *mMarkThreadAsReadAction;
-    QAction *mMarkThreadAsUnreadAction;
-    KToggleAction *mToggleThreadImportantAction;
-    KToggleAction *mToggleThreadToActAction;
+    KActionMenu *mThreadStatusMenu = nullptr;
+    KActionMenu *mApplyFilterActionsMenu = nullptr;
+    QAction *mCopyActionMenu = nullptr;
+    QAction *mMoveActionMenu = nullptr;
+    QAction *mCopyDecryptedActionMenu = nullptr;
+    QAction *mMarkThreadAsReadAction = nullptr;
+    QAction *mMarkThreadAsUnreadAction = nullptr;
+    KToggleAction *mToggleThreadImportantAction = nullptr;
+    KToggleAction *mToggleThreadToActAction = nullptr;
 
-    KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
+    KToggleAction *mWatchThreadAction = nullptr;
+    KToggleAction *mIgnoreThreadAction = nullptr;
 
-    MailCommon::FavoriteCollectionWidget *mFavoriteCollectionsView;
-    Akonadi::FavoriteCollectionsModel *mFavoritesModel;
-    KMReaderWin *mMsgView;
-    QSplitter *mSplitter1;
-    QSplitter *mSplitter2;
-    QSplitter *mFolderViewSplitter;
+    MailCommon::FavoriteCollectionWidget *mFavoriteCollectionsView = nullptr;
+    Akonadi::FavoriteCollectionsModel *mFavoritesModel = nullptr;
+    KMReaderWin *mMsgView = nullptr;
+    QSplitter *mSplitter1 = nullptr;
+    QSplitter *mSplitter2 = nullptr;
+    QSplitter *mFolderViewSplitter = nullptr;
     Akonadi::Collection mTemplateFolder;
-    bool mLongFolderList;
-    bool mStartupDone;
-    bool mWasEverShown;
-    bool mHtmlGlobalSetting;
-    bool mHtmlLoadExtGlobalSetting;
-    bool mFolderHtmlLoadExtPreference;
-    bool mReaderWindowActive;
-    bool mReaderWindowBelow;
-    bool mEnableFavoriteFolderView;
-    bool mEnableFolderQuickSearch;
+    bool mLongFolderList = false;
+    bool mStartupDone = false;
+    bool mWasEverShown = false;
+    bool mHtmlGlobalSetting = false;
+    bool mHtmlLoadExtGlobalSetting = false;
+    bool mFolderHtmlLoadExtPreference = false;
+    bool mReaderWindowActive = false;
+    bool mReaderWindowBelow = false;
+    bool mEnableFavoriteFolderView = false;
+    bool mEnableFolderQuickSearch = false;
 
     QPointer<KMail::SearchWindow> mSearchWin;
 
@@ -636,7 +632,7 @@ private:
     QTimer *menutimer = nullptr;
     QTimer *mShowBusySplashTimer = nullptr;
 
-    KSieveUi::VacationManager *mVacationManager;
+    KSieveUi::VacationManager *mVacationManager = nullptr;
 #if !defined(NDEBUG)
     QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog;
 #endif
@@ -672,8 +668,8 @@ private:
     KSieveUi::SieveImapPasswordProvider *mSievePasswordProvider = nullptr;
     QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
-    QAction *mServerSideSubscription;
-    KRecentFilesAction *mOpenRecentAction;
+    QAction *mServerSideSubscription = nullptr;
+    KRecentFilesAction *mOpenRecentAction = nullptr;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
     QAction *mQuickSearchAction = nullptr;
     DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu = nullptr;

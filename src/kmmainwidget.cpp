@@ -4367,6 +4367,11 @@ void KMMainWidget::showEvent(QShowEvent *event)
     mWasEverShown = true;
 }
 
+KActionCollection *KMMainWidget::actionCollection() const
+{
+    return mActionCollection;
+}
+
 void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
     // First, open the search window. If we are currently on a search folder,
@@ -4551,6 +4556,11 @@ QAction *KMMainWidget::akonadiStandardAction(Akonadi::StandardActionManager::Typ
 QAction *KMMainWidget::akonadiStandardAction(Akonadi::StandardMailActionManager::Type type)
 {
     return mAkonadiStandardActionManager->action(type);
+}
+
+StandardMailActionManager *KMMainWidget::standardMailActionManager() const
+{
+    return mAkonadiStandardActionManager;
 }
 
 void KMMainWidget::slotRemoveDuplicates()
