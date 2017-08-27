@@ -97,7 +97,7 @@ protected:
 #endif
 
 private:
-    KIdentityManagement::IdentityManager *mIdentityManager;
+    KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
 };
 } // namespace KMail
 

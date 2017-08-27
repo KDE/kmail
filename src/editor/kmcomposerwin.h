@@ -541,24 +541,24 @@ private:
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
 
-    QWidget *mMainWidget;
-    MessageComposer::ComposerLineEdit *mEdtFrom;
-    MessageComposer::ComposerLineEdit *mEdtReplyTo;
-    PimCommon::LineEditWithAutoCorrection *mEdtSubject;
-    QLabel *mLblIdentity;
-    QLabel *mLblTransport;
-    QLabel *mLblFcc;
-    QLabel *mLblFrom;
-    QLabel *mLblReplyTo;
-    QLabel *mLblSubject;
-    QLabel *mDictionaryLabel;
-    QLabel *mCursorLineLabel;
-    QLabel *mCursorColumnLabel;
-    QLabel *mStatusbarLabel;
+    QWidget *mMainWidget = nullptr;
+    MessageComposer::ComposerLineEdit *mEdtFrom = nullptr;
+    MessageComposer::ComposerLineEdit *mEdtReplyTo = nullptr;
+    PimCommon::LineEditWithAutoCorrection *mEdtSubject = nullptr;
+    QLabel *mLblIdentity = nullptr;
+    QLabel *mLblTransport = nullptr;
+    QLabel *mLblFcc = nullptr;
+    QLabel *mLblFrom = nullptr;
+    QLabel *mLblReplyTo = nullptr;
+    QLabel *mLblSubject = nullptr;
+    QLabel *mDictionaryLabel = nullptr;
+    QLabel *mCursorLineLabel = nullptr;
+    QLabel *mCursorColumnLabel = nullptr;
+    QLabel *mStatusbarLabel = nullptr;
     bool mDone;
 
     KMime::Message::Ptr mMsg;
-    QGridLayout *mGrid;
+    QGridLayout *mGrid = nullptr;
     QString mTextSelection;
     QString mCustomTemplate;
     bool mLastSignActionState;
@@ -575,45 +575,45 @@ private:
     uint mId;
     TemplateContext mContext;
 
-    KRecentFilesAction *mRecentAction;
+    KRecentFilesAction *mRecentAction = nullptr;
 
-    KToggleAction *mSignAction;
-    KToggleAction *mEncryptAction;
-    KToggleAction *mRequestMDNAction;
-    KToggleAction *mUrgentAction;
-    KToggleAction *mAllFieldsAction;
-    KToggleAction *mFromAction;
-    KToggleAction *mReplyToAction;
-    KToggleAction *mSubjectAction;
-    KToggleAction *mIdentityAction;
-    KToggleAction *mTransportAction;
-    KToggleAction *mFccAction;
-    KToggleAction *mWordWrapAction;
-    KToggleAction *mFixedFontAction;
-    KToggleAction *mAutoSpellCheckingAction;
-    KToggleAction *mDictionaryAction;
-    KToggleAction *mSnippetAction;
-    QAction *mAppendSignature;
-    QAction *mPrependSignature;
-    QAction *mInsertSignatureAtCursorPosition;
+    KToggleAction *mSignAction = nullptr;
+    KToggleAction *mEncryptAction = nullptr;
+    KToggleAction *mRequestMDNAction = nullptr;
+    KToggleAction *mUrgentAction = nullptr;
+    KToggleAction *mAllFieldsAction = nullptr;
+    KToggleAction *mFromAction = nullptr;
+    KToggleAction *mReplyToAction = nullptr;
+    KToggleAction *mSubjectAction = nullptr;
+    KToggleAction *mIdentityAction = nullptr;
+    KToggleAction *mTransportAction = nullptr;
+    KToggleAction *mFccAction = nullptr;
+    KToggleAction *mWordWrapAction = nullptr;
+    KToggleAction *mFixedFontAction = nullptr;
+    KToggleAction *mAutoSpellCheckingAction = nullptr;
+    KToggleAction *mDictionaryAction = nullptr;
+    KToggleAction *mSnippetAction = nullptr;
+    QAction *mAppendSignature = nullptr;
+    QAction *mPrependSignature = nullptr;
+    QAction *mInsertSignatureAtCursorPosition = nullptr;
 
-    KToggleAction *mMarkupAction;
+    KToggleAction *mMarkupAction = nullptr;
 
-    CodecAction *mCodecAction;
-    KSelectAction *mCryptoModuleAction;
+    CodecAction *mCodecAction = nullptr;
+    KSelectAction *mCryptoModuleAction = nullptr;
 
-    QAction *mFindText;
-    QAction *mFindNextText;
-    QAction *mReplaceText;
-    QAction *mSelectAll;
+    QAction *mFindText = nullptr;
+    QAction *mFindNextText = nullptr;
+    QAction *mReplaceText = nullptr;
+    QAction *mSelectAll = nullptr;
 
-    QSplitter *mHeadersToEditorSplitter;
-    QWidget *mHeadersArea;
-    QSplitter *mSplitter;
-    QSplitter *mSnippetSplitter;
-    QByteArray mOriginalPreferredCharset;
+    QSplitter *mHeadersToEditorSplitter = nullptr;
+    QWidget *mHeadersArea = nullptr;
+    QSplitter *mSplitter = nullptr;
+    QSplitter *mSnippetSplitter = nullptr;
+    QByteArray mOriginalPreferredCharset = nullptr;
 
-    MessageComposer::Composer *mDummyComposer;
+    MessageComposer::Composer *mDummyComposer = nullptr;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
     QList< MessageComposer::Composer * > mMiscComposers;
 
@@ -622,30 +622,30 @@ private:
     QString mdbusObjectPath;
     static int s_composerNumber;
 
-    MessageComposer::ComposerViewBase *mComposerBase;
+    MessageComposer::ComposerViewBase *mComposerBase = nullptr;
 
-    SnippetWidget *mSnippetWidget;
-    PimCommon::CustomToolsWidgetNg *mCustomToolsWidget;
-    AttachmentMissingWarning *mAttachmentMissing;
-    ExternalEditorWarning *mExternalEditorWarning;
-    QTimer *mVerifyMissingAttachment;
-    MailCommon::FolderRequester *mFccFolder;
+    SnippetWidget *mSnippetWidget = nullptr;
+    PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
+    AttachmentMissingWarning *mAttachmentMissing = nullptr;
+    ExternalEditorWarning *mExternalEditorWarning = nullptr;
+    QTimer *mVerifyMissingAttachment = nullptr;
+    MailCommon::FolderRequester *mFccFolder = nullptr;
     bool mPreventFccOverwrite;
     bool mCheckForForgottenAttachments;
     bool mWasModified;
-    CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget;
+    CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget = nullptr;
     bool mSendNowByShortcutUsed;
-    KSplitterCollapserButton *mSnippetSplitterCollapser;
-    KToggleAction *mFollowUpToggleAction;
-    StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode;
-    StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode;
-    PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning;
-    KMComposerGlobalAction *mGlobalAction;
-    KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget;
+    KSplitterCollapserButton *mSnippetSplitterCollapser = nullptr;
+    KToggleAction *mFollowUpToggleAction = nullptr;
+    StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode = nullptr;
+    StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode = nullptr;
+    PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning = nullptr;
+    KMComposerGlobalAction *mGlobalAction = nullptr;
+    KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget = nullptr;
 
-    KMailPluginEditorManagerInterface *mPluginEditorManagerInterface;
-    KMailPluginEditorCheckBeforeSendManagerInterface *mPluginEditorCheckBeforeSendManagerInterface;
-    KMailPluginEditorInitManagerInterface *mPluginEditorInitManagerInterface;
+    KMailPluginEditorManagerInterface *mPluginEditorManagerInterface = nullptr;
+    KMailPluginEditorCheckBeforeSendManagerInterface *mPluginEditorCheckBeforeSendManagerInterface = nullptr;
+    KMailPluginEditorInitManagerInterface *mPluginEditorInitManagerInterface = nullptr;
 };
 
 #endif

@@ -65,16 +65,16 @@ private:
     void slotFolderChanged(const Akonadi::Collection &);
     void slotUpdateOkButton();
     void load(ArchiveMailInfo *info);
-    MailCommon::FolderRequester *mFolderRequester;
-    FormatComboBox *mFormatComboBox;
-    UnitComboBox *mUnits;
-    QCheckBox *mRecursiveCheckBox;
-    KUrlRequester *mPath;
-    QSpinBox *mDays;
-    QSpinBox *mMaximumArchive;
+    MailCommon::FolderRequester *mFolderRequester = nullptr;
+    FormatComboBox *mFormatComboBox = nullptr;
+    UnitComboBox *mUnits = nullptr;
+    QCheckBox *mRecursiveCheckBox = nullptr;
+    KUrlRequester *mPath = nullptr;
+    QSpinBox *mDays = nullptr;
+    QSpinBox *mMaximumArchive = nullptr;
 
-    ArchiveMailInfo *mInfo;
-    QPushButton *mOkButton;
+    ArchiveMailInfo *mInfo = nullptr;
+    QPushButton *mOkButton = nullptr;
 };
 
 #endif // ADDARCHIVEMAILDIALOG_H

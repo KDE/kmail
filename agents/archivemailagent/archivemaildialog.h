@@ -42,7 +42,7 @@ protected Q_SLOTS:
 private:
     void writeConfig();
     void readConfig();
-    ArchiveMailWidget *mWidget;
+    ArchiveMailWidget *mWidget = nullptr;
 };
 
 #endif /* ARCHIVEMAILWIDGET_H */

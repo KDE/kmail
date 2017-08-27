@@ -31,7 +31,7 @@ public:
 private:
     void readConfig();
     void writeConfig();
-    ConfigureWidget *mConfigureWidget;
+    ConfigureWidget *mConfigureWidget = nullptr;
 };
 
 #endif // CONFIGUREDIALOG_H

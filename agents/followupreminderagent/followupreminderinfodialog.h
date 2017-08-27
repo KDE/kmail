@@ -42,7 +42,7 @@ public:
 private:
     void readConfig();
     void writeConfig();
-    FollowUpReminderInfoWidget *mWidget;
+    FollowUpReminderInfoWidget *mWidget = nullptr;
 };
 
 #endif // FOLLOWUPREMINDERINFODIALOG_H

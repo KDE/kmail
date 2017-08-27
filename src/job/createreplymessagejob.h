@@ -53,7 +53,7 @@ public:
     void setSettings(const CreateReplyMessageJobSettings &settings);
 
 private:
-    MessageComposer::MessageFactoryNG *mMessageFactory;
+    MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
     void slotCreateReplyDone(const MessageComposer::MessageFactoryNG::MessageReply &reply);
     CreateReplyMessageJobSettings mSettings;
 };

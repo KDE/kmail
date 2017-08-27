@@ -60,7 +60,7 @@ private:
     void removeCollectionId(Akonadi::Collection::Id id);
     KSharedConfig::Ptr mConfig;
     QList<ArchiveMailInfo *> mListArchiveInfo;
-    ArchiveMailKernel *mArchiveMailKernel;
+    ArchiveMailKernel *mArchiveMailKernel = nullptr;
 };
 
 #endif /* ARCHIVEMAILMANAGER_H */

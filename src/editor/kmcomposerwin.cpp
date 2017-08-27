@@ -744,7 +744,7 @@ int KMComposerWin::calcColumnWidth(int which, long allShowing, int width) const
         return width;
     }
 
-    QLabel *w;
+    QLabel *w = nullptr;
     if (which == HDR_IDENTITY) {
         w = mLblIdentity;
     } else if (which == HDR_DICTIONARY) {
@@ -1050,7 +1050,8 @@ void KMComposerWin::setQuotePrefix(uint uoid)
 
 void KMComposerWin::setupActions(void)
 {
-    KActionMenuTransport *actActionNowMenu, *actActionLaterMenu;
+    KActionMenuTransport *actActionNowMenu = nullptr;
+    KActionMenuTransport *actActionLaterMenu = nullptr;
 
     if (MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
         //default = send now, alternative = queue

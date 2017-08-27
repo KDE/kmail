@@ -54,7 +54,7 @@ private:
     Akonadi::Tag::List mCurrentSelectedTags;
     QList<MailCommon::Tag::Ptr> mTagList;
     QList<KActionCollection *> mActionCollectionList;
-    QListWidget *mListTag;
+    QListWidget *mListTag = nullptr;
 };
 
 #endif /* TAGSELECTDIALOG_H */

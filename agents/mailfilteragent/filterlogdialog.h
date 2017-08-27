@@ -69,18 +69,18 @@ private:
     void readConfig();
     void writeConfig();
 private:
-    KPIMTextEdit::PlainTextEditorWidget *mTextEdit;
-    QCheckBox *mLogActiveBox;
-    QGroupBox *mLogDetailsBox;
-    QCheckBox *mLogPatternDescBox;
-    QCheckBox *mLogRuleEvaluationBox;
-    QCheckBox *mLogPatternResultBox;
-    QCheckBox *mLogFilterActionBox;
-    QSpinBox *mLogMemLimitSpin;
-    QPushButton *mUser1Button;
-    QPushButton *mUser2Button;
+    KPIMTextEdit::PlainTextEditorWidget *mTextEdit = nullptr;
+    QCheckBox *mLogActiveBox = nullptr;
+    QGroupBox *mLogDetailsBox = nullptr;
+    QCheckBox *mLogPatternDescBox = nullptr;
+    QCheckBox *mLogRuleEvaluationBox = nullptr;
+    QCheckBox *mLogPatternResultBox = nullptr;
+    QCheckBox *mLogFilterActionBox = nullptr;
+    QSpinBox *mLogMemLimitSpin = nullptr;
+    QPushButton *mUser1Button = nullptr;
+    QPushButton *mUser2Button = nullptr;
 
-    bool mIsInitialized;
+    bool mIsInitialized = false;
 };
 
 #endif

@@ -41,7 +41,7 @@ private:
     void slotSave();
     void readConfig();
     void writeConfig();
-    FollowUpReminderInfoWidget *mWidget;
+    FollowUpReminderInfoWidget *mWidget = nullptr;
 };
 
 #endif // FOLLOWUPREMINDERNOANSWERDIALOG_H

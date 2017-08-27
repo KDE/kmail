@@ -391,8 +391,8 @@ public:
 private:
     Result execute() override;
 
-    MessageViewer::HeaderStylePlugin *mHeaderStylePlugin;
-    const MimeTreeParser::AttachmentStrategy *mAttachmentStrategy;
+    MessageViewer::HeaderStylePlugin *mHeaderStylePlugin = nullptr;
+    const MimeTreeParser::AttachmentStrategy *mAttachmentStrategy = nullptr;
     QFont mOverrideFont;
     QString mEncoding;
     MessageViewer::Viewer::DisplayFormatMessage mFormat;

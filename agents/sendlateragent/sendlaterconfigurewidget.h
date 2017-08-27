@@ -40,7 +40,7 @@ public:
     SendLater::SendLaterInfo *info() const;
 
 private:
-    SendLater::SendLaterInfo *mInfo;
+    SendLater::SendLaterInfo *mInfo = nullptr;
 };
 
 class SendLaterWidget : public QWidget
@@ -77,7 +77,7 @@ private:
     void load();
     QList<Akonadi::Item::Id> mListMessagesToRemove;
     bool mChanged;
-    Ui::SendLaterConfigureWidget *mWidget;
+    Ui::SendLaterConfigureWidget *mWidget = nullptr;
 };
 
 #endif // SENDLATERCONFIGUREWIDGET_H

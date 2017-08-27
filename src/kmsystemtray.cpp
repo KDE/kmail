@@ -106,7 +106,7 @@ bool KMSystemTray::buildPopupMenu()
     contextMenu()->clear();
     contextMenu()->setIcon(qApp->windowIcon());
     contextMenu()->setTitle(i18n("KMail"));
-    QAction *action;
+    QAction *action = nullptr;
     if ((action = mainWidget->action(QStringLiteral("check_mail")))) {
         contextMenu()->addAction(action);
     }

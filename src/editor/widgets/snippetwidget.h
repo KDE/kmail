@@ -40,7 +40,7 @@ protected:
     void dropEvent(QDropEvent *) override;
 
 private:
-    MailCommon::SnippetsManager *mSnippetsManager;
+    MailCommon::SnippetsManager *mSnippetsManager = nullptr;
 };
 
 #endif

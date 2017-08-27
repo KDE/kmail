@@ -139,7 +139,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
             const Akonadi::CollectionStatistics stats = col.statistics();
             if (((stats.unreadCount()) != Q_INT64_C(0)) && showCollection) {
                 // Collection Name.
-                KUrlLabel *urlLabel;
+                KUrlLabel *urlLabel = nullptr;
 
                 if (showFolderPaths) {
                     // Construct the full path string.

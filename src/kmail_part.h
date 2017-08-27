@@ -54,8 +54,8 @@ protected:
     void guiActivateEvent(KParts::GUIActivateEvent *e) override;
 
 private:
-    KMMainWidget *mainWidget;
-    QWidget *mParentWidget;
+    KMMainWidget *mainWidget = nullptr;
+    QWidget *mParentWidget = nullptr;
 };
 
 #endif

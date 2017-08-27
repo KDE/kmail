@@ -167,7 +167,7 @@ private Q_SLOTS:
 private:
     QString mName;
     QString mEmail;
-    QGpgME::Job *mJob;
+    QGpgME::Job *mJob = nullptr;
 };
 
 KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent)

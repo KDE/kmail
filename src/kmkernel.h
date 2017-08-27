@@ -500,8 +500,8 @@ private:
     void openReader(bool onlyCheck);
     QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
 
-    UndoStack *the_undoStack;
-    MessageComposer::AkonadiSender *the_msgSender;
+    UndoStack *the_undoStack = nullptr;
+    MessageComposer::AkonadiSender *the_msgSender = nullptr;
     /** previous KMail version. If different from current,
       the user has just updated. read from config */
     QString the_previousVersion;
@@ -513,30 +513,30 @@ private:
     bool the_firstInstance;
 
     KSharedConfig::Ptr mConfig;
-    QTextCodec *mNetCodec;
+    QTextCodec *mNetCodec = nullptr;
     QString mXmlGuiInstance;
-    ConfigureDialog *mConfigureDialog;
+    ConfigureDialog *mConfigureDialog = nullptr;
 
-    QTimer *mBackgroundTasksTimer;
-    MailCommon::JobScheduler *mJobScheduler;
-    MailServiceImpl *mMailService;
+    QTimer *mBackgroundTasksTimer = nullptr;
+    MailCommon::JobScheduler *mJobScheduler = nullptr;
+    MailServiceImpl *mMailService = nullptr;
 
     bool mSystemNetworkStatus;
 
-    KMail::KMSystemTray *mSystemTray;
+    KMail::KMSystemTray *mSystemTray = nullptr;
     QHash<QString, KPIM::ProgressItem::CryptoStatus> mResourceCryptoSettingCache;
-    MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor;
-    Akonadi::EntityTreeModel *mEntityTreeModel;
-    Akonadi::EntityMimeTypeFilterModel *mCollectionModel;
+    MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor = nullptr;
+    Akonadi::EntityTreeModel *mEntityTreeModel = nullptr;
+    Akonadi::EntityMimeTypeFilterModel *mCollectionModel = nullptr;
 
     /// List of Akonadi resources that are currently being checked.
     QStringList mResourcesBeingChecked;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
-    PimCommon::AutoCorrection *mAutoCorrection;
-    FolderArchiveManager *mFolderArchiveManager;
-    CheckIndexingManager *mCheckIndexingManager;
-    Akonadi::Search::PIM::IndexedItems *mIndexedItems;
+    PimCommon::AutoCorrection *mAutoCorrection = nullptr;
+    FolderArchiveManager *mFolderArchiveManager = nullptr;
+    CheckIndexingManager *mCheckIndexingManager = nullptr;
+    Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
     bool mDebugBaloo;
 };
 

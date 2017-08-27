@@ -39,7 +39,7 @@ public:
     FollowUpReminder::FollowUpReminderInfo *info() const;
 
 private:
-    FollowUpReminder::FollowUpReminderInfo *mInfo;
+    FollowUpReminder::FollowUpReminderInfo *mInfo = nullptr;
 };
 
 class FollowUpReminderInfoWidget : public QWidget
@@ -79,8 +79,8 @@ private:
         AnswerMessageId
     };
     QList<qint32> mListRemoveId;
-    QTreeWidget *mTreeWidget;
-    bool mChanged;
+    QTreeWidget *mTreeWidget = nullptr;
+    bool mChanged = false;
 };
 
 #endif // FOLLOWUPREMINDERINFOWIDGET_H

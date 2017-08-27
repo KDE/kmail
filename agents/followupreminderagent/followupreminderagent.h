@@ -44,8 +44,8 @@ protected:
     void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) override;
 
 private:
-    FollowUpReminderManager *mManager;
-    QTimer *mTimer;
+    FollowUpReminderManager *mManager = nullptr;
+    QTimer *mTimer = nullptr;
 };
 
 #endif // FOLLOWUPREMINDERAGENT_H

@@ -34,7 +34,7 @@ public:
     ArchiveMailInfo *info() const;
 
 private:
-    ArchiveMailInfo *mInfo;
+    ArchiveMailInfo *mInfo = nullptr;
 };
 
 class ArchiveMailWidget : public QWidget
@@ -75,7 +75,7 @@ private:
     void slotArchiveNow();
     void slotItemChanged(QTreeWidgetItem *item, int);
     bool mChanged;
-    Ui::ArchiveMailWidget *mWidget;
+    Ui::ArchiveMailWidget *mWidget = nullptr;
 };
 
 #endif // ARCHIVEMAILWIDGET_H

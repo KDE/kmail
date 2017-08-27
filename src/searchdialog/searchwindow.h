@@ -158,7 +158,7 @@ private:
     QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
     QVector<Akonadi::Collection> mCollectionId;
     Akonadi::SearchQuery mQuery;
-    bool mCloseRequested;
+    bool mCloseRequested = false;
     int mSortColumn;
     Qt::SortOrder mSortOrder;
     Akonadi::Collection mFolder;

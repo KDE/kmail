@@ -36,8 +36,8 @@ public:
 
 private:
     void updateShowAlwaysIndicator();
-    QLabel *mSignatureStateIndicator;
-    QLabel *mEncryptionStateIndicator;
+    QLabel *mSignatureStateIndicator = nullptr;
+    QLabel *mEncryptionStateIndicator = nullptr;
     bool mShowAlwaysIndicator;
     bool mIsSign;
     bool mIsEncrypted;

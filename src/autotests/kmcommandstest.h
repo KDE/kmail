@@ -39,7 +39,7 @@ private:
     void verifySignature(bool sign);
     void verifyEncryption(bool encrypt);
     void waitForMainWindowToClose();
-    KMKernel *mKernel;
+    KMKernel *mKernel = nullptr;
 };
 
 #endif // KMCOMMANDSTEST_H

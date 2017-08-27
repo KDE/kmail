@@ -35,7 +35,7 @@ public Q_SLOTS:
     void slotPaste();
     void slotMarkAll();
 private:
-    KMComposerWin *mComposerWin;
+    KMComposerWin *mComposerWin = nullptr;
 };
 
 #endif // KMCOMPOSERGLOBALACTION_H

@@ -45,7 +45,7 @@ protected:
     void insertFromMimeData(const QMimeData *source) override;
 
 private:
-    KMComposerWin *mComposerWin;
+    KMComposerWin *mComposerWin = nullptr;
 };
 
 #endif // KMCOMPOSEREDITORNG_H

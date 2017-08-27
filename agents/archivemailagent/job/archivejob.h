@@ -40,8 +40,8 @@ private:
     void slotBackupDone(const QString &info);
     void slotError(const QString &error);
     QPixmap mPixmap;
-    ArchiveMailInfo *mInfo;
-    ArchiveMailManager *mManager;
+    ArchiveMailInfo *mInfo = nullptr;
+    ArchiveMailManager *mManager = nullptr;
 };
 
 /// A scheduled "expire mails in this folder" task.
@@ -69,8 +69,8 @@ public:
     }
 
 private:
-    ArchiveMailInfo *mInfo;
-    ArchiveMailManager *mManager;
+    ArchiveMailInfo *mInfo = nullptr;
+    ArchiveMailManager *mManager = nullptr;
 };
 
 #endif // ARCHIVEJOB_H
