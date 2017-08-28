@@ -4069,7 +4069,6 @@ void KMMainWidget::slotShowStartupFolder()
         || KMailSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5) {
         KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
         slotIntro();
-        return;
     }
 }
 
