@@ -247,8 +247,6 @@ public Q_SLOTS:
     void slotItemsFetchedForActivation(KMCommand *command);
     void slotMessageStatusChangeRequest(const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus &);
 
-    void slotReplaceMsgByUnencryptedVersion();
-
     /**
       Update message menu
     */

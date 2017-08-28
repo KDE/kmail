@@ -1045,9 +1045,6 @@ void KMMainWidget::createWidgets()
         if (mMsgActions) {
             mMsgActions->setMessageView(mMsgView);
         }
-        connect(mMsgView->viewer(), &MessageViewer::Viewer::replaceMsgByUnencryptedVersion,
-                this, &KMMainWidget::slotReplaceMsgByUnencryptedVersion);
-
         connect(mMsgView->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMMainWidget::slotMessagePopup);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::moveMessageToTrash,
                 this, &KMMainWidget::slotMoveMessageToTrash);
@@ -2334,7 +2331,7 @@ void KMMainWidget::slotSaveAttachments()
 
 void KMMainWidget::slotOnlineStatus()
 {
-    // KMKernel will Q_EMIT a signal when we toggle the network state that is caught by
+    // KMKernel will emit a signal when we toggle the network state that is caught by
     // KMMainWidget::slotUpdateOnlineStatus to update our GUI
     if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Online) {
         // if online; then toggle and set it offline.
@@ -2402,75 +2399,6 @@ void KMMainWidget::showResourceOfflinePage()
     }
 
     mMsgView->displayResourceOfflinePage();
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
-{
-    Akonadi::Item oldMsg = mMessagePane->currentItem();
-    if (oldMsg.isValid()) {
-#if 0
-        qCDebug(KMAIL_LOG) << "Old message found";
-        if (oldMsg->hasUnencryptedMsg()) {
-            qCDebug(KMAIL_LOG) << "Extra unencrypted message found";
-            KMime::Message *newMsg = oldMsg->unencryptedMsg();
-            // adjust the message id
-            {
-                QString msgId(oldMsg->msgId());
-                QString prefix("DecryptedMsg.");
-                int oldIdx = msgId.indexOf(prefix, 0, Qt::CaseInsensitive);
-                if (-1 == oldIdx) {
-                    int leftAngle = msgId.lastIndexOf('<');
-                    msgId = msgId.insert((-1 == leftAngle) ? 0 : ++leftAngle, prefix);
-                } else {
-                    // toggle between "DecryptedMsg." and "DeCryptedMsg."
-                    // to avoid same message id
-                    QCharRef c = msgId[ oldIdx + 2 ];
-                    if ('C' == c) {
-                        c = 'c';
-                    } else {
-                        c = 'C';
-                    }
-                }
-                newMsg->setMsgId(msgId);
-                mMsgView->setIdOfLastViewedMessage(msgId);
-            }
-            // insert the unencrypted message
-            qCDebug(KMAIL_LOG) << "Adding unencrypted message to folder";
-            mFolder->addMsg(newMsg);
-            /* Figure out its index in the folder for selecting. This must be count()-1,
-            * since we append. Be safe and do find, though, just in case. */
-            int newMsgIdx = mFolder->find(newMsg);
-            Q_ASSERT(newMsgIdx != -1);
-            /* we need this unget, to have the message displayed correctly initially */
-            mFolder->unGetMsg(newMsgIdx);
-            int idx = mFolder->find(oldMsg);
-            Q_ASSERT(idx != -1);
-            /* only select here, so the old one is not un-Gotten before, which would
-            * render the pointer we hold invalid so that find would fail */
-#if 0
-            // FIXME (Pragma)
-            mHeaders->setCurrentItemByIndex(newMsgIdx);
-#endif
-            // remove the old one
-            if (idx != -1) {
-                qCDebug(KMAIL_LOG) << "Deleting encrypted message";
-                mFolder->take(idx);
-            }
-
-            qCDebug(KMAIL_LOG) << "Updating message actions";
-            updateMessageActions();
-
-            qCDebug(KMAIL_LOG) << "Done.";
-        } else {
-            qCDebug(KMAIL_LOG) << "NO EXTRA UNENCRYPTED MESSAGE FOUND";
-        }
-#else
-        qCDebug(KMAIL_LOG) << "AKONADI PORT: Disabled code in  " << Q_FUNC_INFO;
-#endif
-    } else {
-        qCDebug(KMAIL_LOG) << "PANIC: NO OLD MESSAGE FOUND";
-    }
 }
 
 void KMMainWidget::slotFocusOnNextMessage()
