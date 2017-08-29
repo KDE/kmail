@@ -2269,11 +2269,7 @@ void KMMainWidget::slotEditVacation(const QString &serverName)
 void KMMainWidget::slotDebugSieve()
 {
 #if !defined(NDEBUG)
-    if (mSieveDebugDialog) {
-        return;
-    }
-
-    mSieveDebugDialog = new KSieveUi::SieveDebugDialog(mSievePasswordProvider, this);
+    QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog = new KSieveUi::SieveDebugDialog(mSievePasswordProvider, this);
     mSieveDebugDialog->exec();
     delete mSieveDebugDialog;
 #endif

@@ -77,7 +77,6 @@ class FolderShortcutActionManager;
 }
 
 namespace KSieveUi {
-class SieveDebugDialog;
 class SieveImapPasswordProvider;
 class ManageSieveScriptsDialog;
 class VacationManager;
@@ -631,9 +630,6 @@ private:
     QTimer *mShowBusySplashTimer = nullptr;
 
     KSieveUi::VacationManager *mVacationManager = nullptr;
-#if !defined(NDEBUG)
-    QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog;
-#endif
     KActionCollection *mActionCollection = nullptr;
     QAction *mToolbarActionSeparator = nullptr;
     QVBoxLayout *mTopLayout = nullptr;
