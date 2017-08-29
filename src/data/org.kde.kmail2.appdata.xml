@@ -43,28 +43,28 @@
   <name xml:lang="x-test">xxKMailxx</name>
   <name xml:lang="zh-CN">KMail</name>
   <name xml:lang="zh-TW">KMail</name>
-  <summary>Email application.</summary>
-  <summary xml:lang="ca">Aplicació de correu electrònic.</summary>
-  <summary xml:lang="ca-valencia">Aplicació de correu electrònic.</summary>
+  <summary>Email application</summary>
+  <summary xml:lang="ca">Aplicació de correu electrònic</summary>
+  <summary xml:lang="ca-valencia">Aplicació de correu electrònic</summary>
   <summary xml:lang="cs">E-mailová aplikace</summary>
-  <summary xml:lang="de">E-Mail-Programm.</summary>
-  <summary xml:lang="en-GB">Email application.</summary>
-  <summary xml:lang="es">Aplicación de correo.</summary>
-  <summary xml:lang="fi">Sähköpostisovellus.</summary>
-  <summary xml:lang="fr">Application de messagerie électronique.</summary>
-  <summary xml:lang="it">Programma di posta elettronica.</summary>
-  <summary xml:lang="nl">E-mailtoepassing.</summary>
+  <summary xml:lang="de">E-Mail-Programm</summary>
+  <summary xml:lang="en-GB">Email application</summary>
+  <summary xml:lang="es">Aplicación de correo</summary>
+  <summary xml:lang="fi">Sähköpostisovellus</summary>
+  <summary xml:lang="fr">Application de messagerie électronique</summary>
+  <summary xml:lang="it">Programma di posta elettronica</summary>
+  <summary xml:lang="nl">E-mailtoepassing</summary>
   <summary xml:lang="pl">Aplikacja pocztowa</summary>
-  <summary xml:lang="pt">Aplicação de e-mail.</summary>
-  <summary xml:lang="sk">E-mailová aplikácia.</summary>
-  <summary xml:lang="sl">Odjemalec za e-pošto.</summary>
+  <summary xml:lang="pt">Aplicação de e-mail</summary>
+  <summary xml:lang="sk">E-mailová aplikácia</summary>
+  <summary xml:lang="sl">Odjemalec za e-pošto</summary>
   <summary xml:lang="sr">Програм за е‑пошту</summary>
   <summary xml:lang="sr-Latn">Program za e‑poštu</summary>
   <summary xml:lang="sr-ijekavian">Програм за е‑пошту</summary>
   <summary xml:lang="sr-ijekavianlatin">Program za e‑poštu</summary>
-  <summary xml:lang="sv">E-postprogram.</summary>
-  <summary xml:lang="tr">E-posta uygulaması.</summary>
-  <summary xml:lang="uk">Програма для роботи з електронної пошти.</summary>
+  <summary xml:lang="sv">E-postprogram</summary>
+  <summary xml:lang="tr">E-posta uygulaması</summary>
+  <summary xml:lang="uk">Програма для роботи з електронної пошти</summary>
   <summary xml:lang="x-test">xxEmail application.xx</summary>
   <description>
     <p>
