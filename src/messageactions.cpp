@@ -668,7 +668,7 @@ void MessageActions::annotateMessage()
         return;
     }
 
-    PimCommon::AnnotationEditDialog *dialog = new PimCommon::AnnotationEditDialog(mCurrentItem);
+    QPointer<PimCommon::AnnotationEditDialog> dialog = new PimCommon::AnnotationEditDialog(mCurrentItem, mParent);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->exec();
 }
