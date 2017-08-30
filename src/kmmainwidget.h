@@ -125,45 +125,21 @@ public:
     QSharedPointer<MailCommon::FolderSettings> currentFolder() const;
 
     static void cleanup();
-    QAction *action(const QString &name)
-    {
-        return mActionCollection->action(name);
-    }
+    QAction *action(const QString &name);
 
-    KActionMenu *filterMenu() const
-    {
-        return mFilterMenu;
-    }
+    KActionMenu *filterMenu() const;
 
-    KActionMenu *mailingListActionMenu() const
-    {
-        return mMsgActions->mailingListActionMenu();
-    }
+    KActionMenu *mailingListActionMenu() const;
 
-    QAction *editAction() const
-    {
-        return mMsgActions->editAction();
-    }
+    QAction *editAction() const;
 
-    QAction *sendAgainAction() const
-    {
-        return mSendAgainAction;
-    }
+    QAction *sendAgainAction() const;
 
-    QAction *sendQueuedAction() const
-    {
-        return mSendQueued;
-    }
+    QAction *sendQueuedAction() const;
 
-    KActionMenuTransport *sendQueueViaMenu() const
-    {
-        return mSendActionMenu;
-    }
+    KActionMenuTransport *sendQueueViaMenu() const;
 
-    KMail::MessageActions *messageActions() const
-    {
-        return mMsgActions;
-    }
+    KMail::MessageActions *messageActions() const;
 
     /**
       Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
@@ -174,16 +150,10 @@ public:
     QWidget *vacationScriptIndicator() const;
     void updateVacationScriptStatus();
 
-    MailCommon::FolderTreeView *folderTreeView() const
-    {
-        return mFolderTreeWidget->folderTreeView();
-    }
+    MailCommon::FolderTreeView *folderTreeView() const;
 
     /** Returns the XML GUI client. */
-    KXMLGUIClient *guiClient() const
-    {
-        return mGUIClient;
-    }
+    KXMLGUIClient *guiClient() const;
 
     KMail::TagActionManager *tagActionManager() const;
 
@@ -653,8 +623,8 @@ private:
     MailCommon::FolderTreeWidget *mFolderTreeWidget = nullptr;
 
     KMail::VacationScriptIndicatorWidget *mVacationScriptIndicator = nullptr;
-    bool mVacationIndicatorActive;
-    bool mGoToFirstUnreadMessageInSelectedFolder;
+    bool mVacationIndicatorActive = false;
+    bool mGoToFirstUnreadMessageInSelectedFolder = false;
     MessageList::Core::PreSelectionMode mPreSelectionMode;
 
     QTimer mCheckMailTimer;

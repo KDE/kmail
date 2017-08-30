@@ -4271,6 +4271,46 @@ QSharedPointer<FolderSettings> KMMainWidget::currentFolder() const
     return mCurrentFolderSettings;
 }
 
+QAction *KMMainWidget::action(const QString &name)
+{
+    return mActionCollection->action(name);
+}
+
+KActionMenu *KMMainWidget::filterMenu() const
+{
+    return mFilterMenu;
+}
+
+KActionMenu *KMMainWidget::mailingListActionMenu() const
+{
+    return mMsgActions->mailingListActionMenu();
+}
+
+QAction *KMMainWidget::editAction() const
+{
+    return mMsgActions->editAction();
+}
+
+QAction *KMMainWidget::sendAgainAction() const
+{
+    return mSendAgainAction;
+}
+
+QAction *KMMainWidget::sendQueuedAction() const
+{
+    return mSendQueued;
+}
+
+KActionMenuTransport *KMMainWidget::sendQueueViaMenu() const
+{
+    return mSendActionMenu;
+}
+
+KMail::MessageActions *KMMainWidget::messageActions() const
+{
+    return mMsgActions;
+}
+
 //-----------------------------------------------------------------------------
 QString KMMainWidget::overrideEncoding() const
 {
@@ -4356,6 +4396,16 @@ QWidget *KMMainWidget::vacationScriptIndicator() const
 void KMMainWidget::updateVacationScriptStatus()
 {
     updateVacationScriptStatus(mVacationIndicatorActive);
+}
+
+FolderTreeView *KMMainWidget::folderTreeView() const
+{
+    return mFolderTreeWidget->folderTreeView();
+}
+
+KXMLGUIClient *KMMainWidget::guiClient() const
+{
+    return mGUIClient;
 }
 
 KMail::TagActionManager *KMMainWidget::tagActionManager() const
