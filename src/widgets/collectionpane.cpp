@@ -59,9 +59,8 @@ CollectionStorageModel::~CollectionStorageModel()
 
 bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) const
 {
-    if (c.hasAttribute<Akonadi::MessageFolderAttribute>()
-        && c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder()) {
-        return true;
+    if (c.hasAttribute<Akonadi::MessageFolderAttribute>()) {
+        return c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder();
     }
     QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(c, false);
     if (fd) {
