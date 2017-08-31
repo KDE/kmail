@@ -214,7 +214,6 @@ set(kmailprivate_LIB_SRCS
     ${kmailprivate_sieveimapinstanceinterface_LIB_SRCS}
     )
 
-qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
     )
