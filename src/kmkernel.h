@@ -77,7 +77,6 @@ class KMFilterDialog;
 }
 
 class QTimer;
-class KMMainWin;
 class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
