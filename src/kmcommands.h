@@ -149,7 +149,7 @@ private:
     bool mDeletesItself : 1;
     bool mEmitsCompletedItself : 1;
 
-    QWidget *mParent;
+    QWidget *mParent = nullptr;
     Akonadi::Item::List mMsgList;
     Akonadi::ItemFetchScope mFetchScope;
 };
@@ -289,9 +289,9 @@ private:
     static const int MAX_CHUNK_SIZE = 64 * 1024;
     QUrl mUrl;
     QString mMsgString;
-    KIO::TransferJob *mJob;
+    KIO::TransferJob *mJob = nullptr;
     const QString mEncoding;
-    KMMainWidget *mMainWidget;
+    KMMainWidget *mMainWidget = nullptr;
 };
 
 class KMSaveAttachmentsCommand : public KMCommand
@@ -311,7 +311,7 @@ public:
 
 private:
     Result execute() override;
-    MessageViewer::Viewer *mViewer;
+    MessageViewer::Viewer *mViewer = nullptr;
 };
 
 class KMReplyCommand : public KMCommand
@@ -472,7 +472,7 @@ public Q_SLOTS:
 
 private:
     QString mFilterId;
-    KMMainWidget *mMainWidget;
+    KMMainWidget *mMainWidget = nullptr;
 };
 
 class KMMailingListFilterCommand : public KMCommand
@@ -553,7 +553,7 @@ private:
     void completeMove(Result result);
 
     Akonadi::Collection mDestFolder;
-    KPIM::ProgressItem *mProgressItem;
+    KPIM::ProgressItem *mProgressItem = nullptr;
     MessageList::Core::MessageItemSetReference mRef;
 };
 
@@ -605,7 +605,7 @@ private:
     Result execute() override;
 
     Akonadi::Item mItem;
-    MessageViewer::Viewer *mViewer;
+    MessageViewer::Viewer *mViewer = nullptr;
 };
 
 #endif /*KMCommands_h*/

@@ -57,7 +57,7 @@ protected:
 private:
     void readConfig();
     void writeConfig();
-    KTNEFAttach *mAttach;
+    KTNEFAttach *mAttach = nullptr;
 };
 
 #endif

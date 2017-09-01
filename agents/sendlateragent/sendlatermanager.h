@@ -81,10 +81,10 @@ private:
     void removeInfo(Akonadi::Item::Id id);
     KSharedConfig::Ptr mConfig;
     QList<SendLater::SendLaterInfo *> mListSendLaterInfo;
-    SendLater::SendLaterInfo *mCurrentInfo;
-    SendLaterJob *mCurrentJob;
-    QTimer *mTimer;
-    MessageComposer::AkonadiSender *mSender;
+    SendLater::SendLaterInfo *mCurrentInfo = nullptr;
+    SendLaterJob *mCurrentJob = nullptr;
+    QTimer *mTimer = nullptr;
+    MessageComposer::AkonadiSender *mSender = nullptr;
     QQueue<Akonadi::Item::Id> mSendLaterQueue;
 };
 

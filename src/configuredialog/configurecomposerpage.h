@@ -93,7 +93,7 @@ private:
     void doLoadFromGlobalSettings() override;
     void doResetToDefaultsOther() override;
 private:
-    TemplateParser::TemplatesConfiguration *mWidget;
+    TemplateParser::TemplatesConfiguration *mWidget = nullptr;
 };
 
 class ComposerPageCustomTemplatesTab : public ConfigModuleTab
@@ -109,7 +109,7 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    TemplateParser::CustomTemplates *mWidget;
+    TemplateParser::CustomTemplates *mWidget = nullptr;
 };
 
 class ComposerPageSubjectTab : public ConfigModuleTab
@@ -126,10 +126,10 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    PimCommon::SimpleStringListEditor *mReplyListEditor;
-    QCheckBox *mReplaceReplyPrefixCheck;
-    PimCommon::SimpleStringListEditor *mForwardListEditor;
-    QCheckBox *mReplaceForwardPrefixCheck;
+    PimCommon::SimpleStringListEditor *mReplyListEditor = nullptr;
+    QCheckBox *mReplaceReplyPrefixCheck = nullptr;
+    PimCommon::SimpleStringListEditor *mForwardListEditor = nullptr;
+    QCheckBox *mReplaceForwardPrefixCheck = nullptr;
 };
 
 class ComposerPageCharsetTab : public ConfigModuleTab
@@ -149,8 +149,8 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    PimCommon::SimpleStringListEditor *mCharsetListEditor;
-    QCheckBox *mKeepReplyCharsetCheck;
+    PimCommon::SimpleStringListEditor *mCharsetListEditor = nullptr;
+    QCheckBox *mKeepReplyCharsetCheck = nullptr;
 };
 
 class ComposerPageHeadersTab : public ConfigModuleTab
@@ -174,14 +174,14 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox *mCreateOwnMessageIdCheck;
-    QLineEdit *mMessageIdSuffixEdit;
-    ListView *mHeaderList;
-    QPushButton *mRemoveHeaderButton;
-    QLineEdit *mTagNameEdit;
-    QLineEdit *mTagValueEdit;
-    QLabel *mTagNameLabel;
-    QLabel *mTagValueLabel;
+    QCheckBox *mCreateOwnMessageIdCheck = nullptr;
+    QLineEdit *mMessageIdSuffixEdit = nullptr;
+    ListView *mHeaderList = nullptr;
+    QPushButton *mRemoveHeaderButton = nullptr;
+    QLineEdit *mTagNameEdit = nullptr;
+    QLineEdit *mTagValueEdit = nullptr;
+    QLabel *mTagNameLabel = nullptr;
+    QLabel *mTagValueLabel = nullptr;
 };
 
 class ComposerPageAttachmentsTab : public ConfigModuleTab
@@ -200,10 +200,10 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    QCheckBox *mOutlookCompatibleCheck;
-    QCheckBox *mMissingAttachmentDetectionCheck;
-    PimCommon::SimpleStringListEditor *mAttachWordsListEditor;
-    QSpinBox *mMaximumAttachmentSize;
+    QCheckBox *mOutlookCompatibleCheck = nullptr;
+    QCheckBox *mMissingAttachmentDetectionCheck = nullptr;
+    PimCommon::SimpleStringListEditor *mAttachWordsListEditor = nullptr;
+    QSpinBox *mMaximumAttachmentSize = nullptr;
 };
 
 class ComposerPageAutoCorrectionTab : public ConfigModuleTab
@@ -220,7 +220,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    PimCommon::AutoCorrectionWidget *autocorrectionWidget;
+    PimCommon::AutoCorrectionWidget *autocorrectionWidget = nullptr;
 };
 
 class ComposerPageAutoImageResizeTab : public ConfigModuleTab
@@ -237,7 +237,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    MessageComposer::ImageScalingWidget *autoResizeWidget;
+    MessageComposer::ImageScalingWidget *autoResizeWidget = nullptr;
 };
 
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs

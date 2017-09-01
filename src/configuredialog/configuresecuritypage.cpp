@@ -484,24 +484,24 @@ struct SMIMECryptoConfigEntries {
     QGpgME::CryptoConfigEntry *configEntry(const QString &componentName, const QString &groupName, const QString &entryName, int argType, bool isList);
 
     // Checkboxes
-    QGpgME::CryptoConfigEntry *mCheckUsingOCSPConfigEntry;
-    QGpgME::CryptoConfigEntry *mEnableOCSPsendingConfigEntry;
-    QGpgME::CryptoConfigEntry *mDoNotCheckCertPolicyConfigEntry;
-    QGpgME::CryptoConfigEntry *mNeverConsultConfigEntry;
-    QGpgME::CryptoConfigEntry *mFetchMissingConfigEntry;
-    QGpgME::CryptoConfigEntry *mIgnoreServiceURLEntry;
-    QGpgME::CryptoConfigEntry *mIgnoreHTTPDPEntry;
-    QGpgME::CryptoConfigEntry *mDisableHTTPEntry;
-    QGpgME::CryptoConfigEntry *mHonorHTTPProxy;
-    QGpgME::CryptoConfigEntry *mIgnoreLDAPDPEntry;
-    QGpgME::CryptoConfigEntry *mDisableLDAPEntry;
+    QGpgME::CryptoConfigEntry *mCheckUsingOCSPConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mEnableOCSPsendingConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mDoNotCheckCertPolicyConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mNeverConsultConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mFetchMissingConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mIgnoreServiceURLEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mIgnoreHTTPDPEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mDisableHTTPEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mHonorHTTPProxy = nullptr;
+    QGpgME::CryptoConfigEntry *mIgnoreLDAPDPEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mDisableLDAPEntry = nullptr;
     // Other widgets
-    QGpgME::CryptoConfigEntry *mOCSPResponderURLConfigEntry;
-    QGpgME::CryptoConfigEntry *mOCSPResponderSignature;
-    QGpgME::CryptoConfigEntry *mCustomHTTPProxy;
-    QGpgME::CryptoConfigEntry *mCustomLDAPProxy;
+    QGpgME::CryptoConfigEntry *mOCSPResponderURLConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mOCSPResponderSignature = nullptr;
+    QGpgME::CryptoConfigEntry *mCustomHTTPProxy = nullptr;
+    QGpgME::CryptoConfigEntry *mCustomLDAPProxy = nullptr;
 
-    QGpgME::CryptoConfig *mConfig;
+    QGpgME::CryptoConfig *mConfig = nullptr;
 };
 
 void SecurityPage::SMimeTab::doLoadOther()

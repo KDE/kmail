@@ -85,7 +85,7 @@ private:
 
 private:
     Ui_AccountsPageReceivingTab mAccountsReceiving;
-    OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface;
+    OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface = nullptr;
 };
 
 class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
