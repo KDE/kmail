@@ -1652,7 +1652,7 @@ void KMKernel::cleanupTemporaryFiles()
 {
     QDir dir(QDir::tempPath());
     const QStringList lst = dir.entryList(QStringList{QStringLiteral("messageviewer_*")});
-    qDebug() << " list file to delete " << lst;
+    qCDebug(KMAIL_LOG) << " list file to delete " << lst;
     for (const QString &file : lst) {
         QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file);
         if (!tempDir.removeRecursively()) {
