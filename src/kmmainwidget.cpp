@@ -1959,6 +1959,7 @@ void KMMainWidget::refreshMessageListSelection()
 {
     mAkonadiStandardActionManager->setItemSelectionModel(mMessagePane->currentItemSelectionModel());
     slotMessageSelected(mMessagePane->currentItem());
+    Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(mMessagePane->currentFolder()));
 }
 
 //-----------------------------------------------------------------------------
