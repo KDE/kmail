@@ -737,7 +737,7 @@ KMCommand::Result KMOpenMsgCommand::execute()
 {
     if (mUrl.isEmpty()) {
         mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18n("Open Message"), QUrl(),
-                                           i18n("Message (*.mbox)")
+                                           QStringLiteral("%1 (*.mbox)").arg(i18n("Message"))
                                            );
     }
     if (mUrl.isEmpty()) {
