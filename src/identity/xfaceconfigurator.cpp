@@ -215,12 +215,17 @@ void XFaceConfigurator::setXfaceFromFile(const QUrl &url)
 
 void XFaceConfigurator::slotSelectFile()
 {
-    const QList<QByteArray> mimeTypes = QImageReader::supportedImageFormats();
     QString filter;
-    for (const QByteArray &mime : mimeTypes) {
-        filter += QString::fromLatin1(mime);
+    const QList<QByteArray> supportedImage = QImageReader::supportedImageFormats();
+    for (const QByteArray &ba : supportedImage) {
+        if (!filter.isEmpty()) {
+            filter += QLatin1Char(' ');
+        }
+        filter += QLatin1String("*.") + QString::fromLatin1(ba);
     }
-    const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QUrl(), i18n("Image (%1)", filter));
+
+    filter = QStringLiteral("%1 (%2)").arg(i18n("Image"), filter);
+    const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QUrl(), filter);
     if (!url.isEmpty()) {
         setXfaceFromFile(url);
     }
