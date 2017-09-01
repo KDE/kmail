@@ -1008,6 +1008,7 @@ static void kmCrashHandler(int sigId)
         kmkernel->dumpDeadLetters();
         fprintf(stderr, "*** Dead letters dumped.\n");
         kmkernel->stopAgentInstance();
+        kmkernel->cleanupTemporaryFiles();
     }
 }
 
@@ -1257,6 +1258,11 @@ void KMKernel::slotConfigChanged()
 bool KMKernel::haveSystemTrayApplet() const
 {
     return mSystemTray != nullptr;
+}
+
+QTextCodec *KMKernel::networkCodec() const
+{
+    return mNetCodec;
 }
 
 void KMKernel::updateSystemTray()
@@ -1640,6 +1646,21 @@ void KMKernel::slotProgressItemCompletedOrCanceled(KPIM::ProgressItem *item)
 void KMKernel::updatedTemplates()
 {
     Q_EMIT customTemplatesChanged();
+}
+
+void KMKernel::cleanupTemporaryFiles()
+{
+    QDir dir(QDir::tempPath());
+    const QStringList lst = dir.entryList(QStringList{QStringLiteral("messageviewer_*")});
+    qDebug() << " list file to delete " << lst;
+    for (const QString &file : lst) {
+        QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file);
+        if (!tempDir.removeRecursively()) {
+            fprintf(stderr, "%s was not removed .\n", qPrintable(tempDir.absolutePath()));
+        } else {
+            fprintf(stderr, "%s was removed .\n", qPrintable(tempDir.absolutePath()));
+        }
+    }
 }
 
 void KMKernel::stopAgentInstance()

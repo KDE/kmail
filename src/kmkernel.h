@@ -366,10 +366,7 @@ public:
     */
     bool haveSystemTrayApplet() const;
 
-    QTextCodec *networkCodec() const
-    {
-        return mNetCodec;
-    }
+    QTextCodec *networkCodec() const;
 
     /** returns a reference to the first Mainwin or a temporary Mainwin */
     KMainWindow *mainWin();
@@ -424,6 +421,7 @@ public:
 
     Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 
+    void cleanupTemporaryFiles();
 protected:
     void agentInstanceBroken(const Akonadi::AgentInstance &instance);
 
