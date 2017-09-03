@@ -1,9 +1,11 @@
-project(kmail)
+cmake_minimum_required(VERSION 3.1)
+set(KDEPIM_VERSION_NUMBER "5.6.40")
+
+project(kmail VERSION ${KDEPIM_VERSION_NUMBER})
 
 include(CheckIncludeFiles)
 
 
-cmake_minimum_required(VERSION 3.1)
 if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif()
@@ -45,7 +47,6 @@ if(DEFINED KDEPIM_DEV_VERSION)
     set(KDEPIM_DEV_VERSION " ${KDEPIM_DEV_VERSION}")
 endif()
 
-set(KDEPIM_VERSION_NUMBER "5.6.40")
 set(KDEPIM_VERSION "${KDEPIM_VERSION_NUMBER}${KDEPIM_DEV_VERSION}")
 
 
