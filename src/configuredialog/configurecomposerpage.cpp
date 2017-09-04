@@ -27,7 +27,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageCore/MessageCoreSettings>
 #include "settings/kmailsettings.h"
 #include "configuredialog/configuredialoglistview.h"
-#include "PimCommon/SimpleStringlistEditor"
+#include "PimCommon/SimpleStringListEditor"
 #include "templatesconfiguration_kfg.h"
 #include "TemplateParser/TemplatesConfiguration"
 #include "templateparser/customtemplates.h"
