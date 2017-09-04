@@ -516,7 +516,7 @@ private:
     Result execute() override;
 
     Akonadi::Collection mDestFolder;
-    QList<KJob*> mPendingJobs;
+    QList<KJob *> mPendingJobs;
 };
 
 class KMMoveCommand : public KMCommand

@@ -51,5 +51,4 @@ QString KMSieveImapPasswordProvider::walletPassword(const QString &identifier)
     }
 
     return QString();
-
 }

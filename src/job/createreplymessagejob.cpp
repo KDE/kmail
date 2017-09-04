@@ -29,7 +29,6 @@
 #include <QUrl>
 #include <QDebug>
 
-
 CreateReplyMessageJob::CreateReplyMessageJob(QObject *parent)
     : QObject(parent)
     , mMessageFactory(nullptr)

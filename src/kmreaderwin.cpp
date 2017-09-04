@@ -61,7 +61,6 @@ using namespace MessageViewer;
 
 #include <KIO/JobUiDelegate>
 
-
 #include <Akonadi/Contact/ContactEditorDialog>
 
 #include "kmail_debug.h"

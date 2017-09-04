@@ -1432,7 +1432,7 @@ void KMCopyCommand::slotCopyResult(KJob *job)
         setResult(Failed);
     }
 
-    qobject_cast<Akonadi::ItemCopyJob*>(job);
+    qobject_cast<Akonadi::ItemCopyJob *>(job);
 
     Q_EMIT completed(this);
     deleteLater();
@@ -1493,8 +1493,6 @@ void KMCopyDecryptedCommand::slotAppendResult(KJob *job)
         deleteLater();
     }
 }
-
-
 
 KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
     : KMCommand(nullptr, msgList)

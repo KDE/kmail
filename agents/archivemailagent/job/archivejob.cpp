@@ -23,7 +23,6 @@
 #include "archivemailkernel.h"
 #include "archivemailagent_debug.h"
 
-
 #include <MailCommon/MailUtil>
 #include <MailCommon/BackupJob>
 

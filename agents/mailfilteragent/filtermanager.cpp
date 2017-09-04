@@ -351,7 +351,7 @@ void FilterManager::readConfig()
 
     for (auto i = d->mFilters.cbegin(), e = d->mFilters.cend();
          i != e && (!d->mInboundFiltersExist || !d->mAllFoldersFiltersExist);
-        ++i) {
+         ++i) {
         if ((*i)->applyOnInbound()) {
             d->mInboundFiltersExist = true;
         }

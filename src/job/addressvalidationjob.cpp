@@ -31,7 +31,6 @@ using MessageComposer::AliasesExpandJob;
 
 #include <KEmailAddress>
 
-
 AddressValidationJob::AddressValidationJob(const QString &emailAddresses, QWidget *parentWidget, QObject *parent)
     : KJob(parent)
     , mEmailAddresses(emailAddresses)

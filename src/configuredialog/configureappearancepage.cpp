@@ -460,7 +460,6 @@ void AppearancePage::ColorsTab::save()
     bool customColors = mCustomColorCheck->isChecked();
     MessageCore::MessageCoreSettings::self()->setUseDefaultColors(!customColors);
 
-
     for (int i = 0; i < numColorNames; ++i) {
         const QString configName = QLatin1String(colorNames[i].configName);
         if (customColors && configName == QLatin1String("UnreadMessageColor")) {

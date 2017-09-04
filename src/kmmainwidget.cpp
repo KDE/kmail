@@ -2211,7 +2211,7 @@ void KMMainWidget::slotApplyFilterOnFolder(bool recursive)
 {
     if (mCurrentCollection.isValid()) {
         const Akonadi::Collection::List cols = applyFilterOnCollection(recursive);
-        QAction *action = qobject_cast<QAction*>(sender());
+        QAction *action = qobject_cast<QAction *>(sender());
         applyFilter(cols, action->property("filter_id").toString());
     }
 }
@@ -3349,14 +3349,16 @@ void KMMainWidget::setupActions()
         mApplyAllFiltersFolderAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_folder"), mApplyAllFiltersFolderAction);
         connect(mServerSideSubscription, &QAction::triggered,
-                this, [this] { slotApplyFiltersOnFolder(/* recursive */ false); });
+                this, [this] { slotApplyFiltersOnFolder(/* recursive */ false);
+                });
     }
 
     {
         mApplyAllFiltersFolderRecursiveAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_folder_recursive"), mApplyAllFiltersFolderRecursiveAction);
         connect(mServerSideSubscription, &QAction::triggered,
-                this, [this] { slotApplyFiltersOnFolder(/* recursive */ true); });
+                this, [this] { slotApplyFiltersOnFolder(/* recursive */ true);
+                });
     }
 
     {
@@ -3961,8 +3963,8 @@ void KMMainWidget::updateFolderMenu()
     }
 
     const bool folderWithContent = mCurrentFolderSettings
-                                    && !mCurrentFolderSettings->isStructural()
-                                    && mCurrentFolderSettings->isValid();
+                                   && !mCurrentFolderSettings->isStructural()
+                                   && mCurrentFolderSettings->isValid();
     mFolderMailingListPropertiesAction->setEnabled(folderWithContent
                                                    && !mCurrentFolderSettings->isSystemFolder());
 
@@ -4217,14 +4219,16 @@ void KMMainWidget::initializeFilterActions()
             filterAction = filterToAction(filter);
             actionCollection()->addAction(normalizedName + QStringLiteral("___folder"), filterAction);
             connect(filterAction, &QAction::triggered,
-                    this, [this] { slotApplyFilterOnFolder(/* recursive */ false); });
+                    this, [this] { slotApplyFilterOnFolder(/* recursive */ false);
+                    });
             mApplyFilterFolderActionsMenu->menu()->addAction(filterAction);
             mFilterFolderMenuActions.append(filterAction);
 
             filterAction = filterToAction(filter);
             actionCollection()->addAction(normalizedName + QStringLiteral("___folder_recursive"), filterAction);
             connect(filterAction, &QAction::triggered,
-                    this, [this] { slotApplyFilterOnFolder(/* recursive */ true); });
+                    this, [this] { slotApplyFilterOnFolder(/* recursive */ true);
+                    });
             mApplyFilterFolderRecursiveActionsMenu->menu()->addAction(filterAction);
             mFilterFolderMenuRecursiveActions.append(filterAction);
         }
