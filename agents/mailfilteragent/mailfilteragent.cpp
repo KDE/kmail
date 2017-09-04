@@ -84,6 +84,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     connect(m_filterManager, &FilterManager::progressMessage, this, &MailFilterAgent::emitProgressMessage);
 
     Akonadi::Monitor *collectionMonitor = new Akonadi::Monitor(this);
+    collectionMonitor->setObjectName(QStringLiteral("MailFilterCollectionMonitor"));
     collectionMonitor->fetchCollection(true);
     collectionMonitor->ignoreSession(Akonadi::Session::defaultSession());
     collectionMonitor->collectionFetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
@@ -133,6 +134,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     connect(mProgressTimer, SIGNAL(timeout()), this, SLOT(emitProgress()));
 
     itemMonitor = new Akonadi::Monitor(this);
+    itemMonitor->setObjectName(QStringLiteral("MailFilterItemMonitor"));
     itemMonitor->itemFetchScope().setFetchRemoteIdentification(true);
     itemMonitor->itemFetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     connect(itemMonitor, &Akonadi::Monitor::itemChanged, this, &MailFilterAgent::slotItemChanged);

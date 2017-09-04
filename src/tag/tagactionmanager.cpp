@@ -63,6 +63,7 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
 {
     mMessageActions->messageStatusMenu()->menu()->addSeparator();
 
+    mMonitor->setObjectName(QStringLiteral("TagActionManagerMonitor"));
     mMonitor->setTypeMonitored(Akonadi::Monitor::Tags);
     mMonitor->tagFetchScope().fetchAttribute<Akonadi::TagAttribute>();
     connect(mMonitor, &Akonadi::Monitor::tagAdded, this, &TagActionManager::onTagAdded);
