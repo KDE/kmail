@@ -8,7 +8,7 @@ set(icons
     48-apps-kmail.png
     64-apps-kmail.png
     128-apps-kmail.png
-    hisc-apps-kmail.svgz
+    sc-apps-kmail.svgz
 )
 
 file(GLOB icons_svg "*.svg")
