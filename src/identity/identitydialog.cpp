@@ -987,6 +987,9 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
         if (alias.trimmed().isEmpty()) {
             continue;
         }
+        if (alias == email) {
+            continue;
+        }
         result.append(alias);
     }
     ident.setEmailAliases(result);
