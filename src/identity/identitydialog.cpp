@@ -752,6 +752,9 @@ void IdentityDialog::slotAccepted()
 {
     const QStringList aliases = mAliasEdit->items();
     for (const QString &alias : aliases) {
+        if (alias.trimmed().isEmpty()) {
+            continue;
+        }
         if (!KEmailAddress::isValidSimpleAddress(alias)) {
             const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
             KMessageBox::sorry(this, errorMsg, i18n("Invalid Email Alias \"%1\"", alias));
@@ -978,7 +981,15 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setOrganization(mOrganizationEdit->text());
     QString email = mEmailEdit->text();
     ident.setPrimaryEmailAddress(email);
-    ident.setEmailAliases(mAliasEdit->items());
+    const QStringList aliases = mAliasEdit->items();
+    QStringList result;
+    for (const QString &alias : aliases) {
+        if (alias.trimmed().isEmpty()) {
+            continue;
+        }
+        result.append(alias);
+    }
+    ident.setEmailAliases(result);
     // "Cryptography" tab:
     ident.setPGPSigningKey(mPGPSigningKeyRequester->currentKey().primaryFingerprint());
     ident.setPGPEncryptionKey(mPGPEncryptionKeyRequester->currentKey().primaryFingerprint());
