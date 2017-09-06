@@ -1703,9 +1703,10 @@ KMCommand::Result KMShareImageCommand::execute()
     return OK;
 }
 
-KMFetchMessageCommand::KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item, MessageViewer::Viewer *viewer)
+KMFetchMessageCommand::KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item, MessageViewer::Viewer *viewer, KMReaderMainWin *win)
     : KMCommand(parent, item)
     , mViewer(viewer)
+    , mReaderMainWin(win)
 {
     // Workaround KMCommand::transferSelectedMsgs() expecting non-empty fetchscope
     fetchScope().fetchFullPayload(true);
@@ -1728,6 +1729,11 @@ KMCommand::Result KMFetchMessageCommand::execute()
 
     mItem = item;
     return OK;
+}
+
+KMReaderMainWin *KMFetchMessageCommand::readerMainWin() const
+{
+    return mReaderMainWin;
 }
 
 Akonadi::Item KMFetchMessageCommand::item() const

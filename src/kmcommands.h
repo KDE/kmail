@@ -30,6 +30,7 @@ using Akonadi::MessageStatus;
 
 class QProgressDialog;
 class KMMainWidget;
+class KMReaderMainWin;
 
 template<typename T> class QSharedPointer;
 
@@ -596,9 +597,11 @@ class KMFetchMessageCommand : public KMCommand
 {
     Q_OBJECT
 public:
-    explicit KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item, MessageViewer::Viewer *viewer);
+    explicit KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item, MessageViewer::Viewer *viewer, KMReaderMainWin *win = nullptr);
 
     Akonadi::Item item() const;
+
+    KMReaderMainWin *readerMainWin() const;
 
 private:
     Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items) override;
@@ -606,6 +609,7 @@ private:
 
     Akonadi::Item mItem;
     MessageViewer::Viewer *mViewer = nullptr;
+    KMReaderMainWin *mReaderMainWin = nullptr;
 };
 
 #endif /*KMCommands_h*/

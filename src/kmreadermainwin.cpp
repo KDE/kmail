@@ -129,6 +129,11 @@ void KMReaderMainWin::setUseFixedFont(bool useFixedFont)
     mReaderWin->setUseFixedFont(useFixedFont);
 }
 
+MessageViewer::Viewer *KMReaderMainWin::viewer() const
+{
+    return mReaderWin->viewer();
+}
+
 void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection)
 {
     mParentCollection = parentCollection;

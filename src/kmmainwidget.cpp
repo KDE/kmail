@@ -2531,15 +2531,15 @@ void KMMainWidget::slotMessageActivated(const Akonadi::Item &msg)
         return;
     }
 
-    if (mMsgView) {
-        // Try to fetch the mail, even in offline mode, it might be cached
-        KMFetchMessageCommand *cmd = new KMFetchMessageCommand(this, msg, mMsgView->viewer());
-        connect(cmd, &KMCommand::completed,
-                this, &KMMainWidget::slotItemsFetchedForActivation);
-        cmd->start();
-    } else {
-        qCWarning(KMAIL_LOG) << "There is not a msgview we can't fetch message. Bug ?";
+    KMReaderMainWin *win = nullptr;
+    if (!mMsgView) {
+        win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
     }
+    // Try to fetch the mail, even in offline mode, it might be cached
+    KMFetchMessageCommand *cmd = new KMFetchMessageCommand(this, msg, win ? win->viewer() : mMsgView->viewer(), win);
+    connect(cmd, &KMCommand::completed,
+            this, &KMMainWidget::slotItemsFetchedForActivation);
+    cmd->start();
 }
 
 void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
@@ -2552,12 +2552,14 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
 
     KMFetchMessageCommand *fetchCmd = qobject_cast<KMFetchMessageCommand *>(command);
     const Item msg = fetchCmd->item();
+    KMReaderMainWin *win = fetchCmd->readerMainWin();
 
-    KMReaderMainWin *win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
+    if (!win) {
+        win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
+    }
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
-                              : MessageViewer::MessageViewerSettings::self()->useFixedFont();
+                          : MessageViewer::MessageViewerSettings::self()->useFixedFont();
     win->setUseFixedFont(useFixedFont);
-
     win->showMessage(overrideEncoding(), msg, CommonKernel->collectionFromId(msg.parentCollection().id()));
     win->show();
 }

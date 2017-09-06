@@ -40,6 +40,7 @@ public:
 
     void setUseFixedFont(bool useFixedFont);
 
+    MessageViewer::Viewer *viewer() const;
     /**
     * take ownership of and show @param msg
     *
