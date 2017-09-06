@@ -67,9 +67,9 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     , mChanged(false)
 {
     setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
-    QHBoxLayout *hbox = new QHBoxLayout;
+    QHBoxLayout *hbox = new QHBoxLayout(this);
     hbox->setMargin(0);
-    mTreeWidget = new QTreeWidget;
+    mTreeWidget = new QTreeWidget(this);
     mTreeWidget->setObjectName(QStringLiteral("treewidget"));
     QStringList headers;
     headers << i18n("To")
@@ -91,7 +91,6 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     connect(mTreeWidget, &QTreeWidget::customContextMenuRequested, this, &FollowUpReminderInfoWidget::customContextMenuRequested);
 
     hbox->addWidget(mTreeWidget);
-    setLayout(hbox);
 }
 
 FollowUpReminderInfoWidget::~FollowUpReminderInfoWidget()

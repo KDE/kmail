@@ -39,18 +39,17 @@ FollowUpReminderInfoDialog::FollowUpReminderInfoDialog(QWidget *parent)
 {
     setWindowTitle(i18n("Configure"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help);
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    setLayout(mainLayout);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+
+    mWidget = new FollowUpReminderInfoWidget(this);
+    mWidget->setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
+    mainLayout->addWidget(mWidget);
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &FollowUpReminderInfoDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FollowUpReminderInfoDialog::reject);
-
-    mWidget = new FollowUpReminderInfoWidget;
-    mWidget->setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
-    mainLayout->addWidget(mWidget);
     mainLayout->addWidget(buttonBox);
 
     readConfig();
