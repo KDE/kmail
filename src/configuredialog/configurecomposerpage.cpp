@@ -1268,7 +1268,6 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
         autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
     }
     vlay->addWidget(autocorrectionWidget);
-    setLayout(vlay);
     connect(autocorrectionWidget, &PimCommon::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
@@ -1300,7 +1299,6 @@ ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
     vlay->setMargin(0);
     autoResizeWidget = new MessageComposer::ImageScalingWidget(this);
     vlay->addWidget(autoResizeWidget);
-    setLayout(vlay);
     connect(autoResizeWidget, &MessageComposer::ImageScalingWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
