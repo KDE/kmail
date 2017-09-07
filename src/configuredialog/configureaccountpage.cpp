@@ -213,9 +213,11 @@ AccountsPageReceivingTab::~AccountsPageReceivingTab()
 
 void AccountsPageReceivingTab::slotCustomizeAccountOrder()
 {
-    QPointer<MailCommon::AccountConfigOrderDialog> dlg = new MailCommon::AccountConfigOrderDialog(this);
-    dlg->exec();
-    delete dlg;
+    if (KMKernel::self()) {
+        QPointer<MailCommon::AccountConfigOrderDialog> dlg = new MailCommon::AccountConfigOrderDialog(KMKernel::self()->mailCommonSettings(), this);
+        dlg->exec();
+        delete dlg;
+    }
 }
 
 void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const QPoint &pos)

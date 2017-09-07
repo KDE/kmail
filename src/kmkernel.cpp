@@ -241,6 +241,7 @@ KMKernel::~KMKernel()
     slotSyncConfig();
 
     delete mAutoCorrection;
+    delete mMailCommonSettings;
     mySelf = nullptr;
 }
 
@@ -1197,7 +1198,7 @@ void KMKernel::slotSyncConfig()
     MessageComposer::MessageComposerSettings::self()->save();
     TemplateParser::TemplateParserSettings::self()->save();
     MessageList::MessageListSettings::self()->save();
-    MailCommon::MailCommonSettings::self()->save();
+    mMailCommonSettings->save();
     Gravatar::GravatarSettings::self()->save();
     KMailSettings::self()->save();
     KMKernel::config()->sync();
@@ -1208,7 +1209,7 @@ void KMKernel::slotSyncConfig()
     MessageComposer::MessageComposerSettings::self()->load();
     TemplateParser::TemplateParserSettings::self()->load();
     MessageList::MessageListSettings::self()->load();
-    MailCommon::MailCommonSettings::self()->load();
+    mMailCommonSettings->load();
     Gravatar::GravatarSettings::self()->load();
     KMailSettings::self()->load();
     KMKernel::config()->reparseConfiguration();
@@ -1324,8 +1325,10 @@ KSharedConfig::Ptr KMKernel::config()
         MessageCore::MessageCoreSettings::self()->load();
         MessageViewer::MessageViewerSettings::self()->setSharedConfig(mySelf->mConfig);
         MessageViewer::MessageViewerSettings::self()->load();
-        MailCommon::MailCommonSettings::self()->setSharedConfig(mySelf->mConfig);
-        MailCommon::MailCommonSettings::self()->load();
+        mMailCommonSettings = new MailCommon::MailCommonSettings;
+
+        mMailCommonSettings->setSharedConfig(mySelf->mConfig);
+        mMailCommonSettings->load();
         PimCommon::PimCommonSettings::self()->setSharedConfig(mySelf->mConfig);
         PimCommon::PimCommonSettings::self()->load();
         Gravatar::GravatarSettings::self()->setSharedConfig(mySelf->mConfig);
@@ -1475,6 +1478,11 @@ QSharedPointer<FolderSettings> KMKernel::currentFolderCollection()
         folder = widget->currentFolder();
     }
     return folder;
+}
+
+MailCommon::MailCommonSettings *KMKernel::mailCommonSettings() const
+{
+    return mMailCommonSettings;
 }
 
 Akonadi::Search::PIM::IndexedItems *KMKernel::indexedItems() const

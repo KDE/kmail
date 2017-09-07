@@ -554,7 +554,9 @@ void AppearancePage::LayoutTab::doLoadOther()
 {
     loadWidget(mFolderListGroupBox, mFolderListGroup, KMailSettings::self()->folderListItem());
     loadWidget(mReaderWindowModeGroupBox, mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
-    loadWidget(mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem());
+    if (KMKernel::self()) {
+        loadWidget(mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, KMKernel::self()->mailCommonSettings()->favoriteCollectionViewModeItem());
+    }
     loadWidget(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
     const int checkedFolderToolTipsPolicy = KMailSettings::self()->toolTipDisplayPolicy();
     if (checkedFolderToolTipsPolicy >= 0) {
@@ -566,7 +568,9 @@ void AppearancePage::LayoutTab::save()
 {
     saveButtonGroup(mFolderListGroup, KMailSettings::self()->folderListItem());
     saveButtonGroup(mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
-    saveButtonGroup(mFavoriteFoldersViewGroup, MailCommon::MailCommonSettings::self()->favoriteCollectionViewModeItem());
+    if (KMKernel::self()) {
+        saveButtonGroup(mFavoriteFoldersViewGroup, KMKernel::self()->mailCommonSettings()->favoriteCollectionViewModeItem());
+    }
     saveCheckBox(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
     KMailSettings::self()->setToolTipDisplayPolicy(mFolderToolTipsGroup->checkedId());
 }
@@ -813,7 +817,9 @@ void AppearancePage::HeadersTab::save()
 {
     saveCheckBox(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
 
-    KMKernel::self()->savePaneSelection();
+    if (KMKernel::self()) {
+        KMKernel::self()->savePaneSelection();
+    }
     // "Aggregation"
     mAggregationComboBox->writeDefaultConfig();
 

@@ -576,7 +576,7 @@ void KMMainWidget::readPreConfig()
     mHtmlGlobalSetting = MessageViewer::MessageViewerSettings::self()->htmlMail();
     mHtmlLoadExtGlobalSetting = MessageViewer::MessageViewerSettings::self()->htmlLoadExternal();
 
-    mEnableFavoriteFolderView = (MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode);
+    mEnableFavoriteFolderView = (KMKernel::self()->mailCommonSettings()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode);
     mEnableFolderQuickSearch = KMailSettings::self()->enableFolderQuickSearch();
 
     readFolderConfig();
@@ -746,7 +746,7 @@ void KMMainWidget::layoutSplitters()
     int headerWidth = KMailSettings::self()->searchAndHeaderWidth();
     int messageViewerHeight = KMailSettings::self()->readerWindowHeight();
 
-    int ffvHeight = mFolderViewSplitter ? MailCommon::MailCommonSettings::self()->favoriteCollectionViewHeight() : 0;
+    int ffvHeight = mFolderViewSplitter ? KMKernel::self()->mailCommonSettings()->favoriteCollectionViewHeight() : 0;
 
     // If the message viewer was hidden before, make sure it is not zero height
     if (messageViewerHeight < 10 && readerWindowBelow) {
@@ -810,9 +810,9 @@ void KMMainWidget::layoutSplitters()
 void KMMainWidget::refreshFavoriteFoldersViewProperties()
 {
     if (mFavoriteCollectionsView) {
-        if (MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() == MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::IconMode) {
+        if (KMKernel::self()->mailCommonSettings()->favoriteCollectionViewMode() == MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::IconMode) {
             mFavoriteCollectionsView->changeViewMode(QListView::IconMode);
-        } else if (MailCommon::MailCommonSettings::self()->favoriteCollectionViewMode() == MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode) {
+        } else if (KMKernel::self()->mailCommonSettings()->favoriteCollectionViewMode() == MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode) {
             mFavoriteCollectionsView->changeViewMode(QListView::ListMode);
         } else {
             Q_ASSERT(false);    // we should never get here in hidden mode
@@ -886,7 +886,7 @@ void KMMainWidget::readConfig()
     updateMessageMenu();
     updateFileMenu();
     kmkernel->toggleSystemTray();
-    mAccountActionMenu->setAccountOrder(MailCommon::MailCommonSettings::self()->order());
+    mAccountActionMenu->setAccountOrder(KMKernel::self()->mailCommonSettings()->order());
 
     connect(Akonadi::AgentManager::self(), &AgentManager::instanceAdded,
             this, &KMMainWidget::updateFileMenu);
@@ -913,7 +913,7 @@ void KMMainWidget::writeConfig(bool force)
         KMailSettings::self()->setSearchAndHeaderHeight(headersHeight);
         KMailSettings::self()->setSearchAndHeaderWidth(mMessagePane->width());
         if (mFavoriteCollectionsView) {
-            MailCommon::MailCommonSettings::self()->setFavoriteCollectionViewHeight(mFavoriteCollectionsView->height());
+            KMKernel::self()->mailCommonSettings()->setFavoriteCollectionViewHeight(mFavoriteCollectionsView->height());
             KMailSettings::self()->setFolderTreeHeight(mFolderTreeWidget->height());
             if (!mLongFolderList) {
                 KMailSettings::self()->setFolderViewHeight(mFolderViewSplitter->height());
@@ -1077,7 +1077,7 @@ void KMMainWidget::createWidgets()
     mAkonadiStandardActionManager->setItemSelectionModel(mMessagePane->currentItemSelectionModel());
 
     if (mEnableFavoriteFolderView) {
-        mFavoriteCollectionsView = new FavoriteCollectionWidget(mGUIClient, this);
+        mFavoriteCollectionsView = new FavoriteCollectionWidget(KMKernel::self()->mailCommonSettings(), mGUIClient, this);
         refreshFavoriteFoldersViewProperties();
         connect(mFavoriteCollectionsView, SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)));
         connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::newTabRequested, this, &KMMainWidget::slotCreateNewTab);

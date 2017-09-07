@@ -74,6 +74,7 @@ class FolderSettings;
 class FolderCollectionMonitor;
 class JobScheduler;
 class KMFilterDialog;
+class MailCommonSettings;
 }
 
 class QTimer;
@@ -422,6 +423,8 @@ public:
     Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 
     void cleanupTemporaryFiles();
+    MailCommon::MailCommonSettings *mailCommonSettings() const;
+
 protected:
     void agentInstanceBroken(const Akonadi::AgentInstance &instance);
 
@@ -534,7 +537,8 @@ private:
     FolderArchiveManager *mFolderArchiveManager = nullptr;
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
-    bool mDebugBaloo;
+    MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;
+    bool mDebugBaloo = false;
 };
 
 #endif // _KMKERNEL_H
