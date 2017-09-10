@@ -2558,7 +2558,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
         win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
     }
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
-                          : MessageViewer::MessageViewerSettings::self()->useFixedFont();
+                              : MessageViewer::MessageViewerSettings::self()->useFixedFont();
     win->setUseFixedFont(useFixedFont);
     win->showMessage(overrideEncoding(), msg, CommonKernel->collectionFromId(msg.parentCollection().id()));
     win->show();
