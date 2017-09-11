@@ -107,7 +107,7 @@ void KMailPlugin::shortcutChanged()
 
 void KMailPlugin::processDropEvent(QDropEvent *de)
 {
-    MemoryCalendar::Ptr cal(new MemoryCalendar(QStringLiteral("UTC")));
+    MemoryCalendar::Ptr cal(new MemoryCalendar(QTimeZone::utc()));
     KContacts::Addressee::List list;
     const QMimeData *md = de->mimeData();
 
