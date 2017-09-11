@@ -18,7 +18,6 @@
 #include <KLocalizedString>
 #include <qapplication.h>
 #include <QCommandLineParser>
-#include <kaboutdata.h>
 #include <QStandardPaths>
 
 #include <KSieveUi/MultiImapVacationDialog>
@@ -30,19 +29,12 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
     QStandardPaths::setTestModeEnabled(true);
-    KAboutData aboutData(QStringLiteral("vacationmultiscripttest"),
-                         i18n("VacationMultiScriptTest_Gui"),
-                         QStringLiteral("1.0"));
-
-    KAboutData::setApplicationData(aboutData);
 
     QCommandLineParser parser;
     parser.addVersionOption();
     parser.addHelpOption();
-    aboutData.setupCommandLine(&parser);
 
     parser.process(app);
-    aboutData.processCommandLine(&parser);
 
     app.setQuitOnLastWindowClosed(true);
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);

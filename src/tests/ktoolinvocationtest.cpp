@@ -20,8 +20,6 @@
 #include <qdebug.h>
 
 #include <QCoreApplication>
-#include <KAboutData>
-#include <KLocalizedString>
 #include <QCommandLineParser>
 #include <KToolInvocation>
 #include <QStandardPaths>
@@ -30,15 +28,11 @@ int main(int argc, char **argv)
 {
     qDebug() << "Test kinvocation by desktop name.";
 
-    KAboutData aboutData(QStringLiteral("testKInvocation"), i18n("Test for KMail invocation"), QStringLiteral("0.0"));
     QCoreApplication app(argc, argv);
     QCommandLineParser parser;
-    KAboutData::setApplicationData(aboutData);
     parser.addVersionOption();
     parser.addHelpOption();
-    aboutData.setupCommandLine(&parser);
     parser.process(app);
-    aboutData.processCommandLine(&parser);
 
     QString errmsg;
     if (KToolInvocation::startServiceByDesktopName(QStringLiteral("org.kde.kmail2"), QString(), &errmsg)) {
