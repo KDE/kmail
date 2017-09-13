@@ -29,6 +29,12 @@ target_link_libraries(akonadi_followupreminder_agent
     KF5::DBusAddons
     KF5::FollowupReminder
     Qt5::Widgets
+    KF5::Notifications
+    KF5::I18n
+    KF5::WindowSystem
+    KF5::IconThemes
+    KF5::XmlGui
+    KF5::Service
     )
 
 if( APPLE )
