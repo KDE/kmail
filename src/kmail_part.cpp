@@ -99,6 +99,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
     setXMLFile(QStringLiteral("kmail_part.rc"), true);
     KSettings::Dispatcher::registerComponent(QStringLiteral("kmail2"), mKMailKernel, "slotConfigChanged");
+    connect(mainWidget, &KMMainWidget::captionChangeRequest, this, &KMailPart::setWindowCaption);
 }
 
 KMailPart::~KMailPart()
@@ -133,6 +134,13 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
     mainWidget->updateVacationScriptStatus();
     mainWidget->populateMessageListStatusFilterCombo();
     mainWidget->initializePluginActions();
+    /*
+    FIXME it doesn't work when we switch component.
+    const QString title = mainWidget->fullCollectionPath();
+    if (!title.isEmpty()) {
+        Q_EMIT setWindowCaption(title);
+    }
+    */
 }
 
 void KMailPart::exit()

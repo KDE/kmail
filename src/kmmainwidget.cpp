@@ -470,8 +470,16 @@ void KMMainWidget::slotCollectionFetched(int collectionId)
     }
     // We call this for any collection, it could be one of our parents...
     if (mCurrentCollection.isValid()) {
-        Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(mCurrentCollection));
+        Q_EMIT captionChangeRequest(fullCollectionPath());
     }
+}
+
+QString KMMainWidget::fullCollectionPath() const
+{
+    if (mCurrentCollection.isValid()) {
+        return MailCommon::Util::fullCollectionPath(mCurrentCollection);
+    }
+    return {};
 }
 
 void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)

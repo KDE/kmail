@@ -172,6 +172,7 @@ public:
 
     Akonadi::Item::List currentSelection() const;
 
+    QString fullCollectionPath() const;
 public Q_SLOTS:
     // Moving messages around
     /**
