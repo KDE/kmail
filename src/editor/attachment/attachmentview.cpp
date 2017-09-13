@@ -86,7 +86,7 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     setDropIndicatorShown(false);
     setSortingEnabled(true);
 
-    header()->setResizeMode(QHeaderView::Interactive);
+    header()->setSectionResizeMode(QHeaderView::Interactive);
     header()->setStretchLastSection(false);
     restoreHeaderState();
     setColumnWidth(0, 200);
