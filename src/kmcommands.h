@@ -142,7 +142,7 @@ protected:
 
 private:
     // ProgressDialog for transferring messages
-    QWeakPointer<QProgressDialog> mProgressDialog;
+    QPointer<QProgressDialog> mProgressDialog;
     //Currently only one async command allowed at a time
     static int mCountJobs;
     int mCountMsgs;
