@@ -39,7 +39,6 @@ using KPIM::BroadcastStatus;
 #include <KActionCollection>
 #include <KCMultiDialog>
 #include <KConfigGroup>
-#include <QDialog>
 #include <QIcon>
 #include <KLocalizedString>
 #include <KParts/PartActivateEvent>

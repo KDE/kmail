@@ -44,12 +44,8 @@
 
 #include <kmime/kmime_message.h>
 #include <kmessagebox.h>
-#include <KLocalizedString>
-#include <KProcess>
 #include "kmail_debug.h"
 
-#include <QProcess>
-#include <QFileInfo>
 #include <QAction>
 #include <QStandardPaths>
 

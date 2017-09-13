@@ -32,11 +32,9 @@
 #include <KAboutData>
 #include <KAcceleratorManager>
 #include "kmailplugin_debug.h"
-#include <QDialog>
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KConfig>
-#include <QLineEdit>
 
 #include <QCheckBox>
 #include <QTreeView>

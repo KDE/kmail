@@ -30,7 +30,6 @@
 #include <KLocalizedString>
 #include <QIcon>
 
-#include <QGridLayout>
 #include <QListWidget>
 #include <AkonadiCore/TagFetchJob>
 #include <AkonadiCore/TagFetchScope>

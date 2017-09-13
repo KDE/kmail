@@ -29,7 +29,6 @@
 #include <KWindowSystem>
 #include <KIconLoader>
 #include <QPushButton>
-#include <KHelpClient>
 
 ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     : KCMultiDialog(parent)

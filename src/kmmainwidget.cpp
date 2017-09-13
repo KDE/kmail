@@ -184,13 +184,9 @@ using KSieveUi::SieveDebugDialog;
 #include <QVBoxLayout>
 #include <QShortcut>
 #include <QProcess>
-#include <QDBusConnection>
-#include <QTextDocument>
-#include <QDir>
 #include <WebEngineViewer/WebHitTestResult>
 // System includes
 #include <AkonadiWidgets/standardactionmanager.h>
-#include <KHelpClient>
 #include <QStandardPaths>
 
 #include "PimCommonAkonadi/ManageServerSideSubscriptionJob"

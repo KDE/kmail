@@ -41,7 +41,6 @@
 #include <QColor>
 #include <QApplication>
 #include <QPalette>
-#include <QTextDocument>
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KFormat>

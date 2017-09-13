@@ -38,7 +38,6 @@
 #include <kmessagebox.h>
 #include <QVBoxLayout>
 #include <QIcon>
-#include <QUrl>
 
 #include <QCheckBox>
 #include <QLabel>

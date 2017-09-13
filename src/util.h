@@ -38,7 +38,6 @@
 #ifndef KMAILUTIL_H
 #define KMAILUTIL_H
 
-#include <QWidget>
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/Collection>
 #include <MailCommon/FolderSettings>

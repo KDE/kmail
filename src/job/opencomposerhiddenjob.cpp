@@ -24,7 +24,6 @@
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
-#include <KStartupInfo>
 
 #include <TemplateParser/TemplateParserJob>
 

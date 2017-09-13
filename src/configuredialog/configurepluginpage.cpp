@@ -19,7 +19,6 @@
 #include "configureplugins/configurepluginslistwidget.h"
 #include <PimCommon/ConfigurePluginsWidget>
 
-#include <KLocalizedString>
 #include <QHBoxLayout>
 
 ConfigurePluginPage::ConfigurePluginPage(QWidget *parent)

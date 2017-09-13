@@ -29,7 +29,6 @@
 #include <kparts/readonlypart.h>
 
 #include <QWidget>
-#include <QPixmap>
 
 class KMMainWidget;
 

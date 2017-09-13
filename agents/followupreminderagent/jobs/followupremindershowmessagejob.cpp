@@ -21,7 +21,6 @@
 #include "followupreminderagent_debug.h"
 #include <QDBusConnection>
 #include <QDBusInterface>
-#include <QDBusReply>
 #include <QDBusConnectionInterface>
 #include <ktoolinvocation.h>
 

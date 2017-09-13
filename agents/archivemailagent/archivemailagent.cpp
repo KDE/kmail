@@ -24,7 +24,6 @@
 #include "archivemailagentsettings.h"
 #include <AkonadiCore/ServerManager>
 
-#include <KLocalizedString>
 #include <MailCommon/MailKernel>
 #include <kdbusconnectionpool.h>
 #include <Monitor>

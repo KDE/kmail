@@ -26,11 +26,9 @@
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include <QDialog>
 #include <QHBoxLayout>
 #include <KLocalizedString>
 #include <KKeySequenceWidget>
-#include <KConfigGroup>
 
 using namespace MailCommon;
 

@@ -27,9 +27,7 @@
 
 #include <KLocalizedString>
 #include <QPushButton>
-#include <QDialog>
 #include <QCheckBox>
-#include <KConfigGroup>
 
 using namespace Akonadi;
 using namespace MailCommon;

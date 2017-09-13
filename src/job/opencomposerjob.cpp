@@ -32,7 +32,6 @@
 #include <QFile>
 #include <KMessageBox>
 #include <KLocalizedString>
-#include <KStartupInfo>
 
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent)

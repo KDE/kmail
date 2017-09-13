@@ -65,7 +65,6 @@
 #include <QKeyEvent>
 #include <QMenu>
 #include <QVBoxLayout>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 

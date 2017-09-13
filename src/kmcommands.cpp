@@ -116,7 +116,6 @@
 
 #include <KBookmarkManager>
 
-#include <KDBusServiceStarter>
 #include <KEmailAddress>
 #include <KFileWidget>
 #include <KJobWidgets>

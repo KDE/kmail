@@ -24,7 +24,6 @@
 
 #include <KConfigGroup>
 #include <KLocalizedString>
-#include <KHelpMenu>
 #include <QMenu>
 #include <KMessageBox>
 #include <QIcon>

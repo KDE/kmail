@@ -18,7 +18,6 @@
 */
 
 #include "statusbarlabeltoggledstate.h"
-#include <KLocalizedString>
 #include "kmail_debug.h"
 
 StatusBarLabelToggledState::StatusBarLabelToggledState(QWidget *parent)

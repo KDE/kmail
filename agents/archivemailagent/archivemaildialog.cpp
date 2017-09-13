@@ -34,7 +34,6 @@
 #include <QDialogButtonBox>
 #include <KConfigGroup>
 #include <QPushButton>
-#include <QLocale>
 
 namespace {
 inline QString archiveMailCollectionPattern()

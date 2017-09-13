@@ -20,7 +20,6 @@
 #define ARCHIVEFOLDERDIALOG_H
 
 #include <QDialog>
-#include <KConfigGroup>
 
 class QCheckBox;
 class KUrlRequester;

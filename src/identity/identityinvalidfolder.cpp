@@ -16,7 +16,6 @@
 */
 
 #include "identityinvalidfolder.h"
-#include <KLocalizedString>
 
 using namespace KMail;
 

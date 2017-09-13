@@ -18,7 +18,6 @@
 */
 #include "configuredialog.h"
 #include "configurewidget.h"
-#include <KLocalizedString>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <kconfiggroup.h>

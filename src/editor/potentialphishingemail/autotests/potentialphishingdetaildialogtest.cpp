@@ -21,8 +21,6 @@
 #include "potentialphishingdetaildialogtest.h"
 #include "../potentialphishingdetaildialog.h"
 #include "../potentialphishingdetailwidget.h"
-#include <QLabel>
-#include <QListWidget>
 #include <qtest.h>
 #include <QStandardPaths>
 PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *parent)

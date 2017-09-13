@@ -32,7 +32,6 @@
 #include <QMenu>
 #include <KRun>
 
-#include <QHBoxLayout>
 
 namespace {
 inline QString archiveMailCollectionPattern()

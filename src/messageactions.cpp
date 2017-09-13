@@ -53,7 +53,6 @@
 #include <KRun>
 #include <QMenu>
 #include <KUriFilter>
-#include <KStringHandler>
 #include <QIcon>
 
 #include <QVariant>

@@ -19,7 +19,6 @@
 #include "tag/tagselectdialog.h"
 #include <KListWidgetSearchLine>
 #include <QListWidget>
-#include <QLineEdit>
 #include <qtest.h>
 #include <QStandardPaths>
 

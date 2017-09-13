@@ -23,7 +23,6 @@
 #include <qtest.h>
 #include <QStringList>
 #include <QSignalSpy>
-#include <QDebug>
 
 PotentialPhishingEmailJobTest::PotentialPhishingEmailJobTest(QObject *parent)
     : QObject(parent)

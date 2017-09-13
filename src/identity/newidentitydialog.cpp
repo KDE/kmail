@@ -39,8 +39,6 @@
 
 #include <assert.h>
 #include <QDialogButtonBox>
-#include <KConfigGroup>
-#include <KHelpClient>
 #include <QPushButton>
 
 using namespace KMail;

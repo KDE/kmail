@@ -32,7 +32,6 @@
 #include "secondarywindow.h"
 #include "kmkernel.h"
 
-#include <QApplication>
 #include <KLocalizedString>
 
 #include <QCloseEvent>

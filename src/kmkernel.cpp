@@ -44,8 +44,8 @@ using KPIM::RecentAddresses;
 #include <mailtransport/transportmanager.h>
 #include <mailtransportakonadi/dispatcherinterface.h>
 #include <AkonadiCore/servermanager.h>
-#include <KSieveUi/SieveImapInstanceInterfaceManager>
 
+#include <KSieveUi/SieveImapInstanceInterfaceManager>
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "mailcommon/jobscheduler.h"
@@ -100,7 +100,6 @@ using KMail::MailServiceImpl;
 #include <QWidget>
 #include <QFileInfo>
 #include <QtDBus/QtDBus>
-#include <QMimeDatabase>
 
 #include <MailCommon/ResourceReadConfigFile>
 

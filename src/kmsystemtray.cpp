@@ -32,10 +32,7 @@
 #include <QMenu>
 #include <KLocalizedString>
 #include <QAction>
-#include <KActionMenu>
 #include "widgets/kactionmenutransport.h"
-#include <KActionCollection>
-#include <QPainter>
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/EntityTreeModel>

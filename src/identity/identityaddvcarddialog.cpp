@@ -27,7 +27,6 @@
 #include <QRadioButton>
 #include <QLabel>
 #include <QDialogButtonBox>
-#include <KConfigGroup>
 #include <QPushButton>
 
 IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)

@@ -36,6 +36,8 @@
 #include "identityinvalidfolder.h"
 #include "identityfolderrequester.h"
 
+#include <QGpgME/Protocol>
+#include <QGpgME/Job>
 #include "MessageComposer/MessageComposerSettings"
 
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
@@ -70,8 +72,6 @@
 #include <Libkleo/DefaultKeyGenerationJob>
 #include <Libkleo/ProgressDialog>
 
-#include <QGpgME/Protocol>
-#include <QGpgME/Job>
 
 // gpgme++
 #include <gpgme++/keygenerationresult.h>
@@ -94,7 +94,6 @@ using MailTransport::TransportManager;
 #include <QTabWidget>
 #include <QIcon>
 #include <sonnet/dictionarycombobox.h>
-#include <KHelpClient>
 
 // Qt headers:
 #include <QLabel>
@@ -115,7 +114,6 @@ using MailTransport::TransportManager;
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <AkonadiCore/collectionmodifyjob.h>
 #include <QStandardPaths>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 
 using namespace KPIM;

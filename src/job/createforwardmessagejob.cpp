@@ -26,7 +26,6 @@
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
 
-#include <QUrl>
 
 CreateForwardMessageJob::CreateForwardMessageJob(QObject *parent)
     : QObject(parent)

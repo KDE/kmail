@@ -26,8 +26,6 @@
 #include <KMime/Message>
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
-#include <QUrl>
-#include <QDebug>
 
 CreateReplyMessageJob::CreateReplyMessageJob(QObject *parent)
     : QObject(parent)

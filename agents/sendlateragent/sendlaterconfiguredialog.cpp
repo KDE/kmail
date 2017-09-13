@@ -27,9 +27,8 @@
 #include <KHelpMenu>
 #include <QMenu>
 #include <kaboutdata.h>
-#include <KMessageBox>
 #include <QIcon>
-
+#include <QDialogButtonBox>
 #include <QApplication>
 
 SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)

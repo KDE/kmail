@@ -44,7 +44,6 @@
 #include <MailCommon/MailFilter>
 #include <MailCommon/MailKernel>
 
-#include <QTimer>
 
 // other headers
 #include <algorithm>

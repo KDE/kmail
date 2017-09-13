@@ -48,7 +48,6 @@
 #include <AttributeFactory>
 #include <KConfigGroup>
 
-#include <QVector>
 #include <QTimer>
 #include <KSharedConfig>
 

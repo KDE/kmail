@@ -37,7 +37,6 @@
 #include <QGridLayout>
 #include <QStandardPaths>
 #include <QMimeDatabase>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>

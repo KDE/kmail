@@ -41,10 +41,8 @@ using KPIM::RecentAddresses;
 #include <KLocalizedString>
 #include <KSeparator>
 #include <KCharsets>
-#include <KUrlRequester>
 #include <QHBoxLayout>
 #include <KMessageBox>
-#include <KFile>
 #include <QSpinBox>
 #include <KPluralHandlingSpinBox>
 #include "kmail_debug.h"

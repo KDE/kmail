@@ -28,15 +28,10 @@
 #include <PimCommon/GenericPluginManager>
 #include <AkonadiCore/ServerManager>
 #include <PimCommon/PluginUtil>
-#include <KConfigGroup>
 #include <KSharedConfig>
 #include <KLocalizedString>
 #include <MessageComposer/PluginEditorManager>
 
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QTreeWidget>
-#include <QDebug>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <MessageComposer/PluginEditorInit>

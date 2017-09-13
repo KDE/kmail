@@ -32,7 +32,6 @@
 #include <QVBoxLayout>
 #include <KLocalizedString>
 #include <KIconButton>
-#include <KConfigGroup>
 #include <QRadioButton>
 #include "kmail_debug.h"
 

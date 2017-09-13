@@ -21,13 +21,11 @@
 #include "kmkernel.h"
 
 #include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <KComboBox>
 #include <KNotifyConfigWidget>
 #include <KLocalizedString>
 #include <KConfig>
 #include <KSeparator>
-#include <KIconLoader>
 #include <QStandardPaths>
 #include <QDialogButtonBox>
 #include <KConfigGroup>

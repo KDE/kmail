@@ -27,7 +27,6 @@
 
 #include <KMime/Message>
 
-#include <QDebug>
 #include <QEventLoop>
 #include <QLabel>
 #include <QStandardPaths>

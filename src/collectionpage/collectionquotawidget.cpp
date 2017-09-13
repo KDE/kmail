@@ -33,13 +33,11 @@
 #include "collectionquotawidget.h"
 
 #include <KLocalizedString>
-#include <QDialog>
 
 #include <QLabel>
 #include <qlayout.h>
 #include <qprogressbar.h>
 #include <KFormat>
-#include <KConfigGroup>
 
 CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
     : QWidget(parent)

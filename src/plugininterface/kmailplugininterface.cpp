@@ -18,7 +18,6 @@
 */
 
 #include "kmailplugininterface.h"
-#include <KActionCollection>
 #include <kmmainwidget.h>
 #include "kmail_debug.h"
 

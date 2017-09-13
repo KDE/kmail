@@ -27,13 +27,11 @@
 #include "tag/tagactionmanager.h"
 
 #include <QTimer>
-#include <QAction>
 #include <QStatusBar>
 #include <QApplication>
 
 #include <KConfigGui>
 #include <QMenuBar>
-#include <KToggleAction>
 #include <KConfigGui>
 #include <KLocalizedString>
 #include <kedittoolbar.h>

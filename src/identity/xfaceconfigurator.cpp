@@ -39,7 +39,6 @@
 #include "kpimtextedit/plaintexteditorwidget.h"
 #include <messageviewer/kxface.h>
 
-#include <KConfigGroup>
 #include <KJobWidgets>
 #include <kcombobox.h>
 #include <KLocalizedString>
@@ -47,7 +46,6 @@
 #include <KIO/StoredTransferJob>
 
 #include <QCheckBox>
-#include <QDialog>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>

@@ -27,10 +27,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "MessageViewer/PrintingSettings"
 
-#include <KCModuleProxy>
-#include <KCModuleInfo>
 #include <KLocalizedString>
-#include <KConfigGroup>
 #include <QHBoxLayout>
 
 #include <WebEngineViewer/NetworkPluginUrlInterceptorConfigureWidget>

@@ -24,9 +24,7 @@
 #include <KMessageBox>
 #include <QStandardPaths>
 
-#include <QHBoxLayout>
 #include <QFileInfo>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>
