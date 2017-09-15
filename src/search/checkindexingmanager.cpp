@@ -98,10 +98,10 @@ void CheckIndexingManager::callToReindexCollection()
         if (Akonadi::ServerManager::hasInstanceIdentifier()) {
             service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
         }
-        QDBusInterface interfaceBalooIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), service);
-        if (interfaceBalooIndexer.isValid()) {
+        QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), service);
+        if (interfaceAkonadiIndexer.isValid()) {
             qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
-            interfaceBalooIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));
+            interfaceAkonadiIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));
         }
     }
 }

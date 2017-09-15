@@ -91,7 +91,7 @@ public:
 
     void addWebShortcutsMenu(QMenu *menu, const QString &text);
 
-    QAction *debugBalooAction() const;
+    QAction *debugAkonadiSearchAction() const;
     QAction *addFollowupReminderAction() const;
 
 Q_SIGNALS:
@@ -129,7 +129,7 @@ private Q_SLOTS:
 
     void slotUpdateActionsFetchDone(KJob *job);
     void slotMailingListFilter();
-    void slotDebugBaloo();
+    void slotDebugAkonadiSearch();
 
     void slotAddFollowupReminder();
 private:
@@ -158,7 +158,7 @@ private:
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu = nullptr;
     QAction *mListFilterAction = nullptr;
     QAction *mAddFollowupReminderAction = nullptr;
-    QAction *mDebugBalooAction = nullptr;
+    QAction *mDebugAkonadiSearchAction = nullptr;
     KIO::KUriFilterSearchProviderActions *mWebShortcutMenuManager = nullptr;
 };
 }

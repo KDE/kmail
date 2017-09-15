@@ -2761,9 +2761,9 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
 
         menu.addSeparator();
         menu.addAction(mMsgActions->addFollowupReminderAction());
-        if (kmkernel->allowToDebugBalooSupport()) {
+        if (kmkernel->allowToDebugAkonadiSeachSupport()) {
             menu.addSeparator();
-            menu.addAction(mMsgActions->debugBalooAction());
+            menu.addAction(mMsgActions->debugAkonadiSearchAction());
         }
     }
     if (!selectedText.isEmpty()) {

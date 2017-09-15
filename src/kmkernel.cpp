@@ -129,11 +129,11 @@ KMKernel::KMKernel(QObject *parent)
     , mMailService(nullptr)
     , mSystemNetworkStatus(true)
     , mSystemTray(nullptr)
-    , mDebugBaloo(false)
+    , mDebugAkonadiSearch(false)
 {
     //Initialize kmail sieveimap interface
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
-    mDebugBaloo = !qEnvironmentVariableIsEmpty("KDEPIM_BALOO_DEBUG");
+    mDebugAkonadiSearch = !qEnvironmentVariableIsEmpty("AKONADI_SEARCH_DEBUG");
 
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();
 
@@ -1920,9 +1920,9 @@ FolderArchiveManager *KMKernel::folderArchiveManager() const
     return mFolderArchiveManager;
 }
 
-bool KMKernel::allowToDebugBalooSupport() const
+bool KMKernel::allowToDebugAkonadiSeachSupport() const
 {
-    return mDebugBaloo;
+    return mDebugAkonadiSearch;
 }
 
 bool KMKernel::firstStart() const

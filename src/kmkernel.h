@@ -418,7 +418,7 @@ public:
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
 
-    bool allowToDebugBalooSupport() const;
+    bool allowToDebugAkonadiSeachSupport() const;
 
     Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 
@@ -538,7 +538,7 @@ private:
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
     MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;
-    bool mDebugBaloo = false;
+    bool mDebugAkonadiSearch = false;
 };
 
 #endif // _KMKERNEL_H

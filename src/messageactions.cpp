@@ -186,9 +186,9 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     replyMenu()->addAction(mCustomTemplatesMenu->replyActionMenu());
     replyMenu()->addAction(mCustomTemplatesMenu->replyAllActionMenu());
 
-    //Don't translate it. Shown only when we set env variable KDEPIM_BALOO_DEBUG
-    mDebugBalooAction = new QAction(QStringLiteral("Debug Baloo..."), this);
-    connect(mDebugBalooAction, &QAction::triggered, this, &MessageActions::slotDebugBaloo);
+    //Don't translate it. Shown only when we set env variable AKONADI_SEARCH_DEBUG
+    mDebugAkonadiSearchAction = new QAction(QStringLiteral("Debug Akonadi Search..."), this);
+    connect(mDebugAkonadiSearchAction, &QAction::triggered, this, &MessageActions::slotDebugAkonadiSearch);
 
     mAddFollowupReminderAction = new QAction(i18n("Add Followup Reminder..."), this);
     ac->addAction(QStringLiteral("message_followup_reminder"), mAddFollowupReminderAction);
@@ -672,9 +672,9 @@ void MessageActions::addWebShortcutsMenu(QMenu *menu, const QString &text)
     mWebShortcutMenuManager->addWebShortcutsToMenu(menu);
 }
 
-QAction *MessageActions::debugBalooAction() const
+QAction *MessageActions::debugAkonadiSearchAction() const
 {
-    return mDebugBalooAction;
+    return mDebugAkonadiSearchAction;
 }
 
 QAction *MessageActions::addFollowupReminderAction() const
@@ -682,7 +682,7 @@ QAction *MessageActions::addFollowupReminderAction() const
     return mAddFollowupReminderAction;
 }
 
-void MessageActions::slotDebugBaloo()
+void MessageActions::slotDebugAkonadiSearch()
 {
     if (!mCurrentItem.isValid()) {
         return;
