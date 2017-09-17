@@ -3839,7 +3839,7 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     slotUpdateOnlineStatus(static_cast<GlobalSettingsBase::EnumNetworkState::type>(KMailSettings::self()->networkState()));
     if (QAction *act = action(QStringLiteral("kmail_undo"))) {
-        act->setEnabled(!kmkernel->undoStack()->isEmpty());
+        act->setEnabled(kmkernel->undoStack() && !kmkernel->undoStack()->isEmpty());
     }
 
     // Enable / disable all filters.
