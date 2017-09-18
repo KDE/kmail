@@ -34,6 +34,7 @@
     <method name="applySpecificFiltersOnCollections">
       <arg name="collections" type="ax" direction="in"/>
       <arg name="listFilters" type="as" direction="in"/>
+      <arg name="filterSet" type="i" direction="in"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="const QList&lt;qint64&gt; &amp;"/>
     </method>
     <method name="reload"/>

@@ -596,7 +596,10 @@ void FilterManager::dump() const
 
 #endif
 
-void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMessages, SearchRule::RequiredPart requiredPart, const QStringList &listFilters)
+void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMessages,
+                                         SearchRule::RequiredPart requiredPart,
+                                         const QStringList &listFilters,
+                                         FilterSet filterSet)
 {
     Q_EMIT progressMessage(i18n("Filtering messages"));
     d->mTotalProgressCount = selectedMessages.size();
@@ -613,6 +616,7 @@ void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMess
 
     itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     itemFetchJob->setProperty("listFilters", QVariant::fromValue(listFilters));
+    itemFetchJob->setProperty("filterSet", QVariant::fromValue(static_cast<int>(filterSet)));
     itemFetchJob->setProperty("needsFullPayload", requiredPart != SearchRule::Envelope);
 
     connect(itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),

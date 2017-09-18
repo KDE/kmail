@@ -341,7 +341,7 @@ void MailFilterAgent::applySpecificFilters(const QList< qint64 > &itemIds, int r
     m_filterManager->applySpecificFilters(items, static_cast<MailCommon::SearchRule::RequiredPart>(requires), listFilters);
 }
 
-void MailFilterAgent::applySpecificFiltersOnCollections(const QList<qint64> &colIds, const QStringList &listFilters)
+void MailFilterAgent::applySpecificFiltersOnCollections(const QList<qint64> &colIds, const QStringList &listFilters, int filterSet)
 {
     // TODO: Actually calculate this based on the listFilters' requirements
     const auto requires = MailCommon::SearchRule::CompleteMessage;
@@ -355,7 +355,7 @@ void MailFilterAgent::applySpecificFiltersOnCollections(const QList<qint64> &col
         ifj->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
         connect(ifj, &Akonadi::ItemFetchJob::itemsReceived,
                 this, [=](const Akonadi::Item::List &items) {
-            m_filterManager->applySpecificFilters(items, requires, listFilters);
+            m_filterManager->applySpecificFilters(items, requires, listFilters, static_cast<FilterManager::FilterSet>(filterSet));
         });
     }
 }
