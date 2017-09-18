@@ -57,7 +57,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox *mShowBalooSearchAddressesInComposer = nullptr;
+    QCheckBox *mShowAkonadiSearchAddressesInComposer = nullptr;
     QCheckBox *mAutoAppSignFileCheck = nullptr;
     QCheckBox *mTopQuoteCheck = nullptr;
     QCheckBox *mDashDashCheck = nullptr;

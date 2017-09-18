@@ -371,13 +371,13 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // "Use Baloo seach in composer" checkbox
-    mShowBalooSearchAddressesInComposer = new QCheckBox(
+    mShowAkonadiSearchAddressesInComposer = new QCheckBox(
         MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(),
         this);
 
-    connect(mShowBalooSearchAddressesInComposer, &QCheckBox::stateChanged,
+    connect(mShowAkonadiSearchAddressesInComposer, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
-    groupGridLayout->addWidget(mShowBalooSearchAddressesInComposer, row, 0, 1, -1);
+    groupGridLayout->addWidget(mShowAkonadiSearchAddressesInComposer, row, 0, 1, -1);
     ++row;
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
@@ -526,7 +526,7 @@ void ComposerPage::GeneralTab::doResetToDefaultsOther()
     mWrapColumnSpin->setValue(wrapColumn);
     mMaximumRecipients->setValue(maximumRecipient);
     mShowRecentAddressesInComposer->setChecked(showRecentAddress);
-    mShowBalooSearchAddressesInComposer->setChecked(showBalooSearchInComposer);
+    mShowAkonadiSearchAddressesInComposer->setChecked(showBalooSearchInComposer);
     mImprovePlainTextOfHtmlMessage->setChecked(improvePlainText);
 
     mMaximumRecentAddress->setValue(200);
@@ -552,7 +552,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
     loadWidget(mMaximumRecipients, MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
     mAutoSave->setValue(KMailSettings::self()->autosaveInterval());
     loadWidget(mShowRecentAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem());
-    loadWidget(mShowBalooSearchAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem());
+    loadWidget(mShowAkonadiSearchAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem());
     mImprovePlainTextOfHtmlMessage->setChecked(MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessage());
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
@@ -586,7 +586,7 @@ void ComposerPage::GeneralTab::save()
     saveSpinBox(mMaximumRecipients, MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
     KMailSettings::self()->setAutosaveInterval(mAutoSave->value());
     MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer(mShowRecentAddressesInComposer->isChecked());
-    MessageComposer::MessageComposerSettings::self()->setShowBalooSearchInComposer(mShowBalooSearchAddressesInComposer->isChecked());
+    MessageComposer::MessageComposerSettings::self()->setShowBalooSearchInComposer(mShowAkonadiSearchAddressesInComposer->isChecked());
     MessageComposer::MessageComposerSettings::self()->setImprovePlainTextOfHtmlMessage(mImprovePlainTextOfHtmlMessage->isChecked());
 #ifdef KDEPIM_ENTERPRISE_BUILD
     KMailSettings::self()->setTooManyRecipients(mRecipientCheck->isChecked());

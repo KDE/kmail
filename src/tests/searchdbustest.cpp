@@ -38,12 +38,12 @@ searchdbustest::searchdbustest(QWidget *parent)
 
 void searchdbustest::slotReindexCollections()
 {
-    QDBusInterface interfaceBalooIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
-    if (interfaceBalooIndexer.isValid()) {
+    QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+    if (interfaceAkonadiIndexer.isValid()) {
         const QList<qlonglong> lst = {100, 300};
         qDebug() << "reindex " << lst;
         //qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
-        interfaceBalooIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(lst));
+        interfaceAkonadiIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(lst));
     } else {
         qDebug() << " interface is not valid";
     }
