@@ -72,7 +72,6 @@
 #include <Libkleo/DefaultKeyGenerationJob>
 #include <Libkleo/ProgressDialog>
 
-
 // gpgme++
 #include <gpgme++/keygenerationresult.h>
 

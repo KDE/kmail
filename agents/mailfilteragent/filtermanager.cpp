@@ -44,7 +44,6 @@
 #include <MailCommon/MailFilter>
 #include <MailCommon/MailKernel>
 
-
 // other headers
 #include <algorithm>
 #include <errno.h>

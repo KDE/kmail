@@ -241,7 +241,6 @@ public Q_SLOTS:
     void clearFilterActions();
     void initializeFilterActions();
 
-
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
     void slotUpdateMessageTagList(const Akonadi::Tag &tag);
@@ -261,7 +260,6 @@ public Q_SLOTS:
     Akonadi::StandardMailActionManager *standardMailActionManager() const;
 
     void refreshMessageListSelection();
-
 
     void slotRemoveDuplicates();
 
