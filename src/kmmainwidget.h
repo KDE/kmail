@@ -173,7 +173,7 @@ public:
     Akonadi::Item::List currentSelection() const;
 
     QString fullCollectionPath() const;
-public Q_SLOTS:
+private:
     // Moving messages around
     /**
      * This will ask for a destination folder and move the currently selected
@@ -188,16 +188,22 @@ public Q_SLOTS:
      * messages (in MessageListView) into it.
      */
     void slotCopySelectedMessagesToFolder();
-
     /**
      * Implements the "move to trash" action
      */
     void slotTrashSelectedMessages();
 
     void slotCheckMail();
-
     void slotCheckMailOnStartup();
 
+    /** Trigger the dialog for editing out-of-office scripts.  */
+    void slotEditVacation(const QString &serverName);
+
+    void slotStartCheckMail();
+    void slotEndCheckMail();
+    void restoreCollectionFolderViewConfig();
+
+public Q_SLOTS:
     /**
       Select the given folder
       If the folder is 0 the intro is shown
@@ -235,8 +241,6 @@ public Q_SLOTS:
     void clearFilterActions();
     void initializeFilterActions();
 
-    /** Trigger the dialog for editing out-of-office scripts.  */
-    void slotEditVacation(const QString &serverName);
 
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
@@ -258,14 +262,11 @@ public Q_SLOTS:
 
     void refreshMessageListSelection();
 
-    void slotStartCheckMail();
-    void slotEndCheckMail();
 
     void slotRemoveDuplicates();
 
     void slotSelectCollectionFolder(const Akonadi::Collection &col);
 
-    void restoreCollectionFolderViewConfig();
     void slotUpdateConfig();
 Q_SIGNALS:
     void messagesTransfered(bool);
