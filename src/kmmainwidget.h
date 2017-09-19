@@ -202,13 +202,24 @@ private:
     void slotStartCheckMail();
     void slotEndCheckMail();
     void restoreCollectionFolderViewConfig();
+    /** Update message actions */
+    void updateMessageActions(bool fast = false);
+    void updateMessageActionsDelayed();
+    /**
+      Update message menu
+    */
+    void updateMessageMenu();
 
-public Q_SLOTS:
+
+    void slotRemoveDuplicates();
     /**
       Select the given folder
       If the folder is 0 the intro is shown
     */
     void folderSelected(const Akonadi::Collection &col);
+
+
+public Q_SLOTS:
 
     /**
       Open a separate viewer window containing the specified message.
@@ -224,28 +235,26 @@ public Q_SLOTS:
     void slotMessageStatusChangeRequest(const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus &);
 
     /**
-      Update message menu
-    */
-    void updateMessageMenu();
-
-    /**
       Start a timer to update message actions
     */
     void startUpdateMessageActionsTimer();
 
-    /** Update message actions */
-    void updateMessageActions(bool fast = false);
-    void updateMessageActionsDelayed();
-
-    /** Clear and create actions for marked filters */
-    void clearFilterActions();
-    void initializeFilterActions();
 
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
     void slotUpdateMessageTagList(const Akonadi::Tag &tag);
     void slotSelectMoreMessageTagList();
 
+
+
+    void slotSelectCollectionFolder(const Akonadi::Collection &col);
+
+    void slotUpdateConfig();
+public:
+
+    void initializeFilterActions();
+    /** Clear and create actions for marked filters */
+    void clearFilterActions();
     /**
      * Convenience function to get the action collection in a list.
      *
@@ -254,24 +263,16 @@ public Q_SLOTS:
      *         by actionCollection().
      */
     QList<KActionCollection *> actionCollections() const;
-
+    void refreshMessageListSelection();
+    Akonadi::StandardMailActionManager *standardMailActionManager() const;
     QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
     QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
-    Akonadi::StandardMailActionManager *standardMailActionManager() const;
-
-    void refreshMessageListSelection();
-
-    void slotRemoveDuplicates();
-
-    void slotSelectCollectionFolder(const Akonadi::Collection &col);
-
-    void slotUpdateConfig();
 Q_SIGNALS:
     void messagesTransfered(bool);
     void captionChangeRequest(const QString &caption);
     void recreateGui();
 
-protected:
+private:
     void setupActions();
     void createWidgets();
     void deleteWidgets();
@@ -279,17 +280,17 @@ protected:
     void newFromTemplate(const Akonadi::Item &);
     void moveSelectedMessagesToFolder(const Akonadi::Collection &dest);
     void copySelectedMessagesToFolder(const Akonadi::Collection &dest);
-
-    void showEvent(QShowEvent *event) override;
-
     KActionCollection *actionCollection() const;
-
     /**
       @return the correct config dialog depending on whether the parent of
       the mainWidget is a KPart or a KMMainWindow.
       When dealing with geometries, use this pointer
     */
     KSharedConfig::Ptr config();
+protected:
+    void showEvent(QShowEvent *event) override;
+
+
 
 protected Q_SLOTS:
     void updateFileMenu();
