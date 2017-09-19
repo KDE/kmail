@@ -57,10 +57,10 @@ private:
     QString mCustomTemplate;
     KMime::Message::Ptr mMsg;
     Akonadi::Collection mCollectionForNewMessage;
-    uint mUoldId;
-    uint mUoid;
+    uint mUoldId = 0;
+    uint mUoid = 0;
     KIdentityManagement::Identity mIdent;
-    bool mWasModified;
+    bool mWasModified = false;
 };
 
 #endif // KMCOMPOSERUPDATETEMPLATEJOB_H

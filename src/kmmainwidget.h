@@ -127,19 +127,12 @@ public:
     static void cleanup();
     QAction *action(const QString &name);
 
-    KActionMenu *filterMenu() const;
-
-    KActionMenu *mailingListActionMenu() const;
-
-    QAction *editAction() const;
 
     QAction *sendAgainAction() const;
 
     QAction *sendQueuedAction() const;
 
     KActionMenuTransport *sendQueueViaMenu() const;
-
-    KMail::MessageActions *messageActions() const;
 
     /**
       Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
@@ -173,7 +166,65 @@ public:
     Akonadi::Item::List currentSelection() const;
 
     QString fullCollectionPath() const;
+
+    void initializeFilterActions();
+    /** Clear and create actions for marked filters */
+    void clearFilterActions();
+    /**
+     * Convenience function to get the action collection in a list.
+     *
+     * @return a list of action collections. The list only has one item, and
+     *         that is the action collection of this main widget as returned
+     *         by actionCollection().
+     */
+    QList<KActionCollection *> actionCollections() const;
+    void refreshMessageListSelection();
+    Akonadi::StandardMailActionManager *standardMailActionManager() const;
+    QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
+    QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
+
+public Q_SLOTS:
+
+    /**
+      Open a separate viewer window containing the specified message.
+    */
+    void slotMessageActivated(const Akonadi::Item &);
+
+    /**
+      Opens mail in the internal viewer.
+    */
+    void slotMessageSelected(const Akonadi::Item &);
+
+    void slotItemsFetchedForActivation(KMCommand *command);
+    void slotMessageStatusChangeRequest(const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus &);
+
+
+
+    /** Adds if not existing/removes if existing the tag identified by @p aLabel
+        in all selected messages */
+    void slotUpdateMessageTagList(const Akonadi::Tag &tag);
+
+
+    void slotSelectCollectionFolder(const Akonadi::Collection &col);
+
+    void slotUpdateConfig();
+Q_SIGNALS:
+    void messagesTransfered(bool);
+    void captionChangeRequest(const QString &caption);
+    void recreateGui();
+
+protected:
+    void showEvent(QShowEvent *event) override;
+
 private:
+    KMail::MessageActions *messageActions() const;
+
+    KActionMenu *filterMenu() const;
+
+    KActionMenu *mailingListActionMenu() const;
+
+    QAction *editAction() const;
+
     // Moving messages around
     /**
      * This will ask for a destination folder and move the currently selected
@@ -219,60 +270,12 @@ private:
     void folderSelected(const Akonadi::Collection &col);
 
 
-public Q_SLOTS:
-
-    /**
-      Open a separate viewer window containing the specified message.
-    */
-    void slotMessageActivated(const Akonadi::Item &);
-
-    /**
-      Opens mail in the internal viewer.
-    */
-    void slotMessageSelected(const Akonadi::Item &);
-
-    void slotItemsFetchedForActivation(KMCommand *command);
-    void slotMessageStatusChangeRequest(const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus &);
 
     /**
       Start a timer to update message actions
     */
     void startUpdateMessageActionsTimer();
-
-
-    /** Adds if not existing/removes if existing the tag identified by @p aLabel
-        in all selected messages */
-    void slotUpdateMessageTagList(const Akonadi::Tag &tag);
     void slotSelectMoreMessageTagList();
-
-
-
-    void slotSelectCollectionFolder(const Akonadi::Collection &col);
-
-    void slotUpdateConfig();
-public:
-
-    void initializeFilterActions();
-    /** Clear and create actions for marked filters */
-    void clearFilterActions();
-    /**
-     * Convenience function to get the action collection in a list.
-     *
-     * @return a list of action collections. The list only has one item, and
-     *         that is the action collection of this main widget as returned
-     *         by actionCollection().
-     */
-    QList<KActionCollection *> actionCollections() const;
-    void refreshMessageListSelection();
-    Akonadi::StandardMailActionManager *standardMailActionManager() const;
-    QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
-    QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
-Q_SIGNALS:
-    void messagesTransfered(bool);
-    void captionChangeRequest(const QString &caption);
-    void recreateGui();
-
-private:
     void setupActions();
     void createWidgets();
     void deleteWidgets();
@@ -287,10 +290,70 @@ private:
       When dealing with geometries, use this pointer
     */
     KSharedConfig::Ptr config();
-protected:
-    void showEvent(QShowEvent *event) override;
 
+    void checkAkonadiServerManagerState();
+    void updateHtmlMenuEntry();
 
+    void updateMoveAction(const Akonadi::CollectionStatistics &statistic);
+    void updateMoveAction(bool hasUnreadMails);
+
+    void updateAllToTrashAction(int statistics);
+
+    /** Get override character encoding. */
+    QString overrideEncoding() const;
+
+    void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);
+
+    void copyMessageSelected(const Akonadi::Item::List &selectMsg, const Akonadi::Collection &dest);
+
+    /**
+     * Move the messages referenced by the specified set to trash.
+     * The set parameter must not be null and the ownership is passed
+     * to this function.
+     */
+    void trashMessageSelected(MessageList::Core::MessageItemSetReference ref);
+    /**
+     * Set the status of the messages referenced by the specified set, eventually toggling it.
+     * The set parameter must not be null and the ownership is passed to this function.
+     */
+    void setMessageSetStatus(const Akonadi::Item::List &select, const Akonadi::MessageStatus &status, bool toggle);
+    /**
+     * Toggles a tag for the messages referenced by the specified set.
+     * The set parameter must not be null and the ownership is passed to this function.
+     */
+    void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
+    /**
+     * This applies setMessageSetStatus() on the current thread.
+     */
+    void setCurrentThreadStatus(const Akonadi::MessageStatus &status, bool toggle);
+
+    void applyFilters(const Akonadi::Item::List &selectedMessages);
+    void applyFilters(const Akonadi::Collection::List &selectedCols);
+    void applyFilter(const Akonadi::Collection::List &selectedCols, const QString &filter);
+
+    /**
+     * Internal helper that creates the folder selection dialog used for the
+     * move and copy to folder actions on demand. Only folders where items can
+     * be added are listed.
+     */
+    MailCommon::FolderSelectionDialog *moveOrCopyToDialog();
+
+    /**
+     * Internal helper that creates the folder selection dialog used for
+     * jumping to folders, or adding them as favourites. All folders are listed.
+     */
+    MailCommon::FolderSelectionDialog *selectFromAllFoldersDialog();
+
+    /**
+     * Internal helper that applies the current settings so the
+     * favorite folder view.
+     */
+    void refreshFavoriteFoldersViewProperties();
+
+    void openFilterDialog(const QByteArray &field, const QString &value);
+
+    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
+                          const WebEngineViewer::WebHitTestResult &result);
 
 private Q_SLOTS:
     void updateFileMenu();
@@ -416,72 +479,7 @@ private Q_SLOTS:
     void slotCreateAddressBookContact();
     void slotOpenRecentMsg(const QUrl &url);
 
-private:
-    void checkAkonadiServerManagerState();
-    void updateHtmlMenuEntry();
 
-    void updateMoveAction(const Akonadi::CollectionStatistics &statistic);
-    void updateMoveAction(bool hasUnreadMails);
-
-    void updateAllToTrashAction(int statistics);
-
-    /** Get override character encoding. */
-    QString overrideEncoding() const;
-
-    void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);
-
-    void copyMessageSelected(const Akonadi::Item::List &selectMsg, const Akonadi::Collection &dest);
-
-    /**
-     * Move the messages referenced by the specified set to trash.
-     * The set parameter must not be null and the ownership is passed
-     * to this function.
-     */
-    void trashMessageSelected(MessageList::Core::MessageItemSetReference ref);
-    /**
-     * Set the status of the messages referenced by the specified set, eventually toggling it.
-     * The set parameter must not be null and the ownership is passed to this function.
-     */
-    void setMessageSetStatus(const Akonadi::Item::List &select, const Akonadi::MessageStatus &status, bool toggle);
-    /**
-     * Toggles a tag for the messages referenced by the specified set.
-     * The set parameter must not be null and the ownership is passed to this function.
-     */
-    void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
-    /**
-     * This applies setMessageSetStatus() on the current thread.
-     */
-    void setCurrentThreadStatus(const Akonadi::MessageStatus &status, bool toggle);
-
-    void applyFilters(const Akonadi::Item::List &selectedMessages);
-    void applyFilters(const Akonadi::Collection::List &selectedCols);
-    void applyFilter(const Akonadi::Collection::List &selectedCols, const QString &filter);
-
-    /**
-     * Internal helper that creates the folder selection dialog used for the
-     * move and copy to folder actions on demand. Only folders where items can
-     * be added are listed.
-     */
-    MailCommon::FolderSelectionDialog *moveOrCopyToDialog();
-
-    /**
-     * Internal helper that creates the folder selection dialog used for
-     * jumping to folders, or adding them as favourites. All folders are listed.
-     */
-    MailCommon::FolderSelectionDialog *selectFromAllFoldersDialog();
-
-    /**
-     * Internal helper that applies the current settings so the
-     * favorite folder view.
-     */
-    void refreshFavoriteFoldersViewProperties();
-
-    void openFilterDialog(const QByteArray &field, const QString &value);
-
-    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
-                          const WebEngineViewer::WebHitTestResult &result);
-
-private Q_SLOTS:
     void slotMoveMessageToTrash();
     /**
      * Called when a "move to trash" operation is completed

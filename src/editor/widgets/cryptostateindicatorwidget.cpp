@@ -28,9 +28,6 @@
 
 CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     : QWidget(parent)
-    , mShowAlwaysIndicator(true)
-    , mIsSign(false)
-    , mIsEncrypted(false)
 {
     QHBoxLayout *hbox = new QHBoxLayout(this);
     hbox->setMargin(0);

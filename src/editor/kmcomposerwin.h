@@ -306,7 +306,7 @@ private Q_SLOTS:
      * Change crypto plugin to be used for signing/encrypting messages,
      * or switch to built-in OpenPGP code.
      */
-    void slotSelectCryptoModule(bool init = false);
+    void slotSelectCryptoModule(bool init);
 
     /**
      * XML-GUI stuff
@@ -531,6 +531,7 @@ private:
         KeyOk,
         NoKey
     };
+    void slotCryptoModuleSelected();
 
     void updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified);
 
@@ -555,23 +556,24 @@ private:
     QLabel *mCursorLineLabel = nullptr;
     QLabel *mCursorColumnLabel = nullptr;
     QLabel *mStatusbarLabel = nullptr;
-    bool mDone;
+    bool mDone = false;
 
     KMime::Message::Ptr mMsg;
     QGridLayout *mGrid = nullptr;
     QString mTextSelection;
     QString mCustomTemplate;
-    bool mLastSignActionState;
-    bool mLastEncryptActionState;
-    bool mSigningAndEncryptionExplicitlyDisabled;
-    bool mLastIdentityHasSigningKey;
-    bool mLastIdentityHasEncryptionKey;
+    bool mLastSignActionState = false;
+    bool mLastEncryptActionState = false;
+    bool mSigningAndEncryptionExplicitlyDisabled = false;
+    bool mLastIdentityHasSigningKey = false;
+    bool mLastIdentityHasEncryptionKey = false;
     Akonadi::Collection mFolder;
     long mShowHeaders;
-    bool mForceDisableHtml;     // Completely disable any HTML. Useful when sending invitations in the
+    bool mForceDisableHtml = false;     // Completely disable any HTML. Useful when sending invitations in the
     // mail body.
     int mNumHeaders;
-    QFont mBodyFont, mFixedFont;
+    QFont mBodyFont;
+    QFont mFixedFont;
     uint mId;
     TemplateContext mContext;
 
@@ -630,11 +632,11 @@ private:
     ExternalEditorWarning *mExternalEditorWarning = nullptr;
     QTimer *mVerifyMissingAttachment = nullptr;
     MailCommon::FolderRequester *mFccFolder = nullptr;
-    bool mPreventFccOverwrite;
-    bool mCheckForForgottenAttachments;
-    bool mWasModified;
+    bool mPreventFccOverwrite = false;
+    bool mCheckForForgottenAttachments = false;
+    bool mWasModified = false;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget = nullptr;
-    bool mSendNowByShortcutUsed;
+    bool mSendNowByShortcutUsed = false;
     KSplitterCollapserButton *mSnippetSplitterCollapser = nullptr;
     KToggleAction *mFollowUpToggleAction = nullptr;
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode = nullptr;

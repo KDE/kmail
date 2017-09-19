@@ -38,9 +38,9 @@ private:
     void updateShowAlwaysIndicator();
     QLabel *mSignatureStateIndicator = nullptr;
     QLabel *mEncryptionStateIndicator = nullptr;
-    bool mShowAlwaysIndicator;
-    bool mIsSign;
-    bool mIsEncrypted;
+    bool mShowAlwaysIndicator = true;
+    bool mIsSign = false;
+    bool mIsEncrypted = false;
 };
 
 #endif // CRYPTOSTATEINDICATORWIDGET_H

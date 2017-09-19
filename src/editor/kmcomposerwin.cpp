@@ -22,7 +22,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include "kmcomposerwin.h"
-
+#include "kconfigwidgets_version.h"
 // KMail includes
 #include "job/addressvalidationjob.h"
 #include "kmcomposercreatenewcomposerjob.h"
@@ -1099,8 +1099,8 @@ void KMComposerWin::setupActions(void)
         actionCollection()->addAction(QStringLiteral("send_alternative_via"), actActionNowMenu);
     }
 
-    connect(actActionNowMenu, SIGNAL(triggered(bool)), this,
-            SLOT(slotSendNow()));
+    connect(actActionNowMenu, &QAction::triggered, this,
+            &KMComposerWin::slotSendNow);
     connect(actActionLaterMenu, &QAction::triggered, this,
             &KMComposerWin::slotSendLater);
     connect(actActionNowMenu, &KActionMenuTransport::transportSelected, this,
@@ -1166,7 +1166,11 @@ void KMComposerWin::setupActions(void)
     KStandardAction::redo(mGlobalAction, &KMComposerGlobalAction::slotRedo, actionCollection());
     KStandardAction::cut(mGlobalAction, &KMComposerGlobalAction::slotCut, actionCollection());
     KStandardAction::copy(mGlobalAction, &KMComposerGlobalAction::slotCopy, actionCollection());
+#if KCONFIGWIDGETS_VERSION_MINOR >= 39
+    KStandardAction::paste(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
+#else
     KStandardAction::pasteText(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
+#endif
     mSelectAll = KStandardAction::selectAll(mGlobalAction, &KMComposerGlobalAction::slotMarkAll, actionCollection());
 
     mFindText = KStandardAction::find(mRichTextEditorwidget, &KPIMTextEdit::RichTextEditorWidget::slotFind, actionCollection());
@@ -1279,7 +1283,7 @@ void KMComposerWin::setupActions(void)
 
     KStandardAction::keyBindings(this, &KMComposerWin::slotEditKeys, actionCollection());
     KStandardAction::configureToolbars(this, &KMComposerWin::slotEditToolbars, actionCollection());
-    KStandardAction::preferences(kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection());
+    KStandardAction::preferences(kmkernel, &KMKernel::slotShowConfigurationDialog, actionCollection());
 
     action = new QAction(i18n("&Spellchecker..."), this);
     action->setIconText(i18n("Spellchecker"));
@@ -1315,7 +1319,7 @@ void KMComposerWin::setupActions(void)
 
     mCryptoModuleAction = new KSelectAction(i18n("&Cryptographic Message Format"), this);
     actionCollection()->addAction(QStringLiteral("options_select_crypto"), mCryptoModuleAction);
-    connect(mCryptoModuleAction, SIGNAL(triggered(int)), SLOT(slotSelectCryptoModule()));
+    connect(mCryptoModuleAction, QOverload<int>::of(&KSelectAction::triggered), this, &KMComposerWin::slotCryptoModuleSelected);
     mCryptoModuleAction->setToolTip(i18n("Select a cryptographic format for this message"));
     mCryptoModuleAction->setItems(listCryptoFormat);
 
@@ -1910,6 +1914,11 @@ bool KMComposerWin::showErrorMessage(KJob *job)
 void KMComposerWin::slotInsertTextFile(KJob *job)
 {
     showErrorMessage(job);
+}
+
+void KMComposerWin::slotCryptoModuleSelected()
+{
+    slotSelectCryptoModule(false);
 }
 
 void KMComposerWin::slotSelectCryptoModule(bool init)
