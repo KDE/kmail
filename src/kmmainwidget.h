@@ -292,7 +292,7 @@ protected:
 
 
 
-protected Q_SLOTS:
+private Q_SLOTS:
     void updateFileMenu();
     void slotFilter();
     void slotManageSieveScripts();
