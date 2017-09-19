@@ -1585,16 +1585,6 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
     }
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotMessageQueuedOrDrafted()
-{
-    if (!CommonKernel->folderIsDraftOrOutbox(mCurrentCollection)) {
-        return;
-    }
-    if (mMsgView) {
-        mMsgView->update(true);
-    }
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardInlineMsg()

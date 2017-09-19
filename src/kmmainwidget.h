@@ -307,7 +307,6 @@ protected Q_SLOTS:
     void slotAddFavoriteFolder();
     void slotShowSelectedFolderInPane();
     void slotOverrideHtmlLoadExt();
-    void slotMessageQueuedOrDrafted();
     void slotUseTemplate();
     void slotDeleteMsg(bool confirmDelete = true);    // completely delete message
     void slotTrashThread();
