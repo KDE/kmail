@@ -47,14 +47,13 @@ public:
     void load(const Akonadi::Collection &col) override;
     void save(Akonadi::Collection &col) override;
 
-private Q_SLOTS:
+private:
     void slotChangeIcon(const QString &icon);
     void slotAggregationCheckboxChanged();
     void slotThemeCheckboxChanged();
     void slotSelectFolderAggregation();
     void slotSelectFolderTheme();
 
-private:
     void init(const Akonadi::Collection &);
     QSharedPointer<MailCommon::FolderSettings> mFolderCollection;
     QCheckBox *mIconsCheckBox = nullptr;

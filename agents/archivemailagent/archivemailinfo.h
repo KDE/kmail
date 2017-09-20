@@ -83,14 +83,14 @@ public:
 private:
     QString dirArchive(bool &dirExit) const;
     QDate mLastDateSaved;
-    int mArchiveAge;
-    MailCommon::BackupJob::ArchiveType mArchiveType;
-    ArchiveUnit mArchiveUnit;
-    Akonadi::Collection::Id mSaveCollectionId;
+    int mArchiveAge = 1;
+    MailCommon::BackupJob::ArchiveType mArchiveType = MailCommon::BackupJob::Zip;
+    ArchiveUnit mArchiveUnit = ArchiveMailInfo::ArchiveDays;
+    Akonadi::Collection::Id mSaveCollectionId = -1;
     QUrl mPath;
-    int mMaximumArchiveCount;
-    bool mSaveSubCollection;
-    bool mIsEnabled;
+    int mMaximumArchiveCount = 0;
+    bool mSaveSubCollection = false;
+    bool mIsEnabled = true;
 };
 
 #endif // ARCHIVEMAILINFO_H

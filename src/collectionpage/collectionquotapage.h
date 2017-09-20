@@ -47,10 +47,8 @@ public:
     void save(Akonadi::Collection &col) override;
     bool canHandle(const Akonadi::Collection &collection) const override;
 
-protected:
-    void init();
-
 private:
+    void init();
     CollectionQuotaWidget *mQuotaWidget = nullptr;
 };
 

@@ -23,26 +23,10 @@
 #include <QDir>
 
 ArchiveMailInfo::ArchiveMailInfo()
-    : mLastDateSaved(QDate())
-    , mArchiveAge(1)
-    , mArchiveType(MailCommon::BackupJob::Zip)
-    , mArchiveUnit(ArchiveMailInfo::ArchiveDays)
-    , mSaveCollectionId(-1)
-    , mMaximumArchiveCount(0)
-    , mSaveSubCollection(false)
-    , mIsEnabled(true)
 {
 }
 
 ArchiveMailInfo::ArchiveMailInfo(const KConfigGroup &config)
-    : mLastDateSaved(QDate())
-    , mArchiveAge(1)
-    , mArchiveType(MailCommon::BackupJob::Zip)
-    , mArchiveUnit(ArchiveMailInfo::ArchiveDays)
-    , mSaveCollectionId(-1)
-    , mMaximumArchiveCount(0)
-    , mSaveSubCollection(false)
-    , mIsEnabled(true)
 {
     readConfig(config);
 }

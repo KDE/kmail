@@ -49,13 +49,11 @@ public:
 
     bool canHandle(const Akonadi::Collection &col) const override;
 
-protected:
-    void init(const Akonadi::Collection &);
-
 protected Q_SLOTS:
     void slotFetchDone(KJob *job);
 
 private:
+    void init(const Akonadi::Collection &);
     /*
     * Detects mailing-list related stuff
     */
