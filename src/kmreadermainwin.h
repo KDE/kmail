@@ -55,7 +55,7 @@ public:
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
                           const WebEngineViewer::WebHitTestResult &result);
 
-private Q_SLOTS:
+private:
     void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint);
     void slotContactSearchJobForMessagePopupDone(KJob *);
     void slotTrashMessage();
@@ -78,7 +78,7 @@ private Q_SLOTS:
     void slotMoveItem(QAction *action);
 
     void slotShowMessageStatusBar(const QString &msg);
-private:
+
     void copyOrMoveItem(const Akonadi::Collection &collection, bool move);
     Akonadi::Collection parentCollection() const;
     void initKMReaderMainWin();
@@ -86,13 +86,13 @@ private:
     QAction *copyActionMenu(QMenu *menu);
     QAction *moveActionMenu(QMenu *menu);
 
-    KMReaderWin *mReaderWin = nullptr;
+    Akonadi::Collection mParentCollection;
     Akonadi::Item mMsg;
     // a few actions duplicated from kmmainwidget
     QAction *mTrashAction = nullptr;
     QAction *mSaveAtmAction = nullptr;
     KMail::MessageActions *mMsgActions = nullptr;
-    Akonadi::Collection mParentCollection;
+    KMReaderWin *mReaderWin = nullptr;
 };
 
 #endif /*KMReaderMainWin_h*/
