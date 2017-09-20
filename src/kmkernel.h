@@ -521,7 +521,7 @@ private:
     MailCommon::JobScheduler *mJobScheduler = nullptr;
     MailServiceImpl *mMailService = nullptr;
 
-    bool mSystemNetworkStatus;
+    bool mSystemNetworkStatus = true;
 
     KMail::KMSystemTray *mSystemTray = nullptr;
     QHash<QString, KPIM::ProgressItem::CryptoStatus> mResourceCryptoSettingCache;

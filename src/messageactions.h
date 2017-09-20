@@ -134,9 +134,9 @@ private Q_SLOTS:
     void slotAddFollowupReminder();
 private:
     QList<QAction *> mMailListActionList;
-    QWidget *mParent = nullptr;
     Akonadi::Item mCurrentItem;
     Akonadi::Item::List mVisibleItems;
+    QWidget *mParent = nullptr;
     KMReaderWin *mMessageView = nullptr;
 
     KActionMenu *mReplyActionMenu = nullptr;

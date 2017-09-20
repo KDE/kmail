@@ -64,17 +64,16 @@ public:
 
     QString undoInfo() const;
 
-protected Q_SLOTS:
-    void slotMoveResult(KJob *);
+Q_SIGNALS:
+    void undoStackChanged();
 
-protected:
+private:
+    void slotMoveResult(KJob *);
     QList<UndoInfo *> mStack;
     int mSize = 0;
     int mLastId = 0;
     UndoInfo *mCachedInfo = nullptr;
 
-Q_SIGNALS:
-    void undoStackChanged();
 };
 }
 

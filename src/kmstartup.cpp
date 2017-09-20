@@ -20,7 +20,7 @@
 
 #include <kiconloader.h>
 
-using namespace KMail;
+namespace KMail {
 void insertLibraryIcons()
 {
     static const char *const iconPath[] = {
@@ -36,4 +36,4 @@ void insertLibraryIcons()
         il->addAppDir(QLatin1String(iconPath[i]));
     }
 }
-
+}
