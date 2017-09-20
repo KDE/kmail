@@ -50,11 +50,11 @@ public:
 
     void setAccountOrder(const QStringList &identifier);
 
-private Q_SLOTS:
+private:
     void updateAccountMenu();
     void slotCheckTransportMenu();
     void slotSelectAccount(QAction *act);
-private:
+
     QStringList mOrderIdentifier;
     bool mInitialized = false;
 };

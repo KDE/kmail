@@ -35,11 +35,11 @@ public:
 Q_SIGNALS:
     void transportSelected(MailTransport::Transport *transport);
 
-private Q_SLOTS:
+private:
     void updateTransportMenu();
     void slotCheckTransportMenu();
     void slotSelectTransport(QAction *act);
-private:
+
     bool mInitialized = false;
 };
 

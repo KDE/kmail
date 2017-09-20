@@ -70,8 +70,8 @@ private:
     KPIM::ProgressStatusBarWidget *mProgressBar = nullptr;
     KMMainWidget *mKMMainWidget = nullptr;
     KToggleAction *mHideMenuBarAction = nullptr;
-    bool mReallyClose;
     QLabel *mMessageLabel = nullptr;
+    bool mReallyClose = false;
 };
 
 #endif

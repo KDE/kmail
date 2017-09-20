@@ -36,10 +36,9 @@ public:
 Q_SIGNALS:
     void changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
-private Q_SLOTS:
-    void slotChangeDisplayMessageFormat(QAction *act);
 
 private:
+    void slotChangeDisplayMessageFormat(QAction *act);
     void updateMenu();
     MessageViewer::Viewer::DisplayFormatMessage mDisplayMessageFormat = MessageViewer::Viewer::UseGlobalSetting;
 };

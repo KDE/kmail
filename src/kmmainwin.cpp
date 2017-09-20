@@ -47,7 +47,6 @@
 
 KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow(nullptr)
-    , mReallyClose(false)
 {
     setObjectName(QStringLiteral("kmail-mainwindow#"));
     // Set this to be the group leader for all subdialogs - this means
@@ -79,8 +78,8 @@ KMMainWin::KMMainWin(QWidget *)
     //must be after createGUI, otherwise e.g toolbar settings are not loaded
     applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
 
-    connect(KPIM::BroadcastStatus::instance(), SIGNAL(statusMsg(QString)),
-            this, SLOT(displayStatusMsg(QString)));
+    connect(KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::statusMsg,
+            this, &KMMainWin::displayStatusMsg);
 
     connect(mKMMainWidget, SIGNAL(captionChangeRequest(QString)),
             SLOT(setCaption(QString)));

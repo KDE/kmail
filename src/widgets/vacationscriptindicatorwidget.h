@@ -71,9 +71,8 @@ public:
 Q_SIGNALS:
     void clicked(const QString &serverName);
 
-private Q_SLOTS:
-    void slotVacationLabelClicked();
 private:
+    void slotVacationLabelClicked();
     void createIndicator();
     QStringList mServerActive;
     QHBoxLayout *mBoxLayout = nullptr;
