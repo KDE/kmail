@@ -41,8 +41,8 @@ private:
     QUrl mUrl;
     Akonadi::Collection mCurrentCollection;
     QSharedPointer<MailCommon::FolderSettings> mFolder;
-    uint mIdentity;
-    KMime::Message::Ptr mMsg;
+    uint mIdentity = 0;
+    KMime::Message::Ptr mMsg = nullptr;
 };
 
 #endif // HANDLECLICKEDURLJOB_H

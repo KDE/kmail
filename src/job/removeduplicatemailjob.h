@@ -36,12 +36,10 @@ public:
 
     void start();
 
-private Q_SLOTS:
+private:
     void slotRemoveDuplicatesDone(KJob *job);
     void slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item);
     void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);
-
-private:
     QWidget *mParent = nullptr;
     QItemSelectionModel *mSelectionModel = nullptr;
 };

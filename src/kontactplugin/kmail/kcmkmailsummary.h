@@ -49,10 +49,8 @@ public:
     void save() override;
     void defaults() override;
 
-private Q_SLOTS:
-    void modified();
-
 private:
+    void modified();
     void initGUI();
     void initFolders();
     void loadFolders();

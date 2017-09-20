@@ -33,9 +33,9 @@ public:
     ~SaveDraftJob();
 
     void start() override;
-private Q_SLOTS:
-    void slotStoreDone(KJob *job);
+
 private:
+    void slotStoreDone(KJob *job);
     KMime::Message::Ptr mMsg;
     Akonadi::Collection mCollection;
 };

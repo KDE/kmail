@@ -28,8 +28,6 @@
 
 ComposeNewMessageJob::ComposeNewMessageJob(QObject *parent)
     : QObject(parent)
-    , mIdentity(0)
-    , mMsg(nullptr)
 {
 }
 

@@ -65,12 +65,10 @@ protected:
 public Q_SLOTS:
     void updateSummary(bool force) override;
 
-private Q_SLOTS:
+private:
     void selectFolder(const QString &);
     void slotCollectionChanged();
     void slotUpdateFolderList();
-
-private:
     void displayModel(const QModelIndex &, int &, const bool, QStringList);
 
     QList<QLabel *> mLabels;

@@ -44,13 +44,12 @@ public:
 private:
     void setXfaceFromFile(const QUrl &url);
 
-private Q_SLOTS:
+private:
     void slotSelectFile();
     void slotSelectFromAddressbook();
     void slotDelayedSelectFromAddressbook(KJob *);
     void slotUpdateXFace();
 
-private:
     QCheckBox *mEnableCheck = nullptr;
     KPIMTextEdit::PlainTextEditorWidget *mTextEdit = nullptr;
     QLabel *mXFaceLabel = nullptr;

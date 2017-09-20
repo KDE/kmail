@@ -32,10 +32,8 @@ public:
 
     void start() override;
 
-private Q_SLOTS:
-    void slotAddEmailDone(KJob *job);
-
 private:
+    void slotAddEmailDone(KJob *job);
     QString mEmail;
     Akonadi::Item mItem;
 };

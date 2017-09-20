@@ -37,9 +37,9 @@ public:
 private:
     void slotOpenComposer(bool forceCursorPosition);
     QSharedPointer<MailCommon::FolderSettings> mFolder;
-    uint mIdentity;
-    KMime::Message::Ptr mMsg;
     Akonadi::Collection mCurrentCollection;
+    uint mIdentity = 0;
+    KMime::Message::Ptr mMsg = nullptr;
 };
 
 #endif // COMPOSENEWMESSAGEJOB_H
