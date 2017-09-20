@@ -52,8 +52,8 @@
 #include <MailCommon/FolderSettings>
 
 using namespace MailCommon;
-
-KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage(const Akonadi::Item &item)
+using namespace KMail;
+KMime::Types::Mailbox::List Util::mailingListsFromMessage(const Akonadi::Item &item)
 {
     KMime::Types::Mailbox::List addresses;
     // determine the mailing list posting address
@@ -70,7 +70,7 @@ KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage(const Akonadi::
     return addresses;
 }
 
-Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
+Akonadi::Item::Id Util::putRepliesInSameFolder(const Akonadi::Item &item)
 {
     Akonadi::Collection parentCollection = item.parentCollection();
     if (parentCollection.isValid()) {
@@ -82,7 +82,7 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
     return -1;
 }
 
-bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
+bool Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
 {
     if (url.scheme() == QLatin1String("mailto")) {
         HandleClickedUrlJob *job = new HandleClickedUrlJob;
@@ -97,7 +97,7 @@ bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCom
     }
 }
 
-bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
+bool Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
 {
     const QString handler = (folder->mailingList().handler() == MailingList::KMail)
                             ? QStringLiteral("mailto") : QStringLiteral("https");
@@ -115,60 +115,60 @@ bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPoi
     }
 
     if (!urlToHandle.isEmpty()) {
-        return KMail::Util::handleClickedURL(urlToHandle, folder, collection);
+        return Util::handleClickedURL(urlToHandle, folder, collection);
     } else {
         qCWarning(KMAIL_LOG) << "Can't handle url";
         return false;
     }
 }
 
-bool KMail::Util::mailingListPost(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
+bool Util::mailingListPost(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().postUrls(), fd, col);
+        return Util::mailingListsHandleURL(fd->mailingList().postUrls(), fd, col);
     }
     return false;
 }
 
-bool KMail::Util::mailingListSubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
+bool Util::mailingListSubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().subscribeUrls(), fd, col);
+        return Util::mailingListsHandleURL(fd->mailingList().subscribeUrls(), fd, col);
     }
     return false;
 }
 
-bool KMail::Util::mailingListUnsubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
+bool Util::mailingListUnsubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().unsubscribeUrls(), fd, col);
+        return Util::mailingListsHandleURL(fd->mailingList().unsubscribeUrls(), fd, col);
     }
     return false;
 }
 
-bool KMail::Util::mailingListArchives(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
+bool Util::mailingListArchives(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().archiveUrls(), fd, col);
+        return Util::mailingListsHandleURL(fd->mailingList().archiveUrls(), fd, col);
     }
     return false;
 }
 
-bool KMail::Util::mailingListHelp(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
+bool Util::mailingListHelp(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().helpUrls(), fd, col);
+        return Util::mailingListsHandleURL(fd->mailingList().helpUrls(), fd, col);
     }
     return false;
 }
 
-void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr &msg)
+void Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr &msg)
 {
     lastSign = KMime::isSigned(msg.data());
     lastEncrypt = KMime::isEncrypted(msg.data());
 }
 
-void KMail::Util::addQActionHelpText(QAction *action, const QString &text)
+void Util::addQActionHelpText(QAction *action, const QString &text)
 {
     action->setStatusTip(text);
     action->setToolTip(text);
