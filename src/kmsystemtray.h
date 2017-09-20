@@ -53,7 +53,7 @@ public:
 
     void updateSystemTray();
 
-private Q_SLOTS:
+private:
     void slotActivated();
     void slotContextMenuAboutToShow();
     void slotSelectCollection(QAction *act);
@@ -61,7 +61,6 @@ private Q_SLOTS:
     void slotCollectionStatisticsChanged(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
     void slotGeneralFontChanged();
 
-private:
     bool mainWindowIsOnCurrentDesktop();
     bool buildPopupMenu();
     void updateCount();
@@ -69,14 +68,12 @@ private:
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = QModelIndex());
     bool excludeFolder(const Akonadi::Collection &collection) const;
     bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
-
-private:
     QIcon mIcon;
-    int mDesktopOfMainWin;
+    int mDesktopOfMainWin = 0;
 
-    int mCount;
+    int mCount = 0;
 
-    bool mIconNotificationsEnabled;
+    bool mIconNotificationsEnabled =true;
 
     QMenu *mNewMessagesPopup = nullptr;
     QAction *mSendQueued = nullptr;

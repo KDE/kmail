@@ -56,11 +56,6 @@ using namespace KMail;
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent)
     , mIcon(QIcon::fromTheme(QStringLiteral("mail-mark-unread-new")))
-    , mDesktopOfMainWin(0)
-    , mCount(0)
-    , mIconNotificationsEnabled(true)
-    , mNewMessagesPopup(nullptr)
-    , mSendQueued(nullptr)
 {
     qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));

@@ -41,7 +41,7 @@
 
 #include <QDBusConnection>
 
-namespace KMail {
+using namespace KMail;
 MailServiceImpl::MailServiceImpl()
 {
     new ServiceAdaptor(this);
@@ -129,4 +129,3 @@ bool MailServiceImpl::sendMessage(const QString &from, const QString &to, const 
     KMail::makeComposer(msg, false, false);
     return true;
 }
-}//end namespace KMail
