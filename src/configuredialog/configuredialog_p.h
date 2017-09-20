@@ -82,7 +82,7 @@ protected:
 
 private:
     QTabWidget *mTabWidget = nullptr;
-    bool mWasInitialized;
+    bool mWasInitialized = false;
 };
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_

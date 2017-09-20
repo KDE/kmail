@@ -32,10 +32,8 @@ public:
 
     void fillList(const QStringList &lst);
 
-private Q_SLOTS:
-    void slotSave();
-
 private:
+    void slotSave();
     void readConfig();
     void writeConfig();
     PotentialPhishingDetailWidget *mPotentialPhishingDetailWidget = nullptr;

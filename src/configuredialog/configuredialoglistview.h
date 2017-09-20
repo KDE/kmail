@@ -20,10 +20,8 @@ protected:
     void resizeEvent(QResizeEvent *e) override;
     void showEvent(QShowEvent *e) override;
 
-private Q_SLOTS:
-    void slotContextMenu(const QPoint &pos);
-
 private:
+    void slotContextMenu(const QPoint &pos);
     void resizeColums();
 };
 

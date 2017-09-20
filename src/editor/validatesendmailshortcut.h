@@ -29,8 +29,8 @@ public:
     bool validate();
 
 private:
-    QWidget *mParent;
-    KActionCollection *mActionCollection;
+    QWidget *mParent = nullptr;
+    KActionCollection *mActionCollection = nullptr;
 };
 
 #endif // VALIDATESENDMAILSHORTCUT_H

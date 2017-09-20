@@ -42,14 +42,13 @@ public:
     explicit ArchiveFolderDialog(QWidget *parent = nullptr);
     void setFolder(const Akonadi::Collection &defaultCollection);
 
-private Q_SLOTS:
+private:
     void slotFixFileExtension();
     void slotFolderChanged(const Akonadi::Collection &);
     void slotRecursiveCheckboxClicked();
     void slotAccepted();
     void slotUrlChanged(const QString &);
 
-private:
     bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
     QString standardArchivePath(const QString &folderName);
 

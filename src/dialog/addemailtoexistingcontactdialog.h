@@ -33,11 +33,10 @@ public:
 
     Akonadi::Item selectedContact() const;
 
-private Q_SLOTS:
+private:
     void slotSelectionChanged();
 
     void slotDoubleClicked();
-private:
     void readConfig();
     void writeConfig();
     Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget = nullptr;

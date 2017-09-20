@@ -29,9 +29,6 @@ public:
     explicit AttachmentMissingWarning(QWidget *parent = nullptr);
     ~AttachmentMissingWarning();
 
-private Q_SLOTS:
-    void explicitlyClosed();
-    void slotAttachFile();
 
 public Q_SLOTS:
     void slotFileAttached();
@@ -40,6 +37,10 @@ Q_SIGNALS:
     void attachMissingFile();
     void closeAttachMissingFile();
     void explicitClosedMissingAttachment();
+
+private:
+    void explicitlyClosed();
+    void slotAttachFile();
 };
 
 #endif // ATTACHMENTMISSINGWARNING_H

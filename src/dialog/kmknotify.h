@@ -34,17 +34,14 @@ public:
 
     void setCurrentNotification(const QString &name);
 
-private Q_SLOTS:
+private:
     void slotComboChanged(int);
     void slotOk();
     void slotConfigChanged(bool changed);
 
-private:
     void initCombobox();
     void writeConfig();
     void readConfig();
-
-private:
     KComboBox *m_comboNotify = nullptr;
     KNotifyConfigWidget *m_notifyWidget = nullptr;
     bool m_changed = false;

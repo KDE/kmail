@@ -37,11 +37,9 @@ public:
 
     void setActionCollection(const QList<KActionCollection *> &actionCollectionList);
 
-private Q_SLOTS:
+private:
     void slotAddNewTag();
     void slotTagsFetched(KJob *);
-
-private:
     void writeConfig();
     void readConfig();
     void createTagList(bool updateList);

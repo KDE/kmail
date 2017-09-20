@@ -63,10 +63,8 @@ protected:
     /** reimpl to avoid drags from ourselves */
     void dragEnterEvent(QDragEnterEvent *event) override;
 
-private Q_SLOTS:
-    void slotShowHideAttchementList(bool);
-
 private:
+    void slotShowHideAttchementList(bool);
     void saveHeaderState();
     void restoreHeaderState();
 
