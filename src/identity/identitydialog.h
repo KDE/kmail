@@ -109,6 +109,8 @@ private:
     void editVcard(const QString &filename);
 
 private:
+    QString mVcardFilename;
+
     // "general" tab:
     KLineEdit *mNameEdit = nullptr;
     KLineEdit *mOrganizationEdit = nullptr;
@@ -135,7 +137,6 @@ private:
     QCheckBox *mTransportCheck = nullptr;
     MailTransport::TransportComboBox *mTransportCombo = nullptr;
     QCheckBox *mAttachMyVCard = nullptr;
-    QString mVcardFilename;
     QPushButton *mEditVCard = nullptr;
     PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
     KLineEdit *mDefaultDomainEdit = nullptr;

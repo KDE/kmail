@@ -84,9 +84,6 @@ public:
 protected Q_SLOTS:
     void commitData(QWidget *editor) override;
 
-public Q_SLOTS:
-    void slotCustomContextMenuRequested(const QPoint &);
-
 Q_SIGNALS:
     void contextMenu(KMail::IdentityListViewItem *, const QPoint &);
     void rename(KMail::IdentityListViewItem *, const QString &);
@@ -97,6 +94,7 @@ protected:
 #endif
 
 private:
+    void slotCustomContextMenuRequested(const QPoint &);
     KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
 };
 } // namespace KMail

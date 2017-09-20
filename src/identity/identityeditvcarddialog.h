@@ -44,10 +44,8 @@ public:
 Q_SIGNALS:
     void vcardRemoved();
 
-private Q_SLOTS:
-    void slotDeleteCurrentVCard();
-
 private:
+    void slotDeleteCurrentVCard();
     void deleteCurrentVcard(bool deleteOnDisk);
     QString mVcardFileName;
     Akonadi::AkonadiContactEditor *mContactEditor = nullptr;
