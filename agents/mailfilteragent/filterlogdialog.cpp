@@ -179,7 +179,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
 
     connect(mUser1Button, &QPushButton::clicked, this, &FilterLogDialog::slotUser1);
     connect(mUser2Button, &QPushButton::clicked, this, &FilterLogDialog::slotUser2);
-    connect(mTextEdit->editor(), SIGNAL(textChanged()), this, SLOT(slotTextChanged()));
+    connect(mTextEdit->editor(), &KPIMTextEdit::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
 
     slotTextChanged();
     readConfig();
@@ -234,6 +234,7 @@ void FilterLogDialog::readConfig()
 
 FilterLogDialog::~FilterLogDialog()
 {
+    disconnect(mTextEdit->editor(), &KPIMTextEdit::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
     KConfigGroup myGroup(KSharedConfig::openConfig(), "Geometry");
     myGroup.writeEntry("filterLogSize", size());
     myGroup.sync();
