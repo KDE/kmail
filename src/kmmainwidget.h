@@ -371,9 +371,8 @@ private Q_SLOTS:
     void slotShowSelectedFolderInPane();
     void slotOverrideHtmlLoadExt();
     void slotUseTemplate();
-    void slotDeleteMsg(bool confirmDelete = true);    // completely delete message
     void slotTrashThread();
-    void slotDeleteThread(bool confirmDelete = true);    // completely delete thread
+    void slotDeleteThread(bool confirmDelete);    // completely delete thread
     void slotUndo();
     void slotReadOn();
     void slotSaveMsg();
@@ -404,7 +403,7 @@ private Q_SLOTS:
     void slotContactSearchJobForMessagePopupDone(KJob *job);
     void slotSelectAllMessages();
     void slotFocusQuickSearch();
-    bool slotSearch();
+
     void slotIntro();
     void slotShowStartupFolder();
     void slotCopyDecryptedTo(QAction *action);
@@ -519,6 +518,8 @@ private Q_SLOTS:
     void slotEditCurrentVacation();
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
 private:
+    void slotDeleteMsg(bool confirmDelete);    // completely delete message
+    bool showSearchDialog();
     void clearCurrentFolder();
     void setCurrentCollection(const Akonadi::Collection &col);
     void showMessageActivities(const QString &str);

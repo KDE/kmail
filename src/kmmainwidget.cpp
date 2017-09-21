@@ -1276,7 +1276,7 @@ void KMMainWidget::slotFocusQuickSearch()
 }
 
 //-------------------------------------------------------------------------
-bool KMMainWidget::slotSearch()
+bool KMMainWidget::showSearchDialog()
 {
     if (!mSearchWin) {
         mSearchWin = new SearchWindow(this, mCurrentCollection);
@@ -2934,7 +2934,7 @@ void KMMainWidget::setupActions()
     mDeleteThreadAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete T&hread"), this);
     actionCollection()->addAction(QStringLiteral("delete_thread"), mDeleteThreadAction);
     //Don't use new connect api.
-    connect(mDeleteThreadAction, SIGNAL(triggered(bool)), this, SLOT(slotDeleteThread()));
+    connect(mDeleteThreadAction, &QAction::triggered, this, &KMMainWidget::slotDeleteThread);
     actionCollection()->setDefaultShortcut(mDeleteThreadAction, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_Delete));
 
     mSearchMessages = new QAction(QIcon::fromTheme(QStringLiteral("edit-find-mail")), i18n("&Find Messages..."), this);
@@ -4337,7 +4337,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
 {
     // First, open the search window. If we are currently on a search folder,
     // the search associated with that will be loaded.
-    if (!slotSearch()) {
+    if (!showSearchDialog()) {
         return;
     }
 
