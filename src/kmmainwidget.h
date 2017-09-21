@@ -476,7 +476,7 @@ private Q_SLOTS:
     void slotCreateNewTab(bool);
     void slotUpdateActionsAfterMailChecking();
     void slotCreateAddressBookContact();
-    void slotOpenRecentMsg(const QUrl &url);
+    void slotOpenRecentMessage(const QUrl &url);
 
 
     void slotMoveMessageToTrash();
