@@ -122,7 +122,7 @@ public:
 
     bool isFixedFont() const;
     void setUseFixedFont(bool useFixedFont);
-    MessageViewer::Viewer *viewer();
+    MessageViewer::Viewer *viewer() const;
     KToggleAction *toggleFixFontAction() const;
     QAction *mailToComposeAction() const;
     QAction *mailToReplyAction() const;
@@ -153,7 +153,7 @@ public:
 
     Akonadi::Item message() const;
 
-    QWidget *mainWindow();
+    QWidget *mainWindow() const;
 
     /** Enforce message decryption. */
     void setDecryptMessageOverwrite(bool overwrite = true);

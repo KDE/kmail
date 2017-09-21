@@ -47,7 +47,7 @@ public:
     bool restoreDockedState(int number);
 
 public Q_SLOTS:
-    void displayStatusMsg(const QString &);
+    void displayStatusMessage(const QString &);
     void slotEditToolbars();
     void slotUpdateGui();
     void setupStatusBar();
@@ -63,7 +63,7 @@ protected Q_SLOTS:
     void slotQuit();
 
 private Q_SLOTS:
-    void slotToggleMenubar(bool dontShowWarning = false);
+    void slotToggleMenubar(bool dontShowWarning);
     void slotConfigureShortcuts();
 
 private:

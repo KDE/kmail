@@ -135,7 +135,7 @@ private:
     QList<MailCommon::Tag::Ptr> mTags;
 
     // Uri of a newly created tag
-    qint64 mNewTagId;
+    qint64 mNewTagId = -1;
     bool mTagFetchInProgress = false;
     Akonadi::Monitor *mMonitor = nullptr;
 };

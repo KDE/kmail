@@ -103,9 +103,9 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void editCurrentMessage();
-    void annotateMessage();
 
 private:
+    void annotateMessage();
     void updateActions();
     void replyCommand(MessageComposer::ReplyStrategy strategy);
     void addMailingListAction(const QString &item, const QUrl &url);

@@ -221,7 +221,7 @@ void KMReaderWin::setUseFixedFont(bool useFixedFont)
     mViewer->setUseFixedFont(useFixedFont);
 }
 
-Viewer *KMReaderWin::viewer()
+Viewer *KMReaderWin::viewer() const
 {
     return mViewer;
 }
@@ -420,7 +420,7 @@ Akonadi::Item KMReaderWin::message() const
     return mViewer->messageItem();
 }
 
-QWidget *KMReaderWin::mainWindow()
+QWidget *KMReaderWin::mainWindow() const
 {
     return mMainWindow;
 }

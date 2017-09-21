@@ -79,7 +79,7 @@ KMMainWin::KMMainWin(QWidget *)
     applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
 
     connect(KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::statusMsg,
-            this, &KMMainWin::displayStatusMsg);
+            this, &KMMainWin::displayStatusMessage);
 
     connect(mKMMainWidget, SIGNAL(captionChangeRequest(QString)),
             SLOT(setCaption(QString)));
@@ -101,7 +101,7 @@ KMMainWidget *KMMainWin::mainKMWidget() const
     return mKMMainWidget;
 }
 
-void KMMainWin::displayStatusMsg(const QString &aText)
+void KMMainWin::displayStatusMessage(const QString &aText)
 {
     if (!statusBar() || !mProgressBar->littleProgress()) {
         return;
