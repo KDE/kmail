@@ -59,6 +59,7 @@
   <summary xml:lang="sv">E-postprogram</summary>
   <summary xml:lang="uk">Програма для роботи з електронною пошти</summary>
   <summary xml:lang="x-test">xxEmail applicationxx</summary>
+  <summary xml:lang="zh-CN">电子邮件应用程序</summary>
   <description>
     <p>
       KMail is the email component of Kontact, the integrated personal information manager from KDE.
