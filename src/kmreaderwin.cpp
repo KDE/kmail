@@ -88,14 +88,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     : QWidget(aParent)
     , mMainWindow(mainWindow)
     , mActionCollection(actionCollection)
-    , mMailToComposeAction(nullptr)
-    , mMailToReplyAction(nullptr)
-    , mMailToForwardAction(nullptr)
-    , mAddAddrBookAction(nullptr)
-    , mOpenAddrBookAction(nullptr)
-    , mUrlSaveAsAction(nullptr)
-    , mAddBookmarksAction(nullptr)
-    , mAddEmailToExistingContactAction(nullptr)
 {
     createActions();
     QVBoxLayout *vlay = new QVBoxLayout(this);

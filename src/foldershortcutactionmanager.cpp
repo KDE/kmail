@@ -38,7 +38,6 @@ FolderShortcutCommand::FolderShortcutCommand(QWidget *mainwidget, const Akonadi:
     : QObject(mainwidget)
     , mCollectionFolder(col)
     , mMainWidget(mainwidget)
-    , mAction(nullptr)
 {
     connect(this, SIGNAL(selectCollectionFolder(Akonadi::Collection)), mMainWidget, SLOT(slotSelectCollectionFolder(Akonadi::Collection)));
 }

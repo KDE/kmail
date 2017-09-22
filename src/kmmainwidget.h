@@ -636,7 +636,7 @@ private:
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
     QAction *mQuickSearchAction = nullptr;
     DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu = nullptr;
-    MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference;
+    MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference = MessageViewer::Viewer::UseGlobalSetting;
     QAction *mSearchMessages = nullptr;
     KMLaunchExternalComponent *mLaunchExternalComponent = nullptr;
     ManageShowCollectionProperties *mManageShowCollectionProperties = nullptr;
