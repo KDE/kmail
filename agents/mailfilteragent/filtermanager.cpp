@@ -394,7 +394,7 @@ void FilterManager::filter(const Akonadi::Item &item, FilterManager::FilterSet s
     }
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 
-    connect(job, SIGNAL(result(KJob *)), SLOT(itemFetchJobForFilterDone(KJob *)));
+    connect(job, &Akonadi::ItemFetchJob::result, this, [this](KJob *job) { d->itemFetchJobForFilterDone(job); });
 }
 
 void FilterManager::filter(const Akonadi::Item &item, const QString &filterId, const QString &resourceId)
@@ -413,7 +413,7 @@ void FilterManager::filter(const Akonadi::Item &item, const QString &filterId, c
 
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 
-    connect(job, SIGNAL(result(KJob *)), SLOT(itemFetchJobForFilterDone(KJob *)));
+    connect(job, &Akonadi::ItemFetchJob::result, this, [this](KJob *job) { d->itemFetchJobForFilterDone(job);} );
 }
 
 bool FilterManager::process(const Akonadi::Item &item, bool needsFullPayload, const MailFilter *filter)
@@ -464,7 +464,7 @@ bool FilterManager::processContextItem(ItemContext context)
     if (context.deleteItem()) {
         if (itemCanDelete) {
             Akonadi::ItemDeleteJob *deleteJob = new Akonadi::ItemDeleteJob(context.item(), this);
-            connect(deleteJob, SIGNAL(result(KJob *)), SLOT(deleteJobResult(KJob *)));
+            connect(deleteJob, &Akonadi::ItemDeleteJob::result, this, [this](KJob *job) { d->deleteJobResult(job); });
         } else {
             return false;
         }
@@ -472,7 +472,7 @@ bool FilterManager::processContextItem(ItemContext context)
         if (context.moveTargetCollection().isValid() && context.item().storageCollectionId() != context.moveTargetCollection().id()) {
             if (itemCanDelete) {
                 Akonadi::ItemMoveJob *moveJob = new Akonadi::ItemMoveJob(context.item(), context.moveTargetCollection(), this);
-                connect(moveJob, SIGNAL(result(KJob *)), SLOT(moveJobResult(KJob *)));
+                connect(moveJob, &Akonadi::ItemMoveJob::result, this, [this](KJob *job) {d->moveJobResult(job); });
             } else {
                 return false;
             }
@@ -489,7 +489,7 @@ bool FilterManager::processContextItem(ItemContext context)
             //The below is a safety check to ignore modifying payloads if it was not requested,
             //as in that case we might change the payload to an invalid one
             modifyJob->setIgnorePayload(!context.needsFullPayload());
-            connect(modifyJob, SIGNAL(result(KJob *)), SLOT(modifyJobResult(KJob *)));
+            connect(modifyJob, &Akonadi::ItemModifyJob::result, this, [this](KJob *job) { d->modifyJobResult(job);});
         }
     }
 
@@ -618,10 +618,8 @@ void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMess
     itemFetchJob->setProperty("filterSet", QVariant::fromValue(static_cast<int>(filterSet)));
     itemFetchJob->setProperty("needsFullPayload", requiredPart != SearchRule::Envelope);
 
-    connect(itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
-            this, SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)));
-    connect(itemFetchJob, SIGNAL(result(KJob *)),
-            SLOT(itemsFetchJobForFilterDone(KJob *)));
+    connect(itemFetchJob, &Akonadi::ItemFetchJob::itemsReceived, this, [this](const Akonadi::Item::List &lst) {d->slotItemsFetchedForFilter(lst); });
+    connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, [this](KJob *job) { d->itemsFetchJobForFilterDone(job); });
 }
 
 void FilterManager::applyFilters(const Akonadi::Item::List &selectedMessages, FilterSet filterSet)
@@ -644,10 +642,9 @@ void FilterManager::applyFilters(const Akonadi::Item::List &selectedMessages, Fi
     itemFetchJob->setProperty("filterSet", QVariant::fromValue(static_cast<int>(filterSet)));
     itemFetchJob->setProperty("needsFullPayload", requiredParts != SearchRule::Envelope);
 
-    connect(itemFetchJob, SIGNAL(itemsReceived(Akonadi::Item::List)),
-            this, SLOT(slotItemsFetchedForFilter(Akonadi::Item::List)));
-    connect(itemFetchJob, SIGNAL(result(KJob *)),
-            SLOT(itemsFetchJobForFilterDone(KJob *)));
+    connect(itemFetchJob, &Akonadi::ItemFetchJob::itemsReceived, this, [this](const Akonadi::Item::List &lst) {d->slotItemsFetchedForFilter(lst); });
+    connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, [this](KJob *job) { d->itemsFetchJobForFilterDone(job); });
+
 }
 
 bool FilterManager::hasAllFoldersFilter() const

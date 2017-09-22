@@ -156,13 +156,6 @@ private:
     //@cond PRIVATE
     class Private;
     Private *d;
-
-    Q_PRIVATE_SLOT(d, void itemsFetchJobForFilterDone(KJob *))
-    Q_PRIVATE_SLOT(d, void itemFetchJobForFilterDone(KJob *))
-    Q_PRIVATE_SLOT(d, void moveJobResult(KJob *))
-    Q_PRIVATE_SLOT(d, void modifyJobResult(KJob *))
-    Q_PRIVATE_SLOT(d, void deleteJobResult(KJob *))
-    Q_PRIVATE_SLOT(d, void slotItemsFetchedForFilter(const Akonadi::Item::List &))
     //@endcond
 };
 

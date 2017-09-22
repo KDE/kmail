@@ -3286,8 +3286,6 @@ void KMMainWidget::setupActions()
     }
 
     // ----- Standard Actions
-
-    //  KStandardAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
     {
         QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("preferences-desktop-notification")),
                                       i18n("Configure &Notifications..."), this);
