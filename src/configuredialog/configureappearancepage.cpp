@@ -631,8 +631,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
 
     connect(aggregationConfigButton, &MessageList::Utils::AggregationConfigButton::configureDialogCompleted,
             this, &AppearancePageHeadersTab::slotSelectDefaultAggregation);
-    connect(mAggregationComboBox, SIGNAL(activated(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mAggregationComboBox, QOverload<int>::of(&MessageList::Utils::AggregationComboBox::activated),
+            this, &ConfigModuleTab::slotEmitChanged);
 
     // "Theme"
     using MessageList::Utils::ThemeComboBox;
@@ -652,8 +652,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
 
     connect(themeConfigButton, &MessageList::Utils::ThemeConfigButton::configureDialogCompleted,
             this, &AppearancePageHeadersTab::slotSelectDefaultTheme);
-    connect(mThemeComboBox, SIGNAL(activated(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mThemeComboBox, QOverload<int>::of(&MessageList::Utils::ThemeComboBox::activated),
+            this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addWidget(group);
 

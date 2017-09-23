@@ -1845,8 +1845,8 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
     KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentCollection, select, ref);
 
     QObject::connect(
-        command, SIGNAL(moveDone(KMMoveCommand *)),
-        this, SLOT(slotTrashMessagesCompleted(KMMoveCommand *))
+        command, SIGNAL(moveDone(KMMoveCommand*)),
+        this, SLOT(slotTrashMessagesCompleted(KMMoveCommand*))
         );
     command->start();
     bool moveToTrash = command->destFolder().isValid();

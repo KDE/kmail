@@ -1109,8 +1109,8 @@ void KMKernel::cleanup(void)
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)));
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceWarning(Akonadi::AgentInstance,QString)));
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)));
-    disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem *)));
-    disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem *)));
+    disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)));
+    disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)));
 
     dumpDeadLetters();
     the_shuttingDown = true;
