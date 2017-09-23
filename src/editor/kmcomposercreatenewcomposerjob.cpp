@@ -18,7 +18,6 @@
 */
 
 #include "kmcomposercreatenewcomposerjob.h"
-#include "config-kmail.h"
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"

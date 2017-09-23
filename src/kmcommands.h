@@ -2,7 +2,6 @@
 
 #ifndef KMCommands_h
 #define KMCommands_h
-#include "config-kmail.h"
 #include <MessageComposer/MessageFactoryNG>
 #include "MessageList/View"
 #include "mailcommon/searchpattern.h"

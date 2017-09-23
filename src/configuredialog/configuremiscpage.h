@@ -21,7 +21,6 @@
 #include "kmail_export.h"
 #include "ui_miscpagemaintab.h"
 #include "configuredialog_p.h"
-#include "config-kmail.h"
 
 namespace MailCommon {
 class FolderRequester;
