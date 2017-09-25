@@ -246,8 +246,7 @@ PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(cons
         if (type.identifier() == service) {
             data.mExtraInfo << service;
             data.mExtraInfo << path;
-            bool failed = false;
-            const bool enabled = agentActivateState(interfaceName, path, failed);
+            const bool enabled = agentActivateState(interfaceName, path);
             data.mEnableByDefault = enabled;
             data.mName = type.name();
             data.mDescription = type.description();
@@ -258,9 +257,8 @@ PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(cons
     return data;
 }
 
-bool ConfigurePluginsListWidget::agentActivateState(const QString &interfaceName, const QString &pathName, bool &failed)
+bool ConfigurePluginsListWidget::agentActivateState(const QString &interfaceName, const QString &pathName)
 {
-    failed = false;
     QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName);
     if (interface.isValid()) {
         QDBusReply<bool> enabled = interface.call(QStringLiteral("enabledAgent"));
@@ -268,11 +266,9 @@ bool ConfigurePluginsListWidget::agentActivateState(const QString &interfaceName
             return enabled;
         } else {
             qCDebug(KMAIL_LOG) << interfaceName << "doesn't have enabledAgent function";
-            failed = true;
             return false;
         }
     } else {
-        failed = true;
         qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
     }
     return false;

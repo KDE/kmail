@@ -316,8 +316,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     QLabel *label = new QLabel(KMailSettings::self()->autosaveIntervalItem()->label(), this);
     label->setBuddy(mAutoSave);
 
-    connect(mAutoSave, SIGNAL(valueChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mAutoSave, QOverload<int>::of(&QSpinBox::valueChanged),
+            this, &ConfigModuleTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mAutoSave, row, 1);
@@ -432,8 +432,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this);
     label->setBuddy(mMaximumRecipients);
 
-    connect(mMaximumRecipients, SIGNAL(valueChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mMaximumRecipients, QOverload<int>::of(&QSpinBox::valueChanged),
+            this, &ConfigModuleTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0, 1, 2);
     groupGridLayout->addWidget(mMaximumRecipients, row, 2);
@@ -473,8 +473,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecentAddress->setToolTip(helpText);
     mMaximumRecentAddress->setWhatsThis(helpText);
 
-    connect(mMaximumRecentAddress, SIGNAL(valueChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mMaximumRecentAddress, QOverload<int>::of(&QSpinBox::valueChanged),
+            this, &ConfigModuleTab::slotEmitChanged);
     connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled,
             mMaximumRecentAddress, &QWidget::setEnabled);
     connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled,
@@ -1214,8 +1214,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     mMaximumAttachmentSize->setRange(-1, 99999);
     mMaximumAttachmentSize->setSingleStep(100);
     mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
-    connect(mMaximumAttachmentSize, SIGNAL(valueChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mMaximumAttachmentSize, QOverload<int>::of(&QSpinBox::valueChanged),
+            this, &ConfigModuleTab::slotEmitChanged);
     mMaximumAttachmentSize->setSpecialValueText(i18n("No limit"));
     layAttachment->addWidget(mMaximumAttachmentSize);
     vlay->addLayout(layAttachment);

@@ -376,8 +376,8 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     mCloseToQuotaThreshold = new QSpinBox(this);
     mCloseToQuotaThreshold->setRange(0, 100);
     mCloseToQuotaThreshold->setSingleStep(1);
-    connect(mCloseToQuotaThreshold, SIGNAL(valueChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mCloseToQuotaThreshold, QOverload<int>::of(&QSpinBox::valueChanged),
+            this, &ConfigModuleTab::slotEmitChanged);
     mCloseToQuotaThreshold->setSuffix(i18n("%"));
 
     hbox->addWidget(mCloseToQuotaThreshold);

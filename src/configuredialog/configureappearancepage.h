@@ -140,6 +140,9 @@ private: // methods
     void doLoadOther() override;
     // virtual void doResetToDefaultsOther();
     void setDateDisplay(int id, const QString &format);
+    void slotLinkClicked(const QString &link);
+    void slotSelectDefaultAggregation();
+    void slotSelectDefaultTheme();
 
 private: // data
     QCheckBox *mDisplayMessageToolTips = nullptr;
@@ -149,11 +152,6 @@ private: // data
     QGroupBox *mDateDisplayBox = nullptr;
     KLineEdit *mCustomDateFormatEdit = nullptr;
     QString mCustomDateWhatsThis;
-
-private Q_SLOTS:
-    void slotLinkClicked(const QString &link);
-    void slotSelectDefaultAggregation();
-    void slotSelectDefaultTheme();
 };
 
 class AppearancePageReaderTab : public ConfigModuleTab
@@ -238,7 +236,7 @@ public Q_SLOTS:
     changes*/
     void slotMoveTagDown();
 
-private Q_SLOTS:
+private:
     /*Handles necessary processing when the selection in the edit box changes.
     Records the unselected tag's information, and applies visual changes
     necessary depending on the description of the new tag. Private since doesn't
@@ -261,7 +259,7 @@ private Q_SLOTS:
     void slotTagsFetched(KJob *job);
 
     void slotDeleteTagJob(KJob *job);
-private:
+
     void doLoadFromGlobalSettings() override;
     void swapTagsInListBox(const int first, const int second);
     void updateButtons();

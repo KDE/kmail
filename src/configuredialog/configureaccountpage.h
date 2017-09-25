@@ -76,9 +76,9 @@ private:
         {
         }
 
-        bool IncludeInManualChecks;
-        bool OfflineOnShutdown;
-        bool CheckOnStartup;
+        bool IncludeInManualChecks = false;
+        bool OfflineOnShutdown = false;
+        bool CheckOnStartup = false;
     };
 
     QHash<QString, QSharedPointer<RetrievalOptions> > mRetrievalHash;
