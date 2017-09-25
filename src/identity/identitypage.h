@@ -49,7 +49,7 @@ public:
     void load() override;
     void save() override;
 
-private Q_SLOTS:
+private:
     void slotNewIdentity();
     void slotModifyIdentity();
     void slotRemoveIdentity();
@@ -63,7 +63,6 @@ private Q_SLOTS:
     void slotSetAsDefault();
     void slotIdentitySelectionChanged();
 
-private: // methods
     void refreshList();
     void updateButtons();
 

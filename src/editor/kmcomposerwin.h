@@ -315,10 +315,6 @@ private Q_SLOTS:
     void slotUpdateToolbars();
     void slotEditKeys();
 
-    /**
-     * Read settings from app's config file.
-     */
-    void readConfig(bool reload = false);
 
     /**
      * Change window title to given string.
@@ -415,6 +411,11 @@ public: // kmcommand
     QList<KToggleAction *> customToolsList() const;
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 private:
+    /**
+     * Read settings from app's config file.
+     */
+    void readConfig(bool reload = false);
+
     QUrl insertFile();
     /**
      * Updates the visibility and text of the signature and encryption state indicators.

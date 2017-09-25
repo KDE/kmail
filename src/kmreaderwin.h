@@ -173,12 +173,12 @@ public:
     QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
 
     void setPrintElementBackground(bool printElementBackground);
+    /** Force update even if message is the same */
+    void clearCache();
 Q_SIGNALS:
     void showStatusBarMessage(const QString &message);
 
 public Q_SLOTS:
-    /** Force update even if message is the same */
-    void clearCache();
 
     /** The user selected "Find" from the menu. */
     void slotFind();

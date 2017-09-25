@@ -28,10 +28,6 @@
 
 struct CreateForwardMessageJobSettings
 {
-    CreateForwardMessageJobSettings()
-    {
-    }
-
     QUrl mUrl;
     Akonadi::Item mItem;
     KMime::Message::Ptr mMsg;

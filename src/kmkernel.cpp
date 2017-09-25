@@ -498,7 +498,7 @@ void KMKernel::setSystrayIconNotificationsEnabled(bool enabled)
     }
 }
 
-QStringList KMKernel::accounts()
+QStringList KMKernel::accounts() const
 {
     QStringList accountLst;
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
@@ -1275,6 +1275,11 @@ void KMKernel::updateSystemTray()
 KIdentityManagement::IdentityManager *KMKernel::identityManager()
 {
     return KIdentityManagement::IdentityManager::self();
+}
+
+JobScheduler *KMKernel::jobScheduler() const
+{
+    return mJobScheduler;
 }
 
 KMainWindow *KMKernel::mainWin()

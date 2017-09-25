@@ -152,7 +152,7 @@ public Q_SLOTS:
     */
     Q_SCRIPTABLE void resumeNetworkJobs();
 
-    Q_SCRIPTABLE QStringList accounts();
+    Q_SCRIPTABLE QStringList accounts() const;
 
     Q_SCRIPTABLE void makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode);
 
@@ -348,10 +348,7 @@ public:
     /** return the pointer to the identity manager */
     KIdentityManagement::IdentityManager *identityManager() override;
 
-    MailCommon::JobScheduler *jobScheduler() const override
-    {
-        return mJobScheduler;
-    }
+    MailCommon::JobScheduler *jobScheduler() const override;
 
     /** Expire all folders, used for the gui action */
     void expireAllFoldersNow();
@@ -506,11 +503,11 @@ private:
       the user has just updated. read from config */
     QString the_previousVersion;
     /** is this the first start?  read from config */
-    bool the_firstStart;
+    bool the_firstStart = false;
     /** are we going down? set from here */
-    bool the_shuttingDown;
+    bool the_shuttingDown = false;
     /** true unles kmail is closed by session management */
-    bool the_firstInstance;
+    bool the_firstInstance = false;
 
     KSharedConfig::Ptr mConfig;
     QTextCodec *mNetCodec = nullptr;

@@ -100,7 +100,7 @@ Q_SIGNALS:
        */
     void tagMoreActionClicked();
 
-private Q_SLOTS:
+private:
     void finishedTagListing(KJob *job);
     void newTagActionClicked();
     void onSignalMapped(const QString &tag);
@@ -108,7 +108,6 @@ private Q_SLOTS:
     void onTagRemoved(const Akonadi::Tag &);
     void onTagChanged(const Akonadi::Tag &);
 
-private:
     void fillTagList();
     void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
     void createTagActions(const QList<MailCommon::Tag::Ptr> &);

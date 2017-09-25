@@ -234,7 +234,7 @@ private Q_SLOTS:
     void slotDeleteItem(KJob *job);
 private:
     Result execute() override;
-    bool mDeleteFromSource;
+    bool mDeleteFromSource = false;
 };
 
 class KMEditMessageCommand : public KMCommand
@@ -327,7 +327,7 @@ private:
     QString mSelection;
     QString mTemplate;
     MessageComposer::ReplyStrategy m_replyStrategy;
-    bool mNoQuote;
+    bool mNoQuote = false;
 };
 
 class KMForwardCommand : public KMCommand
@@ -396,9 +396,9 @@ private:
     QFont mOverrideFont;
     QString mEncoding;
     MessageViewer::Viewer::DisplayFormatMessage mFormat;
-    bool mHtmlLoadExtOverride;
-    bool mUseFixedFont;
-    bool mPrintPreview;
+    bool mHtmlLoadExtOverride = false;
+    bool mUseFixedFont = false;
+    bool mPrintPreview = false;
 };
 
 class KMSetStatusCommand : public KMCommand
@@ -415,7 +415,7 @@ protected Q_SLOTS:
 private:
     Result execute() override;
     MessageStatus mStatus;
-    bool mInvertMark;
+    bool mInvertMark = false;
 };
 
 /** This command is used to set or toggle a tag for a list of messages. If toggle is
