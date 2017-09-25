@@ -151,8 +151,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoAppSignFileCheck->setToolTip(helpText);
     mAutoAppSignFileCheck->setWhatsThis(helpText);
 
-    connect(mAutoAppSignFileCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAutoAppSignFileCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupVBoxLayout->addWidget(mAutoAppSignFileCheck);
 
     // "Insert signature above quoted text" checkbox
@@ -164,10 +163,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mTopQuoteCheck->setToolTip(helpText);
     mTopQuoteCheck->setWhatsThis(helpText);
 
-    connect(mTopQuoteCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-    connect(mAutoAppSignFileCheck, &QAbstractButton::toggled,
-            mTopQuoteCheck, &QWidget::setEnabled);
+    connect(mTopQuoteCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAutoAppSignFileCheck, &QAbstractButton::toggled, mTopQuoteCheck, &QWidget::setEnabled);
     groupVBoxLayout->addWidget(mTopQuoteCheck);
 
     // "Prepend separator to signature" checkbox
@@ -180,10 +177,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mDashDashCheck->setToolTip(helpText);
     mDashDashCheck->setWhatsThis(helpText);
 
-    connect(mDashDashCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-    connect(mAutoAppSignFileCheck, &QAbstractButton::toggled,
-            mDashDashCheck, &QWidget::setEnabled);
+    connect(mDashDashCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAutoAppSignFileCheck, &QAbstractButton::toggled, mDashDashCheck, &QWidget::setEnabled);
     groupVBoxLayout->addWidget(mDashDashCheck);
 
     // "Remove signature when replying" checkbox
@@ -194,8 +189,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mStripSignatureCheck->setToolTip(helpText);
     mStripSignatureCheck->setWhatsThis(helpText);
 
-    connect(mStripSignatureCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mStripSignatureCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupVBoxLayout->addWidget(mStripSignatureCheck);
 
     groupBox->setLayout(groupVBoxLayout);
@@ -215,8 +209,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mQuoteSelectionOnlyCheck->setToolTip(helpText);
     mQuoteSelectionOnlyCheck->setWhatsThis(helpText);
 
-    connect(mQuoteSelectionOnlyCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mQuoteSelectionOnlyCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mQuoteSelectionOnlyCheck, row, 0, 1, -1);
     ++row;
 
@@ -229,8 +222,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mSmartQuoteCheck->setToolTip(helpText);
     mSmartQuoteCheck->setWhatsThis(helpText);
 
-    connect(mSmartQuoteCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mSmartQuoteCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mSmartQuoteCheck, row, 0, 1, -1);
     ++row;
 
@@ -253,13 +245,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mWrapColumnSpin->setToolTip(helpText);
     mWrapColumnSpin->setWhatsThis(helpText);
 
-    connect(mWordWrapCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-    connect(mWrapColumnSpin, QOverload<int>::of(&QSpinBox::valueChanged),
-            this, &ComposerPageGeneralTab::slotEmitChanged);
+    connect(mWordWrapCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+    connect(mWrapColumnSpin, QOverload<int>::of(&QSpinBox::valueChanged), this, &ComposerPageGeneralTab::slotEmitChanged);
     // only enable the spinbox if the checkbox is checked
-    connect(mWordWrapCheck, &QAbstractButton::toggled,
-            mWrapColumnSpin, &QWidget::setEnabled);
+    connect(mWordWrapCheck, &QAbstractButton::toggled, mWrapColumnSpin, &QWidget::setEnabled);
 
     groupGridLayout->addWidget(mWordWrapCheck, row, 0);
     groupGridLayout->addWidget(mWrapColumnSpin, row, 1);
@@ -276,8 +265,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mReplyUsingHtml->setToolTip(helpText);
     mReplyUsingHtml->setWhatsThis(helpText);
 
-    connect(mReplyUsingHtml, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mReplyUsingHtml, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mReplyUsingHtml, row, 0, 1, -1);
     ++row;
 
@@ -291,8 +279,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mImprovePlainTextOfHtmlMessage->setToolTip(helpText);
     mImprovePlainTextOfHtmlMessage->setWhatsThis(helpText);
 
-    connect(mImprovePlainTextOfHtmlMessage, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mImprovePlainTextOfHtmlMessage, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mImprovePlainTextOfHtmlMessage, row, 0, 1, -1);
     ++row;
 
@@ -316,8 +303,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     QLabel *label = new QLabel(KMailSettings::self()->autosaveIntervalItem()->label(), this);
     label->setBuddy(mAutoSave);
 
-    connect(mAutoSave, QOverload<int>::of(&QSpinBox::valueChanged),
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAutoSave, QOverload<int>::of(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mAutoSave, row, 1);
@@ -337,8 +323,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(i18n("Default forwarding type:"), this);
     label->setBuddy(mForwardTypeCombo);
 
-    connect(mForwardTypeCombo, SIGNAL(activated(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mForwardTypeCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &ComposerPageGeneralTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mForwardTypeCombo, row, 1);
@@ -362,8 +347,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoRequestMDNCheck->setToolTip(helpText);
     mAutoRequestMDNCheck->setWhatsThis(helpText);
 
-    connect(mAutoRequestMDNCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAutoRequestMDNCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mAutoRequestMDNCheck, row, 0, 1, -1);
     ++row;
 
@@ -375,8 +359,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
         MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(),
         this);
 
-    connect(mShowAkonadiSearchAddressesInComposer, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mShowAkonadiSearchAddressesInComposer, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mShowAkonadiSearchAddressesInComposer, row, 0, 1, -1);
     ++row;
 
@@ -400,13 +383,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setWhatsThis(helpText);
     mRecipientSpin->setToolTip(i18n("Set the maximum number of recipients for the warning"));
 
-    connect(mRecipientCheck, SIGNAL(stateChanged(int)),
-            this, SLOT(slotEmitChanged()));
-    connect(mRecipientSpin, SIGNAL(valueChanged(int)),
-            this, SLOT(slotEmitChanged()));
+    connect(mRecipientCheck, &QCheckBox::stateChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
+    connect(mRecipientSpin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &ComposerPageGeneralTab::slotEmitChanged);
     // only enable the spinbox if the checkbox is checked
-    connect(mRecipientCheck, SIGNAL(toggled(bool)),
-            mRecipientSpin, SLOT(setEnabled(bool)));
+    connect(mRecipientCheck, &QCheckBox::toggled, mRecipientSpin, &QSpinBox::setEnabled);
 
     groupGridLayout->addWidget(mRecipientCheck, row, 0, 1, 2);
     groupGridLayout->addWidget(mRecipientSpin, row, 2);
@@ -432,8 +412,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this);
     label->setBuddy(mMaximumRecipients);
 
-    connect(mMaximumRecipients, QOverload<int>::of(&QSpinBox::valueChanged),
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mMaximumRecipients, QOverload<int>::of(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0, 1, 2);
     groupGridLayout->addWidget(mMaximumRecipients, row, 2);
@@ -452,8 +431,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mShowRecentAddressesInComposer->setToolTip(helpText);
     mShowRecentAddressesInComposer->setWhatsThis(helpText);
 
-    connect(mShowRecentAddressesInComposer, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mShowRecentAddressesInComposer, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mShowRecentAddressesInComposer, row, 0, 1, -1);
     ++row;
 
@@ -473,12 +451,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecentAddress->setToolTip(helpText);
     mMaximumRecentAddress->setWhatsThis(helpText);
 
-    connect(mMaximumRecentAddress, QOverload<int>::of(&QSpinBox::valueChanged),
-            this, &ConfigModuleTab::slotEmitChanged);
-    connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled,
-            mMaximumRecentAddress, &QWidget::setEnabled);
-    connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled,
-            label, &QWidget::setEnabled);
+    connect(mMaximumRecentAddress, QOverload<int>::of(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled, mMaximumRecentAddress, &QWidget::setEnabled);
+    connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled, label, &QWidget::setEnabled);
 
     groupGridLayout->addWidget(label, row, 0, 1, 2);
     groupGridLayout->addWidget(mMaximumRecentAddress, row, 2);
@@ -633,8 +608,7 @@ ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
     mWidget = new TemplateParser::TemplatesConfiguration(this);
     vlay->addWidget(mWidget);
 
-    connect(mWidget, &TemplateParser::TemplatesConfiguration::changed,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mWidget, &TemplateParser::TemplatesConfiguration::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
 void ComposerPage::TemplatesTab::doLoadFromGlobalSettings()
@@ -665,8 +639,7 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
     mWidget = new TemplateParser::CustomTemplates(kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection *>(), this);
     vlay->addWidget(mWidget);
 
-    connect(mWidget, &TemplateParser::CustomTemplates::changed,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mWidget, &TemplateParser::CustomTemplates::changed, this, &ConfigModuleTab::slotEmitChanged);
     if (KMKernel::self()) {
         connect(mWidget, &TemplateParser::CustomTemplates::templatesUpdated, KMKernel::self(), &KMKernel::updatedTemplates);
     }
@@ -709,15 +682,13 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
                                                 i18n("A&dd..."), i18n("Re&move"),
                                                 i18n("Mod&ify..."),
                                                 i18n("Enter new reply prefix:"));
-    connect(mReplyListEditor, &PimCommon::SimpleStringListEditor::changed,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mReplyListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
     // row 2: "replace [...]" check box:
     mReplaceReplyPrefixCheck = new QCheckBox(
         MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem()->label(),
         group);
-    connect(mReplaceReplyPrefixCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mReplaceReplyPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
     layout->addWidget(mReplyListEditor);
     layout->addWidget(mReplaceReplyPrefixCheck);
@@ -740,15 +711,13 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
                                                 i18n("Remo&ve"),
                                                 i18n("Modify..."),
                                                 i18n("Enter new forward prefix:"));
-    connect(mForwardListEditor, &PimCommon::SimpleStringListEditor::changed,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mForwardListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
     // row 3: "replace [...]" check box:
     mReplaceForwardPrefixCheck = new QCheckBox(
         MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem()->label(),
         group);
-    connect(mReplaceForwardPrefixCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mReplaceForwardPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
     layout->addWidget(mForwardListEditor);
     layout->addWidget(mReplaceForwardPrefixCheck);
@@ -802,20 +771,17 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
                                                 i18n("A&dd..."), i18n("Remo&ve"),
                                                 i18n("&Modify..."), i18n("Enter charset:"));
     mCharsetListEditor->setUpDownAutoRepeat(true);
-    connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::changed,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addWidget(mCharsetListEditor, 1);
 
     mKeepReplyCharsetCheck = new QCheckBox(i18n("&Keep original charset when "
                                                 "replying or forwarding (if "
                                                 "possible)"), this);
-    connect(mKeepReplyCharsetCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mKeepReplyCharsetCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mKeepReplyCharsetCheck);
 
-    connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::aboutToAdd,
-            this, &ComposerPageCharsetTab::slotVerifyCharset);
+    connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::aboutToAdd, this, &ComposerPageCharsetTab::slotVerifyCharset);
     setEnabled(kmkernel);
 }
 
@@ -910,8 +876,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     // "Use custom Message-Id suffix" checkbox:
     mCreateOwnMessageIdCheck
         = new QCheckBox(i18n("&Use custom message-id suffix"), this);
-    connect(mCreateOwnMessageIdCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mCreateOwnMessageIdCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mCreateOwnMessageIdCheck);
 
     // "Message-Id suffix" line edit and label:
@@ -929,12 +894,9 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mMessageIdSuffixEdit->setEnabled(false);
     hlay->addWidget(label);
     hlay->addWidget(mMessageIdSuffixEdit, 1);
-    connect(mCreateOwnMessageIdCheck, &QAbstractButton::toggled,
-            label, &QWidget::setEnabled);
-    connect(mCreateOwnMessageIdCheck, &QAbstractButton::toggled,
-            mMessageIdSuffixEdit, &QWidget::setEnabled);
-    connect(mMessageIdSuffixEdit, &QLineEdit::textChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mCreateOwnMessageIdCheck, &QAbstractButton::toggled, label, &QWidget::setEnabled);
+    connect(mCreateOwnMessageIdCheck, &QAbstractButton::toggled, mMessageIdSuffixEdit, &QWidget::setEnabled);
+    connect(mMessageIdSuffixEdit, &QLineEdit::textChanged, this, &ConfigModuleTab::slotEmitChanged);
 
     // horizontal rule and "custom header fields" label:
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
@@ -949,8 +911,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mHeaderList->setHeaderLabels(QStringList() << i18nc("@title:column Name of the mime header.", "Name")
                                                << i18nc("@title:column Value of the mimeheader.", "Value"));
     mHeaderList->setSortingEnabled(false);
-    connect(mHeaderList, &QTreeWidget::currentItemChanged,
-            this, &ComposerPageHeadersTab::slotMimeHeaderSelectionChanged);
+    connect(mHeaderList, &QTreeWidget::currentItemChanged, this, &ComposerPageHeadersTab::slotMimeHeaderSelectionChanged);
     connect(mHeaderList, &ListView::addHeader, this, &ComposerPageHeadersTab::slotNewMimeHeader);
     connect(mHeaderList, &ListView::removeHeader, this, &ComposerPageHeadersTab::slotRemoveMimeHeader);
     glay->addWidget(mHeaderList, 0, 0, 3, 2);
@@ -961,8 +922,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     button->setAutoDefault(false);
     glay->addWidget(button, 0, 2);
     mRemoveHeaderButton = new QPushButton(i18n("Re&move"), this);
-    connect(mRemoveHeaderButton, &QAbstractButton::clicked,
-            this, &ComposerPageHeadersTab::slotRemoveMimeHeader);
+    connect(mRemoveHeaderButton, &QAbstractButton::clicked, this, &ComposerPageHeadersTab::slotRemoveMimeHeader);
     button->setAutoDefault(false);
     glay->addWidget(mRemoveHeaderButton, 1, 2);
 
@@ -975,8 +935,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mTagNameLabel->setEnabled(false);
     glay->addWidget(mTagNameLabel, 3, 0);
     glay->addWidget(mTagNameEdit, 3, 1);
-    connect(mTagNameEdit, &QLineEdit::textChanged,
-            this, &ComposerPageHeadersTab::slotMimeHeaderNameChanged);
+    connect(mTagNameEdit, &QLineEdit::textChanged, this, &ComposerPageHeadersTab::slotMimeHeaderNameChanged);
 
     mTagValueEdit = new QLineEdit(this);
     mTagValueEdit->setClearButtonEnabled(true);
@@ -986,8 +945,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mTagValueLabel->setEnabled(false);
     glay->addWidget(mTagValueLabel, 4, 0);
     glay->addWidget(mTagValueEdit, 4, 1);
-    connect(mTagValueEdit, &QLineEdit::textChanged,
-            this, &ComposerPageHeadersTab::slotMimeHeaderValueChanged);
+    connect(mTagValueEdit, &QLineEdit::textChanged, this, &ComposerPageHeadersTab::slotMimeHeaderValueChanged);
 }
 
 void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
@@ -1166,10 +1124,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     mOutlookCompatibleCheck->setToolTip(i18n(
                                             "Turn this option on to make Outlook(tm) understand attachment names "
                                             "containing non-English characters"));
-    connect(mOutlookCompatibleCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-    connect(mOutlookCompatibleCheck, &QAbstractButton::clicked,
-            this, &ComposerPageAttachmentsTab::slotOutlookCompatibleClicked);
+    connect(mOutlookCompatibleCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+    connect(mOutlookCompatibleCheck, &QAbstractButton::clicked, this, &ComposerPageAttachmentsTab::slotOutlookCompatibleClicked);
     vlay->addWidget(mOutlookCompatibleCheck);
     vlay->addSpacing(5);
 
@@ -1177,8 +1133,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     mMissingAttachmentDetectionCheck
         = new QCheckBox(i18n("E&nable detection of missing attachments"), this);
     mMissingAttachmentDetectionCheck->setChecked(true);
-    connect(mMissingAttachmentDetectionCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mMissingAttachmentDetectionCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mMissingAttachmentDetectionCheck);
 
     // "Attachment key words" label and string list editor
@@ -1196,14 +1151,11 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
                                                 i18n("A&dd..."), i18n("Re&move"),
                                                 i18n("Mod&ify..."),
                                                 i18n("Enter new key word:"));
-    connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed,
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mAttachWordsListEditor);
 
-    connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled,
-            label, &QWidget::setEnabled);
-    connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled,
-            mAttachWordsListEditor, &QWidget::setEnabled);
+    connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled, label, &QWidget::setEnabled);
+    connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled, mAttachWordsListEditor, &QWidget::setEnabled);
 
     QHBoxLayout *layAttachment = new QHBoxLayout;
     label = new QLabel(i18n("Maximum Attachment Size:"), this);
@@ -1214,8 +1166,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     mMaximumAttachmentSize->setRange(-1, 99999);
     mMaximumAttachmentSize->setSingleStep(100);
     mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
-    connect(mMaximumAttachmentSize, QOverload<int>::of(&QSpinBox::valueChanged),
-            this, &ConfigModuleTab::slotEmitChanged);
+    connect(mMaximumAttachmentSize, QOverload<int>::of(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
     mMaximumAttachmentSize->setSpecialValueText(i18n("No limit"));
     layAttachment->addWidget(mMaximumAttachmentSize);
     vlay->addLayout(layAttachment);
