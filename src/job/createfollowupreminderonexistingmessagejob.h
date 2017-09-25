@@ -45,10 +45,11 @@ public:
 
     bool canStart() const;
 
-private Q_SLOTS:
+private:
     void itemFetchJobDone(KJob *job);
     void slotReminderDone(KJob *job);
-private:
+
+
     void doStart();
     Akonadi::Collection mCollection;
     Akonadi::Item mMessageItem;

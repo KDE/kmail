@@ -40,11 +40,11 @@ public:
 
     void start(QAbstractItemModel *collectionModel);
 
-private Q_SLOTS:
+private:
     void checkNextCollection();
 
     void indexingFinished(qint64 index, bool reindexCollection);
-private:
+
     void initializeCollectionList(QAbstractItemModel *model, const QModelIndex &parentIndex = QModelIndex());
     void createJob();
     void callToReindexCollection();

@@ -50,16 +50,14 @@ public:
      */
     void start() override;
 
-private Q_SLOTS:
+private:
     void slotCollectionsFetched(KJob *);
     void slotResourceCreationDone(KJob *job);
     void slotContactEditorError(const QString &error);
     void contactStored(const Akonadi::Item &item);
 
-private:
     void createContact();
 
-private:
     QWidget *mParentWidget = nullptr;
 };
 

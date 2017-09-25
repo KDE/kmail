@@ -45,13 +45,10 @@ public:
 protected:
     KParts::ReadOnlyPart *createPart() override;
 
-private Q_SLOTS:
-
+private:
     void doSync();
     void syncAccount(QAction *act);
     void fillSyncActionSubEntries();
-
-private:
     SummaryViewPart *mPart = nullptr;
     KSelectAction *mSyncAction = nullptr;
     QAction *mAllSync = nullptr;

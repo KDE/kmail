@@ -40,11 +40,10 @@ public:
 Q_SIGNALS:
     void clearCurrentFolder();
 
-private Q_SLOTS:
+private:
     void slotDelayedRemoveFolder(KJob *job);
     void slotDeletionCollectionResult(KJob *job);
 
-private:
     KMMainWidget *mMainWidget = nullptr;
     Akonadi::Collection mCurrentCollection;
 };

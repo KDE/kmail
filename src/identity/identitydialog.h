@@ -94,21 +94,20 @@ protected Q_SLOTS:
     // copy default templates to identity templates
     void slotCopyGlobal();
 
-private Q_SLOTS:
+private:
     void slotAccepted();
     void slotDelayedButtonClicked(KJob *);
     void slotEditVcard();
     void slotRefreshDefaultDomainName();
     void slotVCardRemoved();
     void slotHelp();
-private:
+
     bool keyMatchesEmailAddress(const GpgME::Key &key, const QString &email);
     bool checkFolderExists(const QString &folder);
     bool validateAddresses(const QString &addresses);
     void updateVcardButton();
     void editVcard(const QString &filename);
 
-private:
     QString mVcardFilename;
 
     // "general" tab:

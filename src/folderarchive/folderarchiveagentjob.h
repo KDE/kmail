@@ -34,13 +34,13 @@ public:
 
     void start();
 
-private Q_SLOTS:
+private:
     void slotFetchCollection(KJob *job);
     void sloMoveMailsToCollection(const Akonadi::Collection &col);
     void slotCheckFailed(const QString &message);
     void slotCollectionIdFound(const Akonadi::Collection &col);
     void slotMoveMessages(KMMoveCommand *);
-private:
+
     void sendError(const QString &error);
     Akonadi::Item::List mListItem;
     FolderArchiveManager *mManager = nullptr;

@@ -46,7 +46,7 @@ public Q_SLOTS:
     /// @reimp
     void attachMyPublicKey() override;
 
-private Q_SLOTS:
+private:
     void identityChanged();
     void actionsCreated();
     void addAttachmentItems(const Akonadi::Item::List &items);
@@ -55,7 +55,7 @@ private Q_SLOTS:
     void doubleClicked(const QModelIndex &itemClicked);
     void slotSelectAllAttachment();
 
-private:
+
     KMComposerWin *mComposer = nullptr;
     AttachmentView *mView = nullptr;
 };

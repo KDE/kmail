@@ -50,9 +50,8 @@ public:
     QString helpAnchor() const;
 
     void save() override;
-private Q_SLOTS:
-    void slotConfigureAddressCompletion();
 private:
+    void slotConfigureAddressCompletion();
     void doLoadFromGlobalSettings() override;
     void doResetToDefaultsOther() override;
 

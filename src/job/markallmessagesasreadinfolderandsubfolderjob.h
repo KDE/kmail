@@ -36,11 +36,10 @@ public:
     void setTopLevelCollection(const Akonadi::Collection &topLevelCollection);
 
     void start();
-private Q_SLOTS:
+private:
     void slotFetchCollectionFailed();
     void slotFetchCollectionDone(const Akonadi::Collection::List &list);
     void slotMarkAsResult(Akonadi::MarkAsCommand::Result result);
-private:
     Akonadi::Collection mTopLevelCollection;
 };
 

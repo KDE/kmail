@@ -27,14 +27,9 @@
 class FolderArchiveAccountInfo;
 
 struct ArchiveCache {
-    ArchiveCache()
-        : date(QDate::currentDate())
-        , colId(-1)
-    {
-    }
 
-    QDate date;
-    Akonadi::Collection::Id colId;
+    QDate date = QDate::currentDate();
+    Akonadi::Collection::Id colId = -1;
 };
 
 class FolderArchiveCache : public QObject

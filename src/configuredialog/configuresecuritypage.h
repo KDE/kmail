@@ -45,10 +45,8 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui_SecurityPageGeneralTab mSGTab;
-
-private Q_SLOTS:
     void slotLinkClicked(const QString &link);
+    Ui_SecurityPageGeneralTab mSGTab;
 };
 
 class SecurityPageMDNTab : public ConfigModuleTab
@@ -64,12 +62,10 @@ private:
     void doLoadOther() override;
 
 private:
+    void slotLinkClicked(const QString &link);
     QButtonGroup *mMDNGroup = nullptr;
     QButtonGroup *mOrigQuoteGroup = nullptr;
     Ui_SecurityPageMDNTab mUi;
-
-private Q_SLOTS:
-    void slotLinkClicked(const QString &link);
 };
 
 class SecurityPageComposerCryptoTab : public ConfigModuleTab

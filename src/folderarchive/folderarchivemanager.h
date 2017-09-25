@@ -54,11 +54,10 @@ public Q_SLOTS:
     void slotCollectionRemoved(const Akonadi::Collection &collection);
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
 
-private Q_SLOTS:
+private:
     void slotFetchParentCollection(KJob *job);
     void slotFetchCollection(KJob *job);
 
-private:
     FolderArchiveAccountInfo *infoFromInstanceName(const QString &instanceName) const;
     void nextJob();
     void removeInfo(const QString &instanceName);

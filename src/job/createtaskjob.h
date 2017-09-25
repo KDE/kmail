@@ -32,11 +32,11 @@ public:
     ~CreateTaskJob();
 
     void start() override;
-private Q_SLOTS:
+private:
     void itemFetchJobDone(KJob *job);
 
     void slotModifyItemDone(KJob *job);
-private:
+
     void fetchItems();
     Akonadi::Item::List mListItem;
 };

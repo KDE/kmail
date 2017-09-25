@@ -44,7 +44,6 @@ public:
 private:
     void setXfaceFromFile(const QUrl &url);
 
-private:
     void slotSelectFile();
     void slotSelectFromAddressbook();
     void slotDelayedSelectFromAddressbook(KJob *);
