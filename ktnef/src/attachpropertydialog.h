@@ -48,13 +48,11 @@ public:
     static void formatPropertySet(KTNEFPropertySet *, QTreeWidget *);
     static bool saveProperty(QTreeWidget *, KTNEFPropertySet *, QWidget *);
 
-private Q_SLOTS:
-    void slotSave();
-
 protected:
     Ui::AttachPropertyWidgetBase mUI;
 
 private:
+    void slotSave();
     void readConfig();
     void writeConfig();
     KTNEFAttach *mAttach = nullptr;

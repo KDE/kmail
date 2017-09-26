@@ -54,7 +54,7 @@ public:
     explicit FilterLogDialog(QWidget *parent);
     ~FilterLogDialog();
 
-private Q_SLOTS:
+private:
     void slotTextChanged();
     void slotLogEntryAdded(const QString &logEntry);
     void slotLogShrinked();
@@ -65,10 +65,10 @@ private Q_SLOTS:
 
     void slotUser1();
     void slotUser2();
-private:
+
     void readConfig();
     void writeConfig();
-private:
+
     KPIMTextEdit::PlainTextEditorWidget *mTextEdit = nullptr;
     QCheckBox *mLogActiveBox = nullptr;
     QGroupBox *mLogDetailsBox = nullptr;

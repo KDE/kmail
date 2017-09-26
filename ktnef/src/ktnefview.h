@@ -42,10 +42,8 @@ protected:
     void resizeEvent(QResizeEvent *e) override;
     void startDrag(Qt::DropActions dropAction) override;
 
-private Q_SLOTS:
-    void adjustColumnWidth();
-
 private:
+    void adjustColumnWidth();
     QList<KTNEFAttach *> mAttachments;
 };
 
