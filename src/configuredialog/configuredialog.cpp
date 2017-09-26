@@ -54,17 +54,14 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     connect(button(QDialogButtonBox::Cancel), &QPushButton::clicked, this, &ConfigureDialog::slotUser1Clicked);
     connect(button(QDialogButtonBox::RestoreDefaults), &QPushButton::clicked, this, &ConfigureDialog::slotDefaultClicked);
     connect(button(QDialogButtonBox::Reset), &QPushButton::clicked, this, &ConfigureDialog::slotUser1Clicked);
-    // We store the size of the dialog on hide, because otherwise
-    // the KCMultiDialog starts with the size of the first kcm, not
-    // the largest one. This way at least after the first showing of
-    // the largest kcm the size is kept.
-    const int width = KMailSettings::self()->configureDialogWidth();
-    const int height = KMailSettings::self()->configureDialogHeight();
-    if (width != 0 && height != 0) {
-        resize(width, height);
-    }
 }
 
+QSize ConfigureDialog::sizeHint() const
+{
+    const int width = KMailSettings::self()->configureDialogWidth();
+    const int height = KMailSettings::self()->configureDialogHeight();
+    return QSize(width, height);
+}
 void ConfigureDialog::hideEvent(QHideEvent *ev)
 {
     KMailSettings::self()->setConfigureDialogWidth(width());

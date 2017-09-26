@@ -40,6 +40,7 @@ Q_SIGNALS:
 protected:
     void hideEvent(QHideEvent *i) override;
 
+    QSize sizeHint() const override;
 protected Q_SLOTS:
     /** @reimplemented
     * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
