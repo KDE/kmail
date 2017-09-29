@@ -108,8 +108,8 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     layout->setStretchFactor(mPluginView, 1);
 
     load();
-    connect(mPluginView, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-            this, SLOT(changed()));
+    connect(mPluginView, &QTreeWidget::itemChanged,
+            this, QOverload<>::of(&KCMKontactSummary::changed));
 
     KAboutData *about = new KAboutData(QStringLiteral("kontactsummary"),
                                        i18n("kontactsummary"),

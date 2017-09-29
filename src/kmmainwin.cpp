@@ -81,8 +81,8 @@ KMMainWin::KMMainWin(QWidget *)
     connect(KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::statusMsg,
             this, &KMMainWin::displayStatusMessage);
 
-    connect(mKMMainWidget, SIGNAL(captionChangeRequest(QString)),
-            SLOT(setCaption(QString)));
+    connect(mKMMainWidget, &KMMainWidget::captionChangeRequest,
+            this, QOverload<const QString &>::of(&KMainWindow::setCaption));
 
     mKMMainWidget->updateQuickSearchLineText();
     mHideMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());

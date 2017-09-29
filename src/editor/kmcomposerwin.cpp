@@ -469,8 +469,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 
     connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
-    connect(identity, SIGNAL(identityChanged(uint)),
-            SLOT(slotIdentityChanged(uint)));
+    connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {slotIdentityChanged(val);});
     connect(kmkernel->identityManager(), SIGNAL(changed(uint)),
             SLOT(slotIdentityChanged(uint)));
 
