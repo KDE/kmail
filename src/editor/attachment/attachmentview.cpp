@@ -133,6 +133,8 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
         for (const AttachmentPart::Ptr &part : qAsConst(toRemove)) {
             mModel->removeAttachment(part);
         }
+    } else {
+        QTreeView::keyPressEvent(event);
     }
 }
 
