@@ -83,6 +83,7 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     setUniformRowHeights(true);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     setDragDropMode(QAbstractItemView::DragDrop);
+    setEditTriggers(QAbstractItemView::EditKeyPressed);
     setDropIndicatorShown(false);
     setSortingEnabled(true);
 
