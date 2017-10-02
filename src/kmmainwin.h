@@ -62,11 +62,9 @@ protected:
 protected Q_SLOTS:
     void slotQuit();
 
-private Q_SLOTS:
-    void slotToggleMenubar(bool dontShowWarning);
-    void slotConfigureShortcuts();
-
 private:
+    void slotConfigureShortcuts();
+    void slotToggleMenubar(bool dontShowWarning);
     KPIM::ProgressStatusBarWidget *mProgressBar = nullptr;
     KMMainWidget *mKMMainWidget = nullptr;
     KToggleAction *mHideMenuBarAction = nullptr;

@@ -45,15 +45,12 @@ public Q_SLOTS:
     void slotShowExpiryProperties();
     void slotCollectionProperties();
 
-private Q_SLOTS:
+private:
     void slotCollectionPropertiesContinued(KJob *job);
     void slotCollectionPropertiesFinished(KJob *job);
-
-private:
     void showCollectionProperties(const QString &pageToShow);
     void showCollectionPropertiesContinued(const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem);
 
-private:
     QHash<Akonadi::Collection::Id, QPointer<Akonadi::CollectionPropertiesDialog> > mHashDialogBox;
     QStringList mPages;
     KMMainWidget *mMainWidget = nullptr;
