@@ -54,17 +54,18 @@ public:
     void showMessage(const QString &encoding, const KMime::Message::Ptr &message);
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
                           const WebEngineViewer::WebHitTestResult &result);
-
-private:
-    void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint);
-    void slotContactSearchJobForMessagePopupDone(KJob *);
-    void slotTrashMessage();
+public Q_SLOTS:
     void slotForwardInlineMsg();
     void slotForwardAttachedMessage();
     void slotRedirectMessage();
     void slotCustomReplyToMsg(const QString &tmpl);
     void slotCustomReplyAllToMsg(const QString &tmpl);
     void slotCustomForwardMsg(const QString &tmpl);
+
+private:
+    void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint);
+    void slotContactSearchJobForMessagePopupDone(KJob *);
+    void slotTrashMessage();
 
     void slotEditToolbars();
     void slotConfigChanged();
