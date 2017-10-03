@@ -36,13 +36,15 @@ public:
     ~IncompleteIndexDialog();
 
 private Q_SLOTS:
-    void selectAll();
-    void unselectAll();
 
     void slotCurrentlyIndexingCollectionChanged(qlonglong colId);
-    void slotStopIndexing();
 
 private:
+    void selectAll();
+    void unselectAll();
+    void slotStopIndexing();
+    void readConfig();
+    void writeConfig();
     QList<qlonglong> collectionsToReindex() const;
     void waitForIndexer();
     void updateAllSelection(bool select);
