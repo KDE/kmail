@@ -38,6 +38,8 @@
 #include <QTimer>
 #include <QHBoxLayout>
 #include <QDialogButtonBox>
+#include <KConfigGroup>
+#include <KSharedConfig>
 
 Q_DECLARE_METATYPE(Qt::CheckState)
 Q_DECLARE_METATYPE(QVector<qint64>)
@@ -142,10 +144,28 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
     mUi->buttonBox->button(QDialogButtonBox::Cancel)->setText(i18n("Search Anyway"));
     connect(mUi->buttonBox, &QDialogButtonBox::accepted, this, &IncompleteIndexDialog::waitForIndexer);
     connect(mUi->buttonBox, &QDialogButtonBox::rejected, this, &IncompleteIndexDialog::reject);
+    readConfig();
 }
 
 IncompleteIndexDialog::~IncompleteIndexDialog()
 {
+    writeConfig();
+}
+
+void IncompleteIndexDialog::readConfig()
+{
+    KConfigGroup group(KSharedConfig::openConfig(), "IncompleteIndexDialog");
+    const QSize size = group.readEntry("Size", QSize(500, 400));
+    if (size.isValid()) {
+        resize(size);
+    }
+}
+
+void IncompleteIndexDialog::writeConfig()
+{
+    KConfigGroup group(KSharedConfig::openConfig(), "IncompleteIndexDialog");
+    group.writeEntry("Size", size());
+    group.sync();
 }
 
 void IncompleteIndexDialog::selectAll()
