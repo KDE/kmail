@@ -221,7 +221,7 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
 {
     const int idx = mIndexingQueue.indexOf(colId);
     if (idx > -1) {
-        mIndexingQueue.removeAll(idx);
+        mIndexingQueue.removeAll(colId);
         mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
 
         if (mIndexingQueue.isEmpty()) {
