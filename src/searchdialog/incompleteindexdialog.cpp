@@ -20,6 +20,7 @@
 #include "incompleteindexdialog.h"
 #include "ui_incompleteindexdialog.h"
 #include "kmkernel.h"
+#include "kmail_debug.h"
 
 #include <QAbstractItemView>
 #include <QProgressDialog>
@@ -209,6 +210,7 @@ void IncompleteIndexDialog::waitForIndexer()
                                   QDBusConnection::sessionBus(), this);
 
     if (!mIndexer->isValid()) {
+        qCWarning(KMAIL_LOG) << "Invalid indexer dbus interface ";
         accept();
         return;
     }
