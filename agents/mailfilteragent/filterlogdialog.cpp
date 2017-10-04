@@ -36,6 +36,7 @@
 #include <QFileDialog>
 #include <KLocalizedString>
 #include <kmessagebox.h>
+#include <KStandardAction>
 #include <QVBoxLayout>
 #include <QIcon>
 
@@ -44,6 +45,8 @@
 #include <QSpinBox>
 #include <QStringList>
 #include <QGroupBox>
+#include <QAction>
+#include <QMenu>
 
 #include <errno.h>
 #include <KSharedConfig>
@@ -79,7 +82,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     pageVBoxLayout->setMargin(0);
     mainLayout->addWidget(page);
 
-    mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(page);
+    mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(new FilterLogTextEdit(this),page);
     pageVBoxLayout->addWidget(mTextEdit);
 
     mTextEdit->setReadOnly(true);
@@ -361,5 +364,23 @@ void FilterLogDialog::slotUser2()
                                     QString::fromLocal8Bit(strerror(errno))),
                                i18n("KMail Error"));
         }
+    }
+}
+
+FilterLogTextEdit::FilterLogTextEdit(QWidget *parent)
+    : KPIMTextEdit::PlainTextEditor(parent)
+{
+}
+
+
+void FilterLogTextEdit::addExtraMenuEntry(QMenu *menu, QPoint pos)
+{
+    Q_UNUSED(pos);
+    if (!document()->isEmpty()) {
+        QAction *sep = new QAction(menu);
+        sep->setSeparator(true);
+        menu->addAction(sep);
+        QAction *clearAllAction = KStandardAction::clear(this, &FilterLogTextEdit::clear, menu);
+        menu->addAction(clearAllAction);
     }
 }

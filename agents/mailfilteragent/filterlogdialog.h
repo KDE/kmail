@@ -31,6 +31,8 @@
 
 #include <QDialog>
 
+#include <KPIMTextEdit/PlainTextEditor>
+
 class QCheckBox;
 class QSpinBox;
 class QGroupBox;
@@ -45,6 +47,18 @@ class QPushButton;
 namespace KPIMTextEdit {
 class PlainTextEditorWidget;
 }
+
+class FilterLogTextEdit : public KPIMTextEdit::PlainTextEditor
+{
+    Q_OBJECT
+public:
+    explicit FilterLogTextEdit(QWidget *parent = nullptr);
+    ~FilterLogTextEdit() = default;
+
+protected:
+    void addExtraMenuEntry(QMenu *menu, QPoint pos) override;
+};
+
 class FilterLogDialog : public QDialog
 {
     Q_OBJECT
