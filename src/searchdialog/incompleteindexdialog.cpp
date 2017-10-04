@@ -112,8 +112,6 @@ private:
 IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent)
     : QDialog(parent)
     , mUi(new Ui::IncompleteIndexDialog)
-    , mProgressDialog(nullptr)
-    , mIndexer(nullptr)
 {
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setMargin(0);
