@@ -133,7 +133,7 @@ KMKernel::KMKernel(QObject *parent)
 {
     //Initialize kmail sieveimap interface
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
-    mDebugAkonadiSearch = !qEnvironmentVariableIsEmpty("AKONADI_SEARCH_DEBUG");
+    mDebugAkonadiSearch = !qEnvironmentVariableIsEmpty("KDEPIM_DEBUGGING");
 
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();
 
