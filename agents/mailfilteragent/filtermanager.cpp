@@ -431,14 +431,14 @@ bool FilterManager::process(const Akonadi::Item &item, bool needsFullPayload, co
         return false;
     }
 
-    bool stopIt = false;
-    bool applyOnOutbound = false;
     if (d->isMatching(item, filter)) {
         // do the actual filtering stuff
         d->beginFiltering(item);
 
         ItemContext context(item, needsFullPayload);
 
+        bool stopIt = false;
+        bool applyOnOutbound = false;
         if (filter->execActions(context, stopIt, applyOnOutbound) == MailCommon::MailFilter::CriticalError) {
             return false;
         }
@@ -525,7 +525,7 @@ bool FilterManager::process(const QList< MailFilter * > &mailFilters, const Akon
             const bool beforeOutboundOk = ((set & BeforeOutbound) && (*it)->applyBeforeOutbound());
             const bool explicitOk = ((set & Explicit) && (*it)->applyOnExplicit());
             const bool allFoldersOk = ((set & AllFolders) && (*it)->applyOnAllFoldersInbound());
-            const bool accountOk = (!account || (account && (*it)->applyOnAccount(accountId)));
+            const bool accountOk = (!account || (*it)->applyOnAccount(accountId));
 
             if ((inboundOk && accountOk) || (allFoldersOk && accountOk) || outboundOk || beforeOutboundOk || explicitOk) {
                 // filter is applicable

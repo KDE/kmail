@@ -90,7 +90,7 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
         document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->errorPixmap);
     }
 
-    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
+    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
     if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
         cg = QPalette::Inactive;
     }
@@ -139,7 +139,7 @@ void ConfigAgentDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     QPen pen = painter->pen();
 
-    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
+    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
     if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
         cg = QPalette::Inactive;
     }

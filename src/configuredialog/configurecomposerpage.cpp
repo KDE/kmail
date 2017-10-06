@@ -307,9 +307,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mAutoSave, row, 1);
-    ++row;
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
+    ++row;
     // "Default forwarding type" combobox
     mForwardTypeCombo = new KComboBox(false, this);
     mForwardTypeCombo->addItems(QStringList() << i18nc("@item:inlistbox Inline mail forwarding",
@@ -327,7 +327,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mForwardTypeCombo, row, 1);
-    ++row;
 #endif
 
     groupBox->setLayout(groupGridLayout);
@@ -463,7 +462,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     QPushButton *configureCompletionButton = new QPushButton(i18n("Configure Completion..."), this);
     connect(configureCompletionButton, &QAbstractButton::clicked, this, &ComposerPageGeneralTab::slotConfigureAddressCompletion);
     groupGridLayout->addWidget(configureCompletionButton, row, 1, 1, 2);
-    ++row;
 
     groupBox->setLayout(groupGridLayout);
     vb2->addWidget(groupBox);
