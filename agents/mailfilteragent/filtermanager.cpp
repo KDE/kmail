@@ -83,10 +83,10 @@ public:
     QMap<QString, SearchRule::RequiredPart> mRequiredParts;
     SearchRule::RequiredPart mRequiredPartsBasedOnAll;
     QPixmap pixmapNotification;
-    bool mInboundFiltersExist;
-    bool mAllFoldersFiltersExist;
-    int mTotalProgressCount;
-    int mCurrentProgressCount;
+    bool mInboundFiltersExist = false;
+    bool mAllFoldersFiltersExist = false;
+    int mTotalProgressCount = 0;
+    int mCurrentProgressCount = 0;
 };
 
 void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List &items)
