@@ -120,6 +120,7 @@ QList<KTNEFAttach *> KTNEFView::getSelection()
 
     QList<QTreeWidgetItem *>::const_iterator it;
     QList<QTreeWidgetItem *>::const_iterator end(list.constEnd());
+    mAttachments.reserve(list.count());
     for (it = list.constBegin(); it != end; ++it) {
         Attachment *a = static_cast<Attachment *>(*it);
         mAttachments.append(a->getAttachment());

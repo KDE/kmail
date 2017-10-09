@@ -68,10 +68,8 @@ protected Q_SLOTS:
     void slotConfigureKeys();
     void openRecentFile(const QUrl &);
 
-private Q_SLOTS:
-    void slotOpenWithAction(QAction *act);
-
 private:
+    void slotOpenWithAction(QAction *act);
     void addRecentFile(const QUrl &url);
     void setupStatusbar();
     void setupActions();
