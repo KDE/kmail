@@ -127,7 +127,6 @@ public:
     static void cleanup();
     QAction *action(const QString &name);
 
-
     QAction *sendAgainAction() const;
 
     QAction *sendQueuedAction() const;
@@ -198,12 +197,9 @@ public Q_SLOTS:
     void slotItemsFetchedForActivation(KMCommand *command);
     void slotMessageStatusChangeRequest(const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus &);
 
-
-
     /** Adds if not existing/removes if existing the tag identified by @p aLabel
         in all selected messages */
     void slotUpdateMessageTagList(const Akonadi::Tag &tag);
-
 
     void slotSelectCollectionFolder(const Akonadi::Collection &col);
 
@@ -261,15 +257,12 @@ private:
     */
     void updateMessageMenu();
 
-
     void slotRemoveDuplicates();
     /**
       Select the given folder
       If the folder is 0 the intro is shown
     */
     void folderSelected(const Akonadi::Collection &col);
-
-
 
     /**
       Start a timer to update message actions
@@ -477,7 +470,6 @@ private Q_SLOTS:
     void slotUpdateActionsAfterMailChecking();
     void slotCreateAddressBookContact();
     void slotOpenRecentMessage(const QUrl &url);
-
 
     void slotMoveMessageToTrash();
     /**

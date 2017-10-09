@@ -27,7 +27,6 @@
 class FolderArchiveAccountInfo;
 
 struct ArchiveCache {
-
     QDate date = QDate::currentDate();
     Akonadi::Collection::Id colId = -1;
 };

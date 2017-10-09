@@ -49,7 +49,6 @@ private:
     void itemFetchJobDone(KJob *job);
     void slotReminderDone(KJob *job);
 
-
     void doStart();
     Akonadi::Collection mCollection;
     Akonadi::Item mMessageItem;

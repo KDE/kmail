@@ -73,7 +73,6 @@ private:
     int mSize = 0;
     int mLastId = 0;
     UndoInfo *mCachedInfo = nullptr;
-
 };
 }
 

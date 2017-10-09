@@ -1565,7 +1565,6 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
     }
 }
 
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardInlineMsg()
 {

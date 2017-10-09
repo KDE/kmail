@@ -315,7 +315,6 @@ private Q_SLOTS:
     void slotUpdateToolbars();
     void slotEditKeys();
 
-
     /**
      * Change window title to given string.
      */

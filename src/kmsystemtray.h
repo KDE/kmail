@@ -73,7 +73,7 @@ private:
 
     int mCount = 0;
 
-    bool mIconNotificationsEnabled =true;
+    bool mIconNotificationsEnabled = true;
 
     QMenu *mNewMessagesPopup = nullptr;
     QAction *mSendQueued = nullptr;

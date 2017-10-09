@@ -82,7 +82,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     pageVBoxLayout->setMargin(0);
     mainLayout->addWidget(page);
 
-    mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(new FilterLogTextEdit(this),page);
+    mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(new FilterLogTextEdit(this), page);
     pageVBoxLayout->addWidget(mTextEdit);
 
     mTextEdit->setReadOnly(true);
@@ -371,7 +371,6 @@ FilterLogTextEdit::FilterLogTextEdit(QWidget *parent)
     : KPIMTextEdit::PlainTextEditor(parent)
 {
 }
-
 
 void FilterLogTextEdit::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {

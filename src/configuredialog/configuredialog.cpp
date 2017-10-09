@@ -62,6 +62,7 @@ QSize ConfigureDialog::sizeHint() const
     const int height = KMailSettings::self()->configureDialogHeight();
     return QSize(width, height);
 }
+
 void ConfigureDialog::hideEvent(QHideEvent *ev)
 {
     KMailSettings::self()->setConfigureDialogWidth(width());

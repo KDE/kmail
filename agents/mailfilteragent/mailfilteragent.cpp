@@ -130,7 +130,9 @@ MailFilterAgent::MailFilterAgent(const QString &id)
 
     mProgressCounter = 0;
     mProgressTimer = new QTimer(this);
-    connect(mProgressTimer, &QTimer::timeout, this, [this]() {emitProgress();});
+    connect(mProgressTimer, &QTimer::timeout, this, [this]() {
+        emitProgress();
+    });
 
     itemMonitor = new Akonadi::Monitor(this);
     itemMonitor->setObjectName(QStringLiteral("MailFilterItemMonitor"));
