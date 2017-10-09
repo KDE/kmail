@@ -856,7 +856,7 @@ void KMComposerWin::rethinkFields(bool fromSlot)
     }
     rethinkHeaderLine(showHeaders, HDR_REPLY_TO, row, mLblReplyTo, mEdtReplyTo);
     if (showHeaders & HDR_REPLY_TO) {
-        prevFocus = connectFocusMoving(prevFocus, mEdtReplyTo);
+        (void) connectFocusMoving(prevFocus, mEdtReplyTo);
     }
 
     mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 2);
