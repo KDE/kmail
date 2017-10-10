@@ -415,7 +415,7 @@ public:
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
 
-    bool allowToDebugAkonadiSeachSupport() const;
+    bool allowToDebug() const;
 
     Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 
@@ -535,7 +535,7 @@ private:
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
     MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;
-    bool mDebugAkonadiSearch = false;
+    bool mDebug = false;
 };
 
 #endif // _KMKERNEL_H

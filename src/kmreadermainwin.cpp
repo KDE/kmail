@@ -612,7 +612,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addSeparator();
             menu->addAction(mMsgActions->addFollowupReminderAction());
         }
-        if (kmkernel->allowToDebugAkonadiSeachSupport()) {
+        if (kmkernel->allowToDebug()) {
             menu->addSeparator();
             menu->addAction(mMsgActions->debugAkonadiSearchAction());
         }

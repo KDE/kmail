@@ -53,10 +53,8 @@
 #include "job/markallmessagesasreadinfolderandsubfolderjob.h"
 #include "job/removeduplicatemessageinfolderandsubfolderjob.h"
 #include "sieveimapinterface/kmsieveimappasswordprovider.h"
-#if !defined(NDEBUG)
 #include <KSieveUi/SieveDebugDialog>
 using KSieveUi::SieveDebugDialog;
-#endif
 
 #include <AkonadiWidgets/CollectionMaintenancePage>
 #include "collectionpage/collectionquotapage.h"
@@ -2242,11 +2240,11 @@ void KMMainWidget::slotEditVacation(const QString &serverName)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotDebugSieve()
 {
-#if !defined(NDEBUG)
-    QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog = new KSieveUi::SieveDebugDialog(mSievePasswordProvider, this);
-    mSieveDebugDialog->exec();
-    delete mSieveDebugDialog;
-#endif
+    if (kmkernel->allowToDebug()) {
+        QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog = new KSieveUi::SieveDebugDialog(mSievePasswordProvider, this);
+        mSieveDebugDialog->exec();
+        delete mSieveDebugDialog;
+    }
 }
 
 void KMMainWidget::slotConfigChanged()
@@ -2730,7 +2728,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
 
         menu.addSeparator();
         menu.addAction(mMsgActions->addFollowupReminderAction());
-        if (kmkernel->allowToDebugAkonadiSeachSupport()) {
+        if (kmkernel->allowToDebug()) {
             menu.addSeparator();
             menu.addAction(mMsgActions->debugAkonadiSearchAction());
         }
@@ -2850,13 +2848,13 @@ void KMMainWidget::setupActions()
         }
     }
 
-#if !defined(NDEBUG)
     {
-        QAction *action = new QAction(i18n("&Debug Sieve..."), this);
-        actionCollection()->addAction(QStringLiteral("tools_debug_sieve"), action);
-        connect(action, &QAction::triggered, this, &KMMainWidget::slotDebugSieve);
+        if (kmkernel->allowToDebug()) {
+            QAction *action = new QAction(i18n("&Debug Sieve..."), this);
+            actionCollection()->addAction(QStringLiteral("tools_debug_sieve"), action);
+            connect(action, &QAction::triggered, this, &KMMainWidget::slotDebugSieve);
+        }
     }
-#endif
 
     {
         QAction *action = new QAction(i18n("Filter &Log Viewer..."), this);
