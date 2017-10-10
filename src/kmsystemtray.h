@@ -19,7 +19,6 @@
 #define KMSYSTEMTRAY_H
 
 #include <AkonadiCore/collection.h>
-#include <qicon.h>
 #include <kstatusnotifieritem.h>
 
 #include <QAction>
@@ -68,7 +67,6 @@ private:
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = QModelIndex());
     bool excludeFolder(const Akonadi::Collection &collection) const;
     bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
-    QIcon mIcon;
     int mDesktopOfMainWin = 0;
 
     int mCount = 0;

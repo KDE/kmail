@@ -55,7 +55,6 @@ using namespace KMail;
 
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent)
-    , mIcon(QIcon::fromTheme(QStringLiteral("mail-mark-unread-new")))
 {
     qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
@@ -140,7 +139,7 @@ void KMSystemTray::slotGeneralFontChanged()
 
 /**
  * Update the count of unread messages.  If there are unread messages,
- * overlay the count on top of a transparent version of the KMail icon.
+ * show the "unread new mail" KMail icon.
  * If there is no unread mail, restore the normal KMail icon.
  */
 void KMSystemTray::updateCount()
@@ -148,7 +147,7 @@ void KMSystemTray::updateCount()
     if (mCount == 0) {
         setIconByName(QStringLiteral("kmail"));
     } else {
-        setIconByPixmap(mIcon);
+        setIconByName(QStringLiteral("mail-mark-unread-new"));
     }
 }
 
