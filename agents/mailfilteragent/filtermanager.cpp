@@ -595,15 +595,12 @@ MailCommon::SearchRule::RequiredPart FilterManager::requiredPart(const QString &
     return d->mRequiredParts.contains(id) ? d->mRequiredParts[id] : SearchRule::Envelope;
 }
 
-#ifndef NDEBUG
 void FilterManager::dump() const
 {
     for (const MailCommon::MailFilter *filter : qAsConst(d->mFilters)) {
         qCDebug(MAILFILTERAGENT_LOG) << filter->asString();
     }
 }
-
-#endif
 
 void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMessages, SearchRule::RequiredPart requiredPart, const QStringList &listFilters, FilterSet filterSet)
 {

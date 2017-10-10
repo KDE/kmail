@@ -127,12 +127,10 @@ public:
 
     bool hasAllFoldersFilter() const;
 
-#ifndef NDEBUG
     /**
      * Outputs all filter rules to console. Used for debugging.
      */
     void dump() const;
-#endif
 
 protected:
     bool processContextItem(MailCommon::ItemContext context);
