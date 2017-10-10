@@ -1,0 +1,5 @@
+Version=5
+
+# Update ~/.config/mimeapps.list and kickoff to match the new .desktop file name in 17.08
+Id=kmail2
+Script=kmail2.sh,sh
