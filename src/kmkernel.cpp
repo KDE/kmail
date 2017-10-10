@@ -388,37 +388,30 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
             if (arg.startsWith(QStringLiteral("mailto:"), Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
                 QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
-                QString str = values.value(QStringLiteral("to"));
-                if (!str.isEmpty()) {
-                    to += str + QStringLiteral(", ");
-                }
-                str = values.value(QStringLiteral("cc"));
-                if (!str.isEmpty()) {
-                    cc += str + QStringLiteral(", ");
-                }
-                str = values.value(QStringLiteral("bcc"));
-                if (!str.isEmpty()) {
-                    bcc += str + QStringLiteral(", ");
-                }
-                str = values.value(QStringLiteral("subject"));
-                if (!str.isEmpty()) {
-                    subj = str;
-                }
-                str = values.value(QStringLiteral("body"));
-                if (!str.isEmpty()) {
-                    body = str;
-                }
-                str = values.value(QStringLiteral("in-reply-to"));
-                if (!str.isEmpty()) {
-                    inReplyTo = str;
-                }
-                QString attach = values.value(QStringLiteral("attachment"));
-                if (!attach.isEmpty()) {
-                    attachURLs << makeAbsoluteUrl(attach, workingDir);
-                }
-                attach = values.value(QStringLiteral("attach"));
-                if (!attach.isEmpty()) {
-                    attachURLs << makeAbsoluteUrl(attach, workingDir);
+                for (auto it = values.cbegin(), end = values.cend(); it != end; ++it) {
+                    if (it.key() == QLatin1Literal("to")) {
+                        if (!it->isEmpty()) {
+                            to += *it + QStringLiteral(", ");
+                        }
+                    } else if (it.key() == QLatin1Literal("cc")) {
+                        if (!it->isEmpty()) {
+                            cc += *it + QStringLiteral(", ");
+                        }
+                    } else if (it.key() == QLatin1Literal("bcc")) {
+                        if (!it->isEmpty()) {
+                            bcc += *it + QStringLiteral(", ");
+                        }
+                    } else if (it.key() == QLatin1Literal("subject")) {
+                        subj = it.value();
+                    } else if (it.key() == QLatin1Literal("body")) {
+                        body = it.value();
+                    } else if (it.key() == QLatin1Literal("in-reply-to")) {
+                        inReplyTo = it.value();
+                    } else if (it.key() == QLatin1Literal("attachment") || it.key() == QLatin1Literal("attach")) {
+                        if (!it->isEmpty()) {
+                            attachURLs << makeAbsoluteUrl(*it, workingDir);
+                        }
+                    }
                 }
             } else {
                 QUrl url(arg);
