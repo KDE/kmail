@@ -47,6 +47,7 @@
 #include <QGroupBox>
 #include <QAction>
 #include <QMenu>
+#include <QPointer>
 
 #include <errno.h>
 #include <KSharedConfig>
@@ -348,12 +349,12 @@ void FilterLogDialog::slotUser1()
 
 void FilterLogDialog::slotUser2()
 {
-    QScopedPointer<QFileDialog> fdlg(new QFileDialog(this));
+    QPointer<QFileDialog> fdlg(new QFileDialog(this));
 
     fdlg->setAcceptMode(QFileDialog::AcceptSave);
     fdlg->setFileMode(QFileDialog::AnyFile);
     fdlg->selectFile(QStringLiteral("kmail-filter.html"));
-    if (fdlg->exec() == QDialog::Accepted && fdlg) {
+    if (fdlg->exec() == QDialog::Accepted) {
         const QStringList fileName = fdlg->selectedFiles();
 
         if (!fileName.isEmpty() && !FilterLog::instance()->saveToFile(fileName.at(0))) {
@@ -365,6 +366,7 @@ void FilterLogDialog::slotUser2()
                                i18n("KMail Error"));
         }
     }
+    delete fdlg;
 }
 
 FilterLogTextEdit::FilterLogTextEdit(QWidget *parent)
