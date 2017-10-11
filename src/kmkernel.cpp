@@ -389,25 +389,26 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
                 QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
                 for (auto it = values.cbegin(), end = values.cend(); it != end; ++it) {
-                    if (it.key() == QLatin1Literal("to")) {
+                    const QString key = it.key();
+                    if (key == QLatin1Literal("to")) {
                         if (!it->isEmpty()) {
                             to += *it + QStringLiteral(", ");
                         }
-                    } else if (it.key() == QLatin1Literal("cc")) {
+                    } else if (key == QLatin1Literal("cc")) {
                         if (!it->isEmpty()) {
                             cc += *it + QStringLiteral(", ");
                         }
-                    } else if (it.key() == QLatin1Literal("bcc")) {
+                    } else if (key == QLatin1Literal("bcc")) {
                         if (!it->isEmpty()) {
                             bcc += *it + QStringLiteral(", ");
                         }
-                    } else if (it.key() == QLatin1Literal("subject")) {
+                    } else if (key == QLatin1Literal("subject")) {
                         subj = it.value();
-                    } else if (it.key() == QLatin1Literal("body")) {
+                    } else if (key == QLatin1Literal("body")) {
                         body = it.value();
-                    } else if (it.key() == QLatin1Literal("in-reply-to")) {
+                    } else if (key == QLatin1Literal("in-reply-to")) {
                         inReplyTo = it.value();
-                    } else if (it.key() == QLatin1Literal("attachment") || it.key() == QLatin1Literal("attach")) {
+                    } else if (key == QLatin1Literal("attachment") || key == QLatin1Literal("attach")) {
                         if (!it->isEmpty()) {
                             attachURLs << makeAbsoluteUrl(*it, workingDir);
                         }
