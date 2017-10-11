@@ -58,8 +58,6 @@ int main(int argc, char *argv[])
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QApplication::applicationDisplayName());
-    parser.addVersionOption();
-    parser.addHelpOption();
     parser.addPositionalArgument(QStringLiteral("file"), i18n("An optional argument 'file' "), QStringLiteral("[file]"));
 
     aboutData.setupCommandLine(&parser);
