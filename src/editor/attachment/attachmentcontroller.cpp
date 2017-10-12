@@ -64,7 +64,7 @@ AttachmentController::AttachmentController(MessageComposer::AttachmentModel *mod
     connect(this, &AttachmentController::showAttachment, this, &AttachmentController::onShowAttachment);
     connect(this, &AttachmentController::selectedAllAttachment, this, &AttachmentController::slotSelectAllAttachment);
     connect(model, &MessageComposer::AttachmentModel::attachItemsRequester, this, &AttachmentController::addAttachmentItems);
-    connect(this, &AttachmentController::slotActionsCreated, this, &AttachmentController::slotActionsCreated);
+    connect(this, &AttachmentController::actionsCreated, this, &AttachmentController::slotActionsCreated);
 }
 
 AttachmentController::~AttachmentController()
