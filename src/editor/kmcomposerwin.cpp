@@ -2450,8 +2450,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                          "Send message anyway?"),
                                                     i18n("No To: specified"),
                                                     KStandardGuiItem::yes(),
-                                                    KStandardGuiItem::no(),
-                                                    QStringLiteral(":kmail_no_to_field_specified"));
+                                                    KStandardGuiItem::no());
                 if (rc == KMessageBox::No) {
                     return;
                 }
@@ -2466,8 +2465,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                   "Send message anyway?"),
                                              i18n("No Subject Specified"),
                                              KGuiItem(i18n("S&end as Is")),
-                                             KGuiItem(i18n("&Specify the Subject")),
-                                             QStringLiteral("no_subject_specified"));
+                                             KGuiItem(i18n("&Specify the Subject")));
             if (rc == KMessageBox::No) {
                 return;
             }
