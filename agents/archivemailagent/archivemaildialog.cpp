@@ -35,13 +35,6 @@
 #include <KConfigGroup>
 #include <QPushButton>
 
-namespace {
-inline QString archiveMailCollectionPattern()
-{
-    return QStringLiteral("ArchiveMailCollection \\d+");
-}
-}
-
 ArchiveMailDialog::ArchiveMailDialog(QWidget *parent)
     : QDialog(parent)
 {

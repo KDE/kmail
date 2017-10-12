@@ -70,7 +70,7 @@ private:
     void slotAddItem();
     void updateButtons();
     void slotOpenFolder();
-    void customContextMenuRequested(const QPoint &);
+    void slotCustomContextMenuRequested(const QPoint &);
     void slotArchiveNow();
     void slotItemChanged(QTreeWidgetItem *item, int);
     bool mChanged = false;

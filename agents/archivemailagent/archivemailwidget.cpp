@@ -76,7 +76,7 @@ ArchiveMailWidget::ArchiveMailWidget(QWidget *parent)
     mWidget->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(mWidget->treeWidget, &QWidget::customContextMenuRequested,
-            this, &ArchiveMailWidget::customContextMenuRequested);
+            this, &ArchiveMailWidget::slotCustomContextMenuRequested);
 
     load();
     connect(mWidget->removeItem, &QAbstractButton::clicked, this, &ArchiveMailWidget::slotRemoveItem);
@@ -93,7 +93,7 @@ ArchiveMailWidget::~ArchiveMailWidget()
     delete mWidget;
 }
 
-void ArchiveMailWidget::customContextMenuRequested(const QPoint &)
+void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
     QMenu menu(this);

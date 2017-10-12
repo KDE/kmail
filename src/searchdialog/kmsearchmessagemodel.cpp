@@ -102,9 +102,9 @@ static QString toolTip(const Akonadi::Item &item)
     QString content = MessageList::Util::contentSummary(item);
 
     if (textIsLeftToRight) {
-        tip += htmlCodeForStandardRow.arg(i18n("From")).arg(msg->from()->displayString());
-        tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To")).arg(msg->to()->displayString());
-        tip += htmlCodeForStandardRow.arg(i18n("Date")).arg(QLocale().toString(msg->date()->dateTime()));
+        tip += htmlCodeForStandardRow.arg(i18n("From"), msg->from()->displayString());
+        tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To"), msg->to()->displayString());
+        tip += htmlCodeForStandardRow.arg(i18n("Date"), QLocale().toString(msg->date()->dateTime()));
         if (!content.isEmpty()) {
             tip += htmlCodeForStandardRow.arg(i18n("Preview")).arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
         }

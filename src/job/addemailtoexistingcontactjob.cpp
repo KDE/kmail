@@ -45,7 +45,7 @@ void AddEmailToExistingContactJob::start()
         KContacts::Addressee address = mItem.payload<KContacts::Addressee>();
         QStringList emails = address.emails();
         if (emails.contains(mEmail)) {
-            Q_EMIT emitResult();
+            emitResult();
         } else {
             emails.append(mEmail);
             address.setEmails(emails);
@@ -56,7 +56,7 @@ void AddEmailToExistingContactJob::start()
     } else {
         qCDebug(KMAIL_LOG) << " not a KContacts::Addressee item ";
         //TODO add error
-        Q_EMIT emitResult();
+        emitResult();
     }
 }
 
@@ -68,5 +68,5 @@ void AddEmailToExistingContactJob::slotAddEmailDone(KJob *job)
     } else {
         KPIM::BroadcastStatus::instance()->setStatusMsg(i18n("Email added successfully."));
     }
-    Q_EMIT emitResult();
+    emitResult();
 }

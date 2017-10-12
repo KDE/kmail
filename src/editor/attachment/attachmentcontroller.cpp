@@ -64,6 +64,7 @@ AttachmentController::AttachmentController(MessageComposer::AttachmentModel *mod
     connect(this, &AttachmentController::showAttachment, this, &AttachmentController::onShowAttachment);
     connect(this, &AttachmentController::selectedAllAttachment, this, &AttachmentController::slotSelectAllAttachment);
     connect(model, &MessageComposer::AttachmentModel::attachItemsRequester, this, &AttachmentController::addAttachmentItems);
+    connect(this, &AttachmentController::slotActionsCreated, this, &AttachmentController::slotActionsCreated);
 }
 
 AttachmentController::~AttachmentController()
@@ -94,7 +95,7 @@ void AttachmentController::attachMyPublicKey()
     exportPublicKey(QString::fromLatin1(identity.pgpEncryptionKey()));
 }
 
-void AttachmentController::actionsCreated()
+void AttachmentController::slotActionsCreated()
 {
     // Disable public key actions if appropriate.
     identityChanged();

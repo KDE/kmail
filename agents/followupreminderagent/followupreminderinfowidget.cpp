@@ -88,7 +88,7 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     mTreeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
     mTreeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(mTreeWidget, &QTreeWidget::customContextMenuRequested, this, &FollowUpReminderInfoWidget::customContextMenuRequested);
+    connect(mTreeWidget, &QTreeWidget::customContextMenuRequested, this, &FollowUpReminderInfoWidget::slotCustomContextMenuRequested);
 
     hbox->addWidget(mTreeWidget);
 }
@@ -185,7 +185,7 @@ bool FollowUpReminderInfoWidget::save()
     return true;
 }
 
-void FollowUpReminderInfoWidget::customContextMenuRequested(const QPoint &pos)
+void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &pos)
 {
     Q_UNUSED(pos);
     const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();

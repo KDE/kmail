@@ -48,7 +48,7 @@ public Q_SLOTS:
 
 private:
     void identityChanged();
-    void actionsCreated();
+    void slotActionsCreated();
     void addAttachmentItems(const Akonadi::Item::List &items);
     void selectionChanged();
     void onShowAttachment(KMime::Content *content, const QByteArray &charset);

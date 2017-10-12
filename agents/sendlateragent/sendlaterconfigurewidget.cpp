@@ -84,7 +84,7 @@ SendLaterWidget::SendLaterWidget(QWidget *parent)
     mWidget->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
     mWidget->treeWidget->setDefaultText(i18n("No messages waiting..."));
 
-    connect(mWidget->treeWidget, &QTreeWidget::customContextMenuRequested, this, &SendLaterWidget::customContextMenuRequested);
+    connect(mWidget->treeWidget, &QTreeWidget::customContextMenuRequested, this, &SendLaterWidget::slotCustomContextMenuRequested);
 
     connect(mWidget->removeItem, &QPushButton::clicked, this, &SendLaterWidget::slotRemoveItem);
     connect(mWidget->modifyItem, &QPushButton::clicked, this, &SendLaterWidget::slotModifyItem);
@@ -99,7 +99,7 @@ SendLaterWidget::~SendLaterWidget()
     delete mWidget;
 }
 
-void SendLaterWidget::customContextMenuRequested(const QPoint &)
+void SendLaterWidget::slotCustomContextMenuRequested(const QPoint &)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
     if (!listItems.isEmpty()) {

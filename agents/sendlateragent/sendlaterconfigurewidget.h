@@ -71,7 +71,7 @@ private:
     void slotRemoveItem();
     void slotModifyItem();
     void updateButtons();
-    void customContextMenuRequested(const QPoint &);
+    void slotCustomContextMenuRequested(const QPoint &);
     void slotSendNow();
     void createOrUpdateItem(SendLater::SendLaterInfo *info, SendLaterItem *item = nullptr);
     void load();
