@@ -1526,7 +1526,7 @@ void KMMainWidget::slotClearCurrentFolder()
 void KMMainWidget::slotExpireAll()
 {
     if (KMailSettings::self()->warnBeforeExpire()) {
-        const int ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().first(),
+        const int ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().constFirst(),
                                                            i18n("Are you sure you want to expire all old messages?"),
                                                            i18n("Expire Old Messages?"), KGuiItem(i18n("Expire")));
         if (ret != KMessageBox::Continue) {

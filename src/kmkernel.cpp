@@ -1284,7 +1284,7 @@ KMainWindow *KMKernel::mainWin()
     // case we are running inside Kontact) because we anyway only need
     // it for modal message boxes and for KNotify events.
     if (!KMainWindow::memberList().isEmpty()) {
-        KMainWindow *kmWin = KMainWindow::memberList().first();
+        KMainWindow *kmWin = KMainWindow::memberList().constFirst();
         if (kmWin) {
             return kmWin;
         }

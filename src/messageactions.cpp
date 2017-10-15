@@ -374,7 +374,7 @@ void MessageActions::slotUpdateActionsFetchDone(KJob *job)
     if (fetchJob->items().isEmpty()) {
         return;
     }
-    Akonadi::Item messageItem = fetchJob->items().first();
+    const Akonadi::Item messageItem = fetchJob->items().constFirst();
     if (messageItem == mCurrentItem) {
         mCurrentItem = messageItem;
         updateMailingListActions(messageItem);

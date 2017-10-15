@@ -71,7 +71,7 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
         return;
     }
 
-    mCollection = fetch->collections().first();
+    mCollection = fetch->collections().constFirst();
     const qlonglong result = mIndexedItems->indexedItems(mCollection.id());
     bool needToReindex = false;
     qCDebug(KMAIL_LOG) << "name :" << mCollection.name() << " mCollection.statistics().count() " << mCollection.statistics().count() << "stats.value(mCollection.id())" << result;

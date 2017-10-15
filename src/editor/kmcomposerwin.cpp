@@ -2401,8 +2401,8 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
     if (composer->error() == MessageComposer::Composer::NoError) {
         Q_ASSERT(composer->resultMessages().size() == 1);
         Akonadi::Item printItem;
-        printItem.setPayload<KMime::Message::Ptr>(composer->resultMessages().first());
-        Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().first()), printItem);
+        printItem.setPayload<KMime::Message::Ptr>(composer->resultMessages().constFirst());
+        Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().constFirst()), printItem);
         const bool isHtml = mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
         KMPrintCommand *command = new KMPrintCommand(this, printItem, nullptr,

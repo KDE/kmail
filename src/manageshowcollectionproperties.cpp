@@ -190,7 +190,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
         return;
     }
 
-    const Akonadi::Collection collection = fetch->collections().first();
+    const Akonadi::Collection collection = fetch->collections().constFirst();
 
     QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog(collection, mPages, mMainWidget);
     dlg->setWindowTitle(i18nc("@title:window", "Properties of Folder %1", collection.name()));
