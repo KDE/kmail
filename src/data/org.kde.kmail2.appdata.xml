@@ -354,7 +354,7 @@
       <li xml:lang="et">Võimalus kuvada HTML-kirja ainult lihttekstina</li>
       <li xml:lang="fi">Osaa näyttää HTML-viesteistä raakatekstin.</li>
       <li xml:lang="fr">Possibilité d'afficher un courrier électronique HTML en texte seul.</li>
-      <li xml:lang="gl">Permite mostrar mensaxes HTML como texto simple.</li>
+      <li xml:lang="gl">Permite mostrar só o texto simple de correo HTML.</li>
       <li xml:lang="hu">Sima szöveg megjelenítése HTML levélből.</li>
       <li xml:lang="it">Capacità di mostrare il solo testo semplice da un messaggio in formato HTML.</li>
       <li xml:lang="ko">HTML 메시지의 텍스트만 표시할 수 있습니다.</li>
