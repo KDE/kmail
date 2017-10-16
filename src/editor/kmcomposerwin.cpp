@@ -866,13 +866,13 @@ void KMComposerWin::rethinkFields(bool fromSlot)
     ++row;
     if (showHeaders & HDR_REPLY_TO) {
         connect(mEdtReplyTo, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
-        connect(mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtReplyTo, SLOT(setFocus()));
+        connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusUp, mEdtReplyTo, QOverload<>::of(&QWidget::setFocus));
     } else {
         connect(mEdtFrom, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
-        connect(mComposerBase->recipientsEditor(), SIGNAL(focusUp()), mEdtFrom, SLOT(setFocus()));
+        connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusUp, mEdtFrom, QOverload<>::of(&QWidget::setFocus));
     }
 
-    connect(mComposerBase->recipientsEditor(), SIGNAL(focusDown()), mEdtSubject, SLOT(setFocus()));
+    connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusDown, mEdtSubject, QOverload<>::of(&QWidget::setFocus));
     connect(mEdtSubject, &PimCommon::SpellCheckLineEdit::focusUp, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusBottom);
 
     prevFocus = mComposerBase->recipientsEditor();
