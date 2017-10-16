@@ -733,7 +733,11 @@ void KMComposerWin::slotUpdateView(void)
         if (id > 0) {
             mShowHeaders |= id;
         } else {
-            mShowHeaders = -std::abs(mShowHeaders);
+            if (id == 0) {
+                mShowHeaders = -1;
+            } else {
+                mShowHeaders = -std::abs(mShowHeaders);
+            }
         }
     }
     rethinkFields(true);
@@ -787,7 +791,6 @@ void KMComposerWin::rethinkFields(bool fromSlot)
             ++mNumHeaders;
         }
     }
-
     delete mGrid;
     mGrid = new QGridLayout(mHeadersArea);
     mGrid->setColumnStretch(0, 1);
