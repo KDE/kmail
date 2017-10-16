@@ -916,6 +916,7 @@ void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow, QLabel *
 
         mGrid->addWidget(aCbx, aRow, 1);
         aCbx->show();
+        aLbl->show();
         aRow++;
     } else {
         aLbl->hide();
