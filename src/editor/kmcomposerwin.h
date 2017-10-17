@@ -433,7 +433,7 @@ private:
      * should not be there they are removed. Those that are needed are
      * created if necessary.
      */
-    void rethinkFields(bool fromslot = false);
+    void rethinkFields(bool fromslot = false, bool forceAllHeaders = false);
 
     /**
       Connect signals for moving focus by arrow keys. Returns next edit.

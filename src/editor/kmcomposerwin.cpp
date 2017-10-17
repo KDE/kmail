@@ -682,7 +682,7 @@ bool KMComposerWin::canSignEncryptAttachments() const
     return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
 }
 
-void KMComposerWin::slotUpdateView(void)
+void KMComposerWin::slotUpdateView()
 {
     if (!mDone) {
         return; // otherwise called from rethinkFields during the construction
@@ -718,6 +718,7 @@ void KMComposerWin::slotUpdateView(void)
         return;
     }
 
+    bool forceAllHeaders = false;
     // sanders There's a bug here this logic doesn't work if no
     // fields are shown and then show all fields is selected.
     // Instead of all fields being shown none are.
@@ -733,14 +734,13 @@ void KMComposerWin::slotUpdateView(void)
         if (id > 0) {
             mShowHeaders |= id;
         } else {
-            if (id == 0) {
-                mShowHeaders = -1;
-            } else {
-                mShowHeaders = -std::abs(mShowHeaders);
+            mShowHeaders = -std::abs(mShowHeaders);
+            if (mShowHeaders == 0) {
+                forceAllHeaders = true;
             }
         }
     }
-    rethinkFields(true);
+    rethinkFields(true, forceAllHeaders);
 }
 
 int KMComposerWin::calcColumnWidth(int which, long allShowing, int width) const
@@ -774,13 +774,13 @@ int KMComposerWin::calcColumnWidth(int which, long allShowing, int width) const
     return qMax(width, w->sizeHint().width());
 }
 
-void KMComposerWin::rethinkFields(bool fromSlot)
+void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
 {
     //This sucks even more but again no ids. sorry (sven)
     int mask, row;
     long showHeaders;
 
-    if (mShowHeaders < 0) {
+    if ((mShowHeaders < 0) || forceAllHeaders) {
         showHeaders = HDR_ALL;
     } else {
         showHeaders = mShowHeaders;
