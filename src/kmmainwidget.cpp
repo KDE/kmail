@@ -991,7 +991,7 @@ void KMMainWidget::createWidgets()
     opt |= FolderTreeWidget::DontKeyFilter;
     mFolderTreeWidget = new FolderTreeWidget(this, mGUIClient, opt);
 
-    connect(mFolderTreeWidget->folderTreeView(), SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)));
+    connect(mFolderTreeWidget->folderTreeView(), QOverload<const Akonadi::Collection &>::of(&EntityTreeView::currentChanged), this, &KMMainWidget::slotFolderChanged);
 
     connect(mFolderTreeWidget->folderTreeView()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &KMMainWidget::updateFolderMenu);
 
@@ -1061,7 +1061,7 @@ void KMMainWidget::createWidgets()
     if (mEnableFavoriteFolderView) {
         mFavoriteCollectionsView = new FavoriteCollectionWidget(KMKernel::self()->mailCommonSettings(), mGUIClient, this);
         refreshFavoriteFoldersViewProperties();
-        connect(mFavoriteCollectionsView, SIGNAL(currentChanged(Akonadi::Collection)), this, SLOT(slotFolderChanged(Akonadi::Collection)));
+        connect(mFavoriteCollectionsView, QOverload<const Akonadi::Collection &>::of(&EntityListView::currentChanged), this, &KMMainWidget::slotFolderChanged);
         connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
         mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
             mFolderTreeWidget->folderTreeView()->model(),
@@ -1842,8 +1842,8 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
     KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentCollection, select, ref);
 
     QObject::connect(
-        command, SIGNAL(moveDone(KMMoveCommand*)),
-        this, SLOT(slotTrashMessagesCompleted(KMMoveCommand*))
+        command, &KMMoveCommand::moveDone,
+        this, &KMMainWidget::slotTrashMessagesCompleted
         );
     command->start();
     bool moveToTrash = command->destFolder().isValid();
