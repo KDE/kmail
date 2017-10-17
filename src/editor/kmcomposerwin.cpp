@@ -800,25 +800,25 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     row = 0;
 
     mLabelWidth = mComposerBase->recipientsEditor()->setFirstColumnWidth(0) + 2;
-    if (std::abs(mShowHeaders)&HDR_IDENTITY) {
+    if (std::abs(showHeaders)&HDR_IDENTITY) {
         mLabelWidth = calcColumnWidth(HDR_IDENTITY, showHeaders, mLabelWidth);
     }
-    if (std::abs(mShowHeaders)&HDR_DICTIONARY) {
+    if (std::abs(showHeaders)&HDR_DICTIONARY) {
         mLabelWidth = calcColumnWidth(HDR_DICTIONARY, showHeaders, mLabelWidth);
     }
-    if (std::abs(mShowHeaders)&HDR_FCC) {
+    if (std::abs(showHeaders)&HDR_FCC) {
         mLabelWidth = calcColumnWidth(HDR_FCC, showHeaders, mLabelWidth);
     }
-    if (std::abs(mShowHeaders)&HDR_TRANSPORT) {
+    if (std::abs(showHeaders)&HDR_TRANSPORT) {
         mLabelWidth = calcColumnWidth(HDR_TRANSPORT, showHeaders, mLabelWidth);
     }
-    if (std::abs(mShowHeaders)&HDR_FROM) {
+    if (std::abs(showHeaders)&HDR_FROM) {
         mLabelWidth = calcColumnWidth(HDR_FROM, showHeaders, mLabelWidth);
     }
-    if (std::abs(mShowHeaders)&HDR_REPLY_TO) {
+    if (std::abs(showHeaders)&HDR_REPLY_TO) {
         mLabelWidth = calcColumnWidth(HDR_REPLY_TO, showHeaders, mLabelWidth);
     }
-    if (std::abs(mShowHeaders)&HDR_SUBJECT) {
+    if (std::abs(showHeaders)&HDR_SUBJECT) {
         mLabelWidth = calcColumnWidth(HDR_SUBJECT, showHeaders, mLabelWidth);
     }
 
