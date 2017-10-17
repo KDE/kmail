@@ -93,7 +93,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     QVBoxLayout *vlay = new QVBoxLayout(this);
     vlay->setContentsMargins(0, 4, 0, 0);
     mViewer = new Viewer(this, mainWindow, mActionCollection);
-    connect(mViewer, SIGNAL(urlClicked(Akonadi::Item,QUrl)), this, SLOT(slotUrlClicked(Akonadi::Item,QUrl)));
+    connect(mViewer, QOverload<const Akonadi::Item &, const QUrl&>::of(&Viewer::urlClicked), this, &KMReaderWin::slotUrlClicked);
     connect(mViewer, &Viewer::requestConfigSync, kmkernel, &KMKernel::slotRequestConfigSync, Qt::QueuedConnection);   // happens anyway on shutdown, so we can skip it there with using a queued connection
     connect(mViewer, &Viewer::makeResourceOnline, kmkernel, &KMKernel::makeResourceOnline);
     connect(mViewer, &MessageViewer::Viewer::showReader, this, &KMReaderWin::slotShowReader);

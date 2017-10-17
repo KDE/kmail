@@ -115,8 +115,8 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     connect(mEnableCheck, &QCheckBox::toggled, widgetStack, &QStackedWidget::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, label, &QLabel::setEnabled);
     // The focus might be still in the widget that is disabled
-    connect(mEnableCheck, SIGNAL(clicked()),
-            mEnableCheck, SLOT(setFocus()));
+    connect(mEnableCheck, &QAbstractButton::clicked,
+            mEnableCheck, QOverload<>::of(&QWidget::setFocus));
 
     int pageno = 0;
     // page 0: create X-Face from image file or address book entry
