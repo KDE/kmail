@@ -84,6 +84,8 @@ private:
     QHash<QString, QSharedPointer<RetrievalOptions> > mRetrievalHash;
 
 private:
+    void slotAddCustomAccount();
+    void slotAddMailAccount();
     Ui_AccountsPageReceivingTab mAccountsReceiving;
     OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface = nullptr;
 };

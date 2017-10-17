@@ -48,6 +48,7 @@ using MailTransport::TransportManagementWidget;
 #include <QMenu>
 #include <KConfigGroup>
 #include <QLabel>
+#include <QProcess>
 
 QString AccountsPage::helpAnchor() const
 {
@@ -203,12 +204,34 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
 
     connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
     connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);
+    mAccountsReceiving.mAccountsReceiving->disconnectAddAccountButton();
+    QMenu *accountMenu = new QMenu(this);
+    accountMenu->addAction(i18n("Add Mail Account..."), this, &AccountsPageReceivingTab::slotAddMailAccount);
+    accountMenu->addAction(i18n("Custom Account..."), this, &AccountsPageReceivingTab::slotAddCustomAccount);
+    mAccountsReceiving.mAccountsReceiving->addAccountButton()->setMenu(accountMenu);
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
     delete mNewMailNotifierInterface;
     mRetrievalHash.clear();
+}
+
+void AccountsPageReceivingTab::slotAddCustomAccount()
+{
+    mAccountsReceiving.mAccountsReceiving->slotAddAccount();
+}
+
+void AccountsPageReceivingTab::slotAddMailAccount()
+{
+    const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822") };
+
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
+    if (!QProcess::startDetached(path, lst)) {
+        KMessageBox::error(this, i18n("Could not start the account wizard. "
+                                               "Please make sure you have AccountWizard properly installed."),
+                           i18n("Unable to start account wizard"));
+    }
 }
 
 void AccountsPageReceivingTab::slotCustomizeAccountOrder()
