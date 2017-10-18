@@ -2724,9 +2724,11 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             menu.addSeparator();
         }
+#if 0
         menu.addAction(mMsgActions->annotateAction());
 
         menu.addSeparator();
+#endif
         menu.addAction(mMsgActions->addFollowupReminderAction());
         if (kmkernel->allowToDebug()) {
             menu.addSeparator();
