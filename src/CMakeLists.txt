@@ -101,9 +101,11 @@ set(kmailprivate_editor_LIB_SRCS
     )
 
 set(kmailprivate_warningwidgets_LIB_SRCS
-    warningwidgets/externaleditorwarning.cpp
-    warningwidgets/attachmentmissingwarning.cpp
+    editor/warningwidgets/externaleditorwarning.cpp
+    editor/warningwidgets/attachmentmissingwarning.cpp
+    editor/warningwidgets/incorrectidentityfolderwarning.cpp
     )
+
 set(kmailprivate_editor_potentialphishingemail_SRCS
     editor/potentialphishingemail/potentialphishingemailwarning.cpp
     editor/potentialphishingemail/potentialphishingemailjob.cpp
