@@ -422,7 +422,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
         qDeleteAll(mMailListActionList);
         mMailListActionList.clear();
         if (!listId.isEmpty()) {
-            mMailingListActionMenu->menu()->setTitle(listId);
+            mMailingListActionMenu->menu()->setTitle(i18n("Mailing List Name: %1",listId));
         }
         if (mailList.features() & MessageCore::MailingList::ArchivedAt) {
             // IDEA: this may be something you want to copy - "Copy in submenu"?
