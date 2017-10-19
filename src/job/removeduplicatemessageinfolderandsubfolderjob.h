@@ -24,6 +24,10 @@
 #include <QObject>
 #include <AkonadiCore/Collection>
 class KJob;
+namespace KPIM
+{
+class ProgressItem;
+}
 class RemoveDuplicateMessageInFolderAndSubFolderJob : public QObject
 {
     Q_OBJECT
@@ -39,6 +43,8 @@ private:
     void slotFetchCollectionFailed();
     void slotFetchCollectionDone(const Akonadi::Collection::List &list);
     void slotFinished(KJob *job);
+    void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);
+    void slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item);
     Akonadi::Collection mTopLevelCollection;
 };
 

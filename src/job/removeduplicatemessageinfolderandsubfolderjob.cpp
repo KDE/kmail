@@ -22,6 +22,8 @@
 #include <PimCommonAkonadi/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
 #include <Akonadi/KMime/RemoveDuplicatesJob>
+#include "libkdepim/progressmanager.h"
+#include <KLocalizedString>
 
 RemoveDuplicateMessageInFolderAndSubFolderJob::RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent)
     : QObject(parent)
@@ -70,15 +72,51 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone(cons
     if (lst.isEmpty()) {
         deleteLater();
     } else {
+        KPIM::ProgressItem *item = KPIM::ProgressManager::createProgressItem(i18n("Removing duplicates"));
+        item->setUsesBusyIndicator(true);
+        item->setCryptoStatus(KPIM::ProgressItem::Unknown);
+
         Akonadi::RemoveDuplicatesJob *job = new Akonadi::RemoveDuplicatesJob(lst, this);
+        job->setProperty("ProgressItem", QVariant::fromValue(item));
+        item->setProperty("RemoveDuplicatesJob", QVariant::fromValue(qobject_cast<Akonadi::Job *>(job)));
         connect(job, &Akonadi::RemoveDuplicatesJob::finished, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished);
+        connect(job, &Akonadi::RemoveDuplicatesJob::description, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotRemoveDuplicatesUpdate);
+        connect(item, &KPIM::ProgressItem::progressItemCanceled, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotRemoveDuplicatesCanceled);
     }
 }
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
 {
+    KPIM::ProgressItem *item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
+    if (item) {
+        item->setComplete();
+        item->setStatus(i18n("Done"));
+        item = nullptr;
+    }
     if (job->error()) {
         qCDebug(KMAIL_LOG()) << " Error during remove duplicates " << job->errorString();
+        //KMessageBox::error(mParent, i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()), i18n("Error while removing duplicates"));
     }
+
+    deleteLater();
+}
+
+void RemoveDuplicateMessageInFolderAndSubFolderJob::slotRemoveDuplicatesUpdate(KJob *job, const QString &description)
+{
+    KPIM::ProgressItem *item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
+    if (item) {
+        item->setStatus(description);
+    }
+}
+
+void RemoveDuplicateMessageInFolderAndSubFolderJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item)
+{
+    Akonadi::Job *job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
+    if (job) {
+        job->kill(KJob::Quietly);
+    }
+
+    item->setComplete();
+    item = nullptr;
     deleteLater();
 }
