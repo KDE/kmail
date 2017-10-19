@@ -59,8 +59,20 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionFailed()
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone(const Akonadi::Collection::List &list)
 {
-    Akonadi::RemoveDuplicatesJob *job = new Akonadi::RemoveDuplicatesJob(list, this);
-    connect(job, &Akonadi::RemoveDuplicatesJob::finished, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished);
+    Akonadi::Collection::List lst;
+    for (const Akonadi::Collection &collection : list) {
+        if (collection.isValid()) {
+            if(collection.rights() & Akonadi::Collection::CanDeleteItem) {
+                lst.append(collection);
+            }
+        }
+    }
+    if (lst.isEmpty()) {
+        deleteLater();
+    } else {
+        Akonadi::RemoveDuplicatesJob *job = new Akonadi::RemoveDuplicatesJob(list, this);
+        connect(job, &Akonadi::RemoveDuplicatesJob::finished, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished);
+    }
 }
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
