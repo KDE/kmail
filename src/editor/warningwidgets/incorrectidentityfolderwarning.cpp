@@ -24,9 +24,9 @@ IncorrectIdentityFolderWarning::IncorrectIdentityFolderWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
     setVisible(false);
-    setCloseButtonVisible(false);
+    setCloseButtonVisible(true);
     setMessageType(Information);
-    setText(i18n("Incorrect Identity."));
+    setText(i18n("Identity was not found. Please verify that you will use a correct identity."));
     setWordWrap(true);
     connect(this, &IncorrectIdentityFolderWarning::hideAnimationFinished, this, &IncorrectIdentityFolderWarning::slotAnimationFinished);
 }

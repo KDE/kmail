@@ -72,6 +72,7 @@ class KMComposerGlobalAction;
 class KMailPluginEditorManagerInterface;
 class KMailPluginEditorCheckBeforeSendManagerInterface;
 class KMailPluginEditorInitManagerInterface;
+class IncorrectIdentityFolderWarning;
 namespace MailTransport {
 class Transport;
 }
@@ -642,6 +643,7 @@ private:
     StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode = nullptr;
     StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode = nullptr;
     PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning = nullptr;
+    IncorrectIdentityFolderWarning *mIncorrectIdentityFolderWarning = nullptr;
     KMComposerGlobalAction *mGlobalAction = nullptr;
     KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget = nullptr;
 

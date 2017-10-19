@@ -191,6 +191,7 @@
 #include <KSplitterCollapserButton>
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <editor/potentialphishingemail/potentialphishingemailjob.h>
+#include <editor/warningwidgets/incorrectidentityfolderwarning.h>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
@@ -386,6 +387,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(composerEditorNg, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
     //connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor(composerEditorNg);
+    mIncorrectIdentityFolderWarning = new IncorrectIdentityFolderWarning(this);
+    vbox->addWidget(mIncorrectIdentityFolderWarning);
+
     vbox->addWidget(mCryptoStateIndicatorWidget);
     vbox->addWidget(mRichTextEditorwidget);
 
@@ -437,6 +441,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
     v->addWidget(mPotentialPhishingEmailWarning);
+
 
     if (KMailSettings::self()->showForgottenAttachmentWarning()) {
         mVerifyMissingAttachment = new QTimer(this);
@@ -1457,7 +1462,7 @@ QString KMComposerWin::replyTo() const
 void KMComposerWin::setCurrentTransport(int transportId)
 {
     if (!mComposerBase->transportComboBox()->setCurrentTransport(transportId)) {
-        //TODO
+        mIncorrectIdentityFolderWarning->animatedShow();
     }
 }
 
