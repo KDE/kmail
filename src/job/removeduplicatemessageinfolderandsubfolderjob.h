@@ -32,7 +32,7 @@ class RemoveDuplicateMessageInFolderAndSubFolderJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent = nullptr);
+    explicit RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent = nullptr, QWidget *parentWidget = nullptr);
     ~RemoveDuplicateMessageInFolderAndSubFolderJob();
 
     void start();
@@ -46,6 +46,7 @@ private:
     void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);
     void slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item);
     Akonadi::Collection mTopLevelCollection;
+    QWidget *mParentWidget = nullptr;
 };
 
 #endif // REMOVEDUPLICATEMESSAGEINFOLDERANDSUBFOLDERJOB_H

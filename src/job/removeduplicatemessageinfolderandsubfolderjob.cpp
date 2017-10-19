@@ -24,9 +24,11 @@
 #include <Akonadi/KMime/RemoveDuplicatesJob>
 #include "libkdepim/progressmanager.h"
 #include <KLocalizedString>
+#include <KMessageBox>
 
-RemoveDuplicateMessageInFolderAndSubFolderJob::RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent)
+RemoveDuplicateMessageInFolderAndSubFolderJob::RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent, QWidget *parentWidget)
     : QObject(parent)
+    , mParentWidget(parentWidget)
 {
 }
 
@@ -95,7 +97,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
     }
     if (job->error()) {
         qCDebug(KMAIL_LOG()) << " Error during remove duplicates " << job->errorString();
-        //KMessageBox::error(mParent, i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()), i18n("Error while removing duplicates"));
+        KMessageBox::error(mParentWidget, i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()), i18n("Error while removing duplicates"));
     }
 
     deleteLater();

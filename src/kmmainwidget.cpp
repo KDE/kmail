@@ -4638,7 +4638,7 @@ void KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder()
 void KMMainWidget::slotRemoveDuplicateRecursive()
 {
     if (mCurrentCollection.isValid()) {
-        RemoveDuplicateMessageInFolderAndSubFolderJob *job = new RemoveDuplicateMessageInFolderAndSubFolderJob(this);
+        RemoveDuplicateMessageInFolderAndSubFolderJob *job = new RemoveDuplicateMessageInFolderAndSubFolderJob(this, this);
         job->setTopLevelCollection(mCurrentCollection);
         job->start();
     }
