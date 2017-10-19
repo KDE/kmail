@@ -1456,7 +1456,9 @@ QString KMComposerWin::replyTo() const
 
 void KMComposerWin::setCurrentTransport(int transportId)
 {
-    mComposerBase->transportComboBox()->setCurrentTransport(transportId);
+    if (!mComposerBase->transportComboBox()->setCurrentTransport(transportId)) {
+        //TODO
+    }
 }
 
 void KMComposerWin::setCurrentReplyTo(const QString &replyTo)
