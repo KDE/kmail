@@ -70,7 +70,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone(cons
     if (lst.isEmpty()) {
         deleteLater();
     } else {
-        Akonadi::RemoveDuplicatesJob *job = new Akonadi::RemoveDuplicatesJob(list, this);
+        Akonadi::RemoveDuplicatesJob *job = new Akonadi::RemoveDuplicatesJob(lst, this);
         connect(job, &Akonadi::RemoveDuplicatesJob::finished, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished);
     }
 }
