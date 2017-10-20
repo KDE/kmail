@@ -26,7 +26,7 @@ IncorrectIdentityFolderWarning::IncorrectIdentityFolderWarning(QWidget *parent)
     setVisible(false);
     setCloseButtonVisible(true);
     setMessageType(Warning);
-    setText(i18n("Identity was not found. Please verify that you will use a correct identity."));
+    setText(i18n("Transport was not found. Please verify that you will use a correct mail transport."));
     setWordWrap(true);
     connect(this, &IncorrectIdentityFolderWarning::hideAnimationFinished, this, &IncorrectIdentityFolderWarning::slotAnimationFinished);
 }
