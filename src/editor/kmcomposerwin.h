@@ -533,6 +533,8 @@ private:
         NoKey
     };
     void slotCryptoModuleSelected();
+    void slotFccIsInvalid();
+
 
     void updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified);
 

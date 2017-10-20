@@ -328,6 +328,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mFccFolder->setToolTip(i18n("Select the sent-mail folder where a copy of this message will be saved"));
     connect(mFccFolder, &MailCommon::FolderRequester::folderChanged, this, &KMComposerWin::slotFccFolderChanged);
+    connect(mFccFolder, &MailCommon::FolderRequester::invalidFolder, this, &KMComposerWin::slotFccIsInvalid);
 
     MailTransport::TransportComboBox *transport = new MailTransport::TransportComboBox(mHeadersArea);
     transport->setToolTip(i18n("Select the outgoing account to use for sending this message"));
@@ -1457,6 +1458,11 @@ QString KMComposerWin::replyTo() const
     } else {
         return QString();
     }
+}
+
+void KMComposerWin::slotFccIsInvalid()
+{
+    mIncorrectIdentityFolderWarning->fccIsInvalid();
 }
 
 void KMComposerWin::setCurrentTransport(int transportId)
