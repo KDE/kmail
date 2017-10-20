@@ -28,8 +28,14 @@ class IncorrectIdentityFolderWarning : public KMessageWidget
 public:
     explicit IncorrectIdentityFolderWarning(QWidget *parent = nullptr);
     ~IncorrectIdentityFolderWarning();
+
+    void mailTransportIsInvalid();
+    void fccIsInvalid();
+
 private:
-    void slotAnimationFinished();
+    void updateText();
+    bool mMailTransportIsInvalid = false;
+    bool mFccIsInvalid = false;
 };
 
 #endif // INCORRECTIDENTITYFOLDERWARNING_H

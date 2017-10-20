@@ -1462,7 +1462,7 @@ QString KMComposerWin::replyTo() const
 void KMComposerWin::setCurrentTransport(int transportId)
 {
     if (!mComposerBase->transportComboBox()->setCurrentTransport(transportId)) {
-        mIncorrectIdentityFolderWarning->animatedShow();
+        mIncorrectIdentityFolderWarning->mailTransportIsInvalid();
     }
 }
 

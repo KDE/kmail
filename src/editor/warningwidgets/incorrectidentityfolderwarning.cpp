@@ -26,9 +26,7 @@ IncorrectIdentityFolderWarning::IncorrectIdentityFolderWarning(QWidget *parent)
     setVisible(false);
     setCloseButtonVisible(true);
     setMessageType(Warning);
-    setText(i18n("Transport was not found. Please verify that you will use a correct mail transport."));
     setWordWrap(true);
-    connect(this, &IncorrectIdentityFolderWarning::hideAnimationFinished, this, &IncorrectIdentityFolderWarning::slotAnimationFinished);
 }
 
 IncorrectIdentityFolderWarning::~IncorrectIdentityFolderWarning()
@@ -36,7 +34,30 @@ IncorrectIdentityFolderWarning::~IncorrectIdentityFolderWarning()
 
 }
 
-void IncorrectIdentityFolderWarning::slotAnimationFinished()
+void IncorrectIdentityFolderWarning::mailTransportIsInvalid()
 {
-    //TODO
+    mMailTransportIsInvalid = true;
+    updateText();
+}
+
+void IncorrectIdentityFolderWarning::fccIsInvalid()
+{
+    mFccIsInvalid = true;
+    updateText();
+}
+
+void IncorrectIdentityFolderWarning::updateText()
+{
+    QString text;
+    if (mMailTransportIsInvalid) {
+        text = i18n("Transport was not found. Please verify that you will use a correct mail transport.");
+    }
+    if (mFccIsInvalid) {
+        if (!text.isEmpty()) {
+            text += QLatin1Char('\n');
+        }
+        text += i18n("Sent Folder is not defined. Please verify it before to send it.");
+    }
+    setText(text);
+    animatedShow();
 }
