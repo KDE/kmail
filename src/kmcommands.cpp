@@ -81,7 +81,6 @@
 #include <MailCommon/MailUtil>
 #include <MailCommon/CryptoUtils>
 
-#include <MessageCore/StringUtil>
 #include <MessageCore/MessageCoreSettings>
 #include <MessageCore/StringUtil>
 #include <MessageCore/MailingList>

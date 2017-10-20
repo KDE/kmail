@@ -28,8 +28,8 @@
 #include "followupreminderinterface.h"
 #include "MailCommon/FilterManager"
 
-#include <QtDBus/QDBusInterface>
-#include <QtDBus/QDBusReply>
+#include <QDBusInterface>
+#include <QDBusReply>
 #include <QProcess>
 #include "kmail_debug.h"
 #include <QStandardPaths>
