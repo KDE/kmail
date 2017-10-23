@@ -3105,6 +3105,10 @@ void KMComposerWin::slotFolderRemoved(const Akonadi::Collection &col)
     if ((mFolder.isValid()) && (col.id() == mFolder.id())) {
         mFolder = CommonKernel->draftsCollectionFolder();
         qCDebug(KMAIL_LOG) << "restoring drafts to" << mFolder.id();
+    } else if (col.id() == mFccFolder->collection().id()) {
+        qCDebug(KMAIL_LOG) << "FCC was removed " << col.id();
+        mFccFolder->setCollection(CommonKernel->sentCollectionFolder());
+        mIncorrectIdentityFolderWarning->fccIsInvalid();
     }
 }
 
