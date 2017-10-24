@@ -312,6 +312,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     KIdentityManagement::IdentityCombo *identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(),
                                                                                           mHeadersArea);
     identity->setCurrentIdentity(mId);
+    connect(identity, &KIdentityManagement::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
     mComposerBase->setIdentityCombo(identity);
 
     sigController->setIdentityCombo(identity);
@@ -3470,5 +3471,12 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
         line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
 
         slotRecipientEditorFocusChanged();
+    }
+}
+
+void KMComposerWin::slotIdentityDeleted(uint uoid)
+{
+    if (mComposerBase->identityCombo()->currentIdentity() == uoid) {
+        mIncorrectIdentityFolderWarning->identityInvalid();
     }
 }

@@ -534,6 +534,7 @@ private:
     };
     void slotCryptoModuleSelected();
     void slotFccIsInvalid();
+    void slotIdentityDeleted(uint uoid);
 
     void updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified);
 

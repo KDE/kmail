@@ -31,11 +31,14 @@ public:
 
     void mailTransportIsInvalid();
     void fccIsInvalid();
+    void identityInvalid();
 
 private:
     void updateText();
+    void slotHideAnnimationFinished();
     bool mMailTransportIsInvalid = false;
     bool mFccIsInvalid = false;
+    bool mIdentityIsInvalid = false;
 };
 
 #endif // INCORRECTIDENTITYFOLDERWARNING_H

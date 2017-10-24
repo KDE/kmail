@@ -27,6 +27,7 @@ IncorrectIdentityFolderWarning::IncorrectIdentityFolderWarning(QWidget *parent)
     setCloseButtonVisible(true);
     setMessageType(Warning);
     setWordWrap(true);
+    connect(this, &IncorrectIdentityFolderWarning::hideAnimationFinished, this, &IncorrectIdentityFolderWarning::slotHideAnnimationFinished);
 }
 
 IncorrectIdentityFolderWarning::~IncorrectIdentityFolderWarning()
@@ -45,6 +46,12 @@ void IncorrectIdentityFolderWarning::fccIsInvalid()
     updateText();
 }
 
+void IncorrectIdentityFolderWarning::identityInvalid()
+{
+    mIdentityIsInvalid = true;
+    updateText();
+}
+
 void IncorrectIdentityFolderWarning::updateText()
 {
     QString text;
@@ -57,6 +64,19 @@ void IncorrectIdentityFolderWarning::updateText()
         }
         text += i18n("Sent Folder is not defined. Please verify it before to send it.");
     }
+    if (mIdentityIsInvalid) {
+        if (!text.isEmpty()) {
+            text += QLatin1Char('\n');
+        }
+        text += i18n("Identity was not found. Please verify that you will use a correct identity.");
+    }
     setText(text);
     animatedShow();
+}
+
+void IncorrectIdentityFolderWarning::slotHideAnnimationFinished()
+{
+    mMailTransportIsInvalid = false;
+    mFccIsInvalid = false;
+    mIdentityIsInvalid = false;
 }
