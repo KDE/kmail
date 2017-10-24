@@ -311,7 +311,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     v->addWidget(mHeadersToEditorSplitter);
     KIdentityManagement::IdentityCombo *identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(),
                                                                                           mHeadersArea);
-    identity->setToolTip(i18n("Select an identity for this message"));
     identity->setCurrentIdentity(mId);
     mComposerBase->setIdentityCombo(identity);
 
