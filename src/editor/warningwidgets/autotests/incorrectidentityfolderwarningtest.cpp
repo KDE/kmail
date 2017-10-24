@@ -20,6 +20,7 @@
 
 #include "incorrectidentityfolderwarningtest.h"
 #include "../incorrectidentityfolderwarning.h"
+#include <QBoxLayout>
 #include <QTest>
 
 QTEST_MAIN(IncorrectIdentityFolderWarningTest)
@@ -28,4 +29,17 @@ IncorrectIdentityFolderWarningTest::IncorrectIdentityFolderWarningTest(QObject *
     : QObject(parent)
 {
 
+}
+
+void IncorrectIdentityFolderWarningTest::shouldHaveDefaultValues()
+{
+    QWidget *wid = new QWidget;
+    QHBoxLayout *layout = new QHBoxLayout(wid);
+    IncorrectIdentityFolderWarning w;
+    layout->addWidget(&w);
+    wid->show();
+    QVERIFY(!w.isVisible());
+    //QVERIFY(w.isCloseButtonVisible());
+    QCOMPARE(w.messageType(), KMessageWidget::Warning);
+    QVERIFY(w.wordWrap());
 }

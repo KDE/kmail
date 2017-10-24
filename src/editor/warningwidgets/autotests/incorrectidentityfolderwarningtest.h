@@ -28,6 +28,8 @@ class IncorrectIdentityFolderWarningTest : public QObject
 public:
     explicit IncorrectIdentityFolderWarningTest(QObject *parent = nullptr);
     ~IncorrectIdentityFolderWarningTest() = default;
+private Q_SLOTS:
+    void shouldHaveDefaultValues();
 };
 
 #endif // INCORRECTIDENTITYFOLDERWARNINGTEST_H
