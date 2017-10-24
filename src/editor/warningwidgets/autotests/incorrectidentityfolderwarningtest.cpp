@@ -43,3 +43,42 @@ void IncorrectIdentityFolderWarningTest::shouldHaveDefaultValues()
     QCOMPARE(w.messageType(), KMessageWidget::Warning);
     QVERIFY(w.wordWrap());
 }
+
+void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidIdentity()
+{
+    QWidget *wid = new QWidget;
+    QHBoxLayout *layout = new QHBoxLayout(wid);
+    IncorrectIdentityFolderWarning w;
+    layout->addWidget(&w);
+    wid->show();
+    QVERIFY(!w.isVisible());
+    w.identityInvalid();
+    QVERIFY(w.isVisible());
+    QVERIFY(!w.text().isEmpty());
+}
+
+void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidMailTransport()
+{
+    QWidget *wid = new QWidget;
+    QHBoxLayout *layout = new QHBoxLayout(wid);
+    IncorrectIdentityFolderWarning w;
+    layout->addWidget(&w);
+    wid->show();
+    QVERIFY(!w.isVisible());
+    w.mailTransportIsInvalid();
+    QVERIFY(w.isVisible());
+    QVERIFY(!w.text().isEmpty());
+}
+
+void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidFcc()
+{
+    QWidget *wid = new QWidget;
+    QHBoxLayout *layout = new QHBoxLayout(wid);
+    IncorrectIdentityFolderWarning w;
+    layout->addWidget(&w);
+    wid->show();
+    QVERIFY(!w.isVisible());
+    w.fccIsInvalid();
+    QVERIFY(w.isVisible());
+    QVERIFY(!w.text().isEmpty());
+}

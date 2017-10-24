@@ -30,6 +30,9 @@ public:
     ~IncorrectIdentityFolderWarningTest() = default;
 private Q_SLOTS:
     void shouldHaveDefaultValues();
+    void shouldShowWarningInvalidIdentity();
+    void shouldShowWarningInvalidMailTransport();
+    void shouldShowWarningInvalidFcc();
 };
 
 #endif // INCORRECTIDENTITYFOLDERWARNINGTEST_H
