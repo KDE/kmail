@@ -443,7 +443,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
     v->addWidget(mPotentialPhishingEmailWarning);
 
-
     if (KMailSettings::self()->showForgottenAttachmentWarning()) {
         mVerifyMissingAttachment = new QTimer(this);
         mVerifyMissingAttachment->setSingleShot(true);
@@ -865,7 +864,7 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     }
     rethinkHeaderLine(showHeaders, HDR_REPLY_TO, row, mLblReplyTo, mEdtReplyTo);
     if (showHeaders & HDR_REPLY_TO) {
-        (void) connectFocusMoving(prevFocus, mEdtReplyTo);
+        (void)connectFocusMoving(prevFocus, mEdtReplyTo);
     }
 
     mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 2);

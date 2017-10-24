@@ -66,7 +66,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone(cons
     Akonadi::Collection::List lst;
     for (const Akonadi::Collection &collection : list) {
         if (collection.isValid()) {
-            if(collection.rights() & Akonadi::Collection::CanDeleteItem) {
+            if (collection.rights() & Akonadi::Collection::CanDeleteItem) {
                 lst.append(collection);
             }
         }

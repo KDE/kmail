@@ -535,7 +535,6 @@ private:
     void slotCryptoModuleSelected();
     void slotFccIsInvalid();
 
-
     void updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified);
 
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);

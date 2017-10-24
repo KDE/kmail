@@ -229,7 +229,7 @@ void AccountsPageReceivingTab::slotAddMailAccount()
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
     if (!QProcess::startDetached(path, lst)) {
         KMessageBox::error(this, i18n("Could not start the account wizard. "
-                                               "Please make sure you have AccountWizard properly installed."),
+                                      "Please make sure you have AccountWizard properly installed."),
                            i18n("Unable to start account wizard"));
     }
 }

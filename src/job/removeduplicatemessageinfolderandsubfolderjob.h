@@ -24,8 +24,7 @@
 #include <QObject>
 #include <AkonadiCore/Collection>
 class KJob;
-namespace KPIM
-{
+namespace KPIM {
 class ProgressItem;
 }
 class RemoveDuplicateMessageInFolderAndSubFolderJob : public QObject

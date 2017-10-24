@@ -31,7 +31,6 @@ IncorrectIdentityFolderWarning::IncorrectIdentityFolderWarning(QWidget *parent)
 
 IncorrectIdentityFolderWarning::~IncorrectIdentityFolderWarning()
 {
-
 }
 
 void IncorrectIdentityFolderWarning::mailTransportIsInvalid()

@@ -128,10 +128,11 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     connect(mEditList, &KEditListWidget::changed, this, &CollectionMailingListPage::slotConfigChanged);
     groupLayout->addWidget(mEditList, 7, 0, 1, 4);
 
-
     //Order is important because the activate handler and fillMLFromWidgets
     //depend on it
-    const QStringList el {i18n("Post to List"), i18n("Subscribe to List"), i18n("Unsubscribe From List"), i18n("List Archives"), i18n("List Help")};
+    const QStringList el {
+        i18n("Post to List"), i18n("Subscribe to List"), i18n("Unsubscribe From List"), i18n("List Archives"), i18n("List Help")
+    };
     mAddressCombo->addItems(el);
     connect(mAddressCombo, QOverload<int>::of(&KComboBox::activated), this, &CollectionMailingListPage::slotAddressChanged);
 
