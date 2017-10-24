@@ -380,6 +380,7 @@ if(BUILD_TESTING)
     add_subdirectory(tests)
     add_subdirectory(folderarchive/autotests/)
     add_subdirectory(editor/potentialphishingemail/autotests)
+    add_subdirectory(editor/warningwidgets/autotests)
     add_subdirectory(sieveimapinterface/tests/)
 endif()
 ########### install files ###############
