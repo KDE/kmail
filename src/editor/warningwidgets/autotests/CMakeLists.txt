@@ -1,0 +1,7 @@
+set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
+
+set( kmail_incorrectidentityfolderwarningtest_SRCS incorrectidentityfolderwarningtest.cpp ../incorrectidentityfolderwarning.cpp )
+add_executable( kmail_incorrectidentityfolderwarningtest ${kmail_incorrectidentityfolderwarningtest_SRCS})
+add_test(NAME kmail_incorrectidentityfolderwarningtest COMMAND kmail_incorrectidentityfolderwarningtest)
+ecm_mark_as_test(kmail_incorrectidentityfolderwarningtest)
+target_link_libraries( kmail_incorrectidentityfolderwarningtest Qt5::Test KF5::PimCommon KF5::I18n)
