@@ -5,3 +5,10 @@ add_executable( kmail_incorrectidentityfolderwarningtest ${kmail_incorrectidenti
 add_test(NAME kmail_incorrectidentityfolderwarningtest COMMAND kmail_incorrectidentityfolderwarningtest)
 ecm_mark_as_test(kmail_incorrectidentityfolderwarningtest)
 target_link_libraries( kmail_incorrectidentityfolderwarningtest Qt5::Test KF5::PimCommon KF5::I18n)
+
+
+set( kmail_externaleditorwarningtest_SRCS externaleditorwarningtest.cpp ../externaleditorwarning.cpp )
+add_executable( kmail_externaleditorwarningtest ${kmail_externaleditorwarningtest_SRCS})
+add_test(NAME kmail_externaleditorwarningtest COMMAND kmail_externaleditorwarningtest)
+ecm_mark_as_test(kmail_externaleditorwarningtest)
+target_link_libraries( kmail_externaleditorwarningtest Qt5::Test KF5::PimCommon KF5::I18n)
