@@ -334,6 +334,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     transport->setToolTip(i18n("Select the outgoing account to use for sending this message"));
     mComposerBase->setTransportCombo(transport);
     connect(transport, QOverload<int>::of(&MailTransport::TransportComboBox::activated), this, &KMComposerWin::slotTransportChanged);
+    connect(transport, &MailTransport::TransportComboBox::transportRemoved, this, &KMComposerWin::slotTransportRemoved);
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
     mEdtFrom->setObjectName(QStringLiteral("fromLine"));
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
@@ -3478,5 +3479,13 @@ void KMComposerWin::slotIdentityDeleted(uint uoid)
 {
     if (mComposerBase->identityCombo()->currentIdentity() == uoid) {
         mIncorrectIdentityFolderWarning->identityInvalid();
+    }
+}
+
+void KMComposerWin::slotTransportRemoved(int id, const QString &name)
+{
+    Q_UNUSED(name);
+    if (mComposerBase->transportComboBox()->currentTransportId() == id) {
+        mIncorrectIdentityFolderWarning->mailTransportIsInvalid();
     }
 }
