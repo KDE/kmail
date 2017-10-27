@@ -192,8 +192,8 @@ KMKernel::KMKernel(QObject *parent)
     mCollectionModel->setDynamicSortFilter(true);
     mCollectionModel->setSortCaseSensitivity(Qt::CaseInsensitive);
 
-    connect(folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)),
-            SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
+    connect(folderCollectionMonitor(), QOverload<const Akonadi::Collection &, const QSet<QByteArray> &>::of(&Akonadi::ChangeRecorder::collectionChanged), this,
+            &KMKernel::slotCollectionChanged);
 
     connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportRemoved, this, &KMKernel::transportRemoved);
     connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportRenamed, this, &KMKernel::transportRenamed);

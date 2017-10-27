@@ -1151,7 +1151,8 @@ void KMMainWidget::createWidgets()
             this, &KMMainWidget::slotItemRemoved);
     connect(kmkernel->folderCollectionMonitor(), &Monitor::itemMoved,
             this, &KMMainWidget::slotItemMoved);
-    connect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), SLOT(slotCollectionChanged(Akonadi::Collection,QSet<QByteArray>)));
+    connect(kmkernel->folderCollectionMonitor(), QOverload<const Akonadi::Collection &, const QSet<QByteArray> &>::of(&ChangeRecorder::collectionChanged),
+            this, &KMMainWidget::slotCollectionChanged);
 
     connect(kmkernel->folderCollectionMonitor(), &Monitor::collectionStatisticsChanged, this, &KMMainWidget::slotCollectionStatisticsChanged);
 }
