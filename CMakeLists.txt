@@ -9,7 +9,7 @@ include(CheckIncludeFiles)
 if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif()
-set(ECM_VERSION "5.38.0")
+set(ECM_VERSION "5.39.0")
 
 find_package(ECM ${ECM_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
