@@ -71,6 +71,7 @@
 #include "kmcomposerglobalaction.h"
 #include "widgets/kactionmenutransport.h"
 #include "pimcommon/kactionmenuchangecase.h"
+#include "sonnet_version.h"
 
 #include <Libkdepim/StatusbarProgressWidget>
 #include <Libkdepim/ProgressStatusBarWidget>
@@ -1606,7 +1607,13 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     if (auto hdr = mMsg->headerByType("X-KMail-Dictionary")) {
         const QString dictionary = hdr->asUnicodeString();
         if (!dictionary.isEmpty()) {
-            mComposerBase->dictionary()->setCurrentByDictionary(dictionary);
+            if (SONNET_VERSION_MINOR >= 40) {
+                if (!mComposerBase->dictionary()->assignDictionnaryName(dictionary)) {
+                    mIncorrectIdentityFolderWarning->dictionaryInvalid();
+                }
+            } else {
+                mComposerBase->dictionary()->setCurrentByDictionary(dictionary);
+            }
         }
     } else {
         mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());

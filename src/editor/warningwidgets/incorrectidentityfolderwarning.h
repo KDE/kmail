@@ -32,6 +32,7 @@ public:
     void mailTransportIsInvalid();
     void fccIsInvalid();
     void identityInvalid();
+    void dictionaryInvalid();
 
 private:
     void updateText();
@@ -39,6 +40,7 @@ private:
     bool mMailTransportIsInvalid = false;
     bool mFccIsInvalid = false;
     bool mIdentityIsInvalid = false;
+    bool mDictionaryIsInvalid = false;
 };
 
 #endif // INCORRECTIDENTITYFOLDERWARNING_H

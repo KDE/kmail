@@ -52,6 +52,12 @@ void IncorrectIdentityFolderWarning::identityInvalid()
     updateText();
 }
 
+void IncorrectIdentityFolderWarning::dictionaryInvalid()
+{
+    mDictionaryIsInvalid = true;
+    updateText();
+}
+
 void IncorrectIdentityFolderWarning::updateText()
 {
     QString text;
@@ -70,6 +76,12 @@ void IncorrectIdentityFolderWarning::updateText()
         }
         text += i18n("Identity was not found. Please verify that you will use a correct identity.");
     }
+    if (mDictionaryIsInvalid) {
+        if (!text.isEmpty()) {
+            text += QLatin1Char('\n');
+        }
+        text += i18n("Dictionary was not found. Please verify that you will use a correct dictionnary.");
+    }
     setText(text);
     animatedShow();
 }
@@ -79,4 +91,5 @@ void IncorrectIdentityFolderWarning::slotHideAnnimationFinished()
     mMailTransportIsInvalid = false;
     mFccIsInvalid = false;
     mIdentityIsInvalid = false;
+    mDictionaryIsInvalid = false;
 }
