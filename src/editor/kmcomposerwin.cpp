@@ -478,7 +478,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
         slotIdentityChanged(val);
     });
-    connect(kmkernel->identityManager(), QOverload<uint>::of(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) { slotIdentityChanged(val); });
+    connect(kmkernel->identityManager(), QOverload<uint>::of(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
+        slotIdentityChanged(val);
+    });
 
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMComposerWin::slotFolderRemoved);

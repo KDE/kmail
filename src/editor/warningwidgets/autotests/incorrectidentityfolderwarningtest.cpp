@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "incorrectidentityfolderwarningtest.h"
 #include "../incorrectidentityfolderwarning.h"
 #include <QBoxLayout>
@@ -28,7 +27,6 @@ QTEST_MAIN(IncorrectIdentityFolderWarningTest)
 IncorrectIdentityFolderWarningTest::IncorrectIdentityFolderWarningTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 void IncorrectIdentityFolderWarningTest::shouldHaveDefaultValues()

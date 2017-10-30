@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "externaleditorwarningtest.h"
 #include "../externaleditorwarning.h"
 #include <QHBoxLayout>
@@ -28,7 +27,6 @@ QTEST_MAIN(ExternalEditorWarningTest)
 ExternalEditorWarningTest::ExternalEditorWarningTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 void ExternalEditorWarningTest::shouldHaveDefaultValue()
