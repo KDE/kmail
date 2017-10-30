@@ -572,13 +572,13 @@ private:
     bool mLastIdentityHasSigningKey = false;
     bool mLastIdentityHasEncryptionKey = false;
     Akonadi::Collection mFolder;
-    long mShowHeaders;
+    long mShowHeaders = 0;
     bool mForceDisableHtml = false;     // Completely disable any HTML. Useful when sending invitations in the
     // mail body.
-    int mNumHeaders;
+    int mNumHeaders = 0;
     QFont mBodyFont;
     QFont mFixedFont;
-    uint mId;
+    uint mId = 0;
     TemplateContext mContext;
 
     KRecentFilesAction *mRecentAction = nullptr;
