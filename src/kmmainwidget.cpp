@@ -3357,7 +3357,8 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCreateAddressBookContact);
     }
 
-    actionCollection()->addAction(KStandardAction::Undo, QStringLiteral("kmail_undo"), this, SLOT(slotUndo()));
+    QAction *act = actionCollection()->addAction(KStandardAction::Undo, QStringLiteral("kmail_undo"));
+    connect(act, &QAction::triggered, this, &KMMainWidget::slotUndo);
 
     menutimer = new QTimer(this);
     menutimer->setObjectName(QStringLiteral("menutimer"));
