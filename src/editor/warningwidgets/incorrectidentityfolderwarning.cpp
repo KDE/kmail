@@ -80,7 +80,7 @@ void IncorrectIdentityFolderWarning::updateText()
         if (!text.isEmpty()) {
             text += QLatin1Char('\n');
         }
-        text += i18n("Dictionary was not found. Please verify that you will use a correct dictionnary.");
+        text += i18n("Dictionary was not found. Please verify that you will use a correct dictionary.");
     }
     setText(text);
     animatedShow();
