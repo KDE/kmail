@@ -1179,7 +1179,7 @@ void KMComposerWin::setupActions(void)
     KStandardAction::redo(mGlobalAction, &KMComposerGlobalAction::slotRedo, actionCollection());
     KStandardAction::cut(mGlobalAction, &KMComposerGlobalAction::slotCut, actionCollection());
     KStandardAction::copy(mGlobalAction, &KMComposerGlobalAction::slotCopy, actionCollection());
-#if KCONFIGWIDGETS_VERSION_MINOR >= 39
+#if SONNET_VERSION >= QT_VERSION_CHECK(5, 40, 0)
     KStandardAction::paste(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
 #else
     KStandardAction::pasteText(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
