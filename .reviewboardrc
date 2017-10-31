@@ -1,5 +1,0 @@
-REVIEWBOARD_URL = "https://git.reviewboard.kde.org"
-TARGET_GROUPS = "kdepim"
-REPOSITORY = "kdepim"
-TARGET_PEOPLE = "mlaurent"
-BRANCH = "master"
