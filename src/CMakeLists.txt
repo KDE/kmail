@@ -405,13 +405,7 @@ install(FILES
     data/kmail_config_plugins.desktop
     DESTINATION ${KDE_INSTALL_KSERVICES5DIR}
     )
-install(FILES
-    kmcomposerui.rc
-    kmmainwin.rc
-    kmreadermainwin.rc
-    kmail_part.rc
-    DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/kmail2
-    )
+
 install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
 install(FILES data/dbusmail.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 install(TARGETS
