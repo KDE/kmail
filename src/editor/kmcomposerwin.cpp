@@ -1607,13 +1607,13 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     if (auto hdr = mMsg->headerByType("X-KMail-Dictionary")) {
         const QString dictionary = hdr->asUnicodeString();
         if (!dictionary.isEmpty()) {
-            if (SONNET_VERSION_MINOR >= 40) {
-                if (!mComposerBase->dictionary()->assignDictionnaryName(dictionary)) {
-                    mIncorrectIdentityFolderWarning->dictionaryInvalid();
-                }
-            } else {
-                mComposerBase->dictionary()->setCurrentByDictionary(dictionary);
+#if SONNET_VERSION >= QT_VERSION_CHECK(5, 40, 0)
+            if (!mComposerBase->dictionary()->assignDictionnaryName(dictionary)) {
+                mIncorrectIdentityFolderWarning->dictionaryInvalid();
             }
+#else
+            mComposerBase->dictionary()->setCurrentByDictionary(dictionary);
+#endif
         }
     } else {
         mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
