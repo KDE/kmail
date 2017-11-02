@@ -380,6 +380,16 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setMargin(0);
 
+
+    mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
+    connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
+    vbox->addWidget(mPotentialPhishingEmailWarning);
+
+    mAttachmentMissing = new AttachmentMissingWarning(this);
+    connect(mAttachmentMissing, &AttachmentMissingWarning::attachMissingFile, this, &KMComposerWin::slotAttachMissingFile);
+    connect(mAttachmentMissing, &AttachmentMissingWarning::explicitClosedMissingAttachment, this, &KMComposerWin::slotExplicitClosedMissingAttachment);
+    vbox->addWidget(mAttachmentMissing);
+
     KMComposerEditorNg *composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
     mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
 
@@ -430,14 +440,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mComposerBase->setAttachmentModel(attachmentModel);
     mComposerBase->setAttachmentController(attachmentController);
 
-    mAttachmentMissing = new AttachmentMissingWarning(this);
-    connect(mAttachmentMissing, &AttachmentMissingWarning::attachMissingFile, this, &KMComposerWin::slotAttachMissingFile);
-    connect(mAttachmentMissing, &AttachmentMissingWarning::explicitClosedMissingAttachment, this, &KMComposerWin::slotExplicitClosedMissingAttachment);
-    v->addWidget(mAttachmentMissing);
 
-    mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
-    connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
-    v->addWidget(mPotentialPhishingEmailWarning);
 
     if (KMailSettings::self()->showForgottenAttachmentWarning()) {
         mVerifyMissingAttachment = new QTimer(this);

@@ -67,6 +67,8 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
     QTest::newRow("WithMultiNotSameEmail") << (QStringList() << QStringLiteral("\"  bla@kde.org   foo@kde.org  \" <foo@kde.org>")) << QStringList() << true;
 
     QTest::newRow("EmailWithSimpleQuote") << (QStringList() << QStringLiteral("\"\'foo@kde.org\'\" <foo@kde.org>")) << QStringList() << false;
+
+    QTest::newRow("BadCompletion") << (QStringList() << QStringLiteral("@kde.org <foo@kde.org>")) << QStringList() << false;
 }
 
 void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
