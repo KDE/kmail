@@ -1179,11 +1179,7 @@ void KMComposerWin::setupActions(void)
     KStandardAction::redo(mGlobalAction, &KMComposerGlobalAction::slotRedo, actionCollection());
     KStandardAction::cut(mGlobalAction, &KMComposerGlobalAction::slotCut, actionCollection());
     KStandardAction::copy(mGlobalAction, &KMComposerGlobalAction::slotCopy, actionCollection());
-#if SONNET_VERSION >= QT_VERSION_CHECK(5, 40, 0)
     KStandardAction::paste(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
-#else
-    KStandardAction::pasteText(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
-#endif
     mSelectAll = KStandardAction::selectAll(mGlobalAction, &KMComposerGlobalAction::slotMarkAll, actionCollection());
 
     mFindText = KStandardAction::find(mRichTextEditorwidget, &KPIMTextEdit::RichTextEditorWidget::slotFind, actionCollection());
