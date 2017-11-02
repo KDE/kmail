@@ -548,6 +548,10 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 
     if (!mCurrentFolderSettings->isValid() && (mMessagePane->count() < 2)) {
         slotIntro();
+    } else {
+        if (mMessagePane->isHidden()) {
+            mMessagePane->show();
+        }
     }
 
     // The message pane uses the selection model of the folder view to load the correct aggregation model and theme
@@ -4074,7 +4078,7 @@ void KMMainWidget::slotShowStartupFolder()
     messageActions()->setupForwardingActionsList(mGUIClient);
     initializePluginActions();
 
-    QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
+    const QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
     if (kmkernel->firstStart()
         || KMailSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5) {
         KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
