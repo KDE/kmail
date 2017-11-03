@@ -80,7 +80,6 @@ public:
     KActionMenu *messageStatusMenu() const;
     KActionMenu *forwardMenu() const;
 
-    QAction *editAction() const;
     QAction *annotateAction() const;
     QAction *printAction() const;
     QAction *printPreviewAction() const;
@@ -151,7 +150,6 @@ private:
     KActionMenu *mStatusMenu = nullptr;
     KActionMenu *mForwardActionMenu = nullptr;
     KActionMenu *mMailingListActionMenu = nullptr;
-    QAction *mEditAction = nullptr;
     QAction *mAnnotateAction = nullptr;
     QAction *mPrintAction = nullptr;
     QAction *mPrintPreviewAction = nullptr;

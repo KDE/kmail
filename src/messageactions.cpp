@@ -125,11 +125,6 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
         mStatusMenu->addAction(action);
     }
 
-    mEditAction = new QAction(QIcon::fromTheme(QStringLiteral("accessories-text-editor")), i18n("&Edit Message"), this);
-    ac->addAction(QStringLiteral("edit"), mEditAction);
-    connect(mEditAction, &QAction::triggered, this, &MessageActions::editCurrentMessage);
-    ac->setDefaultShortcut(mEditAction, Qt::Key_T);
-
     mAnnotateAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-notes")), i18n("Add Note..."), this);
     ac->addAction(QStringLiteral("annotate"), mAnnotateAction);
     connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);
@@ -262,11 +257,6 @@ KActionMenu *MessageActions::forwardMenu() const
     return mForwardActionMenu;
 }
 
-QAction *MessageActions::editAction() const
-{
-    return mEditAction;
-}
-
 QAction *MessageActions::annotateAction() const
 {
     return mAnnotateAction;
@@ -361,7 +351,6 @@ void MessageActions::updateActions()
             connect(job, &Akonadi::ItemFetchJob::result, this, &MessageActions::slotUpdateActionsFetchDone);
         }
     }
-    mEditAction->setEnabled(uniqItem);
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob *job)

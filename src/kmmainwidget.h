@@ -219,8 +219,6 @@ private:
 
     KActionMenu *mailingListActionMenu() const;
 
-    QAction *editAction() const;
-
     // Moving messages around
     /**
      * This will ask for a destination folder and move the currently selected

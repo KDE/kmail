@@ -2689,8 +2689,6 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
         if (parentCol.isValid() && CommonKernel->folderIsSentMailFolder(parentCol)) {
             menu.addAction(sendAgainAction());
-        } else {
-            menu.addAction(editAction());
         }
         menu.addAction(mailingListActionMenu());
         menu.addSeparator();
@@ -3751,7 +3749,6 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMsgActions->forwardAttachedAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
     mMsgActions->forwardMenu()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
 
-    mMsgActions->editAction()->setEnabled(single_actions);
     mNewMessageFromTemplateAction->setEnabled(single_actions && CommonKernel->folderIsTemplates(mCurrentCollection));
     filterMenu()->setEnabled(single_actions);
     mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/ mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
@@ -3782,8 +3779,6 @@ void KMMainWidget::updateMessageActionsDelayed()
     bool statusSendAgain = single_actions && ((currentMessage.isValid() && status.isSent()) || (currentMessage.isValid() && CommonKernel->folderIsSentMailFolder(mCurrentCollection)));
     if (statusSendAgain) {
         actionList << mSendAgainAction;
-    } else if (single_actions) {
-        actionList << messageActions()->editAction();
     }
     actionList << mSaveAttachmentsAction;
     if (mCurrentCollection.isValid() && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
@@ -4268,11 +4263,6 @@ KActionMenu *KMMainWidget::filterMenu() const
 KActionMenu *KMMainWidget::mailingListActionMenu() const
 {
     return mMsgActions->mailingListActionMenu();
-}
-
-QAction *KMMainWidget::editAction() const
-{
-    return mMsgActions->editAction();
 }
 
 QAction *KMMainWidget::sendAgainAction() const
