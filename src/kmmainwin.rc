@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE gui>
-<gui version="530" name="kmmainwin" translationDomain="kmail">
+<gui version="531" name="kmmainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -83,8 +83,6 @@
    <Action name="reset_message_display_format"/>
    <Separator/>
    <Action name="disable_emoticon"/> 
-   <Separator/>
-   <Action name="toggle_mimeparttree"/>
    <Separator/>
    <Action name="toggle_fixedfont"/>
    <Separator/>
