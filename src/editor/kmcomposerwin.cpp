@@ -1607,7 +1607,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         const QString dictionary = hdr->asUnicodeString();
         if (!dictionary.isEmpty()) {
 #if SONNET_VERSION >= QT_VERSION_CHECK(5, 40, 0)
-            if (!mComposerBase->dictionary()->assignDictionnaryName(dictionary)) {
+            if (!mComposerBase->dictionary()->assignByDictionnary(dictionary)) {
                 mIncorrectIdentityFolderWarning->dictionaryInvalid();
             }
 #else
