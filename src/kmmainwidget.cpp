@@ -2831,19 +2831,7 @@ void KMMainWidget::setupActions()
             action->setEnabled(false);
         }
     }
-    {
-        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("pgp-keys")), i18n("GnuPG Log Viewer"), this);
-        actionCollection()->addAction(QStringLiteral("tools_start_kwatchgnupg"), action);
-        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotStartWatchGnuPG);
-#ifdef Q_OS_WIN32
-        // not ported yet, underlying infrastructure missing on Windows
-        const bool usableKWatchGnupg = false;
-#else
-        // disable action if no kwatchgnupg binary is around
-        bool usableKWatchGnupg = !QStandardPaths::findExecutable(QStringLiteral("kwatchgnupg")).isEmpty();
-#endif
-        action->setEnabled(usableKWatchGnupg);
-    }
+
     {
         QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("document-import")), i18n("&Import Messages..."), this);
         actionCollection()->addAction(QStringLiteral("import"), action);

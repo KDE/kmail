@@ -97,15 +97,6 @@ void KMLaunchExternalComponent::slotStartCertManager()
     }
 }
 
-void KMLaunchExternalComponent::slotStartWatchGnuPG()
-{
-    if (!QProcess::startDetached(QStringLiteral("kwatchgnupg"))) {
-        KMessageBox::error(mParentWidget, i18n("Could not start GnuPG LogViewer (kwatchgnupg); "
-                                               "please check your installation."),
-                           i18n("KMail Error"));
-    }
-}
-
 void KMLaunchExternalComponent::slotImportWizard()
 {
     const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));

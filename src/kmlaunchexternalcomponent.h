@@ -33,7 +33,6 @@ public Q_SLOTS:
     void slotConfigureAutomaticArchiving();
     void slotConfigureFollowupReminder();
     void slotStartCertManager();
-    void slotStartWatchGnuPG();
     void slotImportWizard();
     void slotExportData();
     void slotRunAddressBook();
