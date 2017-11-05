@@ -3809,6 +3809,7 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     if (currentMessage.hasFlag(Akonadi::MessageFlags::Encrypted) || count > 1) {
         mCopyDecryptedActionMenu->setVisible(true);
+        mCopyDecryptedActionMenu->menu()->clear();
         mAkonadiStandardActionManager->standardActionManager()->createActionFolderMenu(
             mCopyDecryptedActionMenu->menu(),
             Akonadi::StandardActionManager::CopyItemToMenu);
