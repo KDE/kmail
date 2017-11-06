@@ -172,22 +172,6 @@ private: // data
     QCheckBox *mCloseAfterReplyOrForwardCheck = nullptr;
     MessageViewer::ConfigureWidget *mViewerSettings = nullptr;
     Gravatar::GravatarConfigWidget *mGravatarConfigWidget = nullptr;
-};
-
-class AppearancePageSystemTrayTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit AppearancePageSystemTrayTab(QWidget *parent = nullptr);
-
-    QString helpAnchor() const;
-
-    void save() override;
-
-private:
-    void doLoadFromGlobalSettings() override;
-
-private:
     QCheckBox *mSystemTrayCheck = nullptr;
 };
 
@@ -300,7 +284,6 @@ public:
     typedef AppearancePageLayoutTab LayoutTab;
     typedef AppearancePageHeadersTab HeadersTab;
     typedef AppearancePageReaderTab ReaderTab;
-    typedef AppearancePageSystemTrayTab SystemTrayTab;
     typedef AppearancePageMessageTagTab MessageTagTab;
 };
 

@@ -89,6 +89,13 @@ AppearancePage::AppearancePage(QWidget *parent)
     : ConfigModuleWithTabs(parent)
 {
     //
+    // "General" tab:
+    //
+    ReaderTab *readerTab = new ReaderTab();
+    addTab(readerTab, i18n("General"));
+    addConfig(MessageViewer::MessageViewerSettings::self(), readerTab);
+
+    //
     // "Fonts" tab:
     //
     FontsTab *fontsTab = new FontsTab();
@@ -111,19 +118,6 @@ AppearancePage::AppearancePage(QWidget *parent)
     //
     HeadersTab *headersTab = new HeadersTab();
     addTab(headersTab, i18n("Message List"));
-
-    //
-    // "Reader window" tab:
-    //
-    ReaderTab *readerTab = new ReaderTab();
-    addTab(readerTab, i18n("Message Window"));
-    addConfig(MessageViewer::MessageViewerSettings::self(), readerTab);
-
-    //
-    // "System Tray" tab:
-    //
-    SystemTrayTab *systemTrayTab = new SystemTrayTab();
-    addTab(systemTrayTab, i18n("System Tray"));
 
     //
     // "Message Tag" tab:
@@ -845,23 +839,40 @@ AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
 
+    QGroupBox *readerBox = new QGroupBox(i18n("Message Window"), this);
+    topLayout->addWidget(readerBox);
+
+    QVBoxLayout *readerBoxLayout = new QVBoxLayout(readerBox);
+
     // "Close message window after replying or forwarding" check box:
     populateCheckBox(mCloseAfterReplyOrForwardCheck = new QCheckBox(this),
                      MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mCloseAfterReplyOrForwardCheck->setToolTip(
         i18n("Close the standalone message window after replying or forwarding the message"));
-    topLayout->addWidget(mCloseAfterReplyOrForwardCheck);
+    readerBoxLayout->addWidget(mCloseAfterReplyOrForwardCheck);
     connect(mCloseAfterReplyOrForwardCheck, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
     mViewerSettings = new MessageViewer::ConfigureWidget;
     connect(mViewerSettings, &MessageViewer::ConfigureWidget::settingsChanged,
             this, &ConfigModuleTab::slotEmitChanged);
-    topLayout->addWidget(mViewerSettings);
+    readerBoxLayout->addWidget(mViewerSettings);
 
     mGravatarConfigWidget = new Gravatar::GravatarConfigWidget;
     connect(mGravatarConfigWidget, &Gravatar::GravatarConfigWidget::configChanged, this, &ConfigModuleTab::slotEmitChanged);
-    topLayout->addWidget(mGravatarConfigWidget);
+    readerBoxLayout->addWidget(mGravatarConfigWidget);
+
+    QGroupBox *systrayBox = new QGroupBox(i18n("System Tray"), this);
+    topLayout->addWidget(systrayBox);
+
+    QVBoxLayout *systrayBoxlayout = new QVBoxLayout(systrayBox);
+
+    // "Enable system tray applet" check box
+    mSystemTrayCheck = new QCheckBox(i18n("Enable system tray icon"), this);
+    systrayBoxlayout->addWidget(mSystemTrayCheck);
+    connect(mSystemTrayCheck, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
+
     topLayout->addStretch(100);   // spacer
 }
 
@@ -872,6 +883,7 @@ void AppearancePage::ReaderTab::doResetToDefaultsOther()
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
+    loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
     loadWidget(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->readConfig();
     mGravatarConfigWidget->doLoadFromGlobalSettings();
@@ -879,39 +891,11 @@ void AppearancePage::ReaderTab::doLoadOther()
 
 void AppearancePage::ReaderTab::save()
 {
+    saveCheckBox(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
+    KMailSettings::self()->save();
     saveCheckBox(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->writeConfig();
     mGravatarConfigWidget->save();
-}
-
-QString AppearancePage::SystemTrayTab::helpAnchor() const
-{
-    return QStringLiteral("configure-appearance-systemtray");
-}
-
-AppearancePageSystemTrayTab::AppearancePageSystemTrayTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    QVBoxLayout *vlay = new QVBoxLayout(this);
-
-    // "Enable system tray applet" check box
-    mSystemTrayCheck = new QCheckBox(i18n("Enable system tray icon"), this);
-    vlay->addWidget(mSystemTrayCheck);
-    connect(mSystemTrayCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
-
-    vlay->addStretch(10);
-}
-
-void AppearancePage::SystemTrayTab::doLoadFromGlobalSettings()
-{
-    loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
-}
-
-void AppearancePage::SystemTrayTab::save()
-{
-    saveCheckBox(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
-    KMailSettings::self()->save();
 }
 
 QString AppearancePage::MessageTagTab::helpAnchor() const
