@@ -51,6 +51,7 @@
 #include <MailCommon/FolderSettings>
 #include "messageviewer/headerstyleplugin.h"
 #include "messageviewer/headerstyle.h"
+#include <MessageViewer/MessageViewerSettings>
 
 #include <KActionCollection>
 #include <Akonadi/Contact/ContactSearchJob>
@@ -190,7 +191,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message:
 
 void KMReaderMainWin::slotReplyOrForwardFinished()
 {
-    if (KMailSettings::self()->closeAfterReplyOrForward()) {
+    if (MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForward()) {
         close();
     }
 }

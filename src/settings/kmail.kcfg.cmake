@@ -335,13 +335,6 @@
       </entry>
     </group>
 
-    <group name="Reader">
-     <entry name="CloseAfterReplyOrForward" type="Bool">
-       <label>Close message window after replying or forwarding</label>
-       <default>false</default>
-     </entry>
-    </group>
-
   <group name="GlobalTemplates">
     <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
       <label>Message template for new message</label>

@@ -847,7 +847,7 @@ AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
 
     // "Close message window after replying or forwarding" check box:
     populateCheckBox(mCloseAfterReplyOrForwardCheck = new QCheckBox(this),
-                     KMailSettings::self()->closeAfterReplyOrForwardItem());
+                     MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mCloseAfterReplyOrForwardCheck->setToolTip(
         i18n("Close the standalone message window after replying or forwarding the message"));
     topLayout->addWidget(mCloseAfterReplyOrForwardCheck);
@@ -872,14 +872,14 @@ void AppearancePage::ReaderTab::doResetToDefaultsOther()
 
 void AppearancePage::ReaderTab::doLoadOther()
 {
-    loadWidget(mCloseAfterReplyOrForwardCheck, KMailSettings::self()->closeAfterReplyOrForwardItem());
+    loadWidget(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->readConfig();
     mGravatarConfigWidget->doLoadFromGlobalSettings();
 }
 
 void AppearancePage::ReaderTab::save()
 {
-    saveCheckBox(mCloseAfterReplyOrForwardCheck, KMailSettings::self()->closeAfterReplyOrForwardItem());
+    saveCheckBox(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->writeConfig();
     mGravatarConfigWidget->save();
 }
