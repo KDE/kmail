@@ -3750,8 +3750,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     // "Print" will act on the current message: it will ignore any hidden selection
     mMsgActions->printAction()->setEnabled(singleVisibleMessageSelected);
     // "Print preview" will act on the current message: it will ignore any hidden selection
-    QAction *printPreviewAction = mMsgActions->printPreviewAction();
-    if (printPreviewAction) {
+    if (QAction *printPreviewAction = mMsgActions->printPreviewAction()) {
         printPreviewAction->setEnabled(singleVisibleMessageSelected);
     }
 
