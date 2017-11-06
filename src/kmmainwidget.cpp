@@ -3768,7 +3768,9 @@ void KMMainWidget::updateMessageActionsDelayed()
     if (statusSendAgain) {
         actionList << mSendAgainAction;
     }
-    actionList << mSaveAttachmentsAction;
+    if (single_actions) {
+        actionList << mSaveAttachmentsAction;
+    }
     if (mCurrentCollection.isValid() && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
         actionList << mArchiveAction;
     }
@@ -3776,7 +3778,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     mGUIClient->plugActionList(QStringLiteral("messagelist_actionlist"), actionList);
     mSendAgainAction->setEnabled(statusSendAgain);
 
-    mSaveAsAction->setEnabled(mass_actions);
+    mSaveAsAction->setEnabled(single_actions);
 
     if (currentFolderSettingsIsValid) {
         updateMoveAction(mCurrentFolderSettings->statistics());
