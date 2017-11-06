@@ -991,7 +991,6 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     //Extra VBoxLayout for stretchers around settings
     QVBoxLayout *tagsettinggrid = new QVBoxLayout();
     maingrid->addLayout(tagsettinggrid);
-    //tagsettinggrid->addStretch( 10 );
 
     //Groupbox frame
     mTagSettingGroupBox = new QGroupBox(i18n("Ta&g Settings"),
