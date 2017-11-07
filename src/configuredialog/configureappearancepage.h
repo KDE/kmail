@@ -154,11 +154,11 @@ private: // data
     QString mCustomDateWhatsThis;
 };
 
-class AppearancePageReaderTab : public ConfigModuleTab
+class AppearancePageGeneralTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageReaderTab(QWidget *parent = nullptr);
+    explicit AppearancePageGeneralTab(QWidget *parent = nullptr);
 
     QString helpAnchor() const;
 
@@ -283,7 +283,7 @@ public:
     typedef AppearancePageColorsTab ColorsTab;
     typedef AppearancePageLayoutTab LayoutTab;
     typedef AppearancePageHeadersTab HeadersTab;
-    typedef AppearancePageReaderTab ReaderTab;
+    typedef AppearancePageGeneralTab ReaderTab;
     typedef AppearancePageMessageTagTab MessageTagTab;
 };
 

@@ -834,7 +834,7 @@ QString AppearancePage::ReaderTab::helpAnchor() const
     return QStringLiteral("configure-appearance-reader");
 }
 
-AppearancePageReaderTab::AppearancePageReaderTab(QWidget *parent)
+AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
