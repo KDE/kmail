@@ -151,7 +151,7 @@ public:
 
     QString helpAnchor() const override;
 
-    typedef SecurityPageGeneralTab GeneralTab;
+    typedef SecurityPageGeneralTab ReadingTab;
     typedef SecurityPageMDNTab MDNTab;
     typedef SecurityPageComposerCryptoTab ComposerCryptoTab;
     typedef SecurityPageWarningTab WarningTab;

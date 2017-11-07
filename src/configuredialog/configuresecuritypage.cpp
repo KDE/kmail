@@ -49,7 +49,7 @@ SecurityPage::SecurityPage(QWidget *parent)
     //
     // "Reading" tab:
     //
-    GeneralTab *generalTab = new GeneralTab(); //  @TODO: rename
+    ReadingTab *generalTab = new ReadingTab();
     addTab(generalTab, i18n("Reading"));
 
     addTab(new MDNTab(), i18n("Message Disposition Notifications"));
@@ -73,7 +73,7 @@ SecurityPage::SecurityPage(QWidget *parent)
     addTab(sMimeTab, i18n("S/MIME Validation"));
 }
 
-QString SecurityPage::GeneralTab::helpAnchor() const
+QString SecurityPage::ReadingTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-reading");
 }
@@ -107,7 +107,7 @@ void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
     }
 }
 
-void SecurityPage::GeneralTab::doLoadOther()
+void SecurityPage::ReadingTab::doLoadOther()
 {
     loadWidget(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
     loadWidget(mSGTab.mExternalReferences, MessageViewer::MessageViewerSettings::self()->htmlLoadExternalItem());
@@ -119,7 +119,7 @@ void SecurityPage::GeneralTab::doLoadOther()
     loadWidget(mSGTab.mCheckUrl, MessageViewer::MessageViewerSettings::self()->checkPhishingUrlItem());
 }
 
-void SecurityPage::GeneralTab::save()
+void SecurityPage::ReadingTab::save()
 {
     if (MessageViewer::MessageViewerSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked()) {
         if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
