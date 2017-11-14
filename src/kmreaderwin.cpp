@@ -53,7 +53,7 @@ using MessageViewer::CSSHelper;
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 
-#include <MimeTreeParser/AttachmentStrategy>
+#include <MessageViewer/AttachmentStrategy>
 #include <MessageComposer/MessageSender>
 #include "MessageComposer/Composer"
 #include "MessageComposer/TextPart"
@@ -232,7 +232,7 @@ void KMReaderWin::readConfig(void)
     mViewer->readConfig();
 }
 
-void KMReaderWin::setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy)
+void KMReaderWin::setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy)
 {
     mViewer->setAttachmentStrategy(strategy);
 }
@@ -524,7 +524,7 @@ void KMReaderWin::setDecryptMessageOverwrite(bool overwrite)
     mViewer->setDecryptMessageOverwrite(overwrite);
 }
 
-const MimeTreeParser::AttachmentStrategy *KMReaderWin::attachmentStrategy() const
+const MessageViewer::AttachmentStrategy *KMReaderWin::attachmentStrategy() const
 {
     return mViewer->attachmentStrategy();
 }

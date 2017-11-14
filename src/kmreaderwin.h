@@ -60,9 +60,9 @@ public:
     void readConfig();
 
     /** Get/set the message attachment strategy. */
-    const MimeTreeParser::AttachmentStrategy *attachmentStrategy() const;
+    const MessageViewer::AttachmentStrategy *attachmentStrategy() const;
 
-    void setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy);
+    void setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy);
 
     /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection

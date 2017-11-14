@@ -1121,7 +1121,7 @@ void KMPrintCommand::setOverrideFont(const QFont &font)
     mOverrideFont = font;
 }
 
-void KMPrintCommand::setAttachmentStrategy(const MimeTreeParser::AttachmentStrategy *strategy)
+void KMPrintCommand::setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy)
 {
     mAttachmentStrategy = strategy;
 }

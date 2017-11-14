@@ -88,7 +88,7 @@ using KSieveUi::SieveDebugDialog;
 #include "messageviewer/headerstyleplugin.h"
 #include "messageviewer/headerstyle.h"
 
-#include <MimeTreeParser/AttachmentStrategy>
+#include <MessageViewer/AttachmentStrategy>
 
 #ifndef QT_NO_CURSOR
 #include "Libkdepim/KCursorSaver"
@@ -198,7 +198,7 @@ using KPIM::ProgressManager;
 using KPIM::BroadcastStatus;
 using KMail::SearchWindow;
 using KMime::Types::AddrSpecList;
-using MimeTreeParser::AttachmentStrategy;
+using MessageViewer::AttachmentStrategy;
 
 Q_GLOBAL_STATIC(KMMainWidget::PtrList, theMainWidgetList)
 
