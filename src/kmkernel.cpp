@@ -1063,33 +1063,14 @@ void KMKernel::setFirstInstance(bool value)
 
 void KMKernel::closeAllKMailWindows()
 {
-    QList<KMainWindow *> windowsToDelete;
-
     foreach (KMainWindow *window, KMainWindow::memberList()) {
         if (::qobject_cast<KMMainWin *>(window)
             || ::qobject_cast<KMail::SecondaryWindow *>(window)) {
             // close and delete the window
             window->setAttribute(Qt::WA_DeleteOnClose);
             window->close();
-            windowsToDelete.append(window);
         }
     }
-
-    // We delete all main windows here. Above we called close(), but that calls
-    // deleteLater() internally, therefore does not delete it immediately.
-    // This would lead to problems when closing Kontact when a composer window
-    // is open, because the destruction order is:
-    //
-    // 1. destructor of the Kontact mainwinow
-    // 2.   delete all parts
-    // 3.     the KMail part destructor calls KMKernel::cleanup(), which calls
-    //        this function
-    // 4. delete all other mainwindows
-    //
-    // Deleting the composer windows here will make sure that step 4 will not delete
-    // any composer window, which would fail because the kernel is already deleted.
-    qDeleteAll(windowsToDelete);
-    windowsToDelete.clear();
 }
 
 void KMKernel::cleanup(void)

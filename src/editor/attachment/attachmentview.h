@@ -77,6 +77,7 @@ private:
     QToolButton *mToolButton = nullptr;
     QLabel *mInfoAttachment = nullptr;
     QWidget *mWidget = nullptr;
+    KConfigGroup grp;
 };
 } // namespace KMail
 
