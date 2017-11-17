@@ -51,6 +51,7 @@ using namespace KMail;
 
 AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent)
     : QTreeView(parent)
+    , grp(KMKernel::self()->config()->group("AttachmentView"))
 {
     mWidget = new QWidget();
     QHBoxLayout *lay = new QHBoxLayout(mWidget);
@@ -100,13 +101,11 @@ AttachmentView::~AttachmentView()
 
 void AttachmentView::restoreHeaderState()
 {
-    KConfigGroup grp(KMKernel::self()->config(), "AttachmentView");
     header()->restoreState(grp.readEntry("State", QByteArray()));
 }
 
 void AttachmentView::saveHeaderState()
 {
-    KConfigGroup grp(KMKernel::self()->config(), "AttachmentView");
     grp.writeEntry("State", header()->saveState());
     grp.sync();
 }

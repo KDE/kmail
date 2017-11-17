@@ -520,12 +520,13 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mDummyComposer = new MessageComposer::Composer(this);
     mDummyComposer->globalPart()->setParentWidgetForGui(this);
+
+    KConfigGroup grp(KMKernel::self()->config()->group("Composer"));
+    setAutoSaveSettings(grp, true);
 }
 
 KMComposerWin::~KMComposerWin()
 {
-    writeConfig();
-
     // When we have a collection set, store the message back to that collection.
     // Note that when we save the message or sent it, mFolder is set back to 0.
     // So this for example kicks in when opening a draft and then closing the window.
@@ -665,8 +666,6 @@ void KMComposerWin::writeConfig(void)
     KMailSettings::self()->setComposerSize(size());
     KMailSettings::self()->setShowSnippetManager(mSnippetAction->isChecked());
 
-    KConfigGroup grp(KMKernel::self()->config()->group("Composer"));
-    saveMainWindowSettings(grp);
     if (mSnippetAction->isChecked()) {
         KMailSettings::setSnippetSplitterPosition(mSnippetSplitter->sizes());
     }
@@ -1731,6 +1730,7 @@ bool KMComposerWin::queryClose()
         return false;
     }
     if (kmkernel->shuttingDown() || qApp->isSavingSession()) {
+        writeConfig();
         return true;
     }
 
@@ -1770,6 +1770,7 @@ bool KMComposerWin::queryClose()
         qCWarning(KMAIL_LOG) << "Tried to close while composer was active";
         return false;
     }
+    writeConfig();
     return true;
 }
 
@@ -3049,8 +3050,6 @@ void KMComposerWin::slotSpellcheckConfig()
 
 void KMComposerWin::slotEditToolbars()
 {
-    KConfigGroup grp(KMKernel::self()->config()->group("Composer"));
-    saveMainWindowSettings(grp);
     QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
 
     connect(dlg.data(), &KEditToolBar::newToolBarConfig, this, &KMComposerWin::slotUpdateToolbars);
