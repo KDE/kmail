@@ -26,6 +26,7 @@
 #define KMAIL_ATTACHMENTVIEW_H
 
 #include <QTreeView>
+#include <KConfigGroup>
 
 class QContextMenuEvent;
 class QToolButton;
