@@ -75,6 +75,7 @@ using KSieveUi::SieveDebugDialog;
 #include "MailCommon/FilterManager"
 #include "MailCommon/MailFilter"
 #include "MailCommon/FavoriteCollectionWidget"
+#include "MailCommon/FavoriteCollectionOrderProxyModel"
 #include "MailCommon/FolderTreeWidget"
 #include "MailCommon/FolderTreeView"
 #include "mailcommonsettings_base.h"
@@ -1068,10 +1069,15 @@ void KMMainWidget::createWidgets()
         connect(mFavoriteCollectionsView, QOverload<const Akonadi::Collection &>::of(&EntityListView::currentChanged), this, &KMMainWidget::slotFolderChanged);
         connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
         mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
-            mFolderTreeWidget->folderTreeView()->model(),
+            mFolderTreeWidget->folderTreeWidgetProxyModel(),
             KMKernel::self()->config()->group("FavoriteCollections"), mFavoriteCollectionsView);
 
-        mFavoriteCollectionsView->setModel(mFavoritesModel);
+        auto *orderProxy = new MailCommon::FavoriteCollectionOrderProxyModel(this);
+        orderProxy->setOrderConfig(KMKernel::self()->config()->group("FavoriteCollectionsOrder"));
+        orderProxy->setSourceModel(mFavoritesModel);
+        orderProxy->sort(0, Qt::AscendingOrder);
+
+        mFavoriteCollectionsView->setModel(orderProxy);
 
         mAkonadiStandardActionManager->setFavoriteCollectionsModel(mFavoritesModel);
         mAkonadiStandardActionManager->setFavoriteSelectionModel(mFavoriteCollectionsView->selectionModel());
