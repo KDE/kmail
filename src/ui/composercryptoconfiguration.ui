@@ -61,7 +61,7 @@ However, there may be local rules that require you to turn this option on. When 
       <item>
        <widget class="QCheckBox" name="mAlwaysEncryptWhenSavingInDrafts">
         <property name="text">
-         <string>Always sign/encrypt when sa&amp;ving as draft</string>
+         <string>When sa&amp;ving as draft, sign/encrypt as indicated</string>
         </property>
        </widget>
       </item>
