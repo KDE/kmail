@@ -59,7 +59,7 @@ using namespace KIO;
 using namespace KMail;
 using namespace MessageViewer;
 
-namespace KMail {
+using namespace KMail;
 XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     : QWidget(parent)
 {
@@ -287,4 +287,3 @@ void XFaceConfigurator::slotUpdateXFace()
         mXFaceLabel->clear();
     }
 }
-} // namespace KMail

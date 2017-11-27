@@ -40,14 +40,14 @@
 #endif
 
 #include "kmail_debug.h"
-#include <KLocalizedString> // i18n
+#include <KLocalizedString>
 
 #include <QDrag>
 #include <QHeaderView>
 #include <QLineEdit>
 #include <QMimeData>
 
-namespace KMail {
+using namespace KMail;
 //
 //
 // IdentityListViewItem
@@ -214,4 +214,3 @@ void IdentityListView::setIdentityManager(KIdentityManagement::IdentityManager *
 {
     mIdentityManager = im;
 }
-} // namespace KMail
