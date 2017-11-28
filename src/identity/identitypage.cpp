@@ -276,21 +276,20 @@ void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item,
 
 void IdentityPage::slotContextMenu(IdentityListViewItem *item, const QPoint &pos)
 {
-    QMenu *menu = new QMenu(this);
-    menu->addAction(i18n("Add..."), this, &IdentityPage::slotNewIdentity);
+    QMenu menu(this);
+    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add..."), this, &IdentityPage::slotNewIdentity);
     if (item) {
-        menu->addAction(i18n("Modify..."), this, &IdentityPage::slotModifyIdentity);
-        menu->addAction(i18n("Rename"), this, &IdentityPage::slotRenameIdentity);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-document")), i18n("Modify..."), this, &IdentityPage::slotModifyIdentity);
+        menu.addAction(i18n("Rename"), this, &IdentityPage::slotRenameIdentity);
         if (mIPage.mIdentityList->topLevelItemCount() > 1) {
-            menu->addAction(i18n("Remove"), this, &IdentityPage::slotRemoveIdentity);
+            menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this, &IdentityPage::slotRemoveIdentity);
         }
         if (!item->identity().isDefault()) {
-            menu->addSeparator();
-            menu->addAction(i18n("Set as Default"), this, &IdentityPage::slotSetAsDefault);
+            menu.addSeparator();
+            menu.addAction(i18n("Set as Default"), this, &IdentityPage::slotSetAsDefault);
         }
     }
-    menu->exec(pos);
-    delete menu;
+    menu.exec(pos);
 }
 
 void IdentityPage::slotSetAsDefault()
