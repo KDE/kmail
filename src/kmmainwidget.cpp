@@ -2738,13 +2738,11 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu.addAction(mMsgActions->debugAkonadiSearchAction());
         }
     }
-    if (!selectedText.isEmpty()) {
-        if (mMsgView) {
-            const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
-            if (!interceptorUrlActions.isEmpty()) {
-                menu.addSeparator();
-                menu.addActions(interceptorUrlActions);
-            }
+    if (mMsgView) {
+        const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
+        if (!interceptorUrlActions.isEmpty()) {
+            menu.addSeparator();
+            menu.addActions(interceptorUrlActions);
         }
     }
 
