@@ -73,7 +73,7 @@ option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branc
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngine WebEngineWidgets)
 set(LIBGRAVATAR_VERSION_LIB "5.6.90")
-set(MAILCOMMON_LIB_VERSION_LIB "5.6.90")
+set(MAILCOMMON_LIB_VERSION_LIB "5.7.41")
 set(KDEPIM_APPS_LIB_VERSION_LIB "5.6.90")
 set(MESSAGELIB_LIB_VERSION_LIB "5.6.90")
 set(LIBKLEO_LIB_VERSION_LIB "5.6.90")
