@@ -300,7 +300,7 @@ void KTNEFMain::extractFile()
 
 void KTNEFMain::extractFileTo()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
+    const QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
     if (!dir.isEmpty()) {
         extractTo(dir);
         mLastDir = dir;
@@ -407,12 +407,6 @@ void KTNEFMain::extractTo(const QString &dirname)
     }
 }
 
-/* This breaks the saveMainWindowSettings stuff....
-  void KTNEFMain::closeEvent(QCloseEvent *e)
-{
-  e->accept();
-}*/
-
 void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
 {
     QList<KTNEFAttach *> list = mView->getSelection();
@@ -421,21 +415,21 @@ void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
     }
 
     QAction *prop = nullptr;
-    QMenu *menu = new QMenu(this);
+    QMenu menu(this);
     if (list.count() == 1) {
-        createOpenWithMenu(menu);
-        menu->addSeparator();
+        createOpenWithMenu(&menu);
+        menu.addSeparator();
     }
-    QAction *extract = menu->addAction(i18nc("@action:inmenu", "Extract"));
-    QAction *extractTo = menu->addAction(QIcon::fromTheme(QStringLiteral("archive-extract")),
+    QAction *extract = menu.addAction(i18nc("@action:inmenu", "Extract"));
+    QAction *extractTo = menu.addAction(QIcon::fromTheme(QStringLiteral("archive-extract")),
                                          i18nc("@action:inmenu", "Extract To..."));
     if (list.count() == 1) {
-        menu->addSeparator();
-        prop = menu->addAction(QIcon::fromTheme(QStringLiteral("document-properties")),
+        menu.addSeparator();
+        prop = menu.addAction(QIcon::fromTheme(QStringLiteral("document-properties")),
                                i18nc("@action:inmenu", "Properties"));
     }
 
-    QAction *a = menu->exec(event->globalPos(), 0);
+    QAction *a = menu.exec(event->globalPos(), 0);
     if (a) {
         if (a == extract) {
             extractFile();
@@ -445,7 +439,6 @@ void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
             propertiesFile();
         }
     }
-    delete menu;
 }
 
 void KTNEFMain::viewDoubleClicked(QTreeWidgetItem *item)
