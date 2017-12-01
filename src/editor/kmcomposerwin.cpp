@@ -2016,7 +2016,10 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         const QString html = QString::fromUtf8(source->data(QStringLiteral("text/html")));
         mComposerBase->editor()->insertHtml(html);
         return true;
-    } else if (source->hasHtml() && mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Plain && source->hasText()) {
+    } else if (source->hasHtml() &&
+               (mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Plain)
+               && source->hasText()
+               && !forceAttachment) {
         mComposerBase->editor()->insertPlainText(source->text());
         return true;
     } else if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
