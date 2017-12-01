@@ -22,178 +22,183 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include "kmcomposerwin.h"
-#include "kconfigwidgets_version.h"
 // KMail includes
-#include "job/addressvalidationjob.h"
-#include "kmcomposercreatenewcomposerjob.h"
 #include "attachment/attachmentcontroller.h"
-#include <MessageComposer/AttachmentModel>
 #include "attachment/attachmentview.h"
 #include "codec/codecaction.h"
-#include <MessageComposer/Kleo_Util>
-#include "kmcommands.h"
-#include "editor/kmcomposereditorng.h"
-#include "KPIMTextEdit/RichTextComposerControler"
-#include "MessageComposer/RichTextComposerSignatures"
-#include <KPIMTextEdit/RichTextComposerActions>
-#include <KPIMTextEdit/RichTextComposerImages>
-#include <KPIMTextEdit/RichTextExternalComposer>
-#include <KPIMTextEdit/RichTextEditorWidget>
-#include "kmcomposerupdatetemplatejob.h"
-#include <TemplateParser/TemplateParserJob>
-#include "kmkernel.h"
-#include "settings/kmailsettings.h"
-#include "kmmainwin.h"
-#include "kmmainwidget.h"
-#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
-#include "messageviewer/stl_util.h"
-#include "messagecomposer/util.h"
-#include <MessageCore/StringUtil>
-#include "util.h"
-#include "editor/widgets/snippetwidget.h"
-#include "templatesconfiguration_kfg.h"
-#include "mailcommon/foldercollectionmonitor.h"
-#include "mailcommon/mailkernel.h"
 #include "custommimeheader.h"
-#include "PimCommon/LineEditWithAutoCorrection"
-#include "PimCommon/CustomToolsWidgetng"
-#include "warningwidgets/attachmentmissingwarning.h"
-#include "job/createnewcontactjob.h"
-#include "job/savedraftjob.h"
-#include "warningwidgets/externaleditorwarning.h"
-#include "widgets/cryptostateindicatorwidget.h"
-#include "validatesendmailshortcut.h"
-#include "job/saveasfilejob.h"
-#include "messagecomposer/followupreminderselectdatedialog.h"
-#include "messagecomposer/followupremindercreatejob.h"
-#include "FollowupReminder/FollowUpReminderUtil"
-#include "editor/potentialphishingemail/potentialphishingemailwarning.h"
-#include "kmcomposerglobalaction.h"
-#include "widgets/kactionmenutransport.h"
-#include "pimcommon/kactionmenuchangecase.h"
-#include "sonnet_version.h"
-
-#include <Libkdepim/StatusbarProgressWidget>
-#include <Libkdepim/ProgressStatusBarWidget>
-
-#include "KPIMTextEdit/EditorUtil"
-#include "plugineditorinterface.h"
-#include "editor/plugininterface/kmailplugineditormanagerinterface.h"
+#include "editor/kmcomposereditorng.h"
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorinitmanagerinterface.h"
-#include <MessageComposer/PluginEditorCheckBeforeSendParams>
-#include <MessageComposer/Util>
+#include "editor/plugininterface/kmailplugineditormanagerinterface.h"
+#include "editor/potentialphishingemail/potentialphishingemailjob.h"
+#include "editor/potentialphishingemail/potentialphishingemailwarning.h"
+#include "editor/warningwidgets/incorrectidentityfolderwarning.h"
+#include "editor/widgets/snippetwidget.h"
+#include "job/addressvalidationjob.h"
+#include "job/createnewcontactjob.h"
+#include "job/saveasfilejob.h"
+#include "job/savedraftjob.h"
+#include "kconfigwidgets_version.h"
+#include "kmail_debug.h"
+#include "kmcommands.h"
+#include "kmcomposercreatenewcomposerjob.h"
+#include "kmcomposerglobalaction.h"
+#include "kmcomposerupdatetemplatejob.h"
+#include "kmkernel.h"
+#include "kmmainwidget.h"
+#include "kmmainwin.h"
+#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
+#include "settings/kmailsettings.h"
+#include "templatesconfiguration_kfg.h"
+#include "util.h"
+#include "validatesendmailshortcut.h"
+#include "warningwidgets/attachmentmissingwarning.h"
+#include "warningwidgets/externaleditorwarning.h"
+#include "widgets/cryptostateindicatorwidget.h"
+#include "widgets/kactionmenutransport.h"
+#include "widgets/statusbarlabeltoggledstate.h"
 
-#include <kcontacts/vcardconverter.h>
-#include "SendLater/SendLaterUtil"
-#include "SendLater/SendLaterDialog"
-#include "SendLater/SendLaterInfo"
+#include <Akonadi/Contact/ContactGroupExpandJob>
+#include <Akonadi/KMime/MessageFlags>
+#include <Akonadi/KMime/MessageStatus>
+#include <AkonadiCore/ItemFetchJob>
+#include <AkonadiCore/Monitor>
+#include <AkonadiCore/changerecorder.h>
 
-// KDEPIM includes
-#include <Libkleo/ProgressDialog>
-#include <Libkleo/KeySelectionDialog>
-#include <QGpgME/Protocol>
-#include <QGpgME/ExportJob>
-#include <QGpgME/KeyForMailboxJob>
+#include <FollowupReminder/FollowUpReminderUtil>
+
+#include <KContacts/VCardConverter>
+
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityCombo>
+#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagement/Signature>
+
+#include <KMime/Message>
+
+#include <KPIMTextEdit/EditorUtil>
+#include <KPIMTextEdit/RichTextComposerActions>
+#include <KPIMTextEdit/RichTextComposerControler>
+#include <KPIMTextEdit/RichTextComposerImages>
+#include <KPIMTextEdit/RichTextEditorWidget>
+#include <KPIMTextEdit/RichTextExternalComposer>
+#include <KPIMTextEdit/SelectSpecialCharDialog>
+
+#include <Libkdepim/ProgressStatusBarWidget>
+#include <Libkdepim/StatusbarProgressWidget>
 
 #ifndef QT_NO_CURSOR
 #include <Libkdepim/KCursorSaver>
 #endif
 
-#include <MessageViewer/MessageViewerSettings>
-#include <MimeTreeParser/ObjectTreeParser>
-#include <MimeTreeParser/SimpleObjectTreeSource>
-#include <MimeTreeParser/NodeHelper>
+#include <Libkleo/KeySelectionDialog>
+#include <Libkleo/ProgressDialog>
+
+#include <MailCommon/FolderCollectionMonitor>
+#include <MailCommon/FolderRequester>
+#include <MailCommon/FolderSettings>
+#include <MailCommon/MailKernel>
+
+#include <MailTransport/Transport>
+#include <MailTransport/TransportComboBox>
+#include <MailTransport/TransportManager>
+
+#include <MessageComposer/AttachmentModel>
 #include <MessageComposer/Composer>
+#include <MessageComposer/ComposerLineEdit>
+#include <MessageComposer/FollowUpReminderSelectDateDialog>
+#include <MessageComposer/FollowupReminderCreateJob>
 #include <MessageComposer/GlobalPart>
 #include <MessageComposer/InfoPart>
-#include <MessageComposer/TextPart>
-#include <messagecomposer/messagecomposersettings.h>
-#include <MessageComposer/MessageHelper>
-#include <MessageComposer/SignatureController>
 #include <MessageComposer/InsertTextFileJob>
-#include <MessageComposer/ComposerLineEdit>
+#include <MessageComposer/Kleo_Util>
+#include <MessageComposer/MessageComposerSettings>
+#include <MessageComposer/MessageHelper>
+#include <MessageComposer/PluginEditorCheckBeforeSendParams>
+#include <MessageComposer/PluginEditorInterface>
+#include <MessageComposer/RichTextComposerSignatures>
+#include <MessageComposer/SignatureController>
+#include <MessageComposer/TextPart>
+#include <MessageComposer/Util>
 
 #include <MessageCore/AttachmentPart>
 #include <MessageCore/MessageCoreSettings>
-#include <TemplateParser/TemplatesConfiguration>
 #include <MessageCore/NodeHelper>
-#include <Akonadi/KMime/MessageStatus>
-#include <MailCommon/FolderRequester>
-#include <MailCommon/FolderSettings>
+#include <MessageCore/StringUtil>
 
-#include "widgets/statusbarlabeltoggledstate.h"
+#include <MessageViewer/MessageViewerSettings>
+#include <MessageViewer/Stl_Util>
 
-// KDEPIMLIBS includes
-#include <AkonadiCore/changerecorder.h>
-#include <AkonadiCore/Monitor>
-#include <AkonadiCore/ItemFetchJob>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include <KIdentityManagement/kidentitymanagement/identitycombo.h>
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/signature.h>
-#include <mailtransport/transportcombobox.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transport.h>
-#include <Akonadi/KMime/MessageFlags>
-#include <kmime/kmime_message.h>
-#include <kpimtextedit/selectspecialchardialog.h>
+#include <MimeTreeParser/NodeHelper>
+#include <MimeTreeParser/ObjectTreeParser>
+#include <MimeTreeParser/SimpleObjectTreeSource>
 
-// KDELIBS includes
-#include <kactioncollection.h>
-#include <kactionmenu.h>
-#include <kcharsets.h>
-#include "kmail_debug.h"
-#include <kdescendantsproxymodel.h>
-#include <kedittoolbar.h>
+#include <PimCommon/CustomToolsWidgetng>
+#include <PimCommon/KActionMenuChangeCase>
+#include <PimCommon/LineEditWithAutoCorrection>
 
-#include <QShortcut>
-#include <kmessagebox.h>
-#include <krecentfilesaction.h>
-#include <kshortcutsdialog.h>
+#include <SendLater/SendLaterDialog>
+#include <SendLater/SendLaterInfo>
+#include <SendLater/SendLaterUtil>
 
-#include <kstandardshortcut.h>
-#include <ktoggleaction.h>
-#include <ktoolbar.h>
-#include <ktoolinvocation.h>
-#include <sonnet/dictionarycombobox.h>
-#include <krun.h>
-#include <KIO/JobUiDelegate>
-#include <QFileDialog>
+#include <TemplateParser/TemplateParserJob>
+#include <TemplateParser/TemplatesConfiguration>
+
+#include <QGpgME/Protocol>
+#include <QGpgME/ExportJob>
+#include <QGpgME/KeyForMailboxJob>
+
+// KDE Frameworks includes
+#include <KActionCollection>
+#include <KActionMenu>
+#include <KCharsets>
+#include <KConfigGroup>
+#include <KDescendantsProxyModel>
+#include <KEditToolBar>
 #include <KEmailAddress>
 #include <KEncodingFileDialog>
 #include <KHelpClient>
-#include <KCharsets>
-#include <KConfigGroup>
-#include <KXMLGUIFactory>
+#include <KIO/JobUiDelegate>
 #include <KIconUtils>
+#include <KMessageBox>
+#include <KRecentFilesAction>
+#include <KRun>
+#include <KShortcutsDialog>
+#include <KSplitterCollapserButton>
+#include <KStandardShortcut>
+#include <KToggleAction>
+#include <KToolBar>
+#include <KToolInvocation>
+#include <KXMLGUIFactory>
+
+#include <sonnet/dictionarycombobox.h>
+#include <sonnet_version.h>
 
 // Qt includes
-#include <QMenu>
-#include <qinputdialog.h>
-#include <qstatusbar.h>
-#include <QTemporaryDir>
 #include <QAction>
-#include <QClipboard>
-#include <QSplitter>
-#include <QMimeData>
-#include <QTextDocumentWriter>
 #include <QApplication>
 #include <QCheckBox>
-#include <QStandardPaths>
+#include <QClipboard>
+#include <QFileDialog>
 #include <QFontDatabase>
+#include <QInputDialog>
+#include <QMenu>
+#include <QMimeData>
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QPointer>
+#include <QShortcut>
+#include <QSplitter>
+#include <QStandardPaths>
+#include <QStatusBar>
+#include <QTemporaryDir>
+#include <QTextDocumentWriter>
 
 // GPGME
 #include <gpgme++/keylistresult.h>
 #include <gpgme++/key.h>
 
-#include <KSplitterCollapserButton>
-#include <Akonadi/Contact/ContactGroupExpandJob>
-#include <editor/potentialphishingemail/potentialphishingemailjob.h>
-#include <editor/warningwidgets/incorrectidentityfolderwarning.h>
 
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
