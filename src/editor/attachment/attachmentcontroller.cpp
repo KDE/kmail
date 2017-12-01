@@ -122,7 +122,6 @@ void AttachmentController::selectionChanged()
             index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
         selectedParts.append(part);
     }
-    qDebug() << " void AttachmentController::selectionChanged()"<<selectedParts;
     setSelectedParts(selectedParts);
 }
 
