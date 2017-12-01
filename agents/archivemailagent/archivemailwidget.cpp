@@ -97,7 +97,7 @@ void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
     QMenu menu(this);
-    menu.addAction(i18n("Add..."), this, &ArchiveMailWidget::slotAddItem);
+    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add..."), this, &ArchiveMailWidget::slotAddItem);
     if (!listItems.isEmpty()) {
         if (listItems.count() == 1) {
             menu.addAction(i18n("Open Containing Folder..."), this, &ArchiveMailWidget::slotOpenFolder);
