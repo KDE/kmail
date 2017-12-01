@@ -102,6 +102,7 @@
 
 #include <MessageViewer/MessageViewerSettings>
 #include <MimeTreeParser/ObjectTreeParser>
+#include <MimeTreeParser/SimpleObjectTreeSource>
 #include <MimeTreeParser/NodeHelper>
 #include <MessageComposer/Composer>
 #include <MessageComposer/GlobalPart>
@@ -1622,9 +1623,9 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     KMime::Content *msgContent = new KMime::Content;
     msgContent->setContent(mMsg->encodedContent());
     msgContent->parse();
-    MessageViewer::EmptySource emptySource;
+    MimeTreeParser::SimpleObjectTreeSource emptySource;
     MimeTreeParser::ObjectTreeParser otp(&emptySource);  //All default are ok
-    emptySource.setAllowDecryption(allowDecryption);
+    emptySource.setDecryptMessage(allowDecryption);
     otp.parseObjectTree(msgContent);
 
     bool shouldSetCharset = false;
