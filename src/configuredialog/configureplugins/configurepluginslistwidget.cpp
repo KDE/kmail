@@ -232,21 +232,17 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
                                                         agentAkonadiGroupName());
 }
 
-PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(const QString &interfaceName, const QString &path)
+PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(const QString &agentIdentifier, const QString &path)
 {
     PimCommon::PluginUtilData data;
     data.mEnableByDefault = true;
     data.mHasConfigureDialog = true;
     const Akonadi::AgentType::List lstAgent = Akonadi::AgentManager::self()->types();
-    QString service = interfaceName;
-    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
-        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
-    }
     for (const Akonadi::AgentType &type : lstAgent) {
-        if (type.identifier() == service) {
-            data.mExtraInfo << service;
+        if (type.identifier() == agentIdentifier) {
+            data.mExtraInfo << agentIdentifier;
             data.mExtraInfo << path;
-            const bool enabled = agentActivateState(interfaceName, path);
+            const bool enabled = agentActivateState(agentIdentifier, path);
             data.mEnableByDefault = enabled;
             data.mName = type.name();
             data.mDescription = type.description();
@@ -257,31 +253,35 @@ PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(cons
     return data;
 }
 
-bool ConfigurePluginsListWidget::agentActivateState(const QString &interfaceName, const QString &pathName)
+bool ConfigurePluginsListWidget::agentActivateState(const QString &agentIdentifier, const QString &pathName)
 {
-    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, pathName);
+    const QString service =
+        Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
+    QDBusInterface interface(service, pathName);
     if (interface.isValid()) {
         QDBusReply<bool> enabled = interface.call(QStringLiteral("enabledAgent"));
         if (enabled.isValid()) {
             return enabled;
         } else {
-            qCDebug(KMAIL_LOG) << interfaceName << "doesn't have enabledAgent function";
+            qCDebug(KMAIL_LOG) << agentIdentifier << "doesn't have enabledAgent function";
             return false;
         }
     } else {
-        qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
+        qCDebug(KMAIL_LOG) << agentIdentifier << "does not exist when trying to activate the agent state";
     }
     return false;
 }
 
-void ConfigurePluginsListWidget::changeAgentActiveState(const QString &interfaceName, const QString &path, bool enable)
+void ConfigurePluginsListWidget::changeAgentActiveState(const QString &agentIdentifier, const QString &path, bool enable)
 {
-    if (!interfaceName.isEmpty() && !path.isEmpty()) {
-        QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + interfaceName, path);
+    if (!agentIdentifier.isEmpty() && !path.isEmpty()) {
+        const QString service =
+            Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
+        QDBusInterface interface(service, path);
         if (interface.isValid()) {
             interface.call(QStringLiteral("setEnableAgent"), enable);
         } else {
-            qCDebug(KMAIL_LOG) << interfaceName << "does not exist ";
+            qCDebug(KMAIL_LOG) << agentIdentifier << "does not exist when trying to change the agent active state";
         }
     }
 }
@@ -313,11 +313,12 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
         } else if (configureGroupName == agentAkonadiGroupName()) {
             for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {
                 if (data.mIdentifier == identifier) {
-                    QDBusInterface interface(QLatin1String("org.freedesktop.Akonadi.Agent.") + data.mExtraInfo.at(0), data.mExtraInfo.at(1));
+                    const QString service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, data.mExtraInfo.at(0));
+                    QDBusInterface interface(service, data.mExtraInfo.at(1));
                     if (interface.isValid()) {
                         interface.call(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
                     } else {
-                        qCDebug(KMAIL_LOG) << " interface does not exist ";
+                        qCDebug(KMAIL_LOG) << " interface does not exist when trying to configure the plugin";
                     }
                     break;
                 }
