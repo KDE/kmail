@@ -55,6 +55,7 @@
 
 #include "job/addressvalidationjob.h"
 #include <MessageComposer/Kleo_Util>
+#include <MessageComposer/DictionaryComboBox>
 #include <MessageCore/StringUtil>
 #include "TemplateParser/TemplatesConfiguration"
 #include "templatesconfiguration_kfg.h"
@@ -92,7 +93,6 @@ using MailTransport::TransportManager;
 #include <kcombobox.h>
 #include <QTabWidget>
 #include <QIcon>
-#include <sonnet/dictionarycombobox.h>
 
 // Qt headers:
 #include <QLabel>
@@ -570,7 +570,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Dictionary" combo box and label:
     ++row;
-    mDictionaryCombo = new Sonnet::DictionaryComboBox(tab);
+    mDictionaryCombo = new MessageComposer::DictionaryComboBox(tab);
     glay->addWidget(mDictionaryCombo, row, 1);
     label = new QLabel(i18n("D&ictionary:"), tab);
     label->setBuddy(mDictionaryCombo);

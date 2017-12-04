@@ -56,7 +56,7 @@ class XFaceConfigurator;
 namespace MailCommon {
 class FolderRequester;
 }
-namespace Sonnet {
+namespace MessageComposer {
 class DictionaryComboBox;
 }
 
@@ -125,7 +125,7 @@ private:
     KLineEdit *mReplyToEdit = nullptr;
     KLineEdit *mBccEdit = nullptr;
     KLineEdit *mCcEdit = nullptr;
-    Sonnet::DictionaryComboBox *mDictionaryCombo = nullptr;
+    MessageComposer::DictionaryComboBox *mDictionaryCombo = nullptr;
     IdentityFolderRequester *mFccFolderRequester = nullptr;
     QCheckBox *mSentMailFolderCheck = nullptr;
     IdentityFolderRequester *mDraftsFolderRequester = nullptr;
