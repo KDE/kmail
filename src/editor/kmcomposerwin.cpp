@@ -199,7 +199,6 @@
 #include <gpgme++/keylistresult.h>
 #include <gpgme++/key.h>
 
-
 using MessageComposer::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
@@ -389,7 +388,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setMargin(0);
 
-
     mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
     vbox->addWidget(mPotentialPhishingEmailWarning);
@@ -451,8 +449,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mComposerBase->setAttachmentModel(attachmentModel);
     mComposerBase->setAttachmentController(attachmentController);
-
-
 
     if (KMailSettings::self()->showForgottenAttachmentWarning()) {
         mVerifyMissingAttachment = new QTimer(this);
@@ -2022,8 +2018,8 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         const QString html = QString::fromUtf8(source->data(QStringLiteral("text/html")));
         mComposerBase->editor()->insertHtml(html);
         return true;
-    } else if (source->hasHtml() &&
-               (mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Plain)
+    } else if (source->hasHtml()
+               && (mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Plain)
                && source->hasText()
                && !forceAttachment) {
         mComposerBase->editor()->insertPlainText(source->text());

@@ -422,11 +422,11 @@ void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
     }
     QAction *extract = menu.addAction(i18nc("@action:inmenu", "Extract"));
     QAction *extractTo = menu.addAction(QIcon::fromTheme(QStringLiteral("archive-extract")),
-                                         i18nc("@action:inmenu", "Extract To..."));
+                                        i18nc("@action:inmenu", "Extract To..."));
     if (list.count() == 1) {
         menu.addSeparator();
         prop = menu.addAction(QIcon::fromTheme(QStringLiteral("document-properties")),
-                               i18nc("@action:inmenu", "Properties"));
+                              i18nc("@action:inmenu", "Properties"));
     }
 
     QAction *a = menu.exec(event->globalPos(), 0);

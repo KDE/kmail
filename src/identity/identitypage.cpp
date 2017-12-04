@@ -280,7 +280,7 @@ void IdentityPage::slotContextMenu(IdentityListViewItem *item, const QPoint &pos
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add..."), this, &IdentityPage::slotNewIdentity);
     if (item) {
         menu.addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18n("Modify..."), this, &IdentityPage::slotModifyIdentity);
-        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")),i18n("Rename"), this, &IdentityPage::slotRenameIdentity);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18n("Rename"), this, &IdentityPage::slotRenameIdentity);
         if (mIPage.mIdentityList->topLevelItemCount() > 1) {
             menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this, &IdentityPage::slotRemoveIdentity);
         }

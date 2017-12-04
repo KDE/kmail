@@ -255,8 +255,8 @@ PimCommon::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(cons
 
 bool ConfigurePluginsListWidget::agentActivateState(const QString &agentIdentifier, const QString &pathName)
 {
-    const QString service =
-        Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
+    const QString service
+        = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
     QDBusInterface interface(service, pathName);
     if (interface.isValid()) {
         QDBusReply<bool> enabled = interface.call(QStringLiteral("enabledAgent"));
@@ -275,8 +275,8 @@ bool ConfigurePluginsListWidget::agentActivateState(const QString &agentIdentifi
 void ConfigurePluginsListWidget::changeAgentActiveState(const QString &agentIdentifier, const QString &path, bool enable)
 {
     if (!agentIdentifier.isEmpty() && !path.isEmpty()) {
-        const QString service =
-            Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
+        const QString service
+            = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
         QDBusInterface interface(service, path);
         if (interface.isValid()) {
             interface.call(QStringLiteral("setEnableAgent"), enable);
