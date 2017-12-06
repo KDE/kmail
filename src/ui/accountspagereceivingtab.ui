@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>287</width>
-    <height>326</height>
+    <height>399</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -26,7 +26,7 @@
       <number>6</number>
      </property>
      <item>
-      <widget class="Akonadi::ManageAccountWidget" name="mAccountsReceiving" native="true"/>
+      <widget class="Akonadi::ManageAccountWidget" name="mAccountsReceiving"/>
      </item>
      <item>
       <widget class="QPushButton" name="customizeAccountOrder">
@@ -41,6 +41,18 @@
         <string>New Mail Notification</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="leftMargin">
+         <number>9</number>
+        </property>
+        <property name="topMargin">
+         <number>9</number>
+        </property>
+        <property name="rightMargin">
+         <number>9</number>
+        </property>
+        <property name="bottomMargin">
+         <number>9</number>
+        </property>
         <item>
          <widget class="QCheckBox" name="mVerboseNotificationCheck">
           <property name="sizePolicy">
@@ -82,7 +94,7 @@
   <customwidget>
    <class>Akonadi::ManageAccountWidget</class>
    <extends>QWidget</extends>
-   <header>AkonadiWidgets/ManageAccountWidget</header>
+   <header>manageaccountwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
