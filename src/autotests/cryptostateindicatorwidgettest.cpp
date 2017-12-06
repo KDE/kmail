@@ -31,7 +31,7 @@ void CryptoStateIndicatorWidgetTest::shouldHaveDefaultValue()
 {
     CryptoStateIndicatorWidget w;
     w.show();
-    QTest::qWaitForWindowExposed(&w);
+    QVERIFY(QTest::qWaitForWindowExposed(&w));
     QLabel *signature = w.findChild<QLabel *>(QStringLiteral("signatureindicator"));
     QVERIFY(signature);
     QLabel *encryption = w.findChild<QLabel *>(QStringLiteral("encryptionindicator"));
@@ -45,7 +45,7 @@ void CryptoStateIndicatorWidgetTest::shouldBeNotVisibleWhenShowAlwaysIsFalse()
     CryptoStateIndicatorWidget w;
     w.setShowAlwaysIndicator(false);
     w.show();
-    QTest::qWaitForWindowExposed(&w);
+    QVERIFY(QTest::qWaitForWindowExposed(&w));
     QLabel *signature = w.findChild<QLabel *>(QStringLiteral("signatureindicator"));
     QLabel *encryption = w.findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(!signature->isVisible());
@@ -61,7 +61,7 @@ void CryptoStateIndicatorWidgetTest::shouldVisibleWhenChangeStatus()
     CryptoStateIndicatorWidget w;
     w.setShowAlwaysIndicator(true);
     w.show();
-    QTest::qWaitForWindowExposed(&w);
+    QVERIFY(QTest::qWaitForWindowExposed(&w));
     QLabel *signature = w.findChild<QLabel *>(QStringLiteral("signatureindicator"));
     QLabel *encryption = w.findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     w.updateSignatureAndEncrypionStateIndicators(true, false);
