@@ -36,7 +36,6 @@
 #include <AkonadiCore/Monitor>
 #include "kmail_debug.h"
 
-#include <QSignalMapper>
 #include <QPointer>
 
 #include <AkonadiCore/TagFetchJob>
@@ -51,7 +50,6 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
     : QObject(parent)
     , mActionCollection(actionCollection)
     , mMessageActions(messageActions)
-    , mMessageTagToggleMapper(nullptr)
     , mGUIClient(guiClient)
     , mSeparatorMoreAction(nullptr)
     , mSeparatorNewTagAction(nullptr)
@@ -111,8 +109,6 @@ void TagActionManager::clearActions()
     }
 
     mTagActions.clear();
-    delete mMessageTagToggleMapper;
-    mMessageTagToggleMapper = nullptr;
 }
 
 void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu)
@@ -126,14 +122,13 @@ void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool add
 
     mActionCollection->addAction(tag->name(), tagAction);
     mActionCollection->setDefaultShortcut(tagAction, QKeySequence(tag->shortcut));
-    connect(tagAction, SIGNAL(triggered(bool)),
-            mMessageTagToggleMapper, SLOT(map()));
+    const QString tagName = QString::number(tag->tag().id());
+    connect(tagAction, &KToggleAction::triggered, this, [this, tagName] { onSignalMapped(tagName);});
 
     // The shortcut configuration is done in the config dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
     // the tag descriptions correctly.
     mActionCollection->setShortcutsConfigurable(tagAction, false);
-    mMessageTagToggleMapper->setMapping(tagAction, QString::number(tag->tag().id()));
 
     mTagActions.insert(tag->id(), tagAction);
     if (addToMenu) {
@@ -185,10 +180,6 @@ void TagActionManager::onSignalMapped(const QString &tag)
 void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
 {
     clearActions();
-    //Use a mapper to understand which tag button is triggered
-    mMessageTagToggleMapper = new QSignalMapper(this);
-    connect(mMessageTagToggleMapper, QOverload<const QString &>::of(&QSignalMapper::mapped),
-            this, &TagActionManager::onSignalMapped);
 
     // Create a action for each tag and plug it into various places
     int i = 0;

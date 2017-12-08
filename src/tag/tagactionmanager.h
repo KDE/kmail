@@ -30,7 +30,6 @@ class KActionCollection;
 class KXMLGUIClient;
 class KToggleAction;
 class QAction;
-class QSignalMapper;
 namespace Akonadi {
 class Item;
 class Monitor;
@@ -116,7 +115,6 @@ private:
 
     KActionCollection *mActionCollection = nullptr;
     MessageActions *mMessageActions = nullptr;
-    QSignalMapper *mMessageTagToggleMapper = nullptr;
     KXMLGUIClient *mGUIClient = nullptr;
 
     QAction *mSeparatorMoreAction = nullptr;
