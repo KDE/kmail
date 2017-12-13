@@ -75,13 +75,7 @@ using namespace KMail;
 
 SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &collection)
     : QDialog(nullptr)
-    , mCloseRequested(false)
-    , mSortColumn(0)
-    , mSortOrder(Qt::AscendingOrder)
-    , mSearchJob(nullptr)
-    , mResultModel(nullptr)
     , mKMMainWidget(widget)
-    , mAkonadiStandardAction(nullptr)
 {
     setWindowTitle(i18n("Find Messages"));
 

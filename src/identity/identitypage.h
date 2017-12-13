@@ -69,7 +69,7 @@ private:
 private: // data members
     Ui_IdentityPage mIPage;
     KMail::IdentityDialog *mIdentityDialog = nullptr;
-    int mOldNumberOfIdentities;
+    int mOldNumberOfIdentities = 0;
     KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
 };
 }

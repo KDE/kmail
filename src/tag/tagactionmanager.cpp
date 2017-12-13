@@ -51,12 +51,6 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
     , mActionCollection(actionCollection)
     , mMessageActions(messageActions)
     , mGUIClient(guiClient)
-    , mSeparatorMoreAction(nullptr)
-    , mSeparatorNewTagAction(nullptr)
-    , mMoreAction(nullptr)
-    , mNewTagAction(nullptr)
-    , mNewTagId(-1)
-    , mTagFetchInProgress(false)
     , mMonitor(new Akonadi::Monitor(this))
 {
     mMessageActions->messageStatusMenu()->menu()->addSeparator();

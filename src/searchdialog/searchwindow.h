@@ -159,8 +159,8 @@ private:
     QVector<Akonadi::Collection> mCollectionId;
     Akonadi::SearchQuery mQuery;
     bool mCloseRequested = false;
-    int mSortColumn;
-    Qt::SortOrder mSortOrder;
+    int mSortColumn = 0;
+    Qt::SortOrder mSortOrder = Qt::AscendingOrder;
     Akonadi::Collection mFolder;
     KJob *mSearchJob = nullptr;
 
