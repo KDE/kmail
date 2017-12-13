@@ -623,7 +623,7 @@ private:
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
     QList< MessageComposer::Composer * > mMiscComposers;
 
-    int mLabelWidth;
+    int mLabelWidth = 0;
 
     QString mdbusObjectPath;
     static int s_composerNumber;
@@ -637,7 +637,7 @@ private:
     QTimer *mVerifyMissingAttachment = nullptr;
     MailCommon::FolderRequester *mFccFolder = nullptr;
     bool mPreventFccOverwrite = false;
-    bool mCheckForForgottenAttachments = false;
+    bool mCheckForForgottenAttachments = true;
     bool mWasModified = false;
     CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget = nullptr;
     bool mSendNowByShortcutUsed = false;
