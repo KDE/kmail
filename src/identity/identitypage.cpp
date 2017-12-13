@@ -40,6 +40,7 @@
 #include <KLocalizedString>
 #include "kmail_debug.h"
 
+
 using namespace KMail;
 
 QString IdentityPage::helpAnchor() const
@@ -48,7 +49,7 @@ QString IdentityPage::helpAnchor() const
 }
 
 IdentityPage::IdentityPage(QWidget *parent)
-    : ConfigModule(parent)
+    : ConfigModuleTab(parent)
 {
     if (!MailCommon::Kernel::self()->kernelIsRegistered()) {
         return;
@@ -72,6 +73,7 @@ IdentityPage::IdentityPage(QWidget *parent)
             this, &IdentityPage::slotRenameIdentity);
     connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityPage::slotRemoveIdentity);
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityPage::slotSetAsDefault);
+    load();
 }
 
 IdentityPage::~IdentityPage()

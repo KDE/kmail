@@ -68,16 +68,6 @@ Q_DECL_EXPORT KCModule *create_kmail_config_composer(QWidget *parent, const char
 
 extern "C"
 {
-Q_DECL_EXPORT KCModule *create_kmail_config_identity(QWidget *parent, const char *)
-{
-    KMail::IdentityPage *page = new KMail::IdentityPage(parent);
-    page->setObjectName(QStringLiteral("kcmkmail_config_identity"));
-    return page;
-}
-}
-
-extern "C"
-{
 Q_DECL_EXPORT KCModule *create_kmail_config_accounts(QWidget *parent, const char *)
 {
     AccountsPage *page = new AccountsPage(parent);

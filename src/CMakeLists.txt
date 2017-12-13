@@ -20,7 +20,6 @@ include_directories(
 
 add_subdirectory(pics)
 add_subdirectory(icons)
-add_subdirectory(kcm_kpimidentities)
 add_subdirectory(kconf_update)
 add_subdirectory(kontactplugin)
 
@@ -398,7 +397,6 @@ install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFO
 install(FILES
     data/kmail_config_misc.desktop
     data/kmail_config_appearance.desktop
-    data/kmail_config_identity.desktop
     data/kmail_config_accounts.desktop
     data/kmail_config_composer.desktop
     data/kmail_config_security.desktop

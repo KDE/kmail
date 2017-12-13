@@ -26,7 +26,7 @@
 
 #include "kmail_export.h"
 
-#include "configuredialog/configmodule.h"
+#include "configuredialog/configuredialog_p.h"
 #include "ui_identitypage.h"
 namespace KIdentityManagement {
 class IdentityManager;
@@ -37,16 +37,16 @@ class IdentityDialog;
 class IdentityListView;
 class IdentityListViewItem;
 
-class KMAIL_EXPORT IdentityPage : public ConfigModule
+class KMAIL_EXPORT IdentityPage : public ConfigModuleTab
 {
     Q_OBJECT
 public:
     explicit IdentityPage(QWidget *parent = nullptr);
     ~IdentityPage();
 
-    QString helpAnchor() const override;
+    QString helpAnchor() const;
 
-    void load() override;
+    void load();
     void save() override;
 
 private:

@@ -36,6 +36,7 @@ using MailTransport::TransportManagementWidget;
 #include <AkonadiCore/agentmanager.h>
 #include <AkonadiWidgets/agenttypedialog.h>
 #include <AkonadiCore/agentinstancecreatejob.h>
+#include <identity/identitypage.h>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -58,6 +59,10 @@ QString AccountsPage::helpAnchor() const
 AccountsPage::AccountsPage(QWidget *parent)
     : ConfigModuleWithTabs(parent)
 {
+    //Identity Tab:
+    KMail::IdentityPage *identityTab = new KMail::IdentityPage();
+    addTab(identityTab, i18nc("@title:tab Tab page where the user configures identities", "Identities"));
+
     //
     // "Receiving" tab:
     //
