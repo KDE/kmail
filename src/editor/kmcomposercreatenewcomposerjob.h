@@ -38,7 +38,7 @@ public:
 private:
     void slotCreateNewComposer(bool forceCursorPosition);
     Akonadi::Collection mCollectionForNewMessage;
-    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mMsg = nullptr;
     uint mCurrentIdentity = 0;
 };
 

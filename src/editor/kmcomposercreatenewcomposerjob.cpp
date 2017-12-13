@@ -28,8 +28,6 @@
 
 KMComposerCreateNewComposerJob::KMComposerCreateNewComposerJob(QObject *parent)
     : QObject(parent)
-    , mMsg(nullptr)
-    , mCurrentIdentity(0)
 {
 }
 

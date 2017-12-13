@@ -245,7 +245,7 @@ void AccountsPageReceivingTab::slotCustomizeAccountOrder()
 
 void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const QPoint &pos)
 {
-    QMenu *menu = new QMenu(this);
+    QMenu menu(this);
 
     bool IncludeInManualChecks;
     bool OfflineOnShutdown;
@@ -279,31 +279,30 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
     }
 
     if (!MailCommon::Util::isVirtualCollection(ident)) {
-        QAction *manualMailCheck = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check"), menu);
+        QAction *manualMailCheck = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check"), &menu);
         manualMailCheck->setCheckable(true);
         manualMailCheck->setChecked(IncludeInManualChecks);
         manualMailCheck->setData(ident);
-        menu->addAction(manualMailCheck);
+        menu.addAction(manualMailCheck);
         connect(manualMailCheck, &QAction::toggled, this, &AccountsPageReceivingTab::slotIncludeInCheckChanged);
     }
 
-    QAction *switchOffline = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown"), menu);
+    QAction *switchOffline = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown"), &menu);
     switchOffline->setCheckable(true);
     switchOffline->setChecked(OfflineOnShutdown);
     switchOffline->setData(ident);
-    menu->addAction(switchOffline);
+    menu.addAction(switchOffline);
     connect(switchOffline, &QAction::toggled, this, &AccountsPageReceivingTab::slotOfflineOnShutdownChanged);
 
-    QAction *checkOnStartup = new QAction(i18n("Check mail on startup"), menu);
+    QAction *checkOnStartup = new QAction(i18n("Check mail on startup"), &menu);
     checkOnStartup->setCheckable(true);
     checkOnStartup->setChecked(CheckOnStartup);
     checkOnStartup->setData(ident);
-    menu->addAction(checkOnStartup);
+    menu.addAction(checkOnStartup);
 
     connect(checkOnStartup, &QAction::toggled, this, &AccountsPageReceivingTab::slotCheckOnStatupChanged);
 
-    menu->exec(mAccountsReceiving.mAccountsReceiving->view()->mapToGlobal(pos));
-    delete menu;
+    menu.exec(mAccountsReceiving.mAccountsReceiving->view()->mapToGlobal(pos));
 }
 
 void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)

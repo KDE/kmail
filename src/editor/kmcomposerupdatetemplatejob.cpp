@@ -28,10 +28,6 @@
 
 KMComposerUpdateTemplateJob::KMComposerUpdateTemplateJob(QObject *parent)
     : QObject(parent)
-    , mMsg(nullptr)
-    , mUoldId(0)
-    , mUoid(0)
-    , mWasModified(false)
 {
 }
 
