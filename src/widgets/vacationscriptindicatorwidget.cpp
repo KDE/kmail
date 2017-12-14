@@ -96,7 +96,7 @@ void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const Q
 void VacationScriptIndicatorWidget::createIndicator()
 {
     delete mBoxLayout;
-    mBoxLayout = new QHBoxLayout;
+    mBoxLayout = new QHBoxLayout(this);
     mBoxLayout->setMargin(0);
     mBoxLayout->setSpacing(0);
     mInfo = new VacationLabel(i18np("Out of office reply active on server", "Out of office reply active on servers", mServerActive.count()));
@@ -107,7 +107,6 @@ void VacationScriptIndicatorWidget::createIndicator()
         connect(lab, &ServerLabel::clicked, this, &VacationScriptIndicatorWidget::clicked);
         mBoxLayout->addWidget(lab);
     }
-    setLayout(mBoxLayout);
 }
 
 void VacationScriptIndicatorWidget::slotVacationLabelClicked()

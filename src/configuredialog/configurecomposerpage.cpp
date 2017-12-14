@@ -133,7 +133,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     // Main layout
-    QHBoxLayout *hb1 = new QHBoxLayout();           // box with 2 columns
+    QHBoxLayout *hb1 = new QHBoxLayout(this);           // box with 2 columns
     QVBoxLayout *vb1 = new QVBoxLayout();           // first with 2 groupboxes
     QVBoxLayout *vb2 = new QVBoxLayout();           // second with 1 groupbox
 
@@ -472,7 +472,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     hb1->addLayout(vb1);
     hb1->addLayout(vb2);
-    setLayout(hb1);
 }
 
 void ComposerPage::GeneralTab::doResetToDefaultsOther()
