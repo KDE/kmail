@@ -1636,9 +1636,10 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
         }
     }
     QUrl currentUrl;
-    if (MessageViewer::Util::saveAttachments(contentsToSave, parentWidget(), currentUrl)) {
+    QList<QUrl> urlList;
+    if (MessageViewer::Util::saveAttachments(contentsToSave, parentWidget(), currentUrl, urlList)) {
         if (mViewer) {
-            mViewer->showOpenAttachmentFolderWidget(currentUrl);
+            mViewer->showOpenAttachmentFolderWidget(urlList);
         }
         return OK;
     }
