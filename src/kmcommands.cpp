@@ -1635,9 +1635,8 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
             qCWarning(KMAIL_LOG) << "Retrieved item has no payload? Ignoring for saving the attachments";
         }
     }
-    QUrl currentUrl;
     QList<QUrl> urlList;
-    if (MessageViewer::Util::saveAttachments(contentsToSave, parentWidget(), currentUrl, urlList)) {
+    if (MessageViewer::Util::saveAttachments(contentsToSave, parentWidget(), urlList)) {
         if (mViewer) {
             mViewer->showOpenAttachmentFolderWidget(urlList);
         }
