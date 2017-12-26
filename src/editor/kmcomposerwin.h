@@ -532,6 +532,8 @@ private:
         KeyOk,
         NoKey
     };
+    void slotToggleMenubar(bool dontShowWarning);
+
     void slotCryptoModuleSelected();
     void slotFccIsInvalid();
     void slotIdentityDeleted(uint uoid);
@@ -599,6 +601,7 @@ private:
     KToggleAction *mAutoSpellCheckingAction = nullptr;
     KToggleAction *mDictionaryAction = nullptr;
     KToggleAction *mSnippetAction = nullptr;
+    KToggleAction *mHideMenuBarAction = nullptr;
     QAction *mAppendSignature = nullptr;
     QAction *mPrependSignature = nullptr;
     QAction *mInsertSignatureAtCursorPosition = nullptr;

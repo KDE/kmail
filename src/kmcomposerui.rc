@@ -1,5 +1,5 @@
 <!DOCTYPE gui SYSTEM "kpartgui.dtd" >
-<gui version="515" name="kmcomposer" translationDomain="kmail">
+<gui version="517" name="kmcomposer" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -101,6 +101,7 @@
   <Menu name="settings" >
    <text>&amp;Settings</text>
    <Action name="setup_spellchecker" append="save_merge"/>
+   <Action name="options_show_menubar" group="settings_configure" />
   </Menu>
  </MenuBar>
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" ><text>Main Toolbar</text>

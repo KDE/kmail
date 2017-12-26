@@ -194,6 +194,7 @@
 #include <QStatusBar>
 #include <QTemporaryDir>
 #include <QTextDocumentWriter>
+#include <QMenuBar>
 
 // GPGME
 #include <gpgme++/keylistresult.h>
@@ -1303,6 +1304,11 @@ void KMComposerWin::setupActions(void)
     mPluginEditorCheckBeforeSendManagerInterface->initializePlugins();
     mPluginEditorInitManagerInterface->initializePlugins();
 
+    mHideMenuBarAction = KStandardAction::showMenubar(this, &KMComposerWin::slotToggleMenubar, actionCollection());
+    mHideMenuBarAction->setChecked(KMailSettings::self()->composerShowMenuBar());
+    slotToggleMenubar(true);
+
+
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
@@ -1315,6 +1321,26 @@ void KMComposerWin::setupActions(void)
         configureAction->setText(i18n("Configure KMail..."));
     }
 }
+
+void KMComposerWin::slotToggleMenubar(bool dontShowWarning)
+{
+    if (menuBar()) {
+        if (mHideMenuBarAction->isChecked()) {
+            menuBar()->show();
+        } else {
+            if (!dontShowWarning) {
+                const QString accel = mHideMenuBarAction->shortcut().toString();
+                KMessageBox::information(this,
+                                         i18n("<qt>This will hide the menu bar completely."
+                                              " You can show it again by typing %1.</qt>", accel),
+                                         i18n("Hide menu bar"), QStringLiteral("HideMenuBarWarning"));
+            }
+            menuBar()->hide();
+        }
+        KMailSettings::self()->setComposerShowMenuBar(mHideMenuBarAction->isChecked());
+    }
+}
+
 
 void KMComposerWin::initializePluginActions()
 {
