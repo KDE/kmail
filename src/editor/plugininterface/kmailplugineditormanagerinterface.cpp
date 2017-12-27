@@ -101,8 +101,12 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
 {
     if (mActionHash.isEmpty()) {
         for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
-            MessageComposer::ActionType actionType = interface->actionType();
+            const MessageComposer::ActionType actionType = interface->actionType();
             MessageComposer::ActionType::Type type = actionType.type();
+            const bool needSelectedText = interface->needSelectedText();
+            if (needSelectedText) {
+                connect(this, &KMailPluginEditorManagerInterface::textSelectionChanged, actionType.action(), &QAction::setEnabled);
+            }
             QList<QAction *> lst = mActionHash.value(type);
             if (!lst.isEmpty()) {
                 QAction *act = new QAction(this);

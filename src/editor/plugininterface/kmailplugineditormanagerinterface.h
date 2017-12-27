@@ -51,6 +51,9 @@ public:
     QHash<MessageComposer::ActionType::Type, QList<QAction *> > actionsType();
     QList<QAction *> actionsType(MessageComposer::ActionType::Type type);
 
+Q_SIGNALS:
+    void textSelectionChanged(bool hasSelection);
+
 private:
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
     KPIMTextEdit::RichTextEditor *mRichTextEditor = nullptr;

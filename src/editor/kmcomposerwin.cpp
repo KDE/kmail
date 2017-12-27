@@ -359,6 +359,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     //Don't use new connect api here. It crashs
     connect(composerEditorNg, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
+    connect(composerEditorNg, &KMComposerEditorNg::selectionChanged, this, &KMComposerWin::slotSelectionChanged);
     //connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor(composerEditorNg);
     mIncorrectIdentityFolderWarning = new IncorrectIdentityFolderWarning(this);
@@ -3477,4 +3478,9 @@ void KMComposerWin::slotTransportRemoved(int id, const QString &name)
     if (mComposerBase->transportComboBox()->currentTransportId() == id) {
         mIncorrectIdentityFolderWarning->mailTransportIsInvalid();
     }
+}
+
+void KMComposerWin::slotSelectionChanged()
+{
+    Q_EMIT mPluginEditorManagerInterface->textSelectionChanged(mRichTextEditorwidget->editor()->textCursor().hasSelection());
 }

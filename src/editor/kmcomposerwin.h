@@ -545,6 +545,8 @@ private:
     void initializePluginActions();
     bool showErrorMessage(KJob *job);
     int validateLineWrapWidth();
+    void slotSelectionChanged();
+
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
 
