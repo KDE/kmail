@@ -105,6 +105,8 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
             MessageComposer::ActionType::Type type = actionType.type();
             const bool needSelectedText = interface->needSelectedText();
             if (needSelectedText) {
+                //Disable by default as we don't have selection by default.
+                actionType.action()->setEnabled(false);
                 connect(this, &KMailPluginEditorManagerInterface::textSelectionChanged, actionType.action(), &QAction::setEnabled);
             }
             QList<QAction *> lst = mActionHash.value(type);
