@@ -793,7 +793,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             return;
         }
         int startOfMessage = 0;
-        if (mMsgString.startsWith(QStringLiteral("From "))) {
+        if (mMsgString.startsWith(QLatin1String("From "))) {
             startOfMessage = mMsgString.indexOf(QLatin1Char('\n'));
             if (startOfMessage == -1) {
                 doesNotContainMessage();

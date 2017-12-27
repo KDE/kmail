@@ -608,7 +608,7 @@ void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
     if (protocol == QLatin1String("mailto")) {
         protocol = i18n("email");
         prettyUrl.remove(0, 7);   // length( "mailto:" )
-    } else if (protocol.startsWith(QStringLiteral("http"))) {
+    } else if (protocol.startsWith(QLatin1String("http"))) {
         protocol = i18n("web");
     }
     // item is a mailing list url description passed from the updateActions method above.

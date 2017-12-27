@@ -385,7 +385,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         // only read additional command line arguments if kmail/kontact is
         // not called with "-session foo"
         for (const QString &arg : parser.positionalArguments()) {
-            if (arg.startsWith(QStringLiteral("mailto:"), Qt::CaseInsensitive)) {
+            if (arg.startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
                 QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
                 for (auto it = values.cbegin(), end = values.cend(); it != end; ++it) {
@@ -1655,7 +1655,7 @@ void KMKernel::stopAgentInstance()
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(identifier));
 
         // Keep sync in ConfigureDialog, don't forget to change there.
-        if (group.readEntry("OfflineOnShutdown", identifier.startsWith(QStringLiteral("akonadi_pop3_resource")) ? true : false)) {
+        if (group.readEntry("OfflineOnShutdown", identifier.startsWith(QLatin1String("akonadi_pop3_resource")) ? true : false)) {
             type.setIsOnline(false);
         }
     }
