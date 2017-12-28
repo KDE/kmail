@@ -235,6 +235,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mComposerBase->setIdentityManager(kmkernel->identityManager());
 
     mPluginEditorManagerInterface = new KMailPluginEditorManagerInterface(this);
+    connect(mPluginEditorManagerInterface, &KMailPluginEditorManagerInterface::message, this, &KMComposerWin::slotMessage);
     mPluginEditorCheckBeforeSendManagerInterface = new KMailPluginEditorCheckBeforeSendManagerInterface(this);
     mPluginEditorInitManagerInterface = new KMailPluginEditorInitManagerInterface(this);
 
@@ -3483,4 +3484,9 @@ void KMComposerWin::slotTransportRemoved(int id, const QString &name)
 void KMComposerWin::slotSelectionChanged()
 {
     Q_EMIT mPluginEditorManagerInterface->textSelectionChanged(mRichTextEditorwidget->editor()->textCursor().hasSelection());
+}
+
+void KMComposerWin::slotMessage(const QString &str)
+{
+    KMessageBox::information(this, str, i18n("Plugin Editor Information"));
 }

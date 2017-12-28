@@ -53,6 +53,7 @@ public:
 
 Q_SIGNALS:
     void textSelectionChanged(bool hasSelection);
+    void message(const QString &str);
 
 private:
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
