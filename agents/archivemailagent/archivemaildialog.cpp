@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2012-2017 Montel Laurent <montel@kde.org>
+   Copyright (C) 2012-2018 Montel Laurent <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public
@@ -68,7 +68,7 @@ ArchiveMailDialog::ArchiveMailDialog(QWidget *parent)
         QStringLiteral(KDEPIM_VERSION),
         i18n("Archive emails automatically."),
         KAboutLicense::GPL_V2,
-        i18n("Copyright (C) 2012-2017 Laurent Montel"));
+        i18n("Copyright (C) 2012-2018 Laurent Montel"));
 
     aboutData.addAuthor(i18n("Laurent Montel"),
                         i18n("Maintainer"), QStringLiteral("montel@kde.org"));
