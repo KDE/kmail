@@ -140,10 +140,8 @@ public:
 
     void save() override;
 
-private Q_SLOTS:
-    void slotVerifyCharset(QString &);
-
 private:
+    void slotVerifyCharset(QString &);
     void doLoadOther() override;
     void doResetToDefaultsOther() override;
 

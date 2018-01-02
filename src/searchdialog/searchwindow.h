@@ -113,7 +113,7 @@ protected:
 
     void createSearchModel();
 
-private Q_SLOTS:
+private:
     void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
 
     void slotClose();
@@ -151,6 +151,7 @@ private Q_SLOTS:
     void slotSearchCollectionsFetched(KJob *job);
 
     void slotJumpToFolder();
+
 private:
     void doSearch();
     QVector<qint64> checkIncompleteIndex(const Akonadi::Collection::List &searchCols, bool recursive);
@@ -158,16 +159,19 @@ private:
     QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
     QVector<Akonadi::Collection> mCollectionId;
     Akonadi::SearchQuery mQuery;
-    bool mCloseRequested = false;
-    int mSortColumn = 0;
     Qt::SortOrder mSortOrder = Qt::AscendingOrder;
     Akonadi::Collection mFolder;
-    KJob *mSearchJob = nullptr;
 
-    KMSearchMessageModel *mResultModel = nullptr;
     Ui_SearchWindow mUi;
     KGuiItem mStartSearchGuiItem;
     KGuiItem mStopSearchGuiItem;
+    MailCommon::SearchPattern mSearchPattern;
+
+    bool mCloseRequested = false;
+    int mSortColumn = 0;
+
+    KJob *mSearchJob = nullptr;
+    KMSearchMessageModel *mResultModel = nullptr;
     QPushButton *mSearchButton = nullptr;
 
     QAction *mReplyAction = nullptr;
@@ -185,7 +189,6 @@ private:
     QByteArray mHeaderState;
     // not owned by us
     KMMainWidget *mKMMainWidget = nullptr;
-    MailCommon::SearchPattern mSearchPattern;
     SearchPatternWarning *mSearchPatternWidget = nullptr;
 
     Akonadi::StandardMailActionManager *mAkonadiStandardAction = nullptr;

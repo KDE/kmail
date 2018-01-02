@@ -72,7 +72,7 @@ public Q_SLOTS:
        */
     void shortcutChanged(const Akonadi::Collection &collection);
 
-private Q_SLOTS:
+private:
     /**
        * Removes the shortcut actions associated with a folder.
        */

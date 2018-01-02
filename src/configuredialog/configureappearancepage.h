@@ -64,10 +64,8 @@ public:
     QString helpAnchor() const;
     void save() override;
 
-private Q_SLOTS:
-    void slotFontSelectorChanged(int);
-
 private:
+    void slotFontSelectorChanged(int);
     void doLoadOther() override;
     void updateFontSelector();
     void doResetToDefaultsOther() override;

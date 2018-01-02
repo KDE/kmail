@@ -98,11 +98,9 @@ public:
 
     void save() override;
 
-private Q_SLOTS:
+private:
     void slotReenableAllWarningsClicked();
     void slotConfigureGnupg();
-
-private:
     void doLoadFromGlobalSettings() override;
     void doLoadOther() override;
 

@@ -137,10 +137,8 @@ public:
 
     void init() override;
 
-private Q_SLOTS:
-    void onCustomItemSelected(const QVariant &type);
-
 private:
+    void onCustomItemSelected(const QVariant &type);
     QString mEmail;
     QString mName;
     KeyType mKeyType;
@@ -158,10 +156,8 @@ public:
     void slotCancel() override;
     void start();
 
-private Q_SLOTS:
-    void keyGenerated(const GpgME::KeyGenerationResult &result);
-
 private:
+    void keyGenerated(const GpgME::KeyGenerationResult &result);
     QString mName;
     QString mEmail;
     QGpgME::Job *mJob = nullptr;
