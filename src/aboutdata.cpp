@@ -45,7 +45,7 @@ struct about_data {
 
 // This file should not be changed by anybody other than the maintainer
 // If you change the maintainer here, change it in the MAINTAINERS file in the
-// top level kdepim folder as well.
+// top level folder as well.
 
 static const about_data authors[] = {
     {
