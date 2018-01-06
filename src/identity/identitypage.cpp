@@ -40,7 +40,6 @@
 #include <KLocalizedString>
 #include "kmail_debug.h"
 
-
 using namespace KMail;
 
 QString IdentityPage::helpAnchor() const

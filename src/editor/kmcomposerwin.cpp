@@ -206,8 +206,7 @@ using MailTransport::Transport;
 
 Q_DECLARE_METATYPE(MessageComposer::Recipient::Ptr)
 
-KMail::Composer *KMail::makeComposer(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context,
-                                     uint identity, const QString &textSelection,
+KMail::Composer *KMail::makeComposer(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint identity, const QString &textSelection,
                                      const QString &customTemplate)
 {
     return KMComposerWin::create(msg, lastSignState, lastEncryptState, context, identity, textSelection, customTemplate);
@@ -1310,7 +1309,6 @@ void KMComposerWin::setupActions(void)
     mHideMenuBarAction->setChecked(KMailSettings::self()->composerShowMenuBar());
     slotToggleMenubar(true);
 
-
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled,
@@ -1342,7 +1340,6 @@ void KMComposerWin::slotToggleMenubar(bool dontShowWarning)
         KMailSettings::self()->setComposerShowMenuBar(mHideMenuBarAction->isChecked());
     }
 }
-
 
 void KMComposerWin::initializePluginActions()
 {

@@ -117,7 +117,9 @@ void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool add
     mActionCollection->addAction(tag->name(), tagAction);
     mActionCollection->setDefaultShortcut(tagAction, QKeySequence(tag->shortcut));
     const QString tagName = QString::number(tag->tag().id());
-    connect(tagAction, &KToggleAction::triggered, this, [this, tagName] { onSignalMapped(tagName);});
+    connect(tagAction, &KToggleAction::triggered, this, [this, tagName] {
+        onSignalMapped(tagName);
+    });
 
     // The shortcut configuration is done in the config dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
