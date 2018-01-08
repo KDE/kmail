@@ -58,6 +58,13 @@ void IncorrectIdentityFolderWarning::dictionaryInvalid()
     updateText();
 }
 
+void IncorrectIdentityFolderWarning::addNewLine(QString &str)
+{
+    if (!str.isEmpty()) {
+        str += QLatin1Char('\n');
+    }
+}
+
 void IncorrectIdentityFolderWarning::updateText()
 {
     QString text;
@@ -65,21 +72,15 @@ void IncorrectIdentityFolderWarning::updateText()
         text = i18n("Transport was not found. Please verify that you will use a correct mail transport.");
     }
     if (mFccIsInvalid) {
-        if (!text.isEmpty()) {
-            text += QLatin1Char('\n');
-        }
+        addNewLine(text);
         text += i18n("Sent Folder is not defined. Please verify it before to send it.");
     }
     if (mIdentityIsInvalid) {
-        if (!text.isEmpty()) {
-            text += QLatin1Char('\n');
-        }
+        addNewLine(text);
         text += i18n("Identity was not found. Please verify that you will use a correct identity.");
     }
     if (mDictionaryIsInvalid) {
-        if (!text.isEmpty()) {
-            text += QLatin1Char('\n');
-        }
+        addNewLine(text);
         text += i18n("Dictionary was not found. Please verify that you will use a correct dictionary.");
     }
     setText(text);

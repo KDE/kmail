@@ -35,6 +35,7 @@ public:
     void dictionaryInvalid();
 
 private:
+    void addNewLine(QString &str);
     void updateText();
     void slotHideAnnimationFinished();
     bool mMailTransportIsInvalid = false;
