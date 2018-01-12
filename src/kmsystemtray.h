@@ -24,6 +24,7 @@
 #include <QAction>
 #include <QAbstractItemModel>
 
+class QDBusServiceWatcher;
 class QMenu;
 
 /**
@@ -57,6 +58,7 @@ private:
     void slotContextMenuAboutToShow();
     void slotSelectCollection(QAction *act);
     void initListOfCollection();
+    void initUnity();
     void slotCollectionStatisticsChanged(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
     void slotGeneralFontChanged();
 
@@ -75,6 +77,9 @@ private:
 
     QMenu *mNewMessagesPopup = nullptr;
     QAction *mSendQueued = nullptr;
+
+    QDBusServiceWatcher *mUnityServiceWatcher = nullptr;
+    bool mUnityServiceAvailable = false;
 };
 }
 #endif

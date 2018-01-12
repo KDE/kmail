@@ -32,6 +32,13 @@
 #include <QMenu>
 #include <KLocalizedString>
 #include <QAction>
+
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDBusMessage>
+#include <QDBusPendingReply>
+#include <QDBusServiceWatcher>
+
 #include "widgets/kactionmenutransport.h"
 
 #include <AkonadiCore/ChangeRecorder>
@@ -55,6 +62,7 @@ using namespace KMail;
 
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent)
+    , mUnityServiceWatcher(new QDBusServiceWatcher(this))
 {
     qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
@@ -81,6 +89,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &KMSystemTray::initListOfCollection);
 
     initListOfCollection();
+
+    initUnity();
 }
 
 bool KMSystemTray::buildPopupMenu()
@@ -148,6 +158,21 @@ void KMSystemTray::updateCount()
         setIconByName(QStringLiteral("kmail"));
     } else {
         setIconByName(QStringLiteral("mail-mark-unread-new"));
+    }
+
+    if (mUnityServiceAvailable) {
+        const QString launcherId = qApp->desktopFileName() + QLatin1String(".desktop");
+
+        const QVariantMap properties{
+            {QStringLiteral("count-visible"), mCount > 0},
+            {QStringLiteral("count"), mCount}
+        };
+
+        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/org/kmail2/UnityLauncher"),
+                                                          QStringLiteral("com.canonical.Unity.LauncherEntry"),
+                                                          QStringLiteral("Update"));
+        message.setArguments({launcherId, properties});
+        QDBusConnection::sessionBus().send(message);
     }
 }
 
@@ -289,6 +314,43 @@ void KMSystemTray::initListOfCollection()
 
     //qCDebug(KMAIL_LOG)<<" mCount :"<<mCount;
     updateCount();
+}
+
+void KMSystemTray::initUnity()
+{
+    mUnityServiceWatcher->setConnection(QDBusConnection::sessionBus());
+    mUnityServiceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration | QDBusServiceWatcher::WatchForRegistration);
+    mUnityServiceWatcher->addWatchedService(QStringLiteral("com.canonical.Unity"));
+    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceRegistered, this, [this](const QString &service) {
+        Q_UNUSED(service);
+        mUnityServiceAvailable = true;
+        updateCount();
+    });
+
+    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, [this](const QString &service) {
+        Q_UNUSED(service);
+        mUnityServiceAvailable = false;
+    });
+
+    // QDBusConnectionInterface::isServiceRegistered blocks
+    QDBusPendingCall listNamesCall = QDBusConnection::sessionBus().interface()->asyncCall(QStringLiteral("ListNames"));
+    QDBusPendingCallWatcher *callWatcher = new QDBusPendingCallWatcher(listNamesCall, this);
+    connect(callWatcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
+        QDBusPendingReply<QStringList> reply = *watcher;
+        watcher->deleteLater();
+
+        if (reply.isError()) {
+            return;
+        }
+
+        const QStringList &services = reply.value();
+
+        mUnityServiceAvailable = services.contains(QLatin1String("com.canonical.Unity"));
+        if (mUnityServiceAvailable) {
+            updateCount();
+        }
+    });
+
 }
 
 void KMSystemTray::unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex)
