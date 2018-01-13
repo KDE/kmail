@@ -350,7 +350,6 @@ void KMSystemTray::initUnity()
             updateCount();
         }
     });
-
 }
 
 void KMSystemTray::unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex)
