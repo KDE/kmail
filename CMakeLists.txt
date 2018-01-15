@@ -32,14 +32,6 @@ include(ECMAddAppIcon)
 include(ECMQtDeclareLoggingCategory)
 include(ECMCoverageOption)
 
-if(NOT CMAKE_VERSION VERSION_LESS "3.10.0")
-  # CMake 3.9+ warns about automoc on files without Q_OBJECT, and doesn't know about other macros.
-  # 3.10+ lets us provide more macro names that require automoc.
-  # Remove this when depending on a Frameworks or ECM version that solves this upstream.
-  list(APPEND CMAKE_AUTOMOC_MACRO_NAMES "K_PLUGIN_FACTORY_WITH_JSON" "K_PLUGIN_FACTORY" "EXPORT_KONTACT_PLUGIN")
-endif()
-
-
 # Do NOT add quote
 set(KDEPIM_DEV_VERSION alpha)
 
