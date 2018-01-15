@@ -3310,7 +3310,7 @@ void KMMainWidget::setupActions()
     {
         mApplyAllFiltersFolderAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_folder"), mApplyAllFiltersFolderAction);
-        connect(mServerSideSubscription, &QAction::triggered,
+        connect(mApplyAllFiltersFolderAction, &QAction::triggered,
                 this, [this] { slotApplyFiltersOnFolder(/* recursive */ false);
                 });
     }
@@ -3318,7 +3318,7 @@ void KMMainWidget::setupActions()
     {
         mApplyAllFiltersFolderRecursiveAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_folder_recursive"), mApplyAllFiltersFolderRecursiveAction);
-        connect(mServerSideSubscription, &QAction::triggered,
+        connect(mApplyAllFiltersFolderRecursiveAction, &QAction::triggered,
                 this, [this] { slotApplyFiltersOnFolder(/* recursive */ true);
                 });
     }
