@@ -103,6 +103,8 @@ void CreateFollowupReminderOnExistingMessageJob::slotReminderDone(KJob *job)
 {
     if (job->error()) {
         qCDebug(KMAIL_LOG) << "CreateFollowupReminderOnExistingMessageJob::slotReminderDone  :" << job->errorString();
+    } else {
+        //TODO update dialog if opened
     }
     deleteLater();
 }
