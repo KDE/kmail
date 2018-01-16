@@ -40,6 +40,7 @@ void FollowUpReminderFinishTaskJob::start()
     if (mTodoId != -1) {
         closeTodo();
     } else {
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "Failed to FollowUpReminderFinishTaskJob::start";
         Q_EMIT finishTaskFailed();
         deleteLater();
     }
@@ -55,7 +56,7 @@ void FollowUpReminderFinishTaskJob::closeTodo()
 void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
 {
     if (job->error()) {
-        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << job->errorString();
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "Failed to fetch item in FollowUpReminderFinishTaskJob : " <<  job->errorString();
         Q_EMIT finishTaskFailed();
         deleteLater();
         return;
@@ -65,7 +66,7 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
     if (lst.count() == 1) {
         const Akonadi::Item item = lst.first();
         if (!item.hasPayload<KCalCore::Todo::Ptr>()) {
-            qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " item is not a todo.";
+            qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderFinishTaskJob::slotItemFetchJobDone: item is not a todo.";
             Q_EMIT finishTaskFailed();
             deleteLater();
             return;
@@ -88,7 +89,7 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
 void FollowUpReminderFinishTaskJob::slotItemModifiedResult(KJob *job)
 {
     if (job->error()) {
-        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << job->errorString();
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderFinishTaskJob::slotItemModifiedResult: Error during modified item: " << job->errorString();
         Q_EMIT finishTaskFailed();
     } else {
         Q_EMIT finishTaskDone();

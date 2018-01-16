@@ -143,11 +143,13 @@ void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId
 
 void FollowUpReminderManager::slotFinishTaskDone()
 {
+    qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Task Done";
     //TODO
 }
 
 void FollowUpReminderManager::slotFinishTaskFailed()
 {
+    qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Task Failed";
     //TODO
 }
 
