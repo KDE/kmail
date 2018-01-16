@@ -3683,17 +3683,17 @@ void KMMainWidget::updateMessageActionsDelayed()
     //       the selection contains any.
     //
 
-    bool readOnly = currentFolderSettingsIsValid && (mCurrentFolderSettings->rights() & Akonadi::Collection::ReadOnly);
+    const bool readOnly = currentFolderSettingsIsValid && (mCurrentFolderSettings->rights() & Akonadi::Collection::ReadOnly);
     // can we apply strictly single message actions ? (this is false if the whole selection contains more than one message)
-    bool single_actions = count == 1;
+    const bool single_actions = count == 1;
     // can we apply loosely single message actions ? (this is false if the VISIBLE selection contains more than one message)
-    bool singleVisibleMessageSelected = selectedVisibleItems.count() == 1;
+    const bool singleVisibleMessageSelected = selectedVisibleItems.count() == 1;
     // can we apply "mass" actions to the selection ? (this is actually always true if the selection is non-empty)
-    bool mass_actions = count >= 1;
+    const bool mass_actions = count >= 1;
     // does the selection identify a single thread ?
-    bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessagePane->isThreaded();
+    const bool thread_actions = mass_actions && allSelectedBelongToSameThread && mMessagePane->isThreaded();
     // can we apply flags to the selected messages ?
-    bool flags_available = KMailSettings::self()->allowLocalFlags() || !(currentFolderSettingsIsValid ? readOnly : true);
+    const bool flags_available = KMailSettings::self()->allowLocalFlags() || !(currentFolderSettingsIsValid ? readOnly : true);
 
     mThreadStatusMenu->setEnabled(thread_actions);
     // these need to be handled individually, the user might have them
@@ -3745,10 +3745,10 @@ void KMMainWidget::updateMessageActionsDelayed()
     filterMenu()->setEnabled(single_actions);
     mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/ mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
 
-    if (mMsgActions->customTemplatesMenu()) {
-        mMsgActions->customTemplatesMenu()->forwardActionMenu()->setEnabled(mass_actions);
-        mMsgActions->customTemplatesMenu()->replyActionMenu()->setEnabled(single_actions);
-        mMsgActions->customTemplatesMenu()->replyAllActionMenu()->setEnabled(single_actions);
+    if (auto *menuCustom = mMsgActions->customTemplatesMenu()) {
+        menuCustom->forwardActionMenu()->setEnabled(mass_actions);
+        menuCustom->replyActionMenu()->setEnabled(single_actions);
+        menuCustom->replyAllActionMenu()->setEnabled(single_actions);
     }
 
     // "Print" will act on the current message: it will ignore any hidden selection
@@ -3845,20 +3845,20 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
 
     const bool folderWithContent = mCurrentFolderSettings && !mCurrentFolderSettings->isStructural();
 
-    if (mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)) {
-        mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)->setEnabled(mCurrentFolderSettings
-                                                                                                             && (mCurrentCollection.rights() & Collection::CanDeleteCollection)
-                                                                                                             && !mCurrentFolderSettings->isSystemFolder()
-                                                                                                             && folderWithContent);
+    if (QAction *act = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)) {
+        act->setEnabled(mCurrentFolderSettings
+                        && (mCurrentCollection.rights() & Collection::CanDeleteCollection)
+                        && !mCurrentFolderSettings->isSystemFolder()
+                        && folderWithContent);
     }
 
-    if (mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)) {
-        mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)->setEnabled(folderWithContent
-                                                                                                              && (mCurrentFolderSettings->count() > 0)
-                                                                                                              && mCurrentFolderSettings->canDeleteMessages());
-        mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)->setText((mCurrentFolderSettings
-                                                                                                            && CommonKernel->folderIsTrash(mCurrentCollection)) ? i18n("E&mpty Trash") : i18n(
-                                                                                                               "&Move All Messages to Trash"));
+    if (QAction *act = mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)) {
+        act->setEnabled(folderWithContent
+                        && (mCurrentFolderSettings->count() > 0)
+                        && mCurrentFolderSettings->canDeleteMessages());
+        act->setText((mCurrentFolderSettings
+                      && CommonKernel->folderIsTrash(mCurrentCollection)) ? i18n("E&mpty Trash") : i18n(
+                                                                                "&Move All Messages to Trash"));
     }
 
     QList< QAction * > addToFavorite;
@@ -3956,12 +3956,12 @@ void KMMainWidget::updateFolderMenu()
 
     mArchiveFolderAction->setEnabled(mCurrentFolderSettings && folderWithContent);
 
-    bool isInTrashFolder = (mCurrentFolderSettings && CommonKernel->folderIsTrash(mCurrentCollection));
+    const bool isInTrashFolder = (mCurrentFolderSettings && CommonKernel->folderIsTrash(mCurrentCollection));
     QAction *moveToTrash = akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash);
-    akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash)->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
-    akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash)->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
+    moveToTrash->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
+    moveToTrash->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
     //Use same text as in Text property. Change it in kf5
-    moveToTrash->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
+    moveToTrash->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "Delete") : i18n("Move to Trash"));
 
     mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
     mTrashThreadAction->setText(isInTrashFolder ? i18n("Delete T&hread") : i18n("M&ove Thread to Trash"));
