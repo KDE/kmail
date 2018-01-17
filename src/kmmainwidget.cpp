@@ -1334,6 +1334,7 @@ void KMMainWidget::slotShowNewFromTemplate()
         mTemplateFolder = CommonKernel->templatesCollectionFolder();
     }
     if (!mTemplateFolder.isValid()) {
+        qCWarning(KMAIL_LOG) << "Template folder not found";
         return;
     }
 
