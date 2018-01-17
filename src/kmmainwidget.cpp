@@ -227,7 +227,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mFavoritesModel = nullptr;
     mSievePasswordProvider = new KMSieveImapPasswordProvider(winId());
     mVacationManager = new KSieveUi::VacationManager(mSievePasswordProvider, this);
-    connect(mVacationManager, SIGNAL(updateVacationScriptStatus(bool,QString)), SLOT(updateVacationScriptStatus(bool,QString)));
+    connect(mVacationManager, &KSieveUi::VacationManager::updateVacationScriptStatus, this, QOverload<bool, const QString &>::of(&KMMainWidget::updateVacationScriptStatus));
 
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);
