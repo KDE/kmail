@@ -1474,7 +1474,7 @@ void KMMainWidget::slotEmptyFolder()
     if (isTrash) {
         /* Don't ask for confirmation again when deleting, the user has already
         confirmed. */
-        slotDeleteMsg(false);
+        deleteSelectedMessages(false);
     } else {
         slotTrashSelectedMessages();
     }
@@ -1710,7 +1710,7 @@ void KMMainWidget::slotMoveMessagesCompleted(KMMoveCommand *command)
 
 void KMMainWidget::slotDeleteMessages()
 {
-    slotDeleteMsg(true);
+    deleteSelectedMessages(true);
 }
 
 Akonadi::Item::List KMMainWidget::currentSelection() const
@@ -1723,7 +1723,7 @@ Akonadi::Item::List KMMainWidget::currentSelection() const
     return selectMsg;
 }
 
-void KMMainWidget::slotDeleteMsg(bool confirmDelete)
+void KMMainWidget::deleteSelectedMessages(bool confirmDelete)
 {
     // Create a persistent message set from the current selection
     MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
