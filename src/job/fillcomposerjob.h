@@ -84,6 +84,7 @@ public:
     void setSettings(const FillComposerJobSettings &settings);
 
 private:
+    Q_DISABLE_COPY(FillComposerJob)
     void slotOpenComposer();
     FillComposerJobSettings mSettings;
     KMime::Message::Ptr mMsg;

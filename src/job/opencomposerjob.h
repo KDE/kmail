@@ -72,6 +72,7 @@ public:
     void setOpenComposerSettings(const OpenComposerSettings &openComposerSettings);
 
 private:
+    Q_DISABLE_COPY(OpenComposerJob)
     void slotOpenComposer();
     OpenComposerSettings mOpenComposerSettings;
     KMime::Message::Ptr mMsg;

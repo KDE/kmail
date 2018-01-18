@@ -41,6 +41,7 @@ Q_SIGNALS:
     void clearCurrentFolder();
 
 private:
+    Q_DISABLE_COPY(RemoveCollectionJob)
     void slotDelayedRemoveFolder(KJob *job);
     void slotDeletionCollectionResult(KJob *job);
 

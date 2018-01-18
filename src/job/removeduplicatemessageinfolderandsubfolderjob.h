@@ -39,6 +39,7 @@ public:
     void setTopLevelCollection(const Akonadi::Collection &topLevelCollection);
 
 private:
+    Q_DISABLE_COPY(RemoveDuplicateMessageInFolderAndSubFolderJob)
     void slotFetchCollectionFailed();
     void slotFetchCollectionDone(const Akonadi::Collection::List &list);
     void slotFinished(KJob *job);

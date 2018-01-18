@@ -100,6 +100,7 @@ Q_SIGNALS:
     void tagMoreActionClicked();
 
 private:
+    Q_DISABLE_COPY(TagActionManager)
     void finishedTagListing(KJob *job);
     void newTagActionClicked();
     void onSignalMapped(const QString &tag);

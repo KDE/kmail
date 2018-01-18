@@ -45,6 +45,8 @@ public:
     bool sendMessage(const QString &from, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QStringList &attachments);
 
     bool sendMessage(const QString &from, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QByteArray &attachment);
+private:
+    Q_DISABLE_COPY(MailServiceImpl)
 };
 }
 

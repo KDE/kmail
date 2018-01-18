@@ -40,6 +40,7 @@ public Q_SLOTS:
     void slotAccountWizard();
     void slotFilterLogViewer();
 private:
+    Q_DISABLE_COPY(KMLaunchExternalComponent)
     QString akonadiPath(QString service);
     QWidget *mParentWidget = nullptr;
 };

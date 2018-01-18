@@ -47,6 +47,7 @@ public:
     void setSettings(const CreateForwardMessageJobSettings &value);
 
 private:
+    Q_DISABLE_COPY(CreateForwardMessageJob)
     MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
     void slotCreateForwardDone(const KMime::Message::Ptr &msg);
     CreateForwardMessageJobSettings mSettings;

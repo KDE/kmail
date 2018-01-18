@@ -37,6 +37,7 @@ public:
 
     void start();
 private:
+    Q_DISABLE_COPY(MarkAllMessagesAsReadInFolderAndSubFolderJob)
     void slotFetchCollectionFailed();
     void slotFetchCollectionDone(const Akonadi::Collection::List &list);
     void slotMarkAsResult(Akonadi::MarkAsCommand::Result result);

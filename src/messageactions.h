@@ -104,6 +104,7 @@ public Q_SLOTS:
     void editCurrentMessage();
 
 private:
+    Q_DISABLE_COPY(MessageActions)
     void annotateMessage();
     void updateActions();
     void replyCommand(MessageComposer::ReplyStrategy strategy);

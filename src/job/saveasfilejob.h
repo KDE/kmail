@@ -37,6 +37,7 @@ public:
     void setParentWidget(QWidget *parentWidget);
 
 private:
+    Q_DISABLE_COPY(SaveAsFileJob)
     bool mHtmlMode = false;
     QTextDocument *mTextDocument = nullptr;
     QWidget *mParentWidget = nullptr;
