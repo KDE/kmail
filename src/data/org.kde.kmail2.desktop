@@ -197,33 +197,6 @@ Actions=Composer;CheckMail;
 
 [Desktop Action Composer]
 Name=New Message...
-Name[ca]=Missatge nou
-Name[ca@valencia]=Missatge nou
-Name[cs]=Nová zpráva
-Name[da]=Nyt brev
-Name[de]=Neue Nachricht
-Name[en_GB]=New Message
-Name[es]=Mensaje nuevo
-Name[et]=Uus kiri
-Name[fi]=Uusi viesti
-Name[fr]=Nouveau message
-Name[it]=Nuovo messaggio
-Name[ko]=새 메시지
-Name[nl]=Nieuw bericht
-Name[pl]=Nowa wiadomość
-Name[pt]=Nova Mensagem
-Name[ru]=Написать письмо
-Name[sk]=Nová správa
-Name[sl]=Novo sporočilo
-Name[sr]=Нова порука
-Name[sr@ijekavian]=Нова порука
-Name[sr@ijekavianlatin]=Nova poruka
-Name[sr@latin]=Nova poruka
-Name[sv]=Nytt brev
-Name[tr]=Yeni İleti
-Name[uk]=Нове повідомлення
-Name[x-test]=xxNew Messagexx
-Name[zh_CN]=新信件
 Icon=mail-message-new
 Exec=kmail --composer
 
