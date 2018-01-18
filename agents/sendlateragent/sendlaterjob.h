@@ -41,6 +41,7 @@ public:
     void start();
 
 private:
+    Q_DISABLE_COPY(SendLaterJob)
     void sendDone();
     void sendError(const QString &error, SendLaterManager::ErrorType type);
     void slotMessageTransfered(const Akonadi::Item::List &);

@@ -35,6 +35,7 @@ public:
     void start();
 
 private:
+    Q_DISABLE_COPY(SendLaterRemoveMessageJob)
     void slotItemDeleteDone(KJob *job);
     void deleteItem();
     QList<Akonadi::Item::Id> mListItems;

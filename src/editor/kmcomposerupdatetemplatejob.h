@@ -51,6 +51,7 @@ Q_SIGNALS:
     void updateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
 
 private:
+    Q_DISABLE_COPY(KMComposerUpdateTemplateJob)
     void slotFinished();
 
     QString mTextSelection;

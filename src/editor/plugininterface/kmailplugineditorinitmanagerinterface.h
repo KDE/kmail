@@ -40,6 +40,7 @@ public:
 
     void initializePlugins();
 private:
+    Q_DISABLE_COPY(KMailPluginEditorInitManagerInterface)
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
     QWidget *mParentWidget = nullptr;
     bool mWasInitialized = false;

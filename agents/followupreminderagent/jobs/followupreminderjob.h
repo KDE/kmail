@@ -39,6 +39,7 @@ Q_SIGNALS:
     void finished(const QString &messageId, Akonadi::Item::Id id);
 
 private:
+    Q_DISABLE_COPY(FollowUpReminderJob)
     void slotItemFetchJobDone(KJob *job);
     Akonadi::Item mItem;
 };

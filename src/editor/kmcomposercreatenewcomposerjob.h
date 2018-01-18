@@ -36,6 +36,7 @@ public:
     void setCurrentIdentity(const uint &currentIdentity);
 
 private:
+    Q_DISABLE_COPY(KMComposerCreateNewComposerJob)
     void slotCreateNewComposer(bool forceCursorPosition);
     Akonadi::Collection mCollectionForNewMessage;
     KMime::Message::Ptr mMsg = nullptr;

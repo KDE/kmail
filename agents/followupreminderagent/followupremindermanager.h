@@ -40,6 +40,7 @@ public:
 
     QString printDebugInfo();
 private:
+    Q_DISABLE_COPY(FollowUpReminderManager)
     void slotCheckFollowUpFinished(const QString &messageId, Akonadi::Item::Id id);
 
     void slotFinishTaskDone();

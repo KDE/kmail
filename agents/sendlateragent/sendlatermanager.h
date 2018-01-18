@@ -71,6 +71,7 @@ public Q_SLOTS:
     void load(bool forcereload = false);
 
 private:
+    Q_DISABLE_COPY(SendLaterManager)
     void slotCreateJob();
     void createSendInfoList();
     QString infoToStr(SendLater::SendLaterInfo *info);

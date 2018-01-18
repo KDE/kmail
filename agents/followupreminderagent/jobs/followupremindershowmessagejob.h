@@ -33,6 +33,7 @@ public:
     void start();
 
 private:
+    Q_DISABLE_COPY(FollowUpReminderShowMessageJob)
     Akonadi::Item::Id mId;
 };
 
