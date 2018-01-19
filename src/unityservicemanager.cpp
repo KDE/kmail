@@ -18,6 +18,8 @@
 */
 
 #include "unityservicemanager.h"
+#include "kmkernel.h"
+#include <MailCommon/MailKernel>
 
 #include <QDBusConnection>
 #include <QDBusMessage>
@@ -27,6 +29,10 @@
 #include <QDBusConnectionInterface>
 #include <QApplication>
 
+#include <AkonadiCore/ChangeRecorder>
+#include <AkonadiCore/EntityTreeModel>
+#include <AkonadiCore/EntityMimeTypeFilterModel>
+
 using namespace KMail;
 
 UnityServiceManager::UnityServiceManager(QObject *parent)
@@ -34,6 +40,14 @@ UnityServiceManager::UnityServiceManager(QObject *parent)
     , mUnityServiceWatcher(new QDBusServiceWatcher(this))
     , mCount(0)
 {
+#if 0
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &UnityServiceManager::slotCollectionStatisticsChanged);
+
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionAdded, this, &UnityServiceManager::initListOfCollection);
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &UnityServiceManager::initListOfCollection);
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionSubscribed, this, &UnityServiceManager::initListOfCollection);
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &UnityServiceManager::initListOfCollection);
+#endif
     initUnity();
 }
 
