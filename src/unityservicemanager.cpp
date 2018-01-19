@@ -27,6 +27,7 @@
 #include <QDBusConnectionInterface>
 #include <QApplication>
 
+using namespace KMail;
 UnityServiceManager *UnityServiceManager::mInstance = nullptr;
 
 UnityServiceManager *UnityServiceManager::instance()
@@ -40,7 +41,7 @@ UnityServiceManager *UnityServiceManager::instance()
 UnityServiceManager::UnityServiceManager(QObject *parent)
     : QObject(parent)
     , mUnityServiceWatcher(new QDBusServiceWatcher(this))
-    , m_unread(0)
+    , mCount(0)
 {
     initUnity();
 }
@@ -52,7 +53,7 @@ UnityServiceManager::~UnityServiceManager()
 
 void UnityServiceManager::slotSetUnread(int unread)
 {
-    m_unread = unread;
+    mCount = unread;
     updateCount();
 }
 
@@ -62,11 +63,11 @@ void UnityServiceManager::updateCount()
         const QString launcherId = qApp->desktopFileName() + QLatin1String(".desktop");
 
         const QVariantMap properties{
-            {QStringLiteral("count-visible"), m_unread > 0},
-            {QStringLiteral("count"), m_unread}
+            {QStringLiteral("count-visible"), mCount > 0},
+            {QStringLiteral("count"), mCount}
         };
 
-        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/org/akregator/UnityLauncher"),
+        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/org/kmail2/UnityLauncher"),
                                                           QStringLiteral("com.canonical.Unity.LauncherEntry"),
                                                           QStringLiteral("Update"));
         message.setArguments({launcherId, properties});

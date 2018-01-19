@@ -22,10 +22,9 @@
 #define UNITYSERVICEMANAGER_H
 
 #include <QObject>
-#include "akregator_export.h"
 class QDBusServiceWatcher;
-
-class AKREGATOR_EXPORT UnityServiceManager : public QObject
+namespace KMail {
+class UnityServiceManager : public QObject
 {
     Q_OBJECT
 public:
@@ -42,8 +41,8 @@ private:
     void initUnity();
     QDBusServiceWatcher *mUnityServiceWatcher = nullptr;
     static UnityServiceManager *mInstance;
-    int m_unread;
+    int mCount;
     bool mUnityServiceAvailable = false;
 };
-
+}
 #endif // UNITYSERVICEMANAGER_H

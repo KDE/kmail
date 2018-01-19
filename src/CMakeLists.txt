@@ -180,6 +180,7 @@ set(kmailprivate_LIB_SRCS
     settings/kmailsettings.cpp
     kmreaderwin.cpp
     kmsystemtray.cpp
+    unityservicemanager.cpp
     undostack.cpp
     kmkernel.cpp
     kmcommands.cpp
