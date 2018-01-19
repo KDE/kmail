@@ -32,6 +32,7 @@ class QMenu;
  * tray notification for KMail
  */
 namespace KMail {
+class UnityServiceManager;
 class KMSystemTray : public KStatusNotifierItem
 {
     Q_OBJECT
@@ -41,45 +42,29 @@ public:
     /** destructor */
     ~KMSystemTray();
 
-    /**
-     * Use this method to disable any systray icon changing.
-     * By default this is enabled and you'll see the "new e-mail" icon whenever there's
-     * new e-mail.
-     */
-    void setSystrayIconNotificationsEnabled(bool enable);
-
     void hideKMail();
-    bool hasUnreadMail() const;
 
-    void updateSystemTray();
-
+    void updateStatus(int count);
+    void updateCount(int count);
+    void setUnityServiceManager(KMail::UnityServiceManager *unityServiceManager);
+    void initialize(int count);
+    void updateToolTip(int count);
 private:
     void slotActivated();
     void slotContextMenuAboutToShow();
     void slotSelectCollection(QAction *act);
-    void initListOfCollection();
-    void initUnity();
-    void slotCollectionStatisticsChanged(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
-    void slotGeneralFontChanged();
 
     bool mainWindowIsOnCurrentDesktop();
     bool buildPopupMenu();
-    void updateCount();
     void fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model, const QString &parentName = QString(), const QModelIndex &parentIndex = QModelIndex());
-    void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = QModelIndex());
-    bool excludeFolder(const Akonadi::Collection &collection) const;
-    bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
     int mDesktopOfMainWin = 0;
 
-    int mCount = 0;
-
+    bool mHasUnreadMessage = false;
     bool mIconNotificationsEnabled = true;
 
     QMenu *mNewMessagesPopup = nullptr;
     QAction *mSendQueued = nullptr;
-
-    QDBusServiceWatcher *mUnityServiceWatcher = nullptr;
-    bool mUnityServiceAvailable = false;
+    KMail::UnityServiceManager *mUnityServiceManager = nullptr;
 };
 }
 #endif

@@ -19,7 +19,11 @@
 
 #include "unityservicemanager.h"
 #include "kmkernel.h"
+#include "kmsystemtray.h"
+#include "settings/kmailsettings.h"
+#include "kmail_debug.h"
 #include <MailCommon/MailKernel>
+#include <MailCommon/MailUtil>
 
 #include <QDBusConnection>
 #include <QDBusMessage>
@@ -28,42 +32,122 @@
 #include <QDBusPendingReply>
 #include <QDBusConnectionInterface>
 #include <QApplication>
+#include <QTimer>
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
+#include <AkonadiCore/CollectionStatistics>
+#include <AkonadiCore/NewMailNotifierAttribute>
 
 using namespace KMail;
 
 UnityServiceManager::UnityServiceManager(QObject *parent)
     : QObject(parent)
     , mUnityServiceWatcher(new QDBusServiceWatcher(this))
-    , mCount(0)
 {
-#if 0
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &UnityServiceManager::slotCollectionStatisticsChanged);
 
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionAdded, this, &UnityServiceManager::initListOfCollection);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &UnityServiceManager::initListOfCollection);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionSubscribed, this, &UnityServiceManager::initListOfCollection);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &UnityServiceManager::initListOfCollection);
-#endif
+    initListOfCollection();
     initUnity();
 }
 
 UnityServiceManager::~UnityServiceManager()
 {
-
+    mSystemTray = nullptr;
 }
 
-void UnityServiceManager::slotSetUnread(int unread)
+bool UnityServiceManager::excludeFolder(const Akonadi::Collection &collection) const
 {
-    mCount = unread;
+    if (!collection.isValid() || !collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
+        return true;
+    }
+    if (CommonKernel->outboxCollectionFolder() == collection
+        || CommonKernel->sentCollectionFolder() == collection
+        || CommonKernel->templatesCollectionFolder() == collection
+        || CommonKernel->trashCollectionFolder() == collection
+        || CommonKernel->draftsCollectionFolder() == collection) {
+        return true;
+    }
+
+    if (MailCommon::Util::isVirtualCollection(collection)) {
+        return true;
+    }
+    return false;
+}
+
+void UnityServiceManager::unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex)
+{
+    const int rowCount = model->rowCount(parentIndex);
+    for (int row = 0; row < rowCount; ++row) {
+        const QModelIndex index = model->index(row, 0, parentIndex);
+        const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+
+        if (!excludeFolder(collection)) {
+            const Akonadi::CollectionStatistics statistics = collection.statistics();
+            const qint64 count = qMax(0LL, statistics.unreadCount());
+
+            if (count > 0) {
+                if (!ignoreNewMailInFolder(collection)) {
+                    mCount += count;
+                }
+            }
+        }
+        if (model->rowCount(index) > 0) {
+            unreadMail(model, index);
+        }
+    }
+    if (mSystemTray) {
+        // Update tooltip to reflect count of unread messages
+        mSystemTray->updateToolTip(mCount);
+    }
+}
+
+void UnityServiceManager::updateSystemTray()
+{
+    initListOfCollection();
+}
+
+void UnityServiceManager::initListOfCollection()
+{
+    mCount = 0;
+    const QAbstractItemModel *model = kmkernel->collectionModel();
+    if (model->rowCount() == 0) {
+        QTimer::singleShot(1000, this, &UnityServiceManager::initListOfCollection);
+        return;
+    }
+    unreadMail(model);
+    if (mSystemTray) {
+        mSystemTray->updateStatus(mCount);
+    }
+
+    //qCDebug(KMAIL_LOG)<<" mCount :"<<mCount;
     updateCount();
+}
+
+void UnityServiceManager::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &)
+{
+    //Exclude sent mail folder
+
+    if (CommonKernel->outboxCollectionFolder().id() == id
+        || CommonKernel->sentCollectionFolder().id() == id
+        || CommonKernel->templatesCollectionFolder().id() == id
+        || CommonKernel->trashCollectionFolder().id() == id
+        || CommonKernel->draftsCollectionFolder().id() == id) {
+        return;
+    }
+    initListOfCollection();
 }
 
 void UnityServiceManager::updateCount()
 {
+    if (mSystemTray) {
+        mSystemTray->updateCount(mCount);
+    }
     if (mUnityServiceAvailable) {
         const QString launcherId = qApp->desktopFileName() + QLatin1String(".desktop");
 
@@ -114,4 +198,52 @@ void UnityServiceManager::initUnity()
             updateCount();
         }
     });
+}
+
+bool UnityServiceManager::ignoreNewMailInFolder(const Akonadi::Collection &collection)
+{
+    if (collection.hasAttribute<Akonadi::NewMailNotifierAttribute>()) {
+        if (collection.attribute<Akonadi::NewMailNotifierAttribute>()->ignoreNewMail()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool UnityServiceManager::haveSystemTrayApplet() const
+{
+    return mSystemTray != nullptr;
+}
+
+bool UnityServiceManager::hasUnreadMail() const
+{
+    return mCount != 0;
+}
+
+bool UnityServiceManager::canQueryClose()
+{
+    if (!mSystemTray) {
+        return true;
+    }
+    if (hasUnreadMail()) {
+        mSystemTray->setStatus(KStatusNotifierItem::Active);
+    }
+    mSystemTray->hideKMail();
+    return false;
+}
+
+void UnityServiceManager::toggleSystemTray(QWidget *widget)
+{
+    if (widget) {
+        if (!mSystemTray && KMailSettings::self()->systemTrayEnabled()) {
+            mSystemTray = new KMail::KMSystemTray(widget);
+            mSystemTray->setUnityServiceManager(this);
+            mSystemTray->initialize(mCount);
+        } else if (mSystemTray && !KMailSettings::self()->systemTrayEnabled()) {
+            // Get rid of system tray on user's request
+            qCDebug(KMAIL_LOG) << "deleting systray";
+            delete mSystemTray;
+            mSystemTray = nullptr;
+        }
+    }
 }

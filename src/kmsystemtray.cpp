@@ -20,6 +20,7 @@
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
+#include "unityservicemanager.h"
 #include "settings/kmailsettings.h"
 #include "mailcommon/mailutil.h"
 #include "MailCommon/MailKernel"
@@ -33,17 +34,7 @@
 #include <KLocalizedString>
 #include <QAction>
 
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
-#include <QDBusMessage>
-#include <QDBusPendingReply>
-#include <QDBusServiceWatcher>
-
 #include "widgets/kactionmenutransport.h"
-
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/EntityMimeTypeFilterModel>
 
 using namespace MailCommon;
 
@@ -62,7 +53,6 @@ using namespace KMail;
 
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent)
-    , mUnityServiceWatcher(new QDBusServiceWatcher(this))
 {
     qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
@@ -80,17 +70,6 @@ KMSystemTray::KMSystemTray(QObject *parent)
     connect(this, &KMSystemTray::activateRequested, this, &KMSystemTray::slotActivated);
     connect(contextMenu(), &QMenu::aboutToShow,
             this, &KMSystemTray::slotContextMenuAboutToShow);
-
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &KMSystemTray::slotCollectionStatisticsChanged);
-
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionAdded, this, &KMSystemTray::initListOfCollection);
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMSystemTray::initListOfCollection);
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionSubscribed, this, &KMSystemTray::initListOfCollection);
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &KMSystemTray::initListOfCollection);
-
-    initListOfCollection();
-
-    initUnity();
 }
 
 bool KMSystemTray::buildPopupMenu()
@@ -142,9 +121,11 @@ KMSystemTray::~KMSystemTray()
 {
 }
 
-void KMSystemTray::slotGeneralFontChanged()
+void KMSystemTray::initialize(int count)
 {
-    updateSystemTray();
+    updateCount(count);
+    updateStatus(count);
+    updateToolTip(count);
 }
 
 /**
@@ -152,36 +133,18 @@ void KMSystemTray::slotGeneralFontChanged()
  * show the "unread new mail" KMail icon.
  * If there is no unread mail, restore the normal KMail icon.
  */
-void KMSystemTray::updateCount()
+void KMSystemTray::updateCount(int count)
 {
-    if (mCount == 0) {
+    if (count == 0) {
         setIconByName(QStringLiteral("kmail"));
     } else {
         setIconByName(QStringLiteral("mail-mark-unread-new"));
     }
-
-    if (mUnityServiceAvailable) {
-        const QString launcherId = qApp->desktopFileName() + QLatin1String(".desktop");
-
-        const QVariantMap properties{
-            {QStringLiteral("count-visible"), mCount > 0},
-            {QStringLiteral("count"), mCount}
-        };
-
-        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/org/kmail2/UnityLauncher"),
-                                                          QStringLiteral("com.canonical.Unity.LauncherEntry"),
-                                                          QStringLiteral("Update"));
-        message.setArguments({launcherId, properties});
-        QDBusConnection::sessionBus().send(message);
-    }
 }
 
-void KMSystemTray::setSystrayIconNotificationsEnabled(bool enabled)
+void KMSystemTray::setUnityServiceManager(UnityServiceManager *unityServiceManager)
 {
-    if (enabled != mIconNotificationsEnabled) {
-        mIconNotificationsEnabled = enabled;
-        updateSystemTray();
-    }
+    mUnityServiceManager = unityServiceManager;
 }
 
 /**
@@ -237,12 +200,13 @@ void KMSystemTray::slotContextMenuAboutToShow()
         delete mNewMessagesPopup;
         mNewMessagesPopup = nullptr;
     }
+    mHasUnreadMessage = false;
     mNewMessagesPopup = new QMenu();
     fillFoldersMenu(mNewMessagesPopup, kmkernel->treeviewModelSelection());
 
     connect(mNewMessagesPopup, &QMenu::triggered, this, &KMSystemTray::slotSelectCollection);
 
-    if (mCount > 0) {
+    if (mHasUnreadMessage) {
         mNewMessagesPopup->setTitle(i18n("New Messages In"));
         contextMenu()->insertAction(mSendQueued, mNewMessagesPopup->menuAction());
     }
@@ -255,14 +219,14 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
         const QModelIndex index = model->index(row, 0, parentIndex);
         const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         qint64 count = 0;
-        if (!excludeFolder(collection)) {
+        if (!mUnityServiceManager->excludeFolder(collection)) {
             Akonadi::CollectionStatistics statistics = collection.statistics();
             count = qMax(0LL, statistics.unreadCount());
             if (count > 0) {
-                if (ignoreNewMailInFolder(collection)) {
+                if (mUnityServiceManager->ignoreNewMailInFolder(collection)) {
                     count = 0;
                 } else {
-                    mCount += count;
+                    mHasUnreadMessage = true;
                 }
             }
         }
@@ -296,93 +260,21 @@ void KMSystemTray::hideKMail()
     }
 }
 
-void KMSystemTray::initListOfCollection()
+void KMSystemTray::updateToolTip(int count)
 {
-    mCount = 0;
-    const QAbstractItemModel *model = kmkernel->collectionModel();
-    if (model->rowCount() == 0) {
-        QTimer::singleShot(1000, this, &KMSystemTray::initListOfCollection);
-        return;
-    }
-    unreadMail(model);
+    setToolTipSubTitle(count == 0 ? i18n("There are no unread messages")
+                                  : i18np("1 unread message",
+                                          "%1 unread messages",
+                                          count));
+}
 
-    if (status() == KStatusNotifierItem::Passive && (mCount > 0)) {
+void KMSystemTray::updateStatus(int count)
+{
+    if (status() == KStatusNotifierItem::Passive && (count > 0)) {
         setStatus(KStatusNotifierItem::Active);
-    } else if (status() == KStatusNotifierItem::Active && (mCount == 0)) {
+    } else if (status() == KStatusNotifierItem::Active && (count == 0)) {
         setStatus(KStatusNotifierItem::Passive);
     }
-
-    //qCDebug(KMAIL_LOG)<<" mCount :"<<mCount;
-    updateCount();
-}
-
-void KMSystemTray::initUnity()
-{
-    mUnityServiceWatcher->setConnection(QDBusConnection::sessionBus());
-    mUnityServiceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration | QDBusServiceWatcher::WatchForRegistration);
-    mUnityServiceWatcher->addWatchedService(QStringLiteral("com.canonical.Unity"));
-    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceRegistered, this, [this](const QString &service) {
-        Q_UNUSED(service);
-        mUnityServiceAvailable = true;
-        updateCount();
-    });
-
-    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, [this](const QString &service) {
-        Q_UNUSED(service);
-        mUnityServiceAvailable = false;
-    });
-
-    // QDBusConnectionInterface::isServiceRegistered blocks
-    QDBusPendingCall listNamesCall = QDBusConnection::sessionBus().interface()->asyncCall(QStringLiteral("ListNames"));
-    QDBusPendingCallWatcher *callWatcher = new QDBusPendingCallWatcher(listNamesCall, this);
-    connect(callWatcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
-        QDBusPendingReply<QStringList> reply = *watcher;
-        watcher->deleteLater();
-
-        if (reply.isError()) {
-            return;
-        }
-
-        const QStringList &services = reply.value();
-
-        mUnityServiceAvailable = services.contains(QLatin1String("com.canonical.Unity"));
-        if (mUnityServiceAvailable) {
-            updateCount();
-        }
-    });
-}
-
-void KMSystemTray::unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex)
-{
-    const int rowCount = model->rowCount(parentIndex);
-    for (int row = 0; row < rowCount; ++row) {
-        const QModelIndex index = model->index(row, 0, parentIndex);
-        const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-
-        if (!excludeFolder(collection)) {
-            const Akonadi::CollectionStatistics statistics = collection.statistics();
-            const qint64 count = qMax(0LL, statistics.unreadCount());
-
-            if (count > 0) {
-                if (!ignoreNewMailInFolder(collection)) {
-                    mCount += count;
-                }
-            }
-        }
-        if (model->rowCount(index) > 0) {
-            unreadMail(model, index);
-        }
-    }
-    // Update tooltip to reflect count of unread messages
-    setToolTipSubTitle(mCount == 0 ? i18n("There are no unread messages")
-                       : i18np("1 unread message",
-                               "%1 unread messages",
-                               mCount));
-}
-
-bool KMSystemTray::hasUnreadMail() const
-{
-    return mCount != 0;
 }
 
 void KMSystemTray::slotSelectCollection(QAction *act)
@@ -397,52 +289,4 @@ void KMSystemTray::slotSelectCollection(QAction *act)
     if (mainWin && !mainWin->isVisible()) {
         activate();
     }
-}
-
-void KMSystemTray::updateSystemTray()
-{
-    initListOfCollection();
-}
-
-void KMSystemTray::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &)
-{
-    //Exclude sent mail folder
-
-    if (CommonKernel->outboxCollectionFolder().id() == id
-        || CommonKernel->sentCollectionFolder().id() == id
-        || CommonKernel->templatesCollectionFolder().id() == id
-        || CommonKernel->trashCollectionFolder().id() == id
-        || CommonKernel->draftsCollectionFolder().id() == id) {
-        return;
-    }
-    initListOfCollection();
-}
-
-bool KMSystemTray::excludeFolder(const Akonadi::Collection &collection) const
-{
-    if (!collection.isValid() || !collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
-        return true;
-    }
-    if (CommonKernel->outboxCollectionFolder() == collection
-        || CommonKernel->sentCollectionFolder() == collection
-        || CommonKernel->templatesCollectionFolder() == collection
-        || CommonKernel->trashCollectionFolder() == collection
-        || CommonKernel->draftsCollectionFolder() == collection) {
-        return true;
-    }
-
-    if (MailCommon::Util::isVirtualCollection(collection)) {
-        return true;
-    }
-    return false;
-}
-
-bool KMSystemTray::ignoreNewMailInFolder(const Akonadi::Collection &collection)
-{
-    if (collection.hasAttribute<Akonadi::NewMailNotifierAttribute>()) {
-        if (collection.attribute<Akonadi::NewMailNotifierAttribute>()->ignoreNewMail()) {
-            return true;
-        }
-    }
-    return false;
 }

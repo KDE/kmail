@@ -21,9 +21,13 @@
 #ifndef UNITYSERVICEMANAGER_H
 #define UNITYSERVICEMANAGER_H
 
+#include <QModelIndex>
 #include <QObject>
+#include <AkonadiCore/Collection>
 class QDBusServiceWatcher;
+class QAbstractItemModel;
 namespace KMail {
+class KMSystemTray;
 class UnityServiceManager : public QObject
 {
     Q_OBJECT
@@ -31,14 +35,29 @@ public:
     explicit UnityServiceManager(QObject *parent = nullptr);
     ~UnityServiceManager();
 
-public Q_SLOTS:
-    void slotSetUnread(int unread);
+    void updateSystemTray();
+    /**
+     * Use this method to disable any systray icon changing.
+     * By default this is enabled and you'll see the "new e-mail" icon whenever there's
+     * new e-mail.
+     */
+    void setSystrayIconNotificationsEnabled(bool enable);
+    bool haveSystemTrayApplet() const;
 
+    bool canQueryClose();
+    void toggleSystemTray(QWidget *parent);
+    void initListOfCollection();
+    bool excludeFolder(const Akonadi::Collection &collection) const;
+    bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
 private:
+    void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = {});
+    void slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &);
     void updateCount();
     void initUnity();
+    bool hasUnreadMail() const;
     QDBusServiceWatcher *mUnityServiceWatcher = nullptr;
-    int mCount;
+    KMail::KMSystemTray *mSystemTray = nullptr;
+    int mCount = 0;
     bool mUnityServiceAvailable = false;
 };
 }

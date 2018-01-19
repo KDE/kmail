@@ -23,7 +23,6 @@ using KPIM::BroadcastStatus;
 using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
-#include "kmsystemtray.h"
 #include "unityservicemanager.h"
 #include <MessageCore/StringUtil>
 #include "mailcommon/mailutil.h"
@@ -132,7 +131,6 @@ KMKernel::KMKernel(QObject *parent)
     mDebug = !qEnvironmentVariableIsEmpty("KDEPIM_DEBUGGING");
 
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();
-    mUnityServiceManager = new KMail::UnityServiceManager(this);
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
     QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.kmail"));
@@ -224,14 +222,13 @@ KMKernel::KMKernel(QObject *parent)
     mFolderArchiveManager = new FolderArchiveManager(this);
     mIndexedItems = new Akonadi::Search::PIM::IndexedItems(this);
     mCheckIndexingManager = new CheckIndexingManager(mIndexedItems, this);
+    mUnityServiceManager = new KMail::UnityServiceManager(this);
 }
 
 KMKernel::~KMKernel()
 {
     delete mMailService;
     mMailService = nullptr;
-
-    mSystemTray = nullptr;
 
     stopAgentInstance();
     slotSyncConfig();
@@ -482,12 +479,6 @@ void KMKernel::openReader()
     openReader(false);
 }
 
-void KMKernel::setSystrayIconNotificationsEnabled(bool enabled)
-{
-    if (mSystemTray) {
-        mSystemTray->setSystrayIconNotificationsEnabled(enabled);
-    }
-}
 
 QStringList KMKernel::accounts() const
 {
@@ -1229,7 +1220,7 @@ void KMKernel::slotConfigChanged()
 
 bool KMKernel::haveSystemTrayApplet() const
 {
-    return mSystemTray != nullptr;
+    return mUnityServiceManager->haveSystemTrayApplet();
 }
 
 QTextCodec *KMKernel::networkCodec() const
@@ -1239,8 +1230,8 @@ QTextCodec *KMKernel::networkCodec() const
 
 void KMKernel::updateSystemTray()
 {
-    if (mSystemTray && !the_shuttingDown) {
-        mSystemTray->updateSystemTray();
+    if (!the_shuttingDown) {
+        mUnityServiceManager->initListOfCollection();
     }
 }
 
@@ -1426,14 +1417,7 @@ bool KMKernel::canQueryClose()
         && KMMainWidget::mainWidgetList()->count() > 1) {
         return true;
     }
-    if (!mSystemTray) {
-        return true;
-    }
-    if (mSystemTray->hasUnreadMail()) {
-        mSystemTray->setStatus(KStatusNotifierItem::Active);
-    }
-    mSystemTray->hideKMail();
-    return false;
+    return mUnityServiceManager->canQueryClose();
 }
 
 Akonadi::Collection KMKernel::currentCollection()
@@ -1859,14 +1843,7 @@ void KMKernel::toggleSystemTray()
 {
     KMMainWidget *widget = getKMMainWidget();
     if (widget) {
-        if (!mSystemTray && KMailSettings::self()->systemTrayEnabled()) {
-            mSystemTray = new KMail::KMSystemTray(widget);
-        } else if (mSystemTray && !KMailSettings::self()->systemTrayEnabled()) {
-            // Get rid of system tray on user's request
-            qCDebug(KMAIL_LOG) << "deleting systray";
-            delete mSystemTray;
-            mSystemTray = nullptr;
-        }
+        mUnityServiceManager->toggleSystemTray(widget);
     }
 }
 
@@ -1886,9 +1863,7 @@ void KMKernel::reloadFolderArchiveConfig()
 void KMKernel::slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set)
 {
     if (set.contains("newmailnotifierattribute")) {
-        if (mSystemTray) {
-            mSystemTray->updateSystemTray();
-        }
+        mUnityServiceManager->initListOfCollection();
     }
 }
 

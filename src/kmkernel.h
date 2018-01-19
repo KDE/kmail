@@ -55,7 +55,6 @@ class AutoCorrection;
 namespace KMail {
 class MailServiceImpl;
 class UndoStack;
-class KMSystemTray;
 class UnityServiceManager;
 }
 using KMail::MailServiceImpl;
@@ -122,12 +121,6 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE void checkMail();
     Q_SCRIPTABLE void openReader();
-
-    /**
-    * Enables/disables systray icon changing when mail arrives.
-    * With this disabled the systray icon will always be the same.
-    */
-    Q_SCRIPTABLE void setSystrayIconNotificationsEnabled(bool enabled);
 
     /**
     * Pauses all background jobs and does not
@@ -521,7 +514,6 @@ private:
 
     bool mSystemNetworkStatus = true;
 
-    KMail::KMSystemTray *mSystemTray = nullptr;
     KMail::UnityServiceManager *mUnityServiceManager = nullptr;
     QHash<QString, KPIM::ProgressItem::CryptoStatus> mResourceCryptoSettingCache;
     MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor = nullptr;
