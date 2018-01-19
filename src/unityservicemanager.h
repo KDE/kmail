@@ -31,8 +31,6 @@ public:
     explicit UnityServiceManager(QObject *parent = nullptr);
     ~UnityServiceManager();
 
-    static UnityServiceManager *instance();
-
 public Q_SLOTS:
     void slotSetUnread(int unread);
 
@@ -40,7 +38,6 @@ private:
     void updateCount();
     void initUnity();
     QDBusServiceWatcher *mUnityServiceWatcher = nullptr;
-    static UnityServiceManager *mInstance;
     int mCount;
     bool mUnityServiceAvailable = false;
 };

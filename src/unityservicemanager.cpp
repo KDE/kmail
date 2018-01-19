@@ -28,15 +28,6 @@
 #include <QApplication>
 
 using namespace KMail;
-UnityServiceManager *UnityServiceManager::mInstance = nullptr;
-
-UnityServiceManager *UnityServiceManager::instance()
-{
-    if (!mInstance) {
-        mInstance = new UnityServiceManager;
-    }
-    return mInstance;
-}
 
 UnityServiceManager::UnityServiceManager(QObject *parent)
     : QObject(parent)

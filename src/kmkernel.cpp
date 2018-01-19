@@ -24,6 +24,7 @@ using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
+#include "unityservicemanager.h"
 #include <MessageCore/StringUtil>
 #include "mailcommon/mailutil.h"
 #include "pop3settings.h"
@@ -131,6 +132,7 @@ KMKernel::KMKernel(QObject *parent)
     mDebug = !qEnvironmentVariableIsEmpty("KDEPIM_DEBUGGING");
 
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();
+    mUnityServiceManager = new KMail::UnityServiceManager(this);
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
     QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.kmail"));

@@ -56,6 +56,7 @@ namespace KMail {
 class MailServiceImpl;
 class UndoStack;
 class KMSystemTray;
+class UnityServiceManager;
 }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
@@ -521,6 +522,7 @@ private:
     bool mSystemNetworkStatus = true;
 
     KMail::KMSystemTray *mSystemTray = nullptr;
+    KMail::UnityServiceManager *mUnityServiceManager = nullptr;
     QHash<QString, KPIM::ProgressItem::CryptoStatus> mResourceCryptoSettingCache;
     MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor = nullptr;
     Akonadi::EntityTreeModel *mEntityTreeModel = nullptr;
