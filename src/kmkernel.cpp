@@ -1000,8 +1000,6 @@ void KMKernel::init()
 
     the_firstStart = KMailSettings::self()->firstStart();
     KMailSettings::self()->setFirstStart(false);
-    the_previousVersion = KMailSettings::self()->previousVersion();
-    KMailSettings::self()->setPreviousVersion(QStringLiteral(KDEPIM_VERSION));
 
     the_undoStack = new KMail::UndoStack(20);
 
@@ -1880,11 +1878,6 @@ bool KMKernel::allowToDebug() const
 bool KMKernel::firstStart() const
 {
     return the_firstStart;
-}
-
-QString KMKernel::previousVersion() const
-{
-    return the_previousVersion;
 }
 
 bool KMKernel::shuttingDown() const

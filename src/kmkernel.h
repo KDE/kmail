@@ -346,7 +346,6 @@ public:
     void expireAllFoldersNow();
 
     bool firstStart() const;
-    QString previousVersion() const;
     bool shuttingDown() const;
     void setShuttingDown(bool flag);
 
@@ -491,9 +490,6 @@ private:
 
     KMail::UndoStack *the_undoStack = nullptr;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;
-    /** previous KMail version. If different from current,
-      the user has just updated. read from config */
-    QString the_previousVersion;
     /** is this the first start?  read from config */
     bool the_firstStart = false;
     /** are we going down? set from here */
