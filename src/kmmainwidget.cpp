@@ -3791,10 +3791,10 @@ void KMMainWidget::updateMessageActionsDelayed()
     }
 
     const auto col = CommonKernel->collectionFromId(CommonKernel->outboxCollectionFolder().id());
-    const qint64 nbMsgOutboxCollection = col.statistics().count();
+    const bool nbMsgOutboxCollectionIsNotNull = (col.statistics().count() > 0);
 
-    mSendQueued->setEnabled(nbMsgOutboxCollection > 0);
-    mSendActionMenu->setEnabled(nbMsgOutboxCollection > 0);
+    mSendQueued->setEnabled(nbMsgOutboxCollectionIsNotNull);
+    mSendActionMenu->setEnabled(nbMsgOutboxCollectionIsNotNull);
 
     const bool newPostToMailingList = mCurrentFolderSettings && mCurrentFolderSettings->isMailingListEnabled();
     mMessageNewList->setEnabled(newPostToMailingList);
