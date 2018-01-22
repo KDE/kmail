@@ -1003,7 +1003,7 @@ void KMKernel::init()
     the_previousVersion = KMailSettings::self()->previousVersion();
     KMailSettings::self()->setPreviousVersion(QStringLiteral(KDEPIM_VERSION));
 
-    the_undoStack = new UndoStack(20);
+    the_undoStack = new KMail::UndoStack(20);
 
     the_msgSender = new MessageComposer::AkonadiSender;
     // filterMgr->dump();

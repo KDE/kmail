@@ -57,8 +57,6 @@ class MailServiceImpl;
 class UndoStack;
 class UnityServiceManager;
 }
-using KMail::MailServiceImpl;
-using KMail::UndoStack;
 namespace MessageComposer {
 class AkonadiSender;
 }
@@ -333,7 +331,7 @@ public:
     const QString xmlGuiInstanceName() const;
     void setXmlGuiInstanceName(const QString &instance);
 
-    UndoStack *undoStack() const;
+    KMail::UndoStack *undoStack() const;
     MessageComposer::MessageSender *msgSender() override;
 
     void openFilterDialog(bool createDummyFilter = true) override;
@@ -491,7 +489,7 @@ private:
     void openReader(bool onlyCheck);
     QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
 
-    UndoStack *the_undoStack = nullptr;
+    KMail::UndoStack *the_undoStack = nullptr;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;
     /** previous KMail version. If different from current,
       the user has just updated. read from config */
@@ -510,7 +508,7 @@ private:
 
     QTimer *mBackgroundTasksTimer = nullptr;
     MailCommon::JobScheduler *mJobScheduler = nullptr;
-    MailServiceImpl *mMailService = nullptr;
+    KMail::MailServiceImpl *mMailService = nullptr;
 
     bool mSystemNetworkStatus = true;
 
