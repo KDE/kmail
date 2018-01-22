@@ -317,7 +317,7 @@ public:
 
     void recoverDeadLetters();
     void closeAllKMailWindows();
-    void cleanup(void);
+    void cleanup();
     void quit();
     bool doSessionManagement();
     bool firstInstance() const;

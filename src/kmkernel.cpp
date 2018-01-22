@@ -1064,7 +1064,7 @@ void KMKernel::closeAllKMailWindows()
     }
 }
 
-void KMKernel::cleanup(void)
+void KMKernel::cleanup()
 {
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceStatusChanged(Akonadi::AgentInstance)));
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)));
