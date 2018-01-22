@@ -57,7 +57,7 @@ void KMComposerCreateNewComposerJob::slotCreateNewComposer(bool forceCursorPosit
     deleteLater();
 }
 
-void KMComposerCreateNewComposerJob::setCurrentIdentity(const uint &currentIdentity)
+void KMComposerCreateNewComposerJob::setCurrentIdentity(uint currentIdentity)
 {
     mCurrentIdentity = currentIdentity;
 }

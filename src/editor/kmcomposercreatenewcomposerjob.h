@@ -33,7 +33,7 @@ public:
     void start();
     void setCollectionForNewMessage(const Akonadi::Collection &collectionForNewMessage);
 
-    void setCurrentIdentity(const uint &currentIdentity);
+    void setCurrentIdentity(uint currentIdentity);
 
 private:
     Q_DISABLE_COPY(KMComposerCreateNewComposerJob)
