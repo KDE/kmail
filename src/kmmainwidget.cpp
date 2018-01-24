@@ -53,7 +53,6 @@
 #include "job/removeduplicatemessageinfolderandsubfolderjob.h"
 #include "sieveimapinterface/kmsieveimappasswordprovider.h"
 #include <KSieveUi/SieveDebugDialog>
-using KSieveUi::SieveDebugDialog;
 
 #include <AkonadiWidgets/CollectionMaintenancePage>
 #include "collectionpage/collectionquotapage.h"
