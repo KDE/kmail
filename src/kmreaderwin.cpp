@@ -289,13 +289,13 @@ QString KMReaderWin::newFeaturesMD5()
 void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantHash &_data)
 {
     QVariantHash data = _data;
-    if (!data.contains(QStringLiteral("icon"))) {
+    if (!data.contains(QLatin1String("icon"))) {
         data[QStringLiteral("icon")] = QStringLiteral("kmail");
     }
-    if (!data.contains(QStringLiteral("name"))) {
+    if (!data.contains(QLatin1String("name"))) {
         data[QStringLiteral("name")] = i18n("KMail");
     }
-    if (!data.contains(QStringLiteral("subtitle"))) {
+    if (!data.contains(QLatin1String("subtitle"))) {
         data[QStringLiteral("subtitle")] = i18n("The KDE Mail Client");
     }
 
@@ -784,10 +784,10 @@ void KMReaderWin::updateHtmlActions()
     } else {
         const QStringList customs = mSearchedAddress.customs();
         for (const QString &custom : customs) {
-            if (custom.contains(QStringLiteral("MailPreferedFormatting"))) {
+            if (custom.contains(QLatin1String("MailPreferedFormatting"))) {
                 const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailPreferedFormatting"));
                 mViewAsHtml->setChecked(value == QLatin1String("HTML"));
-            } else if (custom.contains(QStringLiteral("MailAllowToRemoteContent"))) {
+            } else if (custom.contains(QLatin1String("MailAllowToRemoteContent"))) {
                 const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailAllowToRemoteContent"));
                 mLoadExternalReference->setChecked((value == QLatin1String("TRUE")));
             }
