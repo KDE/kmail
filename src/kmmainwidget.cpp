@@ -28,7 +28,6 @@
 #include "undostack.h"
 #include "kmcommands.h"
 #include "kmmainwin.h"
-#include "kmsystemtray.h"
 #include <TemplateParser/CustomTemplatesMenu>
 #include "MailCommon/FolderSelectionDialog"
 #include "MailCommon/FolderTreeWidget"
