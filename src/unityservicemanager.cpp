@@ -188,6 +188,7 @@ void UnityServiceManager::initUnity()
         watcher->deleteLater();
 
         if (reply.isError()) {
+            qCWarning(KMAIL_LOG) << "DBus reported an error " << reply.error().message();
             return;
         }
 
