@@ -73,7 +73,7 @@ void IncorrectIdentityFolderWarning::updateText()
     }
     if (mFccIsInvalid) {
         addNewLine(text);
-        text += i18n("Sent Folder is not defined. Please verify it before to send it.");
+        text += i18n("Sent Folder is not defined. Please set it before sending the mail.");
     }
     if (mIdentityIsInvalid) {
         addNewLine(text);
