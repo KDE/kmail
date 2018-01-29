@@ -238,8 +238,8 @@ void KMCommandsTest::waitForMainWindowToClose()
 int main(int argc, char *argv[])
 {
     QTemporaryDir config;
-    setenv("LC_ALL", "C", 1);
-    setenv("XDG_CONFIG_HOME", config.path().toUtf8(), 1);
+    qputenv("LC_ALL", "C");
+    qputenv("XDG_CONFIG_HOME", config.path().toUtf8());
     QApplication app(argc, argv);
     app.setAttribute(Qt::AA_Use96Dpi, true);
     QTEST_DISABLE_KEYPAD_NAVIGATION
