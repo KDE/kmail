@@ -133,9 +133,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     // Main layout
-    QHBoxLayout *hb1 = new QHBoxLayout(this);           // box with 2 columns
-    QVBoxLayout *vb1 = new QVBoxLayout();           // first with 2 groupboxes
-    QVBoxLayout *vb2 = new QVBoxLayout();           // second with 1 groupbox
+    QGridLayout *grid = new QGridLayout(this);
 
     // "Signature" group
     QGroupBox *groupBox = new QGroupBox(i18nc("@title:group", "Signature"));
@@ -191,9 +189,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     connect(mStripSignatureCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupVBoxLayout->addWidget(mStripSignatureCheck);
+    groupVBoxLayout->addStretch(1);
 
     groupBox->setLayout(groupVBoxLayout);
-    vb1->addWidget(groupBox);
+    grid->addWidget(groupBox, 0, 0);
 
     // "Format" group
     groupBox = new QGroupBox(i18nc("@title:group", "Format"));
@@ -283,30 +282,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->addWidget(mImprovePlainTextOfHtmlMessage, row, 0, 1, -1);
     ++row;
 
-    // Spacing
-    ++row;
-
-    // "Autosave interval" spinbox
-    mAutoSave = new KPluralHandlingSpinBox(this);
-    mAutoSave->setMaximum(60);
-    mAutoSave->setMinimum(0);
-    mAutoSave->setSingleStep(1);
-    mAutoSave->setValue(1);
-    mAutoSave->setObjectName(QStringLiteral("kcfg_AutosaveInterval"));
-    mAutoSave->setSpecialValueText(i18n("No autosave"));
-    mAutoSave->setSuffix(ki18ncp("Interval suffix", " minute", " minutes"));
-
-    helpText = i18n("Automatically save the message at this specified interval");
-    mAutoSave->setToolTip(helpText);
-    mAutoSave->setWhatsThis(helpText);
-
-    QLabel *label = new QLabel(KMailSettings::self()->autosaveIntervalItem()->label(), this);
-    label->setBuddy(mAutoSave);
-
-    connect(mAutoSave, QOverload<int>::of(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
-
-    groupGridLayout->addWidget(label, row, 0);
-    groupGridLayout->addWidget(mAutoSave, row, 1);
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
     ++row;
@@ -328,9 +303,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mForwardTypeCombo, row, 1);
 #endif
+    groupGridLayout->setRowStretch(row, 1);
 
     groupBox->setLayout(groupGridLayout);
-    vb1->addWidget(groupBox);
+    grid->addWidget(groupBox, 1, 0);
 
     // "Recipients" group
     groupBox = new QGroupBox(i18nc("@title:group", "Recipients"));
@@ -408,7 +384,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecipients->setToolTip(helpText);
     mMaximumRecipients->setWhatsThis(helpText);
 
-    label = new QLabel(MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this);
+    QLabel *label = new QLabel(MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this);
     label->setBuddy(mMaximumRecipients);
 
     connect(mMaximumRecipients, QOverload<int>::of(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
@@ -462,16 +438,44 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     QPushButton *configureCompletionButton = new QPushButton(i18n("Configure Completion..."), this);
     connect(configureCompletionButton, &QAbstractButton::clicked, this, &ComposerPageGeneralTab::slotConfigureAddressCompletion);
     groupGridLayout->addWidget(configureCompletionButton, row, 1, 1, 2);
+    groupGridLayout->setRowStretch(row, 1);
 
     groupBox->setLayout(groupGridLayout);
-    vb2->addWidget(groupBox);
+    grid->addWidget(groupBox, 0, 1);
 
-    // Finish up main layout
-    vb1->addStretch(1);
-    vb2->addStretch(1);
+    groupBox = new QGroupBox(i18nc("@title:group", "Autosave"));
+    groupGridLayout = new QGridLayout();
+    row = 0;
 
-    hb1->addLayout(vb1);
-    hb1->addLayout(vb2);
+
+    // "Autosave interval" spinbox
+    mAutoSave = new KPluralHandlingSpinBox(this);
+    mAutoSave->setMaximum(60);
+    mAutoSave->setMinimum(0);
+    mAutoSave->setSingleStep(1);
+    mAutoSave->setValue(1);
+    mAutoSave->setObjectName(QStringLiteral("kcfg_AutosaveInterval"));
+    mAutoSave->setSpecialValueText(i18n("No autosave"));
+    mAutoSave->setSuffix(ki18ncp("Interval suffix", " minute", " minutes"));
+
+    helpText = i18n("Automatically save the message at this specified interval");
+    mAutoSave->setToolTip(helpText);
+    mAutoSave->setWhatsThis(helpText);
+
+    label = new QLabel(KMailSettings::self()->autosaveIntervalItem()->label(), this);
+    label->setBuddy(mAutoSave);
+
+    connect(mAutoSave, QOverload<int>::of(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
+
+    groupGridLayout->addWidget(label, row, 0);
+    groupGridLayout->addWidget(mAutoSave, row, 1);
+    row++;
+    groupGridLayout->setRowStretch(row, 1);
+    groupBox->setLayout(groupGridLayout);
+
+    grid->addWidget(groupBox, 1, 1);
+
+    grid->setRowStretch(2, 1);
 }
 
 void ComposerPage::GeneralTab::doResetToDefaultsOther()
