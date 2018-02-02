@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Send Later Agent
+Name[ar]=وكيل الإرسال لاحقًا
 Name[bs]=Agent za kasnije slanje
 Name[ca]=Agent per enviar més tard
 Name[ca@valencia]=Agent per enviar més tard
@@ -39,6 +40,7 @@ Name[x-test]=xxSend Later Agentxx
 Name[zh_CN]=稍后发送代理
 Name[zh_TW]=稍後傳送代理程式
 Comment=Send Later Agent
+Comment[ar]=وكيل الإرسال لاحقًا
 Comment[bs]=Agent za slanje kasnije
 Comment[ca]=Agent per enviar més tard
 Comment[ca@valencia]=Agent per enviar més tard

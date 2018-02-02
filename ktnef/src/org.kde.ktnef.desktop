@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=KTnef
 Name[af]=KTnef
+Name[ar]=KTnef
 Name[ast]=KTnef
 Name[bg]=KTnef
 Name[br]=KTnef
@@ -57,6 +58,7 @@ Name[x-test]=xxKTnefxx
 Name[zh_CN]=KTnef
 Name[zh_TW]=KTnef
 GenericName=TNEF File Viewer (proprietary format used by outlook)
+GenericName[ar]=عارض ملفّات TNEF (نسق مملوك يستخدمه «آوتلوك»)
 GenericName[bs]=TNEF File Viewer (zakonom zaštićeni format korišten od strane outlook-a)
 GenericName[ca]=Visor de fitxers TNEF (format utilitzat per Outlook)
 GenericName[ca@valencia]=Visor de fitxers TNEF (format utilitzat per Outlook)
@@ -100,6 +102,7 @@ Type=Application
 X-DocPath=ktnef/index.html
 Comment=A viewer/extractor for TNEF files
 Comment[af]='n Leeser en data onttrekker vir TNEF lêers
+Comment[ar]=عارض/مستخرج لملفّات TNEF
 Comment[bg]=Програма за преглед и извличане на файлове TNEF
 Comment[bs]=Pregledač/izdvajač iz TNEF datoteka
 Comment[ca]=Un visor/extractor pels fitxers TNEF

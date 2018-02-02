@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=KMail
 Name[af]=KMail
-Name[ar]=برنامج البريد KMail
+Name[ar]=بريدك
 Name[be]=KMail
 Name[bg]=KMail
 Name[br]=KMail
@@ -153,6 +153,7 @@ GenericName[x-test]=xxMail Clientxx
 GenericName[zh_CN]=邮件客户程序
 GenericName[zh_TW]=收發信軟體
 Comment=Send, receive and manage your mail with KMail
+Comment[ar]=أرسل البريد واستلمه وأدره عبر «بريدك»
 Comment[ca]=Envia, rep i administra el vostre correu amb el KMail
 Comment[ca@valencia]=Envia, rep i administra el vostre correu amb el KMail
 Comment[da]=Send, modtag og håndtér din e-mail med KMail
@@ -197,6 +198,7 @@ Actions=Composer;CheckMail;
 
 [Desktop Action Composer]
 Name=New Message...
+Name[ar]=رسالة جديدة...
 Name[ca]=Missatge nou...
 Name[ca@valencia]=Missatge nou...
 Name[es]=Nuevo mensaje...
@@ -214,6 +216,7 @@ Exec=kmail --composer
 
 [Desktop Action CheckMail]
 Name=Check Mail
+Name[ar]=التمس البريد
 Name[ca]=Comprova el correu
 Name[ca@valencia]=Comprova el correu
 Name[cs]=Zkontrolovat poštu

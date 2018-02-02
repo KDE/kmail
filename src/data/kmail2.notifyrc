@@ -2,7 +2,7 @@
 IconName=kmail
 Comment=KMail
 Comment[af]=KMail
-Comment[ar]=برنامج البريد KMail
+Comment[ar]=بريدك
 Comment[bg]=KMail
 Comment[br]=KMail
 Comment[bs]=KMail
@@ -72,6 +72,7 @@ Comment[zh_TW]=KMail 郵件軟體
 
 [Event/akonadi-instance-warning]
 Name=Akonadi server sent a warning
+Name[ar]=أرسل خادوم «أكونادي» تحذيرًا
 Name[bs]=Akonadi server poslao upozorenje
 Name[ca]=El servidor Akonadi ha enviat un avís
 Name[ca@valencia]=El servidor Akonadi ha enviat un avís
@@ -115,6 +116,7 @@ Name[x-test]=xxAkonadi server sent a warningxx
 Name[zh_CN]=Akonadi 服务器发送了一条警告信息
 Name[zh_TW]=Akonadi 伺服器送出一個警告
 Comment=Akonadi server sent a warning
+Comment[ar]=أرسل خادوم «أكونادي» تحذيرًا
 Comment[bs]=Akonadi server poslao upozorenje
 Comment[ca]=El servidor Akonadi ha enviat un avís
 Comment[ca@valencia]=El servidor Akonadi ha enviat un avís
@@ -161,6 +163,7 @@ Action=None
 
 [Event/akonadi-instance-error]
 Name=Akonadi server sent an error
+Name[ar]=أرسل خادوم «أكونادي» خطأً
 Name[bs]=Akonadi server poslao grešku
 Name[ca]=El servidor Akonadi ha enviat un error
 Name[ca@valencia]=El servidor Akonadi ha enviat un error
@@ -204,6 +207,7 @@ Name[x-test]=xxAkonadi server sent an errorxx
 Name[zh_CN]=Akonadi 服务器发送了一条错误信息
 Name[zh_TW]=Akonadi 伺服器送出一個錯誤
 Comment=Akonadi server sent an error
+Comment[ar]=أرسل خادوم «أكونادي» خطأً
 Comment[bs]=Akonadi server poslao grešku
 Comment[ca]=El servidor Akonadi ha enviat un error
 Comment[ca@valencia]=El servidor Akonadi ha enviat un error
@@ -250,6 +254,7 @@ Action=None
 
 [Event/akonadi-resource-broken]
 Name=A resource is broken
+Name[ar]=عطُب مورد
 Name[bs]=Resurs je prekinut
 Name[ca]=Hi ha un recurs trencat
 Name[ca@valencia]=Hi ha un recurs trencat
@@ -293,6 +298,7 @@ Name[x-test]=xxA resource is brokenxx
 Name[zh_CN]=资源已损坏
 Name[zh_TW]=某個資源已損毀
 Comment=A resource change its state to broken
+Comment[ar]=تغيّرت حالة إحدى الموارد إلى ”معطوب“
 Comment[bs]=Promjena resursa  je prekinuta
 Comment[ca]=Un recurs canvia el seu estat a trencat
 Comment[ca@valencia]=Un recurs canvia el seu estat a trencat
@@ -338,6 +344,7 @@ Action=Popup
 
 [Event/mail-check-error]
 Name=Error While Checking Mail
+Name[ar]=خطأ أثناء التماس البريد
 Name[bs]=Greška prilikom provjere pošte
 Name[ca]=Error en comprovar el correu
 Name[ca@valencia]=Error en comprovar el correu
@@ -385,6 +392,7 @@ Name[x-test]=xxError While Checking Mailxx
 Name[zh_CN]=检查邮件时出错
 Name[zh_TW]=檢查郵件時發生錯誤
 Comment=There was an error while checking for new mail
+Comment[ar]=حدث خطأ أثناء التماس البريد الجديد
 Comment[bs]=Nastala je greška prilikom provjere ima li novog maila
 Comment[ca]=S'ha produït un error en comprovar el correu nou
 Comment[ca@valencia]=S'ha produït un error en comprovar el correu nou
@@ -435,6 +443,7 @@ Action=Popup
 
 [Event/folderarchivedone]
 Name=Archive Mails in Folder done
+Name[ar]=تمّت أرشفة البريد في المجلّد
 Name[bs]=Arhiviranje mailova u folder gotovo
 Name[ca]=S'ha realitzat l'arxivat del correu a la carpeta
 Name[ca@valencia]=S'ha realitzat l'arxivat del correu a la carpeta
@@ -476,6 +485,7 @@ Action=None
 
 [Event/folderarchiveerror]
 Name=Folder Archive Error
+Name[ar]=خطأ في أرشفة المجلّد
 Name[bs]=Greška arhiviranja foldera
 Name[ca]=Error en arxivar la carpeta
 Name[ca@valencia]=Error en arxivar la carpeta

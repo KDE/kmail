@@ -7,6 +7,7 @@ Actions=sendto;
 [Desktop Action sendto]
 Icon=kmail
 Name=Send as Email Attachment
+Name[ar]=أرسِل كمرفق بالبريد
 Name[bs]=Pošalji kao dodatak elektronske pošte
 Name[ca]=Envia com a adjunt a correu
 Name[ca@valencia]=Envia com a adjunt a correu
