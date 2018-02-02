@@ -44,6 +44,7 @@
   <name xml:lang="zh-CN">KMail</name>
   <name xml:lang="zh-TW">KMail</name>
   <summary>Email application</summary>
+  <summary xml:lang="ar">تطبيق البريد الإلكترونيّ</summary>
   <summary xml:lang="ca">Aplicació de correu electrònic</summary>
   <summary xml:lang="ca-valencia">Aplicació de correu electrònic</summary>
   <summary xml:lang="cs">E-mailová aplikace</summary>
@@ -71,7 +72,7 @@
     <p>
       KMail is the email component of Kontact, the integrated personal information manager from KDE.
     </p>
-    <p xml:lang="ar">«بريدك» هو مكوّن البريد ل‍«تراسلك»، مدير المعلومات الشّخصيّة المتكامل لكدي.</p>
+    <p xml:lang="ar">«بريدك» هو مكوّن البريد لِ‍«متراسلك»، مدير المعلومات الشّخصيّة المتكامل لِ‍«كدي».</p>
     <p xml:lang="ca">El KMail és el component de correu electrònic del Kontact, el gestor per a la informació personal integrat del KDE.</p>
     <p xml:lang="ca-valencia">El KMail és el component de correu electrònic del Kontact, el gestor per a la informació personal integrat del KDE.</p>
     <p xml:lang="de">KMail ist die E-Mail-Komponente von Kontact, der integrierten persönlichen Informationsverwaltung für KDE.</p>
@@ -245,7 +246,7 @@
       <li xml:lang="zh-CN">支持纯文本和安全登录，使用 SSL 和 TLS。</li>
       <li xml:lang="zh-TW">支援純文字與透過 SSL 與 TLS安全登入</li>
       <li>Integration of international character sets and spell-checking (as-you-type and on demand)</li>
-      <li xml:lang="ar">تكامل أطقم المحارف العالميّة وتدقيق الهجاء (عند الكتابة وعند الطّلب)</li>
+      <li xml:lang="ar">تكامل أطقم المحارف العالميّة وتدقيق الإملاء (عند الكتابة وعند الطّلب)</li>
       <li xml:lang="ca">Integra els jocs de caràcters internacionals i la verificació ortogràfica (mentre escriviu i sota demanda)</li>
       <li xml:lang="ca-valencia">Integra els jocs de caràcters internacionals i la verificació ortogràfica (mentre escriviu i sota demanda)</li>
       <li xml:lang="de">Integration von internationalen Zeichensätzen und einer Rechtschreibprüfung bei der Eingabe oder auf Anforderung</li>
@@ -278,7 +279,7 @@
       <li xml:lang="zh-CN">集成国际字符集支持和拼写检查（输入即检查，可以按照需求配置）</li>
       <li xml:lang="zh-TW">整合國際字元集與拼字檢查（輸入時即時檢查）</li>
       <li>Native support for inline OpenPGP, PGP/MIME, and S/MIME.</li>
-      <li xml:lang="ar">دعم أصيل ل‍OpenPGP، وPGP/MIME وS/MIME ضمن السّياق.</li>
+      <li xml:lang="ar">دعم أصيل لِ‍OpenPGP، وPGP/MIME وS/MIME ضمن السّياق.</li>
       <li xml:lang="ca">Implementació nativa per a OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="ca-valencia">Implementació nativa per a OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="de">Native Unterstützung für Inline-OpenPGP, PGP/MIME und S/MIME.</li>
@@ -546,7 +547,7 @@
       <li xml:lang="zh-CN">可以从许多其它客户端导入邮件</li>
       <li xml:lang="zh-TW">可以從其它郵件程式中匯入信件</li>
       <li>Searching in IMAP folders fully supported</li>
-      <li xml:lang="ar">البحث في مجلّدات IMAP مدعوم بالكامل</li>
+      <li xml:lang="ar">دعم كامل للبحث في مجلّدات IMAP</li>
       <li xml:lang="ca">La cerca a les carpetes IMAP està totalment implementada</li>
       <li xml:lang="ca-valencia">La busca a les carpetes IMAP està totalment implementada</li>
       <li xml:lang="de">Suche in IMAP-Ordnern wird vollständig unterstützt</li>
@@ -579,7 +580,7 @@
       <li xml:lang="zh-CN">完全支持在 IMAP 文件夹内进行搜索</li>
       <li xml:lang="zh-TW">完整支援在 IMAP 資料夾中搜尋</li>
       <li>Highly integrated with other Kontact components</li>
-      <li xml:lang="ar">متكامل مع مكوّنات «تراسلك» الأخرى</li>
+      <li xml:lang="ar">متكامل مع مكوّنات «متراسلك» الأخرى</li>
       <li xml:lang="ca">Altament integrat amb els altres components del Kontact</li>
       <li xml:lang="ca-valencia">Altament integrat amb els altres components del Kontact</li>
       <li xml:lang="de">Gut in andere Kontact-Componenten integriert</li>
@@ -612,7 +613,7 @@
       <li xml:lang="zh-CN">与其它 Kontact 组件高度集成</li>
       <li xml:lang="zh-TW">與其他 Kontact 組件高度整合</li>
       <li>Encrypted password saving in KWallet</li>
-      <li xml:lang="ar">حفظ كلمات المرور معمّاة في «محفظتك»</li>
+      <li xml:lang="ar">حفظ كلمات السّرّ معمّاة في «محفظتك»</li>
       <li xml:lang="ca">Desa la contrasenya encriptada al KWallet</li>
       <li xml:lang="ca-valencia">Guarda la contrasenya encriptada al KWallet</li>
       <li xml:lang="de">Verschlüsselte Speicherung von Passwörtern in KWallet</li>
@@ -743,7 +744,7 @@
       <li xml:lang="zh-CN">可以使用表情符号替换文字 smilies</li>
       <li xml:lang="zh-TW">可以用表情符號取代文字式的表情符號</li>
       <li>Displays the sender's picture or avatar if present in the address book</li>
-      <li xml:lang="ar">عرض صورة المرسل أو صورة أفاتار إن وُجدت في دفتر العناوين</li>
+      <li xml:lang="ar">عرض صورة المرسل أو صورة أڤاتار إن وُجدت في دفتر العناوين</li>
       <li xml:lang="ca">Mostra la imatge o avatar del remitent si està present a la llibreta d'adreces</li>
       <li xml:lang="ca-valencia">Mostra la imatge o avatar del remitent si està present a la llibreta d'adreces</li>
       <li xml:lang="de">Zeigt das Bild oder den Avatar des Absenders an, sofern im Adressbuch eines vorhanden ist</li>
