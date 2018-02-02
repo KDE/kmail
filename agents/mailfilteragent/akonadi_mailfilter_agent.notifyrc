@@ -1,6 +1,7 @@
 [Global]
 IconName=view-filter
 Comment=Mail Filter Agent
+Comment[ar]=عميل ترشيح البريد
 Comment[bs]=Agent poštanskog filtera
 Comment[ca]=Agent per filtrar el correu
 Comment[ca@valencia]=Agent per filtrar el correu
@@ -44,6 +45,7 @@ Comment[x-test]=xxMail Filter Agentxx
 Comment[zh_CN]=邮件过滤代理
 Comment[zh_TW]=郵件過濾代理程式
 Name=Mail Filter Agent
+Name[ar]=عميل ترشيح البريد
 Name[bs]=Agent poštanskog filtera
 Name[ca]=Agent per filtrar el correu
 Name[ca@valencia]=Agent per filtrar el correu
@@ -89,6 +91,7 @@ Name[zh_TW]=郵件過濾代理程式
 
 [Event/mailfilterlogenabled]
 Name=Mail filter log enabled
+Name[ar]=فُعّل تسجيل مرشّح البريد
 Name[bs]=Poštanski filter omogućen
 Name[ca]=Activat el registre pel filtratge de correu
 Name[ca@valencia]=Activat el registre pel filtratge de correu
@@ -135,6 +138,7 @@ Action=Popup
 
 [Event/mailfilterjoberror]
 Name=An error occurred during filtering
+Name[ar]=حدث خطأ أثناء التّرشيح
 Name[ca]=S'ha detectat un error durant el filtratge
 Name[ca@valencia]=S'ha detectat un error durant el filtratge
 Name[da]=Der opstod en fejl under filtrering

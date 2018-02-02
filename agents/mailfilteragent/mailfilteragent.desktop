@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Mail Filter Agent
+Name[ar]=عميل ترشيح البريد
 Name[bs]=Agent poštanskog filtera
 Name[ca]=Agent per filtrar el correu
 Name[ca@valencia]=Agent per filtrar el correu
@@ -43,6 +44,7 @@ Name[x-test]=xxMail Filter Agentxx
 Name[zh_CN]=邮件过滤代理
 Name[zh_TW]=郵件過濾代理程式
 Comment=Extension to filter emails
+Comment[ar]=امتداد لترشيح البريد
 Comment[bs]=Proširenje za filtriranje elektronske pošte
 Comment[ca]=Extensió per a filtrar correus
 Comment[ca@valencia]=Extensió per a filtrar correus

@@ -1,6 +1,7 @@
 [Global]
 IconName=kmail
 Comment=Archive Mail Agent
+Comment[ar]=وكيل أرشفة البريد
 Comment[bs]=Arhiva poštanskih agenata
 Comment[ca]=Agent per arxivar el correu
 Comment[ca@valencia]=Agent per arxivar el correu
@@ -44,6 +45,7 @@ Comment[x-test]=xxArchive Mail Agentxx
 Comment[zh_CN]=邮件归档代理
 Comment[zh_TW]=歸檔郵件代理程式
 Name=Archive Mail Agent
+Name[ar]=وكيل أرشفة البريد
 Name[bs]=Arhiva poštanskih agenata
 Name[ca]=Agent per arxivar el correu
 Name[ca@valencia]=Agent per arxivar el correu
@@ -89,6 +91,7 @@ Name[zh_TW]=歸檔郵件代理程式
 
 [Event/archivemailfinished]
 Name=Archive Mail finished
+Name[ar]=انتهت أرشفة البريد
 Name[bs]=Arhiva završene pošte
 Name[ca]=Ha finalitzat l'arxivat del correu
 Name[ca@valencia]=Ha finalitzat l'arxivat del correu
@@ -134,6 +137,7 @@ Action=Popup
 
 [Event/archivemailstarted]
 Name=Archive Mail started
+Name[ar]=بدأت أرشفة البريد
 Name[bs]=Arhiva započete pošte
 Name[ca]=S'ha iniciat l'arxivat del correu
 Name[ca@valencia]=S'ha iniciat l'arxivat del correu
@@ -179,6 +183,7 @@ Action=Popup
 
 [Event/archivemailfolderdoesntexist]
 Name=Directory does not exist
+Name[ar]=الدّليل غير موجود
 Name[ca]=El directori no existeix
 Name[ca@valencia]=El directori no existeix
 Name[cs]=Adresář neexistuje
@@ -217,6 +222,7 @@ Action=Popup
 
 [Event/archivemailerror]
 Name=Archive Mail Error
+Name[ar]=خطأ في أرشفة البريد
 Name[bs]=arhiva pogrešne pošte
 Name[ca]=Error en arxivar el correu
 Name[ca@valencia]=Error en arxivar el correu
