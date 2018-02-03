@@ -1,5 +1,5 @@
 <!DOCTYPE gui SYSTEM "kpartgui.dtd" >
-<gui version="517" name="kmcomposer" translationDomain="kmail">
+<gui version="518" name="kmcomposer" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -119,7 +119,7 @@
   <Separator/>
   <Action name="add_emoticon" />
   <Separator/>
-  <ActionList name="kmaileditor_toolbar_action"/>
+  <ActionList name="kmaileditor_toolbar_actions"/>
  </ToolBar>
  <ToolBar noMerge="1" newline="true" hidden="true" enable="0" name="htmlToolBar" iconText="icononly" >
   <text>HTML Toolbar</text>
