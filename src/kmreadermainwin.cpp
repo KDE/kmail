@@ -571,10 +571,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 replyForwardMenu = true;
             }
 
-            if (col.isValid() && CommonKernel->folderIsSentMailFolder(col)) {
-                menu->addAction(mMsgActions->sendAgainAction());
-            }
-
             if (replyForwardMenu) {
                 // add the reply and forward actions only if we are not in a sent-mail,
                 // templates or drafts folder
@@ -582,6 +578,12 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 menu->addAction(mMsgActions->forwardMenu());
                 menu->addSeparator();
             }
+
+            if (col.isValid() && CommonKernel->folderIsSentMailFolder(col)) {
+                menu->addAction(mMsgActions->sendAgainAction());
+                menu->addSeparator();
+            }
+
             menu->addAction(copyActionMenu(menu));
             menu->addAction(moveActionMenu(menu));
             menu->addSeparator();
