@@ -189,6 +189,11 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     ac->addAction(QStringLiteral("message_followup_reminder"), mAddFollowupReminderAction);
     connect(mAddFollowupReminderAction, &QAction::triggered, this, &MessageActions::slotAddFollowupReminder);
 
+    mSendAgainAction = new QAction(i18n("Send A&gain..."), this);
+    ac->addAction(QStringLiteral("send_again"), mSendAgainAction);
+    connect(mSendAgainAction, &QAction::triggered, this, &MessageActions::slotResendMessage);
+
+
     updateActions();
 }
 
@@ -682,6 +687,20 @@ void MessageActions::slotDebugAkonadiSearch()
     dlg->setSearchType(Akonadi::Search::AkonadiSearchDebugSearchPathComboBox::Emails);
     dlg->doSearch();
     dlg->show();
+}
+
+void MessageActions::slotResendMessage()
+{
+    if (!mCurrentItem.isValid()) {
+        return;
+    }
+    KMCommand *command = new KMResendMessageCommand(mParent, mCurrentItem);
+    command->start();
+}
+
+QAction *MessageActions::sendAgainAction() const
+{
+    return mSendAgainAction;
 }
 
 void MessageActions::slotAddFollowupReminder()

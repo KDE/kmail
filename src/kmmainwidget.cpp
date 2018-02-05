@@ -1617,18 +1617,6 @@ void KMMainWidget::slotUseTemplate()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotResendMsg()
-{
-    const Akonadi::Item msg = mMessagePane->currentItem();
-    if (!msg.isValid()) {
-        return;
-    }
-    KMCommand *command = new KMResendMessageCommand(this, msg);
-
-    command->start();
-}
-
-//-----------------------------------------------------------------------------
 // Message moving and permanent deletion
 //
 
@@ -2693,7 +2681,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu.addAction(mMsgActions->forwardMenu());
         }
         if (parentCol.isValid() && CommonKernel->folderIsSentMailFolder(parentCol)) {
-            menu.addAction(sendAgainAction());
+            menu.addAction(mMsgActions->sendAgainAction());
         }
         menu.addAction(mailingListActionMenu());
         menu.addSeparator();
@@ -3023,10 +3011,6 @@ void KMMainWidget::setupActions()
     connect(mMessageNewList, &QAction::triggered,
             this, &KMMainWidget::slotPostToML);
     actionCollection()->setDefaultShortcut(mMessageNewList, QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_N));
-
-    mSendAgainAction = new QAction(i18n("Send A&gain..."), this);
-    actionCollection()->addAction(QStringLiteral("send_again"), mSendAgainAction);
-    connect(mSendAgainAction, &QAction::triggered, this, &KMMainWidget::slotResendMsg);
 
     //----- Create filter actions
     mFilterMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("&Create Filter"), this);
@@ -3768,7 +3752,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     QList< QAction *> actionList;
     bool statusSendAgain = single_actions && ((currentMessage.isValid() && status.isSent()) || (currentMessage.isValid() && CommonKernel->folderIsSentMailFolder(mCurrentCollection)));
     if (statusSendAgain) {
-        actionList << mSendAgainAction;
+        actionList << mMsgActions->sendAgainAction();
     }
     if (single_actions) {
         actionList << mSaveAttachmentsAction;
@@ -3778,7 +3762,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     }
     mGUIClient->unplugActionList(QStringLiteral("messagelist_actionlist"));
     mGUIClient->plugActionList(QStringLiteral("messagelist_actionlist"), actionList);
-    mSendAgainAction->setEnabled(statusSendAgain);
+    mMsgActions->sendAgainAction()->setEnabled(statusSendAgain);
 
     mSaveAsAction->setEnabled(single_actions);
 
@@ -4258,11 +4242,6 @@ KActionMenu *KMMainWidget::filterMenu() const
 KActionMenu *KMMainWidget::mailingListActionMenu() const
 {
     return mMsgActions->mailingListActionMenu();
-}
-
-QAction *KMMainWidget::sendAgainAction() const
-{
-    return mSendAgainAction;
 }
 
 QAction *KMMainWidget::sendQueuedAction() const

@@ -93,6 +93,8 @@ public:
     QAction *debugAkonadiSearchAction() const;
     QAction *addFollowupReminderAction() const;
 
+    QAction *sendAgainAction() const;
+
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
     // action has finished.
@@ -132,6 +134,8 @@ private Q_SLOTS:
     void slotDebugAkonadiSearch();
 
     void slotAddFollowupReminder();
+    void slotResendMessage();
+
 private:
     QList<QAction *> mMailListActionList;
     Akonadi::Item mCurrentItem;
@@ -158,6 +162,7 @@ private:
     QAction *mListFilterAction = nullptr;
     QAction *mAddFollowupReminderAction = nullptr;
     QAction *mDebugAkonadiSearchAction = nullptr;
+    QAction *mSendAgainAction = nullptr;
     KIO::KUriFilterSearchProviderActions *mWebShortcutMenuManager = nullptr;
 };
 }

@@ -127,8 +127,6 @@ public:
     static void cleanup();
     QAction *action(const QString &name);
 
-    QAction *sendAgainAction() const;
-
     QAction *sendQueuedAction() const;
 
     KActionMenuTransport *sendQueueViaMenu() const;
@@ -370,7 +368,6 @@ private Q_SLOTS:
     void slotOpenMsg();
     void slotSaveAttachments();
     void slotJumpToFolder();
-    void slotResendMsg();
     void slotCheckVacation();
     void slotDebugSieve();
     void slotApplyFilters();
@@ -525,7 +522,6 @@ private:
     QAction *mDeleteThreadAction = nullptr;
     QAction *mSaveAsAction = nullptr;
     QAction *mNewMessageFromTemplateAction = nullptr;
-    QAction *mSendAgainAction = nullptr;
     QAction *mApplyAllFiltersAction = nullptr;
     QAction *mSaveAttachmentsAction = nullptr;
     QAction *mOpenAction = nullptr;
