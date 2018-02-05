@@ -578,7 +578,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 menu->addAction(mMsgActions->forwardMenu());
                 menu->addSeparator();
             } else if (col.isValid() && CommonKernel->folderIsTemplates(col)) {
-                //TODO add use newTemplate (sync with kmail mainwidget)
+                menu->addAction(mMsgActions->newMessageFromTemplateAction());
             }
 
             if (col.isValid() && CommonKernel->folderIsSentMailFolder(col)) {

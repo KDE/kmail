@@ -193,6 +193,11 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     ac->addAction(QStringLiteral("send_again"), mSendAgainAction);
     connect(mSendAgainAction, &QAction::triggered, this, &MessageActions::slotResendMessage);
 
+    mNewMessageFromTemplateAction = new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Message From &Template"), this);
+    ac->addAction(QStringLiteral("use_template"), mNewMessageFromTemplateAction);
+    connect(mNewMessageFromTemplateAction, &QAction::triggered, this, &MessageActions::slotUseTemplate);
+    ac->setDefaultShortcut(mNewMessageFromTemplateAction, QKeySequence(Qt::SHIFT + Qt::Key_N));
+
 
     updateActions();
 }
@@ -205,6 +210,15 @@ MessageActions::~MessageActions()
 TemplateParser::CustomTemplatesMenu *MessageActions::customTemplatesMenu() const
 {
     return mCustomTemplatesMenu;
+}
+
+void MessageActions::slotUseTemplate()
+{
+    if (!mCurrentItem.isValid()) {
+        return;
+    }
+    KMCommand *command = new KMUseTemplateCommand(mParent, mCurrentItem);
+    command->start();
 }
 
 void MessageActions::setCurrentMessage(const Akonadi::Item &msg, const Akonadi::Item::List &items)
@@ -696,6 +710,11 @@ void MessageActions::slotResendMessage()
     }
     KMCommand *command = new KMResendMessageCommand(mParent, mCurrentItem);
     command->start();
+}
+
+QAction *MessageActions::newMessageFromTemplateAction() const
+{
+    return mNewMessageFromTemplateAction;
 }
 
 QAction *MessageActions::sendAgainAction() const

@@ -521,7 +521,6 @@ private:
     QAction *mTrashThreadAction = nullptr;
     QAction *mDeleteThreadAction = nullptr;
     QAction *mSaveAsAction = nullptr;
-    QAction *mNewMessageFromTemplateAction = nullptr;
     QAction *mApplyAllFiltersAction = nullptr;
     QAction *mSaveAttachmentsAction = nullptr;
     QAction *mOpenAction = nullptr;
