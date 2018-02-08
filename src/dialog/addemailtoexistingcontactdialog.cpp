@@ -33,6 +33,7 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <KConfigGroup>
 
 AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent)
     : QDialog(parent)

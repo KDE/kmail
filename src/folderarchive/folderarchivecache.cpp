@@ -73,7 +73,6 @@ Akonadi::Collection::Id FolderArchiveCache::collectionId(FolderArchiveAccountInf
             } else {
                 return mCache.value(info->instanceName()).colId;
             }
-            break;
         }
         return mCache.value(info->instanceName()).colId;
     }

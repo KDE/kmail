@@ -316,7 +316,7 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
                     const QString service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, data.mExtraInfo.at(0));
                     QDBusInterface interface(service, data.mExtraInfo.at(1));
                     if (interface.isValid()) {
-                        interface.call(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
+                        interface.call(QStringLiteral("showConfigureDialog"), static_cast<qlonglong>(winId()));
                     } else {
                         qCDebug(KMAIL_LOG) << " interface does not exist when trying to configure the plugin";
                     }

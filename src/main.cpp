@@ -104,7 +104,7 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args, const QS
 
 int main(int argc, char *argv[])
 {
-#if defined(Q_OS_UNIX) && QT_VERSION < QT_VERSION_CHECK(5, 9, 0)
+#if defined(Q_OS_UNIX) && QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
     // enforce xcb plugin fix bug Bug 367598
     qputenv("QT_QPA_PLATFORM", "xcb");
 #endif

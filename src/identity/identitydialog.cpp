@@ -131,7 +131,7 @@ public:
     };
 
     KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, QWidget *parent);
-    ~KeySelectionCombo();
+    ~KeySelectionCombo() override;
 
     void setIdentity(const QString &name, const QString &email);
 
@@ -151,7 +151,7 @@ class KeyGenerationJob : public QGpgME::Job
 
 public:
     KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
-    ~KeyGenerationJob();
+    ~KeyGenerationJob() override;
 
     void slotCancel() override;
     void start();

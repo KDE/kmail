@@ -81,17 +81,17 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     QRadioButton *radio = new QRadioButton(i18n("&With empty fields"), page);
     radio->setChecked(true);
     vlay->addWidget(radio);
-    mButtonGroup->addButton(radio, (int)Empty);
+    mButtonGroup->addButton(radio, static_cast<int>(Empty));
 
     // row 2: radio button
     radio = new QRadioButton(i18n("&Use System Settings values"), page);
     vlay->addWidget(radio);
-    mButtonGroup->addButton(radio, (int)ControlCenter);
+    mButtonGroup->addButton(radio, static_cast<int>(ControlCenter));
 
     // row 3: radio button
     radio = new QRadioButton(i18n("&Duplicate existing identity"), page);
     vlay->addWidget(radio);
-    mButtonGroup->addButton(radio, (int)ExistingEntry);
+    mButtonGroup->addButton(radio, static_cast<int>(ExistingEntry));
 
     // row 4: combobox with existing identities and label
     hlay = new QHBoxLayout(); // inherits spacing

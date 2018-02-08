@@ -92,7 +92,7 @@ void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
 {
     mInstanceName = config.readEntry(QStringLiteral("instanceName"));
     mArchiveTopLevelCollectionId = config.readEntry(QStringLiteral("topLevelCollectionId"), -1);
-    mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", (int)UniqueFolder));
+    mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", static_cast<int>(UniqueFolder)));
     mEnabled = config.readEntry("enabled", false);
     mKeepExistingStructure = config.readEntry("keepExistingStructure", false);
 }
@@ -106,7 +106,7 @@ void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
         config.deleteEntry(QStringLiteral("topLevelCollectionId"));
     }
 
-    config.writeEntry(QStringLiteral("folderArchiveType"), (int)mArchiveType);
+    config.writeEntry(QStringLiteral("folderArchiveType"), static_cast<int>(mArchiveType));
     config.writeEntry(QStringLiteral("enabled"), mEnabled);
     config.writeEntry("keepExistingStructure", mKeepExistingStructure);
 }
