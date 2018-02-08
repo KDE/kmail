@@ -58,9 +58,9 @@ public:
     Private(FilterManager *qq)
         : q(qq)
         , mRequiredPartsBasedOnAll(SearchRule::Envelope)
-        , mInboundFiltersExist(false)
         , mTotalProgressCount(0)
         , mCurrentProgressCount(0)
+        , mInboundFiltersExist(false)
     {
         pixmapNotification = QIcon::fromTheme(QStringLiteral("view-filter")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
     }
@@ -81,12 +81,12 @@ public:
     FilterManager *q;
     QList<MailCommon::MailFilter *> mFilters;
     QMap<QString, SearchRule::RequiredPart> mRequiredParts;
-    SearchRule::RequiredPart mRequiredPartsBasedOnAll;
     QPixmap pixmapNotification;
-    bool mInboundFiltersExist = false;
-    bool mAllFoldersFiltersExist = false;
+    SearchRule::RequiredPart mRequiredPartsBasedOnAll;
     int mTotalProgressCount = 0;
     int mCurrentProgressCount = 0;
+    bool mInboundFiltersExist = false;
+    bool mAllFoldersFiltersExist = false;
 };
 
 void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List &items)

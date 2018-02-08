@@ -23,10 +23,10 @@
 UnitComboBox::UnitComboBox(QWidget *parent)
     : QComboBox(parent)
 {
-    addItem(i18n("Days"), (int)ArchiveMailInfo::ArchiveDays);
-    addItem(i18n("Weeks"), (int)ArchiveMailInfo::ArchiveWeeks);
-    addItem(i18n("Months"), (int)ArchiveMailInfo::ArchiveMonths);
-    addItem(i18n("Years"), (int)ArchiveMailInfo::ArchiveYears);
+    addItem(i18n("Days"), static_cast<int>(ArchiveMailInfo::ArchiveDays));
+    addItem(i18n("Weeks"), static_cast<int>(ArchiveMailInfo::ArchiveWeeks));
+    addItem(i18n("Months"), static_cast<int>(ArchiveMailInfo::ArchiveMonths));
+    addItem(i18n("Years"), static_cast<int>(ArchiveMailInfo::ArchiveYears));
 }
 
 UnitComboBox::~UnitComboBox()
@@ -35,7 +35,7 @@ UnitComboBox::~UnitComboBox()
 
 void UnitComboBox::setUnit(ArchiveMailInfo::ArchiveUnit unit)
 {
-    const int index = findData((int)unit);
+    const int index = findData(static_cast<int>(unit));
     if (index != -1) {
         setCurrentIndex(index);
     } else {

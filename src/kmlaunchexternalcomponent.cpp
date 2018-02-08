@@ -58,7 +58,7 @@ void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
     OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(service, QStringLiteral("/ArchiveMailAgent"),
                                                                         QDBusConnection::sessionBus(), this);
     if (archiveMailInterface.isValid()) {
-        archiveMailInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
+        archiveMailInterface.showConfigureDialog(static_cast<qlonglong>(mParentWidget->winId()));
     } else {
         KMessageBox::error(mParentWidget, i18n("Archive Mail Agent was not registered."));
     }
@@ -69,7 +69,7 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
     const QString service = akonadiPath(QStringLiteral("org.freedesktop.Akonadi.SendLaterAgent"));
     OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(service, QStringLiteral("/SendLaterAgent"), QDBusConnection::sessionBus(), this);
     if (sendLaterInterface.isValid()) {
-        sendLaterInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
+        sendLaterInterface.showConfigureDialog(static_cast<qlonglong>(mParentWidget->winId()));
     } else {
         KMessageBox::error(mParentWidget, i18n("Send Later Agent was not registered."));
     }
@@ -82,7 +82,7 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
     OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(service, QStringLiteral("/FollowUpReminder"),
                                                                           QDBusConnection::sessionBus(), this);
     if (followUpInterface.isValid()) {
-        followUpInterface.showConfigureDialog((qlonglong)mParentWidget->winId());
+        followUpInterface.showConfigureDialog(static_cast<qlonglong>(mParentWidget->winId()));
     } else {
         KMessageBox::error(mParentWidget, i18n("Followup Reminder Agent was not registered."));
     }
@@ -147,5 +147,5 @@ void KMLaunchExternalComponent::slotAccountWizard()
 
 void KMLaunchExternalComponent::slotFilterLogViewer()
 {
-    MailCommon::FilterManager::instance()->showFilterLogDialog((qlonglong)mParentWidget->winId());
+    MailCommon::FilterManager::instance()->showFilterLogDialog(static_cast<qlonglong>(mParentWidget->winId()));
 }

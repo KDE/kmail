@@ -257,7 +257,7 @@ void FilterLogDialog::writeConfig()
     group.writeEntry("LogRuleResult", FilterLog::instance()->isContentTypeEnabled(FilterLog::RuleResult));
     group.writeEntry("LogPatternResult", FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternResult));
     group.writeEntry("LogAppliedAction", FilterLog::instance()->isContentTypeEnabled(FilterLog::AppliedAction));
-    group.writeEntry("maxLogSize", (int)(FilterLog::instance()->maxLogSize()));
+    group.writeEntry("maxLogSize", static_cast<int>(FilterLog::instance()->maxLogSize()));
     group.sync();
 }
 

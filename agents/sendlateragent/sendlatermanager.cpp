@@ -91,7 +91,7 @@ void SendLaterManager::createSendInfoList()
         if (!mListSendLaterInfo.isEmpty()) {
             mCurrentInfo = mListSendLaterInfo.first();
             const QDateTime now = QDateTime::currentDateTime();
-            const int seconds = now.secsTo(mCurrentInfo->dateTime());
+            const qint64 seconds = now.secsTo(mCurrentInfo->dateTime());
             if (seconds > 0) {
                 //qCDebug(SENDLATERAGENT_LOG)<<" seconds"<<seconds;
                 mTimer->start(seconds * 1000);

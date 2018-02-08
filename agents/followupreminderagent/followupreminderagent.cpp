@@ -119,7 +119,7 @@ void FollowUpReminderAgent::showConfigureDialog(qlonglong windowId)
 
 void FollowUpReminderAgent::configure(WId windowId)
 {
-    showConfigureDialog((qulonglong)windowId);
+    showConfigureDialog(static_cast<qlonglong>(windowId));
 }
 
 void FollowUpReminderAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection)

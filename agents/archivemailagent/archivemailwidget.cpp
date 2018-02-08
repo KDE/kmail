@@ -178,7 +178,7 @@ void ArchiveMailWidget::createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailIte
 void ArchiveMailWidget::updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *info)
 {
     const QDate diffDate = ArchiveMailAgentUtil::diffDate(info);
-    const int diff = QDate::currentDate().daysTo(diffDate);
+    const qint64 diff = QDate::currentDate().daysTo(diffDate);
     item->setText(ArchiveMailWidget::NextArchive, i18np("Tomorrow", "%1 days", diff));
     if (diff < 0) {
         if (info->isEnabled()) {
@@ -252,7 +252,7 @@ void ArchiveMailWidget::slotModifyItem()
 
 void ArchiveMailWidget::slotAddItem()
 {
-    QPointer<AddArchiveMailDialog> dialog = new AddArchiveMailDialog(0, this);
+    QPointer<AddArchiveMailDialog> dialog = new AddArchiveMailDialog(nullptr, this);
     if (dialog->exec()) {
         ArchiveMailInfo *info = dialog->info();
         if (verifyExistingArchive(info)) {

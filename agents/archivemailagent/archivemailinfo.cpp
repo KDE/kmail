@@ -189,8 +189,8 @@ void ArchiveMailInfo::writeConfig(KConfigGroup &config)
     }
 
     config.writeEntry("saveSubCollection", mSaveSubCollection);
-    config.writeEntry("archiveType", (int)mArchiveType);
-    config.writeEntry("archiveUnit", (int)mArchiveUnit);
+    config.writeEntry("archiveType", static_cast<int>(mArchiveType));
+    config.writeEntry("archiveUnit", static_cast<int>(mArchiveUnit));
     config.writeEntry("saveCollectionId", mSaveCollectionId);
     config.writeEntry("archiveAge", mArchiveAge);
     config.writeEntry("maximumArchiveCount", mMaximumArchiveCount);

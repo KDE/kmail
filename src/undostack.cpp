@@ -73,7 +73,7 @@ int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi
     info->srcFolder = srcFolder;
     info->destFolder = destFolder;
     info->moveToTrash = (destFolder == CommonKernel->trashCollectionFolder());
-    if ((int)mStack.count() == mSize) {
+    if (static_cast<int>(mStack.count()) == mSize) {
         delete mStack.last();
         mStack.removeLast();
     }

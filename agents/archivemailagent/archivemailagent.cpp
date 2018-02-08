@@ -139,7 +139,7 @@ void ArchiveMailAgent::reload()
 
 void ArchiveMailAgent::configure(WId windowId)
 {
-    showConfigureDialog((qulonglong)windowId);
+    showConfigureDialog(static_cast<qulonglong>(windowId));
 }
 
 void ArchiveMailAgent::pause()

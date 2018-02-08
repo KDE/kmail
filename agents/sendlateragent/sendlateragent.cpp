@@ -138,7 +138,7 @@ bool SendLaterAgent::enabledAgent() const
 
 void SendLaterAgent::configure(WId windowId)
 {
-    showConfigureDialog((qlonglong)windowId);
+    showConfigureDialog(static_cast<qlonglong>(windowId));
 }
 
 void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)
