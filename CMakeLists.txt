@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1)
-set(KDEPIM_VERSION_NUMBER "5.7.2")
+set(KDEPIM_VERSION_NUMBER "5.7.3")
 
 project(kmail VERSION ${KDEPIM_VERSION_NUMBER})
 
