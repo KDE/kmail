@@ -64,7 +64,7 @@ public:
     /**
      * Destroys the filter manager.
      */
-    virtual ~FilterManager();
+    ~FilterManager() override;
 
     /**
      * Clears the list of filters and deletes them.

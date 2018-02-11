@@ -96,7 +96,7 @@ public:
     typedef QList<KMMainWidget *> PtrList;
 
     KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, KSharedConfig::Ptr config = KMKernel::self()->config());
-    virtual ~KMMainWidget();
+    ~KMMainWidget() override;
     void destruct();
 
     /** Read configuration options before widgets are created. */

@@ -32,7 +32,7 @@ class AccountsPageSendingTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AccountsPageSendingTab(QWidget *parent = nullptr);
-    virtual ~AccountsPageSendingTab();
+    ~AccountsPageSendingTab() override;
     QString helpAnchor() const;
     void save() override;
 

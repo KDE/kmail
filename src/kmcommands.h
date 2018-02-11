@@ -62,7 +62,7 @@ public:
     // Retrieve all messages in msgList when start is called.
     KMCommand(QWidget *parent, const Akonadi::Item::List &msgList);
     // Retrieve the single message msgBase when start is called.
-    virtual ~KMCommand();
+    ~KMCommand() override;
 
     /** Returns the result of the command. Only call this method from the slot
       connected to completed().

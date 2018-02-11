@@ -36,7 +36,7 @@ public:
     KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride, const QString &name = QString());
     explicit KMReaderMainWin(const QString &name = QString());
     KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, const QString &name = QString());
-    virtual ~KMReaderMainWin();
+    ~KMReaderMainWin() override;
 
     void setUseFixedFont(bool useFixedFont);
 

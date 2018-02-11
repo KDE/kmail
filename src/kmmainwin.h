@@ -38,7 +38,7 @@ public:
     // the main window needs to have a name since else restoring the window
     // settings by kwin doesn't work
     explicit KMMainWin(QWidget *parent = nullptr);
-    virtual ~KMMainWin();
+    ~KMMainWin() override;
     KMMainWidget *mainKMWidget() const;
 
     /// Same as KMMainWin::restore(), except that it also restores the docked state,

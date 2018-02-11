@@ -39,7 +39,7 @@ class KMailPart : public KParts::ReadOnlyPart
 
 public:
     KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &);
-    virtual ~KMailPart();
+    ~KMailPart() override;
 
     QWidget *parentWidget() const;
 

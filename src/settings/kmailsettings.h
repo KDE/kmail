@@ -46,7 +46,7 @@ private Q_SLOTS:
 
 private:
     KMailSettings();
-    virtual ~KMailSettings();
+    ~KMailSettings() override;
     static KMailSettings *mSelf;
 
     QTimer *mConfigSyncTimer = nullptr;
