@@ -3449,7 +3449,6 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
             break;
         case GpgME::UserID::Undefined:
         case GpgME::UserID::Unknown:
-        default:
             overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
             tooltip = i18n("The email to this recipient will be encrypted, but the security of the encryption is unknown "
                            "(the encryption key could not be verified). Click the icon for details.");

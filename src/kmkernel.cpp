@@ -1100,7 +1100,7 @@ void KMKernel::cleanup()
             OrgFreedesktopAkonadiMailFilterAgentInterface mailFilterInterface(QStringLiteral("org.freedesktop.Akonadi.MailFilterAgent"), QStringLiteral(
                                                                                   "/MailFilterAgent"), QDBusConnection::sessionBus(), this);
             if (mailFilterInterface.isValid()) {
-                mailFilterInterface.expunge((qlonglong)trashCollection.id());
+                mailFilterInterface.expunge(static_cast<qlonglong>(trashCollection.id()));
             } else {
                 qCWarning(KMAIL_LOG) << "Mailfilter is not active";
             }

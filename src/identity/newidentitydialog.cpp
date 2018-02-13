@@ -127,9 +127,9 @@ void NewIdentityDialog::slotHelp()
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
 {
     const int id = mButtonGroup->checkedId();
-    assert(id == (int)Empty
-           || id == (int)ControlCenter
-           || id == (int)ExistingEntry);
+    assert(id == static_cast<int>(Empty)
+           || id == static_cast<int>(ControlCenter)
+           || id == static_cast<int>(ExistingEntry));
     return static_cast<DuplicateMode>(id);
 }
 
