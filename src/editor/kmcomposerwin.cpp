@@ -950,7 +950,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
             Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(items, this);
             job->fetchScope().fetchFullPayload(true);
             job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-            job->setProperty("mode", (int)mode);
+            job->setProperty("mode", static_cast<int>(mode));
             job->setProperty("uoid", uoid);
             job->setProperty("uOldid", uOldId);
             connect(job, &Akonadi::ItemFetchJob::result, this, &KMComposerWin::slotDelayedApplyTemplate);
@@ -2896,11 +2896,10 @@ void KMComposerWin::slotSpellcheckDoneClearStatus()
 
 void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
 {
-    if (mMsg == nullptr) {
+    if (!mMsg) {
         qCDebug(KMAIL_LOG) << "Trying to change identity but mMsg == 0!";
         return;
     }
-
     const KIdentityManagement::Identity &ident
         = KMKernel::self()->identityManager()->identityForUoid(uoid);
     if (ident.isNull()) {
