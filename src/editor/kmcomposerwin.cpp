@@ -2894,7 +2894,7 @@ void KMComposerWin::slotSpellcheckDoneClearStatus()
     mStatusbarLabel->clear();
 }
 
-void KMComposerWin::slotIdentityChanged(uint uoid, bool initalChange)
+void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
 {
     if (mMsg == nullptr) {
         qCDebug(KMAIL_LOG) << "Trying to change identity but mMsg == 0!";
@@ -2974,7 +2974,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initalChange)
     }
     // if unmodified, apply new template, if one is set
     if (!wasModified && !(ident.templates().isEmpty() && mCustomTemplate.isEmpty())
-        && !initalChange) {
+        && !initialChange) {
         applyTemplate(uoid, mId, ident, wasModified);
     } else {
         mComposerBase->identityChanged(ident, oldIdentity, false);
