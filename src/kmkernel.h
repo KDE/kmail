@@ -109,7 +109,7 @@ class KMAIL_EXPORT KMKernel : public QObject, public MailCommon::IKernel, public
 
 public:
     explicit KMKernel(QObject *parent = nullptr);
-    ~KMKernel();
+    ~KMKernel() override;
 
     /**
     * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,

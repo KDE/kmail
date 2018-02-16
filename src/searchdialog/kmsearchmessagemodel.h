@@ -45,7 +45,7 @@ public:
         Size
     };
     explicit KMSearchMessageModel(QObject *parent = nullptr);
-    ~KMSearchMessageModel();
+    ~KMSearchMessageModel() override;
 
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

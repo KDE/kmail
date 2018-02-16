@@ -29,8 +29,8 @@
     your version.
 */
 
-#ifndef __KMAIL_IDENTITYDIALOG_H__
-#define __KMAIL_IDENTITYDIALOG_H__
+#ifndef KMAIL_IDENTITYDIALOG_H
+#define KMAIL_IDENTITYDIALOG_H
 
 #include <QDialog>
 class QCheckBox;
@@ -150,4 +150,4 @@ private:
 };
 } // namespace KMail
 
-#endif // __KMAIL_IDENTITYDIALOG_H__
+#endif // KMAIL_IDENTITYDIALOG_H

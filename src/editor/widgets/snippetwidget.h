@@ -11,8 +11,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef __SNIPPETWIDGET_H__
-#define __SNIPPETWIDGET_H__
+#ifndef KMAIL_SNIPPETWIDGET_H
+#define KMAIL_SNIPPETWIDGET_H
 
 #include <QTreeView>
 

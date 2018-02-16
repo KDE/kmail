@@ -29,8 +29,8 @@
     your version.
 */
 
-#ifndef __KMAIL_ABOUTDATA_H__
-#define __KMAIL_ABOUTDATA_H__
+#ifndef KMAIL_ABOUTDATA_H
+#define KMAIL_ABOUTDATA_H
 
 #include "kmail_export.h"
 #include <KAboutData>
@@ -44,4 +44,4 @@ public:
 };
 } // namespace KMail
 
-#endif // __KMAIL_ABOUTDATA_H__
+#endif // KMAIL_ABOUTDATA_H

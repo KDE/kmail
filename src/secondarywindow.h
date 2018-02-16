@@ -28,8 +28,8 @@
     you do not wish to do so, delete this exception statement from
     your version.
 */
-#ifndef __KMAIL_SECONDARYWINDOW_H__
-#define __KMAIL_SECONDARYWINDOW_H__
+#ifndef KMAIL_SECONDARYWINDOW_H
+#define KMAIL_SECONDARYWINDOW_H
 
 #include <kxmlguiwindow.h>
 
@@ -46,7 +46,7 @@ class SecondaryWindow : public KXmlGuiWindow
 
 public:
     explicit SecondaryWindow(const QString &name = QString());
-    ~SecondaryWindow();
+    ~SecondaryWindow() override;
     using KMainWindow::setCaption;
 public Q_SLOTS:
     /**
@@ -66,4 +66,4 @@ protected:
 };
 } // namespace KMail
 
-#endif // __KMAIL_SECONDARYWINDOW_H__
+#endif // KMAIL_SECONDARYWINDOW_H

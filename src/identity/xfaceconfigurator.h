@@ -14,8 +14,8 @@
     Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, US
 */
 
-#ifndef __KMAIL_XFACECONFIGURATOR_H__
-#define __KMAIL_XFACECONFIGURATOR_H__
+#ifndef KMAIL_XFACECONFIGURATOR_H
+#define KMAIL_XFACECONFIGURATOR_H
 
 #include <QWidget>
 
@@ -55,4 +55,4 @@ private:
 };
 } // namespace KMail
 
-#endif // __KMAIL_XFACECONFIGURATOR_H__
+#endif // KMAIL_XFACECONFIGURATOR_H

@@ -29,7 +29,7 @@ class ServerLabel : public QLabel
     Q_OBJECT
 public:
     explicit ServerLabel(const QString &toolTip, QWidget *parent = nullptr);
-    ~ServerLabel();
+    ~ServerLabel() override;
 
 Q_SIGNALS:
     void clicked(const QString &serverName);
@@ -46,7 +46,7 @@ class VacationLabel : public QLabel
     Q_OBJECT
 public:
     explicit VacationLabel(const QString &text, QWidget *parent = nullptr);
-    ~VacationLabel();
+    ~VacationLabel() override;
 
 Q_SIGNALS:
     void vacationLabelClicked();

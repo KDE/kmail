@@ -28,7 +28,7 @@ class KMComposerEditorNg : public MessageComposer::RichTextComposerNg
     Q_OBJECT
 public:
     explicit KMComposerEditorNg(KMComposerWin *win, QWidget *parent);
-    ~KMComposerEditorNg();
+    ~KMComposerEditorNg() override;
 
     QString smartQuote(const QString &msg) override;
 

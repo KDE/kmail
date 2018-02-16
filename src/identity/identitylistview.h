@@ -30,8 +30,8 @@
     your version.
 */
 
-#ifndef __KMAIL_IDENTITYLISTVIEW_H__
-#define __KMAIL_IDENTITYLISTVIEW_H__
+#ifndef KMAIL_IDENTITYLISTVIEW_H
+#define KMAIL_IDENTITYLISTVIEW_H
 
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
@@ -99,4 +99,4 @@ private:
 };
 } // namespace KMail
 
-#endif // __KMAIL_IDENTITYLISTVIEW_H__
+#endif // KMAIL_IDENTITYLISTVIEW_H

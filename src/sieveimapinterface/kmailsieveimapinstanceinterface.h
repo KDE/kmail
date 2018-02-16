@@ -26,7 +26,7 @@ class KMailSieveImapInstanceInterface : public KSieveUi::SieveImapInstanceInterf
 {
 public:
     KMailSieveImapInstanceInterface();
-    ~KMailSieveImapInstanceInterface() = default;
+    ~KMailSieveImapInstanceInterface() override = default;
 
     QVector<KSieveUi::SieveImapInstance> sieveImapInstances() override;
 };
