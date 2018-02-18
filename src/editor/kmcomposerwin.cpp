@@ -483,7 +483,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
         slotIdentityChanged(val);
     });
     connect(kmkernel->identityManager(), QOverload<uint>::of(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
-        slotIdentityChanged(val);
+        if (mComposerBase->identityCombo()->currentIdentity() == val) {
+            slotIdentityChanged(val);
+        }
     });
 
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
