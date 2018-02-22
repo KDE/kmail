@@ -479,7 +479,6 @@ void KMKernel::openReader()
     openReader(false);
 }
 
-
 QStringList KMKernel::accounts() const
 {
     QStringList accountLst;

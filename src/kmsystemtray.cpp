@@ -263,9 +263,9 @@ void KMSystemTray::hideKMail()
 void KMSystemTray::updateToolTip(int count)
 {
     setToolTipSubTitle(count == 0 ? i18n("There are no unread messages")
-                                  : i18np("1 unread message",
-                                          "%1 unread messages",
-                                          count));
+                       : i18np("1 unread message",
+                               "%1 unread messages",
+                               count));
 }
 
 void KMSystemTray::updateStatus(int count)

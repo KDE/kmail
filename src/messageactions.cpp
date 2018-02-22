@@ -198,7 +198,6 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     connect(mNewMessageFromTemplateAction, &QAction::triggered, this, &MessageActions::slotUseTemplate);
     ac->setDefaultShortcut(mNewMessageFromTemplateAction, QKeySequence(Qt::SHIFT + Qt::Key_N));
 
-
     updateActions();
 }
 

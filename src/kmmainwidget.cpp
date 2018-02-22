@@ -3295,16 +3295,18 @@ void KMMainWidget::setupActions()
         mApplyAllFiltersFolderAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_folder"), mApplyAllFiltersFolderAction);
         connect(mApplyAllFiltersFolderAction, &QAction::triggered,
-                this, [this] { slotApplyFiltersOnFolder(/* recursive */ false);
-                });
+                this, [this] {
+            slotApplyFiltersOnFolder(/* recursive */ false);
+        });
     }
 
     {
         mApplyAllFiltersFolderRecursiveAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_folder_recursive"), mApplyAllFiltersFolderRecursiveAction);
         connect(mApplyAllFiltersFolderRecursiveAction, &QAction::triggered,
-                this, [this] { slotApplyFiltersOnFolder(/* recursive */ true);
-                });
+                this, [this] {
+            slotApplyFiltersOnFolder(/* recursive */ true);
+        });
     }
 
     {
@@ -3836,7 +3838,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
                         && mCurrentFolderSettings->canDeleteMessages());
         act->setText((mCurrentFolderSettings
                       && CommonKernel->folderIsTrash(mCurrentCollection)) ? i18n("E&mpty Trash") : i18n(
-                                                                                "&Move All Messages to Trash"));
+                         "&Move All Messages to Trash"));
     }
 
     QList< QAction * > addToFavorite;

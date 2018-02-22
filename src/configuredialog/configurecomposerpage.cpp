@@ -282,7 +282,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->addWidget(mImprovePlainTextOfHtmlMessage, row, 0, 1, -1);
     ++row;
 
-
 #ifdef KDEPIM_ENTERPRISE_BUILD
     ++row;
     // "Default forwarding type" combobox
@@ -446,7 +445,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupBox = new QGroupBox(i18nc("@title:group", "Autosave"));
     groupGridLayout = new QGridLayout();
     row = 0;
-
 
     // "Autosave interval" spinbox
     mAutoSave = new KPluralHandlingSpinBox(this);
