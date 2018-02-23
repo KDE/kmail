@@ -387,30 +387,47 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
             if (arg.startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
                 QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
+                QString previousKey;
                 for (auto it = values.cbegin(), end = values.cend(); it != end; ++it) {
                     const QString key = it.key();
                     if (key == QLatin1Literal("to")) {
                         if (!it->isEmpty()) {
                             to += *it + QStringLiteral(", ");
                         }
+                        previousKey.clear();
                     } else if (key == QLatin1Literal("cc")) {
                         if (!it->isEmpty()) {
                             cc += *it + QStringLiteral(", ");
                         }
+                        previousKey.clear();
                     } else if (key == QLatin1Literal("bcc")) {
                         if (!it->isEmpty()) {
                             bcc += *it + QStringLiteral(", ");
                         }
+                        previousKey.clear();
                     } else if (key == QLatin1Literal("subject")) {
                         subj = it.value();
+                        previousKey.clear();
                     } else if (key == QLatin1Literal("body")) {
                         body = it.value();
+                        previousKey = key;
                     } else if (key == QLatin1Literal("in-reply-to")) {
                         inReplyTo = it.value();
+                        previousKey.clear();
                     } else if (key == QLatin1Literal("attachment") || key == QLatin1Literal("attach")) {
                         if (!it->isEmpty()) {
                             attachURLs << makeAbsoluteUrl(*it, workingDir);
                         }
+                        previousKey.clear();
+                    } else {
+                        qCWarning(KMAIL_LOG) << "unknown key" << key;
+                        //Workaround: https://bugs.kde.org/show_bug.cgi?id=390939
+                        //QMap<QString, QString> parseMailtoUrl(const QUrl &url) parses correctly url
+                        //But if we have a "&" unknown key we lost it.
+                        if (previousKey == QLatin1Literal("body")) {
+                            body += QLatin1Char('&') + key + QLatin1Char('=') + it.value();
+                        }
+                        previousKey.clear();
                     }
                 }
             } else {
