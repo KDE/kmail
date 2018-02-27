@@ -43,7 +43,7 @@ public:
     /**
      * Destroys the new contact job
      */
-    ~CreateNewContactJob();
+    ~CreateNewContactJob() override;
 
     /**
      * @brief start the job

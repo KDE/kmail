@@ -29,7 +29,7 @@ class CreateTaskJob : public KJob
     Q_OBJECT
 public:
     explicit CreateTaskJob(const Akonadi::Item::List &items, QObject *parent = nullptr);
-    ~CreateTaskJob();
+    ~CreateTaskJob() override;
 
     void start() override;
 private:

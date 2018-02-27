@@ -35,7 +35,7 @@ public:
     {
     }
 
-    ~ConfigModule()
+    ~ConfigModule() override
     {
     }
 

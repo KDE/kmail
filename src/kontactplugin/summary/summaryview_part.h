@@ -47,7 +47,7 @@ class SummaryViewPart : public KParts::ReadOnlyPart
 
 public:
     SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent = nullptr);
-    ~SummaryViewPart();
+    ~SummaryViewPart() override;
 
 public Q_SLOTS:
     void slotTextChanged();

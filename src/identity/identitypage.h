@@ -42,7 +42,7 @@ class KMAIL_EXPORT IdentityPage : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit IdentityPage(QWidget *parent = nullptr);
-    ~IdentityPage();
+    ~IdentityPage() override;
 
     QString helpAnchor() const;
 

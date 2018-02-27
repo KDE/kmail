@@ -26,7 +26,7 @@ class ConfigurePluginsListWidget : public PimCommon::ConfigurePluginsListWidget
     Q_OBJECT
 public:
     explicit ConfigurePluginsListWidget(QWidget *parent = nullptr);
-    ~ConfigurePluginsListWidget();
+    ~ConfigurePluginsListWidget() override;
 
     void save() override;
     void doLoadFromGlobalSettings() override;

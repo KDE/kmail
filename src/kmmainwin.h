@@ -17,8 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-#ifndef __KMMAINWIN
-#define __KMMAINWIN
+#ifndef KMAIL_KMMAINWIN_H
+#define KMAIL_KMMAINWIN_H
 
 #include "kmail_export.h"
 

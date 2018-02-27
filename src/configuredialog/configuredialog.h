@@ -32,7 +32,7 @@ class ConfigureDialog : public KCMultiDialog
 
 public:
     explicit ConfigureDialog(QWidget *parent = nullptr, bool modal = true);
-    ~ConfigureDialog();
+    ~ConfigureDialog() override;
 
 Q_SIGNALS:
     void configChanged();

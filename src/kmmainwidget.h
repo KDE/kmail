@@ -18,8 +18,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef __KMMAINWIDGET
-#define __KMMAINWIDGET
+#ifndef KMAIL__KMMAINWIDGET
+#define KMAIL__KMMAINWIDGET
 
 #include "kmail_export.h"
 #include "kmreaderwin.h" //for inline actions

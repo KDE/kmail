@@ -40,7 +40,7 @@ class AttachmentController : public MessageComposer::AttachmentControllerBase
 
 public:
     explicit AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposerWin *composer);
-    ~AttachmentController();
+    ~AttachmentController() override;
 
 public Q_SLOTS:
     /// @reimp

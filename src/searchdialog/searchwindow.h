@@ -76,7 +76,7 @@ public:
     /**
      * Destroys the search window.
      */
-    ~SearchWindow();
+    ~SearchWindow() override;
 
     /**
      * Changes the base folder for search operations to a different folder.

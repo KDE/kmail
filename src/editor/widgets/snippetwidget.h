@@ -33,7 +33,7 @@ class SnippetWidget : public QTreeView
     Q_OBJECT
 public:
     explicit SnippetWidget(KMComposerEditorNg *editor, KActionCollection *actionCollection, QWidget *parent = nullptr);
-    ~SnippetWidget();
+    ~SnippetWidget() override;
 
 protected:
     void contextMenuEvent(QContextMenuEvent *) override;
