@@ -34,7 +34,7 @@ class ArchiveMailAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::O
 
 public:
     explicit ArchiveMailAgent(const QString &id);
-    ~ArchiveMailAgent();
+    ~ArchiveMailAgent() override;
 
     void showConfigureDialog(qlonglong windowId = 0);
     QString printArchiveListInfo();

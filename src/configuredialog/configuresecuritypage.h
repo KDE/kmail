@@ -73,7 +73,7 @@ class SecurityPageComposerCryptoTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit SecurityPageComposerCryptoTab(QWidget *parent = nullptr);
-    ~SecurityPageComposerCryptoTab();
+    ~SecurityPageComposerCryptoTab() override;
 
     QString helpAnchor() const;
 
@@ -92,7 +92,7 @@ class SecurityPageWarningTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit SecurityPageWarningTab(QWidget *parent = nullptr);
-    ~SecurityPageWarningTab();
+    ~SecurityPageWarningTab() override;
 
     QString helpAnchor() const;
 
@@ -113,7 +113,7 @@ class SecurityPageSMimeTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit SecurityPageSMimeTab(QWidget *parent = nullptr);
-    ~SecurityPageSMimeTab();
+    ~SecurityPageSMimeTab() override;
 
     QString helpAnchor() const;
 

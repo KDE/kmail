@@ -27,7 +27,7 @@ class FollowUpReminderAgent : public Akonadi::AgentBase, public Akonadi::AgentBa
     Q_OBJECT
 public:
     explicit FollowUpReminderAgent(const QString &id);
-    ~FollowUpReminderAgent();
+    ~FollowUpReminderAgent() override;
 
     void setEnableAgent(bool b);
     bool enabledAgent() const;

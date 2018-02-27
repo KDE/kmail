@@ -42,7 +42,7 @@ class CollectionMailingListPage : public Akonadi::CollectionPropertiesPage
     Q_OBJECT
 public:
     explicit CollectionMailingListPage(QWidget *parent = nullptr);
-    ~CollectionMailingListPage();
+    ~CollectionMailingListPage() override;
 
     void load(const Akonadi::Collection &col) override;
     void save(Akonadi::Collection &col) override;

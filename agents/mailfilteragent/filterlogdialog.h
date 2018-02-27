@@ -53,7 +53,7 @@ class FilterLogTextEdit : public KPIMTextEdit::PlainTextEditor
     Q_OBJECT
 public:
     explicit FilterLogTextEdit(QWidget *parent = nullptr);
-    ~FilterLogTextEdit() = default;
+    ~FilterLogTextEdit() override = default;
 
 protected:
     void addExtraMenuEntry(QMenu *menu, QPoint pos) override;

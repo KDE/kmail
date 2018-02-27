@@ -42,7 +42,7 @@ class CollectionViewPage : public Akonadi::CollectionPropertiesPage
     Q_OBJECT
 public:
     explicit CollectionViewPage(QWidget *parent = nullptr);
-    ~CollectionViewPage();
+    ~CollectionViewPage() override;
 
     void load(const Akonadi::Collection &col) override;
     void save(Akonadi::Collection &col) override;

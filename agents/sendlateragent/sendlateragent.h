@@ -30,7 +30,7 @@ class SendLaterAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::Obs
     Q_OBJECT
 public:
     explicit SendLaterAgent(const QString &id);
-    ~SendLaterAgent();
+    ~SendLaterAgent() override;
 
     void showConfigureDialog(qlonglong windowId = 0);
 

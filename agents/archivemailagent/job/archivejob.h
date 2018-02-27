@@ -31,7 +31,7 @@ class ArchiveJob : public MailCommon::ScheduledJob
     Q_OBJECT
 public:
     explicit ArchiveJob(ArchiveMailManager *manager, ArchiveMailInfo *info, const Akonadi::Collection &folder, bool immediate);
-    ~ArchiveJob();
+    ~ArchiveJob() override;
 
     void execute() override;
     void kill() override;

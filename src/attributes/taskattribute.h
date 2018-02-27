@@ -26,7 +26,7 @@ class TaskAttribute : public Akonadi::Attribute
 public:
     TaskAttribute();
     TaskAttribute(Akonadi::Item::Id id);
-    ~TaskAttribute();
+    ~TaskAttribute() override;
 
     QByteArray type() const override;
 

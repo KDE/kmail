@@ -43,7 +43,7 @@ class MailFilterAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::Ob
 
 public:
     explicit MailFilterAgent(const QString &id);
-    ~MailFilterAgent();
+    ~MailFilterAgent() override;
 
     QString createUniqueName(const QString &nameTemplate);
     void filterItems(const QList< qint64 > &itemIds, int filterSet);

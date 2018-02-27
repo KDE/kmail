@@ -33,7 +33,7 @@ class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
     Q_OBJECT
 public:
     explicit CollectionTemplatesPage(QWidget *parent = nullptr);
-    ~CollectionTemplatesPage();
+    ~CollectionTemplatesPage() override;
 
     void load(const Akonadi::Collection &col) override;
     void save(Akonadi::Collection &col) override;
