@@ -5,6 +5,6 @@ configure_file(src/config-ktnef.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-k
 
 add_subdirectory(src)
 
-install( FILES ktnef.categories DESTINATION ${KDE_INSTALL_CONFDIR} )
+install( FILES ktnefapps.categories ktnefapps.renamecategories DESTINATION ${KDE_INSTALL_CONFDIR} )
 
 add_subdirectory(doc)
