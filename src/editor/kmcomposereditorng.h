@@ -36,6 +36,7 @@ public:
 
     void showSpellConfigDialog(const QString &configFileName);
 
+    bool convertPlainText(MessageComposer::TextPart *textPart) override;
 Q_SIGNALS:
     void insertSnippet();
 
