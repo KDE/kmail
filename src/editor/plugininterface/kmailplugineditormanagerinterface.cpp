@@ -93,17 +93,17 @@ void KMailPluginEditorManagerInterface::setActionCollection(KActionCollection *a
     mActionCollection = actionCollection;
 }
 
-QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer::ActionType::Type type)
+QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer::PluginActionType::Type type)
 {
     return mActionHash.value(type);
 }
 
-QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType()
+QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType()
 {
     if (mActionHash.isEmpty()) {
         for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
-            const MessageComposer::ActionType actionType = interface->actionType();
-            MessageComposer::ActionType::Type type = actionType.type();
+            const MessageComposer::PluginActionType actionType = interface->actionType();
+            MessageComposer::PluginActionType::Type type = actionType.type();
             const bool needSelectedText = interface->needSelectedText();
             if (needSelectedText) {
                 //Disable by default as we don't have selection by default.
@@ -120,7 +120,7 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
                 mActionHash.insert(type, QList<QAction *>() << actionType.action());
             }
             if (interface->plugin()->hasPopupMenuSupport()) {
-                type = MessageComposer::ActionType::PopupMenu;
+                type = MessageComposer::PluginActionType::PopupMenu;
                 QList<QAction *> lst = mActionHash.value(type);
                 if (!lst.isEmpty()) {
                     QAction *act = new QAction(this);
@@ -132,7 +132,7 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
                 }
             }
             if (interface->plugin()->hasToolBarSupport()) {
-                type = MessageComposer::ActionType::ToolBar;
+                type = MessageComposer::PluginActionType::ToolBar;
                 QList<QAction *> lst = mActionHash.value(type);
                 if (!lst.isEmpty()) {
                     QAction *act = new QAction(this);

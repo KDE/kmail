@@ -48,8 +48,8 @@ public:
     KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
-    QHash<MessageComposer::ActionType::Type, QList<QAction *> > actionsType();
-    QList<QAction *> actionsType(MessageComposer::ActionType::Type type);
+    QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
+    QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
 Q_SIGNALS:
     void textSelectionChanged(bool hasSelection);
@@ -62,7 +62,7 @@ private:
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;
     QList<MessageComposer::PluginEditorInterface *> mListPluginInterface;
-    QHash<MessageComposer::ActionType::Type, QList<QAction *> > mActionHash;
+    QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > mActionHash;
 };
 
 #endif // KMAILPLUGINEDITORMANAGERINTERFACE_H

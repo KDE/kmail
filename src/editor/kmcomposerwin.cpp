@@ -117,6 +117,7 @@
 #include <MessageComposer/MessageHelper>
 #include <MessageComposer/PluginEditorCheckBeforeSendParams>
 #include <MessageComposer/PluginEditorInterface>
+#include <MessageComposer/PluginActionType>
 #include <MessageComposer/RichTextComposerSignatures>
 #include <MessageComposer/SignatureController>
 #include <MessageComposer/TextPart>
@@ -1345,12 +1346,12 @@ void KMComposerWin::slotToggleMenubar(bool dontShowWarning)
 void KMComposerWin::initializePluginActions()
 {
     if (guiFactory()) {
-        QHashIterator<MessageComposer::ActionType::Type, QList<QAction *> > localActionsType(mPluginEditorManagerInterface->actionsType());
+        QHashIterator<MessageComposer::PluginActionType::Type, QList<QAction *> > localActionsType(mPluginEditorManagerInterface->actionsType());
         while (localActionsType.hasNext()) {
             localActionsType.next();
             QList<QAction *> lst = localActionsType.value();
             if (!lst.isEmpty()) {
-                const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginEditorInterface::actionXmlExtension(localActionsType.key());
+                const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localActionsType.key());
                 Q_FOREACH (KXMLGUIClient *client, guiFactory()->clients()) {
                     client->unplugActionList(actionlistname);
                     client->plugActionList(actionlistname, lst);
@@ -3245,7 +3246,7 @@ QList<KToggleAction *> KMComposerWin::customToolsList() const
 
 QList<QAction *> KMComposerWin::pluginToolsActionListForPopupMenu() const
 {
-    return mPluginEditorManagerInterface->actionsType(MessageComposer::ActionType::PopupMenu);
+    return mPluginEditorManagerInterface->actionsType(MessageComposer::PluginActionType::PopupMenu);
 }
 
 void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
