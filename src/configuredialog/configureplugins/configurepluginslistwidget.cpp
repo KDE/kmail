@@ -24,6 +24,8 @@
 #include <MessageViewer/HeaderStylePluginManager>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
 #include <MessageComposer/PluginEditorInitManager>
+#include <MessageComposer/PluginEditorConvertTextManager>
+#include <MessageComposer/PluginEditorConvertText>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 #include <PimCommon/GenericPluginManager>
 #include <AkonadiCore/ServerManager>
@@ -62,6 +64,11 @@ QString pluginEditorCheckBeforeGroupName()
 QString pluginEditorInitGroupName()
 {
     return QStringLiteral("plugineditorinitgroupname");
+}
+
+QString pluginEditorConvertTextGroupName()
+{
+    return QStringLiteral("plugineditorconvertTextgroupname");
 }
 
 QString kmailPluginToolsGroupName()
@@ -118,6 +125,9 @@ void ConfigurePluginsListWidget::save()
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
                                                        MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
                                                        mPluginHeaderStyleItems);
+//    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
+//                                                       MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
+//                                                       mPluginConvertTextItems);
     saveAkonadiAgent();
 }
 
@@ -148,6 +158,7 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     changeState(mPluginHeaderStyleItems);
     changeState(mAgentPluginsItems);
     changeState(mPluginEditorInitItems);
+//    changeState(mPluginConvertTextItems);
 }
 
 void ConfigurePluginsListWidget::initialize()
@@ -210,6 +221,14 @@ void ConfigurePluginsListWidget::initialize()
                                                         MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
                                                         mPluginHeaderStyleItems,
                                                         headerStyleGroupName());
+//    //Load headerstyle
+//    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorConvertTextManager::self()->pluginsDataList(),
+//                                                        i18n("Convertor Text Plugins"),
+//                                                        MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
+//                                                        MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
+//                                                        mPluginConvertTextItems,
+//                                                        pluginEditorConvertTextGroupName());
+
     //Load Agent Plugin
     initializeAgentPlugins();
     mListWidget->expandAll();
@@ -310,6 +329,9 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
         } else if (configureGroupName == pluginEditorCheckBeforeGroupName()) {
             MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
+        } else if (configureGroupName == pluginEditorConvertTextGroupName()) {
+            MessageComposer::PluginEditorConvertText *plugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
         } else if (configureGroupName == agentAkonadiGroupName()) {
             for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {
                 if (data.mIdentifier == identifier) {
@@ -338,4 +360,5 @@ void ConfigurePluginsListWidget::defaults()
     resetToUserSettings(mPluginWebEngineItems);
     resetToUserSettings(mPluginHeaderStyleItems);
     resetToUserSettings(mAgentPluginsItems);
+//    resetToUserSettings(mPluginConvertTextItems);
 }
