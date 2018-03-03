@@ -125,9 +125,9 @@ void ConfigurePluginsListWidget::save()
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
                                                        MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
                                                        mPluginHeaderStyleItems);
-//    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
-//                                                       MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
-//                                                       mPluginConvertTextItems);
+    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
+                                                       MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
+                                                       mPluginConvertTextItems);
     saveAkonadiAgent();
 }
 
@@ -158,7 +158,7 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     changeState(mPluginHeaderStyleItems);
     changeState(mAgentPluginsItems);
     changeState(mPluginEditorInitItems);
-//    changeState(mPluginConvertTextItems);
+    changeState(mPluginConvertTextItems);
 }
 
 void ConfigurePluginsListWidget::initialize()
@@ -222,12 +222,12 @@ void ConfigurePluginsListWidget::initialize()
                                                         mPluginHeaderStyleItems,
                                                         headerStyleGroupName());
 //    //Load headerstyle
-//    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorConvertTextManager::self()->pluginsDataList(),
-//                                                        i18n("Convertor Text Plugins"),
-//                                                        MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
-//                                                        MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
-//                                                        mPluginConvertTextItems,
-//                                                        pluginEditorConvertTextGroupName());
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorConvertTextManager::self()->pluginsDataList(),
+                                                        i18n("Convertor Text Plugins"),
+                                                        MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
+                                                        MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
+                                                        mPluginConvertTextItems,
+                                                        pluginEditorConvertTextGroupName());
 
     //Load Agent Plugin
     initializeAgentPlugins();
@@ -360,5 +360,5 @@ void ConfigurePluginsListWidget::defaults()
     resetToUserSettings(mPluginWebEngineItems);
     resetToUserSettings(mPluginHeaderStyleItems);
     resetToUserSettings(mAgentPluginsItems);
-//    resetToUserSettings(mPluginConvertTextItems);
+    resetToUserSettings(mPluginConvertTextItems);
 }
