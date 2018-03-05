@@ -38,6 +38,8 @@ public:
     KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
+    void initializePlugins();
+
 private:
     Q_DISABLE_COPY(KMailPluginEditorConvertTextManagerInterface)
     QList<MessageComposer::PluginEditorConvertTextInterface *> mListPluginInterface;

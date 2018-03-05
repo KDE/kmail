@@ -73,6 +73,7 @@ class KMailPluginEditorManagerInterface;
 class KMailPluginEditorCheckBeforeSendManagerInterface;
 class KMailPluginEditorInitManagerInterface;
 class IncorrectIdentityFolderWarning;
+class KMailPluginEditorConvertTextManagerInterface;
 namespace MailTransport {
 class Transport;
 }
@@ -659,6 +660,7 @@ private:
     KMailPluginEditorManagerInterface *mPluginEditorManagerInterface = nullptr;
     KMailPluginEditorCheckBeforeSendManagerInterface *mPluginEditorCheckBeforeSendManagerInterface = nullptr;
     KMailPluginEditorInitManagerInterface *mPluginEditorInitManagerInterface = nullptr;
+    KMailPluginEditorConvertTextManagerInterface *mPluginEditorConvertTextManagerInterface = nullptr;
 };
 
 #endif

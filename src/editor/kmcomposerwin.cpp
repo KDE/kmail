@@ -31,6 +31,7 @@
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorinitmanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditormanagerinterface.h"
+#include "editor/plugininterface/kmailplugineditorconverttextmanagerinterface.h"
 #include "editor/potentialphishingemail/potentialphishingemailjob.h"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "editor/warningwidgets/incorrectidentityfolderwarning.h"
@@ -238,6 +239,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(mPluginEditorManagerInterface, &KMailPluginEditorManagerInterface::message, this, &KMComposerWin::slotMessage);
     mPluginEditorCheckBeforeSendManagerInterface = new KMailPluginEditorCheckBeforeSendManagerInterface(this);
     mPluginEditorInitManagerInterface = new KMailPluginEditorInitManagerInterface(this);
+    mPluginEditorConvertTextManagerInterface = new KMailPluginEditorConvertTextManagerInterface(this);
 
     connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposerWin::disableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposerWin::enableHtml);
@@ -428,6 +430,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mPluginEditorInitManagerInterface->setParent(this);
     mPluginEditorInitManagerInterface->setRichTextEditor(composerEditorNg);
+
+    mPluginEditorConvertTextManagerInterface->setParentWidget(this);
+    mPluginEditorConvertTextManagerInterface->setActionCollection(actionCollection());
 
     setupStatusBar(attachmentView->widget());
     setupActions();
@@ -1306,6 +1311,7 @@ void KMComposerWin::setupActions(void)
     mPluginEditorManagerInterface->initializePlugins();
     mPluginEditorCheckBeforeSendManagerInterface->initializePlugins();
     mPluginEditorInitManagerInterface->initializePlugins();
+    mPluginEditorConvertTextManagerInterface->initializePlugins();
 
     mHideMenuBarAction = KStandardAction::showMenubar(this, &KMComposerWin::slotToggleMenubar, actionCollection());
     mHideMenuBarAction->setChecked(KMailSettings::self()->composerShowMenuBar());

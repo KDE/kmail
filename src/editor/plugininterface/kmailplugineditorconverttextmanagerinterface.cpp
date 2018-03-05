@@ -54,3 +54,8 @@ void KMailPluginEditorConvertTextManagerInterface::setActionCollection(KActionCo
 {
     mActionCollection = actionCollection;
 }
+
+void KMailPluginEditorConvertTextManagerInterface::initializePlugins()
+{
+    //TODO
+}
