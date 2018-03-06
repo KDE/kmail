@@ -48,6 +48,8 @@ public:
     QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
     QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
+Q_SIGNALS:
+    void reformatingTextDone();
 
 private:
     Q_DISABLE_COPY(KMailPluginEditorConvertTextManagerInterface)
