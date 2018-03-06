@@ -57,5 +57,27 @@ void KMailPluginEditorConvertTextManagerInterface::setActionCollection(KActionCo
 
 void KMailPluginEditorConvertTextManagerInterface::initializePlugins()
 {
-    //TODO
+    if (!mListPluginInterface.isEmpty()) {
+        qCDebug(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Plugin was already initialized. This is a bug";
+        return;
+    }
+    const QVector<MessageComposer::PluginEditorConvertText *> lstPlugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginsList();
+    for (MessageComposer::PluginEditorConvertText *plugin : lstPlugin) {
+        if (plugin->isEnabled()) {
+            MessageComposer::PluginEditorConvertTextInterface *interface = static_cast<MessageComposer::PluginEditorConvertTextInterface *>(plugin->createInterface(mActionCollection, this));
+            interface->setRichTextEditor(mRichTextEditor);
+            interface->setParentWidget(mParentWidget);
+            mListPluginInterface.append(interface);
+        }
+    }
+}
+
+KPIMTextEdit::RichTextComposer *KMailPluginEditorConvertTextManagerInterface::richTextEditor() const
+{
+    return mRichTextEditor;
+}
+
+void KMailPluginEditorConvertTextManagerInterface::setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor)
+{
+    mRichTextEditor = richTextEditor;
 }

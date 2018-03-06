@@ -25,6 +25,9 @@ class QWidget;
 namespace MessageComposer {
 class PluginEditorConvertTextInterface;
 }
+namespace KPIMTextEdit {
+class RichTextComposer;
+}
 class KActionCollection;
 class KMailPluginEditorConvertTextManagerInterface : public QObject
 {
@@ -40,9 +43,13 @@ public:
 
     void initializePlugins();
 
+    KPIMTextEdit::RichTextComposer *richTextEditor() const;
+    void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);
+
 private:
     Q_DISABLE_COPY(KMailPluginEditorConvertTextManagerInterface)
     QList<MessageComposer::PluginEditorConvertTextInterface *> mListPluginInterface;
+    KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;
 };

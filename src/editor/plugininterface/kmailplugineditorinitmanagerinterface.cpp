@@ -52,6 +52,7 @@ void KMailPluginEditorInitManagerInterface::initializePlugins()
 {
     if (mWasInitialized) {
         qCDebug(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Plugin was already initialized. This is a bug";
+        return;
     }
     const QVector<MessageComposer::PluginEditorInit *> lstPlugin = MessageComposer::PluginEditorInitManager::self()->pluginsList();
     for (MessageComposer::PluginEditorInit *plugin : lstPlugin) {
