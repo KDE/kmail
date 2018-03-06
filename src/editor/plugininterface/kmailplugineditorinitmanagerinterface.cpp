@@ -54,6 +54,14 @@ void KMailPluginEditorInitManagerInterface::initializePlugins()
         qCDebug(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Plugin was already initialized. This is a bug";
         return;
     }
+    if (!mRichTextEditor) {
+        qCDebug(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Richtexteditor is null. This is a bug";
+        return;
+    }
+    if (!mParentWidget) {
+        qCDebug(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Parent is null. This is a bug";
+    }
+
     const QVector<MessageComposer::PluginEditorInit *> lstPlugin = MessageComposer::PluginEditorInitManager::self()->pluginsList();
     for (MessageComposer::PluginEditorInit *plugin : lstPlugin) {
         if (plugin->isEnabled()) {

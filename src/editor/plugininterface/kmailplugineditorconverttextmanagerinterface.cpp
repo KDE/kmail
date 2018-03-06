@@ -61,6 +61,13 @@ void KMailPluginEditorConvertTextManagerInterface::initializePlugins()
         qCDebug(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Plugin was already initialized. This is a bug";
         return;
     }
+    if (!mRichTextEditor) {
+        qCDebug(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Richtexteditor is null. This is a bug";
+        return;
+    }
+    if (!mParentWidget) {
+        qCDebug(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Parent is null. This is a bug";
+    }
     const QVector<MessageComposer::PluginEditorConvertText *> lstPlugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginsList();
     for (MessageComposer::PluginEditorConvertText *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
@@ -70,6 +77,7 @@ void KMailPluginEditorConvertTextManagerInterface::initializePlugins()
             mListPluginInterface.append(interface);
         }
     }
+    qCDebug(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Initialize done, number of plugins found: " << mListPluginInterface.count();
 }
 
 KPIMTextEdit::RichTextComposer *KMailPluginEditorConvertTextManagerInterface::richTextEditor() const

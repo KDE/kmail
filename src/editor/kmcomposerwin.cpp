@@ -433,6 +433,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mPluginEditorConvertTextManagerInterface->setParentWidget(this);
     mPluginEditorConvertTextManagerInterface->setActionCollection(actionCollection());
+    mPluginEditorConvertTextManagerInterface->setRichTextEditor(composerEditorNg);
 
     setupStatusBar(attachmentView->widget());
     setupActions();
