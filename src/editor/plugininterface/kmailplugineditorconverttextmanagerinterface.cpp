@@ -23,6 +23,7 @@
 #include <MessageComposer/PluginEditorConvertText>
 #include <MessageComposer/PluginEditorConvertTextManager>
 #include <MessageComposer/PluginEditorConvertTextInterface>
+#include <QAction>
 
 KMailPluginEditorConvertTextManagerInterface::KMailPluginEditorConvertTextManagerInterface(QObject *parent)
     : QObject(parent)
@@ -88,4 +89,55 @@ KPIMTextEdit::RichTextComposer *KMailPluginEditorConvertTextManagerInterface::ri
 void KMailPluginEditorConvertTextManagerInterface::setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor)
 {
     mRichTextEditor = richTextEditor;
+}
+
+QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEditorConvertTextManagerInterface::actionsType()
+{
+    if (mActionHash.isEmpty()) {
+        for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+            const MessageComposer::PluginActionType actionType = interface->actionType();
+            MessageComposer::PluginActionType::Type type = actionType.type();
+            QList<QAction *> lst = mActionHash.value(type);
+            if (!lst.isEmpty()) {
+                QAction *act = new QAction(this);
+                act->setSeparator(true);
+                lst << act << actionType.action();
+                mActionHash.insert(type, lst);
+            } else {
+                mActionHash.insert(type, QList<QAction *>() << actionType.action());
+            }
+            /*
+            if (interface->plugin()->hasPopupMenuSupport()) {
+                type = MessageComposer::PluginActionType::PopupMenu;
+                QList<QAction *> lst = mActionHash.value(type);
+                if (!lst.isEmpty()) {
+                    QAction *act = new QAction(this);
+                    act->setSeparator(true);
+                    lst << act << actionType.action();
+                    mActionHash.insert(type, lst);
+                } else {
+                    mActionHash.insert(type, QList<QAction *>() << actionType.action());
+                }
+            }
+            if (interface->plugin()->hasToolBarSupport()) {
+                type = MessageComposer::PluginActionType::ToolBar;
+                QList<QAction *> lst = mActionHash.value(type);
+                if (!lst.isEmpty()) {
+                    QAction *act = new QAction(this);
+                    act->setSeparator(true);
+                    lst << act << actionType.action();
+                    mActionHash.insert(type, lst);
+                } else {
+                    mActionHash.insert(type, QList<QAction *>() << actionType.action());
+                }
+            }
+            */
+        }
+    }
+    return mActionHash;
+}
+
+QList<QAction *> KMailPluginEditorConvertTextManagerInterface::actionsType(MessageComposer::PluginActionType::Type type)
+{
+    return mActionHash.value(type);
 }
