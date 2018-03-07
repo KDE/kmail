@@ -38,18 +38,19 @@ using MailTransport::TransportManagementWidget;
 #include <AkonadiCore/agentinstancecreatejob.h>
 #include <identity/identitypage.h>
 
+#include <KComboBox>
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KComboBox>
 #include "kmail_debug.h"
 
-#include <QVBoxLayout>
+#include <QAbstractItemView>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QMenu>
-#include <KConfigGroup>
 #include <QLabel>
 #include <QProcess>
+#include <QVBoxLayout>
 
 QString AccountsPage::helpAnchor() const
 {
