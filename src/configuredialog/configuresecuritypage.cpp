@@ -34,9 +34,11 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KLocalizedString>
 #include <KCMultiDialog>
 #include <KMessageBox>
-#include <QWhatsThis>
-#include <QDBusConnection>
 #include "kmail_debug.h"
+
+#include <QButtonGroup>
+#include <QDBusConnection>
+#include <QWhatsThis>
 
 QString SecurityPage::helpAnchor() const
 {
