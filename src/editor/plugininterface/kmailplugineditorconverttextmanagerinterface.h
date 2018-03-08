@@ -48,6 +48,7 @@ public:
     QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
     QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
+    void reformatText();
 Q_SIGNALS:
     void reformatingTextDone();
 

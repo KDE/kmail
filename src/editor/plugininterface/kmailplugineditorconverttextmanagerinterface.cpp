@@ -36,6 +36,17 @@ KMailPluginEditorConvertTextManagerInterface::~KMailPluginEditorConvertTextManag
 
 }
 
+void KMailPluginEditorConvertTextManagerInterface::reformatText()
+{
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+        if (interface->reformatText()) {
+            //Stop it.
+        }
+        //TODO
+    }
+}
+
+
 QWidget *KMailPluginEditorConvertTextManagerInterface::parentWidget() const
 {
     return mParentWidget;
