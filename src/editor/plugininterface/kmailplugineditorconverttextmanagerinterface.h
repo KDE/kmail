@@ -49,6 +49,7 @@ public:
     QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
     void reformatText();
+    void convertTextToFormat(MessageComposer::TextPart *textPart);
 Q_SIGNALS:
     void reformatingTextDone();
 

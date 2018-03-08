@@ -40,12 +40,23 @@ void KMailPluginEditorConvertTextManagerInterface::reformatText()
 {
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
         if (interface->reformatText()) {
-            //Stop it.
+            //TODO signal that it was reformating.
+            //Stop it.?
         }
-        //TODO
     }
+    Q_EMIT reformatingTextDone();
 }
 
+void KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
+{
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+        if (interface->convertTextToFormat(textPart)) {
+            //TODO signal that it was reformating.
+            //Stop it.?
+        }
+    }
+    //TODO
+}
 
 QWidget *KMailPluginEditorConvertTextManagerInterface::parentWidget() const
 {
