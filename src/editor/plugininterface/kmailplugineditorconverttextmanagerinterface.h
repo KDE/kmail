@@ -50,6 +50,9 @@ public:
 
     void reformatText();
     void convertTextToFormat(MessageComposer::TextPart *textPart);
+
+    void setMessage(const KMime::Message::Ptr &newMsg);
+
 Q_SIGNALS:
     void reformatingTextDone();
 

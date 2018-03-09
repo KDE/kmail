@@ -58,6 +58,13 @@ void KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageCo
     //TODO
 }
 
+void KMailPluginEditorConvertTextManagerInterface::setMessage(const KMime::Message::Ptr &newMsg)
+{
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+        interface->setMessage(newMsg);
+    }
+}
+
 QWidget *KMailPluginEditorConvertTextManagerInterface::parentWidget() const
 {
     return mParentWidget;
