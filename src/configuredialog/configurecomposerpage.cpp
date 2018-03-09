@@ -1078,9 +1078,14 @@ void ComposerPage::HeadersTab::save()
     const int numberOfEntry = mHeaderList->topLevelItemCount();
     for (int i = 0; i < numberOfEntry; ++i) {
         item = mHeaderList->topLevelItem(i);
-        if (!item->text(0).isEmpty()) {
+        const QString str = item->text(0).trimmed();
+        if (!str.isEmpty()) {
+            if (str == QLatin1String("Content-Type")) {
+                KMessageBox::error(this, i18n("\'Content-Type\' is not an authorized string. This header will be not saved."), i18n("Invalid header"));
+                continue;
+            }
             KConfigGroup config(KMKernel::self()->config(), QStringLiteral("Mime #%1").arg(numValidEntries));
-            config.writeEntry("name", item->text(0));
+            config.writeEntry("name", str);
             config.writeEntry("value", item->text(1));
             numValidEntries++;
         }
