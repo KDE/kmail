@@ -49,6 +49,7 @@ public:
     bool excludeFolder(const Akonadi::Collection &collection) const;
     bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
 private:
+    Q_DISABLE_COPY(UnityServiceManager)
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = {});
     void slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &);
     void updateCount();

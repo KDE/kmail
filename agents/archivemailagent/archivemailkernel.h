@@ -56,6 +56,7 @@ public:
     void expunge(Akonadi::Collection::Id col, bool sync) override;
 
 private:
+    Q_DISABLE_COPY(ArchiveMailKernel)
     KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
     MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor = nullptr;
     Akonadi::EntityTreeModel *mEntityTreeModel = nullptr;

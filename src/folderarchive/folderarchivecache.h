@@ -47,6 +47,7 @@ public:
     void clearCache();
 
 private:
+    Q_DISABLE_COPY(FolderArchiveCache)
     QHash<QString, ArchiveCache> mCache;
 };
 

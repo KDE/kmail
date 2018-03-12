@@ -36,6 +36,7 @@ public:
     void expunge(Akonadi::Collection::Id id, bool sync) override;
 
 private:
+    Q_DISABLE_COPY(DummyKernel)
     KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
     MessageComposer::MessageSender *mMessageSender = nullptr;
     MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor = nullptr;

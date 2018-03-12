@@ -35,6 +35,7 @@ public:
 
     void setCurrentCollection(const Akonadi::Collection &col);
 private:
+    Q_DISABLE_COPY(ComposeNewMessageJob)
     void slotOpenComposer(bool forceCursorPosition);
     QSharedPointer<MailCommon::FolderSettings> mFolder;
     Akonadi::Collection mCurrentCollection;
