@@ -694,11 +694,13 @@ bool KMKernel::showMail(qint64 serialNumber)
     if (mainWidget) {
         Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
         job->fetchScope().fetchFullPayload();
+        job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
         if (job->exec()) {
             if (job->items().count() >= 1) {
                 KMReaderMainWin *win = new KMReaderMainWin(MessageViewer::Viewer::UseGlobalSetting, false);
+                const auto item = job->items().at(0);
                 win->showMessage(MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding(),
-                                 job->items().at(0));
+                                 item, item.parentCollection());
                 win->show();
                 return true;
             }
