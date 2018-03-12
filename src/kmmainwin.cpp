@@ -91,6 +91,10 @@ KMMainWin::KMMainWin(QWidget *)
 
 KMMainWin::~KMMainWin()
 {
+    // Avoids a crash if there are any Akonadi jobs running, which may
+    // attempt to display a status message when they are killed.
+    disconnect(KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::statusMsg, this, nullptr);
+
     KConfigGroup grp(KMKernel::self()->config()->group("Main Window"));
     saveMainWindowSettings(grp);
     KMKernel::self()->config()->sync();
