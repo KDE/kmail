@@ -150,7 +150,6 @@ void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
     delete dialog;
 }
 
-
 bool KMComposerEditorNg::convertPlainText(MessageComposer::TextPart *textPart)
 {
     //TODO implement it

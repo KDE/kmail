@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "kmailplugineditorconverttextmanagerinterface.h"
 #include "kmail_debug.h"
 #include <MessageComposer/PluginEditorConvertText>
@@ -28,12 +27,10 @@
 KMailPluginEditorConvertTextManagerInterface::KMailPluginEditorConvertTextManagerInterface(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 KMailPluginEditorConvertTextManagerInterface::~KMailPluginEditorConvertTextManagerInterface()
 {
-
 }
 
 void KMailPluginEditorConvertTextManagerInterface::reformatText()
