@@ -1354,16 +1354,30 @@ void KMComposerWin::initializePluginActions()
 {
     if (guiFactory()) {
         QHash<QString, QList<QAction *>> hashActions;
-        QHashIterator<MessageComposer::PluginActionType::Type, QList<QAction *> > localActionsType(mPluginEditorManagerInterface->actionsType());
-        while (localActionsType.hasNext()) {
-            localActionsType.next();
-            QList<QAction *> lst = localActionsType.value();
+        QHashIterator<MessageComposer::PluginActionType::Type, QList<QAction *> > localEditorManagerActionsType(mPluginEditorManagerInterface->actionsType());
+        while (localEditorManagerActionsType.hasNext()) {
+            localEditorManagerActionsType.next();
+            QList<QAction *> lst = localEditorManagerActionsType.value();
             if (!lst.isEmpty()) {                
-                const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localActionsType.key());
+                const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
+                hashActions.insert(actionlistname, lst);
+            }
+        }
+        QHashIterator<MessageComposer::PluginActionType::Type, QList<QAction *> > localEditorConvertTextManagerActionsType(mPluginEditorConvertTextManagerInterface->actionsType());
+        while (localEditorConvertTextManagerActionsType.hasNext()) {
+            localEditorConvertTextManagerActionsType.next();
+            QList<QAction *> lst = localEditorConvertTextManagerActionsType.value();
+            if (!lst.isEmpty()) {
+                const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
+                if (hashActions.contains(actionlistname)) {
+                    lst = hashActions.value(actionlistname) + lst;
+                    hashActions.remove(actionlistname);
+                }
                 hashActions.insert(actionlistname, lst);
             }
         }
         QHash<QString, QList<QAction *>>::const_iterator i = hashActions.constBegin();
+
         while (i != hashActions.constEnd()) {
             Q_FOREACH (KXMLGUIClient *client, guiFactory()->clients()) {
                 client->unplugActionList(i.key());
