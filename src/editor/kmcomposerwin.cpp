@@ -1512,7 +1512,9 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     }
 
     mComposerBase->setMessage(newMsg, allowDecryption);
-    mPluginEditorConvertTextManagerInterface->setMessage(newMsg);
+    if (mContext != TemplateContext::New) {
+        mPluginEditorConvertTextManagerInterface->setMessage(newMsg);
+    }
 
     mMsg = newMsg;
     KIdentityManagement::IdentityManager *im = KMKernel::self()->identityManager();
