@@ -197,6 +197,7 @@
 #include <QTemporaryDir>
 #include <QTextDocumentWriter>
 #include <QMenuBar>
+#include <MessageComposer/PluginEditorConverterInitialData>
 
 // GPGME
 #include <gpgme++/keylistresult.h>
@@ -1512,9 +1513,12 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     }
 
     mComposerBase->setMessage(newMsg, allowDecryption);
-    if (mContext != TemplateContext::New) {
-        mPluginEditorConvertTextManagerInterface->setMessage(newMsg);
-    }
+
+    //void KMailPluginEditorConvertTextManagerInterface::setInitialData(const MessageComposer::PluginEditorConverterInitialData &data)
+    MessageComposer::PluginEditorConverterInitialData data;
+    data.setMewMsg(newMsg);
+    data.setNewMessage(mContext == TemplateContext::New);
+    mPluginEditorConvertTextManagerInterface->setInitialData(data);
 
     mMsg = newMsg;
     KIdentityManagement::IdentityManager *im = KMKernel::self()->identityManager();

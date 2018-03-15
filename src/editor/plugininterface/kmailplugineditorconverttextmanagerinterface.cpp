@@ -55,10 +55,17 @@ void KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageCo
     //TODO
 }
 
-void KMailPluginEditorConvertTextManagerInterface::setMessage(const KMime::Message::Ptr &newMsg)
+void KMailPluginEditorConvertTextManagerInterface::setInitialData(const MessageComposer::PluginEditorConverterInitialData &data)
 {
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
-        interface->setMessage(newMsg);
+        interface->setInitialData(data);
+    }
+}
+
+void KMailPluginEditorConvertTextManagerInterface::setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data)
+{
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+        interface->setBeforeConvertingData(data);
     }
 }
 

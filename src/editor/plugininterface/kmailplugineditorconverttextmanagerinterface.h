@@ -51,8 +51,8 @@ public:
     void reformatText();
     void convertTextToFormat(MessageComposer::TextPart *textPart);
 
-    void setMessage(const KMime::Message::Ptr &newMsg);
-
+    void setInitialData(const MessageComposer::PluginEditorConverterInitialData &data);
+    void setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data);
 Q_SIGNALS:
     void reformatingTextDone();
 
