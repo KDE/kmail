@@ -1513,14 +1513,14 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     }
 
     mComposerBase->setMessage(newMsg, allowDecryption);
+    mMsg = newMsg;
 
-    //void KMailPluginEditorConvertTextManagerInterface::setInitialData(const MessageComposer::PluginEditorConverterInitialData &data)
+    //Add initial data.
     MessageComposer::PluginEditorConverterInitialData data;
-    data.setMewMsg(newMsg);
+    data.setMewMsg(mMsg);
     data.setNewMessage(mContext == TemplateContext::New);
     mPluginEditorConvertTextManagerInterface->setInitialData(data);
 
-    mMsg = newMsg;
     KIdentityManagement::IdentityManager *im = KMKernel::self()->identityManager();
 
     mEdtFrom->setText(mMsg->from()->asUnicodeString());
