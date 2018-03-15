@@ -198,6 +198,7 @@
 #include <QTextDocumentWriter>
 #include <QMenuBar>
 #include <MessageComposer/PluginEditorConverterInitialData>
+#include <MessageComposer/PluginEditorConverterBeforeConvertingData>
 
 // GPGME
 #include <gpgme++/keylistresult.h>
@@ -2460,6 +2461,14 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
 
 void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn, bool willSendItWithoutReediting)
 {
+    //TODO generate new message from plugins.
+    MessageComposer::PluginEditorConverterBeforeConvertingData data;
+    data.setNewMessage(mContext == TemplateContext::New);
+    mPluginEditorConvertTextManagerInterface->setDataBeforeConvertingText(data);
+
+    //TODO converttext if necessary
+
+
     // TODO integrate with MDA online status
     if (method == MessageComposer::MessageSender::SendImmediate) {
         if (!MessageComposer::Util::sendMailDispatcherIsOnline()) {
