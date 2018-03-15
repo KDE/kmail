@@ -78,6 +78,13 @@ bool mailingListHelp(const QSharedPointer<MailCommon::FolderSettings> &fd, const
 void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr &msg);
 
 void addQActionHelpText(QAction *action, const QString &text);
+
+/**
+     * Set an action's text, icon etc. as appropriate for whether a message is
+     * in the trash folder (delete permanently) or any other (move to trash).
+     */
+void setActionTrashOrDelete(QAction *action, bool isInTrashFolder);
+
 }
 }
 

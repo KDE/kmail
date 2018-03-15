@@ -160,6 +160,9 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
         mReaderWin->viewer()->headerStylePlugin()->headerStyle()->setReadOnlyMessage(!canChange);
     }
 
+    const bool isInTrashFolder = mParentCollection.isValid() ? CommonKernel->folderIsTrash(mParentCollection) : false;
+    QAction *moveToTrash = actionCollection()->action(QStringLiteral("move_to_trash"));
+    KMail::Util::setActionTrashOrDelete(moveToTrash, isInTrashFolder);
     menuBar()->show();
     toolBar(QStringLiteral("mainToolBar"))->show();
 }

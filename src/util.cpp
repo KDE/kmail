@@ -44,6 +44,7 @@
 
 #include <kmime/kmime_message.h>
 #include <kmessagebox.h>
+#include <klocalizedstring.h>
 #include "kmail_debug.h"
 
 #include <QAction>
@@ -174,5 +175,15 @@ void Util::addQActionHelpText(QAction *action, const QString &text)
     action->setToolTip(text);
     if (action->whatsThis().isEmpty()) {
         action->setWhatsThis(text);
+    }
+}
+
+void Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
+{
+    if (action) {
+        action->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
+        action->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
+        //Use same text as in Text property. Change it in kf5
+        action->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "Delete") : i18n("Move to Trash"));
     }
 }
