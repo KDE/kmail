@@ -455,8 +455,11 @@ QString KMMainWidget::fullCollectionPath() const
     return {};
 }
 
+// Connected to the currentChanged signals from the folderTreeView and favorites view.
 void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
 {
+    if (mCurrentCollection == collection)
+        return;
     folderSelected(collection);
     if (collection.cachePolicy().syncOnDemand()) {
         AgentManager::self()->synchronizeCollection(collection, false);
@@ -465,10 +468,9 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
     Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(collection));
 }
 
+// Called by slotFolderChanged (no particular reason for this method to be split out)
 void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 {
-    // This is connected to the MainFolderView signal triggering when a folder is selected
-
     if (mGoToFirstUnreadMessageInSelectedFolder) {
         // the default action has been overridden from outside
         mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;
@@ -537,7 +539,8 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 void KMMainWidget::slotShowSelectedFolderInPane()
 {
     if (mCurrentCollection.isValid()) {
-        mMessagePane->setCurrentFolder(mCurrentCollection, false, mPreSelectionMode);
+        QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(KMKernel::self()->entityTreeModel(), mCurrentCollection);
+        mMessagePane->setCurrentFolder(mCurrentCollection, idx, false, mPreSelectionMode);
     }
     updateMessageActions();
     updateFolderMenu();
@@ -2147,7 +2150,7 @@ void KMMainWidget::slotSelectCollectionFolder(const Akonadi::Collection &col)
 {
     if (mFolderTreeWidget) {
         mFolderTreeWidget->selectCollectionFolder(col);
-        slotFolderChanged(col);
+        slotFolderChanged(col); // call it explicitly in case the collection is filtered out in the foldertreeview
     }
 }
 
