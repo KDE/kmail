@@ -67,7 +67,7 @@ class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule
     Q_OBJECT
 public:
     explicit ConfigModuleWithTabs(QWidget *parent = nullptr);
-    ~ConfigModuleWithTabs()
+    ~ConfigModuleWithTabs() override
     {
     }
 
