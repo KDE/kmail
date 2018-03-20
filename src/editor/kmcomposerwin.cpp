@@ -619,6 +619,7 @@ void KMComposerWin::readConfig(bool reload /* = false */)
     if (!ident.fcc().isEmpty()) {
         fccName = ident.fcc();
     }
+    qDebug() <<" fccName" << fccName;
     setFcc(fccName);
 }
 
@@ -1618,6 +1619,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     if (auto hdr = mMsg->headerByType("X-KMail-Fcc")) {
         kmailFcc = hdr->asUnicodeString();
     }
+    qDebug() << "sssssssssssssssssssssssssss22222222" << kmailFcc;
     if (kmailFcc.isEmpty()) {
         setFcc(ident.fcc());
     } else {
@@ -1703,9 +1705,10 @@ void KMComposerWin::setFcc(const QString &idString)
     } else {
         col = Akonadi::Collection(idString.toLongLong());
     }
-
-    mComposerBase->setFcc(col);
-    mFccFolder->setCollection(col);
+    if (col.isValid()) {
+        mComposerBase->setFcc(col);
+        mFccFolder->setCollection(col);
+    }
 }
 
 bool KMComposerWin::isComposerModified() const
