@@ -448,9 +448,11 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 
     connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
-    connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
-        slotIdentityChanged(val);
-    });
+    //Laurent: don't use new connect api here as we connect/disconnect it.
+//    connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
+//        slotIdentityChanged(val);
+//    });
+    connect(identity, SIGNAL(identityChanged(uint)), this, SLOT(slotIdentityChanged(uint)));
     connect(kmkernel->identityManager(), QOverload<uint>::of(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
         if (mComposerBase->identityCombo()->currentIdentity() == val) {
             slotIdentityChanged(val);
@@ -619,7 +621,6 @@ void KMComposerWin::readConfig(bool reload /* = false */)
     if (!ident.fcc().isEmpty()) {
         fccName = ident.fcc();
     }
-    qDebug() <<" fccName" << fccName;
     setFcc(fccName);
 }
 
@@ -1619,7 +1620,6 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     if (auto hdr = mMsg->headerByType("X-KMail-Fcc")) {
         kmailFcc = hdr->asUnicodeString();
     }
-    qDebug() << "sssssssssssssssssssssssssss22222222" << kmailFcc;
     if (kmailFcc.isEmpty()) {
         setFcc(ident.fcc());
     } else {
