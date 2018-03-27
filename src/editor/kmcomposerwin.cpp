@@ -448,11 +448,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 
     connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
-    //Laurent: don't use new connect api here as we connect/disconnect it.
-//    connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
-//        slotIdentityChanged(val);
-//    });
-    connect(identity, SIGNAL(identityChanged(uint)), this, SLOT(slotIdentityChanged(uint)));
+    mIdentityConnection = connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
+            slotIdentityChanged(val);
+    });
     connect(kmkernel->identityManager(), QOverload<uint>::of(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
         if (mComposerBase->identityCombo()->currentIdentity() == val) {
             slotIdentityChanged(val);
@@ -1544,13 +1542,13 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     }
 
     // don't overwrite the header values with identity specific values
-    disconnect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
-               this, SLOT(slotIdentityChanged(uint)));
+    disconnect(mIdentityConnection);
 
     // load the mId into the gui, sticky or not, without emitting
     mComposerBase->identityCombo()->setCurrentIdentity(mId);
-    connect(mComposerBase->identityCombo(), SIGNAL(identityChanged(uint)),
-            this, SLOT(slotIdentityChanged(uint)));
+    mIdentityConnection = connect(mComposerBase->identityCombo(), &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
+            slotIdentityChanged(val);
+    });
 
     // manually load the identity's value into the fields; either the one from the
     // messge, where appropriate, or the one from the sticky identity. What's in
