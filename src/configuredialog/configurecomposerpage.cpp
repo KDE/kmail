@@ -297,7 +297,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(i18n("Default forwarding type:"), this);
     label->setBuddy(mForwardTypeCombo);
 
-    connect(mForwardTypeCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &ComposerPageGeneralTab::slotEmitChanged);
+    connect(mForwardTypeCombo, QOverload<int>::of(&KComboBox::activated), this, &ComposerPageGeneralTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mForwardTypeCombo, row, 1);
@@ -358,7 +358,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setToolTip(i18n("Set the maximum number of recipients for the warning"));
 
     connect(mRecipientCheck, &QCheckBox::stateChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
-    connect(mRecipientSpin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &ComposerPageGeneralTab::slotEmitChanged);
+    connect(mRecipientSpin, QOverload<int>::of(&QSpinBox::valueChanged), this, &ComposerPageGeneralTab::slotEmitChanged);
     // only enable the spinbox if the checkbox is checked
     connect(mRecipientCheck, &QCheckBox::toggled, mRecipientSpin, &QSpinBox::setEnabled);
 
