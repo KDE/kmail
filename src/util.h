@@ -84,7 +84,6 @@ void addQActionHelpText(QAction *action, const QString &text);
      * in the trash folder (delete permanently) or any other (move to trash).
      */
 void setActionTrashOrDelete(QAction *action, bool isInTrashFolder);
-
 }
 }
 

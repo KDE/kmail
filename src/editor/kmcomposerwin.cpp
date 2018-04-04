@@ -449,7 +449,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
     mIdentityConnection = connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
-            slotIdentityChanged(val);
+        slotIdentityChanged(val);
     });
     connect(kmkernel->identityManager(), QOverload<uint>::of(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
         if (mComposerBase->identityCombo()->currentIdentity() == val) {
@@ -1355,12 +1355,12 @@ void KMComposerWin::slotToggleMenubar(bool dontShowWarning)
 void KMComposerWin::initializePluginActions()
 {
     if (guiFactory()) {
-        QHash<QString, QList<QAction *>> hashActions;
+        QHash<QString, QList<QAction *> > hashActions;
         QHashIterator<MessageComposer::PluginActionType::Type, QList<QAction *> > localEditorManagerActionsType(mPluginEditorManagerInterface->actionsType());
         while (localEditorManagerActionsType.hasNext()) {
             localEditorManagerActionsType.next();
             QList<QAction *> lst = localEditorManagerActionsType.value();
-            if (!lst.isEmpty()) {                
+            if (!lst.isEmpty()) {
                 const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
                 hashActions.insert(actionlistname, lst);
             }
@@ -1378,7 +1378,7 @@ void KMComposerWin::initializePluginActions()
                 hashActions.insert(actionlistname, lst);
             }
         }
-        QHash<QString, QList<QAction *>>::const_iterator i = hashActions.constBegin();
+        QHash<QString, QList<QAction *> >::const_iterator i = hashActions.constBegin();
 
         while (i != hashActions.constEnd()) {
             Q_FOREACH (KXMLGUIClient *client, guiFactory()->clients()) {
@@ -1547,7 +1547,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     // load the mId into the gui, sticky or not, without emitting
     mComposerBase->identityCombo()->setCurrentIdentity(mId);
     mIdentityConnection = connect(mComposerBase->identityCombo(), &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
-            slotIdentityChanged(val);
+        slotIdentityChanged(val);
     });
 
     // manually load the identity's value into the fields; either the one from the
@@ -2468,7 +2468,6 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
     mPluginEditorConvertTextManagerInterface->setDataBeforeConvertingText(data);
 
     //TODO converttext if necessary
-
 
     // TODO integrate with MDA online status
     if (method == MessageComposer::MessageSender::SendImmediate) {
