@@ -216,6 +216,7 @@ Name[sv]=Nytt brev...
 Name[uk]=Нове повідомлення…
 Name[x-test]=xxNew Message...xx
 Name[zh_CN]=新信件...
+Name[zh_TW]=建立訊息…
 Icon=mail-message-new
 Exec=kmail --composer
 
@@ -249,5 +250,6 @@ Name[tr]=Posyayı Kontrol Et
 Name[uk]=Перевірити пошту
 Name[x-test]=xxCheck Mailxx
 Name[zh_CN]=检查邮件
+Name[zh_TW]=檢查信箱
 Icon=mail-receive
 Exec=kmail --check
