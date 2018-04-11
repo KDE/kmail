@@ -161,7 +161,7 @@ void IdentityPage::slotNewIdentity()
         KIdentityManagement::Identity &newIdent = mIdentityManager->modifyIdentityForName(identityName);
         QTreeWidgetItem *item = nullptr;
         if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-            item = mIPage.mIdentityList->selectedItems()[0];
+            item = mIPage.mIdentityList->selectedItems().at(0);
         }
 
         QTreeWidgetItem *newItem = nullptr;
@@ -217,7 +217,7 @@ void IdentityPage::slotRemoveIdentity()
 
     IdentityListViewItem *item = nullptr;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-        item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems()[0]);
+        item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().at(0));
     }
     if (!item) {
         return;
