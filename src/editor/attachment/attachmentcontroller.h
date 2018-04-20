@@ -43,7 +43,6 @@ public:
     ~AttachmentController() override;
 
 public Q_SLOTS:
-    /// @reimp
     void attachMyPublicKey() override;
 
 private:
