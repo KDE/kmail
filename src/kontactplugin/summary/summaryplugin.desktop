@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Service
-Icon=kontact
+Icon=view-calendar-agenda
 X-KDE-ServiceTypes=Kontact/Plugin,KPluginInfo
 
 X-KDE-Library=kontact_summaryplugin

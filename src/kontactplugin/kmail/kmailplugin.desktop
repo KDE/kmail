@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Service
-Icon=kmail
+Icon=view-pim-mail
 X-KDE-ServiceTypes=Kontact/Plugin,KPluginInfo
 
 X-KDE-Library=kontact_kmailplugin
