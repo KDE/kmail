@@ -123,7 +123,7 @@
 #include <MessageComposer/SignatureController>
 #include <MessageComposer/TextPart>
 #include <MessageComposer/Util>
-#include <MessageComposer/DictionaryComboBox>
+#include <Sonnet/DictionaryComboBox>
 
 #include <MessageCore/AttachmentPart>
 #include <MessageCore/MessageCoreSettings>
@@ -204,7 +204,7 @@
 #include <gpgme++/keylistresult.h>
 #include <gpgme++/key.h>
 
-using MessageComposer::DictionaryComboBox;
+using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
 
@@ -286,7 +286,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     sigController->setIdentityCombo(identity);
     sigController->suspend(); // we have to do identity change tracking ourselves due to the template code
 
-    MessageComposer::DictionaryComboBox *dictionaryCombo = new DictionaryComboBox(mHeadersArea);
+    Sonnet::DictionaryComboBox *dictionaryCombo = new DictionaryComboBox(mHeadersArea);
     dictionaryCombo->setToolTip(i18n("Select the dictionary to use when spell-checking this message"));
     mComposerBase->setDictionary(dictionaryCombo);
 
@@ -382,7 +382,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(sigController, &MessageComposer::SignatureController::signatureAdded,
             mComposerBase->editor()->externalComposer(), &KPIMTextEdit::RichTextExternalComposer::startExternalEditor);
 
-    connect(dictionaryCombo, &MessageComposer::DictionaryComboBox::dictionaryChanged, this, &KMComposerWin::slotSpellCheckingLanguage);
+    connect(dictionaryCombo, &Sonnet::DictionaryComboBox::dictionaryChanged, this, &KMComposerWin::slotSpellCheckingLanguage);
 
     connect(composerEditorNg, &KMComposerEditorNg::languageChanged, this, &KMComposerWin::slotDictionaryLanguageChanged);
     connect(composerEditorNg, &KMComposerEditorNg::spellCheckStatus, this, &KMComposerWin::slotSpellCheckingStatus);
