@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>570</width>
-    <height>348</height>
+    <height>362</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -80,7 +80,7 @@ It is recommended to leave this option turned on for maximum security.
    <item>
     <widget class="QGroupBox" name="warnGroupBox">
      <property name="title">
-      <string>Warn if certificates/keys expire soon (configure thresholds below)</string>
+      <string>Warn if certificates/ke&amp;ys expire soon (configure thresholds below)</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -313,7 +313,7 @@ The recommended SPHINX setting is 14 days.
       <item row="3" column="0">
        <widget class="QLabel" name="textLabel1_2_2">
         <property name="text">
-         <string>For root certificates:</string>
+         <string>For &amp;root certificates:</string>
         </property>
         <property name="wordWrap">
          <bool>false</bool>
@@ -339,7 +339,7 @@ The recommended SPHINX setting is 14 days.
       <item row="1" column="0">
        <widget class="QLabel" name="textLabel1">
         <property name="text">
-         <string>For end-user certificates/keys:</string>
+         <string>For end-user certificates/&amp;keys:</string>
         </property>
         <property name="wordWrap">
          <bool>false</bool>
@@ -369,22 +369,6 @@ The recommended SPHINX setting is 14 days.
     </widget>
    </item>
    <item>
-    <spacer name="spacer23">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>90</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -410,7 +394,16 @@ The recommended SPHINX setting is 14 days.
    </item>
    <item>
     <layout class="QHBoxLayout">
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -438,13 +431,26 @@ The recommended SPHINX setting is 14 days.
      </item>
     </layout>
    </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
    <class>KPluralHandlingSpinBox</class>
    <extends>QSpinBox</extends>
-   <header>KPluralHandlingSpinBox</header>
+   <header>kpluralhandlingspinbox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
