@@ -70,12 +70,12 @@
 
 using namespace MailCommon;
 
-KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride, const QString &name)
+KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
     : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
 {
     mReaderWin = new KMReaderWin(this, this, actionCollection());
     mReaderWin->setDisplayFormatMessageOverwrite(format);
-    mReaderWin->setHtmlLoadExtOverride(htmlLoadExtOverride);
+    mReaderWin->setHtmlLoadExtDefault(htmlLoadExtDefault);
     mReaderWin->setDecryptMessageOverwrite(true);
     initKMReaderMainWin();
 }
