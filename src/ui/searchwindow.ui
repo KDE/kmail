@@ -57,7 +57,7 @@
      <item>
       <widget class="QPushButton" name="selectMultipleFolders">
        <property name="text">
-        <string>Select folders...</string>
+        <string>Select Folders...</string>
        </property>
       </widget>
      </item>
