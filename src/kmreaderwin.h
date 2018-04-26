@@ -96,7 +96,8 @@ public:
 
     /** Override default load external references setting */
     bool htmlLoadExtOverride() const;
-    void setHtmlLoadExtOverride(bool override);
+    void setHtmlLoadExtDefault(bool loadExtDefault);
+    void setHtmlLoadExtOverride(bool loadExtOverride);
 
     /** Is html mail to be supported? Takes into account override */
     bool htmlMail() const;

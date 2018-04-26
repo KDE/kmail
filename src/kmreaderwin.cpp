@@ -392,9 +392,14 @@ void KMReaderWin::setDisplayFormatMessageOverwrite(MessageViewer::Viewer::Displa
     mViewer->setDisplayFormatMessageOverwrite(format);
 }
 
-void KMReaderWin::setHtmlLoadExtOverride(bool override)
+void KMReaderWin::setHtmlLoadExtDefault(bool loadExtDefault)
 {
-    mViewer->setHtmlLoadExtOverride(override);
+    mViewer->setHtmlLoadExtDefault(loadExtDefault);
+}
+
+void KMReaderWin::setHtmlLoadExtOverride(bool loadExtOverride)
+{
+    mViewer->setHtmlLoadExtOverride(loadExtOverride);
 }
 
 bool KMReaderWin::htmlMail() const

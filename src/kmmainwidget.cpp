@@ -517,7 +517,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
     readFolderConfig();
     if (mMsgView) {
         mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
-        mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPreference);
+        mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
     }
 
     if (!mCurrentFolderSettings->isValid() && (mMessagePane->count() < 2)) {
@@ -1568,7 +1568,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
     mFolderHtmlLoadExtPreference = !mFolderHtmlLoadExtPreference;
 
     if (mMsgView) {
-        mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPreference);
+        mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
         mMsgView->update(true);
     }
 }
@@ -4424,7 +4424,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     mMsgView->setMessage(copyItem);
     // reset HTML override to the folder setting
     mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
-    mMsgView->setHtmlLoadExtOverride(mFolderHtmlLoadExtPreference);
+    mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
     mMsgView->setDecryptMessageOverwrite(false);
     mMsgActions->setCurrentMessage(copyItem);
 }
