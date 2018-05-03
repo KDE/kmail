@@ -1022,6 +1022,9 @@ void KMMainWidget::createWidgets()
     connect(mMessagePane, &MessageList::Pane::statusMessage,
             this, &KMMainWidget::showMessageActivities);
 
+    connect(mMessagePane, &MessageList::Pane::forceLostFocus,
+            this, &KMMainWidget::slotSetFocusToViewer);
+
     //
     // Create the reader window
     //
@@ -4686,5 +4689,12 @@ void KMMainWidget::slotCopyDecryptedTo(QAction *action)
 
         auto command = new KMCopyDecryptedCommand(collection, mMessagePane->selectionAsMessageItemList());
         command->start();
+    }
+}
+
+void KMMainWidget::slotSetFocusToViewer()
+{
+    if (messageView() && messageView()->viewer()) {
+        messageView()->viewer()->setFocus();
     }
 }
