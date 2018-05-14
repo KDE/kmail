@@ -138,7 +138,6 @@ public:
     static const PtrList *mainWidgetList();
 
     QWidget *vacationScriptIndicator() const;
-    void updateVacationScriptStatus();
 
     MailCommon::FolderTreeView *folderTreeView() const;
 

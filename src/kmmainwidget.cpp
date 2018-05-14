@@ -4338,11 +4338,6 @@ QWidget *KMMainWidget::vacationScriptIndicator() const
     return mVacationScriptIndicator;
 }
 
-void KMMainWidget::updateVacationScriptStatus()
-{
-    updateVacationScriptStatus(mVacationIndicatorActive);
-}
-
 FolderTreeView *KMMainWidget::folderTreeView() const
 {
     return mFolderTreeWidget->folderTreeView();
