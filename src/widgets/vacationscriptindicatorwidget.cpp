@@ -80,6 +80,10 @@ VacationScriptIndicatorWidget::~VacationScriptIndicatorWidget()
 
 void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const QString &serverName)
 {
+    if (serverName.isEmpty()) {
+        return;
+    }
+
     if (active) {
         if (!mServerActive.contains(serverName)) {
             mServerActive.append(serverName);
