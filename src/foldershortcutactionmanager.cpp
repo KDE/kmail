@@ -140,7 +140,7 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
     // the folder settings correctly.
     mActionCollection->setShortcutsConfigurable(action, false);
     action->setText(actionLabel);
-    action->setShortcut(shortcut);
+    mActionCollection->setDefaultShortcut(action, shortcut);
     action->setIcon(icon);
 
     connect(action, &QAction::triggered, command, &FolderShortcutCommand::start);
