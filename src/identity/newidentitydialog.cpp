@@ -68,7 +68,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     vlay->addLayout(hlay);
     mLineEdit = new KLineEdit(page);
     mLineEdit->setFocus();
-    mLineEdit->setClearButtonShown(true);
+    mLineEdit->setClearButtonEnabled(true);
     QLabel *l = new QLabel(i18n("&New identity:"), page);
     l->setBuddy(mLineEdit);
     hlay->addWidget(l);

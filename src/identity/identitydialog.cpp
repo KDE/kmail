@@ -504,7 +504,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Reply-To Address" line edit and label:
     ++row;
     mReplyToEdit = new KPIM::AddresseeLineEdit(tab, true);
-    mReplyToEdit->setClearButtonShown(true);
+    mReplyToEdit->setClearButtonEnabled(true);
     mReplyToEdit->setObjectName(QStringLiteral("mReplyToEdit"));
     glay->addWidget(mReplyToEdit, row, 1);
     label = new QLabel(i18n("&Reply-To address:"), tab);
@@ -526,7 +526,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "CC addresses" line edit and label:
     ++row;
     mCcEdit = new KPIM::AddresseeLineEdit(tab, true);
-    mCcEdit->setClearButtonShown(true);
+    mCcEdit->setClearButtonEnabled(true);
     mCcEdit->setObjectName(QStringLiteral("mCcEdit"));
     glay->addWidget(mCcEdit, row, 1);
     label = new QLabel(i18n("&CC addresses:"), tab);
@@ -546,7 +546,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "BCC addresses" line edit and label:
     ++row;
     mBccEdit = new KPIM::AddresseeLineEdit(tab, true);
-    mBccEdit->setClearButtonShown(true);
+    mBccEdit->setClearButtonEnabled(true);
     mBccEdit->setObjectName(QStringLiteral("mBccEdit"));
     glay->addWidget(mBccEdit, row, 1);
     label = new QLabel(i18n("&BCC addresses:"), tab);
@@ -626,7 +626,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     QHBoxLayout *hbox = new QHBoxLayout;
     mDefaultDomainEdit = new KLineEdit(tab);
-    mDefaultDomainEdit->setClearButtonShown(true);
+    mDefaultDomainEdit->setClearButtonEnabled(true);
     hbox->addWidget(mDefaultDomainEdit);
     QToolButton *restoreDefaultDomainName = new QToolButton;
     restoreDefaultDomainName->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
