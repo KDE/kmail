@@ -840,10 +840,7 @@ KMReplyCommand::KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, Messag
     , m_replyStrategy(replyStrategy)
     , mNoQuote(noquote)
 {
-    if (!noquote) {
-        fetchScope().fetchFullPayload(true);
-    }
-
+    fetchScope().fetchFullPayload(true);
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
 
