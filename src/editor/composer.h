@@ -137,4 +137,4 @@ KMAIL_EXPORT Composer *makeComposer(
     const QString &textSelection = QString(), const QString &customTemplate = QString());
 }
 
-#endif // __KMAIL_COMPOSER_H__
+#endif // KMAIL_COMPOSER_H
