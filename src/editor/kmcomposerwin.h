@@ -22,8 +22,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef KMAIL__KMComposeWin
-#define KMAIL__KMComposeWin
+#ifndef KMAIL_KMComposeWin
+#define KMAIL_KMComposeWin
 
 // KMail includes
 #include "editor/composer.h"
