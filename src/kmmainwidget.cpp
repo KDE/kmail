@@ -1639,8 +1639,7 @@ void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReferenc
                 ),
             selectMsg.count() > 1 ? i18n("Delete Messages") : i18n("Delete Message"),
             KStandardGuiItem::del(),
-            KStandardGuiItem::cancel(),
-            QStringLiteral("NoConfirmDelete")
+            KStandardGuiItem::cancel()
             );
         if (ret == KMessageBox::Cancel) {
             mMessagePane->deletePersistentSet(ref);
