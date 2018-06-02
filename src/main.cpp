@@ -49,10 +49,10 @@ public:
     {
     }
 
-    int activate(const QStringList &args, const QString &workindDir) override;
+    int activate(const QStringList &args, const QString &workingDir) override;
     void commitData(QSessionManager &sm);
     void setEventLoopReached();
-    void delayedInstanceCreation(const QStringList &args, const QString &workindDir);
+    void delayedInstanceCreation(const QStringList &args, const QString &workingDir);
 protected:
     bool mDelayedInstanceCreation;
     bool mEventLoopReached;
@@ -69,7 +69,7 @@ void KMailApplication::setEventLoopReached()
     mEventLoopReached = true;
 }
 
-int KMailApplication::activate(const QStringList &args, const QString &workindDir)
+int KMailApplication::activate(const QStringList &args, const QString &workingDir)
 {
     // If the event loop hasn't been reached yet, the kernel is probably not
     // fully initialized. Creating an instance would therefore fail, this is why
@@ -89,16 +89,16 @@ int KMailApplication::activate(const QStringList &args, const QString &workindDi
     }
 
     if (!kmkernel->firstInstance() || !qApp->isSessionRestored()) {
-        kmkernel->handleCommandLine(true, args, workindDir);
+        kmkernel->handleCommandLine(true, args, workingDir);
     }
     kmkernel->setFirstInstance(false);
     return 0;
 }
 
-void KMailApplication::delayedInstanceCreation(const QStringList &args, const QString &workindDir)
+void KMailApplication::delayedInstanceCreation(const QStringList &args, const QString &workingDir)
 {
     if (mDelayedInstanceCreation) {
-        activate(args, workindDir);
+        activate(args, workingDir);
     }
 }
 
