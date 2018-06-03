@@ -53,6 +53,10 @@ public:
     void commitData(QSessionManager &sm);
     void setEventLoopReached();
     void delayedInstanceCreation(const QStringList &args, const QString &workingDir);
+
+public Q_SLOTS:
+    int newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory) override;
+
 protected:
     bool mDelayedInstanceCreation;
     bool mEventLoopReached;
@@ -67,6 +71,17 @@ void KMailApplication::commitData(QSessionManager &)
 void KMailApplication::setEventLoopReached()
 {
     mEventLoopReached = true;
+}
+
+int KMailApplication::newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory)
+{
+    if (!kmkernel->firstInstance() && !arguments.isEmpty()) {
+        // if we're going to create a new window (viewer or composer),
+        // don't bring the mainwindow onto the current desktop
+        return activate(arguments, workingDirectory);
+    } else {
+        return PimUniqueApplication::newInstance(startupId, arguments, workingDirectory);
+    }
 }
 
 int KMailApplication::activate(const QStringList &args, const QString &workingDir)
