@@ -127,9 +127,19 @@ void AttachmentController::selectionChanged()
 
 void AttachmentController::onShowAttachment(KMime::Content *content, const QByteArray &charset)
 {
-    KMReaderMainWin *win
-        = new KMReaderMainWin(content, MessageViewer::Viewer::Text, QString::fromLatin1(charset));
-    win->show();
+
+    if (content->bodyAsMessage()) {
+        KMime::Message::Ptr m = KMime::Message::Ptr(new KMime::Message);
+        m->setContent(content->bodyAsMessage()->encodedContent());
+        m->parse();
+        KMReaderMainWin *win = new KMReaderMainWin();
+        win->showMessage(QString::fromLatin1(charset), m);
+        win->show();
+    } else {
+        KMReaderMainWin *win
+            = new KMReaderMainWin(content, MessageViewer::Viewer::Text, QString::fromLatin1(charset));
+        win->show();
+    }
 }
 
 void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
