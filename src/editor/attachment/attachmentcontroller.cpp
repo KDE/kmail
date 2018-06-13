@@ -129,7 +129,7 @@ void AttachmentController::onShowAttachment(KMime::Content *content, const QByte
 {
 
     if (content->bodyAsMessage()) {
-        KMime::Message::Ptr m = KMime::Message::Ptr(new KMime::Message);
+        KMime::Message::Ptr m(new KMime::Message);
         m->setContent(content->bodyAsMessage()->encodedContent());
         m->parse();
         KMReaderMainWin *win = new KMReaderMainWin();
