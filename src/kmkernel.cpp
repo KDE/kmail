@@ -389,7 +389,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                 QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
                 QString previousKey;
                 for (auto it = values.cbegin(), end = values.cend(); it != end; ++it) {
-                    const QString key = it.key();
+                    const QString key = it.key().toLower();
                     if (key == QLatin1Literal("to")) {
                         if (!it->isEmpty()) {
                             to += *it + QStringLiteral(", ");
