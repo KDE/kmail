@@ -2330,7 +2330,9 @@ void KMMainWidget::slotUpdateOnlineStatus(KMailSettings::EnumNetworkState::type)
 void KMMainWidget::slotSendQueued()
 {
     if (kmkernel->msgSender()) {
-        kmkernel->msgSender()->sendQueued();
+        if (!kmkernel->msgSender()->sendQueued()) {
+            KMessageBox::error(this, i18n("Impossible to send email"), i18n("Send Email"));
+        }
     }
 }
 
@@ -2339,7 +2341,9 @@ void KMMainWidget::slotSendQueuedVia(MailTransport::Transport *transport)
 {
     if (transport) {
         if (kmkernel->msgSender()) {
-            kmkernel->msgSender()->sendQueued(transport->id());
+            if (!kmkernel->msgSender()->sendQueued(transport->id())) {
+                KMessageBox::error(this, i18n("Impossible to send email"), i18n("Send Email"));
+            }
         }
     }
 }

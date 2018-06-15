@@ -750,7 +750,9 @@ void KMKernel::setAccountStatus(bool goOnline)
         const auto col = CommonKernel->collectionFromId(CommonKernel->outboxCollectionFolder().id());
         const qint64 nbMsgOutboxCollection = col.statistics().count();
         if (nbMsgOutboxCollection > 0) {
-            kmkernel->msgSender()->sendQueued();
+            if (!kmkernel->msgSender()->sendQueued()) {
+                KMessageBox::error(KMKernel::self()->mainWin(), i18n("Impossible to send email"), i18n("Send Email"));
+            }
         }
     }
 }
