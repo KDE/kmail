@@ -38,7 +38,7 @@ void TagSelectDialogTest::initTestCase()
 
 void TagSelectDialogTest::shouldHaveDefaultValue()
 {
-    TagSelectDialog dlg(0, 1, Akonadi::Item());
+    TagSelectDialog dlg(nullptr, 1, Akonadi::Item());
     QListWidget *listWidget = dlg.findChild<QListWidget *>(QStringLiteral("listtag"));
     QVERIFY(listWidget);
 

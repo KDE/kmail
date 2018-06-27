@@ -429,7 +429,7 @@ void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
                               i18nc("@action:inmenu", "Properties"));
     }
 
-    QAction *a = menu.exec(event->globalPos(), 0);
+    QAction *a = menu.exec(event->globalPos(), nullptr);
     if (a) {
         if (a == extract) {
             extractFile();

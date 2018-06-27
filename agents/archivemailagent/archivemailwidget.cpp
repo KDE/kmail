@@ -41,7 +41,7 @@ inline QString archiveMailCollectionPattern()
 
 ArchiveMailItem::ArchiveMailItem(QTreeWidget *parent)
     : QTreeWidgetItem(parent)
-    , mInfo(0)
+    , mInfo(nullptr)
 {
 }
 
