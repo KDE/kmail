@@ -353,13 +353,5 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
 
 void ConfigurePluginsListWidget::defaults()
 {
-    resetToUserSettings(mPluginEditorItems);
-    resetToUserSettings(mPluginMessageViewerItems);
-    resetToUserSettings(mPluginCheckBeforeSendItems);
-    resetToUserSettings(mPluginGenericItems);
-    resetToUserSettings(mPluginWebEngineItems);
-    resetToUserSettings(mPluginHeaderStyleItems);
-    resetToUserSettings(mAgentPluginsItems);
-    resetToUserSettings(mPluginConvertTextItems);
-    resetToUserSettings(mPluginEditorInitItems);
+    doResetToDefaultsOther();
 }
