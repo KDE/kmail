@@ -361,4 +361,5 @@ void ConfigurePluginsListWidget::defaults()
     resetToUserSettings(mPluginHeaderStyleItems);
     resetToUserSettings(mAgentPluginsItems);
     resetToUserSettings(mPluginConvertTextItems);
+    resetToUserSettings(mPluginEditorInitItems);
 }
