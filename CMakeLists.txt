@@ -33,7 +33,7 @@ include(ECMQtDeclareLoggingCategory)
 include(ECMCoverageOption)
 
 # Do NOT add quote
-set(KDEPIM_DEV_VERSION alpha)
+set(KDEPIM_DEV_VERSION beta1)
 
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
