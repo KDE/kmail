@@ -1186,7 +1186,7 @@ void KMMainWidget::updateMoveAction(bool hasUnreadMails)
     }
 }
 
-void KMMainWidget::updateAllToTrashAction(int statistics)
+void KMMainWidget::updateAllToTrashAction(qint64 statistics)
 {
     if (mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)) {
         const bool folderWithContent = mCurrentFolderSettings && !mCurrentFolderSettings->isStructural();

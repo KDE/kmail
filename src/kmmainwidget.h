@@ -285,7 +285,7 @@ private:
     void updateMoveAction(const Akonadi::CollectionStatistics &statistic);
     void updateMoveAction(bool hasUnreadMails);
 
-    void updateAllToTrashAction(int statistics);
+    void updateAllToTrashAction(qint64 statistics);
 
     /** Get override character encoding. */
     QString overrideEncoding() const;
