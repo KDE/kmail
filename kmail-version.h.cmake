@@ -18,13 +18,10 @@
 */
 
 /*
-  Set the version for this kdepim release.
+  Set the version for this kmail release.
 
   This version may be used by programs within this module that
   do not want to maintain a version on their own.
-
-  Note that we cannot use the kdelibs version because we may
-  build against older kdelibs releases.
 */
 
 #ifndef KMAIL_VERSION_H
