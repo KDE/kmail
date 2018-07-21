@@ -59,6 +59,7 @@
   <summary xml:lang="nl">E-mailtoepassing</summary>
   <summary xml:lang="pl">Aplikacja pocztowa</summary>
   <summary xml:lang="pt">Aplicação de e-mail</summary>
+  <summary xml:lang="ru">Приложение электронной почты</summary>
   <summary xml:lang="sl">Odjemalec za e-pošto</summary>
   <summary xml:lang="sr">Програм за е‑пошту</summary>
   <summary xml:lang="sr-Latn">Program za e‑poštu</summary>
@@ -732,6 +733,7 @@
       <li xml:lang="pl">Możliwość zastępowania buziek tekstowych emotikonami</li>
       <li xml:lang="pt">Pode substituir ícones emotivos de texto por gráficos</li>
       <li xml:lang="pt-BR">Substituição carinhas de texto por emoticons</li>
+      <li xml:lang="ru">Замена текстовых смайликов на смайлики-значки;</li>
       <li xml:lang="sk">Vie nahradiť textové smajlíky emotikonmi</li>
       <li xml:lang="sl">Lahko zamenja besedilne smeške z izraznimi ikonami</li>
       <li xml:lang="sr">Опциона замена текстуалних смешкова емотиконима.</li>
@@ -764,6 +766,7 @@
       <li xml:lang="pl">Wyświetlanie zdjęcia nadawcy lub awatara, jeśli jest dostępny w książce adresowej</li>
       <li xml:lang="pt">Mostra a imagem ou avatar do remetente, caso esteja presente no livro de endereços</li>
       <li xml:lang="pt-BR">Mostra a imagem ou avatar do remetente, caso esteja presente no livro de endereços</li>
+      <li xml:lang="ru">Отображение фотографии или аватара отправителя (при наличии в адресной книге);</li>
       <li xml:lang="sk">Zobrazí obrázok odosielateľa alebo avatar, ak je dostupny v adresári kontaktov</li>
       <li xml:lang="sl">Prikaže sliko pošiljatelja ali podobo, če je prisotna v imeniku</li>
       <li xml:lang="sr">Приказ слике или аватара пошиљаоца, ако их има у адресару.</li>
@@ -796,6 +799,7 @@
       <li xml:lang="pl">Obsługa X-Face (zdjęcia czarno białe w wiadomościach)</li>
       <li xml:lang="pt">Suporta o X-Face (imagens a p/b nas mensagens)</li>
       <li xml:lang="pt-BR">Suporta a X-Face (imagens em preto e branco nas mensagens)</li>
+      <li xml:lang="ru">Поддержка X-Face (ч/б изображения в сообщениях);</li>
       <li xml:lang="sk">Podporuje X-Face (č/b obrázky v správach)</li>
       <li xml:lang="sl">Podpira X-Face (črno-bele slike v sporočilih)</li>
       <li xml:lang="sr">Подршка за X-Face (црно‑беле слике у порукама).</li>
@@ -829,6 +833,7 @@
       <li xml:lang="pl">Pakowanie załączników</li>
       <li xml:lang="pt">Compressão dos anexos</li>
       <li xml:lang="pt-BR">Compressão dos anexos</li>
+      <li xml:lang="ru">Сжатие вложений;</li>
       <li xml:lang="sk">Kompresia príloh</li>
       <li xml:lang="sl">Stiskanje prilog</li>
       <li xml:lang="sr">Компресовање прилога.</li>
@@ -862,6 +867,7 @@
       <li xml:lang="pl">Obsługa funkcjonalności Groupware.</li>
       <li xml:lang="pt">O KMail suporta as funcionalidades de trabalho em grupo.</li>
       <li xml:lang="pt-BR">Suporte a funcionalidades de Groupware.</li>
+      <li xml:lang="ru">KMail поддерживает совместную функциональность.</li>
       <li xml:lang="sk">KMail podporuje funkcionalitu Groupware.</li>
       <li xml:lang="sl">Podpira programe za skupinsko delo</li>
       <li xml:lang="sr">К‑пошта подржава групверску функционалност.</li>
