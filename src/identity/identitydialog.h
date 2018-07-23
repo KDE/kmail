@@ -104,6 +104,7 @@ private:
     bool validateAddresses(const QString &addresses);
     void updateVcardButton();
     void editVcard(const QString &filename);
+    void unregisterSpecialCollection(qint64 id);
 
     QString mVcardFilename;
 

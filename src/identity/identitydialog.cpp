@@ -112,6 +112,8 @@ using MailTransport::TransportManager;
 
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <AkonadiCore/collectionmodifyjob.h>
+#include <AkonadiCore/CollectionFetchJob>
+#include <Akonadi/KMime/SpecialMailCollections>
 #include <QStandardPaths>
 #include <QDialogButtonBox>
 
@@ -967,6 +969,20 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mXFaceConfigurator->setXFaceEnabled(ident.isXFaceEnabled());
 }
 
+void IdentityDialog::unregisterSpecialCollection(qint64 colId)
+{
+    // ID is not enough to unregister a special collection, we need the
+    // resource set as well.
+    auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection(colId), Akonadi::CollectionFetchJob::Base, this);
+    connect(fetch, &Akonadi::CollectionFetchJob::collectionsReceived,
+            this, [this](const Akonadi::Collection::List &cols) {
+                if (cols.count() != 1) {
+                    return;
+                }
+                Akonadi::SpecialMailCollections::self()->unregisterCollection(cols.first());
+            });
+}
+
 void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
 {
     // "General" tab:
@@ -1004,30 +1020,43 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setDictionary(mDictionaryCombo->currentDictionaryName());
     ident.setDisabledFcc(!mSentMailFolderCheck->isChecked());
     Akonadi::Collection collection = mFccFolderRequester->collection();
+    if (!ident.fcc().isEmpty()) {
+        unregisterSpecialCollection(ident.fcc().toLongLong());
+    }
     if (collection.isValid()) {
         ident.setFcc(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("mail-folder-sent"));
-        new Akonadi::CollectionModifyJob(collection);
+        // It will also start a CollectionModifyJob
+        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::SentMail, collection);
     } else {
         ident.setFcc(QString());
     }
 
     collection = mDraftsFolderRequester->collection();
+    if (!ident.drafts().isEmpty()) {
+        unregisterSpecialCollection(ident.drafts().toLongLong());
+    }
     if (collection.isValid()) {
         ident.setDrafts(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-properties"));
-        new Akonadi::CollectionModifyJob(collection);
+        // It will also start a CollectionModifyJob
+        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Drafts, collection);
     } else {
         ident.setDrafts(QString());
     }
 
     collection = mTemplatesFolderRequester->collection();
+    if (ident.templates().isEmpty()) {
+        unregisterSpecialCollection(ident.templates().toLongLong());
+    }
     if (collection.isValid()) {
         ident.setTemplates(QString::number(collection.id()));
         Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-new"));
+        // It will also start a CollectionModifyJob
+        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Templates, collection);
         new Akonadi::CollectionModifyJob(collection);
     } else {
         ident.setTemplates(QString());
