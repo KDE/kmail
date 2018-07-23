@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Unified Mailbox Agent
+Comment=Unified Mailbox Agent
+Type=AkonadiAgent
+Exec=akonadi_unifiedmailbox_agent
+Icon=folder-mail
+X-Akonadi-MimeTypes=message/rfc822
+X-Akonadi-Capabilities=Resource,Unique,Autostart
+X-Akonadi-Identifier=akonadi_unifiedmailbox_agent
