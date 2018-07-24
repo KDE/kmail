@@ -988,15 +988,16 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     // "General" tab:
     ident.setFullName(mNameEdit->text());
     ident.setOrganization(mOrganizationEdit->text());
-    QString email = mEmailEdit->text();
+    QString email = mEmailEdit->text().trimmed();
     ident.setPrimaryEmailAddress(email);
     const QStringList aliases = mAliasEdit->items();
     QStringList result;
     for (const QString &alias : aliases) {
-        if (alias.trimmed().isEmpty()) {
+        const QString aliasTrimmed = alias.trimmed();
+        if (aliasTrimmed.isEmpty()) {
             continue;
         }
-        if (alias == email) {
+        if (aliasTrimmed == email) {
             continue;
         }
         result.append(alias);
