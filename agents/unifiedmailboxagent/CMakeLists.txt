@@ -8,6 +8,10 @@ endif()
 
 set(unifiedmailbox_agent_SRCS
     unifiedmailboxagent.cpp
+    unifiedmailboxmanager.cpp
+    unifiedmailboxeditor.cpp
+    settingsdialog.cpp
+    mailkernel.cpp
 )
 ecm_qt_declare_logging_category(unifiedmailbox_agent_SRCS HEADER unifiedmailboxagent_debug.h IDENTIFIER agent_log CATEGORY_NAME org.kde.pim.unifiedmailboxagent)
 kconfig_add_kcfg_files(unifiedmailbox_agent_SRCS
@@ -20,9 +24,14 @@ add_executable(akonadi_unifiedmailbox_agent ${unifiedmailbox_agent_SRCS})
 target_link_libraries(akonadi_unifiedmailbox_agent
     KF5::AkonadiAgentBase
     KF5::AkonadiMime
+    KF5::AkonadiWidgets
     KF5::Mime
     KF5::I18n
     KF5::IdentityManagement
+    KF5::WidgetsAddons
+    KF5::IconThemes
+    KF5::ItemModels
+    KF5::MailCommon
 )
 
 if( APPLE )

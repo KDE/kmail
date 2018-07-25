@@ -19,6 +19,7 @@
 
 #include "unifiedmailboxagent.h"
 #include "unifiedmailboxagent_debug.h"
+#include "settingsdialog.h"
 #include "settings.h"
 
 #include <AkonadiCore/ChangeRecorder>
@@ -38,6 +39,9 @@
 
 #include <KLocalizedString>
 
+#include <QPointer>
+
+#include <memory>
 #include <unordered_set>
 #include <chrono>
 
@@ -51,6 +55,7 @@ static const auto Drafts = QStringLiteral("drafts");
 
 UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     : Akonadi::ResourceBase(id)
+    , mBoxManager(config())
 {
     setAgentName(i18n("Unified Mailboxes"));
 
@@ -67,89 +72,40 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     ifs.setCacheOnly(true);
     ifs.fetchFullPayload(false);
 
-    scheduleCustomTask(this, "init", {});
+    QMetaObject::invokeMethod(this, "delayedInit", Qt::QueuedConnection);
 }
 
 void UnifiedMailboxAgent::configure(WId windowId)
 {
+    QPointer<UnifiedMailboxAgent> agent(this);
+    if (SettingsDialog(config(), mBoxManager, windowId).exec() && agent) {
+        QMetaObject::invokeMethod(this, "delayedInit", Qt::QueuedConnection);
+        Q_EMIT configurationDialogAccepted();
+    }
 }
 
-void UnifiedMailboxAgent::init(const QVariant & /* dummy */)
+void UnifiedMailboxAgent::delayedInit()
 {
     qCDebug(agent_log) << "init";
 
     fixSpecialCollections();
+    mBoxManager.loadBoxes([this]() {
+        // start monitoring all source collections
+        for (const auto &box : mBoxManager) {
+            const auto sources = box.sourceCollections();
+            for (auto source : sources) {
+                changeRecorder()->setCollectionMonitored(Akonadi::Collection(source), true);
+            }
+        }
 
-    // First discover our boxes
-    Q_EMIT status(Running, i18n("Discovering Unified MailBoxes..."));
-    auto list = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
-    list->fetchScope().setResource(identifier());
-    connect(list, &Akonadi::CollectionFetchJob::collectionsReceived,
-            this, [this](const Akonadi::Collection::List &list) {
-                for (const auto &col : list) {
-                    Q_ASSERT(col.resource() == identifier());
-                    mBoxIdToName.insert(col.id(), col.name());
-                    mBoxNameToId.insert(col.name(), col.id());
-                }
-            });
-
-    // No boxes yet? Schedule collection tree sync and then try again
-    if (mBoxIdToName.isEmpty()) {
-        Q_EMIT status(Idle);
-        qCDebug(agent_log) << "No boxes found, requesting collection tree sync";
+        // boxes are loaded, schedule tree sync and afterwards check for missing items
         synchronizeCollectionTree();
-        scheduleCustomTask(this, "init", {});
-        taskDone();
-        return;
-    }
-    qCDebug(agent_log) << "Found" << mBoxIdToName.count() << "boxes";
-
-    // Now build mapping between regular collections and boxes
-    Q_EMIT status(Running, i18n("Discovering local mailboxes..."));
-    list = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
-    list->fetchScope().fetchAttribute<Akonadi::SpecialCollectionAttribute>();
-    list->fetchScope().setContentMimeTypes({MailMimeType});
-    connect(list, &Akonadi::CollectionFetchJob::collectionsReceived,
-            this, [this](const Akonadi::Collection::List &list) {
-                for (const auto &col : list) {
-                    if (col.resource() == identifier()) {
-                        continue;
-                    }
-                    // TODO: Support custom collections too
-                    if (!col.hasAttribute<Akonadi::SpecialCollectionAttribute>()) {
-                        continue;
-                    }
-
-                    const auto *attr = col.attribute<Akonadi::SpecialCollectionAttribute>();
-                    qCDebug(agent_log) << "Found Collection with special attribute: " << attr->collectionType();
-                    if (QString::fromLatin1(attr->collectionType()) == Inbox) {
-                        const auto boxId = mBoxNameToId.value(Inbox, -1);
-                        Q_ASSERT(boxId > -1);
-                        mCollectionToBox.insert(col.id(), boxId);
-                        changeRecorder()->setCollectionMonitored(col);
-                        qCDebug(agent_log) << "Added collection" << col.id() << "to Inbox box";
-                    } else if (QString::fromLatin1(attr->collectionType()) == Sent) {
-                        const auto boxId =  mBoxNameToId.value(Sent, -1);
-                        Q_ASSERT(boxId > -1);
-                        mCollectionToBox.insert(col.id(), boxId);
-                        changeRecorder()->setCollectionMonitored(col);
-                        qCDebug(agent_log) << "Added collection" << col.id() << "to Sent box";
-                    } else if (QString::fromLatin1(attr->collectionType()) == Drafts) {
-                        const auto boxId = mBoxNameToId.value(Drafts, -1);
-                        Q_ASSERT(boxId > -1);
-                        mCollectionToBox.insert(col.id(), boxId);
-                        changeRecorder()->setCollectionMonitored(col);
-                        qCDebug(agent_log) << "Added collection" << col.id() << "to Drafts box";
-                    }
-                }
-            });
-    // Once we have full mapping between collections and mappings, check if there
-    // are any items that we may have missed and must be linked or unlinked to/from
-    // the boxes.
-    connect(list, &Akonadi::CollectionFetchJob::result, this, &UnifiedMailboxAgent::checkForMissingItems);
+        scheduleCustomTask(this, "rediscoverLocalBoxes", {});
+        scheduleCustomTask(this, "checkForMissingItems", {});
+    });
 }
 
-void UnifiedMailboxAgent::checkForMissingItems()
+void UnifiedMailboxAgent::checkForMissingItems(const QVariant & /* dummy */)
 {
     const auto lastSeenEvent = QDateTime::fromTime_t(Settings::self()->lastSeenEvent());
     qCDebug(agent_log) << "Checking for missing Items in boxes, last seen event was on" << lastSeenEvent;
@@ -159,60 +115,71 @@ void UnifiedMailboxAgent::checkForMissingItems()
     const auto collections = changeRecorder()->collectionsMonitored();
     Q_EMIT status(Running, i18n("Checking if unified boxes are up to date"));
     for (const auto &collection : collections) {
-        const Akonadi::Collection box{unifiedBoxForCollection(collection)};
-        if (!box.isValid()) {
+        auto unifiedBox = mBoxManager.unifiedMailboxForSource(collection.id());
+        if (!unifiedBox) {
             qCWarning(agent_log) << "Failed to retrieve box ID for collection " << collection.id();
             continue;
         }
+        Akonadi::Collection unifiedCollection(mBoxManager.collectionIdForUnifiedMailbox(unifiedBox->id()));
         qCDebug(agent_log) << "\tChecking source collection" << collection.id();
         auto fetch = new Akonadi::ItemFetchJob(collection, this);
         fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
         // Optimize: we could've only missed events that occured since the last time we saw one
-        fetch->fetchScope().setFetchChangedSince(lastSeenEvent);
+        //fetch->fetchScope().setFetchChangedSince(lastSeenEvent);
         fetch->fetchScope().setFetchVirtualReferences(true);
         fetch->fetchScope().setCacheOnly(true);
         connect(fetch, &Akonadi::ItemFetchJob::itemsReceived,
-                this, [this, box](const Akonadi::Item::List &items) {
+                this, [this, unifiedCollection](const Akonadi::Item::List &items) {
                     Akonadi::Item::List toLink;
                     std::copy_if(items.cbegin(), items.cend(), std::back_inserter(toLink),
-                        [&box](const Akonadi::Item &item) {
-                            return !item.virtualReferences().contains(box);
+                        [&unifiedCollection](const Akonadi::Item &item) {
+                            return !item.virtualReferences().contains(unifiedCollection);
                         });
                     if (!toLink.isEmpty()) {
-                        new Akonadi::LinkJob(box, toLink, this);
+                        new Akonadi::LinkJob(unifiedCollection, toLink, this);
                     }
                 });
     }
 
     // Then check content of all boxes and verify that each Item still belongs to
     // a Collection that is part of the box
-    for (const qint64 boxId : mBoxNameToId) {
-        qCDebug(agent_log) << "\tChecking box" << boxId;
+    for (const auto &box : mBoxManager) {
+        qCDebug(agent_log) << "\tChecking box" << box.name();
         std::unordered_set<qint64> boxSources;
-        const auto sourceList = mCollectionToBox.keys();
+        const auto sourceList = box.sourceCollections();
         boxSources.reserve(sourceList.size());
         std::copy(sourceList.cbegin(), sourceList.cend(), std::inserter(boxSources, boxSources.end()));
 
-        auto fetch = new Akonadi::ItemFetchJob(Akonadi::Collection(boxId), this);
+        Akonadi::Collection unifiedCollection(mBoxManager.collectionIdForUnifiedMailbox(box.id()));
+        auto fetch = new Akonadi::ItemFetchJob(unifiedCollection, this);
         fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
         // TODO: Does this optimization here make sense?
-        fetch->fetchScope().setFetchChangedSince(lastSeenEvent);
+        //fetch->fetchScope().setFetchChangedSince(lastSeenEvent);
         fetch->fetchScope().setCacheOnly(true);
+        fetch->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
         connect(fetch, &Akonadi::ItemFetchJob::itemsReceived,
-                this, [this, boxSources = std::move(boxSources), boxId](const Akonadi::Item::List &items) {
+                this, [this, boxSources = std::move(boxSources), unifiedCollection](const Akonadi::Item::List &items) {
                     Akonadi::Item::List toUnlink;
                     std::copy_if(items.cbegin(), items.cend(), std::back_inserter(toUnlink),
                         [&boxSources](const Akonadi::Item &item) {
                             return boxSources.find(item.storageCollectionId()) == boxSources.cend();
                         });
                     if (!toUnlink.isEmpty()) {
-                        new Akonadi::UnlinkJob(Akonadi::Collection{boxId}, toUnlink, this);
+                        new Akonadi::UnlinkJob(unifiedCollection, toUnlink, this);
                     }
                 });
     }
     Q_EMIT status(Idle);
     taskDone();
 }
+
+void UnifiedMailboxAgent::rediscoverLocalBoxes(const QVariant &)
+{
+    mBoxManager.discoverBoxCollections([this]() {
+        taskDone();
+    });
+}
+
 
 
 void UnifiedMailboxAgent::retrieveCollections()
@@ -230,34 +197,25 @@ void UnifiedMailboxAgent::retrieveCollections()
     displayAttr->setActiveIconName(QStringLiteral("globe"));
     collections.push_back(topLevel);
 
-    // Now create unified folders for Inbox, Sent and Drafts
-    // TODO: Templates?
-    struct Folder {
-        QString id;
-        QString name;
-        QString icon;
-    } folders[] = {
-        {Inbox, i18n("Inbox"), QStringLiteral("mail-folder-inbox")},
-        {Sent, i18n("Sent"), QStringLiteral("mail-folder-sent")},
-        {Drafts, i18n("Drafts"), QStringLiteral("document-properties")}
-    };
-    for (const auto &folder : folders) {
+    for (const auto &box : mBoxManager) {
         Akonadi::Collection col;
-        col.setName(folder.id);
-        col.setRemoteId(folder.id);
+        col.setName(box.id());
+        col.setRemoteId(box.id());
         col.setParentCollection(topLevel);
         col.setContentMimeTypes({MailMimeType});
         col.setRights(Akonadi::Collection::CanChangeItem);
         col.setVirtual(true);
         auto displayAttr = col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
-        displayAttr->setDisplayName(folder.name);
-        displayAttr->setIconName(folder.icon);
+        displayAttr->setDisplayName(box.name());
+        displayAttr->setIconName(box.icon());
         collections.push_back(std::move(col));
     }
 
     // TODO: Support custom folders
 
     collectionsRetrieved(std::move(collections));
+
+    scheduleCustomTask(this, "rediscoverLocalBoxes", {});
 }
 
 void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
@@ -274,24 +232,20 @@ bool UnifiedMailboxAgent::retrieveItem(const Akonadi::Item &item, const QSet<QBy
     return false;
 }
 
-qint64 UnifiedMailboxAgent::unifiedBoxForCollection(const Akonadi::Collection& col) const
-{
-    const auto boxId = mCollectionToBox.constFind(col.id());
-    if (boxId == mCollectionToBox.cend()) {
-        qCWarning(agent_log) << "Missing ID for unified box for collection" << col.id() << col.name();
-        return -1;
-    }
-    return *boxId;
-}
-
-
 void UnifiedMailboxAgent::itemAdded(const Akonadi::Item &item,
                                     const Akonadi::Collection &collection)
 {
     // We are subscribed only to our source collections so we will only be notified
     // when an item is added into one of them.
 
-    const auto boxId = unifiedBoxForCollection(collection);
+    const auto box = mBoxManager.unifiedMailboxForSource(collection.id());
+    if (!box) {
+        qCWarning(agent_log) << "Failed to find unified mailbox for source collection " << collection.id();
+        cancelTask();
+        return;
+    }
+
+    const auto boxId = mBoxManager.collectionIdForUnifiedMailbox(box->id());
     if (boxId > -1) {
         new Akonadi::LinkJob(Akonadi::Collection{boxId}, {item}, this);
     }
@@ -304,15 +258,17 @@ void UnifiedMailboxAgent::itemsMoved(const Akonadi::Item::List&items,
                                      const Akonadi::Collection &sourceCollection,
                                      const Akonadi::Collection &destinationCollection)
 {
-    const auto srcBoxId = unifiedBoxForCollection(sourceCollection);
-    const auto dstBoxId = unifiedBoxForCollection(destinationCollection);
-    if (srcBoxId != -1) {
+    const auto srcBox = mBoxManager.unifiedMailboxForSource(sourceCollection.id());
+    const auto dstBox = mBoxManager.unifiedMailboxForSource(destinationCollection.id());
+    if (srcBox) {
         // Move source collection was our source, unlink the Item from a box
+        const auto srcBoxId = mBoxManager.collectionIdForUnifiedMailbox(srcBox->id());
         new Akonadi::UnlinkJob(Akonadi::Collection{srcBoxId}, items, this);
     }
 
-    if (dstBoxId != -1) {
+    if (dstBox) {
         // Move destination collection is our source, link the Item into a box
+        const auto dstBoxId = mBoxManager.collectionIdForUnifiedMailbox(dstBox->id());
         new Akonadi::LinkJob(Akonadi::Collection{dstBoxId}, items, this);
     }
 

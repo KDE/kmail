@@ -21,8 +21,9 @@
 #define UNIFIEDMAILBOXAGENT_H
 
 #include <AkonadiAgentBase/ResourceBase>
-
 #include <Akonadi/KMime/SpecialMailCollections>
+
+#include "unifiedmailboxmanager.h"
 
 #include <QHash>
 #include <QVector>
@@ -54,19 +55,15 @@ public:
                     const Akonadi::Collection &destinationCollection) override;
 
 private Q_SLOTS:
-    void init(const QVariant & /* dummy */ = {});
-    void checkForMissingItems();
+    void delayedInit();
+    void checkForMissingItems(const QVariant & /* dummy */);
+    void rediscoverLocalBoxes(const QVariant & /* dummy */);
 
 private:
     void fixSpecialCollections();
     void fixSpecialCollection(const QString &colId, Akonadi::SpecialMailCollections::Type type);
 
-    // TODO: std::optional
-    qint64 unifiedBoxForCollection(const Akonadi::Collection &col) const;
-
-    QHash<qint64 /* source collection */, qint64 /* box ID */> mCollectionToBox;
-    QHash<qint64 /* box ID */, QString /* box name */> mBoxIdToName;
-    QHash<QString /* box name */, qint64 /* box ID */> mBoxNameToId;
+    UnifiedMailboxManager mBoxManager;
 };
 
 #endif
