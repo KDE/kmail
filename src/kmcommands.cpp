@@ -1124,6 +1124,7 @@ KMCommand::Result KMPrintCommand::execute()
     if (mPrintCommandInfo.mAttachmentStrategy) {
         printerWin->setAttachmentStrategy(mPrintCommandInfo.mAttachmentStrategy);
     }
+    printerWin->viewer()->setShowSignatureDetails(mPrintCommandInfo.mShowDetailSignature);
     if (mPrintCommandInfo.mPrintPreview) {
         printerWin->viewer()->printPreviewMessage(retrievedMessage());
     } else {

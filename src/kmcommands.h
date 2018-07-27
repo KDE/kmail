@@ -387,6 +387,7 @@ struct KMPrintCommandInfo
     bool mHtmlLoadExtOverride = false;
     bool mUseFixedFont = false;
     bool mPrintPreview = false;
+    bool mShowDetailSignature = false;
 };
 
 class KMPrintCommand : public KMCommand

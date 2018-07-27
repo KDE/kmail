@@ -4641,6 +4641,7 @@ void KMMainWidget::printCurrentMessage(bool preview)
         commandInfo.mPrintPreview = preview;
         commandInfo.mUseFixedFont = useFixedFont;
         commandInfo.mOverrideFont = overrideEncoding;
+        commandInfo.mShowDetailSignature = messageView()->viewer()->showSignatureDetails();
 
         KMPrintCommand *command
             = new KMPrintCommand(this, commandInfo);
