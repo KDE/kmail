@@ -36,7 +36,6 @@
  * linked.
  */
 class UnifiedMailboxAgent : public Akonadi::ResourceBase
-                          , public Akonadi::AgentBase::ObserverV4
 {
     Q_OBJECT
 
@@ -49,15 +48,6 @@ public:
     void retrieveCollections() override;
     void retrieveItems(const Akonadi::Collection &collection) override;
     bool retrieveItem(const Akonadi::Item &item, const QSet<QByteArray> &parts) override;
-
-    void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) override;
-    void itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection &sourceCollection,
-                    const Akonadi::Collection &destinationCollection) override;
-
-private Q_SLOTS:
-    void delayedInit();
-    void checkForMissingItems(const QVariant & /* dummy */);
-    void rediscoverLocalBoxes(const QVariant & /* dummy */);
 
 private:
     void fixSpecialCollections();

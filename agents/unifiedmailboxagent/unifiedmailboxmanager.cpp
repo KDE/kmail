@@ -18,6 +18,7 @@
 */
 
 #include "unifiedmailboxmanager.h"
+#include "unifiedmailboxagent_debug.h"
 
 #include <KSharedConfig>
 #include <KConfigGroup>
@@ -26,6 +27,9 @@
 #include <AkonadiCore/SpecialCollectionAttribute>
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionFetchScope>
+#include <AkonadiCore/LinkJob>
+#include <AkonadiCore/UnlinkJob>
+#include <AkonadiCore/ItemFetchScope>
 #include <Akonadi/KMime/SpecialMailCollections>
 
 #include <QList>
@@ -82,9 +86,96 @@ QSet<qint64> UnifiedMailbox::sourceCollections() const
     return mSources;
 }
 
-UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* parent)
-    : QObject(parent), mConfig(std::move(config))
+// static
+bool UnifiedMailboxManager::isUnifiedMailbox(const Akonadi::Collection &col)
 {
+    return col.resource() == QLatin1String("akonadi_unifiedmailbox_agent");
+}
+
+UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* parent)
+    : QObject(parent)
+    , mConfig(std::move(config))
+{
+    mMonitor.setObjectName(QStringLiteral("UnifiedMailboxChangeRecorder"));
+    mMonitor.setConfig(&mMonitorSettings);
+    mMonitor.setChangeRecordingEnabled(true);
+    mMonitor.setTypeMonitored(Akonadi::Monitor::Items);
+    mMonitor.setTypeMonitored(Akonadi::Monitor::Collections);
+    mMonitor.itemFetchScope().setCacheOnly(true);
+    mMonitor.itemFetchScope().setFetchRemoteIdentification(false);
+    mMonitor.itemFetchScope().setFetchModificationTime(false);
+    mMonitor.collectionFetchScope().fetchAttribute<Akonadi::SpecialCollectionAttribute>();
+    connect(&mMonitor, &Akonadi::Monitor::itemAdded,
+            this, [this](const Akonadi::Item &item, const Akonadi::Collection &collection) {
+                qCDebug(agent_log) << "Item" << item.id() << "added to collection" << collection.id();
+                const auto box = unifiedMailboxForSource(collection.id());
+                if (box) {
+                    const auto boxId = collectionIdFromUnifiedMailbox(box->id());
+                    qCDebug(agent_log) << "Unified box:" << box->name() << ", collection" << boxId;
+                    if (boxId > -1) {
+                        new Akonadi::LinkJob(Akonadi::Collection{boxId}, {item}, this);
+                    }
+                } else {
+                    qCWarning(agent_log) << "Failed to find unified mailbox for source collection " << collection.id();
+                }
+
+                //TODO Settings::self()->setLastSeenEvent(std::chrono::steady_clock::now().time_since_epoch().count());
+                mMonitor.changeProcessed();
+                mMonitor.replayNext();
+            });
+    connect(&mMonitor, &Akonadi::Monitor::itemsMoved,
+            this, [this](const Akonadi::Item::List &items, const Akonadi::Collection &srcCollection,
+                         const Akonadi::Collection &dstCollection) {
+                const auto srcBox = unifiedMailboxForSource(srcCollection.id());
+                const auto dstBox = unifiedMailboxForSource(dstCollection.id());
+                qCDebug(agent_log ) << "Items moved away from " << srcCollection.id() << "(box" << srcBox << ") to " << dstCollection.id() << "(Box" << dstBox << ")";
+                if (srcBox) {
+                    // Move source collection was our source, unlink the Item from a box
+                    const auto srcBoxId = collectionIdFromUnifiedMailbox(srcBox->id());
+                    new Akonadi::UnlinkJob(Akonadi::Collection{srcBoxId}, items, this);
+                }
+                if (dstBox) {
+                    // Move destination collection is our source, link the Item into a box
+                    const auto dstBoxId = collectionIdFromUnifiedMailbox(dstBox->id());
+                    new Akonadi::LinkJob(Akonadi::Collection{dstBoxId}, items, this);
+                }
+
+                //TODO Settings::self()->setLastSeenEvent(std::chrono::steady_clock::now().time_since_epoch().count());
+
+                mMonitor.changeProcessed();
+                mMonitor.replayNext();
+            });
+    connect(&mMonitor, &Akonadi::Monitor::collectionAdded,
+            this, [this](const Akonadi::Collection &col) {
+                if (isUnifiedMailbox(col)) {
+                    mBoxId.insert(col.name(), col.id());
+                } else {
+                    // TODO: Potentially a new special collection: we should auto-add it to our box
+                }
+
+                mMonitor.changeProcessed();
+                mMonitor.replayNext();
+            });
+    connect(&mMonitor, &Akonadi::Monitor::collectionRemoved,
+            this, [this](const Akonadi::Collection &col) {
+                // TODO: If it was a source collection for one of our boxes, remove it from box's sources
+                mMonitor.changeProcessed();
+                mMonitor.replayNext();
+            });
+    connect(&mMonitor, QOverload<const Akonadi::Collection &, const QSet<QByteArray> &>::of(&Akonadi::Monitor::collectionChanged),
+            this, [this](const Akonadi::Collection &col, const QSet<QByteArray> &parts) {
+                if (col.hasAttribute<Akonadi::SpecialCollectionAttribute>()) {
+                    // TODO: Remove collection from whichever special mailbox it may
+                    // have belonged to before and add it to correct special mailbox
+                } else {
+                    // TODO: Check whether it's a source of one of our special
+                    // mailboxes and remove it from there
+                }
+
+                mMonitor.changeProcessed();
+                mMonitor.replayNext();
+            });
+
 }
 
 UnifiedMailboxManager::~UnifiedMailboxManager()
@@ -92,17 +183,6 @@ UnifiedMailboxManager::~UnifiedMailboxManager()
 }
 
 void UnifiedMailboxManager::loadBoxes(LoadCallback &&cb)
-{
-    auto general = mConfig->group("General");
-    if (general.readEntry("DiscoverDefaultBoxes", true)) {
-        discoverDefaultBoxes(std::move(cb));
-        general.writeEntry("DiscoverDefaultBoxes", false);
-    } else {
-        loadBoxesFromConfig(std::move(cb));
-    }
-}
-
-void UnifiedMailboxManager::loadBoxesFromConfig(LoadCallback &&cb)
 {
     const auto group = mConfig->group("UnifiedMailboxes");
     const auto boxGroups = group.groupList();
@@ -115,11 +195,25 @@ void UnifiedMailboxManager::loadBoxesFromConfig(LoadCallback &&cb)
         QList<qint64> sources = boxGroup.readEntry("sources", QList<qint64>{});
         for (auto source : sources) {
             box.addSourceCollection(source);
+            mMonitor.setCollectionMonitored(Akonadi::Collection(source));
         }
         insertBox(std::move(box));
     }
 
-    discoverBoxCollections(std::move(cb));
+    if (mBoxes.isEmpty()) {
+        createDefaultBoxes(std::move(cb));
+    } else {
+        discoverBoxCollections([this, cb = std::move(cb)]() {
+            // Only now start processing changes from change recorder
+            connect(&mMonitor, &Akonadi::ChangeRecorder::changesAdded, &mMonitor, &Akonadi::ChangeRecorder::replayNext, Qt::QueuedConnection);
+            // And start replaying any potentially pending notification
+            mMonitor.replayNext();
+
+            if (cb) {
+                cb();
+            }
+        });
+    }
 }
 
 void UnifiedMailboxManager::saveBoxes()
@@ -140,13 +234,11 @@ void UnifiedMailboxManager::saveBoxes()
 void UnifiedMailboxManager::insertBox(UnifiedMailbox box)
 {
     mBoxes.insert(box.id(), box);
-    Q_EMIT boxesChanged();
 }
 
 void UnifiedMailboxManager::removeBox(const QString &name)
 {
     mBoxes.remove(name);
-    Q_EMIT boxesChanged();
 }
 
 const UnifiedMailbox *UnifiedMailboxManager::unifiedMailboxForSource(qint64 source) const
@@ -160,12 +252,26 @@ const UnifiedMailbox *UnifiedMailboxManager::unifiedMailboxForSource(qint64 sour
     return nullptr;
 }
 
-qint64 UnifiedMailboxManager::collectionIdForUnifiedMailbox(const QString &id) const
+const UnifiedMailbox * UnifiedMailboxManager::unifiedMailboxFromCollection(const Akonadi::Collection &col) const
+{
+    if (!isUnifiedMailbox(col)) {
+        return nullptr;
+    }
+
+    const auto box = mBoxes.find(col.name());
+    if (box == mBoxes.cend()) {
+        return nullptr;
+    }
+    return &(*box);
+}
+
+
+qint64 UnifiedMailboxManager::collectionIdFromUnifiedMailbox(const QString &id) const
 {
     return mBoxId.value(id, -1);
 }
 
-void UnifiedMailboxManager::discoverDefaultBoxes(LoadCallback &&cb)
+void UnifiedMailboxManager::createDefaultBoxes(LoadCallback &&cb)
 {
     // First build empty boxes
     UnifiedMailbox inbox;
@@ -192,7 +298,7 @@ void UnifiedMailboxManager::discoverDefaultBoxes(LoadCallback &&cb)
     connect(list, &Akonadi::CollectionFetchJob::collectionsReceived,
             this, [this](const Akonadi::Collection::List &list) {
                 for (const auto &col : list) {
-                    if (col.resource() == QLatin1String("akonadi_unifiedmailbox_agent")) {
+                    if (isUnifiedMailbox(col)) {
                         continue;
                     }
 
@@ -231,7 +337,7 @@ void UnifiedMailboxManager::discoverBoxCollections(LoadCallback &&cb)
                 }
             });
     connect(list, &Akonadi::CollectionFetchJob::finished,
-            this, [this, cb = std::move(cb)]() {
+            this, [cb = std::move(cb)]() {
                 if (cb) {
                     cb();
                 }

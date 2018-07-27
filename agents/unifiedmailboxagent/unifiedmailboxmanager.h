@@ -22,8 +22,11 @@
 
 #include <QObject>
 #include <QSet>
+#include <QSettings>
 
 #include <KSharedConfig>
+
+#include <AkonadiCore/ChangeRecorder>
 
 #include <unordered_map>
 #include <functional>
@@ -71,7 +74,7 @@ public:
     explicit UnifiedMailboxManager(KSharedConfigPtr config, QObject *parent = nullptr);
     ~UnifiedMailboxManager() override;
 
-    void loadBoxes(LoadCallback &&cb);
+    void loadBoxes(LoadCallback &&cb = {});
     void saveBoxes();
 
     void insertBox(UnifiedMailbox box);
@@ -79,7 +82,8 @@ public:
 
     // FIXME: std::optional :-(
     const UnifiedMailbox *unifiedMailboxForSource(qint64 source) const;
-    qint64 collectionIdForUnifiedMailbox(const QString &id) const;
+    const UnifiedMailbox *unifiedMailboxFromCollection(const Akonadi::Collection &col) const;
+    qint64 collectionIdFromUnifiedMailbox(const QString &id) const;
 
     inline QHash<QString, UnifiedMailbox>::const_iterator begin() const
     {
@@ -93,15 +97,15 @@ public:
 
     void discoverBoxCollections(LoadCallback &&cb);
 
-Q_SIGNALS:
-    void boxesChanged();
-
+    static bool isUnifiedMailbox(const Akonadi::Collection &col);
 private:
-    void discoverDefaultBoxes(LoadCallback &&cb);
-    void loadBoxesFromConfig(LoadCallback &&cb);
+    void createDefaultBoxes(LoadCallback &&cb);
 
     QHash<QString, UnifiedMailbox> mBoxes;
     QHash<QString, qint64> mBoxId;
+
+    Akonadi::ChangeRecorder mMonitor;
+    QSettings mMonitorSettings;
 
     KSharedConfigPtr mConfig;
 };
