@@ -4632,12 +4632,18 @@ void KMMainWidget::printCurrentMessage(bool preview)
         const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
         const Akonadi::Item currentItem = messageView()->viewer()->messageItem();
+
+        KMPrintCommandInfo commandInfo;
+        commandInfo.mMsg = currentItem;
+        commandInfo.mHeaderStylePlugin = messageView()->viewer()->headerStylePlugin();
+        commandInfo.mFormat = messageView()->viewer()->displayFormatMessageOverwrite();
+        commandInfo.mHtmlLoadExtOverride =  messageView()->viewer()->htmlLoadExternal();
+        commandInfo.mPrintPreview = preview;
+        commandInfo.mUseFixedFont = useFixedFont;
+        commandInfo.mOverrideFont = overrideEncoding;
+
         KMPrintCommand *command
-            = new KMPrintCommand(this, currentItem,
-                                 messageView()->viewer()->headerStylePlugin(),
-                                 messageView()->viewer()->displayFormatMessageOverwrite(), messageView()->viewer()->htmlLoadExternal(),
-                                 useFixedFont, overrideEncoding);
-        command->setPrintPreview(preview);
+            = new KMPrintCommand(this, commandInfo);
         command->start();
     }
 }

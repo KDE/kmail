@@ -753,9 +753,18 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
         const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
-        KMPrintCommand *command = new KMPrintCommand(this, printItem, mViewer->headerStylePlugin(),
-                                                     mViewer->displayFormatMessageOverwrite(), mViewer->htmlLoadExternal(), useFixedFont, overrideEncoding);
-        command->setPrintPreview(preview);
+
+        KMPrintCommandInfo commandInfo;
+        commandInfo.mMsg = printItem;
+        commandInfo.mHeaderStylePlugin = mViewer->headerStylePlugin();
+        commandInfo.mFormat = mViewer->displayFormatMessageOverwrite();
+        commandInfo.mHtmlLoadExtOverride =  mViewer->htmlLoadExternal();
+        commandInfo.mPrintPreview = preview;
+        commandInfo.mUseFixedFont = useFixedFont;
+        commandInfo.mOverrideFont = overrideEncoding;
+
+
+        KMPrintCommand *command = new KMPrintCommand(this, commandInfo);
         command->start();
     } else {
         if (static_cast<KIO::Job *>(job)->uiDelegate()) {

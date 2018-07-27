@@ -2455,9 +2455,12 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().constFirst()), printItem);
         const bool isHtml = mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
-        KMPrintCommand *command = new KMPrintCommand(this, printItem, nullptr,
-                                                     format, isHtml);
-        command->setPrintPreview(preview);
+        KMPrintCommandInfo commandInfo;
+        commandInfo.mMsg = printItem;
+        commandInfo.mFormat = format;
+        commandInfo.mHtmlLoadExtOverride = isHtml;
+        commandInfo.mPrintPreview = preview;
+        KMPrintCommand *command = new KMPrintCommand(this, commandInfo);
         command->start();
     } else {
         showErrorMessage(job);

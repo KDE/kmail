@@ -579,12 +579,18 @@ void MessageActions::printMessage(bool preview)
             const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
             const Akonadi::Item message = mCurrentItem;
+            KMPrintCommandInfo commandInfo;
+            commandInfo.mMsg = message;
+            commandInfo.mHeaderStylePlugin = mMessageView->viewer()->headerStylePlugin();
+            commandInfo.mFormat = mMessageView->viewer()->displayFormatMessageOverwrite();
+            commandInfo.mHtmlLoadExtOverride =  mMessageView->viewer()->htmlLoadExternal();
+            commandInfo.mPrintPreview = preview;
+            commandInfo.mUseFixedFont = useFixedFont;
+            commandInfo.mOverrideFont = overrideEncoding;
+
+
             KMPrintCommand *command
-                = new KMPrintCommand(mParent, message,
-                                     mMessageView->viewer()->headerStylePlugin(),
-                                     mMessageView->viewer()->displayFormatMessageOverwrite(), mMessageView->viewer()->htmlLoadExternal(),
-                                     useFixedFont, overrideEncoding);
-            command->setPrintPreview(preview);
+                = new KMPrintCommand(mParent, commandInfo);
             command->start();
         }
     }

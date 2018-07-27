@@ -1094,38 +1094,16 @@ KMCommand::Result KMRedirectCommand::execute()
     return OK;
 }
 
-KMPrintCommand::KMPrintCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::HeaderStylePlugin *plugin, MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtOverride,
-                               bool useFixedFont, const QString &encoding)
-    : KMCommand(parent, msg)
-    , mHeaderStylePlugin(plugin)
-    , mAttachmentStrategy(nullptr)
-    , mEncoding(encoding)
-    , mFormat(format)
-    , mHtmlLoadExtOverride(htmlLoadExtOverride)
-    , mUseFixedFont(useFixedFont)
-    , mPrintPreview(false)
+KMPrintCommand::KMPrintCommand(QWidget *parent, const KMPrintCommandInfo &commandInfo)
+    : KMCommand(parent, commandInfo.mMsg)
+    , mPrintCommandInfo(commandInfo)
 {
     fetchScope().fetchFullPayload(true);
     if (MessageCore::MessageCoreSettings::useDefaultFonts()) {
-        mOverrideFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
+        mPrintCommandInfo.mOverrideFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
     } else {
-        mOverrideFont = MessageViewer::MessageViewerSettings::self()->printFont();
+        mPrintCommandInfo.mOverrideFont = MessageViewer::MessageViewerSettings::self()->printFont();
     }
-}
-
-void KMPrintCommand::setOverrideFont(const QFont &font)
-{
-    mOverrideFont = font;
-}
-
-void KMPrintCommand::setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy)
-{
-    mAttachmentStrategy = strategy;
-}
-
-void KMPrintCommand::setPrintPreview(bool preview)
-{
-    mPrintPreview = preview;
 }
 
 KMCommand::Result KMPrintCommand::execute()
@@ -1134,19 +1112,19 @@ KMCommand::Result KMPrintCommand::execute()
     printerWin->setPrinting(true);
     printerWin->readConfig();
     printerWin->setPrintElementBackground(MessageViewer::MessageViewerSettings::self()->printBackgroundColorImages());
-    if (mHeaderStylePlugin) {
-        printerWin->viewer()->setPluginName(mHeaderStylePlugin->name());
+    if (mPrintCommandInfo.mHeaderStylePlugin) {
+        printerWin->viewer()->setPluginName(mPrintCommandInfo.mHeaderStylePlugin->name());
     }
-    printerWin->setDisplayFormatMessageOverwrite(mFormat);
-    printerWin->setHtmlLoadExtOverride(mHtmlLoadExtOverride);
-    printerWin->setUseFixedFont(mUseFixedFont);
-    printerWin->setOverrideEncoding(mEncoding);
-    printerWin->cssHelper()->setPrintFont(mOverrideFont);
+    printerWin->setDisplayFormatMessageOverwrite(mPrintCommandInfo.mFormat);
+    printerWin->setHtmlLoadExtOverride(mPrintCommandInfo.mHtmlLoadExtOverride);
+    printerWin->setUseFixedFont(mPrintCommandInfo.mUseFixedFont);
+    printerWin->setOverrideEncoding(mPrintCommandInfo.mEncoding);
+    printerWin->cssHelper()->setPrintFont(mPrintCommandInfo.mOverrideFont);
     printerWin->setDecryptMessageOverwrite(true);
-    if (mAttachmentStrategy) {
-        printerWin->setAttachmentStrategy(mAttachmentStrategy);
+    if (mPrintCommandInfo.mAttachmentStrategy) {
+        printerWin->setAttachmentStrategy(mPrintCommandInfo.mAttachmentStrategy);
     }
-    if (mPrintPreview) {
+    if (mPrintCommandInfo.mPrintPreview) {
         printerWin->viewer()->printPreviewMessage(retrievedMessage());
     } else {
         printerWin->viewer()->printMessage(retrievedMessage());

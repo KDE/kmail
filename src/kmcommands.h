@@ -376,30 +376,29 @@ private:
     Result execute() override;
 };
 
+struct KMPrintCommandInfo
+{
+    Akonadi::Item mMsg;
+    QFont mOverrideFont;
+    QString mEncoding;
+    MessageViewer::Viewer::DisplayFormatMessage mFormat = MessageViewer::Viewer::UseGlobalSetting;
+    const MessageViewer::AttachmentStrategy *mAttachmentStrategy = nullptr;
+    MessageViewer::HeaderStylePlugin *mHeaderStylePlugin = nullptr;
+    bool mHtmlLoadExtOverride = false;
+    bool mUseFixedFont = false;
+    bool mPrintPreview = false;
+};
+
 class KMPrintCommand : public KMCommand
 {
     Q_OBJECT
 
 public:
-    KMPrintCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::HeaderStylePlugin *plugin = nullptr,
-                   MessageViewer::Viewer::DisplayFormatMessage format = MessageViewer::Viewer::UseGlobalSetting, bool htmlLoadExtOverride = false, bool useFixedFont = false,
-                   const QString &encoding = QString());
-
-    void setOverrideFont(const QFont &);
-    void setAttachmentStrategy(const MessageViewer::AttachmentStrategy *strategy);
-    void setPrintPreview(bool preview);
-
+    KMPrintCommand(QWidget *parent, const KMPrintCommandInfo &commandInfo);
 private:
     Result execute() override;
 
-    MessageViewer::HeaderStylePlugin *mHeaderStylePlugin = nullptr;
-    const MessageViewer::AttachmentStrategy *mAttachmentStrategy = nullptr;
-    QFont mOverrideFont;
-    QString mEncoding;
-    MessageViewer::Viewer::DisplayFormatMessage mFormat;
-    bool mHtmlLoadExtOverride = false;
-    bool mUseFixedFont = false;
-    bool mPrintPreview = false;
+    KMPrintCommandInfo mPrintCommandInfo;
 };
 
 class KMSetStatusCommand : public KMCommand
