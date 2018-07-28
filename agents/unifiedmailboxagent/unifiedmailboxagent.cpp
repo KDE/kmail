@@ -60,6 +60,18 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
 {
     setAgentName(i18n("Unified Mailboxes"));
 
+    connect(&mBoxManager, &UnifiedMailboxManager::updateBox,
+            this, [this](const UnifiedMailbox &box) {
+                const auto colId = mBoxManager.collectionIdFromUnifiedMailbox(box.id());
+                if (colId <= -1) {
+                    qCWarning(agent_log) << "MailboxManager wants us to update Box but does not have its CollectionId!?";
+                    return;
+                }
+
+                // Schedule collection sync for the box
+                synchronizeCollection(colId);
+            });
+
     auto &ifs = changeRecorder()->itemFetchScope();
     ifs.setAncestorRetrieval(Akonadi::ItemFetchScope::None);
     ifs.setCacheOnly(true);

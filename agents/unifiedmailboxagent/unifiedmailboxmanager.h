@@ -41,6 +41,8 @@ public:
     UnifiedMailbox &operator=(const UnifiedMailbox &) = default;
     UnifiedMailbox &operator=(UnifiedMailbox &&) = default;
 
+    bool isSpecial() const;
+
     QString id() const;
     void setId(const QString &id);
 
@@ -82,6 +84,7 @@ public:
 
     // FIXME: std::optional :-(
     const UnifiedMailbox *unifiedMailboxForSource(qint64 source) const;
+    UnifiedMailbox *unifiedMailboxForSource(qint64 source);
     const UnifiedMailbox *unifiedMailboxFromCollection(const Akonadi::Collection &col) const;
     qint64 collectionIdFromUnifiedMailbox(const QString &id) const;
 
@@ -98,8 +101,14 @@ public:
     void discoverBoxCollections(LoadCallback &&cb);
 
     static bool isUnifiedMailbox(const Akonadi::Collection &col);
+
+Q_SIGNALS:
+    void updateBox(const UnifiedMailbox &box);
+
 private:
     void createDefaultBoxes(LoadCallback &&cb);
+    const UnifiedMailbox *unregisterSpecialSourceCollection(qint64 colId);
+    const UnifiedMailbox *registerSpecialSourceCollection(const Akonadi::Collection &col);
 
     QHash<QString, UnifiedMailbox> mBoxes;
     QHash<QString, qint64> mBoxId;
