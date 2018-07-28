@@ -74,7 +74,7 @@ public:
         // Hide ourselves
         const auto sourceIndex = sourceModel()->index(source_row, 0, source_parent);
         const Akonadi::Collection col = sourceModel()->data(sourceIndex, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        return UnifiedMailboxManager::isUnifiedMailbox(col);
+        return !UnifiedMailboxManager::isUnifiedMailbox(col);
     }
 };
 
