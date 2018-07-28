@@ -17,7 +17,12 @@
    Boston, MA 02110-1301, USA.
 */
 
+#ifndef UTILS_H_
+#define UTILS_H_
+
 #include <functional>
+#include <QHash>
+#include <QString>
 
 template<typename T>
 QList<T> setToList(QSet<T> &&set)
@@ -27,3 +32,25 @@ QList<T> setToList(QSet<T> &&set)
     std::copy(set.cbegin(), set.cend(), std::back_inserter(rv));
     return rv;
 }
+
+template<typename T>
+QSet<T> listToSet(QList<T> &&list)
+{
+    QSet<T> rv;
+    rv.reserve(list.size());
+    for (auto t : list) {
+        rv.insert(std::move(t));
+    }
+    return rv;
+}
+
+namespace std {
+    template<>
+    struct hash<QString> {
+        size_t operator()(const QString &str) const {
+            return qHash(str);
+        }
+    };
+}
+
+#endif

@@ -20,6 +20,7 @@
 #include "settingsdialog.h"
 #include "unifiedmailboxmanager.h"
 #include "unifiedmailboxeditor.h"
+#include "unifiedmailbox.h"
 #include "mailkernel.h"
 
 #include <QStandardItemModel>
@@ -32,6 +33,8 @@
 
 #include <KLocalizedString>
 #include <KMessageBox>
+
+#include <memory>
 
 SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &boxManager, WId windowId, QWidget *parent)
     : QDialog(parent)
@@ -57,12 +60,12 @@ SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &b
     v->addWidget(addButton);
     connect(addButton, &QPushButton::clicked,
             this, [this]() {
-                auto editor = new UnifiedMailboxEditor(this);
+                auto mailbox = std::make_unique<UnifiedMailbox>();
+                auto editor = new UnifiedMailboxEditor(mailbox.get(), this);
                 if (editor->exec()) {
-                    auto box = editor->box();
-                    box.setId(box.name()); // assign ID
-                    addBox(box);
-                    mBoxManager.insertBox(std::move(box));
+                    mailbox->setId(mailbox->name()); // assign ID
+                    addBox(mailbox.get());
+                    mBoxManager.insertBox(std::move(mailbox));
                 }
             });
     auto editButton = new QPushButton(QIcon::fromTheme(QStringLiteral("entry-edit")), i18n("Modify"));
@@ -73,13 +76,11 @@ SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &b
                 const auto indexes = view->selectionModel()->selectedIndexes();
                 if (!indexes.isEmpty()) {
                     auto item = mBoxModel->itemFromIndex(indexes[0]);
-                    auto editor = new UnifiedMailboxEditor(item->data().value<UnifiedMailbox>(), this);
+                    auto mailbox = item->data().value<UnifiedMailbox*>();
+                    auto editor = new UnifiedMailboxEditor(mailbox, this);
                     if (editor->exec()) {
-                        auto box = editor->box();
-                        item->setText(box.name());
-                        item->setIcon(QIcon::fromTheme(box.icon()));
-                        item->setData(QVariant::fromValue(box));
-                        mBoxManager.insertBox(std::move(box));
+                        item->setText(mailbox->name());
+                        item->setIcon(QIcon::fromTheme(mailbox->icon()));
                     }
                 }
             });
@@ -91,13 +92,13 @@ SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &b
                 const auto indexes = view->selectionModel()->selectedIndexes();
                 if (!indexes.isEmpty()) {
                     auto item = mBoxModel->itemFromIndex(indexes[0]);
-                    const auto box = item->data().value<UnifiedMailbox>();
+                    const auto mailbox = item->data().value<UnifiedMailbox*>();
                     if (KMessageBox::warningYesNo(
-                            this, i18n("Do you really want to remove unified mailbox <b>%1</b>?", box.name()),
+                            this, i18n("Do you really want to remove unified mailbox <b>%1</b>?", mailbox->name()),
                             i18n("Really Remove?"), KStandardGuiItem::remove(), KStandardGuiItem::cancel()) == KMessageBox::Yes)
                     {
                         mBoxModel->removeRow(item->row());
-                        mBoxManager.removeBox(box.name());
+                        mBoxManager.removeBox(mailbox->id());
                     }
                 }
             });
@@ -132,14 +133,14 @@ void SettingsDialog::accept()
 void SettingsDialog::loadBoxes()
 {
     mBoxModel->clear();
-    for (const auto &box : mBoxManager) {
-        addBox(box);
+    for (const auto &mailboxIt : mBoxManager) {
+        addBox(mailboxIt.second.get());
     }
 }
 
-void SettingsDialog::addBox(const UnifiedMailbox &box)
+void SettingsDialog::addBox(UnifiedMailbox *box)
 {
-    auto item = new QStandardItem(QIcon::fromTheme(box.icon()), box.name());
+    auto item = new QStandardItem(QIcon::fromTheme(box->icon()), box->name());
     item->setData(QVariant::fromValue(box));
     mBoxModel->appendRow(item);
 }

@@ -18,6 +18,7 @@
 */
 
 #include "unifiedmailboxagent.h"
+#include "unifiedmailbox.h"
 #include "unifiedmailboxagent_debug.h"
 #include "settingsdialog.h"
 #include "settings.h"
@@ -61,15 +62,14 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     setAgentName(i18n("Unified Mailboxes"));
 
     connect(&mBoxManager, &UnifiedMailboxManager::updateBox,
-            this, [this](const UnifiedMailbox &box) {
-                const auto colId = mBoxManager.collectionIdFromUnifiedMailbox(box.id());
-                if (colId <= -1) {
+            this, [this](const UnifiedMailbox *box) {
+                if (box->collectionId() <= -1) {
                     qCWarning(agent_log) << "MailboxManager wants us to update Box but does not have its CollectionId!?";
                     return;
                 }
 
                 // Schedule collection sync for the box
-                synchronizeCollection(colId);
+                synchronizeCollection(box->collectionId());
             });
 
     auto &ifs = changeRecorder()->itemFetchScope();
@@ -115,17 +115,18 @@ void UnifiedMailboxAgent::retrieveCollections()
     displayAttr->setActiveIconName(QStringLiteral("globe"));
     collections.push_back(topLevel);
 
-    for (const auto &box : mBoxManager) {
+    for (const auto &boxIt : mBoxManager) {
+        const auto &box = boxIt.second;
         Akonadi::Collection col;
-        col.setName(box.id());
-        col.setRemoteId(box.id());
+        col.setName(box->id());
+        col.setRemoteId(box->id());
         col.setParentCollection(topLevel);
         col.setContentMimeTypes({MailMimeType});
         col.setRights(Akonadi::Collection::CanChangeItem | Akonadi::Collection::CanDeleteItem);
         col.setVirtual(true);
         auto displayAttr = col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
-        displayAttr->setDisplayName(box.name());
-        displayAttr->setIconName(box.icon());
+        displayAttr->setDisplayName(box->name());
+        displayAttr->setIconName(box->icon());
         collections.push_back(std::move(col));
     }
 

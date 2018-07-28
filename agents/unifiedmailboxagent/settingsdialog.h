@@ -42,7 +42,7 @@ public Q_SLOTS:
 
 private:
     void loadBoxes();
-    void addBox(const UnifiedMailbox &box);
+    void addBox(UnifiedMailbox *box);
 
 private:
     QStandardItemModel *mBoxModel = nullptr;

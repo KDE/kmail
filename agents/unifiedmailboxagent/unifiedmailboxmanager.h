@@ -20,6 +20,8 @@
 #ifndef UNIFIEDBOXMANAGER_H
 #define UNIFIEDBOXMANAGER_H
 
+#include "utils.h"
+
 #include <QObject>
 #include <QSet>
 #include <QSettings>
@@ -30,46 +32,13 @@
 
 #include <unordered_map>
 #include <functional>
+#include <memory>
 
-class UnifiedMailboxManager;
-class UnifiedMailbox {
-    friend class UnifiedMailboxManager;
-public:
-    UnifiedMailbox() = default;
-    UnifiedMailbox(UnifiedMailbox &&) = default;
-    UnifiedMailbox(const UnifiedMailbox &) = default;
-    UnifiedMailbox &operator=(const UnifiedMailbox &) = default;
-    UnifiedMailbox &operator=(UnifiedMailbox &&) = default;
-
-    bool isSpecial() const;
-
-    QString id() const;
-    void setId(const QString &id);
-
-    QString name() const;
-    void setName(const QString &name);
-
-    QString icon() const;
-    void setIcon(const QString &icon);
-
-    void addSourceCollection(qint64 source);
-    void removeSourceCollection(qint64 source);
-    void setSourceCollections(const QSet<qint64> &sources);
-    QSet<qint64> sourceCollections() const;
-
-private:
-    QString mId;
-    QString mName;
-    QString mIcon;
-    QSet<qint64> mSources;
-};
-
-Q_DECLARE_METATYPE(UnifiedMailbox)
-
-
+class UnifiedMailbox;
 class UnifiedMailboxManager : public QObject
 {
     Q_OBJECT
+    friend class UnifiedMailbox;
 public:
     using LoadCallback = std::function<void()>;
 
@@ -79,23 +48,20 @@ public:
     void loadBoxes(LoadCallback &&cb = {});
     void saveBoxes();
 
-    void insertBox(UnifiedMailbox box);
-    void removeBox(const QString &name);
+    void insertBox(std::unique_ptr<UnifiedMailbox> box);
+    void removeBox(const QString &id);
 
-    // FIXME: std::optional :-(
-    const UnifiedMailbox *unifiedMailboxForSource(qint64 source) const;
-    UnifiedMailbox *unifiedMailboxForSource(qint64 source);
-    const UnifiedMailbox *unifiedMailboxFromCollection(const Akonadi::Collection &col) const;
-    qint64 collectionIdFromUnifiedMailbox(const QString &id) const;
+    UnifiedMailbox *unifiedMailboxForSource(qint64 source) const;
+    UnifiedMailbox *unifiedMailboxFromCollection(const Akonadi::Collection &col) const;
 
-    inline QHash<QString, UnifiedMailbox>::const_iterator begin() const
+    inline auto begin() const
     {
-        return mBoxes.begin();
+        return mMailboxes.begin();
     }
 
-    inline QHash<QString, UnifiedMailbox>::const_iterator end() const
+    inline auto end() const
     {
-        return mBoxes.end();
+        return mMailboxes.end();
     }
 
     void discoverBoxCollections(LoadCallback &&cb);
@@ -103,15 +69,16 @@ public:
     static bool isUnifiedMailbox(const Akonadi::Collection &col);
 
 Q_SIGNALS:
-    void updateBox(const UnifiedMailbox &box);
+    void updateBox(const UnifiedMailbox *box);
 
 private:
     void createDefaultBoxes(LoadCallback &&cb);
     const UnifiedMailbox *unregisterSpecialSourceCollection(qint64 colId);
     const UnifiedMailbox *registerSpecialSourceCollection(const Akonadi::Collection &col);
 
-    QHash<QString, UnifiedMailbox> mBoxes;
-    QHash<QString, qint64> mBoxId;
+    // Using unordered_map because Qt containers do not support movable-only types
+    std::unordered_map<QString, std::unique_ptr<UnifiedMailbox>> mMailboxes;
+    std::unordered_map<qint64, UnifiedMailbox*> mSourceToBoxMap;
 
     Akonadi::ChangeRecorder mMonitor;
     QSettings mMonitorSettings;

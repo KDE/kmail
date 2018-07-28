@@ -21,15 +21,14 @@
 
 #include "unifiedmailboxmanager.h"
 
+class UnifiedMailbox;
 class UnifiedMailboxEditor : public QDialog
 {
     Q_OBJECT
 public:
     explicit UnifiedMailboxEditor(QWidget *parent = nullptr);
-    explicit UnifiedMailboxEditor(UnifiedMailbox mailbox, QWidget *parent = nullptr);
-
-    UnifiedMailbox box() const;
+    explicit UnifiedMailboxEditor(UnifiedMailbox *mailbox, QWidget *parent = nullptr);
 
 private:
-    UnifiedMailbox mBox;
+    UnifiedMailbox *mMailbox = nullptr;
 };

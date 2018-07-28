@@ -18,6 +18,7 @@
 */
 
 #include "unifiedmailboxeditor.h"
+#include "unifiedmailbox.h"
 #include "mailkernel.h"
 
 #include <QVBoxLayout>
@@ -85,9 +86,9 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(QWidget* parent)
 {
 }
 
-UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox mailbox, QWidget *parent)
+UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, QWidget *parent)
     : QDialog(parent)
-    , mBox(std::move(mailbox))
+    , mMailbox(mailbox)
 {
     resize(500, 900);
 
@@ -96,25 +97,25 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox mailbox, QWidget *pare
 
     auto f = new QFormLayout;
     l->addLayout(f);
-    auto nameEdit = new QLineEdit(mBox.name());
+    auto nameEdit = new QLineEdit(mMailbox->name());
     f->addRow(i18n("Name:"), nameEdit);
     connect(nameEdit, &QLineEdit::textChanged,
             this, [this](const QString &name) {
-                mBox.setName(name);
+                mMailbox->setName(name);
             });
 
-    auto iconButton = new QPushButton(QIcon::fromTheme(mBox.icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))),
+    auto iconButton = new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))),
                                                            i18n("Pick icon..."));
     f->addRow(i18n("Icon:"), iconButton);
     connect(iconButton, &QPushButton::clicked,
             this, [iconButton, this]() {
                 const auto iconName = KIconDialog::getIcon();
                 if (!iconName.isEmpty()) {
-                    mBox.setIcon(iconName);
+                    mMailbox->setIcon(iconName);
                     iconButton->setIcon(QIcon::fromTheme(iconName));
                 }
             });
-    mBox.setIcon(iconButton->icon().name());
+    mMailbox->setIcon(iconButton->icon().name());
 
     l->addSpacing(10);
 
@@ -130,7 +131,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox mailbox, QWidget *pare
     auto checkable = new KCheckableProxyModel(this);
     checkable->setSourceModel(sourceModel);
     checkable->setSelectionModel(selectionModel);
-    const auto sources = mBox.sourceCollections();
+    const auto sources = mMailbox->sourceCollections();
     for (const auto source : sources) {
         const auto index = Akonadi::EntityTreeModel::modelIndexForCollection(selectionModel->model(), Akonadi::Collection(source));
         selectionModel->select(index, QItemSelectionModel::Select);
@@ -139,11 +140,11 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox mailbox, QWidget *pare
             this, [this](const QItemSelection &selected, const QItemSelection &deselected) {
                 auto indexes = selected.indexes();
                 for (const auto &index : indexes) {
-                    mBox.addSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
+                    mMailbox->addSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
                 }
                 indexes = deselected.indexes();
                 for (const auto &index : indexes) {
-                    mBox.removeSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
+                    mMailbox->removeSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
                 }
             });
 
@@ -164,9 +165,5 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox mailbox, QWidget *pare
     l->addWidget(box);
 }
 
-UnifiedMailbox UnifiedMailboxEditor::box() const
-{
-    return mBox;
-}
 
 #include "unifiedmailboxeditor.moc"
