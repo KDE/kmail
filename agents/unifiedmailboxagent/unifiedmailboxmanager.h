@@ -40,12 +40,12 @@ class UnifiedMailboxManager : public QObject
     Q_OBJECT
     friend class UnifiedMailbox;
 public:
-    using LoadCallback = std::function<void()>;
+    using FinishedCallback = std::function<void()>;
 
     explicit UnifiedMailboxManager(KSharedConfigPtr config, QObject *parent = nullptr);
     ~UnifiedMailboxManager() override;
 
-    void loadBoxes(LoadCallback &&cb = {});
+    void loadBoxes(FinishedCallback &&cb = {});
     void saveBoxes();
 
     void insertBox(std::unique_ptr<UnifiedMailbox> box);
@@ -64,7 +64,7 @@ public:
         return mMailboxes.end();
     }
 
-    void discoverBoxCollections(LoadCallback &&cb);
+    void discoverBoxCollections(FinishedCallback &&cb);
 
     static bool isUnifiedMailbox(const Akonadi::Collection &col);
 
@@ -72,7 +72,7 @@ Q_SIGNALS:
     void updateBox(const UnifiedMailbox *box);
 
 private:
-    void createDefaultBoxes(LoadCallback &&cb);
+    void createDefaultBoxes(FinishedCallback &&cb);
     const UnifiedMailbox *unregisterSpecialSourceCollection(qint64 colId);
     const UnifiedMailbox *registerSpecialSourceCollection(const Akonadi::Collection &col);
 

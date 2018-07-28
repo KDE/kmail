@@ -22,6 +22,7 @@
 #include "unifiedmailboxagent_debug.h"
 #include "settingsdialog.h"
 #include "settings.h"
+#include "common.h"
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/Session>
@@ -46,13 +47,6 @@
 #include <memory>
 #include <unordered_set>
 #include <chrono>
-
-namespace {
-static const auto MailMimeType = QStringLiteral("message/rfc822");
-static const auto Inbox = QStringLiteral("inbox");
-static const auto Sent = QStringLiteral("sent-mail");
-static const auto Drafts = QStringLiteral("drafts");
-}
 
 
 UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
@@ -121,7 +115,7 @@ void UnifiedMailboxAgent::retrieveCollections()
         col.setName(box->id());
         col.setRemoteId(box->id());
         col.setParentCollection(topLevel);
-        col.setContentMimeTypes({MailMimeType});
+        col.setContentMimeTypes({Common::MailMimeType});
         col.setRights(Akonadi::Collection::CanChangeItem | Akonadi::Collection::CanDeleteItem);
         col.setVirtual(true);
         auto displayAttr = col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
