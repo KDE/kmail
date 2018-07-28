@@ -133,8 +133,6 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
                     // Move destination collection is our source, link the Item into a box
                     new Akonadi::LinkJob(Akonadi::Collection{dstBox->collectionId()}, items, this);
                 }
-
-                //TODO Settings::self()->setLastSeenEvent(std::chrono::steady_clock::now().time_since_epoch().count());
             });
 
     connect(&mMonitor, &Akonadi::Monitor::collectionRemoved,

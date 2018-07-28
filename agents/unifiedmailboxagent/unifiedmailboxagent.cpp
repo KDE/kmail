@@ -144,8 +144,6 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
     for (auto source  : sources) {
         auto fetch = new Akonadi::ItemFetchJob(Akonadi::Collection(source), this);
         fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
-        // Optimize: we could've only missed events that occured since the last time we saw one
-        // TODO: fetch->fetchScope().setFetchChangedSince(lastSeenEvent);
         fetch->fetchScope().setFetchVirtualReferences(true);
         fetch->fetchScope().setCacheOnly(true);
         connect(fetch, &Akonadi::ItemFetchJob::itemsReceived,
@@ -163,7 +161,6 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
 
     auto fetch = new Akonadi::ItemFetchJob(c, this);
     fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
-    // TODO: fetch->fetchScope().setFetchChangedSince(lastSeenEvent);
     fetch->fetchScope().setCacheOnly(true);
     fetch->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     connect(fetch, &Akonadi::ItemFetchJob::itemsReceived,
