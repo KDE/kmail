@@ -19,11 +19,30 @@
 
 #include "unifiedmailbox.h"
 #include "unifiedmailboxmanager.h"
+#include "utils.h"
 
-UnifiedMailbox::UnifiedMailbox(UnifiedMailboxManager *manager)
-    : mManager(manager)
+#include <KConfigGroup>
+
+
+void UnifiedMailbox::load(const KConfigGroup &group)
 {
+    mId = group.name();
+    mName = group.readEntry("name");
+    mIcon = group.readEntry("icon", QStringLiteral("folder-mail"));
+    mSources = listToSet(group.readEntry("sources", QList<qint64>{}));
+    // This is not authoritative, we will do collection discovery anyway
+    mCollectionId = group.readEntry("collectionId", -1ll);
 }
+
+void UnifiedMailbox::save(KConfigGroup& group) const
+{
+    group.writeEntry("name", name());
+    group.writeEntry("icon", icon());
+    group.writeEntry("sources", setToList(sourceCollections()));
+    // just for cacheing, we will do collection discovery on next start anyway
+    group.writeEntry("collectionId", collectionId());
+}
+
 
 bool UnifiedMailbox::isSpecial() const
 {

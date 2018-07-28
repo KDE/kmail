@@ -24,7 +24,9 @@
 #include <QMetaType>
 #include <QSet>
 
+class KConfigGroup;
 class UnifiedMailboxManager;
+
 class UnifiedMailbox {
     friend class UnifiedMailboxManager;
 public:
@@ -34,6 +36,9 @@ public:
 
     UnifiedMailbox(const UnifiedMailbox &) = delete;
     UnifiedMailbox &operator=(const UnifiedMailbox &) = delete;
+
+    void save(KConfigGroup &group) const;
+    void load(const KConfigGroup &group);
 
     bool isSpecial() const;
 
@@ -55,8 +60,6 @@ public:
     QSet<qint64> sourceCollections() const;
 
 private:
-    UnifiedMailbox(UnifiedMailboxManager *manager);
-
     void attachManager(UnifiedMailboxManager *manager);
 
     qint64 mCollectionId = -1;

@@ -195,11 +195,7 @@ void UnifiedMailboxManager::loadBoxes(LoadCallback &&cb)
     for (const auto &boxGroupName : boxGroups) {
         const auto boxGroup = group.group(boxGroupName);
         auto box = std::make_unique<UnifiedMailbox>();
-        box->setId(boxGroupName);
-        box->setName(boxGroup.readEntry("name"));
-        box->setIcon(boxGroup.readEntry("icon", QStringLiteral("folder-mail")));
-        QList<qint64> sources = boxGroup.readEntry("sources", QList<qint64>{});
-        box->setSourceCollections(listToSet(std::move(sources)));
+        box->load(boxGroup);
         insertBox(std::move(box));
     }
 
@@ -227,11 +223,8 @@ void UnifiedMailboxManager::saveBoxes()
         group.deleteGroup(groupName);
     }
     for (const auto &boxIt : mMailboxes) {
-        const auto &box = boxIt.second;
-        auto boxGroup = group.group(box->id());
-        boxGroup.writeEntry("name", box->name());
-        boxGroup.writeEntry("icon", box->icon());
-        boxGroup.writeEntry("sources", setToList(box->sourceCollections()));
+        auto boxGroup = group.group(boxIt.second->id());
+        boxIt.second->save(boxGroup);
     }
     mConfig->sync();
 }
