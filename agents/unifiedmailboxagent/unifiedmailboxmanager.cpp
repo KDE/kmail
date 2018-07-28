@@ -36,6 +36,30 @@
 
 #include "utils.h"
 
+namespace {
+
+/**
+ * A little RAII helper to make sure changeProcessed() and replayNext() gets
+ * called on the ChangeRecorder whenever we are done with handling a change.
+ */
+class ReplayNextOnExit
+{
+public:
+    ReplayNextOnExit(Akonadi::ChangeRecorder &recorder)
+        : mRecorder(recorder)
+    {}
+    ~ReplayNextOnExit()
+    {
+        mRecorder.changeProcessed();
+        mRecorder.replayNext();
+    }
+private:
+    Akonadi::ChangeRecorder &mRecorder;
+};
+
+}
+
+
 void UnifiedMailbox::setId(const QString &id)
 {
     mId = id;
@@ -107,25 +131,52 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
     mMonitor.collectionFetchScope().fetchAttribute<Akonadi::SpecialCollectionAttribute>();
     connect(&mMonitor, &Akonadi::Monitor::itemAdded,
             this, [this](const Akonadi::Item &item, const Akonadi::Collection &collection) {
+                ReplayNextOnExit replayNext(mMonitor);
+
                 qCDebug(agent_log) << "Item" << item.id() << "added to collection" << collection.id();
                 const auto box = unifiedMailboxForSource(collection.id());
-                if (box) {
-                    const auto boxId = collectionIdFromUnifiedMailbox(box->id());
-                    qCDebug(agent_log) << "Unified box:" << box->name() << ", collection" << boxId;
-                    if (boxId > -1) {
-                        new Akonadi::LinkJob(Akonadi::Collection{boxId}, {item}, this);
-                    }
-                } else {
+                if (!box) {
                     qCWarning(agent_log) << "Failed to find unified mailbox for source collection " << collection.id();
+                    return;
                 }
 
-                //TODO Settings::self()->setLastSeenEvent(std::chrono::steady_clock::now().time_since_epoch().count());
-                mMonitor.changeProcessed();
-                mMonitor.replayNext();
+                const auto boxId = collectionIdFromUnifiedMailbox(box->id());
+                qCDebug(agent_log) << "Unified box:" << box->name() << ", collection" << boxId;
+                if (boxId <= -1) {
+                    qCWarning(agent_log) << "Missing box->collection mapping for unified mailbox" << box->id();
+                    return;
+                }
+
+                new Akonadi::LinkJob(Akonadi::Collection{boxId}, {item}, this);
+            });
+    connect(&mMonitor, &Akonadi::Monitor::itemsRemoved,
+            this, [this](const Akonadi::Item::List &items) {
+                ReplayNextOnExit replayNext(mMonitor);
+
+                // Monitor did the heavy lifting for us and already figured out that
+                // we only monitor the source collection of the Items and translated
+                // it into REMOVE change.
+
+                // This relies on Akonadi never mixing Items from different sources or
+                // destination during batch-moves.
+                const auto parentId = items.first().parentCollection().id();
+                const auto box = unifiedMailboxForSource(parentId);
+                if (!box) {
+                    qCWarning(agent_log) << "Received Remove notification for Items belonging to" << parentId << "which we don't monitor";
+                    return;
+                }
+                const auto boxId = collectionIdFromUnifiedMailbox(box->id());
+                if (boxId <= -1) {
+                    qCWarning(agent_log) << "Missing box->collection mapping for unified mailbox" << box->id();
+                }
+
+                new Akonadi::UnlinkJob(Akonadi::Collection{boxId}, items, this);
             });
     connect(&mMonitor, &Akonadi::Monitor::itemsMoved,
             this, [this](const Akonadi::Item::List &items, const Akonadi::Collection &srcCollection,
                          const Akonadi::Collection &dstCollection) {
+                ReplayNextOnExit replayNext(mMonitor);
+
                 const auto srcBox = unifiedMailboxForSource(srcCollection.id());
                 const auto dstBox = unifiedMailboxForSource(dstCollection.id());
                 qCDebug(agent_log ) << "Items moved away from " << srcCollection.id() << "(box" << srcBox << ") to " << dstCollection.id() << "(Box" << dstBox << ")";
@@ -141,29 +192,27 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
                 }
 
                 //TODO Settings::self()->setLastSeenEvent(std::chrono::steady_clock::now().time_since_epoch().count());
-
-                mMonitor.changeProcessed();
-                mMonitor.replayNext();
             });
     connect(&mMonitor, &Akonadi::Monitor::collectionAdded,
             this, [this](const Akonadi::Collection &col) {
+                ReplayNextOnExit replayNext(mMonitor);
+
                 if (isUnifiedMailbox(col)) {
                     mBoxId.insert(col.name(), col.id());
                 } else {
                     // TODO: Potentially a new special collection: we should auto-add it to our box
                 }
-
-                mMonitor.changeProcessed();
-                mMonitor.replayNext();
             });
     connect(&mMonitor, &Akonadi::Monitor::collectionRemoved,
             this, [this](const Akonadi::Collection &col) {
+                ReplayNextOnExit replayNext(mMonitor);
+
                 // TODO: If it was a source collection for one of our boxes, remove it from box's sources
-                mMonitor.changeProcessed();
-                mMonitor.replayNext();
             });
     connect(&mMonitor, QOverload<const Akonadi::Collection &, const QSet<QByteArray> &>::of(&Akonadi::Monitor::collectionChanged),
             this, [this](const Akonadi::Collection &col, const QSet<QByteArray> &parts) {
+                ReplayNextOnExit replayNext(mMonitor);
+
                 if (col.hasAttribute<Akonadi::SpecialCollectionAttribute>()) {
                     // TODO: Remove collection from whichever special mailbox it may
                     // have belonged to before and add it to correct special mailbox
@@ -171,9 +220,6 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
                     // TODO: Check whether it's a source of one of our special
                     // mailboxes and remove it from there
                 }
-
-                mMonitor.changeProcessed();
-                mMonitor.replayNext();
             });
 
 }

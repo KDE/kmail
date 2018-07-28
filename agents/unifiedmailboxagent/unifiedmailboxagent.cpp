@@ -109,7 +109,7 @@ void UnifiedMailboxAgent::retrieveCollections()
         col.setRemoteId(box.id());
         col.setParentCollection(topLevel);
         col.setContentMimeTypes({MailMimeType});
-        col.setRights(Akonadi::Collection::CanChangeItem);
+        col.setRights(Akonadi::Collection::CanChangeItem | Akonadi::Collection::CanDeleteItem);
         col.setVirtual(true);
         auto displayAttr = col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         displayAttr->setDisplayName(box.name());
