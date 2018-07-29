@@ -60,6 +60,7 @@ class KMMetaFilterActionCommand;
 class CollectionPane;
 class KMCommand;
 class KMMoveCommand;
+class KMTrashMsgCommand;
 class KRecentFilesAction;
 class ManageShowCollectionProperties;
 class KActionMenuTransport;
@@ -469,7 +470,7 @@ private Q_SLOTS:
     /**
      * Called when a "move to trash" operation is completed
      */
-    void slotTrashMessagesCompleted(KMMoveCommand *command);
+    void slotTrashMessagesCompleted(KMTrashMsgCommand *command);
 
     /**
      * Called when a "move" operation is completed

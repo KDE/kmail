@@ -1845,28 +1845,66 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
     // And stuff them into a KMTrashMsgCommand :)
     KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentCollection, select, ref);
 
-    QObject::connect(
-        command, &KMMoveCommand::moveDone,
-        this, &KMMainWidget::slotTrashMessagesCompleted
-        );
+    QObject::connect(command, &KMTrashMsgCommand::moveDone,
+                     this, &KMMainWidget::slotTrashMessagesCompleted);
     command->start();
-    bool moveToTrash = command->destFolder().isValid();
-    showMessageActivities(moveToTrash ? i18n("Moving messages to trash...") : i18n("Deleting messages..."));
+    switch (command->operation()) {
+    case KMTrashMsgCommand::MoveToTrash:
+        showMessageActivities(i18n("Moving messages to trash..."));
+        break;
+    case KMTrashMsgCommand::Delete:
+        showMessageActivities(i18n("Deleting messages..."));
+        break;
+    case KMTrashMsgCommand::Both:
+    case KMTrashMsgCommand::Unknown:
+        showMessageActivities(i18n("Deleting and moving messages to trash..."));
+        break;
+    }
 }
 
-void KMMainWidget::slotTrashMessagesCompleted(KMMoveCommand *command)
+void KMMainWidget::slotTrashMessagesCompleted(KMTrashMsgCommand *command)
 {
     Q_ASSERT(command);
     mMessagePane->markMessageItemsAsAboutToBeRemoved(command->refSet(), false);
     mMessagePane->deletePersistentSet(command->refSet());
-    bool moveToTrash = command->destFolder().isValid();
     if (command->result() == KMCommand::OK) {
-        showMessageActivities(moveToTrash ? i18n("Messages moved to trash successfully.") : i18n("Messages deleted successfully."));
+        switch (command->operation()) {
+        case KMTrashMsgCommand::MoveToTrash:
+            showMessageActivities(i18n("Messages moved to trash successfully."));
+            break;
+        case KMTrashMsgCommand::Delete:
+            showMessageActivities(i18n("Messages deleted successfully."));
+            break;
+        case KMTrashMsgCommand::Both:
+        case KMTrashMsgCommand::Unknown:
+            showMessageActivities(i18n("Messages moved to trash or deleted successfully"));
+            break;
+        }
+    } else if (command->result() == KMCommand::Failed) {
+        switch (command->operation()) {
+        case KMTrashMsgCommand::MoveToTrash:
+            showMessageActivities(i18n("Moving messages to trash failed."));
+            break;
+        case KMTrashMsgCommand::Delete:
+            showMessageActivities(i18n("Deleting messages failed."));
+            break;
+        case KMTrashMsgCommand::Both:
+        case KMTrashMsgCommand::Unknown:
+            showMessageActivities(i18n("Deleting or moving messages to trash failed."));
+            break;
+        }
     } else {
-        if (command->result() == KMCommand::Failed) {
-            showMessageActivities(moveToTrash ? i18n("Moving messages to trash failed.") : i18n("Deleting messages failed."));
-        } else {
-            showMessageActivities(moveToTrash ? i18n("Moving messages to trash canceled.") : i18n("Deleting messages canceled."));
+        switch (command->operation()) {
+        case KMTrashMsgCommand::MoveToTrash:
+            showMessageActivities(i18n("Moving messages to trash canceled."));
+            break;
+        case KMTrashMsgCommand::Delete:
+            showMessageActivities(i18n("Deleting messages canceled."));
+            break;
+        case KMTrashMsgCommand::Both:
+        case KMTrashMsgCommand::Unknown:
+            showMessageActivities(i18n("Deleting or moving messages to trash canceled."));
+            break;
         }
     }
 

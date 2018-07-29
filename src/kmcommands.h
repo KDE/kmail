@@ -558,16 +558,48 @@ private:
     MessageList::Core::MessageItemSetReference mRef;
 };
 
-class KMTrashMsgCommand : public KMMoveCommand
+class KMTrashMsgCommand final : public KMCommand
 {
     Q_OBJECT
 
 public:
+    enum TrashOperation {
+        Unknown,
+        MoveToTrash,
+        Delete,
+        Both
+    };
+
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref);
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref);
+    MessageList::Core::MessageItemSetReference refSet() const
+    {
+        return mRef;
+    }
+
+    TrashOperation operation() const;
+
+public Q_SLOTS:
+    void slotMoveCanceled();
+
+private Q_SLOTS:
+    void slotMoveResult(KJob *job);
+    void slotDeleteResult(KJob *job);
+Q_SIGNALS:
+    void moveDone(KMTrashMsgCommand *);
 
 private:
+    Result execute() override;
+    void completeMove(Result result);
+
     static Akonadi::Collection findTrashFolder(const Akonadi::Collection &srcFolder);
+
+    QMap<Akonadi::Collection, Akonadi::Item::List> mTrashFolders;
+    KPIM::ProgressItem *mMoveProgress = nullptr;
+    KPIM::ProgressItem *mDeleteProgress = nullptr;
+    MessageList::Core::MessageItemSetReference mRef;
+    QList<KJob*> mPendingMoves;
+    QList<KJob*> mPendingDeletes;
 };
 
 class KMResendMessageCommand : public KMCommand

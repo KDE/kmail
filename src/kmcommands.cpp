@@ -1563,16 +1563,54 @@ void KMMoveCommand::slotMoveCanceled()
     completeMove(Canceled);
 }
 
-// srcFolder doesn't make much sense for searchFolders
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
-    : KMMoveCommand(findTrashFolder(srcFolder), msgList, ref)
+    : KMCommand()
+    , mRef(ref)
 {
+    // When trashing items from a virtual collection, they may each have a different
+    // trash folder, so we need to handle it here carefuly
+    if (srcFolder.isVirtual()) {
+        QHash<qint64, Akonadi::Collection> cache;
+        for (const auto &msg : msgList) {
+            auto cacheIt = cache.find(msg.storageCollectionId());
+            if (cacheIt == cache.end()) {
+                cacheIt = cache.insert(msg.storageCollectionId(), findTrashFolder(CommonKernel->collectionFromId(msg.storageCollectionId())));
+            }
+            auto trashIt = mTrashFolders.find(*cacheIt);
+            if (trashIt == mTrashFolders.end()) {
+                trashIt = mTrashFolders.insert(*cacheIt, {});
+            }
+            trashIt->push_back(msg);
+        }
+    } else {
+        mTrashFolders.insert(findTrashFolder(srcFolder), msgList);
+    }
+}
+
+KMTrashMsgCommand::TrashOperation KMTrashMsgCommand::operation() const
+{
+    if (!mPendingMoves.isEmpty() && !mPendingDeletes.isEmpty()) {
+        return Both;
+    } else if (!mPendingMoves.isEmpty()) {
+        return MoveToTrash;
+    } else if (!mPendingDeletes.isEmpty()) {
+        return Delete;
+    } else {
+        if (mTrashFolders.size() == 1) {
+            if (mTrashFolders.begin().key().isValid()) {
+                return MoveToTrash;
+            } else {
+                return Delete;
+            }
+        } else {
+            return Unknown;
+        }
+    }
 }
 
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref)
-    : KMMoveCommand(findTrashFolder(srcFolder), msg, ref)
-{
-}
+    : KMTrashMsgCommand(findTrashFolder(srcFolder), Akonadi::Item::List{msg}, ref)
+{}
 
 Akonadi::Collection KMTrashMsgCommand::findTrashFolder(const Akonadi::Collection &folder)
 {
@@ -1585,6 +1623,124 @@ Akonadi::Collection KMTrashMsgCommand::findTrashFolder(const Akonadi::Collection
     }
     return Akonadi::Collection();
 }
+
+KMCommand::Result KMTrashMsgCommand::execute()
+{
+#ifndef QT_NO_CURSOR
+    KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+    setEmitsCompletedItself(true);
+    setDeletesItself(true);
+    for (auto trashIt = mTrashFolders.begin(), end = mTrashFolders.end(); trashIt != end; ++trashIt) {
+        const auto trash = trashIt.key();
+        if (trash.isValid()) {
+            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(*trashIt, trash, this);
+            connect(job, &KIO::Job::result, this, &KMTrashMsgCommand::slotMoveResult);
+            mPendingMoves.push_back(job);
+
+            // group by source folder for undo
+            std::sort(trashIt->begin(), trashIt->end(),
+                      [](const Akonadi::Item &lhs, const Akonadi::Item &rhs) {
+                return lhs.storageCollectionId() < rhs.storageCollectionId();
+            });
+            Akonadi::Collection parent;
+            int undoId = -1;
+            for (const Akonadi::Item &item : qAsConst(*trashIt)) {
+                if (item.storageCollectionId() <= 0) {
+                    continue;
+                }
+                if (parent.id() != item.storageCollectionId()) {
+                    parent = Akonadi::Collection(item.storageCollectionId());
+                    undoId = kmkernel->undoStack()->newUndoAction(parent, trash);
+                }
+                kmkernel->undoStack()->addMsgToAction(undoId, item);
+            }
+        } else {
+            Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob(*trashIt, this);
+            connect(job, &KIO::Job::result, this, &KMTrashMsgCommand::slotDeleteResult);
+            mPendingDeletes.push_back(job);
+        }
+    }
+
+    if (mPendingMoves.isEmpty() && mPendingDeletes.isEmpty()) {
+        deleteLater();
+        return Failed;
+    }
+
+    // TODO set SSL state according to source and destfolder connection?
+    if (!mPendingMoves.isEmpty()) {
+        Q_ASSERT(!mMoveProgress);
+        mMoveProgress = ProgressManager::createProgressItem(QLatin1String("move") + ProgressManager::getUniqueID(),
+            i18n("Moving messages"), QString(), true, KPIM::ProgressItem::Unknown);
+        mMoveProgress->setUsesBusyIndicator(true);
+        connect(mMoveProgress, &ProgressItem::progressItemCanceled,
+                this, &KMTrashMsgCommand::slotMoveCanceled);
+    }
+    if (!mPendingDeletes.isEmpty()) {
+        Q_ASSERT(!mDeleteProgress);
+        mDeleteProgress = ProgressManager::createProgressItem(QLatin1String("delete") + ProgressManager::getUniqueID(),
+            i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
+        mDeleteProgress->setUsesBusyIndicator(true);
+        connect(mMoveProgress, &ProgressItem::progressItemCanceled,
+                this, &KMTrashMsgCommand::slotMoveCanceled);
+    }
+    return OK;
+}
+
+void KMTrashMsgCommand::slotMoveResult(KJob *job)
+{
+    mPendingMoves.removeOne(job);
+    if (job->error()) {
+        // handle errors
+        showJobError(job);
+        completeMove(Failed);
+    } else if (mPendingMoves.isEmpty() && mPendingDeletes.isEmpty()) {
+        completeMove(OK);
+    }
+}
+
+void KMTrashMsgCommand::slotDeleteResult(KJob* job)
+{
+    mPendingDeletes.removeOne(job);
+    if (job->error()) {
+        showJobError(job);
+        completeMove(Failed);
+    } else if (mPendingDeletes.isEmpty() && mPendingMoves.isEmpty()) {
+        completeMove(OK);
+    }
+}
+
+void KMTrashMsgCommand::slotMoveCanceled()
+{
+    completeMove(Canceled);
+}
+
+void KMTrashMsgCommand::completeMove(KMCommand::Result result)
+{
+    if (result == Failed) {
+        for (auto job : mPendingMoves) {
+            job->kill();
+        }
+        for (auto job : mPendingDeletes) {
+            job->kill();
+        }
+    }
+
+    if (mDeleteProgress) {
+        mDeleteProgress->setComplete();
+        mDeleteProgress = nullptr;
+    }
+    if (mMoveProgress) {
+        mMoveProgress->setComplete();
+        mMoveProgress = nullptr;
+    }
+
+    setResult(result);
+    Q_EMIT moveDone(this);
+    Q_EMIT completed(this);
+    deleteLater();
+}
+
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::Viewer *viewer)
     : KMCommand(parent, msg)
