@@ -371,7 +371,7 @@ void UnifiedMailboxManager::discoverBoxCollections(FinishedCallback &&finishedCb
     connect(list, &Akonadi::CollectionFetchJob::collectionsReceived,
             this, [this](const Akonadi::Collection::List &list) {
                 for (const auto &col : list) {
-                    if (!isUnifiedMailbox(col)) {
+                    if (!isUnifiedMailbox(col) || col.parentCollection() == Akonadi::Collection::root()) {
                         continue;
                     }
 
