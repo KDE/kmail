@@ -20,9 +20,15 @@
 #include "unifiedmailbox.h"
 #include "unifiedmailboxmanager.h"
 #include "utils.h"
+#include "common.h"
 
 #include <KConfigGroup>
 
+
+bool UnifiedMailbox::operator==(const UnifiedMailbox &other) const
+{
+    return mId == other.mId;
+}
 
 void UnifiedMailbox::load(const KConfigGroup &group)
 {
@@ -43,12 +49,11 @@ void UnifiedMailbox::save(KConfigGroup& group) const
     group.writeEntry("collectionId", collectionId());
 }
 
-
 bool UnifiedMailbox::isSpecial() const
 {
-    return mId == QLatin1String("inbox")
-        || mId == QLatin1String("sent-mail")
-        || mId == QLatin1String("drafts");
+    return mId == Common::InboxBoxId
+        || mId == Common::SentBoxId
+        || mId == Common::DraftsBoxId;
 }
 
 void UnifiedMailbox::setCollectionId(qint64 id)
@@ -96,6 +101,7 @@ void UnifiedMailbox::addSourceCollection(qint64 source)
     mSources.insert(source);
     if (mManager) {
         mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source});
+        mManager->mSourceToBoxMap.insert({ source, this });
     }
 }
 
@@ -104,22 +110,18 @@ void UnifiedMailbox::removeSourceCollection(qint64 source)
     mSources.remove(source);
     if (mManager) {
         mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source}, false);
+        mManager->mSourceToBoxMap.erase(source);
     }
 }
 
 void UnifiedMailbox::setSourceCollections(const QSet<qint64> &sources)
 {
-    const auto updateMonitor = [this](bool monitor) {
-        if (mManager) {
-            for (const auto source : mSources) {
-                mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source}, monitor);
-            }
-        }
-    };
-
-    updateMonitor(false);
-    mSources = sources;
-    updateMonitor(true);
+    while (!mSources.empty()) {
+        removeSourceCollection(*mSources.begin());
+    }
+    for (auto source : sources) {
+        addSourceCollection(source);
+    }
 }
 
 QSet<qint64> UnifiedMailbox::sourceCollections() const
@@ -129,11 +131,20 @@ QSet<qint64> UnifiedMailbox::sourceCollections() const
 
 void UnifiedMailbox::attachManager(UnifiedMailboxManager *manager)
 {
-    Q_ASSERT(manager);
     if (mManager != manager) {
+        if (manager) {
+            // Force that we start monitoring all the collections
+            for (auto source : mSources) {
+                manager->mMonitor.setCollectionMonitored(Akonadi::Collection{source});
+                manager->mSourceToBoxMap.insert({ source, this });
+            }
+        } else {
+            for (auto source : mSources) {
+                mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source}, false);
+                mManager->mSourceToBoxMap.erase(source);
+            }
+        }
         mManager = manager;
-        // Force that we start monitoring all the collections
-        setSourceCollections(mSources);
     }
 }
 

@@ -125,6 +125,9 @@ void UnifiedMailboxAgent::retrieveCollections()
     }
 
     collectionsRetrieved(std::move(collections));
+
+    // Add mapping between boxes and collections
+    mBoxManager.discoverBoxCollections();
 }
 
 void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)

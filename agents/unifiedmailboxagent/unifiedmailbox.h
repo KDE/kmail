@@ -37,6 +37,9 @@ public:
     UnifiedMailbox(const UnifiedMailbox &) = delete;
     UnifiedMailbox &operator=(const UnifiedMailbox &) = delete;
 
+    /** Compares two boxes by their ID **/
+    bool operator==(const UnifiedMailbox &other) const;
+
     void save(KConfigGroup &group) const;
     void load(const KConfigGroup &group);
 

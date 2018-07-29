@@ -3,8 +3,7 @@ add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_unifiedmailbox_agent\")
 set(CMAKE_CXX_STANDARD 14)
 
 if(BUILD_TESTING)
-    #add_subdirectory(tests)
-    #add_subdirectory(autotests)
+    add_subdirectory(autotests)
 endif()
 
 
