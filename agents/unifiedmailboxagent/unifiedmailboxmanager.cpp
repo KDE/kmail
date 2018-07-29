@@ -414,6 +414,10 @@ const UnifiedMailbox *UnifiedMailboxManager::registerSpecialSourceCollection(con
 const UnifiedMailbox *UnifiedMailboxManager::unregisterSpecialSourceCollection(qint64 colId)
 {
     auto box = unifiedMailboxForSource(colId);
+    if (!box) {
+        return {};
+    }
+
     if (!box->isSpecial()) {
         qDebug() << colId << "does not belong to a special unified box" << box->id();
         return {};
