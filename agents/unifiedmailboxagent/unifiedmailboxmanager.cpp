@@ -95,12 +95,12 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
                     return;
                 }
 
-                if (box->collectionId() <= -1) {
+                if (!box->collectionId()) {
                     qCWarning(agent_log) << "Missing box->collection mapping for unified mailbox" << box->id();
                     return;
                 }
 
-                new Akonadi::LinkJob(Akonadi::Collection{box->collectionId()}, {item}, this);
+                new Akonadi::LinkJob(Akonadi::Collection{box->collectionId().value()}, {item}, this);
             });
     connect(&mMonitor, &Akonadi::Monitor::itemsRemoved,
             this, [this](const Akonadi::Item::List &items) {
@@ -118,11 +118,12 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
                     qCWarning(agent_log) << "Received Remove notification for Items belonging to" << parentId << "which we don't monitor";
                     return;
                 }
-                if (box->collectionId() <= -1) {
+                if (!box->collectionId()) {
                     qCWarning(agent_log) << "Missing box->collection mapping for unified mailbox" << box->id();
+                    return;
                 }
 
-                new Akonadi::UnlinkJob(Akonadi::Collection{box->collectionId()}, items, this);
+                new Akonadi::UnlinkJob(Akonadi::Collection{box->collectionId().value()}, items, this);
             });
     connect(&mMonitor, &Akonadi::Monitor::itemsMoved,
             this, [this](const Akonadi::Item::List &items, const Akonadi::Collection &srcCollection,
@@ -131,11 +132,11 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
 
                 if (const auto srcBox = unifiedMailboxForSource(srcCollection.id())) {
                     // Move source collection was our source, unlink the Item from a box
-                    new Akonadi::UnlinkJob(Akonadi::Collection{srcBox->collectionId()}, items, this);
+                    new Akonadi::UnlinkJob(Akonadi::Collection{srcBox->collectionId().value()}, items, this);
                 }
                 if (const auto dstBox = unifiedMailboxForSource(dstCollection.id())) {
                     // Move destination collection is our source, link the Item into a box
-                    new Akonadi::LinkJob(Akonadi::Collection{dstBox->collectionId()}, items, this);
+                    new Akonadi::LinkJob(Akonadi::Collection{dstBox->collectionId().value()}, items, this);
                 }
             });
 

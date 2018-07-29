@@ -79,7 +79,8 @@ private:
     const UnifiedMailbox *unregisterSpecialSourceCollection(qint64 colId);
     const UnifiedMailbox *registerSpecialSourceCollection(const Akonadi::Collection &col);
 
-    // Using unordered_map because Qt containers do not support movable-only types
+    // Using std::unique_ptr because QScopedPointer is not movable
+    // Using std::unordered_map because Qt containers do not support movable-only types,
     std::unordered_map<QString, std::unique_ptr<UnifiedMailbox>> mMailboxes;
     std::unordered_map<qint64, UnifiedMailbox*> mSourceToBoxMap;
 

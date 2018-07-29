@@ -24,8 +24,15 @@
 #include <QHash>
 #include <QString>
 
+#include <experimental/optional>
+namespace exp {
+    // Injects content of std::experimental namespace into "exp" namespace.
+    // C++ is magical.
+    using namespace std::experimental;
+}
+
 template<typename T>
-QList<T> setToList(QSet<T> &&set)
+inline QList<T> setToList(QSet<T> &&set)
 {
     QList<T> rv;
     rv.reserve(set.size());
@@ -34,7 +41,16 @@ QList<T> setToList(QSet<T> &&set)
 }
 
 template<typename T>
-QSet<T> listToSet(QList<T> &&list)
+inline QList<T> setToList(const QSet<T> &set)
+{
+    QList<T> rv;
+    rv.reserve(set.size());
+    std::copy(set.cbegin(), set.cend(), std::back_inserter(rv));
+    return rv;
+}
+
+template<typename T>
+inline QSet<T> listToSet(QList<T> &&list)
 {
     QSet<T> rv;
     rv.reserve(list.size());
@@ -47,7 +63,7 @@ QSet<T> listToSet(QList<T> &&list)
 namespace std {
     template<>
     struct hash<QString> {
-        size_t operator()(const QString &str) const {
+        inline size_t operator()(const QString &str) const {
             return qHash(str);
         }
     };
