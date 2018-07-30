@@ -2525,7 +2525,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
 {
     KMCommand::Result result = command->result();
     if (result != KMCommand::OK) {
-        qCDebug(KMAIL_LOG) << "Result:" << result;
+        qCDebug(KMAIL_LOG) << "slotItemsFetchedForActivation result:" << result;
         return;
     }
 
