@@ -45,11 +45,15 @@ public:
 
     void configure(WId windowId) override;
 
+    void setEnableAgent(bool enable);
+    bool enabledAgent() const;
+
     void retrieveCollections() override;
     void retrieveItems(const Akonadi::Collection &collection) override;
     bool retrieveItem(const Akonadi::Item &item, const QSet<QByteArray> &parts) override;
-
 private:
+    void delayedInit();
+
     void fixSpecialCollections();
     void fixSpecialCollection(const QString &colId, Akonadi::SpecialMailCollections::Type type);
 

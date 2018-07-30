@@ -36,6 +36,7 @@
 #include <Akonadi/KMime/SpecialMailCollections>
 
 #include <QList>
+#include <QTimer>
 
 
 namespace {
@@ -159,6 +160,7 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
     connect(&mMonitor, qOverload<const Akonadi::Collection &, const QSet<QByteArray> &>(&Akonadi::Monitor::collectionChanged),
             this, [this](const Akonadi::Collection &col, const QSet<QByteArray> &parts) {
                 ReplayNextOnExit replayNext(mMonitor);
+
                 qCDebug(agent_log) << "Collection changed:" << parts;
                 if (!parts.contains(Akonadi::SpecialCollectionAttribute().type())) {
                     return;
@@ -209,6 +211,7 @@ Akonadi::ChangeRecorder &UnifiedMailboxManager::changeRecorder()
 
 void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
 {
+    qCDebug(agent_log) << "loading boxes";
     const auto group = mConfig->group("UnifiedMailboxes");
     const auto boxGroups = group.groupList();
     for (const auto &boxGroupName : boxGroups) {
@@ -219,15 +222,18 @@ void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
     }
 
     const auto cb = [this, finishedCb = std::move(finishedCb)]() {
+        qCDebug(agent_log) << "Finished callback: enabling change recorder";
         // Only now start processing changes from change recorder
         connect(&mMonitor, &Akonadi::ChangeRecorder::changesAdded, &mMonitor, &Akonadi::ChangeRecorder::replayNext, Qt::QueuedConnection);
         // And start replaying any potentially pending notification
-        mMonitor.replayNext();
+        QTimer::singleShot(0, &mMonitor, &Akonadi::ChangeRecorder::replayNext);
 
         if (finishedCb) {
             finishedCb();
         }
     };
+
+    qCDebug(agent_log) << "Loaded" << mMailboxes.size() << "boxes from config";
 
     if (mMailboxes.empty()) {
         createDefaultBoxes(std::move(cb));
@@ -351,7 +357,7 @@ void UnifiedMailboxManager::createDefaultBoxes(FinishedCallback &&finishedCb)
                     }
                 }
             });
-    connect(list, &Akonadi::CollectionFetchJob::finished,
+    connect(list, &Akonadi::CollectionFetchJob::result,
             this, [this, finishedCb = std::move(finishedCb)]() {
                 saveBoxes();
                 if (finishedCb) {
@@ -379,8 +385,7 @@ void UnifiedMailboxManager::discoverBoxCollections(FinishedCallback &&finishedCb
                 }
             });
     if (finishedCb) {
-        connect(list, &Akonadi::CollectionFetchJob::finished,
-                this, finishedCb);
+        connect(list, &Akonadi::CollectionFetchJob::result, this, finishedCb);
     }
 }
 

@@ -20,6 +20,7 @@
 #include "unifiedmailboxagent.h"
 #include "unifiedmailbox.h"
 #include "unifiedmailboxagent_debug.h"
+#include "unifiedmailboxagentadaptor.h"
 #include "settingsdialog.h"
 #include "settings.h"
 #include "common.h"
@@ -28,18 +29,21 @@
 #include <AkonadiCore/Session>
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionFetchScope>
+#include <AkonadiCore/CollectionDeleteJob>
 #include <AkonadiCore/SpecialCollectionAttribute>
 #include <AkonadiCore/EntityDisplayAttribute>
 #include <AkonadiCore/ItemFetchScope>
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/LinkJob>
 #include <AkonadiCore/UnlinkJob>
+#include <AkonadiCore/ServerManager>
 #include <Akonadi/KMime/SpecialMailCollections>
 
 #include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Identity>
 
 #include <KLocalizedString>
+#include <KDBusConnectionPool>
 
 #include <QPointer>
 #include <QTimer>
@@ -54,6 +58,11 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     , mBoxManager(config())
 {
     setAgentName(i18n("Unified Mailboxes"));
+
+    new UnifiedMailboxAgentAdaptor(this);
+    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/UnifiedMailboxAgent"), this, QDBusConnection::ExportAdaptors);
+    const auto service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Resource, identifier());
+    KDBusConnectionPool::threadConnection().registerService(service);
 
     connect(&mBoxManager, &UnifiedMailboxManager::updateBox,
             this, [this](const UnifiedMailbox *box) {
@@ -71,15 +80,9 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     ifs.setCacheOnly(true);
     ifs.fetchFullPayload(false);
 
-    QTimer::singleShot(0, this, [this]() {
-        qCDebug(agent_log) << "delayed init";
-
-        fixSpecialCollections();
-        mBoxManager.loadBoxes([this]() {
-            // boxes loaded, let's sync up
-            synchronize();
-        });
-    });
+    if (Settings::self()->enabled()) {
+        QTimer::singleShot(0, this, &UnifiedMailboxAgent::delayedInit);
+    }
 }
 
 void UnifiedMailboxAgent::configure(WId windowId)
@@ -94,8 +97,53 @@ void UnifiedMailboxAgent::configure(WId windowId)
     }
 }
 
+void UnifiedMailboxAgent::delayedInit()
+{
+    qCDebug(agent_log) << "delayed init";
+
+    fixSpecialCollections();
+    mBoxManager.loadBoxes([this]() {
+        // boxes loaded, let's sync up
+        synchronize();
+    });
+}
+
+
+bool UnifiedMailboxAgent::enabledAgent() const
+{
+    return Settings::self()->enabled();
+}
+
+void UnifiedMailboxAgent::setEnableAgent(bool enabled)
+{
+    if (enabled != Settings::self()->enabled()) {
+        Settings::self()->setEnabled(enabled);
+        Settings::self()->save();
+        if (!enabled) {
+            setOnline(false);
+            auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
+            fetch->fetchScope().setResource(identifier());
+            connect(fetch, &Akonadi::CollectionFetchJob::collectionsReceived,
+                    this, [this](const Akonadi::Collection::List &cols) {
+                        for (const auto &col : cols) {
+                            new Akonadi::CollectionDeleteJob(col, this);
+                        }
+                    });
+        } else {
+            setOnline(true);
+            delayedInit();
+        }
+    }
+}
+
+
 void UnifiedMailboxAgent::retrieveCollections()
 {
+    if (!Settings::self()->enabled()) {
+        collectionsRetrieved({});
+        return;
+    }
+
     Akonadi::Collection::List collections;
 
     Akonadi::Collection topLevel;
@@ -132,6 +180,11 @@ void UnifiedMailboxAgent::retrieveCollections()
 
 void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
 {
+    if (!Settings::self()->enabled()) {
+        itemsRetrieved({});
+        return;
+    }
+
     // First check that we have all Items from all source collections
     Q_EMIT status(Running, i18n("Synchronizing unified mailbox %1", c.displayName()));
     const auto unifiedBox = mBoxManager.unifiedMailboxFromCollection(c);

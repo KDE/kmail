@@ -20,6 +20,7 @@ kconfig_add_kcfg_files(unifiedmailbox_agent_SRCS
     settings.kcfgc
 )
 
+qt5_add_dbus_adaptor(unifiedmailbox_agent_SRCS org.freedesktop.Akonadi.UnifiedMailboxAgent.xml unifiedmailboxagent.h UnifiedMailboxAgent)
 
 add_executable(akonadi_unifiedmailbox_agent ${unifiedmailbox_agent_SRCS})
 
@@ -34,6 +35,7 @@ target_link_libraries(akonadi_unifiedmailbox_agent
     KF5::IconThemes
     KF5::ItemModels
     KF5::MailCommon
+    KF5::DBusAddons
 )
 
 if( APPLE )
