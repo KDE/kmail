@@ -156,7 +156,7 @@ UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* p
                     qCWarning(agent_log) << "Received notification about removal of Collection" << col.id() << "which we don't monitor";
                 }
            });
-    connect(&mMonitor, QOverload<const Akonadi::Collection &, const QSet<QByteArray> &>::of(&Akonadi::Monitor::collectionChanged),
+    connect(&mMonitor, qOverload<const Akonadi::Collection &, const QSet<QByteArray> &>(&Akonadi::Monitor::collectionChanged),
             this, [this](const Akonadi::Collection &col, const QSet<QByteArray> &parts) {
                 ReplayNextOnExit replayNext(mMonitor);
                 qCDebug(agent_log) << "Collection changed:" << parts;
