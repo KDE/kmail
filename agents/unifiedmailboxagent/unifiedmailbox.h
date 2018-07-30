@@ -47,7 +47,7 @@ public:
 
     bool isSpecial() const;
 
-    exp::optional<qint64> collectionId() const;
+    stdx::optional<qint64> collectionId() const;
     void setCollectionId(qint64 id);
 
     QString id() const;
@@ -67,7 +67,7 @@ public:
 private:
     void attachManager(UnifiedMailboxManager *manager);
 
-    exp::optional<qint64> mCollectionId;
+    stdx::optional<qint64> mCollectionId;
     QString mId;
     QString mName;
     QString mIcon;

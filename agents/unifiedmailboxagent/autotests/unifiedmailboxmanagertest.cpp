@@ -61,28 +61,28 @@ do {\
 
 
 
-exp::optional<Akonadi::Collection> collectionForId(qint64 id)
+stdx::optional<Akonadi::Collection> collectionForId(qint64 id)
 {
     auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base);
     fetch->fetchScope().fetchAttribute<Akonadi::SpecialCollectionAttribute>();
-    AKVERIFY_RET(fetch->exec(), exp::nullopt);
+    AKVERIFY_RET(fetch->exec(), stdx::nullopt);
     const auto cols = fetch->collections();
-    AKCOMPARE_RET(cols.count(), 1, exp::nullopt);
-    AKVERIFY_RET(cols.first().isValid(), exp::nullopt);
+    AKCOMPARE_RET(cols.count(), 1, stdx::nullopt);
+    AKVERIFY_RET(cols.first().isValid(), stdx::nullopt);
     return cols.first();
 }
 
-exp::optional<Akonadi::Collection> collectionForRid(const QString &rid)
+stdx::optional<Akonadi::Collection> collectionForRid(const QString &rid)
 {
     auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive);
     fetch->fetchScope().fetchAttribute<Akonadi::SpecialCollectionAttribute>();
     fetch->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
-    AKVERIFY_RET(fetch->exec(), exp::nullopt);
+    AKVERIFY_RET(fetch->exec(), stdx::nullopt);
     const auto cols = fetch->collections();
     auto colIt = std::find_if(cols.cbegin(), cols.cend(), [&rid](const Akonadi::Collection &col) {
         return col.remoteId() == rid;
     });
-    AKVERIFY_RET(colIt != cols.cend(), exp::nullopt);
+    AKVERIFY_RET(colIt != cols.cend(), stdx::nullopt);
     return *colIt;
 }
 
@@ -133,20 +133,20 @@ private:
     Akonadi::Item::List items;
 };
 
-exp::optional<Akonadi::Collection> createCollection(const QString &name, const Akonadi::Collection &parent, EntityDeleter &deleter)
+stdx::optional<Akonadi::Collection> createCollection(const QString &name, const Akonadi::Collection &parent, EntityDeleter &deleter)
 {
     Akonadi::Collection col;
     col.setName(name);
     col.setParentCollection(parent);
     col.setVirtual(true);
     auto createCol = new Akonadi::CollectionCreateJob(col);
-    AKVERIFY_RET(createCol->exec(), exp::nullopt);
+    AKVERIFY_RET(createCol->exec(), stdx::nullopt);
     col = createCol->collection();
     if (col.isValid()) {
         deleter << col;
         return col;
     }
-    return exp::nullopt;
+    return stdx::nullopt;
 }
 
 

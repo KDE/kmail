@@ -65,7 +65,7 @@ void UnifiedMailbox::setCollectionId(qint64 id)
     mCollectionId = id;
 }
 
-exp::optional<qint64> UnifiedMailbox::collectionId() const
+stdx::optional<qint64> UnifiedMailbox::collectionId() const
 {
     return mCollectionId;
 }

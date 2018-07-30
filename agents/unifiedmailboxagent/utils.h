@@ -25,7 +25,7 @@
 #include <QString>
 
 #include <experimental/optional>
-namespace exp {
+namespace stdx {
     // Injects content of std::experimental namespace into "exp" namespace.
     // C++ is magical.
     using namespace std::experimental;
