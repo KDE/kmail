@@ -4680,8 +4680,8 @@ void KMMainWidget::printCurrentMessage(bool preview)
         commandInfo.mPrintPreview = preview;
         commandInfo.mUseFixedFont = useFixedFont;
         commandInfo.mOverrideFont = overrideEncoding;
-        commandInfo.mShowSignatureDetails = messageView()->viewer()->showSignatureDetails();
-        commandInfo.mShowEncryptionDetails = messageView()->viewer()->showEncryptionDetails();
+        commandInfo.mShowSignatureDetails = messageView()->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
+        commandInfo.mShowEncryptionDetails = messageView()->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
 
         KMPrintCommand *command
             = new KMPrintCommand(this, commandInfo);
