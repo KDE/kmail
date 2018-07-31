@@ -231,7 +231,7 @@ KMKernel::~KMKernel()
     mMailService = nullptr;
 
     stopAgentInstance();
-    slotSyncConfig();
+    saveConfig();
 
     delete mAutoCorrection;
     delete mMailCommonSettings;
@@ -1172,16 +1172,7 @@ void KMKernel::slotRequestConfigSync()
 
 void KMKernel::slotSyncConfig()
 {
-    PimCommon::PimCommonSettings::self()->save();
-    MessageCore::MessageCoreSettings::self()->save();
-    MessageViewer::MessageViewerSettings::self()->save();
-    MessageComposer::MessageComposerSettings::self()->save();
-    TemplateParser::TemplateParserSettings::self()->save();
-    MessageList::MessageListSettings::self()->save();
-    mMailCommonSettings->save();
-    Gravatar::GravatarSettings::self()->save();
-    KMailSettings::self()->save();
-    KMKernel::config()->sync();
+    saveConfig();
     //Laurent investigate why we need to reload them.
     PimCommon::PimCommonSettings::self()->load();
     MessageCore::MessageCoreSettings::self()->load();
@@ -1193,6 +1184,19 @@ void KMKernel::slotSyncConfig()
     Gravatar::GravatarSettings::self()->load();
     KMailSettings::self()->load();
     KMKernel::config()->reparseConfiguration();
+}
+
+void KMKernel::saveConfig()
+{
+    PimCommon::PimCommonSettings::self()->save();
+    MessageCore::MessageCoreSettings::self()->save();
+    MessageViewer::MessageViewerSettings::self()->save();
+    MessageComposer::MessageComposerSettings::self()->save();
+    TemplateParser::TemplateParserSettings::self()->save();
+    MessageList::MessageListSettings::self()->save();
+    mMailCommonSettings->save();
+    Gravatar::GravatarSettings::self()->save();
+    KMailSettings::self()->save();
 }
 
 void KMKernel::updateConfig()
