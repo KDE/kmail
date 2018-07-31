@@ -487,6 +487,7 @@ private:
     void resourceGoOnLine();
     void openReader(bool onlyCheck);
     QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
+    void saveConfig();
 
     KMail::UndoStack *the_undoStack = nullptr;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;

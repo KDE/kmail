@@ -76,7 +76,7 @@ KMMainWin::KMMainWin(QWidget *)
     createGUI(QStringLiteral("kmmainwin.rc"));
 
     //must be after createGUI, otherwise e.g toolbar settings are not loaded
-    applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
+    setAutoSaveSettings(KMKernel::self()->config()->group("Main Window"));
 
     connect(KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::statusMsg,
             this, &KMMainWin::displayStatusMessage);
@@ -94,10 +94,6 @@ KMMainWin::~KMMainWin()
     // Avoids a crash if there are any Akonadi jobs running, which may
     // attempt to display a status message when they are killed.
     disconnect(KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::statusMsg, this, nullptr);
-
-    KConfigGroup grp(KMKernel::self()->config()->group("Main Window"));
-    saveMainWindowSettings(grp);
-    KMKernel::self()->config()->sync();
 }
 
 KMMainWidget *KMMainWin::mainKMWidget() const
