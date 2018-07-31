@@ -587,7 +587,8 @@ void MessageActions::printMessage(bool preview)
             commandInfo.mPrintPreview = preview;
             commandInfo.mUseFixedFont = useFixedFont;
             commandInfo.mOverrideFont = overrideEncoding;
-            commandInfo.mShowDetailSignature = mMessageView->viewer()->showSignatureDetails();
+            commandInfo.mShowSignatureDetails = mMessageView->viewer()->showSignatureDetails();
+            commandInfo.mShowEncryptionDetails = mMessageView->viewer()->showEncryptionDetails();
 
 
             KMPrintCommand *command

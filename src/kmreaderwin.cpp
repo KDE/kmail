@@ -762,7 +762,8 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         commandInfo.mPrintPreview = preview;
         commandInfo.mUseFixedFont = useFixedFont;
         commandInfo.mOverrideFont = overrideEncoding;
-        commandInfo.mShowDetailSignature = mViewer->showSignatureDetails();
+        commandInfo.mShowSignatureDetails = mViewer->showSignatureDetails();
+        commandInfo.mShowEncryptionDetails = mViewer->showEncryptionDetails();
 
 
         KMPrintCommand *command = new KMPrintCommand(this, commandInfo);
