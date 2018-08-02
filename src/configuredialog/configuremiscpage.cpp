@@ -83,6 +83,7 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     connect(mMMTab.mEmptyTrashCheck, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, mOnStartupOpenFolder, &MailCommon::FolderRequester::setEnabled);
+    connect(mMMTab.mDeleteMessagesWithoutConfirmation, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
 }
 
 void MiscPage::FolderTab::doLoadFromGlobalSettings()
@@ -96,6 +97,9 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
     loadWidget(mMMTab.mShowPopupAfterDnD, KMailSettings::self()->showPopupAfterDnDItem());
     loadWidget(mMMTab.mStartUpFolderCheck, KMailSettings::self()->startSpecificFolderAtStartupItem());
     mOnStartupOpenFolder->setEnabled(KMailSettings::self()->startSpecificFolderAtStartup());
+
+    loadWidget(mMMTab.mDeleteMessagesWithoutConfirmation, KMailSettings::self()->deleteMessageWithoutConfirmationItem());
+
     doLoadOther();
 }
 
@@ -118,6 +122,7 @@ void MiscPage::FolderTab::save()
     saveCheckBox(mMMTab.mExcludeImportantFromExpiry, KMailSettings::self()->excludeImportantMailFromExpiryItem());
     saveCheckBox(mMMTab.mShowPopupAfterDnD, KMailSettings::self()->showPopupAfterDnDItem());
     saveCheckBox(mMMTab.mStartUpFolderCheck, KMailSettings::self()->startSpecificFolderAtStartupItem());
+    saveCheckBox(mMMTab.mDeleteMessagesWithoutConfirmation, KMailSettings::self()->deleteMessageWithoutConfirmationItem());
 }
 
 MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)

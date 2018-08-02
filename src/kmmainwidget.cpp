@@ -1702,7 +1702,7 @@ void KMMainWidget::slotMoveMessagesCompleted(KMMoveCommand *command)
 
 void KMMainWidget::slotDeleteMessages()
 {
-    deleteSelectedMessages(true);
+    deleteSelectedMessages(true && !KMailSettings::self()->deleteMessageWithoutConfirmation());
 }
 
 Akonadi::Item::List KMMainWidget::currentSelection() const
