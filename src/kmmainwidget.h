@@ -88,7 +88,7 @@ class FolderSelectionDialog;
 class FavoriteCollectionWidget;
 class MailFilter;
 }
-
+class QStatusBar;
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
     Q_OBJECT
@@ -516,6 +516,8 @@ private:
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
     QAction *filterToAction(MailCommon::MailFilter *filter);
     Akonadi::Collection::List applyFilterOnCollection(bool recursive);
+    void setShowStatusBarMessage(const QString &msg);
+
 
     // Message actions
     QAction *mDeleteAction = nullptr;
@@ -632,6 +634,7 @@ private:
     KActionMenuAccount *mAccountActionMenu = nullptr;
     QAction *mRemoveDuplicateRecursiveAction = nullptr;
     Akonadi::Collection mCurrentCollection;
+    QStatusBar *mCurrentStatusBar = nullptr;
 };
 
 #endif

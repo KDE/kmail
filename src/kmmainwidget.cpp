@@ -288,8 +288,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     }
 
     KMainWindow *mainWin = qobject_cast<KMainWindow *>(window());
-    QStatusBar *sb = mainWin ? mainWin->statusBar() : nullptr;
-    mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget(sb);
+    mCurrentStatusBar = mainWin ? mainWin->statusBar() : nullptr;
+    mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget(mCurrentStatusBar);
     mVacationScriptIndicator->hide();
     connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);
     if (KSieveUi::Util::checkOutOfOfficeOnStartup()) {
@@ -1043,6 +1043,7 @@ void KMMainWidget::createWidgets()
                 this, &KMMainWidget::slotPageIsScrolledToBottom);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::replyMessageTo,
                 this, &KMMainWidget::slotReplyMessageTo);
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::showStatusBarMessage, this, &KMMainWidget::setShowStatusBarMessage);
         if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(true);
         }
@@ -4745,5 +4746,12 @@ void KMMainWidget::slotSetFocusToViewer()
 {
     if (messageView() && messageView()->viewer()) {
         messageView()->viewer()->setFocus();
+    }
+}
+
+void KMMainWidget::setShowStatusBarMessage(const QString &msg)
+{
+    if (mCurrentStatusBar) {
+        mCurrentStatusBar->showMessage(msg);
     }
 }
