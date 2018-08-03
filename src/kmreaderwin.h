@@ -178,6 +178,7 @@ public:
     void clearCache();
 Q_SIGNALS:
     void showStatusBarMessage(const QString &message);
+    void zoomChanged(qreal factor);
 
 public Q_SLOTS:
 
