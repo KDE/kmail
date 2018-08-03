@@ -639,7 +639,7 @@ private:
     QAction *mRemoveDuplicateRecursiveAction = nullptr;
     Akonadi::Collection mCurrentCollection;
     QStatusBar *mCurrentStatusBar = nullptr;
-    ZoomLabelWidget *mZoomLabelWidget = nullptr;
+    ZoomLabelWidget *mZoomLabelIndicator = nullptr;
 };
 
 #endif

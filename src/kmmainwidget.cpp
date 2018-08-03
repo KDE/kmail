@@ -293,8 +293,10 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget(mCurrentStatusBar);
     mVacationScriptIndicator->hide();
 
-    mZoomLabelWidget = new ZoomLabelWidget(mCurrentStatusBar);
-    mZoomLabelWidget->hide();
+    mZoomLabelIndicator = new ZoomLabelWidget(mCurrentStatusBar);
+    if (mMsgView) {
+        setZoomChanged(mMsgView->viewer()->webViewZoomFactor());
+    }
     connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);
     if (KSieveUi::Util::checkOutOfOfficeOnStartup()) {
         QTimer::singleShot(0, this, &KMMainWidget::slotCheckVacation);
@@ -2800,8 +2802,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
 
 void KMMainWidget::setZoomChanged(qreal zoomFactor)
 {
-    if (mZoomLabelWidget) {
-        mZoomLabelWidget->setZoom(zoomFactor);
+    if (mZoomLabelIndicator) {
+        mZoomLabelIndicator->setZoom(zoomFactor);
     }
 }
 
@@ -4399,7 +4401,7 @@ QWidget *KMMainWidget::vacationScriptIndicator() const
 
 QWidget *KMMainWidget::zoomLabelIndicator() const
 {
-    return mZoomLabelWidget;
+    return mZoomLabelIndicator;
 }
 
 FolderTreeView *KMMainWidget::folderTreeView() const
