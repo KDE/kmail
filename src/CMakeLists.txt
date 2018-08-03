@@ -145,6 +145,7 @@ set(kmailprivate_widgets_LIB_SRCS
     widgets/statusbarlabeltoggledstate.cpp
     widgets/kactionmenutransport.cpp
     widgets/kactionmenuaccount.cpp
+    widgets/zoomlabelwidget.cpp
     )
 set(kmailprivate_tag_LIB_SRCS
     tag/tagactionmanager.cpp

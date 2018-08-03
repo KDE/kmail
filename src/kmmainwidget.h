@@ -65,6 +65,7 @@ class KRecentFilesAction;
 class ManageShowCollectionProperties;
 class KActionMenuTransport;
 class KActionMenuAccount;
+class ZoomLabelWidget;
 
 namespace KIO {
 class Job;
@@ -179,6 +180,7 @@ public:
     Akonadi::StandardMailActionManager *standardMailActionManager() const;
     QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
     QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
+    QWidget *zoomLabelIndicator() const;
 
 public Q_SLOTS:
 
@@ -343,6 +345,8 @@ private:
 
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
                           const WebEngineViewer::WebHitTestResult &result);
+
+    void setZoomChanged(qreal zoomFactor);
 
 private Q_SLOTS:
     void updateFileMenu();
@@ -635,6 +639,7 @@ private:
     QAction *mRemoveDuplicateRecursiveAction = nullptr;
     Akonadi::Collection mCurrentCollection;
     QStatusBar *mCurrentStatusBar = nullptr;
+    ZoomLabelWidget *mZoomLabelWidget = nullptr;
 };
 
 #endif

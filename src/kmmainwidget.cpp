@@ -25,6 +25,7 @@
 #include "editor/composer.h"
 #include "searchdialog/searchwindow.h"
 #include "widgets/vacationscriptindicatorwidget.h"
+#include "widgets/zoomlabelwidget.h"
 #include "undostack.h"
 #include "kmcommands.h"
 #include "kmmainwin.h"
@@ -291,6 +292,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mCurrentStatusBar = mainWin ? mainWin->statusBar() : nullptr;
     mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget(mCurrentStatusBar);
     mVacationScriptIndicator->hide();
+
+    mZoomLabelWidget = new ZoomLabelWidget(mCurrentStatusBar);
+    mZoomLabelWidget->hide();
     connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);
     if (KSieveUi::Util::checkOutOfOfficeOnStartup()) {
         QTimer::singleShot(0, this, &KMMainWidget::slotCheckVacation);
@@ -1044,6 +1048,7 @@ void KMMainWidget::createWidgets()
         connect(mMsgView->viewer(), &MessageViewer::Viewer::replyMessageTo,
                 this, &KMMainWidget::slotReplyMessageTo);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::showStatusBarMessage, this, &KMMainWidget::setShowStatusBarMessage);
+        connect(mMsgView->viewer(), &MessageViewer::Viewer::zoomChanged, this, &KMMainWidget::setZoomChanged);
         if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(true);
         }
@@ -2793,6 +2798,13 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
     menu.exec(aPoint, nullptr);
 }
 
+void KMMainWidget::setZoomChanged(qreal zoomFactor)
+{
+    if (mZoomLabelWidget) {
+        mZoomLabelWidget->setZoom(zoomFactor);
+    }
+}
+
 void KMMainWidget::setupActions()
 {
     KMailPluginInterface::self()->setParentWidget(this);
@@ -4383,6 +4395,11 @@ void KMMainWidget::updateVacationScriptStatus(bool active, const QString &server
 QWidget *KMMainWidget::vacationScriptIndicator() const
 {
     return mVacationScriptIndicator;
+}
+
+QWidget *KMMainWidget::zoomLabelIndicator() const
+{
+    return mZoomLabelWidget;
 }
 
 FolderTreeView *KMMainWidget::folderTreeView() const
