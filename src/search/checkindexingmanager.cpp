@@ -94,11 +94,8 @@ void CheckIndexingManager::checkNextCollection()
 void CheckIndexingManager::callToReindexCollection()
 {
     if (!mCollectionsNeedToBeReIndexed.isEmpty()) {
-        QString service = QStringLiteral("org.freedesktop.Akonadi.Indexer");
-        if (Akonadi::ServerManager::hasInstanceIdentifier()) {
-            service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
-        }
-        QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), service);
+        QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"),
+                                               QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceAkonadiIndexer.isValid()) {
             qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
             interfaceAkonadiIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));
