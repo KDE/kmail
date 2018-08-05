@@ -208,6 +208,8 @@ KMKernel::KMKernel(QObject *parent)
 
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KMKernel::slotInstanceRemoved);
 
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &KMKernel::slotInstanceAdded);
+
     connect(PimCommon::NetworkManager::self()->networkConfigureManager(), &QNetworkConfigurationManager::onlineStateChanged,
             this, &KMKernel::slotSystemNetworkStatusChanged);
 
@@ -1809,6 +1811,17 @@ void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
         mResourceCryptoSettingCache.remove(identifier);
     }
     mFolderArchiveManager->slotInstanceRemoved(instance);
+
+    if (MailCommon::Util::isMailAgent(instance)) {
+        Q_EMIT incomingAccountsChanged();
+    }
+}
+
+void KMKernel::slotInstanceAdded(const Akonadi::AgentInstance &instance)
+{
+    if (MailCommon::Util::isMailAgent(instance)) {
+        Q_EMIT incomingAccountsChanged();
+    }
 }
 
 void KMKernel::savePaneSelection()

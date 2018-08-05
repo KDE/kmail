@@ -513,6 +513,7 @@ private:
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
+    void setupUnifiedMailboxChecker();
     QAction *filterToAction(MailCommon::MailFilter *filter);
     Akonadi::Collection::List applyFilterOnCollection(bool recursive);
 

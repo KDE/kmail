@@ -134,7 +134,10 @@
         <label></label>
         <whatsthis></whatsthis>
       </entry>
-
+      <entry key="AskEnableUnifiedMailboxes" type="Bool">
+        <default>true</default>
+        <label>Whether to ask if users wants to enable Unified Mailboxes if more than one email accounts are detected. We only ever ask once.</label>
+      </entry>
     </group>
 <!-- General -->
 
