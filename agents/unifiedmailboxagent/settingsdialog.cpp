@@ -36,7 +36,7 @@
 
 #include <memory>
 
-SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &boxManager, WId windowId, QWidget *parent)
+SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &boxManager, WId, QWidget *parent)
     : QDialog(parent)
     , mBoxManager(boxManager)
     , mKernel(new MailKernel(config, this))
