@@ -3552,6 +3552,11 @@ void KMMainWidget::setupActions()
     mRemoveDuplicateRecursiveAction = new QAction(i18n("Remove Duplicates in This Folder and All its Subfolder"), this);
     actionCollection()->addAction(QStringLiteral("remove_duplicate_recursive"), mRemoveDuplicateRecursiveAction);
     connect(mRemoveDuplicateRecursiveAction, &KToggleAction::triggered, this, &KMMainWidget::slotRemoveDuplicateRecursive);
+
+
+    mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
+    actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
+    connect(mAccountSettings, &QAction::triggered, this, &KMMainWidget::slotAccountSettings);
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
@@ -4024,6 +4029,11 @@ void KMMainWidget::updateFolderMenu()
         if (imapFolderIsOnline) {
             actionlist << mServerSideSubscription;
         }
+    }
+    if (mCurrentCollection.parentCollection() != Akonadi::Collection::root()) {
+        mActionCollection->removeAction(mAccountSettings);
+    } else {
+        mActionCollection->addAction(QStringLiteral("resource_settings"), mAccountSettings);
     }
 
     mGUIClient->unplugActionList(QStringLiteral("collectionview_actionlist"));
@@ -4554,6 +4564,20 @@ void KMMainWidget::slotServerSideSubscription()
     job->setCurrentCollection(mCurrentCollection);
     job->setParentWidget(this);
     job->start();
+}
+
+void KMMainWidget::slotAccountSettings()
+{
+    if (!mCurrentCollection.isValid() || mCurrentCollection.parentCollection() != Akonadi::Collection::root()) {
+        return;
+    }
+
+    auto instance = Akonadi::AgentManager::self()->instance(mCurrentCollection.resource());
+    if (!instance.isValid()) {
+        return;
+    }
+
+    instance.configure(this);
 }
 
 void KMMainWidget::savePaneSelection()

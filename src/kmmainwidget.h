@@ -508,6 +508,7 @@ private Q_SLOTS:
     void slotRedirectCurrentMessage();
     void slotEditCurrentVacation();
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
+    void slotAccountSettings();
 private:
     void slotSetFocusToViewer();
     void deleteSelectedMessages(bool confirmDelete);    // completely delete message
@@ -624,6 +625,7 @@ private:
     QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
     QAction *mServerSideSubscription = nullptr;
+    QAction *mAccountSettings = nullptr;
     KRecentFilesAction *mOpenRecentAction = nullptr;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
     QAction *mQuickSearchAction = nullptr;
