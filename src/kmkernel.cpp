@@ -43,7 +43,6 @@ using KPIM::RecentAddresses;
 #include <mailtransport/transport.h>
 #include <mailtransport/transportmanager.h>
 #include <mailtransportakonadi/dispatcherinterface.h>
-#include <AkonadiCore/servermanager.h>
 
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
 #include "mailserviceimpl.h"
@@ -94,6 +93,7 @@ using KMail::MailServiceImpl;
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/entitymimetypefiltermodel.h>
 #include <AkonadiCore/CollectionStatisticsJob>
+#include <AkonadiCore/ServerManager>
 
 #include <QNetworkConfigurationManager>
 #include <QDir>
@@ -1117,8 +1117,8 @@ void KMKernel::cleanup()
     Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
     if (trashCollection.isValid()) {
         if (KMailSettings::self()->emptyTrashOnExit()) {
-            OrgFreedesktopAkonadiMailFilterAgentInterface mailFilterInterface(QStringLiteral("org.freedesktop.Akonadi.MailFilterAgent"), QStringLiteral(
-                                                                                  "/MailFilterAgent"), QDBusConnection::sessionBus(), this);
+            const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
+            OrgFreedesktopAkonadiMailFilterAgentInterface mailFilterInterface(service, QStringLiteral("/MailFilterAgent"), QDBusConnection::sessionBus(), this);
             if (mailFilterInterface.isValid()) {
                 mailFilterInterface.expunge(static_cast<qlonglong>(trashCollection.id()));
             } else {
