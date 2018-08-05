@@ -52,7 +52,6 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     if (Akonadi::ServerManager::hasInstanceIdentifier()) {
         service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
     }
-
     KDBusConnectionPool::threadConnection().registerService(service);
     mManager = new FollowUpReminderManager(this);
     setNeedsNetwork(true);
@@ -101,7 +100,7 @@ bool FollowUpReminderAgent::enabledAgent() const
     return FollowUpReminderAgentSettings::self()->enabled();
 }
 
-void FollowUpReminderAgent::showConfigureDialog(qlonglong windowId)
+void FollowUpReminderAgent::configure(WId windowId)
 {
     QPointer<FollowUpReminderInfoDialog> dialog = new FollowUpReminderInfoDialog();
     dialog->load();
@@ -115,11 +114,6 @@ void FollowUpReminderAgent::showConfigureDialog(qlonglong windowId)
         }
     }
     delete dialog;
-}
-
-void FollowUpReminderAgent::configure(WId windowId)
-{
-    showConfigureDialog(static_cast<qlonglong>(windowId));
 }
 
 void FollowUpReminderAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection)

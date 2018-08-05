@@ -335,12 +335,9 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
         } else if (configureGroupName == agentAkonadiGroupName()) {
             for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {
                 if (data.mIdentifier == identifier) {
-                    const QString service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, data.mExtraInfo.at(0));
-                    QDBusInterface interface(service, data.mExtraInfo.at(1));
-                    if (interface.isValid()) {
-                        interface.call(QStringLiteral("showConfigureDialog"), static_cast<qlonglong>(winId()));
-                    } else {
-                        qCDebug(KMAIL_LOG) << " interface does not exist when trying to configure the plugin";
+                    auto instance = Akonadi::AgentManager::self()->instance(identifier);
+                    if (instance.isValid()) {
+                        instance.configure(this);
                     }
                     break;
                 }

@@ -138,16 +138,6 @@ bool SendLaterAgent::enabledAgent() const
 
 void SendLaterAgent::configure(WId windowId)
 {
-    showConfigureDialog(static_cast<qlonglong>(windowId));
-}
-
-void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)
-{
-    mManager->sendNow(id);
-}
-
-void SendLaterAgent::showConfigureDialog(qlonglong windowId)
-{
     QPointer<SendLaterConfigureDialog> dialog = new SendLaterConfigureDialog();
     if (windowId) {
         KWindowSystem::setMainWindow(dialog, windowId);
@@ -164,6 +154,11 @@ void SendLaterAgent::showConfigureDialog(qlonglong windowId)
         }
     }
     delete dialog;
+}
+
+void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)
+{
+    mManager->sendNow(id);
 }
 
 void SendLaterAgent::itemsRemoved(const Akonadi::Item::List &items)

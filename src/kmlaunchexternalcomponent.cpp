@@ -21,6 +21,7 @@
 #include <KMessageBox>
 #include <KLocalizedString>
 #include <KRun>
+#include <AkonadiCore/AgentManager>
 
 #include "util.h"
 #include "archivemailagentinterface.h"
@@ -44,21 +45,11 @@ KMLaunchExternalComponent::~KMLaunchExternalComponent()
 {
 }
 
-QString KMLaunchExternalComponent::akonadiPath(QString service)
-{
-    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
-        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
-    }
-    return service;
-}
-
 void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {
-    const QString service = akonadiPath(QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent"));
-    OrgFreedesktopAkonadiArchiveMailAgentInterface archiveMailInterface(service, QStringLiteral("/ArchiveMailAgent"),
-                                                                        QDBusConnection::sessionBus(), this);
-    if (archiveMailInterface.isValid()) {
-        archiveMailInterface.showConfigureDialog(static_cast<qlonglong>(mParentWidget->winId()));
+    auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_archivemail_agent"));
+    if (agent.isValid()) {
+        agent.configure(mParentWidget);
     } else {
         KMessageBox::error(mParentWidget, i18n("Archive Mail Agent was not registered."));
     }
@@ -66,10 +57,9 @@ void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 
 void KMLaunchExternalComponent::slotConfigureSendLater()
 {
-    const QString service = akonadiPath(QStringLiteral("org.freedesktop.Akonadi.SendLaterAgent"));
-    OrgFreedesktopAkonadiSendLaterAgentInterface sendLaterInterface(service, QStringLiteral("/SendLaterAgent"), QDBusConnection::sessionBus(), this);
-    if (sendLaterInterface.isValid()) {
-        sendLaterInterface.showConfigureDialog(static_cast<qlonglong>(mParentWidget->winId()));
+    auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_sendlater_agent"));
+    if (agent.isValid()) {
+        agent.configure(mParentWidget);
     } else {
         KMessageBox::error(mParentWidget, i18n("Send Later Agent was not registered."));
     }
@@ -77,12 +67,9 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
 
 void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 {
-    const QString service = akonadiPath(QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder"));
-
-    OrgFreedesktopAkonadiFollowUpReminderAgentInterface followUpInterface(service, QStringLiteral("/FollowUpReminder"),
-                                                                          QDBusConnection::sessionBus(), this);
-    if (followUpInterface.isValid()) {
-        followUpInterface.showConfigureDialog(static_cast<qlonglong>(mParentWidget->winId()));
+    auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_followupreminder_agent"));
+    if (agent.isValid()) {
+        agent.configure(mParentWidget);
     } else {
         KMessageBox::error(mParentWidget, i18n("Followup Reminder Agent was not registered."));
     }

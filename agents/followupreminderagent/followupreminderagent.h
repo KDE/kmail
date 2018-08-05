@@ -32,8 +32,6 @@ public:
     void setEnableAgent(bool b);
     bool enabledAgent() const;
 
-    void showConfigureDialog(qlonglong windowId = 0);
-
     QString printDebugInfo();
 
 public Q_SLOTS:

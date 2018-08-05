@@ -32,8 +32,6 @@ public:
     explicit SendLaterAgent(const QString &id);
     ~SendLaterAgent() override;
 
-    void showConfigureDialog(qlonglong windowId = 0);
-
     QString printDebugInfo();
 
     void setEnableAgent(bool b);

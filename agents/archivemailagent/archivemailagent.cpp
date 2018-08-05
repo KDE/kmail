@@ -106,20 +106,6 @@ void ArchiveMailAgent::mailCollectionRemoved(const Akonadi::Collection &collecti
     mArchiveManager->removeCollection(collection);
 }
 
-void ArchiveMailAgent::showConfigureDialog(qlonglong windowId)
-{
-    QPointer<ArchiveMailDialog> dialog = new ArchiveMailDialog();
-    if (windowId) {
-        KWindowSystem::setMainWindow(dialog, windowId);
-    }
-    connect(dialog.data(), &ArchiveMailDialog::archiveNow, mArchiveManager, &ArchiveMailManager::slotArchiveNow);
-    connect(this, &ArchiveMailAgent::needUpdateConfigDialogBox, dialog.data(), &ArchiveMailDialog::slotNeedReloadConfig);
-    if (dialog->exec()) {
-        mArchiveManager->load();
-    }
-    delete dialog;
-}
-
 void ArchiveMailAgent::doSetOnline(bool online)
 {
     if (online) {
@@ -139,7 +125,16 @@ void ArchiveMailAgent::reload()
 
 void ArchiveMailAgent::configure(WId windowId)
 {
-    showConfigureDialog(static_cast<qulonglong>(windowId));
+    QPointer<ArchiveMailDialog> dialog = new ArchiveMailDialog();
+    if (windowId) {
+        KWindowSystem::setMainWindow(dialog, windowId);
+    }
+    connect(dialog.data(), &ArchiveMailDialog::archiveNow, mArchiveManager, &ArchiveMailManager::slotArchiveNow);
+    connect(this, &ArchiveMailAgent::needUpdateConfigDialogBox, dialog.data(), &ArchiveMailDialog::slotNeedReloadConfig);
+    if (dialog->exec()) {
+        mArchiveManager->load();
+    }
+    delete dialog;
 }
 
 void ArchiveMailAgent::pause()
