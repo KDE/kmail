@@ -1391,6 +1391,11 @@ void KMComposerWin::initializePluginActions()
             }
             ++i;
         }
+        //Initialize statusbar
+        const QList<QWidget *> statusbarWidgetList = mPluginEditorManagerInterface->statusBarWidgetList();
+        for (int i = 0; i < statusbarWidgetList.count(); ++i) {
+            statusBar()->addPermanentWidget(statusbarWidgetList.at(i), 0);
+        }
     }
 }
 
@@ -1442,6 +1447,7 @@ void KMComposerWin::setupStatusBar(QWidget *w)
     mStatusBarLabelSpellCheckingChangeMode->setStateString(i18n("Spellcheck: on"), i18n("Spellcheck: off"));
     statusBar()->addPermanentWidget(mStatusBarLabelSpellCheckingChangeMode, 0);
     connect(mStatusBarLabelSpellCheckingChangeMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
+
 }
 
 void KMComposerWin::setupEditor(void)
@@ -1988,8 +1994,9 @@ void KMComposerWin::slotUpdateFont()
     if (!mFixedFontAction) {
         return;
     }
-    mComposerBase->editor()->composerControler()->setFontForWholeText(mFixedFontAction->isChecked()
-                                                                      ? mFixedFont : mBodyFont);
+    const QFont plaintextFont = mFixedFontAction->isChecked() ? mFixedFont : mBodyFont;
+    mComposerBase->editor()->composerControler()->setFontForWholeText(plaintextFont);
+    mComposerBase->editor()->setDefaultFontSize(plaintextFont.pointSize());
 }
 
 QUrl KMComposerWin::insertFile()

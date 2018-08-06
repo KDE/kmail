@@ -102,9 +102,21 @@ QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer:
     return mActionHash.value(type);
 }
 
+QList<QWidget *> KMailPluginEditorManagerInterface::statusBarWidgetList()
+{
+    if (mStatusBarWidget.isEmpty() && !mListPluginInterface.isEmpty()) {
+        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
+            if (interface->plugin()->hasStatusBarSupport()) {
+                mStatusBarWidget.append(interface->statusBarWidget());
+            }
+        }
+    }
+    return mStatusBarWidget;
+}
+
 QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType()
 {
-    if (mActionHash.isEmpty()) {
+    if (mActionHash.isEmpty() && !mListPluginInterface.isEmpty()) {
         for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
             const MessageComposer::PluginActionType actionType = interface->actionType();
             MessageComposer::PluginActionType::Type type = actionType.type();

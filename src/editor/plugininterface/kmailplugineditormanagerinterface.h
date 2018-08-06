@@ -50,6 +50,7 @@ public:
 
     QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
     QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
+    QList<QWidget *> statusBarWidgetList();
 
 Q_SIGNALS:
     void textSelectionChanged(bool hasSelection);
@@ -63,6 +64,7 @@ private:
     KActionCollection *mActionCollection = nullptr;
     QList<MessageComposer::PluginEditorInterface *> mListPluginInterface;
     QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > mActionHash;
+    QList<QWidget *> mStatusBarWidget;
 };
 
 #endif // KMAILPLUGINEDITORMANAGERINTERFACE_H
