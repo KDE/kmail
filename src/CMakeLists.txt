@@ -136,6 +136,7 @@ set(kmailprivate_job_LIB_SRCS
     job/fillcomposerjob.cpp
     job/createreplymessagejob.cpp
     job/createforwardmessagejob.cpp
+    job/dndfromarkjob.cpp
     )
 
 set(kmailprivate_widgets_LIB_SRCS
