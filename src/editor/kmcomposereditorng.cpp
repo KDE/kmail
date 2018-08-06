@@ -20,6 +20,7 @@
 #include "kmkernel.h"
 #include "util.h"
 #include "kmail_debug.h"
+#include "job/dndfromarkjob.h"
 
 #include <qmenu.h>
 #include <KToggleAction>
@@ -79,8 +80,7 @@ bool KMComposerEditorNg::canInsertFromMimeData(const QMimeData *source) const
         return true;
     }
 
-    if (source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-service")) &&
-            source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
+    if (DndFromArkJob::dndFromArk(source)) {
         return true;
     }
 

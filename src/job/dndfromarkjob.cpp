@@ -51,7 +51,6 @@ bool DndFromArkJob::extract(const QMimeData *source)
             deleteLater();
             return false;
         }
-        qDebug() << " ssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
         const QString remoteDBusClient = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
         const QString remoteDBusPath = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
 
