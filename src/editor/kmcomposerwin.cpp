@@ -2049,8 +2049,8 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         return true;
     } else if (source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-service")) &&
                source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
-        const QString remoteDBusClient = QString::fromUtf8(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
-        const QString remoteDBusPath = QString::fromUtf8(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
+        const QString remoteDBusClient = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
+        const QString remoteDBusPath = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
 
         const QString tmpPath = QDir::tempPath() + QLatin1String("/attachments_ark");
         QDir().mkpath(tmpPath);
