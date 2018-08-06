@@ -96,6 +96,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mainWidget->setFocusPolicy(Qt::ClickFocus);
     KParts::StatusBarExtension *statusBar = new KParts::StatusBarExtension(this);
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
+    statusBar->addStatusBarItem(mainWidget->zoomLabelIndicator(), 3, false);
 
     setXMLFile(QStringLiteral("kmail_part.rc"), true);
     KSettings::Dispatcher::registerComponent(QStringLiteral("kmail2"), mKMailKernel, "slotConfigChanged");
