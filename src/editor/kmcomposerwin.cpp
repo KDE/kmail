@@ -2063,9 +2063,9 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         QDBusConnection::sessionBus().call(message);
         QDir dir(arkPath);
         QStringList list = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
-         for (int i = 0; i < list.size(); ++i) {
-             addAttachment(QUrl::fromLocalFile(list.at(i)), QString());
-         }
+        for (int i = 0; i < list.size(); ++i) {
+            addAttachment(QUrl::fromLocalFile(list.at(i)), QString());
+        }
         delete linkDir;
     } else if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         // Get the image data before showing the dialog, since that processes events which can delete
