@@ -177,6 +177,7 @@
 
 #include <QDBusConnection>
 #include <QDBusMessage>
+#include <QTemporaryDir>
 #include <QTemporaryFile>
 #include <sonnet_version.h>
 
@@ -2050,20 +2051,22 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
         const QString remoteDBusClient = QString::fromUtf8(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
         const QString remoteDBusPath = QString::fromUtf8(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
-        qDebug() << " remoteDBusClient"<<remoteDBusClient<< " remoteDBusPath" <<remoteDBusPath;
 
+        const QString tmpPath = QDir::tempPath() + QLatin1String("/attachments_ark");
+        QDir().mkpath(tmpPath);
+
+        QTemporaryDir *linkDir = new QTemporaryDir(tmpPath);
+        const QString arkPath = linkDir->path();
         QDBusMessage message = QDBusMessage::createMethodCall(remoteDBusClient, remoteDBusPath,
                                                               QStringLiteral("org.kde.ark.DndExtract"), QStringLiteral("extractSelectedFilesTo"));
-        QTemporaryFile *tempFile = new QTemporaryFile(QDir::tempPath() + QLatin1String("/kmail_XXXXXX") + QLatin1String("ark"));
-        tempFile->open();
-        QString fileName = tempFile->fileName();
-        message.setArguments({fileName});
-        qDebug() << " tempFile->fileName()"<<tempFile->fileName();
-        qDebug() << " tempFile" << tempFile->isOpen();
-        tempFile->close();
+        message.setArguments({arkPath});
         QDBusConnection::sessionBus().call(message);
-        addAttachment(QUrl::fromLocalFile(fileName), QString());
-        //delete tempFile;
+        QDir dir(arkPath);
+        QStringList list = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
+         for (int i = 0; i < list.size(); ++i) {
+             addAttachment(QUrl::fromLocalFile(list.at(i)), QString());
+         }
+        delete linkDir;
     } else if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         // Get the image data before showing the dialog, since that processes events which can delete
         // the QMimeData object behind our back
