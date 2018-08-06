@@ -79,6 +79,11 @@ bool KMComposerEditorNg::canInsertFromMimeData(const QMimeData *source) const
         return true;
     }
 
+    if (source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-service")) &&
+            source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
+        return true;
+    }
+
     return MessageComposer::RichTextComposerNg::canInsertFromMimeData(source);
 }
 
