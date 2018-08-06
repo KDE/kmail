@@ -19,6 +19,7 @@
 
 #include "dndfromarkjob.h"
 #include "editor/kmcomposerwin.h"
+#include "kmail_debug.h"
 
 #include <QDBusConnection>
 #include <QDBusMessage>
@@ -45,6 +46,11 @@ bool DndFromArkJob::dndFromArk(const QMimeData *source)
 bool DndFromArkJob::extract(const QMimeData *source)
 {
     if (dndFromArk(source)) {
+        if (!mComposerWin) {
+            qCWarning(KMAIL_LOG) << "mComposerWin is null, it's a bug";
+            deleteLater();
+            return false;
+        }
         const QString remoteDBusClient = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
         const QString remoteDBusPath = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
 
@@ -63,6 +69,7 @@ bool DndFromArkJob::extract(const QMimeData *source)
             mComposerWin->addAttachment(QUrl::fromLocalFile(list.at(i)), QString());
         }
         delete linkDir;
+        deleteLater();
         return true;
     }
     return false;
