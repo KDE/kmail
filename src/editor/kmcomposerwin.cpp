@@ -40,6 +40,7 @@
 #include "job/createnewcontactjob.h"
 #include "job/saveasfilejob.h"
 #include "job/savedraftjob.h"
+#include "job/dndfromarkjob.h"
 #include "kconfigwidgets_version.h"
 #include "kmail_debug.h"
 #include "kmcommands.h"
@@ -2047,26 +2048,6 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                && !forceAttachment) {
         mComposerBase->editor()->insertPlainText(source->text());
         return true;
-    } else if (source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-service")) &&
-               source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
-        const QString remoteDBusClient = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
-        const QString remoteDBusPath = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
-
-        const QString tmpPath = QDir::tempPath() + QLatin1String("/attachments_ark");
-        QDir().mkpath(tmpPath);
-
-        QTemporaryDir *linkDir = new QTemporaryDir(tmpPath);
-        const QString arkPath = linkDir->path();
-        QDBusMessage message = QDBusMessage::createMethodCall(remoteDBusClient, remoteDBusPath,
-                                                              QStringLiteral("org.kde.ark.DndExtract"), QStringLiteral("extractSelectedFilesTo"));
-        message.setArguments({arkPath});
-        QDBusConnection::sessionBus().call(message);
-        QDir dir(arkPath);
-        QStringList list = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
-        for (int i = 0; i < list.size(); ++i) {
-            addAttachment(QUrl::fromLocalFile(list.at(i)), QString());
-        }
-        delete linkDir;
     } else if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         // Get the image data before showing the dialog, since that processes events which can delete
         // the QMimeData object behind our back
@@ -2103,6 +2084,12 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         }
         addAttachment(attName, KMime::Headers::CEbase64, QString(), imageData, "image/png");
         return true;
+    } else {
+        DndFromArkJob *job = new DndFromArkJob(this);
+        job->setComposerWin(this);
+        if (job->extract(source)) {
+            return true;
+        }
     }
 
     // If this is a URL list, add those files as attachments or text
