@@ -18,10 +18,17 @@
 */
 
 #include "dndfromarkjob.h"
+#include "editor/kmcomposerwin.h"
 
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDir>
 #include <QMimeData>
+#include <QTemporaryDir>
+#include <QUrl>
 
-DndFromArkJob::DndFromArkJob()
+DndFromArkJob::DndFromArkJob(QObject *parent)
+    : QObject(parent)
 {
 
 }
@@ -35,7 +42,33 @@ bool DndFromArkJob::dndFromArk(const QMimeData *source)
     return false;
 }
 
-void DndFromArkJob::extract(const QMimeData *source)
+bool DndFromArkJob::extract(const QMimeData *source)
 {
+    if (dndFromArk(source)) {
+        const QString remoteDBusClient = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
+        const QString remoteDBusPath = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
 
+        const QString tmpPath = QDir::tempPath() + QLatin1String("/attachments_ark");
+        QDir().mkpath(tmpPath);
+
+        QTemporaryDir *linkDir = new QTemporaryDir(tmpPath);
+        const QString arkPath = linkDir->path();
+        QDBusMessage message = QDBusMessage::createMethodCall(remoteDBusClient, remoteDBusPath,
+                                                              QStringLiteral("org.kde.ark.DndExtract"), QStringLiteral("extractSelectedFilesTo"));
+        message.setArguments({arkPath});
+        QDBusConnection::sessionBus().call(message);
+        QDir dir(arkPath);
+        QStringList list = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
+        for (int i = 0; i < list.size(); ++i) {
+            mComposerWin->addAttachment(QUrl::fromLocalFile(list.at(i)), QString());
+        }
+        delete linkDir;
+        return true;
+    }
+    return false;
+}
+
+void DndFromArkJob::setComposerWin(KMComposerWin *composerWin)
+{
+    mComposerWin = composerWin;
 }

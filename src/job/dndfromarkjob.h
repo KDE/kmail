@@ -20,14 +20,22 @@
 #ifndef DNDFROMARKJOB_H
 #define DNDFROMARKJOB_H
 
-class QMimeData;
+#include <QObject>
 
-class DndFromArkJob
+
+class QMimeData;
+class KMComposerWin;
+class DndFromArkJob : public QObject
 {
+    Q_OBJECT
 public:
-    DndFromArkJob();
+    explicit DndFromArkJob(QObject *parent = nullptr);
     static bool dndFromArk(const QMimeData *source);
-    void extract(const QMimeData *source);
+    bool extract(const QMimeData *source);
+    void setComposerWin(KMComposerWin *composerWin);
+
+private:
+    KMComposerWin *mComposerWin = nullptr;
 };
 
 #endif // DNDFROMARKJOB_H
