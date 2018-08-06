@@ -175,6 +175,9 @@
 #include <KToolInvocation>
 #include <KXMLGUIFactory>
 
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QTemporaryFile>
 #include <sonnet_version.h>
 
 // Qt includes
@@ -194,7 +197,6 @@
 #include <QSplitter>
 #include <QStandardPaths>
 #include <QStatusBar>
-#include <QTemporaryDir>
 #include <QTextDocumentWriter>
 #include <QMenuBar>
 #include <MessageComposer/PluginEditorConverterInitialData>
@@ -2044,6 +2046,24 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                && !forceAttachment) {
         mComposerBase->editor()->insertPlainText(source->text());
         return true;
+    } else if (source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-service")) &&
+               source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
+        const QString remoteDBusClient = QString::fromUtf8(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
+        const QString remoteDBusPath = QString::fromUtf8(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
+        qDebug() << " remoteDBusClient"<<remoteDBusClient<< " remoteDBusPath" <<remoteDBusPath;
+
+        QDBusMessage message = QDBusMessage::createMethodCall(remoteDBusClient, remoteDBusPath,
+                                                              QStringLiteral("org.kde.ark.DndExtract"), QStringLiteral("extractSelectedFilesTo"));
+        QTemporaryFile *tempFile = new QTemporaryFile(QDir::tempPath() + QLatin1String("/kmail_XXXXXX") + QLatin1String("ark"));
+        tempFile->open();
+        QString fileName = tempFile->fileName();
+        message.setArguments({fileName});
+        qDebug() << " tempFile->fileName()"<<tempFile->fileName();
+        qDebug() << " tempFile" << tempFile->isOpen();
+        tempFile->close();
+        QDBusConnection::sessionBus().call(message);
+        addAttachment(QUrl::fromLocalFile(fileName), QString());
+        //delete tempFile;
     } else if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
         // Get the image data before showing the dialog, since that processes events which can delete
         // the QMimeData object behind our back
