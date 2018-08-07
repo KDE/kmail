@@ -48,10 +48,7 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
 
     new FollowUpReminderAgentAdaptor(this);
     KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/FollowUpReminder"), this, QDBusConnection::ExportAdaptors);
-    QString service = QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder");
-    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
-        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
-    }
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_followupreminder_agent"));
     KDBusConnectionPool::threadConnection().registerService(service);
     mManager = new FollowUpReminderManager(this);
     setNeedsNetwork(true);

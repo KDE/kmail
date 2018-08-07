@@ -57,10 +57,8 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
 
     new ArchiveMailAgentAdaptor(this);
     KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/ArchiveMailAgent"), this, QDBusConnection::ExportAdaptors);
-    QString service = QStringLiteral("org.freedesktop.Akonadi.ArchiveMailAgent");
-    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
-        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
-    }
+
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_archivemail_agent"));
 
     KDBusConnectionPool::threadConnection().registerService(service);
     connect(collectionMonitor, &Akonadi::Monitor::collectionRemoved, this, &ArchiveMailAgent::mailCollectionRemoved);

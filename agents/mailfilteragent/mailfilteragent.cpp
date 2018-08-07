@@ -103,10 +103,8 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     new MailFilterAgentAdaptor(this);
 
     KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
-    QString service = QStringLiteral("org.freedesktop.Akonadi.MailFilterAgent");
-    if (Akonadi::ServerManager::hasInstanceIdentifier()) {
-        service += QLatin1Char('.') + Akonadi::ServerManager::instanceIdentifier();
-    }
+
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
 
     KDBusConnectionPool::threadConnection().registerService(service);
     //Enabled or not filterlogdialog
