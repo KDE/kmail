@@ -4031,9 +4031,9 @@ void KMMainWidget::updateFolderMenu()
         }
     }
     if (mCurrentCollection.parentCollection() != Akonadi::Collection::root()) {
-        mActionCollection->removeAction(mAccountSettings);
+        mGUIClient->unplugActionList(QStringLiteral("resource_settings"));
     } else {
-        mActionCollection->addAction(QStringLiteral("resource_settings"), mAccountSettings);
+        mGUIClient->plugActionList(QStringLiteral("resource_settings"), {mAccountSettings});
     }
 
     mGUIClient->unplugActionList(QStringLiteral("collectionview_actionlist"));
