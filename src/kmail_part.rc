@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE gui>
-<gui version="539" name="kmmainwin" translationDomain="kmail">
+<gui version="540" name="kmmainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -320,6 +320,8 @@
   <Action name="create_note"/>
   <Separator/>
   <Action name="annotate"/>
+  <Separator/>
+  <Action name="message_followup_reminder"/>
  </Menu>
 
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >

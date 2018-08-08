@@ -349,6 +349,7 @@ void MessageActions::updateActions()
     mNoQuoteReplyAction->setEnabled(hasPayload);
 
     mAnnotateAction->setEnabled(uniqItem);
+    mAddFollowupReminderAction->setEnabled(uniqItem);
     if (!mCurrentItem.hasAttribute<Akonadi::EntityAnnotationsAttribute>()) {
         mAnnotateAction->setText(i18n("Add Note..."));
     } else {
