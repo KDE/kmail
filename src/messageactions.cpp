@@ -588,6 +588,8 @@ void MessageActions::printMessage(bool preview)
             command->setPrintPreview(preview);
             command->start();
         }
+    } else {
+        qCWarning(KMAIL_LOG) << "MessageActions::printMessage impossible to do it if we don't have a viewer";
     }
 }
 
