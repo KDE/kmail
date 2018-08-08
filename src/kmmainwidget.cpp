@@ -2758,11 +2758,11 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
                 menu.addAction(mMsgView->shareImage());
                 menu.addSeparator();
             }
+            menu.addSeparator();
+            menu.addAction(mMsgActions->printPreviewAction());
+            menu.addAction(mMsgActions->printAction());
+            menu.addSeparator();
         }
-        menu.addSeparator();
-        menu.addAction(mMsgActions->printPreviewAction());
-        menu.addAction(mMsgActions->printAction());
-        menu.addSeparator();
         menu.addAction(mSaveAsAction);
         menu.addAction(mSaveAttachmentsAction);
         menu.addSeparator();
@@ -3801,10 +3801,10 @@ void KMMainWidget::updateMessageActionsDelayed()
     }
 
     // "Print" will act on the current message: it will ignore any hidden selection
-    mMsgActions->printAction()->setEnabled(singleVisibleMessageSelected);
+    mMsgActions->printAction()->setEnabled(singleVisibleMessageSelected && mMsgView);
     // "Print preview" will act on the current message: it will ignore any hidden selection
     if (QAction *printPreviewAction = mMsgActions->printPreviewAction()) {
-        printPreviewAction->setEnabled(singleVisibleMessageSelected);
+        printPreviewAction->setEnabled(singleVisibleMessageSelected && mMsgView);
     }
 
     // "View Source" will act on the current message: it will ignore any hidden selection

@@ -358,6 +358,9 @@ void MessageActions::updateActions()
 
     mStatusMenu->setEnabled(multiVisible);
 
+    mPrintAction->setEnabled(mMessageView != nullptr);
+    mPrintPreviewAction->setEnabled(mMessageView != nullptr);
+
     if (mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
         if (mCurrentItem.loadedPayloadParts().contains("RFC822")) {
             updateMailingListActions(mCurrentItem);
@@ -596,6 +599,8 @@ void MessageActions::printMessage(bool preview)
                 = new KMPrintCommand(mParent, commandInfo);
             command->start();
         }
+    } else {
+        qCWarning(KMAIL_LOG) << "MessageActions::printMessage impossible to do it if we don't have a viewer";
     }
 }
 
