@@ -358,6 +358,9 @@ void MessageActions::updateActions()
 
     mStatusMenu->setEnabled(multiVisible);
 
+    mPrintAction->setEnabled(mMessageView != nullptr);
+    mPrintPreviewAction->setEnabled(mMessageView != nullptr);
+
     if (mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
         if (mCurrentItem.loadedPayloadParts().contains("RFC822")) {
             updateMailingListActions(mCurrentItem);
