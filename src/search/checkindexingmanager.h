@@ -23,19 +23,13 @@
 #include <QObject>
 #include <AkonadiCore/Collection>
 #include <QAbstractItemModel>
-namespace Akonadi {
-namespace Search {
-namespace PIM {
-class IndexedItems;
-}
-}
-}
+
 class QTimer;
 class CheckIndexingManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent = nullptr);
+    explicit CheckIndexingManager(QObject *parent = nullptr);
     ~CheckIndexingManager();
 
     void start(QAbstractItemModel *collectionModel);
@@ -50,7 +44,6 @@ private:
     void createJob();
     void callToReindexCollection();
 
-    Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
     Akonadi::Collection::List mListCollection;
     QTimer *mTimer = nullptr;
     QList<qint64> mCollectionsIndexed;

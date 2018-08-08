@@ -19,7 +19,7 @@
 
 #include "checkindexingjob.h"
 #include "kmail_debug.h"
-#include <AkonadiSearch/PIM/indexeditems.h>
+#include <AkonadiSearch/IndexedItems>
 
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionFetchScope>
@@ -27,9 +27,8 @@
 
 #include <PimCommon/PimUtil>
 
-CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent)
+CheckIndexingJob::CheckIndexingJob(QObject *parent)
     : QObject(parent)
-    , mIndexedItems(indexedItems)
 {
 }
 
@@ -72,7 +71,7 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
     }
 
     mCollection = fetch->collections().constFirst();
-    const qlonglong result = mIndexedItems->indexedItems(mCollection.id());
+    const qlonglong result = Akonadi::Search::IndexedItems().indexedItems(mCollection.id());
     bool needToReindex = false;
     qCDebug(KMAIL_LOG) << "name :" << mCollection.name() << " mCollection.statistics().count() " << mCollection.statistics().count() << "stats.value(mCollection.id())" << result;
     if (mCollection.statistics().count() != result) {

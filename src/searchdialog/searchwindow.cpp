@@ -46,6 +46,7 @@
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <AkonadiCore/CachePolicy>
 #include <AkonadiCore/EntityHiddenAttribute>
+#include <AkonadiSearch/IndexedItems>
 #include <KActionMenu>
 #include "kmail_debug.h"
 #include <QIcon>
@@ -56,7 +57,6 @@
 #include <KStandardGuiItem>
 #include <KWindowSystem>
 #include <KMessageBox>
-#include <AkonadiSearch/PIM/indexeditems.h>
 
 #include <QCheckBox>
 #include <QCloseEvent>
@@ -917,7 +917,7 @@ QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::Li
     mUi.mStatusLbl->setText(i18n("Checking index status..."));
     //Fetch collection ?
     for (const Akonadi::Collection &col : qAsConst(cols)) {
-        const qlonglong num = KMKernel::self()->indexedItems()->indexedItems((qlonglong)col.id());
+        const qlonglong num = Akonadi::Search::IndexedItems().indexedItems((qlonglong)col.id());
         if (col.statistics().count() != num) {
             results.push_back(col.id());
         }

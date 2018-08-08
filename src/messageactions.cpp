@@ -38,7 +38,7 @@
 #include <Akonadi/KMime/MessageParts>
 #include <AkonadiCore/ChangeRecorder>
 #include <QAction>
-#include <AkonadiSearch/Debug/akonadisearchdebugdialog.h>
+//#include <AkonadiSearch/Debug/akonadisearchdebugdialog.h>
 #include <KIO/KUriFilterSearchProviderActions>
 
 #include "messagecomposer/followupreminderselectdatedialog.h"
@@ -182,8 +182,10 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     replyMenu()->addAction(mCustomTemplatesMenu->replyAllActionMenu());
 
     //Don't translate it. Shown only when we set env variable AKONADI_SEARCH_DEBUG
+#ifdef AKONADISEARCH_PORT
     mDebugAkonadiSearchAction = new QAction(QStringLiteral("Debug Akonadi Search..."), this);
     connect(mDebugAkonadiSearchAction, &QAction::triggered, this, &MessageActions::slotDebugAkonadiSearch);
+#endif
 
     mAddFollowupReminderAction = new QAction(i18n("Add Followup Reminder..."), this);
     ac->addAction(QStringLiteral("message_followup_reminder"), mAddFollowupReminderAction);
@@ -708,12 +710,14 @@ void MessageActions::slotDebugAkonadiSearch()
     if (!mCurrentItem.isValid()) {
         return;
     }
+#ifdef AKONADISEARCH_PORT
     QPointer<Akonadi::Search::AkonadiSearchDebugDialog> dlg = new Akonadi::Search::AkonadiSearchDebugDialog;
     dlg->setAkonadiId(mCurrentItem.id());
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setSearchType(Akonadi::Search::AkonadiSearchDebugSearchPathComboBox::Emails);
     dlg->doSearch();
     dlg->show();
+#endif
 }
 
 void MessageActions::slotResendMessage()

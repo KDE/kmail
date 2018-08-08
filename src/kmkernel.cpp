@@ -8,7 +8,6 @@
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"
 #include "job/fillcomposerjob.h"
-#include <AkonadiSearch/PIM/indexeditems.h>
 #include <LibkdepimAkonadi/ProgressManagerAkonadi>
 using KPIM::BroadcastStatus;
 #include "kmstartup.h"
@@ -220,8 +219,7 @@ KMKernel::KMKernel(QObject *parent)
     CommonKernel->registerSettingsIf(this);
     CommonKernel->registerFilterIf(this);
     mFolderArchiveManager = new FolderArchiveManager(this);
-    mIndexedItems = new Akonadi::Search::PIM::IndexedItems(this);
-    mCheckIndexingManager = new CheckIndexingManager(mIndexedItems, this);
+    mCheckIndexingManager = new CheckIndexingManager(this);
     mUnityServiceManager = new KMail::UnityServiceManager(this);
 }
 
@@ -1465,11 +1463,6 @@ QSharedPointer<FolderSettings> KMKernel::currentFolderCollection()
 MailCommon::MailCommonSettings *KMKernel::mailCommonSettings() const
 {
     return mMailCommonSettings;
-}
-
-Akonadi::Search::PIM::IndexedItems *KMKernel::indexedItems() const
-{
-    return mIndexedItems;
 }
 
 // can't be inline, since KMSender isn't known to implement

@@ -29,14 +29,6 @@ class EntityTreeModel;
 class EntityMimeTypeFilterModel;
 }
 
-namespace Akonadi {
-namespace Search {
-namespace PIM {
-class IndexedItems;
-}
-}
-}
-
 namespace KIO {
 class Job;
 }
@@ -408,8 +400,6 @@ public:
 
     bool allowToDebug() const;
 
-    Akonadi::Search::PIM::IndexedItems *indexedItems() const;
-
     void cleanupTemporaryFiles();
     MailCommon::MailCommonSettings *mailCommonSettings() const;
 
@@ -522,7 +512,6 @@ private:
     PimCommon::AutoCorrection *mAutoCorrection = nullptr;
     FolderArchiveManager *mFolderArchiveManager = nullptr;
     CheckIndexingManager *mCheckIndexingManager = nullptr;
-    Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
     MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;
     bool mDebug = false;
 };

@@ -28,15 +28,14 @@
 #include <MailCommon/MailUtil>
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>
-#include <AkonadiSearch/PIM/indexeditems.h>
+#include <AkonadiSearch/IndexedItems>
 #include <QTimer>
 #include <QDBusInterface>
 #include <QDBusPendingCall>
 #include <AkonadiCore/entityhiddenattribute.h>
 
-CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
+CheckIndexingManager::CheckIndexingManager(QObject *parent)
     : QObject(parent)
-    , mIndexedItems(indexer)
 {
     mTimer = new QTimer(this);
     mTimer->setSingleShot(true);
@@ -78,7 +77,7 @@ void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
 
 void CheckIndexingManager::createJob()
 {
-    CheckIndexingJob *job = new CheckIndexingJob(mIndexedItems, this);
+    CheckIndexingJob *job = new CheckIndexingJob(this);
     job->setCollection(mListCollection.at(mIndex));
     connect(job, &CheckIndexingJob::finished, this, &CheckIndexingManager::indexingFinished);
     job->start();

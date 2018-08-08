@@ -324,8 +324,7 @@ target_link_libraries(kmailprivate
     KF5::XmlGui
     KF5::Completion
     KF5::Ldap
-    KF5::AkonadiSearchDebug
-    KF5::AkonadiSearchPIM
+    KF5::AkonadiSearch
     KF5::WebEngineViewer
     KF5::SyntaxHighlighting
     )

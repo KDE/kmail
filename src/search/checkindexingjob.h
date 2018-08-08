@@ -22,19 +22,13 @@
 
 #include <QObject>
 #include <AkonadiCore/Collection>
-namespace Akonadi {
-namespace Search {
-namespace PIM {
-class IndexedItems;
-}
-}
-}
+
 class KJob;
 class CheckIndexingJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent = nullptr);
+    explicit CheckIndexingJob(QObject *parent = nullptr);
     ~CheckIndexingJob();
 
     void setCollection(const Akonadi::Collection &col);
@@ -49,7 +43,6 @@ private:
     void slotCollectionPropertiesFinished(KJob *job);
     void askForNextCheck(quint64 id, bool needToReindex = false);
     Akonadi::Collection mCollection;
-    Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
 };
 
 #endif // CHECKINDEXINGJOB_H
