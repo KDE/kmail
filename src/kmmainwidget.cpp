@@ -790,7 +790,7 @@ void KMMainWidget::layoutSplitters()
     if (kmkernel->firstStart()) {
         mFolderTreeWidget->folderTreeView()->hideColumn(1);
         mFolderTreeWidget->folderTreeView()->hideColumn(3);
-        mFolderTreeWidget->folderTreeView()->header()->resizeSection(0, folderViewWidth * 0.8);
+        mFolderTreeWidget->folderTreeView()->header()->resizeSection(0, static_cast<int>(folderViewWidth * 0.8));
     }
 
     // Make the copy action work, see disconnect comment above
