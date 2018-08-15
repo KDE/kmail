@@ -420,6 +420,3 @@ install(FILES
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
     DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR}
     )
-
-install( FILES data/kmail_addattachmentservicemenu.desktop DESTINATION
-    ${KDE_INSTALL_KSERVICES5DIR}/ServiceMenus)
