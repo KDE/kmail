@@ -103,6 +103,10 @@
         <label>Empty the local trash folder on program exit</label>
         <default>false</default>
       </entry>
+      <entry name="DeleteMessageWithoutConfirmation" type="Bool" key="delete-messages-without-confirmation">
+        <label>Delete messages without confirmation</label>
+        <default>false</default>
+      </entry>
       <entry name="StartSpecificFolderAtStartup" type="Bool" key="startSpecificFolderAtStatup">
         <label>Allow to start specific folder</label>
         <default>true</default>
