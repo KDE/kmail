@@ -99,7 +99,7 @@
        </widget>
       </item>
       <item>
-       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList" native="true"/>
+       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList"/>
       </item>
      </layout>
     </widget>
@@ -158,6 +158,13 @@
        <widget class="QCheckBox" name="mCheckUrl">
         <property name="text">
          <string>Check URL With Phishing Google System</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mCheckMailUrlTracking">
+        <property name="text">
+         <string>Check Mail Url Tracking</string>
         </property>
        </widget>
       </item>

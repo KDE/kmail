@@ -123,6 +123,7 @@ int main(int argc, char *argv[])
     // enforce xcb plugin fix bug Bug 367598
     qputenv("QT_QPA_PLATFORM", "xcb");
 #endif
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     KMailApplication app(argc, &argv);
     KLocalizedString::setApplicationDomain("kmail");
