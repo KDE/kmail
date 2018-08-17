@@ -17,20 +17,32 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef ARCHIVEMAILDIALOGTEST_H
-#define ARCHIVEMAILDIALOGTEST_H
+#include "archivemailwidgettest.h"
+#include "../archivemailwidget.h"
 
-#include <QObject>
+#include <qtest.h>
+#include <QTreeWidget>
+#include <QStandardPaths>
 
-class ArchiveMailDialogTest : public QObject
+ArchiveMailWidgetTest::ArchiveMailWidgetTest(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
-public:
-    explicit ArchiveMailDialogTest(QObject *parent = nullptr);
-    ~ArchiveMailDialogTest();
+    QStandardPaths::setTestModeEnabled(true);
+}
 
-private Q_SLOTS:
-    void shouldHaveDefaultValue();
-};
+ArchiveMailWidgetTest::~ArchiveMailWidgetTest()
+{
+}
 
-#endif // ARCHIVEMAILDIALOGTEST_H
+void ArchiveMailWidgetTest::shouldHaveDefaultValue()
+{
+    QWidget parent;
+    ArchiveMailWidget mailwidget({}, &parent, {QStringLiteral("akonadi_archivemail_agent")});
+
+    QTreeWidget *treeWidget = parent.findChild<QTreeWidget *>(QStringLiteral("treewidget"));
+    QVERIFY(treeWidget);
+
+    QCOMPARE(treeWidget->topLevelItemCount(), 0);
+}
+
+QTEST_MAIN(ArchiveMailWidgetTest)

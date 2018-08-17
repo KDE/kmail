@@ -19,7 +19,6 @@
 
 #include "archivemailagent.h"
 #include "archivemailagentadaptor.h"
-#include "archivemaildialog.h"
 #include "archivemailmanager.h"
 #include "archivemailagentsettings.h"
 #include <AkonadiCore/ServerManager>
@@ -45,6 +44,8 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_archivemail_agentrc") << QStringLiteral("akonadi_archivemail_agent.notifyrc"));
     migrate.migrate();
 
+    connect(this, &Akonadi::AgentBase::reloadConfiguration, this, &ArchiveMailAgent::reload);
+
     mArchiveManager = new ArchiveMailManager(this);
     connect(mArchiveManager, &ArchiveMailManager::needUpdateConfigDialogBox, this, &ArchiveMailAgent::needUpdateConfigDialogBox);
 
@@ -58,7 +59,7 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     new ArchiveMailAgentAdaptor(this);
     KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/ArchiveMailAgent"), this, QDBusConnection::ExportAdaptors);
 
-    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_archivemail_agent"));
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, identifier());
 
     KDBusConnectionPool::threadConnection().registerService(service);
     connect(collectionMonitor, &Akonadi::Monitor::collectionRemoved, this, &ArchiveMailAgent::mailCollectionRemoved);
@@ -120,7 +121,7 @@ void ArchiveMailAgent::reload()
         mTimer->start();
     }
 }
-
+#if 0
 void ArchiveMailAgent::configure(WId windowId)
 {
     QPointer<ArchiveMailDialog> dialog = new ArchiveMailDialog();
@@ -134,7 +135,7 @@ void ArchiveMailAgent::configure(WId windowId)
     }
     delete dialog;
 }
-
+#endif
 void ArchiveMailAgent::pause()
 {
     if (isOnline() && enabledAgent()) {

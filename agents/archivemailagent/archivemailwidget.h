@@ -24,6 +24,8 @@
 #include "archivemailinfo.h"
 #include <QTreeWidgetItem>
 
+#include <AkonadiCore/AgentConfigurationBase>
+
 class ArchiveMailItem : public QTreeWidgetItem
 {
 public:
@@ -37,11 +39,11 @@ private:
     ArchiveMailInfo *mInfo = nullptr;
 };
 
-class ArchiveMailWidget : public QWidget
+class ArchiveMailWidget : public Akonadi::AgentConfigurationBase
 {
     Q_OBJECT
 public:
-    explicit ArchiveMailWidget(QWidget *parent = nullptr);
+    explicit ArchiveMailWidget(KSharedConfigPtr config, QWidget *parentWidget, const QVariantList &args);
     ~ArchiveMailWidget();
 
     enum ArchiveMailColumn {
@@ -51,16 +53,15 @@ public:
         StorageDirectory
     };
 
-    void save();
-    void saveTreeWidgetHeader(KConfigGroup &group);
-    void restoreTreeWidgetHeader(const QByteArray &group);
+    bool save() const override;
+    void load() override;
+
     void needReloadConfig();
 
 Q_SIGNALS:
     void archiveNow(ArchiveMailInfo *info);
 
 private:
-    void load();
     void createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item = nullptr);
     bool verifyExistingArchive(ArchiveMailInfo *info) const;
     void updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *info);
@@ -73,8 +74,11 @@ private:
     void slotCustomContextMenuRequested(const QPoint &);
     void slotArchiveNow();
     void slotItemChanged(QTreeWidgetItem *item, int);
+
     bool mChanged = false;
-    Ui::ArchiveMailWidget *mWidget = nullptr;
+    Ui::ArchiveMailWidget mWidget;
 };
+
+AKONADI_AGENTCONFIG_FACTORY(ArchiveMailAgentConfigFactory, "archivemailagentconfig.json", ArchiveMailWidget)
 
 #endif // ARCHIVEMAILWIDGET_H

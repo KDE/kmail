@@ -48,7 +48,6 @@ Q_SIGNALS:
     void needUpdateConfigDialogBox();
 
 public Q_SLOTS:
-    void configure(WId windowId) override;
     void reload();
     void pause();
     void resume();

@@ -17,33 +17,20 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "archivemaildialogtest.h"
-#include "../archivemaildialog.h"
-#include <qtest.h>
-#include <QTreeWidget>
-#include "../archivemailwidget.h"
-#include <QStandardPaths>
-ArchiveMailDialogTest::ArchiveMailDialogTest(QObject *parent)
-    : QObject(parent)
+#ifndef ARCHIVEMAILWIDGETTEST_H
+#define ARCHIVEMAILWIDGETTEST_H
+
+#include <QObject>
+
+class ArchiveMailWidgetTest : public QObject
 {
-    QStandardPaths::setTestModeEnabled(true);
-}
+    Q_OBJECT
+public:
+    explicit ArchiveMailWidgetTest(QObject *parent = nullptr);
+    ~ArchiveMailWidgetTest();
 
-ArchiveMailDialogTest::~ArchiveMailDialogTest()
-{
-}
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
+};
 
-void ArchiveMailDialogTest::shouldHaveDefaultValue()
-{
-    ArchiveMailDialog dlg;
-    ArchiveMailWidget *mailwidget = dlg.findChild<ArchiveMailWidget *>(QStringLiteral("archivemailwidget"));
-    QVERIFY(mailwidget);
-
-    QTreeWidget *treeWidget = mailwidget->findChild<QTreeWidget *>(QStringLiteral("treewidget"));
-
-    QVERIFY(treeWidget);
-
-    QCOMPARE(treeWidget->topLevelItemCount(), 0);
-}
-
-QTEST_MAIN(ArchiveMailDialogTest)
+#endif // ARCHIVEMAILWIDGETTEST_H

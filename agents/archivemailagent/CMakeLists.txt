@@ -1,34 +1,39 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_archivemail_agent\")
 
-set(archivemailagent_SRCS
+set(libarchivemailagent_SRCS
     archivemailkernel.cpp
-    archivemailagent.cpp
     archivemailmanager.cpp
-    archivemaildialog.cpp
     archivemailinfo.cpp
-    addarchivemaildialog.cpp
-    archivemailwidget.cpp
     job/archivejob.cpp
     archivemailagentutil.cpp
-    widgets/formatcombobox.cpp
-    widgets/unitcombobox.cpp
     )
 
-kconfig_add_kcfg_files(archivemailagent_SRCS
+kconfig_add_kcfg_files(libarchivemailagent_SRCS
     settings/archivemailagentsettings.kcfgc
     )
 
 
-qt5_add_dbus_adaptor(archivemailagent_SRCS org.freedesktop.Akonadi.ArchiveMailAgent.xml archivemailagent.h ArchiveMailAgent)
+qt5_add_dbus_adaptor(libarchivemailagent_SRCS org.freedesktop.Akonadi.ArchiveMailAgent.xml archivemailagent.h ArchiveMailAgent)
 
-ecm_qt_declare_logging_category(archivemailagent_SRCS HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME org.kde.pim.archivemailagent)
+ecm_qt_declare_logging_category(libarchivemailagent_SRCS HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME org.kde.pim.archivemailagent)
 
+ki18n_wrap_ui(libarchivemailagent_SRCS ui/archivemailwidget.ui )
 
-ki18n_wrap_ui(archivemailagent_SRCS ui/archivemailwidget.ui )
+add_library(archivemailagent STATIC ${libarchivemailagent_SRCS})
+target_link_libraries(archivemailagent
+    KF5::MailCommon
+    KF5::I18n
+    KF5::Notifications
+    KF5::IconThemes
+    KF5::KIOWidgets
+)
 
-add_executable(akonadi_archivemail_agent ${archivemailagent_SRCS})
+########################### Agent executable ################################
+
+add_executable(akonadi_archivemail_agent archivemailagent.cpp)
 
 target_link_libraries(akonadi_archivemail_agent
+    archivemailagent
     KF5::AkonadiCore
     KF5::IdentityManagement
     KF5::AkonadiMime
@@ -55,8 +60,31 @@ install(TARGETS akonadi_archivemail_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
 install(FILES archivemailagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 install(FILES akonadi_archivemail_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
 
-install(FILES settings/archivemailagentsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 
 if (BUILD_TESTING)
     add_subdirectory(autotests)
 endif()
+
+########## Configuration ##############
+
+set(archivemailagentconfig_SRCS
+    addarchivemaildialog.cpp
+    archivemailwidget.cpp
+    widgets/formatcombobox.cpp
+    widgets/unitcombobox.cpp
+)
+
+kcoreaddons_add_plugin(archivemailagentconfig
+    JSON archivemailagentconfig.json
+    SOURCES ${archivemailagentconfig_SRCS}
+    INSTALL_NAMESPACE akonadi/config
+)
+target_link_libraries(archivemailagentconfig
+    archivemailagent
+    KF5::AkonadiCore
+    KF5::WindowSystem
+    KF5::XmlGui
+    KF5::I18n
+)
+
+install(FILES settings/archivemailagentsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
