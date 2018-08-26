@@ -41,6 +41,7 @@ Comment[zh_TW]=回覆提醒代理程式
 
 [Event/mailreceived]
 Name=Mail Follow Up Received
+Name[ar]=استُلم بريد تذكيريّ
 Name[ca]=S'ha rebut correu de seguiment
 Name[ca@valencia]=S'ha rebut correu de seguiment
 Name[da]=Opfølgning på mail modtaget
