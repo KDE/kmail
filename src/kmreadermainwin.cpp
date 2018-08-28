@@ -153,7 +153,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     mMsg = msg;
     mMsgActions->setCurrentMessage(msg);
 
-    const bool canChange = mParentCollection.isValid() ? (bool)(mParentCollection.rights() & Akonadi::Collection::CanDeleteItem) : false;
+    const bool canChange = mParentCollection.isValid() ? static_cast<bool>(mParentCollection.rights() & Akonadi::Collection::CanDeleteItem) : false;
     mTrashAction->setEnabled(canChange);
 
     if (mReaderWin->viewer() && mReaderWin->viewer()->headerStylePlugin() && mReaderWin->viewer()->headerStylePlugin()->headerStyle()) {
