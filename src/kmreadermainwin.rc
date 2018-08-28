@@ -1,5 +1,5 @@
 <!DOCTYPE gui>
-<gui version="522" name="kmreadermainwin" translationDomain="kmail">
+<gui version="523" name="kmreadermainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -20,8 +20,6 @@
    <text>&amp;View</text>
    <Action name="view_headers"/>
    <Action name="view_attachments"/>
-   <Separator/>
-   <Action name="view_source"/>
    <Separator/>
    <Action name="toggle_fixedfont"/>
    <Action name="encoding" />
