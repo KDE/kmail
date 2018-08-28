@@ -9,7 +9,7 @@ include(CheckIncludeFiles)
 if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif()
-set(KF5_VERSION "5.48.0")
+set(KF5_VERSION "5.49.0")
 
 find_package(ECM ${KF5_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
