@@ -17,6 +17,7 @@
 class KMReaderWin;
 class QAction;
 class KJob;
+class ZoomLabelWidget;
 
 namespace KMail {
 class MessageActions;
@@ -86,6 +87,8 @@ private:
     void setupAccel();
     QAction *copyActionMenu(QMenu *menu);
     QAction *moveActionMenu(QMenu *menu);
+    void setZoomChanged(qreal zoomFactor);
+
 
     Akonadi::Collection mParentCollection;
     Akonadi::Item mMsg;
@@ -94,6 +97,7 @@ private:
     QAction *mSaveAtmAction = nullptr;
     KMail::MessageActions *mMsgActions = nullptr;
     KMReaderWin *mReaderWin = nullptr;
+    ZoomLabelWidget *mZoomLabelIndicator = nullptr;
 };
 
 #endif /*KMReaderMainWin_h*/

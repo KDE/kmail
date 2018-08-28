@@ -25,6 +25,8 @@
 
 #include "kmreadermainwin.h"
 #include "kmreaderwin.h"
+#include "widgets/zoomlabelwidget.h"
+#include "kmmainwidget.h"
 
 #include <kactionmenu.h>
 #include <kedittoolbar.h>
@@ -42,7 +44,6 @@
 #include "kmcommands.h"
 #include <QMenuBar>
 #include <qmenu.h>
-#include "kmmainwidget.h"
 #include <MessageViewer/CSSHelper>
 #include <TemplateParser/CustomTemplatesMenu>
 #include "messageactions.h"
@@ -104,18 +105,30 @@ void KMReaderMainWin::initKMReaderMainWin()
     setupGUI(Keys | StatusBar | Create, QStringLiteral("kmreadermainwin.rc"));
     mMsgActions->setupForwardingActionsList(this);
     applyMainWindowSettings(KMKernel::self()->config()->group("Separate Reader Window"));
+    mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
+    statusBar()->addPermanentWidget(mZoomLabelIndicator);
+    setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
+
     if (!mReaderWin->message().isValid()) {
         menuBar()->hide();
         toolBar(QStringLiteral("mainToolBar"))->hide();
     }
     connect(kmkernel, &KMKernel::configChanged, this, &KMReaderMainWin::slotConfigChanged);
     connect(mReaderWin, &KMReaderWin::showStatusBarMessage, this, &KMReaderMainWin::slotShowMessageStatusBar);
+    connect(mReaderWin, &KMReaderWin::zoomChanged, this, &KMReaderMainWin::setZoomChanged);
 }
 
 KMReaderMainWin::~KMReaderMainWin()
 {
     KConfigGroup grp(KMKernel::self()->config()->group("Separate Reader Window"));
     saveMainWindowSettings(grp);
+}
+
+void KMReaderMainWin::setZoomChanged(qreal zoomFactor)
+{
+    if (mZoomLabelIndicator) {
+        mZoomLabelIndicator->setZoom(zoomFactor);
+    }
 }
 
 void KMReaderMainWin::slotShowMessageStatusBar(const QString &msg)
