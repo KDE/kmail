@@ -53,6 +53,7 @@
 #include <KRun>
 #include <QMenu>
 #include <KUriFilter>
+#include <KStringHandler>
 #include <QIcon>
 
 #include <QVariant>
@@ -433,7 +434,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
         qDeleteAll(mMailListActionList);
         mMailListActionList.clear();
         if (!listId.isEmpty()) {
-            mMailingListActionMenu->menu()->setTitle(i18n("Mailing List Name: %1", listId));
+            mMailingListActionMenu->menu()->setTitle(KStringHandler::rsqueeze(i18n("Mailing List Name: %1", listId), 40));
         }
         if (mailList.features() & MessageCore::MailingList::ArchivedAt) {
             // IDEA: this may be something you want to copy - "Copy in submenu"?
