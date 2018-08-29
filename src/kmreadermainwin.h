@@ -21,6 +21,7 @@ class ZoomLabelWidget;
 
 namespace KMail {
 class MessageActions;
+class TagActionManager;
 }
 
 namespace KMime {
@@ -88,6 +89,10 @@ private:
     QAction *copyActionMenu(QMenu *menu);
     QAction *moveActionMenu(QMenu *menu);
     void setZoomChanged(qreal zoomFactor);
+    void updateActions();
+    void slotSelectMoreMessageTagList();
+    void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
+    void slotUpdateMessageTagList(const Akonadi::Tag &tag);
 
 
     Akonadi::Collection mParentCollection;
@@ -98,6 +103,7 @@ private:
     KMail::MessageActions *mMsgActions = nullptr;
     KMReaderWin *mReaderWin = nullptr;
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
+    KMail::TagActionManager *mTagActionManager = nullptr;
 };
 
 #endif /*KMReaderMainWin_h*/
