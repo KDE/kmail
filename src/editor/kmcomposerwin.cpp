@@ -1185,6 +1185,12 @@ void KMComposerWin::setupActions(void)
     mRequestMDNAction = new KToggleAction(i18n("&Request Disposition Notification"), this);
     actionCollection()->addAction(QStringLiteral("options_request_mdn"), mRequestMDNAction);
     mRequestMDNAction->setChecked(KMailSettings::self()->requestMDN());
+
+    mRequestDeliveryConfirmation = new KToggleAction(i18n("&Request Delivery Confirmation"), this);
+    actionCollection()->addAction(QStringLiteral("options_request_delivery_confirmation"), mRequestDeliveryConfirmation);
+    //TOOD mRequestDeliveryConfirmation->setChecked(KMailSettings::self()->requestMDN());
+
+
     //----- Message-Encoding Submenu
     mCodecAction = new CodecAction(CodecAction::ComposerMode, this);
     actionCollection()->addAction(QStringLiteral("charsets"), mCodecAction);
@@ -2635,6 +2641,7 @@ void KMComposerWin::applyComposerSetting(MessageComposer::ComposerViewBase *mCom
     mComposerBase->setCharsets(charsets);
     mComposerBase->setUrgent(mUrgentAction->isChecked());
     mComposerBase->setMDNRequested(mRequestMDNAction->isChecked());
+    mComposerBase->setRequestDeleveryConfirmation(mRequestDeliveryConfirmation->isChecked());
 }
 
 void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn)

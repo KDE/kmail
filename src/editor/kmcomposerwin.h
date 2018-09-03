@@ -592,6 +592,7 @@ private:
     KToggleAction *mSignAction = nullptr;
     KToggleAction *mEncryptAction = nullptr;
     KToggleAction *mRequestMDNAction = nullptr;
+    KToggleAction *mRequestDeliveryConfirmation = nullptr;
     KToggleAction *mUrgentAction = nullptr;
     KToggleAction *mAllFieldsAction = nullptr;
     KToggleAction *mFromAction = nullptr;
