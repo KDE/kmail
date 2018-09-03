@@ -1,7 +1,7 @@
-org.kde.pim.kmail kmail (kmail)
-org.kde.pim.sendlateragent kmail (sendlateragent)
-org.kde.pim.archivemailagent kmail (archivemailagent)
-org.kde.pim.followupreminderagent kmail (followupreminderagent)
-org.kde.pim.kmail_plugin kmail (kmail kontact plugins)
-org.kde.pim.mailfilteragent kmail (mailfilter agent)
+org.kde.pim.kmail kmail (kmail) IDENTIFIER [KMAIL_LOG]
+org.kde.pim.sendlateragent kmail (sendlateragent) IDENTIFIER [SENDLATERAGENT_LOG]
+org.kde.pim.archivemailagent kmail (archivemailagent) IDENTIFIER [ARCHIVEMAILAGENT_LOG]
+org.kde.pim.followupreminderagent kmail (followupreminderagent) IDENTIFIER [FOLLOWUPREMINDERAGENT_LOG]
+org.kde.pim.kmail_plugin kmail (kmail kontact plugins) IDENTIFIER [KMAILPLUGIN_LOG]
+org.kde.pim.mailfilteragent kmail (mailfilter agent) IDENTIFIER [MAILFILTERAGENT_LOG]
 
