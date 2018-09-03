@@ -1581,10 +1581,16 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
 
     // check for the presence of a DNT header, indicating that MDN's were requested
     if (auto hdr = newMsg->headerByType("Disposition-Notification-To")) {
-        QString mdnAddr = hdr->asUnicodeString();
+        const QString mdnAddr = hdr->asUnicodeString();
         mRequestMDNAction->setChecked((!mdnAddr.isEmpty()
                                        && im->thatIsMe(mdnAddr))
                                       || KMailSettings::self()->requestMDN());
+    }
+    if (auto hdr = newMsg->headerByType("Return-Receipt-To")) {
+        const QString returnReceiptToAddr = hdr->asUnicodeString();
+        mRequestDeliveryConfirmation->setChecked((!returnReceiptToAddr.isEmpty()
+                                       && im->thatIsMe(returnReceiptToAddr))
+                                      /*TODO || KMailSettings::self()->requestMDN()*/);
     }
     // check for presence of a priority header, indicating urgent mail:
     if (newMsg->headerByType("X-PRIORITY") && newMsg->headerByType("Priority")) {
