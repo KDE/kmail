@@ -48,6 +48,7 @@ private:
     QStandardItemModel *mBoxModel = nullptr;
     UnifiedMailboxManager &mBoxManager;
     MailKernel *mKernel = nullptr;
+    KSharedConfigPtr mConfig;
 };
 
 

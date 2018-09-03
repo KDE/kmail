@@ -29,7 +29,8 @@
 class KConfigGroup;
 class UnifiedMailboxManager;
 
-class UnifiedMailbox {
+class UnifiedMailbox
+{
     friend class UnifiedMailboxManager;
 public:
     UnifiedMailbox() = default;

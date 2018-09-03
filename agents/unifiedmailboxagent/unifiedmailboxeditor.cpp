@@ -32,11 +32,14 @@
 #include <KIconDialog>
 #include <KLocalizedString>
 #include <KCheckableProxyModel>
+#include <KConfigGroup>
 
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/FolderTreeWidget>
 
 namespace {
+
+static constexpr const char *EditorGroup = "__Editor";
 
 class SelfFilterProxyModel : public QSortFilterProxyModel
 {
@@ -81,17 +84,16 @@ public:
 
 }
 
-UnifiedMailboxEditor::UnifiedMailboxEditor(QWidget* parent)
-    : UnifiedMailboxEditor({}, parent)
+UnifiedMailboxEditor::UnifiedMailboxEditor(KSharedConfigPtr config, QWidget* parent)
+    : UnifiedMailboxEditor({}, config, parent)
 {
 }
 
-UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, QWidget *parent)
+UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, KSharedConfigPtr config, QWidget *parent)
     : QDialog(parent)
     , mMailbox(mailbox)
+    , mConfig(config)
 {
-    resize(500, 900);
-
     auto l = new QVBoxLayout;
     setLayout(l);
 
@@ -163,6 +165,19 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, QWidget *par
             });
     box->button(QDialogButtonBox::Ok)->setEnabled(!nameEdit->text().isEmpty());
     l->addWidget(box);
+
+    const auto editorGroup = config->group(EditorGroup);
+    if (editorGroup.hasKey("geometry")) {
+        restoreGeometry(editorGroup.readEntry("geometry", QByteArray()));
+    } else {
+        resize(500, 900);
+    }
+}
+
+UnifiedMailboxEditor::~UnifiedMailboxEditor()
+{
+    auto editorGrp = mConfig->group(EditorGroup);
+    editorGrp.writeEntry("geometry", saveGeometry());
 }
 
 

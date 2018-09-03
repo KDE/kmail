@@ -26,9 +26,11 @@ class UnifiedMailboxEditor : public QDialog
 {
     Q_OBJECT
 public:
-    explicit UnifiedMailboxEditor(QWidget *parent = nullptr);
-    explicit UnifiedMailboxEditor(UnifiedMailbox *mailbox, QWidget *parent = nullptr);
+    explicit UnifiedMailboxEditor(KSharedConfigPtr config, QWidget *parent = nullptr);
+    explicit UnifiedMailboxEditor(UnifiedMailbox *mailbox, KSharedConfigPtr config, QWidget *parent = nullptr);
 
+    ~UnifiedMailboxEditor() override;
 private:
     UnifiedMailbox *mMailbox = nullptr;
+    KSharedConfigPtr mConfig;
 };

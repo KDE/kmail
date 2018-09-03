@@ -285,7 +285,7 @@ UnifiedMailbox *UnifiedMailboxManager::unifiedMailboxForSource(qint64 source) co
     return box->second;
 }
 
-UnifiedMailbox * UnifiedMailboxManager::unifiedMailboxFromCollection(const Akonadi::Collection &col) const
+UnifiedMailbox *UnifiedMailboxManager::unifiedMailboxFromCollection(const Akonadi::Collection &col) const
 {
     if (!isUnifiedMailbox(col)) {
         return nullptr;

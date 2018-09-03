@@ -33,16 +33,22 @@
 
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KConfigGroup>
 
 #include <memory>
+
+namespace {
+
+static constexpr const char *DialogGroup = "__Dialog";
+
+}
 
 SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &boxManager, WId, QWidget *parent)
     : QDialog(parent)
     , mBoxManager(boxManager)
     , mKernel(new MailKernel(config, this))
+    , mConfig(config)
 {
-    resize(500, 500);
-
     auto l = new QVBoxLayout;
     setLayout(l);
 
@@ -61,7 +67,7 @@ SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &b
     connect(addButton, &QPushButton::clicked,
             this, [this]() {
                 auto mailbox = std::make_unique<UnifiedMailbox>();
-                auto editor = new UnifiedMailboxEditor(mailbox.get(), this);
+                auto editor = new UnifiedMailboxEditor(mailbox.get(), mConfig, this);
                 if (editor->exec()) {
                     mailbox->setId(mailbox->name()); // assign ID
                     addBox(mailbox.get());
@@ -77,7 +83,7 @@ SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &b
                 if (!indexes.isEmpty()) {
                     auto item = mBoxModel->itemFromIndex(indexes[0]);
                     auto mailbox = item->data().value<UnifiedMailbox*>();
-                    auto editor = new UnifiedMailboxEditor(mailbox, this);
+                    auto editor = new UnifiedMailboxEditor(mailbox, mConfig, this);
                     if (editor->exec()) {
                         item->setText(mailbox->name());
                         item->setIcon(QIcon::fromTheme(mailbox->icon()));
@@ -117,10 +123,20 @@ SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &b
     l->addWidget(box);
 
     loadBoxes();
+
+    const auto dlgGroup = config->group(DialogGroup);
+    if (dlgGroup.hasKey("geometry")) {
+        restoreGeometry(dlgGroup.readEntry("geometry", QByteArray()));
+    } else {
+        resize(500, 500);
+    }
+
 }
 
 SettingsDialog::~SettingsDialog()
 {
+    auto dlgGroup = mConfig->group(DialogGroup);
+    dlgGroup.writeEntry("geometry", saveGeometry());
 }
 
 void SettingsDialog::accept()
