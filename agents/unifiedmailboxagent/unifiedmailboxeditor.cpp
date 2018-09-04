@@ -84,12 +84,12 @@ public:
 
 }
 
-UnifiedMailboxEditor::UnifiedMailboxEditor(KSharedConfigPtr config, QWidget* parent)
+UnifiedMailboxEditor::UnifiedMailboxEditor(const KSharedConfigPtr &config, QWidget* parent)
     : UnifiedMailboxEditor({}, config, parent)
 {
 }
 
-UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, KSharedConfigPtr config, QWidget *parent)
+UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KSharedConfigPtr &config, QWidget *parent)
     : QDialog(parent)
     , mMailbox(mailbox)
     , mConfig(config)

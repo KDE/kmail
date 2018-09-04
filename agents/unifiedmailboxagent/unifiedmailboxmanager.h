@@ -43,7 +43,7 @@ public:
     using FinishedCallback = std::function<void()>;
     using Entry = std::pair<const QString, std::unique_ptr<UnifiedMailbox>>;
 
-    explicit UnifiedMailboxManager(KSharedConfigPtr config, QObject *parent = nullptr);
+    explicit UnifiedMailboxManager(const KSharedConfigPtr &config, QObject *parent = nullptr);
     ~UnifiedMailboxManager() override;
 
     void loadBoxes(FinishedCallback &&cb = {});

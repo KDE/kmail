@@ -72,9 +72,9 @@ bool UnifiedMailboxManager::isUnifiedMailbox(const Akonadi::Collection &col)
 #endif
 }
 
-UnifiedMailboxManager::UnifiedMailboxManager(KSharedConfigPtr config, QObject* parent)
+UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QObject* parent)
     : QObject(parent)
-    , mConfig(std::move(config))
+    , mConfig(config)
 {
     mMonitor.setObjectName(QStringLiteral("UnifiedMailboxChangeRecorder"));
     mMonitor.setConfig(&mMonitorSettings);
@@ -424,7 +424,7 @@ const UnifiedMailbox *UnifiedMailboxManager::unregisterSpecialSourceCollection(q
     }
 
     if (!box->isSpecial()) {
-        qDebug() << colId << "does not belong to a special unified box" << box->id();
+        qCDebug(agent_log) << colId << "does not belong to a special unified box" << box->id();
         return {};
     }
 
