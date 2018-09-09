@@ -39,7 +39,7 @@
 
 namespace {
 
-static constexpr const char *EditorGroup = "__Editor";
+static constexpr const char *EditorGroup = "UnifiedMailboxEditorDialog";
 
 class SelfFilterProxyModel : public QSortFilterProxyModel
 {

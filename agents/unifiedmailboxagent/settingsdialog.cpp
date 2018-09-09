@@ -39,7 +39,7 @@
 
 namespace {
 
-static constexpr const char *DialogGroup = "__Dialog";
+static constexpr const char *DialogGroup = "UnifiedMailboxSettingsDialog";
 
 }
 
