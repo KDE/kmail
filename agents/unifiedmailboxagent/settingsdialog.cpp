@@ -49,8 +49,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     , mKernel(new MailKernel(config, this))
     , mConfig(config)
 {
-    auto l = new QVBoxLayout;
-    setLayout(l);
+    auto l = new QVBoxLayout(this);
 
     auto h = new QHBoxLayout;
     l->addLayout(h);

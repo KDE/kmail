@@ -94,8 +94,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     , mMailbox(mailbox)
     , mConfig(config)
 {
-    auto l = new QVBoxLayout;
-    setLayout(l);
+    auto l = new QVBoxLayout(this);
 
     auto f = new QFormLayout;
     l->addLayout(f);
@@ -103,7 +102,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     f->addRow(i18n("Name:"), nameEdit);
     connect(nameEdit, &QLineEdit::textChanged,
             this, [this](const QString &name) {
-                mMailbox->setName(name);
+                mMailbox->setName(name.trimmed());
             });
 
     auto iconButton = new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))),
@@ -161,9 +160,9 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     connect(box, &QDialogButtonBox::rejected, this, &QDialog::reject);
     connect(nameEdit, &QLineEdit::textChanged,
             box, [box](const QString &name) {
-                box->button(QDialogButtonBox::Ok)->setEnabled(!name.isEmpty());
+                box->button(QDialogButtonBox::Ok)->setEnabled(!name.trimmed().isEmpty());
             });
-    box->button(QDialogButtonBox::Ok)->setEnabled(!nameEdit->text().isEmpty());
+    box->button(QDialogButtonBox::Ok)->setEnabled(!nameEdit->text().trimmed().isEmpty());
     l->addWidget(box);
 
     const auto editorGroup = config->group(EditorGroup);
