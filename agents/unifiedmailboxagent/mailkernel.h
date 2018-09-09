@@ -38,7 +38,7 @@ class MailKernel : public QObject
 {
     Q_OBJECT
 public:
-    explicit MailKernel(KSharedConfigPtr config, QObject *parent = nullptr);
+    explicit MailKernel(const KSharedConfigPtr &config, QObject *parent = nullptr);
     ~MailKernel() override;
 
     KIdentityManagement::IdentityManager *identityManager() override;

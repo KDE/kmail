@@ -33,7 +33,7 @@ class SettingsDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &manager,
+    explicit SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxManager &manager,
                             WId windowId, QWidget *parent = nullptr);
     ~SettingsDialog() override;
 

@@ -29,7 +29,7 @@
 #include <AkonadiCore/changerecorder.h>
 #include <KSharedConfig>
 
-MailKernel::MailKernel(KSharedConfigPtr config, QObject *parent)
+MailKernel::MailKernel(const KSharedConfigPtr &config, QObject *parent)
     : QObject(parent)
     , mConfig(config)
 {

@@ -43,7 +43,7 @@ static constexpr const char *DialogGroup = "__Dialog";
 
 }
 
-SettingsDialog::SettingsDialog(KSharedConfigPtr config, UnifiedMailboxManager &boxManager, WId, QWidget *parent)
+SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxManager &boxManager, WId, QWidget *parent)
     : QDialog(parent)
     , mBoxManager(boxManager)
     , mKernel(new MailKernel(config, this))
