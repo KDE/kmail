@@ -186,6 +186,9 @@
 // System includes
 #include <AkonadiWidgets/standardactionmanager.h>
 #include <QStandardPaths>
+#include <QDBusInterface>
+#include <QDBusConnection>
+#include <QDBusReply>
 
 #include "PimCommonAkonadi/ManageServerSideSubscriptionJob"
 #include <job/removeduplicatemailjob.h>
@@ -329,6 +332,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mCheckMailTimer.setInterval(3 * 1000);
     mCheckMailTimer.setSingleShot(true);
     connect(&mCheckMailTimer, &QTimer::timeout, this, &KMMainWidget::slotUpdateActionsAfterMailChecking);
+
+    setupUnifiedMailboxChecker();
 }
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
@@ -4798,3 +4803,51 @@ void KMMainWidget::setShowStatusBarMessage(const QString &msg)
         mCurrentStatusBar->showMessage(msg);
     }
 }
+
+void KMMainWidget::setupUnifiedMailboxChecker()
+{
+    if (!KMailSettings::self()->askEnableUnifiedMailboxes()) {
+        return;
+    }
+
+    const auto ask = [this]() {
+        if (!KMailSettings::self()->askEnableUnifiedMailboxes()) {
+            return;
+        }
+
+        if (kmkernel->accounts().count() <= 1) {
+            return;
+        }
+
+        const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_unifiedmailbox_agent"));
+        QDBusInterface iface(service, QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.UnifiedMailboxAgent"),
+                             QDBusConnection::sessionBus(), this);
+        if (!iface.isValid()) {
+            return;
+        }
+
+        QDBusReply<bool> reply = iface.call(QStringLiteral("enabledAgent"));
+        if (!reply.isValid() || bool(reply)) {
+            return;
+        }
+
+        const auto answer = KMessageBox::questionYesNo(
+            this, i18n("You have more than one email account set up. Do you want to enable the Unified Mailbox feature to "
+                        "show unified content of your inbox, sent and drafts folders?\n"
+                        "You can configure unified mailboxes, create custom ones or disable the feature completely in KMail's Plugin settings."),
+            i18n("Enable Unified Mailboxes?"),
+            KGuiItem(i18n("Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
+            KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel")));
+        if (answer == KMessageBox::Yes) {
+            iface.call(QStringLiteral("setEnableAgent"), true);
+        }
+
+        KMailSettings::self()->setAskEnableUnifiedMailboxes(false);
+    };
+
+    connect(kmkernel, &KMKernel::incomingAccountsChanged, this, ask);
+
+    // Wait for a bit before asking so we at least have the window on screen
+    QTimer::singleShot(500, this, ask);
+}
+

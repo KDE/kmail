@@ -1,0 +1,46 @@
+<knut>
+ <collection rid="res2" name="res2" content="inode/directory">
+  <collection rid="res2_inbox" name="res2_inbox" content="inode/directory,message/rfc822,application/octet-stream">
+   <attribute type="SpecialCollectionAttribute">inbox</attribute>
+   <item rid="AA" mimetype="application/octet-stream">
+    <payload>testmailbody</payload>
+    <attribute type="HEAD">From: &lt;test@user.tst&gt;</attribute>
+    <flag>\SEEN</flag>
+   </item>
+   <item rid="BB" mimetype="application/octet-stream">
+    <payload>testmailbody1</payload>
+    <attribute type="HEAD">From: &lt;test1@user.tst&gt;</attribute>
+    <flag>\FLAGGED</flag>
+   </item>
+  </collection>
+  <collection rid="res2_sent" name="res2_sent" content="inode/directory,message/rfc822,application/octet-stream">
+   <attribute type="SpecialCollectionAttribute">sent-mail</attribute>
+   <item rid="DD" mimetype="application/octet-stream">
+    <payload>testmailbody3</payload>
+    <attribute type="HEAD">From: &lt;test3@user.tst&gt;</attribute>
+   </item>
+  </collection>
+  <collection rid="res2_templates" name="res2_templates" content="inode/directory,message/rfc822,application/octet-stream">
+   <attribute type="SpecialCollectionAttribute">templates</attribute>
+   <item rid="FF" mimetype="application/octet-stream">
+    <payload>testmailbody5</payload>
+    <attribute type="HEAD">From: &lt;test5@user.tst&gt;</attribute>
+   </item>
+  </collection>
+  <collection rid="res2_foo" name="res2_foo" content="inode/directory,message/rfc822">
+   <item rid="GG" mimetype="application/octet-stream">
+    <payload>testmailbody6</payload>
+    <attribute type="HEAD">From: &lt;test6@user.tst&gt;</attribute>
+   </item>
+   <item rid="HH" mimetype="application/octet-stream">
+    <payload>testmailbody7</payload>
+    <attribute type="HEAD">From: &lt;test7@user.tst&gt;</attribute>
+   </item>
+   <item rid="II" mimetype="application/octet-stream">
+    <payload>testmailbody8</payload>
+    <attribute type="HEAD">From: &lt;test8@user.tst&gt;</attribute>
+   </item>
+  </collection>
+ </collection>
+</knut>
+

@@ -1,0 +1,11 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.freedesktop.Akonadi.UnifiedMailboxAgent">
+    <method name="setEnableAgent" >
+      <arg direction="in" type="b" name="enabled" />
+    </method>
+    <method name="enabledAgent" >
+      <arg direction="out" type="b" />
+    </method>
+  </interface>
+</node>
