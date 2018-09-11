@@ -3786,7 +3786,7 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     mDeleteAction->setEnabled(mass_actions && canDeleteMessages);
 
-    mExpireConfigAction->setEnabled(canDeleteMessages);
+    mExpireConfigAction->setEnabled(canDeleteMessages && !MailCommon::Util::isVirtualCollection(mCurrentCollection));
 
     if (mMsgView) {
         mMsgView->findInMessageAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
