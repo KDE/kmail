@@ -2096,9 +2096,17 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         // Ok, when we reached this point, the user wants to add the image as an attachment.
         // Ask for the filename first.
         bool ok;
-        const QString attName
+        QString attName
             = QInputDialog::getText(this, i18n("KMail"), i18n("Name of the attachment:"), QLineEdit::Normal, QString(), &ok);
         if (!ok) {
+            return true;
+        }
+        attName = attName.trimmed();
+        if (attName.isEmpty()) {
+            KMessageBox::sorry(this,
+                               i18n("Attachment name can't be empty"),
+                               i18n("Invalid Attachment Name"));
+
             return true;
         }
         addAttachment(attName, KMime::Headers::CEbase64, QString(), imageData, "image/png");
