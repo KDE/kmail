@@ -238,7 +238,7 @@ void ConfigurePluginsListWidget::initialize()
 void ConfigurePluginsListWidget::initializeAgentPlugins()
 {
     mPluginUtilDataList.clear();
-    mPluginUtilDataList.reserve(4);
+    mPluginUtilDataList.reserve(5);
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"));
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"));
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
