@@ -67,7 +67,7 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     connect(&mBoxManager, &UnifiedMailboxManager::updateBox,
             this, [this](const UnifiedMailbox *box) {
                 if (!box->collectionId()) {
-                    qCWarning(AGENT_LOG) << "MailboxManager wants us to update Box but does not have its CollectionId!?";
+                    qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "MailboxManager wants us to update Box but does not have its CollectionId!?";
                     return;
                 }
 
@@ -99,7 +99,7 @@ void UnifiedMailboxAgent::configure(WId windowId)
 
 void UnifiedMailboxAgent::delayedInit()
 {
-    qCDebug(AGENT_LOG) << "delayed init";
+    qCDebug(UNIFIEDMAILBOXAGENT_LOG) << "delayed init";
 
     fixSpecialCollections();
     mBoxManager.loadBoxes([this]() {
@@ -189,7 +189,7 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
     Q_EMIT status(Running, i18n("Synchronizing unified mailbox %1", c.displayName()));
     const auto unifiedBox = mBoxManager.unifiedMailboxFromCollection(c);
     if (!unifiedBox) {
-        qCWarning(AGENT_LOG) << "Failed to retrieve box ID for collection " << c.id();
+        qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "Failed to retrieve box ID for collection " << c.id();
         itemsRetrievedIncremental({}, {}); // fake incremental retrieval
         return;
     }
@@ -240,7 +240,7 @@ bool UnifiedMailboxAgent::retrieveItem(const Akonadi::Item &item, const QSet<QBy
 {
     // This method should never be called by Akonadi
     Q_UNUSED(parts);
-    qCWarning(AGENT_LOG) << "retrieveItem() for item" << item.id() << "called but we can't own any items! This is a bug in Akonadi";
+    qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "retrieveItem() for item" << item.id() << "called but we can't own any items! This is a bug in Akonadi";
     return false;
 }
 
@@ -257,7 +257,7 @@ void UnifiedMailboxAgent::fixSpecialCollection(const QString &colId, Akonadi::Sp
             &Akonadi::CollectionFetchJob::collectionsReceived,
             this, [type](const Akonadi::Collection::List &cols) {
                 if (cols.count() != 1) {
-                    qCWarning(AGENT_LOG) << "Identity special collection retrieval did not find a valid collection";
+                    qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "Identity special collection retrieval did not find a valid collection";
                     return;
                 }
                 Akonadi::SpecialMailCollections::self()->registerCollection(type, cols.first());
@@ -275,7 +275,7 @@ void UnifiedMailboxAgent::fixSpecialCollections()
         return;
     }
 
-    qCDebug(AGENT_LOG) << "Fixing special collections assigned from Identities";
+    qCDebug(UNIFIEDMAILBOXAGENT_LOG) << "Fixing special collections assigned from Identities";
 
     for (const auto &identity : *KIdentityManagement::IdentityManager::self()) {
         if (!identity.disabledFcc()) {
