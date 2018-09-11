@@ -15,7 +15,7 @@ set(unifiedmailbox_agent_SRCS
     settingsdialog.cpp
     mailkernel.cpp
 )
-ecm_qt_declare_logging_category(unifiedmailbox_agent_SRCS HEADER unifiedmailboxagent_debug.h IDENTIFIER agent_log CATEGORY_NAME org.kde.pim.unifiedmailboxagent)
+ecm_qt_declare_logging_category(unifiedmailbox_agent_SRCS HEADER unifiedmailboxagent_debug.h IDENTIFIER AGENT_LOG CATEGORY_NAME org.kde.pim.unifiedmailboxagent)
 kconfig_add_kcfg_files(unifiedmailbox_agent_SRCS
     settings.kcfgc
 )

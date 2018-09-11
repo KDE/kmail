@@ -89,15 +89,15 @@ UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QOb
             this, [this](const Akonadi::Item &item, const Akonadi::Collection &collection) {
                 ReplayNextOnExit replayNext(mMonitor);
 
-                qCDebug(agent_log) << "Item" << item.id() << "added to collection" << collection.id();
+                qCDebug(AGENT_LOG) << "Item" << item.id() << "added to collection" << collection.id();
                 const auto box = unifiedMailboxForSource(collection.id());
                 if (!box) {
-                    qCWarning(agent_log) << "Failed to find unified mailbox for source collection " << collection.id();
+                    qCWarning(AGENT_LOG) << "Failed to find unified mailbox for source collection " << collection.id();
                     return;
                 }
 
                 if (!box->collectionId()) {
-                    qCWarning(agent_log) << "Missing box->collection mapping for unified mailbox" << box->id();
+                    qCWarning(AGENT_LOG) << "Missing box->collection mapping for unified mailbox" << box->id();
                     return;
                 }
 
@@ -116,11 +116,11 @@ UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QOb
                 const auto parentId = items.first().parentCollection().id();
                 const auto box = unifiedMailboxForSource(parentId);
                 if (!box) {
-                    qCWarning(agent_log) << "Received Remove notification for Items belonging to" << parentId << "which we don't monitor";
+                    qCWarning(AGENT_LOG) << "Received Remove notification for Items belonging to" << parentId << "which we don't monitor";
                     return;
                 }
                 if (!box->collectionId()) {
-                    qCWarning(agent_log) << "Missing box->collection mapping for unified mailbox" << box->id();
+                    qCWarning(AGENT_LOG) << "Missing box->collection mapping for unified mailbox" << box->id();
                     return;
                 }
 
@@ -154,14 +154,14 @@ UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QOb
                     saveBoxes();
                     // No need to resync the box collection, the linked Items got removed by Akonadi
                 } else {
-                    qCWarning(agent_log) << "Received notification about removal of Collection" << col.id() << "which we don't monitor";
+                    qCWarning(AGENT_LOG) << "Received notification about removal of Collection" << col.id() << "which we don't monitor";
                 }
            });
     connect(&mMonitor, qOverload<const Akonadi::Collection &, const QSet<QByteArray> &>(&Akonadi::Monitor::collectionChanged),
             this, [this](const Akonadi::Collection &col, const QSet<QByteArray> &parts) {
                 ReplayNextOnExit replayNext(mMonitor);
 
-                qCDebug(agent_log) << "Collection changed:" << parts;
+                qCDebug(AGENT_LOG) << "Collection changed:" << parts;
                 if (!parts.contains(Akonadi::SpecialCollectionAttribute().type())) {
                     return;
                 }
@@ -211,7 +211,7 @@ Akonadi::ChangeRecorder &UnifiedMailboxManager::changeRecorder()
 
 void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
 {
-    qCDebug(agent_log) << "loading boxes";
+    qCDebug(AGENT_LOG) << "loading boxes";
     const auto group = mConfig->group("UnifiedMailboxes");
     const auto boxGroups = group.groupList();
     for (const auto &boxGroupName : boxGroups) {
@@ -222,7 +222,7 @@ void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
     }
 
     const auto cb = [this, finishedCb = std::move(finishedCb)]() {
-        qCDebug(agent_log) << "Finished callback: enabling change recorder";
+        qCDebug(AGENT_LOG) << "Finished callback: enabling change recorder";
         // Only now start processing changes from change recorder
         connect(&mMonitor, &Akonadi::ChangeRecorder::changesAdded, &mMonitor, &Akonadi::ChangeRecorder::replayNext, Qt::QueuedConnection);
         // And start replaying any potentially pending notification
@@ -233,7 +233,7 @@ void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
         }
     };
 
-    qCDebug(agent_log) << "Loaded" << mMailboxes.size() << "boxes from config";
+    qCDebug(AGENT_LOG) << "Loaded" << mMailboxes.size() << "boxes from config";
 
     if (mMailboxes.empty()) {
         createDefaultBoxes(std::move(cb));
@@ -352,7 +352,7 @@ void UnifiedMailboxManager::createDefaultBoxes(FinishedCallback &&finishedCb)
                             continue;
                         }
                     } catch (const std::out_of_range &) {
-                        qCWarning(agent_log) << "Failed to find a special unified mailbox for source collection" << col.id();
+                        qCWarning(AGENT_LOG) << "Failed to find a special unified mailbox for source collection" << col.id();
                         continue;
                     }
                 }
@@ -424,7 +424,7 @@ const UnifiedMailbox *UnifiedMailboxManager::unregisterSpecialSourceCollection(q
     }
 
     if (!box->isSpecial()) {
-        qCDebug(agent_log) << colId << "does not belong to a special unified box" << box->id();
+        qCDebug(AGENT_LOG) << colId << "does not belong to a special unified box" << box->id();
         return {};
     }
 
