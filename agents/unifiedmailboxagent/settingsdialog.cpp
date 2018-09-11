@@ -49,6 +49,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     , mKernel(new MailKernel(config, this))
     , mConfig(config)
 {
+    setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     auto l = new QVBoxLayout(this);
 
     auto h = new QHBoxLayout;
