@@ -685,7 +685,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 2: "replace [...]" check box:
     mReplaceReplyPrefixCheck = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem()->label(),
+        MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem()->label(),
         group);
     connect(mReplaceReplyPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
@@ -714,7 +714,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 3: "replace [...]" check box:
     mReplaceForwardPrefixCheck = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem()->label(),
+        MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem()->label(),
         group);
     connect(mReplaceForwardPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
@@ -725,27 +725,27 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
 void ComposerPage::SubjectTab::doLoadFromGlobalSettings()
 {
-    loadWidget(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem());
-    loadWidget(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem());
-    loadWidget(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
-    loadWidget(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
+    loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
+    loadWidget(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
+    loadWidget(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
+    loadWidget(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
 }
 
 void ComposerPage::SubjectTab::save()
 {
-    saveSimpleStringListEditor(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem());
-    saveSimpleStringListEditor(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem());
-    saveCheckBox(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
-    saveCheckBox(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
+    saveSimpleStringListEditor(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
+    saveSimpleStringListEditor(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
+    saveCheckBox(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
+    saveCheckBox(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
 }
 
 void ComposerPage::SubjectTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
-    loadWidget(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem());
-    loadWidget(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem());
-    loadWidget(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
-    loadWidget(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
+    loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
+    loadWidget(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
+    loadWidget(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
+    loadWidget(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
 }
 
