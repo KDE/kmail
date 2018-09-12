@@ -1,6 +1,18 @@
 [Desktop Entry]
 Name=Unified Mailbox Agent
+Name[ca]=Agent de la bústia unificada
+Name[nl]=Geünificeerde e-mailboxagent
+Name[pt]=Agente de Caixas de Correio Unificadas
+Name[pt_BR]=Agente de Caixas de Mensagens Unificadas
+Name[uk]=Агент уніфікованої поштової скриньки
+Name[x-test]=xxUnified Mailbox Agentxx
 Comment=Unified Mailbox Agent
+Comment[ca]=Agent de la bústia unificada
+Comment[nl]=Geünificeerde e-mailboxagent
+Comment[pt]=Agente de Caixas de Correio Unificadas
+Comment[pt_BR]=Agente de Caixas de Mensagens Unificadas
+Comment[uk]=Агент уніфікованої поштової скриньки
+Comment[x-test]=xxUnified Mailbox Agentxx
 Type=AkonadiAgent
 Exec=akonadi_unifiedmailbox_agent
 Icon=folder-mail
