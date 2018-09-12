@@ -389,7 +389,7 @@ private Q_SLOTS:
         QCOMPARE(linkedItems.size(), 1);
         QCOMPARE(linkedItems.at(0), item);
         const auto linkedCol = itemLinkedSignalSpy.at(0).at(1).value<Akonadi::Collection>();
-        QCOMPARE(linkedCol, inboxBoxCol);
+        QCOMPARE(linkedCol, inboxBoxCol.value());
     }
 
     void testItemMovedFromSourceCollection()
@@ -453,7 +453,7 @@ private Q_SLOTS:
         QCOMPARE(unlinkedItems.size(), 1);
         QCOMPARE(unlinkedItems.first(), item);
         const auto unlinkedCol = itemUnlinkedSignalSpy.at(0).at(1).value<Akonadi::Collection>();
-        QCOMPARE(unlinkedCol, inboxBoxCol);
+        QCOMPARE(unlinkedCol, inboxBoxCol.value());
     }
 
     void testItemMovedBetweenSourceCollections()
@@ -522,7 +522,7 @@ private Q_SLOTS:
         QCOMPARE(unlinkedItems.size(), 1);
         QCOMPARE(unlinkedItems.first(), item);
         const auto unlinkedCol = itemUnlinkedSignalSpy.at(0).at(1).value<Akonadi::Collection>();
-        QCOMPARE(unlinkedCol, inboxBoxCol);
+        QCOMPARE(unlinkedCol, inboxBoxCol.value());
 
         QTRY_COMPARE(itemLinkedSignalSpy.size(), 1);
         const auto linkedItems = itemLinkedSignalSpy.at(0).at(0).value<Akonadi::Item::List>();
