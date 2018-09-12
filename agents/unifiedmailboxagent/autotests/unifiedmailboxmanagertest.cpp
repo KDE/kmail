@@ -529,7 +529,7 @@ private Q_SLOTS:
         QCOMPARE(linkedItems.size(), 1);
         QCOMPARE(linkedItems.first(), item);
         const auto linkedCol = itemLinkedSignalSpy.at(0).at(1).value<Akonadi::Collection>();
-        QCOMPARE(linkedCol, draftsBoxCol);
+        QCOMPARE(linkedCol, draftsBoxCol.value());
     }
 
     void testSourceCollectionRemoved()
