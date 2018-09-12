@@ -234,7 +234,7 @@ private Q_SLOTS:
 
         // Now manager should have one unified mailbox and monitor all of its
         // source collections
-        QCOMPARE(std::distance(manager.begin(), manager.end()), 1);
+        QCOMPARE(std::distance(manager.begin(), manager.end()), 1l);
         QCOMPARE(recorder.collectionsMonitored().size(), 1);
         QCOMPARE(recorder.collectionsMonitored().at(0).id(), sourceCol);
         QVERIFY(manager.unifiedMailboxForSource(sourceCol) != nullptr);
@@ -271,7 +271,7 @@ private Q_SLOTS:
         QTRY_VERIFY_WITH_TIMEOUT(loadingDone, milliseconds(10s).count());
 
         // Now the box should be loaded and its source collections monitored
-        QCOMPARE(std::distance(manager.begin(), manager.end()), 1);
+        QCOMPARE(std::distance(manager.begin(), manager.end()), 1l);
         QCOMPARE(recorder.collectionsMonitored().count(), 2);
         const auto srcCols = mailbox->sourceCollections().toList();
         QCOMPARE(srcCols.count(), 2);
