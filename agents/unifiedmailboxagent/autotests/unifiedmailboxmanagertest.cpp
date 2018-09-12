@@ -330,11 +330,11 @@ private Q_SLOTS:
         // be set for each box.
         auto box = manager.unifiedMailboxFromCollection(inboxBoxCol.value());
         QVERIFY(box != nullptr);
-        QCOMPARE(box->collectionId(), inboxBoxCol->id());
+        QCOMPARE(box->collectionId().value(), inboxBoxCol->id());
 
         box = manager.unifiedMailboxFromCollection(sentBoxCol.value());
         QVERIFY(box != nullptr);
-        QCOMPARE(box->collectionId(), sentBoxCol->id());
+        QCOMPARE(box->collectionId().value(), sentBoxCol->id());
     }
 
     void testItemAddedToSourceCollection()
