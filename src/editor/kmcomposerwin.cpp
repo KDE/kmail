@@ -1571,10 +1571,10 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     });
 
     // manually load the identity's value into the fields; either the one from the
-    // messge, where appropriate, or the one from the sticky identity. What's in
+    // message, where appropriate, or the one from the sticky identity. What's in
     // mId might have changed meanwhile, thus the save value
     slotIdentityChanged(mId, true /*initalChange*/);
-    // Fixing the identitis with auto signing activated
+    // Fixing the identities with auto signing activated
     mLastSignActionState = mSignAction->isChecked();
 
     const KIdentityManagement::Identity &ident = im->identityForUoid(mComposerBase->identityCombo()->currentIdentity());

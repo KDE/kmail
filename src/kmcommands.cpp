@@ -1569,7 +1569,7 @@ KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const
     , mRef(ref)
 {
     // When trashing items from a virtual collection, they may each have a different
-    // trash folder, so we need to handle it here carefuly
+    // trash folder, so we need to handle it here carefully
     if (srcFolder.isVirtual()) {
         QHash<qint64, Akonadi::Collection> cache;
         for (const auto &msg : msgList) {

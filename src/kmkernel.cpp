@@ -99,7 +99,7 @@ using KMail::MailServiceImpl;
 #include <QDir>
 #include <QWidget>
 #include <QFileInfo>
-#include <QtDBus/QtDBus>
+#include <QtDBus>
 
 #include <MailCommon/ResourceReadConfigFile>
 

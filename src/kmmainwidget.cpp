@@ -20,6 +20,7 @@
 */
 
 // KMail includes
+#include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "job/composenewmessagejob.h"
 #include "editor/composer.h"
@@ -75,10 +76,7 @@
 #include "MailCommon/MailFilter"
 #include "MailCommon/FavoriteCollectionWidget"
 #include "MailCommon/FavoriteCollectionOrderProxyModel"
-#include "MailCommon/FolderTreeWidget"
-#include "MailCommon/FolderTreeView"
 #include "mailcommonsettings_base.h"
-#include "kmmainwidget.h"
 
 // Other PIM includes
 #include "kmail-version.h"

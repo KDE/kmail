@@ -22,8 +22,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef KMAIL_KMComposeWin
-#define KMAIL_KMComposeWin
+#ifndef KMAIL_KMCOMPOSERWIN_H
+#define KMAIL_KMCOMPOSERWIN_H
 
 // KMail includes
 #include "editor/composer.h"
@@ -323,7 +323,7 @@ private Q_SLOTS:
     void slotUpdateWindowTitle();
 
     /**
-     * Switch the icon to lock or unlock respectivly.
+     * Switch the icon to lock or unlock respectively.
      * Change states of all encrypt check boxes in the attachments listview
      */
     void slotEncryptToggled(bool);

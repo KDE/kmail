@@ -17,6 +17,9 @@
    Boston, MA 02110-1301, USA.
 */
 
+#ifndef UNIFIEDMAILBOXEDITOR_H
+#define UNIFIEDMAILBOXEDITOR_H
+
 #include <QDialog>
 
 #include "unifiedmailboxmanager.h"
@@ -35,3 +38,5 @@ private:
     UnifiedMailbox *mMailbox = nullptr;
     KSharedConfigPtr mConfig;
 };
+
+#endif

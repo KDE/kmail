@@ -29,8 +29,8 @@
  *  your version.
  */
 
-#ifndef COLLECTIONQUOTAPAGE_P_H
-#define COLLECTIONQUOTAPAGE_P_H
+#ifndef COLLECTIONQUOTAWIDGET_H
+#define COLLECTIONQUOTAWIDGET_H
 
 #include <QWidget>
 
@@ -53,4 +53,4 @@ private:
     QLabel *mUsage = nullptr;
 };
 
-#endif /* COLLECTIONQUOTAPAGE_P_H */
+#endif /* COLLECTIONQUOTAWIDGET_H */

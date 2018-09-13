@@ -96,7 +96,7 @@ void FillComposerJob::slotOpenComposer()
                 arg(mSettings.mAttachParamValue).toLatin1());
 
             iCalAutoSend = true; // no point in editing raw ICAL
-            noWordWrap = true; // we shant word wrap inline invitations
+            noWordWrap = true; // we shouldn't word wrap inline invitations
         } else {
             // Just do what we're told to do
             msgPart = new KMime::Content;

@@ -45,7 +45,7 @@ void UnifiedMailbox::save(KConfigGroup& group) const
     group.writeEntry("name", mName);
     group.writeEntry("icon", mIcon);
     group.writeEntry("sources", setToList(mSources));
-    // just for cacheing, we will do collection discovery on next start anyway
+    // just for caching, we will do collection discovery on next start anyway
     if (mCollectionId) {
         group.writeEntry("collectionId", *mCollectionId);
     } else {

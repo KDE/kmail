@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef UNIFIEDBOXMANAGER_H
-#define UNIFIEDBOXMANAGER_H
+#ifndef UNIFIEDMAILBOXMANAGER_H
+#define UNIFIEDMAILBOXMANAGER_H
 
 #include "utils.h"
 

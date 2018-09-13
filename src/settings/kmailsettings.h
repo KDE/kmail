@@ -21,8 +21,8 @@
     without including the source code for Qt in the source distribution.
 */
 
-#ifndef KMAIL_GLOBALSETTINGS_H
-#define KMAIL_GLOBALSETTINGS_H
+#ifndef KMAIL_SETTINGS_H
+#define KMAIL_SETTINGS_H
 
 #include "globalsettings_kmail.h"
 
@@ -52,4 +52,4 @@ private:
     QTimer *mConfigSyncTimer = nullptr;
 };
 
-#endif /* KMAIL_GLOBALSETTINGS_H */
+#endif /* KMAIL_SETTINGS_H */

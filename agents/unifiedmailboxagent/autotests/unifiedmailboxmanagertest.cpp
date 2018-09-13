@@ -593,7 +593,7 @@ private Q_SLOTS:
     void testSpecialSourceCollectionCreated()
     {
         // TODO: this does not work yet: we only monitor collections that we are
-        // intersted in, we don't monitor other collections
+        // interested in, we don't monitor other collections
     }
 
     void testSpecialSourceCollectionDemoted()

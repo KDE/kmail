@@ -328,7 +328,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // Spacing
     ++row;
 
-    // "Use Baloo seach in composer" checkbox
+    // "Use Baloo search in composer" checkbox
     mShowAkonadiSearchAddressesInComposer = new QCheckBox(
         MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(),
         this);

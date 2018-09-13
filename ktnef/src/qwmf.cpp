@@ -359,7 +359,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
         delete[] mObjHandleTab;
     }
     mObjHandleTab = new WinObjHandle * [ MAX_OBJHANDLE ];
-    for (i = MAX_OBJHANDLE - 1; i >= 0; i--) {
+    for (i = MAX_OBJHANDLE - 1; i >= 0; --i) {
         mObjHandleTab[ i ] = NULL;
     }
 
@@ -514,7 +514,7 @@ void QWinMetaFile::polyPolygon(long, short *parm)
     startPolygon = 1 + parm[ 0 ];
     for (i = 0; i < parm[ 0 ]; ++i) {
         QPolygon pa1(parm[ 1 + i ]);
-        for (j = 0; j < parm[ 1 + i ]; j++) {
+        for (j = 0; j < parm[ 1 + i ]; ++j) {
             pa1.setPoint(j, parm[ startPolygon ], parm[ startPolygon + 1 ]);
             startPolygon += 2;
         }
