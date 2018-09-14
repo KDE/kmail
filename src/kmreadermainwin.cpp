@@ -340,7 +340,7 @@ void KMReaderMainWin::setupAccel()
     mSaveAtmAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments..."), actionCollection());
     connect(mSaveAtmAction, &QAction::triggered, mReaderWin->viewer(), &MessageViewer::Viewer::slotAttachmentSaveAll);
 
-    mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("user-trash")), i18n("&Move to Trash"), this);
+    mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete-shred")), i18n("&Move to Trash"), this);
     mTrashAction->setIconText(i18nc("@action:intoolbar Move to Trash", "Trash"));
     KMail::Util::addQActionHelpText(mTrashAction, i18n("Move message to trashcan"));
     actionCollection()->addAction(QStringLiteral("move_to_trash"), mTrashAction);
