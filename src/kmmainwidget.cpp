@@ -1478,7 +1478,7 @@ void KMMainWidget::slotEmptyFolder()
                          : i18n("<qt>Are you sure you want to move all messages from "
                                 "folder <b>%1</b> to the trash?</qt>", mCurrentCollection.name().toHtmlEscaped());
 
-    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QStringLiteral("user-trash")))
+    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QStringLiteral("edit-delete-shred")))
         != KMessageBox::Continue) {
         return;
     }
@@ -2955,7 +2955,7 @@ void KMMainWidget::setupActions()
     mTrashThreadAction = new QAction(i18n("M&ove Thread to Trash"), this);
     actionCollection()->addAction(QStringLiteral("move_thread_to_trash"), mTrashThreadAction);
     actionCollection()->setDefaultShortcut(mTrashThreadAction, QKeySequence(Qt::CTRL + Qt::Key_Delete));
-    mTrashThreadAction->setIcon(QIcon::fromTheme(QStringLiteral("user-trash")));
+    mTrashThreadAction->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete-shred")));
     KMail::Util::addQActionHelpText(mTrashThreadAction, i18n("Move thread to trashcan"));
     connect(mTrashThreadAction, &QAction::triggered, this, &KMMainWidget::slotTrashThread);
 
@@ -4012,7 +4012,7 @@ void KMMainWidget::updateFolderMenu()
     QAction *moveToTrash = akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash);
     KMail::Util::setActionTrashOrDelete(moveToTrash, isInTrashFolder);
 
-    mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
+    mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("edit-delete-shred")));
     mTrashThreadAction->setText(isInTrashFolder ? i18n("Delete T&hread") : i18n("M&ove Thread to Trash"));
 
     mSearchMessages->setText((mCurrentCollection.resource() == QLatin1String("akonadi_search_resource")) ? i18n("Edit Search...") : i18n("&Find Messages..."));
