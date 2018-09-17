@@ -342,7 +342,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientCheck = new QCheckBox(
         GlobalSettings::self()->tooManyRecipientsItem()->label(), this);
     mRecipientCheck->setObjectName(QStringLiteral("kcfg_TooManyRecipients"));
-    helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8());
+    helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8().constData());
     mRecipientCheck->setWhatsThis(helpText);
     mRecipientCheck->setToolTip(i18n("Warn if too many recipients are specified"));
 
@@ -353,7 +353,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setValue(5 /*init*/);
     mRecipientSpin->setObjectName(QStringLiteral("kcfg_RecipientThreshold"));
     mRecipientSpin->setEnabled(false);
-    helpText = i18n(KMailSettings::self()->recipientThresholdItem()->whatsThis().toUtf8());
+    helpText = i18n(KMailSettings::self()->recipientThresholdItem()->whatsThis().toUtf8().constData());
     mRecipientSpin->setWhatsThis(helpText);
     mRecipientSpin->setToolTip(i18n("Set the maximum number of recipients for the warning"));
 

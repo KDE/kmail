@@ -1241,7 +1241,7 @@ bool QWinMetaFile::dibToBmp(QImage &bmp, const char *dib, long size)
 
     // add BMP header
     BMPFILEHEADER *bmpHeader;
-    bmpHeader = (BMPFILEHEADER *)((const char *)pattern);
+    bmpHeader = (BMPFILEHEADER *)(pattern.constData());
     bmpHeader->bmType = 0x4D42;
     bmpHeader->bmSize = sizeBmp;
 

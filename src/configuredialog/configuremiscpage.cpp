@@ -70,7 +70,7 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     layout->addWidget(mOnStartupOpenFolder);
 
     mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
-        i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8()));
+        i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8().constData()));
 
     connect(mMMTab.mExcludeImportantFromExpiry, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mLoopOnGotoUnread, QOverload<int>::of(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);

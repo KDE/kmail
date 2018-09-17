@@ -140,7 +140,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     l->setBuddy(mSendOnCheckCombo);
     glay->addWidget(l, 2, 0);
 
-    QString msg = i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8());
+    QString msg = i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8().constData());
     l->setWhatsThis(msg);
     mSendOnCheckCombo->setWhatsThis(msg);
 
