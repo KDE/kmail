@@ -77,6 +77,7 @@ private:
     OpenComposerSettings mOpenComposerSettings;
     KMime::Message::Ptr mMsg;
     KMail::Composer::TemplateContext mContext;
+    uint mIdentityId = 0;
 };
 
 #endif // OPENCOMPOSERJOB_H

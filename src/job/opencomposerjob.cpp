@@ -52,7 +52,15 @@ OpenComposerJob::~OpenComposerJob()
 void OpenComposerJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message);
-    MessageHelper::initHeader(mMsg, KIdentityManagement::IdentityManager::self());
+    if (!mOpenComposerSettings.mIdentity.isEmpty()) {
+        if (KMKernel::self()->identityManager()->identities().contains(mOpenComposerSettings.mIdentity)) {
+            const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(mOpenComposerSettings.mIdentity);
+            mIdentityId = id.uoid();
+        }
+    }
+
+    MessageHelper::initHeader(mMsg, KIdentityManagement::IdentityManager::self(), mIdentityId);
+
     mMsg->contentType()->setCharset("utf-8");
     if (!mOpenComposerSettings.mTo.isEmpty()) {
         mMsg->to()->fromUnicodeString(mOpenComposerSettings.mTo, "utf-8");
@@ -111,14 +119,7 @@ void OpenComposerJob::slotOpenComposer()
 
     mMsg->assemble();
 
-    uint identityId = 0;
-    if (!mOpenComposerSettings.mIdentity.isEmpty()) {
-        if (KMKernel::self()->identityManager()->identities().contains(mOpenComposerSettings.mIdentity)) {
-            const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(mOpenComposerSettings.mIdentity);
-            identityId = id.uoid();
-        }
-    }
-    KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, mContext, identityId);
+    KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, mContext, mIdentityId);
     if (!mOpenComposerSettings.mTo.isEmpty()) {
         cWin->setFocusToSubject();
     }
