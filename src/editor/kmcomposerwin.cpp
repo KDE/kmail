@@ -285,6 +285,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
                                                                                           mHeadersArea);
     identity->setCurrentIdentity(mId);
     connect(identity, &KIdentityManagement::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
+    connect(identity, &KIdentityManagement::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);
     mComposerBase->setIdentityCombo(identity);
 
     sigController->setIdentityCombo(identity);
@@ -1492,6 +1493,11 @@ QString KMComposerWin::replyTo() const
     } else {
         return QString();
     }
+}
+
+void KMComposerWin::slotInvalidIdentity()
+{
+    mIncorrectIdentityFolderWarning->identityInvalid();
 }
 
 void KMComposerWin::slotFccIsInvalid()
