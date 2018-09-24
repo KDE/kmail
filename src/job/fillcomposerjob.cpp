@@ -40,7 +40,7 @@ FillComposerJob::~FillComposerJob()
 void FillComposerJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message);
-    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager());
+    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mSettings.mIdentity);
     mMsg->contentType()->setCharset("utf-8");
     if (!mSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mSettings.mCc, "utf-8");
