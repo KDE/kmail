@@ -1543,7 +1543,34 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     if (auto hrd = newMsg->headerByType("X-KMail-Identity")) {
         const QString identityStr = hrd->asUnicodeString();
         if (!identityStr.isEmpty()) {
-            mId = identityStr.toUInt();
+            const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid(identityStr.toUInt());
+            if (ident.isNull()) {
+                if (auto hrd = newMsg->headerByType("X-KMail-Identity-Name")) {
+                    const QString identityStrName = hrd->asUnicodeString();
+                    const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(identityStrName);
+                    if (!id.isNull()) {
+                        mId = id.uoid();
+                    } else {
+                        mId = 0;
+                    }
+                } else {
+                    mId = 0;
+                }
+            } else {
+                mId = identityStr.toUInt();
+            }
+        }
+    } else {
+        if (auto hrd = newMsg->headerByType("X-KMail-Identity-Name")) {
+            const QString identityStrName = hrd->asUnicodeString();
+            const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(identityStrName);
+            if (!id.isNull()) {
+                mId = id.uoid();
+            } else {
+                mId = 0;
+            }
+        } else {
+            mId = 0;
         }
     }
 
@@ -2996,16 +3023,61 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             mMsg->setHeader(header);
         }
     }
-    const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
-    const Transport *transport = TransportManager::self()->transportById(transportId, true);
-    if (!transport) {
-        mMsg->removeHeader("X-KMail-Transport");
-        mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
+
+
+    if (initialChange) {
+        if (auto hrd = mMsg->headerByType("X-KMail-Transport")) {
+            const QString mailtransportStr = hrd->asUnicodeString();
+            if (!mailtransportStr.isEmpty()) {
+                int transportId = mailtransportStr.toInt();
+                const Transport *transport = TransportManager::self()->transportById(transportId, false); /*don't return default transport */
+                if (transport) {
+                    KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport");
+                    header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+                    mMsg->setHeader(header);
+                    mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
+                } else {
+                    if (auto hrd = mMsg->headerByType("X-KMail-Transport-Name")) {
+                        const QString identityStrName = hrd->asUnicodeString();
+                        const Transport *transport = TransportManager::self()->transportByName(identityStrName, true);
+                        if (transport) {
+                            KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport");
+                            header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+                            mMsg->setHeader(header);
+                            mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
+                        } else {
+                            mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
+                        }
+                    } else {
+                        mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
+                    }
+                }
+            }
+        } else {
+            const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
+            const Transport *transport = TransportManager::self()->transportById(transportId, true);
+            if (transport) {
+                KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport");
+                header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+                mMsg->setHeader(header);
+                mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
+            } else {
+                mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
+            }
+
+        }
     } else {
-        KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport");
-        header->fromUnicodeString(QString::number(transport->id()), "utf-8");
-        mMsg->setHeader(header);
-        mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
+        const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
+        const Transport *transport = TransportManager::self()->transportById(transportId, true);
+        if (!transport) {
+            mMsg->removeHeader("X-KMail-Transport");
+            mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
+        } else {
+            KMime::Headers::Generic *header = new KMime::Headers::Generic("X-KMail-Transport");
+            header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+            mMsg->setHeader(header);
+            mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
+        }
     }
 
     const bool fccIsDisabled = ident.disabledFcc();
