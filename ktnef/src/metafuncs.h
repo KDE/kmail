@@ -95,7 +95,7 @@ static const struct MetaFuncRec {
     { "CREATEREGION", 0x06FF, &QWinMetaFile::createEmptyObject },
     { "END", 0, &QWinMetaFile::end },
     // always the latest in the table : in case of unknown function
-    { NULL, 0, &QWinMetaFile::noop },
+    { nullptr, 0, &QWinMetaFile::noop },
 };
 
 #endif /*metafunc_h*/

@@ -132,8 +132,8 @@ void WinObjFontHandle::apply(QPainter &p)
 QWinMetaFile::QWinMetaFile()
 {
     mValid = false;
-    mFirstCmd = NULL;
-    mObjHandleTab = NULL;
+    mFirstCmd = nullptr;
+    mObjHandleTab = nullptr;
     mDpi = 1000;
 }
 
@@ -188,7 +188,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
     if (mFirstCmd) {
         delete mFirstCmd;
     }
-    mFirstCmd = NULL;
+    mFirstCmd = nullptr;
 
     st.setDevice(&buffer);
     st.setByteOrder(QDataStream::LittleEndian);   // Great, I love Qt !
@@ -288,7 +288,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
     mValid = ((header.mtHeaderSize == 9) && (header.mtNoParameters == 0)) || mIsEnhanced || mIsPlaceable;
     if (mValid) {
         //----- Read Metafile Records
-        last = NULL;
+        last = nullptr;
         rdFunc = -1;
         while (!st.atEnd() && (rdFunc != 0)) {
             st >> rdSize;
@@ -297,7 +297,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
             rdSize -= 3;
 
             cmd = new WmfCmd;
-            cmd->next = NULL;
+            cmd->next = nullptr;
             if (last) {
                 last->next = cmd;
             } else {
@@ -350,7 +350,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
         return false;
     }
 
-    assert(aTarget != NULL);
+    assert(aTarget != nullptr);
     if (mPainter.isActive()) {
         return false;
     }
@@ -360,7 +360,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
     }
     mObjHandleTab = new WinObjHandle * [ MAX_OBJHANDLE ];
     for (i = MAX_OBJHANDLE - 1; i >= 0; --i) {
-        mObjHandleTab[ i ] = NULL;
+        mObjHandleTab[ i ] = nullptr;
     }
 
     mPainter.resetMatrix();
@@ -384,7 +384,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
 
         if (QWMF_DEBUG) {
             QString str, param;
-            if (metaFuncTab[ idx ].name == NULL) {
+            if (metaFuncTab[ idx ].name == nullptr) {
                 str += QLatin1String("UNKNOWN ");
             }
             if (metaFuncTab[ idx ].method == &QWinMetaFile::noop) {
@@ -1127,7 +1127,7 @@ void QWinMetaFile::addHandle(WinObjHandle *handle)
     int idx;
 
     for (idx = 0; idx < MAX_OBJHANDLE; idx++) {
-        if (mObjHandleTab[ idx ] == NULL) {
+        if (mObjHandleTab[ idx ] == nullptr) {
             break;
         }
     }
@@ -1144,7 +1144,7 @@ void QWinMetaFile::deleteHandle(int idx)
 {
     if (idx >= 0 && idx < MAX_OBJHANDLE && mObjHandleTab[ idx ]) {
         delete mObjHandleTab[ idx ];
-        mObjHandleTab[ idx ] = NULL;
+        mObjHandleTab[ idx ] = nullptr;
     }
 }
 
