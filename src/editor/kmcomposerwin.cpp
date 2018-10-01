@@ -1191,7 +1191,6 @@ void KMComposerWin::setupActions(void)
     actionCollection()->addAction(QStringLiteral("options_request_delivery_confirmation"), mRequestDeliveryConfirmation);
     //TOOD mRequestDeliveryConfirmation->setChecked(KMailSettings::self()->requestMDN());
 
-
     //----- Message-Encoding Submenu
     mCodecAction = new CodecAction(CodecAction::ComposerMode, this);
     actionCollection()->addAction(QStringLiteral("charsets"), mCodecAction);
@@ -1454,7 +1453,6 @@ void KMComposerWin::setupStatusBar(QWidget *w)
     mStatusBarLabelSpellCheckingChangeMode->setStateString(i18n("Spellcheck: on"), i18n("Spellcheck: off"));
     statusBar()->addPermanentWidget(mStatusBarLabelSpellCheckingChangeMode, 0);
     connect(mStatusBarLabelSpellCheckingChangeMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
-
 }
 
 void KMComposerWin::setupEditor(void)
@@ -1622,8 +1620,8 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
     if (auto hdr = newMsg->headerByType("Return-Receipt-To")) {
         const QString returnReceiptToAddr = hdr->asUnicodeString();
         mRequestDeliveryConfirmation->setChecked((!returnReceiptToAddr.isEmpty()
-                                       && im->thatIsMe(returnReceiptToAddr))
-                                      /*TODO || KMailSettings::self()->requestMDN()*/);
+                                                  && im->thatIsMe(returnReceiptToAddr))
+                                                 /*TODO || KMailSettings::self()->requestMDN()*/);
     }
     // check for presence of a priority header, indicating urgent mail:
     if (newMsg->headerByType("X-PRIORITY") && newMsg->headerByType("Priority")) {
@@ -3069,7 +3067,6 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
         }
     }
 
-
     if (initialChange) {
         if (auto hrd = mMsg->headerByType("X-KMail-Transport")) {
             const QString mailtransportStr = hrd->asUnicodeString();
@@ -3109,7 +3106,6 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             } else {
                 mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
             }
-
         }
     } else {
         const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();

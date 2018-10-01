@@ -524,7 +524,6 @@ private:
     Akonadi::Collection::List applyFilterOnCollection(bool recursive);
     void setShowStatusBarMessage(const QString &msg);
 
-
     // Message actions
     QAction *mDeleteAction = nullptr;
     QAction *mTrashThreadAction = nullptr;

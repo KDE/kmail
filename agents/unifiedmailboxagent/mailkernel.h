@@ -32,9 +32,7 @@ namespace MailCommon {
 class FolderCollectionMonitor;
 }
 
-class MailKernel : public QObject
-                 , public MailCommon::IKernel
-                 , public MailCommon::ISettings
+class MailKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings
 {
     Q_OBJECT
 public:
@@ -71,4 +69,3 @@ private:
 };
 
 #endif
-

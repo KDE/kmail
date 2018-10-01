@@ -144,7 +144,7 @@ void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, c
         const QModelIndex index = model->index(row, 0, parentIndex);
         const Akonadi::Collection collection
             = model->data(
-            index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+                  index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
 
         if (!collection.isValid() || MailCommon::Util::isVirtualCollection(collection)) {
             continue;

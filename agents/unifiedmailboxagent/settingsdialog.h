@@ -33,8 +33,7 @@ class SettingsDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxManager &manager,
-                            WId windowId, QWidget *parent = nullptr);
+    explicit SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxManager &manager, WId windowId, QWidget *parent = nullptr);
     ~SettingsDialog() override;
 
 public Q_SLOTS:
@@ -50,7 +49,5 @@ private:
     MailKernel *mKernel = nullptr;
     KSharedConfigPtr mConfig;
 };
-
-
 
 #endif

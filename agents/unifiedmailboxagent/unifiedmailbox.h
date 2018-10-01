@@ -77,7 +77,6 @@ private:
     UnifiedMailboxManager *mManager = nullptr;
 };
 
-Q_DECLARE_METATYPE(UnifiedMailbox*)
-
+Q_DECLARE_METATYPE(UnifiedMailbox *)
 
 #endif

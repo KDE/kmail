@@ -22,7 +22,6 @@
 
 #include <QObject>
 
-
 class QMimeData;
 class KMComposerWin;
 class DndFromArkJob : public QObject

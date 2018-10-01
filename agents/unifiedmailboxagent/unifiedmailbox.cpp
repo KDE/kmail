@@ -24,7 +24,6 @@
 
 #include <KConfigGroup>
 
-
 bool UnifiedMailbox::operator==(const UnifiedMailbox &other) const
 {
     return mId == other.mId;
@@ -40,7 +39,7 @@ void UnifiedMailbox::load(const KConfigGroup &group)
     mCollectionId = group.readEntry("collectionId", -1ll);
 }
 
-void UnifiedMailbox::save(KConfigGroup& group) const
+void UnifiedMailbox::save(KConfigGroup &group) const
 {
     group.writeEntry("name", mName);
     group.writeEntry("icon", mIcon);
@@ -56,8 +55,8 @@ void UnifiedMailbox::save(KConfigGroup& group) const
 bool UnifiedMailbox::isSpecial() const
 {
     return mId == Common::InboxBoxId
-        || mId == Common::SentBoxId
-        || mId == Common::DraftsBoxId;
+           || mId == Common::SentBoxId
+           || mId == Common::DraftsBoxId;
 }
 
 void UnifiedMailbox::setCollectionId(qint64 id)
@@ -151,5 +150,3 @@ void UnifiedMailbox::attachManager(UnifiedMailboxManager *manager)
         mManager = manager;
     }
 }
-
-

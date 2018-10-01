@@ -467,8 +467,9 @@ QString KMMainWidget::fullCollectionPath() const
 // Connected to the currentChanged signals from the folderTreeView and favorites view.
 void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
 {
-    if (mCurrentCollection == collection)
+    if (mCurrentCollection == collection) {
         return;
+    }
     folderSelected(collection);
     if (collection.cachePolicy().syncOnDemand()) {
         AgentManager::self()->synchronizeCollection(collection, false);
@@ -3556,7 +3557,6 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("remove_duplicate_recursive"), mRemoveDuplicateRecursiveAction);
     connect(mRemoveDuplicateRecursiveAction, &KToggleAction::triggered, this, &KMMainWidget::slotRemoveDuplicateRecursive);
 
-
     mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
     actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
     connect(mAccountSettings, &QAction::triggered, this, &KMMainWidget::slotAccountSettings);
@@ -4723,7 +4723,7 @@ void KMMainWidget::printCurrentMessage(bool preview)
         commandInfo.mMsg = currentItem;
         commandInfo.mHeaderStylePlugin = messageView()->viewer()->headerStylePlugin();
         commandInfo.mFormat = messageView()->viewer()->displayFormatMessageOverwrite();
-        commandInfo.mHtmlLoadExtOverride =  messageView()->viewer()->htmlLoadExternal();
+        commandInfo.mHtmlLoadExtOverride = messageView()->viewer()->htmlLoadExternal();
         commandInfo.mPrintPreview = preview;
         commandInfo.mUseFixedFont = useFixedFont;
         commandInfo.mOverrideFont = overrideEncoding;
@@ -4809,43 +4809,42 @@ void KMMainWidget::setupUnifiedMailboxChecker()
     }
 
     const auto ask = [this]() {
-        if (!KMailSettings::self()->askEnableUnifiedMailboxes()) {
-            return;
-        }
+                         if (!KMailSettings::self()->askEnableUnifiedMailboxes()) {
+                             return;
+                         }
 
-        if (kmkernel->accounts().count() <= 1) {
-            return;
-        }
+                         if (kmkernel->accounts().count() <= 1) {
+                             return;
+                         }
 
-        const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_unifiedmailbox_agent"));
-        QDBusInterface iface(service, QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.UnifiedMailboxAgent"),
-                             QDBusConnection::sessionBus(), this);
-        if (!iface.isValid()) {
-            return;
-        }
+                         const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_unifiedmailbox_agent"));
+                         QDBusInterface iface(service, QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.UnifiedMailboxAgent"),
+                                              QDBusConnection::sessionBus(), this);
+                         if (!iface.isValid()) {
+                             return;
+                         }
 
-        QDBusReply<bool> reply = iface.call(QStringLiteral("enabledAgent"));
-        if (!reply.isValid() || bool(reply)) {
-            return;
-        }
+                         QDBusReply<bool> reply = iface.call(QStringLiteral("enabledAgent"));
+                         if (!reply.isValid() || bool(reply)) {
+                             return;
+                         }
 
-        const auto answer = KMessageBox::questionYesNo(
-            this, i18n("You have more than one email account set up. Do you want to enable the Unified Mailbox feature to "
-                        "show unified content of your inbox, sent and drafts folders?\n"
-                        "You can configure unified mailboxes, create custom ones or disable the feature completely in KMail's Plugin settings."),
-            i18n("Enable Unified Mailboxes?"),
-            KGuiItem(i18n("Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
-            KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel")));
-        if (answer == KMessageBox::Yes) {
-            iface.call(QStringLiteral("setEnableAgent"), true);
-        }
+                         const auto answer = KMessageBox::questionYesNo(
+                             this, i18n("You have more than one email account set up. Do you want to enable the Unified Mailbox feature to "
+                                        "show unified content of your inbox, sent and drafts folders?\n"
+                                        "You can configure unified mailboxes, create custom ones or disable the feature completely in KMail's Plugin settings."),
+                             i18n("Enable Unified Mailboxes?"),
+                             KGuiItem(i18n("Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
+                             KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel")));
+                         if (answer == KMessageBox::Yes) {
+                             iface.call(QStringLiteral("setEnableAgent"), true);
+                         }
 
-        KMailSettings::self()->setAskEnableUnifiedMailboxes(false);
-    };
+                         KMailSettings::self()->setAskEnableUnifiedMailboxes(false);
+                     };
 
     connect(kmkernel, &KMKernel::incomingAccountsChanged, this, ask);
 
     // Wait for a bit before asking so we at least have the window on screen
     QTimer::singleShot(500, this, ask);
 }
-

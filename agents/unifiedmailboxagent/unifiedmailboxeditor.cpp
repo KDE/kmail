@@ -38,7 +38,6 @@
 #include <MailCommon/FolderTreeWidget>
 
 namespace {
-
 static constexpr const char *EditorGroup = "UnifiedMailboxEditorDialog";
 
 class SelfFilterProxyModel : public QSortFilterProxyModel
@@ -47,7 +46,8 @@ class SelfFilterProxyModel : public QSortFilterProxyModel
 public:
     explicit SelfFilterProxyModel(QObject *parent = nullptr)
         : QSortFilterProxyModel(parent)
-    {}
+    {
+    }
 
     QVariant data(const QModelIndex &index, int role) const override
     {
@@ -81,10 +81,9 @@ public:
         return !UnifiedMailboxManager::isUnifiedMailbox(col);
     }
 };
-
 }
 
-UnifiedMailboxEditor::UnifiedMailboxEditor(const KSharedConfigPtr &config, QWidget* parent)
+UnifiedMailboxEditor::UnifiedMailboxEditor(const KSharedConfigPtr &config, QWidget *parent)
     : UnifiedMailboxEditor({}, config, parent)
 {
 }
@@ -104,27 +103,27 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     f->addRow(i18n("Name:"), nameEdit);
     connect(nameEdit, &QLineEdit::textChanged,
             this, [this](const QString &name) {
-                mMailbox->setName(name.trimmed());
-            });
+        mMailbox->setName(name.trimmed());
+    });
 
     auto iconButton = new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))),
-                                                           i18n("Pick icon..."));
+                                      i18n("Pick icon..."));
     f->addRow(i18n("Icon:"), iconButton);
     connect(iconButton, &QPushButton::clicked,
             this, [iconButton, this]() {
-                const auto iconName = KIconDialog::getIcon();
-                if (!iconName.isEmpty()) {
-                    mMailbox->setIcon(iconName);
-                    iconButton->setIcon(QIcon::fromTheme(iconName));
-                }
-            });
+        const auto iconName = KIconDialog::getIcon();
+        if (!iconName.isEmpty()) {
+            mMailbox->setIcon(iconName);
+            iconButton->setIcon(QIcon::fromTheme(iconName));
+        }
+    });
     mMailbox->setIcon(iconButton->icon().name());
 
     l->addSpacing(10);
 
     auto ftw = new MailCommon::FolderTreeWidget(nullptr, nullptr,
-            MailCommon::FolderTreeWidget::TreeViewOptions(MailCommon::FolderTreeWidget::UseDistinctSelectionModel |
-                                                          MailCommon::FolderTreeWidget::HideStatistics));
+                                                MailCommon::FolderTreeWidget::TreeViewOptions(MailCommon::FolderTreeWidget::UseDistinctSelectionModel
+                                                                                              |MailCommon::FolderTreeWidget::HideStatistics));
     l->addWidget(ftw);
 
     auto ftv = ftw->folderTreeView();
@@ -141,15 +140,15 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     }
     connect(checkable->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, [this](const QItemSelection &selected, const QItemSelection &deselected) {
-                auto indexes = selected.indexes();
-                for (const auto &index : indexes) {
-                    mMailbox->addSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
-                }
-                indexes = deselected.indexes();
-                for (const auto &index : indexes) {
-                    mMailbox->removeSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
-                }
-            });
+        auto indexes = selected.indexes();
+        for (const auto &index : indexes) {
+            mMailbox->addSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
+        }
+        indexes = deselected.indexes();
+        for (const auto &index : indexes) {
+            mMailbox->removeSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
+        }
+    });
 
     auto selfFilter = new SelfFilterProxyModel(this);
     selfFilter->setSourceModel(checkable);
@@ -162,8 +161,8 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     connect(box, &QDialogButtonBox::rejected, this, &QDialog::reject);
     connect(nameEdit, &QLineEdit::textChanged,
             box, [box](const QString &name) {
-                box->button(QDialogButtonBox::Ok)->setEnabled(!name.trimmed().isEmpty());
-            });
+        box->button(QDialogButtonBox::Ok)->setEnabled(!name.trimmed().isEmpty());
+    });
     box->button(QDialogButtonBox::Ok)->setEnabled(!nameEdit->text().trimmed().isEmpty());
     l->addWidget(box);
 
@@ -180,6 +179,5 @@ UnifiedMailboxEditor::~UnifiedMailboxEditor()
     auto editorGrp = mConfig->group(EditorGroup);
     editorGrp.writeEntry("geometry", saveGeometry());
 }
-
 
 #include "unifiedmailboxeditor.moc"

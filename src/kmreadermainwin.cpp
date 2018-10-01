@@ -202,7 +202,6 @@ void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message:
 
     mTrashAction->setEnabled(false);
     updateActions();
-
 }
 
 void KMReaderMainWin::updateActions()

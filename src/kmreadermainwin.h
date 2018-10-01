@@ -94,7 +94,6 @@ private:
     void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
     void slotUpdateMessageTagList(const Akonadi::Tag &tag);
 
-
     Akonadi::Collection mParentCollection;
     Akonadi::Item mMsg;
     // a few actions duplicated from kmmainwidget

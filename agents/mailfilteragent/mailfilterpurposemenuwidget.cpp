@@ -22,7 +22,6 @@
 MailfilterPurposeMenuWidget::MailfilterPurposeMenuWidget(QWidget *parentWidget, QObject *parent)
     : PimCommon::PurposeMenuWidget(parentWidget, parent)
 {
-
 }
 
 MailfilterPurposeMenuWidget::~MailfilterPurposeMenuWidget()

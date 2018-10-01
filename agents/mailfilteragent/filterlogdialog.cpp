@@ -75,7 +75,6 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     setWindowIcon(QIcon::fromTheme(QStringLiteral("view-filter")));
     setModal(false);
 
-
     buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
     KGuiItem::assign(mUser1Button, KStandardGuiItem::clear());
     KGuiItem::assign(mUser2Button, KStandardGuiItem::saveAs());

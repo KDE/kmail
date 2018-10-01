@@ -38,9 +38,7 @@
 #include <memory>
 
 namespace {
-
 static constexpr const char *DialogGroup = "UnifiedMailboxSettingsDialog";
-
 }
 
 SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxManager &boxManager, WId, QWidget *parent)
@@ -66,56 +64,55 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     v->addWidget(addButton);
     connect(addButton, &QPushButton::clicked,
             this, [this]() {
-                auto mailbox = std::make_unique<UnifiedMailbox>();
-                auto editor = new UnifiedMailboxEditor(mailbox.get(), mConfig, this);
-                if (editor->exec()) {
-                    mailbox->setId(mailbox->name()); // assign ID
-                    addBox(mailbox.get());
-                    mBoxManager.insertBox(std::move(mailbox));
-                }
-            });
+        auto mailbox = std::make_unique<UnifiedMailbox>();
+        auto editor = new UnifiedMailboxEditor(mailbox.get(), mConfig, this);
+        if (editor->exec()) {
+            mailbox->setId(mailbox->name());         // assign ID
+            addBox(mailbox.get());
+            mBoxManager.insertBox(std::move(mailbox));
+        }
+    });
     auto editButton = new QPushButton(QIcon::fromTheme(QStringLiteral("entry-edit")), i18n("Modify"));
     editButton->setEnabled(false);
     v->addWidget(editButton);
     connect(editButton, &QPushButton::clicked,
             this, [this, view]() {
-                const auto indexes = view->selectionModel()->selectedIndexes();
-                if (!indexes.isEmpty()) {
-                    auto item = mBoxModel->itemFromIndex(indexes[0]);
-                    auto mailbox = item->data().value<UnifiedMailbox*>();
-                    auto editor = new UnifiedMailboxEditor(mailbox, mConfig, this);
-                    if (editor->exec()) {
-                        item->setText(mailbox->name());
-                        item->setIcon(QIcon::fromTheme(mailbox->icon()));
-                    }
-                }
-            });
+        const auto indexes = view->selectionModel()->selectedIndexes();
+        if (!indexes.isEmpty()) {
+            auto item = mBoxModel->itemFromIndex(indexes[0]);
+            auto mailbox = item->data().value<UnifiedMailbox *>();
+            auto editor = new UnifiedMailboxEditor(mailbox, mConfig, this);
+            if (editor->exec()) {
+                item->setText(mailbox->name());
+                item->setIcon(QIcon::fromTheme(mailbox->icon()));
+            }
+        }
+    });
     auto removeButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18n("Remove"));
     removeButton->setEnabled(false);
     v->addWidget(removeButton);
     connect(removeButton, &QPushButton::clicked,
             this, [this, view]() {
-                const auto indexes = view->selectionModel()->selectedIndexes();
-                if (!indexes.isEmpty()) {
-                    auto item = mBoxModel->itemFromIndex(indexes[0]);
-                    const auto mailbox = item->data().value<UnifiedMailbox*>();
-                    if (KMessageBox::warningYesNo(
-                            this, i18n("Do you really want to remove unified mailbox <b>%1</b>?", mailbox->name()),
-                            i18n("Really Remove?"), KStandardGuiItem::remove(), KStandardGuiItem::cancel()) == KMessageBox::Yes)
-                    {
-                        mBoxModel->removeRow(item->row());
-                        mBoxManager.removeBox(mailbox->id());
-                    }
-                }
-            });
+        const auto indexes = view->selectionModel()->selectedIndexes();
+        if (!indexes.isEmpty()) {
+            auto item = mBoxModel->itemFromIndex(indexes[0]);
+            const auto mailbox = item->data().value<UnifiedMailbox *>();
+            if (KMessageBox::warningYesNo(
+                    this, i18n("Do you really want to remove unified mailbox <b>%1</b>?", mailbox->name()),
+                    i18n("Really Remove?"), KStandardGuiItem::remove(), KStandardGuiItem::cancel()) == KMessageBox::Yes) {
+                mBoxModel->removeRow(item->row());
+                mBoxManager.removeBox(mailbox->id());
+            }
+        }
+    });
     v->addStretch(1);
 
     connect(view->selectionModel(), &QItemSelectionModel::selectionChanged,
             this, [view, editButton, removeButton]() {
-                const bool hasSelection = view->selectionModel()->hasSelection();
-                editButton->setEnabled(hasSelection);
-                removeButton->setEnabled(hasSelection);
-            });
+        const bool hasSelection = view->selectionModel()->hasSelection();
+        editButton->setEnabled(hasSelection);
+        removeButton->setEnabled(hasSelection);
+    });
 
     auto box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     connect(box, &QDialogButtonBox::accepted, this, &SettingsDialog::accept);
@@ -130,7 +127,6 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     } else {
         resize(500, 500);
     }
-
 }
 
 SettingsDialog::~SettingsDialog()

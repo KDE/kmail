@@ -1316,8 +1316,8 @@ KMCommand::Result KMFilterActionCommand::execute()
     const int msgCountToFilter = mMsgListId.count();
     ProgressItem *progressItem
         = ProgressManager::createProgressItem(
-        QLatin1String("filter") + ProgressManager::getUniqueID(),
-        i18n("Filtering messages"), QString(), true, KPIM::ProgressItem::Unknown);
+              QLatin1String("filter") + ProgressManager::getUniqueID(),
+              i18n("Filtering messages"), QString(), true, KPIM::ProgressItem::Unknown);
     progressItem->setTotalItems(msgCountToFilter);
 
     for (const qlonglong &id : qAsConst(mMsgListId)) {
@@ -1611,7 +1611,8 @@ KMTrashMsgCommand::TrashOperation KMTrashMsgCommand::operation() const
 
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref)
     : KMTrashMsgCommand(findTrashFolder(srcFolder), Akonadi::Item::List{msg}, ref)
-{}
+{
+}
 
 Akonadi::Collection KMTrashMsgCommand::findTrashFolder(const Akonadi::Collection &folder)
 {
@@ -1672,7 +1673,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     if (!mPendingMoves.isEmpty()) {
         Q_ASSERT(!mMoveProgress);
         mMoveProgress = ProgressManager::createProgressItem(QLatin1String("move") + ProgressManager::getUniqueID(),
-            i18n("Moving messages"), QString(), true, KPIM::ProgressItem::Unknown);
+                                                            i18n("Moving messages"), QString(), true, KPIM::ProgressItem::Unknown);
         mMoveProgress->setUsesBusyIndicator(true);
         connect(mMoveProgress, &ProgressItem::progressItemCanceled,
                 this, &KMTrashMsgCommand::slotMoveCanceled);
@@ -1680,7 +1681,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     if (!mPendingDeletes.isEmpty()) {
         Q_ASSERT(!mDeleteProgress);
         mDeleteProgress = ProgressManager::createProgressItem(QLatin1String("delete") + ProgressManager::getUniqueID(),
-            i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
+                                                              i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
         mDeleteProgress->setUsesBusyIndicator(true);
         connect(mMoveProgress, &ProgressItem::progressItemCanceled,
                 this, &KMTrashMsgCommand::slotMoveCanceled);
@@ -1700,7 +1701,7 @@ void KMTrashMsgCommand::slotMoveResult(KJob *job)
     }
 }
 
-void KMTrashMsgCommand::slotDeleteResult(KJob* job)
+void KMTrashMsgCommand::slotDeleteResult(KJob *job)
 {
     mPendingDeletes.removeOne(job);
     if (job->error()) {
@@ -1741,7 +1742,6 @@ void KMTrashMsgCommand::completeMove(KMCommand::Result result)
     Q_EMIT completed(this);
     deleteLater();
 }
-
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::Viewer *viewer)
     : KMCommand(parent, msg)

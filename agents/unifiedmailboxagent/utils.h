@@ -26,9 +26,9 @@
 
 #include <experimental/optional>
 namespace stdx {
-    // Injects content of std::experimental namespace into "exp" namespace.
-    // C++ is magical.
-    using namespace std::experimental;
+// Injects content of std::experimental namespace into "exp" namespace.
+// C++ is magical.
+using namespace std::experimental;
 }
 
 template<typename T>
@@ -61,12 +61,13 @@ inline QSet<T> listToSet(QList<T> &&list)
 }
 
 namespace std {
-    template<>
-    struct hash<QString> {
-        inline size_t operator()(const QString &str) const {
-            return qHash(str);
-        }
-    };
+template<>
+struct hash<QString> {
+    inline size_t operator()(const QString &str) const
+    {
+        return qHash(str);
+    }
+};
 }
 
 #endif

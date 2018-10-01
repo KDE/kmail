@@ -754,18 +754,16 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
         const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
 
-
         KMPrintCommandInfo commandInfo;
         commandInfo.mMsg = printItem;
         commandInfo.mHeaderStylePlugin = mViewer->headerStylePlugin();
         commandInfo.mFormat = mViewer->displayFormatMessageOverwrite();
-        commandInfo.mHtmlLoadExtOverride =  mViewer->htmlLoadExternal();
+        commandInfo.mHtmlLoadExtOverride = mViewer->htmlLoadExternal();
         commandInfo.mPrintPreview = preview;
         commandInfo.mUseFixedFont = useFixedFont;
         commandInfo.mOverrideFont = overrideEncoding;
         commandInfo.mShowSignatureDetails = mViewer->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
         commandInfo.mShowEncryptionDetails = mViewer->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
-
 
         KMPrintCommand *command = new KMPrintCommand(this, commandInfo);
         command->start();
