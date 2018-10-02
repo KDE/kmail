@@ -365,7 +365,7 @@ target_link_libraries(kmailpart
 ########### KMail executable ###############
 
 set(kmail_SRCS main.cpp ${kmail_common_SRCS})
-file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/*-apps-kmail.png")
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/*-app-kmail.svg")
 ecm_add_app_icon(kmail_SRCS ICONS ${ICONS_SRCS})
 add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
