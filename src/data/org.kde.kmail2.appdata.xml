@@ -3,7 +3,7 @@
   <id>org.kde.kmail2.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
-  <developer_name>The KDE Commmunity</developer_name>
+  <developer_name>The KDE Community</developer_name>
   <name>KMail</name>
   <name xml:lang="ar">بريدك</name>
   <name xml:lang="ast">KMail</name>
@@ -91,7 +91,7 @@
     <ul>
       <li>Secure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.</li>
       <li>Powerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.</li>
-      <li>Integrated - Meeting invitations can be easilly added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
+      <li>Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
       <li>Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
     </ul>
   </description>
