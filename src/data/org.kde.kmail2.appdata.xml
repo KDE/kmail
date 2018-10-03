@@ -45,70 +45,10 @@
   <name xml:lang="zh-CN">KMail</name>
   <name xml:lang="zh-TW">KMail</name>
   <summary>A feature-rich email application</summary>
-  <summary xml:lang="ar">تطبيق البريد الإلكترونيّ</summary>
-  <summary xml:lang="ca">Aplicació de correu electrònic</summary>
-  <summary xml:lang="ca-valencia">Aplicació de correu electrònic</summary>
-  <summary xml:lang="cs">E-mailová aplikace</summary>
-  <summary xml:lang="de">E-Mail-Programm</summary>
-  <summary xml:lang="en-GB">Email application</summary>
-  <summary xml:lang="es">Aplicación de correo</summary>
-  <summary xml:lang="fi">Sähköpostisovellus.</summary>
-  <summary xml:lang="fr">Application de messagerie électronique</summary>
-  <summary xml:lang="gl">Aplicativo de correo electrónico</summary>
-  <summary xml:lang="it">Programma di posta elettronica</summary>
-  <summary xml:lang="ko">이메일 프로그램</summary>
-  <summary xml:lang="nl">E-mailtoepassing</summary>
-  <summary xml:lang="pl">Aplikacja pocztowa</summary>
-  <summary xml:lang="pt">Aplicação de e-mail</summary>
-  <summary xml:lang="pt-BR">Aplicativo de e-mail</summary>
-  <summary xml:lang="ru">Приложение электронной почты</summary>
-  <summary xml:lang="sl">Odjemalec za e-pošto</summary>
-  <summary xml:lang="sr">Програм за е‑пошту</summary>
-  <summary xml:lang="sr-Latn">Program za e‑poštu</summary>
-  <summary xml:lang="sr-ijekavian">Програм за е‑пошту</summary>
-  <summary xml:lang="sr-ijekavianlatin">Program za e‑poštu</summary>
-  <summary xml:lang="sv">E-postprogram</summary>
-  <summary xml:lang="tr">Eposta uygulaması</summary>
-  <summary xml:lang="uk">Програма для роботи з електронною пошти</summary>
-  <summary xml:lang="x-test">xxEmail applicationxx</summary>
-  <summary xml:lang="zh-CN">电子邮件应用程序</summary>
   <description>
     <p>
       KMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximize your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.
     </p>
-    <p xml:lang="ar">«بريدك» هو مكوّن البريد لِ‍«متراسلك»، مدير المعلومات الشّخصيّة المتكامل لِ‍«كدي».</p>
-    <p xml:lang="ca">El KMail és el component de correu electrònic del Kontact, el gestor per a la informació personal integrat del KDE.</p>
-    <p xml:lang="ca-valencia">El KMail és el component de correu electrònic del Kontact, el gestor per a la informació personal integrat del KDE.</p>
-    <p xml:lang="de">KMail ist die E-Mail-Komponente von Kontact, der integrierten persönlichen Informationsverwaltung für KDE.</p>
-    <p xml:lang="en-GB">KMail is the email component of Kontact, the integrated personal information manager from KDE.</p>
-    <p xml:lang="es">KMail es el componente de correo de Kontact, el gestor integrado de información personal de KDE.</p>
-    <p xml:lang="et">KMail on Kontacti ehk KDE lõimitud isikliku teabe halduri e-posti komponent.</p>
-    <p xml:lang="fi">KMail on Kontactin, KDE:n henkilökohtaisen tiedonhallintajärjestelmän, sähköpostiosa.</p>
-    <p xml:lang="fr">KMail est le composant pour le courrier électronique de la suite Kontact, le gestionnaire d'informations personnelles de KDE.</p>
-    <p xml:lang="gl">KMail é o compoñente de correo electrónico de Kontact, o xestor completo de información persoal de KDE.</p>
-    <p xml:lang="hu">A KMail a Kontact, a KDE integrált információkezelő alkalmazásának e-mail programja.</p>
-    <p xml:lang="it">KMail è il componente di posta elettronica di Kontact, il gestore integrato di informazioni personali da KDE.</p>
-    <p xml:lang="ko">KMail은 KDE 개인 정보 관리자 Kontact의 이메일 구성 요소입니다.</p>
-    <p xml:lang="lt">KMail yra Kontact, KDE integruotos asmeninės informacijos tvarkyklės, pašto komponentas.</p>
-    <p xml:lang="nb">KMail er e-postkomponenten i Kontact, KDEs integrerte personlige informasjonsbehandler.</p>
-    <p xml:lang="nds">KMail is de Nettpostkomponent vun Kontact, KDE sien inbuut Pleger för persöönlich Informatschonen</p>
-    <p xml:lang="nl">KMail is de e-mailcomponent van Kontact, de geïntegreerde persoonlijke informatiebeheerder uit KDE.</p>
-    <p xml:lang="pl">KMail jest składnikiem pocztowym pakietu Kontact, programu do zarządzania informacjami osobistymi w KDE.</p>
-    <p xml:lang="pt">O KMail é o componente de e-mail do Kontact, o gestor de informações pessoais do KDE.</p>
-    <p xml:lang="pt-BR">KMail é o componente de e-mail do Kontact, o gerenciador integrado de informações pessoais do KDE.</p>
-    <p xml:lang="ru">KMail — почтовый клиент в составе электронного секретаря Kontact от сообщества KDE.</p>
-    <p xml:lang="sk">KMail je e-mailový komponent programu Kontact, integrovaný správca osobných informácií z KDE.</p>
-    <p xml:lang="sl">KMail je sestavni del paketa Kontact, ki omogoča delo z e-pošto.</p>
-    <p xml:lang="sr">К‑пошта је е‑поштанска компонента Контакта, КДЕ‑овог интегрисаног менаџера личних података.</p>
-    <p xml:lang="sr-Latn">K‑pošta je e‑poštanska komponenta Kontacta, KDE‑ovog integrisanog menadžera ličnih podataka.</p>
-    <p xml:lang="sr-ijekavian">К‑пошта је е‑поштанска компонента Контакта, КДЕ‑овог интегрисаног менаџера личних података.</p>
-    <p xml:lang="sr-ijekavianlatin">K‑pošta je e‑poštanska komponenta Kontacta, KDE‑ovog integrisanog menadžera ličnih podataka.</p>
-    <p xml:lang="sv">Kmail är e-postkomponenten i Kontact, den integrerade personliga informationshanteraren från KDE.</p>
-    <p xml:lang="tr">KMail, Kontact'ın e-posta bileşeni ve aynı zamanda KDE'den tümleşik kişisel bilgi yöneticisidir.</p>
-    <p xml:lang="uk">KMail — компонент для роботи з електронною поштою комплексу програм Kontact, інтегрованого рішення для роботи з особистими даними у KDE.</p>
-    <p xml:lang="x-test">xxKMail is the email component of Kontact, the integrated personal information manager from KDE.xx</p>
-    <p xml:lang="zh-CN">Kmail 是 KDE 集成个人信息管理器 Kontact 的电子邮件组件。</p>
-    <p xml:lang="zh-TW">KMail 是 Kontact 的電子郵件組件。Kontact 是 KDE 中的一套整合個人資訊管理員。</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
     <p xml:lang="bs">Svojstva:</p>
