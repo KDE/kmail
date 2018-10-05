@@ -4,6 +4,10 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <developer_name>The KDE Community</developer_name>
+  <developer_name xml:lang="pt">A Comunidade do KDE</developer_name>
+  <developer_name xml:lang="sv">KDE-gemenskapen</developer_name>
+  <developer_name xml:lang="uk">Спільнота KDE</developer_name>
+  <developer_name xml:lang="x-test">xxThe KDE Communityxx</developer_name>
   <name>KMail</name>
   <name xml:lang="ar">بريدك</name>
   <name xml:lang="ast">KMail</name>
@@ -110,6 +114,9 @@
       <li xml:lang="uk">Потужність — серед можливостей програми можливість роботи у автономному режимі (без з'єднання із інтернетом), робота із декількома профілями надсилання повідомлень, підтримка багатомовності, потужні можливості з фільтрування, пошуку та встановлення міток, керування повідомленнями зі списків листування та надзвичайна гнучкість у налаштовуванні.</li>
       <li xml:lang="x-test">xxPowerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.xx</li>
       <li>Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
+      <li xml:lang="pt">Integrado - Os convites para reuniões podem ser facilmente adicionados como eventos ao KOrganizer; as definições de completação automática de endereços, avatars e encriptação são carregadas a partir do KAddressBook.</li>
+      <li xml:lang="uk">Інтеграція — реалізовано можливості простого додавання запрошень на зустрічі як записів подій у KOrganizer, дані автоматичного доповнення адрес, аватари та параметри шифрування завантажуються напряму з KAddressBook.</li>
+      <li xml:lang="x-test">xxIntegrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.xx</li>
       <li>Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
       <li xml:lang="ca">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="pt">Compatível com as Normas - Suporta os protocolos-padrão de correio, filtragem do lado do servidor e OpenPGP, PGP/MIME e S/MIME incorporados.</li>
