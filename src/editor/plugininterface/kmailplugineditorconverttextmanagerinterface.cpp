@@ -52,7 +52,6 @@ void KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageCo
             //Stop it.?
         }
     }
-    //TODO
 }
 
 void KMailPluginEditorConvertTextManagerInterface::setInitialData(const MessageComposer::PluginEditorConverterInitialData &data)
