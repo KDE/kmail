@@ -157,7 +157,8 @@ void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
 
 bool KMComposerEditorNg::convertPlainText(MessageComposer::TextPart *textPart)
 {
-    Q_UNUSED(textPart);
-    //TODO implement it
+    if (mComposerWin->convertPlainText(textPart)) {
+        return true;
+    }
     return false;
 }

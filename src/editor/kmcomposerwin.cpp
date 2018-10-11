@@ -3352,6 +3352,11 @@ void KMComposerWin::addExtraCustomHeaders(const QMap<QByteArray, QString> &heade
     mExtraHeaders = headers;
 }
 
+bool KMComposerWin::convertPlainText(MessageComposer::TextPart *textPart)
+{
+    return mPluginEditorConvertTextManagerInterface->convertTextToFormat(textPart);
+}
+
 void KMComposerWin::slotExternalEditorStarted()
 {
     mComposerBase->identityCombo()->setEnabled(false);

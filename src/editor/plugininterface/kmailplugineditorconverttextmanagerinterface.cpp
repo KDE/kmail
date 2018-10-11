@@ -44,14 +44,18 @@ void KMailPluginEditorConvertTextManagerInterface::reformatText()
     Q_EMIT reformatingTextDone();
 }
 
-void KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
+bool KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
 {
+    bool converted = false;
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
         if (interface->convertTextToFormat(textPart)) {
             //TODO signal that it was reformating.
             //Stop it.?
+        } else {
+            converted = true;
         }
     }
+    return converted;
 }
 
 void KMailPluginEditorConvertTextManagerInterface::setInitialData(const MessageComposer::PluginEditorConverterInitialData &data)

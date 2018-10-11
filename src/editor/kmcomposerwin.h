@@ -215,6 +215,7 @@ public: // kmkernel, kmcommands, callback
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) override;
 
+    bool convertPlainText(MessageComposer::TextPart *textPart);
 private:
     /**
     * Write settings to app's config file.
