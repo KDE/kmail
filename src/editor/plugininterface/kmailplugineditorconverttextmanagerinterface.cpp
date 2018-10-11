@@ -48,13 +48,19 @@ bool KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageCo
 {
     bool converted = false;
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
-        if (interface->convertTextToFormat(textPart)) {
-            //TODO signal that it was reformating.
-            //Stop it.?
-        } else {
+        switch(interface->convertTextToFormat(textPart)) {
+        case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted:
+            converted = false;
+            break;
+        case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted:
             converted = true;
+            break;
+        case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Error:
+            converted = false;
+            break;
         }
     }
+    //TODO improve it
     return converted;
 }
 
