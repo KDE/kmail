@@ -49,7 +49,7 @@ public:
     QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
     void reformatText();
-    bool convertTextToFormat(MessageComposer::TextPart *textPart);
+    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertTextToFormat(MessageComposer::TextPart *textPart);
 
     void setInitialData(const MessageComposer::PluginEditorConverterInitialData &data);
     void setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data);

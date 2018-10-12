@@ -28,7 +28,7 @@
 // KMail includes
 #include "editor/composer.h"
 #include "MessageComposer/RecipientsEditor"
-
+#include <MessageComposer/PluginEditorConvertTextInterface>
 // Qt includes
 #include <QFont>
 #include <QList>
@@ -215,7 +215,7 @@ public: // kmkernel, kmcommands, callback
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) override;
 
-    bool convertPlainText(MessageComposer::TextPart *textPart);
+    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart);
 private:
     /**
     * Write settings to app's config file.

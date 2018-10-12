@@ -44,24 +44,23 @@ void KMailPluginEditorConvertTextManagerInterface::reformatText()
     Q_EMIT reformatingTextDone();
 }
 
-bool KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
+MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
 {
-    bool converted = false;
+    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
         switch(interface->convertTextToFormat(textPart)) {
         case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted:
-            converted = false;
+            status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
             break;
         case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted:
-            converted = true;
+            status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted;
             break;
         case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Error:
-            converted = false;
-            break;
+            status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Error;
+            return status;
         }
     }
-    //TODO improve it
-    return converted;
+    return status;
 }
 
 void KMailPluginEditorConvertTextManagerInterface::setInitialData(const MessageComposer::PluginEditorConverterInitialData &data)
