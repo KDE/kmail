@@ -157,10 +157,8 @@ void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
 
 MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMComposerEditorNg::convertPlainText(MessageComposer::TextPart *textPart)
 {
-#if 0  //FIXME
-    if (mComposerWin->convertPlainText(textPart)) {
-        return true;
+    if (mComposerWin->convertPlainText(textPart) == MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted) {
+        return MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted;
     }
-#endif
     return MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
 }
