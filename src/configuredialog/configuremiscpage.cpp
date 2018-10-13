@@ -25,8 +25,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "MessageViewer/PrintingSettings"
 #include "messageviewer/messageviewersettings.h"
 
-#include "MessageViewer/PrintingSettings"
-
 #include <KLocalizedString>
 #include <QHBoxLayout>
 
