@@ -57,7 +57,9 @@ MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMailPlugin
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
         switch (interface->convertTextToFormat(textPart)) {
         case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted:
-            status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
+            if (status != MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted) {
+                status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
+            }
             break;
         case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted:
             status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted;
