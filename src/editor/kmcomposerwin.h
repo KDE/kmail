@@ -413,6 +413,7 @@ public: // kmcommand
     QList<KToggleAction *> customToolsList() const;
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 private:
+    void enableDisablePluginActions(bool richText);
     /**
      * Read settings from app's config file.
      */

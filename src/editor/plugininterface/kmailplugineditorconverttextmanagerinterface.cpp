@@ -33,6 +33,13 @@ KMailPluginEditorConvertTextManagerInterface::~KMailPluginEditorConvertTextManag
 {
 }
 
+void KMailPluginEditorConvertTextManagerInterface::enableDisablePluginActions(bool richText)
+{
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+        interface->enableDisablePluginActions(richText);
+    }
+}
+
 void KMailPluginEditorConvertTextManagerInterface::reformatText()
 {
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {

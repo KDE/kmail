@@ -2982,6 +2982,12 @@ void KMComposerWin::slotTextModeChanged(MessageComposer::RichTextComposerNg::Mod
     } else {
         enableHtml();
     }
+    enableDisablePluginActions(mode == MessageComposer::RichTextComposerNg::Rich);
+}
+
+void KMComposerWin::enableDisablePluginActions(bool richText)
+{
+    mPluginEditorConvertTextManagerInterface->enableDisablePluginActions(richText);
 }
 
 void KMComposerWin::htmlToolBarVisibilityChanged(bool visible)

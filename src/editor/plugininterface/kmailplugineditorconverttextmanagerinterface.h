@@ -53,6 +53,7 @@ public:
 
     void setInitialData(const MessageComposer::PluginEditorConverterInitialData &data);
     void setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data);
+    void enableDisablePluginActions(bool richText);
 Q_SIGNALS:
     void reformatingTextDone();
 
