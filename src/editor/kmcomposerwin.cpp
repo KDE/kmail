@@ -1402,6 +1402,10 @@ void KMComposerWin::initializePluginActions()
         for (int i = 0; i < statusbarWidgetList.count(); ++i) {
             statusBar()->addPermanentWidget(statusbarWidgetList.at(i), 0);
         }
+        const QList<QWidget *> statusbarWidgetListConverter = mPluginEditorConvertTextManagerInterface->statusBarWidgetList();
+        for (int i = 0; i < statusbarWidgetListConverter.count(); ++i) {
+            statusBar()->addPermanentWidget(statusbarWidgetListConverter.at(i), 0);
+        }
     }
 }
 

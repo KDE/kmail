@@ -54,6 +54,8 @@ public:
     void setInitialData(const MessageComposer::PluginEditorConverterInitialData &data);
     void setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data);
     void enableDisablePluginActions(bool richText);
+
+    QList<QWidget *> statusBarWidgetList();
 Q_SIGNALS:
     void reformatingTextDone();
 
@@ -64,6 +66,7 @@ private:
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;
+    QList<QWidget *> mStatusBarWidget;
 };
 
 #endif // KMAILPLUGINEDITORCONVERTTEXTMANAGERINTERFACE_H
