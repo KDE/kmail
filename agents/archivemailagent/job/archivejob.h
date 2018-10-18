@@ -39,7 +39,7 @@ public:
 private:
     void slotBackupDone(const QString &info);
     void slotError(const QString &error);
-    QPixmap mPixmap;
+    QString mDefaultIconName;
     ArchiveMailInfo *mInfo = nullptr;
     ArchiveMailManager *mManager = nullptr;
 };

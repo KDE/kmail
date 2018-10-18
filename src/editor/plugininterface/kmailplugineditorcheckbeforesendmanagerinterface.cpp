@@ -46,11 +46,11 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::setParentWidget(QWidget *
 void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
 {
     if (!mListPluginInterface.isEmpty()) {
-        qCDebug(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
+        qCWarning(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
         return;
     }
     if (!mParentWidget) {
-        qCDebug(KMAIL_LOG) << "KMailPluginEditorCheckBeforeSendManagerInterface : Parent is null. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorCheckBeforeSendManagerInterface : Parent is null. This is a bug";
     }
 
     const QVector<MessageComposer::PluginEditorCheckBeforeSend *> lstPlugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList();
