@@ -57,15 +57,15 @@ void KMailPluginEditorManagerInterface::setParentWidget(QWidget *parentWidget)
 void KMailPluginEditorManagerInterface::initializePlugins()
 {
     if (!mListPluginInterface.isEmpty()) {
-        qCDebug(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
+        qCWarning(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
         return;
     }
     if (!mRichTextEditor) {
-        qCDebug(KMAIL_LOG) << "KMailPluginEditorManagerInterface: Missing richtexteditor";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorManagerInterface: Missing richtexteditor";
         return;
     }
     if (!mParentWidget) {
-        qCDebug(KMAIL_LOG) << "KMailPluginEditorManagerInterface : Parent is null. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorManagerInterface : Parent is null. This is a bug";
     }
 
     const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();

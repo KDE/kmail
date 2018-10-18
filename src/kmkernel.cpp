@@ -1614,8 +1614,9 @@ void KMKernel::agentInstanceBroken(const Akonadi::AgentInstance &instance)
 {
     const QString summary = i18n("Resource %1 is broken.", instance.name());
     KNotification::event(QStringLiteral("akonadi-resource-broken"),
+                         QString(),
                          summary,
-                         QPixmap(),
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout);
 }
@@ -1784,8 +1785,9 @@ void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance, const
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
     KNotification::event(QStringLiteral("akonadi-instance-warning"),
+                         QString(),
                          summary,
-                         QPixmap(),
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout);
 }
@@ -1794,8 +1796,9 @@ void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const Q
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
     KNotification::event(QStringLiteral("akonadi-instance-error"),
+                         QString(),
                          summary,
-                         QPixmap(),
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout);
 }

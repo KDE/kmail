@@ -38,7 +38,7 @@ ArchiveJob::ArchiveJob(ArchiveMailManager *manager, ArchiveMailInfo *info, const
     , mInfo(info)
     , mManager(manager)
 {
-    mPixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
+    mDefaultIconName = QStringLiteral("kmail");
 }
 
 ArchiveJob::~ArchiveJob()
@@ -69,8 +69,9 @@ void ArchiveJob::execute()
         if (!dirExit) {
             mManager->backupDone(mInfo);
             KNotification::event(QStringLiteral("archivemailfolderdoesntexist"),
+                                 QString(),
                                  i18n("Directory does not exist. Please verify settings. Archive postponed."),
-                                 mPixmap,
+                                 mDefaultIconName,
                                  nullptr,
                                  KNotification::CloseOnTimeout,
                                  QStringLiteral("akonadi_archivemail_agent"));
@@ -89,8 +90,9 @@ void ArchiveJob::execute()
         backupJob->setRealPath(realPath);
         const QString summary = i18n("Start to archive %1", realPath);
         KNotification::event(QStringLiteral("archivemailstarted"),
+                             QString(),
                              summary,
-                             mPixmap,
+                             mDefaultIconName,
                              nullptr,
                              KNotification::CloseOnTimeout,
                              QStringLiteral("akonadi_archivemail_agent"));
@@ -103,8 +105,9 @@ void ArchiveJob::execute()
 void ArchiveJob::slotError(const QString &error)
 {
     KNotification::event(QStringLiteral("archivemailerror"),
+                         QString(),
                          error,
-                         mPixmap,
+                         mDefaultIconName,
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_archivemail_agent"));
@@ -115,8 +118,9 @@ void ArchiveJob::slotError(const QString &error)
 void ArchiveJob::slotBackupDone(const QString &info)
 {
     KNotification::event(QStringLiteral("archivemailfinished"),
+                         QString(),
                          info,
-                         mPixmap,
+                         mDefaultIconName,
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_archivemail_agent"));

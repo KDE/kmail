@@ -155,10 +155,10 @@ void FollowUpReminderManager::slotFinishTaskFailed()
 
 void FollowUpReminderManager::answerReceived(const QString &from)
 {
-    const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
     KNotification::event(QStringLiteral("mailreceived"),
+                         QString(),
                          i18n("Answer from %1 received", from),
-                         pixmap,
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_followupreminder_agent"));
