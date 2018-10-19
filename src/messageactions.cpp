@@ -130,6 +130,11 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     ac->addAction(QStringLiteral("annotate"), mAnnotateAction);
     connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);
 
+    mEditAsNewAction = new QAction(QIcon::fromTheme(QStringLiteral("accessories-text-editor")), i18n("&Edit As New"), this);
+    ac->addAction(QStringLiteral("editasnew"), mEditAsNewAction);
+    connect(mEditAsNewAction, &QAction::triggered, this, &MessageActions::editCurrentMessage);
+    ac->setDefaultShortcut(mEditAsNewAction, Qt::Key_T);
+
     mPrintAction = KStandardAction::print(this, &MessageActions::slotPrintMessage, ac);
     mPrintPreviewAction = KStandardAction::printPreview(this, &MessageActions::slotPrintPreviewMsg, ac);
 
@@ -219,6 +224,11 @@ void MessageActions::slotUseTemplate()
     }
     KMCommand *command = new KMUseTemplateCommand(mParent, mCurrentItem);
     command->start();
+}
+
+QAction *MessageActions::editAsNewAction() const
+{
+    return mEditAsNewAction;
 }
 
 void MessageActions::setCurrentMessage(const Akonadi::Item &msg, const Akonadi::Item::List &items)
@@ -374,6 +384,7 @@ void MessageActions::updateActions()
             connect(job, &Akonadi::ItemFetchJob::result, this, &MessageActions::slotUpdateActionsFetchDone);
         }
     }
+    mEditAsNewAction->setEnabled(uniqItem);
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob *job)

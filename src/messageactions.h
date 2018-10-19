@@ -97,6 +97,8 @@ public:
 
     QAction *newMessageFromTemplateAction() const;
 
+    QAction *editAsNewAction() const;
+
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
     // action has finished.
@@ -159,6 +161,7 @@ private:
     KActionMenu *mForwardActionMenu = nullptr;
     KActionMenu *mMailingListActionMenu = nullptr;
     QAction *mAnnotateAction = nullptr;
+    QAction *mEditAsNewAction = nullptr;
     QAction *mPrintAction = nullptr;
     QAction *mPrintPreviewAction = nullptr;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu = nullptr;
