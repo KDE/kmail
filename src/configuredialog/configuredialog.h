@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef _CONFIGURE_DIALOG_H_
-#define _CONFIGURE_DIALOG_H_
+#ifndef CONFIGURE_DIALOG_H
+#define CONFIGURE_DIALOG_H
 
 #include <kcmultidialog.h>
 

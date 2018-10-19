@@ -2,8 +2,8 @@
 // configuredialog_p.h: classes internal to ConfigureDialog
 // see configuredialog.h for details.
 
-#ifndef _CONFIGURE_DIALOG_PRIVATE_H_
-#define _CONFIGURE_DIALOG_PRIVATE_H_
+#ifndef CONFIGURE_DIALOG_PRIVATE_H
+#define CONFIGURE_DIALOG_PRIVATE_H
 
 #include "kmail_export.h"
 #include "configmodule.h"

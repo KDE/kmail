@@ -1,7 +1,7 @@
 //
 
-#ifndef _KMKERNEL_H
-#define _KMKERNEL_H
+#ifndef KMKERNEL_H
+#define KMKERNEL_H
 
 #include "mailcommon/mailinterfaces.h"
 
