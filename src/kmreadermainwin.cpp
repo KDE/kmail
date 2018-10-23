@@ -44,7 +44,7 @@
 #include "kmcommands.h"
 #include <QMenuBar>
 #include <qmenu.h>
-#include <MessageViewer/CSSHelper>
+//#include <MessageViewer/CSSHelper>
 #include <TemplateParser/CustomTemplatesMenu>
 #include "messageactions.h"
 #include "util.h"

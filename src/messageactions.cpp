@@ -30,7 +30,6 @@
 #include <PimCommonAkonadi/AnnotationDialog>
 #include <MessageCore/MessageCoreSettings>
 #include "MessageCore/MailingList"
-#include <MessageViewer/CSSHelper>
 #include "messageviewer/messageviewersettings.h"
 #include "messageviewer/headerstyleplugin.h"
 
