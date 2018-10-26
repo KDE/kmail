@@ -346,7 +346,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     connect(mCustomColorCheck, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
-    mUseInlineStyle = new QCheckBox(i18n("&Use inline link style"), this);
+    mUseInlineStyle = new QCheckBox(i18n("&Do not change color from original HTML mail"), this);
     vlay->addWidget(mUseInlineStyle);
     connect(mUseInlineStyle, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
