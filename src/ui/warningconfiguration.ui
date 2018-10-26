@@ -54,30 +54,6 @@ It is recommended to leave this option turned on for maximum integrity.
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="warnReceiverNotInCertificateCB">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="toolTip">
-      <string>Check to be warned if the address is not in the certificate</string>
-     </property>
-     <property name="whatsThis">
-      <string>&lt;qt&gt;
-&lt;h1&gt;Warn If Receiver's Email Address Is Not In Certificate&lt;/h1&gt;
-If this option is checked, a warning is issued if the email address of the receiver is not contained in the certificate used for encrypting.
-&lt;p&gt;
-It is recommended to leave this option turned on for maximum security.
-&lt;/p&gt;&lt;/qt&gt;</string>
-     </property>
-     <property name="text">
-      <string>Warn if &amp;receiver's email address is not in certificate</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QGroupBox" name="warnGroupBox">
      <property name="title">
       <string>Warn if certificates/ke&amp;ys expire soon (configure thresholds below)</string>
@@ -456,7 +432,6 @@ The recommended SPHINX setting is 14 days.
  <tabstops>
   <tabstop>mWarnUnsigned</tabstop>
   <tabstop>warnUnencryptedCB</tabstop>
-  <tabstop>warnReceiverNotInCertificateCB</tabstop>
   <tabstop>warnGroupBox</tabstop>
   <tabstop>mWarnSignKeyExpiresSB</tabstop>
   <tabstop>mWarnSignChainCertExpiresSB</tabstop>
