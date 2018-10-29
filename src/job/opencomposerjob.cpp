@@ -77,6 +77,9 @@ void OpenComposerJob::start()
     if (!mOpenComposerSettings.mSubject.isEmpty()) {
         mMsg->subject()->fromUnicodeString(mOpenComposerSettings.mSubject, "utf-8");
     }
+    if (!mOpenComposerSettings.mReplyTo.isEmpty()) {
+        mMsg->replyTo()->fromUnicodeString(mOpenComposerSettings.mReplyTo, "utf-8");
+    }
 
     if (!mOpenComposerSettings.mMessageFile.isEmpty() && QFile::exists(mOpenComposerSettings.mMessageFile)) {
         QFile f(mOpenComposerSettings.mMessageFile);
@@ -111,14 +114,6 @@ void OpenComposerJob::start()
 
 void OpenComposerJob::slotOpenComposer()
 {
-    if (!mOpenComposerSettings.mInReplyTo.isEmpty()) {
-        KMime::Headers::InReplyTo *header = new KMime::Headers::InReplyTo;
-        header->fromUnicodeString(mOpenComposerSettings.mInReplyTo, "utf-8");
-        mMsg->setHeader(header);
-    }
-
-    mMsg->assemble();
-
     KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, mContext, mIdentityId);
     if (!mOpenComposerSettings.mTo.isEmpty()) {
         cWin->setFocusToSubject();
@@ -134,10 +129,6 @@ void OpenComposerJob::slotOpenComposer()
         }
         cWin->addAttachment((*it), QString());
     }
-    if (!mOpenComposerSettings.mReplyTo.isEmpty()) {
-        cWin->setCurrentReplyTo(mOpenComposerSettings.mReplyTo);
-    }
-
     if (!mOpenComposerSettings.mCustomHeaders.isEmpty()) {
         QMap<QByteArray, QString> extraCustomHeaders;
         QStringList::ConstIterator end = mOpenComposerSettings.mCustomHeaders.constEnd();

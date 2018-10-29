@@ -312,11 +312,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mEdtFrom->setObjectName(QStringLiteral("fromLine"));
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     mEdtFrom->setToolTip(i18n("Set the \"From:\" email address for this message"));
-    mEdtReplyTo = new MessageComposer::ComposerLineEdit(true, mHeadersArea);
-    mEdtReplyTo->setObjectName(QStringLiteral("replyToLine"));
-    mEdtReplyTo->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
-    mEdtReplyTo->setToolTip(i18n("Set the \"Reply-To:\" email address for this message"));
-    connect(mEdtReplyTo, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
 
     MessageComposer::RecipientsEditor *recipientsEditor = new MessageComposer::RecipientsEditor(mHeadersArea);
     recipientsEditor->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
@@ -334,7 +329,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mLblFcc = new QLabel(i18n("&Sent-Mail folder:"), mHeadersArea);
     mLblTransport = new QLabel(i18n("&Mail transport:"), mHeadersArea);
     mLblFrom = new QLabel(i18nc("sender address field", "&From:"), mHeadersArea);
-    mLblReplyTo = new QLabel(i18n("&Reply to:"), mHeadersArea);
     mLblSubject = new QLabel(i18nc("@label:textbox Subject of email.", "S&ubject:"), mHeadersArea);
     mShowHeaders = KMailSettings::self()->headers();
     mDone = false;
@@ -577,7 +571,6 @@ void KMComposerWin::readConfig(bool reload /* = false */)
 {
     mEdtFrom->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
     mComposerBase->recipientsEditor()->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
-    mEdtReplyTo->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
 
     if (MessageCore::MessageCoreSettings::self()->useDefaultFonts()) {
         mBodyFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
@@ -589,7 +582,6 @@ void KMComposerWin::readConfig(bool reload /* = false */)
 
     slotUpdateFont();
     mEdtFrom->setFont(mBodyFont);
-    mEdtReplyTo->setFont(mBodyFont);
     mEdtSubject->setFont(mBodyFont);
 
     if (!reload) {
@@ -657,7 +649,7 @@ MessageComposer::Composer *KMComposerWin::createSimpleComposer()
         charsets.insert(0, mOriginalPreferredCharset);
     }
     mComposerBase->setFrom(from());
-    mComposerBase->setReplyTo(replyTo());
+    //TODO mComposerBase->setReplyTo(replyTo());
     mComposerBase->setSubject(subject());
     mComposerBase->setCharsets(charsets);
     return mComposerBase->createSimpleComposer();
@@ -691,8 +683,6 @@ void KMComposerWin::slotUpdateView()
         id = HDR_TRANSPORT;
     } else if (act == mFromAction) {
         id = HDR_FROM;
-    } else if (act == mReplyToAction) {
-        id = HDR_REPLY_TO;
     } else if (act == mSubjectAction) {
         id = HDR_SUBJECT;
     } else if (act == mFccAction) {
@@ -746,8 +736,6 @@ int KMComposerWin::calcColumnWidth(int which, long allShowing, int width) const
         w = mLblTransport;
     } else if (which == HDR_FROM) {
         w = mLblFrom;
-    } else if (which == HDR_REPLY_TO) {
-        w = mLblReplyTo;
     } else if (which == HDR_SUBJECT) {
         w = mLblSubject;
     } else {
@@ -801,9 +789,6 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     if (std::abs(showHeaders)&HDR_FROM) {
         mLabelWidth = calcColumnWidth(HDR_FROM, showHeaders, mLabelWidth);
     }
-    if (std::abs(showHeaders)&HDR_REPLY_TO) {
-        mLabelWidth = calcColumnWidth(HDR_REPLY_TO, showHeaders, mLabelWidth);
-    }
     if (std::abs(showHeaders)&HDR_SUBJECT) {
         mLabelWidth = calcColumnWidth(HDR_SUBJECT, showHeaders, mLabelWidth);
     }
@@ -840,23 +825,11 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
 
     QWidget *prevFocus = mEdtFrom;
 
-    if (!fromSlot) {
-        mReplyToAction->setChecked(std::abs(mShowHeaders)&HDR_REPLY_TO);
-    }
-    rethinkHeaderLine(showHeaders, HDR_REPLY_TO, row, mLblReplyTo, mEdtReplyTo);
-    if (showHeaders & HDR_REPLY_TO) {
-        (void)connectFocusMoving(prevFocus, mEdtReplyTo);
-    }
 
     mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 2);
     ++row;
-    if (showHeaders & HDR_REPLY_TO) {
-        connect(mEdtReplyTo, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
-        connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusUp, mEdtReplyTo, QOverload<>::of(&QWidget::setFocus));
-    } else {
-        connect(mEdtFrom, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
-        connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusUp, mEdtFrom, QOverload<>::of(&QWidget::setFocus));
-    }
+    connect(mEdtFrom, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
+    connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusUp, mEdtFrom, QOverload<>::of(&QWidget::setFocus));
 
     connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusDown, mEdtSubject, QOverload<>::of(&QWidget::setFocus));
     connect(mEdtSubject, &PimCommon::SpellCheckLineEdit::focusUp, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusBottom);
@@ -877,9 +850,6 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     mDictionaryAction->setEnabled(!mAllFieldsAction->isChecked());
     mTransportAction->setEnabled(!mAllFieldsAction->isChecked());
     mFromAction->setEnabled(!mAllFieldsAction->isChecked());
-    if (mReplyToAction) {
-        mReplyToAction->setEnabled(!mAllFieldsAction->isChecked());
-    }
     mFccAction->setEnabled(!mAllFieldsAction->isChecked());
     mSubjectAction->setEnabled(!mAllFieldsAction->isChecked());
     mComposerBase->recipientsEditor()->setFirstColumnWidth(mLabelWidth);
@@ -1247,9 +1217,6 @@ void KMComposerWin::setupActions(void)
     mFromAction = new KToggleAction(i18n("&From"), this);
     actionCollection()->addAction(QStringLiteral("show_from"), mFromAction);
     connect(mFromAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
-    mReplyToAction = new KToggleAction(i18n("&Reply To"), this);
-    actionCollection()->addAction(QStringLiteral("show_reply_to"), mReplyToAction);
-    connect(mReplyToAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
     mSubjectAction = new KToggleAction(
         i18nc("@action:inmenu Show the subject in the composer window.", "S&ubject"), this);
     actionCollection()->addAction(QStringLiteral("show_subject"), mSubjectAction);
@@ -1488,15 +1455,6 @@ QString KMComposerWin::from() const
     return MessageComposer::Util::cleanedUpHeaderString(mEdtFrom->text());
 }
 
-QString KMComposerWin::replyTo() const
-{
-    if (mEdtReplyTo) {
-        return MessageComposer::Util::cleanedUpHeaderString(mEdtReplyTo->text());
-    } else {
-        return QString();
-    }
-}
-
 void KMComposerWin::slotInvalidIdentity()
 {
     mIncorrectIdentityFolderWarning->identityInvalid();
@@ -1511,13 +1469,6 @@ void KMComposerWin::setCurrentTransport(int transportId)
 {
     if (!mComposerBase->transportComboBox()->setCurrentTransport(transportId)) {
         mIncorrectIdentityFolderWarning->mailTransportIsInvalid();
-    }
-}
-
-void KMComposerWin::setCurrentReplyTo(const QString &replyTo)
-{
-    if (mEdtReplyTo) {
-        mEdtReplyTo->setText(replyTo);
     }
 }
 
@@ -1695,7 +1646,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     }
 
-    mEdtReplyTo->setText(mMsg->replyTo()->asUnicodeString());
+    //TODO FIXME mEdtReplyTo->setText(mMsg->replyTo()->asUnicodeString());
 
     KMime::Content *msgContent = new KMime::Content;
     msgContent->setContent(mMsg->encodedContent());
@@ -1774,7 +1725,6 @@ bool KMComposerWin::isComposerModified() const
 {
     return mComposerBase->editor()->document()->isModified()
            || mEdtFrom->isModified()
-           || (mEdtReplyTo && mEdtReplyTo->isModified())
            || mComposerBase->recipientsEditor()->isModified()
            || mEdtSubject->document()->isModified();
 }
@@ -1795,9 +1745,6 @@ void KMComposerWin::changeModifiedState(bool modified)
     mComposerBase->editor()->document()->setModified(modified);
     if (!modified) {
         mEdtFrom->setModified(false);
-        if (mEdtReplyTo) {
-            mEdtReplyTo->setModified(false);
-        }
         mComposerBase->recipientsEditor()->clearModified();
         mEdtSubject->document()->setModified(false);
     }
@@ -2685,7 +2632,7 @@ void KMComposerWin::applyComposerSetting(MessageComposer::ComposerViewBase *mCom
         charsets.insert(0, mOriginalPreferredCharset);
     }
     mComposerBase->setFrom(from());
-    mComposerBase->setReplyTo(replyTo());
+    //TODO FIXME mComposerBase->setReplyTo(replyTo());
     mComposerBase->setSubject(subject());
     mComposerBase->setCharsets(charsets);
     mComposerBase->setUrgent(mUrgentAction->isChecked());
@@ -3047,9 +2994,6 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
     if (KEmailAddress::firstEmailAddress(from()).isEmpty()) {
         mShowHeaders |= HDR_FROM;
     }
-    if (mEdtReplyTo) {
-        mEdtReplyTo->setText(ident.replyToAddr());
-    }
 
     // remove BCC of old identity and add BCC of new identity (if they differ)
     const KIdentityManagement::Identity &oldIdentity
@@ -3244,7 +3188,6 @@ void KMComposerWin::slotCompletionModeChanged(KCompletion::CompletionMode mode)
 
     // sync all the lineedits to the same completion mode
     mEdtFrom->setCompletionMode(mode);
-    mEdtReplyTo->setCompletionMode(mode);
     mComposerBase->recipientsEditor()->setCompletionMode(mode);
 }
 

@@ -637,11 +637,6 @@ KMCommand::Result KMEditItemCommand::execute()
         }
     }
 
-    if (auto hdr = msg->replyTo(false)) {
-        const QString replyTo = hdr->asUnicodeString();
-        win->setCurrentReplyTo(replyTo);
-    }
-
     const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
     if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
         win->setFcc(QString::number(sentAttribute->moveToCollection().id()));
@@ -1799,10 +1794,6 @@ KMCommand::Result KMResendMessageCommand::execute()
     newMsg->contentType()->setCharset(MimeTreeParser::NodeHelper::charset(msg.data()));
 
     KMail::Composer *win = KMail::makeComposer();
-    if (auto hdr = msg->replyTo(false)) {
-        const QString replyTo = hdr->asUnicodeString();
-        win->setCurrentReplyTo(replyTo);
-    }
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);

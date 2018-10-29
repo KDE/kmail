@@ -210,7 +210,6 @@ public: // kmkernel, kmcommands, callback
 
     bool insertFromMimeData(const QMimeData *source, bool forceAttachment = false);
 
-    void setCurrentReplyTo(const QString &) override;
     void setCollectionForNewMessage(const Akonadi::Collection &folder) override;
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) override;
@@ -477,7 +476,6 @@ private:
      */
     QString subject() const;
     QString from() const;
-    QString replyTo() const;
 
     /**
      * Ask for confirmation if the message was changed before close.
@@ -557,13 +555,11 @@ private:
 
     QWidget *mMainWidget = nullptr;
     MessageComposer::ComposerLineEdit *mEdtFrom = nullptr;
-    MessageComposer::ComposerLineEdit *mEdtReplyTo = nullptr;
     PimCommon::LineEditWithAutoCorrection *mEdtSubject = nullptr;
     QLabel *mLblIdentity = nullptr;
     QLabel *mLblTransport = nullptr;
     QLabel *mLblFcc = nullptr;
     QLabel *mLblFrom = nullptr;
-    QLabel *mLblReplyTo = nullptr;
     QLabel *mLblSubject = nullptr;
     QLabel *mDictionaryLabel = nullptr;
     QLabel *mCursorLineLabel = nullptr;
@@ -599,7 +595,6 @@ private:
     KToggleAction *mUrgentAction = nullptr;
     KToggleAction *mAllFieldsAction = nullptr;
     KToggleAction *mFromAction = nullptr;
-    KToggleAction *mReplyToAction = nullptr;
     KToggleAction *mSubjectAction = nullptr;
     KToggleAction *mIdentityAction = nullptr;
     KToggleAction *mTransportAction = nullptr;
