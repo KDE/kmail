@@ -527,7 +527,6 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 
     readFolderConfig();
     if (mMsgView) {
-        mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
         assignLoadExternalReference();
     }
 
@@ -1571,6 +1570,7 @@ void KMMainWidget::assignLoadExternalReference()
     } else {
         mMsgView->setHtmlLoadExtDefault(mHtmlLoadExtGlobalSetting);
     }
+    mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
 }
 
 //-----------------------------------------------------------------------------
@@ -4516,8 +4516,6 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     }
 
     mMsgView->setMessage(copyItem);
-    // reset HTML override to the folder setting
-    mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
     assignLoadExternalReference();
     mMsgView->setDecryptMessageOverwrite(false);
     mMsgActions->setCurrentMessage(copyItem);

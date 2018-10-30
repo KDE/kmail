@@ -62,6 +62,7 @@ void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat(QAction *act
 {
     MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
     if (format != mDisplayMessageFormat) {
+        mDisplayMessageFormat = format;
         Q_EMIT changeDisplayMessageFormat(format);
     }
 }
