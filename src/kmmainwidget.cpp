@@ -220,7 +220,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mConfig = config;
     mGUIClient = aGUIClient;
     mFolderTreeWidget = nullptr;
-    mPreferHtmlLoadExtAction = nullptr;
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
     mFavoritesModel = nullptr;
     mSievePasswordProvider = new KMSieveImapPasswordProvider(winId());
@@ -519,7 +518,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
     readFolderConfig();
     if (mMsgView) {
         mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
-        mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
+        assignLoadExternalReference();
     }
 
     if (!mCurrentFolderSettings->isValid() && (mMessagePane->count() < 2)) {
@@ -1553,6 +1552,15 @@ void KMMainWidget::slotExpireAll()
     kmkernel->expireAllFoldersNow();
 }
 
+void KMMainWidget::assignLoadExternalReference()
+{
+    if (mFolderHtmlLoadExtPreference) {
+        mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
+    } else {
+        mMsgView->setHtmlLoadExtDefault(mHtmlLoadExtGlobalSetting);
+    }
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOverrideHtmlLoadExt()
 {
@@ -1574,7 +1582,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
     mFolderHtmlLoadExtPreference = !mFolderHtmlLoadExtPreference;
 
     if (mMsgView) {
-        mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
+        assignLoadExternalReference();
         mMsgView->update(true);
     }
 }
@@ -3908,7 +3916,11 @@ void KMMainWidget::updateHtmlMenuEntry()
 
         mDisplayMessageFormatMenu->setDisplayMessageFormat(mFolderDisplayFormatPreference);
 
-        mPreferHtmlLoadExtAction->setChecked((mHtmlLoadExtGlobalSetting ? !mFolderHtmlLoadExtPreference : mFolderHtmlLoadExtPreference));
+        if (mFolderHtmlLoadExtPreference) {
+            mPreferHtmlLoadExtAction->setChecked(true);
+        } else {
+            mPreferHtmlLoadExtAction->setChecked(mHtmlLoadExtGlobalSetting);
+        }
     }
 }
 
@@ -4429,7 +4441,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     mMsgView->setMessage(copyItem);
     // reset HTML override to the folder setting
     mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
-    mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
+    assignLoadExternalReference();
     mMsgView->setDecryptMessageOverwrite(false);
     mMsgActions->setCurrentMessage(copyItem);
 }
