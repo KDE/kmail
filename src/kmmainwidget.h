@@ -213,6 +213,7 @@ protected:
     void showEvent(QShowEvent *event) override;
 
 private:
+    void assignLoadExternalReference();
     KMail::MessageActions *messageActions() const;
 
     KActionMenu *filterMenu() const;
