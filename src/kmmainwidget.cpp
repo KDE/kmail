@@ -4674,7 +4674,8 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
     mFolderDisplayFormatPreference = format;
 
     //Update mPrefererHtmlLoadExtAction
-    const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html || (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
+    const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html ||
+                          (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
     mPreferHtmlLoadExtAction->setEnabled(useHtml);
 
     if (mMsgView) {
