@@ -93,6 +93,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     , mMailbox(mailbox)
     , mConfig(config)
 {
+    setWindowTitle(i18n("Add an Unified MailBox"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     auto l = new QVBoxLayout(this);
 
