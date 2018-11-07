@@ -71,6 +71,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
             addBox(mailbox.get());
             mBoxManager.insertBox(std::move(mailbox));
         }
+        delete editor;
     });
     auto editButton = new QPushButton(QIcon::fromTheme(QStringLiteral("entry-edit")), i18n("Modify"));
     editButton->setEnabled(false);
@@ -86,6 +87,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
                 item->setText(mailbox->name());
                 item->setIcon(QIcon::fromTheme(mailbox->icon()));
             }
+            delete editor;
         }
     });
     auto removeButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18n("Remove"));
