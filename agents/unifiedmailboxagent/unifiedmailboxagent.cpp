@@ -87,12 +87,10 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
 void UnifiedMailboxAgent::configure(WId windowId)
 {
     QPointer<UnifiedMailboxAgent> agent(this);
-    if (SettingsDialog(config(), mBoxManager, windowId).exec() && agent) {
-        mBoxManager.saveBoxes();
+    if (agent) {
+        SettingsDialog(config(), mBoxManager, windowId).exec();
         synchronize();
         Q_EMIT configurationDialogAccepted();
-    } else {
-        mBoxManager.loadBoxes();
     }
 }
 
