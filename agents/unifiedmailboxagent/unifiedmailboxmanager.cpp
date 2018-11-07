@@ -22,6 +22,7 @@
 #include "unifiedmailboxagent_debug.h"
 #include "utils.h"
 #include "common.h"
+#include "settings.h"
 
 #include <KSharedConfig>
 #include <KConfigGroup>
@@ -299,6 +300,9 @@ UnifiedMailbox *UnifiedMailboxManager::unifiedMailboxFromCollection(const Akonad
 
 void UnifiedMailboxManager::createDefaultBoxes(FinishedCallback &&finishedCb)
 {
+    if (!Settings::self()->createDefaultBoxes()) {
+        return;
+    }
     // First build empty boxes
     auto inbox = std::make_unique<UnifiedMailbox>();
     inbox->attachManager(this);
@@ -363,6 +367,10 @@ void UnifiedMailboxManager::createDefaultBoxes(FinishedCallback &&finishedCb)
             finishedCb();
         }
     });
+#ifndef UNIT_TESTS
+    Settings::self()->setCreateDefaultBoxes(false);
+    Settings::self()->save();
+#endif
 }
 
 void UnifiedMailboxManager::discoverBoxCollections(FinishedCallback &&finishedCb)
