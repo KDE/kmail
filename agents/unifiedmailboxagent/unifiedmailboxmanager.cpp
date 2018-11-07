@@ -254,6 +254,7 @@ void UnifiedMailboxManager::saveBoxes()
         boxIt.second->save(boxGroup);
     }
     mConfig->sync();
+    mConfig->reparseConfiguration();
 }
 
 void UnifiedMailboxManager::insertBox(std::unique_ptr<UnifiedMailbox> box)
