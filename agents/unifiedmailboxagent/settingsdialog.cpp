@@ -70,6 +70,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
             mailbox->setId(mailbox->name());         // assign ID
             addBox(mailbox.get());
             mBoxManager.insertBox(std::move(mailbox));
+            mBoxManager.saveBoxes();
         }
         delete editor;
     });
@@ -88,6 +89,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
                 item->setIcon(QIcon::fromTheme(mailbox->icon()));
             }
             delete editor;
+            mBoxManager.saveBoxes();
         }
     });
     auto removeButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18n("Remove"));
@@ -104,6 +106,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
                     i18n("Really Remove?"), KStandardGuiItem::remove(), KStandardGuiItem::cancel()) == KMessageBox::Yes) {
                 mBoxModel->removeRow(item->row());
                 mBoxManager.removeBox(mailbox->id());
+                mBoxManager.saveBoxes();
             }
         }
     });
@@ -116,8 +119,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
         removeButton->setEnabled(hasSelection);
     });
 
-    auto box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    connect(box, &QDialogButtonBox::accepted, this, &SettingsDialog::accept);
+    auto box = new QDialogButtonBox(QDialogButtonBox::Close, this);
     connect(box, &QDialogButtonBox::rejected, this, &SettingsDialog::reject);
     l->addWidget(box);
 
@@ -144,13 +146,6 @@ void SettingsDialog::writeConfig()
     auto dlgGroup = mConfig->group(DialogGroup);
     dlgGroup.writeEntry("Size", size());
     dlgGroup.sync();
-}
-
-void SettingsDialog::accept()
-{
-    mBoxManager.saveBoxes();
-
-    QDialog::accept();
 }
 
 void SettingsDialog::loadBoxes()
