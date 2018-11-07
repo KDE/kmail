@@ -99,8 +99,12 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
 
     auto f = new QFormLayout;
     l->addLayout(f);
-    auto nameEdit = new QLineEdit(mMailbox->name());
+    const QString mailBoxName = mMailbox->name();
+    auto nameEdit = new QLineEdit(mailBoxName);
     nameEdit->setClearButtonEnabled(true);
+    if (!mailBoxName.isEmpty()) {
+        nameEdit->setReadOnly(true);
+    }
     f->addRow(i18n("Name:"), nameEdit);
     connect(nameEdit, &QLineEdit::textChanged,
             this, [this](const QString &name) {
@@ -172,6 +176,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
 
 UnifiedMailboxEditor::~UnifiedMailboxEditor()
 {
+    qDebug()<<" UnifiedMailboxEditor::~UnifiedMailboxEditor()"<<this;
     writeConfig();
 }
 
