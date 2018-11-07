@@ -34,6 +34,8 @@ public:
 
     ~UnifiedMailboxEditor() override;
 private:
+    void writeConfig();
+    void readConfig();
     UnifiedMailbox *mMailbox = nullptr;
     KSharedConfigPtr mConfig;
 };

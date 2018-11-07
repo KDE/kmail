@@ -44,6 +44,8 @@ private:
     void addBox(UnifiedMailbox *box);
 
 private:
+    void readConfig();
+    void writeConfig();
     QStandardItemModel *mBoxModel = nullptr;
     UnifiedMailboxManager &mBoxManager;
     MailKernel *mKernel = nullptr;

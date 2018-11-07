@@ -165,19 +165,28 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     });
     box->button(QDialogButtonBox::Ok)->setEnabled(!nameEdit->text().trimmed().isEmpty());
     l->addWidget(box);
-
-    const auto editorGroup = config->group(EditorGroup);
-    if (editorGroup.hasKey("geometry")) {
-        restoreGeometry(editorGroup.readEntry("geometry", QByteArray()));
-    } else {
-        resize(500, 900);
-    }
+    readConfig();
 }
 
 UnifiedMailboxEditor::~UnifiedMailboxEditor()
 {
+    writeConfig();
+}
+
+void UnifiedMailboxEditor::readConfig()
+{
     auto editorGrp = mConfig->group(EditorGroup);
-    editorGrp.writeEntry("geometry", saveGeometry());
+    const QSize size = editorGrp.readEntry("Size", QSize(500, 900));
+    if (size.isValid()) {
+        resize(size);
+    }
+}
+
+void UnifiedMailboxEditor::writeConfig()
+{
+    auto editorGrp = mConfig->group(EditorGroup);
+    editorGrp.writeEntry("Size", size());
+    editorGrp.sync();
 }
 
 #include "unifiedmailboxeditor.moc"

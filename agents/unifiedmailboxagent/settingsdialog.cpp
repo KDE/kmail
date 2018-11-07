@@ -120,19 +120,28 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     l->addWidget(box);
 
     loadBoxes();
-
-    const auto dlgGroup = config->group(DialogGroup);
-    if (dlgGroup.hasKey("geometry")) {
-        restoreGeometry(dlgGroup.readEntry("geometry", QByteArray()));
-    } else {
-        resize(500, 500);
-    }
+    readConfig();
 }
 
 SettingsDialog::~SettingsDialog()
 {
+    writeConfig();
+}
+
+void SettingsDialog::readConfig()
+{
     auto dlgGroup = mConfig->group(DialogGroup);
-    dlgGroup.writeEntry("geometry", saveGeometry());
+    const QSize size = dlgGroup.readEntry("Size", QSize(500, 500));
+    if (size.isValid()) {
+        resize(size);
+    }
+}
+
+void SettingsDialog::writeConfig()
+{
+    auto dlgGroup = mConfig->group(DialogGroup);
+    dlgGroup.writeEntry("Size", size());
+    dlgGroup.sync();
 }
 
 void SettingsDialog::accept()
