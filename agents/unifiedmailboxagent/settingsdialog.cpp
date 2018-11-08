@@ -77,8 +77,8 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     auto editButton = new QPushButton(QIcon::fromTheme(QStringLiteral("entry-edit")), i18n("Modify"));
     editButton->setEnabled(false);
     v->addWidget(editButton);
-    connect(editButton, &QPushButton::clicked,
-            this, [this, view]() {
+
+    const auto modifyMailBox = [this, view]() {
         const auto indexes = view->selectionModel()->selectedIndexes();
         if (!indexes.isEmpty()) {
             auto item = mBoxModel->itemFromIndex(indexes[0]);
@@ -91,7 +91,12 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
             delete editor;
             mBoxManager.saveBoxes();
         }
-    });
+    };
+
+    connect(view, &QListView::doubleClicked, this, modifyMailBox);
+    connect(editButton, &QPushButton::clicked,
+            this, modifyMailBox);
+
     auto removeButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18n("Remove"));
     removeButton->setEnabled(false);
     v->addWidget(removeButton);
