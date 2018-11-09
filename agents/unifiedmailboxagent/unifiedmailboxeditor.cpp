@@ -144,17 +144,6 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
         const auto index = Akonadi::EntityTreeModel::modelIndexForCollection(selectionModel->model(), Akonadi::Collection(source));
         selectionModel->select(index, QItemSelectionModel::Select);
     }
-    connect(checkable->selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, [this](const QItemSelection &selected, const QItemSelection &deselected) {
-        auto indexes = selected.indexes();
-        for (const auto &index : indexes) {
-            mMailbox->addSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
-        }
-        indexes = deselected.indexes();
-        for (const auto &index : indexes) {
-            mMailbox->removeSourceCollection(index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong());
-        }
-    });
 
     auto selfFilter = new SelfFilterProxyModel(this);
     selfFilter->setSourceModel(checkable);
@@ -163,7 +152,16 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     ftv->expandAll();
 
     auto box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    connect(box, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(box, &QDialogButtonBox::accepted, this, [checkable, this]() {
+        const auto indexes = checkable->selectionModel()->selectedIndexes();
+        QSet<qint64> list;
+        list.reserve(indexes.count());
+        for (const auto &index : indexes) {
+            list << index.data(Akonadi::EntityTreeModel::CollectionIdRole).toLongLong();
+        }
+        mMailbox->setSourceCollections(list);
+        accept();
+    });
     connect(box, &QDialogButtonBox::rejected, this, &QDialog::reject);
     connect(nameEdit, &QLineEdit::textChanged,
             box, [box](const QString &name) {
