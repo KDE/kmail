@@ -649,7 +649,6 @@ MessageComposer::Composer *KMComposerWin::createSimpleComposer()
         charsets.insert(0, mOriginalPreferredCharset);
     }
     mComposerBase->setFrom(from());
-    //TODO mComposerBase->setReplyTo(replyTo());
     mComposerBase->setSubject(subject());
     mComposerBase->setCharsets(charsets);
     return mComposerBase->createSimpleComposer();
@@ -1646,8 +1645,6 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     }
 
-    //TODO FIXME mEdtReplyTo->setText(mMsg->replyTo()->asUnicodeString());
-
     KMime::Content *msgContent = new KMime::Content;
     msgContent->setContent(mMsg->encodedContent());
     msgContent->parse();
@@ -2632,7 +2629,6 @@ void KMComposerWin::applyComposerSetting(MessageComposer::ComposerViewBase *mCom
         charsets.insert(0, mOriginalPreferredCharset);
     }
     mComposerBase->setFrom(from());
-    //TODO FIXME mComposerBase->setReplyTo(replyTo());
     mComposerBase->setSubject(subject());
     mComposerBase->setCharsets(charsets);
     mComposerBase->setUrgent(mUrgentAction->isChecked());
