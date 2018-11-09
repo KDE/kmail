@@ -176,7 +176,6 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
 
 UnifiedMailboxEditor::~UnifiedMailboxEditor()
 {
-    qDebug()<<" UnifiedMailboxEditor::~UnifiedMailboxEditor()"<<this;
     writeConfig();
 }
 
