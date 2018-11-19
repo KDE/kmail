@@ -4825,6 +4825,8 @@ void KMMainWidget::setupUnifiedMailboxChecker()
                              return;
                          }
 
+                         KMailSettings::self()->setAskEnableUnifiedMailboxes(false);
+
                          const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_unifiedmailbox_agent"));
                          QDBusInterface iface(service, QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.UnifiedMailboxAgent"),
                                               QDBusConnection::sessionBus(), this);
@@ -4847,8 +4849,6 @@ void KMMainWidget::setupUnifiedMailboxChecker()
                          if (answer == KMessageBox::Yes) {
                              iface.call(QStringLiteral("setEnableAgent"), true);
                          }
-
-                         KMailSettings::self()->setAskEnableUnifiedMailboxes(false);
                      };
 
     connect(kmkernel, &KMKernel::incomingAccountsChanged, this, ask);
