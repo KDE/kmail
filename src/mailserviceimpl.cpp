@@ -91,8 +91,7 @@ bool MailServiceImpl::sendMessage(const QString &from, const QString &to, const 
     return true;
 }
 
-bool MailServiceImpl::sendMessage(const QString &from, const QString &to, const QString &cc, const QString &bcc,
-                                  const QString &subject, const QString &body, const QByteArray &attachment)
+bool MailServiceImpl::sendMessage(const QString &from, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QByteArray &attachment)
 {
     if (to.isEmpty() && cc.isEmpty() && bcc.isEmpty()) {
         return false;

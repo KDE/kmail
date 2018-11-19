@@ -79,19 +79,19 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     v->addWidget(editButton);
 
     const auto modifyMailBox = [this, view]() {
-        const auto indexes = view->selectionModel()->selectedIndexes();
-        if (!indexes.isEmpty()) {
-            auto item = mBoxModel->itemFromIndex(indexes[0]);
-            auto mailbox = item->data().value<UnifiedMailbox *>();
-            auto editor = new UnifiedMailboxEditor(mailbox, mConfig, this);
-            if (editor->exec()) {
-                item->setText(mailbox->name());
-                item->setIcon(QIcon::fromTheme(mailbox->icon()));
-            }
-            delete editor;
-            mBoxManager.saveBoxes();
-        }
-    };
+                                   const auto indexes = view->selectionModel()->selectedIndexes();
+                                   if (!indexes.isEmpty()) {
+                                       auto item = mBoxModel->itemFromIndex(indexes[0]);
+                                       auto mailbox = item->data().value<UnifiedMailbox *>();
+                                       auto editor = new UnifiedMailboxEditor(mailbox, mConfig, this);
+                                       if (editor->exec()) {
+                                           item->setText(mailbox->name());
+                                           item->setIcon(QIcon::fromTheme(mailbox->icon()));
+                                       }
+                                       delete editor;
+                                       mBoxManager.saveBoxes();
+                                   }
+                               };
 
     connect(view, &QListView::doubleClicked, this, modifyMailBox);
     connect(editButton, &QPushButton::clicked,

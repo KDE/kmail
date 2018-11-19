@@ -824,7 +824,6 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
 
     QWidget *prevFocus = mEdtFrom;
 
-
     mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 2);
     ++row;
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
