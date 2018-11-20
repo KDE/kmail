@@ -153,8 +153,6 @@ public:
 
     void updatePaneTagComboBox();
 
-    void clearViewer();
-
     void addRecentFile(const QUrl &mUrl);
     void updateQuickSearchLineText();
 

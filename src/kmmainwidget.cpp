@@ -554,14 +554,6 @@ void KMMainWidget::slotShowSelectedFolderInPane()
     updateFolderMenu();
 }
 
-void KMMainWidget::clearViewer()
-{
-    if (mMsgView) {
-        mMsgView->clear(true);
-        mMsgView->displayAboutPage();
-    }
-}
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::readPreConfig()
 {
