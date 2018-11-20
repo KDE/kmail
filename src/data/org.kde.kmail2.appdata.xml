@@ -7,6 +7,7 @@
   <developer_name xml:lang="ca">La comunitat KDE</developer_name>
   <developer_name xml:lang="ca-valencia">La comunitat KDE</developer_name>
   <developer_name xml:lang="cs">Komunita KDE</developer_name>
+  <developer_name xml:lang="de">Die KDE-Gemeinschaft</developer_name>
   <developer_name xml:lang="en-GB">The KDE Community</developer_name>
   <developer_name xml:lang="es">La comunidad de KDE</developer_name>
   <developer_name xml:lang="fr">La communauté KDE</developer_name>
@@ -58,6 +59,7 @@
   <summary>A feature-rich email application</summary>
   <summary xml:lang="ca">Una aplicació de correu electrònic rica en característiques</summary>
   <summary xml:lang="ca-valencia">Una aplicació de correu electrònic rica en característiques</summary>
+  <summary xml:lang="de">Ein E-Mail-Programm mit vielen Funktionen</summary>
   <summary xml:lang="en-GB">A feature-rich email application</summary>
   <summary xml:lang="es">Una aplicación de correo rica en características</summary>
   <summary xml:lang="fr">Une application de courriel riche en fonctionnalités</summary>
