@@ -12,6 +12,7 @@
   <developer_name xml:lang="es">La comunidad de KDE</developer_name>
   <developer_name xml:lang="fr">La communauté KDE</developer_name>
   <developer_name xml:lang="gl">A comunidade de KDE</developer_name>
+  <developer_name xml:lang="it">La comunità KDE</developer_name>
   <developer_name xml:lang="nl">De KDE gemeenschap</developer_name>
   <developer_name xml:lang="pt">A Comunidade do KDE</developer_name>
   <developer_name xml:lang="sv">KDE-gemenskapen</developer_name>
@@ -156,6 +157,7 @@
       <li xml:lang="en-GB">Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
       <li xml:lang="es">Integrado - Las invitaciones a reuniones pueden añadirse fácilmente como eventos en KOrganizer, el autocompletado de direcciones, avatares y preferencias de cifrado se cargan desde KAddressBook.</li>
       <li xml:lang="gl">Integrado — As invitacións a reunións poden engadirse facilmente como eventos a KOrganizer, permite completar automaticamente enderezos, e carta as imaxes de usuario e as preferencias criptográficas de KAddressBook.</li>
+      <li xml:lang="it">Integrato - gli inviti alle riunioni possono essere aggiunti in modo semplice come eventi in KOrganizer, mentre il completamento automatico degli indirizzi, gli avatar e le preferenze di cifratura sono caricati da KAddressBook.</li>
       <li xml:lang="nl">Geïntegreerd - invitaties voor bijeenkomsten kunnen gemakkelijk als afspraken in KOrganizer worden toegevoegd, automatisch aanvullen van adressen, avatars en voorkeuren voor versleuteling worden geladen uit KAddressBook.</li>
       <li xml:lang="pt">Integrado - Os convites para reuniões podem ser facilmente adicionados como eventos ao KOrganizer; as definições de completação automática de endereços, avatars e encriptação são carregadas a partir do KAddressBook.</li>
       <li xml:lang="sv">Integrerat: Mötesinbjudan kan enkelt läggas till som händelser i Korganizer, automatisk komplettering av adresser, avatarer och kryptoinställningar läses in från adressboken.</li>
