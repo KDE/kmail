@@ -28,6 +28,7 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     : KActionMenu(parent)
 {
     setText(i18n("Message Default Format"));
+    delete menu();
     QMenu *subMenu = new QMenu;
     setMenu(subMenu);
 
