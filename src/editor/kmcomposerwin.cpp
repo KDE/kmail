@@ -343,7 +343,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mSplitter->addWidget(mSnippetSplitter);
 
     QWidget *editorAndCryptoStateIndicators = new QWidget(mSplitter);
-    mCryptoStateIndicatorWidget = new CryptoStateIndicatorWidget;
+    mCryptoStateIndicatorWidget = new CryptoStateIndicatorWidget(this);
     mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
@@ -823,7 +823,6 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     rethinkHeaderLine(showHeaders, HDR_FROM, row, mLblFrom, mEdtFrom);
 
     QWidget *prevFocus = mEdtFrom;
-
 
     mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 2);
     ++row;

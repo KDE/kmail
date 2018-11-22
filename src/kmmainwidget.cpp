@@ -4666,8 +4666,8 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
     mFolderDisplayFormatPreference = format;
 
     //Update mPrefererHtmlLoadExtAction
-    const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html ||
-                          (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
+    const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html
+                          || (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
     mPreferHtmlLoadExtAction->setEnabled(useHtml);
 
     if (mMsgView) {
@@ -4840,9 +4840,9 @@ void KMMainWidget::setupUnifiedMailboxChecker()
                          }
 
                          const auto answer = KMessageBox::questionYesNo(
-                             this, i18n("You have more than one email account set up. Do you want to enable the Unified Mailbox feature to "
+                             this, i18n("You have more than one email account set up.\nDo you want to enable the Unified Mailbox feature to "
                                         "show unified content of your inbox, sent and drafts folders?\n"
-                                        "You can configure unified mailboxes, create custom ones or disable the feature completely in KMail's Plugin settings."),
+                                        "You can configure unified mailboxes, create custom ones or\ndisable the feature completely in KMail's Plugin settings."),
                              i18n("Enable Unified Mailboxes?"),
                              KGuiItem(i18n("Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
                              KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel")));
