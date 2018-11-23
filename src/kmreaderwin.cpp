@@ -190,7 +190,7 @@ void KMReaderWin::createActions()
     connect(mImageUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotSaveImageOnDisk);
 
     // View html options
-    mViewHtmlOptions = new QMenu(i18n("Show HTML Format"));
+    mViewHtmlOptions = new QMenu(i18n("Show HTML Format"), this);
     mViewAsHtml = new QAction(i18n("Show HTML format when mail comes from this contact"), mViewHtmlOptions);
     ac->setShortcutsConfigurable(mViewAsHtml, false);
     connect(mViewAsHtml, &QAction::triggered, this, &KMReaderWin::slotContactHtmlOptions);
