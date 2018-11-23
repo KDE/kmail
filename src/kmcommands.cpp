@@ -934,6 +934,7 @@ KMCommand::Result KMForwardCommand::execute()
             KMail::Composer *win = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity);
             win->addAttach(fwdMsg.second);
             win->show();
+            delete fwdMsg.second;
             return OK;
         } else if (answer == KMessageBox::No) {  // NO MIME DIGEST, Multiple forward
             Akonadi::Item::List::const_iterator it;
@@ -992,6 +993,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     }
     for (KMime::Content *attach : qAsConst(fwdMsg.second)) {
         mWin->addAttach(attach);
+        delete attach;
     }
     mWin->show();
     return OK;
