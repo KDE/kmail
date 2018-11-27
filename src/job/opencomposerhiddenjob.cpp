@@ -58,7 +58,7 @@ void OpenComposerHiddenJob::start()
         mMsg->setBody(mSettings.mBody.toUtf8());
         slotOpenComposer();
     } else {
-        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
         connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &OpenComposerHiddenJob::slotOpenComposer);
         parser->setIdentityManager(KMKernel::self()->identityManager());
         parser->process(KMime::Message::Ptr());

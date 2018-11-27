@@ -1,5 +1,5 @@
 <!DOCTYPE gui>
-<gui version="522" name="kmreadermainwin" translationDomain="kmail">
+<gui version="527" name="kmreadermainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -15,26 +15,23 @@
    <text>&amp;Edit</text>
    <Action name="kmail_copy"/>
    <Action name="find_in_messages" />
+   <Separator/>
+   <Action name="mark_all_text" />
+   <Separator/>
+   <ActionList name="kmail_plugins_edit"/>
   </Menu>
   <Menu noMerge="1" name="view">
    <text>&amp;View</text>
    <Action name="view_headers"/>
    <Action name="view_attachments"/>
    <Separator/>
-   <Action name="view_source"/>
-   <Separator/>
    <Action name="toggle_fixedfont"/>
+   <Separator/>
+   <Action name="disable_emoticon"/>
+   <Separator/>
    <Action name="encoding" />
    <Separator/>
-   <Menu noMerge="1" name="zoom" >
-     <text>Zoom</text>
-     <Action name="zoom_in"/>
-     <Action name="zoom_out"/>
-     <Separator/>
-     <Action name="zoom_reset"/>
-     <Separator/>
-     <Action name="toggle_zoomtextonly"/>
-   </Menu>
+   <Action name="zoom_menu"/>
   </Menu>
   <Menu noMerge="1" name="message" >
    <text>&amp;Message</text>
@@ -59,15 +56,17 @@
      <Action name="custom_forward" />
    </Menu>
    <Action name="send_again" />
-   <Action name="edit"/>
    <Action name="mailing_list"/>
    <Separator/>
    <Action name="set_status" />
    <Separator/>
    <Action name="create_todo"/>
    <Action name="create_event"/>
+   <Action name="create_note"/>>
    <Separator/>
    <Action name="view_source"/>
+   <Separator/>
+   <ActionList name="kmail_plugins_message"/>
   </Menu>
   <Menu noMerge="1" name="settings">
    <text>&amp;Settings</text>

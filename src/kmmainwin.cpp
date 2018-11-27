@@ -29,10 +29,10 @@
 #include <QTimer>
 #include <QStatusBar>
 #include <QApplication>
+#include <KConfigGroup>
 
 #include <KConfigGui>
 #include <QMenuBar>
-#include <KConfigGui>
 #include <KLocalizedString>
 #include <kedittoolbar.h>
 #include <kconfig.h>

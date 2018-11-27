@@ -99,7 +99,7 @@ using KMail::MailServiceImpl;
 #include <QDir>
 #include <QWidget>
 #include <QFileInfo>
-#include <QtDBus/QtDBus>
+#include <QtDBus>
 
 #include <MailCommon/ResourceReadConfigFile>
 
@@ -207,6 +207,8 @@ KMKernel::KMKernel(QObject *parent)
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceWarning, this, &KMKernel::slotInstanceWarning);
 
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KMKernel::slotInstanceRemoved);
+
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &KMKernel::slotInstanceAdded);
 
     connect(PimCommon::NetworkManager::self()->networkConfigureManager(), &QNetworkConfigurationManager::onlineStateChanged,
             this, &KMKernel::slotSystemNetworkStatusChanged);
@@ -1614,8 +1616,9 @@ void KMKernel::agentInstanceBroken(const Akonadi::AgentInstance &instance)
 {
     const QString summary = i18n("Resource %1 is broken.", instance.name());
     KNotification::event(QStringLiteral("akonadi-resource-broken"),
+                         QString(),
                          summary,
-                         QPixmap(),
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout);
 }
@@ -1784,8 +1787,9 @@ void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance, const
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
     KNotification::event(QStringLiteral("akonadi-instance-warning"),
+                         QString(),
                          summary,
-                         QPixmap(),
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout);
 }
@@ -1794,8 +1798,9 @@ void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const Q
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
     KNotification::event(QStringLiteral("akonadi-instance-error"),
+                         QString(),
                          summary,
-                         QPixmap(),
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout);
 }
@@ -1813,6 +1818,17 @@ void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
         mResourceCryptoSettingCache.remove(identifier);
     }
     mFolderArchiveManager->slotInstanceRemoved(instance);
+
+    if (MailCommon::Util::isMailAgent(instance)) {
+        Q_EMIT incomingAccountsChanged();
+    }
+}
+
+void KMKernel::slotInstanceAdded(const Akonadi::AgentInstance &instance)
+{
+    if (MailCommon::Util::isMailAgent(instance)) {
+        Q_EMIT incomingAccountsChanged();
+    }
 }
 
 void KMKernel::savePaneSelection()

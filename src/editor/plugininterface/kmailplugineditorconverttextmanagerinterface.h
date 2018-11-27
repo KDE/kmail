@@ -49,10 +49,13 @@ public:
     QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
     void reformatText();
-    void convertTextToFormat(MessageComposer::TextPart *textPart);
+    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertTextToFormat(MessageComposer::TextPart *textPart);
 
     void setInitialData(const MessageComposer::PluginEditorConverterInitialData &data);
     void setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data);
+    void enableDisablePluginActions(bool richText);
+
+    QList<QWidget *> statusBarWidgetList();
 Q_SIGNALS:
     void reformatingTextDone();
 
@@ -63,6 +66,7 @@ private:
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;
+    QList<QWidget *> mStatusBarWidget;
 };
 
 #endif // KMAILPLUGINEDITORCONVERTTEXTMANAGERINTERFACE_H

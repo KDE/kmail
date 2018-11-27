@@ -1,5 +1,5 @@
 <!DOCTYPE gui SYSTEM "kpartgui.dtd" >
-<gui version="518" name="kmcomposer" translationDomain="kmail">
+<gui version="519" name="kmcomposer" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -40,6 +40,7 @@
    <text>&amp;Options</text>
    <Action name="urgent" />
    <Action name="options_request_mdn" />
+   <Action name="options_request_delivery_confirmation" />
    <Separator/>
    <Action name="sign_message" />
    <Action name="encrypt_message" />

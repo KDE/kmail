@@ -281,7 +281,6 @@ SecurityPageWarningTab::SecurityPageWarningTab(QWidget *parent)
     connect(mWidget->warnGroupBox, &QGroupBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->warnUnencryptedCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->warnReceiverNotInCertificateCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->mWarnSignKeyExpiresSB, QOverload<int>::of(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->mWarnEncrKeyExpiresSB, QOverload<int>::of(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->mWarnEncrChainCertExpiresSB, QOverload<int>::of(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
@@ -302,7 +301,6 @@ void SecurityPage::WarningTab::doLoadFromGlobalSettings()
 {
     loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
-    loadWidget(mWidget->warnReceiverNotInCertificateCB, MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCertItem());
 
     // The "-int" part of the key name is because there used to be a separate boolean
     // config entry for enabling/disabling. This is done with the single bool value now.
@@ -321,7 +319,6 @@ void SecurityPage::WarningTab::doLoadOther()
 {
     loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
-    loadWidget(mWidget->warnReceiverNotInCertificateCB, MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCertItem());
 
     // The "-int" part of the key name is because there used to be a separate boolean
     // config entry for enabling/disabling. This is done with the single bool value now.
@@ -350,7 +347,6 @@ void SecurityPage::WarningTab::save()
 {
     saveCheckBox(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     saveCheckBox(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
-    saveCheckBox(mWidget->warnReceiverNotInCertificateCB, MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCertItem());
 
     MessageComposer::MessageComposerSettings::self()->setCryptoWarnWhenNearExpire(
         mWidget->warnGroupBox->isChecked());

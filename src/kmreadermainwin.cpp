@@ -25,6 +25,8 @@
 
 #include "kmreadermainwin.h"
 #include "kmreaderwin.h"
+#include "widgets/zoomlabelwidget.h"
+#include "kmmainwidget.h"
 
 #include <kactionmenu.h>
 #include <kedittoolbar.h>
@@ -42,8 +44,6 @@
 #include "kmcommands.h"
 #include <QMenuBar>
 #include <qmenu.h>
-#include "kmmainwidget.h"
-#include <MessageViewer/CSSHelper>
 #include <TemplateParser/CustomTemplatesMenu>
 #include "messageactions.h"
 #include "util.h"
@@ -58,6 +58,8 @@
 #include <KEmailAddress>
 #include <WebEngineViewer/WebHitTestResult>
 #include <kmime/kmime_message.h>
+#include <tag/tagactionmanager.h>
+#include <tag/tagselectdialog.h>
 
 #include <messageviewer/viewer.h>
 #include <AkonadiCore/item.h>
@@ -104,18 +106,30 @@ void KMReaderMainWin::initKMReaderMainWin()
     setupGUI(Keys | StatusBar | Create, QStringLiteral("kmreadermainwin.rc"));
     mMsgActions->setupForwardingActionsList(this);
     applyMainWindowSettings(KMKernel::self()->config()->group("Separate Reader Window"));
+    mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
+    statusBar()->addPermanentWidget(mZoomLabelIndicator);
+    setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
+
     if (!mReaderWin->message().isValid()) {
         menuBar()->hide();
         toolBar(QStringLiteral("mainToolBar"))->hide();
     }
     connect(kmkernel, &KMKernel::configChanged, this, &KMReaderMainWin::slotConfigChanged);
     connect(mReaderWin, &KMReaderWin::showStatusBarMessage, this, &KMReaderMainWin::slotShowMessageStatusBar);
+    connect(mReaderWin, &KMReaderWin::zoomChanged, this, &KMReaderMainWin::setZoomChanged);
 }
 
 KMReaderMainWin::~KMReaderMainWin()
 {
     KConfigGroup grp(KMKernel::self()->config()->group("Separate Reader Window"));
     saveMainWindowSettings(grp);
+}
+
+void KMReaderMainWin::setZoomChanged(qreal zoomFactor)
+{
+    if (mZoomLabelIndicator) {
+        mZoomLabelIndicator->setZoom(zoomFactor);
+    }
 }
 
 void KMReaderMainWin::slotShowMessageStatusBar(const QString &msg)
@@ -153,7 +167,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     mMsg = msg;
     mMsgActions->setCurrentMessage(msg);
 
-    const bool canChange = mParentCollection.isValid() ? (bool)(mParentCollection.rights() & Akonadi::Collection::CanDeleteItem) : false;
+    const bool canChange = mParentCollection.isValid() ? static_cast<bool>(mParentCollection.rights() & Akonadi::Collection::CanDeleteItem) : false;
     mTrashAction->setEnabled(canChange);
 
     if (mReaderWin->viewer() && mReaderWin->viewer()->headerStylePlugin() && mReaderWin->viewer()->headerStylePlugin()->headerStyle()) {
@@ -163,8 +177,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     const bool isInTrashFolder = mParentCollection.isValid() ? CommonKernel->folderIsTrash(mParentCollection) : false;
     QAction *moveToTrash = actionCollection()->action(QStringLiteral("move_to_trash"));
     KMail::Util::setActionTrashOrDelete(moveToTrash, isInTrashFolder);
-    menuBar()->show();
-    toolBar(QStringLiteral("mainToolBar"))->show();
+    updateActions();
 }
 
 void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message::Ptr &message)
@@ -187,9 +200,16 @@ void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message:
     setCaption(message->subject()->asUnicodeString());
 
     mTrashAction->setEnabled(false);
+    updateActions();
+}
 
+void KMReaderMainWin::updateActions()
+{
     menuBar()->show();
     toolBar(QStringLiteral("mainToolBar"))->show();
+    if (mMsg.isValid()) {
+        mTagActionManager->updateActionStates(1, mMsg);
+    }
 }
 
 void KMReaderMainWin::slotReplyOrForwardFinished()
@@ -197,6 +217,42 @@ void KMReaderMainWin::slotReplyOrForwardFinished()
     if (MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForward()) {
         close();
     }
+}
+
+void KMReaderMainWin::slotSelectMoreMessageTagList()
+{
+    const Akonadi::Item::List selectedMessages = {mMsg};
+    if (selectedMessages.isEmpty()) {
+        return;
+    }
+
+    QPointer<TagSelectDialog> dlg = new TagSelectDialog(this, selectedMessages.count(), selectedMessages.first());
+    dlg->setActionCollection(QList<KActionCollection *> { actionCollection() });
+    if (dlg->exec()) {
+        const Akonadi::Tag::List lst = dlg->selectedTag();
+        KMCommand *command = new KMSetTagCommand(lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew);
+        command->start();
+    }
+    delete dlg;
+}
+
+void KMReaderMainWin::slotUpdateMessageTagList(const Akonadi::Tag &tag)
+{
+    // Create a persistent set from the current thread.
+    const Akonadi::Item::List selectedMessages = {mMsg};
+    if (selectedMessages.isEmpty()) {
+        return;
+    }
+    toggleMessageSetTag(selectedMessages, tag);
+}
+
+void KMReaderMainWin::toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag)
+{
+    if (select.isEmpty()) {
+        return;
+    }
+    KMCommand *command = new KMSetTagCommand(Akonadi::Tag::List() << tag, select, KMSetTagCommand::Toggle);
+    command->start();
 }
 
 Akonadi::Collection KMReaderMainWin::parentCollection() const
@@ -340,7 +396,7 @@ void KMReaderMainWin::setupAccel()
     mSaveAtmAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments..."), actionCollection());
     connect(mSaveAtmAction, &QAction::triggered, mReaderWin->viewer(), &MessageViewer::Viewer::slotAttachmentSaveAll);
 
-    mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("user-trash")), i18n("&Move to Trash"), this);
+    mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete-shred")), i18n("&Move to Trash"), this);
     mTrashAction->setIconText(i18nc("@action:intoolbar Move to Trash", "Trash"));
     KMail::Util::addQActionHelpText(mTrashAction, i18n("Move message to trashcan"));
     actionCollection()->addAction(QStringLiteral("move_to_trash"), mTrashAction);
@@ -350,6 +406,19 @@ void KMReaderMainWin::setupAccel()
     QAction *closeAction = KStandardAction::close(this, &KMReaderMainWin::close, actionCollection());
     QList<QKeySequence> closeShortcut = closeAction->shortcuts();
     closeAction->setShortcuts(closeShortcut << QKeySequence(Qt::Key_Escape));
+
+    mTagActionManager = new KMail::TagActionManager(this, actionCollection(), mMsgActions,
+                                                    this);
+    connect(mTagActionManager, &KMail::TagActionManager::tagActionTriggered,
+            this, &KMReaderMainWin::slotUpdateMessageTagList);
+
+    connect(mTagActionManager, &KMail::TagActionManager::tagMoreActionClicked,
+            this, &KMReaderMainWin::slotSelectMoreMessageTagList);
+
+    mTagActionManager->createActions();
+    if (mReaderWin->message().isValid()) {
+        mTagActionManager->updateActionStates(1, mReaderWin->message());
+    }
 
     //----- Message Menu
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMReaderMainWin::slotMessagePopup);

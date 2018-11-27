@@ -33,6 +33,13 @@ KMailPluginEditorConvertTextManagerInterface::~KMailPluginEditorConvertTextManag
 {
 }
 
+void KMailPluginEditorConvertTextManagerInterface::enableDisablePluginActions(bool richText)
+{
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+        interface->enableDisablePluginActions(richText);
+    }
+}
+
 void KMailPluginEditorConvertTextManagerInterface::reformatText()
 {
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
@@ -44,15 +51,25 @@ void KMailPluginEditorConvertTextManagerInterface::reformatText()
     Q_EMIT reformatingTextDone();
 }
 
-void KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
+MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
 {
+    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
-        if (interface->convertTextToFormat(textPart)) {
-            //TODO signal that it was reformating.
-            //Stop it.?
+        switch (interface->convertTextToFormat(textPart)) {
+        case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted:
+            if (status != MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted) {
+                status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
+            }
+            break;
+        case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted:
+            status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted;
+            break;
+        case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Error:
+            status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Error;
+            return status;
         }
     }
-    //TODO
+    return status;
 }
 
 void KMailPluginEditorConvertTextManagerInterface::setInitialData(const MessageComposer::PluginEditorConverterInitialData &data)
@@ -92,22 +109,24 @@ void KMailPluginEditorConvertTextManagerInterface::setActionCollection(KActionCo
 void KMailPluginEditorConvertTextManagerInterface::initializePlugins()
 {
     if (!mListPluginInterface.isEmpty()) {
-        qCDebug(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Plugin was already initialized. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Plugin was already initialized. This is a bug";
         return;
     }
     if (!mRichTextEditor) {
-        qCDebug(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Richtexteditor is null. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Richtexteditor is null. This is a bug";
         return;
     }
     if (!mParentWidget) {
-        qCDebug(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Parent is null. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Parent is null. This is a bug";
     }
     const QVector<MessageComposer::PluginEditorConvertText *> lstPlugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginsList();
     for (MessageComposer::PluginEditorConvertText *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
-            MessageComposer::PluginEditorConvertTextInterface *interface = static_cast<MessageComposer::PluginEditorConvertTextInterface *>(plugin->createInterface(mActionCollection, this));
+            MessageComposer::PluginEditorConvertTextInterface *interface = static_cast<MessageComposer::PluginEditorConvertTextInterface *>(plugin->createInterface(this));
             interface->setRichTextEditor(mRichTextEditor);
             interface->setParentWidget(mParentWidget);
+            interface->createAction(mActionCollection);
+            interface->setPlugin(plugin);
             mListPluginInterface.append(interface);
         }
     }
@@ -173,4 +192,16 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
 QList<QAction *> KMailPluginEditorConvertTextManagerInterface::actionsType(MessageComposer::PluginActionType::Type type)
 {
     return mActionHash.value(type);
+}
+
+QList<QWidget *> KMailPluginEditorConvertTextManagerInterface::statusBarWidgetList()
+{
+    if (mStatusBarWidget.isEmpty() && !mListPluginInterface.isEmpty()) {
+        for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+            if (interface->plugin()->hasStatusBarSupport()) {
+                mStatusBarWidget.append(interface->statusBarWidget());
+            }
+        }
+    }
+    return mStatusBarWidget;
 }

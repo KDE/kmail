@@ -155,9 +155,10 @@ void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
     delete dialog;
 }
 
-bool KMComposerEditorNg::convertPlainText(MessageComposer::TextPart *textPart)
+MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMComposerEditorNg::convertPlainText(MessageComposer::TextPart *textPart)
 {
-    Q_UNUSED(textPart);
-    //TODO implement it
-    return false;
+    if (mComposerWin->convertPlainText(textPart) == MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted) {
+        return MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted;
+    }
+    return MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
 }

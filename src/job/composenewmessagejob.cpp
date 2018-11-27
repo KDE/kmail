@@ -46,7 +46,7 @@ void ComposeNewMessageJob::start()
 
     mIdentity = mFolder ? mFolder->identity() : 0;
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
-    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &ComposeNewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     if (mFolder) {

@@ -31,13 +31,12 @@
 DndFromArkJob::DndFromArkJob(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 bool DndFromArkJob::dndFromArk(const QMimeData *source)
 {
-    if (source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-service")) &&
-            source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
+    if (source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-service"))
+        && source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
         return true;
     }
     return false;

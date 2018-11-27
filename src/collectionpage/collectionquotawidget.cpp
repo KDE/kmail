@@ -62,7 +62,7 @@ CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
 
 void CollectionQuotaWidget::setQuotaInfo(qint64 current, qint64 maxValue)
 {
-    int perc = qBound(0, qRound(100.0 * current / qMax(1LL, maxValue)), 100);
+    const int perc = qBound(0, qRound(100.0 * current / qMax(1LL, maxValue)), 100);
     mProgressBar->setValue(perc);
     mUsage->setText(i18n("%1 of %2 used", KFormat().formatByteSize(qMax(0LL, current)), KFormat().formatByteSize(qMax(0LL, maxValue))));
 }

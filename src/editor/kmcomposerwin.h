@@ -22,13 +22,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef KMAIL_KMComposeWin
-#define KMAIL_KMComposeWin
+#ifndef KMAIL_KMCOMPOSERWIN_H
+#define KMAIL_KMCOMPOSERWIN_H
 
 // KMail includes
 #include "editor/composer.h"
 #include "MessageComposer/RecipientsEditor"
-
+#include <MessageComposer/PluginEditorConvertTextInterface>
 // Qt includes
 #include <QFont>
 #include <QList>
@@ -210,11 +210,11 @@ public: // kmkernel, kmcommands, callback
 
     bool insertFromMimeData(const QMimeData *source, bool forceAttachment = false);
 
-    void setCurrentReplyTo(const QString &) override;
     void setCollectionForNewMessage(const Akonadi::Collection &folder) override;
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) override;
 
+    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart);
 private:
     /**
     * Write settings to app's config file.
@@ -323,7 +323,7 @@ private Q_SLOTS:
     void slotUpdateWindowTitle();
 
     /**
-     * Switch the icon to lock or unlock respectivly.
+     * Switch the icon to lock or unlock respectively.
      * Change states of all encrypt check boxes in the attachments listview
      */
     void slotEncryptToggled(bool);
@@ -412,6 +412,7 @@ public: // kmcommand
     QList<KToggleAction *> customToolsList() const;
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 private:
+    void enableDisablePluginActions(bool richText);
     /**
      * Read settings from app's config file.
      */
@@ -475,7 +476,6 @@ private:
      */
     QString subject() const;
     QString from() const;
-    QString replyTo() const;
 
     /**
      * Ask for confirmation if the message was changed before close.
@@ -538,6 +538,7 @@ private:
     void slotCryptoModuleSelected();
     void slotFccIsInvalid();
     void slotIdentityDeleted(uint uoid);
+    void slotInvalidIdentity();
     void slotTransportRemoved(int id, const QString &name);
 
     void updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified);
@@ -554,13 +555,11 @@ private:
 
     QWidget *mMainWidget = nullptr;
     MessageComposer::ComposerLineEdit *mEdtFrom = nullptr;
-    MessageComposer::ComposerLineEdit *mEdtReplyTo = nullptr;
     PimCommon::LineEditWithAutoCorrection *mEdtSubject = nullptr;
     QLabel *mLblIdentity = nullptr;
     QLabel *mLblTransport = nullptr;
     QLabel *mLblFcc = nullptr;
     QLabel *mLblFrom = nullptr;
-    QLabel *mLblReplyTo = nullptr;
     QLabel *mLblSubject = nullptr;
     QLabel *mDictionaryLabel = nullptr;
     QLabel *mCursorLineLabel = nullptr;
@@ -592,10 +591,10 @@ private:
     KToggleAction *mSignAction = nullptr;
     KToggleAction *mEncryptAction = nullptr;
     KToggleAction *mRequestMDNAction = nullptr;
+    KToggleAction *mRequestDeliveryConfirmation = nullptr;
     KToggleAction *mUrgentAction = nullptr;
     KToggleAction *mAllFieldsAction = nullptr;
     KToggleAction *mFromAction = nullptr;
-    KToggleAction *mReplyToAction = nullptr;
     KToggleAction *mSubjectAction = nullptr;
     KToggleAction *mIdentityAction = nullptr;
     KToggleAction *mTransportAction = nullptr;

@@ -40,7 +40,7 @@ FillComposerJob::~FillComposerJob()
 void FillComposerJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message);
-    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager());
+    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mSettings.mIdentity);
     mMsg->contentType()->setCharset("utf-8");
     if (!mSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mSettings.mCc, "utf-8");
@@ -63,7 +63,7 @@ void FillComposerJob::start()
         mMsg->setBody(mSettings.mBody.toUtf8());
         slotOpenComposer();
     } else {
-        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
         connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &FillComposerJob::slotOpenComposer);
         parser->setIdentityManager(KMKernel::self()->identityManager());
         parser->process(KMime::Message::Ptr());
@@ -96,7 +96,7 @@ void FillComposerJob::slotOpenComposer()
                 arg(mSettings.mAttachParamValue).toLatin1());
 
             iCalAutoSend = true; // no point in editing raw ICAL
-            noWordWrap = true; // we shant word wrap inline invitations
+            noWordWrap = true; // we shouldn't word wrap inline invitations
         } else {
             // Just do what we're told to do
             msgPart = new KMime::Content;

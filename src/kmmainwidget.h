@@ -153,8 +153,6 @@ public:
 
     void updatePaneTagComboBox();
 
-    void clearViewer();
-
     void addRecentFile(const QUrl &mUrl);
     void updateQuickSearchLineText();
 
@@ -213,6 +211,7 @@ protected:
     void showEvent(QShowEvent *event) override;
 
 private:
+    void assignLoadExternalReference();
     KMail::MessageActions *messageActions() const;
 
     KActionMenu *filterMenu() const;
@@ -519,10 +518,10 @@ private:
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
+    void setupUnifiedMailboxChecker();
     QAction *filterToAction(MailCommon::MailFilter *filter);
     Akonadi::Collection::List applyFilterOnCollection(bool recursive);
     void setShowStatusBarMessage(const QString &msg);
-
 
     // Message actions
     QAction *mDeleteAction = nullptr;

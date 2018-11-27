@@ -44,6 +44,7 @@
 #include <MessageComposer/PluginEditor>
 #include <MessageViewer/HeaderStylePlugin>
 #include <AkonadiCore/AgentManager>
+#include <AkonadiCore/AgentInstance>
 
 namespace {
 QString pluginEditorGroupName()
@@ -237,11 +238,12 @@ void ConfigurePluginsListWidget::initialize()
 void ConfigurePluginsListWidget::initializeAgentPlugins()
 {
     mPluginUtilDataList.clear();
-    mPluginUtilDataList.reserve(4);
+    mPluginUtilDataList.reserve(5);
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"));
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"));
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"));
+    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_unifiedmailbox_agent"), QStringLiteral("/UnifiedMailboxAgent"));
 
     PimCommon::ConfigurePluginsListWidget::fillTopItems(mPluginUtilDataList,
                                                         i18n("Akonadi Agents"),

@@ -599,8 +599,8 @@ private:
     KPIM::ProgressItem *mMoveProgress = nullptr;
     KPIM::ProgressItem *mDeleteProgress = nullptr;
     MessageList::Core::MessageItemSetReference mRef;
-    QList<KJob*> mPendingMoves;
-    QList<KJob*> mPendingDeletes;
+    QList<KJob *> mPendingMoves;
+    QList<KJob *> mPendingDeletes;
 };
 
 class KMResendMessageCommand : public KMCommand

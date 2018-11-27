@@ -1,0 +1,8 @@
+<knut>
+ <!-- This is pretends to be a top-level colection for the agent, the UnifiedMailboxManager looks for
+      collections with parent that has this name in order to detect its own collections //-->
+ <collection rid="akonadi_unifiedmailbox_agent" name="akonadi_unifiedmailbox_agent" content="inode/directory">
+ </collection>
+</knut>
+
+

@@ -97,6 +97,7 @@ private:
     ColorListBox *mColorList = nullptr;
     QCheckBox *mRecycleColorCheck = nullptr;
     QSpinBox *mCloseToQuotaThreshold = nullptr;
+    QCheckBox *mUseInlineStyle = nullptr;
 };
 
 class AppearancePageLayoutTab : public ConfigModuleTab
@@ -193,7 +194,7 @@ class AppearancePageMessageTagTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AppearancePageMessageTagTab(QWidget *parent = nullptr);
-    ~AppearancePageMessageTagTab();
+    ~AppearancePageMessageTagTab() override;
 
     QString helpAnchor() const;
 

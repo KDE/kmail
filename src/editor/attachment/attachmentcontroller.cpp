@@ -127,7 +127,6 @@ void AttachmentController::selectionChanged()
 
 void AttachmentController::onShowAttachment(KMime::Content *content, const QByteArray &charset)
 {
-
     if (content->bodyAsMessage()) {
         KMime::Message::Ptr m(new KMime::Message);
         m->setContent(content->bodyAsMessage()->encodedContent());

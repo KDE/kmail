@@ -140,7 +140,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     l->setBuddy(mSendOnCheckCombo);
     glay->addWidget(l, 2, 0);
 
-    QString msg = i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8());
+    QString msg = i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8().constData());
     l->setWhatsThis(msg);
     mSendOnCheckCombo->setWhatsThis(msg);
 
@@ -191,7 +191,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
 
     mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType());
     mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QStringLiteral("Resource"));
-    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QStringLiteral("MailTransport") << QStringLiteral("Notes"));
+    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QStringLiteral("MailTransport") << QStringLiteral("Notes") << QStringLiteral("Autostart"));
 
     KConfig specialMailCollection(QStringLiteral("specialmailcollectionsrc"));
     if (specialMailCollection.hasGroup(QStringLiteral("SpecialCollections"))) {

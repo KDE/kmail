@@ -40,7 +40,7 @@ void KMComposerCreateNewComposerJob::start()
     mMsg = KMime::Message::Ptr(new KMime::Message());
 
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mCurrentIdentity);
-    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &KMComposerCreateNewComposerJob::slotCreateNewComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     parser->process(mMsg, mCollectionForNewMessage.id());

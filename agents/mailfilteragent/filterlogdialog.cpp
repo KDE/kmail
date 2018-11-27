@@ -31,6 +31,7 @@
 #include <MailCommon/FilterLog>
 #include "kpimtextedit/plaintexteditorwidget.h"
 #include "kpimtextedit/plaintexteditor.h"
+#include "mailfilterpurposemenuwidget.h"
 
 #include "mailfilteragent_debug.h"
 #include <QFileDialog>
@@ -73,6 +74,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FilterLogDialog::reject);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("view-filter")));
     setModal(false);
+
     buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
     KGuiItem::assign(mUser1Button, KStandardGuiItem::clear());
     KGuiItem::assign(mUser2Button, KStandardGuiItem::saveAs());
@@ -93,6 +95,17 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     for (QStringList::ConstIterator it = logEntries.constBegin();
          it != end; ++it) {
         mTextEdit->editor()->appendHtml(*it);
+    }
+
+    MailfilterPurposeMenuWidget *purposeMenu = new MailfilterPurposeMenuWidget(this, this);
+    if (purposeMenu->menu()) {
+        QPushButton *mShareButton = new QPushButton(i18n("Share..."), this);
+        mShareButton->setMenu(purposeMenu->menu());
+        mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
+        purposeMenu->setEditorWidget(mTextEdit->editor());
+        buttonBox->addButton(mShareButton, QDialogButtonBox::ActionRole);
+    } else {
+        delete purposeMenu;
     }
 
     mLogActiveBox = new QCheckBox(i18n("&Log filter activities"), page);

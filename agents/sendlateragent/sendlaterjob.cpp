@@ -141,11 +141,10 @@ void SendLaterJob::slotDeleteItem(KJob *job)
 
 void SendLaterJob::sendDone()
 {
-    const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
-
     KNotification::event(QStringLiteral("mailsend"),
+                         QString(),
                          i18n("Message sent"),
-                         pixmap,
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_sendlater_agent"));
@@ -155,10 +154,10 @@ void SendLaterJob::sendDone()
 
 void SendLaterJob::sendError(const QString &error, SendLaterManager::ErrorType type)
 {
-    const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
     KNotification::event(QStringLiteral("mailsendfailed"),
+                         QString(),
                          error,
-                         pixmap,
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_sendlater_agent"));

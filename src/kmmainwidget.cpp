@@ -20,6 +20,7 @@
 */
 
 // KMail includes
+#include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "job/composenewmessagejob.h"
 #include "editor/composer.h"
@@ -75,10 +76,7 @@
 #include "MailCommon/MailFilter"
 #include "MailCommon/FavoriteCollectionWidget"
 #include "MailCommon/FavoriteCollectionOrderProxyModel"
-#include "MailCommon/FolderTreeWidget"
-#include "MailCommon/FolderTreeView"
 #include "mailcommonsettings_base.h"
-#include "kmmainwidget.h"
 
 // Other PIM includes
 #include "kmail-version.h"
@@ -186,6 +184,9 @@
 // System includes
 #include <AkonadiWidgets/standardactionmanager.h>
 #include <QStandardPaths>
+#include <QDBusInterface>
+#include <QDBusConnection>
+#include <QDBusReply>
 
 #include "PimCommonAkonadi/ManageServerSideSubscriptionJob"
 #include <job/removeduplicatemailjob.h>
@@ -221,7 +222,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mConfig = config;
     mGUIClient = aGUIClient;
     mFolderTreeWidget = nullptr;
-    mPreferHtmlLoadExtAction = nullptr;
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
     mFavoritesModel = nullptr;
     mSievePasswordProvider = new KMSieveImapPasswordProvider(winId());
@@ -329,6 +329,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mCheckMailTimer.setInterval(3 * 1000);
     mCheckMailTimer.setSingleShot(true);
     connect(&mCheckMailTimer, &QTimer::timeout, this, &KMMainWidget::slotUpdateActionsAfterMailChecking);
+
+    setupUnifiedMailboxChecker();
 }
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
@@ -464,8 +466,9 @@ QString KMMainWidget::fullCollectionPath() const
 // Connected to the currentChanged signals from the folderTreeView and favorites view.
 void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
 {
-    if (mCurrentCollection == collection)
+    if (mCurrentCollection == collection) {
         return;
+    }
     folderSelected(collection);
     if (collection.cachePolicy().syncOnDemand()) {
         AgentManager::self()->synchronizeCollection(collection, false);
@@ -524,8 +527,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
 
     readFolderConfig();
     if (mMsgView) {
-        mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
-        mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
+        assignLoadExternalReference();
     }
 
     if (!mCurrentFolderSettings->isValid() && (mMessagePane->count() < 2)) {
@@ -550,14 +552,6 @@ void KMMainWidget::slotShowSelectedFolderInPane()
     }
     updateMessageActions();
     updateFolderMenu();
-}
-
-void KMMainWidget::clearViewer()
-{
-    if (mMsgView) {
-        mMsgView->clear(true);
-        mMsgView->displayAboutPage();
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -1475,7 +1469,7 @@ void KMMainWidget::slotEmptyFolder()
                          : i18n("<qt>Are you sure you want to move all messages from "
                                 "folder <b>%1</b> to the trash?</qt>", mCurrentCollection.name().toHtmlEscaped());
 
-    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QStringLiteral("user-trash")))
+    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, QStringLiteral("edit-delete-shred")))
         != KMessageBox::Continue) {
         return;
     }
@@ -1561,6 +1555,16 @@ void KMMainWidget::slotExpireAll()
     kmkernel->expireAllFoldersNow();
 }
 
+void KMMainWidget::assignLoadExternalReference()
+{
+    if (mFolderHtmlLoadExtPreference) {
+        mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
+    } else {
+        mMsgView->setHtmlLoadExtDefault(mHtmlLoadExtGlobalSetting);
+    }
+    mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotOverrideHtmlLoadExt()
 {
@@ -1582,7 +1586,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
     mFolderHtmlLoadExtPreference = !mFolderHtmlLoadExtPreference;
 
     if (mMsgView) {
-        mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
+        assignLoadExternalReference();
         mMsgView->update(true);
     }
 }
@@ -2739,6 +2743,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
         if (parentCol.isValid() && CommonKernel->folderIsSentMailFolder(parentCol)) {
             menu.addAction(mMsgActions->sendAgainAction());
+        } else {
+            menu.addAction(mMsgActions->editAsNewAction());
         }
         menu.addAction(mailingListActionMenu());
         menu.addSeparator();
@@ -2952,7 +2958,7 @@ void KMMainWidget::setupActions()
     mTrashThreadAction = new QAction(i18n("M&ove Thread to Trash"), this);
     actionCollection()->addAction(QStringLiteral("move_thread_to_trash"), mTrashThreadAction);
     actionCollection()->setDefaultShortcut(mTrashThreadAction, QKeySequence(Qt::CTRL + Qt::Key_Delete));
-    mTrashThreadAction->setIcon(QIcon::fromTheme(QStringLiteral("user-trash")));
+    mTrashThreadAction->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete-shred")));
     KMail::Util::addQActionHelpText(mTrashThreadAction, i18n("Move thread to trashcan"));
     connect(mTrashThreadAction, &QAction::triggered, this, &KMMainWidget::slotTrashThread);
 
@@ -3553,7 +3559,6 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("remove_duplicate_recursive"), mRemoveDuplicateRecursiveAction);
     connect(mRemoveDuplicateRecursiveAction, &KToggleAction::triggered, this, &KMMainWidget::slotRemoveDuplicateRecursive);
 
-
     mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
     actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
     connect(mAccountSettings, &QAction::triggered, this, &KMMainWidget::slotAccountSettings);
@@ -3781,7 +3786,7 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     mDeleteAction->setEnabled(mass_actions && canDeleteMessages);
 
-    mExpireConfigAction->setEnabled(canDeleteMessages);
+    mExpireConfigAction->setEnabled(canDeleteMessages && !MailCommon::Util::isVirtualCollection(mCurrentCollection));
 
     if (mMsgView) {
         mMsgView->findInMessageAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
@@ -3790,6 +3795,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMsgActions->forwardAttachedAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
     mMsgActions->forwardMenu()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
 
+    mMsgActions->editAsNewAction()->setEnabled(single_actions);
     mMsgActions->newMessageFromTemplateAction()->setEnabled(single_actions && CommonKernel->folderIsTemplates(mCurrentCollection));
     filterMenu()->setEnabled(single_actions);
     mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/ mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
@@ -3819,6 +3825,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     bool statusSendAgain = single_actions && ((currentMessage.isValid() && status.isSent()) || (currentMessage.isValid() && CommonKernel->folderIsSentMailFolder(mCurrentCollection)));
     if (statusSendAgain) {
         actionList << mMsgActions->sendAgainAction();
+    } else if (single_actions) {
+        actionList << mMsgActions->editAsNewAction();
     }
     if (single_actions) {
         actionList << mSaveAttachmentsAction;
@@ -3967,7 +3975,11 @@ void KMMainWidget::updateHtmlMenuEntry()
 
         mDisplayMessageFormatMenu->setDisplayMessageFormat(mFolderDisplayFormatPreference);
 
-        mPreferHtmlLoadExtAction->setChecked((mHtmlLoadExtGlobalSetting ? !mFolderHtmlLoadExtPreference : mFolderHtmlLoadExtPreference));
+        if (mFolderHtmlLoadExtPreference) {
+            mPreferHtmlLoadExtAction->setChecked(true);
+        } else {
+            mPreferHtmlLoadExtAction->setChecked(mHtmlLoadExtGlobalSetting);
+        }
     }
 }
 
@@ -4009,7 +4021,7 @@ void KMMainWidget::updateFolderMenu()
     QAction *moveToTrash = akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash);
     KMail::Util::setActionTrashOrDelete(moveToTrash, isInTrashFolder);
 
-    mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
+    mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("edit-delete-shred")));
     mTrashThreadAction->setText(isInTrashFolder ? i18n("Delete T&hread") : i18n("M&ove Thread to Trash"));
 
     mSearchMessages->setText((mCurrentCollection.resource() == QLatin1String("akonadi_search_resource")) ? i18n("Edit Search...") : i18n("&Find Messages..."));
@@ -4496,9 +4508,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     }
 
     mMsgView->setMessage(copyItem);
-    // reset HTML override to the folder setting
-    mMsgView->setDisplayFormatMessageOverwrite(mFolderDisplayFormatPreference);
-    mMsgView->setHtmlLoadExtDefault(mFolderHtmlLoadExtPreference);
+    assignLoadExternalReference();
     mMsgView->setDecryptMessageOverwrite(false);
     mMsgActions->setCurrentMessage(copyItem);
 }
@@ -4656,7 +4666,8 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
     mFolderDisplayFormatPreference = format;
 
     //Update mPrefererHtmlLoadExtAction
-    const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html || (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
+    const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html
+                          || (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
     mPreferHtmlLoadExtAction->setEnabled(useHtml);
 
     if (mMsgView) {
@@ -4720,7 +4731,7 @@ void KMMainWidget::printCurrentMessage(bool preview)
         commandInfo.mMsg = currentItem;
         commandInfo.mHeaderStylePlugin = messageView()->viewer()->headerStylePlugin();
         commandInfo.mFormat = messageView()->viewer()->displayFormatMessageOverwrite();
-        commandInfo.mHtmlLoadExtOverride =  messageView()->viewer()->htmlLoadExternal();
+        commandInfo.mHtmlLoadExtOverride = messageView()->viewer()->htmlLoadExternal();
         commandInfo.mPrintPreview = preview;
         commandInfo.mUseFixedFont = useFixedFont;
         commandInfo.mOverrideFont = overrideEncoding;
@@ -4797,4 +4808,51 @@ void KMMainWidget::setShowStatusBarMessage(const QString &msg)
     if (mCurrentStatusBar) {
         mCurrentStatusBar->showMessage(msg);
     }
+}
+
+void KMMainWidget::setupUnifiedMailboxChecker()
+{
+    if (!KMailSettings::self()->askEnableUnifiedMailboxes()) {
+        return;
+    }
+
+    const auto ask = [this]() {
+                         if (!KMailSettings::self()->askEnableUnifiedMailboxes()) {
+                             return;
+                         }
+
+                         if (kmkernel->accounts().count() <= 1) {
+                             return;
+                         }
+
+                         KMailSettings::self()->setAskEnableUnifiedMailboxes(false);
+
+                         const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_unifiedmailbox_agent"));
+                         QDBusInterface iface(service, QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.UnifiedMailboxAgent"),
+                                              QDBusConnection::sessionBus(), this);
+                         if (!iface.isValid()) {
+                             return;
+                         }
+
+                         QDBusReply<bool> reply = iface.call(QStringLiteral("enabledAgent"));
+                         if (!reply.isValid() || bool(reply)) {
+                             return;
+                         }
+
+                         const auto answer = KMessageBox::questionYesNo(
+                             this, i18n("You have more than one email account set up.\nDo you want to enable the Unified Mailbox feature to "
+                                        "show unified content of your inbox, sent and drafts folders?\n"
+                                        "You can configure unified mailboxes, create custom ones or\ndisable the feature completely in KMail's Plugin settings."),
+                             i18n("Enable Unified Mailboxes?"),
+                             KGuiItem(i18n("Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
+                             KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel")));
+                         if (answer == KMessageBox::Yes) {
+                             iface.call(QStringLiteral("setEnableAgent"), true);
+                         }
+                     };
+
+    connect(kmkernel, &KMKernel::incomingAccountsChanged, this, ask);
+
+    // Wait for a bit before asking so we at least have the window on screen
+    QTimer::singleShot(500, this, ask);
 }

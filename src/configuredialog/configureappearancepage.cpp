@@ -346,6 +346,11 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     connect(mCustomColorCheck, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
+    mUseInlineStyle = new QCheckBox(i18n("&Do not change color from original HTML mail"), this);
+    vlay->addWidget(mUseInlineStyle);
+    connect(mUseInlineStyle, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
+
     // color list box:
     mColorList = new ColorListBox(this);
     mColorList->setEnabled(false);   // since !mCustomColorCheck->isChecked()
@@ -391,6 +396,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
 void AppearancePage::ColorsTab::doLoadOther()
 {
     mCustomColorCheck->setChecked(!MessageCore::MessageCoreSettings::self()->useDefaultColors());
+    mUseInlineStyle->setChecked(MessageCore::MessageCoreSettings::self()->useRealHtmlMailColor());
     mRecycleColorCheck->setChecked(MessageViewer::MessageViewerSettings::self()->recycleQuoteColors());
     mCloseToQuotaThreshold->setValue(KMailSettings::self()->closeToQuotaThreshold());
     loadColor(true);
@@ -440,6 +446,7 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
 void AppearancePage::ColorsTab::doResetToDefaultsOther()
 {
     mCustomColorCheck->setChecked(false);
+    mUseInlineStyle->setChecked(false);
     mRecycleColorCheck->setChecked(false);
     mCloseToQuotaThreshold->setValue(80);
     loadColor(false);
@@ -453,6 +460,7 @@ void AppearancePage::ColorsTab::save()
     KConfigGroup reader(KMKernel::self()->config(), "Reader");
     bool customColors = mCustomColorCheck->isChecked();
     MessageCore::MessageCoreSettings::self()->setUseDefaultColors(!customColors);
+    MessageCore::MessageCoreSettings::self()->setUseRealHtmlMailColor(mUseInlineStyle->isChecked());
 
     for (int i = 0; i < numColorNames; ++i) {
         const QString configName = QLatin1String(colorNames[i].configName);

@@ -30,7 +30,6 @@
 #include <PimCommonAkonadi/AnnotationDialog>
 #include <MessageCore/MessageCoreSettings>
 #include "MessageCore/MailingList"
-#include <MessageViewer/CSSHelper>
 #include "messageviewer/messageviewersettings.h"
 #include "messageviewer/headerstyleplugin.h"
 
@@ -53,6 +52,7 @@
 #include <KRun>
 #include <QMenu>
 #include <KUriFilter>
+#include <KStringHandler>
 #include <QIcon>
 
 #include <QVariant>
@@ -128,6 +128,11 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     mAnnotateAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-notes")), i18n("Add Note..."), this);
     ac->addAction(QStringLiteral("annotate"), mAnnotateAction);
     connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);
+
+    mEditAsNewAction = new QAction(QIcon::fromTheme(QStringLiteral("accessories-text-editor")), i18n("&Edit As New"), this);
+    ac->addAction(QStringLiteral("editasnew"), mEditAsNewAction);
+    connect(mEditAsNewAction, &QAction::triggered, this, &MessageActions::editCurrentMessage);
+    ac->setDefaultShortcut(mEditAsNewAction, Qt::Key_T);
 
     mPrintAction = KStandardAction::print(this, &MessageActions::slotPrintMessage, ac);
     mPrintPreviewAction = KStandardAction::printPreview(this, &MessageActions::slotPrintPreviewMsg, ac);
@@ -218,6 +223,11 @@ void MessageActions::slotUseTemplate()
     }
     KMCommand *command = new KMUseTemplateCommand(mParent, mCurrentItem);
     command->start();
+}
+
+QAction *MessageActions::editAsNewAction() const
+{
+    return mEditAsNewAction;
 }
 
 void MessageActions::setCurrentMessage(const Akonadi::Item &msg, const Akonadi::Item::List &items)
@@ -373,6 +383,7 @@ void MessageActions::updateActions()
             connect(job, &Akonadi::ItemFetchJob::result, this, &MessageActions::slotUpdateActionsFetchDone);
         }
     }
+    mEditAsNewAction->setEnabled(uniqItem);
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob *job)
@@ -433,7 +444,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
         qDeleteAll(mMailListActionList);
         mMailListActionList.clear();
         if (!listId.isEmpty()) {
-            mMailingListActionMenu->menu()->setTitle(i18n("Mailing List Name: %1", listId));
+            mMailingListActionMenu->menu()->setTitle(KStringHandler::rsqueeze(i18n("Mailing List Name: %1", listId), 40));
         }
         if (mailList.features() & MessageCore::MailingList::ArchivedAt) {
             // IDEA: this may be something you want to copy - "Copy in submenu"?
@@ -587,13 +598,12 @@ void MessageActions::printMessage(bool preview)
             commandInfo.mMsg = message;
             commandInfo.mHeaderStylePlugin = mMessageView->viewer()->headerStylePlugin();
             commandInfo.mFormat = mMessageView->viewer()->displayFormatMessageOverwrite();
-            commandInfo.mHtmlLoadExtOverride =  mMessageView->viewer()->htmlLoadExternal();
+            commandInfo.mHtmlLoadExtOverride = mMessageView->viewer()->htmlLoadExternal();
             commandInfo.mPrintPreview = preview;
             commandInfo.mUseFixedFont = useFixedFont;
             commandInfo.mOverrideFont = overrideEncoding;
             commandInfo.mShowSignatureDetails = mMessageView->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
             commandInfo.mShowEncryptionDetails = mMessageView->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
-
 
             KMPrintCommand *command
                 = new KMPrintCommand(mParent, commandInfo);

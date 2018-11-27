@@ -637,11 +637,6 @@ KMCommand::Result KMEditItemCommand::execute()
         }
     }
 
-    if (auto hdr = msg->replyTo(false)) {
-        const QString replyTo = hdr->asUnicodeString();
-        win->setCurrentReplyTo(replyTo);
-    }
-
     const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
     if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
         win->setFcc(QString::number(sentAttribute->moveToCollection().id()));
@@ -939,6 +934,7 @@ KMCommand::Result KMForwardCommand::execute()
             KMail::Composer *win = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity);
             win->addAttach(fwdMsg.second);
             win->show();
+            delete fwdMsg.second;
             return OK;
         } else if (answer == KMessageBox::No) {  // NO MIME DIGEST, Multiple forward
             Akonadi::Item::List::const_iterator it;
@@ -997,6 +993,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     }
     for (KMime::Content *attach : qAsConst(fwdMsg.second)) {
         mWin->addAttach(attach);
+        delete attach;
     }
     mWin->show();
     return OK;
@@ -1316,8 +1313,8 @@ KMCommand::Result KMFilterActionCommand::execute()
     const int msgCountToFilter = mMsgListId.count();
     ProgressItem *progressItem
         = ProgressManager::createProgressItem(
-        QLatin1String("filter") + ProgressManager::getUniqueID(),
-        i18n("Filtering messages"), QString(), true, KPIM::ProgressItem::Unknown);
+              QLatin1String("filter") + ProgressManager::getUniqueID(),
+              i18n("Filtering messages"), QString(), true, KPIM::ProgressItem::Unknown);
     progressItem->setTotalItems(msgCountToFilter);
 
     for (const qlonglong &id : qAsConst(mMsgListId)) {
@@ -1569,7 +1566,7 @@ KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const
     , mRef(ref)
 {
     // When trashing items from a virtual collection, they may each have a different
-    // trash folder, so we need to handle it here carefuly
+    // trash folder, so we need to handle it here carefully
     if (srcFolder.isVirtual()) {
         QHash<qint64, Akonadi::Collection> cache;
         for (const auto &msg : msgList) {
@@ -1611,7 +1608,8 @@ KMTrashMsgCommand::TrashOperation KMTrashMsgCommand::operation() const
 
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref)
     : KMTrashMsgCommand(findTrashFolder(srcFolder), Akonadi::Item::List{msg}, ref)
-{}
+{
+}
 
 Akonadi::Collection KMTrashMsgCommand::findTrashFolder(const Akonadi::Collection &folder)
 {
@@ -1672,7 +1670,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     if (!mPendingMoves.isEmpty()) {
         Q_ASSERT(!mMoveProgress);
         mMoveProgress = ProgressManager::createProgressItem(QLatin1String("move") + ProgressManager::getUniqueID(),
-            i18n("Moving messages"), QString(), true, KPIM::ProgressItem::Unknown);
+                                                            i18n("Moving messages"), QString(), true, KPIM::ProgressItem::Unknown);
         mMoveProgress->setUsesBusyIndicator(true);
         connect(mMoveProgress, &ProgressItem::progressItemCanceled,
                 this, &KMTrashMsgCommand::slotMoveCanceled);
@@ -1680,7 +1678,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     if (!mPendingDeletes.isEmpty()) {
         Q_ASSERT(!mDeleteProgress);
         mDeleteProgress = ProgressManager::createProgressItem(QLatin1String("delete") + ProgressManager::getUniqueID(),
-            i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
+                                                              i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
         mDeleteProgress->setUsesBusyIndicator(true);
         connect(mMoveProgress, &ProgressItem::progressItemCanceled,
                 this, &KMTrashMsgCommand::slotMoveCanceled);
@@ -1700,7 +1698,7 @@ void KMTrashMsgCommand::slotMoveResult(KJob *job)
     }
 }
 
-void KMTrashMsgCommand::slotDeleteResult(KJob* job)
+void KMTrashMsgCommand::slotDeleteResult(KJob *job)
 {
     mPendingDeletes.removeOne(job);
     if (job->error()) {
@@ -1741,7 +1739,6 @@ void KMTrashMsgCommand::completeMove(KMCommand::Result result)
     Q_EMIT completed(this);
     deleteLater();
 }
-
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::Viewer *viewer)
     : KMCommand(parent, msg)
@@ -1799,10 +1796,6 @@ KMCommand::Result KMResendMessageCommand::execute()
     newMsg->contentType()->setCharset(MimeTreeParser::NodeHelper::charset(msg.data()));
 
     KMail::Composer *win = KMail::makeComposer();
-    if (auto hdr = msg->replyTo(false)) {
-        const QString replyTo = hdr->asUnicodeString();
-        win->setCurrentReplyTo(replyTo);
-    }
     bool lastEncrypt = false;
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);

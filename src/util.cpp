@@ -182,7 +182,7 @@ void Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
 {
     if (action) {
         action->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
-        action->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("user-trash")));
+        action->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete")) : QIcon::fromTheme(QStringLiteral("edit-delete-shred")));
         //Use same text as in Text property. Change it in kf5
         action->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "Delete") : i18n("Move to Trash"));
     }

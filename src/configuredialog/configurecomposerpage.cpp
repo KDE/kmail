@@ -328,7 +328,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // Spacing
     ++row;
 
-    // "Use Baloo seach in composer" checkbox
+    // "Use Baloo search in composer" checkbox
     mShowAkonadiSearchAddressesInComposer = new QCheckBox(
         MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(),
         this);
@@ -342,7 +342,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientCheck = new QCheckBox(
         GlobalSettings::self()->tooManyRecipientsItem()->label(), this);
     mRecipientCheck->setObjectName(QStringLiteral("kcfg_TooManyRecipients"));
-    helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8());
+    helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8().constData());
     mRecipientCheck->setWhatsThis(helpText);
     mRecipientCheck->setToolTip(i18n("Warn if too many recipients are specified"));
 
@@ -353,7 +353,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setValue(5 /*init*/);
     mRecipientSpin->setObjectName(QStringLiteral("kcfg_RecipientThreshold"));
     mRecipientSpin->setEnabled(false);
-    helpText = i18n(KMailSettings::self()->recipientThresholdItem()->whatsThis().toUtf8());
+    helpText = i18n(KMailSettings::self()->recipientThresholdItem()->whatsThis().toUtf8().constData());
     mRecipientSpin->setWhatsThis(helpText);
     mRecipientSpin->setToolTip(i18n("Set the maximum number of recipients for the warning"));
 
@@ -685,7 +685,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 2: "replace [...]" check box:
     mReplaceReplyPrefixCheck = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem()->label(),
+        MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem()->label(),
         group);
     connect(mReplaceReplyPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
@@ -714,7 +714,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 3: "replace [...]" check box:
     mReplaceForwardPrefixCheck = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem()->label(),
+        MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem()->label(),
         group);
     connect(mReplaceForwardPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
@@ -725,27 +725,27 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
 void ComposerPage::SubjectTab::doLoadFromGlobalSettings()
 {
-    loadWidget(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem());
-    loadWidget(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem());
-    loadWidget(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
-    loadWidget(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
+    loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
+    loadWidget(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
+    loadWidget(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
+    loadWidget(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
 }
 
 void ComposerPage::SubjectTab::save()
 {
-    saveSimpleStringListEditor(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem());
-    saveSimpleStringListEditor(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem());
-    saveCheckBox(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
-    saveCheckBox(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
+    saveSimpleStringListEditor(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
+    saveSimpleStringListEditor(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
+    saveCheckBox(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
+    saveCheckBox(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
 }
 
 void ComposerPage::SubjectTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
-    loadWidget(mReplyListEditor, MessageComposer::MessageComposerSettings::self()->replyPrefixesItem());
-    loadWidget(mForwardListEditor, MessageComposer::MessageComposerSettings::self()->forwardPrefixesItem());
-    loadWidget(mReplaceForwardPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceForwardPrefixItem());
-    loadWidget(mReplaceReplyPrefixCheck, MessageComposer::MessageComposerSettings::self()->replaceReplyPrefixItem());
+    loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
+    loadWidget(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
+    loadWidget(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
+    loadWidget(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
 }
 

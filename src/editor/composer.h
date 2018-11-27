@@ -75,8 +75,6 @@ public: // kmkernel, kmcommands, callback
                             bool isModified = false) = 0;
     virtual void setCurrentTransport(int transportId) = 0;
 
-    virtual void setCurrentReplyTo(const QString &replyTo) = 0;
-
     virtual void setFcc(const QString &idString) = 0;
     /**
      * Returns @c true while the message composing is in progress.

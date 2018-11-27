@@ -132,8 +132,8 @@ void WinObjFontHandle::apply(QPainter &p)
 QWinMetaFile::QWinMetaFile()
 {
     mValid = false;
-    mFirstCmd = NULL;
-    mObjHandleTab = NULL;
+    mFirstCmd = nullptr;
+    mObjHandleTab = nullptr;
     mDpi = 1000;
 }
 
@@ -188,7 +188,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
     if (mFirstCmd) {
         delete mFirstCmd;
     }
-    mFirstCmd = NULL;
+    mFirstCmd = nullptr;
 
     st.setDevice(&buffer);
     st.setByteOrder(QDataStream::LittleEndian);   // Great, I love Qt !
@@ -288,7 +288,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
     mValid = ((header.mtHeaderSize == 9) && (header.mtNoParameters == 0)) || mIsEnhanced || mIsPlaceable;
     if (mValid) {
         //----- Read Metafile Records
-        last = NULL;
+        last = nullptr;
         rdFunc = -1;
         while (!st.atEnd() && (rdFunc != 0)) {
             st >> rdSize;
@@ -297,7 +297,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
             rdSize -= 3;
 
             cmd = new WmfCmd;
-            cmd->next = NULL;
+            cmd->next = nullptr;
             if (last) {
                 last->next = cmd;
             } else {
@@ -350,7 +350,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
         return false;
     }
 
-    assert(aTarget != NULL);
+    assert(aTarget != nullptr);
     if (mPainter.isActive()) {
         return false;
     }
@@ -359,8 +359,8 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
         delete[] mObjHandleTab;
     }
     mObjHandleTab = new WinObjHandle * [ MAX_OBJHANDLE ];
-    for (i = MAX_OBJHANDLE - 1; i >= 0; i--) {
-        mObjHandleTab[ i ] = NULL;
+    for (i = MAX_OBJHANDLE - 1; i >= 0; --i) {
+        mObjHandleTab[ i ] = nullptr;
     }
 
     mPainter.resetMatrix();
@@ -384,7 +384,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
 
         if (QWMF_DEBUG) {
             QString str, param;
-            if (metaFuncTab[ idx ].name == NULL) {
+            if (metaFuncTab[ idx ].name == nullptr) {
                 str += QLatin1String("UNKNOWN ");
             }
             if (metaFuncTab[ idx ].method == &QWinMetaFile::noop) {
@@ -514,7 +514,7 @@ void QWinMetaFile::polyPolygon(long, short *parm)
     startPolygon = 1 + parm[ 0 ];
     for (i = 0; i < parm[ 0 ]; ++i) {
         QPolygon pa1(parm[ 1 + i ]);
-        for (j = 0; j < parm[ 1 + i ]; j++) {
+        for (j = 0; j < parm[ 1 + i ]; ++j) {
             pa1.setPoint(j, parm[ startPolygon ], parm[ startPolygon + 1 ]);
             startPolygon += 2;
         }
@@ -1127,7 +1127,7 @@ void QWinMetaFile::addHandle(WinObjHandle *handle)
     int idx;
 
     for (idx = 0; idx < MAX_OBJHANDLE; idx++) {
-        if (mObjHandleTab[ idx ] == NULL) {
+        if (mObjHandleTab[ idx ] == nullptr) {
             break;
         }
     }
@@ -1144,7 +1144,7 @@ void QWinMetaFile::deleteHandle(int idx)
 {
     if (idx >= 0 && idx < MAX_OBJHANDLE && mObjHandleTab[ idx ]) {
         delete mObjHandleTab[ idx ];
-        mObjHandleTab[ idx ] = NULL;
+        mObjHandleTab[ idx ] = nullptr;
     }
 }
 
@@ -1241,7 +1241,7 @@ bool QWinMetaFile::dibToBmp(QImage &bmp, const char *dib, long size)
 
     // add BMP header
     BMPFILEHEADER *bmpHeader;
-    bmpHeader = (BMPFILEHEADER *)((const char *)pattern);
+    bmpHeader = (BMPFILEHEADER *)(pattern.constData());
     bmpHeader->bmType = 0x4D42;
     bmpHeader->bmSize = sizeBmp;
 

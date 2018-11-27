@@ -1,7 +1,7 @@
 //
 
-#ifndef _KMKERNEL_H
-#define _KMKERNEL_H
+#ifndef KMKERNEL_H
+#define KMKERNEL_H
 
 #include "mailcommon/mailinterfaces.h"
 
@@ -443,7 +443,6 @@ public Q_SLOTS:
     void slotRunBackgroundTasks();
 
     void slotConfigChanged();
-
 Q_SIGNALS:
     void configChanged();
     void onlineStatusChanged(KMailSettings::EnumNetworkState::type);
@@ -452,6 +451,7 @@ Q_SIGNALS:
     void startCheckMail();
     void endCheckMail();
 
+    void incomingAccountsChanged();
 private Q_SLOTS:
     /** Updates identities when a transport has been deleted. */
     void transportRemoved(int id, const QString &name);
@@ -467,6 +467,7 @@ private Q_SLOTS:
     void slotCollectionRemoved(const Akonadi::Collection &col);
     void slotDeleteIdentity(uint identity);
     void slotInstanceRemoved(const Akonadi::AgentInstance &);
+    void slotInstanceAdded(const Akonadi::AgentInstance &);
     void slotSystemNetworkStatusChanged(bool isOnline);
     void slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set);
 

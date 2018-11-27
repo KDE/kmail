@@ -21,8 +21,8 @@
  *
  */
 
-#include "incompleteindexdialog.h"
 #include "searchwindow.h"
+#include "incompleteindexdialog.h"
 
 #include "MailCommon/FolderRequester"
 #include "kmcommands.h"

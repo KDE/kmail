@@ -50,7 +50,7 @@ bool CollectionQuotaPage::canHandle(const Akonadi::Collection &collection) const
 {
     const bool hasQuotaAttribute = collection.hasAttribute<Akonadi::CollectionQuotaAttribute>();
     if (hasQuotaAttribute) {
-        if (collection.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue() == 0) {
+        if (collection.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue() <= 0) {
             return false;
         }
     }
