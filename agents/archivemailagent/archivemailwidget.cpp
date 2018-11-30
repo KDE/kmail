@@ -345,3 +345,17 @@ void ArchiveMailWidget::slotItemChanged(QTreeWidgetItem *item, int col)
         }
     }
 }
+
+
+QSize ArchiveMailWidget::restoreDialogSize() const
+{
+    auto group = config()->group(myConfigGroupName);
+    const QSize size = group.readEntry("Size", QSize(500, 300));
+    return size;
+}
+
+void ArchiveMailWidget::saveDialogSize(const QSize &size)
+{
+    auto group = config()->group(myConfigGroupName);
+    group.writeEntry("Size", size);
+}

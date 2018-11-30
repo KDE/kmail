@@ -58,6 +58,9 @@ public:
 
     void needReloadConfig();
 
+    QSize restoreDialogSize() const override;
+    void saveDialogSize(const QSize &size) override;
+
 Q_SIGNALS:
     void archiveNow(ArchiveMailInfo *info);
 
