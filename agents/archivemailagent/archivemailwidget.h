@@ -43,7 +43,7 @@ class ArchiveMailWidget : public Akonadi::AgentConfigurationBase
 {
     Q_OBJECT
 public:
-    explicit ArchiveMailWidget(KSharedConfigPtr config, QWidget *parentWidget, const QVariantList &args);
+    explicit ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *parentWidget, const QVariantList &args);
     ~ArchiveMailWidget();
 
     enum ArchiveMailColumn {

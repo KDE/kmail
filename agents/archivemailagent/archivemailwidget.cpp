@@ -65,11 +65,13 @@ ArchiveMailInfo *ArchiveMailItem::info() const
     return mInfo;
 }
 
-ArchiveMailWidget::ArchiveMailWidget(KSharedConfigPtr config, QWidget *parent, const QVariantList &args)
+ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
     : Akonadi::AgentConfigurationBase(config, parent, args)
     , mChanged(false)
 {
-    mWidget.setupUi(parent);
+    QWidget *w = new QWidget(parent);
+    mWidget.setupUi(w);
+    parent->layout()->addWidget(w);
 
     QStringList headers;
     headers << i18n("Name") << i18n("Last archive") << i18n("Next archive in") << i18n("Storage directory");
