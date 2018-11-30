@@ -85,7 +85,7 @@ for details.</para>
 <title>Getting Help</title>
 <note><para>If you experience any problems migrating to &kmail; 2 please read the chapter <link linkend="troubleshooting">Troubleshooting</link>.
 </para></note>
-<para>&kmail;'s homepage can be found at <ulink url="http://userbase.kde.org/KMail">http://userbase.kde.org/KMail</ulink>. There you will
+<para>&kmail;'s homepage can be found at <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail">https://userbase.kde.org/KMail</ulink>. There you will
 find useful links, &eg; to the user and developer mailing lists. Please report bugs in &kmail; using
 <menuchoice><guimenu>Help</guimenu><guimenuitem>Report Bug...</guimenuitem></menuchoice>.</para>
 </sect2>

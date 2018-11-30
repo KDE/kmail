@@ -27,7 +27,7 @@
       </para>
     </listitem>
   </itemizedlist>
-<para>You can also use the script in <ulink url="http://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults">Tutorials/Modify_KDE_Software_Defaults</ulink></para>
+<para>You can also use the script in <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults">Tutorials/Modify_KDE_Software_Defaults</ulink></para>
 </answer>
 </qandaentry>
 
@@ -256,7 +256,7 @@ way to achieve this is the use of the ntp daemon.</para></listitem>
 <qandaentry>
   <question><para>Why does &kmail; not start up?</para></question>
 <answer>
-<para><emphasis>Symptom:</emphasis> You want to start &kmail; from a minimal desktop environment like <ulink url="http://en.wikipedia.org/wiki/Fvwm2">fvwm2</ulink>. It does not start.</para>
+<para><emphasis>Symptom:</emphasis> You want to start &kmail; from a minimal desktop environment like <ulink url="https://en.wikipedia.org/wiki/Fvwm2">fvwm2</ulink>. It does not start.</para>
 <para><emphasis>Reason:</emphasis> You are missing the <emphasis>dbus</emphasis> functionality.</para>
 <para><emphasis>Solution:</emphasis> Start &kmail; using dbus-launch like this:</para>
 <para><userinput>dbus-launch kmail</userinput></para>
@@ -557,7 +557,7 @@ can do this for you. It probably has already been set up during
 installation.</para>
 
 <para>If that is not the case, you may want to have a look at <ulink
-url="http://tldp.org/HOWTO/Mail-Queue.html">the Mail Queue
+url="https://www.tldp.org/HOWTO/Mail-Queue.html">the Mail Queue
 HOWTO</ulink>.</para></answer>
 </qandaentry>
 

@@ -550,8 +550,8 @@ address book entry.</para>
 <term><guilabel>Input Field Below</guilabel></term>
 <listitem>
 <para>Use this field to enter an arbitrary X-Face string.
-Examples are available at <ulink url="http://ace.home.xs4all.nl/X-Faces/"
->http://ace.home.xs4all.nl/X-Faces/</ulink>
+Examples are available at <ulink url="https://ace.home.xs4all.nl/X-Faces/"
+>https://ace.home.xs4all.nl/X-Faces/</ulink>
 </para>
 </listitem>
 </varlistentry>
@@ -893,7 +893,7 @@ activated, &kmail; will close the message window after replying to or forwarding
 is displayed in the window. This only applies to the separate message window, not to the embedded
 message preview pane.</para>
 <para>By default, <guilabel>Enable access key</guilabel> is enabled. Access keys allow you to use the keyboard keys for functions which would perhaps normally be done with the mouse, such as following links.
-  For more information on access keys please see <ulink url="http://docs.kde.org/stable/en/applications/konqueror/accesskeys.html">Access keys</ulink>.</para>
+  For more information on access keys please see <ulink url="https://docs.kde.org/stable/en/applications/konqueror/accesskeys.html">Access keys</ulink>.</para>
 <para><guilabel>Show HTML status bar</guilabel> activates a bar at the left side of the reader
 pane that tells you if a message is &html; or not. This is important because
 &html; messages might imitate the look of a signed and encrypted message, so
@@ -1919,7 +1919,7 @@ of key words can be modified.</para>
 	      <para>
 		Enter the address of the server for online validation
 		of certificates. The &URL;
-                is usually starting with <emphasis>http://</emphasis>.
+                is usually starting with <emphasis>https://</emphasis>.
 	      </para>
 	  </listitem>
 	</varlistentry>

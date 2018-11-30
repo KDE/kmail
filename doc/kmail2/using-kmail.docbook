@@ -1875,7 +1875,7 @@ necessary to have <application>GnuPG</application> installed and set up
 properly; of course, we cannot give you a full introduction of
 <application>GnuPG</application> here. We will only mention the steps you have to
 do to get <application>GnuPG</application> going. For details you should have a look at 
-the <ulink url="http://www.gnupg.org/docs.html#guides">The &GNU; Privacy Handbook</ulink>.</para>
+the <ulink url="https://www.gnupg.org/docs.html#guides">The &GNU; Privacy Handbook</ulink>.</para>
 
 <para>It is certainly a good idea to study this documentation as well as an
 introduction into public key cryptography: there you can learn a lot about
