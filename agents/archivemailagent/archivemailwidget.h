@@ -44,7 +44,7 @@ class ArchiveMailWidget : public Akonadi::AgentConfigurationBase
     Q_OBJECT
 public:
     explicit ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *parentWidget, const QVariantList &args);
-    ~ArchiveMailWidget();
+    ~ArchiveMailWidget() override;
 
     enum ArchiveMailColumn {
         Name = 0,
