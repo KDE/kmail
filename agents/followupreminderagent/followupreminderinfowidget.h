@@ -23,6 +23,7 @@
 #include <QWidget>
 #include <KConfigGroup>
 #include <QTreeWidgetItem>
+#include <QVariantList>
 #include <AkonadiCore/Item>
 class QTreeWidget;
 namespace FollowUpReminder {
@@ -47,15 +48,14 @@ class FollowUpReminderInfoWidget : public QWidget
     Q_OBJECT
 public:
     explicit FollowUpReminderInfoWidget(QWidget *parent = nullptr);
-    ~FollowUpReminderInfoWidget();
+    ~FollowUpReminderInfoWidget() override;
 
     void restoreTreeWidgetHeader(const QByteArray &data);
     void saveTreeWidgetHeader(KConfigGroup &group);
 
     void setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &infoList);
 
-    bool save();
-
+    bool save() const;
     void load();
 
     QList<qint32> listRemoveId() const;
@@ -82,5 +82,4 @@ private:
     QTreeWidget *mTreeWidget = nullptr;
     bool mChanged = false;
 };
-
 #endif // FOLLOWUPREMINDERINFOWIDGET_H

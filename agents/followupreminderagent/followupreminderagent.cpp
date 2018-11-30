@@ -21,7 +21,6 @@
 #include "followupremindermanager.h"
 #include "FollowupReminder/FollowUpReminderUtil"
 #include "followupreminderadaptor.h"
-#include "followupreminderinfodialog.h"
 #include "followupreminderagentsettings.h"
 #include <KWindowSystem>
 #include <KMime/Message>
@@ -95,22 +94,6 @@ void FollowUpReminderAgent::setEnableAgent(bool enabled)
 bool FollowUpReminderAgent::enabledAgent() const
 {
     return FollowUpReminderAgentSettings::self()->enabled();
-}
-
-void FollowUpReminderAgent::configure(WId windowId)
-{
-    QPointer<FollowUpReminderInfoDialog> dialog = new FollowUpReminderInfoDialog();
-    dialog->load();
-    if (windowId) {
-        KWindowSystem::setMainWindow(dialog, windowId);
-    }
-    if (dialog->exec()) {
-        const QList<qint32> lstRemoveItem = dialog->listRemoveId();
-        if (FollowUpReminder::FollowUpReminderUtil::removeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), lstRemoveItem, true)) {
-            mManager->load();
-        }
-    }
-    delete dialog;
 }
 
 void FollowUpReminderAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection)

@@ -35,7 +35,6 @@ public:
     QString printDebugInfo();
 
 public Q_SLOTS:
-    void configure(WId windowId) override;
     void reload();
 
 protected:

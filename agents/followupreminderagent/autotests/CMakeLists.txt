@@ -1,7 +1,7 @@
 
 # Convenience macro to add unit tests.
 macro( followupreminder_agent _source )
-    set( _test ${_source} ../followupreminderinfodialog.cpp ../followupreminderinfowidget.cpp ../jobs/followupremindershowmessagejob.cpp ../followupremindernoanswerdialog.cpp)
+    set( _test ${_source} ../followupreminderinfowidget.cpp ../jobs/followupremindershowmessagejob.cpp ../followupremindernoanswerdialog.cpp)
     ecm_qt_declare_logging_category(_test HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent)
     get_filename_component( _name ${_source} NAME_WE )
     ecm_add_test(${_test}
@@ -12,6 +12,5 @@ macro( followupreminder_agent _source )
 endmacro()
 
 followupreminder_agent(followupreminderinfotest.cpp)
-followupreminder_agent(followupreminderinfodialogtest.cpp)
 followupreminder_agent(followupremindernoanswerdialogtest.cpp)
 followupreminder_agent(followupreminderconfigtest.cpp)

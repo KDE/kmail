@@ -121,21 +121,7 @@ void ArchiveMailAgent::reload()
         mTimer->start();
     }
 }
-#if 0
-void ArchiveMailAgent::configure(WId windowId)
-{
-    QPointer<ArchiveMailDialog> dialog = new ArchiveMailDialog();
-    if (windowId) {
-        KWindowSystem::setMainWindow(dialog, windowId);
-    }
-    connect(dialog.data(), &ArchiveMailDialog::archiveNow, mArchiveManager, &ArchiveMailManager::slotArchiveNow);
-    connect(this, &ArchiveMailAgent::needUpdateConfigDialogBox, dialog.data(), &ArchiveMailDialog::slotNeedReloadConfig);
-    if (dialog->exec()) {
-        mArchiveManager->load();
-    }
-    delete dialog;
-}
-#endif
+
 void ArchiveMailAgent::pause()
 {
     if (isOnline() && enabledAgent()) {

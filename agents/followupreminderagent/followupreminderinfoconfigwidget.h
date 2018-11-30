@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2014-2018 Montel Laurent <montel@kde.org>
+   Copyright (C) 2018 Montel Laurent <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public
@@ -17,32 +17,32 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef FOLLOWUPREMINDERINFODIALOG_H
-#define FOLLOWUPREMINDERINFODIALOG_H
+#ifndef FOLLOWUPREMINDERINFOCONFIGWIDGET_H
+#define FOLLOWUPREMINDERINFOCONFIGWIDGET_H
 
-#include <QDialog>
-#include <QList>
+#include <QWidget>
+#include <KConfigGroup>
+#include <QTreeWidgetItem>
+#include <QVariantList>
+#include <AkonadiCore/Item>
+#include <AkonadiCore/AgentConfigurationBase>
+class QTreeWidget;
 class FollowUpReminderInfoWidget;
 namespace FollowUpReminder {
 class FollowUpReminderInfo;
 }
-class FollowUpReminderInfoDialog : public QDialog
+
+class FollowUpReminderInfoConfigWidget : public Akonadi::AgentConfigurationBase
 {
     Q_OBJECT
 public:
-    explicit FollowUpReminderInfoDialog(QWidget *parent = nullptr);
-    ~FollowUpReminderInfoDialog();
+    explicit FollowUpReminderInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parentWidget, const QVariantList &args);
+    ~FollowUpReminderInfoConfigWidget() override;
 
-    void load();
-
-    void setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &info);
-
-    QList<qint32> listRemoveId() const;
-
+    bool save() const override;
+    void load() override;
 private:
-    void readConfig();
-    void writeConfig();
     FollowUpReminderInfoWidget *mWidget = nullptr;
 };
-
-#endif // FOLLOWUPREMINDERINFODIALOG_H
+AKONADI_AGENTCONFIG_FACTORY(FollowUpReminderInfoAgentConfigFactory, "followupreminderagentconfig.json", FollowUpReminderInfoConfigWidget)
+#endif // FOLLOWUPREMINDERINFOConfigWIDGET_H
