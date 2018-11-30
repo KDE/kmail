@@ -41,7 +41,7 @@ void SendLaterDialogTest::initTestCase()
 
 void SendLaterDialogTest::shouldHaveDefaultValue()
 {
-    SendLater::SendLaterDialog dlg(0);
+    SendLater::SendLaterDialog dlg(nullptr);
     KTimeComboBox *timeCombo = dlg.findChild<KTimeComboBox *>(QStringLiteral("time_sendlater"));
     QVERIFY(timeCombo);
     KDateComboBox *dateCombo = dlg.findChild<KDateComboBox *>(QStringLiteral("date_sendlater"));

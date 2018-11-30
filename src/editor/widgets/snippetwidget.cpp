@@ -39,7 +39,7 @@ SnippetWidget::SnippetWidget(KMComposerEditorNg *editor, KActionCollection *acti
     setSelectionModel(mSnippetsManager->selectionModel());
 
     connect(this, &QAbstractItemView::activated,
-            mSnippetsManager->editSnippetAction(), &QAction::trigger);
+            mSnippetsManager->insertSnippetAction(), &QAction::trigger);
     connect(mSnippetsManager->model(), &QAbstractItemModel::rowsInserted,
             this, &QTreeView::expandAll);
     connect(mSnippetsManager->model(), &QAbstractItemModel::rowsRemoved,
