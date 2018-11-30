@@ -33,9 +33,8 @@
 FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
     : Akonadi::AgentConfigurationBase(config, parent, args)
 {
-    QWidget *w = new QWidget(parent);
-    parent->layout()->addWidget(w);
-    mWidget = new FollowUpReminderInfoWidget(w);
+    mWidget = new FollowUpReminderInfoWidget(parent);
+    parent->layout()->addWidget(mWidget);
 
     KAboutData aboutData = KAboutData(
         QStringLiteral("followupreminderagent"),
