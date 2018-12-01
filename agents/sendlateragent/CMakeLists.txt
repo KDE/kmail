@@ -8,15 +8,20 @@ endif()
 set(sendlater_common_SRCS)
 ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debug.h IDENTIFIER SENDLATERAGENT_LOG CATEGORY_NAME org.kde.pim.sendlateragent)
 
-set(sendlateragent_SRCS
-    ${sendlater_common_SRCS}
-    sendlateragent.cpp
+set(sendlateragentconfig_SRCS
     sendlaterconfiguredialog.cpp
     sendlaterconfigurewidget.cpp
+    )
+
+set(sendlateragent_SRCS
+    ${sendlateragentconfig_SRCS}
+    ${sendlater_common_SRCS}
+    sendlateragent.cpp
     sendlatermanager.cpp
     sendlaterjob.cpp
     sendlaterremovemessagejob.cpp
     )
+
 
 qt5_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.xml sendlateragent.h SendLaterAgent)
 
@@ -53,3 +58,8 @@ install(TARGETS akonadi_sendlater_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
 install(FILES sendlateragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
 
+#kcoreaddons_add_plugin(sendlateragentconfig
+#    JSON sendlateragentconfig.json
+#    SOURCES ${sendlateragentconfig_SRCS}
+#    INSTALL_NAMESPACE akonadi/config
+#)
