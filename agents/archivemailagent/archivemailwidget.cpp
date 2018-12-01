@@ -46,7 +46,6 @@ static const char myConfigGroupName[] = "ArchiveMailDialog";
 
 ArchiveMailItem::ArchiveMailItem(QTreeWidget *parent)
     : QTreeWidgetItem(parent)
-    , mInfo(nullptr)
 {
 }
 
