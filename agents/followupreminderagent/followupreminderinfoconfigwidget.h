@@ -41,6 +41,8 @@ public:
 
     bool save() const override;
     void load() override;
+    QSize restoreDialogSize() const override;
+    void saveDialogSize(const QSize &size) override;
 private:
     FollowUpReminderInfoWidget *mWidget = nullptr;
 };

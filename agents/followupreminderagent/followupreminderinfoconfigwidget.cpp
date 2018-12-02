@@ -28,7 +28,9 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <KMessageBox>
-
+namespace {
+static const char myConfigGroupName[] = "FollowUpReminderInfoDialog";
+}
 
 FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
     : Akonadi::AgentConfigurationBase(config, parent, args)
@@ -67,3 +69,15 @@ bool FollowUpReminderInfoConfigWidget::save() const
     return mWidget->save();
 }
 
+QSize FollowUpReminderInfoConfigWidget::restoreDialogSize() const
+{
+    auto group = config()->group(myConfigGroupName);
+    const QSize size = group.readEntry("Size", QSize(800, 600));
+    return size;
+}
+
+void FollowUpReminderInfoConfigWidget::saveDialogSize(const QSize &size)
+{
+    auto group = config()->group(myConfigGroupName);
+    group.writeEntry("Size", size);
+}
