@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 set(KDEPIM_VERSION_NUMBER "5.10.40")
 
 project(kmail VERSION ${KDEPIM_VERSION_NUMBER})
