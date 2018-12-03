@@ -9,5 +9,4 @@ macro(add_mailfilter_agent_test _source _extrasource)
         )
 endmacro()
 
-add_mailfilter_agent_test(configuredialogtest.cpp "../configurewidget.cpp;../configuredialog.cpp")
-add_mailfilter_agent_test(configurewidgettest.cpp "../configurewidget.cpp")
+add_mailfilter_agent_test(configurewidgettest.cpp "../config/configurewidget.cpp")
