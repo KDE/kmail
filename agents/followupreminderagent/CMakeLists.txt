@@ -93,5 +93,3 @@ target_link_libraries(followupreminderagentconfig
     KF5::I18n
     KF5::FollowupReminder
 )
-
-#install(FILES settings/followupreminderagentconfigsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
