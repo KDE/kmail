@@ -228,7 +228,7 @@ KMReaderWin::~KMReaderWin()
 {
 }
 
-void KMReaderWin::readConfig(void)
+void KMReaderWin::readConfig()
 {
     mViewer->readConfig();
 }

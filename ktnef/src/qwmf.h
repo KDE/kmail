@@ -68,7 +68,7 @@ public:
     /**
      * @return true if the metafile is placeable.
      */
-    bool isPlaceable(void) const
+    bool isPlaceable() const
     {
         return mIsPlaceable;
     }
@@ -76,7 +76,7 @@ public:
     /**
      * @return true if the metafile is enhanced.
      */
-    bool isEnhanced(void) const
+    bool isEnhanced() const
     {
         return mIsEnhanced;
     }
@@ -84,7 +84,7 @@ public:
     /**
      * @return bounding rectangle
      */
-    QRect bbox(void) const
+    QRect bbox() const
     {
         return mBBox;
     }
@@ -177,7 +177,7 @@ public: // should be protected but cannot
     /** end of meta file */
     void end(long /*num*/, short * /*parms*/);
     /** Resolution of the image in dots per inch */
-    int dpi(void) const
+    int dpi() const
     {
         return mDpi;
     }

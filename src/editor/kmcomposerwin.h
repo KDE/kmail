@@ -219,7 +219,7 @@ private:
     /**
     * Write settings to app's config file.
     */
-    void writeConfig(void);
+    void writeConfig();
 
     /**
      * Returns true if the message was modified by the user.

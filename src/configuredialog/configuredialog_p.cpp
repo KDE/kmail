@@ -92,7 +92,7 @@ void ConfigModuleTab::defaults()
     doResetToDefaultsOther();
 }
 
-void ConfigModuleTab::slotEmitChanged(void)
+void ConfigModuleTab::slotEmitChanged()
 {
     if (mEmitChanges) {
         Q_EMIT changed(true);

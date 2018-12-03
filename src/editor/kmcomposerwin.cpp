@@ -619,7 +619,7 @@ void KMComposerWin::readConfig(bool reload /* = false */)
     setFcc(fccName);
 }
 
-void KMComposerWin::writeConfig(void)
+void KMComposerWin::writeConfig()
 {
     KMailSettings::self()->setHeaders(mShowHeaders);
     KMailSettings::self()->setCurrentTransport(mComposerBase->transportComboBox()->currentText());
@@ -1006,7 +1006,7 @@ void KMComposerWin::setQuotePrefix(uint uoid)
                                                                                            mMsg->from()->displayString()));
 }
 
-void KMComposerWin::setupActions(void)
+void KMComposerWin::setupActions()
 {
     KActionMenuTransport *actActionNowMenu = nullptr;
     KActionMenuTransport *actActionLaterMenu = nullptr;
@@ -1424,7 +1424,7 @@ void KMComposerWin::setupStatusBar(QWidget *w)
     connect(mStatusBarLabelSpellCheckingChangeMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
 }
 
-void KMComposerWin::setupEditor(void)
+void KMComposerWin::setupEditor()
 {
     QFontMetrics fm(mBodyFont);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
