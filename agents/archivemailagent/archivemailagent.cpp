@@ -29,7 +29,6 @@
 #include <Session>
 #include <CollectionFetchScope>
 #include <KMime/Message>
-#include <KWindowSystem>
 #include <QTimer>
 #include <QPointer>
 

@@ -40,7 +40,6 @@ target_link_libraries(akonadi_archivemail_agent
     KF5::AkonadiAgentBase
     KF5::DBusAddons
     KF5::XmlGui
-    KF5::WindowSystem
     KF5::KIOWidgets
     KF5::Notifications
     KF5::MailCommon
@@ -82,7 +81,6 @@ kcoreaddons_add_plugin(archivemailagentconfig
 target_link_libraries(archivemailagentconfig
     archivemailagent
     KF5::AkonadiCore
-    KF5::WindowSystem
     KF5::XmlGui
     KF5::I18n
 )

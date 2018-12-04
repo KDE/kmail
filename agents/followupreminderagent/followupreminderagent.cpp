@@ -22,7 +22,6 @@
 #include "FollowupReminder/FollowUpReminderUtil"
 #include "followupreminderadaptor.h"
 #include "followupreminderagentsettings.h"
-#include <KWindowSystem>
 #include <KMime/Message>
 
 #include <AkonadiCore/ChangeRecorder>

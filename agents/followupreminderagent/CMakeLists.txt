@@ -52,7 +52,6 @@ target_link_libraries(akonadi_followupreminder_agent
     Qt5::Widgets
     KF5::Notifications
     KF5::I18n
-    KF5::WindowSystem
     KF5::IconThemes
     KF5::XmlGui
     KF5::Service
@@ -88,7 +87,6 @@ kcoreaddons_add_plugin(followupreminderagentconfig
 target_link_libraries(followupreminderagentconfig
     followupreminderagent
     KF5::AkonadiCore
-    KF5::WindowSystem
     KF5::XmlGui
     KF5::I18n
     KF5::FollowupReminder
