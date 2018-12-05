@@ -41,7 +41,6 @@ inline QString archiveMailCollectionPattern()
 }
 
 static const char myConfigGroupName[] = "ArchiveMailDialog";
-
 }
 
 ArchiveMailItem::ArchiveMailItem(QTreeWidget *parent)
@@ -149,7 +148,6 @@ void ArchiveMailWidget::needReloadConfig()
     mWidget.treeWidget->clear();
     load();
 }
-
 
 void ArchiveMailWidget::load()
 {
@@ -344,7 +342,6 @@ void ArchiveMailWidget::slotItemChanged(QTreeWidgetItem *item, int col)
         }
     }
 }
-
 
 QSize ArchiveMailWidget::restoreDialogSize() const
 {
