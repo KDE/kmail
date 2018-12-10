@@ -313,7 +313,7 @@ static const about_data credits[] = {
     { "Thomas Moenicke", nullptr, "tm@php-qt.org", nullptr },
     { "Dirk M\303\274ller", nullptr, nullptr, nullptr }, // QUrl() fixes and qt_cast optimizations
     { "Torgny Nyblom", nullptr, "nyblom@kde.org", nullptr },
-    { "OpenUsability", I18N_NOOP("Usability tests and improvements"), nullptr, "http://www.openusability.org" },
+    { "OpenUsability", I18N_NOOP("Usability tests and improvements"), nullptr, "https://www.openusability.org" },
     { "Mario Teijeiro Otero", nullptr, nullptr, nullptr }, // various vendor annotations fixes
     { "Kevin Ottens", nullptr, "ervin@kde.org", nullptr },
     { "Simon Perreault", nullptr, nullptr, nullptr }, // make the composer remember its "Use Fixed Font" setting (bug 49481)
@@ -364,7 +364,7 @@ AboutData::AboutData()
                  KAboutLicense::GPL,
                  i18n("Copyright © 1997–2018, KMail authors"),
                  QString(),
-                 QStringLiteral("http://userbase.kde.org/KMail"))
+                 QStringLiteral("https://userbase.kde.org/KMail"))
 {
     using KMail::authors;
     using KMail::credits;

@@ -394,7 +394,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
                "<p>You can leave this blank, but KMail will not be able "
                "to digitally sign emails using OpenPGP; "
                "normal mail functions will not be affected.</p>"
-               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
+               "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
     label = new QLabel(i18n("OpenPGP signing key:"), tab);
     label->setBuddy(mPGPSigningKeyRequester);
     mPGPSigningKeyRequester->setWhatsThis(msg);
@@ -412,7 +412,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
                "<p>You can leave this blank, but KMail will not be able "
                "to encrypt copies of outgoing messages to you using OpenPGP; "
                "normal mail functions will not be affected.</p>"
-               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
+               "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
     label = new QLabel(i18n("OpenPGP encryption key:"), tab);
     label->setBuddy(mPGPEncryptionKeyRequester);
     mPGPEncryptionKeyRequester->setWhatsThis(msg);

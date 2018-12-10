@@ -165,8 +165,8 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     mTextEdit->editor()->setWordWrapMode(QTextOption::WrapAnywhere);
     mTextEdit->editor()->setSearchSupport(false);
     QLabel *label2 = new QLabel(i18n("Examples are available at <a "
-                                     "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
-                                     "http://ace.home.xs4all.nl/X-Faces/</a>."), page);
+                                     "href=\"https://ace.home.xs4all.nl/X-Faces/\">"
+                                     "https://ace.home.xs4all.nl/X-Faces/</a>."), page);
     label2->setOpenExternalLinks(true);
     label2->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
