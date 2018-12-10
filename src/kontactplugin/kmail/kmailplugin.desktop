@@ -10,7 +10,7 @@ X-KDE-KontactPartExecutableName=kmail
 X-KDE-KontactPartLoadOnStart=true
 X-KDE-KontactPluginHasSummary=true
 
-X-KDE-PluginInfo-Website=http://kmail.kde.org/
+X-KDE-PluginInfo-Website=https://kontact.kde.org/components/kmail.html
 X-KDE-PluginInfo-Name=kontact_kmailplugin
 X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-License=GPL
