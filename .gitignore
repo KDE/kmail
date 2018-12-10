@@ -16,6 +16,6 @@ Doxyfile
 Makefile
 avail
 random_seed
-/build/
+/build*/
 CMakeLists.txt.user*
 *.unc-backup*
