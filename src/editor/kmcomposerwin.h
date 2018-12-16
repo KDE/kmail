@@ -446,7 +446,7 @@ private:
     /**
      * Show or hide header lines
      */
-    void rethinkHeaderLine(int value, int mask, int &row, QLabel *lbl, QWidget *cbx);  // krazy:exclude=qclasses
+    void rethinkHeaderLine(int value, int mask, int &row, QLabel *lbl, QWidget *cbx);
 
     /**
      * Apply template to new or unmodified message.

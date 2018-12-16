@@ -164,7 +164,7 @@ void IdentityListView::commitData(QWidget *editor)
     qCDebug(KMAIL_LOG) << "after editing";
 
     if (!selectedItems().isEmpty()) {
-        QLineEdit *edit = qobject_cast<QLineEdit *>(editor);  // krazy:exclude=qclasses
+        QLineEdit *edit = qobject_cast<QLineEdit *>(editor);
         if (edit) {
             IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(selectedItems().at(0));
             const QString text = edit->text();
