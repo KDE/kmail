@@ -2586,7 +2586,9 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
     if (!win) {
         win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
     }
-    win->viewer()->setWebViewZoomFactor(mMsgView->viewer()->webViewZoomFactor());
+    if (mMsgView) {
+        win->viewer()->setWebViewZoomFactor(mMsgView->viewer()->webViewZoomFactor());
+    }
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
                               : MessageViewer::MessageViewerSettings::self()->useFixedFont();
     win->setUseFixedFont(useFixedFont);
