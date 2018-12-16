@@ -3603,7 +3603,9 @@ void KMMainWidget::slotPageIsScrolledToBottom(bool isAtBottom)
     if (isAtBottom) {
         slotSelectNextUnreadMessage();
     } else {
-        mMsgView->viewer()->slotJumpDown();
+        if (mMsgView) {
+            mMsgView->viewer()->slotJumpDown();
+        }
     }
 }
 
