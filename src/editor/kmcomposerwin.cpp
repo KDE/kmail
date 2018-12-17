@@ -1427,11 +1427,7 @@ void KMComposerWin::setupStatusBar(QWidget *w)
 void KMComposerWin::setupEditor()
 {
     QFontMetrics fm(mBodyFont);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     mComposerBase->editor()->setTabStopDistance(fm.boundingRect(QLatin1Char(' ')).width() * 8);
-#else
-    mComposerBase->editor()->setTabStopWidth(fm.boundingRect(QLatin1Char(' ')).width() * 8);
-#endif
 
     slotWordWrapToggled(MessageComposer::MessageComposerSettings::self()->wordWrap());
 
