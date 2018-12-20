@@ -388,37 +388,38 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         for (const QString &arg : parser.positionalArguments()) {
             if (arg.startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
-                QMap<QString, QString> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
+                const QList<QPair<QString, QString> > values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
                 QString previousKey;
-                for (auto it = values.cbegin(), end = values.cend(); it != end; ++it) {
-                    const QString key = it.key().toLower();
+                for (int i = 0; i < values.count(); ++i) {
+                    const QPair<QString, QString> element = values.at(i);
+                    const QString key = element.first.toLower();
                     if (key == QLatin1Literal("to")) {
-                        if (!it->isEmpty()) {
-                            to += *it + QStringLiteral(", ");
+                        if (!element.second.isEmpty()) {
+                            to += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
                     } else if (key == QLatin1Literal("cc")) {
-                        if (!it->isEmpty()) {
-                            cc += *it + QStringLiteral(", ");
+                        if (!element.second.isEmpty()) {
+                            cc += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
                     } else if (key == QLatin1Literal("bcc")) {
-                        if (!it->isEmpty()) {
-                            bcc += *it + QStringLiteral(", ");
+                        if (!element.second.isEmpty()) {
+                            bcc += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
                     } else if (key == QLatin1Literal("subject")) {
-                        subj = it.value();
+                        subj = element.second;
                         previousKey.clear();
                     } else if (key == QLatin1Literal("body")) {
-                        body = it.value();
+                        body = element.second;
                         previousKey = key;
                     } else if (key == QLatin1Literal("in-reply-to")) {
-                        inReplyTo = it.value();
+                        inReplyTo = element.second;
                         previousKey.clear();
                     } else if (key == QLatin1Literal("attachment") || key == QLatin1Literal("attach")) {
-                        if (!it->isEmpty()) {
-                            attachURLs << makeAbsoluteUrl(*it, workingDir);
+                        if (!element.second.isEmpty()) {
+                            attachURLs << makeAbsoluteUrl(element.second, workingDir);
                         }
                         previousKey.clear();
                     } else {
@@ -427,9 +428,9 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                         //QMap<QString, QString> parseMailtoUrl(const QUrl &url) parses correctly url
                         //But if we have a "&" unknown key we lost it.
                         if (previousKey == QLatin1Literal("body")) {
-                            body += QLatin1Char('&') + key + QLatin1Char('=') + it.value();
+                            body += QLatin1Char('&') + key + QLatin1Char('=') + element.second;
                         }
-                        previousKey.clear();
+                        //Don't clear previous key.
                     }
                 }
             } else {
