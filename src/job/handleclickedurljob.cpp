@@ -45,29 +45,38 @@ void HandleClickedUrlJob::start()
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
     mMsg->contentType()->setCharset("utf-8");
 
-    const QMap<QString, QString> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
-
-    mMsg->to()->fromUnicodeString(fields.value(QStringLiteral("to")), "utf-8");
-    const QString subject = fields.value(QStringLiteral("subject"));
-    if (!subject.isEmpty()) {
-        mMsg->subject()->fromUnicodeString(subject, "utf-8");
-    }
-    const QString body = fields.value(QStringLiteral("body"));
-    if (!body.isEmpty()) {
-        mMsg->setBody(body.toUtf8());
-    }
-    const QString cc = fields.value(QStringLiteral("cc"));
-    if (!cc.isEmpty()) {
-        mMsg->cc()->fromUnicodeString(cc, "utf-8");
-    }
-    const QString bcc = fields.value(QStringLiteral("bcc"));
-    if (!bcc.isEmpty()) {
-        mMsg->bcc()->fromUnicodeString(bcc, "utf-8");
-    }
-    const QString attach = fields.value(QStringLiteral("attach"));
-    if (!attach.isEmpty()) {
-        qCDebug(KMAIL_LOG) << "Attachment not supported yet";
-        //TODO
+    const QList<QPair<QString, QString> > fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
+    for (int i = 0; i < fields.count(); ++i) {
+        const QPair<QString, QString> element = fields.at(i);
+        if (element.first == QStringLiteral("to")) {
+            mMsg->to()->fromUnicodeString(element.second, "utf-8");
+        } else if (element.first == QStringLiteral("subject")) {
+            const QString subject = element.second;
+            if (!subject.isEmpty()) {
+                mMsg->subject()->fromUnicodeString(subject, "utf-8");
+            }
+        } else if (element.first == QStringLiteral("body")) {
+            const QString body = element.second;
+            if (!body.isEmpty()) {
+                mMsg->setBody(body.toUtf8());
+            }
+        } else if (element.first == QStringLiteral("cc")) {
+            const QString cc = element.second;
+            if (!cc.isEmpty()) {
+                mMsg->cc()->fromUnicodeString(cc, "utf-8");
+            }
+        } else if (element.first == QStringLiteral("bcc")) {
+            const QString bcc = element.second;
+            if (!bcc.isEmpty()) {
+                mMsg->bcc()->fromUnicodeString(bcc, "utf-8");
+            }
+        } else if (element.first == QStringLiteral("attach")) {
+            const QString attach = element.second;
+            if (!attach.isEmpty()) {
+                qCDebug(KMAIL_LOG) << "Attachment not supported yet";
+                //TODO
+            }
+        }
     }
 
     TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
