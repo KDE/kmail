@@ -306,7 +306,6 @@ target_link_libraries(kmailprivate
     KF5::Notifications
     KF5::GuiAddons
     KF5::Crash
-    KF5::Bookmarks
     KF5::KIOFileWidgets
     KF5::NotifyConfig
     KF5::MailTransportAkonadi
