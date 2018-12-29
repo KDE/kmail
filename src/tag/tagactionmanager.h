@@ -58,6 +58,7 @@ public:
         * Does not take ownership of the action collection, the GUI client or the message actions.
         * Does not yet create the actions.
         *
+        * @param parent The parent QObject.
         * @param actionCollection: Each tag action is added here
         * @param messageActions: Each action is added to the message status menu
         * @param guiClient: The action list with the toolbar action is plugged here
@@ -83,6 +84,7 @@ public:
         *
         * This function is async
         *
+        * @param numberOfSelectedMessages The number of selected messages
         * @param selectedItem if exactly one item is selected, it should be passed here
         */
     void updateActionStates(int numberOfSelectedMessages, const Akonadi::Item &selectedItem);

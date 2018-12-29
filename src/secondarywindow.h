@@ -50,7 +50,7 @@ public:
     using KMainWindow::setCaption;
 public Q_SLOTS:
     /**
-     * Reimplement because we have this bug #Bug 163978
+     * Reimplement because we have <a href="https://bugs.kde.org/show_bug.cgi?id=163978">this bug</a>
      * @brief setCaption
      * @param caption
      */

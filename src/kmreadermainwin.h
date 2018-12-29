@@ -44,12 +44,16 @@ public:
 
     MessageViewer::Viewer *viewer() const;
     /**
-    * take ownership of and show @param msg
+    * take ownership of and show @p msg
     *
     * The last two parameters, serNumOfOriginalMessage and nodeIdOffset, are needed when @p msg
     * is derived from another message, e.g. the user views an encapsulated message in this window.
     * Then, the reader needs to know about that original message, so those to parameters are passed
     * onto setOriginalMsg() of KMReaderWin.
+    * 
+    * @param encoding The message encoding.
+    * @param msg The message.
+    * @param parentCollection An Akonadi parent collection.
     */
     void showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection = Akonadi::Collection());
 

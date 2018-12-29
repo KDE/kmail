@@ -175,6 +175,9 @@ public Q_SLOTS:
     * @param messageFile A message file that will be used as message body.
     * @param attachmentPaths A list of files that will be attached to the message.
     * @param customHeaders A list of custom headers.
+    * @param replyTo A list of reply-to headers.
+    * @param inReplyTo A list of in-reply-to headers.
+    * @param identity The mail identity.
     */
     Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile,
                                    const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo = QString(),
@@ -253,8 +256,6 @@ public Q_SLOTS:
     * @param to A comma separated list of To addresses.
     * @param cc A comma separated list of CC addresses.
     * @param bcc A comma separated list of BCC addresses.
-    * @param subject The message subject.
-    * @param body The message body.
     * @param hidden Whether the composer window shall initially be hidden.
     * @param useFolderId The id of the folder whose associated identity will be used.
     * @param messageFile A message file that will be used as message body.

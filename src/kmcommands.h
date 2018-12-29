@@ -302,6 +302,7 @@ public:
     /** Use this to save all attachments of the given message.
       @param parent  The parent widget of the command used for message boxes.
       @param msg     The message of which the attachments should be saved.
+      @param viewer  The message viewer.
     */
     KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item &msg, MessageViewer::Viewer *viewer);
     /** Use this to save all attachments of the given messages.
