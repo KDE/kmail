@@ -41,15 +41,11 @@ void UnifiedMailbox::load(const KConfigGroup &group)
 
 void UnifiedMailbox::save(KConfigGroup &group) const
 {
-    group.writeEntry("name", mName);
-    group.writeEntry("icon", mIcon);
-    group.writeEntry("sources", setToList(mSources));
+    group.writeEntry("name", name());
+    group.writeEntry("icon", icon());
+    group.writeEntry("sources", setToList(sourceCollections()));
     // just for caching, we will do collection discovery on next start anyway
-    if (mCollectionId) {
-        group.writeEntry("collectionId", *mCollectionId);
-    } else {
-        group.deleteEntry("collectionId");
-    }
+    group.writeEntry("collectionId", collectionId());
 }
 
 bool UnifiedMailbox::isSpecial() const
@@ -64,7 +60,7 @@ void UnifiedMailbox::setCollectionId(qint64 id)
     mCollectionId = id;
 }
 
-stdx::optional<qint64> UnifiedMailbox::collectionId() const
+qint64 UnifiedMailbox::collectionId() const
 {
     return mCollectionId;
 }
