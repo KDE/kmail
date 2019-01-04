@@ -37,7 +37,7 @@ using MailTransport::TransportManagementWidget;
 #include <AkonadiWidgets/agenttypedialog.h>
 #include <AkonadiCore/agentinstancecreatejob.h>
 #include <identity/identitypage.h>
-
+#include <Libkdepim/LdapConfigureWidget>
 #include <KComboBox>
 #include <KConfigGroup>
 #include <KLocalizedString>
@@ -76,6 +76,12 @@ AccountsPage::AccountsPage(QWidget *parent)
     //
     SendingTab *sendingTab = new SendingTab();
     addTab(sendingTab, i18nc("@title:tab Tab page where the user configures accounts to send mail", "Sending"));
+
+    //
+    // "Sending" tab:
+    //
+    LdapCompetionTab *ldapCompletionTab = new LdapCompetionTab();
+    addTab(ldapCompletionTab, i18nc("@title:tab Tab page where the user configures ldap server", "LDAP server"));
 }
 
 AccountsPageSendingTab::~AccountsPageSendingTab()
@@ -378,4 +384,36 @@ void AccountsPage::ReceivingTab::save()
         group.writeEntry("CheckOnStartup", opts->CheckOnStartup);
         delete conf;
     }
+}
+
+LdapCompetionTab::LdapCompetionTab(QWidget *parent)
+    : ConfigModuleTab(parent)
+{
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setMargin(0);
+
+    mLdapConfigureWidget = new KLDAP::LdapConfigureWidget(this);
+    layout->addWidget(mLdapConfigureWidget);
+
+    connect(mLdapConfigureWidget, &KLDAP::LdapConfigureWidget::changed, this, QOverload<bool>::of(&LdapCompetionTab::changed));
+}
+
+LdapCompetionTab::~LdapCompetionTab()
+{
+
+}
+
+QString LdapCompetionTab::helpAnchor() const
+{
+    return {};
+}
+
+void LdapCompetionTab::save()
+{
+    mLdapConfigureWidget->save();
+}
+
+void LdapCompetionTab::doLoadOther()
+{
+    mLdapConfigureWidget->load();
 }

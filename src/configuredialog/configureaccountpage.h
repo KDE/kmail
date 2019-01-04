@@ -25,7 +25,10 @@
 class QCheckBox;
 class KComboBox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
-
+namespace KLDAP
+{
+class LdapConfigureWidget;
+}
 // subclasses: one class per tab:
 class AccountsPageSendingTab : public ConfigModuleTab
 {
@@ -47,12 +50,29 @@ private:
     KComboBox *mSendMethodCombo = nullptr;
 };
 
+// subclasses: one class per tab:
+class LdapCompetionTab : public ConfigModuleTab
+{
+    Q_OBJECT
+public:
+    explicit LdapCompetionTab(QWidget *parent = nullptr);
+    ~LdapCompetionTab() override;
+    QString helpAnchor() const;
+    void save() override;
+
+private:
+    void doLoadOther() override;
+
+private:
+    KLDAP::LdapConfigureWidget *mLdapConfigureWidget = nullptr;
+};
+
 class AccountsPageReceivingTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
     explicit AccountsPageReceivingTab(QWidget *parent = nullptr);
-    ~AccountsPageReceivingTab();
+    ~AccountsPageReceivingTab() override;
     QString helpAnchor() const;
     void save() override;
 
