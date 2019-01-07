@@ -203,7 +203,7 @@ QList<qlonglong> IncompleteIndexDialog::collectionsToReindex() const
 
 void IncompleteIndexDialog::waitForIndexer()
 {
-    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(), QLatin1String("/"),
+    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"),
                                   QStringLiteral("org.freedesktop.Akonadi.Indexer"),
                                   QDBusConnection::sessionBus(), this);
 

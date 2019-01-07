@@ -975,7 +975,7 @@ void IdentityDialog::unregisterSpecialCollection(qint64 colId)
     // resource set as well.
     auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection(colId), Akonadi::CollectionFetchJob::Base, this);
     connect(fetch, &Akonadi::CollectionFetchJob::collectionsReceived,
-            this, [this](const Akonadi::Collection::List &cols) {
+            this, [](const Akonadi::Collection::List &cols) {
             if (cols.count() != 1) {
                 return;
             }

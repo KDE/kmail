@@ -435,7 +435,7 @@ void SummaryViewPart::slotConfigure()
     dlg->setModal(true);
 
     QStringList modules = configModules();
-    modules.prepend(QLatin1String("kcmkontactsummary.desktop"));
+    modules.prepend(QStringLiteral("kcmkontactsummary.desktop"));
     connect(dlg.data(), QOverload<>::of(&KCMultiDialog::configCommitted),
             this, &SummaryViewPart::updateWidgets);
 

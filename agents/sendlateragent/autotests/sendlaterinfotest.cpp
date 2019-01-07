@@ -25,7 +25,8 @@
 #include <KSharedConfig>
 #include <QStandardPaths>
 
-SendLaterInfoTest::SendLaterInfoTest()
+SendLaterInfoTest::SendLaterInfoTest(QObject *parent)
+    : QObject(parent)
 {
     QStandardPaths::setTestModeEnabled(true);
 }

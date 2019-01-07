@@ -14,6 +14,7 @@ class FolderCollectionMonitor;
 
 class DummyKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings
 {
+    Q_OBJECT
 public:
     explicit DummyKernel(QObject *parent = nullptr);
 

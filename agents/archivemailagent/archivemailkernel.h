@@ -34,6 +34,7 @@ class JobScheduler;
 
 class ArchiveMailKernel : public QObject, public MailCommon::IKernel, public MailCommon::ISettings
 {
+    Q_OBJECT
 public:
     explicit ArchiveMailKernel(QObject *parent = nullptr);
 

@@ -23,7 +23,8 @@
 #include <KToggleAction>
 #include <QSignalSpy>
 Q_DECLARE_METATYPE(MessageViewer::Viewer::DisplayFormatMessage)
-DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest()
+DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest(QObject *parent)
+    : QObject(parent)
 {
     qRegisterMetaType<MessageViewer::Viewer::DisplayFormatMessage >();
 }

@@ -76,6 +76,7 @@ public:
     }
 
 private:
+    Q_DISABLE_COPY(PluginItem)
     KPluginInfo mInfo;
 };
 

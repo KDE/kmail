@@ -137,12 +137,12 @@ void UnifiedMailbox::attachManager(UnifiedMailboxManager *manager)
     if (mManager != manager) {
         if (manager) {
             // Force that we start monitoring all the collections
-            for (auto source : mSources) {
+            for (const auto source : qAsConst(mSources)) {
                 manager->mMonitor.setCollectionMonitored(Akonadi::Collection{source});
                 manager->mSourceToBoxMap.insert({ source, this });
             }
         } else {
-            for (auto source : mSources) {
+            for (const auto source : qAsConst(mSources)) {
                 mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source}, false);
                 mManager->mSourceToBoxMap.erase(source);
             }

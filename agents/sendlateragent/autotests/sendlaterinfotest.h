@@ -26,7 +26,7 @@ class SendLaterInfoTest : public QObject
 {
     Q_OBJECT
 public:
-    SendLaterInfoTest();
+    explicit SendLaterInfoTest(QObject *parent = nullptr);
 
 private Q_SLOTS:
     void shouldHaveDefaultValue();
