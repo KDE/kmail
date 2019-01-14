@@ -148,12 +148,13 @@ void UnityServiceManager::updateCount()
     if (mSystemTray) {
         mSystemTray->updateCount(mCount);
     }
+
     if (mUnityServiceAvailable) {
         const QString launcherId = qApp->desktopFileName() + QLatin1String(".desktop");
-
+        const int unreadEmail = KMailSettings::self()->showUnreadInTaskbar() ? mCount : 0;
         const QVariantMap properties{
-            {QStringLiteral("count-visible"), mCount > 0},
-            {QStringLiteral("count"), mCount}
+            {QStringLiteral("count-visible"), unreadEmail > 0},
+            {QStringLiteral("count"), unreadEmail}
         };
 
         QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/org/kmail2/UnityLauncher"),

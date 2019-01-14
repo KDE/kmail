@@ -1187,6 +1187,7 @@ void KMKernel::slotSyncConfig()
     Gravatar::GravatarSettings::self()->load();
     KMailSettings::self()->load();
     KMKernel::config()->reparseConfiguration();
+    mUnityServiceManager->updateCount();
 }
 
 void KMKernel::saveConfig()

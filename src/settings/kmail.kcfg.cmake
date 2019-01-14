@@ -84,6 +84,10 @@
         <label>Enable system tray icon</label>
         <default>false</default>
       </entry>
+      <entry name="ShowUnreadInTaskbar" type="Bool">
+      <label>Show Unread Email in TaskBar</label>
+        <default>true</default>
+      </entry>      
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
         <default>kwrite %f</default>

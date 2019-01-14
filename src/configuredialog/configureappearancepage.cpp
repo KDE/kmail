@@ -879,6 +879,12 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     connect(mSystemTrayCheck, &QCheckBox::stateChanged,
             this, &ConfigModuleTab::slotEmitChanged);
 
+    // "Enable system tray applet" check box
+    mShowNumberInTaskBar = new QCheckBox(i18n("Show unread email in Taskbar"), this);
+    systrayBoxlayout->addWidget(mShowNumberInTaskBar);
+    connect(mShowNumberInTaskBar, &QCheckBox::stateChanged,
+            this, &ConfigModuleTab::slotEmitChanged);
+
     topLayout->addStretch(100);   // spacer
 }
 
@@ -890,6 +896,7 @@ void AppearancePage::ReaderTab::doResetToDefaultsOther()
 void AppearancePage::ReaderTab::doLoadOther()
 {
     loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
+    loadWidget(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     loadWidget(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->readConfig();
     mGravatarConfigWidget->doLoadFromGlobalSettings();
@@ -898,6 +905,7 @@ void AppearancePage::ReaderTab::doLoadOther()
 void AppearancePage::ReaderTab::save()
 {
     saveCheckBox(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
+    saveCheckBox(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     KMailSettings::self()->save();
     saveCheckBox(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->writeConfig();
