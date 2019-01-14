@@ -35,12 +35,6 @@ public:
     ~UnityServiceManager();
 
     void updateSystemTray();
-    /**
-     * Use this method to disable any systray icon changing.
-     * By default this is enabled and you'll see the "new e-mail" icon whenever there's
-     * new e-mail.
-     */
-    void setSystrayIconNotificationsEnabled(bool enable);
     bool haveSystemTrayApplet() const;
 
     bool canQueryClose();
