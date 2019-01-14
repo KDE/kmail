@@ -219,8 +219,8 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
         const QModelIndex index = model->index(row, 0, parentIndex);
         const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         qint64 count = 0;
-        if (!mUnityServiceManager->excludeFolder(collection)) {
-            Akonadi::CollectionStatistics statistics = collection.statistics();
+        if (mUnityServiceManager && !mUnityServiceManager->excludeFolder(collection)) {
+            const Akonadi::CollectionStatistics statistics = collection.statistics();
             count = qMax(0LL, statistics.unreadCount());
             if (count > 0) {
                 if (mUnityServiceManager->ignoreNewMailInFolder(collection)) {
