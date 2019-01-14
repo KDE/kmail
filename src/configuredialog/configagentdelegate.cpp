@@ -109,7 +109,7 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
         "<tr>"
         "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
         "<td><b>%2</b></td>"
-        "</tr>").arg(textColor.name().toUpper()).arg(name)
+        "</tr>").arg(textColor.name().toUpper(), name)
                             + QStringLiteral(
         "<tr>"
         "<td><img src=\"status_icon\"/> %1 %2</td>"

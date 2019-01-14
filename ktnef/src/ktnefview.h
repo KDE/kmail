@@ -36,7 +36,7 @@ public:
     QList<KTNEFAttach *> getSelection();
 
 Q_SIGNALS:
-    void dragRequested(const QList<KTNEFAttach *> &list);
+    void dragRequested(const QList<KTnef::KTNEFAttach *> &list);
 
 protected:
     void resizeEvent(QResizeEvent *e) override;

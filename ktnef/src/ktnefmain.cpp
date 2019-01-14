@@ -448,7 +448,7 @@ void KTNEFMain::viewDoubleClicked(QTreeWidgetItem *item)
     }
 }
 
-void KTNEFMain::viewDragRequested(const QList<KTNEFAttach *> &list)
+void KTNEFMain::viewDragRequested(const QList<KTnef::KTNEFAttach *> &list)
 {
     QList<QUrl> urlList;
     QList<KTNEFAttach *>::ConstIterator end(list.constEnd());

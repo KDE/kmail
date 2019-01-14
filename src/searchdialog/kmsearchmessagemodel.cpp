@@ -79,7 +79,7 @@ static QString toolTip(const Akonadi::Item &item)
         "</div>"                                                       \
         "</td>"                                                        \
         "</tr>"
-        ).arg(txtColorName).arg(bckColorName).arg(msg->subject()->asUnicodeString().toHtmlEscaped()).arg(textDirection);
+        ).arg(txtColorName, bckColorName, msg->subject()->asUnicodeString().toHtmlEscaped(), textDirection);
 
     tip += QStringLiteral(
         "<tr>"                                                              \
@@ -106,14 +106,14 @@ static QString toolTip(const Akonadi::Item &item)
         tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To"), msg->to()->displayString());
         tip += htmlCodeForStandardRow.arg(i18n("Date"), QLocale().toString(msg->date()->dateTime()));
         if (!content.isEmpty()) {
-            tip += htmlCodeForStandardRow.arg(i18n("Preview")).arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
+            tip += htmlCodeForStandardRow.arg(i18n("Preview"), content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
         }
     } else {
         tip += htmlCodeForStandardRow.arg(msg->from()->displayString()).arg(i18n("From"));
         tip += htmlCodeForStandardRow.arg(msg->to()->displayString()).arg(i18nc("Receiver of the email", "To"));
         tip += htmlCodeForStandardRow.arg(QLocale().toString(msg->date()->dateTime())).arg(i18n("Date"));
         if (!content.isEmpty()) {
-            tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>"))).arg(i18n("Preview"));
+            tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")), i18n("Preview"));
         }
     }
     tip += QLatin1String(

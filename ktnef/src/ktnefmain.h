@@ -64,7 +64,7 @@ protected Q_SLOTS:
 
     void viewSelectionChanged();
     void viewDoubleClicked(QTreeWidgetItem *);
-    void viewDragRequested(const QList<KTNEFAttach *> &list);
+    void viewDragRequested(const QList<KTnef::KTNEFAttach *> &list);
     void slotConfigureKeys();
     void openRecentFile(const QUrl &);
 

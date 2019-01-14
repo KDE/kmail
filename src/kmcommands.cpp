@@ -1717,10 +1717,10 @@ void KMTrashMsgCommand::slotMoveCanceled()
 void KMTrashMsgCommand::completeMove(KMCommand::Result result)
 {
     if (result == Failed) {
-        for (auto job : mPendingMoves) {
+        for (auto job : qAsConst(mPendingMoves)) {
             job->kill();
         }
-        for (auto job : mPendingDeletes) {
+        for (auto job : qAsConst(mPendingDeletes)) {
             job->kill();
         }
     }
