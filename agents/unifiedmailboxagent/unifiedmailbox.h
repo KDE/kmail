@@ -24,8 +24,6 @@
 #include <QMetaType>
 #include <QSet>
 
-#include "utils.h"
-
 class KConfigGroup;
 class UnifiedMailboxManager;
 
@@ -48,7 +46,7 @@ public:
 
     bool isSpecial() const;
 
-    stdx::optional<qint64> collectionId() const;
+    qint64 collectionId() const;
     void setCollectionId(qint64 id);
 
     QString id() const;
@@ -68,7 +66,7 @@ public:
 private:
     void attachManager(UnifiedMailboxManager *manager);
 
-    stdx::optional<qint64> mCollectionId;
+    qint64 mCollectionId = -1;
     QString mId;
     QString mName;
     QString mIcon;

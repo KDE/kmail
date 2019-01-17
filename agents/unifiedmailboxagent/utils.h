@@ -24,13 +24,6 @@
 #include <QHash>
 #include <QString>
 
-#include <experimental/optional>
-namespace stdx {
-// Injects content of std::experimental namespace into "exp" namespace.
-// C++ is magical.
-using namespace std::experimental;
-}
-
 template<typename T>
 inline QList<T> setToList(QSet<T> &&set)
 {

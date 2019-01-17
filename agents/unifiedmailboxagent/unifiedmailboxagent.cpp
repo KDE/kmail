@@ -65,13 +65,13 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
 
     connect(&mBoxManager, &UnifiedMailboxManager::updateBox,
             this, [this](const UnifiedMailbox *box) {
-        if (!box->collectionId()) {
+        if (box->collectionId() <= -1) {
             qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "MailboxManager wants us to update Box but does not have its CollectionId!?";
             return;
         }
 
         // Schedule collection sync for the box
-        synchronizeCollection(box->collectionId().value());
+        synchronizeCollection(box->collectionId());
     });
 
     auto &ifs = changeRecorder()->itemFetchScope();

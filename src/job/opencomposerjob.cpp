@@ -102,7 +102,7 @@ void OpenComposerJob::start()
         }
     } else if (!mOpenComposerSettings.mBody.isEmpty()) {
         mContext = KMail::Composer::NoTemplate;
-        mMsg->setBody(mOpenComposerSettings.mBody.toUtf8());
+        mMsg->setBody(mOpenComposerSettings.mBody.toLatin1());
         slotOpenComposer();
     } else {
         TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);

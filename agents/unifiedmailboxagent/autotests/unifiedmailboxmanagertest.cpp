@@ -20,7 +20,6 @@
 #include "../unifiedmailboxmanager.h"
 #include "../unifiedmailbox.h"
 #include "../common.h"
-#include "../utils.h"
 
 #include <KSharedConfig>
 #include <KConfigGroup>
@@ -58,31 +57,31 @@ namespace {
             return ret;} \
     } while (false)
 
-stdx::optional<Akonadi::Collection> collectionForId(qint64 id)
+Akonadi::Collection collectionForId(qint64 id)
 {
     auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base);
     fetch->fetchScope().fetchAttribute<Akonadi::SpecialCollectionAttribute>();
-    AKVERIFY_RET(fetch->exec(), stdx::nullopt);
+    AKVERIFY_RET(fetch->exec(), {});
     const auto cols = fetch->collections();
-    AKCOMPARE_RET(cols.count(), 1, stdx::nullopt);
-    AKVERIFY_RET(cols.first().isValid(), stdx::nullopt);
+    AKCOMPARE_RET(cols.count(), 1, {});
     return cols.first();
 }
 
-stdx::optional<Akonadi::Collection> collectionForRid(const QString &rid)
+Akonadi::Collection collectionForRid(const QString &rid)
 {
     auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive);
     fetch->fetchScope().fetchAttribute<Akonadi::SpecialCollectionAttribute>();
     fetch->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
-    AKVERIFY_RET(fetch->exec(), stdx::nullopt);
+    AKVERIFY_RET(fetch->exec(), {});
     const auto cols = fetch->collections();
     auto colIt = std::find_if(cols.cbegin(), cols.cend(), [&rid](const Akonadi::Collection &col) {
             return col.remoteId() == rid;
         });
-    AKVERIFY_RET(colIt != cols.cend(), stdx::nullopt);
+    AKVERIFY_RET(colIt != cols.cend(), {});
     return *colIt;
 }
 
+// A kingdom and a horse for std::optional!
 std::unique_ptr<UnifiedMailbox> createUnifiedMailbox(const QString &id, const QString &name, const QStringList &sourceRids)
 {
     auto mailbox = std::make_unique<UnifiedMailbox>();
@@ -91,8 +90,8 @@ std::unique_ptr<UnifiedMailbox> createUnifiedMailbox(const QString &id, const QS
     mailbox->setIcon(QStringLiteral("dummy-icon"));
     for (const auto &srcRid : sourceRids) {
         const auto srcCol = collectionForRid(srcRid);
-        AKVERIFY_RET(srcCol, {});
-        mailbox->addSourceCollection(srcCol->id());
+        AKVERIFY_RET(srcCol.isValid(), {});
+        mailbox->addSourceCollection(srcCol.id());
     }
     return mailbox;
 }
@@ -131,20 +130,19 @@ private:
     Akonadi::Item::List items;
 };
 
-stdx::optional<Akonadi::Collection> createCollection(const QString &name, const Akonadi::Collection &parent, EntityDeleter &deleter)
+Akonadi::Collection createCollection(const QString &name, const Akonadi::Collection &parent, EntityDeleter &deleter)
 {
     Akonadi::Collection col;
     col.setName(name);
     col.setParentCollection(parent);
     col.setVirtual(true);
     auto createCol = new Akonadi::CollectionCreateJob(col);
-    AKVERIFY_RET(createCol->exec(), stdx::nullopt);
+    AKVERIFY_RET(createCol->exec(), {});
     col = createCol->collection();
     if (col.isValid()) {
         deleter << col;
-        return col;
     }
-    return stdx::nullopt;
+    return col;
 }
 } // namespace
 
@@ -190,9 +188,9 @@ private Q_SLOTS:
                                    QCOMPARE(sourceCollections.size(), numSources);
                                    for (auto source : sourceCollections) {
                                        auto col = collectionForId(source);
-                                       QVERIFY(col);
-                                       QVERIFY(col->hasAttribute<Akonadi::SpecialCollectionAttribute>());
-                                       QCOMPARE(col->attribute<Akonadi::SpecialCollectionAttribute>()->collectionType(), id.toLatin1());
+                                       QVERIFY(col.isValid());
+                                       QVERIFY(col.hasAttribute<Akonadi::SpecialCollectionAttribute>());
+                                       QCOMPARE(col.attribute<Akonadi::SpecialCollectionAttribute>()->collectionType(), id.toLatin1());
                                    }
                                    success = true;
                                };
@@ -310,14 +308,14 @@ private Q_SLOTS:
         boxGroup = boxesGroup.group(sentBox->id());
         sentBox->save(boxGroup);
 
-        const auto parentCol = collectionForRid(Common::AgentIdentifier);
-        QVERIFY(parentCol);
+        const Akonadi::Collection parentCol = collectionForRid(Common::AgentIdentifier);
+        QVERIFY(parentCol.isValid());
 
-        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol.value(), deleter);
-        QVERIFY(inboxBoxCol);
+        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol, deleter);
+        QVERIFY(inboxBoxCol.isValid());
 
-        const auto sentBoxCol = createCollection(Common::SentBoxId, parentCol.value(), deleter);
-        QVERIFY(sentBoxCol);
+        const auto sentBoxCol = createCollection(Common::SentBoxId, parentCol, deleter);
+        QVERIFY(sentBoxCol.isValid());
 
         // Load from config
         bool loadingDone = false;
@@ -329,13 +327,13 @@ private Q_SLOTS:
         // Now the boxes should be loaded and we should be able to access them
         // by IDs of collections that represent them. The collections should also
         // be set for each box.
-        auto box = manager.unifiedMailboxFromCollection(inboxBoxCol.value());
+        auto box = manager.unifiedMailboxFromCollection(inboxBoxCol);
         QVERIFY(box != nullptr);
-        QCOMPARE(box->collectionId().value(), inboxBoxCol->id());
+        QCOMPARE(box->collectionId(), inboxBoxCol.id());
 
-        box = manager.unifiedMailboxFromCollection(sentBoxCol.value());
+        box = manager.unifiedMailboxFromCollection(sentBoxCol);
         QVERIFY(box != nullptr);
-        QCOMPARE(box->collectionId().value(), sentBoxCol->id());
+        QCOMPARE(box->collectionId(), sentBoxCol.id());
     }
 
     void testItemAddedToSourceCollection()
@@ -346,10 +344,10 @@ private Q_SLOTS:
         EntityDeleter deleter;
 
         const auto parentCol = collectionForRid(Common::AgentIdentifier);
-        QVERIFY(parentCol);
+        QVERIFY(parentCol.isValid());
 
-        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol.value(), deleter);
-        QVERIFY(inboxBoxCol);
+        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol, deleter);
+        QVERIFY(inboxBoxCol.isValid());
 
         // Load boxes - config is empty so this will create the default Boxes and
         // assign the Inboxes from Knuts to it
@@ -368,21 +366,21 @@ private Q_SLOTS:
 
         // Get one of the source collections for Inbox
         const auto inboxSourceCol = collectionForRid(QStringLiteral("res1_inbox"));
-        QVERIFY(inboxSourceCol);
+        QVERIFY(inboxSourceCol.isValid());
 
         // Setup up a monitor to to be notified when an item gets linked into
         // the unified mailbox collection
         Akonadi::Monitor monitor;
-        monitor.setCollectionMonitored(inboxBoxCol.value());
+        monitor.setCollectionMonitored(inboxBoxCol);
         QSignalSpy itemLinkedSignalSpy(&monitor, &Akonadi::Monitor::itemsLinked);
         QVERIFY(QSignalSpy(&monitor, &Akonadi::Monitor::monitorReady).wait());
 
         // Add a new Item into the source collection
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
-        item.setParentCollection(inboxSourceCol.value());
+        item.setParentCollection(inboxSourceCol);
         item.setPayload(QByteArray{"Hello world!"});
-        auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol.value(), this);
+        auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();
         deleter << item;
@@ -394,7 +392,7 @@ private Q_SLOTS:
         QCOMPARE(linkedItems.size(), 1);
         QCOMPARE(linkedItems.at(0), item);
         const auto linkedCol = itemLinkedSignalSpy.at(0).at(1).value<Akonadi::Collection>();
-        QCOMPARE(linkedCol, inboxBoxCol.value());
+        QCOMPARE(linkedCol, inboxBoxCol);
     }
 
     void testItemMovedFromSourceCollection()
@@ -405,10 +403,10 @@ private Q_SLOTS:
         EntityDeleter deleter;
 
         const auto parentCol = collectionForRid(Common::AgentIdentifier);
-        QVERIFY(parentCol);
+        QVERIFY(parentCol.isValid());
 
-        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol.value(), deleter);
-        QVERIFY(inboxBoxCol);
+        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol, deleter);
+        QVERIFY(inboxBoxCol.isValid());
 
         // Load boxes - config is empty so this will create the default Boxes and
         // assign the Inboxes from Knuts to it
@@ -427,12 +425,12 @@ private Q_SLOTS:
 
         // Get one of the source collections for Inbox
         const auto inboxSourceCol = collectionForRid(QStringLiteral("res1_inbox"));
-        QVERIFY(inboxSourceCol);
+        QVERIFY(inboxSourceCol.isValid());
 
         // Setup up a monitor to to be notified when an item gets linked into
         // the unified mailbox collection
         Akonadi::Monitor monitor;
-        monitor.setCollectionMonitored(inboxBoxCol.value());
+        monitor.setCollectionMonitored(inboxBoxCol);
         QSignalSpy itemLinkedSignalSpy(&monitor, &Akonadi::Monitor::itemsLinked);
         QSignalSpy itemUnlinkedSignalSpy(&monitor, &Akonadi::Monitor::itemsUnlinked);
         QVERIFY(QSignalSpy(&monitor, &Akonadi::Monitor::monitorReady).wait());
@@ -440,9 +438,9 @@ private Q_SLOTS:
         // Add a new Item into the source collection
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
-        item.setParentCollection(inboxSourceCol.value());
+        item.setParentCollection(inboxSourceCol);
         item.setPayload(QByteArray{"Hello world!"});
-        auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol.value(), this);
+        auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();
         deleter << item;
@@ -451,10 +449,10 @@ private Q_SLOTS:
         QTRY_COMPARE(itemLinkedSignalSpy.size(), 1);
 
         const auto destinationCol = collectionForRid(QStringLiteral("res1_foo"));
-        QVERIFY(destinationCol);
+        QVERIFY(destinationCol.isValid());
 
         // Now move the Item to an unmonitored collection
-        auto move = new Akonadi::ItemMoveJob(item, destinationCol.value(), this);
+        auto move = new Akonadi::ItemMoveJob(item, destinationCol, this);
         AKVERIFYEXEC(move);
 
         QTRY_COMPARE(itemUnlinkedSignalSpy.size(), 1);
@@ -462,7 +460,7 @@ private Q_SLOTS:
         QCOMPARE(unlinkedItems.size(), 1);
         QCOMPARE(unlinkedItems.first(), item);
         const auto unlinkedCol = itemUnlinkedSignalSpy.at(0).at(1).value<Akonadi::Collection>();
-        QCOMPARE(unlinkedCol, inboxBoxCol.value());
+        QCOMPARE(unlinkedCol, inboxBoxCol);
     }
 
     void testItemMovedBetweenSourceCollections()
@@ -473,13 +471,13 @@ private Q_SLOTS:
         EntityDeleter deleter;
 
         const auto parentCol = collectionForRid(Common::AgentIdentifier);
-        QVERIFY(parentCol);
+        QVERIFY(parentCol.isValid());
 
-        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol.value(), deleter);
-        QVERIFY(inboxBoxCol);
+        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol, deleter);
+        QVERIFY(inboxBoxCol.isValid());
 
-        const auto draftsBoxCol = createCollection(Common::DraftsBoxId, parentCol.value(), deleter);
-        QVERIFY(draftsBoxCol);
+        const auto draftsBoxCol = createCollection(Common::DraftsBoxId, parentCol, deleter);
+        QVERIFY(draftsBoxCol.isValid());
 
         // Load boxes - config is empty so this will create the default Boxes and
         // assign the Inboxes from Knuts to it
@@ -498,15 +496,15 @@ private Q_SLOTS:
 
         // Get one of the source collections for Inbox and Drafts
         const auto inboxSourceCol = collectionForRid(QStringLiteral("res1_inbox"));
-        QVERIFY(inboxSourceCol);
+        QVERIFY(inboxSourceCol.isValid());
         const auto draftsSourceCol = collectionForRid(QStringLiteral("res1_drafts"));
-        QVERIFY(draftsSourceCol);
+        QVERIFY(draftsSourceCol.isValid());
 
         // Setup up a monitor to to be notified when an item gets linked into
         // the unified mailbox collection
         Akonadi::Monitor monitor;
-        monitor.setCollectionMonitored(inboxBoxCol.value());
-        monitor.setCollectionMonitored(draftsBoxCol.value());
+        monitor.setCollectionMonitored(inboxBoxCol);
+        monitor.setCollectionMonitored(draftsBoxCol);
         QSignalSpy itemLinkedSignalSpy(&monitor, &Akonadi::Monitor::itemsLinked);
         QSignalSpy itemUnlinkedSignalSpy(&monitor, &Akonadi::Monitor::itemsUnlinked);
         QVERIFY(QSignalSpy(&monitor, &Akonadi::Monitor::monitorReady).wait());
@@ -514,9 +512,9 @@ private Q_SLOTS:
         // Add a new Item into the source Inbox collection
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
-        item.setParentCollection(inboxSourceCol.value());
+        item.setParentCollection(inboxSourceCol);
         item.setPayload(QByteArray{"Hello world!"});
-        auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol.value(), this);
+        auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();
         deleter << item;
@@ -526,7 +524,7 @@ private Q_SLOTS:
         itemLinkedSignalSpy.clear();
 
         // Now move the Item to another Unified mailbox's source collection
-        auto move = new Akonadi::ItemMoveJob(item, draftsSourceCol.value(), this);
+        auto move = new Akonadi::ItemMoveJob(item, draftsSourceCol, this);
         AKVERIFYEXEC(move);
 
         QTRY_COMPARE(itemUnlinkedSignalSpy.size(), 1);
@@ -534,14 +532,14 @@ private Q_SLOTS:
         QCOMPARE(unlinkedItems.size(), 1);
         QCOMPARE(unlinkedItems.first(), item);
         const auto unlinkedCol = itemUnlinkedSignalSpy.at(0).at(1).value<Akonadi::Collection>();
-        QCOMPARE(unlinkedCol, inboxBoxCol.value());
+        QCOMPARE(unlinkedCol, inboxBoxCol);
 
         QTRY_COMPARE(itemLinkedSignalSpy.size(), 1);
         const auto linkedItems = itemLinkedSignalSpy.at(0).at(0).value<Akonadi::Item::List>();
         QCOMPARE(linkedItems.size(), 1);
         QCOMPARE(linkedItems.first(), item);
         const auto linkedCol = itemLinkedSignalSpy.at(0).at(1).value<Akonadi::Collection>();
-        QCOMPARE(linkedCol, draftsBoxCol.value());
+        QCOMPARE(linkedCol, draftsBoxCol);
     }
 
     void testSourceCollectionRemoved()
@@ -554,10 +552,10 @@ private Q_SLOTS:
         EntityDeleter deleter;
 
         const auto parentCol = collectionForRid(Common::AgentIdentifier);
-        QVERIFY(parentCol);
+        QVERIFY(parentCol.isValid());
 
-        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol.value(), deleter);
-        QVERIFY(inboxBoxCol);
+        const auto inboxBoxCol = createCollection(Common::InboxBoxId, parentCol, deleter);
+        QVERIFY(inboxBoxCol.isValid());
 
         // Load boxes - config is empty so this will create the default Boxes and
         // assign the Inboxes from Knuts to it
@@ -575,8 +573,8 @@ private Q_SLOTS:
         QTRY_VERIFY_WITH_TIMEOUT(loadingDone, milliseconds(10s).count());
 
         auto inboxSourceCol = collectionForRid(QStringLiteral("res1_inbox"));
-        QVERIFY(inboxSourceCol);
-        auto delJob = new Akonadi::CollectionDeleteJob(inboxSourceCol.value(), this);
+        QVERIFY(inboxSourceCol.isValid());
+        auto delJob = new Akonadi::CollectionDeleteJob(inboxSourceCol, this);
         AKVERIFYEXEC(delJob);
 
         // Wait for the change recorder to be notified
@@ -585,25 +583,25 @@ private Q_SLOTS:
         // and then wait a little bit more to give the Manager time to process the event
         QTest::qWait(0);
 
-        auto inboxBox = manager.unifiedMailboxFromCollection(inboxBoxCol.value());
+        auto inboxBox = manager.unifiedMailboxFromCollection(inboxBoxCol);
         QVERIFY(inboxBox);
-        QVERIFY(!inboxBox->sourceCollections().contains(inboxSourceCol->id()));
-        QVERIFY(!changeRecorder.collectionsMonitored().contains(inboxSourceCol.value()));
-        QVERIFY(!manager.unifiedMailboxForSource(inboxSourceCol->id()));
+        QVERIFY(!inboxBox->sourceCollections().contains(inboxSourceCol.id()));
+        QVERIFY(!changeRecorder.collectionsMonitored().contains(inboxSourceCol));
+        QVERIFY(!manager.unifiedMailboxForSource(inboxSourceCol.id()));
 
         // Lets removed the other source collection now, that should remove the unified box completely
         inboxSourceCol = collectionForRid(QStringLiteral("res2_inbox"));
-        QVERIFY(inboxSourceCol);
-        delJob = new Akonadi::CollectionDeleteJob(inboxSourceCol.value(), this);
+        QVERIFY(inboxSourceCol.isValid());
+        delJob = new Akonadi::CollectionDeleteJob(inboxSourceCol, this);
         AKVERIFYEXEC(delJob);
 
         // Wait for the change recorder once again
         QVERIFY(crRemovedSpy.wait());
         QTest::qWait(0);
 
-        QVERIFY(!manager.unifiedMailboxFromCollection(inboxBoxCol.value()));
-        QVERIFY(!changeRecorder.collectionsMonitored().contains(inboxSourceCol.value()));
-        QVERIFY(!manager.unifiedMailboxForSource(inboxSourceCol->id()));
+        QVERIFY(!manager.unifiedMailboxFromCollection(inboxBoxCol));
+        QVERIFY(!changeRecorder.collectionsMonitored().contains(inboxSourceCol));
+        QVERIFY(!manager.unifiedMailboxForSource(inboxSourceCol.id()));
     }
 
     void testSpecialSourceCollectionCreated()
@@ -622,10 +620,10 @@ private Q_SLOTS:
         EntityDeleter deleter;
 
         const auto parentCol = collectionForRid(Common::AgentIdentifier);
-        QVERIFY(parentCol);
+        QVERIFY(parentCol.isValid());
 
-        const auto sentBoxCol = createCollection(Common::SentBoxId, parentCol.value(), deleter);
-        QVERIFY(sentBoxCol);
+        const auto sentBoxCol = createCollection(Common::SentBoxId, parentCol, deleter);
+        QVERIFY(sentBoxCol.isValid());
 
         // Load boxes - config is empty so this will create the default Boxes and
         // assign the Inboxes from Knuts to it
@@ -643,9 +641,9 @@ private Q_SLOTS:
         QTRY_VERIFY_WITH_TIMEOUT(loadingDone, milliseconds(10s).count());
 
         auto sentSourceCol = collectionForRid(QStringLiteral("res1_sent"));
-        QVERIFY(sentSourceCol);
-        sentSourceCol->removeAttribute<Akonadi::SpecialCollectionAttribute>();
-        auto modify = new Akonadi::CollectionModifyJob(sentSourceCol.value(), this);
+        QVERIFY(sentSourceCol.isValid());
+        sentSourceCol.removeAttribute<Akonadi::SpecialCollectionAttribute>();
+        auto modify = new Akonadi::CollectionModifyJob(sentSourceCol, this);
         AKVERIFYEXEC(modify);
 
         // Wait for the change recorder to be notified
@@ -654,17 +652,17 @@ private Q_SLOTS:
         // and then wait a little bit more to give the Manager time to process the event
         QTest::qWait(0);
 
-        auto sourceBox = manager.unifiedMailboxFromCollection(sentBoxCol.value());
+        auto sourceBox = manager.unifiedMailboxFromCollection(sentBoxCol);
         QVERIFY(sourceBox);
-        QVERIFY(!sourceBox->sourceCollections().contains(sentSourceCol->id()));
-        QVERIFY(!changeRecorder.collectionsMonitored().contains(sentSourceCol.value()));
-        QVERIFY(!manager.unifiedMailboxForSource(sentSourceCol->id()));
+        QVERIFY(!sourceBox->sourceCollections().contains(sentSourceCol.id()));
+        QVERIFY(!changeRecorder.collectionsMonitored().contains(sentSourceCol));
+        QVERIFY(!manager.unifiedMailboxForSource(sentSourceCol.id()));
 
         // Lets demote the other source collection now, that should remove the unified box completely
         sentSourceCol = collectionForRid(QStringLiteral("res2_sent"));
-        QVERIFY(sentSourceCol);
-        sentSourceCol->attribute<Akonadi::SpecialCollectionAttribute>()->setCollectionType("drafts");
-        modify = new Akonadi::CollectionModifyJob(sentSourceCol.value(), this);
+        QVERIFY(sentSourceCol.isValid());
+        sentSourceCol.attribute<Akonadi::SpecialCollectionAttribute>()->setCollectionType("drafts");
+        modify = new Akonadi::CollectionModifyJob(sentSourceCol, this);
         AKVERIFYEXEC(modify);
 
         // Wait for the change recorder once again
@@ -672,11 +670,11 @@ private Q_SLOTS:
         QTest::qWait(0);
 
         // There's no more Sent unified box
-        QVERIFY(!manager.unifiedMailboxFromCollection(sentBoxCol.value()));
+        QVERIFY(!manager.unifiedMailboxFromCollection(sentBoxCol));
 
         // The collection is still monitored: it belongs to the Drafts special box now!
-        QVERIFY(changeRecorder.collectionsMonitored().contains(sentSourceCol.value()));
-        QVERIFY(manager.unifiedMailboxForSource(sentSourceCol->id()));
+        QVERIFY(changeRecorder.collectionsMonitored().contains(sentSourceCol));
+        QVERIFY(manager.unifiedMailboxForSource(sentSourceCol.id()));
     }
 };
 
