@@ -948,7 +948,7 @@ void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
     const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     const Akonadi::Item::List items = fetchJob->items();
 
-    const TemplateParser::TemplateParserJob::Mode mode = static_cast<TemplateParser::TemplateParserJob::Mode>(fetchJob->property("mode").toInt());
+    //Readd ? const TemplateParser::TemplateParserJob::Mode mode = static_cast<TemplateParser::TemplateParserJob::Mode>(fetchJob->property("mode").toInt());
     const uint uoid = fetchJob->property("uoid").toUInt();
     const uint uOldId = fetchJob->property("uOldid").toUInt();
 #if 0 //FIXME template
