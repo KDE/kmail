@@ -50,7 +50,7 @@ public:
     * is derived from another message, e.g. the user views an encapsulated message in this window.
     * Then, the reader needs to know about that original message, so those to parameters are passed
     * onto setOriginalMsg() of KMReaderWin.
-    * 
+    *
     * @param encoding The message encoding.
     * @param msg The message.
     * @param parentCollection An Akonadi parent collection.

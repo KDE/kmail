@@ -25,8 +25,7 @@
 class QCheckBox;
 class KComboBox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
-namespace KLDAP
-{
+namespace KLDAP {
 class LdapConfigureWidget;
 }
 // subclasses: one class per tab:

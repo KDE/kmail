@@ -400,7 +400,6 @@ LdapCompetionTab::LdapCompetionTab(QWidget *parent)
 
 LdapCompetionTab::~LdapCompetionTab()
 {
-
 }
 
 QString LdapCompetionTab::helpAnchor() const
