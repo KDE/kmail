@@ -158,7 +158,6 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
             } else {
                 mActionHash.insert(type, QList<QAction *>() << actionType.action());
             }
-            /*
             if (interface->plugin()->hasPopupMenuSupport()) {
                 type = MessageComposer::PluginActionType::PopupMenu;
                 QList<QAction *> lst = mActionHash.value(type);
@@ -183,7 +182,6 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                     mActionHash.insert(type, QList<QAction *>() << actionType.action());
                 }
             }
-            */
         }
     }
     return mActionHash;

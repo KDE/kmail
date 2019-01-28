@@ -3361,7 +3361,7 @@ QList<KToggleAction *> KMComposerWin::customToolsList() const
 
 QList<QAction *> KMComposerWin::pluginToolsActionListForPopupMenu() const
 {
-    return mPluginEditorManagerInterface->actionsType(MessageComposer::PluginActionType::PopupMenu);
+    return mPluginEditorManagerInterface->actionsType(MessageComposer::PluginActionType::PopupMenu) + mPluginEditorConvertTextManagerInterface->actionsType(MessageComposer::PluginActionType::PopupMenu);
 }
 
 void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
