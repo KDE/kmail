@@ -2480,10 +2480,18 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
 
 void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn, bool willSendItWithoutReediting)
 {
+    const MessageComposer::ComposerViewBase::MissingAttachment forgotAttachment = userForgotAttachment();
+    if ((forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndAddedAttachment)
+        || (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndCancel)) {
+        return;
+    }
+
     //TODO generate new message from plugins.
     MessageComposer::PluginEditorConverterBeforeConvertingData data;
     data.setNewMessage(mContext == TemplateContext::New);
     mPluginEditorConvertTextManagerInterface->setDataBeforeConvertingText(data);
+
+
 
     //TODO converttext if necessary
 
@@ -2542,11 +2550,6 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
             }
         }
 
-        const MessageComposer::ComposerViewBase::MissingAttachment forgotAttachment = userForgotAttachment();
-        if ((forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndAddedAttachment)
-            || (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndCancel)) {
-            return;
-        }
         MessageComposer::PluginEditorCheckBeforeSendParams params;
         params.setSubject(subject());
         params.setHtmlMail(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
