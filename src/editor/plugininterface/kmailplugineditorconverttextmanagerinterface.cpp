@@ -149,25 +149,31 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
         for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
             const MessageComposer::PluginActionType actionType = interface->actionType();
             MessageComposer::PluginActionType::Type type = actionType.type();
+            QAction *currentAction = actionType.action();
+            if (!currentAction) {
+                continue;
+            }
             QList<QAction *> lst = mActionHash.value(type);
             if (!lst.isEmpty()) {
                 QAction *act = new QAction(this);
                 act->setSeparator(true);
-                lst << act << actionType.action();
+                lst << act << currentAction;
                 mActionHash.insert(type, lst);
             } else {
-                mActionHash.insert(type, QList<QAction *>() << actionType.action());
+                mActionHash.insert(type, QList<QAction *>() << currentAction);
             }
             if (interface->plugin()->hasPopupMenuSupport()) {
                 type = MessageComposer::PluginActionType::PopupMenu;
-                QList<QAction *> lst = mActionHash.value(type);
-                if (!lst.isEmpty()) {
-                    QAction *act = new QAction(this);
-                    act->setSeparator(true);
-                    lst << act << actionType.action();
-                    mActionHash.insert(type, lst);
-                } else {
-                    mActionHash.insert(type, QList<QAction *>() << actionType.action());
+                if (currentAction) {
+                    QList<QAction *> lst = mActionHash.value(type);
+                    if (!lst.isEmpty()) {
+                        QAction *act = new QAction(this);
+                        act->setSeparator(true);
+                        lst << act << currentAction;
+                        mActionHash.insert(type, lst);
+                    } else {
+                        mActionHash.insert(type, QList<QAction *>() << currentAction);
+                    }
                 }
             }
             if (interface->plugin()->hasToolBarSupport()) {
@@ -176,10 +182,10 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                 if (!lst.isEmpty()) {
                     QAction *act = new QAction(this);
                     act->setSeparator(true);
-                    lst << act << actionType.action();
+                    lst << act << currentAction;
                     mActionHash.insert(type, lst);
                 } else {
-                    mActionHash.insert(type, QList<QAction *>() << actionType.action());
+                    mActionHash.insert(type, QList<QAction *>() << currentAction);
                 }
             }
         }
