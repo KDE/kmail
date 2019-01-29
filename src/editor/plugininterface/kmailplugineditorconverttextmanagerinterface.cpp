@@ -147,24 +147,37 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
 {
     if (mActionHash.isEmpty()) {
         for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
-            const MessageComposer::PluginActionType actionType = interface->actionType();
-            MessageComposer::PluginActionType::Type type = actionType.type();
-            QAction *currentAction = actionType.action();
-            if (!currentAction) {
-                continue;
-            }
-            QList<QAction *> lst = mActionHash.value(type);
-            if (!lst.isEmpty()) {
-                QAction *act = new QAction(this);
-                act->setSeparator(true);
-                lst << act << currentAction;
-                mActionHash.insert(type, lst);
-            } else {
-                mActionHash.insert(type, QList<QAction *>() << currentAction);
-            }
-            if (interface->plugin()->hasPopupMenuSupport()) {
-                type = MessageComposer::PluginActionType::PopupMenu;
-                if (currentAction) {
+            for (const MessageComposer::PluginActionType &actionType : interface->actionTypes()) {
+                MessageComposer::PluginActionType::Type type = actionType.type();
+                QAction *currentAction = actionType.action();
+                if (!currentAction) {
+                    continue;
+                }
+                QList<QAction *> lst = mActionHash.value(type);
+                if (!lst.isEmpty()) {
+                    QAction *act = new QAction(this);
+                    act->setSeparator(true);
+                    lst << act << currentAction;
+                    mActionHash.insert(type, lst);
+                } else {
+                    mActionHash.insert(type, QList<QAction *>() << currentAction);
+                }
+                if (interface->plugin()->hasPopupMenuSupport()) {
+                    type = MessageComposer::PluginActionType::PopupMenu;
+                    if (currentAction) {
+                        QList<QAction *> lst = mActionHash.value(type);
+                        if (!lst.isEmpty()) {
+                            QAction *act = new QAction(this);
+                            act->setSeparator(true);
+                            lst << act << currentAction;
+                            mActionHash.insert(type, lst);
+                        } else {
+                            mActionHash.insert(type, QList<QAction *>() << currentAction);
+                        }
+                    }
+                }
+                if (interface->plugin()->hasToolBarSupport()) {
+                    type = MessageComposer::PluginActionType::ToolBar;
                     QList<QAction *> lst = mActionHash.value(type);
                     if (!lst.isEmpty()) {
                         QAction *act = new QAction(this);
@@ -174,18 +187,6 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                     } else {
                         mActionHash.insert(type, QList<QAction *>() << currentAction);
                     }
-                }
-            }
-            if (interface->plugin()->hasToolBarSupport()) {
-                type = MessageComposer::PluginActionType::ToolBar;
-                QList<QAction *> lst = mActionHash.value(type);
-                if (!lst.isEmpty()) {
-                    QAction *act = new QAction(this);
-                    act->setSeparator(true);
-                    lst << act << currentAction;
-                    mActionHash.insert(type, lst);
-                } else {
-                    mActionHash.insert(type, QList<QAction *>() << currentAction);
                 }
             }
         }
