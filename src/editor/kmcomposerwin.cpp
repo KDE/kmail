@@ -1365,6 +1365,20 @@ void KMComposerWin::initializePluginActions()
                 hashActions.insert(actionlistname, lst);
             }
         }
+
+        const QList<KToggleAction *> customToolsWidgetActionList = mCustomToolsWidget->actionList();
+        qDebug() << " customToolsWidgetActionList " << customToolsWidgetActionList.count();
+        const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
+        for (KToggleAction * act : customToolsWidgetActionList) {
+            QList<QAction *> lst;
+            lst << act;
+            if (hashActions.contains(actionlistname)) {
+                lst = hashActions.value(actionlistname) + lst;
+                hashActions.remove(actionlistname);
+            }
+            hashActions.insert(actionlistname, lst);
+        }
+
         QHash<QString, QList<QAction *> >::const_iterator i = hashActions.constBegin();
 
         while (i != hashActions.constEnd()) {

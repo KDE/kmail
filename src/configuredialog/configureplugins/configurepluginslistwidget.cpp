@@ -27,9 +27,11 @@
 #include <MessageComposer/PluginEditorConvertTextManager>
 #include <MessageComposer/PluginEditorConvertText>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
+#include <MessageComposer/PluginEditorGrammarManager>
 #include <PimCommon/GenericPluginManager>
 #include <AkonadiCore/ServerManager>
 #include <PimCommon/PluginUtil>
+#include <PimCommon/CustomToolsPlugin>
 #include <KSharedConfig>
 #include <KLocalizedString>
 #include <MessageComposer/PluginEditorManager>
@@ -50,6 +52,11 @@ namespace {
 QString pluginEditorGroupName()
 {
     return QStringLiteral("plugineditorgroupname");
+}
+
+QString pluginEditorGrammarGroupName()
+{
+    return QStringLiteral("plugineditorgrammargroupname");
 }
 
 QString viewerPluginGroupName()
@@ -117,6 +124,9 @@ void ConfigurePluginsListWidget::save()
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
                                                        MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
                                                        mPluginCheckBeforeSendItems);
+    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorGrammarManager::self()->configGroupName(),
+                                                       MessageComposer::PluginEditorGrammarManager::self()->configPrefixSettingKey(),
+                                                       mPluginEditorGrammarItems);
     PimCommon::ConfigurePluginsListWidget::savePlugins(KMailPluginInterface::self()->configGroupName(),
                                                        KMailPluginInterface::self()->configPrefixSettingKey(),
                                                        mPluginGenericItems);
@@ -160,6 +170,7 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     changeState(mAgentPluginsItems);
     changeState(mPluginEditorInitItems);
     changeState(mPluginConvertTextItems);
+    changeState(mPluginEditorGrammarItems);
 }
 
 void ConfigurePluginsListWidget::initialize()
@@ -180,6 +191,12 @@ void ConfigurePluginsListWidget::initialize()
                                                         MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
                                                         mPluginEditorInitItems,
                                                         pluginEditorInitGroupName());
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorGrammarManager::self()->pluginsDataList(),
+                                                        i18n("Grammar Checker Plugins"),
+                                                        MessageComposer::PluginEditorGrammarManager::self()->configGroupName(),
+                                                        MessageComposer::PluginEditorGrammarManager::self()->configPrefixSettingKey(),
+                                                        mPluginEditorGrammarItems,
+                                                        pluginEditorGrammarGroupName());
 
     //Load generic plugins
     //Necessary to initialize pluging when we load it outside kmail
@@ -190,7 +207,6 @@ void ConfigurePluginsListWidget::initialize()
                                                         KMailPluginInterface::self()->configPrefixSettingKey(),
                                                         mPluginGenericItems,
                                                         kmailPluginToolsGroupName());
-
     //Load plugin editor
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(),
                                                         i18n("Editor Plugins"),
@@ -333,6 +349,9 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
             plugin->showConfigureDialog(this);
         } else if (configureGroupName == pluginEditorConvertTextGroupName()) {
             MessageComposer::PluginEditorConvertText *plugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
+        } else if (configureGroupName == pluginEditorGrammarGroupName()) {
+            PimCommon::CustomToolsPlugin *plugin = MessageComposer::PluginEditorGrammarManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
         } else if (configureGroupName == agentAkonadiGroupName()) {
             for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {

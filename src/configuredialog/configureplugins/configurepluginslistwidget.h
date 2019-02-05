@@ -45,6 +45,7 @@ private:
     QList<PluginItem *> mPluginMessageViewerItems;
     QList<PluginItem *> mPluginCheckBeforeSendItems;
     QList<PluginItem *> mPluginEditorInitItems;
+    QList<PluginItem *> mPluginEditorGrammarItems;
     QList<PluginItem *> mPluginGenericItems;
     QList<PluginItem *> mPluginWebEngineItems;
     QList<PluginItem *> mPluginHeaderStyleItems;

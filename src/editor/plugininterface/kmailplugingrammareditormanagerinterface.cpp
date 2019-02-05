@@ -70,7 +70,7 @@ void KMailPluginGrammarEditorManagerInterface::setCustomToolsWidget(PimCommon::C
 }
 
 void KMailPluginGrammarEditorManagerInterface::initializePlugins()
-{
+{    
     if (mWasInitialized) {
         qCDebug(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : Plugin was already initialized. This is a bug";
         return;
