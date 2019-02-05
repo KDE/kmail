@@ -163,6 +163,7 @@ set(kmailprivate_editor_plugininterface_LIB_SRCS
     editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.cpp
     editor/plugininterface/kmailplugineditorinitmanagerinterface.cpp
     editor/plugininterface/kmailplugineditorconverttextmanagerinterface.cpp
+    editor/plugininterface/kmailplugingrammareditormanagerinterface.cpp
     )
 
 set(kmailprivate_checkindexing_LIB_SRCS

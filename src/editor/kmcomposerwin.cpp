@@ -32,6 +32,7 @@
 #include "editor/plugininterface/kmailplugineditorinitmanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditormanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorconverttextmanagerinterface.h"
+#include "editor/plugininterface/kmailplugingrammareditormanagerinterface.h"
 #include "editor/potentialphishingemail/potentialphishingemailjob.h"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "editor/warningwidgets/incorrectidentityfolderwarning.h"
@@ -141,6 +142,7 @@
 #include <PimCommon/CustomToolsWidgetng>
 #include <PimCommon/KActionMenuChangeCase>
 #include <PimCommon/LineEditWithAutoCorrection>
+#include <PimCommon/CustomToolsPluginManager>
 
 #include <SendLater/SendLaterDialog>
 #include <SendLater/SendLaterInfo>
@@ -246,6 +248,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPluginEditorCheckBeforeSendManagerInterface = new KMailPluginEditorCheckBeforeSendManagerInterface(this);
     mPluginEditorInitManagerInterface = new KMailPluginEditorInitManagerInterface(this);
     mPluginEditorConvertTextManagerInterface = new KMailPluginEditorConvertTextManagerInterface(this);
+
+    mPluginEditorGrammarManagerInterface = new KMailPluginGrammarEditorManagerInterface(this);
 
     connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposerWin::disableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposerWin::enableHtml);
@@ -399,7 +403,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     setWindowTitle(i18n("Composer"));
     setMinimumSize(200, 200);
 
-    mCustomToolsWidget = new PimCommon::CustomToolsWidgetNg(actionCollection(), this);
+    mCustomToolsWidget = new PimCommon::CustomToolsWidgetNg(this);
+    mCustomToolsWidget->initializeView(actionCollection(), PimCommon::CustomToolsPluginManager::self()->pluginsList());
     mSplitter->addWidget(mCustomToolsWidget);
     connect(mCustomToolsWidget, &PimCommon::CustomToolsWidgetNg::insertText, this, &KMComposerWin::slotInsertShortUrl);
 
@@ -435,6 +440,12 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPluginEditorConvertTextManagerInterface->setParentWidget(this);
     mPluginEditorConvertTextManagerInterface->setActionCollection(actionCollection());
     mPluginEditorConvertTextManagerInterface->setRichTextEditor(composerEditorNg);
+
+    mPluginEditorGrammarManagerInterface->setParentWidget(this);
+    mPluginEditorGrammarManagerInterface->setActionCollection(actionCollection());
+    mPluginEditorGrammarManagerInterface->setRichTextEditor(composerEditorNg);
+    mPluginEditorGrammarManagerInterface->setCustomToolsWidget(mCustomToolsWidget);
+
 
     setupStatusBar(attachmentView->widget());
     setupActions();
@@ -1290,6 +1301,7 @@ void KMComposerWin::setupActions()
     mPluginEditorCheckBeforeSendManagerInterface->initializePlugins();
     mPluginEditorInitManagerInterface->initializePlugins();
     mPluginEditorConvertTextManagerInterface->initializePlugins();
+    mPluginEditorGrammarManagerInterface->initializePlugins();
 
     mHideMenuBarAction = KStandardAction::showMenubar(this, &KMComposerWin::slotToggleMenubar, actionCollection());
     mHideMenuBarAction->setChecked(KMailSettings::self()->composerShowMenuBar());
