@@ -88,17 +88,12 @@ void KMailPluginGrammarEditorManagerInterface::initializePlugins()
     }
 
     const QVector<PimCommon::CustomToolsPlugin *> lstPlugin = MessageComposer::PluginEditorGrammarManager::self()->pluginsList();
-    qDebug() << "lstPlugin " << lstPlugin.count();
     for (PimCommon::CustomToolsPlugin *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
             MessageComposer::PluginEditorGrammarCustomToolsViewInterface *interface = static_cast<MessageComposer::PluginEditorGrammarCustomToolsViewInterface*>(plugin->createView(mActionCollection, mCustomToolsWidget));
             mCustomToolsWidget->addCustomToolViewInterface(interface);
             interface->setParentWidget(mParentWidget);
             interface->setRichTextEditor(mRichTextEditor);
-//            interface->reloadConfig();
-//            if (!interface->exec()) {
-//                qCWarning(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface::initializePlugins: error during execution of plugin:" << interface;
-//            }
         }
     }
     mWasInitialized = true;
