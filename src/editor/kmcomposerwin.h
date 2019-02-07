@@ -120,13 +120,11 @@ class KMComposerWin : public KMail::Composer
     friend class ::KMComposerEditor;
 
 private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposerWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0,
-                           const QString &textSelection = QString(), const QString &customTemplate = QString());
+    explicit KMComposerWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0, const QString &textSelection = QString(), const QString &customTemplate = QString());
     ~KMComposerWin() override;
 
 public:
-    static Composer *create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0,
-                            const QString &textSelection = QString(), const QString &customTemplate = QString());
+    static Composer *create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0, const QString &textSelection = QString(), const QString &customTemplate = QString());
 
     QString dbusObjectPath() const override;
     QString smartQuote(const QString &msg);
@@ -158,8 +156,7 @@ public: // kmkernel, kmcommands, callback
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true, bool allowDecryption = false,
-                    bool isModified = false) override;
+    void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true, bool allowDecryption = false, bool isModified = false) override;
 
     void setCurrentTransport(int transportId) override;
 
@@ -499,8 +496,7 @@ private:
     /**
      * Send the message.
      */
-    void doSend(MessageComposer::MessageSender::SendMethod method = MessageComposer::MessageSender::SendDefault,
-                MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone, bool willSendItWithoutReediting = false);
+    void doSend(MessageComposer::MessageSender::SendMethod method = MessageComposer::MessageSender::SendDefault, MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone, bool willSendItWithoutReediting = false);
 
     void doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn);
 

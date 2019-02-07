@@ -320,8 +320,7 @@ class KMReplyCommand : public KMCommand
 {
     Q_OBJECT
 public:
-    KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy,
-                   const QString &selection = QString(), bool noquote = false, const QString &templateName = QString());
+    KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy, const QString &selection = QString(), bool noquote = false, const QString &templateName = QString());
 private:
     Result execute() override;
 

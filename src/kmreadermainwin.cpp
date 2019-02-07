@@ -543,8 +543,7 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound, result);
 }
 
-void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
-                                       const WebEngineViewer::WebHitTestResult &result)
+void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result)
 {
     QMenu *menu = nullptr;
 

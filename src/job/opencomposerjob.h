@@ -30,8 +30,7 @@ struct OpenComposerSettings
     {
     }
 
-    OpenComposerSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile,
-                         const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity)
+    OpenComposerSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile, const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity)
         : mAttachmentPaths(attachmentPaths)
         , mCustomHeaders(customHeaders)
         , mTo(to)

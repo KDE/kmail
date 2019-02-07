@@ -663,8 +663,7 @@ void SecurityPage::SMimeTab::save()
     mConfig->sync(true);
 }
 
-QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &componentName, const QString &groupName, const QString &entryName, int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
-                                                                 bool isList)
+QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &componentName, const QString &groupName, const QString &entryName, int /*Kleo::CryptoConfigEntry::ArgType*/ argType, bool isList)
 {
     QGpgME::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
     if (!entry) {

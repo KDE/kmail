@@ -58,8 +58,7 @@ public:
     void showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection = Akonadi::Collection());
 
     void showMessage(const QString &encoding, const KMime::Message::Ptr &message);
-    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
-                          const WebEngineViewer::WebHitTestResult &result);
+    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
 public Q_SLOTS:
     void slotForwardInlineMsg();
     void slotForwardAttachedMessage();

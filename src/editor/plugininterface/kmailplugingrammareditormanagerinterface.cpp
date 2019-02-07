@@ -70,7 +70,7 @@ void KMailPluginGrammarEditorManagerInterface::setCustomToolsWidget(PimCommon::C
 }
 
 void KMailPluginGrammarEditorManagerInterface::initializePlugins()
-{    
+{
     if (mWasInitialized) {
         qCDebug(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : Plugin was already initialized. This is a bug";
         return;
@@ -90,7 +90,7 @@ void KMailPluginGrammarEditorManagerInterface::initializePlugins()
     const QVector<PimCommon::CustomToolsPlugin *> lstPlugin = MessageComposer::PluginEditorGrammarManager::self()->pluginsList();
     for (PimCommon::CustomToolsPlugin *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
-            MessageComposer::PluginEditorGrammarCustomToolsViewInterface *interface = static_cast<MessageComposer::PluginEditorGrammarCustomToolsViewInterface*>(plugin->createView(mActionCollection, mCustomToolsWidget));
+            MessageComposer::PluginEditorGrammarCustomToolsViewInterface *interface = static_cast<MessageComposer::PluginEditorGrammarCustomToolsViewInterface *>(plugin->createView(mActionCollection, mCustomToolsWidget));
             mCustomToolsWidget->addCustomToolViewInterface(interface);
             interface->setParentWidget(mParentWidget);
             interface->setRichTextEditor(mRichTextEditor);

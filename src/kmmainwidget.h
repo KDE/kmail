@@ -342,8 +342,7 @@ private:
 
     void openFilterDialog(const QByteArray &field, const QString &value);
 
-    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound,
-                          const WebEngineViewer::WebHitTestResult &result);
+    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
 
     void setZoomChanged(qreal zoomFactor);
 

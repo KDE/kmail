@@ -64,8 +64,7 @@ Akonadi::Item::Id putRepliesInSameFolder(const Akonadi::Item &item);
      * Handles a clicked URL, but only in case the viewer didn't handle it.
      * Currently only support mailto.
      */
-bool handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder = QSharedPointer<MailCommon::FolderSettings>(),
-                      const Akonadi::Collection &collection = Akonadi::Collection());
+bool handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder = QSharedPointer<MailCommon::FolderSettings>(), const Akonadi::Collection &collection = Akonadi::Collection());
 
 bool mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection);
 

@@ -71,8 +71,7 @@ public: // kmkernel, kmcommands, callback
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    virtual void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true, bool allowDecryption = false,
-                            bool isModified = false) = 0;
+    virtual void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true, bool allowDecryption = false, bool isModified = false) = 0;
     virtual void setCurrentTransport(int transportId) = 0;
 
     virtual void setFcc(const QString &idString) = 0;
@@ -131,8 +130,7 @@ public: // kmcommand
 };
 
 KMAIL_EXPORT Composer *makeComposer(
-    const KMime::Message::Ptr &msg = KMime::Message::Ptr(), bool lastSignState = false, bool lastEncryptState = false, Composer::TemplateContext context = Composer::NoTemplate, uint identity = 0,
-    const QString &textSelection = QString(), const QString &customTemplate = QString());
+    const KMime::Message::Ptr &msg = KMime::Message::Ptr(), bool lastSignState = false, bool lastEncryptState = false, Composer::TemplateContext context = Composer::NoTemplate, uint identity = 0, const QString &textSelection = QString(), const QString &customTemplate = QString());
 }
 
 #endif // KMAIL_COMPOSER_H

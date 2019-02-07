@@ -222,16 +222,14 @@ KMail::Composer *KMail::makeComposer(const KMime::Message::Ptr &msg, bool lastSi
     return KMComposerWin::create(msg, lastSignState, lastEncryptState, context, identity, textSelection, customTemplate);
 }
 
-KMail::Composer *KMComposerWin::create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint identity, const QString &textSelection,
-                                       const QString &customTemplate)
+KMail::Composer *KMComposerWin::create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint identity, const QString &textSelection, const QString &customTemplate)
 {
     return new KMComposerWin(msg, lastSignState, lastEncryptState, context, identity, textSelection, customTemplate);
 }
 
 int KMComposerWin::s_composerNumber = 0;
 
-KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint id, const QString &textSelection,
-                             const QString &customTemplate)
+KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState, bool lastEncryptState, Composer::TemplateContext context, uint id, const QString &textSelection, const QString &customTemplate)
     : KMail::Composer(QStringLiteral("kmail-composer#"))
     , mTextSelection(textSelection)
     , mCustomTemplate(customTemplate)
@@ -445,7 +443,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPluginEditorGrammarManagerInterface->setActionCollection(actionCollection());
     mPluginEditorGrammarManagerInterface->setRichTextEditor(composerEditorNg);
     mPluginEditorGrammarManagerInterface->setCustomToolsWidget(mCustomToolsWidget);
-
 
     setupStatusBar(attachmentView->widget());
     setupActions();
@@ -1369,7 +1366,7 @@ void KMComposerWin::initializePluginActions()
         const QList<KToggleAction *> customToolsWidgetActionList = mCustomToolsWidget->actionList();
         qDebug() << " customToolsWidgetActionList " << customToolsWidgetActionList.count();
         const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
-        for (KToggleAction * act : customToolsWidgetActionList) {
+        for (KToggleAction *act : customToolsWidgetActionList) {
             QList<QAction *> lst;
             lst << act;
             if (hashActions.contains(actionlistname)) {
@@ -2516,8 +2513,6 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
     MessageComposer::PluginEditorConverterBeforeConvertingData data;
     data.setNewMessage(mContext == TemplateContext::New);
     mPluginEditorConvertTextManagerInterface->setDataBeforeConvertingText(data);
-
-
 
     //TODO converttext if necessary
 

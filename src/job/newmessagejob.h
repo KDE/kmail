@@ -29,8 +29,7 @@ struct NewMessageJobSettings
     {
     }
 
-    NewMessageJobSettings(const QString &to, const QString &cc, const QString &bcc, bool hidden, const QString &attachURL, const QSharedPointer<MailCommon::FolderSettings> &folder, uint identity,
-                          const Akonadi::Collection &currentCollection)
+    NewMessageJobSettings(const QString &to, const QString &cc, const QString &bcc, bool hidden, const QString &attachURL, const QSharedPointer<MailCommon::FolderSettings> &folder, uint identity, const Akonadi::Collection &currentCollection)
         : mTo(to)
         , mCc(cc)
         , mBcc(bcc)

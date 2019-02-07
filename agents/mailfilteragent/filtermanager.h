@@ -96,8 +96,7 @@ public:
      */
     bool process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
 
-    bool process(const QList<MailCommon::MailFilter *> &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false,
-                 const QString &accountId = QString());
+    bool process(const QList<MailCommon::MailFilter *> &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
 
     /**
      * For ad-hoc filters.
