@@ -18,6 +18,7 @@
   <developer_name xml:lang="nl">De KDE gemeenschap</developer_name>
   <developer_name xml:lang="pl">Społeczność KDE</developer_name>
   <developer_name xml:lang="pt">A Comunidade do KDE</developer_name>
+  <developer_name xml:lang="pt-BR">A comunidade KDE</developer_name>
   <developer_name xml:lang="sv">KDE-gemenskapen</developer_name>
   <developer_name xml:lang="uk">Спільнота KDE</developer_name>
   <developer_name xml:lang="x-test">xxThe KDE Communityxx</developer_name>
@@ -76,6 +77,7 @@
   <summary xml:lang="nl">Een e-mailtoepassing met veel mogelijkheden</summary>
   <summary xml:lang="pl">Zaawansowana aplikacja pocztowa</summary>
   <summary xml:lang="pt">Uma aplicação de e-mail rica em funcionalidades</summary>
+  <summary xml:lang="pt-BR">Um aplicativo de e-mail rico em recursos</summary>
   <summary xml:lang="sv">Ett funktionsrikt e-postprogram</summary>
   <summary xml:lang="uk">Багата на можливості програма для роботи з електронною пошти</summary>
   <summary xml:lang="x-test">xxA feature-rich email applicationxx</summary>
