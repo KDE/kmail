@@ -1364,7 +1364,6 @@ void KMComposerWin::initializePluginActions()
         }
 
         const QList<KToggleAction *> customToolsWidgetActionList = mCustomToolsWidget->actionList();
-        qDebug() << " customToolsWidgetActionList " << customToolsWidgetActionList.count();
         const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
         for (KToggleAction *act : customToolsWidgetActionList) {
             QList<QAction *> lst;
