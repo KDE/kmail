@@ -81,6 +81,7 @@
   <summary xml:lang="sv">Ett funktionsrikt e-postprogram</summary>
   <summary xml:lang="uk">Багата на можливості програма для роботи з електронною пошти</summary>
   <summary xml:lang="x-test">xxA feature-rich email applicationxx</summary>
+  <summary xml:lang="zh-CN">功能丰富的电子邮件应用</summary>
   <description>
     <p>
       KMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximize your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.
