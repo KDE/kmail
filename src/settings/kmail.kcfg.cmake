@@ -84,6 +84,10 @@
         <label>Enable system tray icon</label>
         <default>false</default>
       </entry>
+      <entry name="StartInTray" type="Bool">
+        <label>Start minimized to tray</label>
+        <default>false</default>
+      </entry>
       <entry name="ShowUnreadInTaskbar" type="Bool">
       <label>Show Unread Email in TaskBar</label>
         <default>true</default>

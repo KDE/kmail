@@ -172,6 +172,7 @@ private: // data
     MessageViewer::ConfigureWidget *mViewerSettings = nullptr;
     Gravatar::GravatarConfigWidget *mGravatarConfigWidget = nullptr;
     QCheckBox *mSystemTrayCheck = nullptr;
+    QCheckBox *mStartInTrayCheck = nullptr;
     QCheckBox *mShowNumberInTaskBar = nullptr;
 };
 

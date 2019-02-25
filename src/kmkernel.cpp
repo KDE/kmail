@@ -274,6 +274,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     QUrl messageFile;
     QList<QUrl> attachURLs;
     QString identity;
+    bool startInTray = false;
     bool mailto = false;
     bool checkMail = false;
     bool viewOnly = false;
@@ -371,6 +372,11 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         checkMail = true;
     }
 
+    if(parser.isSet(QStringLiteral("startintray"))) {
+        KMailSettings::self()->setSystemTrayEnabled(true);
+        startInTray = true;
+    }
+
     if (parser.isSet(QStringLiteral("identity"))) {
         identity = parser.value(QStringLiteral("identity"));
     }
@@ -456,7 +462,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     if (viewOnly) {
         viewMessage(messageFile);
     } else {
-        action(mailto, checkMail, to, cc, bcc, subj, body, messageFile,
+        action(mailto, checkMail, startInTray, to, cc, bcc, subj, body, messageFile,
                attachURLs, customHeaders, replyTo, inReplyTo, identity);
     }
     return true;
@@ -496,7 +502,7 @@ void KMKernel::checkMail()  //might create a new reader but won't show!!
 
 void KMKernel::openReader()
 {
-    openReader(false);
+    openReader(false, false);
 }
 
 QStringList KMKernel::accounts() const
@@ -526,7 +532,7 @@ void KMKernel::checkAccount(const QString &account)   //might create a new reade
     }
 }
 
-void KMKernel::openReader(bool onlyCheck)
+void KMKernel::openReader(bool onlyCheck, bool startInTray)
 {
     KMainWindow *ktmw = nullptr;
 
@@ -546,7 +552,8 @@ void KMKernel::openReader(bool onlyCheck)
         }
     } else {
         KMMainWin *win = new KMMainWin;
-        win->show();
+        if(!startInTray && !KMailSettings::self()->startInTray())
+            win->show();
         activate = false; // new window: no explicit activation (#73591)
     }
 }
@@ -1143,14 +1150,14 @@ void KMKernel::dumpDeadLetters()
     }
 }
 
-void KMKernel::action(bool mailto, bool check, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attachURLs, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity)
+void KMKernel::action(bool mailto, bool check, bool startInTray, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attachURLs, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity)
 {
     if (mailto) {
         openComposer(to, cc, bcc, subj, body, 0,
                      messageFile.toLocalFile(), QUrl::toStringList(attachURLs),
                      customHeaders, replyTo, inReplyTo, identity);
     } else {
-        openReader(check);
+        openReader(check, startInTray);
     }
 
     if (check) {

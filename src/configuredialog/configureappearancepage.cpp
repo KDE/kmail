@@ -876,8 +876,22 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     // "Enable system tray applet" check box
     mSystemTrayCheck = new QCheckBox(i18n("Enable system tray icon"), this);
     systrayBoxlayout->addWidget(mSystemTrayCheck);
-    connect(mSystemTrayCheck, &QCheckBox::stateChanged,
-            this, &ConfigModuleTab::slotEmitChanged);
+
+    // "Enable start in system tray" check box
+    mStartInTrayCheck = new QCheckBox(i18n("Start minimized to tray"));
+    systrayBoxlayout->addWidget(mStartInTrayCheck);
+
+    // Dependencies between the two checkboxes
+    connect(mStartInTrayCheck, &QCheckBox::stateChanged, this, [this](int state) {
+      if (state == Qt::Checked)
+          mSystemTrayCheck->setCheckState(Qt::Checked);
+      slotEmitChanged();
+    });
+    connect(mSystemTrayCheck, &QCheckBox::stateChanged, this, [this](int state) {
+      if(state == Qt::Unchecked)
+          mStartInTrayCheck->setCheckState(Qt::Unchecked);
+      slotEmitChanged();
+    });
 
     // "Enable system tray applet" check box
     mShowNumberInTaskBar = new QCheckBox(i18n("Show unread email in Taskbar"), this);
@@ -896,6 +910,7 @@ void AppearancePage::ReaderTab::doResetToDefaultsOther()
 void AppearancePage::ReaderTab::doLoadOther()
 {
     loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
+    loadWidget(mStartInTrayCheck, KMailSettings::self()->startInTrayItem());
     loadWidget(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     loadWidget(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->readConfig();
@@ -905,6 +920,7 @@ void AppearancePage::ReaderTab::doLoadOther()
 void AppearancePage::ReaderTab::save()
 {
     saveCheckBox(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
+    saveCheckBox(mStartInTrayCheck, KMailSettings::self()->startInTrayItem());
     saveCheckBox(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     KMailSettings::self()->save();
     saveCheckBox(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());

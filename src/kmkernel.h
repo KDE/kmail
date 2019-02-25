@@ -317,7 +317,7 @@ public:
     bool doSessionManagement();
     bool firstInstance() const;
     void setFirstInstance(bool value);
-    void action(bool mailto, bool check, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attach, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity);
+    void action(bool mailto, bool check, bool startInTray, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attach, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity);
 
     //sets online status for akonadi accounts. true for online, false for offline
     void setAccountStatus(bool);
@@ -478,7 +478,7 @@ private:
 
     void verifyAccount();
     void resourceGoOnLine();
-    void openReader(bool onlyCheck);
+    void openReader(bool onlyCheck, bool startInTray);
     QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
     void saveConfig();
 

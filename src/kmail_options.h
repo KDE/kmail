@@ -45,6 +45,9 @@ static void kmail_options(QCommandLineParser *parser)
         QStringLiteral("check"),
         i18n("Only check for new mail"))
             << QCommandLineOption(
+        QStringLiteral("startintray"),
+        i18n("Start minimized to tray"))
+            << QCommandLineOption(
         QStringLiteral("composer"),
         i18n("Only open composer window"))
             << QCommandLineOption(
