@@ -372,7 +372,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         checkMail = true;
     }
 
-    if(parser.isSet(QStringLiteral("startintray"))) {
+    if (parser.isSet(QStringLiteral("startintray"))) {
         KMailSettings::self()->setSystemTrayEnabled(true);
         startInTray = true;
     }
@@ -552,8 +552,9 @@ void KMKernel::openReader(bool onlyCheck, bool startInTray)
         }
     } else {
         KMMainWin *win = new KMMainWin;
-        if(!startInTray && !KMailSettings::self()->startInTray())
+        if (!startInTray && !KMailSettings::self()->startInTray()) {
             win->show();
+        }
         activate = false; // new window: no explicit activation (#73591)
     }
 }

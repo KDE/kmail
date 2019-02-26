@@ -883,14 +883,16 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
 
     // Dependencies between the two checkboxes
     connect(mStartInTrayCheck, &QCheckBox::stateChanged, this, [this](int state) {
-      if (state == Qt::Checked)
-          mSystemTrayCheck->setCheckState(Qt::Checked);
-      slotEmitChanged();
+        if (state == Qt::Checked) {
+            mSystemTrayCheck->setCheckState(Qt::Checked);
+        }
+        slotEmitChanged();
     });
     connect(mSystemTrayCheck, &QCheckBox::stateChanged, this, [this](int state) {
-      if(state == Qt::Unchecked)
-          mStartInTrayCheck->setCheckState(Qt::Unchecked);
-      slotEmitChanged();
+        if (state == Qt::Unchecked) {
+            mStartInTrayCheck->setCheckState(Qt::Unchecked);
+        }
+        slotEmitChanged();
     });
 
     // "Enable system tray applet" check box
