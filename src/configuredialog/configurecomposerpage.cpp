@@ -1215,7 +1215,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
     vlay->setSpacing(0);
-    vlay->setMargin(0);
+    vlay->setContentsMargins(0, 0, 0, 0);
     autocorrectionWidget = new PimCommon::AutoCorrectionWidget(this);
     if (KMKernel::self()) {
         autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
@@ -1249,7 +1249,7 @@ ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
     vlay->setSpacing(0);
-    vlay->setMargin(0);
+    vlay->setContentsMargins(0, 0, 0, 0);
     autoResizeWidget = new MessageComposer::ImageScalingWidget(this);
     vlay->addWidget(autoResizeWidget);
     connect(autoResizeWidget, &MessageComposer::ImageScalingWidget::changed, this, &ConfigModuleTab::slotEmitChanged);

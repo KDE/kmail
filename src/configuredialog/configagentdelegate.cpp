@@ -218,7 +218,7 @@ void ConfigAgentDelegate::drawFocus(QPainter *painter, const QStyleOptionViewIte
         o.state |= QStyle::State_KeyboardFocusChange;
         QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
         o.backgroundColor = option.palette.color(cg, (option.state & QStyle::State_Selected)
-                                                 ? QPalette::Highlight : QPalette::Background);
+                                                 ? QPalette::Highlight : QPalette::Window);
         QApplication::style()->drawPrimitive(QStyle::PE_FrameFocusRect, &o, painter);
     }
 }

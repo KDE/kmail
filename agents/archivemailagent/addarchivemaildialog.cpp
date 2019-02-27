@@ -52,7 +52,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     QVBoxLayout *topLayout = new QVBoxLayout(this);
 
     QGridLayout *mainLayout = new QGridLayout;
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
     int row = 0;
 

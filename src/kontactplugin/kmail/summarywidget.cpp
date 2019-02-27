@@ -59,7 +59,7 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setSpacing(3);
-    mainLayout->setMargin(3);
+    mainLayout->setContentsMargins(3, 3, 3, 3);
 
     QWidget *header = createHeader(this, QStringLiteral("view-pim-mail"), i18n("New Messages"));
     mainLayout->addWidget(header);

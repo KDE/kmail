@@ -30,7 +30,7 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     : QWidget(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     QLabel *lab = new QLabel(i18n("Select email to put in whitelist:"), this);
     lab->setObjectName(QStringLiteral("label"));
     mainLayout->addWidget(lab);

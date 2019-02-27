@@ -123,7 +123,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     QWidget *page = new QWidget(widgetStack);
     widgetStack->insertWidget(pageno, page);   // force sequential numbers (play safe)
     QVBoxLayout *page_vlay = new QVBoxLayout(page);
-    page_vlay->setMargin(0);
+    page_vlay->setContentsMargins(0, 0, 0, 0);
     hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
     page_vlay->addLayout(hlay);
     QPushButton *mFromFileBtn = new QPushButton(i18n("Select File..."), page);
@@ -156,7 +156,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     page = new QWidget(widgetStack);
     widgetStack->insertWidget(pageno, page);
     page_vlay = new QVBoxLayout(page);
-    page_vlay->setMargin(0);
+    page_vlay->setContentsMargins(0, 0, 0, 0);
     mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(page);
     mTextEdit->editor()->setSpellCheckingSupport(false);
     page_vlay->addWidget(mTextEdit);

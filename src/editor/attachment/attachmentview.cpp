@@ -55,7 +55,7 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
 {
     mWidget = new QWidget();
     QHBoxLayout *lay = new QHBoxLayout(mWidget);
-    lay->setMargin(0);
+    lay->setContentsMargins(0, 0, 0, 0);
     mToolButton = new QToolButton;
     connect(mToolButton, &QAbstractButton::toggled, this, &AttachmentView::slotShowHideAttchementList);
     mToolButton->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
@@ -63,7 +63,7 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     mToolButton->setCheckable(true);
     lay->addWidget(mToolButton);
     mInfoAttachment = new QLabel;
-    mInfoAttachment->setMargin(0);
+    mInfoAttachment->setContentsMargins(0, 0, 0, 0);
     mInfoAttachment->setTextFormat(Qt::PlainText);
     lay->addWidget(mInfoAttachment);
 

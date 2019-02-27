@@ -61,7 +61,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
     QVBoxLayout *vlay = new QVBoxLayout(page);
-    vlay->setMargin(0);
+    vlay->setContentsMargins(0, 0, 0, 0);
 
     // row 0: line edit with label
     QHBoxLayout *hlay = new QHBoxLayout();  // inherits spacing

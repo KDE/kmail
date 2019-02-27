@@ -179,7 +179,7 @@ void ArchiveMailWidget::createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailIte
         item->setText(ArchiveMailWidget::LastArchiveDate, QLocale().toString(info->lastDateSaved(), QLocale::ShortFormat));
         updateDiffDate(item, info);
     } else {
-        item->setBackgroundColor(ArchiveMailWidget::NextArchive, Qt::green);
+        item->setBackground(ArchiveMailWidget::NextArchive, Qt::green);
     }
     item->setInfo(info);
 }
@@ -191,9 +191,9 @@ void ArchiveMailWidget::updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *i
     item->setText(ArchiveMailWidget::NextArchive, i18np("Tomorrow", "%1 days", diff));
     if (diff < 0) {
         if (info->isEnabled()) {
-            item->setBackgroundColor(ArchiveMailWidget::NextArchive, Qt::red);
+            item->setBackground(ArchiveMailWidget::NextArchive, Qt::red);
         } else {
-            item->setBackgroundColor(ArchiveMailWidget::NextArchive, Qt::lightGray);
+            item->setBackground(ArchiveMailWidget::NextArchive, Qt::lightGray);
         }
     } else {
         item->setToolTip(ArchiveMailWidget::NextArchive, i18n("Archive will be done %1", QLocale().toString(diffDate, QLocale::ShortFormat)));

@@ -390,7 +390,7 @@ LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     mLdapConfigureWidget = new KLDAP::LdapConfigureWidget(this);
     layout->addWidget(mLdapConfigureWidget);

@@ -363,7 +363,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
         mObjHandleTab[ i ] = nullptr;
     }
 
-    mPainter.resetMatrix();
+    mPainter.resetTransform();
     mWinding = false;
     mAbsoluteCoord = absolute;
 
@@ -571,7 +571,8 @@ void QWinMetaFile::roundRect(long, short *parm)
         yRnd = (parm[ 0 ] * 100) / (parm[ 2 ] - parm[ 4 ]);
     }
 
-    mPainter.drawRoundRect(parm[ 5 ], parm[ 4 ], parm[ 3 ] - parm[ 5 ], parm[ 2 ] - parm[ 4 ], xRnd, yRnd);
+    mPainter.drawRoundedRect(parm[ 5 ], parm[ 4 ], parm[ 3 ] - parm[ 5 ], parm[ 2 ] - parm[ 4 ],
+                             xRnd, yRnd, Qt::RelativeSize);
 }
 
 //-----------------------------------------------------------------------------
@@ -803,12 +804,12 @@ void QWinMetaFile::dibBitBlt(long num, short *parm)
             // wmf file allow negative width or height
             mPainter.save();
             if (parm[ 5 ] < 0) {    // width < 0 => horizontal flip
-                QMatrix m(-1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F);
-                mPainter.setMatrix(m, true);
+                QTransform m(-1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F);
+                mPainter.setWorldTransform(m, true);
             }
             if (parm[ 4 ] < 0) {    // height < 0 => vertical flip
-                QMatrix m(1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F);
-                mPainter.setMatrix(m, true);
+                QTransform m(1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F);
+                mPainter.setWorldTransform(m, true);
             }
             mPainter.drawImage(parm[ 7 ], parm[ 6 ], bmpSrc, parm[ 3 ], parm[ 2 ], parm[ 5 ], parm[ 4 ]);
             mPainter.restore();
@@ -831,12 +832,12 @@ void QWinMetaFile::dibStretchBlt(long num, short *parm)
         // wmf file allow negative width or height
         mPainter.save();
         if (parm[ 7 ] < 0) {    // width < 0 => horizontal flip
-            QMatrix m(-1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F);
-            mPainter.setMatrix(m, true);
+            QTransform m(-1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F);
+            mPainter.setWorldTransform(m, true);
         }
         if (parm[ 6 ] < 0) {    // height < 0 => vertical flip
-            QMatrix m(1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F);
-            mPainter.setMatrix(m, true);
+            QTransform m(1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F);
+            mPainter.setWorldTransform(m, true);
         }
         bmpSrc = bmpSrc.copy(parm[ 5 ], parm[ 4 ], parm[ 3 ], parm[ 2 ]);
         // TODO: scale the bitmap ( QImage::scale(parm[ 7 ], parm[ 6 ]) is actually too slow )
@@ -859,12 +860,12 @@ void QWinMetaFile::stretchDib(long num, short *parm)
         // wmf file allow negative width or height
         mPainter.save();
         if (parm[ 8 ] < 0) {    // width < 0 => horizontal flip
-            QMatrix m(-1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F);
-            mPainter.setMatrix(m, true);
+            QTransform m(-1.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F);
+            mPainter.setWorldTransform(m, true);
         }
         if (parm[ 7 ] < 0) {    // height < 0 => vertical flip
-            QMatrix m(1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F);
-            mPainter.setMatrix(m, true);
+            QTransform m(1.0F, 0.0F, 0.0F, -1.0F, 0.0F, 0.0F);
+            mPainter.setWorldTransform(m, true);
         }
         bmpSrc = bmpSrc.copy(parm[ 6 ], parm[ 5 ], parm[ 4 ], parm[ 3 ]);
         // TODO: scale the bitmap ( QImage::scale(parm[ 8 ], parm[ 7 ]) is actually too slow )

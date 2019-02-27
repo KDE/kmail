@@ -49,6 +49,7 @@ public:
     void setUnityServiceManager(KMail::UnityServiceManager *unityServiceManager);
     void initialize(int count);
     void updateToolTip(int count);
+
 private:
     void slotActivated();
     void slotContextMenuAboutToShow();

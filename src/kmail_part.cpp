@@ -92,7 +92,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mainWidget->setObjectName(QStringLiteral("partmainwidget"));
     QVBoxLayout *topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);
-    topLayout->setMargin(0);
+    topLayout->setContentsMargins(0, 0, 0, 0);
     mainWidget->setFocusPolicy(Qt::ClickFocus);
     KParts::StatusBarExtension *statusBar = new KParts::StatusBarExtension(this);
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);

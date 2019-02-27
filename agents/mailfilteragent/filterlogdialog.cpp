@@ -82,7 +82,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
 
     QVBoxLayout *pageVBoxLayout = new QVBoxLayout;
     page->setLayout(pageVBoxLayout);
-    pageVBoxLayout->setMargin(0);
+    pageVBoxLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addWidget(page);
 
     mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(new FilterLogTextEdit(this), page);
@@ -167,7 +167,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     QWidget *hbox = new QWidget(page);
     QHBoxLayout *hboxHBoxLayout = new QHBoxLayout;
     hbox->setLayout(hboxHBoxLayout);
-    hboxHBoxLayout->setMargin(0);
+    hboxHBoxLayout->setContentsMargins(0, 0, 0, 0);
     pageVBoxLayout->addWidget(hbox);
     QLabel *logSizeLab = new QLabel(i18n("Log size limit:"), hbox);
     hboxHBoxLayout->addWidget(logSizeLab);
