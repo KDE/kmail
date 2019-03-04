@@ -23,7 +23,7 @@
 #include "ui_accountspagereceivingtab.h"
 
 class QCheckBox;
-class KComboBox;
+class QComboBox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
 namespace KLDAP {
 class LdapConfigureWidget;
@@ -45,8 +45,8 @@ private:
 private:
     QCheckBox *mConfirmSendCheck = nullptr;
     QCheckBox *mCheckSpellingBeforeSending = nullptr;
-    KComboBox *mSendOnCheckCombo = nullptr;
-    KComboBox *mSendMethodCombo = nullptr;
+    QComboBox *mSendOnCheckCombo = nullptr;
+    QComboBox *mSendMethodCombo = nullptr;
 };
 
 // subclasses: one class per tab:

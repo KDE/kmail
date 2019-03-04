@@ -25,7 +25,7 @@
 #include <MailCommon/FolderSettings>
 class QCheckBox;
 class QLabel;
-class KComboBox;
+class QComboBox;
 class KIconButton;
 class QRadioButton;
 template<typename T> class QSharedPointer;
@@ -61,7 +61,7 @@ private:
     KIconButton *mNormalIconButton = nullptr;
     QLabel *mUnreadIconLabel = nullptr;
     KIconButton *mUnreadIconButton = nullptr;
-    KComboBox *mShowSenderReceiverComboBox = nullptr;
+    QComboBox *mShowSenderReceiverComboBox = nullptr;
     QCheckBox *mUseDefaultAggregationCheckBox = nullptr;
     MessageList::Utils::AggregationComboBox *mAggregationComboBox = nullptr;
     QCheckBox *mUseDefaultThemeCheckBox = nullptr;

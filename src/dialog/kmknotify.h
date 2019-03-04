@@ -21,7 +21,7 @@
 #define KMKNOTIFY_H
 
 #include <QDialog>
-class KComboBox;
+class QComboBox;
 class KNotifyConfigWidget;
 
 namespace KMail {
@@ -42,7 +42,7 @@ private:
     void initCombobox();
     void writeConfig();
     void readConfig();
-    KComboBox *m_comboNotify = nullptr;
+    QComboBox *m_comboNotify = nullptr;
     KNotifyConfigWidget *m_notifyWidget = nullptr;
     bool m_changed = false;
 };

@@ -117,7 +117,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     const QString senderReceiverColumnTip = i18n("Show Sender/Receiver Column in List of Messages");
 
     QLabel *senderReceiverColumnLabel = new QLabel(i18n("Sho&w column:"), this);
-    mShowSenderReceiverComboBox = new KComboBox(this);
+    mShowSenderReceiverComboBox = new QComboBox(this);
     mShowSenderReceiverComboBox->setToolTip(senderReceiverColumnTip);
     senderReceiverColumnLabel->setBuddy(mShowSenderReceiverComboBox);
     mShowSenderReceiverComboBox->insertItem(0, i18nc("@item:inlistbox Show default value.", "Default"));

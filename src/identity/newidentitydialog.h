@@ -26,7 +26,7 @@
 
 #include <QDialog>
 
-class KComboBox;
+class QComboBox;
 class KLineEdit;
 class QButtonGroup;
 
@@ -56,7 +56,7 @@ private:
     void slotHelp();
     void slotEnableOK(const QString &);
     KLineEdit *mLineEdit = nullptr;
-    KComboBox *mComboBox = nullptr;
+    QComboBox *mComboBox = nullptr;
     QButtonGroup *mButtonGroup = nullptr;
     KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
     QPushButton *mOkButton = nullptr;

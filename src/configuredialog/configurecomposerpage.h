@@ -24,7 +24,7 @@
 class QCheckBox;
 class QSpinBox;
 class QSpinBox;
-class KComboBox;
+class QComboBox;
 class QLineEdit;
 class ListView;
 class QPushButton;
@@ -73,7 +73,7 @@ private:
     QCheckBox *mImprovePlainTextOfHtmlMessage = nullptr;
     QSpinBox *mMaximumRecentAddress = nullptr;
 #ifdef KDEPIM_ENTERPRISE_BUILD
-    KComboBox *mForwardTypeCombo = nullptr;
+    QComboBox *mForwardTypeCombo = nullptr;
     QCheckBox *mRecipientCheck = nullptr;
     QSpinBox *mRecipientSpin = nullptr;
 #endif

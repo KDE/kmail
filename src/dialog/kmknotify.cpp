@@ -21,7 +21,7 @@
 #include "kmkernel.h"
 
 #include <QVBoxLayout>
-#include <KComboBox>
+#include <QComboBox>
 #include <KNotifyConfigWidget>
 #include <KLocalizedString>
 #include <KConfig>
@@ -39,7 +39,7 @@ KMKnotify::KMKnotify(QWidget *parent)
     setWindowTitle(i18n("Notification"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
-    m_comboNotify = new KComboBox(false, this);
+    m_comboNotify = new QComboBox(this);
     m_comboNotify->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     mainLayout->addWidget(m_comboNotify);
 
@@ -58,7 +58,7 @@ KMKnotify::KMKnotify(QWidget *parent)
 
     mainLayout->addWidget(buttonBox);
 
-    connect(m_comboNotify, QOverload<int>::of(&KComboBox::activated), this, &KMKnotify::slotComboChanged);
+    connect(m_comboNotify, QOverload<int>::of(&QComboBox::activated), this, &KMKnotify::slotComboChanged);
     connect(okButton, &QPushButton::clicked, this, &KMKnotify::slotOk);
     connect(m_notifyWidget, &KNotifyConfigWidget::changed, this, &KMKnotify::slotConfigChanged);
     initCombobox();

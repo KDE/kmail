@@ -90,7 +90,7 @@ using MailTransport::TransportManager;
 #include <qurl.h>
 #include "kmail_debug.h"
 #include <QPushButton>
-#include <kcombobox.h>
+#include <qcombobox.h>
 #include <QTabWidget>
 #include <QIcon>
 
@@ -463,8 +463,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Preferred Crypto Message Format" combobox and label:
     ++row;
-    mPreferredCryptoMessageFormat = new KComboBox(tab);
-    mPreferredCryptoMessageFormat->setEditable(false);
+    mPreferredCryptoMessageFormat = new QComboBox(tab);
     QStringList l;
     l << Kleo::cryptoMessageFormatToLabel(Kleo::AutoFormat)
       << Kleo::cryptoMessageFormatToLabel(Kleo::InlineOpenPGPFormat)

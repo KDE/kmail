@@ -32,7 +32,7 @@ class QPushButton;
 
 template<typename T> class QSharedPointer;
 
-class KComboBox;
+class QComboBox;
 class KJob;
 class KEditListWidget;
 class KSqueezedTextLabel;
@@ -69,9 +69,9 @@ private:
 
     MailingList mMailingList;
     QCheckBox *mHoldsMailingList = nullptr;
-    KComboBox *mMLHandlerCombo = nullptr;
+    QComboBox *mMLHandlerCombo = nullptr;
     QPushButton *mDetectButton = nullptr;
-    KComboBox *mAddressCombo = nullptr;
+    QComboBox *mAddressCombo = nullptr;
     KEditListWidget *mEditList = nullptr;
     KSqueezedTextLabel *mMLId = nullptr;
     QWidget *mGroupWidget = nullptr;

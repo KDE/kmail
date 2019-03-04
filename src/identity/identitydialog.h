@@ -36,7 +36,7 @@
 class QCheckBox;
 
 class KEditListWidget;
-class KComboBox;
+class QComboBox;
 class KJob;
 class KLineEdit;
 class QPushButton;
@@ -119,7 +119,7 @@ private:
     KeySelectionCombo *mPGPEncryptionKeyRequester = nullptr;
     KeySelectionCombo *mSMIMESigningKeyRequester = nullptr;
     KeySelectionCombo *mSMIMEEncryptionKeyRequester = nullptr;
-    KComboBox *mPreferredCryptoMessageFormat = nullptr;
+    QComboBox *mPreferredCryptoMessageFormat = nullptr;
     QCheckBox *mAutoSign = nullptr;
     QCheckBox *mAutoEncrypt = nullptr;
     // "advanced" tab:

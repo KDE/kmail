@@ -34,7 +34,7 @@
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include <KComboBox>
+#include <QComboBox>
 #include <KLineEdit>
 #include <KEditListWidget>
 #include <KLocalizedString>
@@ -98,16 +98,16 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     //FIXME: add QWhatsThis
     label = new QLabel(i18n("Preferred handler:"), mGroupWidget);
     groupLayout->addWidget(label, 5, 0);
-    mMLHandlerCombo = new KComboBox(mGroupWidget);
+    mMLHandlerCombo = new QComboBox(mGroupWidget);
     mMLHandlerCombo->addItem(i18n("KMail"), MailingList::KMail);
     mMLHandlerCombo->addItem(i18n("Browser"), MailingList::Browser);
     groupLayout->addWidget(mMLHandlerCombo, 5, 1, 1, 2);
-    connect(mMLHandlerCombo, QOverload<int>::of(&KComboBox::activated), this, &CollectionMailingListPage::slotMLHandling);
+    connect(mMLHandlerCombo, QOverload<int>::of(&QComboBox::activated), this, &CollectionMailingListPage::slotMLHandling);
     label->setBuddy(mMLHandlerCombo);
 
     label = new QLabel(i18n("Address type:"), mGroupWidget);
     groupLayout->addWidget(label, 6, 0);
-    mAddressCombo = new KComboBox(mGroupWidget);
+    mAddressCombo = new QComboBox(mGroupWidget);
     label->setBuddy(mAddressCombo);
     groupLayout->addWidget(mAddressCombo, 6, 1);
 
@@ -134,7 +134,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
         i18n("Post to List"), i18n("Subscribe to List"), i18n("Unsubscribe From List"), i18n("List Archives"), i18n("List Help")
     };
     mAddressCombo->addItems(el);
-    connect(mAddressCombo, QOverload<int>::of(&KComboBox::activated), this, &CollectionMailingListPage::slotAddressChanged);
+    connect(mAddressCombo, QOverload<int>::of(&QComboBox::activated), this, &CollectionMailingListPage::slotAddressChanged);
 
     topLayout->addWidget(mGroupWidget);
     mGroupWidget->setEnabled(false);

@@ -285,7 +285,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 #ifdef KDEPIM_ENTERPRISE_BUILD
     ++row;
     // "Default forwarding type" combobox
-    mForwardTypeCombo = new KComboBox(false, this);
+    mForwardTypeCombo = new QComboBox(this);
     mForwardTypeCombo->addItems(QStringList() << i18nc("@item:inlistbox Inline mail forwarding",
                                                        "Inline")
                                               << i18n("As Attachment"));
@@ -297,7 +297,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(i18n("Default forwarding type:"), this);
     label->setBuddy(mForwardTypeCombo);
 
-    connect(mForwardTypeCombo, QOverload<int>::of(&KComboBox::activated), this, &ComposerPageGeneralTab::slotEmitChanged);
+    connect(mForwardTypeCombo, QOverload<int>::of(&QComboBox::activated), this, &ComposerPageGeneralTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mForwardTypeCombo, row, 1);

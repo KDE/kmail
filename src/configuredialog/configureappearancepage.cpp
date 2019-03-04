@@ -165,8 +165,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     // "font location" combo box and label:
     QHBoxLayout *hlay = new QHBoxLayout(); // inherites spacing
     vlay->addLayout(hlay);
-    mFontLocationCombo = new KComboBox(this);
-    mFontLocationCombo->setEditable(false);
+    mFontLocationCombo = new QComboBox(this);
     mFontLocationCombo->setEnabled(false);   // !mCustomFontCheck->isChecked()
 
     QStringList fontDescriptions;
@@ -198,7 +197,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     connect(mCustomFontCheck, &QAbstractButton::toggled,
             mFontChooser, &QWidget::setEnabled);
     // load the right font settings into mFontChooser:
-    connect(mFontLocationCombo, QOverload<int>::of(&KComboBox::activated),
+    connect(mFontLocationCombo, QOverload<int>::of(&QComboBox::activated),
             this, &AppearancePage::FontsTab::slotFontSelectorChanged);
 }
 

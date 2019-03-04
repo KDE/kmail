@@ -38,7 +38,7 @@ using MailTransport::TransportManagementWidget;
 #include <AkonadiCore/agentinstancecreatejob.h>
 #include <identity/identitypage.h>
 #include <Libkdepim/LdapConfigureWidget>
-#include <KComboBox>
+#include <QComboBox>
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -123,23 +123,23 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     connect(mCheckSpellingBeforeSending, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "send on check" combo:
-    mSendOnCheckCombo = new KComboBox(group);
+    mSendOnCheckCombo = new QComboBox(group);
     mSendOnCheckCombo->setEditable(false);
     mSendOnCheckCombo->addItems(QStringList()
                                 << i18n("Never Automatically")
                                 << i18n("On Manual Mail Checks")
                                 << i18n("On All Mail Checks"));
     glay->addWidget(mSendOnCheckCombo, 2, 1);
-    connect(mSendOnCheckCombo, QOverload<int>::of(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mSendOnCheckCombo, QOverload<int>::of(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "default send method" combo:
-    mSendMethodCombo = new KComboBox(group);
+    mSendMethodCombo = new QComboBox(group);
     mSendMethodCombo->setEditable(false);
     mSendMethodCombo->addItems(QStringList()
                                << i18n("Send Now")
                                << i18n("Send Later"));
     glay->addWidget(mSendMethodCombo, 3, 1);
-    connect(mSendMethodCombo, QOverload<int>::of(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mSendMethodCombo, QOverload<int>::of(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // labels:
     QLabel *l = new QLabel(i18n("Send &messages in outbox folder:"), group);

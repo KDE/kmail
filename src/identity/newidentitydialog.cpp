@@ -26,7 +26,7 @@
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
 #include <PimCommon/PimUtil>
-#include <KComboBox>
+#include <QComboBox>
 #include <KLineEdit>
 #include <KLocalizedString>
 #include <KSeparator>
@@ -96,8 +96,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     // row 4: combobox with existing identities and label
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
-    mComboBox = new KComboBox(page);
-    mComboBox->setEditable(false);
+    mComboBox = new QComboBox(page);
     mComboBox->addItems(manager->shadowIdentities());
     mComboBox->setEnabled(false);
     QLabel *label = new QLabel(i18n("&Existing identities:"), page);
@@ -112,7 +111,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     // enable/disable combobox and label depending on the third radio
     // button's state:
     connect(radio, &QRadioButton::toggled, label, &QLabel::setEnabled);
-    connect(radio, &QRadioButton::toggled, mComboBox, &KComboBox::setEnabled);
+    connect(radio, &QRadioButton::toggled, mComboBox, &QComboBox::setEnabled);
 
     mOkButton->setEnabled(false);   // since line edit is empty
 

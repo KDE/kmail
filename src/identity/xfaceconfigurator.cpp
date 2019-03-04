@@ -40,7 +40,7 @@
 #include <messageviewer/kxface.h>
 
 #include <KJobWidgets>
-#include <kcombobox.h>
+#include <qcombobox.h>
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <KIO/StoredTransferJob>
@@ -89,8 +89,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     // "obtain X-Face from" combo and label:
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
-    KComboBox *sourceCombo = new KComboBox(this);
-    sourceCombo->setEditable(false);
+    QComboBox *sourceCombo = new QComboBox(this);
     sourceCombo->setWhatsThis(
         i18n("Click on the widgets below to obtain help on the input methods."));
     sourceCombo->setEnabled(false);   // since !mEnableCheck->isChecked()
@@ -109,9 +108,9 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     QStackedWidget *widgetStack = new QStackedWidget(this);
     widgetStack->setEnabled(false);   // since !mEnableCheck->isChecked()
     vlay->addWidget(widgetStack, 1);
-    connect(sourceCombo, QOverload<int>::of(&KComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
-    connect(sourceCombo, QOverload<int>::of(&KComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
-    connect(mEnableCheck, &QCheckBox::toggled, sourceCombo, &KComboBox::setEnabled);
+    connect(sourceCombo, QOverload<int>::of(&QComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
+    connect(sourceCombo, QOverload<int>::of(&QComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
+    connect(mEnableCheck, &QCheckBox::toggled, sourceCombo, &QComboBox::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, widgetStack, &QStackedWidget::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, label, &QLabel::setEnabled);
     // The focus might be still in the widget that is disabled

@@ -24,7 +24,7 @@
 
 class QPushButton;
 class QCheckBox;
-class KComboBox;
+class QComboBox;
 class KFontChooser;
 class ColorListBox;
 class QButtonGroup;
@@ -72,7 +72,7 @@ private:
 
 private:
     QCheckBox *mCustomFontCheck = nullptr;
-    KComboBox *mFontLocationCombo = nullptr;
+    QComboBox *mFontLocationCombo = nullptr;
     KFontChooser *mFontChooser = nullptr;
 
     int mActiveFontIndex;
