@@ -41,12 +41,14 @@
 #include <MessageComposer/PluginEditorInit>
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
+#include <MessageViewer/MessageViewerConfigureSettingsPluginManager>
 #include <MessageViewer/ViewerPlugin>
 #include <PimCommon/GenericPlugin>
 #include <MessageComposer/PluginEditor>
 #include <MessageViewer/HeaderStylePlugin>
 #include <AkonadiCore/AgentManager>
 #include <AkonadiCore/AgentInstance>
+#include <MessageViewer/MessageViewerConfigureSettingsPlugin>
 
 namespace {
 QString pluginEditorGroupName()
@@ -97,6 +99,10 @@ QString headerStyleGroupName()
 QString agentAkonadiGroupName()
 {
     return QStringLiteral("agentakonadigroupname");
+}
+QString configurePluginGroupName()
+{
+    return QStringLiteral("configuregroupname");
 }
 }
 
@@ -171,6 +177,7 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     changeState(mPluginEditorInitItems);
     changeState(mPluginConvertTextItems);
     changeState(mPluginEditorGrammarItems);
+
 }
 
 void ConfigurePluginsListWidget::initialize()
@@ -238,13 +245,20 @@ void ConfigurePluginsListWidget::initialize()
                                                         MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
                                                         mPluginHeaderStyleItems,
                                                         headerStyleGroupName());
-//    //Load headerstyle
+    //Load Converter plugin
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorConvertTextManager::self()->pluginsDataList(),
                                                         i18n("Convertor Text Plugins"),
                                                         MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
                                                         MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
                                                         mPluginConvertTextItems,
                                                         pluginEditorConvertTextGroupName());
+
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::MessageViewerConfigureSettingsPluginManager::self()->pluginsDataList(),
+                                                        i18n("Misc"),
+                                                        MessageViewer::MessageViewerConfigureSettingsPluginManager::self()->configGroupName(),
+                                                        MessageViewer::MessageViewerConfigureSettingsPluginManager::self()->configPrefixSettingKey(),
+                                                        mPluginConfigureItems,
+                                                        configurePluginGroupName(), false);
 
     //Load Agent Plugin
     initializeAgentPlugins();
@@ -323,37 +337,40 @@ void ConfigurePluginsListWidget::changeAgentActiveState(const QString &agentIden
     }
 }
 
-void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGroupName, const QString &identifier)
+void ConfigurePluginsListWidget::slotConfigureClicked(const QString &groupName, const QString &identifier)
 {
-    if (!configureGroupName.isEmpty() && !identifier.isEmpty()) {
-        if (configureGroupName == headerStyleGroupName()) {
+    if (!groupName.isEmpty() && !identifier.isEmpty()) {
+        if (groupName == headerStyleGroupName()) {
             MessageViewer::HeaderStylePlugin *plugin = MessageViewer::HeaderStylePluginManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == networkUrlInterceptorGroupName()) {
+        } else if (groupName == networkUrlInterceptorGroupName()) {
             WebEngineViewer::NetworkPluginUrlInterceptor *plugin = WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == viewerPluginGroupName()) {
+        } else if (groupName == viewerPluginGroupName()) {
             MessageViewer::ViewerPlugin *plugin = MessageViewer::ViewerPluginManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == pluginEditorGroupName()) {
+        } else if (groupName == pluginEditorGroupName()) {
             MessageComposer::PluginEditor *plugin = MessageComposer::PluginEditorManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == kmailPluginToolsGroupName()) {
+        } else if (groupName == kmailPluginToolsGroupName()) {
             PimCommon::GenericPlugin *plugin = KMailPluginInterface::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == pluginEditorInitGroupName()) {
+        } else if (groupName == pluginEditorInitGroupName()) {
             MessageComposer::PluginEditorInit *plugin = MessageComposer::PluginEditorInitManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == pluginEditorCheckBeforeGroupName()) {
+        } else if (groupName == pluginEditorCheckBeforeGroupName()) {
             MessageComposer::PluginEditorCheckBeforeSend *plugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == pluginEditorConvertTextGroupName()) {
+        } else if (groupName == pluginEditorConvertTextGroupName()) {
             MessageComposer::PluginEditorConvertText *plugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == pluginEditorGrammarGroupName()) {
+        } else if (groupName == pluginEditorGrammarGroupName()) {
             PimCommon::CustomToolsPlugin *plugin = MessageComposer::PluginEditorGrammarManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
-        } else if (configureGroupName == agentAkonadiGroupName()) {
+        } else if (groupName == configurePluginGroupName()) {
+            MessageViewer::MessageViewerConfigureSettingsPlugin *plugin = MessageViewer::MessageViewerConfigureSettingsPluginManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
+        } else if (groupName == agentAkonadiGroupName()) {
             for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {
                 if (data.mIdentifier == identifier) {
                     auto instance = Akonadi::AgentManager::self()->instance(identifier);
@@ -364,7 +381,7 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &configureGr
                 }
             }
         } else {
-            qCWarning(KMAIL_LOG) << "Unknown configureGroupName" << configureGroupName;
+            qCWarning(KMAIL_LOG) << "Unknown configureGroupName" << groupName;
         }
     }
 }

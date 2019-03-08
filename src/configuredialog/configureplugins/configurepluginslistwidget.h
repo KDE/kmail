@@ -51,6 +51,7 @@ private:
     QList<PluginItem *> mPluginHeaderStyleItems;
     QList<PluginItem *> mAgentPluginsItems;
     QList<PluginItem *> mPluginConvertTextItems;
+    QList<PluginItem *> mPluginConfigureItems;
     QVector<PimCommon::PluginUtilData> mPluginUtilDataList;
 };
 
