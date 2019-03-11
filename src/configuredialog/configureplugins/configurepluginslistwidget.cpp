@@ -100,6 +100,7 @@ QString agentAkonadiGroupName()
 {
     return QStringLiteral("agentakonadigroupname");
 }
+
 QString configurePluginGroupName()
 {
     return QStringLiteral("configuregroupname");
@@ -177,7 +178,6 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     changeState(mPluginEditorInitItems);
     changeState(mPluginConvertTextItems);
     changeState(mPluginEditorGrammarItems);
-
 }
 
 void ConfigurePluginsListWidget::initialize()
