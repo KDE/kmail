@@ -77,7 +77,6 @@ using KMime::DateFormatter;
 #include <QVBoxLayout>
 #include <QRadioButton>
 #include <QCheckBox>
-#include <gravatar/gravatarconfigwidget.h>
 using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
@@ -863,10 +862,6 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
             this, &ConfigModuleTab::slotEmitChanged);
     readerBoxLayout->addWidget(mViewerSettings);
 
-    mGravatarConfigWidget = new Gravatar::GravatarConfigWidget;
-    connect(mGravatarConfigWidget, &Gravatar::GravatarConfigWidget::configChanged, this, &ConfigModuleTab::slotEmitChanged);
-    readerBoxLayout->addWidget(mGravatarConfigWidget);
-
     QGroupBox *systrayBox = new QGroupBox(i18n("System Tray"), this);
     topLayout->addWidget(systrayBox);
 
@@ -905,7 +900,6 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
 
 void AppearancePage::ReaderTab::doResetToDefaultsOther()
 {
-    mGravatarConfigWidget->doResetToDefaultsOther();
 }
 
 void AppearancePage::ReaderTab::doLoadOther()
@@ -915,7 +909,6 @@ void AppearancePage::ReaderTab::doLoadOther()
     loadWidget(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     loadWidget(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->readConfig();
-    mGravatarConfigWidget->doLoadFromGlobalSettings();
 }
 
 void AppearancePage::ReaderTab::save()
@@ -926,7 +919,6 @@ void AppearancePage::ReaderTab::save()
     KMailSettings::self()->save();
     saveCheckBox(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mViewerSettings->writeConfig();
-    mGravatarConfigWidget->save();
 }
 
 QString AppearancePage::MessageTagTab::helpAnchor() const

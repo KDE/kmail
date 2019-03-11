@@ -36,9 +36,6 @@ class KJob;
 namespace MessageViewer {
 class ConfigureWidget;
 }
-namespace Gravatar {
-class GravatarConfigWidget;
-}
 
 namespace MessageList {
 namespace Utils {
@@ -170,7 +167,6 @@ private:
 private: // data
     QCheckBox *mCloseAfterReplyOrForwardCheck = nullptr;
     MessageViewer::ConfigureWidget *mViewerSettings = nullptr;
-    Gravatar::GravatarConfigWidget *mGravatarConfigWidget = nullptr;
     QCheckBox *mSystemTrayCheck = nullptr;
     QCheckBox *mStartInTrayCheck = nullptr;
     QCheckBox *mShowNumberInTaskBar = nullptr;
