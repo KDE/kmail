@@ -24,7 +24,6 @@
 #include <QAction>
 #include <QAbstractItemModel>
 
-class QDBusServiceWatcher;
 class QMenu;
 
 /**
