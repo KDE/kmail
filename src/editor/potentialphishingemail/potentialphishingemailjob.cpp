@@ -56,6 +56,7 @@ bool PotentialPhishingEmailJob::start()
 {
     mPotentialPhisingEmails.clear();
     if (mEmails.isEmpty()) {
+        Q_EMIT potentialPhishingEmailsFound(mPotentialPhisingEmails);
         deleteLater();
         return false;
     }
