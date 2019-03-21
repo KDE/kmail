@@ -2838,21 +2838,26 @@ void KMComposerWin::slotDelayedCheckSendNow()
 
 void KMComposerWin::slotCheckSendNow()
 {
-    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob(this);
-    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
-    const QStringList whiteList = group.readEntry("whiteList", QStringList());
-    job->setEmailWhiteList(whiteList);
-    QStringList lst;
-    lst << mComposerBase->to();
-    if (!mComposerBase->cc().isEmpty()) {
-        lst << mComposerBase->cc().split(QLatin1Char(','));
+    QStringList lst {mComposerBase->to()};
+    const QString ccStr = mComposerBase->cc();
+    if (!ccStr.isEmpty()) {
+        lst << ccStr.split(QLatin1Char(','));
     }
-    if (!mComposerBase->bcc().isEmpty()) {
-        lst << mComposerBase->bcc().split(QLatin1Char(','));
+    const QString bccStr = mComposerBase->bcc();
+    if (!bccStr.isEmpty()) {
+        lst << bccStr.split(QLatin1Char(','));
     }
-    job->setPotentialPhishingEmails(lst);
-    connect(job, &PotentialPhishingEmailJob::potentialPhishingEmailsFound, this, &KMComposerWin::slotPotentialPhishingEmailsFound);
-    job->start();
+    if (lst.isEmpty()) {
+        slotCheckSendNowStep2();
+    } else {
+        PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob(this);
+        KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
+        const QStringList whiteList = group.readEntry("whiteList", QStringList());
+        job->setEmailWhiteList(whiteList);
+        job->setPotentialPhishingEmails(lst);
+        connect(job, &PotentialPhishingEmailJob::potentialPhishingEmailsFound, this, &KMComposerWin::slotPotentialPhishingEmailsFound);
+        job->start();
+    }
 }
 
 void KMComposerWin::slotPotentialPhishingEmailsFound(const QStringList &list)
