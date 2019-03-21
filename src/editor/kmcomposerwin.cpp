@@ -1378,7 +1378,8 @@ void KMComposerWin::initializePluginActions()
         QHash<QString, QList<QAction *> >::const_iterator i = hashActions.constBegin();
 
         while (i != hashActions.constEnd()) {
-            Q_FOREACH (KXMLGUIClient *client, guiFactory()->clients()) {
+            const auto lst = guiFactory()->clients();
+            for (KXMLGUIClient *client : lst) {
                 client->unplugActionList(i.key());
                 client->plugActionList(i.key(), i.value());
             }
@@ -2340,7 +2341,8 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
 
     if (setByUser) {
         // User has toggled encryption, go over all recipients
-        Q_FOREACH (auto line, mComposerBase->recipientsEditor()->lines()) {
+        const auto lst = mComposerBase->recipientsEditor()->lines();
+        for (auto line : lst) {
             if (encrypt) {
                 // Encryption was enabled, update encryption status of all recipients
                 slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG *>(line));
@@ -3420,7 +3422,8 @@ void KMComposerWin::slotRecipientEditorFocusChanged()
     // (unless user enabled it manually), because we want to encrypt by default,
     // but not by force
     bool encrypt = false;
-    Q_FOREACH (auto line_, mComposerBase->recipientsEditor()->lines()) {
+    const auto lst = mComposerBase->recipientsEditor()->lines();
+    for (auto line_ : lst) {
         auto line = qobject_cast<MessageComposer::RecipientLineNG *>(line_);
 
         // There's still a lookup job running, so wait, slotKeyForMailBoxResult()

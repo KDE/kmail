@@ -143,7 +143,10 @@ include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
 configure_file(kmail-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
-
+if (${KF5Config_VERSION} STRGREATER "5.56.0")
+        add_definitions(-DQT_NO_FOREACH)
+        MESSAGE(STATUS "compile without foreach")
+endif()
 add_subdirectory(src)
 add_subdirectory(agents)
 add_subdirectory(ktnef)

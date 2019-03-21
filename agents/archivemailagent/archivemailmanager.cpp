@@ -105,7 +105,8 @@ void ArchiveMailManager::removeCollectionId(Akonadi::Collection::Id id)
         group.deleteGroup();
         mConfig->sync();
         mConfig->reparseConfiguration();
-        foreach (ArchiveMailInfo *info, mListArchiveInfo) { //Don't port to for(...:...)
+        const auto lst = mListArchiveInfo;
+        for (ArchiveMailInfo *info : lst) {
             if (info->saveCollectionId() == id) {
                 mListArchiveInfo.removeAll(info);
             }

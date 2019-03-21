@@ -536,7 +536,8 @@ void KMKernel::openReader(bool onlyCheck, bool startInTray)
 {
     KMainWindow *ktmw = nullptr;
 
-    foreach (KMainWindow *window, KMainWindow::memberList()) {
+    const auto lst = KMainWindow::memberList();
+    for (KMainWindow *window : lst) {
         if (::qobject_cast<KMMainWin *>(window)) {
             ktmw = window;
             break;
@@ -685,7 +686,8 @@ bool KMKernel::showMail(qint64 serialNumber)
     KMMainWidget *mainWidget = nullptr;
 
     // First look for a KMainWindow.
-    foreach (KMainWindow *window, KMainWindow::memberList()) {
+    const auto lst = KMainWindow::memberList();
+    for (KMainWindow *window : lst) {
         // Then look for a KMMainWidget.
         QList<KMMainWidget *> l = window->findChildren<KMMainWidget *>();
         if (!l.isEmpty() && l.first()) {
@@ -1078,7 +1080,8 @@ void KMKernel::setFirstInstance(bool value)
 
 void KMKernel::closeAllKMailWindows()
 {
-    foreach (KMainWindow *window, KMainWindow::memberList()) {
+    const auto lst = KMainWindow::memberList();
+    for (KMainWindow *window : lst) {
         if (::qobject_cast<KMMainWin *>(window)
             || ::qobject_cast<KMail::SecondaryWindow *>(window)) {
             // close and delete the window
@@ -1139,7 +1142,8 @@ void KMKernel::dumpDeadLetters()
     }
 
     // make all composer windows autosave their contents
-    foreach (KMainWindow *window, KMainWindow::memberList()) {
+    const auto lst = KMainWindow::memberList();
+    for (KMainWindow *window : lst) {
         if (KMail::Composer *win = ::qobject_cast<KMail::Composer *>(window)) {
             win->autoSaveMessage(true);
 
@@ -1274,7 +1278,8 @@ JobScheduler *KMKernel::jobScheduler() const
 KMainWindow *KMKernel::mainWin()
 {
     // First look for a KMMainWin.
-    foreach (KMainWindow *window, KMainWindow::memberList()) {
+    const auto lst = KMainWindow::memberList();
+    for (KMainWindow *window : lst) {
         if (::qobject_cast<KMMainWin *>(window)) {
             return window;
         }
