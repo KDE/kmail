@@ -23,6 +23,7 @@
   <developer_name xml:lang="uk">Спільнота KDE</developer_name>
   <developer_name xml:lang="x-test">xxThe KDE Communityxx</developer_name>
   <developer_name xml:lang="zh-CN">KDE 社区</developer_name>
+  <developer_name xml:lang="zh-TW">KDE 社群</developer_name>
   <name>KMail</name>
   <name xml:lang="ar">بريدك</name>
   <name xml:lang="bs">KMail</name>
@@ -82,6 +83,7 @@
   <summary xml:lang="uk">Багата на можливості програма для роботи з електронною пошти</summary>
   <summary xml:lang="x-test">xxA feature-rich email applicationxx</summary>
   <summary xml:lang="zh-CN">功能丰富的电子邮件应用</summary>
+  <summary xml:lang="zh-TW">多功能的電子郵件應用程式</summary>
   <description>
     <p>
       KMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximize your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.
