@@ -34,6 +34,7 @@ public Q_SLOTS:
     void slotCopy();
     void slotPaste();
     void slotMarkAll();
+    void slotInsertEmoticon(const QString &str);
 private:
     Q_DISABLE_COPY(KMComposerGlobalAction)
     KMComposerWin *mComposerWin = nullptr;

@@ -363,6 +363,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     KMComposerEditorNg *composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
     mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
 
+    connect(composerEditorNg, &KMComposerEditorNg::insertEmoticon, mGlobalAction, &KMComposerGlobalAction::slotInsertEmoticon);
     //Don't use new connect api here. It crashs
     connect(composerEditorNg, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
     connect(composerEditorNg, &KMComposerEditorNg::selectionChanged, this, &KMComposerWin::slotSelectionChanged);
