@@ -2384,7 +2384,12 @@ void KMMainWidget::slotSendQueued()
 {
     if (kmkernel->msgSender()) {
         if (!kmkernel->msgSender()->sendQueued()) {
-            KMessageBox::error(this, i18n("Impossible to send email"), i18n("Send Email"));
+            KNotification::event(QStringLiteral("sent-mail-error"),
+                                 i18n("Send Email"),
+                                 i18n("Impossible to send email"),
+                                 QStringLiteral("kmail"),
+                                 this,
+                                 KNotification::CloseOnTimeout);
         }
     }
 }
@@ -2395,7 +2400,12 @@ void KMMainWidget::slotSendQueuedVia(MailTransport::Transport *transport)
     if (transport) {
         if (kmkernel->msgSender()) {
             if (!kmkernel->msgSender()->sendQueued(transport->id())) {
-                KMessageBox::error(this, i18n("Impossible to send email"), i18n("Send Email"));
+                KNotification::event(QStringLiteral("sent-mail-error"),
+                                     i18n("Send Email"),
+                                     i18n("Impossible to send email"),
+                                     QStringLiteral("kmail"),
+                                     this,
+                                     KNotification::CloseOnTimeout);
             }
         }
     }

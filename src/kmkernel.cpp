@@ -757,7 +757,12 @@ void KMKernel::setAccountStatus(bool goOnline)
         const qint64 nbMsgOutboxCollection = col.statistics().count();
         if (nbMsgOutboxCollection > 0) {
             if (!kmkernel->msgSender()->sendQueued()) {
-                KMessageBox::error(KMKernel::self()->mainWin(), i18n("Impossible to send email"), i18n("Send Email"));
+                KNotification::event(QStringLiteral("sent-mail-error"),
+                                     i18n("Send Email"),
+                                     i18n("Impossible to send email"),
+                                     QStringLiteral("kmail"),
+                                     KMKernel::self()->mainWin(),
+                                     KNotification::CloseOnTimeout);
             }
         }
     }
