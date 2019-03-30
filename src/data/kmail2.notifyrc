@@ -344,7 +344,15 @@ Action=Popup
 
 [Event/sent-mail-error]
 Name=Impossible to send email
+Name[ca]=És impossible enviar el correu
+Name[nl]=Verzenden van een e-mail is onmogelijk
+Name[uk]=Не вдалося надіслати повідомлення
+Name[x-test]=xxImpossible to send emailxx
 Comment=Problem during send mail
+Comment[ca]=Problema durant l'enviament del correu
+Comment[nl]=Probleem bij verzenden van e-mail
+Comment[uk]=Проблема під час надсилання пошти
+Comment[x-test]=xxProblem during send mailxx
 Action=Popup
 
 [Event/folderarchivedone]
