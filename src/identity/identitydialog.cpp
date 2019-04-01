@@ -87,10 +87,10 @@ using MailTransport::TransportManager;
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kfileitem.h>
-#include <qurl.h>
+#include <QUrl>
 #include "kmail_debug.h"
 #include <QPushButton>
-#include <qcombobox.h>
+#include <QComboBox>
 #include <QTabWidget>
 #include <QIcon>
 

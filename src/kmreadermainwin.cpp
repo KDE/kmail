@@ -43,7 +43,7 @@
 #include <KAcceleratorManager>
 #include "kmcommands.h"
 #include <QMenuBar>
-#include <qmenu.h>
+#include <QMenu>
 #include <TemplateParser/CustomTemplatesMenu>
 #include "messageactions.h"
 #include "util.h"

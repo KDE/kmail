@@ -23,7 +23,7 @@
 
 #include <QTreeWidget>
 #include <QStandardPaths>
-#include <qtest.h>
+#include <QTest>
 
 SendLaterConfigureDialogTest::SendLaterConfigureDialogTest(QObject *parent)
     : QObject(parent)

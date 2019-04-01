@@ -23,7 +23,7 @@
 #include "kmail_export.h"
 #include "secondarywindow.h"
 
-#include <qurl.h>
+#include <QUrl>
 #include <kmime/kmime_message.h>
 #include <AkonadiCore/collection.h>
 

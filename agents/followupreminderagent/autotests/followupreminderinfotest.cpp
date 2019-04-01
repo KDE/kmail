@@ -19,7 +19,7 @@
 
 #include "followupreminderinfotest.h"
 #include "FollowupReminder/FollowUpReminderInfo"
-#include <qtest.h>
+#include <QTest>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <QStandardPaths>

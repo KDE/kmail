@@ -24,7 +24,7 @@
 #include "kmail_export.h"
 
 #include <QWidget>
-#include <qurl.h>
+#include <QUrl>
 #include <MessageViewer/Viewer>
 #include <MimeTreeParser/BodyPart>
 #include <AkonadiCore/Item>

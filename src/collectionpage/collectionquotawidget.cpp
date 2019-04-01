@@ -35,8 +35,8 @@
 #include <KLocalizedString>
 
 #include <QLabel>
-#include <qlayout.h>
-#include <qprogressbar.h>
+#include <QLayout>
+#include <QProgressBar>
 #include <KFormat>
 
 CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)

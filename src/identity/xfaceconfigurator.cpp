@@ -40,7 +40,7 @@
 #include <messageviewer/kxface.h>
 
 #include <KJobWidgets>
-#include <qcombobox.h>
+#include <QComboBox>
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <KIO/StoredTransferJob>

@@ -21,8 +21,8 @@
 #include "saveasfilejob.h"
 #include "kmail_debug.h"
 #include <QFileDialog>
-#include <qpointer.h>
-#include <qtextdocumentwriter.h>
+#include <QPointer>
+#include <QTextDocumentWriter>
 #include <KLocalizedString>
 #include <QTextDocument>
 

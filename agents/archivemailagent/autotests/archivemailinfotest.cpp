@@ -20,7 +20,7 @@
 #include "archivemailinfotest.h"
 #include "../archivemailinfo.h"
 #include <AkonadiCore/Collection>
-#include <qtest.h>
+#include <QTest>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <QStandardPaths>

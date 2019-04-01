@@ -35,7 +35,7 @@
 #include <AkonadiCore/collectionquotaattribute.h>
 #include <AkonadiCore/collection.h>
 
-#include <qlayout.h>
+#include <QLayout>
 #include <KLocalizedString>
 
 CollectionQuotaPage::CollectionQuotaPage(QWidget *parent)

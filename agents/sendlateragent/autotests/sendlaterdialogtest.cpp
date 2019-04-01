@@ -23,7 +23,7 @@
 #include <KDateComboBox>
 #include <QLineEdit>
 #include <QPushButton>
-#include <qtest.h>
+#include <QTest>
 #include <QStandardPaths>
 SendLaterDialogTest::SendLaterDialogTest(QObject *parent)
     : QObject(parent)

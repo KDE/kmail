@@ -22,7 +22,7 @@
 #include "../followupreminderinfowidget.h"
 #include "FollowupReminder/FollowUpReminderInfo"
 #include <QTreeWidget>
-#include <qtest.h>
+#include <QTest>
 #include <QStandardPaths>
 
 FollowupReminderNoAnswerDialogTest::FollowupReminderNoAnswerDialogTest(QObject *parent)

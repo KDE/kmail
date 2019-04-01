@@ -18,7 +18,7 @@
 */
 #include "createfollowupreminderonexistingmessagejobtest.h"
 #include "../job/createfollowupreminderonexistingmessagejob.h"
-#include <qtest.h>
+#include <QTest>
 
 CreateFollowupReminderOnExistingMessageJobTest::CreateFollowupReminderOnExistingMessageJobTest(QObject *parent)
     : QObject(parent)

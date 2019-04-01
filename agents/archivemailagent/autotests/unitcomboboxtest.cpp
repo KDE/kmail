@@ -19,7 +19,7 @@
 
 #include "unitcomboboxtest.h"
 #include "../widgets/unitcombobox.h"
-#include <qtest.h>
+#include <QTest>
 
 UnitComboBoxTest::UnitComboBoxTest(QObject *parent)
     : QObject(parent)

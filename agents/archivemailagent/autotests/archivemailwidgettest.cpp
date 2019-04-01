@@ -20,7 +20,7 @@
 #include "archivemailwidgettest.h"
 #include "../archivemailwidget.h"
 
-#include <qtest.h>
+#include <QTest>
 #include <QTreeWidget>
 #include <QStandardPaths>
 

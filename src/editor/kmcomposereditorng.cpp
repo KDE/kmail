@@ -22,7 +22,7 @@
 #include "kmail_debug.h"
 #include "job/dndfromarkjob.h"
 
-#include <qmenu.h>
+#include <QMenu>
 #include <KToggleAction>
 #include <QMimeData>
 #include <QCheckBox>

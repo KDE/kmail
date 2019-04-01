@@ -56,7 +56,7 @@
 #include <QIcon>
 
 #include <QVariant>
-#include <qwidget.h>
+#include <QWidget>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entityannotationsattribute.h>
 #include <mailcommon/mailutil.h>
