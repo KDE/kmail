@@ -22,7 +22,7 @@
 #include "../potentialphishingdetailwidget.h"
 #include <QLabel>
 #include <QListWidget>
-#include <qtest.h>
+#include <QTest>
 
 PotentialPhishingDetailWidgetTest::PotentialPhishingDetailWidgetTest(QObject *parent)
     : QObject(parent)

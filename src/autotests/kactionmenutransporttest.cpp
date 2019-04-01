@@ -17,7 +17,7 @@
 
 #include "kactionmenutransporttest.h"
 #include "../widgets/kactionmenutransport.h"
-#include <qtest.h>
+#include <QTest>
 #include <QMenu>
 KActionMenuTransportTest::KActionMenuTransportTest(QObject *parent)
     : QObject(parent)

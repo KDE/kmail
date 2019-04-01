@@ -22,7 +22,7 @@
 #include <MessageComposer/MessageFactoryNG>
 #include <QUrl>
 
-#include <qobject.h>
+#include <QObject>
 
 class QWidget;
 class QAction;

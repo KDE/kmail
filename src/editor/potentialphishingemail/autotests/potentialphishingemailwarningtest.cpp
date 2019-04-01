@@ -21,7 +21,7 @@
 #include "potentialphishingemailwarningtest.h"
 #include "../potentialphishingemailwarning.h"
 #include <QAction>
-#include <qtest.h>
+#include <QTest>
 
 PotentialPhishingEmailWarningTest::PotentialPhishingEmailWarningTest(QObject *parent)
     : QObject(parent)

@@ -17,7 +17,7 @@
 
 #include "displaymessageformatactionmenutest.h"
 #include "../widgets/displaymessageformatactionmenu.h"
-#include <qtest.h>
+#include <QTest>
 #include <qtestmouse.h>
 #include <QMenu>
 #include <KToggleAction>

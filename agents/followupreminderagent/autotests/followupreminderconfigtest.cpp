@@ -20,7 +20,7 @@
 #include "followupreminderconfigtest.h"
 #include "FollowupReminder/FollowUpReminderUtil"
 #include "FollowupReminder/FollowUpReminderInfo"
-#include <qtest.h>
+#include <QTest>
 #include <KSharedConfig>
 #include <QRegularExpression>
 

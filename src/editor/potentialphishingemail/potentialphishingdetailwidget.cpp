@@ -20,9 +20,9 @@
 #include "potentialphishingdetailwidget.h"
 
 #include <KConfigGroup>
-#include <qboxlayout.h>
-#include <qlabel.h>
-#include <qlistwidget.h>
+#include <QBoxLayout>
+#include <QLabel>
+#include <QListWidget>
 #include <KSharedConfig>
 #include <KLocalizedString>
 

@@ -19,7 +19,7 @@
 
 #include "sendlaterinfotest.h"
 #include "sendlaterinfo.h"
-#include <qtest.h>
+#include <QTest>
 #include <QDateTime>
 #include <KConfigGroup>
 #include <KSharedConfig>

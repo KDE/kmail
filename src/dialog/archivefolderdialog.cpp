@@ -32,8 +32,8 @@
 #include <kmessagebox.h>
 #include <KSeparator>
 
-#include <qlabel.h>
-#include <qcheckbox.h>
+#include <QLabel>
+#include <QCheckBox>
 #include <QGridLayout>
 #include <QStandardPaths>
 #include <QMimeDatabase>

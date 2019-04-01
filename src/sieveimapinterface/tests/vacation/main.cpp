@@ -16,7 +16,7 @@
 */
 
 #include <KLocalizedString>
-#include <qapplication.h>
+#include <QApplication>
 #include <QCommandLineParser>
 #include <QStandardPaths>
 

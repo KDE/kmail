@@ -22,7 +22,7 @@
 #include <KUrlRequester>
 #include <QButtonGroup>
 
-#include <qtest.h>
+#include <QTest>
 
 identityaddvcarddialogtest::identityaddvcarddialogtest()
 {

@@ -10,7 +10,7 @@
 #include <QPointer>
 #include <QDBusObjectPath>
 
-#include <qurl.h>
+#include <QUrl>
 
 #include "kmail_export.h"
 #include "settings/kmailsettings.h"

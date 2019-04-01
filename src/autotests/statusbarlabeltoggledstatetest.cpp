@@ -17,7 +17,7 @@
 
 #include "statusbarlabeltoggledstatetest.h"
 #include "../widgets/statusbarlabeltoggledstate.h"
-#include <qtest.h>
+#include <QTest>
 #include <qtestmouse.h>
 #include <QSignalSpy>
 

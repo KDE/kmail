@@ -1,4 +1,4 @@
-#include <qdebug.h>
+#include <QDebug>
 
 #include <QCoreApplication>
 #include <QCommandLineParser>

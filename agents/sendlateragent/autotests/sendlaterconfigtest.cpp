@@ -20,7 +20,7 @@
 #include "sendlaterconfigtest.h"
 #include "sendlaterinfo.h"
 #include "sendlaterutil.h"
-#include <qtest.h>
+#include <QTest>
 
 SendLaterConfigTest::SendLaterConfigTest(QObject *parent)
     : QObject(parent)

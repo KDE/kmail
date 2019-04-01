@@ -20,7 +20,7 @@
 
 #include "potentialphishingemailjobtest.h"
 #include "../potentialphishingemailjob.h"
-#include <qtest.h>
+#include <QTest>
 #include <QStringList>
 #include <QSignalSpy>
 
