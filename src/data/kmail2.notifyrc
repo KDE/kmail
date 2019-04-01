@@ -345,6 +345,7 @@ Action=Popup
 [Event/sent-mail-error]
 Name=Impossible to send email
 Name[ca]=És impossible enviar el correu
+Name[ca@valencia]=És impossible enviar el correu
 Name[en_GB]=Impossible to send email
 Name[gl]=Non se pode enviar a mensaxe
 Name[it]=Impossibile inviare il messaggio di posta
@@ -354,6 +355,7 @@ Name[uk]=Не вдалося надіслати повідомлення
 Name[x-test]=xxImpossible to send emailxx
 Comment=Problem during send mail
 Comment[ca]=Problema durant l'enviament del correu
+Comment[ca@valencia]=Problema durant l'enviament del correu
 Comment[en_GB]=Problem during send mail
 Comment[gl]=Problema ao enviar o correo
 Comment[it]=Problema durante l'invio della posta
