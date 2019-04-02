@@ -55,6 +55,7 @@ public:
 Q_SIGNALS:
     void textSelectionChanged(bool hasSelection);
     void message(const QString &str);
+    void insertText(const QString &str);
 
 private:
     Q_DISABLE_COPY(KMailPluginEditorManagerInterface)
