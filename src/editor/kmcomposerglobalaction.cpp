@@ -146,3 +146,20 @@ void KMComposerGlobalAction::slotInsertEmoticon(const QString &str)
         static_cast<QTextEdit *>(fw)->insertPlainText(str);
     }
 }
+
+void KMComposerGlobalAction::slotInsertText(const QString &str)
+{
+    QWidget *fw = mComposerWin->focusWidget();
+    if (!fw) {
+        return;
+    }
+
+    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->insertPlainText(str);
+    } else if (::qobject_cast<KLineEdit *>(fw)) {
+        //Don't insert emoticon in mail linedit
+        //static_cast<KLineEdit *>(fw)->insert(str);
+    } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
+        static_cast<QTextEdit *>(fw)->insertPlainText(str);
+    }
+}

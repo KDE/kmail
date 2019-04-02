@@ -242,6 +242,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mPluginEditorManagerInterface = new KMailPluginEditorManagerInterface(this);
     connect(mPluginEditorManagerInterface, &KMailPluginEditorManagerInterface::message, this, &KMComposerWin::slotMessage);
+    connect(mPluginEditorManagerInterface, &KMailPluginEditorManagerInterface::insertText, this, &KMComposerWin::slotEditorPluginInsertText);
     mPluginEditorCheckBeforeSendManagerInterface = new KMailPluginEditorCheckBeforeSendManagerInterface(this);
     mPluginEditorInitManagerInterface = new KMailPluginEditorInitManagerInterface(this);
     mPluginEditorConvertTextManagerInterface = new KMailPluginEditorConvertTextManagerInterface(this);
@@ -3629,4 +3630,9 @@ void KMComposerWin::slotSelectionChanged()
 void KMComposerWin::slotMessage(const QString &str)
 {
     KMessageBox::information(this, str, i18n("Plugin Editor Information"));
+}
+
+void KMComposerWin::slotEditorPluginInsertText(const QString &str)
+{
+    mGlobalAction->slotInsertText(str);
 }
