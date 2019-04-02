@@ -86,7 +86,6 @@
 #include <KPIMTextEdit/RichTextComposerImages>
 #include <KPIMTextEdit/RichTextEditorWidget>
 #include <KPIMTextEdit/RichTextExternalComposer>
-#include <KPIMTextEdit/SelectSpecialCharDialog>
 
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
