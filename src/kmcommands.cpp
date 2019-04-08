@@ -1680,7 +1680,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
         mDeleteProgress = ProgressManager::createProgressItem(QLatin1String("delete") + ProgressManager::getUniqueID(),
                                                               i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
         mDeleteProgress->setUsesBusyIndicator(true);
-        connect(mMoveProgress, &ProgressItem::progressItemCanceled,
+        connect(mDeleteProgress, &ProgressItem::progressItemCanceled,
                 this, &KMTrashMsgCommand::slotMoveCanceled);
     }
     return OK;
