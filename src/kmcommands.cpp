@@ -1607,7 +1607,7 @@ KMTrashMsgCommand::TrashOperation KMTrashMsgCommand::operation() const
 }
 
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref)
-    : KMTrashMsgCommand(findTrashFolder(srcFolder), Akonadi::Item::List{msg}, ref)
+    : KMTrashMsgCommand(srcFolder, Akonadi::Item::List{msg}, ref)
 {
 }
 
