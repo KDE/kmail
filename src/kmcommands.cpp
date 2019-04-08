@@ -1607,7 +1607,7 @@ KMTrashMsgCommand::TrashOperation KMTrashMsgCommand::operation() const
 }
 
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref)
-    : KMTrashMsgCommand(findTrashFolder(srcFolder), Akonadi::Item::List{msg}, ref)
+    : KMTrashMsgCommand(srcFolder, Akonadi::Item::List{msg}, ref)
 {
 }
 
@@ -1680,7 +1680,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
         mDeleteProgress = ProgressManager::createProgressItem(QLatin1String("delete") + ProgressManager::getUniqueID(),
                                                               i18n("Deleting messages"), QString(), true, KPIM::ProgressItem::Unknown);
         mDeleteProgress->setUsesBusyIndicator(true);
-        connect(mMoveProgress, &ProgressItem::progressItemCanceled,
+        connect(mDeleteProgress, &ProgressItem::progressItemCanceled,
                 this, &KMTrashMsgCommand::slotMoveCanceled);
     }
     return OK;
