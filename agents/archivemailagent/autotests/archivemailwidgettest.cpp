@@ -37,6 +37,7 @@ ArchiveMailWidgetTest::~ArchiveMailWidgetTest()
 void ArchiveMailWidgetTest::shouldHaveDefaultValue()
 {
     QWidget parent;
+    new QHBoxLayout(&parent);
     ArchiveMailWidget mailwidget({}, &parent, {QStringLiteral("akonadi_archivemail_agent")});
 
     QTreeWidget *treeWidget = parent.findChild<QTreeWidget *>(QStringLiteral("treewidget"));
