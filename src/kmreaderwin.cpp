@@ -93,7 +93,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     QVBoxLayout *vlay = new QVBoxLayout(this);
     vlay->setContentsMargins(0, 4, 0, 0);
     mViewer = new Viewer(this, mainWindow, mActionCollection);
-    connect(mViewer, QOverload<const Akonadi::Item &, const QUrl &>::of(&Viewer::urlClicked), this, &KMReaderWin::slotUrlClicked);
+    connect(mViewer, qOverload<const Akonadi::Item &, const QUrl &>(&Viewer::urlClicked), this, &KMReaderWin::slotUrlClicked);
     connect(mViewer, &Viewer::requestConfigSync, kmkernel, &KMKernel::slotRequestConfigSync, Qt::QueuedConnection);   // happens anyway on shutdown, so we can skip it there with using a queued connection
     connect(mViewer, &Viewer::makeResourceOnline, kmkernel, &KMKernel::makeResourceOnline);
     connect(mViewer, &MessageViewer::Viewer::showReader, this, &KMReaderWin::slotShowReader);
@@ -101,7 +101,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     connect(mViewer, &MessageViewer::Viewer::showStatusBarMessage, this, &KMReaderWin::showStatusBarMessage);
     connect(mViewer, &MessageViewer::Viewer::printingFinished, this, &KMReaderWin::slotPrintingFinished);
     connect(mViewer, &MessageViewer::Viewer::zoomChanged, this, &KMReaderWin::zoomChanged);
-    connect(mViewer, QOverload<const Akonadi::Item &>::of(&Viewer::deleteMessage), this, &KMReaderWin::slotDeleteMessage);
+    connect(mViewer, qOverload<const Akonadi::Item &>(&Viewer::deleteMessage), this, &KMReaderWin::slotDeleteMessage);
 
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
     mViewer->addMessageLoadedHandler(new MailCommon::SendMdnHandler(kmkernel, this));

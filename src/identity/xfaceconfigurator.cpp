@@ -108,14 +108,14 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     QStackedWidget *widgetStack = new QStackedWidget(this);
     widgetStack->setEnabled(false);   // since !mEnableCheck->isChecked()
     vlay->addWidget(widgetStack, 1);
-    connect(sourceCombo, QOverload<int>::of(&QComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
-    connect(sourceCombo, QOverload<int>::of(&QComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
+    connect(sourceCombo, qOverload<int>(&QComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
+    connect(sourceCombo, qOverload<int>(&QComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
     connect(mEnableCheck, &QCheckBox::toggled, sourceCombo, &QComboBox::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, widgetStack, &QStackedWidget::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, label, &QLabel::setEnabled);
     // The focus might be still in the widget that is disabled
     connect(mEnableCheck, &QAbstractButton::clicked,
-            mEnableCheck, QOverload<>::of(&QWidget::setFocus));
+            mEnableCheck, qOverload<>(&QWidget::setFocus));
 
     int pageno = 0;
     // page 0: create X-Face from image file or address book entry

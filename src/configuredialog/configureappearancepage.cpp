@@ -196,7 +196,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     connect(mCustomFontCheck, &QAbstractButton::toggled,
             mFontChooser, &QWidget::setEnabled);
     // load the right font settings into mFontChooser:
-    connect(mFontLocationCombo, QOverload<int>::of(&QComboBox::activated),
+    connect(mFontLocationCombo, qOverload<int>(&QComboBox::activated),
             this, &AppearancePage::FontsTab::slotFontSelectorChanged);
 }
 
@@ -372,7 +372,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     mCloseToQuotaThreshold = new QSpinBox(this);
     mCloseToQuotaThreshold->setRange(0, 100);
     mCloseToQuotaThreshold->setSingleStep(1);
-    connect(mCloseToQuotaThreshold, QOverload<int>::of(&QSpinBox::valueChanged),
+    connect(mCloseToQuotaThreshold, qOverload<int>(&QSpinBox::valueChanged),
             this, &ConfigModuleTab::slotEmitChanged);
     mCloseToQuotaThreshold->setSuffix(i18n("%"));
 
@@ -491,7 +491,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
                         mFolderListGroup = new QButtonGroup(this),
                         Qt::Vertical, KMailSettings::self()->folderListItem());
     vlay->addWidget(mFolderListGroupBox);
-    connect(mFolderListGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFolderListGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     QHBoxLayout *folderCBHLayout = new QHBoxLayout;
     mFolderQuickSearchCB = new QCheckBox(i18n("Show folder quick search field"), this);
@@ -504,7 +504,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFavoriteFoldersViewGroupBox->setTitle(i18n("Show Favorite Folders View"));
     mFavoriteFoldersViewGroupBox->setLayout(new QVBoxLayout());
     mFavoriteFoldersViewGroup = new QButtonGroup(this);
-    connect(mFavoriteFoldersViewGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFavoriteFoldersViewGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     QRadioButton *favoriteFoldersViewHiddenRadio = new QRadioButton(i18n("Never"), mFavoriteFoldersViewGroupBox);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewHiddenRadio, static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode));
@@ -525,7 +525,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFolderToolTipsGroupBox->setTitle(i18n("Folder Tooltips"));
     mFolderToolTipsGroupBox->setLayout(new QVBoxLayout());
     mFolderToolTipsGroup = new QButtonGroup(this);
-    connect(mFolderToolTipsGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFolderToolTipsGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     QRadioButton *folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), mFolderToolTipsGroupBox);
     mFolderToolTipsGroup->addButton(folderToolTipsAlwaysRadio, static_cast< int >(FolderTreeWidget::DisplayAlways));
@@ -543,7 +543,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
                         Qt::Vertical, KMailSettings::self()->readerWindowModeItem());
     vlay->addWidget(mReaderWindowModeGroupBox);
 
-    connect(mReaderWindowModeGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mReaderWindowModeGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addStretch(10);   // spacer
 }
@@ -629,7 +629,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
 
     connect(aggregationConfigButton, &MessageList::Utils::AggregationConfigButton::configureDialogCompleted,
             this, &AppearancePageHeadersTab::slotSelectDefaultAggregation);
-    connect(mAggregationComboBox, QOverload<int>::of(&MessageList::Utils::AggregationComboBox::activated),
+    connect(mAggregationComboBox, qOverload<int>(&MessageList::Utils::AggregationComboBox::activated),
             this, &ConfigModuleTab::slotEmitChanged);
 
     // "Theme"
@@ -650,7 +650,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
 
     connect(themeConfigButton, &MessageList::Utils::ThemeConfigButton::configureDialogCompleted,
             this, &AppearancePageHeadersTab::slotSelectDefaultTheme);
-    connect(mThemeComboBox, QOverload<int>::of(&MessageList::Utils::ThemeComboBox::activated),
+    connect(mThemeComboBox, qOverload<int>(&MessageList::Utils::ThemeComboBox::activated),
             this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addWidget(group);
@@ -738,7 +738,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     } // end for loop populating mDateDisplay
 
     vlay->addWidget(mDateDisplayBox);
-    connect(mDateDisplay, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mDateDisplay, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addStretch(10);   // spacer
 }

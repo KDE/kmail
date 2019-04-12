@@ -130,7 +130,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
                                 << i18n("On Manual Mail Checks")
                                 << i18n("On All Mail Checks"));
     glay->addWidget(mSendOnCheckCombo, 2, 1);
-    connect(mSendOnCheckCombo, QOverload<int>::of(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mSendOnCheckCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "default send method" combo:
     mSendMethodCombo = new QComboBox(group);
@@ -139,7 +139,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
                                << i18n("Send Now")
                                << i18n("Send Later"));
     glay->addWidget(mSendMethodCombo, 3, 1);
-    connect(mSendMethodCombo, QOverload<int>::of(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mSendMethodCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // labels:
     QLabel *l = new QLabel(i18n("Send &messages in outbox folder:"), group);
@@ -395,7 +395,7 @@ LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     mLdapConfigureWidget = new KLDAP::LdapConfigureWidget(this);
     layout->addWidget(mLdapConfigureWidget);
 
-    connect(mLdapConfigureWidget, &KLDAP::LdapConfigureWidget::changed, this, QOverload<bool>::of(&LdapCompetionTab::changed));
+    connect(mLdapConfigureWidget, &KLDAP::LdapConfigureWidget::changed, this, qOverload<bool>(&LdapCompetionTab::changed));
 }
 
 LdapCompetionTab::~LdapCompetionTab()

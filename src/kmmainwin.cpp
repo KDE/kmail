@@ -82,7 +82,7 @@ KMMainWin::KMMainWin(QWidget *)
             this, &KMMainWin::displayStatusMessage);
 
     connect(mKMMainWidget, &KMMainWidget::captionChangeRequest,
-            this, QOverload<const QString &>::of(&KMainWindow::setCaption));
+            this, qOverload<const QString &>(&KMainWindow::setCaption));
 
     mKMMainWidget->updateQuickSearchLineText();
     mHideMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());

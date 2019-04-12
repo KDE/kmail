@@ -308,7 +308,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     MailTransport::TransportComboBox *transport = new MailTransport::TransportComboBox(mHeadersArea);
     transport->setToolTip(i18n("Select the outgoing account to use for sending this message"));
     mComposerBase->setTransportCombo(transport);
-    connect(transport, QOverload<int>::of(&MailTransport::TransportComboBox::activated), this, &KMComposerWin::slotTransportChanged);
+    connect(transport, qOverload<int>(&MailTransport::TransportComboBox::activated), this, &KMComposerWin::slotTransportChanged);
     connect(transport, &MailTransport::TransportComboBox::transportRemoved, this, &KMComposerWin::slotTransportRemoved);
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
     mEdtFrom->setObjectName(QStringLiteral("fromLine"));
@@ -459,7 +459,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mIdentityConnection = connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
         slotIdentityChanged(val);
     });
-    connect(kmkernel->identityManager(), QOverload<uint>::of(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
+    connect(kmkernel->identityManager(), qOverload<uint>(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
         if (mComposerBase->identityCombo()->currentIdentity() == val) {
             slotIdentityChanged(val);
         }
@@ -836,9 +836,9 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 2);
     ++row;
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
-    connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusUp, mEdtFrom, QOverload<>::of(&QWidget::setFocus));
+    connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusUp, mEdtFrom, qOverload<>(&QWidget::setFocus));
 
-    connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusDown, mEdtSubject, QOverload<>::of(&QWidget::setFocus));
+    connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusDown, mEdtSubject, qOverload<>(&QWidget::setFocus));
     connect(mEdtSubject, &PimCommon::SpellCheckLineEdit::focusUp, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusBottom);
 
     prevFocus = mComposerBase->recipientsEditor();
@@ -1284,7 +1284,7 @@ void KMComposerWin::setupActions()
 
     mCryptoModuleAction = new KSelectAction(i18n("&Cryptographic Message Format"), this);
     actionCollection()->addAction(QStringLiteral("options_select_crypto"), mCryptoModuleAction);
-    connect(mCryptoModuleAction, QOverload<int>::of(&KSelectAction::triggered), this, &KMComposerWin::slotCryptoModuleSelected);
+    connect(mCryptoModuleAction, qOverload<int>(&KSelectAction::triggered), this, &KMComposerWin::slotCryptoModuleSelected);
     mCryptoModuleAction->setToolTip(i18n("Select a cryptographic format for this message"));
     mCryptoModuleAction->setItems(listCryptoFormat);
 

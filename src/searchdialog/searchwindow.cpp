@@ -133,9 +133,9 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     mUi.mLbxMatches->setSortingEnabled(true);
 
     connect(mUi.mLbxMatches, &Akonadi::EntityTreeView::customContextMenuRequested, this, &SearchWindow::slotContextMenuRequested);
-    connect(mUi.mLbxMatches, QOverload<const Akonadi::Item &>::of(&Akonadi::EntityTreeView::doubleClicked),
+    connect(mUi.mLbxMatches, qOverload<const Akonadi::Item &>(&Akonadi::EntityTreeView::doubleClicked),
             this, &SearchWindow::slotViewMsg);
-    connect(mUi.mLbxMatches, QOverload<const Akonadi::Item &>::of(&Akonadi::EntityTreeView::currentChanged),
+    connect(mUi.mLbxMatches, qOverload<const Akonadi::Item &>(&Akonadi::EntityTreeView::currentChanged),
             this, &SearchWindow::slotCurrentChanged);
     connect(mUi.selectMultipleFolders, &QPushButton::clicked, this, &SearchWindow::slotSelectMultipleFolders);
 

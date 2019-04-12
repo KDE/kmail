@@ -90,7 +90,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     collectionMonitor->setMimeTypeMonitored(KMime::Message::mimeType());
 
     connect(collectionMonitor, &Akonadi::Monitor::collectionAdded, this, &MailFilterAgent::mailCollectionAdded);
-    connect(collectionMonitor, QOverload<const Akonadi::Collection &>::of(&Akonadi::Monitor::collectionChanged),
+    connect(collectionMonitor, qOverload<const Akonadi::Collection &>(&Akonadi::Monitor::collectionChanged),
             this, &MailFilterAgent::mailCollectionChanged);
 
     connect(collectionMonitor, &Akonadi::Monitor::collectionRemoved, this, &MailFilterAgent::mailCollectionRemoved);

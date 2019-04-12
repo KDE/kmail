@@ -226,7 +226,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mFavoritesModel = nullptr;
     mSievePasswordProvider = new KMSieveImapPasswordProvider(winId());
     mVacationManager = new KSieveUi::VacationManager(mSievePasswordProvider, this);
-    connect(mVacationManager, &KSieveUi::VacationManager::updateVacationScriptStatus, this, QOverload<bool, const QString &>::of(&KMMainWidget::updateVacationScriptStatus));
+    connect(mVacationManager, &KSieveUi::VacationManager::updateVacationScriptStatus, this, qOverload<bool, const QString &>(&KMMainWidget::updateVacationScriptStatus));
 
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);
@@ -997,7 +997,7 @@ void KMMainWidget::createWidgets()
     opt |= FolderTreeWidget::DontKeyFilter;
     mFolderTreeWidget = new FolderTreeWidget(this, mGUIClient, opt);
 
-    connect(mFolderTreeWidget->folderTreeView(), QOverload<const Akonadi::Collection &>::of(&EntityTreeView::currentChanged), this, &KMMainWidget::slotFolderChanged);
+    connect(mFolderTreeWidget->folderTreeView(), qOverload<const Akonadi::Collection &>(&EntityTreeView::currentChanged), this, &KMMainWidget::slotFolderChanged);
 
     connect(mFolderTreeWidget->folderTreeView()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &KMMainWidget::updateFolderMenu);
 
@@ -1072,7 +1072,7 @@ void KMMainWidget::createWidgets()
     if (mEnableFavoriteFolderView) {
         mFavoriteCollectionsView = new FavoriteCollectionWidget(KMKernel::self()->mailCommonSettings(), mGUIClient, this);
         refreshFavoriteFoldersViewProperties();
-        connect(mFavoriteCollectionsView, QOverload<const Akonadi::Collection &>::of(&EntityListView::currentChanged), this, &KMMainWidget::slotFolderChanged);
+        connect(mFavoriteCollectionsView, qOverload<const Akonadi::Collection &>(&EntityListView::currentChanged), this, &KMMainWidget::slotFolderChanged);
         connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
         mFavoritesModel = new Akonadi::FavoriteCollectionsModel(
             mFolderTreeWidget->folderTreeWidgetProxyModel(),
@@ -1167,7 +1167,7 @@ void KMMainWidget::createWidgets()
             this, &KMMainWidget::slotItemRemoved);
     connect(kmkernel->folderCollectionMonitor(), &Monitor::itemMoved,
             this, &KMMainWidget::slotItemMoved);
-    connect(kmkernel->folderCollectionMonitor(), QOverload<const Akonadi::Collection &, const QSet<QByteArray> &>::of(&ChangeRecorder::collectionChanged),
+    connect(kmkernel->folderCollectionMonitor(), qOverload<const Akonadi::Collection &, const QSet<QByteArray> &>(&ChangeRecorder::collectionChanged),
             this, &KMMainWidget::slotCollectionChanged);
 
     connect(kmkernel->folderCollectionMonitor(), &Monitor::collectionStatisticsChanged, this, &KMMainWidget::slotCollectionStatisticsChanged);

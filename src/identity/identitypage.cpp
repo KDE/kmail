@@ -59,8 +59,8 @@ IdentityPage::IdentityPage(QWidget *parent)
     mIPage.mIdentityList->setIdentityManager(mIdentityManager);
 
     connect(mIPage.mIdentityList, &QTreeWidget::itemSelectionChanged, this, &IdentityPage::slotIdentitySelectionChanged);
-    connect(this, QOverload<bool>::of(&IdentityPage::changed), this, &IdentityPage::slotIdentitySelectionChanged);
-    connect(mIPage.mIdentityList, QOverload<KMail::IdentityListViewItem *, const QString &>::of(&IdentityListView::rename),
+    connect(this, qOverload<bool>(&IdentityPage::changed), this, &IdentityPage::slotIdentitySelectionChanged);
+    connect(mIPage.mIdentityList, qOverload<KMail::IdentityListViewItem *, const QString &>(&IdentityListView::rename),
             this, &IdentityPage::slotRenameIdentityFromItem);
     connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked, this, &IdentityPage::slotModifyIdentity);
     connect(mIPage.mIdentityList, &IdentityListView::contextMenu, this, &IdentityPage::slotContextMenu);

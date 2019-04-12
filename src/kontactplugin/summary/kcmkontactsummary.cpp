@@ -110,7 +110,7 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
 
     load();
     connect(mPluginView, &QTreeWidget::itemChanged,
-            this, QOverload<>::of(&KCMKontactSummary::changed));
+            this, qOverload<>(&KCMKontactSummary::changed));
 
     KAboutData *about = new KAboutData(QStringLiteral("kontactsummary"),
                                        i18n("kontactsummary"),
