@@ -54,6 +54,7 @@ IdentityPage::IdentityPage(QWidget *parent)
         return;
     }
     mIdentityManager = KernelIf->identityManager();
+    connect(mIdentityManager, &KIdentityManagement::IdentityManager::needToReloadIdentitySettings, this, &IdentityPage::load);
 
     mIPage.setupUi(this);
     mIPage.mIdentityList->setIdentityManager(mIdentityManager);
