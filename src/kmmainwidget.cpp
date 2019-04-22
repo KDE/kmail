@@ -204,7 +204,7 @@ using MessageViewer::AttachmentStrategy;
 Q_GLOBAL_STATIC(KMMainWidget::PtrList, theMainWidgetList)
 
 //-----------------------------------------------------------------------------
-KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, KSharedConfig::Ptr config)
+KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, const KSharedConfig::Ptr &config)
     : QWidget(parent)
     , mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
 {

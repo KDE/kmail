@@ -97,7 +97,7 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 public:
     typedef QList<KMMainWidget *> PtrList;
 
-    KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, KSharedConfig::Ptr config = KMKernel::self()->config());
+    KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, const KSharedConfig::Ptr &config = KMKernel::self()->config());
     ~KMMainWidget() override;
     void destruct();
 

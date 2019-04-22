@@ -47,7 +47,7 @@ void DisplayMessageFormatActionMenuTest::shouldEmitSignalWhenClickOnSubMenu()
 {
     DisplayMessageFormatActionMenu menu;
     KToggleAction *prefereHtml = menu.findChild<KToggleAction *>(QStringLiteral("prefer-html-action"));
-    QSignalSpy spy(&menu, SIGNAL(changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage)));
+    QSignalSpy spy(&menu, &DisplayMessageFormatActionMenu::changeDisplayMessageFormat);
     prefereHtml->trigger();
     QCOMPARE(spy.count(), 1);
     QCOMPARE(spy.at(0).at(0).value<MessageViewer::Viewer::DisplayFormatMessage>(), MessageViewer::Viewer::Html);
@@ -69,7 +69,7 @@ void DisplayMessageFormatActionMenuTest::shouldSelectItemWhenChangeFormat()
 void DisplayMessageFormatActionMenuTest::shouldDontEmitSignalWhenChangeFormat()
 {
     DisplayMessageFormatActionMenu menu;
-    QSignalSpy spy(&menu, SIGNAL(changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage)));
+    QSignalSpy spy(&menu, &DisplayMessageFormatActionMenu::changeDisplayMessageFormat);
     menu.setDisplayMessageFormat(MessageViewer::Viewer::Text);
     QCOMPARE(spy.count(), 0);
 }
