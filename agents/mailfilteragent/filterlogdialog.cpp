@@ -98,15 +98,11 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     }
 
     MailfilterPurposeMenuWidget *purposeMenu = new MailfilterPurposeMenuWidget(this, this);
-    if (purposeMenu->menu()) {
-        QPushButton *mShareButton = new QPushButton(i18n("Share..."), this);
-        mShareButton->setMenu(purposeMenu->menu());
-        mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
-        purposeMenu->setEditorWidget(mTextEdit->editor());
-        buttonBox->addButton(mShareButton, QDialogButtonBox::ActionRole);
-    } else {
-        delete purposeMenu;
-    }
+    QPushButton *mShareButton = new QPushButton(i18n("Share..."), this);
+    mShareButton->setMenu(purposeMenu->menu());
+    mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
+    purposeMenu->setEditorWidget(mTextEdit->editor());
+    buttonBox->addButton(mShareButton, QDialogButtonBox::ActionRole);
 
     mLogActiveBox = new QCheckBox(i18n("&Log filter activities"), page);
     pageVBoxLayout->addWidget(mLogActiveBox);
