@@ -1906,7 +1906,7 @@ void KMComposerWin::slotInsertFile()
     mRecentAction->addUrl(u);
     // Prevent race condition updating list when multiple composers are open
     {
-        QUrlQuery query;
+        QUrlQuery query(u);
         const QString encoding = MimeTreeParser::NodeHelper::encodingForName(query.queryItemValue(QStringLiteral("charset")));
         QStringList urls = KMailSettings::self()->recentUrls();
         QStringList encodings = KMailSettings::self()->recentEncodings();
