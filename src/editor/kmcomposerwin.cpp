@@ -1957,7 +1957,8 @@ void KMComposerWin::slotInsertRecentFile(const QUrl &u)
         encoding = encodings[ index ];
     } else {
         qCDebug(KMAIL_LOG) << " encoding not found so we can't insert text"; //see InsertTextFileJob
-        return;
+        encoding = QStringLiteral("UTF-8");
+        //return;
     }
 
     MessageComposer::InsertTextFileJob *job = new MessageComposer::InsertTextFileJob(mComposerBase->editor(), u);
