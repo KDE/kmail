@@ -1100,7 +1100,12 @@ void KMComposerWin::setupActions()
     actionCollection()->addAction(QStringLiteral("insert_file_recent"), mRecentAction);
     connect(mRecentAction, &KRecentFilesAction::urlSelected, this, &KMComposerWin::slotInsertRecentFile);
     connect(mRecentAction, &KRecentFilesAction::recentListCleared, this, &KMComposerWin::slotRecentListFileClear);
-    mRecentAction->loadEntries(KMKernel::self()->config()->group(QString()));
+
+    const QStringList urls = KMailSettings::self()->recentUrls();
+    for (const QString &url : urls) {
+        mRecentAction->addUrl(QUrl(url));
+    }
+
 
     action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
     KMail::Util::addQActionHelpText(action, i18n("Open Address Book"));
@@ -1928,7 +1933,7 @@ void KMComposerWin::slotInsertFile()
         encodings.prepend(encoding);
         KMailSettings::self()->setRecentUrls(urls);
         KMailSettings::self()->setRecentEncodings(encodings);
-        mRecentAction->saveEntries(KMKernel::self()->config()->group(QString()));
+        KMailSettings::self()->save();
     }
     slotInsertRecentFile(u);
 }
@@ -1938,8 +1943,8 @@ void KMComposerWin::slotRecentListFileClear()
     KSharedConfig::Ptr config = KMKernel::self()->config();
     KConfigGroup group(config, "Composer");
     group.deleteEntry("recent-urls");
-    group.deleteEntry("recent-encodings");
-    mRecentAction->saveEntries(config->group(QString()));
+    group.deleteEntry("recent-encoding");
+    KMailSettings::self()->save();
 }
 
 void KMComposerWin::slotInsertRecentFile(const QUrl &u)
@@ -1957,10 +1962,8 @@ void KMComposerWin::slotInsertRecentFile(const QUrl &u)
         encoding = encodings[ index ];
     } else {
         qCDebug(KMAIL_LOG) << " encoding not found so we can't insert text"; //see InsertTextFileJob
-        encoding = QStringLiteral("UTF-8");
-        //return;
+        return;
     }
-
     MessageComposer::InsertTextFileJob *job = new MessageComposer::InsertTextFileJob(mComposerBase->editor(), u);
     job->setEncoding(encoding);
     connect(job, &KJob::result, this, &KMComposerWin::slotInsertTextFile);
