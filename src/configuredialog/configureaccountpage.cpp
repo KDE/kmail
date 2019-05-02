@@ -35,6 +35,7 @@ using MailTransport::TransportManagementWidget;
 #include <AkonadiCore/agenttype.h>
 #include <AkonadiCore/agentmanager.h>
 #include <AkonadiWidgets/agenttypedialog.h>
+#include <AkonadiWidgets/AgentConfigurationDialog>
 #include <AkonadiCore/agentinstancecreatejob.h>
 #include <identity/identitypage.h>
 #include <Libkdepim/LdapConfigureWidget>
@@ -51,6 +52,8 @@ using MailTransport::TransportManagementWidget;
 #include <QLabel>
 #include <QProcess>
 #include <QVBoxLayout>
+
+#include <memory>
 
 QString AccountsPage::helpAnchor() const
 {
@@ -345,8 +348,9 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 
 void AccountsPage::ReceivingTab::slotEditNotifications()
 {
-    if (mNewMailNotifierInterface) {
-        mNewMailNotifierInterface->asyncCall(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
+    const auto instance = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_newmailnotifier_agent"));
+    if (instance.isValid()) {
+        std::unique_ptr<Akonadi::AgentConfigurationDialog>(new Akonadi::AgentConfigurationDialog(instance, this))->exec();
     } else {
         KMessageBox::error(this, i18n("New Mail Notifier Agent not registered. Please contact your administrator."));
     }
