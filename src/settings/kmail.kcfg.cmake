@@ -295,11 +295,11 @@
       </entry>
       <entry name="ConfigureDialogWidth" type="Int">
         <label>The width of the Configure KMail dialog (for internal use only)</label>
-        <default>0</default>
+        <default>800</default>
       </entry>
       <entry name="ConfigureDialogHeight" type="Int">
         <label>The height of the Configure KMail dialog (for internal use only)</label>
-        <default>0</default>
+        <default>600</default>
       </entry>
       <entry name="FolderViewWidth" type="Int">
         <default>250</default>
