@@ -3853,8 +3853,6 @@ void KMMainWidget::updateMessageActionsDelayed()
     mGUIClient->plugActionList(QStringLiteral("messagelist_actionlist"), actionList);
     mMsgActions->sendAgainAction()->setEnabled(statusSendAgain);
 
-    mSaveAsAction->setEnabled(single_actions);
-
     if (currentFolderSettingsIsValid) {
         updateMoveAction(mCurrentFolderSettings->statistics());
     } else {
