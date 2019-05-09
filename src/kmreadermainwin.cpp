@@ -180,14 +180,39 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     updateActions();
 }
 
-void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message::Ptr &message)
+void KMReaderMainWin::showNextMessage()
 {
-    if (!message) {
+    if (mCurrentMessageIndex >= (mListMessage.count() - 1)) {
+        return;
+    }
+    mCurrentMessageIndex++;
+    initializeMessage(mListMessage.at(mCurrentMessageIndex));
+}
+
+void KMReaderMainWin::showPreviousMessage()
+{
+    if (mCurrentMessageIndex > 0) {
+        return;
+    }
+    mCurrentMessageIndex--;
+    initializeMessage(mListMessage.at(mCurrentMessageIndex));
+}
+
+void KMReaderMainWin::showMessage(const QString &encoding, const QList<KMime::Message::Ptr> &message)
+{
+    if (message.isEmpty()) {
         return;
     }
 
-    Akonadi::Item item;
+    mListMessage = message;
+    mReaderWin->setOverrideEncoding(encoding);
+    mCurrentMessageIndex = 0;
+    initializeMessage(mListMessage.at(mCurrentMessageIndex));
+}
 
+void KMReaderMainWin::initializeMessage(const KMime::Message::Ptr &message)
+{
+    Akonadi::Item item;
     item.setPayload<KMime::Message::Ptr>(message);
     Akonadi::MessageFlags::copyMessageFlags(*message, item);
     item.setMimeType(KMime::Message::mimeType());
@@ -195,12 +220,20 @@ void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message:
     mMsg = item;
     mMsgActions->setCurrentMessage(item);
 
-    mReaderWin->setOverrideEncoding(encoding);
     mReaderWin->setMessage(message);
     setCaption(message->subject()->asUnicodeString());
 
     mTrashAction->setEnabled(false);
     updateActions();
+}
+
+void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message::Ptr &message)
+{
+    if (!message) {
+        return;
+    }
+    const QList<KMime::Message::Ptr> lst{message};
+    showMessage(encoding, lst);
 }
 
 void KMReaderMainWin::updateActions()

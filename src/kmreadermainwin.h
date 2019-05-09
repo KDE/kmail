@@ -57,6 +57,7 @@ public:
     */
     void showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection = Akonadi::Collection());
 
+    void showMessage(const QString &encoding, const QList<KMime::Message::Ptr> &message);
     void showMessage(const QString &encoding, const KMime::Message::Ptr &message);
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
 public Q_SLOTS:
@@ -96,7 +97,12 @@ private:
     void slotSelectMoreMessageTagList();
     void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
     void slotUpdateMessageTagList(const Akonadi::Tag &tag);
+    void initializeMessage(const KMime::Message::Ptr &message);
+    void showNextMessage();
+    void showPreviousMessage();
 
+    QList<KMime::Message::Ptr> mListMessage;
+    int mCurrentMessageIndex = 0;
     Akonadi::Collection mParentCollection;
     Akonadi::Item mMsg;
     // a few actions duplicated from kmmainwidget
