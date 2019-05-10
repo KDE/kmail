@@ -102,6 +102,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     connect(mViewer, &MessageViewer::Viewer::printingFinished, this, &KMReaderWin::slotPrintingFinished);
     connect(mViewer, &MessageViewer::Viewer::zoomChanged, this, &KMReaderWin::zoomChanged);
     connect(mViewer, qOverload<const Akonadi::Item &>(&Viewer::deleteMessage), this, &KMReaderWin::slotDeleteMessage);
+    connect(mViewer, &MessageViewer::Viewer::showNextMessage, this, &KMReaderWin::showNextMessage);
+    connect(mViewer, &MessageViewer::Viewer::showPreviousMessage, this, &KMReaderWin::showPreviousMessage);
+
 
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
     mViewer->addMessageLoadedHandler(new MailCommon::SendMdnHandler(kmkernel, this));
@@ -246,6 +249,11 @@ void KMReaderWin::setOverrideEncoding(const QString &encoding)
 void KMReaderWin::clearCache()
 {
     clear();
+}
+
+void KMReaderWin::hasMultiMessages(bool multi)
+{
+    mViewer->hasMultiMessages(multi);
 }
 
 // enter items for the "Important changes" list here:

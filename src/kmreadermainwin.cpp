@@ -117,6 +117,8 @@ void KMReaderMainWin::initKMReaderMainWin()
     connect(kmkernel, &KMKernel::configChanged, this, &KMReaderMainWin::slotConfigChanged);
     connect(mReaderWin, &KMReaderWin::showStatusBarMessage, this, &KMReaderMainWin::slotShowMessageStatusBar);
     connect(mReaderWin, &KMReaderWin::zoomChanged, this, &KMReaderMainWin::setZoomChanged);
+    connect(mReaderWin, &KMReaderWin::showPreviousMessage, this, &KMReaderMainWin::showPreviousMessage);
+    connect(mReaderWin, &KMReaderWin::showNextMessage, this, &KMReaderMainWin::showNextMessage);
 }
 
 KMReaderMainWin::~KMReaderMainWin()
@@ -208,6 +210,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const QList<KMime::Me
     mReaderWin->setOverrideEncoding(encoding);
     mCurrentMessageIndex = 0;
     initializeMessage(mListMessage.at(mCurrentMessageIndex));
+    mReaderWin->hasMultiMessages(message.count() > 1);
 }
 
 void KMReaderMainWin::initializeMessage(const KMime::Message::Ptr &message)

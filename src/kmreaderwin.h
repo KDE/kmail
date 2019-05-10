@@ -176,9 +176,14 @@ public:
     void setPrintElementBackground(bool printElementBackground);
     /** Force update even if message is the same */
     void clearCache();
+
+    void hasMultiMessages(bool multi);
+
 Q_SIGNALS:
     void showStatusBarMessage(const QString &message);
     void zoomChanged(qreal factor);
+    void showPreviousMessage();
+    void showNextMessage();
 
 public Q_SLOTS:
 
