@@ -127,16 +127,17 @@ void AttachmentController::selectionChanged()
 
 void AttachmentController::onShowAttachment(KMime::Content *content, const QByteArray &charset)
 {
+    const QString charsetStr = QString::fromLatin1(charset);
     if (content->bodyAsMessage()) {
         KMime::Message::Ptr m(new KMime::Message);
         m->setContent(content->bodyAsMessage()->encodedContent());
         m->parse();
         KMReaderMainWin *win = new KMReaderMainWin();
-        win->showMessage(QString::fromLatin1(charset), m);
+        win->showMessage(charsetStr, m);
         win->show();
     } else {
         KMReaderMainWin *win
-            = new KMReaderMainWin(content, MessageViewer::Viewer::Text, QString::fromLatin1(charset));
+            = new KMReaderMainWin(content, MessageViewer::Viewer::Text, charsetStr);
         win->show();
     }
 }
