@@ -796,6 +796,8 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             }
             startOfMessage += 1; // the message starts after the '\n'
         }
+        QList<KMime::Message::Ptr> listMessages;
+
         // check for multiple messages in the file
         bool multipleMessages = true;
         int endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "));
@@ -814,7 +816,8 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         }
         KMReaderMainWin *win = new KMReaderMainWin();
         KMime::Message::Ptr mMsg(msg);
-        win->showMessage(mEncoding, mMsg);
+        listMessages << mMsg;
+        win->showMessage(mEncoding, listMessages);
         win->show();
         if (multipleMessages) {
             KMessageBox::information(win,
