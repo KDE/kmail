@@ -250,6 +250,10 @@ void KMReaderWin::clearCache()
 {
     clear();
 }
+void KMReaderWin::updateShowMultiMessagesButton(bool enablePreviousButton, bool enableNextButton)
+{
+    mViewer->updateShowMultiMessagesButton(enablePreviousButton, enableNextButton);
+}
 
 void KMReaderWin::hasMultiMessages(bool multi)
 {

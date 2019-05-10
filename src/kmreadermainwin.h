@@ -100,6 +100,7 @@ private:
     void initializeMessage(const KMime::Message::Ptr &message);
     void showNextMessage();
     void showPreviousMessage();
+    void updateButtons();
 
     QList<KMime::Message::Ptr> mListMessage;
     int mCurrentMessageIndex = 0;

@@ -182,6 +182,14 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     updateActions();
 }
 
+void KMReaderMainWin::updateButtons()
+{
+    if (mListMessage.count() <= 1) {
+        return;
+    }
+    mReaderWin->updateShowMultiMessagesButton((mCurrentMessageIndex > 0), (mCurrentMessageIndex < (mListMessage.count() - 1)));
+}
+
 void KMReaderMainWin::showNextMessage()
 {
     if (mCurrentMessageIndex >= (mListMessage.count() - 1)) {
@@ -189,15 +197,17 @@ void KMReaderMainWin::showNextMessage()
     }
     mCurrentMessageIndex++;
     initializeMessage(mListMessage.at(mCurrentMessageIndex));
+    updateButtons();
 }
 
 void KMReaderMainWin::showPreviousMessage()
 {
-    if (mCurrentMessageIndex > 0) {
+    if (mCurrentMessageIndex <= 0) {
         return;
     }
     mCurrentMessageIndex--;
     initializeMessage(mListMessage.at(mCurrentMessageIndex));
+    updateButtons();
 }
 
 void KMReaderMainWin::showMessage(const QString &encoding, const QList<KMime::Message::Ptr> &message)
@@ -211,6 +221,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const QList<KMime::Me
     mCurrentMessageIndex = 0;
     initializeMessage(mListMessage.at(mCurrentMessageIndex));
     mReaderWin->hasMultiMessages(message.count() > 1);
+    updateButtons();
 }
 
 void KMReaderMainWin::initializeMessage(const KMime::Message::Ptr &message)
