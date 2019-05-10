@@ -800,23 +800,39 @@ void KMOpenMsgCommand::slotResult(KJob *job)
 
         // check for multiple messages in the file
         bool multipleMessages = true;
-        int endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "));
+        int endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "), startOfMessage);
+        while(endOfMessage != -1) {
+            KMime::Message *msg = new KMime::Message;
+            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
+            msg->parse();
+            if (!msg->hasContent()) {
+                delete msg;
+                msg = nullptr;
+                doesNotContainMessage();
+                return;
+            }
+            KMime::Message::Ptr mMsg(msg);
+            listMessages << mMsg;
+            startOfMessage = endOfMessage + 1;
+            endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "), startOfMessage);
+        }
         if (endOfMessage == -1) {
             endOfMessage = mMsgString.length();
             multipleMessages = false;
-        }
-        KMime::Message *msg = new KMime::Message;
-        msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
-        msg->parse();
-        if (!msg->hasContent()) {
-            delete msg;
-            msg = nullptr;
-            doesNotContainMessage();
-            return;
+            KMime::Message *msg = new KMime::Message;
+            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
+            msg->parse();
+            if (!msg->hasContent()) {
+                delete msg;
+                msg = nullptr;
+                doesNotContainMessage();
+                return;
+            }
+            KMime::Message::Ptr mMsg(msg);
+            listMessages << mMsg;
+
         }
         KMReaderMainWin *win = new KMReaderMainWin();
-        KMime::Message::Ptr mMsg(msg);
-        listMessages << mMsg;
         win->showMessage(mEncoding, listMessages);
         win->show();
         if (multipleMessages) {
