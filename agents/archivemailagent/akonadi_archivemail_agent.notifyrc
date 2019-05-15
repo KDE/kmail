@@ -43,7 +43,7 @@ Comment[uk]=Агент архівування пошти
 Comment[wa]=Adjint d' årtchivaedje d' emiles
 Comment[x-test]=xxArchive Mail Agentxx
 Comment[zh_CN]=邮件归档代理
-Comment[zh_TW]=歸檔郵件代理程式
+Comment[zh_TW]=封存郵件代理程式
 Name=Archive Mail Agent
 Name[ar]=وكيل أرشفة البريد
 Name[bs]=Arhiva poštanskih agenata
@@ -87,7 +87,7 @@ Name[uk]=Агент архівування пошти
 Name[wa]=Adjint d' årtchivaedje d' emiles
 Name[x-test]=xxArchive Mail Agentxx
 Name[zh_CN]=邮件归档代理
-Name[zh_TW]=歸檔郵件代理程式
+Name[zh_TW]=封存郵件代理程式
 
 [Event/archivemailfinished]
 Name=Archive Mail finished
@@ -132,7 +132,7 @@ Name[uk]=Архівування пошти завершено
 Name[wa]=Årtchivaedje des emiles tot fwait
 Name[x-test]=xxArchive Mail finishedxx
 Name[zh_CN]=邮件归档完成
-Name[zh_TW]=歸檔郵件已完成
+Name[zh_TW]=封存郵件已完成
 Action=Popup
 
 [Event/archivemailstarted]
@@ -178,7 +178,7 @@ Name[uk]=Розпочато архівування пошти
 Name[wa]=Årtchivaedje des emiles ataké
 Name[x-test]=xxArchive Mail startedxx
 Name[zh_CN]=邮件归档开始
-Name[zh_TW]=歸檔郵件已開始
+Name[zh_TW]=封存郵件已開始
 Action=Popup
 
 [Event/archivemailfolderdoesntexist]
@@ -264,6 +264,6 @@ Name[uk]=Помилка під час архівування пошти
 Name[wa]=Åk n' a nén stî come dj' årtchivéve les emiles
 Name[x-test]=xxArchive Mail Errorxx
 Name[zh_CN]=邮件归档发生错误
-Name[zh_TW]=歸檔郵件發生錯誤
+Name[zh_TW]=封存郵件發生錯誤
 Action=Popup
 

@@ -419,7 +419,7 @@ Name[tr]=Dizindeki Postaları Arşivle tamamlandı
 Name[uk]=Архівування пошти до теки завершено
 Name[x-test]=xxArchive Mails in Folder donexx
 Name[zh_CN]=文件夹中的邮件归档完成
-Name[zh_TW]=資料夾中的郵件已歸檔完成
+Name[zh_TW]=資料夾中的郵件已封存完成
 Action=None
 
 [Event/folderarchiveerror]
@@ -460,5 +460,5 @@ Name[tr]=Klasör Arşivleme Hatası
 Name[uk]=Помилка архівування до теки
 Name[x-test]=xxFolder Archive Errorxx
 Name[zh_CN]=文件夹归档错误
-Name[zh_TW]=資料夾歸檔錯誤
+Name[zh_TW]=資料夾封存錯誤
 Action=Popup
