@@ -506,7 +506,6 @@ private Q_SLOTS:
     void slotRedirectCurrentMessage();
     void slotEditCurrentVacation();
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
-    void slotAccountSettings();
 private:
     void slotSetFocusToViewer();
     void deleteSelectedMessages(bool confirmDelete);    // completely delete message
@@ -521,6 +520,8 @@ private:
     QAction *filterToAction(MailCommon::MailFilter *filter);
     Akonadi::Collection::List applyFilterOnCollection(bool recursive);
     void setShowStatusBarMessage(const QString &msg);
+    void slotRestartAccount();
+    void slotAccountSettings();
 
     // Message actions
     QAction *mDeleteAction = nullptr;
@@ -536,6 +537,7 @@ private:
     QAction *mArchiveAction = nullptr;
     QAction *mSelectAllMessages = nullptr;
     KActionMenuTransport *mSendActionMenu = nullptr;
+    QAction *mRestartAccountSettings = nullptr;
     // Filter actions
     KActionMenu *mFilterMenu = nullptr;
     QAction *mExpireConfigAction = nullptr;

@@ -3575,6 +3575,10 @@ void KMMainWidget::setupActions()
     mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
     actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
     connect(mAccountSettings, &QAction::triggered, this, &KMMainWidget::slotAccountSettings);
+
+    mRestartAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Restart Account"), this);
+    actionCollection()->addAction(QStringLiteral("resource_restart"), mRestartAccountSettings);
+    connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
@@ -4057,8 +4061,10 @@ void KMMainWidget::updateFolderMenu()
     }
     if (mCurrentCollection.parentCollection() != Akonadi::Collection::root()) {
         mGUIClient->unplugActionList(QStringLiteral("resource_settings"));
+        mGUIClient->unplugActionList(QStringLiteral("resource_restart"));
     } else {
         mGUIClient->plugActionList(QStringLiteral("resource_settings"), {mAccountSettings});
+        mGUIClient->plugActionList(QStringLiteral("resource_restart"), {mRestartAccountSettings});
     }
 
     mGUIClient->unplugActionList(QStringLiteral("collectionview_actionlist"));
@@ -4601,6 +4607,20 @@ void KMMainWidget::slotAccountSettings()
     }
 
     instance.configure(this);
+}
+
+void KMMainWidget::slotRestartAccount()
+{
+    if (!mCurrentCollection.isValid() || mCurrentCollection.parentCollection() != Akonadi::Collection::root()) {
+        return;
+    }
+
+    auto instance = Akonadi::AgentManager::self()->instance(mCurrentCollection.resource());
+    if (!instance.isValid()) {
+        return;
+    }
+
+    instance.restart();
 }
 
 void KMMainWidget::savePaneSelection()
