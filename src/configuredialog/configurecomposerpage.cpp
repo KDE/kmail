@@ -58,7 +58,9 @@ using KPIM::RecentAddresses;
 #include <QRegularExpressionValidator>
 
 #include <libkdepimakonadi/completionconfiguredialog.h>
-
+#ifdef KDEPIM_ENTERPRISE_BUILD
+#include <QComboBox>
+#endif
 QString ComposerPage::helpAnchor() const
 {
     return QStringLiteral("configure-composer");
@@ -281,7 +283,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     connect(mImprovePlainTextOfHtmlMessage, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mImprovePlainTextOfHtmlMessage, row, 0, 1, -1);
     ++row;
-
+    QLabel *label = nullptr;
 #ifdef KDEPIM_ENTERPRISE_BUILD
     ++row;
     // "Default forwarding type" combobox
@@ -340,7 +342,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 #ifdef KDEPIM_ENTERPRISE_BUILD
     // "Warn if too many recipients" checkbox/spinbox
     mRecipientCheck = new QCheckBox(
-        GlobalSettings::self()->tooManyRecipientsItem()->label(), this);
+        KMailSettings::self()->tooManyRecipientsItem()->label(), this);
     mRecipientCheck->setObjectName(QStringLiteral("kcfg_TooManyRecipients"));
     helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8().constData());
     mRecipientCheck->setWhatsThis(helpText);
@@ -383,7 +385,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecipients->setToolTip(helpText);
     mMaximumRecipients->setWhatsThis(helpText);
 
-    QLabel *label = new QLabel(MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this);
+    label = new QLabel(MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this);
     label->setBuddy(mMaximumRecipients);
 
     connect(mMaximumRecipients, qOverload<int>(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
