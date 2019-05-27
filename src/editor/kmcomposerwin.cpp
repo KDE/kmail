@@ -492,7 +492,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
         setMessage(aMsg, lastSignState, lastEncryptState);
     }
 
-    mComposerBase->recipientsEditor()->setFocus();
+    mComposerBase->recipientsEditor()->setFocusBottom();
     composerEditorNg->composerActions()->updateActionStates(); // set toolbar buttons to correct values
 
     mDone = true;
