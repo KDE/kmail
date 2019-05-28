@@ -61,8 +61,6 @@ public:
     QSize restoreDialogSize() const override;
     void saveDialogSize(const QSize &size) override;
 
-Q_SIGNALS:
-    void archiveNow(ArchiveMailInfo *info);
 
 private:
     void createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item = nullptr);
@@ -75,7 +73,6 @@ private:
     void updateButtons();
     void slotOpenFolder();
     void slotCustomContextMenuRequested(const QPoint &);
-    void slotArchiveNow();
     void slotItemChanged(QTreeWidgetItem *item, int);
 
     bool mChanged = false;

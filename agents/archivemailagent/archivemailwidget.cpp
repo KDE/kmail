@@ -118,8 +118,6 @@ void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
     if (!listItems.isEmpty()) {
         if (listItems.count() == 1) {
             menu.addAction(i18n("Open Containing Folder..."), this, &ArchiveMailWidget::slotOpenFolder);
-            menu.addSeparator();
-            menu.addAction(i18n("Archive now"), this, &ArchiveMailWidget::slotArchiveNow);
         }
         menu.addSeparator();
         menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &ArchiveMailWidget::slotRemoveItem);
@@ -307,23 +305,6 @@ void ArchiveMailWidget::slotOpenFolder()
             const QUrl url = archiveItemInfo->url();
             KRun *runner = new KRun(url, parentWidget());   // will delete itself
             runner->setRunExecutables(false);
-        }
-    }
-}
-
-void ArchiveMailWidget::slotArchiveNow()
-{
-    const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
-    if (listItems.count() == 1) {
-        QTreeWidgetItem *item = listItems.first();
-        if (!item) {
-            return;
-        }
-        ArchiveMailItem *archiveItem = static_cast<ArchiveMailItem *>(item);
-        ArchiveMailInfo *archiveItemInfo = archiveItem->info();
-        save();
-        if (archiveItemInfo) {
-            Q_EMIT archiveNow(archiveItemInfo);
         }
     }
 }
