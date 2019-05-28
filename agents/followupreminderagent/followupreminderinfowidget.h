@@ -58,7 +58,7 @@ public:
     bool save() const;
     void load();
 
-    QList<qint32> listRemoveId() const;
+    Q_REQUIRED_RESULT QList<qint32> listRemoveId() const;
 
 private:
     void slotCustomContextMenuRequested(const QPoint &pos);

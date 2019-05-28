@@ -150,7 +150,7 @@ void ArchiveMailManager::resume()
     mArchiveMailKernel->jobScheduler()->resume();
 }
 
-QString ArchiveMailManager::printCurrentListInfo()
+QString ArchiveMailManager::printCurrentListInfo() const
 {
     QString infoStr;
     if (mListArchiveInfo.isEmpty()) {
@@ -177,7 +177,7 @@ QString ArchiveMailManager::infoToStr(ArchiveMailInfo *info) const
     return infoStr;
 }
 
-QString ArchiveMailManager::printArchiveListInfo()
+QString ArchiveMailManager::printArchiveListInfo() const
 {
     QString infoStr;
     const QStringList collectionList = mConfig->groupList().filter(QRegularExpression(QStringLiteral("ArchiveMailCollection \\d+")));

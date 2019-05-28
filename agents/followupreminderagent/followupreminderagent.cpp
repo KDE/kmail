@@ -116,7 +116,7 @@ void FollowUpReminderAgent::reload()
     }
 }
 
-QString FollowUpReminderAgent::printDebugInfo()
+QString FollowUpReminderAgent::printDebugInfo() const
 {
     return mManager->printDebugInfo();
 }

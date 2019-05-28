@@ -38,7 +38,7 @@ public:
     void load(bool forceReloadConfig = false);
     void checkFollowUp(const Akonadi::Item &item, const Akonadi::Collection &col);
 
-    QString printDebugInfo();
+    Q_REQUIRED_RESULT QString printDebugInfo() const;
 private:
     Q_DISABLE_COPY(FollowUpReminderManager)
     void slotCheckFollowUpFinished(const QString &messageId, Akonadi::Item::Id id);
@@ -47,7 +47,7 @@ private:
     void slotFinishTaskFailed();
     void slotReparseConfiguration();
     void answerReceived(const QString &from);
-    QString infoToStr(FollowUpReminder::FollowUpReminderInfo *info);
+    Q_REQUIRED_RESULT QString infoToStr(FollowUpReminder::FollowUpReminderInfo *info) const;
 
     KSharedConfig::Ptr mConfig;
     QList<FollowUpReminder::FollowUpReminderInfo *> mFollowUpReminderInfoList;

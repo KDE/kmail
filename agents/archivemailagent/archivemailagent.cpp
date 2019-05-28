@@ -135,12 +135,12 @@ void ArchiveMailAgent::resume()
     }
 }
 
-QString ArchiveMailAgent::printArchiveListInfo()
+QString ArchiveMailAgent::printArchiveListInfo() const
 {
     return mArchiveManager->printArchiveListInfo();
 }
 
-QString ArchiveMailAgent::printCurrentListInfo()
+QString ArchiveMailAgent::printCurrentListInfo() const
 {
     return mArchiveManager->printCurrentListInfo();
 }
