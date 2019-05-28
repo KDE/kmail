@@ -29,7 +29,7 @@ class SendLaterRemoveMessageJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit SendLaterRemoveMessageJob(const QList<Akonadi::Item::Id> &listItem, QObject *parent = nullptr);
+    explicit SendLaterRemoveMessageJob(const QVector<Akonadi::Item::Id> &listItem, QObject *parent = nullptr);
     ~SendLaterRemoveMessageJob();
 
     void start();
@@ -38,7 +38,7 @@ private:
     Q_DISABLE_COPY(SendLaterRemoveMessageJob)
     void slotItemDeleteDone(KJob *job);
     void deleteItem();
-    QList<Akonadi::Item::Id> mListItems;
+    QVector<Akonadi::Item::Id> mListItems;
     int mIndex;
 };
 

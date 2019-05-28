@@ -30,7 +30,7 @@ public:
     explicit SendLaterConfigureDialog(QWidget *parent = nullptr);
     ~SendLaterConfigureDialog();
 
-    QList<Akonadi::Item::Id> messagesToRemove() const;
+    QVector<Akonadi::Item::Id> messagesToRemove() const;
 
 public Q_SLOTS:
     void slotNeedToReloadConfig();

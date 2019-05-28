@@ -144,7 +144,7 @@ void SendLaterAgent::configure(WId windowId)
     connect(dialog.data(), &SendLaterConfigureDialog::sendNow, this, &SendLaterAgent::slotSendNow);
     if (dialog->exec()) {
         mManager->load();
-        QList<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
+        const QVector<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
         if (!listMessage.isEmpty()) {
             //Will delete in specific job when done.
             SendLaterRemoveMessageJob *sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);

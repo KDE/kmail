@@ -36,7 +36,6 @@
 #include <AkonadiCore/ItemFetchScope>
 #include <Akonadi/KMime/SpecialMailCollections>
 
-#include <QList>
 #include <QTimer>
 
 namespace {

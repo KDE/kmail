@@ -21,7 +21,7 @@
 #include <ItemDeleteJob>
 #include "sendlateragent_debug.h"
 
-SendLaterRemoveMessageJob::SendLaterRemoveMessageJob(const QList<Akonadi::Item::Id> &listItem, QObject *parent)
+SendLaterRemoveMessageJob::SendLaterRemoveMessageJob(const QVector<Akonadi::Item::Id> &listItem, QObject *parent)
     : QObject(parent)
     , mListItems(listItem)
     , mIndex(0)
