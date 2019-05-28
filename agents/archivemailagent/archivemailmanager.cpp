@@ -49,17 +49,6 @@ ArchiveMailManager::~ArchiveMailManager()
     qDeleteAll(mListArchiveInfo);
 }
 
-void ArchiveMailManager::slotArchiveNow(ArchiveMailInfo *info)
-{
-    if (!info) {
-        return;
-    }
-    ArchiveMailInfo *stockInfo = new ArchiveMailInfo(*info);
-    mListArchiveInfo.append(stockInfo);
-    ScheduledArchiveTask *task = new ScheduledArchiveTask(this, stockInfo, Akonadi::Collection(stockInfo->saveCollectionId()), true /*immediat*/);
-    mArchiveMailKernel->jobScheduler()->registerTask(task);
-}
-
 void ArchiveMailManager::load()
 {
     qDeleteAll(mListArchiveInfo);
@@ -209,6 +198,7 @@ void ArchiveMailManager::archiveFolder(const QString &path, Akonadi::Collection:
     ArchiveMailInfo *info = new ArchiveMailInfo;
     info->setSaveCollectionId(collectionId);
     info->setUrl(QUrl::fromLocalFile(path));
-    slotArchiveNow(info);
-    delete info;
+    mListArchiveInfo.append(info);
+    ScheduledArchiveTask *task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), true /*immediat*/);
+    mArchiveMailKernel->jobScheduler()->registerTask(task);
 }

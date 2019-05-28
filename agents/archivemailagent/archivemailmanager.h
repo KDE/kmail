@@ -53,7 +53,6 @@ public:
 
 public Q_SLOTS:
     void load();
-    void slotArchiveNow(ArchiveMailInfo *info);
 
 Q_SIGNALS:
     void needUpdateConfigDialogBox();
