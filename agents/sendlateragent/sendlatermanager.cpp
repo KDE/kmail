@@ -227,7 +227,7 @@ void SendLaterManager::removeLaterInfo(SendLater::SendLaterInfo *info)
     removeInfo(info->itemId());
 }
 
-QString SendLaterManager::printDebugInfo()
+QString SendLaterManager::printDebugInfo() const
 {
     QString infoStr;
     if (mListSendLaterInfo.isEmpty()) {
@@ -243,7 +243,7 @@ QString SendLaterManager::printDebugInfo()
     return infoStr;
 }
 
-QString SendLaterManager::infoToStr(SendLater::SendLaterInfo *info)
+QString SendLaterManager::infoToStr(SendLater::SendLaterInfo *info) const
 {
     QString infoStr = QLatin1String("Recusive ") + (info->isRecurrence() ? QStringLiteral("true") : QStringLiteral("false"));
     infoStr += QLatin1String("Item id :") + QString::number(info->itemId());

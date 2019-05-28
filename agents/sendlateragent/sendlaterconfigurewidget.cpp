@@ -61,7 +61,6 @@ SendLater::SendLaterInfo *SendLaterItem::info() const
 
 SendLaterWidget::SendLaterWidget(QWidget *parent)
     : QWidget(parent)
-    , mChanged(false)
 {
     mWidget = new Ui::SendLaterConfigureWidget;
     mWidget->setupUi(this);

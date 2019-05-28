@@ -32,7 +32,7 @@ public:
     explicit SendLaterAgent(const QString &id);
     ~SendLaterAgent() override;
 
-    QString printDebugInfo();
+    QString printDebugInfo() const;
 
     void setEnableAgent(bool b);
     bool enabledAgent() const;

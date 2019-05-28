@@ -76,7 +76,7 @@ private:
     void createOrUpdateItem(SendLater::SendLaterInfo *info, SendLaterItem *item = nullptr);
     void load();
     QVector<Akonadi::Item::Id> mListMessagesToRemove;
-    bool mChanged;
+    bool mChanged = false;
     Ui::SendLaterConfigureWidget *mWidget = nullptr;
 };
 

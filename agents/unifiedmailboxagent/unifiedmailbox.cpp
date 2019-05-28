@@ -138,7 +138,7 @@ void UnifiedMailbox::attachManager(UnifiedMailboxManager *manager)
                 manager->mSourceToBoxMap.insert({ source, this });
             }
         } else {
-            for (const auto source : qAsConst(mSources)) {
+            for (const auto &source : qAsConst(mSources)) {
                 mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source}, false);
                 mManager->mSourceToBoxMap.erase(source);
             }

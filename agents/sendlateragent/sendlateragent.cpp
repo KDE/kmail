@@ -174,7 +174,7 @@ void SendLaterAgent::itemsMoved(const Akonadi::Item::List &items, const Akonadi:
     itemsRemoved(items);
 }
 
-QString SendLaterAgent::printDebugInfo()
+QString SendLaterAgent::printDebugInfo() const
 {
     return mManager->printDebugInfo();
 }

@@ -55,7 +55,7 @@ public:
 
     void sendDone(SendLater::SendLaterInfo *info);
     void sendError(SendLater::SendLaterInfo *info, ErrorType type);
-    QString printDebugInfo();
+    QString printDebugInfo() const;
 
     void stopAll();
     void itemRemoved(Akonadi::Item::Id id);
@@ -74,7 +74,7 @@ private:
     Q_DISABLE_COPY(SendLaterManager)
     void slotCreateJob();
     void createSendInfoList();
-    QString infoToStr(SendLater::SendLaterInfo *info);
+    QString infoToStr(SendLater::SendLaterInfo *info) const;
     void removeLaterInfo(SendLater::SendLaterInfo *info);
     SendLater::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
     void recreateSendList();
