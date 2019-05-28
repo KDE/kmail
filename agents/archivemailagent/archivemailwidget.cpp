@@ -20,10 +20,12 @@
 #include "archivemailwidget.h"
 #include "addarchivemaildialog.h"
 #include "archivemailagentutil.h"
+#include "archivemailkernel.h"
 
 #include "kmail-version.h"
 
 #include <MailCommon/MailUtil>
+#include <MailCommon/MailKernel>
 
 #include <QLocale>
 #include <KLocalizedString>
@@ -67,6 +69,10 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
     : Akonadi::AgentConfigurationBase(config, parent, args)
     , mChanged(false)
 {
+    ArchiveMailKernel *archiveMailKernel = new ArchiveMailKernel(this);
+    CommonKernel->registerKernelIf(archiveMailKernel);   //register KernelIf early, it is used by the Filter classes
+    CommonKernel->registerSettingsIf(archiveMailKernel);   //SettingsIf is used in FolderTreeWidget
+
     QWidget *w = new QWidget(parent);
     mWidget.setupUi(w);
     parent->layout()->addWidget(w);
