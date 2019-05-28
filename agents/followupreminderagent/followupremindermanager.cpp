@@ -164,7 +164,7 @@ void FollowUpReminderManager::answerReceived(const QString &from)
                          QStringLiteral("akonadi_followupreminder_agent"));
 }
 
-QString FollowUpReminderManager::printDebugInfo()
+QString FollowUpReminderManager::printDebugInfo() const
 {
     QString infoStr;
     if (mFollowUpReminderInfoList.isEmpty()) {
@@ -180,7 +180,7 @@ QString FollowUpReminderManager::printDebugInfo()
     return infoStr;
 }
 
-QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInfo *info)
+QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInfo *info) const
 {
     QString infoStr = QStringLiteral("****************************************");
     infoStr += QStringLiteral("Akonadi Item id :%1\n").arg(info->originalMessageItemId());

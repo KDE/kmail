@@ -47,19 +47,19 @@ public:
     MailCommon::BackupJob::ArchiveType archiveType() const;
 
     void setRecursive(bool b);
-    bool recursive() const;
+    Q_REQUIRED_RESULT bool recursive() const;
 
     void setSelectedFolder(const Akonadi::Collection &collection);
     Akonadi::Collection selectedFolder() const;
 
-    QUrl path() const;
+    Q_REQUIRED_RESULT QUrl path() const;
     void setPath(const QUrl &);
 
     ArchiveMailInfo *info();
 
     void setMaximumArchiveCount(int);
 
-    int maximumArchiveCount() const;
+    Q_REQUIRED_RESULT int maximumArchiveCount() const;
 
 private:
     void slotFolderChanged(const Akonadi::Collection &);

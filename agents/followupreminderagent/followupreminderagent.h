@@ -30,9 +30,9 @@ public:
     ~FollowUpReminderAgent() override;
 
     void setEnableAgent(bool b);
-    bool enabledAgent() const;
+    Q_REQUIRED_RESULT bool enabledAgent() const;
 
-    QString printDebugInfo();
+    Q_REQUIRED_RESULT QString printDebugInfo() const;
 
 public Q_SLOTS:
     void reload();
