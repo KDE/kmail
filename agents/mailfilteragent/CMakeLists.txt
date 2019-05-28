@@ -8,7 +8,6 @@ set(akonadi_mailfilter_agent_SRCS
     filterlogdialog.cpp
     filtermanager.cpp
     mailfilteragent.cpp
-    config/configurewidget.cpp
     mailfilterpurposemenuwidget.cpp
     )
 
@@ -45,8 +44,4 @@ target_link_libraries(akonadi_mailfilter_agent
 install(TARGETS akonadi_mailfilter_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES mailfilteragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 install(FILES akonadi_mailfilter_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
-
-if(BUILD_TESTING)
-    add_subdirectory(autotests)
-endif()
 

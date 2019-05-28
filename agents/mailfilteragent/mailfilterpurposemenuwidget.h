@@ -31,7 +31,7 @@ public:
     explicit MailfilterPurposeMenuWidget(QWidget *parentWidget, QObject *parent = nullptr);
     ~MailfilterPurposeMenuWidget() override;
 
-    QByteArray text() override;
+    Q_REQUIRED_RESULT QByteArray text() override;
     void setEditorWidget(KPIMTextEdit::PlainTextEditor *editor);
 private:
     KPIMTextEdit::PlainTextEditor *mEditor = nullptr;

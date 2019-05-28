@@ -406,7 +406,7 @@ void MailFilterAgent::emitProgressMessage(const QString &message)
     Q_EMIT status(AgentBase::Running, message);
 }
 
-QString MailFilterAgent::printCollectionMonitored()
+QString MailFilterAgent::printCollectionMonitored() const
 {
     QString printDebugCollection;
     const Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored();
@@ -422,12 +422,6 @@ QString MailFilterAgent::printCollectionMonitored()
         }
     }
     return printDebugCollection;
-}
-
-void MailFilterAgent::showConfigureDialog(qlonglong windowId)
-{
-    Q_UNUSED(windowId);
-    //TODO
 }
 
 void MailFilterAgent::expunge(qint64 collectionId)

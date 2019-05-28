@@ -57,9 +57,7 @@ public:
     void reload();
 
     void showFilterLogDialog(qlonglong windowId = 0);
-    QString printCollectionMonitored();
-
-    void showConfigureDialog(qlonglong windowId = 0);
+    QString printCollectionMonitored() const;
 
     void expunge(qint64 collectionId);
 protected:
