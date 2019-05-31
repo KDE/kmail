@@ -18,7 +18,7 @@
 #ifndef KMAILCONFIGUREPLUGINSLISTWIDGET_H
 #define KMAILCONFIGUREPLUGINSLISTWIDGET_H
 
-#include <QList>
+#include <QVector>
 #include <PimCommon/ConfigurePluginsListWidget>
 #include <PimCommon/PluginUtil>
 class ConfigurePluginsListWidget : public PimCommon::ConfigurePluginsListWidget
@@ -41,17 +41,17 @@ private:
     bool agentActivateState(const QString &agentIdentifier, const QString &pathName);
     void changeAgentActiveState(const QString &agentIdentifier, const QString &path, bool enable);
     void saveAkonadiAgent();
-    QList<PluginItem *> mPluginEditorItems;
-    QList<PluginItem *> mPluginMessageViewerItems;
-    QList<PluginItem *> mPluginCheckBeforeSendItems;
-    QList<PluginItem *> mPluginEditorInitItems;
-    QList<PluginItem *> mPluginEditorGrammarItems;
-    QList<PluginItem *> mPluginGenericItems;
-    QList<PluginItem *> mPluginWebEngineItems;
-    QList<PluginItem *> mPluginHeaderStyleItems;
-    QList<PluginItem *> mAgentPluginsItems;
-    QList<PluginItem *> mPluginConvertTextItems;
-    QList<PluginItem *> mPluginConfigureItems;
+    QVector<PluginItem *> mPluginEditorItems;
+    QVector<PluginItem *> mPluginMessageViewerItems;
+    QVector<PluginItem *> mPluginCheckBeforeSendItems;
+    QVector<PluginItem *> mPluginEditorInitItems;
+    QVector<PluginItem *> mPluginEditorGrammarItems;
+    QVector<PluginItem *> mPluginGenericItems;
+    QVector<PluginItem *> mPluginWebEngineItems;
+    QVector<PluginItem *> mPluginHeaderStyleItems;
+    QVector<PluginItem *> mAgentPluginsItems;
+    QVector<PluginItem *> mPluginConvertTextItems;
+    QVector<PluginItem *> mPluginConfigureItems;
     QVector<PimCommon::PluginUtilData> mPluginUtilDataList;
 };
 
