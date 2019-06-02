@@ -79,7 +79,7 @@ public:
     bool atLeastOneFilterAppliesTo(const QString &accountId) const;
     bool atLeastOneIncomingFilterAppliesTo(const QString &accountId) const;
     FilterManager *q;
-    QList<MailCommon::MailFilter *> mFilters;
+    QVector<MailCommon::MailFilter *> mFilters;
     QMap<QString, SearchRule::RequiredPart> mRequiredParts;
     QPixmap pixmapNotification;
     SearchRule::RequiredPart mRequiredPartsBasedOnAll;
@@ -96,7 +96,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
         filterSet = static_cast<FilterManager::FilterSet>(q->sender()->property("filterSet").toInt());
     }
 
-    QList<MailFilter *> listMailFilters;
+    QVector<MailFilter *> listMailFilters;
     if (q->sender()->property("listFilters").isValid()) {
         const QStringList listFilters = q->sender()->property("listFilters").toStringList();
         //TODO improve it
@@ -363,8 +363,8 @@ void FilterManager::readConfig()
 
 void FilterManager::mailCollectionRemoved(const Akonadi::Collection &collection)
 {
-    QList<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
-    for (QList<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
+    QVector<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
+    for (QVector<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
          it != end; ++it) {
         (*it)->folderRemoved(collection, Akonadi::Collection());
     }
@@ -372,8 +372,8 @@ void FilterManager::mailCollectionRemoved(const Akonadi::Collection &collection)
 
 void FilterManager::agentRemoved(const QString &identifier)
 {
-    QList<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
-    for (QList<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
+    QVector<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
+    for (QVector<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
          it != end; ++it) {
         (*it)->agentRemoved(identifier);
     }
@@ -506,7 +506,7 @@ bool FilterManager::processContextItem(ItemContext context)
     return true;
 }
 
-bool FilterManager::process(const QList< MailFilter * > &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterManager::FilterSet set, bool account, const QString &accountId)
+bool FilterManager::process(const QVector< MailFilter * > &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterManager::FilterSet set, bool account, const QString &accountId)
 {
     if (set == NoSet) {
         qCDebug(MAILFILTERAGENT_LOG) << "FilterManager: process() called with not filter set selected";
@@ -523,11 +523,11 @@ bool FilterManager::process(const QList< MailFilter * > &mailFilters, const Akon
     d->beginFiltering(item);
 
     ItemContext context(item, needsFullPayload);
-    QList<MailCommon::MailFilter *>::const_iterator end(mailFilters.constEnd());
+    QVector<MailCommon::MailFilter *>::const_iterator end(mailFilters.constEnd());
 
     const bool applyOnOutbound = ((set & Outbound) || (set & BeforeOutbound));
 
-    for (QList<MailCommon::MailFilter *>::const_iterator it = mailFilters.constBegin();
+    for (QVector<MailCommon::MailFilter *>::const_iterator it = mailFilters.constBegin();
          !stopIt && it != end; ++it) {
         if ((*it)->isEnabled()) {
             const bool inboundOk = ((set & Inbound) && (*it)->applyOnInbound());

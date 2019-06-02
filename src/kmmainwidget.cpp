@@ -4233,7 +4233,7 @@ void KMMainWidget::initializeFilterActions()
     mApplyFilterFolderRecursiveActionsMenu->menu()->addAction(mApplyAllFiltersFolderRecursiveAction);
     bool addedSeparator = false;
 
-    const QList<MailFilter *> lstFilters = MailCommon::FilterManager::instance()->filters();
+    const QVector<MailFilter *> lstFilters = MailCommon::FilterManager::instance()->filters();
     for (MailFilter *filter : lstFilters) {
         if (!filter->isEmpty() && filter->configureShortcut() && filter->isEnabled()) {
             QString filterName = QStringLiteral("Filter %1").arg(filter->name());
