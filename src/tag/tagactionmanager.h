@@ -24,7 +24,7 @@
 #include "kmail_export.h"
 #include "mailcommon/tag.h"
 #include <QMap>
-
+#include <QVector>
 class KJob;
 class KActionCollection;
 class KXMLGUIClient;
@@ -112,7 +112,7 @@ private:
 
     void fillTagList();
     void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
-    void createTagActions(const QList<MailCommon::Tag::Ptr> &);
+    void createTagActions(const QVector<MailCommon::Tag::Ptr> &);
     void checkTags(const QList<qint64> &tags);
     QList<qint64> checkedTags() const;
 
@@ -132,7 +132,7 @@ private:
     QList<QAction *> mToolbarActions;
 
     // A sorted list of all tags
-    QList<MailCommon::Tag::Ptr> mTags;
+    QVector<MailCommon::Tag::Ptr> mTags;
 
     // Uri of a newly created tag
     qint64 mNewTagId = -1;

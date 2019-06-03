@@ -21,6 +21,7 @@
 #define TAGSELECTDIALOG_H
 
 #include <QDialog>
+#include <QVector>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/Tag>
 #include "MailCommon/Tag"
@@ -50,7 +51,7 @@ private:
     Akonadi::Item mSelectedItem;
 
     Akonadi::Tag::List mCurrentSelectedTags;
-    QList<MailCommon::Tag::Ptr> mTagList;
+    QVector<MailCommon::Tag::Ptr> mTagList;
     QList<KActionCollection *> mActionCollectionList;
     QListWidget *mListTag = nullptr;
 };

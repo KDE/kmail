@@ -173,7 +173,7 @@ void TagActionManager::onSignalMapped(const QString &tag)
     Q_EMIT tagActionTriggered(Akonadi::Tag(tag.toLongLong()));
 }
 
-void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
+void TagActionManager::createTagActions(const QVector<MailCommon::Tag::Ptr> &tags)
 {
     clearActions();
 
