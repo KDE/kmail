@@ -96,11 +96,11 @@ void KMLaunchExternalComponent::slotImportWizard()
 
 void KMLaunchExternalComponent::slotExportData()
 {
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("pimsettingexporter"));
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("pimdataexporter"));
     if (!QProcess::startDetached(path)) {
-        KMessageBox::error(mParentWidget, i18n("Could not start \"PIM Setting Exporter\" program. "
+        KMessageBox::error(mParentWidget, i18n("Could not start \"PIM Data Exporter\" program. "
                                                "Please check your installation."),
-                           i18n("Unable to start \"PIM Setting Exporter\" program"));
+                           i18n("Unable to start \"PIM Data Exporter\" program"));
     }
 }
 
