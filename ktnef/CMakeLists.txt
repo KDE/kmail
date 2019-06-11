@@ -5,6 +5,10 @@ configure_file(src/config-ktnef.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/src/config-k
 
 add_subdirectory(src)
 
-install( FILES ktnefapps.categories ktnefapps.renamecategories DESTINATION ${KDE_INSTALL_CONFDIR} )
+if (${ECM_VERSION} STRGREATER "5.58.0")
+    install(FILES ktnefapps.categories ktnefapps.renamecategories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
+else()
+    install(FILES ktnefapps.categories ktnefapps.renamecategories  DESTINATION ${KDE_INSTALL_CONFDIR})
+endif()
 
 add_subdirectory(doc)
