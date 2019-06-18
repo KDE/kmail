@@ -33,9 +33,8 @@
 #include "collectionquotawidget.h"
 
 #include <KLocalizedString>
-
+#include <QGridLayout>
 #include <QLabel>
-#include <QLayout>
 #include <QProgressBar>
 #include <KFormat>
 

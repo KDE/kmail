@@ -26,14 +26,12 @@
 #include "jobs/followupreminderfinishtaskjob.h"
 #include <Akonadi/KMime/SpecialMailCollections>
 
-#include <QIcon>
 
 #include <KConfigGroup>
 #include <KConfig>
 #include <KSharedConfig>
 #include <knotification.h>
 #include <KLocalizedString>
-#include <KIconLoader>
 #include <QRegularExpression>
 using namespace FollowUpReminder;
 

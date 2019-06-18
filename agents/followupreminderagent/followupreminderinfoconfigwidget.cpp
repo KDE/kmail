@@ -19,15 +19,10 @@
 #include "followupreminderinfoconfigwidget.h"
 #include "followupreminderinfowidget.h"
 #include "kmail-version.h"
-
-#include <QHBoxLayout>
-#include <QHeaderView>
+#include <QLayout>
 #include <KAboutData>
-#include <QLocale>
-#include <QIcon>
 #include <KLocalizedString>
 #include <KSharedConfig>
-#include <KMessageBox>
 namespace {
 static const char myConfigGroupName[] = "FollowUpReminderInfoDialog";
 }

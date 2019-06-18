@@ -30,8 +30,6 @@
 
 #include <KNotification>
 #include <KLocalizedString>
-#include <QIcon>
-#include <KIconLoader>
 
 ArchiveJob::ArchiveJob(ArchiveMailManager *manager, ArchiveMailInfo *info, const Akonadi::Collection &folder, bool immediate)
     : MailCommon::ScheduledJob(folder, immediate)

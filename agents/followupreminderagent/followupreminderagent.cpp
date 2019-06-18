@@ -33,7 +33,6 @@
 #include <AkonadiCore/CollectionFetchScope>
 #include <AkonadiCore/ServerManager>
 
-#include <QPointer>
 #include "followupreminderagent_debug.h"
 #include <QTimer>
 

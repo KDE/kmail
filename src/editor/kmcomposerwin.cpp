@@ -159,11 +159,9 @@
 #include <KActionMenu>
 #include <KCharsets>
 #include <KConfigGroup>
-#include <KDescendantsProxyModel>
 #include <KEditToolBar>
 #include <KEmailAddress>
 #include <KEncodingFileDialog>
-#include <KHelpClient>
 #include <KIO/JobUiDelegate>
 #include <KIconUtils>
 #include <KMessageBox>
@@ -174,33 +172,23 @@
 #include <KStandardShortcut>
 #include <KToggleAction>
 #include <KToolBar>
-#include <KToolInvocation>
-#include <KXMLGUIFactory>
-
 #include <QDBusConnection>
-#include <QDBusMessage>
-#include <QTemporaryDir>
-#include <QTemporaryFile>
 #include <sonnet_version.h>
-
+#include <KXMLGUIFactory>
 // Qt includes
 #include <QAction>
 #include <QApplication>
 #include <QCheckBox>
 #include <QClipboard>
-#include <QFileDialog>
 #include <QFontDatabase>
 #include <QInputDialog>
 #include <QMenu>
 #include <QMimeData>
-#include <QMimeDatabase>
-#include <QMimeType>
 #include <QPointer>
 #include <QShortcut>
 #include <QSplitter>
 #include <QStandardPaths>
 #include <QStatusBar>
-#include <QTextDocumentWriter>
 #include <QMenuBar>
 #include <MessageComposer/PluginEditorConverterInitialData>
 #include <MessageComposer/PluginEditorConverterBeforeConvertingData>

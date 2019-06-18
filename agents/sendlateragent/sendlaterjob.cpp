@@ -34,8 +34,6 @@
 
 #include <KNotification>
 #include <KLocalizedString>
-#include <QIcon>
-#include <KIconLoader>
 #include "sendlateragent_debug.h"
 
 SendLaterJob::SendLaterJob(SendLaterManager *manager, SendLater::SendLaterInfo *info, QObject *parent)

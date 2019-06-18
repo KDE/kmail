@@ -32,8 +32,6 @@
 #include <KSharedConfig>
 #include <KNotification>
 #include <KLocalizedString>
-#include <QIcon>
-#include <KIconLoader>
 #include "kmail_debug.h"
 
 #include <QRegularExpression>

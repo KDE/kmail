@@ -27,7 +27,6 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QSortFilterProxyModel>
-#include <QLabel>
 
 #include <KIconDialog>
 #include <KLocalizedString>

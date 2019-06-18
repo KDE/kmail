@@ -23,7 +23,6 @@
 #include <QWidget>
 #include <KConfigGroup>
 #include <QTreeWidgetItem>
-#include <QVariantList>
 #include <AkonadiCore/Item>
 class QTreeWidget;
 namespace FollowUpReminder {

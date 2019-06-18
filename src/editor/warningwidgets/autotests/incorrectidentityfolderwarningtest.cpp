@@ -19,9 +19,8 @@
 
 #include "incorrectidentityfolderwarningtest.h"
 #include "../incorrectidentityfolderwarning.h"
-#include <QBoxLayout>
 #include <QTest>
-
+#include <QHBoxLayout>
 QTEST_MAIN(IncorrectIdentityFolderWarningTest)
 
 IncorrectIdentityFolderWarningTest::IncorrectIdentityFolderWarningTest(QObject *parent)

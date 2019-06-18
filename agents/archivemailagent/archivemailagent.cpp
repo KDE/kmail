@@ -30,7 +30,6 @@
 #include <CollectionFetchScope>
 #include <KMime/Message>
 #include <QTimer>
-#include <QPointer>
 
 #include <kdelibs4configmigrator.h>
 

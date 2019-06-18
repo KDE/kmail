@@ -24,7 +24,6 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QMimeData>
-
 DropWidget::DropWidget(QWidget *parent)
     : QWidget(parent)
 {

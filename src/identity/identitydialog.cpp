@@ -87,7 +87,6 @@ using MailTransport::TransportManager;
 #include <KLocalizedString>
 #include <kmessagebox.h>
 #include <kfileitem.h>
-#include <QUrl>
 #include "kmail_debug.h"
 #include <QPushButton>
 #include <QComboBox>

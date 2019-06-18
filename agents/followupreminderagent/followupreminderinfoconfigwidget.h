@@ -21,8 +21,6 @@
 #define FOLLOWUPREMINDERINFOCONFIGWIDGET_H
 
 #include <QWidget>
-#include <KConfigGroup>
-#include <QTreeWidgetItem>
 #include <QVariantList>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/AgentConfigurationBase>

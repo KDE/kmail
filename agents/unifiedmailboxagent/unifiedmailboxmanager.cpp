@@ -25,7 +25,6 @@
 #include "settings.h"
 
 #include <KSharedConfig>
-#include <KConfigGroup>
 #include <KLocalizedString>
 
 #include <AkonadiCore/SpecialCollectionAttribute>

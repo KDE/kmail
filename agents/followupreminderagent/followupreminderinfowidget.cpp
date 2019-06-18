@@ -25,7 +25,6 @@
 #include <QTreeWidget>
 #include <QHBoxLayout>
 #include <QHeaderView>
-#include <KAboutData>
 #include <QLocale>
 #include <QIcon>
 #include <QMenu>

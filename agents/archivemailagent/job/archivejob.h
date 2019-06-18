@@ -22,7 +22,6 @@
 
 #include <MailCommon/JobScheduler>
 #include <Collection>
-#include <QPixmap>
 class ArchiveMailInfo;
 class ArchiveMailManager;
 
