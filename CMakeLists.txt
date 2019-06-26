@@ -150,7 +150,7 @@ set(CMAKE_CXX_STANDARD 14)
 add_subdirectory(src)
 add_subdirectory(agents)
 add_subdirectory(ktnef)
-
+add_subdirectory(kmail-refresh-settings)
 install(FILES kmail.renamecategories kmail.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 add_subdirectory(doc)
