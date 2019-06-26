@@ -601,7 +601,11 @@ void KMMainWidget::writeFolderConfig()
     if (mCurrentCollection.isValid()) {
         KSharedConfig::Ptr config = KMKernel::self()->config();
         KConfigGroup group(config, MailCommon::FolderSettings::configGroupName(mCurrentCollection));
-        group.writeEntry("htmlLoadExternalOverride", mFolderHtmlLoadExtPreference);
+        if (mFolderHtmlLoadExtPreference) {
+            group.writeEntry("htmlLoadExternalOverride", mFolderHtmlLoadExtPreference);
+        } else {
+            group.deleteEntry("htmlLoadExternalOverride");
+        }
         if (mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting) {
             group.deleteEntry("displayFormatOverride");
         } else {
