@@ -1,6 +1,61 @@
 cmake_minimum_required(VERSION 3.5)
 set(KDEPIM_VERSION_NUMBER "5.11.40")
 
+project(kmail VERSION ${KDEPIM_VERSION_NUMBER})
+
+include(CheckIncludeFiles)
+
+
+if (POLICY CMP0063)
+    cmake_policy(SET CMP0063 NEW)
+endif()
+set(KF5_MIN_VERSION "5.59.0")
+
+find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+
+include(ECMInstallIcons)
+include(ECMSetupVersion)
+include(ECMAddTests)
+
+include(GenerateExportHeader)
+include(ECMGenerateHeaders)
+
+include(FeatureSummary)
+include(CheckFunctionExists)
+include(ECMGeneratePriFile)
+
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
+include(ECMAddAppIcon)
+include(ECMQtDeclareLoggingCategory)
+
+# Do NOT add quote
+set(KDEPIM_DEV_VERSION alpha)
+
+# add an extra space
+if(DEFINED KDEPIM_DEV_VERSION)
+    set(KDEPIM_DEV_VERSION " ${KDEPIM_DEV_VERSION}")
+endif()
+
+set(KDEPIM_VERSION "${KDEPIM_VERSION_NUMBER}${KDEPIM_DEV_VERSION}")
+
+
+set(AKONADI_MIMELIB_VERSION "5.11.40")
+set(AKONADI_CONTACT_VERSION "5.11.40")
+set(KCONTACTS_LIB_VERSION "5.11.40")
+set(KCALENDARCORE_LIB_VERSION "5.11.40")
+set(CALENDARUTILS_LIB_VERSION "5.11.40")
+set(IDENTITYMANAGEMENT_LIB_VERSION "5.11.41")
+set(KLDAP_LIB_VERSION "5.11.40")
+set(KMAILTRANSPORT_LIB_VERSION "5.11.40")
+set(KONTACTINTERFACE_LIB_VERSION "5.11.40")
+set(KMIME_LIB_VERSION "5.11.40")
+set(KPIMTEXTEDIT_LIB_VERSION "5.11.40")
+set(AKONADI_VERSION "5.11.40")
+set(KTNEF_LIB_VERSION "5.11.40")
+
 set(KDEPIM_LIB_VERSION "${KDEPIM_VERSION_NUMBER}")
 set(KDEPIM_LIB_SOVERSION "5")
 
