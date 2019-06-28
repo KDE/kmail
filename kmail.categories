@@ -5,3 +5,4 @@ org.kde.pim.followupreminderagent kmail (followupreminderagent) IDENTIFIER [FOLL
 org.kde.pim.kmail_plugin kmail (kmail kontact plugins) IDENTIFIER [KMAILPLUGIN_LOG]
 org.kde.pim.mailfilteragent kmail (mailfilter agent) IDENTIFIER [MAILFILTERAGENT_LOG]
 org.kde.pim.unifiedmailboxagent kmail (unifiedmailboxagent) IDENTIFIER [UNIFIEDMAILBOXAGENT_LOG]
+org.kde.pim.kmail_refresh_settings kmail-refresh-settings IDENTIFIER [KMAIL_REFRESH_SETTINGS_LOG]
