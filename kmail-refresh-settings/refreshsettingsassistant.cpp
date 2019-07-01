@@ -19,11 +19,28 @@
 
 
 #include "refreshsettingsassistant.h"
+#include <AkonadiWidgets/controlgui.h>
+#include <KHelpMenu>
+#include <KLocalizedString>
+#include <KAboutData>
+#include <KMessageBox>
+#include <QMenu>
+#include <QPushButton>
 
 RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
     : KAssistantDialog(parent)
 {
-
+    setModal(true);
+    setWindowTitle(i18n("PIM Import Tool"));
+    setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Help);
+    resize(640, 480);
+    Akonadi::ControlGui::widgetNeedsAkonadi(this);
+    KMessageBox::information(this, i18n("Close KMail before cleaning settings."));
+    KHelpMenu *helpMenu = new KHelpMenu(this, KAboutData::applicationData(), true);
+    //Initialize menu
+    QMenu *menu = helpMenu->menu();
+    helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    button(QDialogButtonBox::Help)->setMenu(menu);
 }
 
 RefreshSettingsAssistant::~RefreshSettingsAssistant()

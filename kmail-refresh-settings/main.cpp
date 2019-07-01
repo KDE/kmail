@@ -17,6 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include "refreshsettingsassistant.h"
+
 #include <controlgui.h>
 
 #include <kaboutdata.h>
@@ -59,11 +61,7 @@ int main(int argc, char **argv)
 
     Akonadi::ControlGui::start(nullptr);
 
-//    Dialog dlg(nullptr);
-//    dlg.show();
-//    // Unregister once the UI is closed, even if the app will continue running
-//    // and generating keys in the background.
-//    QObject::connect(&dlg, &Dialog::accepted, &service, &KDBusService::unregister);
-
+    RefreshSettingsAssistant dlg(nullptr);
+    dlg.show();
     return app.exec();
 }
