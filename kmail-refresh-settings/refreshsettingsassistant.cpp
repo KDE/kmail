@@ -20,12 +20,12 @@
 
 #include "refreshsettingsassistant.h"
 #include "refreshsettingscleanuppage.h"
+#include "refreshsettingsfirstpage.h"
 #include "refreshsettringsfinishpage.h"
 #include <AkonadiWidgets/controlgui.h>
 #include <KHelpMenu>
 #include <KLocalizedString>
 #include <KAboutData>
-#include <KMessageBox>
 #include <QMenu>
 #include <QPushButton>
 
@@ -38,7 +38,6 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
     resize(640, 480);
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
     initializePages();
-    KMessageBox::information(this, i18n("Close KMail before cleaning settings."));
     KHelpMenu *helpMenu = new KHelpMenu(this, KAboutData::applicationData(), true);
     //Initialize menu
     QMenu *menu = helpMenu->menu();
@@ -53,8 +52,17 @@ RefreshSettingsAssistant::~RefreshSettingsAssistant()
 
 void RefreshSettingsAssistant::initializePages()
 {
-    mCleanUpPage = new RefreshSettingsCleanupPage(this);
-    mCleanUpPageItem = new KPageWidgetItem(mCleanUpPage, i18n("Step 1: Clean up Settings"));
+    mFirstPage  = new RefreshSettingsFirstPage(this);
+    mFirstPageItem = new KPageWidgetItem(mFirstPage, i18n("Warning"));
+    addPage(mFirstPageItem);
 
+    mCleanUpPage = new RefreshSettingsCleanupPage(this);
+    mCleanUpPageItem = new KPageWidgetItem(mCleanUpPage, i18n("Clean up Settings"));
     addPage(mCleanUpPageItem);
+
+    mFinishPage = new RefreshSettringsFinishPage(this);
+    mFinishPageItem = new KPageWidgetItem(mFinishPage, i18n("Finish"));
+    addPage(mFinishPageItem);
+
+
 }

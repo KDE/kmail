@@ -17,30 +17,15 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef REFRESHSETTINGSASSISTANT_H
-#define REFRESHSETTINGSASSISTANT_H
+#include "refreshsettingsfirstpage.h"
 
-#include <KAssistantDialog>
-class RefreshSettingsCleanupPage;
-class RefreshSettingsFirstPage;
-class RefreshSettringsFinishPage;
-class RefreshSettingsAssistant : public KAssistantDialog
+RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
+    : QWidget(parent)
 {
-    Q_OBJECT
-public:
-    explicit RefreshSettingsAssistant(QWidget *parent = nullptr);
-    ~RefreshSettingsAssistant();
 
-private:
-    void initializePages();
-    KPageWidgetItem *mCleanUpPageItem = nullptr;
-    RefreshSettingsCleanupPage *mCleanUpPage = nullptr;
+}
 
-    KPageWidgetItem *mFirstPageItem = nullptr;
-    RefreshSettingsFirstPage *mFirstPage = nullptr;
+RefreshSettingsFirstPage::~RefreshSettingsFirstPage()
+{
 
-    KPageWidgetItem *mFinishPageItem = nullptr;
-    RefreshSettringsFinishPage *mFinishPage = nullptr;
-};
-
-#endif // REFRESHSETTINGSASSISTANT_H
+}

@@ -3,6 +3,7 @@ set(kmail-refresh-settings_SRCS
     refreshsettingsassistant.cpp
     refreshsettringsfinishpage.cpp
     refreshsettingscleanuppage.cpp
+    refreshsettingsfirstpage.cpp
     )
 
 ecm_qt_declare_logging_category(kmail-refresh-settings_SRCS HEADER kmail-refresh-settings_debug.h IDENTIFIER KMAIL_REFRESH_SETTINGS_LOG CATEGORY_NAME org.kde.pim.kmail_refresh_settings)
