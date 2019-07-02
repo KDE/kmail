@@ -21,13 +21,17 @@
 #define REFRESHSETTINGSASSISTANT_H
 
 #include <KAssistantDialog>
-
+class RefreshSettingsCleanupPage;
 class RefreshSettingsAssistant : public KAssistantDialog
 {
     Q_OBJECT
 public:
     explicit RefreshSettingsAssistant(QWidget *parent = nullptr);
     ~RefreshSettingsAssistant();
+private:
+    void initializePages();
+    KPageWidgetItem *mCleanUpPageItem = nullptr;
+    RefreshSettingsCleanupPage *mCleanUpPage = nullptr;
 };
 
 #endif // REFRESHSETTINGSASSISTANT_H

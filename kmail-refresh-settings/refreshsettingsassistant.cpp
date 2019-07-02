@@ -19,6 +19,8 @@
 
 
 #include "refreshsettingsassistant.h"
+#include "refreshsettingscleanuppage.h"
+#include "refreshsettringsfinishpage.h"
 #include <AkonadiWidgets/controlgui.h>
 #include <KHelpMenu>
 #include <KLocalizedString>
@@ -31,10 +33,11 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
     : KAssistantDialog(parent)
 {
     setModal(true);
-    setWindowTitle(i18n("PIM Import Tool"));
+    setWindowTitle(i18n("KMail Refresh Settings"));
     setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Help);
     resize(640, 480);
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
+    initializePages();
     KMessageBox::information(this, i18n("Close KMail before cleaning settings."));
     KHelpMenu *helpMenu = new KHelpMenu(this, KAboutData::applicationData(), true);
     //Initialize menu
@@ -46,4 +49,12 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
 RefreshSettingsAssistant::~RefreshSettingsAssistant()
 {
 
+}
+
+void RefreshSettingsAssistant::initializePages()
+{
+    mCleanUpPage = new RefreshSettingsCleanupPage(this);
+    mCleanUpPageItem = new KPageWidgetItem(mCleanUpPage, i18n("Step 1: Clean up Settings"));
+
+    addPage(mCleanUpPageItem);
 }
