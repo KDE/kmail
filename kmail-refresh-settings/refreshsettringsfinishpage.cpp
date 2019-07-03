@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "refreshsettringsfinishpage.h"
 #include <QHBoxLayout>
 #include <KLocalizedString>
@@ -32,5 +31,4 @@ RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
 
 RefreshSettringsFinishPage::~RefreshSettringsFinishPage()
 {
-
 }

@@ -1094,7 +1094,6 @@ void KMComposerWin::setupActions()
         mRecentAction->addUrl(QUrl(url));
     }
 
-
     action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
     KMail::Util::addQActionHelpText(action, i18n("Open Address Book"));
     actionCollection()->addAction(QStringLiteral("addressbook"), action);

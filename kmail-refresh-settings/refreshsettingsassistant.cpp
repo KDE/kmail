@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "refreshsettingsassistant.h"
 #include "refreshsettingscleanuppage.h"
 #include "refreshsettingsfirstpage.h"
@@ -47,12 +46,11 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
 
 RefreshSettingsAssistant::~RefreshSettingsAssistant()
 {
-
 }
 
 void RefreshSettingsAssistant::initializePages()
 {
-    mFirstPage  = new RefreshSettingsFirstPage(this);
+    mFirstPage = new RefreshSettingsFirstPage(this);
     mFirstPageItem = new KPageWidgetItem(mFirstPage, i18n("Warning"));
     addPage(mFirstPageItem);
 
@@ -63,6 +61,4 @@ void RefreshSettingsAssistant::initializePages()
     mFinishPage = new RefreshSettringsFinishPage(this);
     mFinishPageItem = new KPageWidgetItem(mFinishPage, i18n("Finish"));
     addPage(mFinishPageItem);
-
-
 }

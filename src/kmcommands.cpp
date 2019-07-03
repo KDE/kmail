@@ -801,7 +801,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         // check for multiple messages in the file
         bool multipleMessages = true;
         int endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "), startOfMessage);
-        while(endOfMessage != -1) {
+        while (endOfMessage != -1) {
             KMime::Message *msg = new KMime::Message;
             msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
             msg->parse();
@@ -830,7 +830,6 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             }
             KMime::Message::Ptr mMsg(msg);
             listMessages << mMsg;
-
         }
         KMReaderMainWin *win = new KMReaderMainWin();
         win->showMessage(mEncoding, listMessages);

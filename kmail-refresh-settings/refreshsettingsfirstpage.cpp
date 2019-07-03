@@ -32,5 +32,4 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
 
 RefreshSettingsFirstPage::~RefreshSettingsFirstPage()
 {
-
 }

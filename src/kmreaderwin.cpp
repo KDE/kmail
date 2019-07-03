@@ -105,7 +105,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     connect(mViewer, &MessageViewer::Viewer::showNextMessage, this, &KMReaderWin::showNextMessage);
     connect(mViewer, &MessageViewer::Viewer::showPreviousMessage, this, &KMReaderWin::showPreviousMessage);
 
-
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
     mViewer->addMessageLoadedHandler(new MailCommon::SendMdnHandler(kmkernel, this));
 
@@ -250,6 +249,7 @@ void KMReaderWin::clearCache()
 {
     clear();
 }
+
 void KMReaderWin::updateShowMultiMessagesButton(bool enablePreviousButton, bool enableNextButton)
 {
     mViewer->updateShowMultiMessagesButton(enablePreviousButton, enableNextButton);

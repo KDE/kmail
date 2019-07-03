@@ -129,7 +129,6 @@ void KMComposerGlobalAction::slotMarkAll()
     }
 }
 
-
 void KMComposerGlobalAction::slotInsertEmoticon(const QString &str)
 {
     QWidget *fw = mComposerWin->focusWidget();

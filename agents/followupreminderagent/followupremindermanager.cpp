@@ -26,7 +26,6 @@
 #include "jobs/followupreminderfinishtaskjob.h"
 #include <Akonadi/KMime/SpecialMailCollections>
 
-
 #include <KConfigGroup>
 #include <KConfig>
 #include <KSharedConfig>
