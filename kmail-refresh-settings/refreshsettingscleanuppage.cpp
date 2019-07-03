@@ -18,11 +18,15 @@
 */
 
 #include "refreshsettingscleanuppage.h"
+#include <QHBoxLayout>
+#include <KLocalizedString>
 
 RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
     : QWidget(parent)
 {
-
+    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    mainLayout->setObjectName(QStringLiteral("mainLayout"));
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage()

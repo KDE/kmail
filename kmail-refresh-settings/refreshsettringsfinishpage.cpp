@@ -19,11 +19,15 @@
 
 
 #include "refreshsettringsfinishpage.h"
+#include <QHBoxLayout>
+#include <KLocalizedString>
 
 RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
     : QWidget(parent)
 {
-
+    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    mainLayout->setObjectName(QStringLiteral("mainLayout"));
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 RefreshSettringsFinishPage::~RefreshSettringsFinishPage()

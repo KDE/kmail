@@ -18,11 +18,16 @@
 */
 
 #include "refreshsettingsfirstpage.h"
+#include <QLabel>
+#include <QHBoxLayout>
+#include <KLocalizedString>
 
 RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     : QWidget(parent)
 {
-
+    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    mainLayout->setObjectName(QStringLiteral("mainLayout"));
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 RefreshSettingsFirstPage::~RefreshSettingsFirstPage()
