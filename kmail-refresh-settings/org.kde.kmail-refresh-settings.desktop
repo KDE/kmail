@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=KMail Refresh Settings
+Type=Application
+Exec=org.kde.kmail-refresh-settings.desktop -qwindowtitle %c %u
+Icon=kmail
+X-DocPath=kmail2/index.html
+GenericName=KMail refresh settings
+Comment=Refresh kmail settings
+Terminal=false
+StartupNotify=true
+X-DBUS-StartupType=Unique
+X-DBUS-ServiceName=org.kde.kmail-refresh-settings
+X-KDE-ServiceTypes=DBUS/Mailer
+Categories=Qt;KDE;Office;Network;Email;
+InitialPreference=10

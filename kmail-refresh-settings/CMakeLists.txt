@@ -13,4 +13,5 @@ target_link_libraries(kmail-refresh-settings KF5::I18n KF5::AkonadiWidgets KF5::
 
 
 install(TARGETS kmail-refresh-settings  ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-#install(PROGRAMS data/org.kde.akonadiimportwizard.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(PROGRAMS org.kde.kmail-refresh-settings.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+
