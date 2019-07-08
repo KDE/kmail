@@ -28,6 +28,10 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
     mainLayout->setContentsMargins(0, 0, 0, 0);
+    QLabel *label = new QLabel(i18n("Please close KMail/Kontact before using it."));
+    label->setObjectName(QStringLiteral("label"));
+    mainLayout->addWidget(label);
+
 }
 
 RefreshSettingsFirstPage::~RefreshSettingsFirstPage()
