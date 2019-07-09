@@ -21,6 +21,7 @@
 #define REFRESHSETTINGSCLEANUPPAGE_H
 
 #include <QWidget>
+#include <KConfigGroup>
 
 class RefreshSettingsCleanupPage : public QWidget
 {
@@ -28,6 +29,10 @@ class RefreshSettingsCleanupPage : public QWidget
 public:
     explicit RefreshSettingsCleanupPage(QWidget *parent = nullptr);
     ~RefreshSettingsCleanupPage();
+
+private:
+    void cleanSettings();
+    void cleanupFolderSettings(KConfigGroup &oldGroup);
 };
 
 #endif // REFRESHSETTINGSCLEANUPPAGE_H

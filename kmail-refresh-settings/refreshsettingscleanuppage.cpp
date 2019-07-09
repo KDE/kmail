@@ -20,6 +20,10 @@
 #include "refreshsettingscleanuppage.h"
 #include <QHBoxLayout>
 #include <KLocalizedString>
+#include <KSharedConfig>
+#include <KConfigGroup>
+#include <QPushButton>
+#include <QRegularExpression>
 
 RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
     : QWidget(parent)
@@ -27,8 +31,59 @@ RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
     mainLayout->setContentsMargins(0, 0, 0, 0);
+    QPushButton *button = new QPushButton(i18n("Clean"), this);
+    button->setObjectName(QStringLiteral("button"));
+    mainLayout->addWidget(button);
+    connect(button, &QPushButton::clicked, this, &RefreshSettingsCleanupPage::cleanSettings);
+    //TODO update next button
 }
 
 RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage()
 {
+}
+
+void RefreshSettingsCleanupPage::cleanSettings()
+{
+    KSharedConfigPtr kmailrc = KSharedConfig::openConfig(QStringLiteral("kmail2rc"));
+
+    const QStringList folderList = kmailrc->groupList().filter(QRegularExpression(QStringLiteral("Folder-\\d+")));
+    for (const QString &str : folderList) {
+        KConfigGroup oldGroup = kmailrc->group(str);
+        cleanupFolderSettings(oldGroup);
+    }
+    kmailrc->sync();
+}
+
+void RefreshSettingsCleanupPage::cleanupFolderSettings(KConfigGroup &oldGroup)
+{
+    const bool mailingListEnabled = oldGroup.readEntry("MailingListEnabled", false);
+    if (!mailingListEnabled) {
+        oldGroup.deleteEntry("MailingListEnabled");
+    }
+    const int mailingListFeatures = oldGroup.readEntry("MailingListFeatures", 0);
+    if (mailingListFeatures == 0) {
+        oldGroup.deleteEntry("MailingListFeatures");
+    }
+    const int mailingListHandler = oldGroup.readEntry("MailingListHandler", 0);
+    if (mailingListHandler == 0) {
+        oldGroup.deleteEntry("MailingListHandler");
+    }
+    const QString mailingListId = oldGroup.readEntry("MailingListId");
+    if (mailingListId.isEmpty()) {
+        oldGroup.deleteEntry("MailingListId");
+    }
+
+    const bool putRepliesInSameFolder = oldGroup.readEntry("PutRepliesInSameFolder", false);
+    if (!putRepliesInSameFolder) {
+        oldGroup.deleteEntry("PutRepliesInSameFolder");
+    }
+
+    const bool folderHtmlLoadExtPreference = oldGroup.readEntry("htmlLoadExternalOverride", false);
+    if (!folderHtmlLoadExtPreference) {
+        oldGroup.deleteEntry("htmlLoadExternalOverride");
+    }
+    const bool useDefaultIdentity = oldGroup.readEntry("UseDefaultIdentity", false);
+    if (useDefaultIdentity) {
+        oldGroup.deleteEntry("UseDefaultIdentity");
+    }
 }
