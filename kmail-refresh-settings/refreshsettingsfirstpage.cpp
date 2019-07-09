@@ -29,8 +29,12 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
     mainLayout->setContentsMargins(0, 0, 0, 0);
     QLabel *label = new QLabel(i18n("Please close KMail/Kontact before using it."));
+    QFont f = label->font();
+    f.setBold(true);
+    f.setPointSize(22);
+    label->setFont(f);
     label->setObjectName(QStringLiteral("label"));
-    mainLayout->addWidget(label);
+    mainLayout->addWidget(label, 0, Qt::AlignHCenter);
 
 }
 
