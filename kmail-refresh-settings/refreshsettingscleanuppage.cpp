@@ -46,6 +46,7 @@ void RefreshSettingsCleanupPage::cleanSettings()
 {
     initCleanupFolderSettings(QStringLiteral("kmail2rc"));
     initCleanupFolderSettings(QStringLiteral("kontactrc"));
+    Q_EMIT cleanDone(i18n("Clean Folder Settings Done"));
 }
 
 void RefreshSettingsCleanupPage::initCleanupFolderSettings(const QString &configName)

@@ -30,6 +30,9 @@ public:
     explicit RefreshSettingsCleanupPage(QWidget *parent = nullptr);
     ~RefreshSettingsCleanupPage();
 
+Q_SIGNALS:
+    void cleanDone(const QString &msg);
+
 private:
     void cleanSettings();
     void cleanupFolderSettings(KConfigGroup &oldGroup);
