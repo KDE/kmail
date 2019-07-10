@@ -33,6 +33,7 @@ public:
 private:
     void cleanSettings();
     void cleanupFolderSettings(KConfigGroup &oldGroup);
+    void initCleanupFolderSettings(const QString &configName);
 };
 
 #endif // REFRESHSETTINGSCLEANUPPAGE_H

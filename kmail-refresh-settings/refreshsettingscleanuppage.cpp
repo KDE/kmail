@@ -44,14 +44,20 @@ RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage()
 
 void RefreshSettingsCleanupPage::cleanSettings()
 {
-    KSharedConfigPtr kmailrc = KSharedConfig::openConfig(QStringLiteral("kmail2rc"));
+    initCleanupFolderSettings(QStringLiteral("kmail2rc"));
+    initCleanupFolderSettings(QStringLiteral("kontactrc"));
+}
 
-    const QStringList folderList = kmailrc->groupList().filter(QRegularExpression(QStringLiteral("Folder-\\d+")));
+void RefreshSettingsCleanupPage::initCleanupFolderSettings(const QString &configName)
+{
+    KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
+
+    const QStringList folderList = settingsrc->groupList().filter(QRegularExpression(QStringLiteral("Folder-\\d+")));
     for (const QString &str : folderList) {
-        KConfigGroup oldGroup = kmailrc->group(str);
+        KConfigGroup oldGroup = settingsrc->group(str);
         cleanupFolderSettings(oldGroup);
     }
-    kmailrc->sync();
+    settingsrc->sync();
 }
 
 void RefreshSettingsCleanupPage::cleanupFolderSettings(KConfigGroup &oldGroup)
