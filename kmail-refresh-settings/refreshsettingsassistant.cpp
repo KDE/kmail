@@ -61,4 +61,6 @@ void RefreshSettingsAssistant::initializePages()
     mFinishPage = new RefreshSettringsFinishPage(this);
     mFinishPageItem = new KPageWidgetItem(mFinishPage, i18n("Finish"));
     addPage(mFinishPageItem);
+
+    connect(mCleanUpPage, &RefreshSettingsCleanupPage::cleanDoneInfo, mFinishPage, &RefreshSettringsFinishPage::cleanDoneInfo);
 }

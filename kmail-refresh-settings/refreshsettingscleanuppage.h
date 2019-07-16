@@ -31,7 +31,7 @@ public:
     ~RefreshSettingsCleanupPage();
 
 Q_SIGNALS:
-    void cleanDone(const QString &msg);
+    void cleanDoneInfo(const QString &msg);
 
 private:
     void cleanSettings();
