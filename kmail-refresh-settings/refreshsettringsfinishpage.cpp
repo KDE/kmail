@@ -20,6 +20,7 @@
 #include "refreshsettringsfinishpage.h"
 #include <QHBoxLayout>
 #include <KLocalizedString>
+#include <QPlainTextEdit>
 
 RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
     : QWidget(parent)
@@ -27,8 +28,19 @@ RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
     mainLayout->setContentsMargins(0, 0, 0, 0);
+
+    mTextEdit = new QPlainTextEdit(this);
+    mTextEdit->setObjectName(QStringLiteral("textedit"));
+    mTextEdit->setReadOnly(true);
+    mainLayout->addWidget(mTextEdit);
+    connect(this, &RefreshSettringsFinishPage::cleanDoneInfo, this, &RefreshSettringsFinishPage::slotCleanDoneInfo);
 }
 
 RefreshSettringsFinishPage::~RefreshSettringsFinishPage()
 {
+}
+
+void RefreshSettringsFinishPage::slotCleanDoneInfo(const QString &str)
+{
+   mTextEdit->insertPlainText(str + QLatin1Char('\n'));
 }
