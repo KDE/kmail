@@ -46,7 +46,37 @@ void RefreshSettingsCleanupPage::cleanSettings()
 {
     initCleanupFolderSettings(QStringLiteral("kmail2rc"));
     initCleanupFolderSettings(QStringLiteral("kontactrc"));
-    Q_EMIT cleanDoneInfo(i18n("Clean Folder Settings Done"));
+
+    initCleanupFiltersSettings(QStringLiteral("kmail2rc"));
+    initCleanupFiltersSettings(QStringLiteral("kontactrc"));
+
+    initCleanDialogSettings(QStringLiteral("kmail2rc"));
+    initCleanDialogSettings(QStringLiteral("kontactrc"));
+}
+
+void RefreshSettingsCleanupPage::initCleanDialogSettings(const QString &configName)
+{
+    KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
+
+    const QStringList dialogList = settingsrc->groupList().filter(QRegularExpression(QStringLiteral(".*Dialog$")));
+    for (const QString &str : dialogList) {
+        settingsrc->deleteGroup(str);
+    }
+    settingsrc->sync();
+    Q_EMIT cleanDoneInfo(i18n("Delete Dialog settings in file `%1`: Done", configName));
+}
+
+
+void RefreshSettingsCleanupPage::initCleanupFiltersSettings(const QString &configName)
+{
+    KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
+
+    const QStringList filterList = settingsrc->groupList().filter(QRegularExpression(QStringLiteral("Filter #\\d+")));
+    for (const QString &str : filterList) {
+        settingsrc->deleteGroup(str);
+    }
+    settingsrc->sync();
+    Q_EMIT cleanDoneInfo(i18n("Delete Filters settings in file `%1`: Done", configName));
 }
 
 void RefreshSettingsCleanupPage::initCleanupFolderSettings(const QString &configName)
@@ -59,6 +89,7 @@ void RefreshSettingsCleanupPage::initCleanupFolderSettings(const QString &config
         cleanupFolderSettings(oldGroup);
     }
     settingsrc->sync();
+    Q_EMIT cleanDoneInfo(i18n("Clean Folder Settings in setting file `%1`: Done", configName));
 }
 
 void RefreshSettingsCleanupPage::cleanupFolderSettings(KConfigGroup &oldGroup)

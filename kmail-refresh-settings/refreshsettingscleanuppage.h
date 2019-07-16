@@ -37,6 +37,8 @@ private:
     void cleanSettings();
     void cleanupFolderSettings(KConfigGroup &oldGroup);
     void initCleanupFolderSettings(const QString &configName);
+    void initCleanupFiltersSettings(const QString &configName);
+    void initCleanDialogSettings(const QString &configName);
 };
 
 #endif // REFRESHSETTINGSCLEANUPPAGE_H
