@@ -32,6 +32,7 @@ public:
 
 Q_SIGNALS:
     void cleanDoneInfo(const QString &msg);
+    void cleanUpDone();
 
 private:
     void cleanSettings();

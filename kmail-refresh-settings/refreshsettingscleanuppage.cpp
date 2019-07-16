@@ -52,6 +52,7 @@ void RefreshSettingsCleanupPage::cleanSettings()
 
     initCleanDialogSettings(QStringLiteral("kmail2rc"));
     initCleanDialogSettings(QStringLiteral("kontactrc"));
+    Q_EMIT cleanUpDone();
 }
 
 void RefreshSettingsCleanupPage::initCleanDialogSettings(const QString &configName)

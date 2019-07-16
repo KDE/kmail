@@ -63,4 +63,10 @@ void RefreshSettingsAssistant::initializePages()
     addPage(mFinishPageItem);
 
     connect(mCleanUpPage, &RefreshSettingsCleanupPage::cleanDoneInfo, mFinishPage, &RefreshSettringsFinishPage::cleanDoneInfo);
+    connect(mCleanUpPage, &RefreshSettingsCleanupPage::cleanUpDone, this, &RefreshSettingsAssistant::cleanUpDone);
+}
+
+void RefreshSettingsAssistant::cleanUpDone()
+{
+    next();
 }
