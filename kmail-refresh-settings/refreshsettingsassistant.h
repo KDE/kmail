@@ -33,6 +33,7 @@ public:
 
 private:
     void initializePages();
+    void cleanUpDone();
     KPageWidgetItem *mCleanUpPageItem = nullptr;
     RefreshSettingsCleanupPage *mCleanUpPage = nullptr;
 
