@@ -44,14 +44,12 @@ RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage()
 
 void RefreshSettingsCleanupPage::cleanSettings()
 {
-    initCleanupFolderSettings(QStringLiteral("kmail2rc"));
-    initCleanupFolderSettings(QStringLiteral("kontactrc"));
-
-    initCleanupFiltersSettings(QStringLiteral("kmail2rc"));
-    initCleanupFiltersSettings(QStringLiteral("kontactrc"));
-
-    initCleanDialogSettings(QStringLiteral("kmail2rc"));
-    initCleanDialogSettings(QStringLiteral("kontactrc"));
+    const QStringList configNameFiles {QStringLiteral("kmail2rc"), QStringLiteral("kontactrc")};
+    for (const QString &configName: configNameFiles) {
+        initCleanupFolderSettings(configName);
+        initCleanupFiltersSettings(configName);
+        initCleanDialogSettings(configName);
+    }
     Q_EMIT cleanUpDone();
 }
 
