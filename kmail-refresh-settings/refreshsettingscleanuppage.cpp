@@ -49,8 +49,21 @@ void RefreshSettingsCleanupPage::cleanSettings()
         initCleanupFolderSettings(configName);
         initCleanupFiltersSettings(configName);
         initCleanDialogSettings(configName);
+        removeTipOfDay(configName);
     }
     Q_EMIT cleanUpDone();
+}
+
+void RefreshSettingsCleanupPage::removeTipOfDay(const QString &configName)
+{
+    KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
+
+    const QString tipOfDayStr = QStringLiteral("TipOfDay");
+    if (settingsrc->hasGroup(tipOfDayStr)) {
+        settingsrc->deleteGroup(tipOfDayStr);
+    }
+    settingsrc->sync();
+    Q_EMIT cleanDoneInfo(i18n("Remove obsolete \"TipOfDay\" settings: Done"));
 }
 
 void RefreshSettingsCleanupPage::initCleanDialogSettings(const QString &configName)
