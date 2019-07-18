@@ -35,7 +35,6 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     label->setFont(f);
     label->setObjectName(QStringLiteral("label"));
     mainLayout->addWidget(label, 0, Qt::AlignHCenter);
-
 }
 
 RefreshSettingsFirstPage::~RefreshSettingsFirstPage()
