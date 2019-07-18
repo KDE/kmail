@@ -78,7 +78,6 @@ void RefreshSettingsCleanupPage::initCleanDialogSettings(const QString &configNa
     Q_EMIT cleanDoneInfo(i18n("Delete Dialog settings in file `%1`: Done", configName));
 }
 
-
 void RefreshSettingsCleanupPage::initCleanupFiltersSettings(const QString &configName)
 {
     KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
