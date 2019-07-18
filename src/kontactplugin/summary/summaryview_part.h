@@ -25,7 +25,7 @@
 #define SUMMARYVIEW_PART_H
 
 #include <KParts/ReadOnlyPart>
-#include <kparts/readonlypart.h>
+#include <QMap>
 
 class DropWidget;
 
