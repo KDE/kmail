@@ -36,7 +36,6 @@ Terminal=false
 StartupNotify=true
 X-DBUS-StartupType=Unique
 X-DBUS-ServiceName=org.kde.kmail-refresh-settings
-X-KDE-ServiceTypes=DBUS/Mailer
 Categories=Qt;KDE;Office;Network;Email;
 InitialPreference=10
 Hidden=true
