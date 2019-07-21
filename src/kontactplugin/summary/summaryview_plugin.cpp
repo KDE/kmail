@@ -56,14 +56,16 @@ void SummaryView::fillSyncActionSubEntries()
     mAllSync = mSyncAction->addAction(i18nc("@action:inmenu sync everything", "All"));
 
     QStringList menuItems;
-    org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
-    const QDBusReply<QStringList> reply = kmail.accounts();
-    if (reply.isValid()) {
-        menuItems << reply.value();
-    }
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral("org.kde.kmail"))) {
+        org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+        const QDBusReply<QStringList> reply = kmail.accounts();
+        if (reply.isValid()) {
+            menuItems << reply.value();
+        }
 
-    for (const QString &acc : qAsConst(menuItems)) {
-        mSyncAction->addAction(acc);
+        for (const QString &acc : qAsConst(menuItems)) {
+            mSyncAction->addAction(acc);
+        }
     }
 }
 
