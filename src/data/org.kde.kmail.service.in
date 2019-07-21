@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.kde.kmail
+Exec=${CMAKE_INSTALL_FULL_BINDIR}/kmail

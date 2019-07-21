@@ -420,3 +420,7 @@ install(FILES
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
     DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR}
     )
+
+configure_file(data/org.kde.kmail.service.in org.kde.kmail.service)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.service DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR})
+
