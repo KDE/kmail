@@ -57,7 +57,6 @@ public:
     ~KMailPlugin();
 
     bool isRunningStandalone() const override;
-    bool createDBUSInterface(const QString &serviceType) override;
     KontactInterface::Summary *createSummaryWidget(QWidget *parent) override;
     int weight() const override;
 
