@@ -409,7 +409,6 @@ install(FILES
     )
 
 install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
-install(FILES data/dbusmail.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 install(TARGETS
     kmailpart
     kcm_kmail

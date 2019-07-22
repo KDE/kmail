@@ -175,16 +175,6 @@ KMailPlugin::~KMailPlugin()
     m_instance = nullptr;
 }
 
-bool KMailPlugin::createDBUSInterface(const QString &serviceType)
-{
-    if (serviceType == QLatin1String("DBUS/Mailer")) {
-        if (part()) {
-            return true;
-        }
-    }
-    return false;
-}
-
 KParts::ReadOnlyPart *KMailPlugin::createPart()
 {
     KParts::ReadOnlyPart *part = loadPart();
