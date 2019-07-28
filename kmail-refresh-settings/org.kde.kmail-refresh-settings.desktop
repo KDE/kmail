@@ -30,6 +30,7 @@ GenericName[x-test]=xxKMail refresh settingsxx
 Comment=Refresh KMail settings
 Comment[ca]=Actualitza els ajustaments del KMail
 Comment[es]=Refrescar preferencias de KMail
+Comment[it]=Rinnova le impostazioni di KMail
 Comment[nl]=KMail-instellingen vernieuwen
 Comment[pl]=Ustawienia odświeżania KMaila
 Comment[pt]=Actualizar a configuração do KMail
