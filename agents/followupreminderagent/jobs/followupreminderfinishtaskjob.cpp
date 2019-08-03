@@ -23,7 +23,7 @@
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemModifyJob>
 #include "followupreminderagent_debug.h"
-#include <KCalCore/Todo>
+#include <KCalendarCore/Todo>
 
 FollowUpReminderFinishTaskJob::FollowUpReminderFinishTaskJob(Akonadi::Item::Id id, QObject *parent)
     : QObject(parent)
@@ -65,16 +65,16 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
     const Akonadi::Item::List lst = qobject_cast<Akonadi::ItemFetchJob *>(job)->items();
     if (lst.count() == 1) {
         const Akonadi::Item item = lst.first();
-        if (!item.hasPayload<KCalCore::Todo::Ptr>()) {
+        if (!item.hasPayload<KCalendarCore::Todo::Ptr>()) {
             qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderFinishTaskJob::slotItemFetchJobDone: item is not a todo.";
             Q_EMIT finishTaskFailed();
             deleteLater();
             return;
         }
-        KCalCore::Todo::Ptr todo = item.payload<KCalCore::Todo::Ptr>();
+        KCalendarCore::Todo::Ptr todo = item.payload<KCalendarCore::Todo::Ptr>();
         todo->setCompleted(true);
         Akonadi::Item updateItem = item;
-        updateItem.setPayload<KCalCore::Todo::Ptr>(todo);
+        updateItem.setPayload<KCalendarCore::Todo::Ptr>(todo);
 
         Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob(updateItem);
         connect(job, &Akonadi::ItemModifyJob::result, this, &FollowUpReminderFinishTaskJob::slotItemModifiedResult);
