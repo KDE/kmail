@@ -27,8 +27,8 @@
 #include "summarywidget.h"
 
 #include <KContacts/VCardDrag>
-#include <KCalCore/MemoryCalendar>
-#include <KCalCore/FileStorage>
+#include <KCalendarCore/MemoryCalendar>
+#include <KCalendarCore/FileStorage>
 #include <KCalUtils/ICalDrag>
 #include <KCalUtils/VCalDrag>
 
@@ -45,7 +45,7 @@
 #include <QStandardPaths>
 
 using namespace KCalUtils;
-using namespace KCalCore;
+using namespace KCalendarCore;
 
 EXPORT_KONTACT_PLUGIN(KMailPlugin, kmail)
 
