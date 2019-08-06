@@ -41,6 +41,7 @@ private:
     void initCleanupFiltersSettings(const QString &configName);
     void initCleanDialogSettings(const QString &configName);
     void removeTipOfDay(const QString &configName);
+    void initCleanupDialogSettings(const QString &configName);
 };
 
 #endif // REFRESHSETTINGSCLEANUPPAGE_H

@@ -35,7 +35,6 @@ RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
     button->setObjectName(QStringLiteral("button"));
     mainLayout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &RefreshSettingsCleanupPage::cleanSettings);
-    //TODO update next button
 }
 
 RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage()
@@ -135,4 +134,22 @@ void RefreshSettingsCleanupPage::cleanupFolderSettings(KConfigGroup &oldGroup)
     if (useDefaultIdentity) {
         oldGroup.deleteEntry("UseDefaultIdentity");
     }
+}
+
+void RefreshSettingsCleanupPage::initCleanupDialogSettings(const QString &configName)
+{
+    KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
+
+    const QStringList dialogListName{QStringLiteral("AddHostDialog"),
+                QStringLiteral("AuditLogViewer"),
+                QStringLiteral("CollectionPropertiesDialog"),
+                QStringLiteral("MailSourceWebEngineViewer"),
+                QStringLiteral("SelectAddressBookDialog"),
+                QStringLiteral("VCardViewer")};
+    for (const QString &str : dialogListName) {
+        KConfigGroup oldGroup = settingsrc->group(str);
+        cleanupFolderSettings(oldGroup);
+    }
+    settingsrc->sync();
+    Q_EMIT cleanDoneInfo(i18n("Clean Dialog Size in setting file `%1`: Done", configName));
 }
