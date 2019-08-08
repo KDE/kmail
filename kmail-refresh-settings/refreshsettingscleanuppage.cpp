@@ -48,6 +48,7 @@ void RefreshSettingsCleanupPage::cleanSettings()
         initCleanupFolderSettings(configName);
         initCleanupFiltersSettings(configName);
         initCleanDialogSettings(configName);
+        initCleanupDialogSettings(configName);
         removeTipOfDay(configName);
     }
     Q_EMIT cleanUpDone();
