@@ -1123,7 +1123,7 @@ KMPrintCommand::KMPrintCommand(QWidget *parent, const KMPrintCommandInfo &comman
 
 KMCommand::Result KMPrintCommand::execute()
 {
-    KMReaderWin *printerWin = new KMReaderWin(nullptr, kmkernel->mainWin(), nullptr);
+    KMReaderWin *printerWin = new KMReaderWin(nullptr, parentWidget(), nullptr);
     printerWin->setPrinting(true);
     printerWin->readConfig();
     printerWin->setPrintElementBackground(MessageViewer::MessageViewerSettings::self()->printBackgroundColorImages());
