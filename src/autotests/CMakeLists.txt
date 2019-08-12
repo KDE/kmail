@@ -17,12 +17,6 @@ add_executable( identityaddvcarddialogtest  ${kmail_identityaddvcarddialog_sourc
 ecm_mark_as_test(kmail-identityaddvcarddialogtest)
 target_link_libraries( identityaddvcarddialogtest Qt5::Test Qt5::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n)
 
-set( kmail_statusbarlabeltoggledstate_source statusbarlabeltoggledstatetest.cpp ../widgets/statusbarlabeltoggledstate.cpp ../kmail_debug.cpp)
-add_executable(statusbarlabeltoggledstatetest ${kmail_statusbarlabeltoggledstate_source})
-ecm_mark_as_test(kmail-statusbarlabeltoggledstatetest)
-target_link_libraries( statusbarlabeltoggledstatetest Qt5::Test KF5::KIOWidgets KF5::I18n)
-
-
 set( kmail_createfollowupreminderonexistingmessagejobtest_source createfollowupreminderonexistingmessagejobtest.cpp ../job/createfollowupreminderonexistingmessagejob.cpp  ../kmail_debug.cpp)
 add_executable( createfollowupreminderonexistingmessagejobtest ${kmail_createfollowupreminderonexistingmessagejobtest_source})
 ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)

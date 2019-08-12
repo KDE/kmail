@@ -143,7 +143,6 @@ set(kmailprivate_widgets_LIB_SRCS
     widgets/collectionpane.cpp
     widgets/vacationscriptindicatorwidget.cpp
     widgets/displaymessageformatactionmenu.cpp
-    widgets/statusbarlabeltoggledstate.cpp
     widgets/kactionmenutransport.cpp
     widgets/kactionmenuaccount.cpp
     widgets/zoomlabelwidget.cpp

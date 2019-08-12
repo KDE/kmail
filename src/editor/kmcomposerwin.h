@@ -66,7 +66,6 @@ class SnippetWidget;
 class AttachmentMissingWarning;
 class ExternalEditorWarning;
 class CryptoStateIndicatorWidget;
-class StatusBarLabelToggledState;
 class PotentialPhishingEmailWarning;
 class KMComposerGlobalAction;
 class KMailPluginEditorManagerInterface;
@@ -94,6 +93,7 @@ class Job;
 namespace MessageComposer {
 class ComposerLineEdit;
 class Composer;
+class StatusBarLabelToggledState;
 }
 
 namespace MailCommon {
@@ -648,8 +648,8 @@ private:
     bool mSendNowByShortcutUsed = false;
     KSplitterCollapserButton *mSnippetSplitterCollapser = nullptr;
     KToggleAction *mFollowUpToggleAction = nullptr;
-    StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode = nullptr;
-    StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode = nullptr;
+    MessageComposer::StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode = nullptr;
+    MessageComposer::StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode = nullptr;
     PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning = nullptr;
     IncorrectIdentityFolderWarning *mIncorrectIdentityFolderWarning = nullptr;
     KMComposerGlobalAction *mGlobalAction = nullptr;

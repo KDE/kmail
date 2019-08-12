@@ -60,7 +60,6 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
-#include "widgets/statusbarlabeltoggledstate.h"
 
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <Akonadi/KMime/MessageFlags>
@@ -124,6 +123,8 @@
 #include <MessageComposer/SignatureController>
 #include <MessageComposer/TextPart>
 #include <MessageComposer/Util>
+#include <MessageComposer/StatusBarLabelToggledState>
+
 #include <Sonnet/DictionaryComboBox>
 
 #include <MessageCore/AttachmentPart>
@@ -1429,15 +1430,15 @@ void KMComposerWin::setupStatusBar(QWidget *w)
     mCursorColumnLabel->setTextFormat(Qt::PlainText);
     statusBar()->addPermanentWidget(mCursorColumnLabel);
 
-    mStatusBarLabelToggledOverrideMode = new StatusBarLabelToggledState(this);
+    mStatusBarLabelToggledOverrideMode = new MessageComposer::StatusBarLabelToggledState(this);
     mStatusBarLabelToggledOverrideMode->setStateString(i18n("OVR"), i18n("INS"));
     statusBar()->addPermanentWidget(mStatusBarLabelToggledOverrideMode, 0);
-    connect(mStatusBarLabelToggledOverrideMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotOverwriteModeWasChanged);
+    connect(mStatusBarLabelToggledOverrideMode, &MessageComposer::StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotOverwriteModeWasChanged);
 
-    mStatusBarLabelSpellCheckingChangeMode = new StatusBarLabelToggledState(this);
+    mStatusBarLabelSpellCheckingChangeMode = new MessageComposer::StatusBarLabelToggledState(this);
     mStatusBarLabelSpellCheckingChangeMode->setStateString(i18n("Spellcheck: on"), i18n("Spellcheck: off"));
     statusBar()->addPermanentWidget(mStatusBarLabelSpellCheckingChangeMode, 0);
-    connect(mStatusBarLabelSpellCheckingChangeMode, &StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
+    connect(mStatusBarLabelSpellCheckingChangeMode, &MessageComposer::StatusBarLabelToggledState::toggleModeChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
 }
 
 void KMComposerWin::setupEditor()
