@@ -560,7 +560,8 @@ void KMKernel::openReader(bool onlyCheck, bool startInTray)
     }
 }
 
-void KMKernel::openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile, const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity)
+void KMKernel::openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile, const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo,
+                            const QString &identity)
 {
     const OpenComposerSettings settings(to, cc,
                                         bcc, subject,
@@ -574,7 +575,8 @@ void KMKernel::openComposer(const QString &to, const QString &cc, const QString 
     job->start();
 }
 
-void KMKernel::openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity)
+void KMKernel::openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType,
+                            const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity)
 {
     fillComposer(hidden, to, cc, bcc,
                  subject, body,
@@ -583,7 +585,8 @@ void KMKernel::openComposer(const QString &to, const QString &cc, const QString 
                  attachContDisp, attachCharset, identity, false);
 }
 
-void KMKernel::openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity)
+void KMKernel::openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType,
+                            const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity)
 {
     fillComposer(false, to, cc, bcc,
                  subject, body,
@@ -592,7 +595,8 @@ void KMKernel::openComposer(const QString &to, const QString &cc, const QString 
                  attachContDisp, attachCharset, identity, true);
 }
 
-void KMKernel::fillComposer(bool hidden, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity, bool forceShowWindow)
+void KMKernel::fillComposer(bool hidden, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType,
+                            const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity, bool forceShowWindow)
 {
     const FillComposerJobSettings settings(hidden,
                                            to,
@@ -1160,7 +1164,8 @@ void KMKernel::dumpDeadLetters()
     }
 }
 
-void KMKernel::action(bool mailto, bool check, bool startInTray, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attachURLs, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity)
+void KMKernel::action(bool mailto, bool check, bool startInTray, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attachURLs, const QStringList &customHeaders, const QString &replyTo,
+                      const QString &inReplyTo, const QString &identity)
 {
     if (mailto) {
         openComposer(to, cc, bcc, subj, body, 0,

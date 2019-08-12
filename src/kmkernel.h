@@ -179,7 +179,8 @@ public Q_SLOTS:
     * @param inReplyTo A list of in-reply-to headers.
     * @param identity The mail identity.
     */
-    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile, const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo = QString(), const QString &inReplyTo = QString(), const QString &identity = QString());
+    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile, const QStringList &attachmentPaths, const QStringList &customHeaders,
+                                   const QString &replyTo = QString(), const QString &inReplyTo = QString(), const QString &identity = QString());
 
     /**
     * Opens a composer window and prefills it with different
@@ -202,7 +203,8 @@ public Q_SLOTS:
     * @param attachCharset The charset of the attachment.
     * @param identity The identity identifier which will be used as sender identity.
     */
-    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity);
+    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType,
+                                   const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity);
 
     /**
     * Opens a composer window and prefills it with different
@@ -225,7 +227,8 @@ public Q_SLOTS:
     * @param attachCharset The charset of the attachment.
     * @param identity The identity identifier which will be used as sender identity.
     */
-    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity);
+    Q_SCRIPTABLE void openComposer(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType,
+                                   const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity);
 
     /**
     * Opens a composer window and prefills it with different
@@ -317,7 +320,8 @@ public:
     bool doSessionManagement();
     bool firstInstance() const;
     void setFirstInstance(bool value);
-    void action(bool mailto, bool check, bool startInTray, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attach, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo, const QString &identity);
+    void action(bool mailto, bool check, bool startInTray, const QString &to, const QString &cc, const QString &bcc, const QString &subj, const QString &body, const QUrl &messageFile, const QList<QUrl> &attach, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo,
+                const QString &identity);
 
     //sets online status for akonadi accounts. true for online, false for offline
     void setAccountStatus(bool);
@@ -474,7 +478,8 @@ private:
      * Fills a composer cWin
      *
     */
-    void fillComposer(bool hidden, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType, const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity, bool forceShowWindow);
+    void fillComposer(bool hidden, const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, const QString &attachName, const QByteArray &attachCte, const QByteArray &attachData, const QByteArray &attachType, const QByteArray &attachSubType,
+                      const QByteArray &attachParamAttr, const QString &attachParamValue, const QByteArray &attachContDisp, const QByteArray &attachCharset, unsigned int identity, bool forceShowWindow);
 
     void verifyAccount();
     void resourceGoOnLine();

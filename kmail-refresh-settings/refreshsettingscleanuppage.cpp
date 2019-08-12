@@ -142,11 +142,11 @@ void RefreshSettingsCleanupPage::initCleanupDialogSettings(const QString &config
     KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
 
     const QStringList dialogListName{QStringLiteral("AddHostDialog"),
-                QStringLiteral("AuditLogViewer"),
-                QStringLiteral("CollectionPropertiesDialog"),
-                QStringLiteral("MailSourceWebEngineViewer"),
-                QStringLiteral("SelectAddressBookDialog"),
-                QStringLiteral("VCardViewer")};
+                                     QStringLiteral("AuditLogViewer"),
+                                     QStringLiteral("CollectionPropertiesDialog"),
+                                     QStringLiteral("MailSourceWebEngineViewer"),
+                                     QStringLiteral("SelectAddressBookDialog"),
+                                     QStringLiteral("VCardViewer")};
     for (const QString &str : dialogListName) {
         KConfigGroup oldGroup = settingsrc->group(str);
         cleanupFolderSettings(oldGroup);
