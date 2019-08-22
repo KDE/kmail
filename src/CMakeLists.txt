@@ -115,6 +115,7 @@ set(kmailprivate_dialogs_LIB_SRCS
     dialog/archivefolderdialog.cpp
     dialog/addemailtoexistingcontactdialog.cpp
     dialog/kmknotify.cpp
+    dialog/spellcheckerconfigdialog.cpp
     )
 set(kmailprivate_job_LIB_SRCS
     job/addressvalidationjob.cpp
