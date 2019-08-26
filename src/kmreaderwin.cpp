@@ -302,13 +302,13 @@ QString KMReaderWin::newFeaturesMD5()
 void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantHash &_data)
 {
     QVariantHash data = _data;
-    if (!data.contains(QStringLiteral("icon"))) {
+    if (!data.contains(QLatin1String("icon"))) {
         data[QStringLiteral("icon")] = QStringLiteral("kmail");
     }
-    if (!data.contains(QStringLiteral("name"))) {
+    if (!data.contains(QLatin1String("name"))) {
         data[QStringLiteral("name")] = i18n("KMail");
     }
-    if (!data.contains(QStringLiteral("subtitle"))) {
+    if (!data.contains(QLatin1String("subtitle"))) {
         data[QStringLiteral("subtitle")] = i18n("The KDE Mail Client");
     }
 

@@ -2592,7 +2592,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         setEnabled(false);
 
         // Validate the To:, CC: and BCC fields
-        AddressValidationJob *job = new AddressValidationJob(recipients.join(QStringLiteral(", ")), this, this);
+        AddressValidationJob *job = new AddressValidationJob(recipients.join(QLatin1String(", ")), this, this);
         job->setDefaultDomain(defaultDomainName);
         job->setProperty("method", static_cast<int>(method));
         job->setProperty("saveIn", static_cast<int>(saveIn));
