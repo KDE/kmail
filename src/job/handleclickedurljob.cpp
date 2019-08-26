@@ -48,29 +48,29 @@ void HandleClickedUrlJob::start()
     const QList<QPair<QString, QString> > fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
     for (int i = 0; i < fields.count(); ++i) {
         const QPair<QString, QString> element = fields.at(i);
-        if (element.first == QStringLiteral("to")) {
+        if (element.first == QLatin1String("to")) {
             mMsg->to()->fromUnicodeString(element.second, "utf-8");
-        } else if (element.first == QStringLiteral("subject")) {
+        } else if (element.first == QLatin1String("subject")) {
             const QString subject = element.second;
             if (!subject.isEmpty()) {
                 mMsg->subject()->fromUnicodeString(subject, "utf-8");
             }
-        } else if (element.first == QStringLiteral("body")) {
+        } else if (element.first == QLatin1String("body")) {
             const QString body = element.second;
             if (!body.isEmpty()) {
                 mMsg->setBody(body.toUtf8());
             }
-        } else if (element.first == QStringLiteral("cc")) {
+        } else if (element.first == QLatin1String("cc")) {
             const QString cc = element.second;
             if (!cc.isEmpty()) {
                 mMsg->cc()->fromUnicodeString(cc, "utf-8");
             }
-        } else if (element.first == QStringLiteral("bcc")) {
+        } else if (element.first == QLatin1String("bcc")) {
             const QString bcc = element.second;
             if (!bcc.isEmpty()) {
                 mMsg->bcc()->fromUnicodeString(bcc, "utf-8");
             }
-        } else if (element.first == QStringLiteral("attach")) {
+        } else if (element.first == QLatin1String("attach")) {
             const QString attach = element.second;
             if (!attach.isEmpty()) {
                 qCDebug(KMAIL_LOG) << "Attachment not supported yet";
