@@ -309,7 +309,7 @@ public:
       @param parent  The parent widget of the command used for message boxes.
       @param msgs    The messages of which the attachments should be saved.
     */
-    KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs);
+    KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer);
 
 private:
     Result execute() override;

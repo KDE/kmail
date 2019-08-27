@@ -1765,9 +1765,9 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonad
     fetchScope().fetchFullPayload(true);
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs)
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer)
     : KMCommand(parent, msgs)
-    , mViewer(nullptr)
+    , mViewer(viewer)
 {
     fetchScope().fetchFullPayload(true);
 }

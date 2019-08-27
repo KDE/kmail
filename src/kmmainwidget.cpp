@@ -2349,7 +2349,7 @@ void KMMainWidget::slotSaveAttachments()
         dummyItem.setPayload<KMime::Message::Ptr>(mMsgView->message().payload<KMime::Message::Ptr>());
         saveCommand = new KMSaveAttachmentsCommand(this, dummyItem, mMsgView->viewer());
     } else {
-        saveCommand = new KMSaveAttachmentsCommand(this, selectedMessages);
+        saveCommand = new KMSaveAttachmentsCommand(this, selectedMessages, mMsgView->viewer());
     }
 
     saveCommand->start();
@@ -3851,9 +3851,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     } else if (single_actions) {
         actionList << mMsgActions->editAsNewAction();
     }
-    if (single_actions) {
-        actionList << mSaveAttachmentsAction;
-    }
+    actionList << mSaveAttachmentsAction;
     if (mCurrentCollection.isValid() && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
         actionList << mArchiveAction;
     }
