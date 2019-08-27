@@ -41,6 +41,7 @@ public:
     */
     QString saveVcard() const;
 
+    void reject() override;
 Q_SIGNALS:
     void vcardRemoved();
 

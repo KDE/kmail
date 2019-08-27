@@ -127,3 +127,13 @@ QString IdentityEditVcardDialog::saveVcard() const
     }
     return mVcardFileName;
 }
+
+void IdentityEditVcardDialog::reject()
+{
+    if (KMessageBox::questionYesNo(
+            this,
+            i18nc("@info", "Do you really want to cancel?"),
+            i18nc("@title:window", "Confirmation")) == KMessageBox::Yes) {
+        QDialog::reject(); // Discard current changes
+    }
+}
