@@ -838,7 +838,7 @@ void SearchWindow::slotSaveMsg()
 
 void SearchWindow::slotSaveAttachments()
 {
-    KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand(this, selectedMessages());
+    KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand(this, selectedMessages(), nullptr);
     saveCommand->start();
 }
 
