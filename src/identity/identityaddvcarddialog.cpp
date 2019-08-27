@@ -67,7 +67,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     QHBoxLayout *hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
 
-    mVCardPath = new KUrlRequester;
+    mVCardPath = new KUrlRequester(this);
     mVCardPath->setObjectName(QStringLiteral("kurlrequester_vcardpath"));
     mVCardPath->setMimeTypeFilters({QStringLiteral("text/vcard"), QStringLiteral("all/allfiles")});
 
