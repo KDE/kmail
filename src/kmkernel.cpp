@@ -451,7 +451,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         }
         if (!to.isEmpty()) {
             // cut off the superfluous trailing ", "
-            to.truncate(to.length() - 2);
+            to.chop(2);
         }
     }
 
