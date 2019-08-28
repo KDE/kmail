@@ -399,31 +399,31 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                 for (int i = 0; i < values.count(); ++i) {
                     const QPair<QString, QString> element = values.at(i);
                     const QString key = element.first.toLower();
-                    if (key == QLatin1Literal("to")) {
+                    if (key == QLatin1String("to")) {
                         if (!element.second.isEmpty()) {
                             to += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
-                    } else if (key == QLatin1Literal("cc")) {
+                    } else if (key == QLatin1String("cc")) {
                         if (!element.second.isEmpty()) {
                             cc += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
-                    } else if (key == QLatin1Literal("bcc")) {
+                    } else if (key == QLatin1String("bcc")) {
                         if (!element.second.isEmpty()) {
                             bcc += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
-                    } else if (key == QLatin1Literal("subject")) {
+                    } else if (key == QLatin1String("subject")) {
                         subj = element.second;
                         previousKey.clear();
-                    } else if (key == QLatin1Literal("body")) {
+                    } else if (key == QLatin1String("body")) {
                         body = element.second;
                         previousKey = key;
-                    } else if (key == QLatin1Literal("in-reply-to")) {
+                    } else if (key == QLatin1String("in-reply-to")) {
                         inReplyTo = element.second;
                         previousKey.clear();
-                    } else if (key == QLatin1Literal("attachment") || key == QLatin1Literal("attach")) {
+                    } else if (key == QLatin1String("attachment") || key == QLatin1String("attach")) {
                         if (!element.second.isEmpty()) {
                             attachURLs << makeAbsoluteUrl(element.second, workingDir);
                         }
@@ -433,7 +433,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
                         //Workaround: https://bugs.kde.org/show_bug.cgi?id=390939
                         //QMap<QString, QString> parseMailtoUrl(const QUrl &url) parses correctly url
                         //But if we have a "&" unknown key we lost it.
-                        if (previousKey == QLatin1Literal("body")) {
+                        if (previousKey == QLatin1String("body")) {
                             body += QLatin1Char('&') + key + QLatin1Char('=') + element.second;
                         }
                         //Don't clear previous key.
