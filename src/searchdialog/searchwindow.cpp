@@ -523,7 +523,7 @@ void SearchWindow::doSearch()
     }
 
     connect(mSearchJob, &Akonadi::CollectionModifyJob::result, this, &SearchWindow::searchDone);
-    mUi.mProgressIndicator->start();
+    mUi.mProgressIndicator->show();
     enableGUI();
     mUi.mStatusLbl->setText(i18n("Searching..."));
 }
@@ -534,7 +534,7 @@ void SearchWindow::searchDone(KJob *job)
     mSearchJob = nullptr;
     QMetaObject::invokeMethod(this, &SearchWindow::enableGUI, Qt::QueuedConnection);
 
-    mUi.mProgressIndicator->stop();
+    mUi.mProgressIndicator->hide();
     if (job->error()) {
         qCDebug(KMAIL_LOG) << job->errorString();
         KMessageBox::sorry(this, i18n("Cannot get search result. %1", job->errorString()));
@@ -614,7 +614,7 @@ void SearchWindow::slotCollectionStatisticsRetrieved(KJob *job)
 
 void SearchWindow::slotStop()
 {
-    mUi.mProgressIndicator->stop();
+    mUi.mProgressIndicator->hide();
     if (mSearchJob) {
         mSearchJob->kill(KJob::Quietly);
         mSearchJob->deleteLater();
@@ -909,7 +909,7 @@ QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::Li
     }
 
     enableGUI();
-    mUi.mProgressIndicator->start();
+    mUi.mProgressIndicator->hide();
     mUi.mStatusLbl->setText(i18n("Checking index status..."));
     //Fetch collection ?
     for (const Akonadi::Collection &col : qAsConst(cols)) {

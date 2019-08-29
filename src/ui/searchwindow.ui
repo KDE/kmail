@@ -156,7 +156,7 @@
    <item row="8" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="KPIM::ProgressIndicatorWidget" name="mProgressIndicator"/>
+      <widget class="KBusyIndicatorWidget" name="mProgressIndicator"/>
      </item>
      <item>
       <widget class="QLabel" name="mStatusLbl">
@@ -200,9 +200,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>KPIM::ProgressIndicatorWidget</class>
-   <extends>QLabel</extends>
-   <header>Libkdepim/ProgressIndicatorWidget</header>
+   <class>KBusyIndicatorWidget</class>
+   <extends>QWidget</extends>
+   <header>KBusyIndicatorWidget</header>
    <container>1</container>
   </customwidget>
   <customwidget>
