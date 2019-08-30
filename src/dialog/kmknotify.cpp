@@ -107,7 +107,7 @@ void KMKnotify::initCombobox()
     //TODO add other notifyrc here if necessary
 
     for (const QString &notify : lstNotify) {
-        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("knotifications5/") + notify);
+        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("knotifications5/") + notify);
 
         if (!fullPath.isEmpty()) {
             const int slash = fullPath.lastIndexOf(QLatin1Char('/'));

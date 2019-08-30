@@ -1339,7 +1339,7 @@ void KMComposerWin::initializePluginActions()
             localEditorManagerActionsType.next();
             QList<QAction *> lst = localEditorManagerActionsType.value();
             if (!lst.isEmpty()) {
-                const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
+                const QString actionlistname = QLatin1String("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
                 hashActions.insert(actionlistname, lst);
             }
         }
@@ -1348,7 +1348,7 @@ void KMComposerWin::initializePluginActions()
             localEditorConvertTextManagerActionsType.next();
             QList<QAction *> lst = localEditorConvertTextManagerActionsType.value();
             if (!lst.isEmpty()) {
-                const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
+                const QString actionlistname = QLatin1String("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
                 if (hashActions.contains(actionlistname)) {
                     lst = hashActions.value(actionlistname) + lst;
                     hashActions.remove(actionlistname);
@@ -1358,7 +1358,7 @@ void KMComposerWin::initializePluginActions()
         }
 
         const QList<KToggleAction *> customToolsWidgetActionList = mCustomToolsWidget->actionList();
-        const QString actionlistname = QStringLiteral("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
+        const QString actionlistname = QLatin1String("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
         for (KToggleAction *act : customToolsWidgetActionList) {
             QList<QAction *> lst;
             lst << act;
