@@ -981,7 +981,7 @@ void KMKernel::recoverDeadLetters()
     for (const QFileInfo &file : autoSaveFiles) {
         // Disregard the '.' and '..' folders
         const QString filename = file.fileName();
-        if (filename == QLatin1String(".")
+        if (filename == QLatin1Char('.')
             || filename == QLatin1String("..")
             || file.isDir()) {
             continue;
