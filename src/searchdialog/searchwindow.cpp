@@ -227,6 +227,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     for (QAction *action : actList) {
         action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
     }
+    mUi.mProgressIndicator->hide();
 }
 
 SearchWindow::~SearchWindow()
