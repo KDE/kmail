@@ -247,7 +247,7 @@ void ConfigurePluginsListWidget::initialize()
                                                         headerStyleGroupName());
     //Load Converter plugin
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageComposer::PluginEditorConvertTextManager::self()->pluginsDataList(),
-                                                        i18n("Convertor Text Plugins"),
+                                                        i18n("Text Conversion Plugins"),
                                                         MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
                                                         MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
                                                         mPluginConvertTextItems,

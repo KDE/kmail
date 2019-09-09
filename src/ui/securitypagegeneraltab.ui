@@ -164,7 +164,7 @@
       <item>
        <widget class="QCheckBox" name="mCheckMailUrlTracking">
         <property name="text">
-         <string>Check Mail Url Tracking</string>
+         <string>Scan emails for tracking URLs</string>
         </property>
        </widget>
       </item>
