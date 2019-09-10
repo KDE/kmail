@@ -20,6 +20,7 @@
 #include "kmailplugineditormanagerinterface.h"
 #include "messagecomposer/plugineditormanager.h"
 #include "messagecomposer/plugineditor.h"
+#include "messagecomposer/plugincomposerinterface.h"
 #include "kmail_debug.h"
 
 #include <QAction>
@@ -75,6 +76,9 @@ void KMailPluginEditorManagerInterface::initializePlugins()
             interface->setRichTextEditor(mRichTextEditor);
             interface->setParentWidget(mParentWidget);
             interface->createAction(mActionCollection);
+            MessageComposer::PluginComposerInterface *composerInterface = new MessageComposer::PluginComposerInterface;
+            composerInterface->setComposerViewBase(mComposerInterface);
+            interface->setComposerInterface(composerInterface);
             interface->setPlugin(plugin);
             connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
             connect(interface, &MessageComposer::PluginEditorInterface::message, this, &KMailPluginEditorManagerInterface::message);
@@ -87,6 +91,16 @@ void KMailPluginEditorManagerInterface::initializePlugins()
 void KMailPluginEditorManagerInterface::slotPluginActivated(MessageComposer::PluginEditorInterface *interface)
 {
     interface->exec();
+}
+
+MessageComposer::ComposerViewBase *KMailPluginEditorManagerInterface::composerInterface() const
+{
+    return mComposerInterface;
+}
+
+void KMailPluginEditorManagerInterface::setComposerInterface(MessageComposer::ComposerViewBase *composerInterface)
+{
+    mComposerInterface = composerInterface;
 }
 
 KActionCollection *KMailPluginEditorManagerInterface::actionCollection() const

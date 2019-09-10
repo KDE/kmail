@@ -28,6 +28,7 @@ class RichTextEditor;
 }
 namespace MessageComposer {
 class PluginEditorInterface;
+class ComposerViewBase;
 }
 class KActionCollection;
 class KMailPluginEditorManagerInterface : public QObject
@@ -52,6 +53,9 @@ public:
     QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
     QList<QWidget *> statusBarWidgetList();
 
+    MessageComposer::ComposerViewBase *composerInterface() const;
+    void setComposerInterface(MessageComposer::ComposerViewBase *composerInterface);
+
 Q_SIGNALS:
     void textSelectionChanged(bool hasSelection);
     void message(const QString &str);
@@ -61,6 +65,7 @@ private:
     Q_DISABLE_COPY(KMailPluginEditorManagerInterface)
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
     KPIMTextEdit::RichTextEditor *mRichTextEditor = nullptr;
+    MessageComposer::ComposerViewBase *mComposerInterface = nullptr;
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;
     QList<MessageComposer::PluginEditorInterface *> mListPluginInterface;

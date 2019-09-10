@@ -419,6 +419,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mPluginEditorManagerInterface->setParentWidget(this);
     mPluginEditorManagerInterface->setRichTextEditor(mRichTextEditorwidget->editor());
     mPluginEditorManagerInterface->setActionCollection(actionCollection());
+    mPluginEditorManagerInterface->setComposerInterface(mComposerBase);
 
     mPluginEditorCheckBeforeSendManagerInterface->setParentWidget(this);
 
