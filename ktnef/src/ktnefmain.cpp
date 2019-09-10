@@ -312,7 +312,7 @@ void KTNEFMain::extractAllFiles()
     QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
     if (!dir.isEmpty()) {
         mLastDir = dir;
-        dir.append(QLatin1String("/"));
+        dir.append(QLatin1Char('/'));
         QList<KTNEFAttach *> list = mParser->message()->attachmentList();
         QList<KTNEFAttach *>::ConstIterator it;
         QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
@@ -390,8 +390,8 @@ void KTNEFMain::cleanup()
 void KTNEFMain::extractTo(const QString &dirname)
 {
     QString dir = dirname;
-    if (dir.right(1) != QLatin1String("/")) {
-        dir.append(QLatin1String("/"));
+    if (dir.right(1) != QLatin1Char('/')) {
+        dir.append(QLatin1Char('/'));
     }
     QList<KTNEFAttach *> list = mView->getSelection();
     QList<KTNEFAttach *>::ConstIterator it;
