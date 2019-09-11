@@ -73,12 +73,12 @@ void KMailPluginEditorManagerInterface::initializePlugins()
     for (MessageComposer::PluginEditor *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
             MessageComposer::PluginEditorInterface *interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(this));
-            interface->setRichTextEditor(mRichTextEditor);
-            interface->setParentWidget(mParentWidget);
-            interface->createAction(mActionCollection);
             MessageComposer::PluginComposerInterface *composerInterface = new MessageComposer::PluginComposerInterface;
             composerInterface->setComposerViewBase(mComposerInterface);
             interface->setComposerInterface(composerInterface);
+            interface->setRichTextEditor(mRichTextEditor);
+            interface->setParentWidget(mParentWidget);
+            interface->createAction(mActionCollection);
             interface->setPlugin(plugin);
             connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
             connect(interface, &MessageComposer::PluginEditorInterface::message, this, &KMailPluginEditorManagerInterface::message);
