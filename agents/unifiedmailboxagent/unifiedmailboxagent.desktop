@@ -2,6 +2,7 @@
 Name=Unified Mailbox Agent
 Name[ca]=Agent de la bústia unificada
 Name[ca@valencia]=Agent de la bústia unificada
+Name[cs]=Agent sjednocené schránky
 Name[de]=Agent für einheitliches Postfach
 Name[en_GB]=Unified Mailbox Agent
 Name[es]=Agente de bandeja de correo unificada
@@ -23,6 +24,7 @@ Name[zh_TW]=整合信箱代理程式
 Comment=Unified Mailbox Agent
 Comment[ca]=Agent de la bústia unificada
 Comment[ca@valencia]=Agent de la bústia unificada
+Comment[cs]=Agent sjednocené schránky
 Comment[de]=Agent für einheitliches Postfach
 Comment[en_GB]=Unified Mailbox Agent
 Comment[es]=Agente de bandeja de correo unificada
