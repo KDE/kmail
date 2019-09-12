@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=KMail Refresh Settings
 Name[ca]=Actualització dels ajustaments del KMail
+Name[cs]=Obnovení nastavení KMailu
 Name[de]=Erneuerung der Einstellungen für KMail
 Name[en_GB]=KMail Refresh Settings
 Name[es]=Preferencias de refresco de KMail
@@ -22,6 +23,7 @@ Icon=kmail
 X-DocPath=kmail2/index.html
 GenericName=KMail refresh settings
 GenericName[ca]=Actualització dels ajustaments del KMail
+GenericName[cs]=Obnovení nastavení KMailu
 GenericName[de]=Erneuerung der Einstellungen für KMail
 GenericName[en_GB]=KMail refresh settings
 GenericName[es]=Preferencias de refresco de KMail
@@ -39,6 +41,7 @@ GenericName[uk]=Оновити параметри KMail
 GenericName[x-test]=xxKMail refresh settingsxx
 Comment=Refresh KMail settings
 Comment[ca]=Actualitza els ajustaments del KMail
+Comment[cs]=Obnovit nastavení KMailu
 Comment[de]=Erneuerung der Einstellungen für KMail
 Comment[en_GB]=Refresh KMail settings
 Comment[es]=Refrescar preferencias de KMail
