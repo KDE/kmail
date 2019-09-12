@@ -1422,41 +1422,33 @@ void KMMainWidget::slotExpireFolder()
     if (!mCurrentFolderSettings) {
         return;
     }
-    bool mustDeleteExpirationAttribute = false;
-    MailCommon::ExpireCollectionAttribute *attr = MailCommon::Util::expirationCollectionAttribute(mCurrentCollection, mustDeleteExpirationAttribute);
-    bool canBeExpired = true;
-    if (!attr->isAutoExpire()) {
-        canBeExpired = false;
-    } else if (attr->unreadExpireUnits() == MailCommon::ExpireCollectionAttribute::ExpireNever
-               && attr->readExpireUnits() == MailCommon::ExpireCollectionAttribute::ExpireNever) {
-        canBeExpired = false;
-    }
-
-    if (!canBeExpired) {
-        const QString message = i18n("This folder does not have any expiry options set");
-        KMessageBox::information(this, message);
-        if (mustDeleteExpirationAttribute) {
-            delete attr;
+    const MailCommon::ExpireCollectionAttribute *attr = mCurrentCollection.attribute<MailCommon::ExpireCollectionAttribute>();
+    if (attr) {
+        bool canBeExpired = true;
+        if (!attr->isAutoExpire()) {
+            canBeExpired = false;
+        } else if (attr->unreadExpireUnits() == MailCommon::ExpireCollectionAttribute::ExpireNever
+                   && attr->readExpireUnits() == MailCommon::ExpireCollectionAttribute::ExpireNever) {
+            canBeExpired = false;
         }
-        return;
-    }
 
-    if (KMailSettings::self()->warnBeforeExpire()) {
-        const QString message = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>",
-                                     mCurrentFolderSettings->name().toHtmlEscaped());
-        if (KMessageBox::warningContinueCancel(this, message, i18n("Expire Folder"),
-                                               KGuiItem(i18n("&Expire")))
-            != KMessageBox::Continue) {
-            if (mustDeleteExpirationAttribute) {
-                delete attr;
-            }
+        if (!canBeExpired) {
+            const QString message = i18n("This folder does not have any expiry options set");
+            KMessageBox::information(this, message);
             return;
         }
-    }
 
-    MailCommon::Util::expireOldMessages(mCurrentCollection, true /*immediate*/);
-    if (mustDeleteExpirationAttribute) {
-        delete attr;
+        if (KMailSettings::self()->warnBeforeExpire()) {
+            const QString message = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>",
+                                         mCurrentFolderSettings->name().toHtmlEscaped());
+            if (KMessageBox::warningContinueCancel(this, message, i18n("Expire Folder"),
+                                                   KGuiItem(i18n("&Expire")))
+                    != KMessageBox::Continue) {
+                return;
+            }
+        }
+
+        MailCommon::Util::expireOldMessages(mCurrentCollection, true /*immediate*/);
     }
 }
 
