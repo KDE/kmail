@@ -2277,6 +2277,7 @@ void KMComposerWin::slotNewComposer()
 void KMComposerWin::slotUpdateWindowTitle()
 {
     QString s(mEdtSubject->toPlainText());
+    mComposerBase->setSubject(s);
     // Remove characters that show badly in most window decorations:
     // newlines tend to become boxes.
     if (s.isEmpty()) {
