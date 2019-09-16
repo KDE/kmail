@@ -380,6 +380,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(composerEditorNg, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
     connect(composerEditorNg, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
     mSnippetWidget = new SnippetWidget(composerEditorNg, actionCollection(), mSnippetSplitter);
+    connect(mSnippetWidget, &SnippetWidget::insertSnippetText, this, &KMComposerWin::insertSnippetText);
     mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
     mSnippetSplitter->setCollapsible(0, false);
@@ -505,6 +506,11 @@ KMComposerWin::~KMComposerWin()
     }
 
     delete mComposerBase;
+}
+
+void KMComposerWin::insertSnippetText(const QString &str)
+{
+    mComposerBase->editor()->insertPlainText(str);
 }
 
 void KMComposerWin::slotSpellCheckingLanguage(const QString &language)

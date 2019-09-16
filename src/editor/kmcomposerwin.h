@@ -547,6 +547,7 @@ private:
     void slotSelectionChanged();
     void slotMessage(const QString &str);
     void slotEditorPluginInsertText(const QString &str);
+    void insertSnippetText(const QString &str);
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
