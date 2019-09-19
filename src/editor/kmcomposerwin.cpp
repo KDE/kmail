@@ -124,6 +124,8 @@
 #include <MessageComposer/TextPart>
 #include <MessageComposer/Util>
 #include <MessageComposer/StatusBarLabelToggledState>
+#include <MessageComposer/ConvertSnippetVariablesJob>
+#include <MessageComposer/ComposerViewInterface>
 
 #include <Sonnet/DictionaryComboBox>
 
@@ -510,7 +512,12 @@ KMComposerWin::~KMComposerWin()
 
 void KMComposerWin::insertSnippetText(const QString &str)
 {
-    mComposerBase->editor()->insertPlainText(str);
+    MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+    job->setText(str);
+    MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+    job->setComposerViewInterface(interface);
+    connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {mComposerBase->editor()->insertPlainText(str);});
+    job->start();
 }
 
 void KMComposerWin::slotSpellCheckingLanguage(const QString &language)
