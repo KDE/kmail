@@ -32,8 +32,8 @@
 <holder>&Laurent.Montel;</holder>
 </copyright>
 
-<date>2013-11-30</date>
-<releaseinfo>&kde; 4.12</releaseinfo>
+<date>2019-09-21</date>
+<releaseinfo>Applications 19.12</releaseinfo>
 
 </articleinfo>
 
@@ -82,7 +82,8 @@ and ask if you want to resend it later.</para>
 messages overdue since the last logout if necessary.
 </para>
 <para>To change the options for emails you have scheduled to send later, use <menuchoice><guimenu>Settings</guimenu>
-<guimenuitem>Configure Send Later Agent...</guimenuitem></menuchoice> in &kmail;.
+<guimenuitem>Configure &kmail;...</guimenuitem></menuchoice> then select the <guilabel>Plugins</guilabel> page in &kmail; and press
+the configuration button against the <guilabel>Send Later Agent</guilabel> item.
 </para>
 
 <screenshot>
@@ -113,10 +114,10 @@ that have been sent using the send later feature.</action>
 
 <para>&i18n-sendlateragent;</para>
 <para>
-Program copyright 2013 &Laurent.Montel; &Laurent.Montel.mail;
+Program copyright 2013-2019 &Laurent.Montel; &Laurent.Montel.mail;
 </para>
 <para>
-Documentation Copyright &copy; 2013 &Laurent.Montel; &Laurent.Montel.mail;
+Documentation Copyright &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail;
 </para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->

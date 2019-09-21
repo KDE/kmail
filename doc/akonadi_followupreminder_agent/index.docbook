@@ -25,8 +25,8 @@
 <holder>&Laurent.Montel;</holder>
 </copyright>
 
-<date>2014-06-10</date>
-<releaseinfo>&kde; 4.14</releaseinfo>
+<date>2019-09-21</date>
+<releaseinfo>Applications 19.12</releaseinfo>
 
 </articleinfo>
 
@@ -37,16 +37,61 @@
 &i18n-followupreminderagent; is an akonadi agent which follow up reminder mail
 </para>
 
+<sect2 id="using-kapp">
+<title>Using &i18n-followupreminderagent;</title>
+
+<para>Use <menuchoice><guimenu>Options</guimenu><guimenuitem>Create Follow Up Reminder</guimenuitem></menuchoice>
+in &kmail;'s composer window to open a dialog which allows you to create a reminder to follow up your current email 
+at a specific date.</para>
+
+<screenshot>
+<screeninfo>&i18n-followupreminderagent; Dialog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>&i18n-followupreminderagent; Dialog</phrase>
+    </textobject>
+    <caption>
+      <para>&i18n-followupreminderagent; Dialog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para>Press the arrow-down button against the <guilabel>Date</guilabel> field to select the date from the &kde; calendar widget. It is also possible to choose your calender for the reminder using the <guilabel>Store ToDo in</guilabel> drop-down list.</para>
+<para>To remove reminders you have scheduled, use <menuchoice><guimenu>Settings</guimenu>
+<guimenuitem>Configure &kmail;...</guimenuitem></menuchoice> then select the <guilabel>Plugins</guilabel> page in &kmail; and press
+the configuration button against the <guilabel>Followup Reminder Agent</guilabel> item. Then use the context menu launched with a &RMB; click on a reminder item to select the <guimenuitem>Delete</guimenuitem> action.
+</para>
+
+<screenshot>
+<screeninfo>Configure &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>Configure &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para>Configure &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
 <sect2 id="credits">
 
 <title>Credits and License</title>
 
 <para>&i18n-followupreminderagent;</para>
 <para>
-Program copyright 2014 &Laurent.Montel; &Laurent.Montel.mail;
+Program copyright 2014-2019 &Laurent.Montel; &Laurent.Montel.mail;
 </para>
 <para>
-Documentation Copyright &copy; 2014 &Laurent.Montel; &Laurent.Montel.mail;
+Documentation Copyright &copy; 2014-2019 &Laurent.Montel; &Laurent.Montel.mail;
 </para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->

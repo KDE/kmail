@@ -30,8 +30,8 @@
 
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2013-08-30</date>
-<releaseinfo>&kde; 4.11</releaseinfo>
+<date>2019-09-21</date>
+<releaseinfo>Applications 19.12</releaseinfo>
 </articleinfo>
 
 <sect1 id="introduction">
@@ -45,7 +45,7 @@
 <title>Using &i18n-archivemailagent;</title>
 
 <!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
-<para>Use <menuchoice><guimenu>Tools</guimenu><guimenuitem>Configure Automatic Archiving...</guimenuitem>
+<para>Use <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Automatic Archiving...</guimenuitem>
 </menuchoice><action> in &kmail;'s reader window to open a dialog to set up automatic archiving of mail folders.</action>
 </para>
 
@@ -73,7 +73,7 @@ the <guibutton>Add...</guibutton> button, and the <guilabel>Add Archive Mail</gu
 <listitem><para>Select the format you would like to save it in. &eg; <literal role="extension">.tar.bz2</literal>
  in the drop down list. The archive filename will consist of the prefix <userinput>Archive_</userinput>,
 the path of the selected folder in &kmail;'s folder list, the date in format <userinput>year-month-day</userinput> 
-and the selected file extension &eg; <filename>Archive_Local Folder_inbox_2013-09-03.tar.bz2</filename>.
+and the selected file extension &eg; <filename>Archive_Local Folder_inbox_2019-09-03.tar.bz2</filename>.
 </para></listitem>
 <listitem><para>By default <guilabel>Archive all subfolders</guilabel> is enabled. 
 Uncheck this if you only want the parent folder archived.</para></listitem>
@@ -107,6 +107,10 @@ Agent</guilabel> dialog will list and allow to modify them.
 <para>You can use the checkbox at the left of each entry in the list to enable or disable 
 archiving of this job.
 </para>
+<para>It is possible to access this configurational dialog any time later using <menuchoice><guimenu>Settings</guimenu>
+<guimenuitem>Configure &kmail;...</guimenuitem></menuchoice> then select the <guilabel>Plugins</guilabel> page in &kmail; main window and pressing
+the configuration button against the <guilabel>Archive Mail Agent</guilabel> item.
+</para>
 <para>Using the context menu launched with a &RMB; click on an archive job you can open the 
 folder containing the archives or start the archive job immediately. This will overwrite an existing 
 archive created earlier at the same day without notification.
@@ -120,10 +124,10 @@ archive created earlier at the same day without notification.
 
 <para>&i18n-archivemailagent;</para>
 <para>
-Program copyright 2013 Laurent Montel montel@kde.org 
+Program copyright 2013-2019 Laurent Montel montel@kde.org 
 </para>
 <para>
-Documentation Copyright &copy; 2013 Laurent Montel montel@kde.org
+Documentation Copyright &copy; 2013-2019 Laurent Montel montel@kde.org
 </para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
