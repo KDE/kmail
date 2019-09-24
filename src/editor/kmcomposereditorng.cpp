@@ -146,5 +146,8 @@ MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMComposerE
 
 bool KMComposerEditorNg::processModifyText(QKeyEvent *event)
 {
-    return MessageComposer::RichTextComposerNg::processModifyText(event);
+    if (!mComposerWin->processModifyText(event)) {
+        return MessageComposer::RichTextComposerNg::processModifyText(event);
+    }
+    return true;
 }

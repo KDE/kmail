@@ -3334,6 +3334,13 @@ void KMComposerWin::addExtraCustomHeaders(const QMap<QByteArray, QString> &heade
     mExtraHeaders = headers;
 }
 
+bool KMComposerWin::processModifyText(QKeyEvent *event)
+{
+    Q_UNUSED(event);
+    //TODO
+    return false;
+}
+
 MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMComposerWin::convertPlainText(MessageComposer::TextPart *textPart)
 {
     return mPluginEditorConvertTextManagerInterface->convertTextToFormat(textPart);
