@@ -143,3 +143,8 @@ MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMComposerE
     }
     return MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
 }
+
+bool KMComposerEditorNg::processModifyText(QKeyEvent *event)
+{
+    return MessageComposer::RichTextComposerNg::processModifyText(event);
+}
