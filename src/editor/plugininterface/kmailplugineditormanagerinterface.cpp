@@ -103,6 +103,20 @@ void KMailPluginEditorManagerInterface::setComposerInterface(MessageComposer::Co
     mComposerInterface = composerInterface;
 }
 
+bool KMailPluginEditorManagerInterface::processProcessKeyEvent(QKeyEvent *event)
+{
+    if (!mListPluginInterface.isEmpty()) {
+        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
+            if (static_cast<MessageComposer::PluginEditor *>(interface->plugin())->canProcessKeyEvent()) {
+                if (interface->processProcessKeyEvent(event)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 KActionCollection *KMailPluginEditorManagerInterface::actionCollection() const
 {
     return mActionCollection;

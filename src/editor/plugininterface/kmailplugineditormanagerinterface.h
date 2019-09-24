@@ -56,6 +56,8 @@ public:
     MessageComposer::ComposerViewBase *composerInterface() const;
     void setComposerInterface(MessageComposer::ComposerViewBase *composerInterface);
 
+    Q_REQUIRED_RESULT bool processProcessKeyEvent(QKeyEvent *event);
+
 Q_SIGNALS:
     void textSelectionChanged(bool hasSelection);
     void message(const QString &str);

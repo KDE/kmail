@@ -3336,9 +3336,7 @@ void KMComposerWin::addExtraCustomHeaders(const QMap<QByteArray, QString> &heade
 
 bool KMComposerWin::processModifyText(QKeyEvent *event)
 {
-    Q_UNUSED(event);
-    //TODO
-    return false;
+    return mPluginEditorManagerInterface->processProcessKeyEvent(event);
 }
 
 MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMComposerWin::convertPlainText(MessageComposer::TextPart *textPart)
