@@ -36,7 +36,6 @@
 #include "editor/potentialphishingemail/potentialphishingemailjob.h"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "editor/warningwidgets/incorrectidentityfolderwarning.h"
-#include "editor/widgets/snippetwidget.h"
 #include "job/addressvalidationjob.h"
 #include "job/createnewcontactjob.h"
 #include "job/saveasfilejob.h"
@@ -100,6 +99,9 @@
 #include <MailCommon/FolderRequester>
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailKernel>
+#include <MailCommon/SnippetWidget>
+#include <MailCommon/SnippetsManager>
+
 
 #include <MailTransport/Transport>
 #include <MailTransport/TransportComboBox>
@@ -381,8 +383,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(composerEditorNg, &KMComposerEditorNg::spellCheckStatus, this, &KMComposerWin::slotSpellCheckingStatus);
     connect(composerEditorNg, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
     connect(composerEditorNg, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
-    mSnippetWidget = new SnippetWidget(composerEditorNg, actionCollection(), mSnippetSplitter);
-    connect(mSnippetWidget, &SnippetWidget::insertSnippetText, this, &KMComposerWin::insertSnippetText);
+    mSnippetWidget = new MailCommon::SnippetWidget(actionCollection(), mSnippetSplitter);
+    connect(mSnippetWidget, &MailCommon::SnippetWidget::insertSnippetText, this, &KMComposerWin::insertSnippetText);
+    connect(composerEditorNg, &KMComposerEditorNg::insertSnippet, mSnippetWidget->snippetsManager(), &MailCommon::SnippetsManager::insertSnippet);
     mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
     mSnippetSplitter->setCollapsible(0, false);

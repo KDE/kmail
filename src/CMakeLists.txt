@@ -84,7 +84,6 @@ set(kmailprivate_identity_LIB_SRCS
     identity/identityfolderrequester.cpp
     )
 set(kmailprivate_editor_LIB_SRCS
-    editor/widgets/snippetwidget.cpp
     editor/kmcomposereditorng.cpp
     editor/composer.cpp
     editor/codec/codecaction.cpp

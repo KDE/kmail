@@ -62,7 +62,6 @@ class KJob;
 class KToggleAction;
 class QUrl;
 class KRecentFilesAction;
-class SnippetWidget;
 class AttachmentMissingWarning;
 class ExternalEditorWarning;
 class CryptoStateIndicatorWidget;
@@ -98,6 +97,7 @@ class StatusBarLabelToggledState;
 
 namespace MailCommon {
 class FolderRequester;
+class SnippetWidget;
 }
 
 namespace PimCommon {
@@ -637,7 +637,7 @@ private:
 
     MessageComposer::ComposerViewBase *mComposerBase = nullptr;
 
-    SnippetWidget *mSnippetWidget = nullptr;
+    MailCommon::SnippetWidget *mSnippetWidget = nullptr;
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
     AttachmentMissingWarning *mAttachmentMissing = nullptr;
     ExternalEditorWarning *mExternalEditorWarning = nullptr;
