@@ -99,7 +99,7 @@
 #include <MailCommon/FolderRequester>
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailKernel>
-#include <MailCommon/SnippetWidget>
+#include <MailCommon/SnippetTreeView>
 #include <MailCommon/SnippetsManager>
 
 
@@ -383,8 +383,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(composerEditorNg, &KMComposerEditorNg::spellCheckStatus, this, &KMComposerWin::slotSpellCheckingStatus);
     connect(composerEditorNg, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
     connect(composerEditorNg, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
-    mSnippetWidget = new MailCommon::SnippetWidget(actionCollection(), mSnippetSplitter);
-    connect(mSnippetWidget, &MailCommon::SnippetWidget::insertSnippetText, this, &KMComposerWin::insertSnippetText);
+    mSnippetWidget = new MailCommon::SnippetTreeView(actionCollection(), mSnippetSplitter);
+    connect(mSnippetWidget, &MailCommon::SnippetTreeView::insertSnippetText, this, &KMComposerWin::insertSnippetText);
     connect(composerEditorNg, &KMComposerEditorNg::insertSnippet, mSnippetWidget->snippetsManager(), &MailCommon::SnippetsManager::insertSnippet);
     mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);

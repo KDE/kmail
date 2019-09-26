@@ -97,7 +97,7 @@ class StatusBarLabelToggledState;
 
 namespace MailCommon {
 class FolderRequester;
-class SnippetWidget;
+class SnippetTreeView;
 }
 
 namespace PimCommon {
@@ -637,7 +637,7 @@ private:
 
     MessageComposer::ComposerViewBase *mComposerBase = nullptr;
 
-    MailCommon::SnippetWidget *mSnippetWidget = nullptr;
+    MailCommon::SnippetTreeView *mSnippetWidget = nullptr;
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
     AttachmentMissingWarning *mAttachmentMissing = nullptr;
     ExternalEditorWarning *mExternalEditorWarning = nullptr;
