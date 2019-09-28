@@ -34,10 +34,10 @@
 
 int main(int argc, char **argv)
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     QApplication app(argc, argv);
-    app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     KLocalizedString::setApplicationDomain("kmail-refresh-settings");
     KCrash::initialize();
     KAboutData aboutData(QStringLiteral("kmail-refresh-settings"),

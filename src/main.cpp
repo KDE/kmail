@@ -119,11 +119,11 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args, const QS
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     KMailApplication app(argc, &argv);
     KLocalizedString::setApplicationDomain("kmail");
-    app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     app.setDesktopFileName(QStringLiteral("org.kde.kmail2"));
     KCrash::initialize();
