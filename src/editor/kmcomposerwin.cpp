@@ -443,7 +443,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 
-    connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
+    mUpdateWindowTitleConnection = connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
     mIdentityConnection = connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
         slotIdentityChanged(val);
     });
@@ -494,6 +494,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
 KMComposerWin::~KMComposerWin()
 {
+    disconnect(mUpdateWindowTitleConnection);
     // When we have a collection set, store the message back to that collection.
     // Note that when we save the message or sent it, mFolder is set back to 0.
     // So this for example kicks in when opening a draft and then closing the window.
