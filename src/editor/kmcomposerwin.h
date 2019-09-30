@@ -634,6 +634,7 @@ private:
     QString mdbusObjectPath;
     static int s_composerNumber;
     QMetaObject::Connection mIdentityConnection;
+    QMetaObject::Connection mUpdateWindowTitleConnection;
 
     MessageComposer::ComposerViewBase *mComposerBase = nullptr;
 
