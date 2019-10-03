@@ -102,7 +102,6 @@
 #include <MailCommon/SnippetTreeView>
 #include <MailCommon/SnippetsManager>
 
-
 #include <MailTransport/Transport>
 #include <MailTransport/TransportComboBox>
 #include <MailTransport/TransportManager>
@@ -520,7 +519,9 @@ void KMComposerWin::insertSnippetText(const QString &str)
     job->setText(str);
     MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
     job->setComposerViewInterface(interface);
-    connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {mComposerBase->editor()->insertPlainText(str);});
+    connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
+        mComposerBase->editor()->insertPlainText(str);
+    });
     job->start();
 }
 

@@ -1443,7 +1443,7 @@ void KMMainWidget::slotExpireFolder()
                                          mCurrentFolderSettings->name().toHtmlEscaped());
             if (KMessageBox::warningContinueCancel(this, message, i18n("Expire Folder"),
                                                    KGuiItem(i18n("&Expire")))
-                    != KMessageBox::Continue) {
+                != KMessageBox::Continue) {
                 return;
             }
         }

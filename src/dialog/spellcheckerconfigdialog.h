@@ -22,7 +22,6 @@
 
 #include <Sonnet/ConfigDialog>
 
-
 class SpellCheckerConfigDialog : public Sonnet::ConfigDialog
 {
     Q_OBJECT
