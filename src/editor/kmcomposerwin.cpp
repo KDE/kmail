@@ -2194,6 +2194,9 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
 void KMComposerWin::slotPasteAsAttachment()
 {
     const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+    if (!mimeData) {
+        return;
+    }
     if (insertFromMimeData(mimeData, true)) {
         return;
     }
