@@ -110,9 +110,12 @@ void KMReaderMainWin::initKMReaderMainWin()
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
     setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
 
+
     if (!mReaderWin->message().isValid()) {
         menuBar()->hide();
         toolBar(QStringLiteral("mainToolBar"))->hide();
+    } else {
+        slotToggleMenubar( true );
     }
     connect(kmkernel, &KMKernel::configChanged, this, &KMReaderMainWin::slotConfigChanged);
     connect(mReaderWin, &KMReaderWin::showStatusBarMessage, this, &KMReaderMainWin::slotShowMessageStatusBar);
@@ -252,7 +255,9 @@ void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message:
 
 void KMReaderMainWin::updateActions()
 {
-    menuBar()->show();
+    if (mHideMenuBarAction->isChecked()) {
+        menuBar()->show();
+    }
     toolBar(QStringLiteral("mainToolBar"))->show();
     if (mMsg.isValid()) {
         mTagActionManager->updateActionStates(1, mMsg);
@@ -466,6 +471,9 @@ void KMReaderMainWin::setupAccel()
     if (mReaderWin->message().isValid()) {
         mTagActionManager->updateActionStates(1, mReaderWin->message());
     }
+    mHideMenuBarAction = KStandardAction::showMenubar(this, &KMReaderMainWin::slotToggleMenubar, actionCollection());
+    mHideMenuBarAction->setChecked( KMailSettings::self()->readerShowMenuBar() );
+
 
     //----- Message Menu
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMReaderMainWin::slotMessagePopup);
@@ -476,6 +484,28 @@ void KMReaderMainWin::setupAccel()
     KStandardAction::configureToolbars(this, &KMReaderMainWin::slotEditToolbars, actionCollection());
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::moveMessageToTrash, this, &KMReaderMainWin::slotTrashMessage);
 }
+
+void KMReaderMainWin::slotToggleMenubar(bool dontShowWarning)
+{
+    if (!mReaderWin->message().isValid())
+        return;
+    if (menuBar()) {
+        if (mHideMenuBarAction->isChecked()) {
+            menuBar()->show();
+        } else {
+            if (!dontShowWarning) {
+                const QString accel = mHideMenuBarAction->shortcut().toString();
+                KMessageBox::information(this,
+                                         i18n("<qt>This will hide the menu bar completely."
+                                              " You can show it again by typing %1.</qt>", accel),
+                                         i18n("Hide menu bar"), QStringLiteral("HideMenuBarWarning"));
+            }
+            menuBar()->hide();
+        }
+        KMailSettings::self()->setReaderShowMenuBar(mHideMenuBarAction->isChecked());
+    }
+}
+
 
 QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 {

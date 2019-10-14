@@ -140,6 +140,14 @@
         <label></label>
         <whatsthis></whatsthis>
       </entry>
+
+      <entry key="ReaderShowMenuBar" type="Bool">
+        <default>true</default>
+         <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
+        <label></label>
+        <whatsthis></whatsthis>
+      </entry>
+
       <entry key="ComposerShowMenuBar" type="Bool">
         <default>true</default>
          <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->

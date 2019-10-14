@@ -101,6 +101,7 @@ private:
     void showNextMessage();
     void showPreviousMessage();
     void updateButtons();
+    void slotToggleMenubar(bool dontShowWarning);
 
     QList<KMime::Message::Ptr> mListMessage;
     int mCurrentMessageIndex = 0;
@@ -113,6 +114,7 @@ private:
     KMReaderWin *mReaderWin = nullptr;
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
     KMail::TagActionManager *mTagActionManager = nullptr;
+    KToggleAction *mHideMenuBarAction = nullptr;
 };
 
 #endif /*KMReaderMainWin_h*/
