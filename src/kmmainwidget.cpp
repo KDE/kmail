@@ -192,6 +192,10 @@
 #include <job/removeduplicatemailjob.h>
 #include <job/removecollectionjob.h>
 
+#ifdef USE_DKIM_CHECKER
+#include <MessageViewer/DKIMWidgetInfo>
+#endif
+
 using namespace KMime;
 using namespace Akonadi;
 using namespace MailCommon;
@@ -297,6 +301,10 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     if (mMsgView) {
         setZoomChanged(mMsgView->viewer()->webViewZoomFactor());
     }
+#ifdef USE_DKIM_CHECKER
+    mDKimWidgetInfo = new MessageViewer::DKIMWidgetInfo(mCurrentStatusBar);
+#endif
+
     connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);
     if (KSieveUi::Util::checkOutOfOfficeOnStartup()) {
         QTimer::singleShot(0, this, &KMMainWidget::slotCheckVacation);
@@ -332,6 +340,13 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
 
     setupUnifiedMailboxChecker();
 }
+
+#ifdef USE_DKIM_CHECKER
+QWidget *KMMainWidget::dkimWidgetInfo() const
+{
+    return mDKimWidgetInfo;
+}
+#endif
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
 {

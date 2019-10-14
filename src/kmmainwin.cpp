@@ -176,7 +176,9 @@ void KMMainWin::setupStatusBar()
     statusBar()->addWidget(mMessageLabel);
 
     QTimer::singleShot(2000, KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::reset);
-
+#ifdef USE_DKIM_CHECKER
+    statusBar()->addPermanentWidget(mKMMainWidget->dkimWidgetInfo());
+#endif
     statusBar()->addPermanentWidget(mKMMainWidget->zoomLabelIndicator());
     statusBar()->addPermanentWidget(mKMMainWidget->vacationScriptIndicator());
     statusBar()->addPermanentWidget(mProgressBar->littleProgress());

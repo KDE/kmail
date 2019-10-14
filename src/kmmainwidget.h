@@ -83,7 +83,11 @@ class SieveImapPasswordProvider;
 class ManageSieveScriptsDialog;
 class VacationManager;
 }
-
+#ifdef USE_DKIM_CHECKER
+namespace MessageViewer {
+class DKIMWidgetInfo;
+}
+#endif
 namespace MailCommon {
 class FolderSelectionDialog;
 class FavoriteCollectionWidget;
@@ -140,7 +144,9 @@ public:
     static const PtrList *mainWidgetList();
 
     QWidget *vacationScriptIndicator() const;
-
+#ifdef USE_DKIM_CHECKER
+    QWidget *dkimWidgetInfo() const;
+#endif
     MailCommon::FolderTreeView *folderTreeView() const;
 
     /** Returns the XML GUI client. */
@@ -642,6 +648,9 @@ private:
     Akonadi::Collection mCurrentCollection;
     QStatusBar *mCurrentStatusBar = nullptr;
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
+#ifdef USE_DKIM_CHECKER
+    MessageViewer::DKIMWidgetInfo *mDKimWidgetInfo = nullptr;
+#endif
 };
 
 #endif
