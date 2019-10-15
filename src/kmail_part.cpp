@@ -48,7 +48,7 @@
 #include "foldershortcutactionmanager.h"
 #include "kmmigrateapplication.h"
 #include <KLocalizedString>
-
+#include "messageviewer/config-messageviewer.h"
 #include <KSharedConfig>
 
 K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();

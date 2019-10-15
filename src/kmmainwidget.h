@@ -31,7 +31,7 @@
 #include "messageactions.h"
 #include <kactioncollection.h>
 #include <mailcommon/foldersettings.h>
-
+#include "messageviewer/config-messageviewer.h"
 #include <QPointer>
 #include <QTimer>
 #include <Akonadi/KMime/StandardMailActionManager>

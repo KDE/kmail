@@ -85,6 +85,7 @@
 #include "messageviewer/viewer.h"
 #include "messageviewer/headerstyleplugin.h"
 #include "messageviewer/headerstyle.h"
+#include "messageviewer/config-messageviewer.h"
 
 #include <MessageViewer/AttachmentStrategy>
 
@@ -157,7 +158,6 @@
 #include <kstandardshortcut.h>
 #include <kcharsets.h>
 #include "kmail_debug.h"
-#include <ktip.h>
 
 #include <kstandardaction.h>
 #include <ktoggleaction.h>
