@@ -1631,7 +1631,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 
 void KMKernel::agentInstanceBroken(const Akonadi::AgentInstance &instance)
 {
-    const QString summary = i18n("Resource %1 is broken.", instance.name());
+    const QString summary = i18n("Resource %1 is broken.\n%2", instance.name(), instance.statusMessage());
     KNotification::event(QStringLiteral("akonadi-resource-broken"),
                          QString(),
                          summary,
