@@ -175,6 +175,10 @@ set(kmailprivate_sieveimapinstanceinterface_LIB_SRCS
     sieveimapinterface/kmsieveimappasswordprovider.cpp
     )
 
+set(kmailprivate_undosend_LIB_SRCS
+    undosend/undosendcombobox.cpp
+    )
+
 set(kmail_common_SRCS)
 ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail)
 set(kmailprivate_LIB_SRCS
@@ -217,6 +221,7 @@ set(kmailprivate_LIB_SRCS
     ${kmailprivate_editor_plugininterface_LIB_SRCS}
     ${kmailprivate_checkindexing_LIB_SRCS}
     ${kmailprivate_sieveimapinstanceinterface_LIB_SRCS}
+    ${kmailprivate_undosend_LIB_SRCS}
     )
 
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
