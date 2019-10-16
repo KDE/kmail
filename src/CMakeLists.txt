@@ -1,7 +1,4 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"kmail\")
-if (DKIM_CHECKER_BUILD)
-    add_definitions(-DUSE_DKIM_CHECKER)
-endif()
 
 qt5_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
 qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)

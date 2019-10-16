@@ -63,8 +63,6 @@ option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branc
 
 option(KDEPIM_RUN_AKONADI_TEST "Enable autotest based on Akonadi." TRUE)
 
-option(DKIM_CHECKER_BUILD "DKIM CHECKER (experimental)" FALSE)
-
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngine WebEngineWidgets)
 set(LIBGRAVATAR_VERSION_LIB "5.12.40")
 set(MAILCOMMON_LIB_VERSION_LIB "5.12.46")
