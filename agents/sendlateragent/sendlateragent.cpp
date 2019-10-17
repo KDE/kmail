@@ -138,7 +138,7 @@ void SendLaterAgent::configure(WId windowId)
 {
     QPointer<SendLaterConfigureDialog> dialog = new SendLaterConfigureDialog();
     if (windowId) {
-        KWindowSystem::setMainWindow(dialog, windowId);
+        KWindowSystem::setMainWindow(dialog->windowHandle(), windowId);
     }
     connect(this, &SendLaterAgent::needUpdateConfigDialogBox, dialog.data(), &SendLaterConfigureDialog::slotNeedToReloadConfig);
     connect(dialog.data(), &SendLaterConfigureDialog::sendNow, this, &SendLaterAgent::slotSendNow);
