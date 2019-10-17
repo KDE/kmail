@@ -19,14 +19,23 @@
 
 
 #include "undosendcombobox.h"
+#include <KLocalizedString>
 
 UndoSendCombobox::UndoSendCombobox(QWidget *parent)
     : QComboBox(parent)
 {
-
+    initialize();
 }
 
 UndoSendCombobox::~UndoSendCombobox()
 {
 
+}
+
+void UndoSendCombobox::initialize()
+{
+    for (int i = 1; i < 6; i++) {
+        const int numberOfSeconds = i * 10;
+        addItem(i18n("%1 seconds", numberOfSeconds), numberOfSeconds);
+    }
 }

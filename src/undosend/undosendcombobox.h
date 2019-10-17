@@ -28,6 +28,8 @@ class UndoSendCombobox : public QComboBox
 public:
     explicit UndoSendCombobox(QWidget *parent = nullptr);
     ~UndoSendCombobox();
+private:
+    void initialize();
 };
 
 #endif // UNDOSENDCOMBOBOX_H
