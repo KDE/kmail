@@ -39,3 +39,8 @@ void UndoSendCombobox::initialize()
         addItem(i18n("%1 seconds", numberOfSeconds), numberOfSeconds);
     }
 }
+
+int UndoSendCombobox::delay() const
+{
+    return currentData().toInt();
+}
