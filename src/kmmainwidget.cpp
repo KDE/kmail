@@ -346,6 +346,7 @@ QWidget *KMMainWidget::dkimWidgetInfo() const
 {
     return mDKimWidgetInfo;
 }
+
 #endif
 
 void KMMainWidget::restoreCollectionFolderViewConfig()

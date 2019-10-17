@@ -22,10 +22,8 @@
 UndoSendManager::UndoSendManager(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 UndoSendManager::~UndoSendManager()
 {
-
 }

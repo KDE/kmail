@@ -30,5 +30,4 @@ UndoSendInfoWidget::UndoSendInfoWidget(QWidget *parent)
 
 UndoSendInfoWidget::~UndoSendInfoWidget()
 {
-
 }

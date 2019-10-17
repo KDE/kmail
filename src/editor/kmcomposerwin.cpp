@@ -2520,10 +2520,10 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
 
 void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn, bool willSendItWithoutReediting)
 {
-    if(saveIn == MessageComposer::MessageSender::SaveInNone) {
+    if (saveIn == MessageComposer::MessageSender::SaveInNone) {
         const MessageComposer::ComposerViewBase::MissingAttachment forgotAttachment = userForgotAttachment();
         if ((forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndAddedAttachment)
-                || (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndCancel)) {
+            || (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndCancel)) {
             return;
         }
     }

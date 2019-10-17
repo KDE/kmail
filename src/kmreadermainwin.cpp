@@ -110,12 +110,11 @@ void KMReaderMainWin::initKMReaderMainWin()
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
     setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
 
-
     if (!mReaderWin->message().isValid()) {
         menuBar()->hide();
         toolBar(QStringLiteral("mainToolBar"))->hide();
     } else {
-        slotToggleMenubar( true );
+        slotToggleMenubar(true);
     }
     connect(kmkernel, &KMKernel::configChanged, this, &KMReaderMainWin::slotConfigChanged);
     connect(mReaderWin, &KMReaderWin::showStatusBarMessage, this, &KMReaderMainWin::slotShowMessageStatusBar);
@@ -472,8 +471,7 @@ void KMReaderMainWin::setupAccel()
         mTagActionManager->updateActionStates(1, mReaderWin->message());
     }
     mHideMenuBarAction = KStandardAction::showMenubar(this, &KMReaderMainWin::slotToggleMenubar, actionCollection());
-    mHideMenuBarAction->setChecked( KMailSettings::self()->readerShowMenuBar() );
-
+    mHideMenuBarAction->setChecked(KMailSettings::self()->readerShowMenuBar());
 
     //----- Message Menu
     connect(mReaderWin->viewer(), &MessageViewer::Viewer::displayPopupMenu, this, &KMReaderMainWin::slotMessagePopup);
@@ -487,8 +485,9 @@ void KMReaderMainWin::setupAccel()
 
 void KMReaderMainWin::slotToggleMenubar(bool dontShowWarning)
 {
-    if (!mReaderWin->message().isValid())
+    if (!mReaderWin->message().isValid()) {
         return;
+    }
     if (menuBar()) {
         if (mHideMenuBarAction->isChecked()) {
             menuBar()->show();
@@ -505,7 +504,6 @@ void KMReaderMainWin::slotToggleMenubar(bool dontShowWarning)
         KMailSettings::self()->setReaderShowMenuBar(mHideMenuBarAction->isChecked());
     }
 }
-
 
 QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 {

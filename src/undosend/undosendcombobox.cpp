@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "undosendcombobox.h"
 #include <KLocalizedString>
 
@@ -29,7 +28,6 @@ UndoSendCombobox::UndoSendCombobox(QWidget *parent)
 
 UndoSendCombobox::~UndoSendCombobox()
 {
-
 }
 
 void UndoSendCombobox::initialize()

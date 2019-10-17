@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #ifndef UNDOSENDMANAGER_H
 #define UNDOSENDMANAGER_H
 
@@ -29,7 +28,6 @@ class UndoSendManager : public QObject
 public:
     explicit UndoSendManager(QObject *parent = nullptr);
     ~UndoSendManager();
-
 };
 
 #endif // UNDOSENDMANAGER_H
