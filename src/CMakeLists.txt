@@ -178,6 +178,7 @@ set(kmailprivate_sieveimapinstanceinterface_LIB_SRCS
 set(kmailprivate_undosend_LIB_SRCS
     undosend/undosendcombobox.cpp
     undosend/undosendinfowidget.cpp
+    undosend/undosendmanager.cpp
     )
 
 set(kmail_common_SRCS)
