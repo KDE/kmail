@@ -55,10 +55,10 @@ public:
 
     void sendDone(SendLater::SendLaterInfo *info);
     void sendError(SendLater::SendLaterInfo *info, ErrorType type);
-    QString printDebugInfo() const;
+    Q_REQUIRED_RESULT QString printDebugInfo() const;
 
     void stopAll();
-    void itemRemoved(Akonadi::Item::Id id);
+    bool itemRemoved(Akonadi::Item::Id id);
 
     MessageComposer::AkonadiSender *sender() const;
 

@@ -156,7 +156,9 @@ void SendLaterAgent::configure(WId windowId)
 
 void SendLaterAgent::removeItem(qint64 item)
 {
-    mManager->itemRemoved(item);
+    if (mManager->itemRemoved(item)) {
+        reload();
+    }
 }
 
 void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)
@@ -166,8 +168,14 @@ void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)
 
 void SendLaterAgent::itemsRemoved(const Akonadi::Item::List &items)
 {
+    bool needToReload = false;
     for (const Akonadi::Item &item : items) {
-        mManager->itemRemoved(item.id());
+        if (mManager->itemRemoved(item.id())) {
+            needToReload = true;
+        }
+    }
+    if (needToReload) {
+        reload();
     }
 }
 

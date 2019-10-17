@@ -156,13 +156,15 @@ void SendLaterManager::slotCreateJob()
     mCurrentJob->start();
 }
 
-void SendLaterManager::itemRemoved(Akonadi::Item::Id id)
+bool SendLaterManager::itemRemoved(Akonadi::Item::Id id)
 {
     if (mConfig->hasGroup(SendLater::SendLaterUtil::sendLaterPattern().arg(id))) {
         removeInfo(id);
         mConfig->reparseConfiguration();
         Q_EMIT needUpdateConfigDialogBox();
+        return true;
     }
+    return false;
 }
 
 void SendLaterManager::removeInfo(Akonadi::Item::Id id)
