@@ -28,6 +28,7 @@ class UndoSendManager : public QObject
 public:
     explicit UndoSendManager(QObject *parent = nullptr);
     ~UndoSendManager();
+    static UndoSendManager *self();
 };
 
 #endif // UNDOSENDMANAGER_H

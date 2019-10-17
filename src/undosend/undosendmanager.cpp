@@ -27,3 +27,9 @@ UndoSendManager::UndoSendManager(QObject *parent)
 UndoSendManager::~UndoSendManager()
 {
 }
+
+UndoSendManager *UndoSendManager::self()
+{
+    static UndoSendManager s_self;
+    return &s_self;
+}
