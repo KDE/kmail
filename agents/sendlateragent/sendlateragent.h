@@ -43,6 +43,7 @@ Q_SIGNALS:
 public Q_SLOTS:
     void reload();
     void configure(WId windowId) override;
+    void removeItem(qint64 item);
 
 protected:
     void itemsRemoved(const Akonadi::Item::List &item) override;

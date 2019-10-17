@@ -154,6 +154,11 @@ void SendLaterAgent::configure(WId windowId)
     delete dialog;
 }
 
+void SendLaterAgent::removeItem(qint64 item)
+{
+    mManager->itemRemoved(item);
+}
+
 void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)
 {
     mManager->sendNow(id);

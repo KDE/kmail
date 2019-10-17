@@ -11,5 +11,8 @@
        <arg type="s" direction="out"/>
     </method>
     <method name="reload" />
+    <method name="removeItem" >
+       <arg name="item" type="x" direction="in"/>
+    </method>
   </interface>
 </node>
