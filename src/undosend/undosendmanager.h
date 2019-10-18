@@ -29,6 +29,9 @@ public:
     explicit UndoSendManager(QObject *parent = nullptr);
     ~UndoSendManager();
     static UndoSendManager *self();
+    void removeItem(qint64 index);
+
+    void addItem(qint64 index);
 };
 
 #endif // UNDOSENDMANAGER_H

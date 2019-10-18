@@ -33,3 +33,13 @@ UndoSendManager *UndoSendManager::self()
     static UndoSendManager s_self;
     return &s_self;
 }
+
+void UndoSendManager::removeItem(qint64 index)
+{
+
+}
+
+void UndoSendManager::addItem(qint64 index)
+{
+    //TODO
+}
