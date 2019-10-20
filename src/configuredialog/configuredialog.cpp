@@ -27,8 +27,6 @@
 #include "settings/kmailsettings.h"
 #include "kmkernel.h"
 
-#include <KWindowSystem>
-#include <KIconLoader>
 #include <QPushButton>
 
 ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
@@ -39,8 +37,6 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
                        |QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel
                        |QDialogButtonBox::Apply | QDialogButtonBox::Reset);
     setModal(modal);
-    KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop), IconSize(KIconLoader::Desktop)),
-                            qApp->windowIcon().pixmap(IconSize(KIconLoader::Small), IconSize(KIconLoader::Small)));
     addModule(QStringLiteral("kmail_config_accounts"));
     addModule(QStringLiteral("kmail_config_appearance"));
     addModule(QStringLiteral("kmail_config_composer"));

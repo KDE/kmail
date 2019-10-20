@@ -50,11 +50,9 @@
 #include "kmail_debug.h"
 #include <QIcon>
 #include <QSortFilterProxyModel>
-#include <KIconLoader>
 #include <kmime/kmime_message.h>
 #include <KStandardAction>
 #include <KStandardGuiItem>
-#include <KWindowSystem>
 #include <KMessageBox>
 #include <AkonadiSearch/PIM/indexeditems.h>
 
@@ -78,11 +76,6 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     , mKMMainWidget(widget)
 {
     setWindowTitle(i18n("Find Messages"));
-
-    KWindowSystem::setIcons(winId(), qApp->windowIcon().pixmap(IconSize(KIconLoader::Desktop),
-                                                               IconSize(KIconLoader::Desktop)),
-                            qApp->windowIcon().pixmap(IconSize(KIconLoader::Small),
-                                                      IconSize(KIconLoader::Small)));
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
