@@ -37,7 +37,6 @@
 #include <KLocalizedString>
 #include <KNotification>
 #include <QIcon>
-#include <KIconLoader>
 #include <kmime/kmime_message.h>
 #include <MailCommon/FilterImporterExporter>
 #include <MailCommon/FilterLog>
@@ -62,7 +61,6 @@ public:
         , mCurrentProgressCount(0)
         , mInboundFiltersExist(false)
     {
-        pixmapNotification = QIcon::fromTheme(QStringLiteral("view-filter")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
     }
 
     void itemsFetchJobForFilterDone(KJob *job);
@@ -81,7 +79,6 @@ public:
     FilterManager *q;
     QVector<MailCommon::MailFilter *> mFilters;
     QMap<QString, SearchRule::RequiredPart> mRequiredParts;
-    QPixmap pixmapNotification;
     SearchRule::RequiredPart mRequiredPartsBasedOnAll;
     int mTotalProgressCount = 0;
     int mCurrentProgressCount = 0;
@@ -232,7 +229,7 @@ void FilterManager::Private::showNotification(const QString &errorMsg, const QSt
 {
     KNotification *notify = new KNotification(QStringLiteral("mailfilterjoberror"));
     notify->setComponentName(QStringLiteral("akonadi_mailfilter_agent"));
-    notify->setPixmap(pixmapNotification);
+    notify->setIconName(QStringLiteral("view-filter"));
     notify->setText(errorMsg + QLatin1Char('\n') + jobErrorString);
     notify->sendEvent();
 }

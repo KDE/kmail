@@ -36,7 +36,6 @@ target_link_libraries(akonadi_mailfilter_agent
     KF5::DBusAddons
     KF5::Notifications
     KF5::WindowSystem
-    KF5::IconThemes
     KF5::Libkdepim
     KF5::I18n
     )

@@ -39,7 +39,6 @@
 #include <KLocalizedString>
 #include <QIcon>
 #include "mailfilteragent_debug.h"
-#include <KIconLoader>
 #include <KMime/Message>
 #include <KNotification>
 #include <KWindowSystem>
@@ -112,10 +111,9 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     if (config->hasGroup("FilterLog")) {
         KConfigGroup group(config, "FilterLog");
         if (group.readEntry("Enabled", false)) {
-            const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("view-filter")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
             KNotification *notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
             notify->setComponentName(QApplication::applicationDisplayName());
-            notify->setPixmap(pixmap);
+            notify->setIconName(QStringLiteral("view-filter"));
             notify->setText(i18nc("Notification when the filter log was enabled", "Mail Filter Log Enabled"));
             notify->sendEvent();
         }
