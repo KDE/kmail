@@ -30,8 +30,6 @@
 
 #include "aboutdata.h"
 
-#include "kmstartup.h"
-
 #include <QDir>
 #include <QApplication>
 #include <QSessionManager>
@@ -144,9 +142,6 @@ int main(int argc, char *argv[])
 
     KMMigrateApplication migrate;
     migrate.migrate();
-
-    // import i18n data and icons from libraries:
-    KMail::insertLibraryIcons();
 
     //local, do the init
     KMKernel kmailKernel;

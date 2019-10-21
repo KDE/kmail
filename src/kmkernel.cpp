@@ -11,7 +11,6 @@
 #include <AkonadiSearch/PIM/indexeditems.h>
 #include <LibkdepimAkonadi/ProgressManagerAkonadi>
 using KPIM::BroadcastStatus;
-#include "kmstartup.h"
 #include "kmmainwin.h"
 #include "editor/composer.h"
 #include "kmreadermainwin.h"

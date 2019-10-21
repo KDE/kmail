@@ -194,7 +194,6 @@ set(kmailprivate_LIB_SRCS
     kmkernel.cpp
     kmcommands.cpp
     kmreadermainwin.cpp
-    kmstartup.cpp
     kmmainwidget.cpp
     aboutdata.cpp
     mailserviceimpl.cpp

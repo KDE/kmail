@@ -28,7 +28,6 @@
 
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "kmstartup.h"
 #include "aboutdata.h"
 
 #include <QVBoxLayout>
@@ -64,9 +63,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
 
     KMMigrateApplication migrate;
     migrate.migrate();
-
-    // import i18n data and icons from libraries:
-    KMail::insertLibraryIcons();
 
     //local, do the init
     KMKernel *mKMailKernel = new KMKernel();
