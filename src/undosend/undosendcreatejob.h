@@ -22,6 +22,8 @@
 
 #include <QObject>
 #include "kmail_private_export.h"
+class KNotification;
+class QTimer;
 class KMAILTESTS_TESTS_EXPORT UndoSendCreateJob : public QObject
 {
     Q_OBJECT
@@ -38,10 +40,16 @@ public:
     void setDelay(int delay);
 
     Q_REQUIRED_RESULT qint64 akonadiIndex() const;
-    void setAkonadiIndex(const qint64 &akonadiIndex);
+    void setAkonadiIndex(qint64 akonadiIndex);
 
 private:
+    void slotActivateNotificationAction(unsigned int index);
+    void slotNotificationClosed();
+    void undoSendEmail();
+    void slotTimeOut();
     QString mSubject;
+    KNotification *mNotification = nullptr;
+    QTimer *mTimer = nullptr;
     qint64 mAkonadiIndex = -1;
     int mDelay = -1;
 };
