@@ -468,3 +468,8 @@ Name[x-test]=xxFolder Archive Errorxx
 Name[zh_CN]=文件夹归档错误
 Name[zh_TW]=資料夾封存錯誤
 Action=Popup
+
+[Event/undosend]
+Name=An email can be undo send
+Action=Popup
+Urgency=Normal

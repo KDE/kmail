@@ -19,6 +19,7 @@
 
 #include "undosendmanager.h"
 #include "undosendcreatejob.h"
+#include "kmail_debug.h"
 
 UndoSendManager::UndoSendManager(QObject *parent)
     : QObject(parent)
@@ -35,12 +36,13 @@ UndoSendManager *UndoSendManager::self()
     return &s_self;
 }
 
-void UndoSendManager::removeItem(qint64 index)
-{
-
-}
-
 void UndoSendManager::addItem(qint64 index, const QString &subject, int delay)
 {
-    //TODO
+    UndoSendCreateJob *job = new UndoSendCreateJob(this);
+    job->setAkonadiIndex(index);
+    job->setSubject(subject);
+    job->setDelay(delay);
+    if (!job->start()) {
+        qCWarning(KMAIL_LOG) << " Impossible to create job";
+    }
 }

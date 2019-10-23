@@ -20,6 +20,7 @@
 
 #include "undosendcreatejob.h"
 #include "kmail_debug.h"
+//TODO add notification
 
 UndoSendCreateJob::UndoSendCreateJob(QObject *parent)
     : QObject(parent)
