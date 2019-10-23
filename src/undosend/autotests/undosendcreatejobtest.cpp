@@ -17,21 +17,21 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef UNDOSENDMANAGER_H
-#define UNDOSENDMANAGER_H
+#include "undosendcreatejobtest.h"
+#include "undosend/undosendcreatejob.h"
+#include <QTest>
+QTEST_MAIN(UndoSendCreateJobTest)
 
-#include <QObject>
-
-class UndoSendManager : public QObject
+UndoSendCreateJobTest::UndoSendCreateJobTest(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
-public:
-    explicit UndoSendManager(QObject *parent = nullptr);
-    ~UndoSendManager();
-    static UndoSendManager *self();
-    void removeItem(qint64 index);
 
-    void addItem(qint64 index, const QString &subject, int delay);
-};
+}
 
-#endif // UNDOSENDMANAGER_H
+void UndoSendCreateJobTest::shouldHaveDefaultValues()
+{
+    UndoSendCreateJob job;
+    QCOMPARE(job.akonadiIndex(), -1);
+    QCOMPARE(job.delay(), -1);
+    QVERIFY(job.subject().isEmpty());
+}

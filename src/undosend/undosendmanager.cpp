@@ -18,6 +18,7 @@
 */
 
 #include "undosendmanager.h"
+#include "undosendcreatejob.h"
 
 UndoSendManager::UndoSendManager(QObject *parent)
     : QObject(parent)
@@ -39,7 +40,7 @@ void UndoSendManager::removeItem(qint64 index)
 
 }
 
-void UndoSendManager::addItem(qint64 index)
+void UndoSendManager::addItem(qint64 index, const QString &subject, int delay)
 {
     //TODO
 }

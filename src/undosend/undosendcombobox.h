@@ -21,8 +21,9 @@
 #define UNDOSENDCOMBOBOX_H
 
 #include <QComboBox>
+#include "kmail_private_export.h"
 
-class UndoSendCombobox : public QComboBox
+class KMAILTESTS_TESTS_EXPORT UndoSendCombobox : public QComboBox
 {
     Q_OBJECT
 public:

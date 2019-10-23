@@ -142,6 +142,9 @@ configure_file(config-enterprise.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-ente
 
 include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
 configure_file(kmail-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
+if(BUILD_TESTING)
+   add_definitions(-DBUILD_TESTING)
+endif()
 
 if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
    add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)

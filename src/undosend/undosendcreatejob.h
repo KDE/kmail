@@ -17,21 +17,33 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef UNDOSENDMANAGER_H
-#define UNDOSENDMANAGER_H
+#ifndef UNDOSENDCREATEJOB_H
+#define UNDOSENDCREATEJOB_H
 
 #include <QObject>
-
-class UndoSendManager : public QObject
+#include "kmail_private_export.h"
+class KMAILTESTS_TESTS_EXPORT UndoSendCreateJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit UndoSendManager(QObject *parent = nullptr);
-    ~UndoSendManager();
-    static UndoSendManager *self();
-    void removeItem(qint64 index);
+    explicit UndoSendCreateJob(QObject *parent = nullptr);
+    ~UndoSendCreateJob();
+    Q_REQUIRED_RESULT bool canStart() const;
+    Q_REQUIRED_RESULT bool start();
 
-    void addItem(qint64 index, const QString &subject, int delay);
+    Q_REQUIRED_RESULT QString subject() const;
+    void setSubject(const QString &subject);
+
+    Q_REQUIRED_RESULT int delay() const;
+    void setDelay(int delay);
+
+    Q_REQUIRED_RESULT qint64 akonadiIndex() const;
+    void setAkonadiIndex(const qint64 &akonadiIndex);
+
+private:
+    QString mSubject;
+    qint64 mAkonadiIndex = -1;
+    int mDelay = -1;
 };
 
-#endif // UNDOSENDMANAGER_H
+#endif // UNDOSENDCREATEJOB_H

@@ -179,6 +179,7 @@ set(kmailprivate_undosend_LIB_SRCS
     undosend/undosendcombobox.cpp
     undosend/undosendinfowidget.cpp
     undosend/undosendmanager.cpp
+    undosend/undosendcreatejob.cpp
     )
 
 set(kmail_common_SRCS)
@@ -390,6 +391,7 @@ if(BUILD_TESTING)
     add_subdirectory(editor/potentialphishingemail/autotests)
     add_subdirectory(editor/warningwidgets/autotests)
     add_subdirectory(sieveimapinterface/tests/)
+    add_subdirectory(undosend/autotests/)
 endif()
 ########### install files ###############
 

@@ -17,21 +17,20 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef UNDOSENDMANAGER_H
-#define UNDOSENDMANAGER_H
 
-#include <QObject>
+#include "undosendcomboboxtest.h"
+#include "undosend/undosendcombobox.h"
+#include <QTest>
+QTEST_MAIN(UndoSendComboboxTest)
 
-class UndoSendManager : public QObject
+UndoSendComboboxTest::UndoSendComboboxTest(QObject *parent)
+    : QObject(parent)
 {
-    Q_OBJECT
-public:
-    explicit UndoSendManager(QObject *parent = nullptr);
-    ~UndoSendManager();
-    static UndoSendManager *self();
-    void removeItem(qint64 index);
 
-    void addItem(qint64 index, const QString &subject, int delay);
-};
+}
 
-#endif // UNDOSENDMANAGER_H
+void UndoSendComboboxTest::shouldHaveDefaultValues()
+{
+    UndoSendCombobox w;
+    QCOMPARE(w.count(), 5);
+}
