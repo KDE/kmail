@@ -176,6 +176,7 @@ void SendLaterManager::removeInfo(Akonadi::Item::Id id)
 
 void SendLaterManager::sendError(SendLater::SendLaterInfo *info, ErrorType type)
 {
+    mCurrentJob = nullptr;
     if (info) {
         switch (type) {
         case UnknownError:
@@ -192,7 +193,12 @@ void SendLaterManager::sendError(SendLater::SendLaterInfo *info, ErrorType type)
                 removeLaterInfo(info);
             }
             break;
-        default:
+        case TooManyItemFound:
+            qDebug() << " TooManyItemFound";
+        case CanNotFetchItem:
+            qDebug() << " CanNotFetchItem";
+        case CanNotCreateTransport:
+            qDebug() << " CanNotCreateTransport";
             if (KMessageBox::No == KMessageBox::questionYesNo(nullptr, i18n("An error was found. Do you want to resend it?"), i18n("Error found"))) {
                 removeLaterInfo(info);
             }

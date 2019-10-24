@@ -59,7 +59,7 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
-
+#include "undosend/undosendmanager.h"
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <Akonadi/KMime/MessageFlags>
 #include <Akonadi/KMime/MessageStatus>
@@ -1879,7 +1879,7 @@ void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::Composer
 void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
 {
     if (id != -1) {
-        //TODO send later info
+        UndoSendManager::self()->addItem(id, subject(), KMailSettings::self()->undoSendDelay());
     }
     setModified(false);
     mComposerBase->cleanupAutoSave();
@@ -2555,7 +2555,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
             }
             method = MessageComposer::MessageSender::SendLater;
             willSendItWithoutReediting = true;
-            saveIn == MessageComposer::MessageSender::SaveInOutbox;
+            saveIn = MessageComposer::MessageSender::SaveInOutbox;
         }
     }
 

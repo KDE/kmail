@@ -40,7 +40,6 @@ inline QString sendLaterItemPattern()
 
 SendLaterItem::SendLaterItem(QTreeWidget *parent)
     : QTreeWidgetItem(parent)
-    , mInfo(nullptr)
 {
 }
 
