@@ -28,7 +28,6 @@ target_link_libraries(followupreminderagent
     KF5::Notifications
     KF5::MailCommon
     KF5::Libkdepim
-    KF5::IconThemes
     KF5::I18n
     KF5::CalendarCore
 )
@@ -52,7 +51,6 @@ target_link_libraries(akonadi_followupreminder_agent
     Qt5::Widgets
     KF5::Notifications
     KF5::I18n
-    KF5::IconThemes
     KF5::XmlGui
     KF5::Service
     )

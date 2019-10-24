@@ -27,7 +27,6 @@
 #include "MailCommon/FolderTreeView"
 #include <AkonadiCore/NewMailNotifierAttribute>
 
-#include <kiconloader.h>
 #include <kwindowsystem.h>
 #include "kmail_debug.h"
 #include <QMenu>

@@ -26,7 +26,6 @@
 
 #include <QGroupBox>
 #include <QHBoxLayout>
-#include <kicondialog.h>
 #include <QLabel>
 #include <QCheckBox>
 #include <QVBoxLayout>

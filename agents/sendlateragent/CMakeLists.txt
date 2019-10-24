@@ -43,7 +43,6 @@ target_link_libraries(akonadi_sendlater_agent
     KF5::WindowSystem
     KF5::XmlGui
     KF5::Notifications
-    KF5::IconThemes
     KF5::I18n
     )
 
