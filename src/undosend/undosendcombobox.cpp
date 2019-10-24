@@ -42,3 +42,9 @@ int UndoSendCombobox::delay() const
 {
     return currentData().toInt();
 }
+
+void UndoSendCombobox::setDelay(int val)
+{
+    const int index = findData(val);
+    setCurrentIndex(index != -1 ? index : 0);
+}

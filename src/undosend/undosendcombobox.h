@@ -31,6 +31,7 @@ public:
     ~UndoSendCombobox();
 
     Q_REQUIRED_RESULT int delay() const;
+    void setDelay(int val);
 private:
     void initialize();
 };

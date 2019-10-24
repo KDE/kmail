@@ -430,4 +430,13 @@
      <default>100</default>
    </entry>
  </group>
+
+ <group name="UndoSend">
+   <entry name="EnabledUndoSend" type="Bool">
+     <default>false</default>
+   </entry>
+   <entry name="UndoSendDelay" type="int">
+     <default>10</default>
+   </entry>
+ </group>
 </kcfg>

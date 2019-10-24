@@ -24,6 +24,7 @@
 
 class QCheckBox;
 class QComboBox;
+class UndoSendCombobox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
 namespace KLDAP {
 class LdapConfigureWidget;
@@ -47,6 +48,8 @@ private:
     QCheckBox *mCheckSpellingBeforeSending = nullptr;
     QComboBox *mSendOnCheckCombo = nullptr;
     QComboBox *mSendMethodCombo = nullptr;
+    UndoSendCombobox *mUndoSendComboBox = nullptr;
+    QCheckBox *mUndoSend = nullptr;
 };
 
 // subclasses: one class per tab:

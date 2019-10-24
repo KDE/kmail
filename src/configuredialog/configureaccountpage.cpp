@@ -21,6 +21,7 @@
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
 #include "configagentdelegate.h"
+#include "undosend/undosendcombobox.h"
 #include "MessageComposer/MessageComposerSettings"
 #include "MailCommon/AccountConfigOrderDialog"
 #include "PimCommon/ConfigureImmutableWidgetUtils"
@@ -156,6 +157,18 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     l = new QLabel(i18n("Defa&ult send method:"), group);
     l->setBuddy(mSendMethodCombo);
     glay->addWidget(l, 3, 0);
+
+    mUndoSend = new QCheckBox(i18n("Enable Undo Send"), this);
+    glay->addWidget(mUndoSend, 4, 0);
+    connect(mUndoSend, &QCheckBox::toggled, this, [this](bool state) {
+        mUndoSendComboBox->setEnabled(state);
+        Q_EMIT slotEmitChanged();
+    });
+
+    mUndoSendComboBox = new UndoSendCombobox(this);
+    mUndoSendComboBox->setEnabled(false);
+    glay->addWidget(mUndoSendComboBox, 4, 1);
+    connect(mUndoSendComboBox, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 }
 
 void AccountsPage::SendingTab::doLoadFromGlobalSettings()
@@ -168,6 +181,8 @@ void AccountsPage::SendingTab::doLoadOther()
     mSendMethodCombo->setCurrentIndex(MessageComposer::MessageComposerSettings::self()->sendImmediate() ? 0 : 1);
     loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
     loadWidget(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
+    loadWidget(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
+    mUndoSendComboBox->setDelay(KMailSettings::self()->undoSendDelay());
 }
 
 void AccountsPage::SendingTab::save()
@@ -175,7 +190,9 @@ void AccountsPage::SendingTab::save()
     KMailSettings::self()->setSendOnCheck(mSendOnCheckCombo->currentIndex());
     saveCheckBox(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
     saveCheckBox(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
+    saveCheckBox(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
     MessageComposer::MessageComposerSettings::self()->setSendImmediate(mSendMethodCombo->currentIndex() == 0);
+    KMailSettings::self()->setUndoSendDelay(mUndoSendComboBox->delay());
 }
 
 QString AccountsPage::ReceivingTab::helpAnchor() const
