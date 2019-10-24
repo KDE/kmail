@@ -2708,6 +2708,11 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
     mComposerBase->send(method, saveIn, false);
 }
 
+bool KMComposerWin::sendLaterRegistered() const
+{
+    return (SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled());
+}
+
 void KMComposerWin::slotSendLater()
 {
     if (!TransportManager::self()->showTransportCreationDialog(this, TransportManager::IfNoTransportExists)) {
@@ -2718,7 +2723,7 @@ void KMComposerWin::slotSendLater()
     }
     mComposerBase->setSendLaterInfo(nullptr);
     if (mComposerBase->editor()->checkExternalEditorFinished()) {
-        const bool wasRegistered = (SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled());
+        const bool wasRegistered = sendLaterRegistered();
         if (wasRegistered) {
             SendLater::SendLaterInfo *info = nullptr;
             QPointer<SendLater::SendLaterDialog> dlg = new SendLater::SendLaterDialog(info, this);
