@@ -358,7 +358,7 @@ private Q_SLOTS:
     void slotPrintComposeResult(KJob *job);
 
     void slotSendFailed(const QString &msg, MessageComposer::ComposerViewBase::FailedType type);
-    void slotSendSuccessful();
+    void slotSendSuccessful(Akonadi::Item::Id id);
 
     /**
      *  toggle automatic spellchecking

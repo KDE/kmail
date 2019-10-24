@@ -1876,8 +1876,11 @@ void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::Composer
     }
 }
 
-void KMComposerWin::slotSendSuccessful()
+void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
 {
+    if (id != -1) {
+        //TODO send later info
+    }
     setModified(false);
     mComposerBase->cleanupAutoSave();
     mFolder = Akonadi::Collection(); // see dtor
@@ -2539,6 +2542,20 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
     if (method == MessageComposer::MessageSender::SendImmediate) {
         if (!MessageComposer::Util::sendMailDispatcherIsOnline()) {
             method = MessageComposer::MessageSender::SendLater;
+        }
+        if (KMailSettings::self()->enabledUndoSend()) {
+            mComposerBase->setSendLaterInfo(nullptr);
+            const bool wasRegistered = sendLaterRegistered();
+            if (wasRegistered) {
+                SendLater::SendLaterInfo *info = new SendLater::SendLaterInfo;
+                info->setRecurrence(false);
+                info->setSubject(subject());
+                info->setDateTime(QDateTime::currentDateTime().addSecs(KMailSettings::self()->undoSendDelay()));
+                mComposerBase->setSendLaterInfo(info);
+            }
+            method = MessageComposer::MessageSender::SendLater;
+            willSendItWithoutReediting = true;
+            saveIn == MessageComposer::MessageSender::SaveInOutbox;
         }
     }
 
