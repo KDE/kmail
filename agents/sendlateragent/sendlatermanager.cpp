@@ -56,6 +56,7 @@ void SendLaterManager::stopAll()
     qDeleteAll(mListSendLaterInfo);
     mListSendLaterInfo.clear();
     mCurrentJob = nullptr;
+    mCurrentInfo = nullptr;
 }
 
 void SendLaterManager::load(bool forcereload)
@@ -194,11 +195,8 @@ void SendLaterManager::sendError(SendLater::SendLaterInfo *info, ErrorType type)
             }
             break;
         case TooManyItemFound:
-            qDebug() << " TooManyItemFound";
         case CanNotFetchItem:
-            qDebug() << " CanNotFetchItem";
         case CanNotCreateTransport:
-            qDebug() << " CanNotCreateTransport";
             if (KMessageBox::No == KMessageBox::questionYesNo(nullptr, i18n("An error was found. Do you want to resend it?"), i18n("Error found"))) {
                 removeLaterInfo(info);
             }
@@ -212,7 +210,7 @@ void SendLaterManager::recreateSendList()
 {
     mCurrentJob = nullptr;
     Q_EMIT needUpdateConfigDialogBox();
-    QTimer::singleShot(1000 * 60, this, &SendLaterManager::createSendInfoList);
+    QTimer::singleShot(0, this, &SendLaterManager::createSendInfoList);
 }
 
 void SendLaterManager::sendDone(SendLater::SendLaterInfo *info)
@@ -230,6 +228,7 @@ void SendLaterManager::sendDone(SendLater::SendLaterInfo *info)
 void SendLaterManager::removeLaterInfo(SendLater::SendLaterInfo *info)
 {
     mListSendLaterInfo.removeAll(mCurrentInfo);
+    mCurrentInfo = nullptr;
     removeInfo(info->itemId());
 }
 
