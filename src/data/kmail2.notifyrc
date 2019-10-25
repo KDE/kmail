@@ -471,5 +471,11 @@ Action=Popup
 
 [Event/undosend]
 Name=An email can be undo send
+Name[ca]=Un correu electrònic es pot desfer l'enviament
+Name[nl]=Verzenden van een e-mailbericht kan ongedaan gemaakt worden
+Name[pt]=Pode ser anulado o envio de um e-mail
+Name[pt_BR]=O envio de um e-mail pode ser desfeito
+Name[uk]=Не можна скасувати надсилання пошти
+Name[x-test]=xxAn email can be undo sendxx
 Action=Popup
 Urgency=Normal
