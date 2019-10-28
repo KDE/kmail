@@ -4485,7 +4485,9 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
         // selected message from the preview pane
         if (!item.isValid()) {
             mMsgView->clear();
+            mDKimWidgetInfo->clear();
         } else {
+            mDKimWidgetInfo->setCurrentItemId(item.id());
             mShowBusySplashTimer = new QTimer(this);
             mShowBusySplashTimer->setSingleShot(true);
             connect(mShowBusySplashTimer, &QTimer::timeout, this, &KMMainWidget::slotShowBusySplash);
