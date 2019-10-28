@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "undosendcreatejob.h"
 #include "kmail_debug.h"
 #include <SendLater/SendLaterUtil>
@@ -28,12 +27,10 @@
 UndoSendCreateJob::UndoSendCreateJob(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 UndoSendCreateJob::~UndoSendCreateJob()
 {
-
 }
 
 bool UndoSendCreateJob::canStart() const
@@ -56,7 +53,7 @@ bool UndoSendCreateJob::start()
     mTimer->setSingleShot(true);
     mTimer->start(mDelay * 1000);
     mNotification = new KNotification(QStringLiteral("undosend"), nullptr,
-                                                    KNotification::Persistent);
+                                      KNotification::Persistent);
     mNotification->setText(mSubject);
     mNotification->setActions(QStringList() << i18n("Undo send"));
 

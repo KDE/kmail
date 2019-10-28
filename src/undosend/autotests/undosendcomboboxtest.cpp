@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "undosendcomboboxtest.h"
 #include "undosend/undosendcombobox.h"
 #include <QTest>
@@ -26,7 +25,6 @@ QTEST_MAIN(UndoSendComboboxTest)
 UndoSendComboboxTest::UndoSendComboboxTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 void UndoSendComboboxTest::shouldHaveDefaultValues()

@@ -25,7 +25,6 @@ QTEST_MAIN(UndoSendCreateJobTest)
 UndoSendCreateJobTest::UndoSendCreateJobTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 void UndoSendCreateJobTest::shouldHaveDefaultValues()

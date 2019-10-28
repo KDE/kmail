@@ -542,7 +542,6 @@ void KMComposerWin::insertSubjectAndPlainText(const QString &subject, const QStr
         });
         job->start();
     }
-
 }
 
 void KMComposerWin::slotSpellCheckingLanguage(const QString &language)
@@ -2747,7 +2746,7 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
 
 bool KMComposerWin::sendLaterRegistered() const
 {
-    return (SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled());
+    return SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled();
 }
 
 void KMComposerWin::slotSendLater()
