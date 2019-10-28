@@ -148,7 +148,7 @@ endif()
 
 if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
    add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
-   #add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x060000) //Need to find a convert method for I18N_NOOP2
+   #add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x060000) #Need to find a convert method for KPluginInfo::fromServices
 endif()
 add_definitions(-DQT_NO_FOREACH)
 set(CMAKE_CXX_STANDARD 14)
