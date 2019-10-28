@@ -383,7 +383,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(composerEditorNg, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
     connect(composerEditorNg, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
     mSnippetWidget = new MailCommon::SnippetTreeView(actionCollection(), mSnippetSplitter);
-    connect(mSnippetWidget, &MailCommon::SnippetTreeView::insertSnippetText, this, &KMComposerWin::insertSnippetText);
+    connect(mSnippetWidget, &MailCommon::SnippetTreeView::insertSubjectAndPlainText, this, &KMComposerWin::insertSubjectAndPlainText);
     connect(composerEditorNg, &KMComposerEditorNg::insertSnippet, mSnippetWidget->snippetsManager(), &MailCommon::SnippetsManager::insertSnippet);
     mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
@@ -513,16 +513,36 @@ KMComposerWin::~KMComposerWin()
     delete mComposerBase;
 }
 
-void KMComposerWin::insertSnippetText(const QString &str)
+void KMComposerWin::insertSubjectAndPlainText(const QString &subject, const QString &str)
 {
-    MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
-    job->setText(str);
-    MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
-    job->setComposerViewInterface(interface);
-    connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
-        mComposerBase->editor()->insertPlainText(str);
-    });
-    job->start();
+    {
+        //Convert plain text
+        MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+        job->setText(str);
+        MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+        job->setComposerViewInterface(interface);
+        connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
+            mComposerBase->editor()->insertPlainText(str);
+        });
+        job->start();
+    }
+
+    {
+        //Convert subject
+        MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+        job->setText(subject);
+        MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+        job->setComposerViewInterface(interface);
+        connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
+            if (!str.isEmpty()) {
+                if (mComposerBase->subject().isEmpty()) { //Add subject only if we don't have subject
+                    mEdtSubject->setText(str);
+                }
+            }
+        });
+        job->start();
+    }
+
 }
 
 void KMComposerWin::slotSpellCheckingLanguage(const QString &language)

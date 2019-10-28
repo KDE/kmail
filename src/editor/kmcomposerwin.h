@@ -548,7 +548,7 @@ private:
     void slotSelectionChanged();
     void slotMessage(const QString &str);
     void slotEditorPluginInsertText(const QString &str);
-    void insertSnippetText(const QString &str);
+    void insertSubjectAndPlainText(const QString &subject, const QString &str);
     bool sendLaterRegistered() const;
 
     Akonadi::Collection mCollectionForNewMessage;
