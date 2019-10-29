@@ -4112,7 +4112,7 @@ void KMMainWidget::slotIntro()
 void KMMainWidget::slotShowStartupFolder()
 {
     connect(MailCommon::FilterManager::instance(), &FilterManager::filtersChanged,
-            this, &KMMainWidget::initializeFilterActions);
+            this, [this]() { initializeFilterActions(true); });
     // Plug various action lists. This can't be done in the constructor, as that is called before
     // the main window or Kontact calls createGUI().
     // This function however is called with a single shot timer.
@@ -4134,7 +4134,7 @@ void KMMainWidget::checkAkonadiServerManagerState()
 {
     Akonadi::ServerManager::State state = Akonadi::ServerManager::self()->state();
     if (state == Akonadi::ServerManager::Running) {
-        initializeFilterActions();
+        initializeFilterActions(true);
     } else {
         connect(Akonadi::ServerManager::self(), &ServerManager::stateChanged,
                 this, &KMMainWidget::slotServerStateChanged);
@@ -4144,7 +4144,7 @@ void KMMainWidget::checkAkonadiServerManagerState()
 void KMMainWidget::slotServerStateChanged(Akonadi::ServerManager::State state)
 {
     if (state == Akonadi::ServerManager::Running) {
-        initializeFilterActions();
+        initializeFilterActions(true);
         disconnect(Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)));
     }
 }
@@ -4211,7 +4211,7 @@ void KMMainWidget::clearFilterActions()
 
 void KMMainWidget::clearPluginActions()
 {
-    //KMailPluginInterface::self()->clearPluginActions(QStringLiteral("kmail"), mGUIClient);
+    KMailPluginInterface::self()->clearPluginActions(QStringLiteral("kmail"), mGUIClient);
 }
 
 void KMMainWidget::initializePluginActions()
@@ -4239,9 +4239,11 @@ QAction *KMMainWidget::filterToAction(MailCommon::MailFilter *filter)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::initializeFilterActions()
+void KMMainWidget::initializeFilterActions(bool clearFilter)
 {
-    clearFilterActions();
+    if (clearFilter) {
+        clearFilterActions();
+    }
     mApplyFilterActionsMenu->menu()->addAction(mApplyAllFiltersAction);
     mApplyFilterFolderActionsMenu->menu()->addAction(mApplyAllFiltersFolderAction);
     mApplyFilterFolderRecursiveActionsMenu->menu()->addAction(mApplyAllFiltersFolderRecursiveAction);

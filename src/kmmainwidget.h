@@ -169,7 +169,7 @@ public:
 
     QString fullCollectionPath() const;
 
-    void initializeFilterActions();
+    void initializeFilterActions(bool clearFilter);
     /** Clear and create actions for marked filters */
     void clearFilterActions();
     /**

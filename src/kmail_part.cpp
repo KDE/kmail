@@ -130,7 +130,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
     KParts::ReadOnlyPart::guiActivateEvent(e);
     if (e->activated()) {
-        mainWidget->initializeFilterActions();
+        mainWidget->initializeFilterActions(true);
         mainWidget->tagActionManager()->createActions();
         mainWidget->folderShortcutActionManager()->createActions();
         mainWidget->populateMessageListStatusFilterCombo();
