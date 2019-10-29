@@ -186,6 +186,7 @@ public:
     QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
     QWidget *zoomLabelIndicator() const;
 
+    void clearPluginActions();
 public Q_SLOTS:
 
     /**

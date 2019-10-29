@@ -4209,6 +4209,11 @@ void KMMainWidget::clearFilterActions()
     mFilterCommands.clear();
 }
 
+void KMMainWidget::clearPluginActions()
+{
+    //KMailPluginInterface::self()->clearPluginActions(QStringLiteral("kmail"), mGUIClient);
+}
+
 void KMMainWidget::initializePluginActions()
 {
     KMailPluginInterface::self()->initializePluginActions(QStringLiteral("kmail"), mGUIClient);

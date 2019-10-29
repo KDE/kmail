@@ -157,6 +157,7 @@ void KMMainWin::slotUpdateGui()
     // remove dynamically created actions before editing
     mKMMainWidget->clearFilterActions();
     mKMMainWidget->tagActionManager()->clearActions();
+    mKMMainWidget->clearPluginActions();
 
     createGUI(QStringLiteral("kmmainwin.rc"));
     applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
