@@ -69,7 +69,9 @@
 #include <Akonadi/KMime/MessageFlags>
 #include "kpimtextedit/texttospeech.h"
 #include <mailcommon/mailutil.h>
-
+#ifdef USE_DKIM_CHECKER
+#include <MessageViewer/DKIMWidgetInfo>
+#endif
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
@@ -109,6 +111,7 @@ void KMReaderMainWin::initKMReaderMainWin()
     mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
     setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
+    statusBar()->addPermanentWidget(mReaderWin->viewer()->dkimWidgetInfo());
 
     if (!mReaderWin->message().isValid()) {
         menuBar()->hide();
