@@ -301,10 +301,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     if (mMsgView) {
         setZoomChanged(mMsgView->viewer()->webViewZoomFactor());
     }
-#ifdef USE_DKIM_CHECKER
-    mDKimWidgetInfo = new MessageViewer::DKIMWidgetInfo(mCurrentStatusBar);
-#endif
-
     connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);
     if (KSieveUi::Util::checkOutOfOfficeOnStartup()) {
         QTimer::singleShot(0, this, &KMMainWidget::slotCheckVacation);
@@ -344,9 +340,11 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
 #ifdef USE_DKIM_CHECKER
 QWidget *KMMainWidget::dkimWidgetInfo() const
 {
-    return mDKimWidgetInfo;
+    if (mMsgView) {
+        return mMsgView->viewer()->dkimWidgetInfo();
+    }
+    return nullptr;
 }
-
 #endif
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
@@ -4485,9 +4483,7 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
         // selected message from the preview pane
         if (!item.isValid()) {
             mMsgView->clear();
-            mDKimWidgetInfo->clear();
         } else {
-            mDKimWidgetInfo->setCurrentItemId(item.id());
             mShowBusySplashTimer = new QTimer(this);
             mShowBusySplashTimer->setSingleShot(true);
             connect(mShowBusySplashTimer, &QTimer::timeout, this, &KMMainWidget::slotShowBusySplash);

@@ -648,9 +648,6 @@ private:
     Akonadi::Collection mCurrentCollection;
     QStatusBar *mCurrentStatusBar = nullptr;
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
-#ifdef USE_DKIM_CHECKER
-    MessageViewer::DKIMWidgetInfo *mDKimWidgetInfo = nullptr;
-#endif
 };
 
 #endif
