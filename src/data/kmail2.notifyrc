@@ -472,6 +472,7 @@ Action=Popup
 [Event/undosend]
 Name=An email can be undo send
 Name[ca]=Un correu electrònic es pot desfer l'enviament
+Name[cs]=Odeslaný e-mail lze vrátit
 Name[gl]=O envío dun correo electrónico pode desfacerse
 Name[nl]=Verzenden van een e-mailbericht kan ongedaan gemaakt worden
 Name[pt]=Pode ser anulado o envio de um e-mail
