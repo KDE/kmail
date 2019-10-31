@@ -98,6 +98,7 @@ class StatusBarLabelToggledState;
 namespace MailCommon {
 class FolderRequester;
 class SnippetTreeView;
+struct SnippetInfo;
 }
 
 namespace PimCommon {
@@ -548,7 +549,7 @@ private:
     void slotSelectionChanged();
     void slotMessage(const QString &str);
     void slotEditorPluginInsertText(const QString &str);
-    void insertSubjectAndPlainText(const QString &subject, const QString &str);
+    void insertSnippetInfo(const MailCommon::SnippetInfo &info);
     bool sendLaterRegistered() const;
 
     Akonadi::Collection mCollectionForNewMessage;

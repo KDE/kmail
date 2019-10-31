@@ -383,7 +383,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(composerEditorNg, &KMComposerEditorNg::insertModeChanged, this, &KMComposerWin::slotOverwriteModeChanged);
     connect(composerEditorNg, &KMComposerEditorNg::spellCheckingFinished, this, &KMComposerWin::slotDelayedCheckSendNow);
     mSnippetWidget = new MailCommon::SnippetTreeView(actionCollection(), mSnippetSplitter);
-    connect(mSnippetWidget, &MailCommon::SnippetTreeView::insertSubjectAndPlainText, this, &KMComposerWin::insertSubjectAndPlainText);
+    connect(mSnippetWidget, &MailCommon::SnippetTreeView::insertSnippetInfo, this, &KMComposerWin::insertSnippetInfo);
     connect(composerEditorNg, &KMComposerEditorNg::insertSnippet, mSnippetWidget->snippetsManager(), &MailCommon::SnippetsManager::insertSnippet);
     mSnippetWidget->setVisible(KMailSettings::self()->showSnippetManager());
     mSnippetSplitter->addWidget(mSnippetWidget);
@@ -513,12 +513,12 @@ KMComposerWin::~KMComposerWin()
     delete mComposerBase;
 }
 
-void KMComposerWin::insertSubjectAndPlainText(const QString &subject, const QString &str)
+void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
 {
     {
         //Convert plain text
         MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
-        job->setText(str);
+        job->setText(info.text);
         MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
         job->setComposerViewInterface(interface);
         connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
@@ -530,7 +530,7 @@ void KMComposerWin::insertSubjectAndPlainText(const QString &subject, const QStr
     {
         //Convert subject
         MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
-        job->setText(subject);
+        job->setText(info.subject);
         MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
         job->setComposerViewInterface(interface);
         connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
