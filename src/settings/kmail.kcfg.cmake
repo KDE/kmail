@@ -435,7 +435,7 @@
    <entry name="EnabledUndoSend" type="Bool">
      <default>false</default>
    </entry>
-   <entry name="UndoSendDelay" type="int">
+   <entry name="UndoSendDelay" type="Int">
      <default>10</default>
    </entry>
  </group>

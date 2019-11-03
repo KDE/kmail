@@ -36,7 +36,7 @@ class KMSystemTray : public KStatusNotifierItem
 {
     Q_OBJECT
 public:
-    /** construtor */
+    /** constructor */
     explicit KMSystemTray(QObject *parent = nullptr);
     /** destructor */
     ~KMSystemTray();

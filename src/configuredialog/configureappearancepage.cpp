@@ -210,7 +210,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged(int index)
     // Save current fontselector setting before we install the new:
     if (mActiveFontIndex == 0) {
         mFont[0] = mFontChooser->font();
-        // hardcode the family and size of "message body" dependant fonts:
+        // hardcode the family and size of "message body" dependent fonts:
         for (int i = 0; i < numFontNames; ++i) {
             if (!fontNames[i].enableFamilyAndSize) {
                 // ### shall we copy the font and set the save and re-set

@@ -206,7 +206,7 @@ void ConfigurePluginsListWidget::initialize()
                                                         pluginEditorGrammarGroupName());
 
     //Load generic plugins
-    //Necessary to initialize pluging when we load it outside kmail
+    //Necessary to initialize plugin when we load it outside kmail
     KMailPluginInterface::self()->initializePlugins();
     PimCommon::ConfigurePluginsListWidget::fillTopItems(KMailPluginInterface::self()->pluginsDataList(),
                                                         i18n("Tools Plugins"),

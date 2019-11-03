@@ -56,7 +56,7 @@ public:
         Undefined, OK, Canceled, Failed
     };
 
-    // Trival constructor, don't retrieve any messages
+    // Trivial constructor, don't retrieve any messages
     explicit KMCommand(QWidget *parent = nullptr);
     KMCommand(QWidget *parent, const Akonadi::Item &);
     // Retrieve all messages in msgList when start is called.

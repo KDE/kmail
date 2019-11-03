@@ -79,7 +79,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 
     int row = 0;
 
-    // TODO: Explaination label
+    // TODO: Explanation label
 
     QLabel *folderLabel = new QLabel(i18n("&Folder:"), mainWidget);
     mainLayout->addWidget(folderLabel, row, 0);

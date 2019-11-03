@@ -920,7 +920,7 @@ void KMKernel::quit()
 }
 
 /* TODO later:
-   Asuming that:
+   Assuming that:
      - msgsender is nonblocking
        (our own, QSocketNotifier based. Pops up errors and sends signal
         senderFinished when done)
@@ -1522,7 +1522,7 @@ void KMKernel::transportRemoved(int id, const QString &name)
         QString information = i18np("This identity has been changed to use the default transport:",
                                     "These %1 identities have been changed to use the default transport:",
                                     changedIdents.count());
-        //Don't set parent otherwise we will swith to current KMail and we configure it. So not good
+        //Don't set parent otherwise we will switch to current KMail and we configure it. So not good
         KMessageBox::informationList(nullptr, information, changedIdents);
         im->commit();
     }

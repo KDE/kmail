@@ -356,7 +356,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
 
     connect(composerEditorNg, &KMComposerEditorNg::insertEmoticon, mGlobalAction, &KMComposerGlobalAction::slotInsertEmoticon);
-    //Don't use new connect api here. It crashs
+    //Don't use new connect api here. It crashes
     connect(composerEditorNg, SIGNAL(textChanged()), this, SLOT(slotEditorTextChanged()));
     connect(composerEditorNg, &KMComposerEditorNg::selectionChanged, this, &KMComposerWin::slotSelectionChanged);
     //connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
@@ -1747,7 +1747,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         //
         // Espen 2000-05-16
         // Delay the signature appending. It may start a fileseletor.
-        // Not user friendy if this modal fileseletor opens before the
+        // Not user friendly if this modal fileseletor opens before the
         // composer.
         //
         if (MessageComposer::MessageComposerSettings::self()->prependSignature()) {

@@ -422,7 +422,7 @@ public Q_SLOTS:
       to regenerate their menus */
     void updatedTemplates();
 
-    /// Save contents of all open composer widnows to ~/dead.letter
+    /// Save contents of all open composer windows to ~/dead.letter
     void dumpDeadLetters();
 
     /** Call this slot instead of directly KConfig::sync() to
