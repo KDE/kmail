@@ -174,6 +174,10 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 void AccountsPage::SendingTab::doLoadFromGlobalSettings()
 {
     mSendOnCheckCombo->setCurrentIndex(KMailSettings::self()->sendOnCheck());
+    loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
+    loadWidget(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
+    loadWidget(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
+    mUndoSendComboBox->setDelay(KMailSettings::self()->undoSendDelay());
 }
 
 void AccountsPage::SendingTab::doLoadOther()
