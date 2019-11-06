@@ -516,37 +516,6 @@ KMComposerWin::~KMComposerWin()
 void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
 {
     {
-        if (!info.text.isEmpty()) {
-            //Convert plain text
-            MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
-            job->setText(info.text);
-            MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
-            job->setComposerViewInterface(interface);
-            connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
-                mComposerBase->editor()->insertPlainText(str);
-            });
-            job->start();
-        }
-    }
-
-    {
-        if (!info.subject.isEmpty()) {
-            //Convert subject
-            MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
-            job->setText(info.subject);
-            MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
-            job->setComposerViewInterface(interface);
-            connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
-                if (!str.isEmpty()) {
-                    if (mComposerBase->subject().isEmpty()) { //Add subject only if we don't have subject
-                        mEdtSubject->setText(str);
-                    }
-                }
-            });
-            job->start();
-        }
-    }
-    {
         if (!info.to.isEmpty()) {
             const QStringList lst = info.to.split(QLatin1Char(','));
             for (const QString &addr : lst) {
@@ -568,6 +537,36 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
             for (const QString &addr : lst) {
                 mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::Bcc);
             }
+        }
+    }
+    {
+        if (!info.subject.isEmpty()) {
+            //Convert subject
+            MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+            job->setText(info.subject);
+            MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+            job->setComposerViewInterface(interface);
+            connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
+                if (!str.isEmpty()) {
+                    if (mComposerBase->subject().isEmpty()) { //Add subject only if we don't have subject
+                        mEdtSubject->setText(str);
+                    }
+                }
+            });
+            job->start();
+        }
+    }
+    {
+        if (!info.text.isEmpty()) {
+            //Convert plain text
+            MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+            job->setText(info.text);
+            MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+            job->setComposerViewInterface(interface);
+            connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
+                mComposerBase->editor()->insertPlainText(str);
+            });
+            job->start();
         }
     }
 }
