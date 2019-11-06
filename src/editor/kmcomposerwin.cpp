@@ -540,6 +540,15 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
         }
     }
     {
+        if (!info.attachment.isEmpty()) {
+            const QStringList lst = info.attachment.split(QLatin1Char(','));
+            for (const QString &attach : lst) {
+                const QUrl localUrl = QUrl::fromLocalFile(attach);
+                addAttachment(localUrl, QString());
+            }
+        }
+    }
+    {
         if (!info.subject.isEmpty()) {
             //Convert subject
             MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
