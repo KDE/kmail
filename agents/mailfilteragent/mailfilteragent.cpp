@@ -381,6 +381,7 @@ void MailFilterAgent::showFilterLogDialog(qlonglong windowId)
 {
     if (!m_filterLogDialog) {
         m_filterLogDialog = new FilterLogDialog(nullptr);
+        m_filterLogDialog->setAttribute(Qt::WA_NativeWindow, true);
     }
     KWindowSystem::setMainWindow(m_filterLogDialog->windowHandle(), windowId);
     m_filterLogDialog->show();
