@@ -54,8 +54,8 @@ private:
     void slotContextMenuAboutToShow();
     void slotSelectCollection(QAction *act);
 
-    bool mainWindowIsOnCurrentDesktop();
-    bool buildPopupMenu();
+    Q_REQUIRED_RESULT bool mainWindowIsOnCurrentDesktop();
+    Q_REQUIRED_RESULT bool buildPopupMenu();
     void fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model, const QString &parentName = QString(), const QModelIndex &parentIndex = QModelIndex());
     int mDesktopOfMainWin = 0;
 

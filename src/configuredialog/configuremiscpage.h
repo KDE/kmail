@@ -37,7 +37,7 @@ public:
     explicit MiscPageFolderTab(QWidget *parent = nullptr);
 
     void save() override;
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
 private:
     void doLoadFromGlobalSettings() override;

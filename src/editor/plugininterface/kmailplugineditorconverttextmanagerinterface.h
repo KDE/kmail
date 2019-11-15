@@ -45,8 +45,8 @@ public:
     KPIMTextEdit::RichTextComposer *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);
 
-    QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
-    QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
+    Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
+    Q_REQUIRED_RESULT QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
     void reformatText();
     MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertTextToFormat(MessageComposer::TextPart *textPart);
@@ -55,7 +55,7 @@ public:
     void setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data);
     void enableDisablePluginActions(bool richText);
 
-    QList<QWidget *> statusBarWidgetList();
+    Q_REQUIRED_RESULT QList<QWidget *> statusBarWidgetList();
 Q_SIGNALS:
     void reformatingTextDone();
 

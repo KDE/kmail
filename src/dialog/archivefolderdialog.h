@@ -49,8 +49,8 @@ private:
     void slotAccepted();
     void slotUrlChanged(const QString &);
 
-    bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
-    QString standardArchivePath(const QString &folderName);
+    Q_REQUIRED_RESULT bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
+    Q_REQUIRED_RESULT QString standardArchivePath(const QString &folderName);
 
     QWidget *mParentWidget = nullptr;
     QCheckBox *mDeleteCheckBox = nullptr;

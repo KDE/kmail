@@ -47,7 +47,7 @@ public:
     void load(const Akonadi::Collection &col) override;
     void save(Akonadi::Collection &col) override;
 
-    bool canHandle(const Akonadi::Collection &col) const override;
+    Q_REQUIRED_RESULT bool canHandle(const Akonadi::Collection &col) const override;
 
 private:
     void slotFetchDone(KJob *job);

@@ -22,9 +22,9 @@
 #include <QString>
 namespace FolderArchive {
 namespace FolderArchiveUtil {
-QString groupConfigPattern();
-bool resourceSupportArchiving(const QString &resource);
-QString configFileName();
+Q_REQUIRED_RESULT QString groupConfigPattern();
+Q_REQUIRED_RESULT bool resourceSupportArchiving(const QString &resource);
+Q_REQUIRED_RESULT QString configFileName();
 }
 }
 

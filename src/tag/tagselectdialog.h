@@ -34,7 +34,7 @@ class TagSelectDialog : public QDialog
 public:
     explicit TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem);
     ~TagSelectDialog();
-    Akonadi::Tag::List selectedTag() const;
+    Q_REQUIRED_RESULT Akonadi::Tag::List selectedTag() const;
 
     void setActionCollection(const QList<KActionCollection *> &actionCollectionList);
 

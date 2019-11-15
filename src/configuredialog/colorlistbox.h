@@ -40,7 +40,7 @@ public:
     void setColor(int index, const QColor &color);
     // like setColor, but does not Q_EMIT changed()
     void setColorSilently(int index, const QColor &color);
-    QColor color(int index) const;
+    Q_REQUIRED_RESULT QColor color(int index) const;
 
 Q_SIGNALS:
     void changed();

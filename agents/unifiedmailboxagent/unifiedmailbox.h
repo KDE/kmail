@@ -46,22 +46,22 @@ public:
 
     bool isSpecial() const;
 
-    qint64 collectionId() const;
+    Q_REQUIRED_RESULT qint64 collectionId() const;
     void setCollectionId(qint64 id);
 
-    QString id() const;
+    Q_REQUIRED_RESULT QString id() const;
     void setId(const QString &id);
 
-    QString name() const;
+    Q_REQUIRED_RESULT QString name() const;
     void setName(const QString &name);
 
-    QString icon() const;
+    Q_REQUIRED_RESULT QString icon() const;
     void setIcon(const QString &icon);
 
     void addSourceCollection(qint64 source);
     void removeSourceCollection(qint64 source);
     void setSourceCollections(const QSet<qint64> &sources);
-    QSet<qint64> sourceCollections() const;
+    Q_REQUIRED_RESULT QSet<qint64> sourceCollections() const;
 
 private:
     void attachManager(UnifiedMailboxManager *manager);

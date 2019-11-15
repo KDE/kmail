@@ -42,43 +42,43 @@ public:
         ArchiveYears
     };
 
-    QUrl realUrl(const QString &folderName, bool &dirExist) const;
+    Q_REQUIRED_RESULT QUrl realUrl(const QString &folderName, bool &dirExist) const;
 
-    bool isValid() const;
+    Q_REQUIRED_RESULT bool isValid() const;
 
-    Akonadi::Collection::Id saveCollectionId() const;
+    Q_REQUIRED_RESULT Akonadi::Collection::Id saveCollectionId() const;
     void setSaveCollectionId(Akonadi::Collection::Id collectionId);
 
     void setSaveSubCollection(bool b);
-    bool saveSubCollection() const;
+    Q_REQUIRED_RESULT bool saveSubCollection() const;
 
     void setUrl(const QUrl &url);
-    QUrl url() const;
+    Q_REQUIRED_RESULT QUrl url() const;
 
     void readConfig(const KConfigGroup &config);
     void writeConfig(KConfigGroup &config);
 
     void setArchiveType(MailCommon::BackupJob::ArchiveType type);
-    MailCommon::BackupJob::ArchiveType archiveType() const;
+    Q_REQUIRED_RESULT MailCommon::BackupJob::ArchiveType archiveType() const;
 
     void setArchiveUnit(ArchiveMailInfo::ArchiveUnit unit);
-    ArchiveMailInfo::ArchiveUnit archiveUnit() const;
+    Q_REQUIRED_RESULT ArchiveMailInfo::ArchiveUnit archiveUnit() const;
 
     void setArchiveAge(int age);
-    int archiveAge() const;
+    Q_REQUIRED_RESULT int archiveAge() const;
 
     void setLastDateSaved(const QDate &date);
-    QDate lastDateSaved() const;
+    Q_REQUIRED_RESULT QDate lastDateSaved() const;
 
-    int maximumArchiveCount() const;
+    Q_REQUIRED_RESULT int maximumArchiveCount() const;
     void setMaximumArchiveCount(int max);
 
-    QStringList listOfArchive(const QString &foldername, bool &dirExist) const;
+    Q_REQUIRED_RESULT QStringList listOfArchive(const QString &foldername, bool &dirExist) const;
 
-    bool isEnabled() const;
+    Q_REQUIRED_RESULT bool isEnabled() const;
     void setEnabled(bool b);
 
-    bool operator ==(const ArchiveMailInfo &other) const;
+    Q_REQUIRED_RESULT bool operator ==(const ArchiveMailInfo &other) const;
 
 private:
     QString dirArchive(bool &dirExit) const;

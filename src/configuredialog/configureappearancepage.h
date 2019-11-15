@@ -58,7 +58,7 @@ class AppearancePageFontsTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AppearancePageFontsTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
     void save() override;
 
 private:
@@ -81,7 +81,7 @@ class AppearancePageColorsTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AppearancePageColorsTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
     void save() override;
 
 private:
@@ -102,7 +102,7 @@ class AppearancePageLayoutTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AppearancePageLayoutTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
 
@@ -127,7 +127,7 @@ class AppearancePageHeadersTab : public ConfigModuleTab
 public:
     explicit AppearancePageHeadersTab(QWidget *parent = nullptr);
 
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
 

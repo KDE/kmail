@@ -90,14 +90,14 @@ public:
      *
      * @return The list of currently selected search result messages.
      */
-    Akonadi::Item::List selectedMessages() const;
+    Q_REQUIRED_RESULT Akonadi::Item::List selectedMessages() const;
 
     /**
      * Provides access to the currently selected message.
      *
      * @return the currently selected message.
      */
-    Akonadi::Item selectedMessage() const;
+    Q_REQUIRED_RESULT Akonadi::Item selectedMessage() const;
 
     /**
      * Loads a search pattern into the search window, appending its rules to the current one.

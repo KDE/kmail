@@ -33,7 +33,7 @@ public:
     /**
       A list of preferred charsets to use when composing messages.
     */
-    QList<QByteArray> preferredCharsets() const;
+    Q_REQUIRED_RESULT QList<QByteArray> preferredCharsets() const;
 
     /**
       Re-read the preferred charsets from settings.

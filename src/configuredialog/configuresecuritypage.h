@@ -37,7 +37,7 @@ class SecurityPageGeneralTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit SecurityPageGeneralTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
 

@@ -43,7 +43,7 @@ public:
     */
     explicit CollectionStorageModel(QAbstractItemModel *model, QItemSelectionModel *selectionModel, QObject *parent = nullptr);
     ~CollectionStorageModel();
-    bool isOutBoundFolder(const Akonadi::Collection &c) const override;
+    Q_REQUIRED_RESULT bool isOutBoundFolder(const Akonadi::Collection &c) const override;
 };
 
 #endif /* COLLECTIONPANE_H */

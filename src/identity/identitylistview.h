@@ -53,7 +53,7 @@ public:
     IdentityListViewItem(IdentityListView *parent, const KIdentityManagement::Identity &ident);
     IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagement::Identity &ident);
 
-    uint uoid() const;
+    Q_REQUIRED_RESULT uint uoid() const;
 
     KIdentityManagement::Identity &identity() const;
     virtual void setIdentity(const KIdentityManagement::Identity &ident);

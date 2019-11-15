@@ -30,7 +30,7 @@ public:
     explicit DisplayMessageFormatActionMenu(QObject *parent = nullptr);
     ~DisplayMessageFormatActionMenu();
 
-    MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat() const;
+    Q_REQUIRED_RESULT MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat() const;
     void setDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat);
 
 Q_SIGNALS:

@@ -35,7 +35,7 @@ public:
 
     void start() override;
 
-    bool isValid() const;
+    Q_REQUIRED_RESULT bool isValid() const;
 
     void setDefaultDomain(const QString &domainName);
 

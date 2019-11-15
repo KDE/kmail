@@ -39,10 +39,10 @@ public:
     void pause();
     void resume();
 
-    QString printArchiveListInfo() const;
+    Q_REQUIRED_RESULT QString printArchiveListInfo() const;
     void collectionDoesntExist(ArchiveMailInfo *info);
 
-    QString printCurrentListInfo() const;
+    Q_REQUIRED_RESULT QString printCurrentListInfo() const;
 
     void archiveFolder(const QString &path, Akonadi::Collection::Id collectionId);
 

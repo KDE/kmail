@@ -49,7 +49,7 @@ public:
       mode.  In Reader mode it probably makes more sense to use KCodecAction::currentCodec()
       and KCodecAction::currentAutoDetectScript().
     */
-    QList<QByteArray> mimeCharsets() const;
+    Q_REQUIRED_RESULT QList<QByteArray> mimeCharsets() const;
 
     void setAutoCharset();
     void setCharset(const QByteArray &charset);

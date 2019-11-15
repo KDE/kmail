@@ -187,7 +187,7 @@ public: // kmkernel, kmcommands, callback
     /**
       * Returns @c true while the message composing is in progress.
       */
-    bool isComposing() const override;
+    Q_REQUIRED_RESULT bool isComposing() const override;
 
     /** Disabled signing and encryption completely for this composer window. */
     void setSigningAndEncryptionDisabled(bool v) override;
@@ -213,8 +213,8 @@ public: // kmkernel, kmcommands, callback
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) override;
 
-    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart);
-    bool processModifyText(QKeyEvent *event);
+    Q_REQUIRED_RESULT MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart);
+    Q_REQUIRED_RESULT bool processModifyText(QKeyEvent *event);
 private:
     /**
     * Write settings to app's config file.
@@ -408,7 +408,7 @@ public: // kmcommand
     /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
     void disableForgottenAttachmentsCheck() override;
 
-    uint currentIdentity() const;
+    Q_REQUIRED_RESULT uint currentIdentity() const;
     QList<KToggleAction *> customToolsList() const;
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 private:
@@ -474,13 +474,13 @@ private:
     /**
      * Header fields.
      */
-    QString subject() const;
-    QString from() const;
+    Q_REQUIRED_RESULT QString subject() const;
+    Q_REQUIRED_RESULT QString from() const;
 
     /**
      * Ask for confirmation if the message was changed before close.
      */
-    bool queryClose() override;
+    Q_REQUIRED_RESULT bool queryClose() override;
 
     /**
      * Turn encryption on/off. If setByUser is true then a message box is shown
@@ -494,7 +494,7 @@ private:
      */
     void setSigning(bool sign, bool setByUser = false);
 
-    MessageComposer::ComposerViewBase::MissingAttachment userForgotAttachment();
+    Q_REQUIRED_RESULT MessageComposer::ComposerViewBase::MissingAttachment userForgotAttachment();
     /**
      * Send the message.
      */
@@ -544,13 +544,13 @@ private:
 
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
-    bool showErrorMessage(KJob *job);
-    int validateLineWrapWidth();
+    Q_REQUIRED_RESULT bool showErrorMessage(KJob *job);
+    Q_REQUIRED_RESULT int validateLineWrapWidth();
     void slotSelectionChanged();
     void slotMessage(const QString &str);
     void slotEditorPluginInsertText(const QString &str);
     void insertSnippetInfo(const MailCommon::SnippetInfo &info);
-    bool sendLaterRegistered() const;
+    Q_REQUIRED_RESULT bool sendLaterRegistered() const;
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;

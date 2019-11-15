@@ -49,9 +49,9 @@ public:
     KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
-    QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
-    QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
-    QList<QWidget *> statusBarWidgetList();
+    Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
+    Q_REQUIRED_RESULT QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
+    Q_REQUIRED_RESULT QList<QWidget *> statusBarWidgetList();
 
     MessageComposer::ComposerViewBase *composerInterface() const;
     void setComposerInterface(MessageComposer::ComposerViewBase *composerInterface);
