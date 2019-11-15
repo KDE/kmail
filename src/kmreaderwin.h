@@ -67,7 +67,7 @@ public:
     /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
       is selected. */
-    QString overrideEncoding() const;
+    Q_REQUIRED_RESULT QString overrideEncoding() const;
     /** Set the override character encoding. */
     void setOverrideEncoding(const QString &encoding);
     void setPrinting(bool enable);
@@ -86,27 +86,27 @@ public:
     void update(bool force = false);
 
     /** Return selected text */
-    QString copyText() const;
+    Q_REQUIRED_RESULT QString copyText() const;
 
     /** Override default html mail setting */
-    bool htmlOverride() const;
+    Q_REQUIRED_RESULT bool htmlOverride() const;
     void setHtmlOverride(bool override);
-    MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
+    Q_REQUIRED_RESULT MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
     void setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format);
 
     /** Override default load external references setting */
-    bool htmlLoadExtOverride() const;
+    Q_REQUIRED_RESULT bool htmlLoadExtOverride() const;
     void setHtmlLoadExtDefault(bool loadExtDefault);
     void setHtmlLoadExtOverride(bool loadExtOverride);
 
     /** Is html mail to be supported? Takes into account override */
-    bool htmlMail() const;
+    Q_REQUIRED_RESULT bool htmlMail() const;
 
     /** Is loading ext. references to be supported? Takes into account override */
-    bool htmlLoadExternal();
+    Q_REQUIRED_RESULT bool htmlLoadExternal();
 
     /** Returns the MD5 hash for the list of new features */
-    static QString newFeaturesMD5();
+    static Q_REQUIRED_RESULT QString newFeaturesMD5();
 
     /** Display a generic HTML splash page instead of a message */
     void displaySplashPage(const QString &templateName, const QVariantHash &data);
@@ -169,9 +169,9 @@ public:
     bool mimePartTreeIsEmpty() const;
     KActionMenu *shareServiceUrlMenu() const;
 
-    QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
+    Q_REQUIRED_RESULT QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
-    QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
+    Q_REQUIRED_RESULT QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
 
     void setPrintElementBackground(bool printElementBackground);
     /** Force update even if message is the same */

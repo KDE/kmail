@@ -58,7 +58,7 @@ public:
     Q_REQUIRED_RESULT QString printDebugInfo() const;
 
     void stopAll();
-    bool itemRemoved(Akonadi::Item::Id id);
+    Q_REQUIRED_RESULT bool itemRemoved(Akonadi::Item::Id id);
 
     MessageComposer::AkonadiSender *sender() const;
 

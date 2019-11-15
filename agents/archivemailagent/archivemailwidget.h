@@ -53,7 +53,7 @@ public:
         StorageDirectory
     };
 
-    bool save() const override;
+    Q_REQUIRED_RESULT bool save() const override;
     void load() override;
 
     void needReloadConfig();

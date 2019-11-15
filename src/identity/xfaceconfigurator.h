@@ -35,10 +35,10 @@ public:
     explicit XFaceConfigurator(QWidget *parent = nullptr);
     ~XFaceConfigurator();
 
-    bool isXFaceEnabled() const;
+    Q_REQUIRED_RESULT bool isXFaceEnabled() const;
     void setXFaceEnabled(bool enable);
 
-    QString xface() const;
+    Q_REQUIRED_RESULT QString xface() const;
     void setXFace(const QString &text);
 
 private:

@@ -45,7 +45,7 @@ public:
     }
 
     void loadCommandLineOptions(QCommandLineParser *parser) override;
-    int activate(const QStringList &args, const QString &workingDir) override;
+    Q_REQUIRED_RESULT int activate(const QStringList &args, const QString &workingDir) override;
 };
 
 class KMailPlugin : public KontactInterface::Plugin
@@ -56,12 +56,12 @@ public:
     KMailPlugin(KontactInterface::Core *core, const QVariantList &);
     ~KMailPlugin();
 
-    bool isRunningStandalone() const override;
+    Q_REQUIRED_RESULT bool isRunningStandalone() const override;
     KontactInterface::Summary *createSummaryWidget(QWidget *parent) override;
-    int weight() const override;
+    Q_REQUIRED_RESULT int weight() const override;
 
-    QStringList invisibleToolbarActions() const override;
-    bool queryClose() const override;
+    Q_REQUIRED_RESULT QStringList invisibleToolbarActions() const override;
+    Q_REQUIRED_RESULT bool queryClose() const override;
 
     void shortcutChanged() override;
 

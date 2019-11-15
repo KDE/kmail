@@ -53,7 +53,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 private:
-    QString fullCollectionPath(Akonadi::Collection::Id id) const;
+    Q_REQUIRED_RESULT QString fullCollectionPath(Akonadi::Collection::Id id) const;
 
     mutable QHash<Akonadi::Collection::Id, QString> m_collectionFullPathCache;
 };

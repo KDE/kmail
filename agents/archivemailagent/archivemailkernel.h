@@ -48,12 +48,12 @@ public:
     Akonadi::ChangeRecorder *folderCollectionMonitor() const override;
     void updateSystemTray() override;
 
-    qreal closeToQuotaThreshold() override;
-    bool excludeImportantMailFromExpiry() override;
-    QStringList customTemplates() override;
-    Akonadi::Collection::Id lastSelectedFolder() override;
+    Q_REQUIRED_RESULT qreal closeToQuotaThreshold() override;
+    Q_REQUIRED_RESULT bool excludeImportantMailFromExpiry() override;
+    Q_REQUIRED_RESULT QStringList customTemplates() override;
+    Q_REQUIRED_RESULT Akonadi::Collection::Id lastSelectedFolder() override;
     void setLastSelectedFolder(Akonadi::Collection::Id col) override;
-    bool showPopupAfterDnD() override;
+    Q_REQUIRED_RESULT bool showPopupAfterDnD() override;
     void expunge(Akonadi::Collection::Id col, bool sync) override;
 
 private:

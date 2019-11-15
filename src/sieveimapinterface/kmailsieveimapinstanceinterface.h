@@ -28,7 +28,7 @@ public:
     KMailSieveImapInstanceInterface();
     ~KMailSieveImapInstanceInterface() override = default;
 
-    QVector<KSieveUi::SieveImapInstance> sieveImapInstances() override;
+    Q_REQUIRED_RESULT QVector<KSieveUi::SieveImapInstance> sieveImapInstances() override;
 private:
     Q_DISABLE_COPY(KMailSieveImapInstanceInterface)
 };

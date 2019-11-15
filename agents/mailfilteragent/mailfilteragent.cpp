@@ -271,7 +271,9 @@ void MailFilterAgent::itemsReceiviedForFiltering(const Akonadi::Item::List &item
     }
 
     emitProgressMessage(i18n("Filtering in %1", Akonadi::AgentManager::self()->instance(resource).name()));
-    m_filterManager->process(item, m_filterManager->requiredPart(resource), FilterManager::Inbound, true, resource);
+    if (!m_filterManager->process(item, m_filterManager->requiredPart(resource), FilterManager::Inbound, true, resource)) {
+        qCWarning(MAILFILTERAGENT_LOG) << "Impossible to process mails";
+    }
 
     emitProgress(++mProgressCounter);
 

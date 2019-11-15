@@ -29,11 +29,11 @@ class KMSieveImapPasswordProvider : public KSieveUi::SieveImapPasswordProvider
 public:
     KMSieveImapPasswordProvider(WId wid);
 
-    QString password(const QString &identifier) override;
-    QString sieveCustomPassword(const QString &identifier) override;
+    Q_REQUIRED_RESULT QString password(const QString &identifier) override;
+    Q_REQUIRED_RESULT QString sieveCustomPassword(const QString &identifier) override;
 
 private:
-    QString walletPassword(const QString &identifier);
+    Q_REQUIRED_RESULT QString walletPassword(const QString &identifier);
 
     WId m_wid;
 };

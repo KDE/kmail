@@ -31,7 +31,7 @@ public:
     explicit ConfigurePluginPage(QWidget *parent);
     ~ConfigurePluginPage() override;
 
-    QString helpAnchor() const override;
+    Q_REQUIRED_RESULT QString helpAnchor() const override;
     void load() override;
     void save() override;
     void defaults() override;

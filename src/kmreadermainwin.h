@@ -87,7 +87,7 @@ private:
     void slotShowMessageStatusBar(const QString &msg);
 
     void copyOrMoveItem(const Akonadi::Collection &collection, bool move);
-    Akonadi::Collection parentCollection() const;
+    Q_REQUIRED_RESULT Akonadi::Collection parentCollection() const;
     void initKMReaderMainWin();
     void setupAccel();
     QAction *copyActionMenu(QMenu *menu);

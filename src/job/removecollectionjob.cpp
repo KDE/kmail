@@ -127,7 +127,9 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
 void RemoveCollectionJob::slotDeletionCollectionResult(KJob *job)
 {
     if (job) {
-        MailCommon::Util::showJobErrorMessage(job);
+        if (!MailCommon::Util::showJobErrorMessage(job)) {
+            //TODO
+        }
     }
     deleteLater();
 }

@@ -30,7 +30,7 @@ public:
     explicit KMComposerEditorNg(KMComposerWin *win, QWidget *parent);
     ~KMComposerEditorNg() override;
 
-    QString smartQuote(const QString &msg) override;
+    Q_REQUIRED_RESULT QString smartQuote(const QString &msg) override;
 
     void setHighlighterColors(KPIMTextEdit::RichTextComposerEmailQuoteHighlighter *highlighter) override;
 

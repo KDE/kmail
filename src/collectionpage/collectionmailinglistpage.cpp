@@ -330,19 +330,29 @@ void CollectionMailingListPage::slotInvokeHandler()
     save(mCurrentCollection);
     switch (mAddressCombo->currentIndex()) {
     case 0:
-        KMail::Util::mailingListPost(mFolder, mCurrentCollection);
+        if (!KMail::Util::mailingListPost(mFolder, mCurrentCollection)) {
+            qCWarning(KMAIL_LOG) << "invalid folder";
+        }
         break;
     case 1:
-        KMail::Util::mailingListSubscribe(mFolder, mCurrentCollection);
+        if (!KMail::Util::mailingListSubscribe(mFolder, mCurrentCollection)) {
+            qCWarning(KMAIL_LOG) << "invalid folder";
+        }
         break;
     case 2:
-        KMail::Util::mailingListUnsubscribe(mFolder, mCurrentCollection);
+        if (!KMail::Util::mailingListUnsubscribe(mFolder, mCurrentCollection)) {
+            qCWarning(KMAIL_LOG) << "invalid folder";
+        }
         break;
     case 3:
-        KMail::Util::mailingListArchives(mFolder, mCurrentCollection);
+        if (!KMail::Util::mailingListArchives(mFolder, mCurrentCollection)) {
+            qCWarning(KMAIL_LOG) << "invalid folder";
+        }
         break;
     case 4:
-        KMail::Util::mailingListHelp(mFolder, mCurrentCollection);
+        if (!KMail::Util::mailingListHelp(mFolder, mCurrentCollection)) {
+            qCWarning(KMAIL_LOG) << "invalid folder";
+        }
         break;
     default:
         qCWarning(KMAIL_LOG) << "Wrong entry in the mailing list entry combo!";

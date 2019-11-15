@@ -80,7 +80,7 @@ public:
      * Checks for existing filters with the @p name and extend the
      * "name" to "name (i)" until no match is found for i=1..n
      */
-    QString createUniqueName(const QString &name) const;
+    Q_REQUIRED_RESULT QString createUniqueName(const QString &name) const;
 
     /**
      * Process given message item by applying the filter rules one by
@@ -94,9 +94,9 @@ public:
      *
      *  @return true if the filtering was successful, false in case of any error
      */
-    bool process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
+    Q_REQUIRED_RESULT bool process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
 
-    bool process(const QVector<MailCommon::MailFilter *> &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
+    Q_REQUIRED_RESULT bool process(const QVector<MailCommon::MailFilter *> &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
 
     /**
      * For ad-hoc filters.
@@ -104,7 +104,7 @@ public:
      * Applies @p filter to message @p item.
      * Return codes are as with the above method.
      */
-    bool process(const Akonadi::Item &item, bool needsFullPayload, const MailCommon::MailFilter *filter);
+    Q_REQUIRED_RESULT bool process(const Akonadi::Item &item, bool needsFullPayload, const MailCommon::MailFilter *filter);
 
     void filter(const Akonadi::Item &item, FilterManager::FilterSet set, const QString &resourceId);
     void filter(const Akonadi::Item &item, const QString &filterId, const QString &resourceId);
@@ -119,12 +119,12 @@ public:
     /**
      * Returns whether the configured filters need the full mail content.
      */
-    MailCommon::SearchRule::RequiredPart requiredPart(const QString &id) const;
+    Q_REQUIRED_RESULT MailCommon::SearchRule::RequiredPart requiredPart(const QString &id) const;
 
     void mailCollectionRemoved(const Akonadi::Collection &collection);
     void agentRemoved(const QString &identifier);
 
-    bool hasAllFoldersFilter() const;
+    Q_REQUIRED_RESULT bool hasAllFoldersFilter() const;
 
     /**
      * Outputs all filter rules to console. Used for debugging.
@@ -132,7 +132,7 @@ public:
     void dump() const;
 
 protected:
-    bool processContextItem(MailCommon::ItemContext context);
+    Q_REQUIRED_RESULT bool processContextItem(MailCommon::ItemContext context);
 
 Q_SIGNALS:
     /**

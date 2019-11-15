@@ -45,7 +45,7 @@ private:
     void slotStopIndexing();
     void readConfig();
     void writeConfig();
-    QList<qlonglong> collectionsToReindex() const;
+    Q_REQUIRED_RESULT QList<qlonglong> collectionsToReindex() const;
     void waitForIndexer();
     void updateAllSelection(bool select);
 

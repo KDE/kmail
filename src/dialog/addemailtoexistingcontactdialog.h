@@ -31,7 +31,7 @@ public:
     explicit AddEmailToExistingContactDialog(QWidget *parent);
     ~AddEmailToExistingContactDialog();
 
-    Akonadi::Item selectedContact() const;
+    Q_REQUIRED_RESULT Akonadi::Item selectedContact() const;
 
 private:
     void slotSelectionChanged();

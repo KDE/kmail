@@ -34,16 +34,16 @@ public:
 
     void start();
 
-    Akonadi::Collection collection() const;
+    Q_REQUIRED_RESULT Akonadi::Collection collection() const;
     void setCollection(const Akonadi::Collection &collection);
 
-    QDate date() const;
+    Q_REQUIRED_RESULT QDate date() const;
     void setDate(const QDate &date);
 
-    Akonadi::Item messageItem() const;
+    Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
     void setMessageItem(const Akonadi::Item &messageItem);
 
-    bool canStart() const;
+    Q_REQUIRED_RESULT bool canStart() const;
 
 private:
     Q_DISABLE_COPY(CreateFollowupReminderOnExistingMessageJob)

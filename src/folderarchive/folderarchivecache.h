@@ -40,7 +40,7 @@ public:
 
     void addToCache(const QString &resourceName, Akonadi::Collection::Id id);
 
-    Akonadi::Collection::Id collectionId(FolderArchiveAccountInfo *info);
+    Q_REQUIRED_RESULT Akonadi::Collection::Id collectionId(FolderArchiveAccountInfo *info);
 
     void clearCacheWithContainsCollection(Akonadi::Collection::Id id);
 

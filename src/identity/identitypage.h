@@ -44,7 +44,7 @@ public:
     explicit IdentityPage(QWidget *parent = nullptr);
     ~IdentityPage() override;
 
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void load();
     void save() override;

@@ -28,7 +28,7 @@ public:
     TaskAttribute(Akonadi::Item::Id id);
     ~TaskAttribute() override;
 
-    QByteArray type() const override;
+    Q_REQUIRED_RESULT QByteArray type() const override;
 
     TaskAttribute *clone() const override;
 

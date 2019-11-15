@@ -139,7 +139,9 @@ void SendLaterManager::sendNow(Akonadi::Item::Id id)
             slotCreateJob();
         } else {
             qCDebug(SENDLATERAGENT_LOG) << " can't find info about current id: " << id;
-            itemRemoved(id);
+            if (!itemRemoved(id)) {
+                qCWarning(SENDLATERAGENT_LOG) << "Impossible to remove id" << id;
+            }
         }
     } else {
         //Add to QQueue
@@ -188,7 +190,9 @@ void SendLaterManager::sendError(SendLater::SendLaterInfo *info, ErrorType type)
         case MailDispatchDoesntWork:
             //Force to make online maildispatcher
             //Don't remove it.
-            MessageComposer::Util::sendMailDispatcherIsOnline(nullptr);
+            if (!MessageComposer::Util::sendMailDispatcherIsOnline(nullptr)) {
+                qCWarning(SENDLATERAGENT_LOG) << " Impossible to make online send dispatcher";
+            }
             //Remove item which create error ?
             if (!info->isRecurrence()) {
                 removeLaterInfo(info);

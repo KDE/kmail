@@ -165,9 +165,9 @@ public:
     void populateMessageListStatusFilterCombo();
     void initializePluginActions();
 
-    Akonadi::Item::List currentSelection() const;
+    Q_REQUIRED_RESULT Akonadi::Item::List currentSelection() const;
 
-    QString fullCollectionPath() const;
+    Q_REQUIRED_RESULT QString fullCollectionPath() const;
 
     void initializeFilterActions(bool clearFilter);
     /** Clear and create actions for marked filters */
@@ -179,7 +179,7 @@ public:
      *         that is the action collection of this main widget as returned
      *         by actionCollection().
      */
-    QList<KActionCollection *> actionCollections() const;
+    Q_REQUIRED_RESULT QList<KActionCollection *> actionCollections() const;
     void refreshMessageListSelection();
     Akonadi::StandardMailActionManager *standardMailActionManager() const;
     QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);

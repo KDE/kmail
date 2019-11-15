@@ -55,9 +55,9 @@ class SummaryWidget : public KontactInterface::Summary
 public:
     SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent);
 
-    int summaryHeight() const override;
+    Q_REQUIRED_RESULT int summaryHeight() const override;
 
-    QStringList configModules() const override;
+    Q_REQUIRED_RESULT QStringList configModules() const override;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e) override;

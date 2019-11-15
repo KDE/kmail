@@ -34,10 +34,10 @@ public:
     void setEmailWhiteList(const QStringList &emails);
     void setPotentialPhishingEmails(const QStringList &emails);
 
-    QStringList potentialPhisingEmails() const;
-    bool start();
+    Q_REQUIRED_RESULT QStringList potentialPhisingEmails() const;
+    Q_REQUIRED_RESULT bool start();
 
-    QStringList checkEmails() const;
+    Q_REQUIRED_RESULT QStringList checkEmails() const;
 
 Q_SIGNALS:
     void potentialPhishingEmailsFound(const QStringList &emails);

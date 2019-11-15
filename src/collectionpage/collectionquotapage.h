@@ -45,7 +45,7 @@ public:
     explicit CollectionQuotaPage(QWidget *parent = nullptr);
     void load(const Akonadi::Collection &col) override;
     void save(Akonadi::Collection &col) override;
-    bool canHandle(const Akonadi::Collection &collection) const override;
+    Q_REQUIRED_RESULT bool canHandle(const Akonadi::Collection &collection) const override;
 
 private:
     void init();
