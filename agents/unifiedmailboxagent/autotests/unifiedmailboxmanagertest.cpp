@@ -224,7 +224,7 @@ private Q_SLOTS:
         auto mailbox = createUnifiedMailbox(QStringLiteral("Test1"), QStringLiteral("Test 1"),
                                             { QStringLiteral("res1_inbox") });
         QVERIFY(mailbox);
-        const auto sourceCol = mailbox->sourceCollections().toList().first();
+        const auto sourceCol = mailbox->sourceCollections().values().first();
         manager.insertBox(std::move(mailbox));
 
         // Now manager should have one unified mailbox and monitor all of its
@@ -270,7 +270,7 @@ private Q_SLOTS:
         // Now the box should be loaded and its source collections monitored
         QCOMPARE(std::distance(manager.begin(), manager.end()), 1l);
         QCOMPARE(recorder.collectionsMonitored().count(), 2);
-        const auto srcCols = mailbox->sourceCollections().toList();
+        const auto srcCols = mailbox->sourceCollections().values();
         QCOMPARE(srcCols.count(), 2);
         QVERIFY(recorder.collectionsMonitored().contains(Akonadi::Collection(srcCols[0])));
         QVERIFY(recorder.collectionsMonitored().contains(Akonadi::Collection(srcCols[1])));
