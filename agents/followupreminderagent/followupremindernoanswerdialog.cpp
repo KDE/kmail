@@ -18,8 +18,10 @@
 */
 
 #include "followupremindernoanswerdialog.h"
-#include "FollowupReminder/FollowUpReminderInfo"
 #include "followupreminderinfowidget.h"
+#include "followupreminderagent_debug.h"
+
+#include <FollowupReminder/FollowUpReminderInfo>
 
 #include <KLocalizedString>
 #include <KSharedConfig>
@@ -29,6 +31,13 @@
 #include <KConfigGroup>
 #include <QPushButton>
 #include <QVBoxLayout>
+
+#include "notifications_interface.h" // DBUS-generated
+#include "dbusproperties.h" // DBUS-generated
+
+static const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";
+static const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
+
 
 FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     : QDialog(parent)
@@ -55,11 +64,54 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     mainLayout->addWidget(buttonBox);
 
     readConfig();
+    QDBusConnection dbusConn = QDBusConnection::sessionBus();
+    if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
+        OrgFreedesktopDBusPropertiesInterface *propsIface = new OrgFreedesktopDBusPropertiesInterface(
+                    QString::fromLatin1(s_fdo_notifications_service),
+                    QString::fromLatin1(s_fdo_notifications_path),
+                    dbusConn, this);
+        connect(propsIface, &OrgFreedesktopDBusPropertiesInterface::PropertiesChanged,
+                this, &FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged);
+    }
 }
 
 FollowUpReminderNoAnswerDialog::~FollowUpReminderNoAnswerDialog()
 {
     writeConfig();
+}
+
+void FollowUpReminderNoAnswerDialog::wakeUp()
+{
+    // Check if notifications are inhibited (e.x. plasma "do not disturb" mode.
+    // In that case, we'll wait until they are allowed again (see slotDBusNotificationsPropertiesChanged)
+    QDBusConnection dbusConn = QDBusConnection::sessionBus();
+    if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
+        OrgFreedesktopNotificationsInterface iface(
+                    QString::fromLatin1(s_fdo_notifications_service),
+                    QString::fromLatin1(s_fdo_notifications_path),
+                    dbusConn);
+        if (iface.inhibited()) {
+            return;
+        }
+    }
+    show();
+}
+
+void FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged(
+        const QString &interface,
+        const QVariantMap &changedProperties,
+        const QStringList &invalidatedProperties)
+{
+    Q_UNUSED(interface); // always "org.freedesktop.Notifications"
+    Q_UNUSED(invalidatedProperties);
+    const auto it = changedProperties.find(QStringLiteral("Inhibited"));
+    if (it != changedProperties.end()) {
+        const bool inhibited = it.value().toBool();
+        qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "Notifications inhibited:" << inhibited;
+        if (!inhibited) {
+            wakeUp();
+        }
+    }
 }
 
 void FollowUpReminderNoAnswerDialog::setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &info)
