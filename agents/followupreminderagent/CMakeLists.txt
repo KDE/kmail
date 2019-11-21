@@ -16,6 +16,10 @@ set(followupreminderagent_SRCS
 ecm_qt_declare_logging_category(followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent)
 qt5_add_dbus_adaptor(followupreminderagent_SRCS org.freedesktop.Akonadi.FollowUpReminder.xml followupreminderagent.h FollowUpReminderAgent)
 
+qt5_add_dbus_interface(followupreminderagent_SRCS org.freedesktop.Notifications.xml notifications_interface)
+qt5_add_dbus_interface(followupreminderagent_SRCS org.freedesktop.DBus.Properties.xml dbusproperties)
+
+
 add_library(followupreminderagent STATIC ${followupreminderagent_SRCS})
 target_link_libraries(followupreminderagent
     KF5::AkonadiCore
