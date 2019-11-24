@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-set(KDEPIM_VERSION_NUMBER "5.12.80")
+set(KDEPIM_VERSION_NUMBER "5.12.90")
 
 project(kmail VERSION ${KDEPIM_VERSION_NUMBER})
 
@@ -32,7 +32,7 @@ include(ECMAddAppIcon)
 include(ECMQtDeclareLoggingCategory)
 
 # Do NOT add quote
-set(KDEPIM_DEV_VERSION beta1)
+set(KDEPIM_DEV_VERSION rc)
 set(KDE_APPLICATIONS_VERSION "19.11.80")
 
 # add an extra space
