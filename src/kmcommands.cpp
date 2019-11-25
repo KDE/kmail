@@ -1819,6 +1819,9 @@ KMCommand::Result KMResendMessageCommand::execute()
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, msg);
     win->setMessage(newMsg, lastSign, lastEncrypt, false, true);
 
+    //Make sure to use current folder as requested by David
+    //We avoid to use an invalid folder when we open an email on two different computer.
+    win->setFcc(QString::number(item.parentCollection().id()));
     win->show();
 
     return OK;
