@@ -1802,6 +1802,7 @@ void KMComposerWin::setFcc(const QString &idString)
         mComposerBase->setFcc(col);
         mFccFolder->setCollection(col);
     } else {
+        mIncorrectIdentityFolderWarning->fccIsInvalid();
         qCWarning(KMAIL_LOG) << "setFcc: collection invalid " << idString;
     }
 }
