@@ -4429,7 +4429,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             searchStringVal = QByteArrayLiteral("<message>");
         }
         pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, searchString));
-        const QList<MessageStatus> statusList = mMessagePane->currentFilterStatus();
+        const QVector<MessageStatus> statusList = mMessagePane->currentFilterStatus();
         for (MessageStatus status : statusList) {
             if (status.hasAttachment()) {
                 pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, searchString));
