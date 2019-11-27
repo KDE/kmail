@@ -61,9 +61,9 @@ CodecAction::~CodecAction()
 {
 }
 
-QList<QByteArray> CodecAction::mimeCharsets() const
+QVector<QByteArray> CodecAction::mimeCharsets() const
 {
-    QList<QByteArray> ret;
+    QVector<QByteArray> ret;
     qCDebug(KMAIL_LOG) << "current item" << currentItem() << currentText();
     if (currentItem() == 0) {
         // 'Default' selected: return the preferred charsets.

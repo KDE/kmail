@@ -21,7 +21,7 @@
 #define CODECMANAGER_H
 
 #include <QByteArray>
-#include <QList>
+#include <QVector>
 class CodecManager
 {
 public:
@@ -33,7 +33,7 @@ public:
     /**
       A list of preferred charsets to use when composing messages.
     */
-    Q_REQUIRED_RESULT QList<QByteArray> preferredCharsets() const;
+    Q_REQUIRED_RESULT QVector<QByteArray> preferredCharsets() const;
 
     /**
       Re-read the preferred charsets from settings.
@@ -46,7 +46,7 @@ private:
     // Singleton.  The only instance lives in sInstance->instance
     CodecManager();
 
-    QList<QByteArray> mPreferredCharsets;
+    QVector<QByteArray> mPreferredCharsets;
 };
 
 #endif /* CODECMANAGER_H */

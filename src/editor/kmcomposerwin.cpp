@@ -716,7 +716,7 @@ void KMComposerWin::writeConfig()
 
 MessageComposer::Composer *KMComposerWin::createSimpleComposer()
 {
-    QList< QByteArray > charsets = mCodecAction->mimeCharsets();
+    QVector< QByteArray > charsets = mCodecAction->mimeCharsets();
     if (!mOriginalPreferredCharset.isEmpty()) {
         charsets.insert(0, mOriginalPreferredCharset);
     }
@@ -2737,7 +2737,7 @@ void KMComposerWin::slotDoDelayedSend(KJob *job)
 
 void KMComposerWin::applyComposerSetting(MessageComposer::ComposerViewBase *mComposerBase)
 {
-    QList< QByteArray > charsets = mCodecAction->mimeCharsets();
+    QVector< QByteArray > charsets = mCodecAction->mimeCharsets();
     if (!mOriginalPreferredCharset.isEmpty()) {
         charsets.insert(0, mOriginalPreferredCharset);
     }
