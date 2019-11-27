@@ -393,7 +393,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         for (const QString &arg : parser.positionalArguments()) {
             if (arg.startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
-                const QList<QPair<QString, QString> > values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
+                const QVector<QPair<QString, QString> > values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
                 QString previousKey;
                 for (int i = 0; i < values.count(); ++i) {
                     const QPair<QString, QString> element = values.at(i);
