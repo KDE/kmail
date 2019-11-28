@@ -109,13 +109,8 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     layout->setStretchFactor(mPluginView, 1);
 
     load();
-#if KCONFIGWIDGETS_VERSION < QT_VERSION_CHECK(5, 64, 0)
-    connect(mPluginView, &QTreeWidget::itemChanged,
-            this, qOverload<>(&KCMKontactSummary::changed));
-#else
     connect(mPluginView, &QTreeWidget::itemChanged,
             this, &KCMKontactSummary::markAsChanged);
-#endif
     KAboutData *about = new KAboutData(QStringLiteral("kontactsummary"),
                                        i18n("kontactsummary"),
                                        QString(),
