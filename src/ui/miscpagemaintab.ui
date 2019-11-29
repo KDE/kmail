@@ -40,7 +40,7 @@
       <widget class="QWidget" name="mOnStartupOpenFolder" native="true"/>
      </item>
      <item row="1" column="1">
-      <widget class="KComboBox" name="mLoopOnGotoUnread">
+      <widget class="QComboBox" name="mLoopOnGotoUnread">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -98,7 +98,7 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="KComboBox" name="mActionEnterFolder">
+      <widget class="QComboBox" name="mActionEnterFolder">
        <item>
         <property name="text">
          <string>Jump to First Unread Message</string>
@@ -198,13 +198,6 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
