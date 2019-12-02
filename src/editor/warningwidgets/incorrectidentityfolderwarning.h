@@ -33,6 +33,7 @@ public:
     void fccIsInvalid();
     void identityInvalid();
     void dictionaryInvalid();
+    void clearFccInvalid();
 
 private:
     void addNewLine(QString &str);
