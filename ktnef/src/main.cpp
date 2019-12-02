@@ -18,7 +18,7 @@
 #include "ktnef-version.h"
 
 #include <Kdelibs4ConfigMigrator>
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <KLocalizedString>
 #include <QCommandLineParser>
 #include <QApplication>

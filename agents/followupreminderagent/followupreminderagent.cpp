@@ -26,7 +26,7 @@
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/ItemFetchScope>
-#include <kdbusconnectionpool.h>
+#include <KDBusConnectionPool>
 
 #include <Kdelibs4ConfigMigrator>
 #include <AkonadiCore/Session>

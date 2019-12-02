@@ -67,16 +67,16 @@ using KMail::MailServiceImpl;
 #include "mailcommon/foldersettings.h"
 #include "editor/codec/codecmanager.h"
 
-#include <kmessagebox.h>
-#include <knotification.h>
+#include <KMessageBox>
+#include <KNotification>
 #include <libkdepim/progressmanager.h>
 
-#include <kconfig.h>
-#include <kpassivepopup.h>
-#include <kconfiggroup.h>
+#include <KConfig>
+#include <KPassivePopup>
+#include <KConfigGroup>
 #include "kmail_debug.h"
 #include <kio/jobuidelegate.h>
-#include <kprocess.h>
+#include <KProcess>
 #include <KCrash>
 
 #include <kmime/kmime_message.h>
@@ -102,7 +102,7 @@ using KMail::MailServiceImpl;
 
 #include <MailCommon/ResourceReadConfigFile>
 
-#include <kstartupinfo.h>
+#include <KStartupInfo>
 #include <kmailadaptor.h>
 #include <KLocalizedString>
 #include <QStandardPaths>

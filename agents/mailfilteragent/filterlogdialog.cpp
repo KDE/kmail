@@ -36,7 +36,7 @@
 #include "mailfilteragent_debug.h"
 #include <QFileDialog>
 #include <KLocalizedString>
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KStandardAction>
 #include <QVBoxLayout>
 #include <QIcon>

@@ -30,7 +30,7 @@
 #include <QTextCodec>
 
 // KDE libs
-#include <kcodecaction.h>
+#include <KCodecAction>
 #include <messagecomposer/messagecomposersettings.h>
 
 CodecManager::CodecManager()

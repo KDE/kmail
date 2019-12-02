@@ -28,7 +28,7 @@
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/item.h>
 #include <QDialog>
-#include <kxmlguiclient.h>
+#include <KXMLGUIClient>
 #include <KGuiItem>
 #include <QTimer>
 

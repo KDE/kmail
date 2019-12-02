@@ -151,23 +151,23 @@
 
 // KDELIBS includes
 #include <kwindowsystem.h>
-#include <kmessagebox.h>
-#include <kactionmenu.h>
+#include <KMessageBox>
+#include <KActionMenu>
 #include <QMenu>
-#include <kacceleratormanager.h>
-#include <kstandardshortcut.h>
-#include <kcharsets.h>
+#include <KAcceleratorManager>
+#include <KStandardShortcut>
+#include <KCharsets>
 #include "kmail_debug.h"
 
-#include <kstandardaction.h>
-#include <ktoggleaction.h>
-#include <knotification.h>
-#include <knotifyconfigwidget.h>
-#include <kstringhandler.h>
-#include <kconfiggroup.h>
-#include <ktoolinvocation.h>
-#include <kxmlguifactory.h>
-#include <kxmlguiclient.h>
+#include <KStandardAction>
+#include <KToggleAction>
+#include <KNotification>
+#include <KNotifyConfigWidget>
+#include <KStringHandler>
+#include <KConfigGroup>
+#include <KToolInvocation>
+#include <KXMLGUIFactory>
+#include <KXMLGUIClient>
 #include <QStatusBar>
 #include <QAction>
 #include <KRecentFilesAction>

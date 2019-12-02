@@ -29,7 +29,7 @@
 #include <KConfigGroup>
 #include <KConfig>
 #include <KSharedConfig>
-#include <knotification.h>
+#include <KNotification>
 #include <KLocalizedString>
 #include <QRegularExpression>
 using namespace FollowUpReminder;

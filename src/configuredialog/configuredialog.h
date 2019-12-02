@@ -22,7 +22,7 @@
 #ifndef CONFIGURE_DIALOG_H
 #define CONFIGURE_DIALOG_H
 
-#include <kcmultidialog.h>
+#include <KCMultiDialog>
 
 #include <QHideEvent>
 

@@ -28,15 +28,15 @@
 #include "widgets/zoomlabelwidget.h"
 #include "kmmainwidget.h"
 
-#include <kactionmenu.h>
-#include <kedittoolbar.h>
+#include <KActionMenu>
+#include <KEditToolBar>
 #include <KLocalizedString>
-#include <kstandardshortcut.h>
+#include <KStandardShortcut>
 #include <QAction>
-#include <kfontaction.h>
-#include <kstandardaction.h>
-#include <ktoggleaction.h>
-#include <ktoolbar.h>
+#include <KFontAction>
+#include <KStandardAction>
+#include <KToggleAction>
+#include <KToolBar>
 #include "kmail_debug.h"
 #include <QStatusBar>
 #include <KMessageBox>

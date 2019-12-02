@@ -30,7 +30,7 @@
 #include <Akonadi/KMime/SpecialMailCollections>
 #include <AgentInstance>
 #include <AgentManager>
-#include <kdbusconnectionpool.h>
+#include <KDBusConnectionPool>
 #include <changerecorder.h>
 #include <itemfetchscope.h>
 #include <AkonadiCore/session.h>

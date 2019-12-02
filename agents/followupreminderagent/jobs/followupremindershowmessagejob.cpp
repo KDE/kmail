@@ -22,7 +22,7 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusConnectionInterface>
-#include <ktoolinvocation.h>
+#include <KToolInvocation>
 
 FollowUpReminderShowMessageJob::FollowUpReminderShowMessageJob(Akonadi::Item::Id id, QObject *parent)
     : QObject(parent)

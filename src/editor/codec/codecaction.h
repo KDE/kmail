@@ -24,7 +24,7 @@
 #include <QVector>
 
 // KDE
-#include <kcodecaction.h>
+#include <KCodecAction>
 
 // TODO since the reader is now in a separate lib, we can probably have this
 // class for the composer only.  The reader can use KCodecAction directly anyway.

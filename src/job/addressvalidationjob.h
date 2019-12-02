@@ -23,7 +23,7 @@
 #ifndef ADDRESSVALIDATIONJOB_H
 #define ADDRESSVALIDATIONJOB_H
 
-#include <kjob.h>
+#include <KJob>
 
 class AddressValidationJob : public KJob
 {

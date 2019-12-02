@@ -19,7 +19,7 @@
 #define KMSYSTEMTRAY_H
 
 #include <AkonadiCore/collection.h>
-#include <kstatusnotifieritem.h>
+#include <KStatusNotifierItem>
 
 #include <QAction>
 #include <QAbstractItemModel>

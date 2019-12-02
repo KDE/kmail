@@ -85,8 +85,8 @@ using MailTransport::TransportManager;
 
 // other KDE headers:
 #include <KLocalizedString>
-#include <kmessagebox.h>
-#include <kfileitem.h>
+#include <KMessageBox>
+#include <KFileItem>
 #include "kmail_debug.h"
 #include <QPushButton>
 #include <QComboBox>

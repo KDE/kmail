@@ -30,7 +30,7 @@
 #include "configuredialog/configureaccountpage.h"
 #include "configuredialog/configurepluginpage.h"
 #include "identity/identitypage.h"
-#include <kcmodule.h>
+#include <KCModule>
 
 //----------------------------
 // KCM stuff

@@ -24,14 +24,14 @@
 #include <AkonadiCore/ServerManager>
 
 #include <MailCommon/MailKernel>
-#include <kdbusconnectionpool.h>
+#include <KDBusConnectionPool>
 #include <Monitor>
 #include <Session>
 #include <CollectionFetchScope>
 #include <KMime/Message>
 #include <QTimer>
 
-#include <kdelibs4configmigrator.h>
+#include <Kdelibs4ConfigMigrator>
 
 //#define DEBUG_ARCHIVEMAILAGENT 1
 

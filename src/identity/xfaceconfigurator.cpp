@@ -42,7 +42,7 @@
 #include <KJobWidgets>
 #include <QComboBox>
 #include <KLocalizedString>
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KIO/StoredTransferJob>
 
 #include <QCheckBox>

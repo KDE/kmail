@@ -67,7 +67,7 @@ using namespace MessageViewer;
 #include <KLocalizedString>
 #include <QAction>
 #include <kcodecs.h>
-#include <ktoggleaction.h>
+#include <KToggleAction>
 #include <kservice.h>
 #include <KActionCollection>
 #include <KMessageBox>

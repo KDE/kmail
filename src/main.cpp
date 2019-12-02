@@ -25,7 +25,7 @@
 #include "kmmigrateapplication.h"
 
 #include "kmail_debug.h"
-#include <kmessagebox.h>
+#include <KMessageBox>
 #undef Status // stupid X headers
 
 #include "aboutdata.h"

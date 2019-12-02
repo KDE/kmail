@@ -27,9 +27,9 @@
 #include <AkonadiCore/Collection>
 
 #include <KLocalizedString>
-#include <kcombobox.h>
-#include <kurlrequester.h>
-#include <kmessagebox.h>
+#include <KComboBox>
+#include <KUrlRequester>
+#include <KMessageBox>
 #include <KSeparator>
 
 #include <QLabel>

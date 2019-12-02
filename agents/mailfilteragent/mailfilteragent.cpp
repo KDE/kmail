@@ -30,7 +30,7 @@
 #include <AkonadiCore/changerecorder.h>
 #include <AkonadiCore/collectionfetchjob.h>
 #include <AkonadiCore/collectionfetchscope.h>
-#include <kdbusconnectionpool.h>
+#include <KDBusConnectionPool>
 #include <AkonadiCore/itemfetchscope.h>
 #include <Akonadi/KMime/MessageParts>
 #include <Akonadi/KMime/MessageStatus>
@@ -50,7 +50,7 @@
 #include <QTimer>
 #include <KSharedConfig>
 
-#include <kdelibs4configmigrator.h>
+#include <Kdelibs4ConfigMigrator>
 
 bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collection) const
 {

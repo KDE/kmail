@@ -26,7 +26,7 @@
 #include <KSharedConfig>
 #include <KHelpMenu>
 #include <QMenu>
-#include <kaboutdata.h>
+#include <KAboutData>
 #include <QIcon>
 #include <QDialogButtonBox>
 #include <QApplication>

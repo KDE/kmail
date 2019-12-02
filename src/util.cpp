@@ -43,8 +43,8 @@
 #include "job/handleclickedurljob.h"
 
 #include <kmime/kmime_message.h>
-#include <kmessagebox.h>
-#include <klocalizedstring.h>
+#include <KMessageBox>
+#include <KLocalizedString>
 #include "kmail_debug.h"
 
 #include <QAction>

@@ -27,9 +27,9 @@
 
 #include "mailcommon/foldertreewidget.h"
 
-#include <kxmlguiclient.h>
+#include <KXMLGUIClient>
 #include "messageactions.h"
-#include <kactioncollection.h>
+#include <KActionCollection>
 #include <mailcommon/foldersettings.h>
 #include "messageviewer/config-messageviewer.h"
 #include <QPointer>

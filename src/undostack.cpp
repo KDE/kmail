@@ -26,7 +26,7 @@
 #include <KJob>
 #include <AkonadiCore/itemmovejob.h>
 
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KLocalizedString>
 #include "kmail_debug.h"
 

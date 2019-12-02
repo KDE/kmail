@@ -34,12 +34,12 @@
 #include <KConfigGui>
 #include <QMenuBar>
 #include <KLocalizedString>
-#include <kedittoolbar.h>
-#include <kconfig.h>
-#include <kmessagebox.h>
-#include <kxmlguifactory.h>
-#include <kstringhandler.h>
-#include <kstandardaction.h>
+#include <KEditToolBar>
+#include <KConfig>
+#include <KMessageBox>
+#include <KXMLGUIFactory>
+#include <KStringHandler>
+#include <KStandardAction>
 #include "kmail_debug.h"
 #include <ktip.h>
 

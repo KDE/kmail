@@ -26,7 +26,7 @@
 
 #include "kmail_export.h"
 
-#include <kcmodule.h>
+#include <KCModule>
 class ConfigModule : public KCModule
 {
 public:
