@@ -58,6 +58,14 @@ void IncorrectIdentityFolderWarning::dictionaryInvalid()
     updateText();
 }
 
+void IncorrectIdentityFolderWarning::clearFccInvalid()
+{
+    if (mFccIsInvalid) {
+        mFccIsInvalid = false;
+        updateText();
+    }
+}
+
 void IncorrectIdentityFolderWarning::addNewLine(QString &str)
 {
     if (!str.isEmpty()) {
@@ -83,8 +91,13 @@ void IncorrectIdentityFolderWarning::updateText()
         addNewLine(text);
         text += i18n("Dictionary was not found. Please verify that you will use a correct dictionary.");
     }
-    setText(text);
-    animatedShow();
+    if (text.isEmpty()) {
+        animatedHide();
+        setText(QString());
+    } else {
+        setText(text);
+        animatedShow();
+    }
 }
 
 void IncorrectIdentityFolderWarning::slotHideAnnimationFinished()
