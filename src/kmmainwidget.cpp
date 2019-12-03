@@ -1588,7 +1588,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
                                                         i18n("Security Warning"),
                                                         KGuiItem(i18n("Load External References")),
                                                         KStandardGuiItem::cancel(),
-                                                        QStringLiteral("OverrideHtmlLoadExtWarning"), nullptr);
+                                                        QStringLiteral("OverrideHtmlLoadExtWarning"), KMessageBox::Option());
         if (result == KMessageBox::Cancel) {
             mPreferHtmlLoadExtAction->setChecked(false);
             return;
@@ -4706,7 +4706,7 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
                                                               i18n("Security Warning"),
                                                               KGuiItem(i18n("Use HTML")),
                                                               KStandardGuiItem::cancel(),
-                                                              QStringLiteral("OverrideHtmlWarning"), nullptr);
+                                                              QStringLiteral("OverrideHtmlWarning"), KMessageBox::Option());
         if (result == KMessageBox::Cancel) {
             mDisplayMessageFormatMenu->setDisplayMessageFormat(MessageViewer::Viewer::Text);
             return;
