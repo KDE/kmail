@@ -114,7 +114,7 @@ using KMail::MailServiceImpl;
 
 #include "searchdialog/searchdescriptionattribute.h"
 #include "kmail_options.h"
-
+//#define DEBUG_SCHEDULER 1
 using namespace MailCommon;
 
 static KMKernel *mySelf = nullptr;
