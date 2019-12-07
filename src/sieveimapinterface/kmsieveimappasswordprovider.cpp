@@ -19,7 +19,7 @@
 
 #include "kmsieveimappasswordprovider.h"
 
-#include <kwallet.h>
+#include <KWallet>
 
 #include <memory>
 

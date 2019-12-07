@@ -150,7 +150,7 @@
 #include <PimCommon/LogActivitiesManager>
 
 // KDELIBS includes
-#include <kwindowsystem.h>
+#include <KWindowSystem>
 #include <KMessageBox>
 #include <KActionMenu>
 #include <QMenu>
