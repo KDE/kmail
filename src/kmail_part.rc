@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE gui>
-<gui version="541" name="kmmainwin" translationDomain="kmail">
+<gui version="543" name="kmmainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -28,8 +28,6 @@
    <Action name="akonadi_empty_all_trash"/>
    <Separator/>
    <Action name="akonadi_work_offline" />
-   <Separator/>
-   <Action name="low_bandwidth"/>
    <Separator/>
    <Action name="check_mail" />
    <Action name="check_mail_in" />
@@ -287,6 +285,7 @@
   <Action name="folder_shortcut_command"/>
   <ActionList name="akonadi_collection_collectionproperties_actionlist"/>
   <ActionList name="resource_settings" />
+  <ActionList name="resource_restart" />
   <Separator/>
   <ActionList name="collectionview_actionlist" />
  </Menu>

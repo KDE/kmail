@@ -642,7 +642,6 @@ private:
     KMLaunchExternalComponent *mLaunchExternalComponent = nullptr;
     ManageShowCollectionProperties *mManageShowCollectionProperties = nullptr;
     QAction *mShowIntroductionAction = nullptr;
-    KToggleAction *mUseLessBandwidth = nullptr;
     QAction *mMarkAllMessageAsReadAndInAllSubFolder = nullptr;
     KActionMenuAccount *mAccountActionMenu = nullptr;
     QAction *mRemoveDuplicateRecursiveAction = nullptr;
