@@ -505,7 +505,6 @@ private Q_SLOTS:
 
     void slotCollectionRemoved(const Akonadi::Collection &col);
     void slotCcFilter();
-    void slotBandwidth(bool b);
     void slotDeleteMessages();
 
     void slotMarkAllMessageAsReadInCurrentFolderAndSubfolder();

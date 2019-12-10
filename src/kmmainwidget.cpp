@@ -49,7 +49,6 @@
 #include "widgets/kactionmenuaccount.h"
 #include "mailcommon/searchrulestatus.h"
 #include "plugininterface/kmailplugininterface.h"
-#include "PimCommon/NetworkUtil"
 #include "kpimtextedit/texttospeech.h"
 #include "job/markallmessagesasreadinfolderandsubfolderjob.h"
 #include "job/removeduplicatemessageinfolderandsubfolderjob.h"
@@ -2179,11 +2178,6 @@ void KMMainWidget::slotCcFilter()
         return;
     }
     openFilterDialog("Cc", msg->cc()->asUnicodeString());
-}
-
-void KMMainWidget::slotBandwidth(bool b)
-{
-    PimCommon::NetworkUtil::self()->setLowBandwidth(b);
 }
 
 //-----------------------------------------------------------------------------
