@@ -47,7 +47,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     : QDialog(parent)
     , mIdentityManager(manager)
 {
-    setWindowTitle(i18n("New Identity"));
+    setWindowTitle(i18nc("@title:window", "New Identity"));
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);

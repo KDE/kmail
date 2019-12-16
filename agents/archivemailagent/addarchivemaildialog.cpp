@@ -41,9 +41,9 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     , mInfo(info)
 {
     if (info) {
-        setWindowTitle(i18n("Modify Archive Mail"));
+        setWindowTitle(i18nc("@title:window", "Modify Archive Mail"));
     } else {
-        setWindowTitle(i18n("Add Archive Mail"));
+        setWindowTitle(i18nc("@title:window", "Add Archive Mail"));
     }
     setModal(true);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));

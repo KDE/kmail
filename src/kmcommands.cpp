@@ -318,7 +318,7 @@ void KMCommand::transferSelectedMsgs()
     // command is executed after the MousePressEvent), cf. bug #71761.
     if (mCountMsgs > 0) {
         mProgressDialog = new QProgressDialog(mParent);
-        mProgressDialog.data()->setWindowTitle(i18n("Please wait"));
+        mProgressDialog.data()->setWindowTitle(i18nc("@title:window", "Please wait"));
 
         mProgressDialog.data()->setLabelText(i18np("Please wait while the message is transferred", "Please wait while the %1 messages are transferred", mMsgList.count()));
         mProgressDialog.data()->setModal(true);

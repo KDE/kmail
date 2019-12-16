@@ -36,7 +36,7 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     mMessage = msg;
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    setWindowTitle(i18n("Message Properties"));
+    setWindowTitle(i18nc("@title:window", "Message Properties"));
     mListView = new QTreeWidget(this);
     mainLayout->addWidget(mListView);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);

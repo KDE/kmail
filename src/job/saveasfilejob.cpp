@@ -38,7 +38,7 @@ SaveAsFileJob::~SaveAsFileJob()
 void SaveAsFileJob::start()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(mParentWidget);
-    dlg->setWindowTitle(i18n("Save File as"));
+    dlg->setWindowTitle(i18nc("@title:window", "Save File as"));
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     QStringList lst;
     if (mHtmlMode) {

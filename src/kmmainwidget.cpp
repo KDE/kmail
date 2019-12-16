@@ -1780,7 +1780,7 @@ FolderSelectionDialog *KMMainWidget::selectFromAllFoldersDialog()
 void KMMainWidget::slotMoveSelectedMessageToFolder()
 {
     QPointer<MailCommon::FolderSelectionDialog> dialog(moveOrCopyToDialog());
-    dialog->setWindowTitle(i18n("Move Messages to Folder"));
+    dialog->setWindowTitle(i18nc("@title:window", "Move Messages to Folder"));
     if (dialog->exec() && dialog) {
         const Akonadi::Collection dest = dialog->selectedCollection();
         if (dest.isValid()) {
@@ -1833,7 +1833,7 @@ void KMMainWidget::slotCopyMessagesCompleted(KMCommand *command)
 void KMMainWidget::slotCopySelectedMessagesToFolder()
 {
     QPointer<MailCommon::FolderSelectionDialog> dialog(moveOrCopyToDialog());
-    dialog->setWindowTitle(i18n("Copy Messages to Folder"));
+    dialog->setWindowTitle(i18nc("@title:window", "Copy Messages to Folder"));
 
     if (dialog->exec() && dialog) {
         const Akonadi::Collection dest = dialog->selectedCollection();
@@ -2192,7 +2192,7 @@ void KMMainWidget::slotUndo()
 void KMMainWidget::slotJumpToFolder()
 {
     QPointer<MailCommon::FolderSelectionDialog> dialog(selectFromAllFoldersDialog());
-    dialog->setWindowTitle(i18n("Jump to Folder"));
+    dialog->setWindowTitle(i18nc("@title:window", "Jump to Folder"));
     if (dialog->exec() && dialog) {
         Akonadi::Collection collection = dialog->selectedCollection();
         if (collection.isValid()) {
@@ -3588,7 +3588,7 @@ void KMMainWidget::slotAddFavoriteFolder()
         return;
     }
     QPointer<MailCommon::FolderSelectionDialog> dialog(selectFromAllFoldersDialog());
-    dialog->setWindowTitle(i18n("Add Favorite Folder"));
+    dialog->setWindowTitle(i18nc("@title:window", "Add Favorite Folder"));
     if (dialog->exec() && dialog) {
         const Akonadi::Collection collection = dialog->selectedCollection();
         if (collection.isValid()) {

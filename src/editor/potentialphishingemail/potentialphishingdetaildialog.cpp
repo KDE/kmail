@@ -30,7 +30,7 @@
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(i18n("Details"));
+    setWindowTitle(i18nc("@title:window", "Details"));
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     setModal(true);
 

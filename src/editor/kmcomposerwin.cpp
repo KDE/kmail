@@ -393,7 +393,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
 
     mSplitter->setOpaqueResize(true);
 
-    setWindowTitle(i18n("Composer"));
+    setWindowTitle(i18nc("@title:window", "Composer"));
     setMinimumSize(200, 200);
 
     mCustomToolsWidget = new PimCommon::CustomToolsWidgetNg(this);

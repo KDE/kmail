@@ -46,7 +46,7 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     , mNumberOfSelectedMessages(numberOfSelectedMessages)
     , mSelectedItem(selectedItem)
 {
-    setWindowTitle(i18n("Select Tags"));
+    setWindowTitle(i18nc("@title:window", "Select Tags"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 

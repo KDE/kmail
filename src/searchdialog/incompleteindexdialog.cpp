@@ -219,7 +219,7 @@ void IncompleteIndexDialog::waitForIndexer()
     }
 
     mProgressDialog = new QProgressDialog(this);
-    mProgressDialog->setWindowTitle(i18n("Indexing"));
+    mProgressDialog->setWindowTitle(i18nc("@title:window", "Indexing"));
     mProgressDialog->setMaximum(mIndexingQueue.size());
     mProgressDialog->setValue(0);
     mProgressDialog->setLabelText(i18n("Indexing Collections..."));

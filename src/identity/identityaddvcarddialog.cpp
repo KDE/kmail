@@ -32,7 +32,7 @@
 IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(i18n("Create own vCard"));
+    setWindowTitle(i18nc("@title:window", "Create own vCard"));
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);

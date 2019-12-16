@@ -75,7 +75,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     : QDialog(nullptr)
     , mKMMainWidget(widget)
 {
-    setWindowTitle(i18n("Find Messages"));
+    setWindowTitle(i18nc("@title:window", "Find Messages"));
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 

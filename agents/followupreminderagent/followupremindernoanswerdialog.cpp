@@ -42,7 +42,7 @@ static const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
 FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(i18n("Follow Up Reminder"));
+    setWindowTitle(i18nc("@title:window", "Follow Up Reminder"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     setAttribute(Qt::WA_DeleteOnClose);
 

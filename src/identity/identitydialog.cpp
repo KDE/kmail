@@ -271,7 +271,7 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(i18n("Edit Identity"));
+    setWindowTitle(i18nc("@title:window", "Edit Identity"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
@@ -871,7 +871,7 @@ bool IdentityDialog::checkFolderExists(const QString &folderID)
 
 void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
 {
-    setWindowTitle(i18n("Edit Identity \"%1\"", ident.identityName()));
+    setWindowTitle(i18nc("@title:window", "Edit Identity \"%1\"", ident.identityName()));
 
     // "General" tab:
     mNameEdit->setText(ident.fullName());

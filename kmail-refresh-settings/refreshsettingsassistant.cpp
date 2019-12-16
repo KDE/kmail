@@ -32,7 +32,7 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
     : KAssistantDialog(parent)
 {
     setModal(true);
-    setWindowTitle(i18n("KMail Refresh Settings"));
+    setWindowTitle(i18nc("@title:window", "KMail Refresh Settings"));
     setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Help);
     resize(640, 480);
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
