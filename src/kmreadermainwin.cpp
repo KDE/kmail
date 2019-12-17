@@ -69,6 +69,7 @@
 #include <Akonadi/KMime/MessageFlags>
 #include "kpimtextedit/texttospeech.h"
 #include <mailcommon/mailutil.h>
+#include "messageviewer/config-messageviewer.h"
 #ifdef USE_DKIM_CHECKER
 #include <MessageViewer/DKIMWidgetInfo>
 #endif
@@ -111,8 +112,9 @@ void KMReaderMainWin::initKMReaderMainWin()
     mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
     setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
+#ifdef USE_DKIM_CHECKER
     statusBar()->addPermanentWidget(mReaderWin->viewer()->dkimWidgetInfo());
-
+#endif
     if (!mReaderWin->message().isValid()) {
         menuBar()->hide();
         toolBar(QStringLiteral("mainToolBar"))->hide();
