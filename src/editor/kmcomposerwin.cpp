@@ -543,8 +543,17 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
         if (!info.attachment.isEmpty()) {
             const QStringList lst = info.attachment.split(QLatin1Char(','));
             for (const QString &attach : lst) {
-                const QUrl localUrl = QUrl::fromLocalFile(attach);
-                addAttachment(localUrl, QString());
+                MessageComposer::ConvertSnippetVariablesJob *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+                job->setText(attach);
+                MessageComposer::ComposerViewInterface *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+                job->setComposerViewInterface(interface);
+                connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
+                    if (!str.isEmpty()) {
+                        const QUrl localUrl = QUrl::fromLocalFile(str);
+                        addAttachment(localUrl, QString());
+                    }
+                });
+                job->start();
             }
         }
     }
