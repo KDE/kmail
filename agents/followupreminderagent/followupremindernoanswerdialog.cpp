@@ -38,7 +38,6 @@
 static const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";
 static const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
 
-
 FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     : QDialog(parent)
 {
@@ -67,9 +66,9 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     QDBusConnection dbusConn = QDBusConnection::sessionBus();
     if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
         OrgFreedesktopDBusPropertiesInterface *propsIface = new OrgFreedesktopDBusPropertiesInterface(
-                    QString::fromLatin1(s_fdo_notifications_service),
-                    QString::fromLatin1(s_fdo_notifications_path),
-                    dbusConn, this);
+            QString::fromLatin1(s_fdo_notifications_service),
+            QString::fromLatin1(s_fdo_notifications_path),
+            dbusConn, this);
         connect(propsIface, &OrgFreedesktopDBusPropertiesInterface::PropertiesChanged,
                 this, &FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged);
     }
@@ -87,9 +86,9 @@ void FollowUpReminderNoAnswerDialog::wakeUp()
     QDBusConnection dbusConn = QDBusConnection::sessionBus();
     if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
         OrgFreedesktopNotificationsInterface iface(
-                    QString::fromLatin1(s_fdo_notifications_service),
-                    QString::fromLatin1(s_fdo_notifications_path),
-                    dbusConn);
+            QString::fromLatin1(s_fdo_notifications_service),
+            QString::fromLatin1(s_fdo_notifications_path),
+            dbusConn);
         if (iface.inhibited()) {
             return;
         }
@@ -98,9 +97,7 @@ void FollowUpReminderNoAnswerDialog::wakeUp()
 }
 
 void FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged(
-        const QString &interface,
-        const QVariantMap &changedProperties,
-        const QStringList &invalidatedProperties)
+    const QString &interface, const QVariantMap &changedProperties, const QStringList &invalidatedProperties)
 {
     Q_UNUSED(interface); // always "org.freedesktop.Notifications"
     Q_UNUSED(invalidatedProperties);

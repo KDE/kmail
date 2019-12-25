@@ -344,6 +344,7 @@ QWidget *KMMainWidget::dkimWidgetInfo() const
     }
     return nullptr;
 }
+
 #endif
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
@@ -4102,7 +4103,9 @@ void KMMainWidget::slotIntro()
 void KMMainWidget::slotShowStartupFolder()
 {
     connect(MailCommon::FilterManager::instance(), &FilterManager::filtersChanged,
-            this, [this]() { initializeFilterActions(true); });
+            this, [this]() {
+        initializeFilterActions(true);
+    });
     // Plug various action lists. This can't be done in the constructor, as that is called before
     // the main window or Kontact calls createGUI().
     // This function however is called with a single shot timer.
