@@ -217,7 +217,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
         mBBox.setBottom(pheader.bbox.bottom);
         mHeaderBoundingBox = mBBox;
         if (QWMF_DEBUG) {
-            qCDebug(KTNEFAPPS_LOG) << endl << "-------------------------------------------------";
+            qCDebug(KTNEFAPPS_LOG) << "\n-------------------------------------------------";
             qCDebug(KTNEFAPPS_LOG) << "WMF Placeable Header (" << static_cast<int>(sizeof(pheader)) << "):";
             qCDebug(KTNEFAPPS_LOG) << "  bbox=(" << mBBox.left() << ";" << mBBox.top() << ";" << mBBox.width()
                                    << "; " << mBBox.height() << ")";
@@ -258,7 +258,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
         st >> eheader.szlMillimeters.height;
 
         if (QWMF_DEBUG) {
-            qCDebug(KTNEFAPPS_LOG) << endl << "-------------------------------------------------";
+            qCDebug(KTNEFAPPS_LOG) << "\n-------------------------------------------------";
             qCDebug(KTNEFAPPS_LOG) << "WMF Extended Header:";
             qCDebug(KTNEFAPPS_LOG) << "  iType=" << eheader.iType;
             qCDebug(KTNEFAPPS_LOG) << "  nSize=" << eheader.nSize;
