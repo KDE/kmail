@@ -193,6 +193,7 @@
 
 #ifdef USE_DKIM_CHECKER
 #include <MessageViewer/DKIMWidgetInfo>
+#include <MessageViewer/DKIMViewerMenu>
 #endif
 
 using namespace KMime;
@@ -2799,6 +2800,12 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         menu.addSeparator();
 
         if (mMsgView) {
+#ifdef USE_DKIM_CHECKER
+            if (mMsgView->dkimViewerMenu()) {
+                menu.addMenu(mMsgView->dkimViewerMenu()->menu());
+                menu.addSeparator();
+            }
+#endif
             menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             menu.addSeparator();
         }

@@ -72,6 +72,7 @@
 #include "messageviewer/config-messageviewer.h"
 #ifdef USE_DKIM_CHECKER
 #include <MessageViewer/DKIMWidgetInfo>
+#include <MessageViewer/DKIMViewerMenu>
 #endif
 using namespace MailCommon;
 
@@ -666,7 +667,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mReaderWin->copyURLAction());
             menu->addSeparator();
             menu->addAction(mReaderWin->shareServiceUrlMenu());
-            menu->addSeparator();
+            menu->addSeparator();            
             menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
             if (!imageUrl.isEmpty()) {
                 menu->addSeparator();
@@ -757,6 +758,12 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mReaderWin->saveAsAction());
             menu->addAction(mSaveAtmAction);
             if (msg.isValid()) {
+#ifdef USE_DKIM_CHECKER
+                if (mReaderWin->dkimViewerMenu()) {
+                    menu->addSeparator();
+                    menu->addMenu(mReaderWin->dkimViewerMenu()->menu());
+                }
+#endif
                 menu->addSeparator();
                 menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             }

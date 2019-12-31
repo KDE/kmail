@@ -29,12 +29,16 @@
 #include <MimeTreeParser/BodyPart>
 #include <AkonadiCore/Item>
 #include <KContacts/Addressee>
+#include <messageviewer/config-messageviewer.h>
 class KActionCollection;
 class QAction;
 class KToggleAction;
 class QMenu;
 namespace MessageViewer {
 class CSSHelper;
+#ifdef USE_DKIM_CHECKER
+class DKIMViewerMenu;
+#endif
 }
 
 namespace MimeTreeParser {
@@ -121,7 +125,7 @@ public:
 
     void displayResourceOfflinePage();
 
-    bool isFixedFont() const;
+    Q_REQUIRED_RESULT bool isFixedFont() const;
     void setUseFixedFont(bool useFixedFont);
     MessageViewer::Viewer *viewer() const;
     KToggleAction *toggleFixFontAction() const;
@@ -161,14 +165,16 @@ public:
 
     MessageViewer::CSSHelper *cssHelper() const;
 
-    bool printSelectedText(bool preview);
+    Q_REQUIRED_RESULT bool printSelectedText(bool preview);
 
     void setContactItem(const Akonadi::Item &contact, const KContacts::Addressee &address);
     void clearContactItem();
 
-    bool mimePartTreeIsEmpty() const;
+    Q_REQUIRED_RESULT bool mimePartTreeIsEmpty() const;
     KActionMenu *shareServiceUrlMenu() const;
-
+#ifdef USE_DKIM_CHECKER
+    MessageViewer::DKIMViewerMenu *dkimViewerMenu();
+#endif
     Q_REQUIRED_RESULT QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
     Q_REQUIRED_RESULT QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
