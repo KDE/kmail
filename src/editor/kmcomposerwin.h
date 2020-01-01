@@ -1,6 +1,6 @@
 /*
  * This file is part of KMail.
- * Copyright (c) 2011-2019 Laurent Montel <montel@kde.org>
+ * Copyright (c) 2011-2020 Laurent Montel <montel@kde.org>
  *
  * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
  *

@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2019 Montel Laurent <montel@kde.org>
+   Copyright (C) 2019-2020 Laurent Montel <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
                          QStringLiteral("0.1"),
                          i18n("KMail Assistant for refreshing settings"),
                          KAboutLicense::LGPL,
-                         i18n("(c) 2019 Laurent Montel <montel@kde.org>"));
+                         i18n("(c) 2019-2020 Laurent Montel <montel@kde.org>"));
     aboutData.addAuthor(i18n("Laurent Montel"), i18n("Author"), QStringLiteral("montel@kde.org"));
 
     app.setOrganizationDomain(QStringLiteral("kde.org"));

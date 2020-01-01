@@ -1,7 +1,7 @@
 /*
   This file is part of KMail, the KDE mail client.
   Copyright (c) 1997 Markus Wuebben <markus.wuebben@kde.org>
-  Copyright (c) 2009-2019 Laurent Montel <montel@kde.org>
+  Copyright (c) 2009-2020 Laurent Montel <montel@kde.org>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
