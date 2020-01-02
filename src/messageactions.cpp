@@ -129,7 +129,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     ac->addAction(QStringLiteral("annotate"), mAnnotateAction);
     connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);
 
-    mEditAsNewAction = new QAction(QIcon::fromTheme(QStringLiteral("accessories-text-editor")), i18n("&Edit As New"), this);
+    mEditAsNewAction = new QAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18n("&Edit As New"), this);
     ac->addAction(QStringLiteral("editasnew"), mEditAsNewAction);
     connect(mEditAsNewAction, &QAction::triggered, this, &MessageActions::editCurrentMessage);
     ac->setDefaultShortcut(mEditAsNewAction, Qt::Key_T);
