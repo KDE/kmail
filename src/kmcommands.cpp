@@ -1005,7 +1005,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
-    QPair< KMime::Message::Ptr, QList< KMime::Content * > > fwdMsg = factory.createAttachedForward(msgList);
+    QPair< KMime::Message::Ptr, QVector< KMime::Content * > > fwdMsg = factory.createAttachedForward(msgList);
     if (!mWin) {
         mWin = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity);
     }
