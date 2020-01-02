@@ -204,7 +204,7 @@ void TagActionManager::createTagActions(const QVector<MailCommon::Tag::Ptr> &tag
     mMessageActions->messageStatusMenu()->menu()->addAction(mSeparatorNewTagAction);
 
     if (!mNewTagAction) {
-        mNewTagAction = new QAction(i18n("Add new tag..."), this);
+        mNewTagAction = new QAction(QIcon::fromTheme(QStringLiteral("tag-new")), i18n("Add new tag..."), this);
         connect(mNewTagAction, &QAction::triggered, this, &TagActionManager::newTagActionClicked);
     }
     mMessageActions->messageStatusMenu()->menu()->addAction(mNewTagAction);
