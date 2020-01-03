@@ -14,8 +14,7 @@
 .swp.*
 Doxyfile
 Makefile
-avail
-random_seed
 /build*/
+.cmake/
 CMakeLists.txt.user*
 *.unc-backup*
