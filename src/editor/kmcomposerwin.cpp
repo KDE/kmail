@@ -41,7 +41,6 @@
 #include "job/saveasfilejob.h"
 #include "job/savedraftjob.h"
 #include "job/dndfromarkjob.h"
-#include "kconfigwidgets_version.h"
 #include "kmail_debug.h"
 #include "kmcommands.h"
 #include "kmcomposercreatenewcomposerjob.h"

@@ -37,7 +37,6 @@
 
 #include <QLabel>
 #include <QVBoxLayout>
-#include <kconfigwidgets_version.h>
 extern "C"
 {
 Q_DECL_EXPORT KCModule *create_kontactsummary(QWidget *parent, const char *)
