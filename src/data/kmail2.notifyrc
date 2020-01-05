@@ -371,6 +371,7 @@ Name[sk]=Nemožné poslať email
 Name[sv]=Omöjligt att skicka e-post
 Name[uk]=Не вдалося надіслати повідомлення
 Name[x-test]=xxImpossible to send emailxx
+Name[zh_CN]=无法发送电子邮件
 Comment=Problem during send mail
 Comment[ca]=Problema durant l'enviament del correu
 Comment[ca@valencia]=Problema durant l'enviament del correu
@@ -392,6 +393,7 @@ Comment[sk]=Chyba pri odosielaní mailu
 Comment[sv]=Problem när e-post skulle skickas
 Comment[uk]=Проблема під час надсилання пошти
 Comment[x-test]=xxProblem during send mailxx
+Comment[zh_CN]=发送邮件时出现问题
 Action=Popup
 
 [Event/folderarchivedone]
@@ -496,5 +498,6 @@ Name[sk]=E-mail je možné vrátiť späť
 Name[sv]=Sändning av ett brev kan ångras
 Name[uk]=Не можна скасувати надсилання пошти
 Name[x-test]=xxAn email can be undo sendxx
+Name[zh_CN]=电子邮件可以撤消发送
 Action=Popup
 Urgency=Normal
