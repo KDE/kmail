@@ -549,11 +549,15 @@ void KMKernel::openReader(bool onlyCheck, bool startInTray)
         activate = !onlyCheck; // existing window: only activate if not --check
         if (activate) {
             win->show();
+            win->raise();
+            win->activateWindow();
         }
     } else {
         KMMainWin *win = new KMMainWin;
         if (!startInTray && !KMailSettings::self()->startInTray()) {
             win->show();
+            win->raise();
+            win->activateWindow();
         }
         activate = false; // new window: no explicit activation (#73591)
     }
@@ -711,6 +715,8 @@ bool KMKernel::showMail(qint64 serialNumber)
                 win->showMessage(MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding(),
                                  item, item.parentCollection());
                 win->show();
+                win->raise();
+                win->activateWindow();
                 return true;
             }
         }
