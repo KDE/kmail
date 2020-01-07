@@ -45,7 +45,7 @@ bool ValidateSendMailShortcut::validate()
                                                           i18n("Remove Shortcut"),
                                                           i18n("Ask Before Sending"),
                                                           i18n("Sending Without Confirmation"));
-    if (result == KMessageBox::Yes) {
+    if (result == QDialogButtonBox::Yes) {
         QAction *act = mActionCollection->action(QStringLiteral("send_mail"));
         if (act) {
             act->setShortcut(QKeySequence());
@@ -54,13 +54,13 @@ bool ValidateSendMailShortcut::validate()
             qCDebug(KMAIL_LOG) << "Unable to find action named \"send_mail\"";
         }
         sendNow = false;
-    } else if (result == KMessageBox::No) {
+    } else if (result == QDialogButtonBox::No) {
         KMailSettings::self()->setConfirmBeforeSendWhenUseShortcut(true);
         sendNow = true;
-    } else if (result == KMessageBox::Ok) {
+    } else if (result == QDialogButtonBox::Ok) {
         KMailSettings::self()->setConfirmBeforeSendWhenUseShortcut(false);
         sendNow = true;
-    } else if (result == KMessageBox::Cancel) {
+    } else if (result == QDialogButtonBox::Cancel) {
         return false;
     }
     KMailSettings::self()->setCheckSendDefaultActionShortcut(true);
