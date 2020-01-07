@@ -35,8 +35,13 @@
 #include "notifications_interface.h" // DBUS-generated
 #include "dbusproperties.h" // DBUS-generated
 
-static const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";
-static const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
+
+
+namespace {
+static constexpr const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";
+static constexpr const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
+static constexpr const char DialogGroup[] = "FollowUpReminderNoAnswerDialog";
+}
 
 FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     : QDialog(parent)
@@ -118,7 +123,7 @@ void FollowUpReminderNoAnswerDialog::setInfo(const QList<FollowUpReminder::Follo
 
 void FollowUpReminderNoAnswerDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "FollowUpReminderNoAnswerDialog");
+    KConfigGroup group(KSharedConfig::openConfig(), DialogGroup);
     const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
     if (sizeDialog.isValid()) {
         resize(sizeDialog);
@@ -128,7 +133,7 @@ void FollowUpReminderNoAnswerDialog::readConfig()
 
 void FollowUpReminderNoAnswerDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "FollowUpReminderNoAnswerDialog");
+    KConfigGroup group(KSharedConfig::openConfig(), DialogGroup);
     group.writeEntry("Size", size());
     mWidget->saveTreeWidgetHeader(group);
 }
