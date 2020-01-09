@@ -1250,9 +1250,9 @@ void KMKernel::slotShowConfigurationDialog()
 
     if (mConfigureDialog->isHidden()) {
         mConfigureDialog->show();
-    } else {
-        mConfigureDialog->raise();
     }
+    mConfigureDialog->raise();
+    mConfigureDialog->activateWindow();
 }
 
 void KMKernel::slotConfigChanged()
