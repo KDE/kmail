@@ -72,7 +72,6 @@ using KMail::MailServiceImpl;
 #include <libkdepim/progressmanager.h>
 
 #include <KConfig>
-#include <KPassivePopup>
 #include <KConfigGroup>
 #include "kmail_debug.h"
 #include <kio/jobuidelegate.h>
