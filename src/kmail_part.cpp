@@ -28,7 +28,6 @@
 
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "aboutdata.h"
 
 #include <QVBoxLayout>
 
