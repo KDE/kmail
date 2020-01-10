@@ -150,9 +150,7 @@ void OpenComposerJob::slotOpenComposer()
         }
     }
     if (!mOpenComposerSettings.mHidden) {
-        cWin->show();
-        cWin->raise();
-        cWin->activateWindow();
+        cWin->showAndActivateComposer();
     }
     deleteLater();
 }

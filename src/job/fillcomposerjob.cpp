@@ -141,7 +141,7 @@ void FillComposerJob::slotOpenComposer()
         cWin->disableForgottenAttachmentsCheck();
     }
     if (mSettings.mForceShowWindow || (!mSettings.mHidden && !iCalAutoSend)) {
-        cWin->show();
+        cWin->showAndActivateComposer();
     } else {
         // Always disable word wrap when we don't show the composer, since otherwise QTextEdit
         // gets the widget size wrong and wraps much too early.

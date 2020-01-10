@@ -547,16 +547,12 @@ void KMKernel::openReader(bool onlyCheck, bool startInTray)
         KMMainWin *win = static_cast<KMMainWin *>(ktmw);
         activate = !onlyCheck; // existing window: only activate if not --check
         if (activate) {
-            win->show();
-            win->raise();
-            win->activateWindow();
+            win->showAndActivateWindow();
         }
     } else {
         KMMainWin *win = new KMMainWin;
         if (!startInTray && !KMailSettings::self()->startInTray()) {
-            win->show();
-            win->raise();
-            win->activateWindow();
+            win->showAndActivateWindow();
         }
         activate = false; // new window: no explicit activation (#73591)
     }

@@ -85,6 +85,8 @@ public: // kmkernel, kmcommands, callback
 
     virtual void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) = 0;
 
+    virtual void showAndActivateComposer() = 0;
+
 public: // kmcommand
     /**
      * If this folder is set, the original message is inserted back after

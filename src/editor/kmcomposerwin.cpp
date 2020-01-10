@@ -3090,6 +3090,13 @@ void KMComposerWin::slotAutoSpellCheckingToggled(bool on)
     mStatusBarLabelSpellCheckingChangeMode->setToggleMode(on);
 }
 
+void KMComposerWin::showAndActivateComposer()
+{
+    show();
+    raise();
+    activateWindow();
+}
+
 void KMComposerWin::slotSpellCheckingStatus(const QString &status)
 {
     mStatusbarLabel->setText(status);

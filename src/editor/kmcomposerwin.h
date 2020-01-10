@@ -366,6 +366,8 @@ private Q_SLOTS:
      */
     void slotAutoSpellCheckingToggled(bool);
 
+    void showAndActivateComposer() override;
+
     void setAutoSaveFileName(const QString &fileName) override;
     void slotSpellCheckingLanguage(const QString &language);
     void forceAutoSaveMessage();

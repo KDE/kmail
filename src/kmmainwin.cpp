@@ -203,6 +203,13 @@ bool KMMainWin::restoreDockedState(int n)
     return KMainWindow::restore(n, show);
 }
 
+void KMMainWin::showAndActivateWindow()
+{
+    show();
+    raise();
+    activateWindow();
+}
+
 void KMMainWin::saveProperties(KConfigGroup &config)
 {
     // This is called by the session manager on log-off
