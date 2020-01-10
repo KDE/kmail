@@ -76,7 +76,7 @@ private:
     void slotOpenComposer();
     OpenComposerSettings mOpenComposerSettings;
     KMime::Message::Ptr mMsg;
-    KMail::Composer::TemplateContext mContext;
+    KMail::Composer::TemplateContext mContext = KMail::Composer::New;
     uint mIdentityId = 0;
 };
 
