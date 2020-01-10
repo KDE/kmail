@@ -602,6 +602,7 @@ DKIMViewerMenu *KMReaderWin::dkimViewerMenu()
 {
     return mViewer->dkimViewerMenu();
 }
+
 #endif
 
 QList<QAction *> KMReaderWin::viewerPluginActionList(ViewerPluginInterface::SpecificFeatureTypes features)

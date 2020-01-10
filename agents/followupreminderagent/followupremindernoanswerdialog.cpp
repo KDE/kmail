@@ -35,8 +35,6 @@
 #include "notifications_interface.h" // DBUS-generated
 #include "dbusproperties.h" // DBUS-generated
 
-
-
 namespace {
 static constexpr const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";
 static constexpr const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
