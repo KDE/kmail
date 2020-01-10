@@ -798,6 +798,13 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
     }
 }
 
+void KMReaderMainWin::showAndActivateWindow()
+{
+    show();
+    raise();
+    activateWindow();
+}
+
 void KMReaderMainWin::slotEditToolbars()
 {
     KConfigGroup grp(KMKernel::self()->config(), "ReaderWindow");

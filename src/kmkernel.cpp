@@ -709,9 +709,7 @@ bool KMKernel::showMail(qint64 serialNumber)
                 const auto item = job->items().at(0);
                 win->showMessage(MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding(),
                                  item, item.parentCollection());
-                win->show();
-                win->raise();
-                win->activateWindow();
+                win->showAndActivateWindow();
                 return true;
             }
         }

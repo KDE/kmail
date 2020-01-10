@@ -60,6 +60,7 @@ public:
     void showMessage(const QString &encoding, const QList<KMime::Message::Ptr> &message);
     void showMessage(const QString &encoding, const KMime::Message::Ptr &message);
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
+    void showAndActivateWindow();
 public Q_SLOTS:
     void slotForwardInlineMsg();
     void slotForwardAttachedMessage();
