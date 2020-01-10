@@ -22,7 +22,7 @@ static void kmail_options(QCommandLineParser *parser)
         i18n("Send BCC: to 'address'"),
         QStringLiteral("address"))
             << QCommandLineOption(
-        QStringList() << QStringLiteral("h") << QStringLiteral("replyTo"),
+        QStringList() << QStringLiteral("r") << QStringLiteral("replyTo"),
         i18n("Set replyTo to 'address'"),
         QStringLiteral("address"))
             << QCommandLineOption(
