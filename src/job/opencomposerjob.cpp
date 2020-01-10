@@ -36,7 +36,6 @@
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent)
     , mMsg(nullptr)
-    , mContext(KMail::Composer::New)
 {
 }
 
@@ -150,6 +149,8 @@ void OpenComposerJob::slotOpenComposer()
     }
     if (!mOpenComposerSettings.mHidden) {
         cWin->show();
+        cWin->raise();
+        cWin->activateWindow();
     }
     deleteLater();
 }
