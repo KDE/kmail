@@ -25,7 +25,7 @@ KMailPluginInterface::KMailPluginInterface(QObject *parent)
     : PimCommon::PluginInterface(parent)
 {
     setPluginName(QStringLiteral("kmail"));
-    setServiceTypeName(QStringLiteral("KMail/MainViewPlugin"));
+    setPluginDirectory(QStringLiteral("kmail/mainview"));
 }
 
 KMailPluginInterface::~KMailPluginInterface()
