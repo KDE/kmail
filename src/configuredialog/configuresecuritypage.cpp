@@ -166,7 +166,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
 
     // "ignore", "ask", "deny", "always send" radiobuttons
     mMDNGroup = new QButtonGroup(this);
-    connect(mMDNGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
+    connect(mMDNGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
     mMDNGroup->addButton(mUi.radioIgnore, 0);
     mMDNGroup->addButton(mUi.radioAsk, 1);
     mMDNGroup->addButton(mUi.radioDeny, 2);
@@ -174,7 +174,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
 
     // "Original Message quote" radiobuttons
     mOrigQuoteGroup = new QButtonGroup(this);
-    connect(mOrigQuoteGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
+    connect(mOrigQuoteGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
     mOrigQuoteGroup->addButton(mUi.radioNothing, 0);
     mOrigQuoteGroup->addButton(mUi.radioFull, 1);
     mOrigQuoteGroup->addButton(mUi.radioHeaders, 2);

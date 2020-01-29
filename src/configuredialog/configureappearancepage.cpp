@@ -491,7 +491,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
                         mFolderListGroup = new QButtonGroup(this),
                         Qt::Vertical, KMailSettings::self()->folderListItem());
     vlay->addWidget(mFolderListGroupBox);
-    connect(mFolderListGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFolderListGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     QHBoxLayout *folderCBHLayout = new QHBoxLayout;
     mFolderQuickSearchCB = new QCheckBox(i18n("Show folder quick search field"), this);
@@ -504,7 +504,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFavoriteFoldersViewGroupBox->setTitle(i18n("Show Favorite Folders View"));
     mFavoriteFoldersViewGroupBox->setLayout(new QVBoxLayout());
     mFavoriteFoldersViewGroup = new QButtonGroup(this);
-    connect(mFavoriteFoldersViewGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFavoriteFoldersViewGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     QRadioButton *favoriteFoldersViewHiddenRadio = new QRadioButton(i18n("Never"), mFavoriteFoldersViewGroupBox);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewHiddenRadio, static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode));
@@ -525,7 +525,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFolderToolTipsGroupBox->setTitle(i18n("Folder Tooltips"));
     mFolderToolTipsGroupBox->setLayout(new QVBoxLayout());
     mFolderToolTipsGroup = new QButtonGroup(this);
-    connect(mFolderToolTipsGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFolderToolTipsGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     QRadioButton *folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), mFolderToolTipsGroupBox);
     mFolderToolTipsGroup->addButton(folderToolTipsAlwaysRadio, static_cast< int >(FolderTreeWidget::DisplayAlways));
@@ -543,7 +543,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
                         Qt::Vertical, KMailSettings::self()->readerWindowModeItem());
     vlay->addWidget(mReaderWindowModeGroupBox);
 
-    connect(mReaderWindowModeGroup, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mReaderWindowModeGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addStretch(10);   // spacer
 }
@@ -738,7 +738,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     } // end for loop populating mDateDisplay
 
     vlay->addWidget(mDateDisplayBox);
-    connect(mDateDisplay, qOverload<int>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mDateDisplay, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addStretch(10);   // spacer
 }
