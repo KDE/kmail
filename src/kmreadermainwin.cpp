@@ -69,11 +69,8 @@
 #include <Akonadi/KMime/MessageFlags>
 #include "kpimtextedit/texttospeech.h"
 #include <mailcommon/mailutil.h>
-#include "messageviewer/config-messageviewer.h"
-#ifdef USE_DKIM_CHECKER
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/DKIMViewerMenu>
-#endif
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
@@ -113,9 +110,7 @@ void KMReaderMainWin::initKMReaderMainWin()
     mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
     setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
-#ifdef USE_DKIM_CHECKER
     statusBar()->addPermanentWidget(mReaderWin->viewer()->dkimWidgetInfo());
-#endif
     if (!mReaderWin->message().isValid()) {
         menuBar()->hide();
         toolBar(QStringLiteral("mainToolBar"))->hide();
@@ -758,12 +753,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mReaderWin->saveAsAction());
             menu->addAction(mSaveAtmAction);
             if (msg.isValid()) {
-#ifdef USE_DKIM_CHECKER
                 if (mReaderWin->dkimViewerMenu()) {
                     menu->addSeparator();
                     menu->addMenu(mReaderWin->dkimViewerMenu()->menu());
                 }
-#endif
                 menu->addSeparator();
                 menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             }

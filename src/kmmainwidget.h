@@ -31,7 +31,6 @@
 #include "messageactions.h"
 #include <KActionCollection>
 #include <mailcommon/foldersettings.h>
-#include "messageviewer/config-messageviewer.h"
 #include <QPointer>
 #include <QTimer>
 #include <Akonadi/KMime/StandardMailActionManager>
@@ -83,11 +82,9 @@ class SieveImapPasswordProvider;
 class ManageSieveScriptsDialog;
 class VacationManager;
 }
-#ifdef USE_DKIM_CHECKER
 namespace MessageViewer {
 class DKIMWidgetInfo;
 }
-#endif
 namespace MailCommon {
 class FolderSelectionDialog;
 class FavoriteCollectionWidget;
@@ -144,9 +141,7 @@ public:
     static const PtrList *mainWidgetList();
 
     QWidget *vacationScriptIndicator() const;
-#ifdef USE_DKIM_CHECKER
     QWidget *dkimWidgetInfo() const;
-#endif
     MailCommon::FolderTreeView *folderTreeView() const;
 
     /** Returns the XML GUI client. */

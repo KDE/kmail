@@ -46,7 +46,6 @@
 #include "foldershortcutactionmanager.h"
 #include "kmmigrateapplication.h"
 #include <KLocalizedString>
-#include "messageviewer/config-messageviewer.h"
 #include <KSharedConfig>
 
 K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();
@@ -93,9 +92,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KParts::StatusBarExtension *statusBar = new KParts::StatusBarExtension(this);
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
     statusBar->addStatusBarItem(mainWidget->zoomLabelIndicator(), 3, false);
-#ifdef USE_DKIM_CHECKER
     statusBar->addStatusBarItem(mainWidget->dkimWidgetInfo(), 4, false);
-#endif
 
     setXMLFile(QStringLiteral("kmail_part.rc"), true);
     KSettings::Dispatcher::registerComponent(QStringLiteral("kmail2"), mKMailKernel, "slotConfigChanged");

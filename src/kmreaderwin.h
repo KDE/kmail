@@ -29,16 +29,13 @@
 #include <MimeTreeParser/BodyPart>
 #include <AkonadiCore/Item>
 #include <KContacts/Addressee>
-#include <messageviewer/config-messageviewer.h>
 class KActionCollection;
 class QAction;
 class KToggleAction;
 class QMenu;
 namespace MessageViewer {
 class CSSHelper;
-#ifdef USE_DKIM_CHECKER
 class DKIMViewerMenu;
-#endif
 }
 
 namespace MimeTreeParser {
@@ -172,9 +169,7 @@ public:
 
     Q_REQUIRED_RESULT bool mimePartTreeIsEmpty() const;
     KActionMenu *shareServiceUrlMenu() const;
-#ifdef USE_DKIM_CHECKER
     MessageViewer::DKIMViewerMenu *dkimViewerMenu();
-#endif
     Q_REQUIRED_RESULT QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
     Q_REQUIRED_RESULT QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;

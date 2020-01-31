@@ -597,13 +597,10 @@ KActionMenu *KMReaderWin::shareServiceUrlMenu() const
     return mViewer->shareServiceUrlMenu();
 }
 
-#ifdef USE_DKIM_CHECKER
 DKIMViewerMenu *KMReaderWin::dkimViewerMenu()
 {
     return mViewer->dkimViewerMenu();
 }
-
-#endif
 
 QList<QAction *> KMReaderWin::viewerPluginActionList(ViewerPluginInterface::SpecificFeatureTypes features)
 {

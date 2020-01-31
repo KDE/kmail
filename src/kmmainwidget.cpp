@@ -191,10 +191,8 @@
 #include <job/removeduplicatemailjob.h>
 #include <job/removecollectionjob.h>
 
-#ifdef USE_DKIM_CHECKER
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/DKIMViewerMenu>
-#endif
 
 using namespace KMime;
 using namespace Akonadi;
@@ -337,7 +335,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     setupUnifiedMailboxChecker();
 }
 
-#ifdef USE_DKIM_CHECKER
 QWidget *KMMainWidget::dkimWidgetInfo() const
 {
     if (mMsgView) {
@@ -345,8 +342,6 @@ QWidget *KMMainWidget::dkimWidgetInfo() const
     }
     return nullptr;
 }
-
-#endif
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
 {
@@ -2800,12 +2795,10 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         menu.addSeparator();
 
         if (mMsgView) {
-#ifdef USE_DKIM_CHECKER
             if (mMsgView->dkimViewerMenu()) {
                 menu.addMenu(mMsgView->dkimViewerMenu()->menu());
                 menu.addSeparator();
             }
-#endif
             menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             menu.addSeparator();
         }
