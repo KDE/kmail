@@ -32,6 +32,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
 
+#ifdef WITH_KUSERFEEDBACK
+#endif
+
 using namespace MailCommon;
 QString MiscPage::helpAnchor() const
 {
@@ -172,3 +175,28 @@ void MiscPagePrintingTab::save()
 {
     mPrintingUi->save();
 }
+
+#ifdef WITH_KUSERFEEDBACK
+KuserFeedBackPagePrintingTab::KuserFeedBackPagePrintingTab(QWidget *parent)
+    : ConfigModuleTab(parent)
+{
+
+}
+
+void KuserFeedBackPagePrintingTab::save()
+{
+
+}
+
+void KuserFeedBackPagePrintingTab::doResetToDefaultsOther()
+{
+
+}
+
+void KuserFeedBackPagePrintingTab::doLoadFromGlobalSettings()
+{
+
+}
+
+
+#endif

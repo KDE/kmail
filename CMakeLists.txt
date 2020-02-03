@@ -63,6 +63,8 @@ option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branc
 
 option(KDEPIM_RUN_AKONADI_TEST "Enable autotest based on Akonadi." TRUE)
 
+option(KDEPIM_KUSERFEEDBACK "Enable user feedback support (experimental)" FALSE)
+
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngine WebEngineWidgets)
 set(LIBGRAVATAR_VERSION_LIB "5.13.40")
 set(MAILCOMMON_LIB_VERSION_LIB "5.13.40")
@@ -154,8 +156,10 @@ add_definitions(-DQT_NO_FOREACH)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#Optional
-find_package(KUserFeedback)
+if (KDEPIM_KUSERFEEDBACK)
+    #Optional
+    find_package(KUserFeedback)
+endif()
 
 add_subdirectory(src)
 add_subdirectory(agents)

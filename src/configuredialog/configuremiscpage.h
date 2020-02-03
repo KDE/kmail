@@ -89,4 +89,19 @@ private:
     MessageViewer::PrintingSettings *mPrintingUi = nullptr;
 };
 
+#ifdef WITH_KUSERFEEDBACK
+class KuserFeedBackPagePrintingTab : public ConfigModuleTab
+{
+    Q_OBJECT
+public:
+    explicit KuserFeedBackPagePrintingTab(QWidget *parent = nullptr);
+    void save() override;
+    void doResetToDefaultsOther() override;
+
+private:
+    void doLoadFromGlobalSettings() override;
+};
+#endif
+
+
 #endif // CONFIGUREMISCPAGE_H
