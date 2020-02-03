@@ -17,6 +17,10 @@ include_directories(
 
 
 
+if (TARGET KUserFeedbackWidgets)
+    add_definitions(-DWITH_KUSERFEEDBACK)
+    # TODO add KUserFeedbackWidgets to lib
+endif()
 
 add_subdirectory(pics)
 add_subdirectory(icons)

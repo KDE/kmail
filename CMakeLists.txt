@@ -154,6 +154,9 @@ add_definitions(-DQT_NO_FOREACH)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#Optional
+find_package(KUserFeedback)
+
 add_subdirectory(src)
 add_subdirectory(agents)
 add_subdirectory(ktnef)
