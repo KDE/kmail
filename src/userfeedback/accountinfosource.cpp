@@ -31,8 +31,7 @@ AccountInfoSource::AccountInfoSource()
 //TODO add account type
 QString AccountInfoSource::name() const
 {
-    //TODO
-    return {};
+    return i18n("Account information");
 }
 
 QString AccountInfoSource::description() const
@@ -42,5 +41,5 @@ QString AccountInfoSource::description() const
 
 QVariant AccountInfoSource::data()
 {
-    return i18n("Account information");
+    return {};
 }
