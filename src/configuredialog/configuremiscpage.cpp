@@ -33,6 +33,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
 
 #ifdef WITH_KUSERFEEDBACK
+#include <KUserFeedback/FeedbackConfigWidget>
 #endif
 
 using namespace MailCommon;
@@ -52,6 +53,10 @@ MiscPage::MiscPage(QWidget *parent)
 
     MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
     addTab(printingTab, i18n("Printing"));
+#ifdef WITH_KUSERFEEDBACK
+    KuserFeedBackPagePrintingTab *userFeedBackTab = new KuserFeedBackPagePrintingTab();
+    addTab(userFeedBackTab, i18n("User Feedback"));
+#endif
 }
 
 QString MiscPageFolderTab::helpAnchor() const
@@ -180,7 +185,10 @@ void MiscPagePrintingTab::save()
 KuserFeedBackPagePrintingTab::KuserFeedBackPagePrintingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-
+    mUserFeedbackWidget = new KUserFeedback::FeedbackConfigWidget(this);
+    QHBoxLayout *l = new QHBoxLayout(this);
+    l->setContentsMargins(0, 0, 0, 0);
+    l->addWidget(mUserFeedbackWidget);
 }
 
 void KuserFeedBackPagePrintingTab::save()

@@ -90,6 +90,9 @@ private:
 };
 
 #ifdef WITH_KUSERFEEDBACK
+namespace KUserFeedback {
+class FeedbackConfigWidget;
+}
 class KuserFeedBackPagePrintingTab : public ConfigModuleTab
 {
     Q_OBJECT
@@ -100,6 +103,8 @@ public:
 
 private:
     void doLoadFromGlobalSettings() override;
+    KUserFeedback::FeedbackConfigWidget *mUserFeedbackWidget = nullptr;
+
 };
 #endif
 

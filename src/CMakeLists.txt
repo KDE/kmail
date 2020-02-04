@@ -294,6 +294,11 @@ kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     editor/custommimeheader/custommimeheader.kcfgc
     )
 
+set(kmail_userfeedback_LIB)
+if (TARGET KUserFeedbackWidgets)
+    set(kmail_userfeedback_LIB KUserFeedbackWidgets)
+endif()
+
 
 add_library(kmailprivate ${kmailprivate_LIB_SRCS})
 generate_export_header(kmailprivate BASE_NAME kmail)
@@ -337,6 +342,7 @@ target_link_libraries(kmailprivate
     KF5::AkonadiSearchPIM
     KF5::WebEngineViewer
     KF5::SyntaxHighlighting
+    ${kmail_userfeedback_LIB}
     )
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
