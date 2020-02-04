@@ -123,6 +123,7 @@ using KMail::MailServiceImpl;
 #include <KUserFeedback/StartCountSource>
 #include <KUserFeedback/UsageTimeSource>
 #include <KUserFeedback/LocaleInfoSource>
+#include "userfeedback/accountinfosource.h"
 #endif
 
 
@@ -158,6 +159,7 @@ KMKernel::KMKernel(QObject *parent)
     mUserFeedbackProvider->addDataSource(new KUserFeedback::UsageTimeSource);
 
     mUserFeedbackProvider->addDataSource(new KUserFeedback::LocaleInfoSource);
+    mUserFeedbackProvider->addDataSource(new AccountInfoSource);
 #endif
 
 
