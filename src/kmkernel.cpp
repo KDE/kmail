@@ -120,6 +120,9 @@ using KMail::MailServiceImpl;
 #include <KUserFeedback/ScreenInfoSource>
 #include <KUserFeedback/QtVersionSource>
 #include <KUserFeedback/Provider>
+#include <KUserFeedback/StartCountSource>
+#include <KUserFeedback/UsageTimeSource>
+#include <KUserFeedback/LocaleInfoSource>
 #endif
 
 
@@ -151,7 +154,10 @@ KMKernel::KMKernel(QObject *parent)
     mUserFeedbackProvider->addDataSource(new KUserFeedback::ScreenInfoSource);
     mUserFeedbackProvider->addDataSource(new KUserFeedback::QtVersionSource);
 
-    mUserFeedbackProvider->setTelemetryMode(KUserFeedback::Provider::TelemetryMode(KSharedConfig::openConfig()->group("General").readEntry("TelemetryMode", int(KUserFeedback::Provider::NoTelemetry))));
+    mUserFeedbackProvider->addDataSource(new KUserFeedback::StartCountSource);
+    mUserFeedbackProvider->addDataSource(new KUserFeedback::UsageTimeSource);
+
+    mUserFeedbackProvider->addDataSource(new KUserFeedback::LocaleInfoSource);
 #endif
 
 

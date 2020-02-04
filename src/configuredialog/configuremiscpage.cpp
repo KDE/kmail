@@ -198,7 +198,11 @@ KuserFeedBackPagePrintingTab::KuserFeedBackPagePrintingTab(QWidget *parent)
 
 void KuserFeedBackPagePrintingTab::save()
 {
-
+    if (KMKernel::self()) {
+        // set current active mode + write back the config for future starts
+        KMKernel::self()->userFeedbackProvider()->setTelemetryMode(mUserFeedbackWidget->telemetryMode());
+        KMKernel::self()->userFeedbackProvider()->setSurveyInterval(mUserFeedbackWidget->surveyInterval());
+    }
 }
 
 void KuserFeedBackPagePrintingTab::doResetToDefaultsOther()
