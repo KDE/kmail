@@ -75,6 +75,12 @@ class KMFilterDialog;
 class MailCommonSettings;
 }
 
+#ifdef WITH_KUSERFEEDBACK
+namespace KUserFeedback {
+class Provider;
+}
+#endif
+
 class QTimer;
 class KMainWindow;
 class KMMainWidget;
@@ -410,7 +416,9 @@ public:
 
     void cleanupTemporaryFiles();
     MailCommon::MailCommonSettings *mailCommonSettings() const;
-
+#ifdef WITH_KUSERFEEDBACK
+    KUserFeedback::Provider *userFeedbackProvider() const;
+#endif
 protected:
     void agentInstanceBroken(const Akonadi::AgentInstance &instance);
 
@@ -522,6 +530,10 @@ private:
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
     MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;
+#ifdef WITH_KUSERFEEDBACK
+    KUserFeedback::Provider *mUserFeedbackProvider = nullptr;
+#endif
+
     bool mDebug = false;
 };
 

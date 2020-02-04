@@ -113,6 +113,16 @@ using KMail::MailServiceImpl;
 
 #include "searchdialog/searchdescriptionattribute.h"
 #include "kmail_options.h"
+
+#ifdef WITH_KUSERFEEDBACK
+#include <KUserFeedback/ApplicationVersionSource>
+#include <KUserFeedback/PlatformInfoSource>
+#include <KUserFeedback/ScreenInfoSource>
+#include <KUserFeedback/QtVersionSource>
+#include <KUserFeedback/Provider>
+#endif
+
+
 //#define DEBUG_SCHEDULER 1
 using namespace MailCommon;
 
@@ -127,6 +137,23 @@ KMKernel::KMKernel(QObject *parent)
     //Initialize kmail sieveimap interface
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     mDebug = !qEnvironmentVariableIsEmpty("KDEPIM_DEBUGGING");
+
+#ifdef WITH_KUSERFEEDBACK
+    mUserFeedbackProvider = new KUserFeedback::Provider(this);
+    mUserFeedbackProvider->setProductIdentifier(QStringLiteral("org.kde.kmail"));
+    mUserFeedbackProvider->setFeedbackServer(QUrl(QStringLiteral("https://telemetry.kde.org/")));
+    mUserFeedbackProvider->setSubmissionInterval(7);
+    mUserFeedbackProvider->setApplicationStartsUntilEncouragement(5);
+    mUserFeedbackProvider->setEncouragementDelay(30);
+
+    mUserFeedbackProvider->addDataSource(new KUserFeedback::ApplicationVersionSource);
+    mUserFeedbackProvider->addDataSource(new KUserFeedback::PlatformInfoSource);
+    mUserFeedbackProvider->addDataSource(new KUserFeedback::ScreenInfoSource);
+    mUserFeedbackProvider->addDataSource(new KUserFeedback::QtVersionSource);
+
+    mUserFeedbackProvider->setTelemetryMode(KUserFeedback::Provider::TelemetryMode(KSharedConfig::openConfig()->group("General").readEntry("TelemetryMode", int(KUserFeedback::Provider::NoTelemetry))));
+#endif
+
 
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();
 
@@ -1950,3 +1977,10 @@ void KMKernel::expunge(Akonadi::Collection::Id col, bool sync)
     Q_UNUSED(col);
     Q_UNUSED(sync);
 }
+
+#ifdef WITH_KUSERFEEDBACK
+KUserFeedback::Provider *KMKernel::userFeedbackProvider() const
+{
+    return mUserFeedbackProvider;
+}
+#endif

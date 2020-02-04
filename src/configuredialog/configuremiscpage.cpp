@@ -19,7 +19,7 @@
 #include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "settings/kmailsettings.h"
-
+#include "kmkernel.h"
 #include <MailCommon/FolderRequester>
 #include "MessageViewer/InvitationSettings"
 #include "MessageViewer/PrintingSettings"
@@ -189,6 +189,11 @@ KuserFeedBackPagePrintingTab::KuserFeedBackPagePrintingTab(QWidget *parent)
     QHBoxLayout *l = new QHBoxLayout(this);
     l->setContentsMargins(0, 0, 0, 0);
     l->addWidget(mUserFeedbackWidget);
+    connect(mUserFeedbackWidget, &KUserFeedback::FeedbackConfigWidget::configurationChanged, this, &KuserFeedBackPagePrintingTab::slotEmitChanged);
+
+    if (KMKernel::self()) {
+        mUserFeedbackWidget->setFeedbackProvider(KMKernel::self()->userFeedbackProvider());
+    }
 }
 
 void KuserFeedBackPagePrintingTab::save()
