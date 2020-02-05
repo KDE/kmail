@@ -193,6 +193,11 @@
 
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/DKIMViewerMenu>
+#ifdef WITH_KUSERFEEDBACK
+#include <KUserFeedback/NotificationPopup>
+#include <KUserFeedback/Provider>
+#endif
+
 
 using namespace KMime;
 using namespace Akonadi;
@@ -229,6 +234,12 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mSievePasswordProvider = new KMSieveImapPasswordProvider(winId());
     mVacationManager = new KSieveUi::VacationManager(mSievePasswordProvider, this);
     connect(mVacationManager, &KSieveUi::VacationManager::updateVacationScriptStatus, this, qOverload<bool, const QString &>(&KMMainWidget::updateVacationScriptStatus));
+
+#ifdef WITH_KUSERFEEDBACK
+    mUserFeedBackNotificationPopup = new KUserFeedback::NotificationPopup(this);
+    mUserFeedBackNotificationPopup->setFeedbackProvider(kmkernel->userFeedbackProvider());
+#endif
+
 
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);

@@ -37,6 +37,12 @@
 #include <AkonadiCore/tag.h>
 #include <MessageList/View>
 
+#ifdef WITH_KUSERFEEDBACK
+namespace KUserFeedback {
+class NotificationPopup;
+}
+#endif
+
 namespace MailTransport {
 class Transport;
 }
@@ -642,6 +648,9 @@ private:
     Akonadi::Collection mCurrentCollection;
     QStatusBar *mCurrentStatusBar = nullptr;
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
+#ifdef WITH_KUSERFEEDBACK
+    KUserFeedback::NotificationPopup *mUserFeedBackNotificationPopup = nullptr;
+#endif
 };
 
 #endif
