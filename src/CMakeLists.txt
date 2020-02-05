@@ -188,6 +188,7 @@ set(kmailprivate_userfeedback_LIB_SRCS)
 if (TARGET KUserFeedbackWidgets)
     set(kmailprivate_userfeedback_LIB_SRCS ${kmailprivate_userfeedback_LIB_SRCS}
         userfeedback/accountinfosource.cpp
+	userfeedback/plugininfosource.cpp
         )
 endif()
 
