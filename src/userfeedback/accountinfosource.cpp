@@ -36,7 +36,7 @@ QString AccountInfoSource::name() const
 
 QString AccountInfoSource::description() const
 {
-    return i18n("Account configurated in KMail (reveiver and sender).");
+    return i18n("Account configured in KMail (receiver and sender).");
 }
 
 QVariant AccountInfoSource::data()
