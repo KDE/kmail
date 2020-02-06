@@ -93,11 +93,11 @@ private:
 namespace KUserFeedback {
 class FeedbackConfigWidget;
 }
-class KuserFeedBackPagePrintingTab : public ConfigModuleTab
+class KuserFeedBackPageTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit KuserFeedBackPagePrintingTab(QWidget *parent = nullptr);
+    explicit KuserFeedBackPageTab(QWidget *parent = nullptr);
     void save() override;
     void doResetToDefaultsOther() override;
 

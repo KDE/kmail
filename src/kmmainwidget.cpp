@@ -236,10 +236,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     connect(mVacationManager, &KSieveUi::VacationManager::updateVacationScriptStatus, this, qOverload<bool, const QString &>(&KMMainWidget::updateVacationScriptStatus));
 
 #ifdef WITH_KUSERFEEDBACK
-    mUserFeedBackNotificationPopup = new KUserFeedback::NotificationPopup(this);
-    mUserFeedBackNotificationPopup->setFeedbackProvider(kmkernel->userFeedbackProvider());
+    KUserFeedback::NotificationPopup *userFeedBackNotificationPopup = new KUserFeedback::NotificationPopup(this);
+    userFeedBackNotificationPopup->setFeedbackProvider(kmkernel->userFeedbackProvider());
 #endif
-
 
     mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);

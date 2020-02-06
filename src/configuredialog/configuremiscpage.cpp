@@ -54,7 +54,7 @@ MiscPage::MiscPage(QWidget *parent)
     MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
     addTab(printingTab, i18n("Printing"));
 #ifdef WITH_KUSERFEEDBACK
-    KuserFeedBackPagePrintingTab *userFeedBackTab = new KuserFeedBackPagePrintingTab();
+    KuserFeedBackPageTab *userFeedBackTab = new KuserFeedBackPageTab();
     addTab(userFeedBackTab, i18n("User Feedback"));
 #endif
 }
@@ -182,21 +182,21 @@ void MiscPagePrintingTab::save()
 }
 
 #ifdef WITH_KUSERFEEDBACK
-KuserFeedBackPagePrintingTab::KuserFeedBackPagePrintingTab(QWidget *parent)
+KuserFeedBackPageTab::KuserFeedBackPageTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mUserFeedbackWidget = new KUserFeedback::FeedbackConfigWidget(this);
     QHBoxLayout *l = new QHBoxLayout(this);
     l->setContentsMargins(0, 0, 0, 0);
     l->addWidget(mUserFeedbackWidget);
-    connect(mUserFeedbackWidget, &KUserFeedback::FeedbackConfigWidget::configurationChanged, this, &KuserFeedBackPagePrintingTab::slotEmitChanged);
+    connect(mUserFeedbackWidget, &KUserFeedback::FeedbackConfigWidget::configurationChanged, this, &KuserFeedBackPageTab::slotEmitChanged);
 
     if (KMKernel::self()) {
         mUserFeedbackWidget->setFeedbackProvider(KMKernel::self()->userFeedbackProvider());
     }
 }
 
-void KuserFeedBackPagePrintingTab::save()
+void KuserFeedBackPageTab::save()
 {
     if (KMKernel::self()) {
         // set current active mode + write back the config for future starts
@@ -205,12 +205,12 @@ void KuserFeedBackPagePrintingTab::save()
     }
 }
 
-void KuserFeedBackPagePrintingTab::doResetToDefaultsOther()
+void KuserFeedBackPageTab::doResetToDefaultsOther()
 {
 
 }
 
-void KuserFeedBackPagePrintingTab::doLoadFromGlobalSettings()
+void KuserFeedBackPageTab::doLoadFromGlobalSettings()
 {
 
 }
