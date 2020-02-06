@@ -13,6 +13,7 @@
   <developer_name xml:lang="fi">KDE-yhteisö</developer_name>
   <developer_name xml:lang="fr">La communauté KDE</developer_name>
   <developer_name xml:lang="gl">A comunidade de KDE</developer_name>
+  <developer_name xml:lang="ia">Le communitate de KDE</developer_name>
   <developer_name xml:lang="id">Komunitas KDE</developer_name>
   <developer_name xml:lang="it">La comunità KDE</developer_name>
   <developer_name xml:lang="ko">KDE 커뮤니티</developer_name>
@@ -76,6 +77,7 @@
   <summary xml:lang="fi">Sähköpostisovellus.</summary>
   <summary xml:lang="fr">Une application de courriel riche en fonctionnalités</summary>
   <summary xml:lang="gl">Unha aplicación de correo electrónico con moitas funcionalidades</summary>
+  <summary xml:lang="ia">Un application de e-posta ric de characteristicas</summary>
   <summary xml:lang="id">Sebuah aplikasi email yang kaya fitur</summary>
   <summary xml:lang="it">Un programma di posta elettronica ricco di funzioni</summary>
   <summary xml:lang="ko">다기능 이메일 프로그램</summary>
