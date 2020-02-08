@@ -159,6 +159,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (KDEPIM_KUSERFEEDBACK)
     #Optional
     find_package(KUserFeedback)
+    set_package_properties(KUserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional). It can be disable in apps.")
 endif()
 
 add_subdirectory(src)
