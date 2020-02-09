@@ -61,23 +61,26 @@ QVariant AccountInfoSource::data()
         //TODO add more
     }
     QVariantList l;
-    QVariantMap m;
     if (numberOfImap > 0) {
+        QVariantMap m;
         m.insert(QStringLiteral("name"), QStringLiteral("imap"));
         m.insert(QStringLiteral("number"), numberOfImap);
         l.push_back(m);
     }
     if (numberOfPop3 > 0) {
+        QVariantMap m;
         m.insert(QStringLiteral("name"), QStringLiteral("pop3"));
         m.insert(QStringLiteral("number"), numberOfPop3);
         l.push_back(m);
     }
     if (numberOfKolab > 0) {
+        QVariantMap m;
         m.insert(QStringLiteral("name"), QStringLiteral("kolab"));
         m.insert(QStringLiteral("number"), numberOfKolab);
         l.push_back(m);
     }
     if (numberOfEws > 0) {
+        QVariantMap m;
         m.insert(QStringLiteral("name"), QStringLiteral("ews"));
         m.insert(QStringLiteral("number"), numberOfEws);
         l.push_back(m);
