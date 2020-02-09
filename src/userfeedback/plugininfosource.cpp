@@ -28,7 +28,6 @@ PluginInfoSource::PluginInfoSource()
 
 }
 
-//TODO add account type
 QString PluginInfoSource::name() const
 {
     return i18n("Plugins Information");
@@ -41,5 +40,6 @@ QString PluginInfoSource::description() const
 
 QVariant PluginInfoSource::data()
 {
+    //TODO add list of plugins.
     return {};
 }
