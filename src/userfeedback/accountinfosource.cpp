@@ -21,14 +21,15 @@
 #include <QVariant>
 #include <KUserFeedback/Provider>
 #include <KLocalizedString>
+#include <MailCommon/MailUtil>
+#include <AkonadiCore/AgentInstance>
 
 AccountInfoSource::AccountInfoSource()
-    : KUserFeedback::AbstractDataSource(QStringLiteral("account"), KUserFeedback::Provider::DetailedSystemInformation)
+    : KUserFeedback::AbstractDataSource(QStringLiteral("accounts"), KUserFeedback::Provider::DetailedSystemInformation)
 {
 
 }
 
-//TODO add account type
 QString AccountInfoSource::name() const
 {
     return i18n("Account information");
@@ -41,5 +42,46 @@ QString AccountInfoSource::description() const
 
 QVariant AccountInfoSource::data()
 {
-    return {};
+    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+    int numberOfImap = 0;
+    int numberOfPop3 = 0;
+    int numberOfKolab = 0;
+    int numberOfEws = 0;
+    for (Akonadi::AgentInstance type : lst) {
+        const QString identifier = type.identifier();
+        if (identifier.startsWith(QLatin1String("akonadi_pop3_resource"))) {
+            numberOfPop3++;
+        } else if (identifier.startsWith(QLatin1String("akonadi_imap_resource"))) {
+            numberOfImap++;
+        } else if (identifier.startsWith(QLatin1String("akonadi_kolab_resource"))) {
+            numberOfKolab++;
+        } else if (identifier.startsWith(QLatin1String("akonadi_ews_resource"))) {
+            numberOfEws++;
+        }
+        //TODO add more
+    }
+    QVariantList l;
+    QVariantMap m;
+    if (numberOfImap > 0) {
+        m.insert(QStringLiteral("name"), QStringLiteral("imap"));
+        m.insert(QStringLiteral("number"), numberOfImap);
+        l.push_back(m);
+    }
+    if (numberOfPop3 > 0) {
+        m.insert(QStringLiteral("name"), QStringLiteral("pop3"));
+        m.insert(QStringLiteral("number"), numberOfPop3);
+        l.push_back(m);
+    }
+    if (numberOfKolab > 0) {
+        m.insert(QStringLiteral("name"), QStringLiteral("kolab"));
+        m.insert(QStringLiteral("number"), numberOfKolab);
+        l.push_back(m);
+    }
+    if (numberOfEws > 0) {
+        m.insert(QStringLiteral("name"), QStringLiteral("ews"));
+        m.insert(QStringLiteral("number"), numberOfEws);
+        l.push_back(m);
+    }
+
+    return l;
 }
