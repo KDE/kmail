@@ -23,6 +23,7 @@
 #include <KLocalizedString>
 #include <MailCommon/MailUtil>
 #include <AkonadiCore/AgentInstance>
+#include <MailTransport/TransportManager>
 
 AccountInfoSource::AccountInfoSource()
     : KUserFeedback::AbstractDataSource(QStringLiteral("accounts"), KUserFeedback::Provider::DetailedSystemInformation)
@@ -85,6 +86,12 @@ QVariant AccountInfoSource::data()
         m.insert(QStringLiteral("number"), numberOfEws);
         l.push_back(m);
     }
+
+    //Mail Transport
+    QVariantMap m;
+    m.insert(QStringLiteral("name"), QStringLiteral("sender"));
+    m.insert(QStringLiteral("number"), MailTransport::TransportManager::self()->transports().count());
+    l.push_back(m);
 
     return l;
 }
