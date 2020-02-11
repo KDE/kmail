@@ -68,8 +68,13 @@ void NewMessageJob::slotOpenComposer()
 
     win->setCollectionForNewMessage(mCollection);
     //Add the attachment if we have one
+
     if (!mAttachURL.isEmpty() && mAttachURL.isValid()) {
-        win->addAttachment(mAttachURL, QString());
+        QList<KMail::Composer::AttachmentInfo> infoList;
+        KMail::Composer::AttachmentInfo info;
+        info.url = mAttachURL;
+        infoList.append(info);
+        win->addAttachment(infoList, false);
     }
 
     //only show window when required

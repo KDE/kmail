@@ -56,13 +56,18 @@ public:
     };
     typedef QFlags<VisibleHeaderFlag> VisibleHeaderFlags;
 
+    struct AttachmentInfo {
+        QString comment;
+        QUrl url;
+    };
+
 public: // mailserviceimpl
     /**
      * From MailComposerIface
      */
     virtual void send(int how) = 0;
     virtual void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) = 0;
-    virtual void addAttachment(const QUrl &url, const QString &comment) = 0;
+    virtual void addAttachment(const QList<AttachmentInfo> &url, bool showWarning) = 0;
     virtual void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) = 0;
 public: // kmcommand
     virtual QString dbusObjectPath() const = 0;

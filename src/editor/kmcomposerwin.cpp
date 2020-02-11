@@ -36,6 +36,7 @@
 #include "editor/potentialphishingemail/potentialphishingemailjob.h"
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "editor/warningwidgets/incorrectidentityfolderwarning.h"
+#include "editor/warningwidgets/attachmentaddedfromexternalwarning.h"
 #include "job/addressvalidationjob.h"
 #include "job/createnewcontactjob.h"
 #include "job/saveasfilejob.h"
@@ -363,6 +364,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mIncorrectIdentityFolderWarning = new IncorrectIdentityFolderWarning(this);
     vbox->addWidget(mIncorrectIdentityFolderWarning);
 
+    mAttachmentFromExternalMissing = new AttachmentAddedFromExternalWarning(this);
+    vbox->addWidget(mAttachmentFromExternalMissing);
+
     vbox->addWidget(mCryptoStateIndicatorWidget);
     vbox->addWidget(mRichTextEditorwidget);
 
@@ -549,7 +553,9 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
                 connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
                     if (!str.isEmpty()) {
                         const QUrl localUrl = QUrl::fromLocalFile(str);
-                        addAttachment(localUrl, QString());
+                        AttachmentInfo info;
+                        info.url = localUrl;
+                        addAttachment(QList<AttachmentInfo>() << info, false);
                     }
                 });
                 job->start();
@@ -636,9 +642,19 @@ void KMComposerWin::addAttachmentsAndSend(const QList<QUrl> &urls, const QString
     send(how);
 }
 
-void KMComposerWin::addAttachment(const QUrl &url, const QString &comment)
+void KMComposerWin::addAttachment(const QList<AttachmentInfo> &infos, bool showWarning)
 {
-    mComposerBase->addAttachment(url, comment, false);
+    QStringList lst;
+    for (const AttachmentInfo &info : infos) {
+        if (showWarning) {
+            lst.append(info.url.toDisplayString());
+        }
+        mComposerBase->addAttachment(info.url, info.comment, false);
+    }
+    if (showWarning) {
+        mAttachmentFromExternalMissing->setAttachmentNames(lst);
+        mAttachmentFromExternalMissing->animatedShow();
+    }
 }
 
 void KMComposerWin::addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType)
@@ -2224,9 +2240,13 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
 
         if (items.isEmpty() && collections.isEmpty()) {
             if (allLocalURLs || forceAttachment) {
+                QList<AttachmentInfo> infoList;
                 for (const QUrl &url : urlList) {
-                    addAttachment(url, QString());
+                    AttachmentInfo info;
+                    info.url = url;
+                    infoList.append(info);
                 }
+                addAttachment(infoList, false);
             } else {
                 QMenu p;
                 const int sizeUrl(urlList.size());
@@ -2237,11 +2257,15 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                 if (selectedAction == addAsTextAction) {
                     insertUrls(source, urlList);
                 } else if (selectedAction == addAsAttachmentAction) {
+                    QList<AttachmentInfo> infoList;
                     for (const QUrl &url : urlList) {
                         if (url.isValid()) {
-                            addAttachment(url, QString());
+                            AttachmentInfo info;
+                            info.url = url;
+                            infoList.append(info);
                         }
                     }
+                    addAttachment(infoList, false);
                 }
             }
             return true;

@@ -28,6 +28,8 @@
 #include <QTemporaryDir>
 #include <QUrl>
 
+#include <editor/composer.h>
+
 DndFromArkJob::DndFromArkJob(QObject *parent)
     : QObject(parent)
 {
@@ -63,10 +65,14 @@ bool DndFromArkJob::extract(const QMimeData *source)
         message.setArguments({arkPath});
         QDBusConnection::sessionBus().call(message);
         QDir dir(arkPath);
-        QStringList list = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
+        const QStringList list = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
+        QList<KMail::Composer::AttachmentInfo> infoList;
         for (int i = 0; i < list.size(); ++i) {
-            mComposerWin->addAttachment(QUrl::fromLocalFile(list.at(i)), QString());
+            KMail::Composer::AttachmentInfo info;
+            info.url = QUrl::fromLocalFile(list.at(i));
+            infoList.append(info);
         }
+        mComposerWin->addAttachment(infoList, false);
         delete linkDir;
         deleteLater();
         return true;

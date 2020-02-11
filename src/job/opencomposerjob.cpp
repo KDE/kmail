@@ -121,6 +121,7 @@ void OpenComposerJob::slotOpenComposer()
     }
     QList<QUrl> attachURLs = QUrl::fromStringList(mOpenComposerSettings.mAttachmentPaths);
     QList<QUrl>::ConstIterator endAttachment(attachURLs.constEnd());
+    QList<KMail::Composer::AttachmentInfo> infoList;
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
         if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
@@ -128,7 +129,12 @@ void OpenComposerJob::slotOpenComposer()
                 continue;
             }
         }
-        cWin->addAttachment((*it), QString());
+        KMail::Composer::AttachmentInfo info;
+        info.url = (*it);
+        infoList.append(info);
+    }
+    if (!infoList.isEmpty()) {
+        cWin->addAttachment(infoList, true);
     }
     if (!mOpenComposerSettings.mCustomHeaders.isEmpty()) {
         QMap<QByteArray, QString> extraCustomHeaders;

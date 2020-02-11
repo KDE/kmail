@@ -73,6 +73,7 @@ class KMailPluginEditorInitManagerInterface;
 class IncorrectIdentityFolderWarning;
 class KMailPluginEditorConvertTextManagerInterface;
 class KMailPluginGrammarEditorManagerInterface;
+class AttachmentAddedFromExternalWarning;
 namespace MailTransport {
 class Transport;
 }
@@ -141,7 +142,7 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) override;
 
-    Q_SCRIPTABLE void addAttachment(const QUrl &url, const QString &comment) override;
+    Q_SCRIPTABLE void addAttachment(const QList<AttachmentInfo> &infos, bool showWarning) override;
 
     Q_SCRIPTABLE void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) override;
 
@@ -667,6 +668,8 @@ private:
     KMailPluginEditorInitManagerInterface *mPluginEditorInitManagerInterface = nullptr;
     KMailPluginEditorConvertTextManagerInterface *mPluginEditorConvertTextManagerInterface = nullptr;
     KMailPluginGrammarEditorManagerInterface *mPluginEditorGrammarManagerInterface = nullptr;
+
+    AttachmentAddedFromExternalWarning *mAttachmentFromExternalMissing = nullptr;
 };
 
 #endif

@@ -1843,7 +1843,12 @@ KMCommand::Result KMShareImageCommand::execute()
 
     KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, id);
     win->setFocusToSubject();
-    win->addAttachment(mUrl, i18n("Image"));
+    QList<KMail::Composer::AttachmentInfo> infoList;
+    KMail::Composer::AttachmentInfo info;
+    info.url = mUrl;
+    info.comment = i18n("Image");
+    infoList.append(info);
+    win->addAttachment(infoList, false);
     win->show();
     return OK;
 }
