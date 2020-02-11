@@ -128,8 +128,8 @@ private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
 public:
     static Composer *create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0, const QString &textSelection = QString(), const QString &customTemplate = QString());
 
-    QString dbusObjectPath() const override;
-    QString smartQuote(const QString &msg);
+    Q_REQUIRED_RESULT QString dbusObjectPath() const override;
+    Q_REQUIRED_RESULT QString smartQuote(const QString &msg);
 
     /**
     * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
