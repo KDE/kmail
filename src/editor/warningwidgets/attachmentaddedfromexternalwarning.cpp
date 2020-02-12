@@ -37,7 +37,7 @@ AttachmentAddedFromExternalWarning::~AttachmentAddedFromExternalWarning()
 void AttachmentAddedFromExternalWarning::setAttachmentNames(const QStringList &lst)
 {
     if (lst.count() == 1) {
-        setText(i18n("These attachment: <ul><li>%1</li></ul> was added from external. Remove them if it's an error.", lst.at(0)));
+        setText(i18n("This attachment: <ul><li>%1</li></ul> was added from external. Remove it if it's an error.", lst.at(0)));
     } else {
         setText(i18n("These attachments: <ul><li>%1</li></ul> were added from external. Remove them if it's an error.", lst.join(QLatin1String("</li><li>"))));
     }
