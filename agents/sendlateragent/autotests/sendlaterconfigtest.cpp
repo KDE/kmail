@@ -71,8 +71,8 @@ void SendLaterConfigTest::shouldAddAnItem()
     info.setRecurrenceEachValue(5);
     info.setRecurrenceUnit(SendLater::SendLaterInfo::Years);
     const QDate date(2014, 1, 1);
-    info.setDateTime(QDateTime(date));
-    info.setLastDateTimeSend(QDateTime(date));
+    info.setDateTime(QDateTime(date.startOfDay()));
+    info.setLastDateTimeSend(QDateTime(date.startOfDay()));
 
     SendLater::SendLaterUtil::writeSendLaterInfo(mConfig, &info, false);
     const QStringList itemList = mConfig->groupList().filter(mSendlaterRegExpFilter);

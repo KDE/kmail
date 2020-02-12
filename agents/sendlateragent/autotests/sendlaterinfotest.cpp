@@ -56,8 +56,8 @@ void SendLaterInfoTest::shouldRestoreFromSettings()
     info.setRecurrenceEachValue(5);
     info.setRecurrenceUnit(SendLater::SendLaterInfo::Years);
     const QDate date(2014, 1, 1);
-    info.setDateTime(QDateTime(date));
-    info.setLastDateTimeSend(QDateTime(date));
+    info.setDateTime(QDateTime(date.startOfDay()));
+    info.setLastDateTimeSend(QDateTime(date.startOfDay()));
 
     KConfigGroup grp(KSharedConfig::openConfig(), "testsettings");
     info.writeConfig(grp);
@@ -76,8 +76,8 @@ void SendLaterInfoTest::shouldNotValidIfIdIsNotValid()
     info.setRecurrenceEachValue(5);
     info.setRecurrenceUnit(SendLater::SendLaterInfo::Years);
     const QDate date(2014, 1, 1);
-    info.setDateTime(QDateTime(date));
-    info.setLastDateTimeSend(QDateTime(date));
+    info.setDateTime(QDateTime(date.startOfDay()));
+    info.setLastDateTimeSend(QDateTime(date.startOfDay()));
     QVERIFY(!info.isValid());
 }
 
@@ -92,7 +92,7 @@ void SendLaterInfoTest::shouldNotValidIfDateIsNotValid()
     info.setRecurrenceEachValue(5);
     info.setRecurrenceUnit(SendLater::SendLaterInfo::Years);
     const QDate date(2014, 1, 1);
-    info.setLastDateTimeSend(QDateTime(date));
+    info.setLastDateTimeSend(QDateTime(date.startOfDay()));
     QVERIFY(!info.isValid());
 }
 
@@ -107,8 +107,8 @@ void SendLaterInfoTest::shouldCopyInfo()
     info.setRecurrenceEachValue(5);
     info.setRecurrenceUnit(SendLater::SendLaterInfo::Years);
     const QDate date(2014, 1, 1);
-    info.setDateTime(QDateTime(date));
-    info.setLastDateTimeSend(QDateTime(date));
+    info.setDateTime(QDateTime(date.startOfDay()));
+    info.setLastDateTimeSend(QDateTime(date.startOfDay()));
 
     SendLater::SendLaterInfo copyInfo(info);
     QCOMPARE(info, copyInfo);
