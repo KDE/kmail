@@ -323,7 +323,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
         if (!listOfMailerFound.isEmpty()) {
             if (KMessageBox::questionYesNoList(this, i18n("Another mailer was found on system. Do you want to import data from it?"), listOfMailerFound) == KMessageBox::Yes) {
                 const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-                if (!QProcess::startDetached(path)) {
+                if (!QProcess::startDetached(path, QStringList())) {
                     KMessageBox::error(this, i18n("Could not start the import wizard. "
                                                   "Please check your installation."),
                                        i18n("Unable to start import wizard"));

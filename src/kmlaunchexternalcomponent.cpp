@@ -75,7 +75,7 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 
 void KMLaunchExternalComponent::slotStartCertManager()
 {
-    if (!QProcess::startDetached(QStringLiteral("kleopatra"))) {
+    if (!QProcess::startDetached(QStringLiteral("kleopatra"), QStringList())) {
         KMessageBox::error(mParentWidget, i18n("Could not start certificate manager; "
                                                "please make sure you have Kleopatra properly installed."),
                            i18n("KMail Error"));
@@ -85,7 +85,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
 void KMLaunchExternalComponent::slotImportWizard()
 {
     const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-    if (!QProcess::startDetached(path)) {
+    if (!QProcess::startDetached(path, QStringList())) {
         KMessageBox::error(mParentWidget, i18n("Could not start the import wizard. "
                                                "Please make sure you have ImportWizard properly installed."),
                            i18n("Unable to start import wizard"));
@@ -95,7 +95,7 @@ void KMLaunchExternalComponent::slotImportWizard()
 void KMLaunchExternalComponent::slotExportData()
 {
     const QString path = QStandardPaths::findExecutable(QStringLiteral("pimdataexporter"));
-    if (!QProcess::startDetached(path)) {
+    if (!QProcess::startDetached(path, QStringList())) {
         KMessageBox::error(mParentWidget, i18n("Could not start \"PIM Data Exporter\" program. "
                                                "Please check your installation."),
                            i18n("Unable to start \"PIM Data Exporter\" program"));
