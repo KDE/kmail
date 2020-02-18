@@ -1663,11 +1663,11 @@ void KMKernel::cleanupTemporaryFiles()
     const QStringList lst = dir.entryList(QStringList{QStringLiteral("messageviewer_*")});
     qCDebug(KMAIL_LOG) << " list file to delete " << lst;
     for (const QString &file : lst) {
-        QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file);
-        if (!tempDir.removeRecursively()) {
-            fprintf(stderr, "%s was not removed .\n", qPrintable(tempDir.absolutePath()));
+        QFile tempFile(QDir::tempPath() + QLatin1Char('/') + file);
+        if (!tempFile.remove()) {
+            fprintf(stderr, "%s was not removed .\n", qPrintable(tempFile.fileName()));
         } else {
-            fprintf(stderr, "%s was removed .\n", qPrintable(tempDir.absolutePath()));
+            fprintf(stderr, "%s was removed .\n", qPrintable(tempFile.fileName()));
         }
     }
 }
