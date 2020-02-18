@@ -135,20 +135,19 @@ public:
     * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
     * otherwise they can't be accessed.
     */
-    // TODO clean-up dbus stuff; make the adaptor a friend; etc.
 public Q_SLOTS:
 
     Q_SCRIPTABLE void send(int how) override;
-
-    Q_SCRIPTABLE void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) override;
-
-    Q_SCRIPTABLE void addAttachment(const QList<AttachmentInfo> &infos, bool showWarning) override;
-
-    Q_SCRIPTABLE void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) override;
-
     /**
     * End of D-Bus callable stuff
     */
+
+    void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) override;
+
+    void addAttachment(const QList<AttachmentInfo> &infos, bool showWarning) override;
+
+    void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) override;
+
 
 Q_SIGNALS:
     void identityChanged(const KIdentityManagement::Identity &identity);
