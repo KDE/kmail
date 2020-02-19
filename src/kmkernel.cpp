@@ -1706,6 +1706,16 @@ void KMKernel::cleanupTemporaryFiles()
             fprintf(stderr, "%s was removed .\n", qPrintable(tempFile.fileName()));
         }
     }
+    const QStringList lstRepo = dir.entryList(QStringList{QStringLiteral("messageviewer_*.index.*")});
+    qCDebug(KMAIL_LOG) << " list repo to delete " << lstRepo;
+    for (const QString &file : lstRepo) {
+        QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file);
+        if (!tempDir.removeRecursively()) {
+            fprintf(stderr, "%s was not removed .\n", qPrintable(tempDir.path()));
+        } else {
+            fprintf(stderr, "%s was removed .\n", qPrintable(tempDir.path()));
+        }
+    }
 }
 
 void KMKernel::stopAgentInstance()
