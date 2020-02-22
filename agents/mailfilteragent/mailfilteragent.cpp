@@ -30,7 +30,7 @@
 #include <AkonadiCore/changerecorder.h>
 #include <AkonadiCore/collectionfetchjob.h>
 #include <AkonadiCore/collectionfetchscope.h>
-#include <KDBusConnectionPool>
+#include <QDBusConnection>
 #include <AkonadiCore/itemfetchscope.h>
 #include <Akonadi/KMime/MessageParts>
 #include <Akonadi/KMime/MessageStatus>
@@ -101,11 +101,11 @@ MailFilterAgent::MailFilterAgent(const QString &id)
 
     new MailFilterAgentAdaptor(this);
 
-    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
 
     const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
 
-    KDBusConnectionPool::threadConnection().registerService(service);
+    QDBusConnection::sessionBus().registerService(service);
     //Enabled or not filterlogdialog
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     if (config->hasGroup("FilterLog")) {

@@ -43,7 +43,7 @@
 #include <KIdentityManagement/Identity>
 
 #include <KLocalizedString>
-#include <KDBusConnectionPool>
+#include <QDBusConnection>
 
 #include <QPointer>
 #include <QTimer>
@@ -59,9 +59,9 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     setAgentName(i18n("Unified Mailboxes"));
 
     new UnifiedMailboxAgentAdaptor(this);
-    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/UnifiedMailboxAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/UnifiedMailboxAgent"), this, QDBusConnection::ExportAdaptors);
     const auto service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Resource, identifier());
-    KDBusConnectionPool::threadConnection().registerService(service);
+    QDBusConnection::sessionBus().registerService(service);
 
     connect(&mBoxManager, &UnifiedMailboxManager::updateBox,
             this, [this](const UnifiedMailbox *box) {

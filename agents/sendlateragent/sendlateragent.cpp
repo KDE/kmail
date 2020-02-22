@@ -30,7 +30,7 @@
 #include <Akonadi/KMime/SpecialMailCollections>
 #include <AgentInstance>
 #include <AgentManager>
-#include <KDBusConnectionPool>
+#include <QDBusConnection>
 #include <changerecorder.h>
 #include <itemfetchscope.h>
 #include <AkonadiCore/session.h>
@@ -56,11 +56,11 @@ SendLaterAgent::SendLaterAgent(const QString &id)
     mManager = new SendLaterManager(this);
     connect(mManager, &SendLaterManager::needUpdateConfigDialogBox, this, &SendLaterAgent::needUpdateConfigDialogBox);
     new SendLaterAgentAdaptor(this);
-    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/SendLaterAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/SendLaterAgent"), this, QDBusConnection::ExportAdaptors);
 
     const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_sendlater_agent"));
 
-    KDBusConnectionPool::threadConnection().registerService(service);
+    QDBusConnection::sessionBus().registerService(service);
 
     changeRecorder()->setMimeTypeMonitored(KMime::Message::mimeType());
     changeRecorder()->itemFetchScope().setCacheOnly(true);

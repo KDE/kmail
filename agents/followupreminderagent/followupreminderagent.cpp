@@ -26,7 +26,7 @@
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/ItemFetchScope>
-#include <KDBusConnectionPool>
+#include <QDBusConnection>
 
 #include <Kdelibs4ConfigMigrator>
 #include <AkonadiCore/Session>
@@ -44,9 +44,9 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     migrate.migrate();
 
     new FollowUpReminderAgentAdaptor(this);
-    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/FollowUpReminder"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/FollowUpReminder"), this, QDBusConnection::ExportAdaptors);
     const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_followupreminder_agent"));
-    KDBusConnectionPool::threadConnection().registerService(service);
+    QDBusConnection::sessionBus().registerService(service);
     mManager = new FollowUpReminderManager(this);
     setNeedsNetwork(true);
 

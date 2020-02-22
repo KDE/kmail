@@ -24,7 +24,7 @@
 #include <AkonadiCore/ServerManager>
 
 #include <MailCommon/MailKernel>
-#include <KDBusConnectionPool>
+#include <QDBusConnection>
 #include <Monitor>
 #include <Session>
 #include <CollectionFetchScope>
@@ -55,11 +55,11 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     collectionMonitor->setMimeTypeMonitored(KMime::Message::mimeType());
 
     new ArchiveMailAgentAdaptor(this);
-    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/ArchiveMailAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/ArchiveMailAgent"), this, QDBusConnection::ExportAdaptors);
 
     const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, identifier());
 
-    KDBusConnectionPool::threadConnection().registerService(service);
+    QDBusConnection::sessionBus().registerService(service);
     connect(collectionMonitor, &Akonadi::Monitor::collectionRemoved, this, &ArchiveMailAgent::mailCollectionRemoved);
 
     if (enabledAgent()) {
