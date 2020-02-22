@@ -188,6 +188,7 @@ public:
     QWidget *zoomLabelIndicator() const;
 
     void clearPluginActions();
+
 public Q_SLOTS:
 
     /**
@@ -225,6 +226,9 @@ private:
     KActionMenu *filterMenu() const;
 
     KActionMenu *mailingListActionMenu() const;
+
+    void slotExportToPdf();
+
 
     // Moving messages around
     /**
@@ -593,6 +597,7 @@ private:
     QAction *mShowFolderShortcutDialogAction = nullptr;
     QAction *mArchiveFolderAction = nullptr;
     QAction *mMessageNewList = nullptr;
+    QAction *mExportToPdfAction = nullptr;
     KToggleAction *mPreferHtmlLoadExtAction = nullptr;
 
     QTimer *menutimer = nullptr;

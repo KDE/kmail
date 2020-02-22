@@ -3591,6 +3591,11 @@ void KMMainWidget::setupActions()
     mRestartAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Restart Account"), this);
     actionCollection()->addAction(QStringLiteral("resource_restart"), mRestartAccountSettings);
     connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
+
+
+    mExportToPdfAction = new QAction(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("Export to Pdf..."), this);
+    actionCollection()->addAction(QStringLiteral("file_export_pdf"), mExportToPdfAction);
+    connect(mSaveAsAction, &QAction::triggered, this, &KMMainWidget::slotExportToPdf);
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
@@ -4360,6 +4365,14 @@ KActionMenu *KMMainWidget::filterMenu() const
 KActionMenu *KMMainWidget::mailingListActionMenu() const
 {
     return mMsgActions->mailingListActionMenu();
+}
+
+void KMMainWidget::slotExportToPdf()
+{
+    if (mMsgView) {
+        //TODO
+        mMsgView->viewer()->exportToPdf(QString());
+    }
 }
 
 QAction *KMMainWidget::sendQueuedAction() const
