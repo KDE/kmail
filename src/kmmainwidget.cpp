@@ -170,6 +170,7 @@
 #include <QStatusBar>
 #include <QAction>
 #include <KRecentFilesAction>
+#include <QFileDialog>
 
 // Qt includes
 #include <QByteArray>
@@ -3595,7 +3596,7 @@ void KMMainWidget::setupActions()
 
     mExportToPdfAction = new QAction(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("Export to Pdf..."), this);
     actionCollection()->addAction(QStringLiteral("file_export_pdf"), mExportToPdfAction);
-    connect(mSaveAsAction, &QAction::triggered, this, &KMMainWidget::slotExportToPdf);
+    connect(mExportToPdfAction, &QAction::triggered, this, &KMMainWidget::slotExportToPdf);
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
@@ -4370,8 +4371,10 @@ KActionMenu *KMMainWidget::mailingListActionMenu() const
 void KMMainWidget::slotExportToPdf()
 {
     if (mMsgView) {
-        //TODO
-        mMsgView->viewer()->exportToPdf(QString());
+        const QString fileName = QFileDialog::getSaveFileName(this, i18n("Export to Pdf"));
+        if (!fileName.isEmpty()) {
+            mMsgView->viewer()->exportToPdf(fileName);
+        }
     }
 }
 
