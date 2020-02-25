@@ -410,7 +410,7 @@ void KTNEFMain::extractTo(const QString &dirname)
 void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
 {
     QList<KTNEFAttach *> list = mView->getSelection();
-    if (!list.count()) {
+    if (list.isEmpty()) {
         return;
     }
 

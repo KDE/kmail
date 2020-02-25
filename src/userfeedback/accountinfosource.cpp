@@ -48,7 +48,7 @@ QVariant AccountInfoSource::data()
     int numberOfPop3 = 0;
     int numberOfKolab = 0;
     int numberOfEws = 0;
-    for (Akonadi::AgentInstance type : lst) {
+    for (const Akonadi::AgentInstance &type : lst) {
         const QString identifier = type.identifier();
         if (identifier.startsWith(QLatin1String("akonadi_pop3_resource"))) {
             numberOfPop3++;
