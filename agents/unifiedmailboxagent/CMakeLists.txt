@@ -13,7 +13,15 @@ set(unifiedmailbox_agent_SRCS
     settingsdialog.cpp
     mailkernel.cpp
 )
-ecm_qt_declare_logging_category(unifiedmailbox_agent_SRCS HEADER unifiedmailboxagent_debug.h IDENTIFIER UNIFIEDMAILBOXAGENT_LOG CATEGORY_NAME org.kde.pim.unifiedmailboxagent)
+if (ECM_VERSION VERSION_LESS "5.68.0")
+    ecm_qt_declare_logging_category(unifiedmailbox_agent_SRCS HEADER unifiedmailboxagent_debug.h IDENTIFIER UNIFIEDMAILBOXAGENT_LOG CATEGORY_NAME org.kde.pim.unifiedmailboxagent)
+else()
+    ecm_qt_declare_logging_category(unifiedmailbox_agent_SRCS HEADER unifiedmailboxagent_debug.h IDENTIFIER UNIFIEDMAILBOXAGENT_LOG CATEGORY_NAME org.kde.pim.unifiedmailboxagent
+        DESCRIPTION "kmail (unifiedmailboxagent)"
+        EXPORT KMAIL
+    )
+endif()
+
 kconfig_add_kcfg_files(unifiedmailbox_agent_SRCS
     settings.kcfgc
 )

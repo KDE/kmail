@@ -1,10 +1,21 @@
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_SOURCE_DIR}/../.. )
 
+set(autotest_categories_SRCS)
+if (ECM_VERSION VERSION_LESS "5.68.0")
+    ecm_qt_declare_logging_category(autotest_categories_SRCS HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME org.kde.pim.archivemailagent)
+else()
+    ecm_qt_declare_logging_category(autotest_categories_SRCS HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME org.kde.pim.archivemailagent
+        DESCRIPTION "kmail (archivemailagent)"
+        OLD_CATEGORY_NAMES log_archivemailagent
+        EXPORT KMAIL
+    )
+endif()
+
+
 # Convenience macro to add unit tests.
 macro( archivemail_agent _source)
-    set( _test ${_source} ../archivemailwidget.cpp ../addarchivemaildialog.cpp ../widgets/formatcombobox.cpp ../widgets/unitcombobox.cpp)
+    set( _test ${_source} ../archivemailwidget.cpp ../addarchivemaildialog.cpp ../widgets/formatcombobox.cpp ../widgets/unitcombobox.cpp ${autotest_categories_SRCS})
     ki18n_wrap_ui(_test ../ui/archivemailwidget.ui )
-    ecm_qt_declare_logging_category(_test HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME org.kde.pim.archivemailagent)
     get_filename_component( _name ${_source} NAME_WE )
     add_executable( ${_name} ${_test} )
     add_test(NAME ${_name} COMMAND ${_name} )

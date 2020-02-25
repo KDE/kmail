@@ -6,7 +6,15 @@ set(kmail-refresh-settings_SRCS
     refreshsettingsfirstpage.cpp
     )
 
-ecm_qt_declare_logging_category(kmail-refresh-settings_SRCS HEADER kmail-refresh-settings_debug.h IDENTIFIER KMAIL_REFRESH_SETTINGS_LOG CATEGORY_NAME org.kde.pim.kmail_refresh_settings)
+if (ECM_VERSION VERSION_LESS "5.68.0")
+    ecm_qt_declare_logging_category(kmail-refresh-settings_SRCS HEADER kmail-refresh-settings_debug.h IDENTIFIER KMAIL_REFRESH_SETTINGS_LOG CATEGORY_NAME org.kde.pim.kmail_refresh_settings)
+else()
+    ecm_qt_declare_logging_category(kmail-refresh-settings_SRCS HEADER kmail-refresh-settings_debug.h IDENTIFIER KMAIL_REFRESH_SETTINGS_LOG CATEGORY_NAME org.kde.pim.kmail_refresh_settings
+        DESCRIPTION "kmail-refresh-settings"
+        EXPORT KMAIL
+    )
+endif()
+
 
 add_executable(kmail-refresh-settings ${kmail-refresh-settings_SRCS})
 target_link_libraries(kmail-refresh-settings KF5::I18n KF5::AkonadiWidgets KF5::DBusAddons KF5::Crash KF5::XmlGui)

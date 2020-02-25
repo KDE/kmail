@@ -194,7 +194,16 @@ if (TARGET KUserFeedbackWidgets)
 endif()
 
 set(kmail_common_SRCS)
-ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail)
+if (ECM_VERSION VERSION_LESS "5.68.0")
+    ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail)
+else()
+    ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail
+        DESCRIPTION "kmail (kmail)"
+        OLD_CATEGORY_NAMES log_kmail
+        EXPORT KMAIL
+    )
+endif()
+
 set(kmailprivate_LIB_SRCS
     ${kmail_common_SRCS}
     kmmainwin.cpp

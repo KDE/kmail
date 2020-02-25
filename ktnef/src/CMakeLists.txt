@@ -11,7 +11,16 @@ set(ktnef_SRCS
     qwmf.cpp
     )
 qt5_add_resources(ktnef_SRCS ktnef.qrc)
-ecm_qt_declare_logging_category(ktnef_SRCS HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME org.kde.pim.ktnefapps)
+
+if (ECM_VERSION VERSION_LESS "5.68.0")
+    ecm_qt_declare_logging_category(ktnef_SRCS HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME org.kde.pim.ktnefapps)
+else()
+    ecm_qt_declare_logging_category(ktnef_SRCS HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME org.kde.pim.ktnefapps
+        DESCRIPTION "kmail-refresh-settings"
+        EXPORT KMAIL
+    )
+endif()
+
 
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/hicolor/*-apps-ktnef.png")
 ecm_add_app_icon(ktnef_SRCS ICONS ${ICONS_SRCS})

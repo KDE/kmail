@@ -6,7 +6,16 @@ if(BUILD_TESTING)
 endif()
 
 set(sendlater_common_SRCS)
-ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debug.h IDENTIFIER SENDLATERAGENT_LOG CATEGORY_NAME org.kde.pim.sendlateragent)
+if (ECM_VERSION VERSION_LESS "5.68.0")
+    ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debug.h IDENTIFIER SENDLATERAGENT_LOG CATEGORY_NAME org.kde.pim.sendlateragent)
+else()
+    ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debug.h IDENTIFIER SENDLATERAGENT_LOG CATEGORY_NAME org.kde.pim.sendlateragent
+        DESCRIPTION "kmail (sendlateragent)"
+        OLD_CATEGORY_NAMES log_sendlateragent
+        EXPORT KMAIL
+    )
+endif()
+
 
 set(sendlateragentconfig_SRCS
     sendlaterconfiguredialog.cpp

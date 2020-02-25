@@ -1,7 +1,17 @@
 ########### next target ###############
 
 set(kontact_kmail_plugins_interface_common_SRCS)
-ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEADER kmailplugin_debug.h IDENTIFIER KMAILPLUGIN_LOG CATEGORY_NAME org.kde.pim.kmail_plugin)
+
+if (ECM_VERSION VERSION_LESS "5.68.0")
+    ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEADER kmailplugin_debug.h IDENTIFIER KMAILPLUGIN_LOG CATEGORY_NAME org.kde.pim.kmail_plugin)
+else()
+    ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEADER kmailplugin_debug.h IDENTIFIER KMAILPLUGIN_LOG CATEGORY_NAME org.kde.pim.kmail_plugin
+        DESCRIPTION "kmail (kmail kontact plugins)"
+        OLD_CATEGORY_NAMES log_kmail_plugin
+        EXPORT KMAIL
+    )
+endif()
+
 
 set(kontact_kmail_plugins_interface_SRCS)
 qt5_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
