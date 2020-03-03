@@ -54,6 +54,7 @@
 #include <KUriFilter>
 #include <KStringHandler>
 #include <QIcon>
+#include <QFileDialog>
 
 #include <QVariant>
 #include <QWidget>
@@ -202,6 +203,10 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     ac->addAction(QStringLiteral("use_template"), mNewMessageFromTemplateAction);
     connect(mNewMessageFromTemplateAction, &QAction::triggered, this, &MessageActions::slotUseTemplate);
     ac->setDefaultShortcut(mNewMessageFromTemplateAction, QKeySequence(Qt::SHIFT + Qt::Key_N));
+
+    mExportToPdfAction = new QAction(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("Export to PDF..."), this);
+    ac->addAction(QStringLiteral("file_export_pdf"), mExportToPdfAction);
+    connect(mExportToPdfAction, &QAction::triggered, this, &MessageActions::slotExportToPdf);
 
     updateActions();
 }
@@ -759,4 +764,19 @@ void MessageActions::slotAddFollowupReminder()
         job->start();
     }
     delete dlg;
+}
+
+void MessageActions::slotExportToPdf()
+{
+    if (!mCurrentItem.isValid()) {
+        return;
+    }
+
+    auto email = mCurrentItem.payload<KMime::Message::Ptr>();
+    const QString fileName = QFileDialog::getSaveFileName(mParent, i18n("Export to PDF"),
+                QDir::homePath() + QLatin1Char('/') + email->subject()->asUnicodeString() + QStringLiteral(".pdf"),
+                i18n("PDF document (*.pdf"));
+    if (!fileName.isEmpty()) {
+        mMessageView->viewer()->exportToPdf(fileName);
+    }
 }

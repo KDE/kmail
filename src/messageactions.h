@@ -141,6 +141,8 @@ private Q_SLOTS:
     void slotResendMessage();
     void slotUseTemplate();
 
+    void slotExportToPdf();
+
 private:
     QList<QAction *> mMailListActionList;
     Akonadi::Item mCurrentItem;
@@ -171,6 +173,7 @@ private:
     QAction *mSendAgainAction = nullptr;
     QAction *mNewMessageFromTemplateAction = nullptr;
     KIO::KUriFilterSearchProviderActions *mWebShortcutMenuManager = nullptr;
+    QAction *mExportToPdfAction = nullptr;
 };
 }
 

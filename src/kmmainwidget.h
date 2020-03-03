@@ -227,9 +227,6 @@ private:
 
     KActionMenu *mailingListActionMenu() const;
 
-    void slotExportToPdf();
-
-
     // Moving messages around
     /**
      * This will ask for a destination folder and move the currently selected
@@ -597,7 +594,6 @@ private:
     QAction *mShowFolderShortcutDialogAction = nullptr;
     QAction *mArchiveFolderAction = nullptr;
     QAction *mMessageNewList = nullptr;
-    QAction *mExportToPdfAction = nullptr;
     KToggleAction *mPreferHtmlLoadExtAction = nullptr;
 
     QTimer *menutimer = nullptr;
