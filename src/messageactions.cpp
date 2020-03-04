@@ -775,7 +775,7 @@ void MessageActions::slotExportToPdf()
     auto email = mCurrentItem.payload<KMime::Message::Ptr>();
     const QString fileName = QFileDialog::getSaveFileName(mParent, i18n("Export to PDF"),
                 QDir::homePath() + QLatin1Char('/') + email->subject()->asUnicodeString() + QStringLiteral(".pdf"),
-                i18n("PDF document (*.pdf"));
+                i18n("PDF document (*.pdf)"));
     if (!fileName.isEmpty()) {
         mMessageView->viewer()->exportToPdf(fileName);
     }
