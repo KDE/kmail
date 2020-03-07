@@ -751,6 +751,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addAction(mMsgActions->printAction());
             menu->addSeparator();
             menu->addAction(mReaderWin->saveAsAction());
+            menu->addAction(mMsgActions->exportToPdfAction());
             menu->addAction(mSaveAtmAction);
             if (msg.isValid()) {
                 if (mReaderWin->dkimViewerMenu()) {

@@ -780,3 +780,9 @@ void MessageActions::slotExportToPdf()
         mMessageView->viewer()->exportToPdf(fileName);
     }
 }
+
+QAction *MessageActions::exportToPdfAction() const
+{
+    return mExportToPdfAction;
+}
+

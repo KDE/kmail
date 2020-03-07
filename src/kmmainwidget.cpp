@@ -2797,6 +2797,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         }
         menu.addAction(mSaveAsAction);
         menu.addAction(mSaveAttachmentsAction);
+        menu.addAction(mMsgActions->exportToPdfAction());
         menu.addSeparator();
         if (parentCol.isValid() && CommonKernel->folderIsTrash(parentCol)) {
             menu.addAction(mDeleteAction);

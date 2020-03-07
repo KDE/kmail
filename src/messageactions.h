@@ -99,6 +99,9 @@ public:
 
     QAction *editAsNewAction() const;
 
+    QAction *exportToPdfAction() const;
+    void setExportToPdfAction(QAction *exportToPdfAction);
+
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
     // action has finished.
