@@ -88,9 +88,6 @@ class SieveImapPasswordProvider;
 class ManageSieveScriptsDialog;
 class VacationManager;
 }
-namespace MessageViewer {
-class DKIMWidgetInfo;
-}
 namespace MailCommon {
 class FolderSelectionDialog;
 class FavoriteCollectionWidget;
