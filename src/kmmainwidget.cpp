@@ -2796,7 +2796,9 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu.addSeparator();
         }
         menu.addAction(mSaveAsAction);
+        menu.addSeparator();
         menu.addAction(mSaveAttachmentsAction);
+        menu.addSeparator();
         menu.addAction(mMsgActions->exportToPdfAction());
         menu.addSeparator();
         if (parentCol.isValid() && CommonKernel->folderIsTrash(parentCol)) {
@@ -2814,11 +2816,6 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             menu.addSeparator();
         }
-#if 0
-        menu.addAction(mMsgActions->annotateAction());
-
-        menu.addSeparator();
-#endif
         menu.addAction(mMsgActions->addFollowupReminderAction());
         if (kmkernel->allowToDebug()) {
             menu.addSeparator();
