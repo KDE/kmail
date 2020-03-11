@@ -3,15 +3,7 @@ qt5_add_dbus_interface(followupreminderagent_test_SRCS ../org.freedesktop.Notifi
 qt5_add_dbus_interface(followupreminderagent_test_SRCS ../org.freedesktop.DBus.Properties.xml dbusproperties)
 
 set(autotest_categories_followupreminderagent_SRCS)
-if (ECM_VERSION VERSION_LESS "5.68.0")
-    ecm_qt_declare_logging_category(autotest_categories_followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent)
-else()
-    ecm_qt_declare_logging_category(autotest_categories_followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent
-        DESCRIPTION "kmail (followupreminderagent)"
-        OLD_CATEGORY_NAMES log_followupreminderagent
-        EXPORT KMAIL
-    )
-endif()
+ecm_qt_declare_logging_category(autotest_categories_followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent)
 
 # Convenience macro to add unit tests.
 macro( followupreminder_agent _source )

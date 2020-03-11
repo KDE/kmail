@@ -161,15 +161,11 @@ add_subdirectory(src)
 add_subdirectory(agents)
 add_subdirectory(ktnef)
 add_subdirectory(kmail-refresh-settings)
-if (ECM_VERSION VERSION_LESS "5.68.0")
-    install(FILES kmail.renamecategories kmail.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
-else ()
-    ecm_qt_install_logging_categories(
+ecm_qt_install_logging_categories(
         EXPORT KMAIL
         FILE kmail.categories
         DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
         )
-endif()
 
 add_subdirectory(doc)
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

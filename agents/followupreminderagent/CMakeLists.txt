@@ -13,15 +13,11 @@ set(followupreminderagent_SRCS
     ${followupreminderagent_job_SRCS}
     )
 
-if (ECM_VERSION VERSION_LESS "5.68.0")
-    ecm_qt_declare_logging_category(followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent)
-else()
-    ecm_qt_declare_logging_category(followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent
+ecm_qt_declare_logging_category(followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent
         DESCRIPTION "kmail (followupreminderagent)"
         OLD_CATEGORY_NAMES log_followupreminderagent
         EXPORT KMAIL
     )
-endif()
 
 qt5_add_dbus_adaptor(followupreminderagent_SRCS org.freedesktop.Akonadi.FollowUpReminder.xml followupreminderagent.h FollowUpReminderAgent)
 
