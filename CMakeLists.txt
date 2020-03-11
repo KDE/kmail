@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-set(KDEPIM_VERSION_NUMBER "5.13.40")
+set(KDEPIM_VERSION_NUMBER "5.13.80")
 
 project(kmail VERSION ${KDEPIM_VERSION_NUMBER})
 
@@ -9,7 +9,7 @@ include(CheckIncludeFiles)
 if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif()
-set(KF5_MIN_VERSION "5.67.0")
+set(KF5_MIN_VERSION "5.68.0")
 
 find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -33,7 +33,7 @@ include(ECMQtDeclareLoggingCategory)
 
 # Do NOT add quote
 set(KDEPIM_DEV_VERSION alpha)
-set(RELEASE_SERVICE_VERSION "20.03.70")
+set(RELEASE_SERVICE_VERSION "20.03.80")
 
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
