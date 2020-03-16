@@ -21,8 +21,9 @@
 #ifndef PLUGININFOSOURCE_H
 #define PLUGININFOSOURCE_H
 #include <KUserFeedback/AbstractDataSource>
+#include "kmail_private_export.h"
 
-class PluginInfoSource : public KUserFeedback::AbstractDataSource
+class KMAILTESTS_TESTS_EXPORT PluginInfoSource : public KUserFeedback::AbstractDataSource
 {
 public:
     PluginInfoSource();

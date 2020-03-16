@@ -21,8 +21,9 @@
 #ifndef ACCOUNTINFOSOURCE_H
 #define ACCOUNTINFOSOURCE_H
 #include <KUserFeedback/AbstractDataSource>
+#include "kmail_private_export.h"
 
-class AccountInfoSource : public KUserFeedback::AbstractDataSource
+class KMAILTESTS_TESTS_EXPORT AccountInfoSource : public KUserFeedback::AbstractDataSource
 {
 public:
     AccountInfoSource();
