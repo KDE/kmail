@@ -1341,7 +1341,7 @@ void KMComposerWin::setupActions()
     KStandardAction::configureToolbars(this, &KMComposerWin::slotEditToolbars, actionCollection());
     KStandardAction::preferences(kmkernel, &KMKernel::slotShowConfigurationDialog, actionCollection());
 
-    action = new QAction(i18n("&Spellchecker..."), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("tools-check-spelling")), i18n("&Spellchecker..."), this);
     action->setIconText(i18n("Spellchecker"));
     actionCollection()->addAction(QStringLiteral("setup_spellchecker"), action);
     connect(action, &QAction::triggered, this, &KMComposerWin::slotSpellcheckConfig);

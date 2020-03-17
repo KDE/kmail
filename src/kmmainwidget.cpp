@@ -3332,7 +3332,7 @@ void KMMainWidget::setupActions()
 
     //----- Settings Menu
     {
-        QAction *action = new QAction(i18n("Configure &Filters..."), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("dialog-filters")), i18n("Configure &Filters..."), this);
         action->setMenuRole(QAction::NoRole);   // do not move to application menu on OS X
         actionCollection()->addAction(QStringLiteral("filter"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotFilter);
@@ -3343,7 +3343,7 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, this, &KMMainWidget::slotManageSieveScripts);
     }
     {
-        QAction *action = new QAction(i18n("&Add Account..."), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("list-resource-add")), i18n("&Add Account..."), this);
         actionCollection()->addAction(QStringLiteral("accountWizard"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAccountWizard);
     }
@@ -3453,7 +3453,7 @@ void KMMainWidget::setupActions()
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::Key_C));
     }
     {
-        QAction *action = new QAction(i18n("Jump to Folder..."), this);
+        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("go-jump")), i18n("Jump to Folder..."), this);
         actionCollection()->addAction(QStringLiteral("jump_to_folder"), action);
         connect(action, &QAction::triggered,
                 this, &KMMainWidget::slotJumpToFolder);
