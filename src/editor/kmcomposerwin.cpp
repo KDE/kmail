@@ -1920,7 +1920,7 @@ MessageComposer::ComposerViewBase::MissingAttachment KMComposerWin::userForgotAt
     }
 
     mComposerBase->setSubject(subject());   //be sure the composer knows the subject
-    MessageComposer::ComposerViewBase::MissingAttachment missingAttachments = mComposerBase->checkForMissingAttachments(KMailSettings::self()->attachmentKeywords());
+    const MessageComposer::ComposerViewBase::MissingAttachment missingAttachments = mComposerBase->checkForMissingAttachments(KMailSettings::self()->attachmentKeywords());
 
     return missingAttachments;
 }
