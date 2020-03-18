@@ -708,10 +708,7 @@ void KMComposerWin::readConfig(bool reload /* = false */)
 
     mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
 
-    QString fccName;
-    if (!ident.fcc().isEmpty()) {
-        fccName = ident.fcc();
-    }
+    const QString fccName = ident.fcc();
     setFcc(fccName);
 }
 
