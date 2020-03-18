@@ -29,7 +29,6 @@
 
 OpenComposerHiddenJob::OpenComposerHiddenJob(QObject *parent)
     : QObject(parent)
-    , mMsg(nullptr)
 {
 }
 

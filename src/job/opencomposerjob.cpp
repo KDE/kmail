@@ -35,7 +35,6 @@
 
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent)
-    , mMsg(nullptr)
 {
 }
 

@@ -60,7 +60,7 @@ private:
     Q_DISABLE_COPY(OpenComposerHiddenJob)
     void slotOpenComposer();
     OpenComposerHiddenJobSettings mSettings;
-    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mMsg = nullptr;
 };
 
 #endif // OPENCOMPOSERHIDDENJOB_H

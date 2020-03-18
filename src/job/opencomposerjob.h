@@ -75,7 +75,7 @@ private:
     Q_DISABLE_COPY(OpenComposerJob)
     void slotOpenComposer();
     OpenComposerSettings mOpenComposerSettings;
-    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mMsg = nullptr;
     KMail::Composer::TemplateContext mContext = KMail::Composer::New;
     uint mIdentityId = 0;
 };
