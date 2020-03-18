@@ -207,12 +207,16 @@ void KuserFeedBackPageTab::save()
 
 void KuserFeedBackPageTab::doResetToDefaultsOther()
 {
-
+    if (KMKernel::self()) {
+        mUserFeedbackWidget->setFeedbackProvider(KMKernel::self()->userFeedbackProvider());
+    }
 }
 
 void KuserFeedBackPageTab::doLoadFromGlobalSettings()
 {
-
+    if (KMKernel::self()) {
+        mUserFeedbackWidget->setFeedbackProvider(KMKernel::self()->userFeedbackProvider());
+    }
 }
 
 

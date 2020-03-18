@@ -32,7 +32,7 @@ include(ECMAddAppIcon)
 include(ECMQtDeclareLoggingCategory)
 
 # Do NOT add quote
-set(KDEPIM_DEV_VERSION alpha)
+set(KDEPIM_DEV_VERSION beta1)
 set(RELEASE_SERVICE_VERSION "20.03.80")
 
 # add an extra space
