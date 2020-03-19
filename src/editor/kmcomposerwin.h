@@ -32,6 +32,7 @@
 // Qt includes
 #include <QFont>
 #include <QList>
+#include <QVector>
 
 // LIBKDEPIM includes
 #include "MessageComposer/RichTextComposerNg"
@@ -631,7 +632,7 @@ private:
 
     MessageComposer::Composer *mDummyComposer = nullptr;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
-    QList< MessageComposer::Composer * > mMiscComposers;
+    QVector< MessageComposer::Composer * > mMiscComposers;
 
     int mLabelWidth = 0;
 
