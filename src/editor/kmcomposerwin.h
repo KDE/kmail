@@ -421,7 +421,7 @@ private:
      */
     void readConfig(bool reload = false);
 
-    QUrl insertFile();
+    Q_REQUIRED_RESULT QUrl insertFile();
     /**
      * Updates the visibility and text of the signature and encryption state indicators.
      */
@@ -431,7 +431,7 @@ private:
     void sendNow(bool shortcutUsed);
 
     void updateSignature(uint uoid, uint uOldId);
-    Kleo::CryptoMessageFormat cryptoMessageFormat() const;
+    Q_REQUIRED_RESULT Kleo::CryptoMessageFormat cryptoMessageFormat() const;
     void printComposeResult(KJob *job, bool preview);
     void printComposer(bool preview);
     /**
@@ -465,7 +465,7 @@ private:
      * Checks how many recipients are and warns if there are too many.
      * @return true, if the user accepted the warning and the message should be sent
     */
-    bool checkRecipientNumber() const;
+    Q_REQUIRED_RESULT bool checkRecipientNumber() const;
 
     /**
      * Initialization methods
@@ -514,7 +514,7 @@ private:
      *
      * The caller takes ownership of the composer.
      */
-    MessageComposer::Composer *createSimpleComposer();
+    Q_REQUIRED_RESULT MessageComposer::Composer *createSimpleComposer();
 
     bool canSignEncryptAttachments() const;
 
@@ -589,7 +589,7 @@ private:
     QFont mBodyFont;
     QFont mFixedFont;
     uint mId = 0;
-    TemplateContext mContext;
+    TemplateContext mContext = NoTemplate;
 
     KRecentFilesAction *mRecentAction = nullptr;
 
