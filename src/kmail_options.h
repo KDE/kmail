@@ -58,6 +58,9 @@ static void kmail_options(QCommandLineParser *parser)
         QStringLiteral("view"),
         i18n("View the given message file"),
         QStringLiteral("url"));
+#ifdef WITH_KUSERFEEDBACK
+    parser->addOption(QCommandLineOption(QStringLiteral("feedback"), i18n("Lists the available options for user feedback")));
+#endif
 
     parser->addOptions(options);
     parser->addPositionalArgument(

@@ -135,6 +135,13 @@ int main(int argc, char *argv[])
     cmdArgs->process(args);
     about.processCommandLine(cmdArgs);
 
+#ifdef WITH_KUSERFEEDBACK
+    if(cmdArgs->isSet(QStringLiteral("feedback"))) {
+        //QTextStream(stdout) << UserFeedBackManager::self()->userFeedbackProvider()->describeDataSources() << '\n';
+        return 0;
+    }
+#endif
+
     if (!KMailApplication::start(args)) {
         qCDebug(KMAIL_LOG) << "Another instance of KMail already running";
         return 0;
