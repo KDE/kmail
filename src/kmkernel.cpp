@@ -113,18 +113,9 @@ using KMail::MailServiceImpl;
 
 #include "searchdialog/searchdescriptionattribute.h"
 #include "kmail_options.h"
-
 #ifdef WITH_KUSERFEEDBACK
-#include <KUserFeedback/ApplicationVersionSource>
-#include <KUserFeedback/PlatformInfoSource>
-#include <KUserFeedback/ScreenInfoSource>
-#include <KUserFeedback/QtVersionSource>
 #include <KUserFeedback/Provider>
-#include <KUserFeedback/StartCountSource>
-#include <KUserFeedback/UsageTimeSource>
-#include <KUserFeedback/LocaleInfoSource>
-#include "userfeedback/accountinfosource.h"
-#include "userfeedback/plugininfosource.h"
+#include "userfeedback/kmailuserfeedbackprovider.h"
 #endif
 
 
@@ -144,27 +135,8 @@ KMKernel::KMKernel(QObject *parent)
     mDebug = !qEnvironmentVariableIsEmpty("KDEPIM_DEBUGGING");
 
 #ifdef WITH_KUSERFEEDBACK
-    mUserFeedbackProvider = new KUserFeedback::Provider(this);
-    mUserFeedbackProvider->setProductIdentifier(QStringLiteral("org.kde.kmail"));
-    mUserFeedbackProvider->setFeedbackServer(QUrl(QStringLiteral("https://telemetry.kde.org/")));
-    mUserFeedbackProvider->setSubmissionInterval(7);
-    mUserFeedbackProvider->setApplicationStartsUntilEncouragement(5);
-    mUserFeedbackProvider->setEncouragementDelay(30);
-
-    mUserFeedbackProvider->addDataSource(new KUserFeedback::ApplicationVersionSource);
-    mUserFeedbackProvider->addDataSource(new KUserFeedback::PlatformInfoSource);
-    mUserFeedbackProvider->addDataSource(new KUserFeedback::ScreenInfoSource);
-    mUserFeedbackProvider->addDataSource(new KUserFeedback::QtVersionSource);
-
-    mUserFeedbackProvider->addDataSource(new KUserFeedback::StartCountSource);
-    mUserFeedbackProvider->addDataSource(new KUserFeedback::UsageTimeSource);
-
-    mUserFeedbackProvider->addDataSource(new KUserFeedback::LocaleInfoSource);
-    mUserFeedbackProvider->addDataSource(new AccountInfoSource);
-    mUserFeedbackProvider->addDataSource(new PluginInfoSource);
+    mUserFeedbackProvider = new KMailUserFeedbackProvider(this);
 #endif
-
-
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();

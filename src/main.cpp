@@ -35,6 +35,11 @@
 #include <QSessionManager>
 #include <KCrash>
 
+#ifdef WITH_KUSERFEEDBACK
+#include <KUserFeedback/Provider>
+#include "userfeedback/kmailuserfeedbackprovider.h"
+#endif
+
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KontactInterface::PimUniqueApplication
@@ -137,7 +142,9 @@ int main(int argc, char *argv[])
 
 #ifdef WITH_KUSERFEEDBACK
     if(cmdArgs->isSet(QStringLiteral("feedback"))) {
-        //QTextStream(stdout) << UserFeedBackManager::self()->userFeedbackProvider()->describeDataSources() << '\n';
+        KMailUserFeedbackProvider *userFeedback = new KMailUserFeedbackProvider(nullptr);
+        QTextStream(stdout) << userFeedback->describeDataSources() << '\n';
+        delete userFeedback;
         return 0;
     }
 #endif

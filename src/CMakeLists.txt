@@ -190,6 +190,7 @@ if (TARGET KUserFeedbackWidgets)
     set(kmailprivate_userfeedback_LIB_SRCS ${kmailprivate_userfeedback_LIB_SRCS}
         userfeedback/accountinfosource.cpp
 	userfeedback/plugininfosource.cpp
+        userfeedback/kmailuserfeedbackprovider.cpp
         )
 endif()
 
@@ -405,6 +406,7 @@ target_link_libraries(kmail
     KF5::TemplateParser
     KF5::Libkdepim
     KF5::Crash
+    ${kmail_userfeedback_LIB}
     )
 
 if(BUILD_TESTING)

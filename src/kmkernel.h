@@ -76,6 +76,7 @@ class MailCommonSettings;
 }
 
 #ifdef WITH_KUSERFEEDBACK
+class KMailUserFeedbackProvider;
 namespace KUserFeedback {
 class Provider;
 }
@@ -531,7 +532,7 @@ private:
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
     MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;
 #ifdef WITH_KUSERFEEDBACK
-    KUserFeedback::Provider *mUserFeedbackProvider = nullptr;
+    KMailUserFeedbackProvider *mUserFeedbackProvider = nullptr;
 #endif
 
     bool mDebug = false;
