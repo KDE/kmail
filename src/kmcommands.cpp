@@ -1296,8 +1296,8 @@ void KMSetTagCommand::setTags()
         KConfigGroup tag(KMKernel::self()->config(), "MessageListView");
         const QString oldTagList = tag.readEntry("TagSelected");
         QStringList lst = oldTagList.split(QLatin1Char(','));
-        for (const Akonadi::Tag &tag : qAsConst(mCreatedTags)) {
-            const QString url = tag.url().url();
+        for (const Akonadi::Tag &createdTag : qAsConst(mCreatedTags)) {
+            const QString url = createdTag.url().url();
             if (!lst.contains(url)) {
                 lst.append(url);
             }
