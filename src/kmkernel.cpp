@@ -426,7 +426,8 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     if (!calledWithSession) {
         // only read additional command line arguments if kmail/kontact is
         // not called with "-session foo"
-        for (const QString &arg : parser.positionalArguments()) {
+        const QStringList lstPositionalArguments = parser.positionalArguments();
+        for (const QString &arg : lstPositionalArguments) {
             if (arg.startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
                 const QVector<QPair<QString, QString> > values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);

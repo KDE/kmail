@@ -144,7 +144,7 @@ public Q_SLOTS:
 
     void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) override;
 
-    void addAttachment(const QList<AttachmentInfo> &infos, bool showWarning) override;
+    void addAttachment(const QList<KMail::Composer::AttachmentInfo> &infos, bool showWarning) override;
 
     void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) override;
 
