@@ -109,9 +109,9 @@ static QString toolTip(const Akonadi::Item &item)
             tip += htmlCodeForStandardRow.arg(i18n("Preview"), content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
         }
     } else {
-        tip += htmlCodeForStandardRow.arg(msg->from()->displayString()).arg(i18n("From"));
-        tip += htmlCodeForStandardRow.arg(msg->to()->displayString()).arg(i18nc("Receiver of the email", "To"));
-        tip += htmlCodeForStandardRow.arg(QLocale().toString(msg->date()->dateTime())).arg(i18n("Date"));
+        tip += htmlCodeForStandardRow.arg(msg->from()->displayString(), i18n("From"));
+        tip += htmlCodeForStandardRow.arg(msg->to()->displayString(), i18nc("Receiver of the email", "To"));
+        tip += htmlCodeForStandardRow.arg(QLocale().toString(msg->date()->dateTime()), i18n("Date"));
         if (!content.isEmpty()) {
             tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")), i18n("Preview"));
         }

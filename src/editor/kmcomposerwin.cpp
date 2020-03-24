@@ -454,7 +454,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 
     mUpdateWindowTitleConnection = connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
-    mIdentityConnection = connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
+    mIdentityConnection = connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, this, [this](uint val) {
         slotIdentityChanged(val);
     });
     connect(kmkernel->identityManager(), qOverload<uint>(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
@@ -642,7 +642,7 @@ void KMComposerWin::addAttachmentsAndSend(const QList<QUrl> &urls, const QString
     send(how);
 }
 
-void KMComposerWin::addAttachment(const QList<AttachmentInfo> &infos, bool showWarning)
+void KMComposerWin::addAttachment(const QList<KMail::Composer::AttachmentInfo> &infos, bool showWarning)
 {
     QStringList lst;
     for (const AttachmentInfo &info : infos) {
@@ -1658,7 +1658,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
 
     // load the mId into the gui, sticky or not, without emitting
     mComposerBase->identityCombo()->setCurrentIdentity(mId);
-    mIdentityConnection = connect(mComposerBase->identityCombo(), &KIdentityManagement::IdentityCombo::identityChanged, [this](uint val) {
+    mIdentityConnection = connect(mComposerBase->identityCombo(), &KIdentityManagement::IdentityCombo::identityChanged, this, [this](uint val) {
         slotIdentityChanged(val);
     });
 
