@@ -770,9 +770,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             }
         }
         if (msg.isValid()) {
-            menu->addAction(mMsgActions->addFollowupReminderAction());
-        }
-        if (msg.isValid()) {
             menu->addSeparator();
             menu->addAction(mMsgActions->addFollowupReminderAction());
         }

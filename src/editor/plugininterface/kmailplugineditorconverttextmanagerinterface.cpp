@@ -165,7 +165,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                 if (interface->plugin()->hasPopupMenuSupport()) {
                     type = MessageComposer::PluginActionType::PopupMenu;
                     if (currentAction) {
-                        QList<QAction *> lst = mActionHash.value(type);
+                        lst = mActionHash.value(type);
                         if (!lst.isEmpty()) {
                             QAction *act = new QAction(this);
                             act->setSeparator(true);
@@ -178,7 +178,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                 }
                 if (interface->plugin()->hasToolBarSupport()) {
                     type = MessageComposer::PluginActionType::ToolBar;
-                    QList<QAction *> lst = mActionHash.value(type);
+                    lst = mActionHash.value(type);
                     if (!lst.isEmpty()) {
                         QAction *act = new QAction(this);
                         act->setSeparator(true);

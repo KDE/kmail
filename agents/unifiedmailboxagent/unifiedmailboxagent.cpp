@@ -147,9 +147,9 @@ void UnifiedMailboxAgent::retrieveCollections()
     topLevel.setParentCollection(Akonadi::Collection::root());
     topLevel.setContentMimeTypes({Akonadi::Collection::mimeType()});
     topLevel.setRights(Akonadi::Collection::ReadOnly);
-    auto displayAttr = topLevel.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
-    displayAttr->setDisplayName(i18n("Unified Mailboxes"));
-    displayAttr->setActiveIconName(QStringLiteral("globe"));
+    auto topLevelDisplayAttr = topLevel.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+    topLevelDisplayAttr->setDisplayName(i18n("Unified Mailboxes"));
+    topLevelDisplayAttr->setActiveIconName(QStringLiteral("globe"));
     collections.push_back(topLevel);
 
     for (const auto &boxIt : mBoxManager) {

@@ -161,8 +161,8 @@ void ArchiveMailWidget::load()
     const QStringList collectionList = config()->groupList().filter(QRegularExpression(archiveMailCollectionPattern()));
     const int numberOfCollection = collectionList.count();
     for (int i = 0; i < numberOfCollection; ++i) {
-        KConfigGroup group = config()->group(collectionList.at(i));
-        ArchiveMailInfo *info = new ArchiveMailInfo(group);
+        KConfigGroup collectionGroup = config()->group(collectionList.at(i));
+        ArchiveMailInfo *info = new ArchiveMailInfo(collectionGroup);
         if (info->isValid()) {
             createOrUpdateItem(info);
         } else {
