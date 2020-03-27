@@ -26,6 +26,7 @@
 
 #include "MailCommon/FolderRequester"
 #include "kmcommands.h"
+#include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "MailCommon/MailKernel"
 #include "MailCommon/SearchPatternEdit"
@@ -50,6 +51,8 @@
 #include "kmail_debug.h"
 #include <QIcon>
 #include <QSortFilterProxyModel>
+#include <entitytreemodel.h>
+#include <entitytreeview.h>
 #include <kmime/kmime_message.h>
 #include <KStandardAction>
 #include <KStandardGuiItem>
@@ -256,8 +259,11 @@ void SearchWindow::createSearchModel()
     if (mResultModel) {
         mResultModel->deleteLater();
     }
-    mResultModel = new KMSearchMessageModel(this);
-    mResultModel->setCollection(mFolder);
+    auto monitor = new Akonadi::Monitor();
+    monitor->setCollectionMonitored(mFolder);
+    mResultModel = new KMSearchMessageModel(monitor, this);
+    mResultModel->setCollectionMonitored(mFolder);
+    monitor->setParent(mResultModel);
     QSortFilterProxyModel *sortproxy = new QSortFilterProxyModel(mResultModel);
     sortproxy->setDynamicSortFilter(true);
     sortproxy->setSortRole(Qt::EditRole);
@@ -724,7 +730,7 @@ Akonadi::Item::List SearchWindow::selectedMessages() const
 
     const QModelIndexList lst = mUi.mLbxMatches->selectionModel()->selectedRows();
     for (const QModelIndex &index : lst) {
-        const Akonadi::Item item = index.data(Akonadi::ItemModel::ItemRole).value<Akonadi::Item>();
+        const Akonadi::Item item = index.data(Akonadi::EntityTreeModel::ItemRole).value<Akonadi::Item>();
         if (item.isValid()) {
             messages.append(item);
         }
@@ -735,7 +741,7 @@ Akonadi::Item::List SearchWindow::selectedMessages() const
 
 Akonadi::Item SearchWindow::selectedMessage() const
 {
-    return mUi.mLbxMatches->currentIndex().data(Akonadi::ItemModel::ItemRole).value<Akonadi::Item>();
+    return mUi.mLbxMatches->currentIndex().data(Akonadi::EntityTreeModel::ItemRole).value<Akonadi::Item>();
 }
 
 void SearchWindow::updateContextMenuActions()

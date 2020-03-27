@@ -44,13 +44,13 @@ public:
         Date,
         Size
     };
-    explicit KMSearchMessageModel(QObject *parent = nullptr);
+    explicit KMSearchMessageModel(Akonadi::Monitor *monitor, QObject *parent = nullptr);
     ~KMSearchMessageModel() override;
 
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+protected:
+    int entityColumnCount(HeaderGroup headerGroup) const override;
+    QVariant entityData(const Akonadi::Item &item, int column, int role = Qt::DisplayRole) const override;
+    QVariant entityHeaderData(int section, Qt::Orientation orientation, int role, HeaderGroup headerGroup) const override;
 
 private:
     Q_REQUIRED_RESULT QString fullCollectionPath(Akonadi::Collection::Id id) const;

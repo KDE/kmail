@@ -45,16 +45,14 @@
 #include <KLocalizedString>
 #include <KFormat>
 
-KMSearchMessageModel::KMSearchMessageModel(QObject *parent)
-    : Akonadi::MessageModel(parent)
+KMSearchMessageModel::KMSearchMessageModel(Akonadi::Monitor *monitor, QObject *parent)
+    : Akonadi::MessageModel(monitor, parent)
 {
-    fetchScope().fetchFullPayload();
-    fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::All);
+    monitor->itemFetchScope().fetchFullPayload();
+    monitor->itemFetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::All);
 }
 
-KMSearchMessageModel::~KMSearchMessageModel()
-{
-}
+KMSearchMessageModel::~KMSearchMessageModel() = default;
 
 static QString toolTip(const Akonadi::Item &item)
 {
@@ -124,19 +122,13 @@ static QString toolTip(const Akonadi::Item &item)
     return tip;
 }
 
-int KMSearchMessageModel::columnCount(const QModelIndex &parent) const
+int KMSearchMessageModel::entityColumnCount(HeaderGroup headerGroup) const
 {
-    if (collection().isValid()
-        && !collection().contentMimeTypes().contains(QLatin1String("message/rfc822"))
-        && collection().contentMimeTypes() != QStringList(QStringLiteral("inode/directory"))) {
-        return 1;
+    if (headerGroup == Akonadi::EntityTreeModel::ItemListHeaders) {
+        return 6; // keep in sync with the column type enum
     }
 
-    if (!parent.isValid()) {
-        return 6;    // keep in sync with the column type enum
-    }
-
-    return 0;
+    return Akonadi::MessageModel::entityColumnCount(headerGroup);
 }
 
 QString KMSearchMessageModel::fullCollectionPath(Akonadi::Collection::Id id) const
@@ -149,93 +141,31 @@ QString KMSearchMessageModel::fullCollectionPath(Akonadi::Collection::Id id) con
     return path;
 }
 
-QVariant KMSearchMessageModel::data(const QModelIndex &index, int role) const
+QVariant KMSearchMessageModel::entityData(const Akonadi::Item &item, int column, int role) const
 {
-    if (!index.isValid()) {
-        return QVariant();
-    }
-    if (index.row() >= rowCount()) {
-        return QVariant();
-    }
-
-    if (!collection().contentMimeTypes().contains(QLatin1String("message/rfc822"))) {
-        if (role == Qt::DisplayRole) {
-            return i18nc("@label", "This model can only handle email folders. The current collection holds mimetypes: %1",
-                         collection().contentMimeTypes().join(QLatin1Char(',')));
-        } else {
-            return QVariant();
-        }
-    }
-
-    Akonadi::Item item = itemForIndex(index);
-
-    // Handle the most common case first, before calling payload().
-    if ((role == Qt::DisplayRole || role == Qt::EditRole) && index.column() == Collection) {
-        if (item.storageCollectionId() >= 0) {
-            return fullCollectionPath(item.storageCollectionId());
-        }
-        return fullCollectionPath(item.parentCollection().id());
-    }
-
-    if (!item.hasPayload<KMime::Message::Ptr>()) {
-        return QVariant();
-    }
-    KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
-    if (role == Qt::DisplayRole) {
-        switch (index.column()) {
-        case Subject:
-            return msg->subject()->asUnicodeString();
-        case Sender:
-            return msg->from()->asUnicodeString();
-        case Receiver:
-            return msg->to()->asUnicodeString();
-        case Date:
-            return QLocale().toString(msg->date()->dateTime());
-        case Size:
-            if (item.size() == 0) {
-                return i18nc("@label No size available", "-");
-            } else {
-                return KFormat().formatByteSize(item.size());
-            }
-        default:
-            return QVariant();
-        }
-    } else if (role == Qt::EditRole) { // used for sorting
-        switch (index.column()) {
-        case Subject:
-            return msg->subject()->asUnicodeString();
-        case Sender:
-            return msg->from()->asUnicodeString();
-        case Receiver:
-            return msg->to()->asUnicodeString();
-        case Date:
-            return msg->date()->dateTime();
-        case Size:
-            return item.size();
-        default:
-            return QVariant();
-        }
-    } else if (role == Qt::ToolTipRole) {
+    if (role == Qt::ToolTipRole) {
         return toolTip(item);
     }
-    return ItemModel::data(index, role);
+
+    // The Collection column is first and is added by this model
+    if (column == Collection) {
+        if (role == Qt::DisplayRole || role == Qt::EditRole) {
+            if (item.storageCollectionId() >= 0) {
+                return fullCollectionPath(item.storageCollectionId());
+            }
+            return fullCollectionPath(item.parentCollection().id());
+        }
+        return {};
+    } else {
+        // Delegate the remaining columns to the MessageModel
+        return Akonadi::MessageModel::entityData(item, column - 1, role);
+    }
 }
 
-QVariant KMSearchMessageModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant KMSearchMessageModel::entityHeaderData(int section, Qt::Orientation orientation, int role, HeaderGroup headerGroup) const
 {
-    if (collection().isValid()
-        && !collection().contentMimeTypes().contains(QLatin1String("message/rfc822"))
-        && collection().contentMimeTypes() != QStringList(QStringLiteral("inode/directory"))) {
-        return QVariant();
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole && section == Collection) {
+        return i18nc("@title:column, folder (e.g. email)", "Folder");
     }
-
-    if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        switch (section) {
-        case Collection:
-            return i18nc("@title:column, folder (e.g. email)", "Folder");
-        default:
-            return Akonadi::MessageModel::headerData((section - 1), orientation, role);
-        }
-    }
-    return Akonadi::MessageModel::headerData((section - 1), orientation, role);
+    return Akonadi::MessageModel::entityHeaderData((section - 1), orientation, role, headerGroup);
 }
