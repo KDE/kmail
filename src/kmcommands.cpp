@@ -530,23 +530,6 @@ KMCommand::Result KMUrlSaveCommand::execute()
         KRecentDirs::add(recentDirClass, saveUrl.path());
     }
 
-    bool fileExists = false;
-    if (saveUrl.isLocalFile()) {
-        fileExists = QFile::exists(saveUrl.toLocalFile());
-    } else {
-        auto job = KIO::stat(saveUrl, KIO::StatJob::DestinationSide, 0);
-        KJobWidgets::setWindow(job, parentWidget());
-        fileExists = job->exec();
-    }
-
-    if (fileExists) {
-        if (KMessageBox::warningContinueCancel(nullptr,
-                                               xi18nc("@info", "File <filename>%1</filename> exists.<nl/>Do you want to replace it?",
-                                                      saveUrl.toDisplayString()), i18n("Save to File"), KGuiItem(i18n("&Replace")))
-            != KMessageBox::Continue) {
-            return Canceled;
-        }
-    }
     KIO::Job *job = KIO::file_copy(mUrl, saveUrl, -1, KIO::Overwrite);
     connect(job, &KIO::Job::result, this, &KMUrlSaveCommand::slotUrlSaveResult);
     setEmitsCompletedItself(true);
