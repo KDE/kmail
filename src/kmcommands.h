@@ -5,7 +5,7 @@
 #include <MessageComposer/MessageFactoryNG>
 #include "MessageList/View"
 #include "mailcommon/searchpattern.h"
-#include "messageviewer/viewer.h"
+#include <MessageViewer/Viewer>
 
 #include <Akonadi/KMime/MessageStatus>
 #include <kio/job.h>

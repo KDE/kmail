@@ -13,7 +13,7 @@
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/collection.h>
 #include <QModelIndex>
-#include <messageviewer/viewer.h>
+#include <MessageViewer/Viewer>
 class KMReaderWin;
 class QAction;
 class KJob;

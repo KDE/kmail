@@ -38,9 +38,9 @@
 #include "kmcommands.h"
 #include "MailCommon/SendMdnHandler"
 #include <QVBoxLayout>
-#include "messageviewer/headerstrategy.h"
-#include "messageviewer/markmessagereadhandler.h"
-#include "messageviewer/messageviewersettings.h"
+#include <MessageViewer/HeaderStrategy>
+#include <MessageViewer/MarkMessageReadHandler>
+#include <MessageViewer/MessageViewerSettings>
 #include <MessageViewer/CSSHelper>
 using MessageViewer::CSSHelper;
 #include "util.h"
@@ -49,7 +49,7 @@ using MessageViewer::CSSHelper;
 #include <kmime/kmime_mdn.h>
 #include <akonadi/kmime/messageflags.h>
 
-#include "messageviewer/viewer.h"
+#include <MessageViewer/Viewer>
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 

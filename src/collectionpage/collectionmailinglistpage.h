@@ -21,7 +21,7 @@
 #ifndef COLLECTIONMAILINGLISTPAGE_H
 #define COLLECTIONMAILINGLISTPAGE_H
 
-#include "MessageCore/MailingList"
+#include <MessageCore/MailingList>
 #include <MailCommon/FolderSettings>
 
 #include <AkonadiWidgets/collectionpropertiespage.h>

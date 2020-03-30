@@ -18,7 +18,7 @@
 #include "configuresecuritypage.h"
 #include "PimCommon/ConfigureImmutableWidgetUtils"
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include "messageviewer/messageviewersettings.h"
+#include <MessageViewer/MessageViewerSettings>
 #include "MessageComposer/MessageComposerSettings"
 #include <WebEngineViewer/CheckPhishingUrlCache>
 #include <MailCommon/FolderSettings>

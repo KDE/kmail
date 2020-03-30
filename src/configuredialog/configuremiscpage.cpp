@@ -21,9 +21,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "settings/kmailsettings.h"
 #include "kmkernel.h"
 #include <MailCommon/FolderRequester>
-#include "MessageViewer/InvitationSettings"
-#include "MessageViewer/PrintingSettings"
-#include "messageviewer/messageviewersettings.h"
+#include <MessageViewer/InvitationSettings>
+#include <MessageViewer/PrintingSettings>
+#include <MessageViewer/MessageViewerSettings>
 
 #include <KLocalizedString>
 #include <QHBoxLayout>

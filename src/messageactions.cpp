@@ -29,10 +29,10 @@
 
 #include <PimCommonAkonadi/AnnotationDialog>
 #include <MessageCore/MessageCoreSettings>
-#include "MessageCore/MailingList"
+#include <MessageCore/MailingList>
 #include <MessageCore/StringUtil>
-#include "messageviewer/messageviewersettings.h"
-#include "messageviewer/headerstyleplugin.h"
+#include <MessageViewer/MessageViewerSettings>
+#include <MessageViewer/HeaderStylePlugin>
 
 #include <AkonadiCore/itemfetchjob.h>
 #include <Akonadi/KMime/MessageParts>

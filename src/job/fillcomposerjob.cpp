@@ -21,7 +21,7 @@
 #include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
-#include "messageviewer/messageviewersettings.h"
+#include <MessageViewer/MessageViewerSettings>
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>

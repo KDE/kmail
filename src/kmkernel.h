@@ -15,7 +15,7 @@
 #include "kmail_export.h"
 #include "settings/kmailsettings.h"
 #include <AkonadiCore/servermanager.h>
-#include "messageviewer/viewer.h"
+#include <MessageViewer/Viewer>
 #include "libkdepim/progressmanager.h"
 
 #define kmkernel KMKernel::self()

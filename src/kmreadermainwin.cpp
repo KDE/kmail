@@ -49,8 +49,8 @@
 #include "util.h"
 #include "mailcommon/mailkernel.h"
 #include <MailCommon/FolderSettings>
-#include "messageviewer/headerstyleplugin.h"
-#include "messageviewer/headerstyle.h"
+#include <MessageViewer/HeaderStylePlugin>
+#include <MessageViewer/HeaderStyle>
 #include <MessageViewer/MessageViewerSettings>
 
 #include <KActionCollection>
@@ -61,7 +61,7 @@
 #include <tag/tagactionmanager.h>
 #include <tag/tagselectdialog.h>
 
-#include <messageviewer/viewer.h>
+#include <MessageViewer/Viewer>
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemcreatejob.h>

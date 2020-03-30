@@ -80,10 +80,10 @@
 // Other PIM includes
 #include "kmail-version.h"
 
-#include "messageviewer/messageviewersettings.h"
-#include "messageviewer/viewer.h"
-#include "messageviewer/headerstyleplugin.h"
-#include "messageviewer/headerstyle.h"
+#include <MessageViewer/MessageViewerSettings>
+#include <MessageViewer/Viewer>
+#include <MessageViewer/HeaderStylePlugin>
+#include <MessageViewer/HeaderStyle>
 #include "messageviewer/config-messageviewer.h"
 
 #include <MessageViewer/AttachmentStrategy>
@@ -96,7 +96,7 @@
 #include "MessageComposer/MessageHelper"
 
 #include <MessageCore/MessageCoreSettings>
-#include "MessageCore/MailingList"
+#include <MessageCore/MailingList>
 
 #include "dialog/kmknotify.h"
 #include "widgets/displaymessageformatactionmenu.h"

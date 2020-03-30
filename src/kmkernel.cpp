@@ -52,7 +52,7 @@ using KMail::MailServiceImpl;
 #include "messagelistsettings.h"
 #include "gravatarsettings.h"
 #include "messagelist/messagelistutil.h"
-#include "messageviewer/messageviewersettings.h"
+#include <MessageViewer/MessageViewerSettings>
 #include "MessageComposer/AkonadiSender"
 #include "messagecomposer/messagecomposersettings.h"
 #include "MessageComposer/MessageHelper"
