@@ -30,6 +30,7 @@
 #include <PimCommonAkonadi/AnnotationDialog>
 #include <MessageCore/MessageCoreSettings>
 #include "MessageCore/MailingList"
+#include <MessageCore/StringUtil>
 #include "messageviewer/messageviewersettings.h"
 #include "messageviewer/headerstyleplugin.h"
 
@@ -773,8 +774,15 @@ void MessageActions::slotExportToPdf()
     }
 
     auto email = mCurrentItem.payload<KMime::Message::Ptr>();
-    const QString fileName = QFileDialog::getSaveFileName(mParent, i18n("Export to PDF"),
-                QDir::homePath() + QLatin1Char('/') + email->subject()->asUnicodeString() + QStringLiteral(".pdf"),
+    QString fileName;
+
+    fileName = MessageCore::StringUtil::cleanFileName(MessageCore::StringUtil::cleanSubject(email.data()).trimmed());
+    fileName.remove(QLatin1Char('\"'));
+    if (!fileName.endsWith(QLatin1String(".pdf"))) {
+        fileName += QLatin1String(".pdf");
+    }
+    fileName = QFileDialog::getSaveFileName(mParent, i18n("Export to PDF"),
+                QDir::homePath() + QLatin1Char('/') + fileName,
                 i18n("PDF document (*.pdf)"));
     if (!fileName.isEmpty()) {
         mMessageView->viewer()->exportToPdf(fileName);
