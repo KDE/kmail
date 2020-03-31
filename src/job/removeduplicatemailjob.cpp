@@ -19,7 +19,7 @@
 
 #include "removeduplicatemailjob.h"
 
-#include "libkdepim/progressmanager.h"
+#include <Libkdepim/ProgressManager>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <AkonadiCore/Collection>

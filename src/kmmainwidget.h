@@ -25,12 +25,12 @@
 #include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
 
-#include "mailcommon/foldertreewidget.h"
+#include <MailCommon/FolderTreeWidget>
 
 #include <KXMLGUIClient>
 #include "messageactions.h"
 #include <KActionCollection>
-#include <mailcommon/foldersettings.h>
+#include <MailCommon/FolderSettings>
 #include <QPointer>
 #include <QTimer>
 #include <Akonadi/KMime/StandardMailActionManager>

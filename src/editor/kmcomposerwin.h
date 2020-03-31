@@ -27,7 +27,7 @@
 
 // KMail includes
 #include "editor/composer.h"
-#include "MessageComposer/RecipientsEditor"
+#include <MessageComposer/RecipientsEditor>
 #include <MessageComposer/PluginEditorConvertTextInterface>
 // Qt includes
 #include <QFont>
@@ -35,7 +35,7 @@
 #include <QVector>
 
 // LIBKDEPIM includes
-#include "MessageComposer/RichTextComposerNg"
+#include <MessageComposer/RichTextComposerNg>
 
 #include <MessageComposer/MessageSender>
 
@@ -44,7 +44,7 @@
 #include <kmime/kmime_headers.h>
 
 // Other includes
-#include "Libkleo/Enum"
+#include <Libkleo/Enum>
 #include <messagecomposer/composerviewbase.h>
 
 class QUrl;

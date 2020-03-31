@@ -39,7 +39,7 @@
 #include "kmkernel.h"
 
 #include <MessageCore/StringUtil>
-#include "MessageComposer/MessageHelper"
+#include <MessageComposer/MessageHelper>
 #include "job/handleclickedurljob.h"
 
 #include <kmime/kmime_message.h>

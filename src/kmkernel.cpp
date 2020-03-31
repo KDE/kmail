@@ -3,7 +3,7 @@
 #include "kmkernel.h"
 
 #include "settings/kmailsettings.h"
-#include "libkdepim/broadcaststatus.h"
+#include <Libkdepim/BroadcastStatus>
 #include "job/opencomposerjob.h"
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"
@@ -18,19 +18,19 @@ using KPIM::BroadcastStatus;
 #include "kmmainwidget.h"
 
 #include "search/checkindexingmanager.h"
-#include "libkdepim/recentaddresses.h"
+#include <Libkdepim/RecentAddresses>
 using KPIM::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
 #include "unityservicemanager.h"
 #include <MessageCore/StringUtil>
-#include "mailcommon/mailutil.h"
+#include <MailCommon/MailUtil>
 #include "pop3settings.h"
-#include "MailCommon/FolderTreeView"
-#include "MailCommon/KMFilterDialog"
+#include <MailCommon/FolderTreeView>
+#include <MailCommon/KMFilterDialog>
 #include "mailcommonsettings_base.h"
 #include "mailfilteragentinterface.h"
-#include "PimCommon/PimUtil"
+#include <PimCommon/PimUtil>
 #include "folderarchive/folderarchivemanager.h"
 #include "sieveimapinterface/kmailsieveimapinstanceinterface.h"
 // kdepim includes
@@ -46,30 +46,30 @@ using KPIM::RecentAddresses;
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
-#include "mailcommon/jobscheduler.h"
+#include <MailCommon/JobScheduler>
 
 #include <MessageCore/MessageCoreSettings>
 #include "messagelistsettings.h"
 #include "gravatarsettings.h"
-#include "messagelist/messagelistutil.h"
+#include <MessageList/MessageListUtil>
 #include <MessageViewer/MessageViewerSettings>
-#include "MessageComposer/AkonadiSender"
-#include "messagecomposer/messagecomposersettings.h"
-#include "MessageComposer/MessageHelper"
-#include "MessageComposer/MessageComposerSettings"
-#include "PimCommon/PimCommonSettings"
-#include "PimCommon/AutoCorrection"
+#include <MessageComposer/AkonadiSender>
+#include <MessageComposer/MessageComposerSettings>
+#include <MessageComposer/MessageHelper>
+#include <MessageComposer/MessageComposerSettings>
+#include <PimCommon/PimCommonSettings>
+#include <PimCommon/AutoCorrection>
 #include <PimCommon/NetworkManager>
 
 #include "globalsettings_templateparser.h"
-#include "TemplateParser/TemplatesUtil"
+#include <TemplateParser/TemplatesUtil>
 
-#include "mailcommon/foldersettings.h"
+#include <MailCommon/FolderSettings>
 #include "editor/codec/codecmanager.h"
 
 #include <KMessageBox>
 #include <KNotification>
-#include <libkdepim/progressmanager.h>
+#include <Libkdepim/ProgressManager>
 
 #include <KConfig>
 #include <KConfigGroup>
@@ -106,10 +106,10 @@ using KMail::MailServiceImpl;
 #include <KLocalizedString>
 #include <QStandardPaths>
 #include "kmailinterface.h"
-#include "mailcommon/foldercollectionmonitor.h"
+#include <MailCommon/FolderCollectionMonitor>
 #include "imapresourcesettings.h"
 #include "util.h"
-#include "MailCommon/MailKernel"
+#include <MailCommon/MailKernel>
 
 #include "searchdialog/searchdescriptionattribute.h"
 #include "kmail_options.h"

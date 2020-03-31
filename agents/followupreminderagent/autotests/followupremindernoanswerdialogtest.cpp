@@ -20,7 +20,7 @@
 #include "followupremindernoanswerdialogtest.h"
 #include "../followupremindernoanswerdialog.h"
 #include "../followupreminderinfowidget.h"
-#include "FollowupReminder/FollowUpReminderInfo"
+#include <FollowupReminder/FollowUpReminderInfo>
 #include <QTreeWidget>
 #include <QTest>
 #include <QStandardPaths>

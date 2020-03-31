@@ -31,25 +31,25 @@
 #include "kmcommands.h"
 #include "kmmainwin.h"
 #include <TemplateParser/CustomTemplatesMenu>
-#include "MailCommon/FolderSelectionDialog"
-#include "MailCommon/FolderTreeWidget"
-#include "PimCommonAkonadi/MailUtil"
+#include <MailCommon/FolderSelectionDialog>
+#include <MailCommon/FolderTreeWidget>
+#include <PimCommonAkonadi/MailUtil>
 #include "util.h"
 
-#include "mailcommon/mailutil.h"
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailUtil>
+#include <MailCommon/MailKernel>
 #include "dialog/archivefolderdialog.h"
 #include "settings/kmailsettings.h"
-#include "MailCommon/FolderTreeView"
+#include <MailCommon/FolderTreeView>
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 #include "widgets/collectionpane.h"
 #include "manageshowcollectionproperties.h"
 #include "widgets/kactionmenutransport.h"
 #include "widgets/kactionmenuaccount.h"
-#include "mailcommon/searchrulestatus.h"
+#include <MailCommon/SearchRuleStatus>
 #include "plugininterface/kmailplugininterface.h"
-#include "kpimtextedit/texttospeech.h"
+#include <KPIMTextEdit/TextToSpeech>
 #include "job/markallmessagesasreadinfolderandsubfolderjob.h"
 #include "job/removeduplicatemessageinfolderandsubfolderjob.h"
 #include "sieveimapinterface/kmsieveimappasswordprovider.h"
@@ -67,14 +67,14 @@
 #include "folderarchive/folderarchivemanager.h"
 
 #include <PimCommonAkonadi/CollectionAclPage>
-#include "PimCommon/PimUtil"
-#include "MailCommon/CollectionGeneralPage"
-#include "MailCommon/CollectionExpiryPage"
-#include "MailCommon/ExpireCollectionAttribute"
-#include "MailCommon/FilterManager"
-#include "MailCommon/MailFilter"
-#include "MailCommon/FavoriteCollectionWidget"
-#include "MailCommon/FavoriteCollectionOrderProxyModel"
+#include <PimCommon/PimUtil>
+#include <MailCommon/CollectionGeneralPage>
+#include <MailCommon/CollectionExpiryPage>
+#include <MailCommon/ExpireCollectionAttribute>
+#include <MailCommon/FilterManager>
+#include <MailCommon/MailFilter>
+#include <MailCommon/FavoriteCollectionWidget>
+#include <MailCommon/FavoriteCollectionOrderProxyModel>
 #include "mailcommonsettings_base.h"
 
 // Other PIM includes
@@ -89,11 +89,11 @@
 #include <MessageViewer/AttachmentStrategy>
 
 #ifndef QT_NO_CURSOR
-#include "Libkdepim/KCursorSaver"
+#include <Libkdepim/KCursorSaver>
 #endif
 
 #include <MessageComposer/MessageSender>
-#include "MessageComposer/MessageHelper"
+#include <MessageComposer/MessageHelper>
 
 #include <MessageCore/MessageCoreSettings>
 #include <MessageCore/MailingList>
@@ -101,12 +101,12 @@
 #include "dialog/kmknotify.h"
 #include "widgets/displaymessageformatactionmenu.h"
 
-#include "ksieveui/vacationmanager.h"
+#include <KSieveUi/VacationManager>
 #include "kmlaunchexternalcomponent.h"
 
 // LIBKDEPIM includes
-#include "libkdepim/progressmanager.h"
-#include "libkdepim/broadcaststatus.h"
+#include <Libkdepim/ProgressManager>
+#include <Libkdepim/BroadcastStatus>
 
 // KDEPIMLIBS includes
 #include <AkonadiCore/AgentManager>
@@ -188,7 +188,7 @@
 #include <QDBusConnection>
 #include <QDBusReply>
 
-#include "PimCommonAkonadi/ManageServerSideSubscriptionJob"
+#include <PimCommonAkonadi/ManageServerSideSubscriptionJob>
 #include <job/removeduplicatemailjob.h>
 #include <job/removecollectionjob.h>
 

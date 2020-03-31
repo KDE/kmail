@@ -22,7 +22,7 @@
 #include <PimCommonAkonadi/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
 #include <Akonadi/KMime/RemoveDuplicatesJob>
-#include "libkdepim/progressmanager.h"
+#include <Libkdepim/ProgressManager>
 #include <KLocalizedString>
 #include <KMessageBox>
 

@@ -19,7 +19,7 @@
 
 #ifndef FORMATCOMBOBOX_H
 #define FORMATCOMBOBOX_H
-#include "MailCommon/BackupJob"
+#include <MailCommon/BackupJob>
 
 #include <QComboBox>
 

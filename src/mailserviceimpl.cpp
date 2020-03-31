@@ -34,7 +34,7 @@
 #include "kmkernel.h"
 
 // kdepim includes
-#include "MessageComposer/MessageHelper"
+#include <MessageComposer/MessageHelper>
 
 #include <QUrl>
 #include "kmail_debug.h"

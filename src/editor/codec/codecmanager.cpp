@@ -31,7 +31,7 @@
 
 // KDE libs
 #include <KCodecAction>
-#include <messagecomposer/messagecomposersettings.h>
+#include <MessageComposer/MessageComposerSettings>
 
 CodecManager::CodecManager()
 {

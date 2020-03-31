@@ -19,9 +19,9 @@
 
 #include "collectiontemplatespage.h"
 
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailKernel>
 #include <MailCommon/FolderSettings>
-#include "TemplateParser/TemplatesConfiguration"
+#include <TemplateParser/TemplatesConfiguration>
 #include "templatesconfiguration_kfg.h"
 #include <AkonadiCore/collection.h>
 

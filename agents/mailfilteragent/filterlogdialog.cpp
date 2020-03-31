@@ -29,8 +29,8 @@
 
 #include "filterlogdialog.h"
 #include <MailCommon/FilterLog>
-#include "kpimtextedit/plaintexteditorwidget.h"
-#include "kpimtextedit/plaintexteditor.h"
+#include <KPIMTextEdit/PlainTextEditorWidget>
+#include <KPIMTextEdit/PlainTextEditor>
 #include "mailfilterpurposemenuwidget.h"
 
 #include "mailfilteragent_debug.h"

@@ -25,7 +25,7 @@
 #include "settings/kmailsettings.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailKernel>
 #include "dialog/addemailtoexistingcontactdialog.h"
 #include "job/addemailtoexistingcontactjob.h"
 
@@ -36,7 +36,7 @@
 #include <LibkdepimAkonadi/AddEmailDisplayJob>
 #include <Libkdepim/BroadcastStatus>
 #include "kmcommands.h"
-#include "MailCommon/SendMdnHandler"
+#include <MailCommon/SendMdnHandler>
 #include <QVBoxLayout>
 #include <MessageViewer/HeaderStrategy>
 #include <MessageViewer/MarkMessageReadHandler>
@@ -55,9 +55,9 @@ using namespace MessageViewer;
 
 #include <MessageViewer/AttachmentStrategy>
 #include <MessageComposer/MessageSender>
-#include "MessageComposer/Composer"
-#include "MessageComposer/TextPart"
-#include "MessageComposer/InfoPart"
+#include <MessageComposer/Composer>
+#include <MessageComposer/TextPart>
+#include <MessageComposer/InfoPart>
 
 #include <KIO/JobUiDelegate>
 
@@ -79,7 +79,7 @@ using namespace MessageViewer;
 #undef Never
 #undef Always
 
-#include <mailcommon/mailutil.h>
+#include <MailCommon/MailUtil>
 
 using namespace KMail;
 using namespace MailCommon;

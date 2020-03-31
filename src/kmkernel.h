@@ -3,7 +3,7 @@
 #ifndef KMKERNEL_H
 #define KMKERNEL_H
 
-#include "mailcommon/mailinterfaces.h"
+#include <MailCommon/MailInterfaces>
 
 #include <QList>
 #include <QObject>
@@ -16,7 +16,7 @@
 #include "settings/kmailsettings.h"
 #include <AkonadiCore/servermanager.h>
 #include <MessageViewer/Viewer>
-#include "libkdepim/progressmanager.h"
+#include <Libkdepim/ProgressManager>
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()

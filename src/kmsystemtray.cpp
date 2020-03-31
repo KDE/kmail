@@ -22,9 +22,9 @@
 #include "kmmainwidget.h"
 #include "unityservicemanager.h"
 #include "settings/kmailsettings.h"
-#include "mailcommon/mailutil.h"
-#include "MailCommon/MailKernel"
-#include "MailCommon/FolderTreeView"
+#include <MailCommon/MailUtil>
+#include <MailCommon/MailKernel>
+#include <MailCommon/FolderTreeView>
 #include <AkonadiCore/NewMailNotifierAttribute>
 
 #include <KWindowSystem>

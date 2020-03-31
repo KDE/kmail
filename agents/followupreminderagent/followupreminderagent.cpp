@@ -19,7 +19,7 @@
 
 #include "followupreminderagent.h"
 #include "followupremindermanager.h"
-#include "FollowupReminder/FollowUpReminderUtil"
+#include <FollowupReminder/FollowUpReminderUtil>
 #include "followupreminderadaptor.h"
 #include "followupreminderagentsettings.h"
 #include <KMime/Message>

@@ -23,7 +23,7 @@
 #ifndef KMAIL_ATTACHMENTCONTROLLER_H
 #define KMAIL_ATTACHMENTCONTROLLER_H
 
-#include "messagecomposer/attachmentcontrollerbase.h"
+#include <MessageComposer/AttachmentControllerBase>
 #include <AkonadiCore/Item>
 class KMComposerWin;
 class QModelIndex;

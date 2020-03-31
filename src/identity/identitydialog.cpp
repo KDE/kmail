@@ -38,32 +38,32 @@
 
 #include <QGpgME/Protocol>
 #include <QGpgME/Job>
-#include "MessageComposer/MessageComposerSettings"
+#include <MessageComposer/MessageComposerSettings>
 
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
 // other KMail headers:
 #include "xfaceconfigurator.h"
 #include <KEditListWidget>
-#include "mailcommon/folderrequester.h"
+#include <MailCommon/FolderRequester>
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "settings/kmailsettings.h"
 #include "kmkernel.h"
 #endif
 
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailKernel>
 
 #include "job/addressvalidationjob.h"
 #include <MessageComposer/Kleo_Util>
 #include <Sonnet/DictionaryComboBox>
 #include <MessageCore/StringUtil>
-#include "TemplateParser/TemplatesConfiguration"
+#include <TemplateParser/TemplatesConfiguration>
 #include "templatesconfiguration_kfg.h"
 // other kdepim headers:
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/signatureconfigurator.h>
 
-#include "PimCommon/AutoCorrectionLanguage"
+#include <PimCommon/AutoCorrectionLanguage>
 #include <PimCommon/PimUtil>
 
 #include <LibkdepimAkonadi/AddresseeLineEdit>

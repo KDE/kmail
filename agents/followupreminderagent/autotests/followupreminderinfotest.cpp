@@ -18,7 +18,7 @@
 */
 
 #include "followupreminderinfotest.h"
-#include "FollowupReminder/FollowUpReminderInfo"
+#include <FollowupReminder/FollowUpReminderInfo>
 #include <QTest>
 #include <KConfigGroup>
 #include <KSharedConfig>

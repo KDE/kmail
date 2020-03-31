@@ -16,26 +16,26 @@
 */
 
 #include "configurecomposerpage.h"
-#include "PimCommon/ConfigureImmutableWidgetUtils"
+#include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
 
 #include "kmmainwidget.h"
-#include "PimCommon/AutoCorrectionWidget"
-#include "MessageComposer/ImageScalingWidget"
-#include "MessageComposer/MessageComposerSettings"
+#include <PimCommon/AutoCorrectionWidget>
+#include <MessageComposer/ImageScalingWidget>
+#include <MessageComposer/MessageComposerSettings>
 #include <MessageCore/MessageCoreSettings>
 #include "settings/kmailsettings.h"
 #include "configuredialog/configuredialoglistview.h"
-#include "PimCommon/SimpleStringListEditor"
+#include <PimCommon/SimpleStringListEditor>
 #include "templatesconfiguration_kfg.h"
-#include "TemplateParser/TemplatesConfiguration"
-#include "templateparser/customtemplates.h"
+#include <TemplateParser/TemplatesConfiguration>
+#include <TemplateParser/CustomTemplates>
 #include "globalsettings_templateparser.h"
 
-#include "libkdepim/recentaddresses.h"
+#include <Libkdepim/RecentAddresses>
 #include <Libkdepim/LdapClientSearch>
-#include "libkdepimakonadi/completionordereditor.h"
+#include <LibkdepimAkonadi/CompletionOrderEditor>
 using KPIM::RecentAddresses;
 
 #include <KLocalizedString>

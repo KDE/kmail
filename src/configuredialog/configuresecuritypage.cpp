@@ -16,10 +16,10 @@
 */
 
 #include "configuresecuritypage.h"
-#include "PimCommon/ConfigureImmutableWidgetUtils"
+#include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageViewer/MessageViewerSettings>
-#include "MessageComposer/MessageComposerSettings"
+#include <MessageComposer/MessageComposerSettings>
 #include <WebEngineViewer/CheckPhishingUrlCache>
 #include <MailCommon/FolderSettings>
 #include "settings/kmailsettings.h"

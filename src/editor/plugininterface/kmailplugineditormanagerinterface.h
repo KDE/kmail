@@ -22,7 +22,7 @@
 
 #include <QObject>
 #include <QHash>
-#include "messagecomposer/plugineditorinterface.h"
+#include <MessageComposer/PluginEditorInterface>
 namespace KPIMTextEdit {
 class RichTextEditor;
 }

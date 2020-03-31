@@ -24,17 +24,17 @@
 #include "searchwindow.h"
 #include "incompleteindexdialog.h"
 
-#include "MailCommon/FolderRequester"
+#include <MailCommon/FolderRequester>
 #include "kmcommands.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "MailCommon/MailKernel"
-#include "MailCommon/SearchPatternEdit"
+#include <MailCommon/MailKernel>
+#include <MailCommon/SearchPatternEdit>
 #include "searchdescriptionattribute.h"
-#include "MailCommon/FolderTreeView"
+#include <MailCommon/FolderTreeView>
 #include "kmsearchmessagemodel.h"
 #include "searchpatternwarning.h"
-#include "PimCommonAkonadi/SelectMultiCollectionDialog"
+#include <PimCommonAkonadi/SelectMultiCollectionDialog>
 #include <PimCommon/PimUtil>
 
 #include <AkonadiCore/CollectionModifyJob>

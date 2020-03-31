@@ -41,7 +41,7 @@
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <AkonadiCore/changerecorder.h>
-#include "MailCommon/FolderTreeView"
+#include <MailCommon/FolderTreeView>
 #include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
 #include "kmmigrateapplication.h"

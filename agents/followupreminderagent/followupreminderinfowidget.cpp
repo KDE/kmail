@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 #include "followupreminderinfowidget.h"
-#include "FollowupReminder/FollowUpReminderInfo"
-#include "FollowupReminder/FollowUpReminderUtil"
+#include <FollowupReminder/FollowUpReminderInfo>
+#include <FollowupReminder/FollowUpReminderUtil>
 #include "jobs/followupremindershowmessagejob.h"
 #include "followupreminderagent_debug.h"
 

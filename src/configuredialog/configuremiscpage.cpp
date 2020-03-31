@@ -16,7 +16,7 @@
 */
 
 #include "configuremiscpage.h"
-#include "PimCommon/ConfigureImmutableWidgetUtils"
+#include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "settings/kmailsettings.h"
 #include "kmkernel.h"

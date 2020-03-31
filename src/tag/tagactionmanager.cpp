@@ -22,7 +22,7 @@
 
 #include "messageactions.h"
 
-#include "MailCommon/AddTagDialog"
+#include <MailCommon/AddTagDialog>
 
 #include <QAction>
 #include <KActionCollection>

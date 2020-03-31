@@ -18,7 +18,7 @@
 */
 
 #include "collectionviewpage.h"
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailKernel>
 
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entitydisplayattribute.h>
@@ -34,10 +34,10 @@
 #include <QRadioButton>
 #include "kmail_debug.h"
 
-#include "messagelist/aggregationcombobox.h"
-#include "messagelist/aggregationconfigbutton.h"
-#include "messagelist/themecombobox.h"
-#include "messagelist/themeconfigbutton.h"
+#include <MessageList/AggregationComboBox>
+#include <MessageList/AggregationConfigButton>
+#include <MessageList/ThemeComboBox>
+#include <MessageList/ThemeConfigButton>
 
 #include <MailCommon/FolderSettings>
 

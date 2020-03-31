@@ -19,7 +19,7 @@
 
 #include "collectionpane.h"
 #include "kmkernel.h"
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailKernel>
 
 #include <MailCommon/FolderSettings>
 #include <PimCommonAkonadi/MailUtil>

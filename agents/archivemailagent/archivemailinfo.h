@@ -19,7 +19,7 @@
 #ifndef ARCHIVEMAILINFO_H
 #define ARCHIVEMAILINFO_H
 
-#include "MailCommon/BackupJob"
+#include <MailCommon/BackupJob>
 #include <KConfigGroup>
 #include <Collection>
 #include <QUrl>

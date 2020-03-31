@@ -18,9 +18,9 @@
 */
 
 #include "kmailplugineditormanagerinterface.h"
-#include "messagecomposer/plugineditormanager.h"
-#include "messagecomposer/plugineditor.h"
-#include "messagecomposer/plugincomposerinterface.h"
+#include <MessageComposer/PluginEditorManager>
+#include <MessageComposer/PluginEditor>
+#include <MessageComposer/PluginComposerInterface>
 #include "kmail_debug.h"
 
 #include <QAction>

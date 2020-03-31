@@ -22,7 +22,7 @@
 
 #include <AkonadiAgentBase/agentbase.h>
 
-#include "MailCommon/SearchPattern"
+#include <MailCommon/SearchPattern>
 #include <Collection>
 #include <AkonadiCore/item.h>
 

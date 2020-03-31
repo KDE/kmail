@@ -3,8 +3,8 @@
 #ifndef KMCommands_h
 #define KMCommands_h
 #include <MessageComposer/MessageFactoryNG>
-#include "MessageList/View"
-#include "mailcommon/searchpattern.h"
+#include <MessageList/View>
+#include <MailCommon/SearchPattern>
 #include <MessageViewer/Viewer>
 
 #include <Akonadi/KMime/MessageStatus>

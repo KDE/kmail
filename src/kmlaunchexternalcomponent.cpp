@@ -27,7 +27,7 @@
 #include "archivemailagentinterface.h"
 #include "sendlateragentinterface.h"
 #include "followupreminderinterface.h"
-#include "MailCommon/FilterManager"
+#include <MailCommon/FilterManager>
 
 #include <QProcess>
 #include "kmail_debug.h"

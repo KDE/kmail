@@ -18,7 +18,7 @@
 #ifndef KMCOMPOSEREDITORNG_H
 #define KMCOMPOSEREDITORNG_H
 
-#include "messagecomposer/richtextcomposerng.h"
+#include <MessageComposer/RichTextComposerNg>
 class KMComposerWin;
 namespace KPIMTextEdit {
 class RichTextComposerEmailQuoteHighlighter;

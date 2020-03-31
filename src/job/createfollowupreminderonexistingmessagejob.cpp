@@ -19,7 +19,7 @@
 
 #include "createfollowupreminderonexistingmessagejob.h"
 #include "kmail_debug.h"
-#include "MessageComposer/FollowupReminderCreateJob"
+#include <MessageComposer/FollowupReminderCreateJob>
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemFetchScope>
 #include <KMime/Message>

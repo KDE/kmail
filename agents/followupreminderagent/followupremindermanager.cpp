@@ -19,8 +19,8 @@
 
 #include "followupremindermanager.h"
 #include "followupreminderagent_debug.h"
-#include "FollowupReminder/FollowUpReminderInfo"
-#include "FollowupReminder/FollowUpReminderUtil"
+#include <FollowupReminder/FollowUpReminderInfo>
+#include <FollowupReminder/FollowUpReminderUtil>
 #include "followupremindernoanswerdialog.h"
 #include "jobs/followupreminderjob.h"
 #include "jobs/followupreminderfinishtaskjob.h"

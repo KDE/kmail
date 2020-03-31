@@ -16,20 +16,20 @@
 */
 
 #include "configureappearancepage.h"
-#include "PimCommon/ConfigureImmutableWidgetUtils"
+#include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configuredialog/colorlistbox.h"
-#include "messagelist/aggregationcombobox.h"
-#include "messagelist/aggregationconfigbutton.h"
-#include "messagelist/themecombobox.h"
-#include "messagelist/themeconfigbutton.h"
+#include <MessageList/AggregationComboBox>
+#include <MessageList/AggregationConfigButton>
+#include <MessageList/ThemeComboBox>
+#include <MessageList/ThemeConfigButton>
 #include "messagelistsettings.h"
-#include "MailCommon/TagWidget"
+#include <MailCommon/TagWidget>
 #include "MailCommon/Tag"
 #include "kmkernel.h"
 
 #include "util.h"
-#include "MailCommon/FolderTreeWidget"
+#include <MailCommon/FolderTreeWidget>
 
 #include "kmmainwidget.h"
 
@@ -38,12 +38,12 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageViewer/ConfigureWidget>
 #include <MessageViewer/MessageViewerSettings>
 
-#include "messagelist/messagelistutil.h"
+#include <MessageList/MessageListUtil>
 #include <MessageCore/MessageCoreSettings>
 #include <MessageCore/MessageCoreUtil>
 #include "settings/kmailsettings.h"
 
-#include "MailCommon/MailUtil"
+#include <MailCommon/MailUtil>
 
 #include <AkonadiCore/Tag>
 #include <AkonadiCore/TagFetchJob>

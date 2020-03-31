@@ -19,8 +19,8 @@
 */
 
 #include "collectionmailinglistpage.h"
-#include "mailcommon/mailkernel.h"
-#include "mailcommon/mailutil.h"
+#include <MailCommon/MailKernel>
+#include <MailCommon/MailUtil>
 #include "util.h"
 
 #include <AkonadiCore/itemfetchjob.h>

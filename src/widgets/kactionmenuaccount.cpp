@@ -20,7 +20,7 @@
 #include "kactionmenuaccount.h"
 #include <AkonadiCore/AgentInstance>
 #include <AkonadiCore/AgentManager>
-#include "MailCommon/MailUtil"
+#include <MailCommon/MailUtil>
 #include "kmail_debug.h"
 #include <QMenu>
 

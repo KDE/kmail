@@ -47,7 +47,7 @@
 #include <TemplateParser/CustomTemplatesMenu>
 #include "messageactions.h"
 #include "util.h"
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailKernel>
 #include <MailCommon/FolderSettings>
 #include <MessageViewer/HeaderStylePlugin>
 #include <MessageViewer/HeaderStyle>
@@ -67,8 +67,8 @@
 #include <AkonadiCore/itemcreatejob.h>
 #include <AkonadiCore/itemmovejob.h>
 #include <Akonadi/KMime/MessageFlags>
-#include "kpimtextedit/texttospeech.h"
-#include <mailcommon/mailutil.h>
+#include <KPIMTextEdit/TextToSpeech>
+#include <MailCommon/MailUtil>
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/DKIMViewerMenu>
 using namespace MailCommon;

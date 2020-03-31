@@ -24,7 +24,7 @@
 #include <QPointer>
 #include <MailCommon/FolderSettings>
 
-#include <libkdepim/progressmanager.h>
+#include <Libkdepim/ProgressManager>
 
 namespace Akonadi {
 class CollectionPropertiesDialog;

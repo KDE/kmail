@@ -20,7 +20,7 @@
 #include "sendlaterjob.h"
 #include "sendlaterinfo.h"
 
-#include "MessageComposer/AkonadiSender"
+#include <MessageComposer/AkonadiSender>
 #include <MessageComposer/Util>
 #include <MessageCore/StringUtil>
 

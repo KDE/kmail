@@ -18,7 +18,7 @@
 */
 
 #include "followupreminderfinishtaskjob.h"
-#include "FollowupReminder/FollowUpReminderInfo"
+#include <FollowupReminder/FollowUpReminderInfo>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemModifyJob>

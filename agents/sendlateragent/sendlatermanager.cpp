@@ -22,7 +22,7 @@
 #include "sendlaterutil.h"
 #include "sendlaterjob.h"
 
-#include "MessageComposer/AkonadiSender"
+#include <MessageComposer/AkonadiSender>
 #include <MessageComposer/Util>
 
 #include <KSharedConfig>

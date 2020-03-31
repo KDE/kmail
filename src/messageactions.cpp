@@ -21,7 +21,7 @@
 #include "settings/kmailsettings.h"
 #include "kmreaderwin.h"
 #include "kmkernel.h"
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailKernel>
 #include "kmmainwidget.h"
 #include "util.h"
 #include "kmcommands.h"
@@ -41,7 +41,7 @@
 #include <AkonadiSearch/Debug/akonadisearchdebugdialog.h>
 #include <KIO/KUriFilterSearchProviderActions>
 
-#include "messagecomposer/followupreminderselectdatedialog.h"
+#include <MessageComposer/FollowUpReminderSelectDateDialog>
 #include "job/createfollowupreminderonexistingmessagejob.h"
 
 #include <AkonadiCore/ItemFetchJob>
@@ -61,7 +61,7 @@
 #include <QWidget>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entityannotationsattribute.h>
-#include <mailcommon/mailutil.h>
+#include <MailCommon/MailUtil>
 
 using namespace KMail;
 

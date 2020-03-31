@@ -25,7 +25,7 @@
 
 #include "kcmkmailsummary.h"
 
-#include "PimCommonAkonadi/CheckedCollectionWidget"
+#include <PimCommonAkonadi/CheckedCollectionWidget>
 #include <AkonadiWidgets/ETMViewStateSaver>
 #include <KMime/KMimeMessage>
 
