@@ -95,7 +95,7 @@ bool KMailPlugin::canDecodeMimeData(const QMimeData *mimeData) const
 
 void KMailPlugin::shortcutChanged()
 {
-    KParts::ReadOnlyPart *localPart = part();
+    KParts::Part *localPart = part();
     if (localPart) {
         if (localPart->metaObject()->indexOfMethod("updateQuickSearchText()") == -1) {
             qCWarning(KMAILPLUGIN_LOG) << "KMailPart part is missing slot updateQuickSearchText()";
@@ -175,9 +175,9 @@ KMailPlugin::~KMailPlugin()
     m_instance = nullptr;
 }
 
-KParts::ReadOnlyPart *KMailPlugin::createPart()
+KParts::Part *KMailPlugin::createPart()
 {
-    KParts::ReadOnlyPart *part = loadPart();
+    KParts::Part *part = loadPart();
     if (!part) {
         return nullptr;
     }

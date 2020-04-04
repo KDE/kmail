@@ -43,7 +43,7 @@ public:
     const KAboutData aboutData() override;
 
 protected:
-    KParts::ReadOnlyPart *createPart() override;
+    KParts::Part *createPart() override;
 
 private:
     void doSync();

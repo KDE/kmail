@@ -104,7 +104,7 @@ void SummaryView::doSync()
     fillSyncActionSubEntries();
 }
 
-KParts::ReadOnlyPart *SummaryView::createPart()
+KParts::Part *SummaryView::createPart()
 {
     mPart = new SummaryViewPart(core(), aboutData(), this);
     mPart->setObjectName(QStringLiteral("summaryPart"));
