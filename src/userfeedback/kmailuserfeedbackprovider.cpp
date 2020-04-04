@@ -49,7 +49,7 @@ KMailUserFeedbackProvider::KMailUserFeedbackProvider(QObject *parent)
 
     addDataSource(new KUserFeedback::LocaleInfoSource);
     addDataSource(new AccountInfoSource);
-    addDataSource(new PluginInfoSource);
+    //addDataSource(new PluginInfoSource);
 }
 
 KMailUserFeedbackProvider::~KMailUserFeedbackProvider()
