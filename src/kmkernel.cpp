@@ -161,7 +161,7 @@ KMKernel::KMKernel(QObject *parent)
 
     mUserFeedbackProvider->addDataSource(new KUserFeedback::LocaleInfoSource);
     mUserFeedbackProvider->addDataSource(new AccountInfoSource);
-    mUserFeedbackProvider->addDataSource(new PluginInfoSource);
+    //mUserFeedbackProvider->addDataSource(new PluginInfoSource);
 #endif
 
 
