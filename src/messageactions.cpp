@@ -62,6 +62,7 @@
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entityannotationsattribute.h>
 #include <mailcommon/mailutil.h>
+#include <MessageViewer/MessageViewerUtil>
 
 using namespace KMail;
 
@@ -769,18 +770,7 @@ void MessageActions::slotAddFollowupReminder()
 
 void MessageActions::slotExportToPdf()
 {
-    if (!mCurrentItem.isValid()) {
-        return;
-    }
-
-    auto email = mCurrentItem.payload<KMime::Message::Ptr>();
-    QString fileName;
-
-    fileName = MessageCore::StringUtil::cleanFileName(MessageCore::StringUtil::cleanSubject(email.data()).trimmed());
-    fileName.remove(QLatin1Char('\"'));
-    if (!fileName.endsWith(QLatin1String(".pdf"))) {
-        fileName += QLatin1String(".pdf");
-    }
+    QString fileName = MessageViewer::Util::generateFileNameForExtension(mCurrentItem, QStringLiteral(".pdf"));
     fileName = QFileDialog::getSaveFileName(mParent, i18n("Export to PDF"),
                 QDir::homePath() + QLatin1Char('/') + fileName,
                 i18n("PDF document (*.pdf)"));
