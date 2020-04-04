@@ -32,7 +32,7 @@
 
 class KMMainWidget;
 
-class KMailPart : public KParts::Part
+class KMailPart : public KParts::ReadOnlyPart
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmailpart")
@@ -49,6 +49,7 @@ public Q_SLOTS:
     void updateQuickSearchText();
 
 protected:
+    bool openFile() override;
     void guiActivateEvent(KParts::GUIActivateEvent *e) override;
 
 private:
