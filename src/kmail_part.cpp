@@ -54,7 +54,7 @@ K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();
 using namespace KMail;
 
 KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &)
-    : KParts::ReadOnlyPart(parent)
+    : KParts::Part(parent)
     , mParentWidget(parentWidget)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
@@ -114,17 +114,11 @@ void KMailPart::updateQuickSearchText()
     mainWidget->updateQuickSearchLineText();
 }
 
-bool KMailPart::openFile()
-{
-    mainWidget->show();
-    return true;
-}
-
 //-----------------------------------------------------------------------------
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
-    KParts::ReadOnlyPart::guiActivateEvent(e);
+    KParts::Part::guiActivateEvent(e);
     if (e->activated()) {
         mainWidget->initializeFilterActions(true);
         mainWidget->tagActionManager()->createActions();

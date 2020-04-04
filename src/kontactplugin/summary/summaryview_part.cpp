@@ -53,7 +53,7 @@ using KPIM::BroadcastStatus;
 #include <QLocale>
 
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
-    : KParts::ReadOnlyPart(parent)
+    : KParts::Part(parent)
     , mCore(core)
     , mFrame(nullptr)
     , mConfigAction(nullptr)
@@ -88,11 +88,6 @@ SummaryViewPart::~SummaryViewPart()
     saveLayout();
 }
 
-bool SummaryViewPart::openFile()
-{
-    return true;
-}
-
 void SummaryViewPart::partActivateEvent(KParts::PartActivateEvent *event)
 {
     // inform the plugins that the part has been activated so that they can
@@ -101,7 +96,7 @@ void SummaryViewPart::partActivateEvent(KParts::PartActivateEvent *event)
         updateSummaries();
     }
 
-    KParts::ReadOnlyPart::partActivateEvent(event);
+    KParts::Part::partActivateEvent(event);
 }
 
 void SummaryViewPart::updateSummaries()

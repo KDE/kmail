@@ -24,7 +24,7 @@
 #ifndef SUMMARYVIEW_PART_H
 #define SUMMARYVIEW_PART_H
 
-#include <KParts/ReadOnlyPart>
+#include <KParts/Part>
 #include <QMap>
 
 class DropWidget;
@@ -41,7 +41,7 @@ class QFrame;
 class QLabel;
 class QVBoxLayout;
 
-class SummaryViewPart : public KParts::ReadOnlyPart
+class SummaryViewPart : public KParts::Part
 {
     Q_OBJECT
 
@@ -59,7 +59,6 @@ Q_SIGNALS:
     void textChanged(const QString &);
 
 protected:
-    Q_REQUIRED_RESULT bool openFile() override;
     void partActivateEvent(KParts::PartActivateEvent *event) override;
 
 protected Q_SLOTS:
