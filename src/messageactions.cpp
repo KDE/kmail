@@ -364,6 +364,7 @@ void MessageActions::updateActions()
     mReplyAllAction->setEnabled(hasPayload);
     mReplyListAction->setEnabled(hasPayload);
     mNoQuoteReplyAction->setEnabled(hasPayload);
+    mSendAgainAction->setEnabled(itemValid);
 
     mAnnotateAction->setEnabled(uniqItem);
     mAddFollowupReminderAction->setEnabled(uniqItem);
