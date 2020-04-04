@@ -24,10 +24,10 @@
 #include <MessageComposer/Util>
 #include <MessageCore/StringUtil>
 
-#include <mailtransportakonadi/transportattribute.h>
-#include <mailtransportakonadi/sentbehaviourattribute.h>
-#include <mailtransport/transport.h>
-#include <mailtransport/transportmanager.h>
+#include <MailTransportAkonadi/TransportAttribute>
+#include <MailTransportAkonadi/SentBehaviourAttribute>
+#include <MailTransport/Transport>
+#include <MailTransport/TransportManager>
 
 #include <ItemFetchJob>
 #include <ItemDeleteJob>

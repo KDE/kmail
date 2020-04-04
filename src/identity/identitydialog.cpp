@@ -78,9 +78,9 @@
 
 #include <KEmailAddress>
 #include <Libkdepim/EmailValidator>
-#include <mailtransport/transport.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transportcombobox.h>
+#include <MailTransport/Transport>
+#include <MailTransport/TransportManager>
+#include <MailTransport/TransportComboBox>
 using MailTransport::TransportManager;
 
 // other KDE headers:

@@ -138,13 +138,13 @@
 #include <kidentitymanagement/identity.h>
 #include <kidentitymanagement/identitymanager.h>
 #include <KEmailAddress>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transport.h>
+#include <MailTransport/TransportManager>
+#include <MailTransport/Transport>
 #include <kmime/kmime_mdn.h>
 #include <kmime/kmime_header_parsing.h>
 #include <kmime/kmime_message.h>
-#include <ksieveui/managesievescriptsdialog.h>
-#include <ksieveui/util.h>
+#include <KSieveUi/ManageSieveScriptsDialog>
+#include <KSieveUi/Util>
 
 #include <PimCommon/LogActivitiesManager>
 

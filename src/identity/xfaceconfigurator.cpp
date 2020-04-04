@@ -37,7 +37,7 @@
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KPIMTextEdit/PlainTextEditor>
 #include <KPIMTextEdit/PlainTextEditorWidget>
-#include <messageviewer/kxface.h>
+#include <MessageViewer/KXFace>
 
 #include <KJobWidgets>
 #include <QComboBox>

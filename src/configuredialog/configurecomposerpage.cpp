@@ -57,7 +57,7 @@ using KPIM::RecentAddresses;
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 
-#include <libkdepimakonadi/completionconfiguredialog.h>
+#include <LibkdepimAkonadi/CompletionConfigureDialog>
 #ifdef KDEPIM_ENTERPRISE_BUILD
 #include <QComboBox>
 #endif

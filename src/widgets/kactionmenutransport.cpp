@@ -19,7 +19,7 @@
 
 #include "kactionmenutransport.h"
 #include <QMenu>
-#include <mailtransport/transportmanager.h>
+#include <MailTransport/TransportManager>
 
 KActionMenuTransport::KActionMenuTransport(QObject *parent)
     : KActionMenu(parent)

@@ -20,7 +20,7 @@
 #ifndef KMSIEVEIMAPPASSWORDPROVIDER_H
 #define KMSIEVEIMAPPASSWORDPROVIDER_H
 
-#include <ksieveui/sieveimappasswordprovider.h>
+#include <KSieveUi/SieveImapPasswordProvider>
 
 #include <QWidget> // for WId
 
