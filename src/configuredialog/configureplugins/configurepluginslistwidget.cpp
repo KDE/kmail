@@ -164,6 +164,7 @@ void ConfigurePluginsListWidget::saveAkonadiAgent()
 void ConfigurePluginsListWidget::doLoadFromGlobalSettings()
 {
     initialize();
+    initializeDone();
 }
 
 void ConfigurePluginsListWidget::doResetToDefaultsOther()
