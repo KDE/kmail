@@ -59,6 +59,8 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData 
     , mConfigAction(nullptr)
 {
     Q_UNUSED(aboutData);
+    setComponentName(QStringLiteral("kontactsummary"), i18n("Kontact Summary"));
+
     loadLayout();
 
     initGUI(core);
