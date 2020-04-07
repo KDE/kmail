@@ -121,7 +121,7 @@ void ArchiveMailManager::backupDone(ArchiveMailInfo *info)
             if (lst.count() > info->maximumArchiveCount()) {
                 const int diff = (lst.count() - info->maximumArchiveCount());
                 for (int i = 0; i < diff; ++i) {
-                    const QString fileToRemove(info->url().path() + QDir::separator() + lst.at(i));
+                    const QString fileToRemove(info->url().path() + QLatin1Char('/') + lst.at(i));
                     qCDebug(ARCHIVEMAILAGENT_LOG) << " file to remove " << fileToRemove;
                     QFile::remove(fileToRemove);
                 }
