@@ -3,7 +3,7 @@ Type=Service
 Icon=view-calendar-agenda
 X-KDE-ServiceTypes=Kontact/Plugin,KPluginInfo
 
-X-KDE-Library=kontact_summaryplugin
+X-KDE-Library=kontact5/kontact_summaryplugin
 X-KDE-KontactPluginVersion=10
 
 X-KDE-PluginInfo-Name=kontact_summaryplugin

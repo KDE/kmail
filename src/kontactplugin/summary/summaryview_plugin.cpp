@@ -34,7 +34,7 @@
 
 #include <QMenu>
 
-EXPORT_KONTACT_PLUGIN(SummaryView, summary)
+EXPORT_KONTACT_PLUGIN_WITH_JSON(SummaryView, "summaryplugin.json")
 
 SummaryView::SummaryView(KontactInterface::Core *core, const QVariantList &)
     : KontactInterface::Plugin(core, core, nullptr)

@@ -3,7 +3,7 @@ Type=Service
 Icon=view-pim-mail
 X-KDE-ServiceTypes=Kontact/Plugin,KPluginInfo
 
-X-KDE-Library=kontact_kmailplugin
+X-KDE-Library=kontact5/kontact_kmailplugin
 X-KDE-KontactPluginVersion=10
 X-KDE-KontactPartLibraryName=kmailpart
 X-KDE-KontactPartExecutableName=kmail

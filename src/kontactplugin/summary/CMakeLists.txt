@@ -11,6 +11,8 @@ add_dependencies(kontact_summaryplugin kmail_xml)
 
 target_link_libraries(kontact_summaryplugin KF5::KCMUtils  KF5::IdentityManagement KF5::KontactInterface KF5::Libkdepim KF5::ConfigCore)
 
+kcoreaddons_desktop_to_json(kontact_summaryplugin summaryplugin.desktop)
+
 ########### next target ###############
 
 set(kcm_kontactsummary_PART_SRCS kcmkontactsummary.cpp)
@@ -21,7 +23,7 @@ target_link_libraries(kcm_kontactsummary KF5::KCMUtils Qt5::Widgets KF5::KCMUtil
 
 ########### install files ###############
 
-install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact5)
 install(TARGETS kcm_kontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 install(FILES summaryplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR}/kontact)

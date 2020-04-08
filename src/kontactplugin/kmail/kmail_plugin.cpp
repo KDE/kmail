@@ -47,7 +47,7 @@
 using namespace KCalUtils;
 using namespace KCalendarCore;
 
-EXPORT_KONTACT_PLUGIN(KMailPlugin, kmail)
+EXPORT_KONTACT_PLUGIN_WITH_JSON(KMailPlugin, "kmailplugin.json")
 
 KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
     : KontactInterface::Plugin(core, core, "kmail2")
