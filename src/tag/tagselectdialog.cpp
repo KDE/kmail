@@ -66,6 +66,7 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
 
     QVBoxLayout *vbox = new QVBoxLayout;
     mainWidget->setLayout(vbox);
+    vbox->setContentsMargins(0, 0, 0, 0);
     mListTag = new QListWidget(this);
     mListTag->setObjectName(QStringLiteral("listtag"));
     KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
