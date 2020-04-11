@@ -100,7 +100,7 @@ void FolderShortcutActionManager::updateShortcutsForIndex(const QModelIndex &par
             if (collection.isValid()) {
                 shortcutChanged(collection);
             }
-            if (model->rowCount(child) > 0) {
+            if (model->hasChildren(child)) {
                 updateShortcutsForIndex(child, 0, model->rowCount(child) - 1);
             }
         }

@@ -97,7 +97,7 @@ void UnityServiceManager::unreadMail(const QAbstractItemModel *model, const QMod
                 }
             }
         }
-        if (model->rowCount(index) > 0) {
+        if (model->hasChildren(index)) {
             unreadMail(model, index);
         }
     }
