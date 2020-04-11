@@ -38,7 +38,7 @@
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <AkonadiCore/CollectionStatistics>
-#include <AkonadiCore/NewMailNotifierAttribute>
+#include <Akonadi/KMime/NewMailNotifierAttribute>
 
 using namespace KMail;
 

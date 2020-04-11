@@ -24,7 +24,6 @@
 #include "filterlogdialog.h"
 #include "filtermanager.h"
 #include "mailfilteragentadaptor.h"
-#include <AkonadiCore/Pop3ResourceAttribute>
 
 #include <AkonadiCore/ServerManager>
 #include <AkonadiCore/changerecorder.h>
@@ -34,6 +33,7 @@
 #include <AkonadiCore/itemfetchscope.h>
 #include <Akonadi/KMime/MessageParts>
 #include <Akonadi/KMime/MessageStatus>
+#include <Akonadi/KMime/Pop3ResourceAttribute>
 #include <AkonadiCore/session.h>
 #include <MailCommon/MailKernel>
 #include <KLocalizedString>
