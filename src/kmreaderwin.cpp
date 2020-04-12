@@ -881,6 +881,11 @@ QAction *KMReaderWin::editContactAction() const
     return mEditContactAction;
 }
 
+QAction *KMReaderWin::developmentToolsAction() const
+{
+    return mViewer->developmentToolsAction();
+}
+
 QMenu *KMReaderWin::viewHtmlOption() const
 {
     return mViewHtmlOptions;

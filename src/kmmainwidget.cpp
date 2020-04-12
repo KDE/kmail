@@ -2822,6 +2822,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
         if (kmkernel->allowToDebug()) {
             menu.addSeparator();
             menu.addAction(mMsgActions->debugAkonadiSearchAction());
+            menu.addSeparator();
+            menu.addAction(mMsgView->developmentToolsAction());
         }
     }
     if (mMsgView) {

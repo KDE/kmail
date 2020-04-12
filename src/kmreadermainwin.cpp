@@ -776,6 +776,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
         if (kmkernel->allowToDebug()) {
             menu->addSeparator();
             menu->addAction(mMsgActions->debugAkonadiSearchAction());
+            menu->addSeparator();
+            menu->addAction(mReaderWin->developmentToolsAction());
         }
     }
     const QList<QAction *> interceptorUrlActions = mReaderWin->interceptorUrlActions(result);
