@@ -194,7 +194,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
 
     QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog(collection, mPages, mMainWidget);
     dlg->setWindowTitle(i18nc("@title:window", "Properties of Folder %1", collection.name()));
-    connect(dlg.data(), &Akonadi::CollectionPropertiesDialog::accepted, mMainWidget, &KMMainWidget::slotUpdateConfig);
+    connect(dlg.data(), &Akonadi::CollectionPropertiesDialog::settingsSaved, mMainWidget, &KMMainWidget::slotUpdateConfig);
 
     const QString pageToShow = fetch->property("pageToShow").toString();
     if (!pageToShow.isEmpty()) {                          // show a specific page

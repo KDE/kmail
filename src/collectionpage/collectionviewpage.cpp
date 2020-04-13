@@ -323,4 +323,5 @@ void CollectionViewPage::save(Akonadi::Collection &col)
         qCDebug(KMAIL_LOG) << "No settings defined";
     }
     mFolderCollection->setFormatMessage(formatMessage);
+    mFolderCollection->writeConfig();
 }
