@@ -201,6 +201,14 @@
 #include <gpgme++/keylistresult.h>
 #include <gpgme++/key.h>
 
+#include <kio_version.h>
+
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 70, 0)
+#include <KDialogJobUiDelegate>
+#include <KIO/CommandLauncherJob>
+#endif
+
+
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;
@@ -1988,7 +1996,14 @@ void KMComposerWin::addAttach(KMime::Content *msgPart)
 
 void KMComposerWin::slotAddressBook()
 {
-    KRun::runCommand(QStringLiteral("kaddressbook"), window());
+#if KIO_VERSION < QT_VERSION_CHECK(5, 70, 0)
+    KRun::runCommand(QStringLiteral("kaddressbook"), this);
+#else
+    KIO::CommandLauncherJob *job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
+    job->setDesktopName(QStringLiteral("org.kde.kaddressbook"));
+    job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+    job->start();
+#endif
 }
 
 void KMComposerWin::slotInsertFile()
