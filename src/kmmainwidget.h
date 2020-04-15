@@ -527,6 +527,7 @@ private:
     void setShowStatusBarMessage(const QString &msg);
     void slotRestartAccount();
     void slotAccountSettings();
+    void updateDisplayFormatMessage();
 
     // Message actions
     QAction *mDeleteAction = nullptr;

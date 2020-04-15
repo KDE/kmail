@@ -589,7 +589,10 @@ void KMMainWidget::readPreConfig()
 
     mEnableFavoriteFolderView = (KMKernel::self()->mailCommonSettings()->favoriteCollectionViewMode() != MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode);
     mEnableFolderQuickSearch = KMailSettings::self()->enableFolderQuickSearch();
+}
 
+void KMMainWidget::updateDisplayFormatMessage()
+{
     readFolderConfig();
     updateHtmlMenuEntry();
     if (mMsgView) {
@@ -4764,8 +4767,7 @@ void KMMainWidget::slotRemoveDuplicateRecursive()
 
 void KMMainWidget::slotUpdateConfig()
 {
-    readFolderConfig();
-    updateHtmlMenuEntry();
+    updateDisplayFormatMessage();
 }
 
 void KMMainWidget::printCurrentMessage(bool preview)
