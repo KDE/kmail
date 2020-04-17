@@ -23,7 +23,7 @@
 
 class QCheckBox;
 class KUrlRequester;
-class KComboBox;
+class QComboBox;
 class QPushButton;
 namespace Akonadi {
 class Collection;
@@ -56,7 +56,7 @@ private:
     QCheckBox *mDeleteCheckBox = nullptr;
     QCheckBox *mRecursiveCheckBox = nullptr;
     MailCommon::FolderRequester *mFolderRequester = nullptr;
-    KComboBox *mFormatComboBox = nullptr;
+    QComboBox *mFormatComboBox = nullptr;
     KUrlRequester *mUrlRequester = nullptr;
     QPushButton *mOkButton = nullptr;
 };

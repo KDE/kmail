@@ -1,4 +1,5 @@
 /* Copyright 2009 Klarälvdalens Datakonsult AB
+   Copyright 2020 Laurent Montel <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
@@ -27,7 +28,7 @@
 #include <AkonadiCore/Collection>
 
 #include <KLocalizedString>
-#include <KComboBox>
+#include <QComboBox>
 #include <KUrlRequester>
 #include <KMessageBox>
 #include <KSeparator>
@@ -93,7 +94,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 
     QLabel *formatLabel = new QLabel(i18n("F&ormat:"), mainWidget);
     mainLayout->addWidget(formatLabel, row, 0);
-    mFormatComboBox = new KComboBox(mainWidget);
+    mFormatComboBox = new QComboBox(mainWidget);
     formatLabel->setBuddy(mFormatComboBox);
 
     // These combobox values have to stay in sync with the ArchiveType enum from BackupJob!
@@ -102,7 +103,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mFormatComboBox->addItem(i18n("BZ2-Compressed Tar Archive (.tar.bz2)"));
     mFormatComboBox->addItem(i18n("GZ-Compressed Tar Archive (.tar.gz)"));
     mFormatComboBox->setCurrentIndex(2);
-    connect(mFormatComboBox, qOverload<int>(&KComboBox::activated), this, &ArchiveFolderDialog::slotFixFileExtension);
+    connect(mFormatComboBox, qOverload<int>(&QComboBox::activated), this, &ArchiveFolderDialog::slotFixFileExtension);
     mainLayout->addWidget(mFormatComboBox, row, 1);
     row++;
 
