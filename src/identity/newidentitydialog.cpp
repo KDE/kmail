@@ -24,10 +24,10 @@
 #include "newidentitydialog.h"
 
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-
+#include <Libkdepim/LineEditCatchReturnKey>
 #include <PimCommon/PimUtil>
 #include <QComboBox>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <KLocalizedString>
 #include <KSeparator>
 
@@ -66,14 +66,15 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     // row 0: line edit with label
     QHBoxLayout *hlay = new QHBoxLayout();  // inherits spacing
     vlay->addLayout(hlay);
-    mLineEdit = new KLineEdit(page);
+    mLineEdit = new QLineEdit(page);
     mLineEdit->setFocus();
     mLineEdit->setClearButtonEnabled(true);
+    new KPIM::LineEditCatchReturnKey(mLineEdit, this);
     QLabel *l = new QLabel(i18n("&New identity:"), page);
     l->setBuddy(mLineEdit);
     hlay->addWidget(l);
     hlay->addWidget(mLineEdit, 1);
-    connect(mLineEdit, &KLineEdit::textChanged, this, &NewIdentityDialog::slotEnableOK);
+    connect(mLineEdit, &QLineEdit::textChanged, this, &NewIdentityDialog::slotEnableOK);
 
     mButtonGroup = new QButtonGroup(page);
 

@@ -25,6 +25,7 @@
 
 #include <KLocalizedString>
 #include <KUrlRequester>
+#include <KLineEdit>
 #include <QSpinBox>
 #include <KSeparator>
 #include <QIcon>

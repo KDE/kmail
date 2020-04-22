@@ -38,7 +38,7 @@ class QCheckBox;
 class KEditListWidget;
 class QComboBox;
 class KJob;
-class KLineEdit;
+class QLineEdit;
 class QPushButton;
 class QTabWidget;
 
@@ -109,9 +109,9 @@ private:
     QString mVcardFilename;
 
     // "general" tab:
-    KLineEdit *mNameEdit = nullptr;
-    KLineEdit *mOrganizationEdit = nullptr;
-    KLineEdit *mEmailEdit = nullptr;
+    QLineEdit *mNameEdit = nullptr;
+    QLineEdit *mOrganizationEdit = nullptr;
+    QLineEdit *mEmailEdit = nullptr;
     KEditListWidget *mAliasEdit = nullptr;
     // "cryptography" tab:
     QWidget *mCryptographyTab = nullptr;
@@ -123,9 +123,9 @@ private:
     QCheckBox *mAutoSign = nullptr;
     QCheckBox *mAutoEncrypt = nullptr;
     // "advanced" tab:
-    KLineEdit *mReplyToEdit = nullptr;
-    KLineEdit *mBccEdit = nullptr;
-    KLineEdit *mCcEdit = nullptr;
+    QLineEdit *mReplyToEdit = nullptr;
+    QLineEdit *mBccEdit = nullptr;
+    QLineEdit *mCcEdit = nullptr;
     Sonnet::DictionaryComboBox *mDictionaryCombo = nullptr;
     IdentityFolderRequester *mFccFolderRequester = nullptr;
     QCheckBox *mSentMailFolderCheck = nullptr;
@@ -136,7 +136,7 @@ private:
     QCheckBox *mAttachMyVCard = nullptr;
     QPushButton *mEditVCard = nullptr;
     PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
-    KLineEdit *mDefaultDomainEdit = nullptr;
+    QLineEdit *mDefaultDomainEdit = nullptr;
 
     // "templates" tab:
     TemplateParser::TemplatesConfiguration *mWidget = nullptr;

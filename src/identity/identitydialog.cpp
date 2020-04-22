@@ -67,6 +67,7 @@
 #include <PimCommon/PimUtil>
 
 #include <LibkdepimAkonadi/AddresseeLineEdit>
+#include <Libkdepim/LineEditCatchReturnKey>
 // libkleopatra:
 #include <Libkleo/KeySelectionCombo>
 #include <Libkleo/DefaultKeyFilter>
@@ -303,7 +304,8 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Name" line edit and label:
     ++row;
-    mNameEdit = new KLineEdit(tab);
+    mNameEdit = new QLineEdit(tab);
+    new LineEditCatchReturnKey(mNameEdit, this);
     glay->addWidget(mNameEdit, row, 1);
     QLabel *label = new QLabel(i18n("&Your name:"), tab);
     label->setBuddy(mNameEdit);
@@ -318,7 +320,8 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Organization" line edit and label:
     ++row;
-    mOrganizationEdit = new KLineEdit(tab);
+    mOrganizationEdit = new QLineEdit(tab);
+    new LineEditCatchReturnKey(mOrganizationEdit, this);
     glay->addWidget(mOrganizationEdit, row, 1);
     label = new QLabel(i18n("Organi&zation:"), tab);
     label->setBuddy(mOrganizationEdit);
@@ -334,7 +337,8 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Email Address" line edit and label:
     // (row 3: spacer)
     ++row;
-    mEmailEdit = new KLineEdit(tab);
+    mEmailEdit = new QLineEdit(tab);
+    new LineEditCatchReturnKey(mEmailEdit, this);
     glay->addWidget(mEmailEdit, row, 1);
     label = new QLabel(i18n("&Email address:"), tab);
     label->setBuddy(mEmailEdit);
@@ -625,7 +629,8 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "default domain" input field:
     ++row;
     QHBoxLayout *hbox = new QHBoxLayout;
-    mDefaultDomainEdit = new KLineEdit(tab);
+    mDefaultDomainEdit = new QLineEdit(tab);
+    new LineEditCatchReturnKey(mDefaultDomainEdit, this);
     mDefaultDomainEdit->setClearButtonEnabled(true);
     hbox->addWidget(mDefaultDomainEdit);
     QToolButton *restoreDefaultDomainName = new QToolButton;

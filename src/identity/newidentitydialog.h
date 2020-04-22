@@ -27,7 +27,7 @@
 #include <QDialog>
 
 class QComboBox;
-class KLineEdit;
+class QLineEdit;
 class QButtonGroup;
 
 namespace KIdentityManagement {
@@ -55,7 +55,7 @@ public:
 private:
     void slotHelp();
     void slotEnableOK(const QString &);
-    KLineEdit *mLineEdit = nullptr;
+    QLineEdit *mLineEdit = nullptr;
     QComboBox *mComboBox = nullptr;
     QButtonGroup *mButtonGroup = nullptr;
     KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
