@@ -35,7 +35,7 @@
 #include <QVBoxLayout>
 
 #include <QComboBox>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <KEditListWidget>
 #include <KLocalizedString>
 #include <KMessageBox>
