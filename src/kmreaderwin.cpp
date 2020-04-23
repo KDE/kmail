@@ -835,7 +835,7 @@ void KMReaderWin::slotContactHtmlOptions()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    KPIM::AddEmailDiplayJob *job = new KPIM::AddEmailDiplayJob(emailString, mMainWindow, this);
+    KPIM::AddEmailDisplayJob *job = new KPIM::AddEmailDisplayJob(emailString, mMainWindow, this);
     job->setRemoteContent(mLoadExternalReference->isChecked());
     job->setShowAsHTML(mViewAsHtml->isChecked());
     job->setContact(mSearchedContact);
