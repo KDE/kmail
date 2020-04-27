@@ -836,10 +836,20 @@ void KMReaderWin::slotContactHtmlOptions()
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
     KPIM::AddEmailDiplayJob *job = new KPIM::AddEmailDiplayJob(emailString, mMainWindow, this);
+    job->setMessageId(mViewer->messageItem().id());
+    connect(job, &KPIM::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
     job->setRemoteContent(mLoadExternalReference->isChecked());
     job->setShowAsHTML(mViewAsHtml->isChecked());
     job->setContact(mSearchedContact);
     job->start();
+}
+
+void KMReaderWin::slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent)
+{
+    Q_UNUSED(contact)
+    if (mViewer->messageItem().id() == id) {
+        mViewer->slotChangeDisplayMail(showAsHTML ? Viewer::Html : Viewer::Text, remoteContent);
+    }
 }
 
 void KMReaderWin::slotEditContact()
