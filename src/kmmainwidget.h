@@ -523,11 +523,13 @@ private:
     void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
     void setupUnifiedMailboxChecker();
     QAction *filterToAction(MailCommon::MailFilter *filter);
-    Akonadi::Collection::List applyFilterOnCollection(bool recursive);
+    Q_REQUIRED_RESULT Akonadi::Collection::List applyFilterOnCollection(bool recursive);
     void setShowStatusBarMessage(const QString &msg);
     void slotRestartAccount();
     void slotAccountSettings();
     void updateDisplayFormatMessage();
+    void slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent);
+
 
     // Message actions
     QAction *mDeleteAction = nullptr;

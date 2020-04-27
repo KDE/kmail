@@ -220,12 +220,13 @@ public Q_SLOTS:
     void slotPrintingFinished();
 
 protected:
-    QUrl urlClicked() const;
-    QUrl imageUrlClicked() const;
+    Q_REQUIRED_RESULT QUrl urlClicked() const;
+    Q_REQUIRED_RESULT QUrl imageUrlClicked() const;
 
 private:
     void createActions();
     void updateHtmlActions();
+    void slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent);
 
 private:
     KContacts::Addressee mSearchedAddress;
