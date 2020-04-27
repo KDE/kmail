@@ -837,7 +837,7 @@ void KMReaderWin::slotContactHtmlOptions()
 
     KPIM::AddEmailDiplayJob *job = new KPIM::AddEmailDiplayJob(emailString, mMainWindow, this);
     job->setMessageId(mViewer->messageItem().id());
-    connect(job, &KPIM::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
+    connect(job, &KPIM::AddEmailDiplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
     job->setRemoteContent(mLoadExternalReference->isChecked());
     job->setShowAsHTML(mViewAsHtml->isChecked());
     job->setContact(mSearchedContact);
