@@ -872,7 +872,11 @@ void KMReaderWin::slotContactEditorError(const QString &error)
 
 void KMReaderWin::contactStored(const Akonadi::Item &item)
 {
-    Q_UNUSED(item);
+    if (item.hasPayload<KContacts::Addressee>()) {
+        const KContacts::Addressee contact = item.payload<KContacts::Addressee>();
+        setContactItem(item, contact);
+        mViewer->slotChangeDisplayMail(mViewAsHtml->isChecked() ? Viewer::Html : Viewer::Text, mLoadExternalReference->isChecked());
+    }
     KPIM::BroadcastStatus::instance()->setStatusMsg(i18n("Contact modified successfully"));
 }
 
