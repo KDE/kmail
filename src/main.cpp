@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
     about.processCommandLine(cmdArgs);
 
 #ifdef WITH_KUSERFEEDBACK
-    if(cmdArgs->isSet(QStringLiteral("feedback"))) {
+    if (cmdArgs->isSet(QStringLiteral("feedback"))) {
         KMailUserFeedbackProvider *userFeedback = new KMailUserFeedbackProvider(nullptr);
         QTextStream(stdout) << userFeedback->describeDataSources() << '\n';
         delete userFeedback;

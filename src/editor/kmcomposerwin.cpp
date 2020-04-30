@@ -208,7 +208,6 @@
 #include <KIO/CommandLauncherJob>
 #endif
 
-
 using Sonnet::DictionaryComboBox;
 using MailTransport::TransportManager;
 using MailTransport::Transport;

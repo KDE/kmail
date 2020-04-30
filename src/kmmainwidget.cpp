@@ -199,7 +199,6 @@
 #include <KUserFeedback/Provider>
 #endif
 
-
 using namespace KMime;
 using namespace Akonadi;
 using namespace MailCommon;

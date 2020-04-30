@@ -25,7 +25,6 @@
 PluginInfoSource::PluginInfoSource()
     : KUserFeedback::AbstractDataSource(QStringLiteral("plugins"), KUserFeedback::Provider::DetailedSystemInformation)
 {
-
 }
 
 QString PluginInfoSource::name() const

@@ -149,7 +149,6 @@ public Q_SLOTS:
 
     void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) override;
 
-
 Q_SIGNALS:
     void identityChanged(const KIdentityManagement::Identity &identity);
 

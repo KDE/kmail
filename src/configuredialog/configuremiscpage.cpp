@@ -219,5 +219,4 @@ void KuserFeedBackPageTab::doLoadFromGlobalSettings()
     }
 }
 
-
 #endif

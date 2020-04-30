@@ -28,7 +28,6 @@
 AccountInfoSource::AccountInfoSource()
     : KUserFeedback::AbstractDataSource(QStringLiteral("accounts"), KUserFeedback::Provider::DetailedSystemInformation)
 {
-
 }
 
 QString AccountInfoSource::name() const

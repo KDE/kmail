@@ -118,7 +118,6 @@ using KMail::MailServiceImpl;
 #include "userfeedback/kmailuserfeedbackprovider.h"
 #endif
 
-
 //#define DEBUG_SCHEDULER 1
 using namespace MailCommon;
 
@@ -1976,4 +1975,5 @@ KUserFeedback::Provider *KMKernel::userFeedbackProvider() const
 {
     return mUserFeedbackProvider;
 }
+
 #endif

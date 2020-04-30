@@ -104,9 +104,7 @@ public:
 private:
     void doLoadFromGlobalSettings() override;
     KUserFeedback::FeedbackConfigWidget *mUserFeedbackWidget = nullptr;
-
 };
 #endif
-
 
 #endif // CONFIGUREMISCPAGE_H

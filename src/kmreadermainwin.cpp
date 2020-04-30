@@ -815,4 +815,3 @@ void KMReaderMainWin::slotUpdateToolbars()
     createGUI(QStringLiteral("kmreadermainwin.rc"));
     applyMainWindowSettings(KConfigGroup(KMKernel::self()->config(), "ReaderWindow"));
 }
-

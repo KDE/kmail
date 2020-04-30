@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #include "kmailuserfeedbackprovider.h"
 #include <KUserFeedback/ApplicationVersionSource>
 #include <KUserFeedback/PlatformInfoSource>
@@ -54,5 +53,4 @@ KMailUserFeedbackProvider::KMailUserFeedbackProvider(QObject *parent)
 
 KMailUserFeedbackProvider::~KMailUserFeedbackProvider()
 {
-
 }

@@ -17,7 +17,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-
 #ifndef ACCOUNTINFOSOURCE_H
 #define ACCOUNTINFOSOURCE_H
 #include <KUserFeedback/AbstractDataSource>
