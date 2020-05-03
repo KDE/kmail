@@ -4220,7 +4220,7 @@ void KMMainWidget::initializePluginActions()
 
 QAction *KMMainWidget::filterToAction(MailCommon::MailFilter *filter)
 {
-    QString displayText = i18n("Filter %1", filter->name());
+    const QString displayText = i18n("Filter %1", filter->name());
     QString icon = filter->icon();
     if (icon.isEmpty()) {
         icon = QStringLiteral("system-run");
@@ -4252,8 +4252,8 @@ void KMMainWidget::initializeFilterActions(bool clearFilter)
     for (MailFilter *filter : lstFilters) {
         if (!filter->isEmpty() && filter->configureShortcut() && filter->isEnabled()) {
             QString filterName = QStringLiteral("Filter %1").arg(filter->name());
-            QString normalizedName = filterName.replace(QLatin1Char(' '), QLatin1Char('_'));
-            if (action(normalizedName)) {
+            filterName.replace(QLatin1Char(' '), QLatin1Char('_'));
+            if (action(filterName)) {
                 continue;
             }
 
@@ -4271,7 +4271,7 @@ void KMMainWidget::initializeFilterActions(bool clearFilter)
             mFilterCommands.append(filterCommand);
 
             auto filterAction = filterToAction(filter);
-            actionCollection()->addAction(normalizedName, filterAction);
+            actionCollection()->addAction(filterName, filterAction);
             connect(filterAction, &QAction::triggered,
                     filterCommand, &KMMetaFilterActionCommand::start);
             actionCollection()->setDefaultShortcut(filterAction, filter->shortcut());
@@ -4282,7 +4282,7 @@ void KMMainWidget::initializeFilterActions(bool clearFilter)
             }
 
             filterAction = filterToAction(filter);
-            actionCollection()->addAction(normalizedName + QStringLiteral("___folder"), filterAction);
+            actionCollection()->addAction(filterName + QStringLiteral("___folder"), filterAction);
             connect(filterAction, &QAction::triggered,
                     this, [this] {
                 slotApplyFilterOnFolder(/* recursive */ false);
@@ -4291,7 +4291,7 @@ void KMMainWidget::initializeFilterActions(bool clearFilter)
             mFilterFolderMenuActions.append(filterAction);
 
             filterAction = filterToAction(filter);
-            actionCollection()->addAction(normalizedName + QStringLiteral("___folder_recursive"), filterAction);
+            actionCollection()->addAction(filterName + QStringLiteral("___folder_recursive"), filterAction);
             connect(filterAction, &QAction::triggered,
                     this, [this] {
                 slotApplyFilterOnFolder(/* recursive */ true);
