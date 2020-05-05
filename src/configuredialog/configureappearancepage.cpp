@@ -23,6 +23,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageList/AggregationConfigButton>
 #include <MessageList/ThemeComboBox>
 #include <MessageList/ThemeConfigButton>
+#include <Libkdepim/LineEditCatchReturnKey>
 #include "messagelistsettings.h"
 #include <MailCommon/TagWidget>
 #include "MailCommon/Tag"
@@ -61,7 +62,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QHBoxLayout>
 #include <KMessageBox>
 #include <KKeySequenceWidget>
-#include <KLineEdit>
+#include <QLineEdit>
 #include <QIcon>
 #include "kmail_debug.h"
 
@@ -678,7 +679,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             hboxHBoxLayout->addWidget(radio);
             mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
 
-            mCustomDateFormatEdit = new KLineEdit(hbox);
+            mCustomDateFormatEdit = new QLineEdit(hbox);
+            new KPIM::LineEditCatchReturnKey(mCustomDateFormatEdit, this);
             hboxHBoxLayout->addWidget(mCustomDateFormatEdit);
             mCustomDateFormatEdit->setEnabled(false);
             hboxHBoxLayout->setStretchFactor(mCustomDateFormatEdit, 1);
@@ -969,8 +971,8 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     QHBoxLayout *addremovegrid = new QHBoxLayout();
     tageditgrid->addLayout(addremovegrid);
 
-    mTagAddLineEdit = new KLineEdit(mTagsGroupBox);
-    mTagAddLineEdit->setTrapReturnKey(true);
+    mTagAddLineEdit = new QLineEdit(mTagsGroupBox);
+    new KPIM::LineEditCatchReturnKey(mTagAddLineEdit, this);
     addremovegrid->addWidget(mTagAddLineEdit);
 
     mTagAddButton = new QPushButton(mTagsGroupBox);
@@ -1031,7 +1033,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     connect(mTagWidget, &TagWidget::changed, this, &AppearancePageMessageTagTab::slotEmitChangeCheck);
 
     //For enabling the add button in case box is non-empty
-    connect(mTagAddLineEdit, &KLineEdit::textChanged,
+    connect(mTagAddLineEdit, &QLineEdit::textChanged,
             this, &AppearancePage::MessageTagTab::slotAddLineTextChanged);
 
     //For on-the-fly updating of tag name in editbox
@@ -1040,7 +1042,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
 
     connect(mTagWidget, &TagWidget::iconNameChanged, this, &AppearancePageMessageTagTab::slotIconNameChanged);
 
-    connect(mTagAddLineEdit, &KLineEdit::returnPressed,
+    connect(mTagAddLineEdit, &QLineEdit::returnPressed,
             this, &AppearancePageMessageTagTab::slotAddNewTag);
 
     connect(mTagAddButton, &QAbstractButton::clicked,
@@ -1163,12 +1165,12 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets(int aIndex)
     TagListWidgetItem *tagItem = static_cast<TagListWidgetItem *>(item);
     MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
-    disconnect(mTagWidget->tagNameLineEdit(), &KLineEdit::textChanged,
+    disconnect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged,
                this, &AppearancePage::MessageTagTab::slotNameLineTextChanged);
 
     mTagWidget->tagNameLineEdit()->setEnabled(!tmp_desc->isImmutable);
     mTagWidget->tagNameLineEdit()->setText(tmp_desc->tagName);
-    connect(mTagWidget->tagNameLineEdit(), &KLineEdit::textChanged,
+    connect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged,
             this, &AppearancePage::MessageTagTab::slotNameLineTextChanged);
 
     mTagWidget->setTagTextColor(tmp_desc->textColor);

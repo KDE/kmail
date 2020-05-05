@@ -30,7 +30,7 @@ class ColorListBox;
 class QButtonGroup;
 class QGroupBox;
 class QSpinBox;
-class KLineEdit;
+class QLineEdit;
 class QModelIndex;
 class KJob;
 namespace MessageViewer {
@@ -146,7 +146,7 @@ private: // data
     MessageList::Utils::ThemeComboBox *mThemeComboBox = nullptr;
     QButtonGroup *mDateDisplay = nullptr;
     QGroupBox *mDateDisplayBox = nullptr;
-    KLineEdit *mCustomDateFormatEdit = nullptr;
+    QLineEdit *mCustomDateFormatEdit = nullptr;
     QString mCustomDateWhatsThis;
 };
 
@@ -246,7 +246,7 @@ private:
     void updateButtons();
 
 private: // data
-    KLineEdit *mTagAddLineEdit = nullptr;
+    QLineEdit *mTagAddLineEdit = nullptr;
     QPushButton *mTagAddButton = nullptr;
     QPushButton *mTagRemoveButton = nullptr;
     QPushButton *mTagUpButton = nullptr;
