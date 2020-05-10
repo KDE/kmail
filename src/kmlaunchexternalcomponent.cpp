@@ -30,10 +30,8 @@
 #include <MailCommon/FilterManager>
 #include <kio_version.h>
 
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 70, 0)
 #include <KDialogJobUiDelegate>
 #include <KIO/CommandLauncherJob>
-#endif
 
 #include <QProcess>
 #include "kmail_debug.h"
@@ -110,14 +108,10 @@ void KMLaunchExternalComponent::slotExportData()
 
 void KMLaunchExternalComponent::slotRunAddressBook()
 {
-#if KIO_VERSION < QT_VERSION_CHECK(5, 70, 0)
-    KRun::runCommand(QStringLiteral("kaddressbook"), mParentWidget->window());
-#else
     KIO::CommandLauncherJob *job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
     job->setDesktopName(QStringLiteral("org.kde.kaddressbook"));
     job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
     job->start();
-#endif
 }
 
 void KMLaunchExternalComponent::slotImport()
