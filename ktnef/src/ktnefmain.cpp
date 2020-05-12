@@ -245,7 +245,7 @@ void KTNEFMain::viewFile()
         if (mimename.isEmpty() || mimename == QLatin1String("application/octet-stream")) {
             qCDebug(KTNEFAPPS_LOG) << "No mime type found in attachment object, trying to guess...";
             QMimeDatabase db;
-            db.mimeTypeForFile(url.path(), QMimeDatabase::MatchExtension).name();
+            mimename = db.mimeTypeForFile(url.path(), QMimeDatabase::MatchExtension).name();
             qCDebug(KTNEFAPPS_LOG) << "Detected mime type: " << mimename;
         } else {
             qCDebug(KTNEFAPPS_LOG) << "Mime type from attachment object: " << mimename;
