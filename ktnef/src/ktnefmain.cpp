@@ -34,6 +34,8 @@
 #include <QMenu>
 #include <KMessageBox>
 #include <KRun>
+#include <KIO/ApplicationLauncherJob>
+#include <KIO/JobUiDelegate>
 #include <KShortcutsDialog>
 #include <KStandardAction>
 #include <QTemporaryFile>
@@ -543,11 +545,13 @@ void KTNEFMain::openWith(const KService::Ptr &offer)
 {
     if (!mView->getSelection().isEmpty()) {
         KTNEFAttach *attach = mView->getSelection().at(0);
-        QUrl url = QUrl::fromLocalFile(QLatin1String("file:") + extractTemp(attach));
-        QList<QUrl> lst;
-        lst.append(url);
+        const QUrl url = QUrl::fromLocalFile(extractTemp(attach));
+        QList<QUrl> lst{url};
         if (offer) {
-            KRun::runService(*offer, lst, this, false);
+            KIO::ApplicationLauncherJob *job = new KIO::ApplicationLauncherJob(offer);
+            job->setUrls(lst);
+            job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+            job->start();
         } else {
             KRun::displayOpenWithDialog(lst, this, false);
         }
