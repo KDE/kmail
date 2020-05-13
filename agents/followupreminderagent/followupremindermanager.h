@@ -36,6 +36,7 @@ public:
     ~FollowUpReminderManager();
 
     void load(bool forceReloadConfig = false);
+    void addReminder(FollowUpReminder::FollowUpReminderInfo *reminder); // takes ownership
     void checkFollowUp(const Akonadi::Item &item, const Akonadi::Collection &col);
 
     Q_REQUIRED_RESULT QString printDebugInfo() const;

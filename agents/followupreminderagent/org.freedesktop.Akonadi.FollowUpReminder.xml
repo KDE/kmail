@@ -11,5 +11,14 @@
        <arg type="s" direction="out"/>
     </method>
     <method name="reload" />
+    <method name="addReminder">
+        <arg name="messageId" type="s" direction="in" />
+        <arg name="originalMessageItemId" type="x" direction="in" />
+        <arg name="to" type="s" direction="in" />
+        <arg name="subject" type="s" direction="in" />
+        <arg name="followupDate" type="(iii)" direction="in" />
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In4" value="QDate" />
+        <arg name="todoId" type="x" direction="in" />
+    </method>
   </interface>
 </node>

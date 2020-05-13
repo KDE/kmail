@@ -36,6 +36,7 @@ public:
 
 public Q_SLOTS:
     void reload();
+    void addReminder(const QString &messageId, Akonadi::Item::Id messageItemId, const QString &to, const QString &subject,  const QDate &followupDate, Akonadi::Item::Id todoId);
 
 protected:
     void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) override;

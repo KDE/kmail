@@ -85,6 +85,15 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
     }
 }
 
+void FollowUpReminderManager::addReminder(FollowUpReminder::FollowUpReminderInfo *info)
+{
+    if (info->isValid()) {
+        FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminderUtil::defaultConfig(), info, true);
+    } else {
+        delete info;
+    }
+}
+
 void FollowUpReminderManager::slotReparseConfiguration()
 {
     load(true);

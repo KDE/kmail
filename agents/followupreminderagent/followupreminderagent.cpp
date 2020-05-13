@@ -22,6 +22,8 @@
 #include <FollowupReminder/FollowUpReminderUtil>
 #include "followupreminderadaptor.h"
 #include "followupreminderagentsettings.h"
+#include <FollowupReminder/FollowUpReminderInfo>
+
 #include <KMime/Message>
 
 #include <AkonadiCore/ChangeRecorder>
@@ -113,6 +115,19 @@ void FollowUpReminderAgent::reload()
         mManager->load(true);
         mTimer->start();
     }
+}
+
+void FollowUpReminderAgent::addReminder(const QString &messageId, Akonadi::Item::Id messageItemId, const QString &to, const QString &subject, const QDate &followupDate, Akonadi::Item::Id todoId)
+{
+    auto info = new FollowUpReminder::FollowUpReminderInfo();
+    info->setMessageId(messageId);
+    info->setOriginalMessageItemId(messageItemId);
+    info->setTo(to);
+    info->setSubject(subject);
+    info->setFollowUpReminderDate(followupDate);
+    info->setTodoId(todoId);
+
+    mManager->addReminder(info);
 }
 
 QString FollowUpReminderAgent::printDebugInfo() const
