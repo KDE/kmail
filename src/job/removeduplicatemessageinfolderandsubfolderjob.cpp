@@ -19,12 +19,13 @@
 */
 
 #include "removeduplicatemessageinfolderandsubfolderjob.h"
-#include <PimCommonAkonadi/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
 #include <Akonadi/KMime/RemoveDuplicatesJob>
 #include <Libkdepim/ProgressManager>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <AkonadiCore/CollectionFetchJob>
+#include <AkonadiCore/CollectionFetchScope>
 
 RemoveDuplicateMessageInFolderAndSubFolderJob::RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent, QWidget *parentWidget)
     : QObject(parent)
@@ -39,11 +40,18 @@ RemoveDuplicateMessageInFolderAndSubFolderJob::~RemoveDuplicateMessageInFolderAn
 void RemoveDuplicateMessageInFolderAndSubFolderJob::start()
 {
     if (mTopLevelCollection.isValid()) {
-        PimCommon::FetchRecursiveCollectionsJob *fetchJob = new PimCommon::FetchRecursiveCollectionsJob(this);
-        fetchJob->setTopCollection(mTopLevelCollection);
-        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionFailed);
-        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone);
-        fetchJob->start();
+        auto fetchJob = new Akonadi::CollectionFetchJob(mTopLevelCollection, Akonadi::CollectionFetchJob::Recursive, this);
+        fetchJob->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
+        connect(fetchJob, &Akonadi::CollectionFetchJob::result,
+                this, [this](KJob *job) {
+                    if (job->error()) {
+                        qCWarning(KMAIL_LOG) << job->errorString();
+                        slotFetchCollectionFailed();
+                    } else {
+                        auto fetch = static_cast<Akonadi::CollectionFetchJob*>(job);
+                        slotFetchCollectionDone(fetch->collections());
+                    }
+                });
     } else {
         qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
         deleteLater();

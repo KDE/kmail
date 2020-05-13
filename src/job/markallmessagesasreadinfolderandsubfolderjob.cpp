@@ -19,8 +19,10 @@
 */
 
 #include "markallmessagesasreadinfolderandsubfolderjob.h"
-#include <PimCommonAkonadi/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
+
+#include <AkonadiCore/CollectionFetchJob>
+#include <AkonadiCore/CollectionFetchScope>
 
 MarkAllMessagesAsReadInFolderAndSubFolderJob::MarkAllMessagesAsReadInFolderAndSubFolderJob(QObject *parent)
     : QObject(parent)
@@ -39,11 +41,18 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::setTopLevelCollection(const A
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::start()
 {
     if (mTopLevelCollection.isValid()) {
-        PimCommon::FetchRecursiveCollectionsJob *fetchJob = new PimCommon::FetchRecursiveCollectionsJob(this);
-        fetchJob->setTopCollection(mTopLevelCollection);
-        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed);
-        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone);
-        fetchJob->start();
+        auto fetchJob = new Akonadi::CollectionFetchJob(mTopLevelCollection, Akonadi::CollectionFetchJob::Recursive, this);
+        fetchJob->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
+        connect(fetchJob, &Akonadi::CollectionFetchJob::finished,
+                this, [this](KJob *job) {
+                    if (job->error()) {
+                        qCWarning(KMAIL_LOG) << job->errorString();
+                        slotFetchCollectionFailed();
+                    } else {
+                        auto fetch = static_cast<Akonadi::CollectionFetchJob*>(job);
+                        slotFetchCollectionDone(fetch->collections());
+                    }
+                });
     } else {
         qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
         deleteLater();
