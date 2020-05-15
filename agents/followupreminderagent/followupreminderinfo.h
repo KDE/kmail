@@ -25,7 +25,6 @@
 
 class KConfigGroup;
 namespace FollowUpReminder {
-
 /** Follow up reminder information. */
 class FollowUpReminderInfo
 {

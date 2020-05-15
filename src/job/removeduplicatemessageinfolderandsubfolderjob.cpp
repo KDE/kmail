@@ -44,14 +44,14 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::start()
         fetchJob->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
         connect(fetchJob, &Akonadi::CollectionFetchJob::result,
                 this, [this](KJob *job) {
-                    if (job->error()) {
-                        qCWarning(KMAIL_LOG) << job->errorString();
-                        slotFetchCollectionFailed();
-                    } else {
-                        auto fetch = static_cast<Akonadi::CollectionFetchJob*>(job);
-                        slotFetchCollectionDone(fetch->collections());
-                    }
-                });
+            if (job->error()) {
+                qCWarning(KMAIL_LOG) << job->errorString();
+                slotFetchCollectionFailed();
+            } else {
+                auto fetch = static_cast<Akonadi::CollectionFetchJob *>(job);
+                slotFetchCollectionDone(fetch->collections());
+            }
+        });
     } else {
         qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
         deleteLater();

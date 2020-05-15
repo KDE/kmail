@@ -42,7 +42,6 @@ void writeFollowupReminderInfo(KSharedConfig::Ptr config, FollowUpReminder::Foll
 Q_REQUIRED_RESULT bool removeFollowupReminderInfo(KSharedConfig::Ptr config, const QList<qint32> &listRemove, bool forceReload = false);
 
 Q_REQUIRED_RESULT QString followUpReminderPattern();
-
 }
 }
 
