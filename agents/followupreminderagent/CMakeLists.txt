@@ -10,7 +10,14 @@ set(followupreminderagent_SRCS
     followupremindermanager.cpp
     followupremindernoanswerdialog.cpp
     followupreminderinfowidget.cpp
+    followupreminderinfo.cpp
+    followupreminderutil.cpp
     ${followupreminderagent_job_SRCS}
+    )
+
+
+kconfig_add_kcfg_files(followupreminderagent_SRCS
+        followupreminderagentsettings.kcfgc
     )
 
 ecm_qt_declare_logging_category(followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent
@@ -45,9 +52,6 @@ target_link_libraries(followupreminderagent
 ########################### Agent executable ################################
 add_executable(akonadi_followupreminder_agent followupreminderagent.cpp)
 
-
-
-
 target_link_libraries(akonadi_followupreminder_agent
     followupreminderagent
     KF5::AkonadiCore
@@ -56,7 +60,6 @@ target_link_libraries(akonadi_followupreminder_agent
     KF5::Mime
     KF5::CalendarCore
     KF5::DBusAddons
-    KF5::FollowupReminder
     Qt5::Widgets
     KF5::Notifications
     KF5::I18n
@@ -96,5 +99,4 @@ target_link_libraries(followupreminderagentconfig
     KF5::AkonadiCore
     KF5::XmlGui
     KF5::I18n
-    KF5::FollowupReminder
 )

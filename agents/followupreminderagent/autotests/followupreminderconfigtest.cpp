@@ -18,8 +18,9 @@
 */
 
 #include "followupreminderconfigtest.h"
-#include <FollowupReminder/FollowUpReminderUtil>
-#include <FollowupReminder/FollowUpReminderInfo>
+#include "../followupreminderutil.h"
+#include "../followupreminderinfo.h"
+
 #include <QTest>
 #include <KSharedConfig>
 #include <QRegularExpression>

@@ -19,9 +19,8 @@
 
 #include "followupremindernoanswerdialog.h"
 #include "followupreminderinfowidget.h"
+#include "followupreminderinfo.h"
 #include "followupreminderagent_debug.h"
-
-#include <FollowupReminder/FollowUpReminderInfo>
 
 #include <KLocalizedString>
 #include <KSharedConfig>

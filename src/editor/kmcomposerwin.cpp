@@ -67,8 +67,6 @@
 #include <AkonadiCore/Monitor>
 #include <AkonadiCore/changerecorder.h>
 
-#include <FollowupReminder/FollowUpReminderUtil>
-
 #include <KContacts/VCardConverter>
 
 #include <KIdentityManagement/Identity>
@@ -87,6 +85,7 @@
 
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
+#include <followupreminder.h>
 
 #ifndef QT_NO_CURSOR
 #include <Libkdepim/KCursorSaver>
@@ -111,6 +110,7 @@
 #include <MessageComposer/ComposerLineEdit>
 #include <MessageComposer/FollowUpReminderSelectDateDialog>
 #include <MessageComposer/FollowupReminderCreateJob>
+#include <MessageComposer/FollowupReminder>
 #include <MessageComposer/GlobalPart>
 #include <MessageComposer/InfoPart>
 #include <MessageComposer/InsertTextFileJob>
@@ -1386,7 +1386,7 @@ void KMComposerWin::setupActions()
     mFollowUpToggleAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("appointment-new")), i18n("Create Follow Up Reminder..."), this);
     actionCollection()->addAction(QStringLiteral("follow_up_mail"), mFollowUpToggleAction);
     connect(mFollowUpToggleAction, &KToggleAction::triggered, this, &KMComposerWin::slotFollowUpMail);
-    mFollowUpToggleAction->setEnabled(FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled());
+    mFollowUpToggleAction->setEnabled(MessageComposer::FollowUpReminder::isAvailableAndEnabled());
 
     mPluginEditorManagerInterface->initializePlugins();
     mPluginEditorCheckBeforeSendManagerInterface->initializePlugins();

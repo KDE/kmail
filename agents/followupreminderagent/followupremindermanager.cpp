@@ -19,11 +19,12 @@
 
 #include "followupremindermanager.h"
 #include "followupreminderagent_debug.h"
-#include <FollowupReminder/FollowUpReminderInfo>
-#include <FollowupReminder/FollowUpReminderUtil>
+#include "followupreminderinfo.h"
+#include "followupreminderutil.h"
 #include "followupremindernoanswerdialog.h"
 #include "jobs/followupreminderjob.h"
 #include "jobs/followupreminderfinishtaskjob.h"
+
 #include <Akonadi/KMime/SpecialMailCollections>
 
 #include <KConfigGroup>

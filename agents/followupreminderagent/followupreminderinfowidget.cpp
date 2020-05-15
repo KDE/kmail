@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 #include "followupreminderinfowidget.h"
-#include <FollowupReminder/FollowUpReminderInfo>
-#include <FollowupReminder/FollowUpReminderUtil>
+#include "followupreminderinfo.h"
+#include "followupreminderutil.h"
 #include "jobs/followupremindershowmessagejob.h"
 #include "followupreminderagent_debug.h"
 
@@ -108,7 +108,7 @@ void FollowUpReminderInfoWidget::setInfo(const QList<FollowUpReminder::FollowUpR
 
 void FollowUpReminderInfoWidget::load()
 {
-    KSharedConfig::Ptr config = KSharedConfig::openConfig();
+    auto config = FollowUpReminder::FollowUpReminderUtil::defaultConfig();
     const QStringList filterGroups = config->groupList().filter(QRegularExpression(followUpItemPattern()));
     const int numberOfItem = filterGroups.count();
     for (int i = 0; i < numberOfItem; ++i) {

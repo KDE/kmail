@@ -18,11 +18,12 @@
 */
 
 #include "followupreminderfinishtaskjob.h"
-#include <FollowupReminder/FollowUpReminderInfo>
+#include "followupreminderinfo.h"
+#include "followupreminderagent_debug.h"
+
 #include <AkonadiCore/Item>
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemModifyJob>
-#include "followupreminderagent_debug.h"
 #include <KCalendarCore/Todo>
 
 FollowUpReminderFinishTaskJob::FollowUpReminderFinishTaskJob(Akonadi::Item::Id id, QObject *parent)
