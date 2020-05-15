@@ -14,16 +14,5 @@
     <method name="removeItem" >
        <arg name="item" type="x" direction="in"/>
     </method>
-
-    <method name="addItem">
-        <arg name="date" type="(iii)" direction="in" />
-        <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QDate">
-        <arg name="recurrence" type="b" direction="in" />
-        <arg name="recurrenceValue" type="i" direction="in" />
-        <arg name="recurrenceUnit" type="i" direction="in" />
-        <arg name="itemId" type="x" direction="in" />
-        <arg name="subject" type="s" direction="in" />
-        <arg name="to" type="s" direction="in" />
-    </method>
   </interface>
 </node>
