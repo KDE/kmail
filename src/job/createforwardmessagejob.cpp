@@ -28,7 +28,6 @@
 
 CreateForwardMessageJob::CreateForwardMessageJob(QObject *parent)
     : QObject(parent)
-    , mMessageFactory(nullptr)
 {
 }
 
@@ -51,9 +50,7 @@ void CreateForwardMessageJob::start()
     mMessageFactory->setIdentityManager(KMKernel::self()->identityManager());
     mMessageFactory->setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.mItem));
     mMessageFactory->setSelection(mSettings.mSelection);
-    if (!mSettings.mTemplate.isEmpty()) {
-        mMessageFactory->setTemplate(mSettings.mTemplate);
-    }
+    mMessageFactory->setTemplate(mSettings.mTemplate);
     mMessageFactory->createForwardAsync();
 }
 
