@@ -29,7 +29,6 @@
 
 CreateReplyMessageJob::CreateReplyMessageJob(QObject *parent)
     : QObject(parent)
-    , mMessageFactory(nullptr)
 {
 }
 
@@ -62,9 +61,7 @@ void CreateReplyMessageJob::start()
     mMessageFactory->setMailingListAddresses(KMail::Util::mailingListsFromMessage(mSettings.mItem));
     mMessageFactory->putRepliesInSameFolder(KMail::Util::putRepliesInSameFolder(mSettings.mItem));
     mMessageFactory->setSelection(mSettings.mSelection);
-    if (!mSettings.mTemplate.isEmpty()) {
-        mMessageFactory->setTemplate(mSettings.mTemplate);
-    }
+    mMessageFactory->setTemplate(mSettings.mTemplate);
     if (mSettings.mNoQuote) {
         mMessageFactory->setQuote(false);
     }
