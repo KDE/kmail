@@ -18,6 +18,7 @@
 */
 
 #include "createreplymessagejobtest.h"
+#include "job/createreplymessagejob.h"
 #include <QTest>
 QTEST_MAIN(CreateReplyMessageJobTest)
 
@@ -29,5 +30,12 @@ CreateReplyMessageJobTest::CreateReplyMessageJobTest(QObject *parent)
 
 void CreateReplyMessageJobTest::shouldHaveDefaultValue()
 {
-    //TODO
+    CreateReplyMessageJobSettings settings;
+    QVERIFY(settings.mUrl.isEmpty());
+    QVERIFY(settings.mSelection.isEmpty());
+    QVERIFY(settings.mTemplate.isEmpty());
+    QVERIFY(!settings.mMsg);
+    QVERIFY(!settings.mNoQuote);
+    QVERIFY(!settings.mReplyAsHtml);
+    QCOMPARE(settings.m_replyStrategy, MessageComposer::ReplySmart);
 }
