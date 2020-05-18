@@ -21,8 +21,9 @@
 #define INCORRECTIDENTITYFOLDERWARNING_H
 
 #include <KMessageWidget>
+#include "kmail_private_export.h"
 
-class IncorrectIdentityFolderWarning : public KMessageWidget
+class KMAILTESTS_TESTS_EXPORT IncorrectIdentityFolderWarning : public KMessageWidget
 {
     Q_OBJECT
 public:

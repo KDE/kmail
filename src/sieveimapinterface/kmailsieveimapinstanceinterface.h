@@ -21,8 +21,8 @@
 #define KMAILSIEVEIMAPINSTANCEINTERFACE_H
 
 #include <KSieveUi/SieveImapInstanceInterface>
-
-class KMailSieveImapInstanceInterface : public KSieveUi::SieveImapInstanceInterface
+#include "kmail_private_export.h"
+class KMAILTESTS_TESTS_EXPORT KMailSieveImapInstanceInterface : public KSieveUi::SieveImapInstanceInterface
 {
 public:
     KMailSieveImapInstanceInterface();

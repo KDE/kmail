@@ -19,12 +19,12 @@
 
 #ifndef KMSIEVEIMAPPASSWORDPROVIDER_H
 #define KMSIEVEIMAPPASSWORDPROVIDER_H
-
+#include "kmail_private_export.h"
 #include <KSieveUi/SieveImapPasswordProvider>
 
 #include <QWidget> // for WId
 
-class KMSieveImapPasswordProvider : public KSieveUi::SieveImapPasswordProvider
+class KMAILTESTS_TESTS_EXPORT KMSieveImapPasswordProvider : public KSieveUi::SieveImapPasswordProvider
 {
 public:
     KMSieveImapPasswordProvider(WId wid);

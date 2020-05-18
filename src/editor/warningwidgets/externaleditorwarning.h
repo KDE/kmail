@@ -21,8 +21,8 @@
 #define EXTERNALEDITORWARNING_H
 
 #include <KMessageWidget>
-
-class ExternalEditorWarning : public KMessageWidget
+#include "kmail_private_export.h"
+class KMAILTESTS_TESTS_EXPORT ExternalEditorWarning : public KMessageWidget
 {
     Q_OBJECT
 public:

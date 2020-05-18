@@ -19,10 +19,11 @@
 #ifndef FOLDERARCHIVEACCOUNTINFO_H
 #define FOLDERARCHIVEACCOUNTINFO_H
 
+#include "kmail_private_export.h"
 #include <KConfigGroup>
 #include <AkonadiCore/Collection>
 
-class FolderArchiveAccountInfo
+class KMAILTESTS_TESTS_EXPORT FolderArchiveAccountInfo
 {
 public:
     FolderArchiveAccountInfo();

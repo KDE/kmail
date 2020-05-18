@@ -1,4 +1,4 @@
-add_executable(sievedebugdialog sievedebugdialog.cpp ../../../sieveimapinterface/kmailsieveimapinstanceinterface.cpp ../../../sieveimapinterface/kmsieveimappasswordprovider.cpp)
+add_executable(sievedebugdialog sievedebugdialog.cpp)
 
 target_link_libraries(sievedebugdialog
   KF5::KSieve
@@ -6,4 +6,5 @@ target_link_libraries(sievedebugdialog
   KF5::AkonadiCore
   KF5::SyntaxHighlighting
   KF5::Wallet
+  kmailprivate
 )

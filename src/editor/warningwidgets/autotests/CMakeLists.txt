@@ -1,14 +1,14 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 
-set( kmail_incorrectidentityfolderwarningtest_SRCS incorrectidentityfolderwarningtest.cpp ../incorrectidentityfolderwarning.cpp )
+set( kmail_incorrectidentityfolderwarningtest_SRCS incorrectidentityfolderwarningtest.cpp )
 add_executable( kmail_incorrectidentityfolderwarningtest ${kmail_incorrectidentityfolderwarningtest_SRCS})
 add_test(NAME kmail_incorrectidentityfolderwarningtest COMMAND kmail_incorrectidentityfolderwarningtest)
 ecm_mark_as_test(kmail_incorrectidentityfolderwarningtest)
-target_link_libraries( kmail_incorrectidentityfolderwarningtest Qt5::Test KF5::PimCommon KF5::I18n)
+target_link_libraries( kmail_incorrectidentityfolderwarningtest Qt5::Test KF5::PimCommon KF5::I18n kmailprivate)
 
 
-set( kmail_externaleditorwarningtest_SRCS externaleditorwarningtest.cpp ../externaleditorwarning.cpp )
+set( kmail_externaleditorwarningtest_SRCS externaleditorwarningtest.cpp)
 add_executable( kmail_externaleditorwarningtest ${kmail_externaleditorwarningtest_SRCS})
 add_test(NAME kmail_externaleditorwarningtest COMMAND kmail_externaleditorwarningtest)
 ecm_mark_as_test(kmail_externaleditorwarningtest)
-target_link_libraries( kmail_externaleditorwarningtest Qt5::Test KF5::PimCommon KF5::I18n)
+target_link_libraries( kmail_externaleditorwarningtest Qt5::Test KF5::PimCommon KF5::I18n kmailprivate)
