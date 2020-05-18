@@ -23,8 +23,9 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <MailCommon/FolderSettings>
+#include "kmail_private_export.h"
 
-class HandleClickedUrlJob : public QObject
+class KMAILTESTS_TESTS_EXPORT HandleClickedUrlJob : public QObject
 {
     Q_OBJECT
 public:

@@ -2,6 +2,9 @@
 
 #ifndef KMCommands_h
 #define KMCommands_h
+
+#include "kmail_private_export.h"
+
 #include <MessageComposer/MessageFactoryNG>
 #include <MessageList/View>
 #include <MailCommon/SearchPattern>
@@ -47,7 +50,7 @@ class Composer;
 typedef QMap<KMime::Content *, Akonadi::Item> PartNodeMessageMap;
 /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
 
-class KMCommand : public QObject
+class KMAILTESTS_TESTS_EXPORT KMCommand : public QObject
 {
     Q_OBJECT
 
@@ -155,7 +158,7 @@ private:
     Akonadi::ItemFetchScope mFetchScope;
 };
 
-class KMMailtoComposeCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMMailtoComposeCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -169,7 +172,7 @@ private:
     Akonadi::Item mMessage;
 };
 
-class KMMailtoReplyCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMMailtoReplyCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -183,7 +186,7 @@ private:
     QString mSelection;
 };
 
-class KMMailtoForwardCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMMailtoForwardCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -195,7 +198,7 @@ private:
     QUrl mUrl;
 };
 
-class KMAddBookmarksCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMAddBookmarksCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -208,7 +211,7 @@ private:
     QUrl mUrl;
 };
 
-class KMUrlSaveCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMUrlSaveCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -224,7 +227,7 @@ private:
     QUrl mUrl;
 };
 
-class KMEditItemCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMEditItemCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -238,7 +241,7 @@ private:
     bool mDeleteFromSource = false;
 };
 
-class KMEditMessageCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMEditMessageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -249,7 +252,7 @@ private:
     KMime::Message::Ptr mMessage;
 };
 
-class KMUseTemplateCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMUseTemplateCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -260,7 +263,7 @@ private:
     Result execute() override;
 };
 
-class KMSaveMsgCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMSaveMsgCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -271,7 +274,7 @@ private:
     Result execute() override;
 };
 
-class KMOpenMsgCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMOpenMsgCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -295,7 +298,7 @@ private:
     KMMainWidget *mMainWidget = nullptr;
 };
 
-class KMSaveAttachmentsCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMSaveAttachmentsCommand : public KMCommand
 {
     Q_OBJECT
 public:
@@ -316,7 +319,7 @@ private:
     MessageViewer::Viewer *mViewer = nullptr;
 };
 
-class KMReplyCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMReplyCommand : public KMCommand
 {
     Q_OBJECT
 public:
@@ -331,7 +334,7 @@ private:
     bool mNoQuote = false;
 };
 
-class KMForwardCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMForwardCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -349,7 +352,7 @@ private:
     QString mSelection;
 };
 
-class KMForwardAttachedCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMForwardAttachedCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -364,7 +367,7 @@ private:
     QPointer<KMail::Composer> mWin;
 };
 
-class KMRedirectCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMRedirectCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -376,7 +379,7 @@ private:
     Result execute() override;
 };
 
-struct KMPrintCommandInfo
+struct KMAILTESTS_TESTS_EXPORT KMPrintCommandInfo
 {
     Akonadi::Item mMsg;
     QFont mOverrideFont;
@@ -391,7 +394,7 @@ struct KMPrintCommandInfo
     bool mShowEncryptionDetails = false;
 };
 
-class KMPrintCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMPrintCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -403,7 +406,7 @@ private:
     KMPrintCommandInfo mPrintCommandInfo;
 };
 
-class KMSetStatusCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMSetStatusCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -423,7 +426,7 @@ private:
 /** This command is used to set or toggle a tag for a list of messages. If toggle is
     true then the tag is deleted if it is already applied.
  */
-class KMSetTagCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMSetTagCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -449,7 +452,7 @@ private:
 
 /* This command is used to apply a single filter (AKA ad-hoc filter)
     to a set of messages */
-class KMFilterActionCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMFilterActionCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -462,7 +465,7 @@ private:
     QString mFilterId;
 };
 
-class KMMetaFilterActionCommand : public QObject
+class KMAILTESTS_TESTS_EXPORT KMMetaFilterActionCommand : public QObject
 {
     Q_OBJECT
 
@@ -477,7 +480,7 @@ private:
     KMMainWidget *mMainWidget = nullptr;
 };
 
-class KMMailingListFilterCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMMailingListFilterCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -488,7 +491,7 @@ private:
     Result execute() override;
 };
 
-class KMCopyCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMCopyCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -504,7 +507,7 @@ private:
     Akonadi::Collection mDestFolder;
 };
 
-class KMCopyDecryptedCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMCopyDecryptedCommand : public KMCommand
 {
     Q_OBJECT
 public:
@@ -521,7 +524,7 @@ private:
     QList<KJob *> mPendingJobs;
 };
 
-class KMMoveCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMMoveCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -559,7 +562,7 @@ private:
     MessageList::Core::MessageItemSetReference mRef;
 };
 
-class KMTrashMsgCommand final : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMTrashMsgCommand final : public KMCommand
 {
     Q_OBJECT
 
@@ -603,7 +606,7 @@ private:
     QList<KJob *> mPendingDeletes;
 };
 
-class KMResendMessageCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMResendMessageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -614,7 +617,7 @@ private:
     Result execute() override;
 };
 
-class KMShareImageCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMShareImageCommand : public KMCommand
 {
     Q_OBJECT
 
@@ -626,7 +629,7 @@ private:
     QUrl mUrl;
 };
 
-class KMFetchMessageCommand : public KMCommand
+class KMAILTESTS_TESTS_EXPORT KMFetchMessageCommand : public KMCommand
 {
     Q_OBJECT
 public:

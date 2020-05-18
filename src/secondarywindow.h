@@ -32,7 +32,7 @@
 #define KMAIL_SECONDARYWINDOW_H
 
 #include <kxmlguiwindow.h>
-
+#include "kmail_private_export.h"
 class QCloseEvent;
 
 namespace KMail {
@@ -40,7 +40,7 @@ namespace KMail {
    *  Window class for secondary KMail window like the composer window and
    *  the separate message window.
    */
-class SecondaryWindow : public KXmlGuiWindow
+class KMAILTESTS_TESTS_EXPORT SecondaryWindow : public KXmlGuiWindow
 {
     Q_OBJECT
 

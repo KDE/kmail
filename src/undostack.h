@@ -22,10 +22,12 @@
 #ifndef UNDOSTACK_H
 #define UNDOSTACK_H
 
+#include "kmail_private_export.h"
 #include <QList>
 #include <QObject>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/item.h>
+
 class KJob;
 
 namespace KMail {
@@ -44,7 +46,7 @@ public:
     bool moveToTrash = false;
 };
 
-class UndoStack : public QObject
+class KMAILTESTS_TESTS_EXPORT UndoStack : public QObject
 {
     Q_OBJECT
 
