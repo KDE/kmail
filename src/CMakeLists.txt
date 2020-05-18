@@ -416,6 +416,7 @@ if(BUILD_TESTING)
     add_subdirectory(editor/warningwidgets/autotests)
     add_subdirectory(sieveimapinterface/tests/)
     add_subdirectory(undosend/autotests/)
+    add_subdirectory(job/autotests/)
 endif()
 ########### install files ###############
 
