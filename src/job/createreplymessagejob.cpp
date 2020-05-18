@@ -62,6 +62,7 @@ void CreateReplyMessageJob::start()
     mMessageFactory->putRepliesInSameFolder(KMail::Util::putRepliesInSameFolder(mSettings.item));
     mMessageFactory->setSelection(mSettings.selection);
     mMessageFactory->setTemplate(mSettings.templateStr);
+    mMessageFactory->setReplyAsHtml(mSettings.replyAsHtml);
     if (mSettings.noQuote) {
         mMessageFactory->setQuote(false);
     }
