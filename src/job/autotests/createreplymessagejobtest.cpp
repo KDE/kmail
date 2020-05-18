@@ -31,11 +31,11 @@ CreateReplyMessageJobTest::CreateReplyMessageJobTest(QObject *parent)
 void CreateReplyMessageJobTest::shouldHaveDefaultValue()
 {
     CreateReplyMessageJobSettings settings;
-    QVERIFY(settings.mUrl.isEmpty());
-    QVERIFY(settings.mSelection.isEmpty());
-    QVERIFY(settings.mTemplate.isEmpty());
-    QVERIFY(!settings.mMsg);
-    QVERIFY(!settings.mNoQuote);
-    QVERIFY(!settings.mReplyAsHtml);
-    QCOMPARE(settings.m_replyStrategy, MessageComposer::ReplySmart);
+    QVERIFY(settings.url.isEmpty());
+    QVERIFY(settings.selection.isEmpty());
+    QVERIFY(settings.templateStr.isEmpty());
+    QVERIFY(!settings.msg);
+    QVERIFY(!settings.noQuote);
+    QVERIFY(!settings.replyAsHtml);
+    QCOMPARE(settings.replyStrategy, MessageComposer::ReplySmart);
 }

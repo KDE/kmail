@@ -33,14 +33,14 @@ struct KMAILTESTS_TESTS_EXPORT CreateReplyMessageJobSettings
     {
     }
 
-    QUrl mUrl;
-    QString mSelection;
-    QString mTemplate;
-    Akonadi::Item mItem;
-    KMime::Message::Ptr mMsg;
-    MessageComposer::ReplyStrategy m_replyStrategy = MessageComposer::ReplySmart;
-    bool mNoQuote = false;
-    bool mReplyAsHtml = false;
+    QUrl url;
+    QString selection;
+    QString templateStr;
+    Akonadi::Item item;
+    KMime::Message::Ptr msg;
+    MessageComposer::ReplyStrategy replyStrategy = MessageComposer::ReplySmart;
+    bool noQuote = false;
+    bool replyAsHtml = false;
 };
 
 class KMAILTESTS_TESTS_EXPORT CreateReplyMessageJob : public QObject

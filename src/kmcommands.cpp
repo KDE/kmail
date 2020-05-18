@@ -446,11 +446,11 @@ KMCommand::Result KMMailtoReplyCommand::execute()
         return Failed;
     }
     CreateReplyMessageJobSettings settings;
-    settings.mItem = item;
-    settings.mMsg = msg;
-    settings.mSelection = mSelection;
-    settings.mUrl = mUrl;
-    settings.m_replyStrategy = MessageComposer::ReplyNone;
+    settings.item = item;
+    settings.msg = msg;
+    settings.selection = mSelection;
+    settings.url = mUrl;
+    settings.replyStrategy = MessageComposer::ReplyNone;
 
     CreateReplyMessageJob *job = new CreateReplyMessageJob;
     job->setSettings(settings);
@@ -852,12 +852,12 @@ KMCommand::Result KMReplyCommand::execute()
     }
 
     CreateReplyMessageJobSettings settings;
-    settings.mItem = item;
-    settings.mMsg = msg;
-    settings.mSelection = mSelection;
-    settings.m_replyStrategy = m_replyStrategy;
-    settings.mTemplate = mTemplate;
-    settings.mNoQuote = mNoQuote;
+    settings.item = item;
+    settings.msg = msg;
+    settings.selection = mSelection;
+    settings.replyStrategy = m_replyStrategy;
+    settings.templateStr = mTemplate;
+    settings.noQuote = mNoQuote;
 
     CreateReplyMessageJob *job = new CreateReplyMessageJob;
     job->setSettings(settings);

@@ -54,38 +54,38 @@ inline KMail::Composer::TemplateContext replyContext(const MessageComposer::Mess
 
 void CreateReplyMessageJob::start()
 {
-    const auto col = CommonKernel->collectionFromId(mSettings.mItem.parentCollection().id());
-    mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.mMsg, mSettings.mItem.id(), col);
+    const auto col = CommonKernel->collectionFromId(mSettings.item.parentCollection().id());
+    mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.msg, mSettings.item.id(), col);
     mMessageFactory->setIdentityManager(KMKernel::self()->identityManager());
-    mMessageFactory->setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.mItem));
-    mMessageFactory->setMailingListAddresses(KMail::Util::mailingListsFromMessage(mSettings.mItem));
-    mMessageFactory->putRepliesInSameFolder(KMail::Util::putRepliesInSameFolder(mSettings.mItem));
-    mMessageFactory->setSelection(mSettings.mSelection);
-    mMessageFactory->setTemplate(mSettings.mTemplate);
-    if (mSettings.mNoQuote) {
+    mMessageFactory->setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.item));
+    mMessageFactory->setMailingListAddresses(KMail::Util::mailingListsFromMessage(mSettings.item));
+    mMessageFactory->putRepliesInSameFolder(KMail::Util::putRepliesInSameFolder(mSettings.item));
+    mMessageFactory->setSelection(mSettings.selection);
+    mMessageFactory->setTemplate(mSettings.templateStr);
+    if (mSettings.noQuote) {
         mMessageFactory->setQuote(false);
     }
     connect(mMessageFactory, &MessageComposer::MessageFactoryNG::createReplyDone, this, &CreateReplyMessageJob::slotCreateReplyDone);
-    mMessageFactory->setReplyStrategy(mSettings.m_replyStrategy);
+    mMessageFactory->setReplyStrategy(mSettings.replyStrategy);
     mMessageFactory->createReplyAsync();
 }
 
 void CreateReplyMessageJob::slotCreateReplyDone(const MessageComposer::MessageFactoryNG::MessageReply &reply)
 {
     KMime::Message::Ptr rmsg = reply.msg;
-    if (mSettings.mUrl.isValid()) {
-        rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.mUrl), "utf-8");
+    if (mSettings.url.isValid()) {
+        rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.url), "utf-8");
     }
     bool lastEncrypt = false;
     bool lastSign = false;
-    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mSettings.mMsg);
+    KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mSettings.msg);
 
     KMail::Composer *win = KMail::makeComposer(rmsg,
                                                lastSign,
                                                lastEncrypt,
-                                               (mSettings.m_replyStrategy == MessageComposer::ReplyNone) ? KMail::Composer::Reply : replyContext(reply),
+                                               (mSettings.replyStrategy == MessageComposer::ReplyNone) ? KMail::Composer::Reply : replyContext(reply),
                                                0,
-                                               mSettings.mSelection, mSettings.mTemplate);
+                                               mSettings.selection, mSettings.templateStr);
     win->setFocusToEditor();
     win->show();
     deleteLater();
