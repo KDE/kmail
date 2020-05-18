@@ -74,7 +74,7 @@ void OpenComposerHiddenJob::slotOpenComposer()
         cWin->showAndActivateComposer();
     } else {
         // Always disable word wrap when we don't show the composer; otherwise,
-        // QTextEdit gets the widget size wrong and wraps much too early.
+        // *TextEdit gets the widget size wrong and wraps much too early.
         cWin->disableWordWrap();
         cWin->slotSendNow();
     }

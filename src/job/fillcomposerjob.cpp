@@ -142,7 +142,7 @@ void FillComposerJob::slotOpenComposer()
     if (mSettings.mForceShowWindow || (!mSettings.mHidden && !iCalAutoSend)) {
         cWin->showAndActivateComposer();
     } else {
-        // Always disable word wrap when we don't show the composer, since otherwise QTextEdit
+        // Always disable word wrap when we don't show the composer, since otherwise *TextEdit
         // gets the widget size wrong and wraps much too early.
         cWin->disableWordWrap();
         cWin->slotSendNow();
