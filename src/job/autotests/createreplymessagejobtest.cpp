@@ -26,3 +26,8 @@ CreateReplyMessageJobTest::CreateReplyMessageJobTest(QObject *parent)
 {
 
 }
+
+void CreateReplyMessageJobTest::shouldHaveDefaultValue()
+{
+    //TODO
+}

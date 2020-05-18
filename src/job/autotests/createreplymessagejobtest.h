@@ -29,6 +29,8 @@ class CreateReplyMessageJobTest : public QObject
 public:
     explicit CreateReplyMessageJobTest(QObject *parent = nullptr);
     ~CreateReplyMessageJobTest() = default;
+private Q_SLOTS:
+    void shouldHaveDefaultValue();
 };
 
 #endif // CREATEREPLYMESSAGEJOBTEST_H
