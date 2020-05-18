@@ -22,8 +22,8 @@
 #define POTENTIALPHISHINGEMAILWARNING_H
 
 #include <KMessageWidget>
-
-class PotentialPhishingEmailWarning : public KMessageWidget
+#include "kmail_private_export.h"
+class KMAILTESTS_TESTS_EXPORT PotentialPhishingEmailWarning : public KMessageWidget
 {
     Q_OBJECT
 public:

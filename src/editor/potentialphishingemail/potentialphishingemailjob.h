@@ -21,10 +21,11 @@
 #ifndef POTENTIALPHISHINGEMAILJOB_H
 #define POTENTIALPHISHINGEMAILJOB_H
 
+#include "kmail_private_export.h"
 #include <QObject>
 #include <QStringList>
 
-class PotentialPhishingEmailJob : public QObject
+class KMAILTESTS_TESTS_EXPORT PotentialPhishingEmailJob : public QObject
 {
     Q_OBJECT
 public:

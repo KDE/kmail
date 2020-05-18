@@ -22,8 +22,9 @@
 #define POTENTIALPHISHINGDETAILWIDGET_H
 
 #include <QWidget>
+#include "kmail_private_export.h"
 class QListWidget;
-class PotentialPhishingDetailWidget : public QWidget
+class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailWidget : public QWidget
 {
     Q_OBJECT
 public:

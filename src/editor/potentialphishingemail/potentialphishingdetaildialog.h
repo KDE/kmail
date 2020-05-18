@@ -22,8 +22,9 @@
 #define POTENTIALPHISHINGDETAILDIALOG_H
 
 #include <QDialog>
+#include "kmail_private_export.h"
 class PotentialPhishingDetailWidget;
-class PotentialPhishingDetailDialog : public QDialog
+class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailDialog : public QDialog
 {
     Q_OBJECT
 public:
