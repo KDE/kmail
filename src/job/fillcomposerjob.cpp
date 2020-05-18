@@ -29,7 +29,6 @@
 
 FillComposerJob::FillComposerJob(QObject *parent)
     : QObject(parent)
-    , mMsg(nullptr)
 {
 }
 

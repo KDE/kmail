@@ -29,8 +29,6 @@
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
     : QObject(parent)
-    , mIdentity(0)
-    , mMsg(nullptr)
 {
 }
 

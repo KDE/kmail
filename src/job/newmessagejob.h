@@ -67,7 +67,7 @@ private:
     NewMessageJobSettings mNewMessageJobSettings;
     Akonadi::Collection mCollection;
     QUrl mAttachURL;
-    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mMsg = nullptr;
 };
 
 #endif // NEWMESSAGEJOB_H

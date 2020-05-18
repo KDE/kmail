@@ -36,7 +36,7 @@ public:
 
 private:
     void slotStoreDone(KJob *job);
-    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mMsg = nullptr;
     Akonadi::Collection mCollection;
 };
 

@@ -28,7 +28,6 @@
 
 NewMessageJob::NewMessageJob(QObject *parent)
     : QObject(parent)
-    , mMsg(nullptr)
 {
 }
 

@@ -26,9 +26,6 @@
 struct FillComposerJobSettings
 {
     FillComposerJobSettings()
-        : mIdentity(0)
-        , mForceShowWindow(false)
-        , mHidden(false)
     {
     }
 
@@ -68,9 +65,9 @@ struct FillComposerJobSettings
     QString mAttachParamValue;
     QByteArray mAttachContDisp;
     QByteArray mAttachCharset;
-    unsigned int mIdentity;
-    bool mForceShowWindow;
-    bool mHidden;
+    unsigned int mIdentity = 0;
+    bool mForceShowWindow = false;
+    bool mHidden = false;
 };
 
 class FillComposerJob : public QObject
@@ -86,7 +83,7 @@ private:
     Q_DISABLE_COPY(FillComposerJob)
     void slotOpenComposer();
     FillComposerJobSettings mSettings;
-    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mMsg = nullptr;
 };
 
 #endif // FILLCOMPOSERJOB_H
