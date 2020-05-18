@@ -20,10 +20,11 @@
 #ifndef DisplayMessageFormatActionMenu_H
 #define DisplayMessageFormatActionMenu_H
 
+#include "kmail_private_export.h"
 #include <KActionMenu>
 #include <MessageViewer/Viewer>
 
-class DisplayMessageFormatActionMenu : public KActionMenu
+class KMAILTESTS_TESTS_EXPORT DisplayMessageFormatActionMenu : public KActionMenu
 {
     Q_OBJECT
 public:

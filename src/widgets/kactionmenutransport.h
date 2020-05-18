@@ -21,11 +21,12 @@
 #define KACTIONMENUTRANSPORT_H
 
 #include <KActionMenu>
+#include "kmail_private_export.h"
 namespace MailTransport {
 class Transport;
 }
 
-class KActionMenuTransport : public KActionMenu
+class KMAILTESTS_TESTS_EXPORT KActionMenuTransport : public KActionMenu
 {
     Q_OBJECT
 public:

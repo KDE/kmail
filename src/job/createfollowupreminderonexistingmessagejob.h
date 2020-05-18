@@ -20,12 +20,13 @@
 #ifndef CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
 #define CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
 
+#include "kmail_private_export.h"
 #include <QObject>
 #include <AkonadiCore/Collection>
 #include <QDate>
 #include <AkonadiCore/Item>
 
-class CreateFollowupReminderOnExistingMessageJob : public QObject
+class KMAILTESTS_TESTS_EXPORT CreateFollowupReminderOnExistingMessageJob : public QObject
 {
     Q_OBJECT
 public:

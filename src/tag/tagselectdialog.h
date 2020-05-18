@@ -20,6 +20,7 @@
 #ifndef TAGSELECTDIALOG_H
 #define TAGSELECTDIALOG_H
 
+#include "kmail_private_export.h"
 #include <QDialog>
 #include <QVector>
 #include <AkonadiCore/Item>
@@ -28,7 +29,7 @@
 
 class QListWidget;
 class KActionCollection;
-class TagSelectDialog : public QDialog
+class KMAILTESTS_TESTS_EXPORT TagSelectDialog : public QDialog
 {
     Q_OBJECT
 public:

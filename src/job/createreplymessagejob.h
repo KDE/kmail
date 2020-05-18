@@ -21,12 +21,13 @@
 #define CREATEREPLYMESSAGEJOB_H
 
 #include <QObject>
+#include "kmail_private_export.h"
 #include <AkonadiCore/Item>
 #include <KMime/Message>
 #include <MessageComposer/MessageFactoryNG>
 #include <QUrl>
 
-struct CreateReplyMessageJobSettings
+struct KMAILTESTS_TESTS_EXPORT CreateReplyMessageJobSettings
 {
     CreateReplyMessageJobSettings()
     {
@@ -39,9 +40,10 @@ struct CreateReplyMessageJobSettings
     KMime::Message::Ptr mMsg;
     MessageComposer::ReplyStrategy m_replyStrategy = MessageComposer::ReplySmart;
     bool mNoQuote = false;
+    bool mReplyAsHtml = false;
 };
 
-class CreateReplyMessageJob : public QObject
+class KMAILTESTS_TESTS_EXPORT CreateReplyMessageJob : public QObject
 {
     Q_OBJECT
 public:

@@ -20,13 +20,14 @@
 #ifndef CREATEFORWARDMESSAGEJOB_H
 #define CREATEFORWARDMESSAGEJOB_H
 
+#include "kmail_private_export.h"
 #include <QObject>
 #include <QUrl>
 #include <KMime/Message>
 #include <AkonadiCore/Item>
 #include <MessageComposer/MessageFactoryNG>
 
-struct CreateForwardMessageJobSettings
+struct KMAILTESTS_TESTS_EXPORT CreateForwardMessageJobSettings
 {
     QUrl mUrl;
     Akonadi::Item mItem;
@@ -36,7 +37,7 @@ struct CreateForwardMessageJobSettings
     uint mIdentity = 0;
 };
 
-class CreateForwardMessageJob : public QObject
+class KMAILTESTS_TESTS_EXPORT CreateForwardMessageJob : public QObject
 {
     Q_OBJECT
 public:

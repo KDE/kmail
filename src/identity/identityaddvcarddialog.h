@@ -17,13 +17,14 @@
 
 #ifndef IDENTITYADDVCARDDIALOG_H
 #define IDENTITYADDVCARDDIALOG_H
+#include "kmail_private_export.h"
 #include <QDialog>
 #include <QUrl>
 class QButtonGroup;
 class QComboBox;
 class KUrlRequester;
 
-class IdentityAddVcardDialog : public QDialog
+class KMAILTESTS_TESTS_EXPORT IdentityAddVcardDialog : public QDialog
 {
     Q_OBJECT
 public:
