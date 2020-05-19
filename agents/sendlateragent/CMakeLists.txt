@@ -18,24 +18,26 @@ set(sendlateragentconfig_SRCS
     sendlaterconfigurewidget.cpp
     )
 
-set(sendlateragent_SRCS
+set(libsendlateragent_SRCS
     ${sendlateragentconfig_SRCS}
     ${sendlater_common_SRCS}
-    sendlateragent.cpp
     sendlatermanager.cpp
     sendlaterjob.cpp
     sendlaterremovemessagejob.cpp
+    sendlaterutil.cpp
     )
 
+set(sendlateragent_SRCS
+    sendlateragent.cpp
+    )
 
 qt5_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.xml sendlateragent.h SendLaterAgent)
 
-ki18n_wrap_ui(sendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
 
-add_executable(akonadi_sendlater_agent ${sendlateragent_SRCS})
-
-target_link_libraries(akonadi_sendlater_agent
-    KF5::SendLater
+ki18n_wrap_ui(libsendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
+kconfig_add_kcfg_files(libsendlateragent_SRCS sendlateragentsettings.kcfgc)
+add_library(sendlateragent STATIC ${libsendlateragent_SRCS})
+target_link_libraries(sendlateragent
     KF5::AkonadiCore
     KF5::AkonadiMime
     KF5::MailTransportAkonadi
@@ -43,7 +45,6 @@ target_link_libraries(akonadi_sendlater_agent
     KF5::MessageComposer
     KF5::MessageCore
     KF5::PimCommon
-    KF5::AkonadiAgentBase
     KF5::DBusAddons
     KF5::WindowSystem
     KF5::XmlGui
@@ -51,9 +52,15 @@ target_link_libraries(akonadi_sendlater_agent
     KF5::I18n
     )
 
+
+add_executable(akonadi_sendlater_agent ${sendlateragent_SRCS})
+target_link_libraries(akonadi_sendlater_agent
+    sendlateragent
+    KF5::AkonadiAgentBase
+    )
+
 if( APPLE )
     set_target_properties(akonadi_sendlater_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
-    set_target_properties(akonadi_sendlater_agent PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.Akonadi.KF5::SendLater")
     set_target_properties(akonadi_sendlater_agent PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Send Later")
 endif ()
 

@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2015-2020 Laurent Montel <montel@kde.org>
+   Copyright (C) 2013-2020 Laurent Montel <montel@kde.org>
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public
@@ -17,20 +17,18 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef SENDLATERDIALOGTEST_H
-#define SENDLATERDIALOGTEST_H
+#ifndef SENDLATERUTIL_P_H
+#define SENDLATERUTIL_P_H
 
-#include <QObject>
+#include <QDateTime>
 
-class SendLaterDialogTest : public QObject
-{
-    Q_OBJECT
-public:
-    explicit SendLaterDialogTest(QObject *parent = nullptr);
-    ~SendLaterDialogTest();
-private Q_SLOTS:
-    void shouldHaveDefaultValue();
-    void initTestCase();
-};
+namespace SendLater {
+class SendLaterInfo;
 
-#endif // SENDLATERDIALOGTEST_H
+namespace SendLaterUtil {
+
+Q_REQUIRED_RESULT QDateTime updateRecurence(SendLater::SendLaterInfo *info, QDateTime dateTime);
+
+}
+}
+#endif // SENDLATERUTIL_P_H

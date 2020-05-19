@@ -18,9 +18,11 @@
 */
 
 #include "sendlaterconfigurewidget.h"
-#include "sendlaterinfo.h"
 #include "sendlaterutil.h"
 #include "sendlaterdialog.h"
+
+#include <MessageComposer/SendLaterInfo>
+#include <MessageComposer/SendLaterDialog>
 
 #include <KConfigGroup>
 #include <KLocalizedString>
@@ -48,12 +50,12 @@ SendLaterItem::~SendLaterItem()
     delete mInfo;
 }
 
-void SendLaterItem::setInfo(SendLater::SendLaterInfo *info)
+void SendLaterItem::setInfo(MessageComposer::SendLaterInfo *info)
 {
     mInfo = info;
 }
 
-SendLater::SendLaterInfo *SendLaterItem::info() const
+MessageComposer::SendLaterInfo *SendLaterItem::info() const
 {
     return mInfo;
 }
@@ -147,12 +149,12 @@ void SendLaterWidget::updateButtons()
 
 void SendLaterWidget::load()
 {
-    KSharedConfig::Ptr config = KSharedConfig::openConfig();
+    KSharedConfig::Ptr config = SendLaterUtil::defaultConfig();
     const QStringList filterGroups = config->groupList().filter(QRegularExpression(sendLaterItemPattern()));
     const int numberOfItem = filterGroups.count();
     for (int i = 0; i < numberOfItem; ++i) {
         KConfigGroup group = config->group(filterGroups.at(i));
-        SendLater::SendLaterInfo *info = new SendLater::SendLaterInfo(group);
+        auto info = SendLaterUtil::readSendLaterInfo(group);
         if (info->isValid()) {
             createOrUpdateItem(info);
         } else {
@@ -162,7 +164,7 @@ void SendLaterWidget::load()
     mWidget->treeWidget->setShowDefaultText(numberOfItem == 0);
 }
 
-void SendLaterWidget::createOrUpdateItem(SendLater::SendLaterInfo *info, SendLaterItem *item)
+void SendLaterWidget::createOrUpdateItem(MessageComposer::SendLaterInfo *info, SendLaterItem *item)
 {
     if (!item) {
         item = new SendLaterItem(mWidget->treeWidget);
@@ -183,7 +185,7 @@ void SendLaterWidget::save()
     if (!mChanged) {
         return;
     }
-    KSharedConfig::Ptr config = KSharedConfig::openConfig();
+    KSharedConfig::Ptr config = SendLaterUtil::defaultConfig();
 
     // first, delete all filter groups:
     const QStringList filterGroups = config->groupList().filter(QRegularExpression(sendLaterItemPattern()));
@@ -196,8 +198,7 @@ void SendLaterWidget::save()
     for (int i = 0; i < numberOfItem; ++i) {
         SendLaterItem *mailItem = static_cast<SendLaterItem *>(mWidget->treeWidget->topLevelItem(i));
         if (mailItem->info()) {
-            KConfigGroup group = config->group(SendLater::SendLaterUtil::sendLaterPattern().arg(mailItem->info()->itemId()));
-            mailItem->info()->writeConfig(group);
+            SendLaterUtil::writeSendLaterInfo(config, mailItem->info());
         }
     }
     config->sync();
@@ -248,9 +249,9 @@ void SendLaterWidget::slotModifyItem()
         }
         SendLaterItem *mailItem = static_cast<SendLaterItem *>(item);
 
-        QPointer<SendLater::SendLaterDialog> dialog = new SendLater::SendLaterDialog(mailItem->info(), this);
+        QPointer<MessageComposer::SendLaterDialog> dialog = new MessageComposer::SendLaterDialog(mailItem->info(), this);
         if (dialog->exec()) {
-            SendLater::SendLaterInfo *info = dialog->info();
+            auto info = dialog->info();
             createOrUpdateItem(info, mailItem);
             mChanged = true;
         }
@@ -261,7 +262,7 @@ void SendLaterWidget::slotModifyItem()
 void SendLaterWidget::needToReload()
 {
     mWidget->treeWidget->clear();
-    KSharedConfig::Ptr config = KSharedConfig::openConfig();
+    KSharedConfig::Ptr config = SendLaterUtil::defaultConfig();
     config->reparseConfiguration();
     load();
 }

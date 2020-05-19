@@ -17,23 +17,19 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef SENDLATERINFOTEST_H
-#define SENDLATERINFOTEST_H
+#ifndef SENDLATERUTILTEST_H
+#define SENDLATERUTILTEST_H
 
 #include <QObject>
 
-class SendLaterInfoTest : public QObject
+class SendLaterUtilTest : public QObject
 {
     Q_OBJECT
 public:
-    explicit SendLaterInfoTest(QObject *parent = nullptr);
+    explicit SendLaterUtilTest(QObject *parent = nullptr);
 
 private Q_SLOTS:
-    void shouldHaveDefaultValue();
     void shouldRestoreFromSettings();
-    void shouldNotValidIfIdIsNotValid();
-    void shouldNotValidIfDateIsNotValid();
-    void shouldCopyInfo();
 };
 
-#endif // SENDLATERINFOTEST_H
+#endif // SENDLATERUTILTEST_H

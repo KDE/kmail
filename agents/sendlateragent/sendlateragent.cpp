@@ -42,6 +42,7 @@
 #include <Kdelibs4ConfigMigrator>
 
 #include <QPointer>
+#include <sendlaterinfo.h>
 
 //#define DEBUG_SENDLATERAGENT 1
 
@@ -160,6 +161,22 @@ void SendLaterAgent::removeItem(qint64 item)
     if (mManager->itemRemoved(item)) {
         reload();
     }
+}
+
+void SendLaterAgent::addItem(qint64 timestamp, bool recurrence, int recurrenceValue, int recurrenceUnit,
+                             Akonadi::Item::Id id, const QString &subject, const QString &to)
+{
+    auto info = new MessageComposer::SendLaterInfo;
+    info->setDateTime(QDateTime::fromSecsSinceEpoch(timestamp));
+    info->setRecurrence(recurrence);
+    info->setRecurrenceEachValue(recurrenceValue);
+    info->setRecurrenceUnit(static_cast<MessageComposer::SendLaterInfo::RecurrenceUnit>(recurrenceUnit));
+    info->setItemId(id);
+    info->setSubject(subject);
+    info->setTo(to);
+
+    SendLaterUtil::writeSendLaterInfo(SendLaterUtil::defaultConfig(), info);
+    reload();
 }
 
 void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)

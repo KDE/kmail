@@ -17,23 +17,32 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <QApplication>
-#include <QCommandLineParser>
-#include <QStandardPaths>
+#ifndef SENDLATERUTIL_H
+#define SENDLATERUTIL_H
 
-#include <MessageComposer/SendLaterDialog>
-#include "sendlaterdialog.h"
+#include <KSharedConfig>
 
-int main(int argc, char **argv)
-{
-    QApplication app(argc, argv);
-    QStandardPaths::setTestModeEnabled(true);
-    QCommandLineParser parser;
-    parser.addVersionOption();
-    parser.addHelpOption();
-    parser.process(app);
-    MessageComposer::SendLaterDialog *dialog = new MessageComposer::SendLaterDialog(nullptr);
-    dialog->exec();
-    delete dialog;
-    return 0;
+namespace MessageComposer {
+class SendLaterInfo;
 }
+
+/** Send later utilities. */
+namespace SendLaterUtil {
+
+Q_REQUIRED_RESULT bool compareSendLaterInfo(MessageComposer::SendLaterInfo *left, MessageComposer::SendLaterInfo *right);
+
+Q_REQUIRED_RESULT KSharedConfig::Ptr defaultConfig();
+
+void writeSendLaterInfo(KSharedConfig::Ptr config, MessageComposer::SendLaterInfo *info);
+Q_REQUIRED_RESULT MessageComposer::SendLaterInfo *readSendLaterInfo(KConfigGroup &config);
+
+Q_REQUIRED_RESULT bool sentLaterAgentEnabled();
+
+void changeRecurrentDate(MessageComposer::SendLaterInfo *info);
+void forceReparseConfiguration();
+
+Q_REQUIRED_RESULT QString sendLaterPattern();
+
+}
+
+#endif // SENDLATERUTIL_H

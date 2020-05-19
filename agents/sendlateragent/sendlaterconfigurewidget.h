@@ -26,7 +26,7 @@
 #include <QTreeWidgetItem>
 #include <KConfigGroup>
 
-namespace SendLater {
+namespace MessageComposer {
 class SendLaterInfo;
 }
 
@@ -36,11 +36,11 @@ public:
     explicit SendLaterItem(QTreeWidget *parent = nullptr);
     ~SendLaterItem();
 
-    void setInfo(SendLater::SendLaterInfo *info);
-    SendLater::SendLaterInfo *info() const;
+    void setInfo(MessageComposer::SendLaterInfo *info);
+    MessageComposer::SendLaterInfo *info() const;
 
 private:
-    SendLater::SendLaterInfo *mInfo = nullptr;
+    MessageComposer::SendLaterInfo *mInfo = nullptr;
 };
 
 class SendLaterWidget : public QWidget
@@ -73,7 +73,7 @@ private:
     void updateButtons();
     void slotCustomContextMenuRequested(const QPoint &);
     void slotSendNow();
-    void createOrUpdateItem(SendLater::SendLaterInfo *info, SendLaterItem *item = nullptr);
+    void createOrUpdateItem(MessageComposer::SendLaterInfo *info, SendLaterItem *item = nullptr);
     void load();
     QVector<Akonadi::Item::Id> mListMessagesToRemove;
     bool mChanged = false;

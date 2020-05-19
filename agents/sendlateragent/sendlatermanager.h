@@ -27,12 +27,9 @@
 
 #include <KSharedConfig>
 
-namespace SendLater {
-class SendLaterInfo;
-}
-
 namespace MessageComposer {
 class AkonadiSender;
+class SendLaterInfo;
 }
 
 class QTimer;
@@ -53,8 +50,8 @@ public:
     explicit SendLaterManager(QObject *parent);
     ~SendLaterManager();
 
-    void sendDone(SendLater::SendLaterInfo *info);
-    void sendError(SendLater::SendLaterInfo *info, ErrorType type);
+    void sendDone(MessageComposer::SendLaterInfo *info);
+    void sendError(MessageComposer::SendLaterInfo *info, ErrorType type);
     Q_REQUIRED_RESULT QString printDebugInfo() const;
 
     void stopAll();
@@ -74,15 +71,15 @@ private:
     Q_DISABLE_COPY(SendLaterManager)
     void slotCreateJob();
     void createSendInfoList();
-    QString infoToStr(SendLater::SendLaterInfo *info) const;
-    void removeLaterInfo(SendLater::SendLaterInfo *info);
-    SendLater::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
+    QString infoToStr(MessageComposer::SendLaterInfo *info) const;
+    void removeLaterInfo(MessageComposer::SendLaterInfo *info);
+    MessageComposer::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
     void recreateSendList();
     void stopTimer();
     void removeInfo(Akonadi::Item::Id id);
     KSharedConfig::Ptr mConfig;
-    QList<SendLater::SendLaterInfo *> mListSendLaterInfo;
-    SendLater::SendLaterInfo *mCurrentInfo = nullptr;
+    QList<MessageComposer::SendLaterInfo *> mListSendLaterInfo;
+    MessageComposer::SendLaterInfo *mCurrentInfo = nullptr;
     SendLaterJob *mCurrentJob = nullptr;
     QTimer *mTimer = nullptr;
     MessageComposer::AkonadiSender *mSender = nullptr;

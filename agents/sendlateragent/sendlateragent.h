@@ -21,7 +21,10 @@
 #define SENDLATERAGENT_H
 
 #include <agentbase.h>
+
 #include "sendlaterdialog.h"
+#include <MessageComposer/SendLaterInfo>
+#include <sendlaterinfo.h>
 
 class SendLaterManager;
 
@@ -44,6 +47,8 @@ public Q_SLOTS:
     void reload();
     void configure(WId windowId) override;
     void removeItem(qint64 item);
+    void addItem(qint64 timestamp, bool recurrence, int recurrenceValue, int recurrenceUnit,
+                 Akonadi::Item::Id itemId, const QString &subject, const QString &to);
 
 protected:
     void itemsRemoved(const Akonadi::Item::List &item) override;

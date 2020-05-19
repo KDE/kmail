@@ -18,10 +18,10 @@
 */
 
 #include "sendlaterjob.h"
-#include "sendlaterinfo.h"
 
 #include <MessageComposer/AkonadiSender>
 #include <MessageComposer/Util>
+#include <MessageComposer/SendLaterInfo>
 #include <MessageCore/StringUtil>
 
 #include <MailTransportAkonadi/TransportAttribute>
@@ -36,7 +36,7 @@
 #include <KLocalizedString>
 #include "sendlateragent_debug.h"
 
-SendLaterJob::SendLaterJob(SendLaterManager *manager, SendLater::SendLaterInfo *info, QObject *parent)
+SendLaterJob::SendLaterJob(SendLaterManager *manager, MessageComposer::SendLaterInfo *info, QObject *parent)
     : QObject(parent)
     , mManager(manager)
     , mInfo(info)

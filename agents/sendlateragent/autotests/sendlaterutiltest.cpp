@@ -17,50 +17,24 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "sendlaterconfigtest.h"
+#include "sendlaterutiltest.h"
 #include "sendlaterutil.h"
 
 #include <MessageComposer/SendLaterInfo>
 
 #include <QTest>
+#include <QDateTime>
+#include <KConfigGroup>
+#include <KSharedConfig>
+#include <QStandardPaths>
+#include <sendlaterinfo.h>
 
-SendLaterConfigTest::SendLaterConfigTest(QObject *parent)
+SendLaterUtilTest::SendLaterUtilTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
-
-SendLaterConfigTest::~SendLaterConfigTest() = default;
-
-void SendLaterConfigTest::init()
-{
-    mConfig = KSharedConfig::openConfig(QStringLiteral("test-sendlateragent.rc"), KConfig::SimpleConfig);
-    mSendlaterRegExpFilter = QRegularExpression(QStringLiteral("SendLaterItem \\d+"));
-    cleanup();
-}
-
-void SendLaterConfigTest::cleanup()
-{
-    const QStringList filterGroups = mConfig->groupList();
-    for (const QString &group : filterGroups) {
-        mConfig->deleteGroup(group);
-    }
-    mConfig->sync();
-    mConfig->reparseConfiguration();
-}
-
-void SendLaterConfigTest::cleanupTestCase()
-{
-    //Make sure to clean config
-    cleanup();
-}
-
-void SendLaterConfigTest::shouldConfigBeEmpty()
-{
-    const QStringList filterGroups = mConfig->groupList();
-    QCOMPARE(filterGroups.isEmpty(), true);
-}
-
-void SendLaterConfigTest::shouldAddAnItem()
+void SendLaterUtilTest::shouldRestoreFromSettings()
 {
     MessageComposer::SendLaterInfo info;
     const QString to = QStringLiteral("kde.org");
@@ -78,21 +52,11 @@ void SendLaterConfigTest::shouldAddAnItem()
     info.setDateTime(QDateTime(date.startOfDay()));
     info.setLastDateTimeSend(QDateTime(date.startOfDay()));
 #endif
+    SendLaterUtil::writeSendLaterInfo(KSharedConfig::openConfig(), &info);
 
-    SendLaterUtil::writeSendLaterInfo(mConfig, &info);
-    const QStringList itemList = mConfig->groupList().filter(mSendlaterRegExpFilter);
-
-    QCOMPARE(itemList.isEmpty(), false);
-    QCOMPARE(itemList.count(), 1);
+    KConfigGroup grp(KSharedConfig::openConfig(), SendLaterUtil::sendLaterPattern().arg(42));
+    std::unique_ptr<MessageComposer::SendLaterInfo> restoreInfo{SendLaterUtil::readSendLaterInfo(grp)};
+    QCOMPARE(info, *restoreInfo);
 }
 
-void SendLaterConfigTest::shouldNotAddInvalidItem()
-{
-    MessageComposer::SendLaterInfo info;
-    SendLaterUtil::writeSendLaterInfo(mConfig, &info);
-    const QStringList itemList = mConfig->groupList().filter(mSendlaterRegExpFilter);
-
-    QCOMPARE(itemList.isEmpty(), true);
-}
-
-QTEST_MAIN(SendLaterConfigTest)
+QTEST_MAIN(SendLaterUtilTest)
