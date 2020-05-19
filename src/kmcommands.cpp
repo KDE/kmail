@@ -451,12 +451,23 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     settings.selection = mSelection;
     settings.url = mUrl;
     settings.replyStrategy = MessageComposer::ReplyNone;
+    settings.replyAsHtml = mReplyAsHtml;
 
     CreateReplyMessageJob *job = new CreateReplyMessageJob;
     job->setSettings(settings);
     job->start();
 
     return OK;
+}
+
+bool KMMailtoReplyCommand::replyAsHtml() const
+{
+    return mReplyAsHtml;
+}
+
+void KMMailtoReplyCommand::setReplyAsHtml(bool replyAsHtml)
+{
+    mReplyAsHtml = replyAsHtml;
 }
 
 KMMailtoForwardCommand::KMMailtoForwardCommand(QWidget *parent, const QUrl &url, const Akonadi::Item &msg)
@@ -858,12 +869,23 @@ KMCommand::Result KMReplyCommand::execute()
     settings.replyStrategy = m_replyStrategy;
     settings.templateStr = mTemplate;
     settings.noQuote = mNoQuote;
+    settings.replyAsHtml = mReplyAsHtml;
 
     CreateReplyMessageJob *job = new CreateReplyMessageJob;
     job->setSettings(settings);
     job->start();
 
     return OK;
+}
+
+bool KMReplyCommand::replyAsHtml() const
+{
+    return mReplyAsHtml;
+}
+
+void KMReplyCommand::setReplyAsHtml(bool replyAsHtml)
+{
+    mReplyAsHtml = replyAsHtml;
 }
 
 KMForwardCommand::KMForwardCommand(QWidget *parent, const Akonadi::Item::List &msgList, uint identity, const QString &templateName, const QString &selection)

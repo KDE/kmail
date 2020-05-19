@@ -179,11 +179,15 @@ class KMAILTESTS_TESTS_EXPORT KMMailtoReplyCommand : public KMCommand
 public:
     KMMailtoReplyCommand(QWidget *parent, const QUrl &url, const Akonadi::Item &msg, const QString &selection);
 
+    Q_REQUIRED_RESULT bool replyAsHtml() const;
+    void setReplyAsHtml(bool replyAsHtml);
+
 private:
     Result execute() override;
 
     QUrl mUrl;
     QString mSelection;
+    bool mReplyAsHtml = false;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMMailtoForwardCommand : public KMCommand
@@ -324,6 +328,9 @@ class KMAILTESTS_TESTS_EXPORT KMReplyCommand : public KMCommand
     Q_OBJECT
 public:
     KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy, const QString &selection = QString(), bool noquote = false, const QString &templateName = QString());
+    Q_REQUIRED_RESULT bool replyAsHtml() const;
+    void setReplyAsHtml(bool replyAsHtml);
+
 private:
     Result execute() override;
 
@@ -332,6 +339,7 @@ private:
     QString mTemplate;
     MessageComposer::ReplyStrategy m_replyStrategy;
     bool mNoQuote = false;
+    bool mReplyAsHtml = false;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMForwardCommand : public KMCommand
