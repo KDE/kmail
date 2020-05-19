@@ -170,7 +170,6 @@
 #include <KIconUtils>
 #include <KMessageBox>
 #include <KRecentFilesAction>
-#include <KRun>
 #include <KShortcutsDialog>
 #include <KSplitterCollapserButton>
 #include <KStandardShortcut>

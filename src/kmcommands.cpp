@@ -487,9 +487,9 @@ KMCommand::Result KMMailtoForwardCommand::execute()
         return Failed;
     }
     CreateForwardMessageJobSettings settings;
-    settings.mItem = item;
-    settings.mMsg = msg;
-    settings.mUrl = mUrl;
+    settings.item = item;
+    settings.msg = msg;
+    settings.url = mUrl;
 
     CreateForwardMessageJob *job = new CreateForwardMessageJob;
     job->setSettings(settings);
@@ -919,11 +919,11 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
 #endif
 
     CreateForwardMessageJobSettings settings;
-    settings.mItem = item;
-    settings.mMsg = msg;
-    settings.mIdentity = mIdentity;
-    settings.mTemplate = mTemplate;
-    settings.mSelection = mSelection;
+    settings.item = item;
+    settings.msg = msg;
+    settings.identity = mIdentity;
+    settings.templateStr = mTemplate;
+    settings.selection = mSelection;
 
     CreateForwardMessageJob *job = new CreateForwardMessageJob;
     job->setSettings(settings);

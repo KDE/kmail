@@ -20,7 +20,6 @@
 #include "kmlaunchexternalcomponent.h"
 #include <KMessageBox>
 #include <KLocalizedString>
-#include <KRun>
 #include <AkonadiCore/AgentManager>
 
 #include "util.h"

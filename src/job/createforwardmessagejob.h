@@ -29,12 +29,12 @@
 
 struct KMAILTESTS_TESTS_EXPORT CreateForwardMessageJobSettings
 {
-    QUrl mUrl;
-    Akonadi::Item mItem;
-    KMime::Message::Ptr mMsg;
-    QString mTemplate;
-    QString mSelection;
-    uint mIdentity = 0;
+    QUrl url;
+    Akonadi::Item item;
+    KMime::Message::Ptr msg = nullptr;
+    QString templateStr;
+    QString selection;
+    uint identity = 0;
 };
 
 class KMAILTESTS_TESTS_EXPORT CreateForwardMessageJob : public QObject
