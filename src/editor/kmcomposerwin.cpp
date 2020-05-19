@@ -147,9 +147,9 @@
 #include <PimCommon/LineEditWithAutoCorrection>
 #include <PimCommon/CustomToolsPluginManager>
 
-#include <SendLater/SendLaterDialog>
-#include <SendLater/SendLaterInfo>
-#include <SendLater/SendLaterUtil>
+#include <MessageComposer/SendLaterDialog>
+#include <MessageComposer/SendLaterInfo>
+#include <MessageComposer/SendLaterUtil>
 
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
@@ -2643,7 +2643,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
             mComposerBase->setSendLaterInfo(nullptr);
             const bool wasRegistered = sendLaterRegistered();
             if (wasRegistered) {
-                SendLater::SendLaterInfo *info = new SendLater::SendLaterInfo;
+                auto info = new MessageComposer::SendLaterInfo;
                 info->setRecurrence(false);
                 info->setSubject(subject());
                 info->setDateTime(QDateTime::currentDateTime().addSecs(KMailSettings::self()->undoSendDelay()));
@@ -2823,7 +2823,8 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
 
 bool KMComposerWin::sendLaterRegistered() const
 {
-    return SendLater::SendLaterUtil::sentLaterAgentWasRegistered() && SendLater::SendLaterUtil::sentLaterAgentEnabled();
+    return MessageComposer::SendLaterUtil::sentLaterAgentWasRegistered()
+            && MessageComposer::SendLaterUtil::sentLaterAgentEnabled();
 }
 
 void KMComposerWin::slotSendLater()
@@ -2838,23 +2839,23 @@ void KMComposerWin::slotSendLater()
     if (mComposerBase->editor()->checkExternalEditorFinished()) {
         const bool wasRegistered = sendLaterRegistered();
         if (wasRegistered) {
-            SendLater::SendLaterInfo *info = nullptr;
-            QPointer<SendLater::SendLaterDialog> dlg = new SendLater::SendLaterDialog(info, this);
+            MessageComposer::SendLaterInfo *info = nullptr;
+            QPointer<MessageComposer::SendLaterDialog> dlg = new MessageComposer::SendLaterDialog(info, this);
             if (dlg->exec()) {
                 info = dlg->info();
-                const SendLater::SendLaterDialog::SendLaterAction action = dlg->action();
+                const MessageComposer::SendLaterDialog::SendLaterAction action = dlg->action();
                 delete dlg;
                 switch (action) {
-                case SendLater::SendLaterDialog::Unknown:
+                case MessageComposer::SendLaterDialog::Unknown:
                     qCDebug(KMAIL_LOG) << "Sendlater action \"Unknown\": Need to fix it.";
                     break;
-                case SendLater::SendLaterDialog::Canceled:
+                case MessageComposer::SendLaterDialog::Canceled:
                     return;
                     break;
-                case SendLater::SendLaterDialog::PutInOutbox:
+                case MessageComposer::SendLaterDialog::PutInOutbox:
                     doSend(MessageComposer::MessageSender::SendLater);
                     break;
-                case SendLater::SendLaterDialog::SendDeliveryAtTime:
+                case MessageComposer::SendLaterDialog::SendDeliveryAtTime:
                     mComposerBase->setSendLaterInfo(info);
                     if (info->isRecurrence()) {
                         doSend(MessageComposer::MessageSender::SendLater, MessageComposer::MessageSender::SaveInTemplates, true);

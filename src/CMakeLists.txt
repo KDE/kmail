@@ -347,7 +347,6 @@ target_link_libraries(kmailprivate
     KF5::Contacts
     KF5::PimTextEdit
     KF5::MessageViewer
-    KF5::SendLater
     KF5::IconThemes
     KF5::XmlGui
     KF5::Completion

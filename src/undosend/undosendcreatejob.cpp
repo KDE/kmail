@@ -19,7 +19,9 @@
 
 #include "undosendcreatejob.h"
 #include "kmail_debug.h"
-#include <SendLater/SendLaterUtil>
+
+#include <MessageComposer/SendLaterRemoveJob>
+
 #include <KNotification>
 #include <KLocalizedString>
 #include <QTimer>
@@ -90,7 +92,8 @@ void UndoSendCreateJob::slotActivateNotificationAction(unsigned int index)
 void UndoSendCreateJob::undoSendEmail()
 {
     mTimer->stop();
-    SendLater::SendLaterUtil::removeItem(mAkonadiIndex);
+    auto job = new MessageComposer::SendLaterRemoveJob(mAkonadiIndex, this);
+    job->start();
 }
 
 QString UndoSendCreateJob::subject() const
