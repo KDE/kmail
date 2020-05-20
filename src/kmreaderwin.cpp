@@ -522,8 +522,9 @@ void KMReaderWin::slotSaveImageOnDisk()
 
 void KMReaderWin::slotMailtoReply()
 {
-    KMCommand *command = new KMMailtoReplyCommand(mMainWindow, urlClicked(),
+    KMMailtoReplyCommand *command = new KMMailtoReplyCommand(mMainWindow, urlClicked(),
                                                   message(), copyText());
+    command->setReplyAsHtml(htmlMail());
     command->start();
 }
 

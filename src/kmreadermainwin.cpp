@@ -393,6 +393,7 @@ void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
                                                  MessageComposer::ReplySmart,
                                                  mReaderWin->copyText(),
                                                  false, tmpl);
+    command->setReplyAsHtml(mReaderWin->htmlMail());
     connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
@@ -408,6 +409,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
                                                  MessageComposer::ReplyAll,
                                                  mReaderWin->copyText(),
                                                  false, tmpl);
+    command->setReplyAsHtml(mReaderWin->htmlMail());
     connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();

@@ -2100,13 +2100,14 @@ void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl)
 
     qCDebug(KMAIL_LOG) << "Reply to All with template:" << tmpl;
 
-    KMCommand *command = new KMReplyCommand(this,
+    KMReplyCommand *command = new KMReplyCommand(this,
                                             msg,
                                             MessageComposer::ReplyAll,
                                             text,
                                             false,
                                             tmpl
                                             );
+    command->setReplyAsHtml(messageView()->htmlMail());
 
     command->start();
 }
@@ -4812,6 +4813,7 @@ void KMMainWidget::replyCurrentMessageCommand(MessageComposer::ReplyStrategy str
         }
         const QString text = messageView()->copyText();
         KMReplyCommand *command = new KMReplyCommand(this, currentItem, strategy, text);
+        command->setReplyAsHtml(messageView()->htmlMail());
         command->start();
     }
 }
@@ -4823,6 +4825,7 @@ void KMMainWidget::slotReplyMessageTo(const KMime::Message::Ptr &message, bool r
     item.setPayload<KMime::Message::Ptr>(message);
     item.setMimeType(KMime::Message::mimeType());
     KMReplyCommand *command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
+    command->setReplyAsHtml(messageView()->htmlMail());
     command->start();
 }
 
