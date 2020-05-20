@@ -24,6 +24,7 @@
 #include <KTNEF/KTNEFParser>
 #include <KTNEF/KTNEFProperty>
 
+
 #include <KFileItemActions>
 #include <KService>
 #include <QAction>
@@ -33,6 +34,11 @@
 #include <KLocalizedString>
 #include <QMenu>
 #include <KMessageBox>
+#include <kio_version.h>
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 71, 0)
+#include <KIO/JobUiDelegate>
+#include <KIO/OpenUrlJob>
+#endif
 #include <KRun>
 #include <KIO/ApplicationLauncherJob>
 #include <KIO/JobUiDelegate>
@@ -252,10 +258,16 @@ void KTNEFMain::viewFile()
         } else {
             qCDebug(KTNEFAPPS_LOG) << "Mime type from attachment object: " << mimename;
         }
-
+#if KIO_VERSION < QT_VERSION_CHECK(5, 71, 0)
         KRun::RunFlags flags;
         flags |= KRun::DeleteTemporaryFiles;
         KRun::runUrl(url, mimename, this, flags);
+#else
+        KIO::OpenUrlJob *job = new KIO::OpenUrlJob(url, mimename);
+        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+        job->setDeleteTemporaryFile(true);
+        job->start();
+#endif
     } else {
         KMessageBox::information(
             this,
@@ -507,9 +519,16 @@ void KTNEFMain::slotShowMessageText()
         tmpFile->write(rtf.toLocal8Bit());
         tmpFile->close();
 
+#if KIO_VERSION < QT_VERSION_CHECK(5, 71, 0)
         KRun::RunFlags flags;
         flags |= KRun::DeleteTemporaryFiles;
         KRun::runUrl(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"), this, flags);
+#else
+        KIO::OpenUrlJob *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"));
+        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+        job->setDeleteTemporaryFile(true);
+        job->start();
+#endif
         delete tmpFile;
     } else {
         KMessageBox::error(
