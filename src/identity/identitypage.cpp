@@ -40,6 +40,8 @@
 #include <KLocalizedString>
 #include "kmail_debug.h"
 
+#include <QTreeWidgetItem>
+
 using namespace KMail;
 
 QString IdentityPage::helpAnchor() const
@@ -216,28 +218,38 @@ void IdentityPage::slotRemoveIdentity()
         qCritical() << "Attempted to remove the last identity!";
     }
 
+    const int numberOfIdentity = mIPage.mIdentityList->selectedItems().count();
+    QString identityName;
     IdentityListViewItem *item = nullptr;
-    if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-        item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().at(0));
+    const QList<QTreeWidgetItem *> selectedItems = mIPage.mIdentityList->selectedItems();
+    if (numberOfIdentity == 1) {
+        if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
+            item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().at(0));
+        }
+        if (!item) {
+            return;
+        }
+        identityName = item->identity().identityName();
     }
-    if (!item) {
-        return;
-    }
-
-    const QString msg = i18n("<qt>Do you really want to remove the identity named "
-                             "<b>%1</b>?</qt>", item->identity().identityName());
-    if (KMessageBox::warningContinueCancel(this, msg, i18n("Remove Identity"),
+    const QString msg = i18np("<qt>Do you really want to remove the identity named "
+                              "<b>%2</b>?</qt>", "Do you really want to remove theses %2 identities?", numberOfIdentity, identityName);
+    if (KMessageBox::warningContinueCancel(this, msg, i18np("Remove Identity", "Remove Identities", numberOfIdentity),
                                            KGuiItem(i18n("&Remove"),
                                                     QStringLiteral("edit-delete")))
         == KMessageBox::Continue) {
-        if (mIdentityManager->removeIdentity(item->identity().identityName())) {
-            delete item;
+        for (QTreeWidgetItem *item : selectedItems) {
+            IdentityListViewItem *identityItem = dynamic_cast<IdentityListViewItem *>(item);
+            identityName = identityItem->identity().identityName();
+            if (mIdentityManager->removeIdentity(identityName)) {
+                delete item;
+            }
             if (mIPage.mIdentityList->currentItem()) {
                 mIPage.mIdentityList->currentItem()->setSelected(true);
             }
             refreshList();
             updateButtons();
         }
+
     }
 }
 
@@ -327,12 +339,14 @@ void IdentityPage::slotIdentitySelectionChanged()
 
 void IdentityPage::updateButtons()
 {
+    const int numSelectedItems = mIPage.mIdentityList->selectedItems().count();
+    mIPage.mRemoveButton->setEnabled(numSelectedItems >= 1);
+    mIPage.mModifyButton->setEnabled(numSelectedItems == 1);
+    mIPage.mRenameButton->setEnabled(numSelectedItems == 1);
     IdentityListViewItem *item = nullptr;
-    if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
+    if (numSelectedItems > 0) {
         item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().first());
     }
-    mIPage.mRemoveButton->setEnabled(item && mIPage.mIdentityList->topLevelItemCount() > 1);
-    mIPage.mModifyButton->setEnabled(item);
-    mIPage.mRenameButton->setEnabled(item);
-    mIPage.mSetAsDefaultButton->setEnabled(item && !item->identity().isDefault());
+    const bool enableDefaultButton = (numSelectedItems == 1) && item && !item->identity().isDefault();
+    mIPage.mSetAsDefaultButton->setEnabled(enableDefaultButton);
 }

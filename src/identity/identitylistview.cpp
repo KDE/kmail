@@ -134,7 +134,7 @@ IdentityListView::IdentityListView(QWidget *parent)
     setAlternatingRowColors(true);
     setSortingEnabled(true);
     sortByColumn(0, Qt::AscendingOrder);
-    setSelectionMode(SingleSelection);   // ### Extended would be nicer...
+    setSelectionMode(ExtendedSelection);
     setColumnWidth(0, 175);
 
     setContextMenuPolicy(Qt::CustomContextMenu);
