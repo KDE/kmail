@@ -579,6 +579,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Sent-mail Folder" combo box and label:
     ++row;
     mFccFolderRequester = new IdentityFolderRequester(tab);
+    mFccFolderRequester->setSelectFolderTitleDialog(i18n("Select Send-mail Folder"));
     mFccFolderRequester->setShowOutbox(false);
     glay->addWidget(mFccFolderRequester, row, 1);
     mSentMailFolderCheck = new QCheckBox(i18n("Sent-mail &folder:"), tab);
@@ -588,6 +589,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Drafts Folder" combo box and label:
     ++row;
     mDraftsFolderRequester = new IdentityFolderRequester(tab);
+    mDraftsFolderRequester->setSelectFolderTitleDialog(i18n("Select Draft Folder"));
     mDraftsFolderRequester->setShowOutbox(false);
     glay->addWidget(mDraftsFolderRequester, row, 1);
     label = new QLabel(i18n("&Drafts folder:"), tab);
@@ -597,6 +599,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Templates Folder" combo box and label:
     ++row;
     mTemplatesFolderRequester = new IdentityFolderRequester(tab);
+    mTemplatesFolderRequester->setSelectFolderTitleDialog(i18n("Select Templates Folder"));
     mTemplatesFolderRequester->setShowOutbox(false);
     glay->addWidget(mTemplatesFolderRequester, row, 1);
     label = new QLabel(i18n("&Templates folder:"), tab);
