@@ -802,6 +802,7 @@ void SearchWindow::slotClearSelection()
 void SearchWindow::slotReplyToMsg()
 {
     KMCommand *command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplySmart);
+
     command->start();
 }
 

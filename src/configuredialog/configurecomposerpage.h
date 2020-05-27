@@ -60,7 +60,7 @@ private:
     QCheckBox *mAutoAppSignFileCheck = nullptr;
     QCheckBox *mTopQuoteCheck = nullptr;
     QCheckBox *mDashDashCheck = nullptr;
-    QCheckBox *mReplyUsingHtml = nullptr;
+    QCheckBox *mReplyUsingVisualFormat = nullptr;
     QCheckBox *mSmartQuoteCheck = nullptr;
     QCheckBox *mStripSignatureCheck = nullptr;
     QCheckBox *mQuoteSelectionOnlyCheck = nullptr;

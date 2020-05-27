@@ -870,6 +870,7 @@ KMCommand::Result KMReplyCommand::execute()
     settings.templateStr = mTemplate;
     settings.noQuote = mNoQuote;
     settings.replyAsHtml = mReplyAsHtml;
+    qDebug() << " settings " << mReplyAsHtml;
 
     CreateReplyMessageJob *job = new CreateReplyMessageJob;
     job->setSettings(settings);
@@ -885,6 +886,7 @@ bool KMReplyCommand::replyAsHtml() const
 
 void KMReplyCommand::setReplyAsHtml(bool replyAsHtml)
 {
+    qDebug() << " void KMReplyCommand::setReplyAsHtml(bool replyAsHtml)"<<replyAsHtml;
     mReplyAsHtml = replyAsHtml;
 }
 

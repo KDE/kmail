@@ -493,7 +493,8 @@ void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
     }
 
     const QString text = mMessageView ? mMessageView->copyText() : QString();
-    KMCommand *command = new KMReplyCommand(mParent, mCurrentItem, strategy, text);
+    KMReplyCommand *command = new KMReplyCommand(mParent, mCurrentItem, strategy, text);
+    command->setReplyAsHtml(mMessageView ? mMessageView->viewer()->htmlMail() : false);
     connect(command, &KMCommand::completed, this, &MessageActions::replyActionFinished);
     command->start();
 }
@@ -566,7 +567,9 @@ void MessageActions::slotNoQuoteReplyToMsg()
     if (!mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMCommand *command = new KMReplyCommand(mParent, mCurrentItem, MessageComposer::ReplySmart, QString(), true);
+    KMReplyCommand *command = new KMReplyCommand(mParent, mCurrentItem, MessageComposer::ReplySmart, QString(), true);
+    command->setReplyAsHtml(mMessageView ? mMessageView->viewer()->htmlMail() : false);
+
     command->start();
 }
 

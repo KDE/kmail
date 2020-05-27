@@ -259,15 +259,15 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // "Reply/Forward using HTML if present" checkbox
-    mReplyUsingHtml = new QCheckBox(TemplateParser::TemplateParserSettings::self()->replyUsingHtmlItem()->label(), this);
+    mReplyUsingVisualFormat = new QCheckBox(TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem()->label(), this);
     helpText = i18n("When replying or forwarding, quote the message\n"
                     "in the original format it was received.\n"
                     "If unchecked, the reply will be as plain text by default.");
-    mReplyUsingHtml->setToolTip(helpText);
-    mReplyUsingHtml->setWhatsThis(helpText);
+    mReplyUsingVisualFormat->setToolTip(helpText);
+    mReplyUsingVisualFormat->setWhatsThis(helpText);
 
-    connect(mReplyUsingHtml, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    groupGridLayout->addWidget(mReplyUsingHtml, row, 0, 1, -1);
+    connect(mReplyUsingVisualFormat, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+    groupGridLayout->addWidget(mReplyUsingVisualFormat, row, 0, 1, -1);
     ++row;
 
     // "Improve plain text of HTML" checkbox
@@ -519,7 +519,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
     loadWidget(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
     loadWidget(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem());
 
-    loadWidget(mReplyUsingHtml, TemplateParser::TemplateParserSettings::self()->replyUsingHtmlItem());
+    loadWidget(mReplyUsingVisualFormat, TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem());
     loadWidget(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
     loadWidget(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     loadWidget(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
@@ -551,7 +551,7 @@ void ComposerPage::GeneralTab::save()
     saveCheckBox(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
     saveCheckBox(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem());
 
-    saveCheckBox(mReplyUsingHtml, TemplateParser::TemplateParserSettings::self()->replyUsingHtmlItem());
+    saveCheckBox(mReplyUsingVisualFormat, TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem());
     saveCheckBox(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
     saveCheckBox(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
