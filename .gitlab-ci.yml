@@ -4,15 +4,26 @@ include:
 
 build_clazy_clang_tidy:
   stage: build
-  image: debian:testing
+  image: kdeorg/ci-suse-qt514
+  extends: .linux
   only:
     - merge_requests
   before_script:
-    - echo 'deb-src http://deb.debian.org/debian unstable main' >> /etc/apt/sources.list
-    - apt-get update
-    - apt-get install --yes --no-install-recommends ninja-build clazy cmake clang clang-tidy python python3-yaml libkf5crash-dev libkf5purpose-dev libegl-dev jq
+    - zypper install -y clazy
+    - git clone --depth=1 https://invent.kde.org/sysadmin/ci-tooling.git $CI_TOOLING
+    - git clone --depth=1 https://invent.kde.org/sysadmin/repo-metadata.git $CI_TOOLING/repo-metadata
+    - git clone --depth=1 https://invent.kde.org/sysadmin/kde-build-metadata.git $CI_TOOLING/kde-build-metadata
+    - git clone --depth=1 https://invent.kde.org/sdk/kde-dev-scripts.git $CI_TOOLING/kde-dev-scripts
 
   script:
-    - srcdir=`pwd` && mkdir -p /tmp/pim_build && cd /tmp/pim_build && CC=clang CXX=clazy CXXFLAGS="-Werror -Wno-deprecated-declarations" cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -G Ninja $srcdir && cat compile_commands.json | jq  '[.[] | select(.file | contains("'"$srcdir"'"))]' > compile_commands.aux.json && cat compile_commands.aux.json | jq  '[.[] | select(.file | contains("/synctex/")| not)]' > compile_commands.json && cp "$srcdir/.clang-tidy" .
-    - CLAZY_CHECKS="level0,level1,level2,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch" ninja
-    - run-clang-tidy
+    - export CXX=clazy
+    - export CC=clang
+    - export CXXFLAGS="-Wno-deprecated-declarations"
+    - export CLAZY_CHECKS="level0,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch"
+    - python3 -u $CI_TOOLING/helpers/prepare-dependencies.py --product $PRODUCT --project $PROJECT --branchGroup $BRANCH_GROUP --environment production --platform $PLATFORM --installTo $INSTALL_PREFIX
+    - python3 -u $CI_TOOLING/helpers/configure-build.py --product $PRODUCT --project $PROJECT --branchGroup $BRANCH_GROUP --platform $PLATFORM --installTo $INSTALL_PREFIX
+    - python3 -u $CI_TOOLING/helpers/compile-build.py --product $PRODUCT --project $PROJECT --branchGroup $BRANCH_GROUP --platform $PLATFORM --usingInstall $INSTALL_PREFIX
+    - cd build && run-clang-tidy
+  variables:
+    PLATFORM: SUSEQt5.14
+    BRANCH_GROUP: kf5-qt5
