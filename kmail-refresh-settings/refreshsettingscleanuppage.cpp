@@ -98,6 +98,9 @@ void RefreshSettingsCleanupPage::initCleanupFolderSettings(const QString &config
     for (const QString &str : folderList) {
         KConfigGroup oldGroup = settingsrc->group(str);
         cleanupFolderSettings(oldGroup);
+        if (oldGroup.keyList().isEmpty()) {
+            oldGroup.deleteGroup();
+        }
     }
     settingsrc->sync();
     Q_EMIT cleanDoneInfo(i18n("Clean Folder Settings in setting file `%1`: Done", configName));
