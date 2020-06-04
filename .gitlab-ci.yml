@@ -6,8 +6,8 @@ build_clazy_clang_tidy:
   stage: build
   image: kdeorg/ci-suse-qt514
   extends: .linux
-  only:
-    - merge_requests
+  #only:
+  #  - merge_requests
   before_script:
     - zypper install -y clazy
     - git clone --depth=1 https://invent.kde.org/sysadmin/ci-tooling.git $CI_TOOLING
@@ -19,7 +19,7 @@ build_clazy_clang_tidy:
     - export CXX=clazy
     - export CC=clang
     - export CXXFLAGS="-Wno-deprecated-declarations"
-    - export CLAZY_CHECKS="level0,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch"
+    - export CLAZY_CHECKS="level0,level1,detaching-member,ifndef-define-typo,isempty-vs-count,qrequiredresult-candidates,reserve-candidates,signal-with-return-value,unneeded-cast,function-args-by-ref,function-args-by-value,returning-void-expression,no-ctor-missing-parent-argument,isempty-vs-count,qhash-with-char-pointer-key,raw-environment-function,qproperty-type-mismatch"
     - python3 -u $CI_TOOLING/helpers/prepare-dependencies.py --product $PRODUCT --project $PROJECT --branchGroup $BRANCH_GROUP --environment production --platform $PLATFORM --installTo $INSTALL_PREFIX
     - python3 -u $CI_TOOLING/helpers/configure-build.py --product $PRODUCT --project $PROJECT --branchGroup $BRANCH_GROUP --platform $PLATFORM --installTo $INSTALL_PREFIX
     - python3 -u $CI_TOOLING/helpers/compile-build.py --product $PRODUCT --project $PROJECT --branchGroup $BRANCH_GROUP --platform $PLATFORM --usingInstall $INSTALL_PREFIX
