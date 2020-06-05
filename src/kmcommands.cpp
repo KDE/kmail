@@ -258,7 +258,7 @@ void KMCommand::start()
     }
 
     // Special case of operating on message that isn't in a folder
-    const Akonadi::Item mb = mMsgList.first();
+    const Akonadi::Item mb = mMsgList.constFirst();
     if ((mMsgList.count() == 1) && MessageComposer::Util::isStandaloneMessage(mb)) {
         mRetrievedMsgs.append(mMsgList.takeFirst());
         Q_EMIT messagesTransfered(OK);
@@ -1200,7 +1200,7 @@ KMCommand::Result KMSetStatusCommand::execute()
             }
         }
         Akonadi::Item item(it);
-        const Akonadi::Item::Flag flag = *(mStatus.statusFlags().begin());
+        const Akonadi::Item::Flag flag = *(mStatus.statusFlags().constBegin());
         if (mInvertMark) {
             if (item.hasFlag(flag)) {
                 item.clearFlag(flag);

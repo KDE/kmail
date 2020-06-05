@@ -2593,7 +2593,7 @@ void KMComposerWin::slotPrintComposeResult(KJob *job)
 void KMComposerWin::printComposeResult(KJob *job, bool preview)
 {
     Q_ASSERT(dynamic_cast< MessageComposer::Composer * >(job));
-    MessageComposer::Composer *composer = dynamic_cast< MessageComposer::Composer * >(job);
+    MessageComposer::Composer *composer = qobject_cast< MessageComposer::Composer * >(job);
     Q_ASSERT(mMiscComposers.contains(composer));
     mMiscComposers.removeAll(composer);
 
