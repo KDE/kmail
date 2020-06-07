@@ -161,16 +161,13 @@
 #include <KStandardAction>
 #include <KToggleAction>
 #include <KNotification>
-#include <KNotifyConfigWidget>
 #include <KStringHandler>
 #include <KConfigGroup>
-#include <KToolInvocation>
 #include <KXMLGUIFactory>
 #include <KXMLGUIClient>
 #include <QStatusBar>
 #include <QAction>
 #include <KRecentFilesAction>
-#include <QFileDialog>
 
 // Qt includes
 #include <QByteArray>

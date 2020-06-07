@@ -20,7 +20,6 @@
 #include <Libkdepim/PIMMessageBox>
 #include "settings/kmailsettings.h"
 
-#include <KMessageBox>
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <QAction>

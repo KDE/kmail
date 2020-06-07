@@ -23,7 +23,6 @@
 #include <QDBusInterface>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QDBusPendingCall>
 #include <PimCommonAkonadi/MailUtil>
 #include <QDebug>
 

@@ -32,7 +32,6 @@
 
 #include <QDate>
 #include <QFile>
-#include <QDir>
 #include <QRegularExpression>
 
 ArchiveMailManager::ArchiveMailManager(QObject *parent)

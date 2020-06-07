@@ -75,7 +75,6 @@ using KMail::MailServiceImpl;
 #include <KConfigGroup>
 #include "kmail_debug.h"
 #include <kio/jobuidelegate.h>
-#include <KProcess>
 #include <KCrash>
 
 #include <kmime/kmime_message.h>
@@ -101,7 +100,6 @@ using KMail::MailServiceImpl;
 
 #include <MailCommon/ResourceReadConfigFile>
 
-#include <KStartupInfo>
 #include <kmailadaptor.h>
 #include <KLocalizedString>
 #include <QStandardPaths>

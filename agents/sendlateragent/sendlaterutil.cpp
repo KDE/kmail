@@ -26,7 +26,6 @@
 #include <KConfigGroup>
 #include <AkonadiCore/ServerManager>
 
-#include <QDBusInterface>
 #include <QStringList>
 
 bool SendLaterUtil::compareSendLaterInfo(MessageComposer::SendLaterInfo *left,

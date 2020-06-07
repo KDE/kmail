@@ -8,7 +8,6 @@
 #include "kmail_export.h"
 #include "configmodule.h"
 
-#include <KCModule>
 
 class QTabWidget;
 class ConfigureDialog;

@@ -58,7 +58,6 @@
 #include <QMimeData>
 #include <KSharedConfig>
 #include <QMimeDatabase>
-#include <QMimeType>
 #include <QFileDialog>
 #include <QStatusBar>
 

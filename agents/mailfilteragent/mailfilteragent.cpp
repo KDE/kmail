@@ -37,7 +37,6 @@
 #include <AkonadiCore/session.h>
 #include <MailCommon/MailKernel>
 #include <KLocalizedString>
-#include <QIcon>
 #include "mailfilteragent_debug.h"
 #include <KMime/Message>
 #include <KNotification>

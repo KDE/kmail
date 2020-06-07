@@ -66,9 +66,7 @@ using namespace MessageViewer;
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QAction>
-#include <KCodecs>
 #include <KToggleAction>
-#include <KService>
 #include <KActionCollection>
 #include <KMessageBox>
 #include <QMenu>

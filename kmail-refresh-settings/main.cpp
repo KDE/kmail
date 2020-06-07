@@ -29,7 +29,6 @@
 
 #include <KCrash/KCrash>
 #include <QCommandLineParser>
-#include <QCommandLineOption>
 #include <QIcon>
 
 int main(int argc, char **argv)

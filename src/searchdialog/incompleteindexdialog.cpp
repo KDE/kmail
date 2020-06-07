@@ -34,7 +34,6 @@
 #include <PimCommonAkonadi/MailUtil>
 
 #include <QDBusInterface>
-#include <QDBusReply>
 #include <QDBusMetaType>
 #include <QTimer>
 #include <QHBoxLayout>

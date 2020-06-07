@@ -19,7 +19,6 @@
 
 #include "refreshsettringsfinishpage.h"
 #include <QHBoxLayout>
-#include <KLocalizedString>
 #include <QPlainTextEdit>
 
 RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)

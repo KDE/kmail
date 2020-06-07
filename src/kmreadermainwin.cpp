@@ -33,13 +33,11 @@
 #include <KLocalizedString>
 #include <KStandardShortcut>
 #include <QAction>
-#include <KFontAction>
 #include <KStandardAction>
-#include <KToggleAction>
-#include <KToolBar>
 #include "kmail_debug.h"
 #include <QStatusBar>
 #include <KMessageBox>
+#include <KToolBar>
 #include <KAcceleratorManager>
 #include "kmcommands.h"
 #include <QMenuBar>

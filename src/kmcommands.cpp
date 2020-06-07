@@ -117,7 +117,6 @@
 
 #include <KEmailAddress>
 #include <KFileWidget>
-#include <KJobWidgets>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KRecentDirs>

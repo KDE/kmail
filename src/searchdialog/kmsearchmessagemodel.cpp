@@ -43,7 +43,6 @@
 #include <QPalette>
 #include "kmail_debug.h"
 #include <KLocalizedString>
-#include <KFormat>
 
 KMSearchMessageModel::KMSearchMessageModel(Akonadi::Monitor *monitor, QObject *parent)
     : Akonadi::MessageModel(monitor, parent)

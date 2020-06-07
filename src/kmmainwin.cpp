@@ -38,7 +38,6 @@
 #include <KConfig>
 #include <KMessageBox>
 #include <KXMLGUIFactory>
-#include <KStringHandler>
 #include <KStandardAction>
 #include "kmail_debug.h"
 #include <ktip.h>
