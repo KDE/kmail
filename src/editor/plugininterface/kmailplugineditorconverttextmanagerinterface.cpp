@@ -122,7 +122,7 @@ void KMailPluginEditorConvertTextManagerInterface::initializePlugins()
     const QVector<MessageComposer::PluginEditorConvertText *> lstPlugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginsList();
     for (MessageComposer::PluginEditorConvertText *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
-            MessageComposer::PluginEditorConvertTextInterface *interface = static_cast<MessageComposer::PluginEditorConvertTextInterface *>(plugin->createInterface(this));
+            MessageComposer::PluginEditorConvertTextInterface *interface = plugin->createInterface(this);
             interface->setRichTextEditor(mRichTextEditor);
             interface->setParentWidget(mParentWidget);
             interface->createAction(mActionCollection);
