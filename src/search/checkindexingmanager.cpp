@@ -31,6 +31,7 @@
 #include <AkonadiSearch/PIM/indexeditems.h>
 #include <QTimer>
 #include <QDBusInterface>
+#include <QDBusPendingCall>
 #include <AkonadiCore/entityhiddenattribute.h>
 
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
