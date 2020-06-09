@@ -40,7 +40,7 @@
 #include <QDialogButtonBox>
 #include <KConfigGroup>
 #include <KSharedConfig>
-
+#include <QDBusPendingCall>
 Q_DECLARE_METATYPE(Qt::CheckState)
 Q_DECLARE_METATYPE(QVector<qint64>)
 
