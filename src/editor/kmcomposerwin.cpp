@@ -2245,6 +2245,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         if (items.isEmpty() && collections.isEmpty()) {
             if (allLocalURLs || forceAttachment) {
                 QList<AttachmentInfo> infoList;
+                infoList.reserve(urlList.count());
                 for (const QUrl &url : urlList) {
                     AttachmentInfo info;
                     info.url = url;
