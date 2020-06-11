@@ -117,7 +117,7 @@ else. You can use the SVN_SILENT keyword then.
 KMail follows the KDE coding style (https://techbase.kde.org/Policies/Frameworks_Coding_Style) with
 some exceptions, mentioned below. Note that most of the rest of KDE PIM also follows the KMail
 style. You should also read the coding style document for Kontact, which can be found at
-https://cgit.kde.org/kontact.git/tree/HACKING. All of it also applies to KMail.
+https://invent.kde.org/pim/kontact/-/blob/master/HACKING. All of it also applies to KMail.
 
 Please don't argue against this style, we're stuck with that anyway (changing the style to something
 else would mess up the svn annotate function)
