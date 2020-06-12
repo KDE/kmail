@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-set(KDEPIM_VERSION_NUMBER "5.14.2")
+set(KDEPIM_VERSION_NUMBER "5.14.3")
 
 project(kmail VERSION ${KDEPIM_VERSION_NUMBER})
 
@@ -33,7 +33,7 @@ include(ECMQtDeclareLoggingCategory)
 
 # Do NOT add quote
 set(KDEPIM_DEV_VERSION )
-set(RELEASE_SERVICE_VERSION "20.04.2")
+set(RELEASE_SERVICE_VERSION "20.04.3")
 
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
