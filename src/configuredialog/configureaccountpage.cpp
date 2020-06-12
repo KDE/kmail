@@ -39,7 +39,7 @@ using MailTransport::TransportManagementWidget;
 #include <AkonadiWidgets/AgentConfigurationDialog>
 #include <AkonadiCore/agentinstancecreatejob.h>
 #include <identity/identitypage.h>
-#include <Libkdepim/LdapConfigureWidget>
+#include <KLDAP/LdapConfigureWidget>
 #include <QComboBox>
 #include <KConfigGroup>
 #include <KLocalizedString>
