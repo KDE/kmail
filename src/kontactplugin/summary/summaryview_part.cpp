@@ -25,8 +25,8 @@
 #include "summaryview_part.h"
 #include "dropwidget.h"
 
-#include <Libkdepim/BroadcastStatus>
-using KPIM::BroadcastStatus;
+#include <PimCommon/BroadcastStatus>
+using PimCommon::BroadcastStatus;
 
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
@@ -161,7 +161,7 @@ void SummaryViewPart::updateWidgets()
                 mSummaries.insert(plugin->identifier(), summary);
 
                 connect(summary, &KontactInterface::Summary::message,
-                        BroadcastStatus::instance(), &KPIM::BroadcastStatus::setStatusMsg);
+                        BroadcastStatus::instance(), &PimCommon::BroadcastStatus::setStatusMsg);
                 connect(summary, &KontactInterface::Summary::summaryWidgetDropped,
                         this, &SummaryViewPart::summaryWidgetMoved);
 

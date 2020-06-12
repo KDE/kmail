@@ -9,7 +9,7 @@ qt5_add_dbus_interfaces(kontact_summaryplugin_PART_SRCS ${kmail_BINARY_DIR}/src/
 add_library(kontact_summaryplugin MODULE ${kontact_summaryplugin_PART_SRCS})
 add_dependencies(kontact_summaryplugin kmail_xml)
 
-target_link_libraries(kontact_summaryplugin KF5::KCMUtils  KF5::IdentityManagement KF5::KontactInterface KF5::Libkdepim KF5::ConfigCore)
+target_link_libraries(kontact_summaryplugin KF5::KCMUtils  KF5::IdentityManagement KF5::KontactInterface KF5::PimCommon KF5::ConfigCore)
 
 kcoreaddons_desktop_to_json(kontact_summaryplugin summaryplugin.desktop)
 

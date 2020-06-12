@@ -106,7 +106,7 @@
 #include <MailTransport/TransportManager>
 
 #include <Libkdepim/ProgressManager>
-#include <Libkdepim/BroadcastStatus>
+#include <PimCommon/BroadcastStatus>
 #ifndef QT_NO_CURSOR
 #include <Libkdepim/KCursorSaver>
 #endif
@@ -1347,7 +1347,7 @@ KMCommand::Result KMFilterActionCommand::execute()
             progressItem->updateProgress();
             const QString statusMsg = i18n("Filtering message %1 of %2",
                                            msgCount, msgCountToFilter);
-            KPIM::BroadcastStatus::instance()->setStatusMsg(statusMsg);
+            PimCommon::BroadcastStatus::instance()->setStatusMsg(statusMsg);
             qApp->processEvents(QEventLoop::ExcludeUserInputEvents, 50);
         }
 

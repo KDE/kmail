@@ -34,7 +34,7 @@
 #include <LibkdepimAkonadi/AddEmailAddressJob>
 #include <LibkdepimAkonadi/OpenEmailAddressJob>
 #include <LibkdepimAkonadi/AddEmailDisplayJob>
-#include <Libkdepim/BroadcastStatus>
+#include <PimCommon/BroadcastStatus>
 #include "kmcommands.h"
 #include <MailCommon/SendMdnHandler>
 #include <QVBoxLayout>
@@ -455,6 +455,10 @@ void KMReaderWin::slotMailtoAddAddrBook()
     const QString emailString = KEmailAddress::decodeMailtoUrl(url);
 
     KPIM::AddEmailAddressJob *job = new KPIM::AddEmailAddressJob(emailString, mMainWindow, this);
+    job->setInteractive(true);
+    connect(job, &KPIM::AddEmailAddressJob::successMessage, this, [this](const QString &message) {
+         PimCommon::BroadcastStatus::instance()->setStatusMsg(message);
+    });
     job->start();
 }
 
@@ -876,7 +880,7 @@ void KMReaderWin::contactStored(const Akonadi::Item &item)
         setContactItem(item, contact);
         mViewer->slotChangeDisplayMail(mViewAsHtml->isChecked() ? Viewer::Html : Viewer::Text, mLoadExternalReference->isChecked());
     }
-    KPIM::BroadcastStatus::instance()->setStatusMsg(i18n("Contact modified successfully"));
+    PimCommon::BroadcastStatus::instance()->setStatusMsg(i18n("Contact modified successfully"));
 }
 
 QAction *KMReaderWin::saveMessageDisplayFormatAction() const

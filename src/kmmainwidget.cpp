@@ -106,7 +106,7 @@
 
 // LIBKDEPIM includes
 #include <Libkdepim/ProgressManager>
-#include <Libkdepim/BroadcastStatus>
+#include <PimCommon/BroadcastStatus>
 
 // KDEPIMLIBS includes
 #include <AkonadiCore/AgentManager>
@@ -200,7 +200,7 @@ using namespace KMime;
 using namespace Akonadi;
 using namespace MailCommon;
 using KPIM::ProgressManager;
-using KPIM::BroadcastStatus;
+using PimCommon::BroadcastStatus;
 using KMail::SearchWindow;
 using KMime::Types::AddrSpecList;
 using MessageViewer::AttachmentStrategy;

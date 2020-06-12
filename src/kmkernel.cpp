@@ -3,14 +3,14 @@
 #include "kmkernel.h"
 
 #include "settings/kmailsettings.h"
-#include <Libkdepim/BroadcastStatus>
+#include <PimCommon/BroadcastStatus>
 #include "job/opencomposerjob.h"
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"
 #include "job/fillcomposerjob.h"
 #include <AkonadiSearch/PIM/indexeditems.h>
 #include <LibkdepimAkonadi/ProgressManagerAkonadi>
-using KPIM::BroadcastStatus;
+using PimCommon::BroadcastStatus;
 #include "kmmainwin.h"
 #include "editor/composer.h"
 #include "kmreadermainwin.h"

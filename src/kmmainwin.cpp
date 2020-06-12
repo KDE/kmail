@@ -22,7 +22,7 @@
 #include "kmmainwidget.h"
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
-#include <Libkdepim/BroadcastStatus>
+#include <PimCommon/BroadcastStatus>
 #include "util.h"
 #include "tag/tagactionmanager.h"
 
@@ -77,7 +77,7 @@ KMMainWin::KMMainWin(QWidget *)
     //must be after createGUI, otherwise e.g toolbar settings are not loaded
     setAutoSaveSettings(KMKernel::self()->config()->group("Main Window"));
 
-    connect(KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::statusMsg,
+    connect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg,
             this, &KMMainWin::displayStatusMessage);
 
     connect(mKMMainWidget, &KMMainWidget::captionChangeRequest,
@@ -92,7 +92,7 @@ KMMainWin::~KMMainWin()
 {
     // Avoids a crash if there are any Akonadi jobs running, which may
     // attempt to display a status message when they are killed.
-    disconnect(KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::statusMsg, this, nullptr);
+    disconnect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg, this, nullptr);
 }
 
 KMMainWidget *KMMainWin::mainKMWidget() const
@@ -175,7 +175,7 @@ void KMMainWin::setupStatusBar()
     mMessageLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     statusBar()->addWidget(mMessageLabel);
 
-    QTimer::singleShot(2000, KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::reset);
+    QTimer::singleShot(2000, PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::reset);
     statusBar()->addPermanentWidget(mKMMainWidget->dkimWidgetInfo());
     statusBar()->addPermanentWidget(mKMMainWidget->zoomLabelIndicator());
     statusBar()->addPermanentWidget(mKMMainWidget->vacationScriptIndicator());

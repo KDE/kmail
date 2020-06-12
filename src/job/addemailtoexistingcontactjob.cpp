@@ -19,7 +19,7 @@
 
 #include "addemailtoexistingcontactjob.h"
 #include "kmail_debug.h"
-#include <Libkdepim/BroadcastStatus>
+#include <PimCommon/BroadcastStatus>
 
 #include <AkonadiCore/ItemModifyJob>
 
@@ -66,7 +66,7 @@ void AddEmailToExistingContactJob::slotAddEmailDone(KJob *job)
         setError(job->error());
         setErrorText(job->errorText());
     } else {
-        KPIM::BroadcastStatus::instance()->setStatusMsg(i18n("Email added successfully."));
+        PimCommon::BroadcastStatus::instance()->setStatusMsg(i18n("Email added successfully."));
     }
     emitResult();
 }

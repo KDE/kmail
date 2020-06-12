@@ -21,7 +21,7 @@
 #include "createnewcontactjob.h"
 #include "util.h"
 
-#include <Libkdepim/BroadcastStatus>
+#include <PimCommon/BroadcastStatus>
 
 #include <KContacts/Addressee>
 #include <KContacts/ContactGroup>
@@ -132,7 +132,7 @@ void CreateNewContactJob::createContact()
 void CreateNewContactJob::contactStored(const Akonadi::Item &item)
 {
     Q_UNUSED(item);
-    KPIM::BroadcastStatus::instance()->setStatusMsg(i18n("Contact created successfully"));
+    PimCommon::BroadcastStatus::instance()->setStatusMsg(i18n("Contact created successfully"));
 }
 
 void CreateNewContactJob::slotContactEditorError(const QString &error)
