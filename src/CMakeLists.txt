@@ -99,6 +99,7 @@ set(kmailprivate_editor_LIB_SRCS
     editor/kmcomposerglobalaction.cpp
     editor/kmcomposerupdatetemplatejob.cpp
     editor/kmcomposercreatenewcomposerjob.cpp
+    editor/pimmessagebox.cpp
     )
 
 set(kmailprivate_warningwidgets_LIB_SRCS

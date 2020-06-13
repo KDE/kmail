@@ -17,7 +17,7 @@
 
 #include "validatesendmailshortcut.h"
 #include "kmail_debug.h"
-#include <Libkdepim/PIMMessageBox>
+#include "pimmessagebox.h" 
 #include "settings/kmailsettings.h"
 
 #include <KActionCollection>
@@ -37,7 +37,7 @@ ValidateSendMailShortcut::~ValidateSendMailShortcut()
 bool ValidateSendMailShortcut::validate()
 {
     bool sendNow = false;
-    const int result = KPIM::PIMMessageBox::fourBtnMsgBox(mParent,
+    const int result = PIMMessageBox::fourBtnMsgBox(mParent,
                                                           QMessageBox::Question,
                                                           i18n("This shortcut allows to send mail directly. Mail can be send accidentally. What do you want to do?"),
                                                           i18n("Configure shortcut"),
