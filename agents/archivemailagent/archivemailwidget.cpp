@@ -22,6 +22,9 @@
 #include "archivemailagentutil.h"
 #include "archivemailkernel.h"
 
+#include <KIO/OpenUrlJob>
+#include <KIO/JobUiDelegate>
+
 #include "kmail-version.h"
 
 #include <MailCommon/MailUtil>
@@ -33,7 +36,6 @@
 #include <KConfigGroup>
 #include <KMessageBox>
 #include <QMenu>
-#include <KRun>
 #include <KAboutData>
 
 namespace {
@@ -309,8 +311,10 @@ void ArchiveMailWidget::slotOpenFolder()
         ArchiveMailInfo *archiveItemInfo = archiveItem->info();
         if (archiveItemInfo) {
             const QUrl url = archiveItemInfo->url();
-            KRun *runner = new KRun(url, parentWidget());   // will delete itself
-            runner->setRunExecutables(false);
+            KIO::OpenUrlJob *job = new KIO::OpenUrlJob(url);
+            job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, parentWidget()));
+            job->setRunExecutables(false);
+            job->start();
         }
     }
 }
