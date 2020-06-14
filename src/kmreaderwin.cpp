@@ -31,9 +31,9 @@
 
 #include "kmail-version.h"
 #include <KEmailAddress>
-#include <LibkdepimAkonadi/AddEmailAddressJob>
-#include <LibkdepimAkonadi/OpenEmailAddressJob>
-#include <LibkdepimAkonadi/AddEmailDisplayJob>
+#include <Akonadi/Contact/AddEmailAddressJob>
+#include <Akonadi/Contact/OpenEmailAddressJob>
+#include <Akonadi/Contact/AddEmailDisplayJob>
 #include <PimCommon/BroadcastStatus>
 #include "kmcommands.h"
 #include <MailCommon/SendMdnHandler>
@@ -454,9 +454,9 @@ void KMReaderWin::slotMailtoAddAddrBook()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url);
 
-    KPIM::AddEmailAddressJob *job = new KPIM::AddEmailAddressJob(emailString, mMainWindow, this);
+    Akonadi::AddEmailAddressJob *job = new Akonadi::AddEmailAddressJob(emailString, mMainWindow, this);
     job->setInteractive(true);
-    connect(job, &KPIM::AddEmailAddressJob::successMessage, this, [this](const QString &message) {
+    connect(job, &Akonadi::AddEmailAddressJob::successMessage, this, [this](const QString &message) {
          PimCommon::BroadcastStatus::instance()->setStatusMsg(message);
     });
     job->start();
@@ -488,7 +488,7 @@ void KMReaderWin::slotMailtoOpenAddrBook()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    KPIM::OpenEmailAddressJob *job = new KPIM::OpenEmailAddressJob(emailString, mMainWindow, this);
+    Akonadi::OpenEmailAddressJob *job = new Akonadi::OpenEmailAddressJob(emailString, mMainWindow, this);
     job->start();
 }
 
@@ -838,9 +838,9 @@ void KMReaderWin::slotContactHtmlOptions()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    KPIM::AddEmailDisplayJob *job = new KPIM::AddEmailDisplayJob(emailString, mMainWindow, this);
+    Akonadi::AddEmailDisplayJob *job = new Akonadi::AddEmailDisplayJob(emailString, mMainWindow, this);
     job->setMessageId(mViewer->messageItem().id());
-    connect(job, &KPIM::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
+    connect(job, &Akonadi::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
     job->setRemoteContent(mLoadExternalReference->isChecked());
     job->setShowAsHTML(mViewAsHtml->isChecked());
     job->setContact(mSearchedContact);
