@@ -33,10 +33,10 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <TemplateParser/CustomTemplates>
 #include "globalsettings_templateparser.h"
 
-#include <Libkdepim/RecentAddresses>
+#include <PimCommonAkonadi/RecentAddresses>
 #include <KLDAP/LdapClientSearch>
-#include <LibkdepimAkonadi/CompletionOrderEditor>
-using KPIM::RecentAddresses;
+#include <PimCommonAkonadi/CompletionOrderEditor>
+using PimCommon::RecentAddresses;
 
 #include <KLocalizedString>
 #include <KSeparator>
@@ -57,7 +57,7 @@ using KPIM::RecentAddresses;
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 
-#include <LibkdepimAkonadi/CompletionConfigureDialog>
+#include <PimCommonAkonadi/CompletionConfigureDialog>
 #ifdef KDEPIM_ENTERPRISE_BUILD
 #include <QComboBox>
 #endif
@@ -578,8 +578,8 @@ void ComposerPage::GeneralTab::save()
 void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
 {
     KLDAP::LdapClientSearch search;
-    QPointer<KPIM::CompletionConfigureDialog> dlg(new KPIM::CompletionConfigureDialog(this));
-    dlg->setRecentAddresses(KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
+    QPointer<PimCommon::CompletionConfigureDialog> dlg(new PimCommon::CompletionConfigureDialog(this));
+    dlg->setRecentAddresses(PimCommon::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     dlg->setLdapClientSearch(&search);
     KSharedConfig::Ptr config = KSharedConfig::openConfig(QStringLiteral("kpimbalooblacklist"));
     KConfigGroup group(config, "AddressLineEdit");
@@ -589,7 +589,7 @@ void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
     dlg->load();
     if (dlg->exec()) {
         if (dlg->recentAddressWasChanged()) {
-            KPIM::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->clear();
+            PimCommon::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->clear();
             dlg->storeAddresses(MessageComposer::MessageComposerSettings::self()->config());
         }
     }

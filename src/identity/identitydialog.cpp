@@ -66,7 +66,7 @@
 #include <PimCommon/AutoCorrectionLanguage>
 #include <PimCommon/PimUtil>
 
-#include <LibkdepimAkonadi/AddresseeLineEdit>
+#include <PimCommonAkonadi/AddresseeLineEdit>
 #include <Libkdepim/LineEditCatchReturnKey>
 // libkleopatra:
 #include <Libkleo/KeySelectionCombo>
@@ -506,7 +506,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Reply-To Address" line edit and label:
     ++row;
-    mReplyToEdit = new KPIM::AddresseeLineEdit(tab, true);
+    mReplyToEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mReplyToEdit->setClearButtonEnabled(true);
     mReplyToEdit->setObjectName(QStringLiteral("mReplyToEdit"));
     glay->addWidget(mReplyToEdit, row, 1);
@@ -528,7 +528,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "CC addresses" line edit and label:
     ++row;
-    mCcEdit = new KPIM::AddresseeLineEdit(tab, true);
+    mCcEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mCcEdit->setClearButtonEnabled(true);
     mCcEdit->setObjectName(QStringLiteral("mCcEdit"));
     glay->addWidget(mCcEdit, row, 1);
@@ -548,7 +548,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "BCC addresses" line edit and label:
     ++row;
-    mBccEdit = new KPIM::AddresseeLineEdit(tab, true);
+    mBccEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mBccEdit->setClearButtonEnabled(true);
     mBccEdit->setObjectName(QStringLiteral("mBccEdit"));
     glay->addWidget(mBccEdit, row, 1);

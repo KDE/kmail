@@ -18,8 +18,8 @@ using PimCommon::BroadcastStatus;
 #include "kmmainwidget.h"
 
 #include "search/checkindexingmanager.h"
-#include <Libkdepim/RecentAddresses>
-using KPIM::RecentAddresses;
+#include <PimCommonAkonadi/RecentAddresses>
+using PimCommon::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "kmcommands.h"
 #include "unityservicemanager.h"
