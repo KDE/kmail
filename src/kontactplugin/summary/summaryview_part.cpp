@@ -55,8 +55,6 @@ using PimCommon::BroadcastStatus;
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
     : KParts::Part(parent)
     , mCore(core)
-    , mFrame(nullptr)
-    , mConfigAction(nullptr)
 {
     Q_UNUSED(aboutData);
     setComponentName(QStringLiteral("kontactsummary"), i18n("Kontact Summary"));
@@ -118,7 +116,7 @@ void SummaryViewPart::updateWidgets()
 
     const KIdentityManagement::Identity &id = KIdentityManagement::IdentityManager::self()->defaultIdentity();
 
-    QString currentUser = i18n("Summary for %1", id.fullName());
+    const QString currentUser = i18n("Summary for %1", id.fullName());
     mUsernameLabel->setText(QStringLiteral("<b>%1</b>").arg(currentUser));
 
     mSummaries.clear();
@@ -128,11 +126,9 @@ void SummaryViewPart::updateWidgets()
 
     mMainLayout->insertWidget(2, mFrame);
 
-    QStringList activeSummaries;
-
     KConfig config(QStringLiteral("kontact_summaryrc"));
     KConfigGroup grp(&config, QString());
-    activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
+    QStringList activeSummaries;
     if (grp.hasKey("ActiveSummaries")) {
         activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
     } else {
