@@ -50,7 +50,8 @@
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KXMLGUIClient>
-#include <KRun>
+#include <KIO/OpenUrlJob>
+#include <KIO/JobUiDelegate>
 #include <QMenu>
 #include <KUriFilter>
 #include <KStringHandler>
@@ -577,7 +578,9 @@ void MessageActions::slotRunUrl(QAction *urlAction)
 {
     const QVariant q = urlAction->data();
     if (q.type() == QVariant::Url) {
-        new KRun(q.toUrl(), mParent);
+        KIO::OpenUrlJob *job = new KIO::OpenUrlJob(q.toUrl());
+        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParent));
+        job->start();
     }
 }
 
