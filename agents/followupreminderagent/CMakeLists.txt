@@ -43,7 +43,6 @@ target_link_libraries(followupreminderagent
     KF5::KIOWidgets
     KF5::Notifications
     KF5::MailCommon
-    KF5::Libkdepim
     KF5::I18n
     KF5::CalendarCore
 )

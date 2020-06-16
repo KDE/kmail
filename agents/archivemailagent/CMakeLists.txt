@@ -47,7 +47,6 @@ target_link_libraries(akonadi_archivemail_agent
     KF5::KIOWidgets
     KF5::Notifications
     KF5::MailCommon
-    KF5::Libkdepim
     KF5::I18n
     )
 
