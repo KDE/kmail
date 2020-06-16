@@ -78,7 +78,7 @@
 #include <gpgme++/keygenerationresult.h>
 
 #include <KEmailAddress>
-#include <Libkdepim/EmailValidator>
+#include <PimCommon/EmailValidator>
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
 #include <MailTransport/TransportComboBox>
@@ -352,14 +352,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setWhatsThis(msg);
     mEmailEdit->setWhatsThis(msg);
 
-    KPIM::EmailValidator *emailValidator = new KPIM::EmailValidator(this);
+    PimCommon::EmailValidator *emailValidator = new PimCommon::EmailValidator(this);
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
     ++row;
     mAliasEdit = new KEditListWidget(tab);
 
-    KPIM::EmailValidator *emailValidator1 = new KPIM::EmailValidator(this);
+    PimCommon::EmailValidator *emailValidator1 = new PimCommon::EmailValidator(this);
     mAliasEdit->lineEdit()->setValidator(emailValidator1);
 
     glay->addWidget(mAliasEdit, row, 1);
