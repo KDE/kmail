@@ -548,15 +548,12 @@ void KTNEFMain::openWith(const KService::Ptr &offer)
     if (!mView->getSelection().isEmpty()) {
         KTNEFAttach *attach = mView->getSelection().at(0);
         const QUrl url = QUrl::fromLocalFile(extractTemp(attach));
-        QList<QUrl> lst{url};
-        if (offer) {
-            KIO::ApplicationLauncherJob *job = new KIO::ApplicationLauncherJob(offer);
-            job->setUrls(lst);
-            job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-            job->start();
-        } else {
-            KRun::displayOpenWithDialog(lst, this, false);
-        }
+        const QList<QUrl> lst{url};
+        KIO::ApplicationLauncherJob *job = new KIO::ApplicationLauncherJob(offer);
+        job->setUrls(lst);
+        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+        job->setAutoDelete(false);
+        job->start();
     }
 }
 
