@@ -69,6 +69,7 @@ Comment[tg]=Модули дайджести Kontact
 Comment[tr]=Kontact Özet Gösterim Eklentisi
 Comment[uk]=Додаток Kontact для перегляду резюме
 Comment[wa]=Module del vuwe des racourtis di Kontact
+Comment[x-test]=xxKontact SummaryView Pluginxx
 Comment[zh_CN]=Kontact 摘要视图插件
 Comment[zh_TW]=Kontact 摘要檢視外掛程式
 Name=Summary
@@ -140,6 +141,7 @@ Name[uk]=Резюме
 Name[uz]=Hisobot
 Name[uz@cyrillic]=Ҳисобот
 Name[wa]=Racourti
+Name[x-test]=xxSummaryxx
 Name[zh_CN]=总计
 Name[zh_TW]=摘要
 #Always last
