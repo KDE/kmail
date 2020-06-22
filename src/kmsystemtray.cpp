@@ -78,8 +78,8 @@ bool KMSystemTray::buildPopupMenu()
         return false;
     }
 
-    if (!contextMenu()) {
-        setContextMenu(new QMenu());
+    if (mBuiltContextMenu) {
+        return true;
     }
 
     contextMenu()->clear();
@@ -97,6 +97,12 @@ bool KMSystemTray::buildPopupMenu()
     contextMenu()->addAction(mSendQueued);
     contextMenu()->addAction(mainWidget->sendQueueViaMenu());
 
+    mNewMessagesPopup = new QMenu();
+    mNewMessagesPopup->setTitle(i18n("New Messages In"));
+    mNewMessagesPopup->setEnabled(false);
+    connect(mNewMessagesPopup, &QMenu::triggered, this, &KMSystemTray::slotSelectCollection);
+    contextMenu()->addAction(mNewMessagesPopup->menuAction());
+
     contextMenu()->addSeparator();
     if ((action = mainWidget->action(QStringLiteral("new_message")))) {
         contextMenu()->addAction(action);
@@ -113,6 +119,8 @@ bool KMSystemTray::buildPopupMenu()
     if ((action = mainWidget->action(QStringLiteral("file_quit")))) {
         contextMenu()->addAction(action);
     }
+
+    mBuiltContextMenu = true;
     return true;
 }
 
@@ -188,27 +196,24 @@ void KMSystemTray::slotActivated()
 
 void KMSystemTray::slotContextMenuAboutToShow()
 {
-    // Rebuild popup menu before show to minimize race condition if
+    // Repeat this check before showing the menu, to minimize a race condition if
     // the base KMainWidget is closed.
-    if (!buildPopupMenu()) {
+    if (!kmkernel->getKMMainWidget() || kmkernel->shuttingDown()) {
         return;
     }
 
-    if (mNewMessagesPopup != nullptr) {
-        contextMenu()->removeAction(mNewMessagesPopup->menuAction());
-        delete mNewMessagesPopup;
-        mNewMessagesPopup = nullptr;
+    // Create the context menu the first time.
+    if (!mBuiltContextMenu) {
+        if (!buildPopupMenu()) {
+            return;
+        }
     }
+
+    // Update the "New messages in" submenu.
     mHasUnreadMessage = false;
-    mNewMessagesPopup = new QMenu();
+    mNewMessagesPopup->clear();
     fillFoldersMenu(mNewMessagesPopup, kmkernel->treeviewModelSelection());
-
-    connect(mNewMessagesPopup, &QMenu::triggered, this, &KMSystemTray::slotSelectCollection);
-
-    if (mHasUnreadMessage) {
-        mNewMessagesPopup->setTitle(i18n("New Messages In"));
-        contextMenu()->insertAction(mSendQueued, mNewMessagesPopup->menuAction());
-    }
+    mNewMessagesPopup->setEnabled(mHasUnreadMessage);
 }
 
 void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model, const QString &parentName, const QModelIndex &parentIndex)
