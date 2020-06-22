@@ -24,7 +24,6 @@
 #include <QVariantList>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/AgentConfigurationBase>
-class QTreeWidget;
 class FollowUpReminderInfoWidget;
 namespace FollowUpReminder {
 class FollowUpReminderInfo;
