@@ -66,6 +66,7 @@ void FollowupReminderNoAnswerDialogTest::shouldAddItemInTreeList()
     dlg.setInfo(lstInfo);
     //We load invalid infos.
     QCOMPARE(treeWidget->topLevelItemCount(), 0);
+    lstInfo.clear();
 
     //Load valid infos
     for (int i = 0; i < 10; ++i) {

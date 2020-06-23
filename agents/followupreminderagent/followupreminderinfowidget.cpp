@@ -102,6 +102,8 @@ void FollowUpReminderInfoWidget::setInfo(const QList<FollowUpReminder::FollowUpR
     for (FollowUpReminder::FollowUpReminderInfo *info : infoList) {
         if (info->isValid()) {
             createOrUpdateItem(info);
+        } else {
+            delete info;
         }
     }
 }

@@ -130,6 +130,7 @@ void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails()
     PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
     job->setPotentialPhishingEmails(emails);
     QCOMPARE(job->checkEmails(), createdListOfEmails);
+    delete job;
 }
 
 QTEST_MAIN(PotentialPhishingEmailJobTest)
