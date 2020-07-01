@@ -101,17 +101,18 @@ void FillComposerJob::slotOpenComposer()
             msgPart = new KMime::Content;
             msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1String(mSettings.mAttachCte), "utf-8");
             msgPart->setBody(mSettings.mAttachData);   //TODO: check if was setBodyEncoded
-            msgPart->contentType()->setMimeType(mSettings.mAttachType + '/' +  mSettings.mAttachSubType);
-            msgPart->contentType()->setParameter(QLatin1String(mSettings.mAttachParamAttr), mSettings.mAttachParamValue);   //TODO: Check if the content disposition parameter needs to be set!
+            auto ct = msgPart->contentType(); //Create
+            ct->setMimeType(mSettings.mAttachType + '/' +  mSettings.mAttachSubType);
+            ct->setParameter(QLatin1String(mSettings.mAttachParamAttr), mSettings.mAttachParamValue);   //TODO: Check if the content disposition parameter needs to be set!
             if (!MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
                 msgPart->contentDisposition()->fromUnicodeString(QLatin1String(mSettings.mAttachContDisp), "utf-8");
             }
             if (!mSettings.mAttachCharset.isEmpty()) {
                 // qCDebug(KMAIL_LOG) << "Set attachCharset to" << attachCharset;
-                msgPart->contentType()->setCharset(mSettings.mAttachCharset);
+                ct->setCharset(mSettings.mAttachCharset);
             }
 
-            msgPart->contentType()->setName(mSettings.mAttachName, "utf-8");
+            ct->setName(mSettings.mAttachName, "utf-8");
             msgPart->assemble();
             // Don't show the composer window if the automatic sending is checked
             iCalAutoSend = MessageViewer::MessageViewerSettings::self()->automaticSending();
