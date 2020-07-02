@@ -32,7 +32,7 @@ SpellCheckerConfigDialog::SpellCheckerConfigDialog(QWidget *parent)
 {
     // Hackish way to hide the "Enable spell check by default" checkbox
     // Our highlighter ignores this setting, so we should not expose its UI
-    QCheckBox *enabledByDefaultCB = findChild<QCheckBox *>(QStringLiteral("m_checkerEnabledByDefaultCB"));
+    QCheckBox *enabledByDefaultCB = findChild<QCheckBox *>(QStringLiteral("kcfg_autodetectLanguage"));
     if (enabledByDefaultCB) {
         enabledByDefaultCB->hide();
     } else {
