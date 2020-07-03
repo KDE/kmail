@@ -52,7 +52,7 @@ static void kmail_options(QCommandLineParser *parser)
         i18n("Only open composer window"))
             << QCommandLineOption(
         QStringLiteral("identity"),
-        i18n("Set identity"),
+        i18n("Set identity name"),
         QStringLiteral("identity"))
             << QCommandLineOption(
         QStringLiteral("view"),
