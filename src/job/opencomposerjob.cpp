@@ -54,6 +54,8 @@ void OpenComposerJob::start()
         if (KMKernel::self()->identityManager()->identities().contains(mOpenComposerSettings.mIdentity)) {
             const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(mOpenComposerSettings.mIdentity);
             mIdentityId = id.uoid();
+        } else {
+            qCWarning(KMAIL_LOG) << "Identity name doesn't exist " << mOpenComposerSettings.mIdentity;
         }
     }
 
