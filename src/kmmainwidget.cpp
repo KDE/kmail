@@ -2747,6 +2747,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, c
             menu.addSeparator();
             menu.addAction(mMsgView->speakTextAction());
         }
+        menu.addSeparator();
+        menu.addAction(mMsgView->shareTextAction());
     } else if (!urlMenuAdded) {
         // popup somewhere else (i.e., not a URL) on the message
         if (!mMessagePane->currentMessage()) {

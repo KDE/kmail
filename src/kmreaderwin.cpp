@@ -670,6 +670,11 @@ QAction *KMReaderWin::speakTextAction() const
     return mViewer->speakTextAction();
 }
 
+QAction *KMReaderWin::shareTextAction() const
+{
+    return mViewer->shareTextAction();
+}
+
 QAction *KMReaderWin::downloadImageToDiskAction() const
 {
     return mImageUrlSaveAsAction;

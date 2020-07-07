@@ -699,6 +699,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             menu->addSeparator();
             menu->addAction(mReaderWin->speakTextAction());
         }
+        menu->addSeparator();
+        menu->addAction(mReaderWin->shareTextAction());
     } else if (!urlMenuAdded) {
         if (!menu) {
             menu = new QMenu(this);

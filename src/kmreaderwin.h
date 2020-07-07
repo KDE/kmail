@@ -148,6 +148,8 @@ public:
     QAction *resetMessageDisplayFormatAction() const;
     QAction *editContactAction() const;
     QAction *developmentToolsAction() const;
+    QAction *shareTextAction() const;
+
 
     QMenu *viewHtmlOption() const;
     QAction *shareImage() const;
