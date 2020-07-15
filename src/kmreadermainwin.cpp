@@ -735,8 +735,11 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 menu->addSeparator();
             }
 
+
             menu->addAction(copyActionMenu(menu));
-            menu->addAction(moveActionMenu(menu));
+            if (col.isValid()) {
+                menu->addAction(moveActionMenu(menu));
+            }
             menu->addSeparator();
             menu->addAction(mMsgActions->mailingListActionMenu());
 
