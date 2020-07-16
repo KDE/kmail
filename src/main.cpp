@@ -33,10 +33,12 @@
 #include <QApplication>
 #include <QSessionManager>
 #include <KCrash>
+#include <QWebEngineUrlScheme>
 
 #ifdef WITH_KUSERFEEDBACK
 #include <KUserFeedback/Provider>
 #include "userfeedback/kmailuserfeedbackprovider.h"
+
 #endif
 
 //-----------------------------------------------------------------------------
@@ -124,6 +126,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    //Necessary for "cid" support in kmail.
+    QWebEngineUrlScheme cidScheme("cid");
+    cidScheme.setFlags(QWebEngineUrlScheme::SecureScheme | QWebEngineUrlScheme::ContentSecurityPolicyIgnored);
+    cidScheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
+    QWebEngineUrlScheme::registerScheme(cidScheme);
+
     KMailApplication app(argc, &argv);
     KLocalizedString::setApplicationDomain("kmail");
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));

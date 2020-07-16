@@ -403,6 +403,7 @@ target_link_libraries(kmail
     KF5::TemplateParser
     KF5::Libkdepim
     KF5::Crash
+    KF5::WebEngineViewer
     ${kmail_userfeedback_LIB}
     )
 
