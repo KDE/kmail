@@ -127,7 +127,8 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
 
     auto ftw = new MailCommon::FolderTreeWidget(nullptr, nullptr,
                                                 MailCommon::FolderTreeWidget::TreeViewOptions(MailCommon::FolderTreeWidget::UseDistinctSelectionModel
-                                                                                              |MailCommon::FolderTreeWidget::HideStatistics));
+                                                                                              |MailCommon::FolderTreeWidget::HideStatistics
+                                                                                              |MailCommon::FolderTreeWidget::HideHeaderViewMenu));
     ftw->folderTreeView()->setDragEnabled(false);
     l->addWidget(ftw);
 
