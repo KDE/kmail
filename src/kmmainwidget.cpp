@@ -88,8 +88,13 @@
 
 #include <MessageViewer/AttachmentStrategy>
 
+#include <kguiaddons_version.h>
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
 #include <Libkdepim/KCursorSaver>
+#endif
+#else
+#include <KCursorSaver>
 #endif
 
 #include <MessageComposer/MessageSender>
@@ -522,8 +527,12 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
     }
 
     mGoToFirstUnreadMessageInSelectedFolder = false;
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
 
     if (mMsgView) {
@@ -1483,8 +1492,12 @@ void KMMainWidget::slotEmptyFolder()
         != KMessageBox::Continue) {
         return;
     }
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     slotSelectAllMessages();
     if (isTrash) {
@@ -2249,8 +2262,12 @@ void KMMainWidget::slotApplyFilterOnFolder(bool recursive)
 
 void KMMainWidget::applyFilters(const Akonadi::Item::List &selectedMessages)
 {
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
 
     MailCommon::FilterManager::instance()->filter(selectedMessages);
@@ -2258,16 +2275,24 @@ void KMMainWidget::applyFilters(const Akonadi::Item::List &selectedMessages)
 
 void KMMainWidget::applyFilters(const Akonadi::Collection::List &selectedCols)
 {
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     MailCommon::FilterManager::instance()->filter(selectedCols);
 }
 
 void KMMainWidget::applyFilter(const Akonadi::Collection::List &selectedCols, const QString &filter)
 {
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     MailCommon::FilterManager::instance()->filter(selectedCols, { filter });
 }
@@ -3665,17 +3690,24 @@ void KMMainWidget::slotCollapseThread()
 void KMMainWidget::slotExpandAllThreads()
 {
     // TODO: Make this asynchronous ? (if there is enough demand)
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     mMessagePane->setAllThreadsExpanded(true);
 }
 
 void KMMainWidget::slotCollapseAllThreads()
 {
-    // TODO: Make this asynchronous ? (if there is enough demand)
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     mMessagePane->setAllThreadsExpanded(false);
 }

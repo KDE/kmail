@@ -107,8 +107,14 @@
 
 #include <Libkdepim/ProgressManager>
 #include <PimCommon/BroadcastStatus>
+
+#include <kguiaddons_version.h>
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
 #include <Libkdepim/KCursorSaver>
+#endif
+#else
+#include <KCursorSaver>
 #endif
 
 #include <gpgme++/error.h>
@@ -852,8 +858,12 @@ KMReplyCommand::KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, Messag
 
 KMCommand::Result KMReplyCommand::execute()
 {
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     Akonadi::Item item = retrievedMessage();
     KMime::Message::Ptr msg = MessageComposer::Util::message(item);
@@ -915,8 +925,12 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
     if (!msg) {
         return Failed;
     }
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
 
     CreateForwardMessageJobSettings settings;
@@ -1330,8 +1344,12 @@ KMFilterActionCommand::KMFilterActionCommand(QWidget *parent, const QVector<qlon
 
 KMCommand::Result KMFilterActionCommand::execute()
 {
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     int msgCount = 0;
     const int msgCountToFilter = mMsgListId.count();
@@ -1521,8 +1539,12 @@ void KMMoveCommand::slotMoveResult(KJob *job)
 
 KMCommand::Result KMMoveCommand::execute()
 {
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     setEmitsCompletedItself(true);
     setDeletesItself(true);
@@ -1649,8 +1671,12 @@ Akonadi::Collection KMTrashMsgCommand::findTrashFolder(const Akonadi::Collection
 
 KMCommand::Result KMTrashMsgCommand::execute()
 {
+#if KGUIADDONS_VERSION < QT_VERSION_CHECK(5, 73, 0)
 #ifndef QT_NO_CURSOR
     KPIM::KCursorSaver busy(KPIM::KBusyPtr::busy());
+#endif
+#else
+    KCursorSaver saver(Qt::WaitCursor);
 #endif
     setEmitsCompletedItself(true);
     setDeletesItself(true);
