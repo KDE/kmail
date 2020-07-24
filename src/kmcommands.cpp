@@ -895,7 +895,6 @@ bool KMReplyCommand::replyAsHtml() const
 
 void KMReplyCommand::setReplyAsHtml(bool replyAsHtml)
 {
-    qDebug() << " void KMReplyCommand::setReplyAsHtml(bool replyAsHtml)"<<replyAsHtml;
     mReplyAsHtml = replyAsHtml;
 }
 
