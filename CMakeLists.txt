@@ -71,10 +71,11 @@ set(LIBKLEO_LIB_VERSION_LIB "5.15.40")
 set(PIMCOMMON_LIB_VERSION_LIB "5.15.40")
 set(LIBKDEPIM_LIB_VERSION_LIB "5.15.40")
 set(LIBKSIEVE_LIB_VERSION_LIB "5.15.40")
+set(AKONADI_SEARCH_VERSION "5.15.40")
 
 find_package(KF5WebEngineViewer ${MESSAGELIB_LIB_VERSION_LIB} CONFIG REQUIRED)
 
-find_package(KF5AkonadiSearch "5.15.40" CONFIG REQUIRED)
+find_package(KF5AkonadiSearch ${AKONADI_SEARCH_VERSION} CONFIG REQUIRED)
 set_package_properties(KF5AkonadiSearch PROPERTIES DESCRIPTION "The Akonadi Search libraries" URL "https://www.kde.org" TYPE REQUIRED PURPOSE "Provides search capabilities in KMail and Akonadi")
 
 set(GPGMEPP_LIB_VERSION "1.11.1")
