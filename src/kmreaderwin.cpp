@@ -457,7 +457,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
     Akonadi::AddEmailAddressJob *job = new Akonadi::AddEmailAddressJob(emailString, mMainWindow, this);
     job->setInteractive(true);
     connect(job, &Akonadi::AddEmailAddressJob::successMessage, this, [this](const QString &message) {
-         PimCommon::BroadcastStatus::instance()->setStatusMsg(message);
+        PimCommon::BroadcastStatus::instance()->setStatusMsg(message);
     });
     job->start();
 }
@@ -525,7 +525,7 @@ void KMReaderWin::slotSaveImageOnDisk()
 void KMReaderWin::slotMailtoReply()
 {
     KMMailtoReplyCommand *command = new KMMailtoReplyCommand(mMainWindow, urlClicked(),
-                                                  message(), copyText());
+                                                             message(), copyText());
     command->setReplyAsHtml(htmlMail());
     command->start();
 }

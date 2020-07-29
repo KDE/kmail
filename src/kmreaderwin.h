@@ -150,7 +150,6 @@ public:
     QAction *developmentToolsAction() const;
     QAction *shareTextAction() const;
 
-
     QMenu *viewHtmlOption() const;
     QAction *shareImage() const;
 

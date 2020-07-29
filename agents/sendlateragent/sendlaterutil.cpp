@@ -28,8 +28,7 @@
 
 #include <QStringList>
 
-bool SendLaterUtil::compareSendLaterInfo(MessageComposer::SendLaterInfo *left,
-                                         MessageComposer::SendLaterInfo *right)
+bool SendLaterUtil::compareSendLaterInfo(MessageComposer::SendLaterInfo *left, MessageComposer::SendLaterInfo *right)
 {
     if (left->dateTime() == right->dateTime()) {
         //Set no recursive first.
@@ -43,16 +42,16 @@ bool SendLaterUtil::compareSendLaterInfo(MessageComposer::SendLaterInfo *left,
 static QDateTime updateRecurence(MessageComposer::SendLaterInfo *info, QDateTime dateTime)
 {
     switch (info->recurrenceUnit()) {
-        case MessageComposer::SendLaterInfo::Days:
+    case MessageComposer::SendLaterInfo::Days:
         dateTime = dateTime.addDays(info->recurrenceEachValue());
         break;
-        case MessageComposer::SendLaterInfo::Weeks:
+    case MessageComposer::SendLaterInfo::Weeks:
         dateTime = dateTime.addDays(info->recurrenceEachValue() * 7);
         break;
-        case MessageComposer::SendLaterInfo::Months:
+    case MessageComposer::SendLaterInfo::Months:
         dateTime = dateTime.addMonths(info->recurrenceEachValue());
         break;
-        case MessageComposer::SendLaterInfo::Years:
+    case MessageComposer::SendLaterInfo::Years:
         dateTime = dateTime.addYears(info->recurrenceEachValue());
         break;
     }

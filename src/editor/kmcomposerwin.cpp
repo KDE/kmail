@@ -2833,7 +2833,7 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
 bool KMComposerWin::sendLaterRegistered() const
 {
     return MessageComposer::SendLaterUtil::sentLaterAgentWasRegistered()
-            && MessageComposer::SendLaterUtil::sentLaterAgentEnabled();
+           && MessageComposer::SendLaterUtil::sentLaterAgentEnabled();
 }
 
 void KMComposerWin::slotSendLater()

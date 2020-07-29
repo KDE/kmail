@@ -2111,12 +2111,12 @@ void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl)
     qCDebug(KMAIL_LOG) << "Reply to All with template:" << tmpl;
 
     KMReplyCommand *command = new KMReplyCommand(this,
-                                            msg,
-                                            MessageComposer::ReplyAll,
-                                            text,
-                                            false,
-                                            tmpl
-                                            );
+                                                 msg,
+                                                 MessageComposer::ReplyAll,
+                                                 text,
+                                                 false,
+                                                 tmpl
+                                                 );
     command->setReplyAsHtml(messageView()->htmlMail());
 
     command->start();

@@ -24,7 +24,6 @@
 #include <KTNEF/KTNEFParser>
 #include <KTNEF/KTNEFProperty>
 
-
 #include <KFileItemActions>
 #include <KService>
 #include <QAction>

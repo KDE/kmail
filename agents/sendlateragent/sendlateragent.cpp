@@ -163,8 +163,7 @@ void SendLaterAgent::removeItem(qint64 item)
     }
 }
 
-void SendLaterAgent::addItem(qint64 timestamp, bool recurrence, int recurrenceValue, int recurrenceUnit,
-                             Akonadi::Item::Id id, const QString &subject, const QString &to)
+void SendLaterAgent::addItem(qint64 timestamp, bool recurrence, int recurrenceValue, int recurrenceUnit, Akonadi::Item::Id id, const QString &subject, const QString &to)
 {
     auto info = new MessageComposer::SendLaterInfo;
     info->setDateTime(QDateTime::fromSecsSinceEpoch(timestamp));

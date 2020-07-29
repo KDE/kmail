@@ -1563,11 +1563,11 @@ void KMKernel::itemDispatchStarted()
 {
     // Watch progress of the MDA.
     PimCommon::ProgressManagerAkonadi::createProgressItem(nullptr,
-                                                     MailTransport::DispatcherInterface().dispatcherInstance(),
-                                                     QStringLiteral("Sender"),
-                                                     i18n("Sending messages"),
-                                                     i18n("Initiating sending process..."),
-                                                     true, KPIM::ProgressItem::Unknown);
+                                                          MailTransport::DispatcherInterface().dispatcherInstance(),
+                                                          QStringLiteral("Sender"),
+                                                          i18n("Sending messages"),
+                                                          i18n("Initiating sending process..."),
+                                                          true, KPIM::ProgressItem::Unknown);
 }
 
 void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
@@ -1576,8 +1576,8 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
         // Creating a progress item twice is ok, it will simply return the already existing
         // item
         KPIM::ProgressItem *progress = PimCommon::ProgressManagerAkonadi::createProgressItem(nullptr, instance,
-                                                                                        instance.identifier(), instance.name(), instance.statusMessage(),
-                                                                                        false, KPIM::ProgressItem::Encrypted);
+                                                                                             instance.identifier(), instance.name(), instance.statusMessage(),
+                                                                                             false, KPIM::ProgressItem::Encrypted);
         progress->setProperty("AgentIdentifier", instance.identifier());
         return;
     }
@@ -1625,8 +1625,8 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
             // Creating a progress item twice is ok, it will simply return the already existing
             // item
             KPIM::ProgressItem *progress = PimCommon::ProgressManagerAkonadi::createProgressItem(nullptr, instance,
-                                                                                            instance.identifier(), instance.name(), instance.statusMessage(),
-                                                                                            true, cryptoStatus);
+                                                                                                 instance.identifier(), instance.name(), instance.statusMessage(),
+                                                                                                 true, cryptoStatus);
             progress->setProperty("AgentIdentifier", instance.identifier());
         } else if (instance.status() == Akonadi::AgentInstance::Broken) {
             agentInstanceBroken(instance);

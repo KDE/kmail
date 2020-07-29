@@ -735,7 +735,6 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
                 menu->addSeparator();
             }
 
-
             menu->addAction(copyActionMenu(menu));
             if (col.isValid()) {
                 menu->addAction(moveActionMenu(menu));

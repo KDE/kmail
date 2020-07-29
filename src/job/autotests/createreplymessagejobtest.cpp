@@ -25,7 +25,6 @@ QTEST_MAIN(CreateReplyMessageJobTest)
 CreateReplyMessageJobTest::CreateReplyMessageJobTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 void CreateReplyMessageJobTest::shouldHaveDefaultValue()

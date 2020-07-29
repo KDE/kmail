@@ -28,7 +28,6 @@ class SendLaterInfo;
 
 /** Send later utilities. */
 namespace SendLaterUtil {
-
 Q_REQUIRED_RESULT bool compareSendLaterInfo(MessageComposer::SendLaterInfo *left, MessageComposer::SendLaterInfo *right);
 
 Q_REQUIRED_RESULT KSharedConfig::Ptr defaultConfig();
@@ -42,7 +41,6 @@ void changeRecurrentDate(MessageComposer::SendLaterInfo *info);
 void forceReparseConfiguration();
 
 Q_REQUIRED_RESULT QString sendLaterPattern();
-
 }
 
 #endif // SENDLATERUTIL_H

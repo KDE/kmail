@@ -26,9 +26,7 @@ namespace SendLater {
 class SendLaterInfo;
 
 namespace SendLaterUtil {
-
 Q_REQUIRED_RESULT QDateTime updateRecurence(SendLater::SendLaterInfo *info, QDateTime dateTime);
-
 }
 }
 #endif // SENDLATERUTIL_P_H

@@ -34,6 +34,7 @@ SendLaterUtilTest::SendLaterUtilTest(QObject *parent)
 {
     QStandardPaths::setTestModeEnabled(true);
 }
+
 void SendLaterUtilTest::shouldRestoreFromSettings()
 {
     MessageComposer::SendLaterInfo info;

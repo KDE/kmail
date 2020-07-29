@@ -232,7 +232,7 @@ void IdentityPage::slotRemoveIdentity()
         identityName = item->identity().identityName();
     }
     const QString msg = numberOfIdentity == 1 ? i18n("<qt>Do you really want to remove the identity named "
-                              "<b>%1</b>?</qt>", identityName) : i18np("Do you really want to remove this %1 identity?", "Do you really want to remove these %1 identities?", numberOfIdentity);
+                                                     "<b>%1</b>?</qt>", identityName) : i18np("Do you really want to remove this %1 identity?", "Do you really want to remove these %1 identities?", numberOfIdentity);
     if (KMessageBox::warningContinueCancel(this, msg, i18np("Remove Identity", "Remove Identities", numberOfIdentity),
                                            KGuiItem(i18n("&Remove"),
                                                     QStringLiteral("edit-delete")))
@@ -249,7 +249,6 @@ void IdentityPage::slotRemoveIdentity()
             refreshList();
             updateButtons();
         }
-
     }
 }
 

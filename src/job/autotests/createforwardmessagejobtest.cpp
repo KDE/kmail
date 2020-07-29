@@ -24,7 +24,6 @@ QTEST_MAIN(CreateForwardMessageJobTest)
 CreateForwardMessageJobTest::CreateForwardMessageJobTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 void CreateForwardMessageJobTest::shouldHaveDefaultValues()
