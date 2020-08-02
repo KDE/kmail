@@ -150,7 +150,7 @@ add_definitions(-DQT_NO_KEYWORDS)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(KUserFeedback 0.9.90 CONFIG) # Needs Provider::describeDataSources()
+find_package(KUserFeedback 1.0.0 CONFIG) # Needs Provider::describeDataSources()
 set_package_properties(KUserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional). It can be disable in apps.")
 
 add_subdirectory(src)
