@@ -211,7 +211,7 @@ void KMReaderMainWin::showPreviousMessage()
     updateButtons();
 }
 
-void KMReaderMainWin::showMessage(const QString &encoding, const QList<KMime::Message::Ptr> &message)
+void KMReaderMainWin::showMessage(const QString &encoding, const QVector<KMime::Message::Ptr> &message)
 {
     if (message.isEmpty()) {
         return;
@@ -247,7 +247,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const KMime::Message:
     if (!message) {
         return;
     }
-    const QList<KMime::Message::Ptr> lst{message};
+    const QVector<KMime::Message::Ptr> lst{message};
     showMessage(encoding, lst);
 }
 

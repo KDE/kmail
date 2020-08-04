@@ -189,8 +189,6 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
         return;
     }
 
-    const auto lastSeenEvent = QDateTime::fromSecsSinceEpoch(c.remoteRevision().toLongLong());
-
     const auto sources = unifiedBox->sourceCollections();
     for (auto source  : sources) {
         auto fetch = new Akonadi::ItemFetchJob(Akonadi::Collection(source), this);

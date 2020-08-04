@@ -49,7 +49,7 @@ public:
     Q_REQUIRED_RESULT QString to() const;
 
     Q_REQUIRED_RESULT QDate followUpReminderDate() const;
-    void setFollowUpReminderDate(const QDate &followUpReminderDate);
+    void setFollowUpReminderDate(QDate followUpReminderDate);
 
     void writeConfig(KConfigGroup &config, qint32 identifier);
 

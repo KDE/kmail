@@ -39,7 +39,7 @@ public:
     void setCollection(const Akonadi::Collection &collection);
 
     Q_REQUIRED_RESULT QDate date() const;
-    void setDate(const QDate &date);
+    void setDate(QDate date);
 
     Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
     void setMessageItem(const Akonadi::Item &messageItem);

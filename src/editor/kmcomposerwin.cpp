@@ -564,7 +564,7 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
                         const QUrl localUrl = QUrl::fromLocalFile(str);
                         AttachmentInfo info;
                         info.url = localUrl;
-                        addAttachment(QList<AttachmentInfo>() << info, false);
+                        addAttachment(QVector<AttachmentInfo>() << info, false);
                     }
                 });
                 job->start();
@@ -651,7 +651,7 @@ void KMComposerWin::addAttachmentsAndSend(const QList<QUrl> &urls, const QString
     send(how);
 }
 
-void KMComposerWin::addAttachment(const QList<KMail::Composer::AttachmentInfo> &infos, bool showWarning)
+void KMComposerWin::addAttachment(const QVector<KMail::Composer::AttachmentInfo> &infos, bool showWarning)
 {
     QStringList lst;
     for (const AttachmentInfo &info : infos) {
@@ -2249,7 +2249,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
 
         if (items.isEmpty() && collections.isEmpty()) {
             if (allLocalURLs || forceAttachment) {
-                QList<AttachmentInfo> infoList;
+                QVector<AttachmentInfo> infoList;
                 infoList.reserve(urlList.count());
                 for (const QUrl &url : urlList) {
                     AttachmentInfo info;
@@ -2267,7 +2267,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                 if (selectedAction == addAsTextAction) {
                     insertUrls(source, urlList);
                 } else if (selectedAction == addAsAttachmentAction) {
-                    QList<AttachmentInfo> infoList;
+                    QVector<AttachmentInfo> infoList;
                     for (const QUrl &url : urlList) {
                         if (url.isValid()) {
                             AttachmentInfo info;

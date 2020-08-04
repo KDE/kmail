@@ -57,7 +57,7 @@ public:
     */
     void showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection = Akonadi::Collection());
 
-    void showMessage(const QString &encoding, const QList<KMime::Message::Ptr> &message);
+    void showMessage(const QString &encoding, const QVector<KMime::Message::Ptr> &message);
     void showMessage(const QString &encoding, const KMime::Message::Ptr &message);
     void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
     void showAndActivateWindow();
@@ -104,7 +104,7 @@ private:
     void updateButtons();
     void slotToggleMenubar(bool dontShowWarning);
 
-    QList<KMime::Message::Ptr> mListMessage;
+    QVector<KMime::Message::Ptr> mListMessage;
     int mCurrentMessageIndex = 0;
     Akonadi::Collection mParentCollection;
     Akonadi::Item mMsg;

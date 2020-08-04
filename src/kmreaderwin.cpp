@@ -456,7 +456,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
 
     Akonadi::AddEmailAddressJob *job = new Akonadi::AddEmailAddressJob(emailString, mMainWindow, this);
     job->setInteractive(true);
-    connect(job, &Akonadi::AddEmailAddressJob::successMessage, this, [this](const QString &message) {
+    connect(job, &Akonadi::AddEmailAddressJob::successMessage, this, [](const QString &message) {
         PimCommon::BroadcastStatus::instance()->setStatusMsg(message);
     });
     job->start();
@@ -769,7 +769,7 @@ bool KMReaderWin::printSelectedText(bool preview)
 void KMReaderWin::slotPrintComposeResult(KJob *job)
 {
     const bool preview = job->property("preview").toBool();
-    ::MessageComposer::Composer *composer = dynamic_cast< ::MessageComposer::Composer * >(job);
+    ::MessageComposer::Composer *composer = qobject_cast< ::MessageComposer::Composer * >(job);
     Q_ASSERT(composer);
     if (composer->error() == ::MessageComposer::Composer::NoError) {
         Q_ASSERT(composer->resultMessages().size() == 1);

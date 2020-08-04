@@ -167,7 +167,7 @@ QDate FollowUpReminderInfo::followUpReminderDate() const
     return mFollowUpReminderDate;
 }
 
-void FollowUpReminderInfo::setFollowUpReminderDate(const QDate &followUpReminderDate)
+void FollowUpReminderInfo::setFollowUpReminderDate(QDate followUpReminderDate)
 {
     mFollowUpReminderDate = followUpReminderDate;
 }

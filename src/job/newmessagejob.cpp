@@ -69,7 +69,7 @@ void NewMessageJob::slotOpenComposer()
     //Add the attachment if we have one
 
     if (!mAttachURL.isEmpty() && mAttachURL.isValid()) {
-        QList<KMail::Composer::AttachmentInfo> infoList;
+        QVector<KMail::Composer::AttachmentInfo> infoList;
         KMail::Composer::AttachmentInfo info;
         info.url = mAttachURL;
         infoList.append(info);

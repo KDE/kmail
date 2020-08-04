@@ -139,10 +139,10 @@ void ConfigAgentDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     QPen pen = painter->pen();
 
-    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
-    if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
-        cg = QPalette::Inactive;
-    }
+//    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
+//    if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
+//        cg = QPalette::Inactive;
+//    }
 
     QStyleOptionViewItem opt(option);
     opt.showDecorationSelected = true;

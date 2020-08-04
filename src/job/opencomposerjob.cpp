@@ -122,7 +122,7 @@ void OpenComposerJob::slotOpenComposer()
     }
     QList<QUrl> attachURLs = QUrl::fromStringList(mOpenComposerSettings.mAttachmentPaths);
     QList<QUrl>::ConstIterator endAttachment(attachURLs.constEnd());
-    QList<KMail::Composer::AttachmentInfo> infoList;
+    QVector<KMail::Composer::AttachmentInfo> infoList;
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
         if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {

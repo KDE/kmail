@@ -66,7 +66,7 @@ bool DndFromArkJob::extract(const QMimeData *source)
         QDBusConnection::sessionBus().call(message);
         QDir dir(arkPath);
         const QStringList list = dir.entryList(QDir::NoDotAndDotDot | QDir::Files);
-        QList<KMail::Composer::AttachmentInfo> infoList;
+        QVector<KMail::Composer::AttachmentInfo> infoList;
         infoList.reserve(list.size());
         for (int i = 0; i < list.size(); ++i) {
             KMail::Composer::AttachmentInfo info;

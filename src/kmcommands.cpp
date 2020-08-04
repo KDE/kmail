@@ -795,7 +795,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             }
             startOfMessage += 1; // the message starts after the '\n'
         }
-        QList<KMime::Message::Ptr> listMessages;
+        QVector<KMime::Message::Ptr> listMessages;
 
         // check for multiple messages in the file
         bool multipleMessages = true;
@@ -1874,7 +1874,7 @@ KMCommand::Result KMShareImageCommand::execute()
 
     KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, id);
     win->setFocusToSubject();
-    QList<KMail::Composer::AttachmentInfo> infoList;
+    QVector<KMail::Composer::AttachmentInfo> infoList;
     KMail::Composer::AttachmentInfo info;
     info.url = mUrl;
     info.comment = i18n("Image");

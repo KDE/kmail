@@ -124,7 +124,7 @@ QDate CreateFollowupReminderOnExistingMessageJob::date() const
     return mDate;
 }
 
-void CreateFollowupReminderOnExistingMessageJob::setDate(const QDate &date)
+void CreateFollowupReminderOnExistingMessageJob::setDate(QDate date)
 {
     mDate = date;
 }
