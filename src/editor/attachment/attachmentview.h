@@ -1,25 +1,13 @@
 /*
  * This file is part of KMail.
- * Copyright (C) 2012-2020 Laurent Montel <montel@kde.org>
- * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ * SPDX-FileCopyrightText: 2012-2020 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
  * Parts based on KMail code by:
- * Copyright (c) 2003 Ingo Kloecker <kloecker@kde.org>
- * Copyright (c) 2007 Thomas McGuire <Thomas.McGuire@gmx.net>
+ * SPDX-FileCopyrightText: 2003 Ingo Kloecker <kloecker@kde.org>
+ * SPDX-FileCopyrightText: 2007 Thomas McGuire <Thomas.McGuire@gmx.net>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #ifndef KMAIL_ATTACHMENTVIEW_H

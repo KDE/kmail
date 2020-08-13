@@ -1,22 +1,9 @@
-//
-/***************************************************************************
-                          kmsystemtray.cpp  -  description
-                             ------------------
-    begin                : Fri Aug 31 22:38:44 EDT 2001
-    copyright            : (C) 2001 by Ryan Breen
-    email                : ryan@porivo.com
+/*
+   SPDX-FileCopyrightText: 2001 by Ryan Breen <ryan@porivo.com>
+   SPDX-FileCopyrightText: 2010-2020 Laurent Montel <montel@kde.org>
 
-    Copyright (c) 2010-2020 Laurent Montel <montel@kde.org>
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+   SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"

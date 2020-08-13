@@ -4,8 +4,8 @@
 #
 # usage:  mh2kmail <dirname>
 #
-# Author: Stefan Taferner <taferner@kde.org>
-# This script is under GPL
+# SPDX-FileContributor: Stefan Taferner <taferner@kde.org>
+# SPDX-License-Identifier: GPL-2.0-only
 #
 if [ "X$*" = "X" ]; then
   echo "usage: mh2kmailr <dirname>"
