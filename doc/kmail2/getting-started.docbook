@@ -3,36 +3,26 @@
 <chapterinfo>
 <authorgroup>
 <author>
-<firstname>Daniel</firstname>
-<surname>Naber</surname>
-<affiliation><address>
-<email>daniel.naber@t-online.de</email>
-</address></affiliation>
+&Daniel.Naber;
+&Daniel.Naber.mail;
 </author>
 <author>
-<firstname>David</firstname>
-<surname>Rugge</surname>
-<affiliation><address>
-<email>davidrugge@mediaone.net</email>
-</address></affiliation>
+&David.Rugge;
+&David.Rugge.mail;
 </author>
 <author>
 <firstname>Michel</firstname>
 <surname>Boyer de la Giroday</surname>
-<affiliation><address>
 <email>michel@klaralvdalens-datakonsult.se</email>
-</address></affiliation>
 </author>
 <author>
-<firstname>Scarlett</firstname>
-<surname>Clark</surname>
-<affiliation><address>
+&Scarlett.Clark;
 &Scarlett.Clark.mail;
-</address></affiliation>
 </author>
 
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
 <date>2017-04-18</date>
 <releaseinfo>Applications 17.08</releaseinfo>
 </chapterinfo>
@@ -97,7 +87,7 @@ start working with it right away. For more in-depth information see the
   <listitem>
     <para>The <guilabel>Personal Settings</guilabel> screen will show if you had to enter your account type.
       Verify that your information is correct on this page. Select <guilabel>Download all messages for offline use</guilabel>
-      if you want your messages available when you do not have an Internet connection (&imap; only).
+      if you want your messages available when you do not have an Internet connection (&IMAP; only).
       Click the <guibutton>Next</guibutton> button once finished.</para>
     </listitem>
     <listitem>
@@ -220,11 +210,11 @@ you like.  <guilabel>Username</guilabel>, <guilabel>Password</guilabel>, and
 <guilabel>Incoming mail server</guilabel> should be filled in with the appropriate information
 from your <acronym>ISP</acronym> or system administrator. You should not
 need to change the <guilabel>Port</guilabel> setting (the default for POP3 is
-<userinput>110</userinput>, the default for <acronym>IMAP</acronym> is
+<userinput>110</userinput>, the default for &IMAP; is
 <userinput>143</userinput>).</para>
 
 <sect3 id="receiving-mail-imap">
-<title>Options only relevant to <acronym>IMAP</acronym></title>
+<title>Options only relevant to &IMAP;</title>
 
 <para>If you check <guilabel>Automatically compact folders</guilabel>
 &kmail; removes the messages you deleted from the
@@ -270,7 +260,7 @@ server. You should carefully test this to make sure it works safely.</para>
 </sect3>
 
 <sect3 id="receiving-mail-imap-pop3">
-<title>Options for both <acronym>IMAP</acronym> and POP3</title>
+<title>Options for both &IMAP; and POP3</title>
 <para>&kmail; supports encryption via <guilabel>SSL/TLS</guilabel> and
 <guilabel>STARTTLS</guilabel> (<guilabel>SSL/TLS</guilabel> should be preferred
 if it is available).</para>
@@ -294,14 +284,14 @@ if <guilabel>DIGEST-MD5</guilabel> is not available),</para></listitem>
 options are only secure when used together with <guilabel>SSL</guilabel>
 or <guilabel>TLS</guilabel>.  You should only use <guilabel>Clear
 text</guilabel> if your server does not support any of the other
-authentication methods. Additionally, for <acronym>IMAP</acronym>
+authentication methods. Additionally, for &IMAP;
 <guilabel>Anonymous</guilabel> is supported, but <guilabel>APOP</guilabel>
 is not. Use the <guibutton>Check what the server supports</guibutton> button
 on the <guilabel>Security</guilabel> tab
 to automatically select the most secure settings supported by your server.</para>
 
 <para>You are now ready to send and receive mail. For
-<acronym>IMAP</acronym>, just open your folders in the
+&IMAP;, just open your folders in the
 folder tree in &kmail;'s main window. &kmail; then connects to your
 server and displays the messages it finds. For POP3 use
 <menuchoice><guimenu>File</guimenu><guimenuitem>Check

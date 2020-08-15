@@ -10,12 +10,10 @@
   <!ENTITY kmail-credits-and-licenses SYSTEM "credits-and-licenses.docbook">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
-  <!ENTITY html "<acronym>HTML</acronym>">
   <!ENTITY gpg "<application>GPG</application>">
   <!ENTITY gpgsm "<application>GpgSM</application>">
   <!ENTITY mdn "<acronym>MDN</acronym>">
   <!ENTITY acl "<acronym>ACL</acronym>">
-  <!ENTITY imap "<acronym>IMAP</acronym>">
   <!ENTITY nntp "<acronym>NNTP</acronym>">
   <!ENTITY openpgp "<acronym>OpenPGP</acronym>">
   <!ENTITY smime "<acronym>S/MIME</acronym>">
@@ -33,7 +31,7 @@
 -->
 
 <!-- TODO:
-*index (see kdegames/kpat/)
+* index (see kdegames/kpat/)
 
 * guisubmenu vs. guititem ??
 * more about security?
@@ -58,35 +56,23 @@
 
 <authorgroup>
 <author>
-<firstname>Daniel</firstname>
-<surname>Naber</surname>
-<affiliation><address>
+&Daniel.Naber;
 &Daniel.Naber.mail;
-</address></affiliation>
 </author>
 
 <author>
-<firstname>David</firstname>
-<surname>Rugge</surname>
-<affiliation><address>
+&David.Rugge;
 &David.Rugge.mail;
-</address></affiliation>
 </author>
 
 <author>
-<firstname>Laurent</firstname>
-<surname>Montel</surname>
-<affiliation><address>
+&Laurent.Montel;
 &Laurent.Montel.mail;
-</address></affiliation>
 </author>
 
 <author>
-<firstname>Scarlett</firstname>
-<surname>Clark</surname>
-<affiliation><address>
+&Scarlett.Clark;
 &Scarlett.Clark.mail;
-</address></affiliation>
 </author>
 
 
@@ -107,7 +93,7 @@
 <copyright>
 <year>2004</year>
 <holder>&Daniel.Naber;</holder>
-<holder>Ingo Kl&ouml;cker</holder>
+<holder>&Ingo.Kloecker;</holder>
 </copyright>
 <copyright>
 <year>2013</year>
@@ -115,8 +101,8 @@
 </copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
-<date>2013-06-26</date>
-<releaseinfo>(&kde; 4.12)</releaseinfo>
+<date>2020-08-14</date>
+<releaseinfo>(&kde;5.14.3)</releaseinfo>
 
 <abstract>
 
@@ -138,7 +124,7 @@
 </keywordset>
 </bookinfo>
 
- &kmail-intro; <!-- 4.7-->
+&kmail-intro; <!-- 4.7-->
 &kmail-getting-started; <!-- 4.7-->
 &kmail-using-kmail; <!-- 4.11 -->
 &kmail-configure;  <!-- 4.11 -->

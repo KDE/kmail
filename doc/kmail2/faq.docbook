@@ -6,6 +6,7 @@
 <author>&David.Rugge; &David.Rugge.mail;</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
 <date>2013-12-20</date>
 <releaseinfo>&kde; 4.12</releaseinfo>
 </chapterinfo>
@@ -40,15 +41,15 @@
 
 <qandaentry><question><para>How to store sent mails in a special folder?</para></question>
 <answer>
-  <para><emphasis>Symptom:</emphasis> You want to store mails in a special folder. Maybe you are using an &imap; server and want to store your mails on the server, not in the client.</para>
+  <para><emphasis>Symptom:</emphasis> You want to store mails in a special folder. Maybe you are using an &IMAP; server and want to store your mails on the server, not in the client.</para>
   <para><emphasis>Solution:</emphasis> In &kmail;, choose <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Identities</guimenuitem><guimenuitem>(Choose an identity)</guimenuitem><guimenuitem>Modify</guimenuitem><guimenuitem>Advanced</guimenuitem><guimenuitem>Sent-mail folder</guimenuitem></menuchoice></para>
 </answer>
 </qandaentry>
 
 <qandaentry><question><para>How to store trash mails in a special folder?</para></question>
 <answer>
-  <para><emphasis>Symptom:</emphasis> You want to store mails in a special folder. Maybe you are using an &imap; server and want Trashed mails to be stored on the server, not in the client.</para>
-  <para>In the settings dialog select an &imap; account on the <guilabel>Accounts</guilabel> page.
+  <para><emphasis>Symptom:</emphasis> You want to store mails in a special folder. Maybe you are using an &IMAP; server and want Trashed mails to be stored on the server, not in the client.</para>
+  <para>In the settings dialog select an &IMAP; account on the <guilabel>Accounts</guilabel> page.
   Click on <guibutton>Modify</guibutton> and change the trash folder location on the <guilabel>Advanced</guilabel> tab.</para>
 </answer>
 </qandaentry>
@@ -62,11 +63,11 @@
 </answer>
 </qandaentry>
 
-<qandaentry><question><para>How to filter spam on an &imap; server?</para></question>
+<qandaentry><question><para>How to filter spam on an &IMAP; server?</para></question>
   <!--FIXME replace this with a link to the sieve section?-->
 <answer>
-  <para><emphasis>Symptom:</emphasis> You intend moving on to reading your mail from an &imap; server, and wonder how filtering and spam handling will occur?</para>
-  <para><emphasis>Solution:</emphasis> The machine that already has your mail can become your &imap; server. You will need to configure a server application. <guilabel>Dovecot</guilabel> is one such, and the guidance on the project web pages make it easy to set up. That still leaves you with the problem of filtering, as it makes sense to do it on the server (when you point &kmail; at the server you will see the folders that you have created on the server). Again there are options, but one of the best known is <guilabel>procmail</guilabel>. Again there is plenty of information on the Internet on how to set this up. You give it a set of <quote>recipes</quote> - here's an example:</para>
+  <para><emphasis>Symptom:</emphasis> You intend moving on to reading your mail from an &IMAP; server, and wonder how filtering and spam handling will occur?</para>
+  <para><emphasis>Solution:</emphasis> The machine that already has your mail can become your &IMAP; server. You will need to configure a server application. <guilabel>Dovecot</guilabel> is one such, and the guidance on the project web pages make it easy to set up. That still leaves you with the problem of filtering, as it makes sense to do it on the server (when you point &kmail; at the server you will see the folders that you have created on the server). Again there are options, but one of the best known is <guilabel>procmail</guilabel>. Again there is plenty of information on the Internet on how to set this up. You give it a set of <quote>recipes</quote> - here's an example:</para>
   <para><screen><markup>    :0
     * (^To|^CC|^List-ID): .*kde-linux
     ${MAILDIR}.INBOX.KDE-Lists.kde-users/
@@ -152,12 +153,12 @@ to export and import settings and data. Please see <ulink url="help:/pimsettinge
 </qandaentry>
 
 <qandaentry>
-<question><para>Why are my filters not applied to incoming messages of &imap; accounts?</para></question>
+<question><para>Why are my filters not applied to incoming messages of &IMAP; accounts?</para></question>
 <answer>
-<para>Normal &imap; mode does not support filtering, but the new
-disconnected &imap; account type does. You could try to use server-side
+<para>Normal &IMAP; mode does not support filtering, but the new
+disconnected &IMAP; account type does. You could try to use server-side
 filtering (ask your admin for how to install filters on the server and in
-which format), since &imap; is all about managing your email <emphasis>on the server</emphasis>.
+which format), since &IMAP; is all about managing your email <emphasis>on the server</emphasis>.
 Unfortunately, although there exists a mail filter language (Sieve, defined
 in RFC3028), there is no standardized access protocol for installing or
 editing server-side Sieve scripts. If such a protocol becomes available in
@@ -577,17 +578,17 @@ Is there any documentation on the available interfaces?</para></question>
 
 
 <qandaentry>
-<question><para>I am only using &imap;, can I get rid of those Local Folders in
+<question><para>I am only using &IMAP;, can I get rid of those Local Folders in
 the folder list or at least keep them collapsed all the time?</para></question>
 <answer><para>No, you cannot get rid of them. The local folders function as a
-fallback when the &imap; server is unreachable. Although you only use &imap;,
+fallback when the &IMAP; server is unreachable. Although you only use &IMAP;,
 &kmail; uses the outbox for sending the messages. If we hide all local folders
 you will not be able to fix messages in the outbox which cannot be send for some
 reason. But it is possible to keep the local folders collapsed. What
 you have to do is go to <menuchoice><guimenu>Settings</guimenu><guimenuitem>
 Configure &kmail;...</guimenuitem></menuchoice> and go to the section Misc,
 there you can setup the folder on startup. If you change that to a folder on
-the &imap; account, the Local Folders will stay collapsed when &kmail; starts.
+the &IMAP; account, the Local Folders will stay collapsed when &kmail; starts.
 </para></answer>
 </qandaentry>
 

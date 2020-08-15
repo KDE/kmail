@@ -37,7 +37,7 @@ Online=true</screen>
 </para>
 </sect1>
 <sect1 id="clean-start-after-a-failed-migration"><title>Clean start after a failed migration</title>
-<para>In case migration from &kmail; 1 to &kmail; 2 fails or you have weird problems after it, you can try to do a clean import of your data, instead of migrating the existing settings. Be warned, this needs more manual setup, so do only if you are confident of setting up your &kmail; accounts again; it can generate a large amount of network traffic for &imap; resources.
+<para>In case migration from &kmail; 1 to &kmail; 2 fails or you have weird problems after it, you can try to do a clean import of your data, instead of migrating the existing settings. Be warned, this needs more manual setup, so do only if you are confident of setting up your &kmail; accounts again; it can generate a large amount of network traffic for &IMAP; resources.
 </para>
 <orderedlist>
 <listitem><para>Stop Akonadi and related applications</para>
@@ -85,7 +85,7 @@ Online=true</screen>
 </para>
 <para>In &kmail;: <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Accounts</guimenuitem></menuchoice> and use <guilabel>Add</guilabel>.
 </para>
-<para>If you use &imap;, add a new <guimenuitem>&imap; E-Mail server</guimenuitem>. If you want disconnected mode (so you can read the mails offline), enable it on the <guilabel>Advanced</guilabel> tab. Be sure to check that you are subscribed to all your important folders.
+<para>If you use &IMAP;, add a new <guimenuitem>&IMAP; E-Mail server</guimenuitem>. If you want disconnected mode (so you can read the mails offline), enable it on the <guilabel>Advanced</guilabel> tab. Be sure to check that you are subscribed to all your important folders.
 </para>
 <para>You might already see a <guilabel>Local folder</guilabel> resource. This points to a local maildir folder. You can either modify this to point to your existing maildir folders or you can add a new resource for local mails.
 </para>
@@ -117,7 +117,7 @@ Online=true</screen>
 </para>
 <para>Start a mail check for your accounts. It is suggested doing it per account.
 </para>
-<para>First check for &imap;, if you have it.
+<para>First check for &IMAP;, if you have it.
 </para>
 <para>Next check (import) your local mails. One solution is to do a full check in one go <menuchoice><guimenu>File</guimenu><guimenuitem>Check Mail In</guimenuitem></menuchoice> and select the local account; the other is to click one by one on the folders, that should initiate the check for that folder (alternatively right click on the folder name and select <guilabel>Update Folder</guilabel>).
 </para>

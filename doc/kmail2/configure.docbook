@@ -3,53 +3,33 @@
 <chapterinfo>
 <authorgroup>
 <author>
-<firstname>Daniel</firstname>
-<surname>Naber</surname>
-<affiliation><address>
+&Daniel.Naber;
 &Daniel.Naber.mail;
-</address></affiliation>
 </author>
 <author>
-<firstname>David</firstname>
-<surname>Rugge</surname>
-<affiliation><address>
+&David.Rugge;
 &David.Rugge.mail;
-</address></affiliation>
 </author>
 <author>
-<firstname>Marc</firstname>
-<surname>Mutz</surname>
-<affiliation>
-<orgname>Klar&auml;lvdalens Datakonsult AB</orgname>
-<address>
+&Marc.Mutz;
 &Marc.Mutz.mail;
-</address>
-</affiliation>
 </author>
 <author>
 <firstname>Michel</firstname>
 <surname>Boyer de la Giroday</surname>
-<affiliation><address>
 <email>michel@kdab.net</email>
-</address></affiliation>
 </author>
 <author>
-<firstname>Laurent</firstname>
-<surname>Montel</surname>
-<affiliation><address>
+&Laurent.Montel;
 &Laurent.Montel.mail;
-</address></affiliation>
 </author>
 <author>
-<firstname>Scarlett</firstname>
-<surname>Clark</surname>
-<affiliation><address>
+&Scarlett.Clark;
 &Scarlett.Clark.mail;
-</address></affiliation>
-
 </author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
 <date>2013-12-18</date>
 <releaseinfo>(&kde; 4.12)</releaseinfo>
 </chapterinfo>
@@ -373,8 +353,8 @@ of this setting, you should look at the <guilabel>Headers</guilabel> tab of the
 <term><guilabel>Sent-mail folder</guilabel></term>
 <listitem>
 <para>Select the folder into which messages should be filed after sending
-when using this identity. &imap; users should consider changing this to an
-&imap; folder, so their sent-mail is stored on a server instead of being
+when using this identity. &IMAP; users should consider changing this to an
+&IMAP; folder, so their sent-mail is stored on a server instead of being
 stored in a local folder. This way they can access these messages from a
 different location.</para>
 <tip><para>You can exercise more fine-grained control over where to
@@ -388,8 +368,8 @@ messages.</para></tip>
 <term><guilabel>Drafts folder</guilabel></term>
 <listitem>
 <para>Select the folder into which drafts should be filed when using
-this identity. &imap; users should consider changing this to an
-&imap; folder, so their drafts are stored on a server instead of being
+this identity. &IMAP; users should consider changing this to an
+&IMAP; folder, so their drafts are stored on a server instead of being
 stored in a local folder. This way they can easily continue to work
 on their drafts at a different location.</para>
 </listitem>
@@ -690,7 +670,7 @@ on an item in the listbox.
 after the third level of quoting has been reached. Note that the
 <guilabel>Quoted text</guilabel> colors only work in the message reader, not in
 the composer. If you want folders which are close to their quota
-(space allotment, usually used on &imap; servers) to be displayed in a different color,
+(space allotment, usually used on &IMAP; servers) to be displayed in a different color,
 you can specify a percentage value as a threshold for this. The color to be used
 can be configured along with the other custom colors.
 
@@ -895,10 +875,10 @@ message preview pane.</para>
 <para>By default, <guilabel>Enable access key</guilabel> is enabled. Access keys allow you to use the keyboard keys for functions which would perhaps normally be done with the mouse, such as following links.
   For more information on access keys please see <ulink url="https://docs.kde.org/stable/en/applications/konqueror/accesskeys.html">Access keys</ulink>.</para>
 <para><guilabel>Show HTML status bar</guilabel> activates a bar at the left side of the reader
-pane that tells you if a message is &html; or not. This is important because
-&html; messages might imitate the look of a signed and encrypted message, so
-you should be aware of the fact that you are reading an &html; message. The &html;
-status bar itself cannot be influenced by the &html; code of the message.</para>
+pane that tells you if a message is &HTML; or not. This is important because
+&HTML; messages might imitate the look of a signed and encrypted message, so
+you should be aware of the fact that you are reading an &HTML; message. The &HTML;
+status bar itself cannot be influenced by the &HTML; code of the message.</para>
  
 <para>Enable <guilabel>Replace smileys by emoticons</guilabel> if you want smileys 
 like <userinput>:-)</userinput> appearing in the message text to be 
@@ -1359,11 +1339,11 @@ of key words can be modified.</para>
 	  <term><guilabel>Prefer HTML to plain text</guilabel></term>
 	  <listitem>
             <para>
-	      By default &kmail; will show &html; messages in plain text. If you prefer to view messages with
-              &html; formatting and layout automatically, select this option. However, we recommend leaving this option off,
-              as security problems with &html; might show up.</para>
-            <para>You can still easily view messages in &html; format per email by
-              clicking the plain message/html message toggle bar on the left hand side of the message window. Please see <link linkend="configure-appearance-message-window">Message Window</link>
+	      By default &kmail; will show &HTML; messages in plain text. If you prefer to view messages with
+              &HTML; formatting and layout automatically, select this option. However, we recommend leaving this option off,
+              as security problems with &HTML; might show up.</para>
+            <para>You can still easily view messages in &HTML; format per email by
+              clicking the plain message/HTML message toggle bar on the left hand side of the message window. Please see <link linkend="configure-appearance-message-window">Message Window</link>
               to enable this feature.</para>
 	  </listitem>
 	</varlistentry>
@@ -1372,7 +1352,7 @@ of key words can be modified.</para>
 	  <term><guilabel>Allow messages to load external references from the Internet</guilabel></term>
 	  <listitem>
             <para>If checked, &kmail; can load external images, stylesheets &etc; from the Internet
-              when you look at an &html; message. We strongly recommend to leave this option off (although it has no effect if you only view
+              when you look at an &HTML; message. We strongly recommend to leave this option off (although it has no effect if you only view
               plain text messages).</para>
             <para>By adding external references to their messages, people sending spam can detect when you have looked at their message, your location, and
               alot of other information that gets logged on web servers. Note that this option has no effect on &Java;, JavaScript and Plugins as
@@ -1734,7 +1714,7 @@ of key words can be modified.</para>
 	      encrypt messages that are merely saved to the
 	      <guilabel>drafts</guilabel> folder. This is more
 	      convenient, and does not result in a gross loss of
-	      security, provided the drafts folder is safe. &imap;
+	      security, provided the drafts folder is safe. &IMAP;
 	      users might want this option turned off, if their
 	      <guilabel>drafts</guilabel> folder is on the server.
 	    </para>
@@ -2221,8 +2201,8 @@ that is used when you create a new folder.</para>
 <term><guilabel>Open this folder on startup</guilabel></term>
 <listitem>
 <para>Here you can set the folder that should be selected by default if you
-start &kmail;. If you use only &imap; folders then you might want to set
-this to your &imap; inbox folder. If you do that, you can collapse the local
+start &kmail;. If you use only &IMAP; folders then you might want to set
+this to your &IMAP; inbox folder. If you do that, you can collapse the local
 folders in the folder list, and then they will stay collapsed when &kmail;
 starts.</para>
 </listitem>

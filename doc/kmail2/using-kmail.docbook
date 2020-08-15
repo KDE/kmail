@@ -3,21 +3,16 @@
 <chapterinfo>
 <authorgroup>
 <author>
-<firstname>Daniel</firstname>
-<surname>Naber</surname>
-<affiliation><address>
+&Daniel.Naber;
 &Daniel.Naber.mail;
-</address></affiliation>
 </author>
 <author>
-<firstname>Scarlett</firstname>
-<surname>Clark</surname>
-<affiliation><address>
+&Scarlett.Clark;
 &Scarlett.Clark.mail;
-</address></affiliation>
 </author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
 <date>2013-12-14</date>
 <releaseinfo>(&kde; 4.12)</releaseinfo>
 </chapterinfo>
@@ -544,7 +539,7 @@ folders are created. These folders each have special functions:</para>
 <term><guilabel>inbox:</guilabel></term>
 <listitem>
 <para>Where &kmail; by default puts your new messages when you ask it to check your
-  mail. </para><note><para>&imap; accounts will not use this inbox. The inbox is located on the &imap; server.</para></note>
+  mail. </para><note><para>&IMAP; accounts will not use this inbox. The inbox is located on the &IMAP; server.</para></note>
 </listitem>
 </varlistentry>
 <varlistentry>
@@ -712,28 +707,28 @@ cannot be restored, so be careful with this setting.</para></warning>
 </sect3>
 
 <sect3 id="folders-properties-acl">
-<title>Access Control tab (&imap; only)</title>
-<para>Here you can manage the access control lists (&acl;s) of &imap; folders.</para>
-<note><para>The &imap; server must have user level &acl; configured and enabled for this tab to be visible.</para></note>
+<title>Access Control tab (&IMAP; only)</title>
+<para>Here you can manage the access control lists (&acl;s) of &IMAP; folders.</para>
+<note><para>The &IMAP; server must have user level &acl; configured and enabled for this tab to be visible.</para></note>
 <para>The currently active &acl; is shown in the list. It consists of pairs of <guilabel>User Id</guilabel>s and the
  <guilabel>Permissions</guilabel> granted to users identified by that <guilabel>User Id</guilabel>.
  <footnote>
- <para>Note that a single <guilabel>User Id</guilabel> might refer to more than one user. Depending on the &imap;
+ <para>Note that a single <guilabel>User Id</guilabel> might refer to more than one user. Depending on the &IMAP;
  server and its configuration, there may be User Ids that correspond to groups of users, anonymous users, or any user.
- Consult the manual of your specific &imap; server implementation for more information.</para>
+ Consult the manual of your specific &IMAP; server implementation for more information.</para>
  </footnote> &acl;s are settable per-folder.</para>
- <note><para>As with everything else when using <emphasis>disconnected &imap;</emphasis>, you need to sync with the server for
+ <note><para>As with everything else when using <emphasis>disconnected &IMAP;</emphasis>, you need to sync with the server for
  the changes to be transferred to the server.</para></note>
-<para>&imap; &acl;s define a lot of fine-grained permissions that you can grant or deny other users. For the sake of clarity,
+<para>&IMAP; &acl;s define a lot of fine-grained permissions that you can grant or deny other users. For the sake of clarity,
  &kmail; will present them as the following five categories that you can choose from (see <xref linkend="table-acl-summary"/>
- for the details if you already know &imap; &acl;s).</para>
+ for the details if you already know &IMAP; &acl;s).</para>
 <variablelist>
 <varlistentry id="folders-properties-acl-none">
 <term><guilabel>None</guilabel></term>
 <listitem>
 <para>Grants the users identified by <guilabel>User Id</guilabel> no rights at all. This is also the
  default for users not explicitly (or implicitly, as a group) listed in the &acl;. These users will not see this folder in the list of
- &imap; folders presented to them by their mail clients.</para>
+ &IMAP; folders presented to them by their mail clients.</para>
 </listitem></varlistentry>
 <varlistentry id="folders-properties-acl-read">
 <term><guilabel>Read</guilabel></term>
@@ -745,7 +740,7 @@ cannot be restored, so be careful with this setting.</para></warning>
  read just because someone else has already read them.</para>
 </footnote>
 </para>
-<para>These users will see this folder in the list of &imap; folders presented to them by their mail clients.</para>
+<para>These users will see this folder in the list of &IMAP; folders presented to them by their mail clients.</para>
 <para>Use this to create a shared folder that others can read, but not modify.</para>
 <informalexample>
 <para>If you were the editor of a company's news letter, you could create a folder for the purpose of
@@ -785,7 +780,7 @@ cannot be restored, so be careful with this setting.</para></warning>
 <para>This is the default set of rights for the owner of a folder.</para>
 </listitem></varlistentry>
 </variablelist>
-<para><xref linkend="table-acl-summary"/> summarizes the &imap; &acl; rights associated with each permission level.</para>
+<para><xref linkend="table-acl-summary"/> summarizes the &IMAP; &acl; rights associated with each permission level.</para>
 <table id="table-acl-summary">
 <title>&acl; Rights Summary</title>
           <tgroup cols="6">
@@ -1300,7 +1295,7 @@ Folder</guilabel>. Here is a list of all possible actions:</para>
 <listitem>
 <para>This will file the message into another folder, removing it from
 its current folder if necessary; you cannot, currently 
-use &imap; folders as a target.</para>
+use &IMAP; folders as a target.</para>
 <!-- fixme: still correct? -->
 </listitem>
 </varlistentry>
@@ -1308,7 +1303,7 @@ use &imap; folders as a target.</para>
 <term><guilabel>Copy Into Folder</guilabel></term>
 <listitem>
 <para>This will copy the message to another folder.</para>
-<note><para>You currently cannot use &imap;
+<note><para>You currently cannot use &IMAP;
 folders as a target.</para></note>
 </listitem>
 </varlistentry>
@@ -1729,7 +1724,7 @@ use this feature with. The first option allows you to enable/disable the folder 
 checkbox. You can set the location of your Archive folder by clicking the folder icon next to
 <guilabel>Folder:</guilabel> and selecting the folder you wish to use. For example, you could create
 a folder called <quote>bill receipts</quote> by clicking the <guibutton>New Subfolder...</guibutton> and typing <userinput>bill receipts</userinput> in
-the dialog. You may choose a folder location anywhere, &eg;.. a folder in your <quote>Local Folders</quote> or on your &imap; server.</para>
+the dialog. You may choose a folder location anywhere, &eg;.. a folder in your <quote>Local Folders</quote> or on your &IMAP; server.</para>
 <para>
 You have several choices on how the emails will be archived:
 </para>

@@ -3,18 +3,12 @@
 <chapterinfo>
 <authorgroup>
 <author>
-<firstname>Daniel</firstname>
-<surname>Naber</surname>
-<affiliation><address>
-<email>daniel.naber@t-online.de</email>
-</address></affiliation>
+&Daniel.Naber;
+&Daniel.Naber.mail;
 </author>
 <author>
-<firstname>Scarlett</firstname>
-<surname>Clark</surname>
-<affiliation><address>
+&Scarlett.Clark;
 &Scarlett.Clark.mail;
-</address></affiliation>
 </author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
@@ -65,7 +59,7 @@ options in <link linkend="import-restore">Restore and Import in &kmail;</link>.<
 </listitem>
 <listitem>
 <para>Organize your folders with ease using &kmail;s extensive <link linkend="folders">Folders</link> options.
-Some of the features include handling per folder: mailing lists, acl (&imap; only), and archiving.</para>
+Some of the features include handling per folder: mailing lists, acl (&IMAP; only), and archiving.</para>
 </listitem>
 <listitem>
 <para>Compliment your folder setup with highly configurable <link linkend="filters">filters</link>.</para>

@@ -3,18 +3,16 @@
 <chapterinfo>
 <authorgroup>
 <author>
-<firstname>Daniel</firstname>
-<surname>Naber</surname>
-<affiliation><address>
+&Daniel.Naber;
 &Daniel.Naber.mail;
-</address></affiliation>
 </author>
 <author>
-<firstname>David</firstname>
-<surname>Rugge</surname>
-<affiliation><address>
+&David.Rugge;
 &David.Rugge.mail;
-</address></affiliation>
+</author>
+<author>
+&Scarlett.Clark;
+&Scarlett.Clark.mail;
 </author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
@@ -107,30 +105,29 @@
 <title>Documentation</title>
 
 <para>Update for &kmail; 4.11 by
-Laurent Montel <email>montel@kde.org</email> and
-Scarlett Clark <email>scarlett@scarlettgatelyclark.com</email></para>
+&Laurent.Montel; &Laurent.Montel.mail; and 
+&Scarlett.Clark; &Scarlett.Clark.mail;.</para>
 
 <para>Update for &kmail; 1.7 by
-Ingo Kl&ouml;cker &Ingo.Kloecker.mail; and
-&Marc.Mutz; &Marc.Mutz.mail;,
-Anti-Spam Wizard chapter by &Andreas.Gungl; &Andreas.Gungl.mail;,
-section about filter log by &Andreas.Gungl; &Andreas.Gungl.mail; and
-&Brad.Hards; &Brad.Hards.mail;,
-additional changes by &Daniel.Naber; &Daniel.Naber.mail;.</para>
+&Ingo.Kloecker; &Ingo.Kloecker.mail; and
+&Marc.Mutz; &Marc.Mutz.mail;.
+Anti-Spam Wizard chapter by &Andreas.Gungl; &Andreas.Gungl.mail;.
+Section about filter log by &Andreas.Gungl; &Andreas.Gungl.mail; and
+&Brad.Hards; &Brad.Hards.mail;.
+Additional changes by &Daniel.Naber; &Daniel.Naber.mail;.</para>
 
-<para>Update for &kmail; 1.2 to 1.5 by &Daniel.Naber;
-&Daniel.Naber.mail;,
+<para>Update for &kmail; 1.2 to 1.5 by &Daniel.Naber; &Daniel.Naber.mail;,
 <application>OpenPGP</application> chapter by &Andreas.Gungl;
-&Andreas.Gungl.mail; and Ingo Kl&ouml;cker &Ingo.Kloecker.mail;,
+&Andreas.Gungl.mail; and &Ingo.Kloecker; &Ingo.Kloecker.mail;,
 message filter chapter by &Marc.Mutz;
-&Marc.Mutz.mail;, download filter chapter by &Thorsten.Zachmann;
+&Marc.Mutz.mail;, and download filter chapter by &Thorsten.Zachmann;
 &Thorsten.Zachmann.mail;. Other parts have been
 contributed by various &kmail; developers.</para>
 
 <para>&kmail; 1.0
 documentation by &David.Rugge; &David.Rugge.mail;.
-Original documentation by Markus Wuebben
-<email>markus.&Bernd.Johannes.Wuebben.mail;</email>, Robert Williams
+Original documentation by &Bernd.Johannes.Wuebben;
+&Bernd.Johannes.Wuebben.mail;, Robert Williams
 <email>rwilliams@kde.org</email> (Editor).</para>
 
 <para>Thanks to Michael Elkins <email>me@cs.hmc.edu</email> for his excellent

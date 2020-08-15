@@ -3,43 +3,30 @@
 <chapterinfo>
 <authorgroup>
 <author>
-<firstname>Daniel</firstname>
-<surname>Naber</surname>
-<affiliation><address>
+&Daniel.Naber;
 &Daniel.Naber.mail;
-</address></affiliation>
 </author>
 <author>
-<firstname>David</firstname>
-<surname>Rugge</surname>
-<affiliation><address>
+&David.Rugge;
 &David.Rugge.mail;
-</address></affiliation>
 </author>
 <author>
 <firstname>Michel</firstname>
 <surname>Boyer de la Giroday</surname>
-<affiliation><address>
 <email>michel@klaralvdalens-datakonsult.se</email>
-</address></affiliation>
 </author>
 <author>
-<firstname>Laurent</firstname>
-<surname>Montel</surname>
-<affiliation><address>
+&Laurent.Montel;
 &Laurent.Montel.mail;
-</address></affiliation>
 </author>
 <author>
-<firstname>Scarlett</firstname>
-<surname>Clark</surname>
-<affiliation><address>
+&Scarlett.Clark;
 &Scarlett.Clark.mail;
-</address></affiliation>
 </author>
 
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
+
 <date>2013-11-25</date>
 <releaseinfo>&kde; 4.11</releaseinfo>
 </chapterinfo>
@@ -161,7 +148,7 @@ performs a menu item function, the default shortcut is listed with the menu item
 <guimenu>File</guimenu>
 <guimenuitem>Empty All Trash Folders</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>Use this to empty all trash folders,</action> &ie; the local trash folder and all trash folders that you might have on &imap; servers.</para></listitem>
+<listitem><para><action>Use this to empty all trash folders,</action> &ie; the local trash folder and all trash folders that you might have on &IMAP; servers.</para></listitem>
 </varlistentry>
 <varlistentry id="reader-work-offline">
 <term><menuchoice>
@@ -199,7 +186,7 @@ which needs to be selected to go back online (required to send and receive).</pa
 <guimenuitem>Update Folder</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Checks whether new mail arrived in the currently selected folder.</action></para>
-<note><para> This is only available for &imap; folders.</para></note></listitem>
+<note><para> This is only available for &IMAP; folders.</para></note></listitem>
 </varlistentry>
 <varlistentry id="reader-update-this-folder-and-all-subfolders">
 <term><menuchoice>
@@ -211,7 +198,7 @@ which needs to be selected to go back online (required to send and receive).</pa
 </menuchoice></term>
 <listitem><para><action>Checks whether new mail arrived in the currently selected folder and all of its subfolders.</action></para>
 <para>You can also select multiple folders and the menu item will turn into <menuchoice><guimenu>File</guimenu><guimenuitem>Update These Folders and All Their Subfolders</guimenuitem></menuchoice></para>
-<note><para> This is only available for &imap; folders.</para></note></listitem>
+<note><para> This is only available for &IMAP; folders.</para></note></listitem>
 </varlistentry>
 <varlistentry id="reader-send-queued-messages">
 <term><menuchoice>
@@ -600,7 +587,7 @@ servers have been used to send the message by looking at the <literal>Received:<
 <guimenuitem>Update Folder</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Checks whether new mail arrived in the currently selected folder.</action></para>
-<note><para>This is only available for &imap; folders.</para></note></listitem>
+<note><para>This is only available for &IMAP; folders.</para></note></listitem>
 </varlistentry>
 <varlistentry id="reader-folder-update-folder-and-all-its-subfolders">
 <term><menuchoice>
@@ -611,7 +598,7 @@ servers have been used to send the message by looking at the <literal>Received:<
 <guimenuitem>Update Folder and All Its Subfolders</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Checks whether new mail arrived in the currently selected folder and all of its subfolders.</action></para>
-<note><para>This is only available for &imap; folders.</para></note></listitem>
+<note><para>This is only available for &IMAP; folders.</para></note></listitem>
 </varlistentry>
 <varlistentry id="reader-folder-move-all-messages-to-trash">
 <term><menuchoice>
@@ -670,7 +657,7 @@ Please see next section for details.</para></note></listitem>
 <guimenu>Folder</guimenu>
 <guimenuitem>Prefer HTML to Plain Text</guimenuitem>
 </menuchoice></term>
-<listitem><para><action>If enabled then &html; messages in this folder will be shown using &html; rendering.</action></para>
+<listitem><para><action>If enabled then &HTML; messages in this folder will be shown using &HTML; rendering.</action></para>
 <warning><para>For security reasons, we recommend to only activate this for folders which only contain trusted messages.</para></warning></listitem>
 </varlistentry>
 <varlistentry id="reader-folder-load-external-references">
@@ -678,7 +665,7 @@ Please see next section for details.</para></note></listitem>
 <guimenu>Folder</guimenu>
 <guimenuitem>Load External References</guimenuitem>
 </menuchoice></term>
-<listitem><para>If you have &html; messages enabled (see above), then you have the option to enable this to have <action>images and resources linked from the web will load automatically.</action></para>
+<listitem><para>If you have &HTML; messages enabled (see above), then you have the option to enable this to have <action>images and resources linked from the web will load automatically.</action></para>
 <warning><para>For security reasons, we recommend to only activate this for folders which only contain trusted messages.</para></warning></listitem>
 </varlistentry>
 <varlistentry id="reader-folder-mailing-list-management">
@@ -1110,7 +1097,7 @@ Please see next section for details.</para></note></listitem>
 <guisubmenu>Edit "Out of Office" Replies...</guisubmenu>
 </menuchoice></term>
 <listitem><para><action>Launch the <guilabel>Configure "Out of Office" Replies</guilabel> dialog,</action> which allows you to set-up vacation notifications.</para>
-<note><para><guilabel>Out of Office reply</guilabel> functionality relies on server-side filtering. To be able to use it you need to configure the <link linkend="receiving-mail">Filtering tab</link> (see option relevant to kolab server) of your &imap; account set-up.</para></note></listitem>
+<note><para><guilabel>Out of Office reply</guilabel> functionality relies on server-side filtering. To be able to use it you need to configure the <link linkend="receiving-mail">Filtering tab</link> (see option relevant to kolab server) of your &IMAP; account set-up.</para></note></listitem>
 </varlistentry>
 <varlistentry id="reader-tools-debug-sieve">
 <term><menuchoice>
@@ -1576,7 +1563,7 @@ Cryptographic Message Formats</link> for more information.</para></listitem>
 <guimenu>Options</guimenu>
 <guisubmenu>Rich Text Editing</guisubmenu>
 </menuchoice></term>
-<listitem><para>Enables Rich Text/&html; editing.</para></listitem>
+<listitem><para>Enables Rich Text/&HTML; editing.</para></listitem>
 </varlistentry>
 <varlistentry id="composer-options-encoding">
 <term><menuchoice>
