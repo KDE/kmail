@@ -43,7 +43,6 @@
 
 #include <KRecentFilesAction>
 #include <KConfigGroup>
-#include <KRun>
 
 #include <QContextMenuEvent>
 #include <QDir>
@@ -283,7 +282,11 @@ void KTNEFMain::viewFileAs()
         list.append(QUrl::fromLocalFile(extractTemp(mView->getSelection().at(0))));
 
         if (!list.isEmpty()) {
-            KRun::displayOpenWithDialog(list, this);
+            // Creating ApplicationLauncherJob without any args will invoke the open-with dialog
+            KIO::ApplicationLauncherJob *job = new KIO::ApplicationLauncherJob();
+            job->setUrls(list);
+            job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+            job->start();
         }
     } else {
         KMessageBox::information(
