@@ -493,8 +493,8 @@ Action=Popup
 
 [Event/undosend]
 Name=Email added to the send later queue
-Name[ca]=Correu afegit a la cua d'enviar més tard
-Name[ca@valencia]=Correu afegit a la cua d'enviar més tard
+Name[ca]=Correu afegit a la cua per a enviar més tard
+Name[ca@valencia]=Correu afegit a la cua per a enviar més tard
 Name[cs]=E-maily přidané do fronty pro pozdější odeslání
 Name[da]=E-mail føjet til send senere-køen
 Name[de]=E-Mail zur Später-Senden-Warteschlange hinzugefügt
