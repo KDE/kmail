@@ -2299,7 +2299,7 @@ The <command>kwriteconfig</command> will add the section for you as long as you 
 The &kmail; configuration file is called <filename>kmail2rc</filename>
 and can be found in your home directory. The location can vary according
 to your operating system or distribution, but can always be found by running
-the command <userinput><command>kde4-config --path config --locate kmail2rc</command></userinput>.
+the command <userinput><command>kf5-config --path config --locate kmail2rc</command></userinput>.
 For the remainder of this section, assume that the configuration file is
 located in <filename>/path/to/kmail2rc</filename>.
 </para>

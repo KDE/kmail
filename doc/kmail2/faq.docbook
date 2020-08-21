@@ -23,7 +23,7 @@
   <para>If you are an administrator and want to set this setting automatically for your users, it is</para>
   <itemizedlist>
     <listitem>
-      <para>in your user directory in <filename>$(kde4-config --localprefix)/share/config/kdeglobals</filename> add the line
+      <para>in your user directory in <filename>$(kf5-config --localprefix)/share/config/kdeglobals</filename> add the line
       <userinput>BrowserApplication[$e]=!firefox</userinput> under category <guilabel>[General]</guilabel>
       </para>
     </listitem>
@@ -209,16 +209,16 @@ ultimate ownertrust: it is no longer implicitly done for you.</para>
 
 <qandaentry> <question><para>Where does &kmail; save my settings and my
 mail?</para></question> <answer> <para>Most &kmail; settings are stored in
-<filename>$(kde4-config --localprefix)/share/config/kmail2rc</filename> and the 
+<filename>$(kf5-config --localprefix)/share/config/kmail2rc</filename> and the 
 <emphasis>Akonadi</emphasis>-controlled entries are stored in the following folders and files:</para>
 <itemizedlist>
   <listitem><para><filename class="directory">~/.local/share/</filename>
 </para></listitem>
 <listitem><para><filename class="directory">~/.config/akonadi/</filename>.
 </para></listitem>
-<listitem><para><filename>$(kde4-config --localprefix)/share/config/nepomukserverrc</filename>
+<listitem><para><filename>$(kf5-config --localprefix)/share/config/nepomukserverrc</filename>
 </para></listitem>
-<listitem><para><filename class="directory">$(kde4-config --localprefix)/share/apps/nepomuk/</filename> (&kaddressbook; stores contact groups in <emphasis>Nepomuk</emphasis>.)
+<listitem><para><filename class="directory">$(kf5-config --localprefix)/share/apps/nepomuk/</filename> (&kaddressbook; stores contact groups in <emphasis>Nepomuk</emphasis>.)
 </para></listitem>
 </itemizedlist>
 <para>Note that some of the files are hidden: remember to also copy those if you want to backup or
@@ -383,9 +383,9 @@ and use <command>uudecode</command> to decode the attachment.</para></answer>
 <qandaentry>
 <question><para>&kmail; crashed while I was writing a mail; is that mail lost now?</para></question>
 <answer><para>&kmail; tries to save your mail to
-<filename class="directory">$(kde4-config --localprefix)/share/apps/kmail/autosave</filename> in case of a crash. The next time you start
+<filename class="directory">$(kf5-config --localprefix)/share/apps/kmail/autosave</filename> in case of a crash. The next time you start
 &kmail; the mail composer should appear with your mail again; If it does not,
-try to open the files in <filename class="directory">$(kde4-config --localprefix)/share/apps/kmail/autosave</filename> with an editor. If there are no files in this folder then the crash was so bad that &kmail; could not save your mail.</para></answer>
+try to open the files in <filename class="directory">$(kf5-config --localprefix)/share/apps/kmail/autosave</filename> with an editor. If there are no files in this folder then the crash was so bad that &kmail; could not save your mail.</para></answer>
 </qandaentry>
 
 <qandaentry>
