@@ -10,14 +10,6 @@
   <!ENTITY kmail-credits-and-licenses SYSTEM "credits-and-licenses.docbook">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE" > <!-- change language only here -->
-  <!ENTITY gpg "<application>GPG</application>">
-  <!ENTITY gpgsm "<application>GpgSM</application>">
-  <!ENTITY mdn "<acronym>MDN</acronym>">
-  <!ENTITY acl "<acronym>ACL</acronym>">
-  <!ENTITY nntp "<acronym>NNTP</acronym>">
-  <!ENTITY openpgp "<acronym>OpenPGP</acronym>">
-  <!ENTITY smime "<acronym>S/MIME</acronym>">
-  <!ENTITY kolab "<acronym>Kolab</acronym>">
 ]>
 <book id="kmail" lang="&language;">
 <bookinfo>
@@ -75,6 +67,10 @@
 &Scarlett.Clark.mail;
 </author>
 
+<author>
+&David.Bryant;
+&David.Bryant.mail;
+</author>
 
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
@@ -99,10 +95,14 @@
 <year>2013</year>
 <holder>&Laurent.Montel;</holder>
 </copyright>
+<copyright>
+<year>2020</year>
+<holder>&David.Bryant;</holder>
+</copyright>
 
 <legalnotice>&FDLNotice;</legalnotice>
 <date>2020-08-14</date>
-<releaseinfo>(&kde;5.14.3)</releaseinfo>
+<releaseinfo>&kde;5.14.2 (20.04.2)</releaseinfo>
 
 <abstract>
 
