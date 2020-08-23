@@ -2340,6 +2340,9 @@ void KMMainWidget::slotSaveAttachments()
     if (selectedMessages.isEmpty()) {
         return;
     }
+    if (!mMsgView) {
+        return;
+    }
     // Avoid re-downloading in the common case that only one message is selected, and the message
     // is also displayed in the viewer. For this, create a dummy item without a parent collection / item id,
     // so that KMCommand doesn't download it.
