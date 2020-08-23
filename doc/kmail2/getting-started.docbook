@@ -260,7 +260,7 @@ start working with it right away. For more in-depth information see the
       tab.
     </para>
     <para>The <guilabel>Advanced</guilabel> and <guilabel>Templates</guilabel> tabs can
-      be used to tailor the way outgoing messages from this identy will be formatted and
+      be used to tailor the way outgoing messages from this identity will be formatted and
       processed. See <link linkend="configure-generalinfo">Configure &kmail;</link> for
       more detailed instructions.
     </para>
