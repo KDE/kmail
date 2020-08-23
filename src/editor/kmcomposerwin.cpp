@@ -162,7 +162,6 @@
 #include <KToggleAction>
 #include <KToolBar>
 #include <QDBusConnection>
-#include <sonnet_version.h>
 #include <KXMLGUIFactory>
 // Qt includes
 #include <QAction>
@@ -185,8 +184,6 @@
 // GPGME
 #include <gpgme++/keylistresult.h>
 #include <gpgme++/key.h>
-
-#include <kio_version.h>
 
 #include <KDialogJobUiDelegate>
 #include <KIO/CommandLauncherJob>

@@ -14,7 +14,6 @@
 #include "sendlateragentinterface.h"
 #include "followupreminderinterface.h"
 #include <MailCommon/FilterManager>
-#include <kio_version.h>
 
 #include <KDialogJobUiDelegate>
 #include <KIO/CommandLauncherJob>
