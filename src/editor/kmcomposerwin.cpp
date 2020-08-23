@@ -75,7 +75,6 @@
 #include <Libkdepim/StatusbarProgressWidget>
 #include <followupreminder.h>
 
-#include <kguiaddons_version.h>
 #include <KCursorSaver>
 
 #include <Libkleo/KeySelectionDialog>
