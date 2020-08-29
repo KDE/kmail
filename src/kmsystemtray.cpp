@@ -113,6 +113,7 @@ bool KMSystemTray::buildPopupMenu()
 
 KMSystemTray::~KMSystemTray()
 {
+    delete mNewMessagesPopup;
 }
 
 void KMSystemTray::initialize(int count)
