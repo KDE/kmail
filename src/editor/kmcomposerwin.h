@@ -534,8 +534,8 @@ private:
 
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
-    Q_REQUIRED_RESULT bool showErrorMessage(KJob *job);
-    Q_REQUIRED_RESULT int validateLineWrapWidth();
+    bool showErrorMessage(KJob *job);
+    Q_REQUIRED_RESULT int validateLineWrapWidth() const;
     void slotSelectionChanged();
     void slotMessage(const QString &str);
     void slotEditorPluginInsertText(const QString &str);

@@ -2515,7 +2515,7 @@ void KMComposerWin::slotWordWrapToggled(bool on)
     }
 }
 
-int KMComposerWin::validateLineWrapWidth()
+int KMComposerWin::validateLineWrapWidth() const
 {
     int lineWrap = MessageComposer::MessageComposerSettings::self()->lineWrapWidth();
     if ((lineWrap == 0) || (lineWrap > 78)) {
