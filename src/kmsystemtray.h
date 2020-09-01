@@ -4,7 +4,6 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-
 #ifndef KMSYSTEMTRAY_H
 #define KMSYSTEMTRAY_H
 

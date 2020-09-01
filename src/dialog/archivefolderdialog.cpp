@@ -1,4 +1,4 @@
-/* 
+/*
    SPDX-FileCopyrightText: 2009 Klarälvdalens Datakonsult AB
    SPDX-FileCopyrightText: 2020 Laurent Montel <montel@kde.org>
 
