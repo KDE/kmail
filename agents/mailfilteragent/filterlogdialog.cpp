@@ -40,7 +40,6 @@ using namespace MailCommon;
 
 FilterLogDialog::FilterLogDialog(QWidget *parent)
     : QDialog(parent)
-    , mIsInitialized(false)
 {
     setWindowTitle(i18nc("@title:window", "Filter Log Viewer"));
     QVBoxLayout *mainLayout = new QVBoxLayout(this);

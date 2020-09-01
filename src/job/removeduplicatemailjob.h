@@ -28,8 +28,8 @@ private:
     void slotRemoveDuplicatesDone(KJob *job);
     void slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item);
     void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);
-    QWidget *mParent = nullptr;
-    QItemSelectionModel *mSelectionModel = nullptr;
+    QWidget *const mParent;
+    QItemSelectionModel *const mSelectionModel;
 };
 
 #endif // REMOVEDUPLICATEMAILJOB_H

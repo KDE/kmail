@@ -31,8 +31,8 @@ private:
 
     void sendError(const QString &error);
     Akonadi::Item::List mListItem;
-    FolderArchiveManager *mManager = nullptr;
-    FolderArchiveAccountInfo *mInfo = nullptr;
+    FolderArchiveManager *const mManager;
+    FolderArchiveAccountInfo *const mInfo;
 };
 
 #endif // FOLDERARCHIVEAGENTJOB_H

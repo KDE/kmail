@@ -36,8 +36,8 @@ private:
     void slotDeleteItem(KJob *);
     void updateAndCleanMessageBeforeSending(const KMime::Message::Ptr &msg);
     Akonadi::ItemFetchScope mFetchScope;
-    SendLaterManager *mManager = nullptr;
-    MessageComposer::SendLaterInfo *mInfo = nullptr;
+    SendLaterManager *const mManager;
+    MessageComposer::SendLaterInfo *const mInfo;
     Akonadi::Item mItem;
 };
 

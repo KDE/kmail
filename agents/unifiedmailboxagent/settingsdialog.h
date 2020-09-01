@@ -31,7 +31,7 @@ private:
     void writeConfig();
     QStandardItemModel *mBoxModel = nullptr;
     UnifiedMailboxManager &mBoxManager;
-    MailKernel *mKernel = nullptr;
+    MailKernel *const mKernel;
     KSharedConfigPtr mConfig;
 };
 

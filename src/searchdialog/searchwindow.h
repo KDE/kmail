@@ -176,7 +176,7 @@ private:
     QTimer mRenameTimer;
     QByteArray mHeaderState;
     // not owned by us
-    KMMainWidget *mKMMainWidget = nullptr;
+    KMMainWidget *const mKMMainWidget;
     SearchPatternWarning *mSearchPatternWidget = nullptr;
 
     Akonadi::StandardMailActionManager *mAkonadiStandardAction = nullptr;

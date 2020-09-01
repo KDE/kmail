@@ -629,7 +629,7 @@ private:
     MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference = MessageViewer::Viewer::UseGlobalSetting;
     QAction *mSearchMessages = nullptr;
     KMLaunchExternalComponent *mLaunchExternalComponent = nullptr;
-    ManageShowCollectionProperties *mManageShowCollectionProperties = nullptr;
+    ManageShowCollectionProperties *const mManageShowCollectionProperties;
     QAction *mShowIntroductionAction = nullptr;
     QAction *mMarkAllMessageAsReadAndInAllSubFolder = nullptr;
     KActionMenuAccount *mAccountActionMenu = nullptr;

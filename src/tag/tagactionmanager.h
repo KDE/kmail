@@ -102,9 +102,9 @@ private:
     void checkTags(const QList<qint64> &tags);
     QList<qint64> checkedTags() const;
 
-    KActionCollection *mActionCollection = nullptr;
-    MessageActions *mMessageActions = nullptr;
-    KXMLGUIClient *mGUIClient = nullptr;
+    KActionCollection *const mActionCollection;
+    MessageActions *const mMessageActions;
+    KXMLGUIClient *const mGUIClient;
 
     QAction *mSeparatorMoreAction = nullptr;
     QAction *mSeparatorNewTagAction = nullptr;
@@ -123,7 +123,7 @@ private:
     // Uri of a newly created tag
     qint64 mNewTagId = -1;
     bool mTagFetchInProgress = false;
-    Akonadi::Monitor *mMonitor = nullptr;
+    Akonadi::Monitor *const mMonitor;
 };
 }
 

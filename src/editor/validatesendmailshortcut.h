@@ -18,8 +18,8 @@ public:
     Q_REQUIRED_RESULT bool validate();
 
 private:
-    QWidget *mParent = nullptr;
-    KActionCollection *mActionCollection = nullptr;
+    QWidget *const mParent;
+    KActionCollection *const mActionCollection;
 };
 
 #endif // VALIDATESENDMAILSHORTCUT_H

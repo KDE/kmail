@@ -29,7 +29,6 @@ inline QString followUpItemPattern()
 
 FollowUpReminderInfoItem::FollowUpReminderInfoItem(QTreeWidget *parent)
     : QTreeWidgetItem(parent)
-    , mInfo(nullptr)
 {
 }
 

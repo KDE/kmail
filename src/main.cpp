@@ -36,8 +36,6 @@ class KMailApplication : public KontactInterface::PimUniqueApplication
 public:
     KMailApplication(int &argc, char **argv[])
         : KontactInterface::PimUniqueApplication(argc, argv)
-        , mDelayedInstanceCreation(false)
-        , mEventLoopReached(false)
     {
     }
 
@@ -50,8 +48,8 @@ public Q_SLOTS:
     int newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory) override;
 
 protected:
-    bool mDelayedInstanceCreation;
-    bool mEventLoopReached;
+    bool mDelayedInstanceCreation = false;
+    bool mEventLoopReached = false;
 };
 
 void KMailApplication::commitData(QSessionManager &)

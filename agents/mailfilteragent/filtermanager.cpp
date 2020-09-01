@@ -42,10 +42,6 @@ class FilterManager::Private
 public:
     Private(FilterManager *qq)
         : q(qq)
-        , mRequiredPartsBasedOnAll(SearchRule::Envelope)
-        , mTotalProgressCount(0)
-        , mCurrentProgressCount(0)
-        , mInboundFiltersExist(false)
     {
     }
 
@@ -62,10 +58,10 @@ public:
     void endFiltering(const Akonadi::Item &item) const;
     bool atLeastOneFilterAppliesTo(const QString &accountId) const;
     bool atLeastOneIncomingFilterAppliesTo(const QString &accountId) const;
-    FilterManager *q;
+    FilterManager *const q;
     QVector<MailCommon::MailFilter *> mFilters;
     QMap<QString, SearchRule::RequiredPart> mRequiredParts;
-    SearchRule::RequiredPart mRequiredPartsBasedOnAll;
+    SearchRule::RequiredPart mRequiredPartsBasedOnAll = SearchRule::Envelope;
     int mTotalProgressCount = 0;
     int mCurrentProgressCount = 0;
     bool mInboundFiltersExist = false;

@@ -46,7 +46,7 @@ private:
     QLineEdit *mLineEdit = nullptr;
     QComboBox *mComboBox = nullptr;
     QButtonGroup *mButtonGroup = nullptr;
-    KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
+    KIdentityManagement::IdentityManager *const mIdentityManager;
     QPushButton *mOkButton = nullptr;
 };
 }

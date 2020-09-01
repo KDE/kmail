@@ -37,7 +37,7 @@ private:
     void createJob();
     void callToReindexCollection();
 
-    Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
+    Akonadi::Search::PIM::IndexedItems *const mIndexedItems;
     Akonadi::Collection::List mListCollection;
     QTimer *mTimer = nullptr;
     QList<qint64> mCollectionsIndexed;

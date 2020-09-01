@@ -29,7 +29,7 @@ private:
     void slotCreateNewFolder(KJob *);
     void createNewFolder(const QString &name);
     QDate mCurrentDate;
-    FolderArchiveAccountInfo *mInfo = nullptr;
+    FolderArchiveAccountInfo *const mInfo;
 };
 
 #endif // FOLDERARCHIVEAGENTCHECKCOLLECTION_H

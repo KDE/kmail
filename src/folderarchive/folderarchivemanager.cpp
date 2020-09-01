@@ -25,8 +25,8 @@
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
     : QObject(parent)
+    , mFolderArchiveCache(new FolderArchiveCache(this))
 {
-    mFolderArchiveCache = new FolderArchiveCache(this);
     load();
 }
 

@@ -36,7 +36,7 @@ private:
     void slotCollectionPropertiesFinished(KJob *job);
     void askForNextCheck(quint64 id, bool needToReindex = false);
     Akonadi::Collection mCollection;
-    Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
+    Akonadi::Search::PIM::IndexedItems *const mIndexedItems;
 };
 
 #endif // CHECKINDEXINGJOB_H

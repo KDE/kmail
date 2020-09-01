@@ -27,7 +27,7 @@ public Q_SLOTS:
     void slotInsertText(const QString &str);
 private:
     Q_DISABLE_COPY(KMComposerGlobalAction)
-    KMComposerWin *mComposerWin = nullptr;
+    KMComposerWin *const mComposerWin;
 };
 
 #endif // KMCOMPOSERGLOBALACTION_H

@@ -11,7 +11,6 @@
 SendLaterRemoveMessageJob::SendLaterRemoveMessageJob(const QVector<Akonadi::Item::Id> &listItem, QObject *parent)
     : QObject(parent)
     , mListItems(listItem)
-    , mIndex(0)
 {
 }
 

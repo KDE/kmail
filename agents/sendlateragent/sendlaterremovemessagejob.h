@@ -26,7 +26,7 @@ private:
     void slotItemDeleteDone(KJob *job);
     void deleteItem();
     QVector<Akonadi::Item::Id> mListItems;
-    int mIndex;
+    int mIndex = 0;
 };
 
 #endif // SENDLATERREMOVEMESSAGEJOB_H

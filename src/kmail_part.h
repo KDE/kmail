@@ -38,7 +38,7 @@ protected:
 
 private:
     KMMainWidget *mainWidget = nullptr;
-    QWidget *mParentWidget = nullptr;
+    QWidget *const mParentWidget;
 };
 
 #endif

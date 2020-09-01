@@ -42,8 +42,8 @@ private:
     void doubleClicked(const QModelIndex &itemClicked);
     void slotSelectAllAttachment();
 
-    KMComposerWin *mComposer = nullptr;
-    AttachmentView *mView = nullptr;
+    KMComposerWin *const mComposer;
+    AttachmentView *const mView;
 };
 } // namespace KMail
 

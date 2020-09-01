@@ -32,7 +32,7 @@ private:
     QString mEmailAddresses;
     QString mDomainDefaultName;
     bool mIsValid = false;
-    QWidget *mParentWidget = nullptr;
+    QWidget *const mParentWidget;
 };
 
 #endif

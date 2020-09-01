@@ -52,7 +52,7 @@ private:
     QQueue<FolderArchiveAgentJob *> mJobQueue;
     FolderArchiveAgentJob *mCurrentJob = nullptr;
     QList<FolderArchiveAccountInfo *> mListAccountInfo;
-    FolderArchiveCache *mFolderArchiveCache = nullptr;
+    FolderArchiveCache *const mFolderArchiveCache;
 };
 
 #endif // FOLDERARCHIVEMANAGER_H

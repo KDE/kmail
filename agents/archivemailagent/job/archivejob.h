@@ -26,8 +26,8 @@ private:
     void slotBackupDone(const QString &info);
     void slotError(const QString &error);
     QString mDefaultIconName;
-    ArchiveMailInfo *mInfo = nullptr;
-    ArchiveMailManager *mManager = nullptr;
+    ArchiveMailInfo *const mInfo;
+    ArchiveMailManager *const mManager;
 };
 
 /// A scheduled "expire mails in this folder" task.

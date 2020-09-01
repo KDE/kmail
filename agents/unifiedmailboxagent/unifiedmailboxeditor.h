@@ -23,7 +23,7 @@ public:
 private:
     void writeConfig();
     void readConfig();
-    UnifiedMailbox *mMailbox = nullptr;
+    UnifiedMailbox *const mMailbox;
     KSharedConfigPtr mConfig;
 };
 

@@ -33,7 +33,7 @@ private:
     void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);
     void slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item);
     Akonadi::Collection mTopLevelCollection;
-    QWidget *mParentWidget = nullptr;
+    QWidget *const mParentWidget;
 };
 
 #endif // REMOVEDUPLICATEMESSAGEINFOLDERANDSUBFOLDERJOB_H

@@ -35,7 +35,6 @@
 
 SendLaterAgent::SendLaterAgent(const QString &id)
     : Akonadi::AgentBase(id)
-    , mAgentInitialized(false)
 {
     Kdelibs4ConfigMigrator migrate(QStringLiteral("sendlateragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_sendlater_agentrc") << QStringLiteral("akonadi_sendlater_agent.notifyrc"));

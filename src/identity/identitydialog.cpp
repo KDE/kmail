@@ -146,7 +146,6 @@ KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, Ke
     : QGpgME::Job(parent)
     , mName(name)
     , mEmail(email)
-    , mJob(nullptr)
 {
 }
 

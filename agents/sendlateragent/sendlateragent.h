@@ -44,7 +44,7 @@ protected:
 private:
     void slotSendNow(Akonadi::Item::Id id);
     void slotStartAgent();
-    bool mAgentInitialized;
+    bool mAgentInitialized = false;
     SendLaterManager *mManager = nullptr;
 };
 
