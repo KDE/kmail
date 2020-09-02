@@ -36,7 +36,7 @@ private:
     void slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &);
     void initUnity();
     Q_REQUIRED_RESULT bool hasUnreadMail() const;
-    QDBusServiceWatcher *mUnityServiceWatcher = nullptr;
+    QDBusServiceWatcher *const mUnityServiceWatcher;
     KMail::KMSystemTray *mSystemTray = nullptr;
     int mCount = 0;
     bool mUnityServiceAvailable = false;

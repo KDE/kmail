@@ -220,8 +220,8 @@ private:
 private:
     KContacts::Addressee mSearchedAddress;
     Akonadi::Item mSearchedContact;
-    QWidget *mMainWindow = nullptr;
-    KActionCollection *mActionCollection = nullptr;
+    QWidget *const mMainWindow;
+    KActionCollection *const mActionCollection;
 
     QAction *mMailToComposeAction = nullptr;
     QAction *mMailToReplyAction = nullptr;

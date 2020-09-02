@@ -41,7 +41,7 @@ private:
 
     QHash<Akonadi::Collection::Id, QPointer<Akonadi::CollectionPropertiesDialog> > mHashDialogBox;
     QStringList mPages;
-    KMMainWidget *mMainWidget = nullptr;
+    KMMainWidget *const mMainWidget;
 };
 
 #endif // MANAGESHOWCOLLECTIONPROPERTIES_H

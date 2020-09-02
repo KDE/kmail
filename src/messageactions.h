@@ -138,7 +138,7 @@ private:
     QList<QAction *> mMailListActionList;
     Akonadi::Item mCurrentItem;
     Akonadi::Item::List mVisibleItems;
-    QWidget *mParent = nullptr;
+    QWidget *const mParent;
     KMReaderWin *mMessageView = nullptr;
 
     KActionMenu *mReplyActionMenu = nullptr;
