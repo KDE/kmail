@@ -30,7 +30,7 @@ private:
     void slotMoveMessages(KMMoveCommand *);
 
     void sendError(const QString &error);
-    Akonadi::Item::List mListItem;
+    const Akonadi::Item::List mListItem;
     FolderArchiveManager *const mManager;
     FolderArchiveAccountInfo *const mInfo;
 };

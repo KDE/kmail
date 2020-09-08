@@ -28,7 +28,7 @@ private:
     void slotInitialCollectionFetchingFirstLevelDone(KJob *job);
     void slotCreateNewFolder(KJob *);
     void createNewFolder(const QString &name);
-    QDate mCurrentDate;
+    const QDate mCurrentDate;
     FolderArchiveAccountInfo *const mInfo;
 };
 

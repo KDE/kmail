@@ -38,7 +38,7 @@ Q_SIGNALS:
 
 private:
     Q_DISABLE_COPY(FolderShortcutCommand)
-    Akonadi::Collection mCollectionFolder;
+    const Akonadi::Collection mCollectionFolder;
     QWidget *const mMainWidget;
     QAction *mAction = nullptr;
 };

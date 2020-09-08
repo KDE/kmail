@@ -25,7 +25,7 @@ private:
     void slotModifyItemDone(KJob *job);
 
     void fetchItems();
-    Akonadi::Item::List mListItem;
+    const Akonadi::Item::List mListItem;
 };
 
 #endif // CREATETASKJOB_H

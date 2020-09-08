@@ -36,7 +36,7 @@ using namespace MailCommon;
 QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
 {
     QString currentPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    QDir dir(currentPath);
+    const QDir dir(currentPath);
     if (!dir.exists()) {
         currentPath = QDir::homePath();
     }

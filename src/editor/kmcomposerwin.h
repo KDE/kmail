@@ -561,8 +561,8 @@ private:
 
     KMime::Message::Ptr mMsg;
     QGridLayout *mGrid = nullptr;
-    QString mTextSelection;
-    QString mCustomTemplate;
+    const QString mTextSelection;
+    const QString mCustomTemplate;
     bool mLastSignActionState = false;
     bool mLastEncryptActionState = false;
     bool mSigningAndEncryptionExplicitlyDisabled = false;
@@ -576,7 +576,7 @@ private:
     QFont mBodyFont;
     QFont mFixedFont;
     uint mId = 0;
-    TemplateContext mContext = NoTemplate;
+    const TemplateContext mContext = NoTemplate;
 
     KRecentFilesAction *mRecentAction = nullptr;
 

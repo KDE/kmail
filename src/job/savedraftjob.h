@@ -24,7 +24,7 @@ public:
 private:
     void slotStoreDone(KJob *job);
     KMime::Message::Ptr mMsg = nullptr;
-    Akonadi::Collection mCollection;
+    const Akonadi::Collection mCollection;
 };
 
 #endif // SAVEDRAFTJOB_H

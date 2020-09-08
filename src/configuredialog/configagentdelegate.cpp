@@ -36,8 +36,8 @@ struct Icons {
     {
     }
 
-    QPixmap readyPixmap, syncPixmap, errorPixmap, offlinePixmap;
-    QIcon checkMailIcon;
+    const QPixmap readyPixmap, syncPixmap, errorPixmap, offlinePixmap;
+    const QIcon checkMailIcon;
 };
 
 Q_GLOBAL_STATIC(Icons, s_icons)

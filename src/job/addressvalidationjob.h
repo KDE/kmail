@@ -29,7 +29,7 @@ public:
 
 private:
     void slotAliasExpansionDone(KJob *);
-    QString mEmailAddresses;
+    const QString mEmailAddresses;
     QString mDomainDefaultName;
     bool mIsValid = false;
     QWidget *const mParentWidget;
