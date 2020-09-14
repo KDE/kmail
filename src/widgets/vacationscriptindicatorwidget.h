@@ -25,7 +25,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    QString mServerName;
+    const QString mServerName;
 };
 
 class VacationLabel : public QLabel
