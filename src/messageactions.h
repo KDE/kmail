@@ -163,7 +163,7 @@ private:
     QAction *mDebugAkonadiSearchAction = nullptr;
     QAction *mSendAgainAction = nullptr;
     QAction *mNewMessageFromTemplateAction = nullptr;
-    KIO::KUriFilterSearchProviderActions *mWebShortcutMenuManager = nullptr;
+    KIO::KUriFilterSearchProviderActions *const mWebShortcutMenuManager;
     QAction *mExportToPdfAction = nullptr;
 };
 }
