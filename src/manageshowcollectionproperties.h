@@ -40,7 +40,7 @@ private:
     void showCollectionPropertiesContinued(const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem);
 
     QHash<Akonadi::Collection::Id, QPointer<Akonadi::CollectionPropertiesDialog> > mHashDialogBox;
-    QStringList mPages;
+    const QStringList mPages;
     KMMainWidget *const mMainWidget;
 };
 
