@@ -61,7 +61,7 @@ private:
     Q_DISABLE_COPY(UndoStack)
     void slotMoveResult(KJob *);
     QList<UndoInfo *> mStack;
-    int mSize = 0;
+    const int mSize = 0;
     int mLastId = 0;
     UndoInfo *mCachedInfo = nullptr;
 };
