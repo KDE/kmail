@@ -45,6 +45,7 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
     connect(tagMonitorManager, &TagMonitorManager::tagAdded, this, &TagActionManager::onTagAdded);
     connect(tagMonitorManager, &TagMonitorManager::tagRemoved, this, &TagActionManager::onTagRemoved);
     connect(tagMonitorManager, &TagMonitorManager::tagChanged, this, &TagActionManager::onTagChanged);
+    connect(tagMonitorManager, &TagMonitorManager::fetchTagDone, this, &TagActionManager::createActions);
 }
 
 TagActionManager::~TagActionManager()
@@ -122,34 +123,7 @@ void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool add
 
 void TagActionManager::createActions()
 {
-    if (mTagFetchInProgress) {
-        return;
-    }
-
-    if (mTags.isEmpty()) {
-        mTagFetchInProgress = true;
-        Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
-        fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
-        connect(fetchJob, &Akonadi::TagFetchJob::result, this, &TagActionManager::finishedTagListing);
-    } else {
-        mTagFetchInProgress = false;
-        createTagActions(mTags);
-    }
-}
-
-void TagActionManager::finishedTagListing(KJob *job)
-{
-    if (job->error()) {
-        qCWarning(KMAIL_LOG) << job->errorString();
-    }
-    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
-    const Akonadi::Tag::List lstTags = fetchJob->tags();
-    for (const Akonadi::Tag &result : lstTags) {
-        mTags.append(MailCommon::Tag::fromAkonadi(result));
-    }
-    mTagFetchInProgress = false;
-    std::sort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
-    createTagActions(mTags);
+    createTagActions(TagMonitorManager::self()->tags());
 }
 
 void TagActionManager::onSignalMapped(const QString &tag)
@@ -231,7 +205,8 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Ak
         for (; it != end; ++it) {
             //FIXME Not very performant tag label retrieval
             QString label(i18n("Tag not Found"));
-            for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
+            const auto tags = TagMonitorManager::self()->tags();
+            for (const MailCommon::Tag::Ptr &tag : tags) {
                 if (tag->id() == it.key()) {
                     label = tag->name();
                     break;
@@ -241,7 +216,6 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Ak
             it.value()->setEnabled(true);
             if (numberOfSelectedMessages == 1) {
                 const bool hasTag = selectedItem.hasTag(Akonadi::Tag(it.key()));
-                qDebug() << "hasTag  " << hasTag;
                 it.value()->setChecked(hasTag);
                 it.value()->setText(i18n("Message Tag: %1", label));
             } else {
@@ -256,39 +230,18 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Ak
     }
 }
 
-void TagActionManager::onTagAdded(const Akonadi::Tag &akonadiTag)
+void TagActionManager::onTagAdded()
 {
-    const QList<qint64> checked = checkedTags();
-
-    clearActions();
-    mTags.append(MailCommon::Tag::fromAkonadi(akonadiTag));
-    std::sort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
-    createTagActions(mTags);
-
-    checkTags(checked);
-}
-
-void TagActionManager::onTagRemoved(const Akonadi::Tag &akonadiTag)
-{
-    for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
-        if (tag->id() == akonadiTag.id()) {
-            mTags.removeAll(tag);
-            break;
-        }
-    }
-
     fillTagList();
 }
 
-void TagActionManager::onTagChanged(const Akonadi::Tag &akonadiTag)
+void TagActionManager::onTagRemoved()
 {
-    for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
-        if (tag->id() == akonadiTag.id()) {
-            mTags.removeAll(tag);
-            break;
-        }
-    }
-    mTags.append(MailCommon::Tag::fromAkonadi(akonadiTag));
+    fillTagList();
+}
+
+void TagActionManager::onTagChanged()
+{
     fillTagList();
 }
 
@@ -297,8 +250,7 @@ void TagActionManager::fillTagList()
     const QList<qint64> checked = checkedTags();
 
     clearActions();
-    std::sort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
-    createTagActions(mTags);
+    createTagActions(TagMonitorManager::self()->tags());
 
     checkTags(checked);
 }
@@ -306,7 +258,7 @@ void TagActionManager::fillTagList()
 void TagActionManager::newTagActionClicked()
 {
     QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection *>() << mActionCollection, nullptr);
-    dialog->setTags(mTags);
+    dialog->setTags(TagMonitorManager::self()->tags());
     if (dialog->exec() == QDialog::Accepted) {
         mNewTagId = dialog->tag().id();
         // Assign tag to all selected items right away

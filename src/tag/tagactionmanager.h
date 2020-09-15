@@ -102,12 +102,11 @@ private:
     };
 
     Q_DISABLE_COPY(TagActionManager)
-    void finishedTagListing(KJob *job);
     void newTagActionClicked();
     void onSignalMapped(const QString &tag);
-    void onTagAdded(const Akonadi::Tag &);
-    void onTagRemoved(const Akonadi::Tag &);
-    void onTagChanged(const Akonadi::Tag &);
+    void onTagAdded();
+    void onTagRemoved();
+    void onTagChanged();
 
     void fillTagList();
     void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
@@ -129,9 +128,6 @@ private:
 
     // The actions of all tags that are in the toolbar
     QList<QAction *> mToolbarActions;
-
-    // A sorted list of all tags
-    QVector<MailCommon::Tag::Ptr> mTags;
 
     MessagesInfo mMessageInfo;
     // Uri of a newly created tag

@@ -9,9 +9,12 @@
 
 #include <QObject>
 #include <AkonadiCore/Tag>
+#include <mailcommon/tag.h>
 namespace Akonadi {
 class Monitor;
 }
+class KJob;
+
 class TagMonitorManager : public QObject
 {
     Q_OBJECT
@@ -21,12 +24,25 @@ public:
 
     static TagMonitorManager *self();
 
+
+    Q_REQUIRED_RESULT QVector<MailCommon::Tag::Ptr> tags() const;
+
 Q_SIGNALS:
-    void tagAdded(const Akonadi::Tag &tag);
-    void tagChanged(const Akonadi::Tag &tag);
-    void tagRemoved(const Akonadi::Tag &tag);
+    void tagAdded();
+    void tagChanged();
+    void tagRemoved();
+    void fetchTagDone();
 
 private:
+    void createActions();
+    void finishedTagListing(KJob *job);
+    void onTagAdded(const Akonadi::Tag &akonadiTag);
+    void onTagRemoved(const Akonadi::Tag &akonadiTag);
+    void onTagChanged(const Akonadi::Tag &akonadiTag);
+
+    // A sorted list of all tags
+    QVector<MailCommon::Tag::Ptr> mTags;
+
     Akonadi::Monitor *const mMonitor;
 };
 
