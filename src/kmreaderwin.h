@@ -143,7 +143,7 @@ public:
 
     QAction *addToExistingContactAction() const;
 
-    Akonadi::Item message() const;
+    Akonadi::Item messageItem() const;
 
     QWidget *mainWindow() const;
 

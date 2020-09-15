@@ -2325,10 +2325,10 @@ void KMMainWidget::slotSaveAttachments()
     // so that KMCommand doesn't download it.
     KMSaveAttachmentsCommand *saveCommand = nullptr;
     if (mMsgView && selectedMessages.size() == 1
-        && mMsgView->message().hasPayload<KMime::Message::Ptr>()
-        && selectedMessages.first().id() == mMsgView->message().id()) {
+        && mMsgView->messageItem().hasPayload<KMime::Message::Ptr>()
+        && selectedMessages.first().id() == mMsgView->messageItem().id()) {
         Akonadi::Item dummyItem;
-        dummyItem.setPayload<KMime::Message::Ptr>(mMsgView->message().payload<KMime::Message::Ptr>());
+        dummyItem.setPayload<KMime::Message::Ptr>(mMsgView->messageItem().payload<KMime::Message::Ptr>());
         saveCommand = new KMSaveAttachmentsCommand(this, dummyItem, mMsgView->viewer());
     } else {
         saveCommand = new KMSaveAttachmentsCommand(this, selectedMessages, mMsgView->viewer());

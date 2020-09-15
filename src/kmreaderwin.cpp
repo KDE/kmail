@@ -411,7 +411,7 @@ bool KMReaderWin::htmlLoadExternal()
     return mViewer->htmlLoadExternal();
 }
 
-Akonadi::Item KMReaderWin::message() const
+Akonadi::Item KMReaderWin::messageItem() const
 {
     return mViewer->messageItem();
 }
@@ -423,14 +423,14 @@ QWidget *KMReaderWin::mainWindow() const
 
 void KMReaderWin::slotMailtoCompose()
 {
-    KMCommand *command = new KMMailtoComposeCommand(urlClicked(), message());
+    KMCommand *command = new KMMailtoComposeCommand(urlClicked(), messageItem());
     command->start();
 }
 
 void KMReaderWin::slotMailtoForward()
 {
     KMCommand *command = new KMMailtoForwardCommand(mMainWindow, urlClicked(),
-                                                    message());
+                                                    messageItem());
     command->start();
 }
 
@@ -513,7 +513,7 @@ void KMReaderWin::slotSaveImageOnDisk()
 void KMReaderWin::slotMailtoReply()
 {
     KMMailtoReplyCommand *command = new KMMailtoReplyCommand(mMainWindow, urlClicked(),
-                                                             message(), copyText());
+                                                             messageItem(), copyText());
     command->setReplyAsHtml(htmlMail());
     command->start();
 }
@@ -743,7 +743,7 @@ bool KMReaderWin::printSelectedText(bool preview)
     ::MessageComposer::Composer *composer = new ::MessageComposer::Composer;
     composer->textPart()->setCleanPlainText(str);
     composer->textPart()->setWrappedPlainText(str);
-    KMime::Message::Ptr messagePtr = message().payload<KMime::Message::Ptr>();
+    KMime::Message::Ptr messagePtr = messageItem().payload<KMime::Message::Ptr>();
     composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
     composer->infoPart()->setTo(QStringList() << messagePtr->to()->asUnicodeString());
     composer->infoPart()->setCc(QStringList() << messagePtr->cc()->asUnicodeString());
