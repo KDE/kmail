@@ -104,9 +104,6 @@ private:
     Q_DISABLE_COPY(TagActionManager)
     void newTagActionClicked();
     void onSignalMapped(const QString &tag);
-    void onTagAdded();
-    void onTagRemoved();
-    void onTagChanged();
 
     void fillTagList();
     void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);

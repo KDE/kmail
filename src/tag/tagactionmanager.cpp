@@ -42,9 +42,9 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
     mMessageActions->messageStatusMenu()->menu()->addSeparator();
 
     TagMonitorManager *tagMonitorManager = TagMonitorManager::self();
-    connect(tagMonitorManager, &TagMonitorManager::tagAdded, this, &TagActionManager::onTagAdded);
-    connect(tagMonitorManager, &TagMonitorManager::tagRemoved, this, &TagActionManager::onTagRemoved);
-    connect(tagMonitorManager, &TagMonitorManager::tagChanged, this, &TagActionManager::onTagChanged);
+    connect(tagMonitorManager, &TagMonitorManager::tagAdded, this, &TagActionManager::fillTagList);
+    connect(tagMonitorManager, &TagMonitorManager::tagRemoved, this, &TagActionManager::fillTagList);
+    connect(tagMonitorManager, &TagMonitorManager::tagChanged, this, &TagActionManager::fillTagList);
     connect(tagMonitorManager, &TagMonitorManager::fetchTagDone, this, &TagActionManager::createActions);
 }
 
@@ -228,21 +228,6 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Ak
             it.value()->setEnabled(false);
         }
     }
-}
-
-void TagActionManager::onTagAdded()
-{
-    fillTagList();
-}
-
-void TagActionManager::onTagRemoved()
-{
-    fillTagList();
-}
-
-void TagActionManager::onTagChanged()
-{
-    fillTagList();
 }
 
 void TagActionManager::fillTagList()
