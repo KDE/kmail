@@ -155,6 +155,7 @@ set(kmailprivate_widgets_LIB_SRCS
 set(kmailprivate_tag_LIB_SRCS
     tag/tagactionmanager.cpp
     tag/tagselectdialog.cpp
+    tag/tagmonitormanager.cpp
     )
 
 

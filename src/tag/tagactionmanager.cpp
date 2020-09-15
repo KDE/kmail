@@ -5,6 +5,7 @@
    SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only OR LicenseRef-KDE-Accepted-GPL
 */
 #include "tagactionmanager.h"
+#include "tagmonitormanager.h"
 
 #include "messageactions.h"
 
@@ -37,16 +38,13 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
     , mActionCollection(actionCollection)
     , mMessageActions(messageActions)
     , mGUIClient(guiClient)
-    , mMonitor(new Akonadi::Monitor(this))
 {
     mMessageActions->messageStatusMenu()->menu()->addSeparator();
 
-    mMonitor->setObjectName(QStringLiteral("TagActionManagerMonitor"));
-    mMonitor->setTypeMonitored(Akonadi::Monitor::Tags);
-    mMonitor->tagFetchScope().fetchAttribute<Akonadi::TagAttribute>();
-    connect(mMonitor, &Akonadi::Monitor::tagAdded, this, &TagActionManager::onTagAdded);
-    connect(mMonitor, &Akonadi::Monitor::tagRemoved, this, &TagActionManager::onTagRemoved);
-    connect(mMonitor, &Akonadi::Monitor::tagChanged, this, &TagActionManager::onTagChanged);
+    TagMonitorManager *tagMonitorManager = TagMonitorManager::self();
+    connect(tagMonitorManager, &TagMonitorManager::tagAdded, this, &TagActionManager::onTagAdded);
+    connect(tagMonitorManager, &TagMonitorManager::tagRemoved, this, &TagActionManager::onTagRemoved);
+    connect(tagMonitorManager, &TagMonitorManager::tagChanged, this, &TagActionManager::onTagChanged);
 }
 
 TagActionManager::~TagActionManager()

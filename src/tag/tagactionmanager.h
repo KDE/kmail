@@ -137,7 +137,6 @@ private:
     // Uri of a newly created tag
     qint64 mNewTagId = -1;
     bool mTagFetchInProgress = false;
-    Akonadi::Monitor *const mMonitor;
 };
 }
 
