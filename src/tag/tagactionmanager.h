@@ -11,6 +11,7 @@
 #include "mailcommon/tag.h"
 #include <QMap>
 #include <QVector>
+#include <AkonadiCore/Item>
 class KJob;
 class KActionCollection;
 class KXMLGUIClient;
@@ -88,6 +89,18 @@ Q_SIGNALS:
     void tagMoreActionClicked();
 
 private:
+    struct MessagesInfo {
+        int numberOfSelectedMessages = -1;
+        Akonadi::Item selectedItem;
+        Q_REQUIRED_RESULT bool hasMessageInfo() const {
+            return numberOfSelectedMessages != -1;
+        }
+        void clear() {
+            numberOfSelectedMessages = -1;
+            selectedItem = {};
+        }
+    };
+
     Q_DISABLE_COPY(TagActionManager)
     void finishedTagListing(KJob *job);
     void newTagActionClicked();
@@ -100,7 +113,7 @@ private:
     void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
     void createTagActions(const QVector<MailCommon::Tag::Ptr> &);
     void checkTags(const QList<qint64> &tags);
-    QList<qint64> checkedTags() const;
+    Q_REQUIRED_RESULT QList<qint64> checkedTags() const;
 
     KActionCollection *const mActionCollection;
     MessageActions *const mMessageActions;
@@ -120,6 +133,7 @@ private:
     // A sorted list of all tags
     QVector<MailCommon::Tag::Ptr> mTags;
 
+    MessagesInfo mMessageInfo;
     // Uri of a newly created tag
     qint64 mNewTagId = -1;
     bool mTagFetchInProgress = false;

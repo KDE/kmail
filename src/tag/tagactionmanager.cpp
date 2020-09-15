@@ -213,10 +213,19 @@ void TagActionManager::createTagActions(const QVector<MailCommon::Tag::Ptr> &tag
     if (!mToolbarActions.isEmpty() && mGUIClient->factory()) {
         mGUIClient->plugActionList(QStringLiteral("toolbar_messagetag_actions"), mToolbarActions);
     }
+    if (mMessageInfo.hasMessageInfo()) {
+        updateActionStates(mMessageInfo.numberOfSelectedMessages, mMessageInfo.selectedItem);
+    }
 }
 
 void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
 {
+    qDebug() << " mMessageInfo.selectedItem " << mMessageInfo.selectedItem.tags();
+    if (mTagFetchInProgress) {
+        mMessageInfo.numberOfSelectedMessages = numberOfSelectedMessages;
+        mMessageInfo.selectedItem = selectedItem;
+        return;
+    }
     mNewTagId = -1;
     QMap<qint64, KToggleAction *>::const_iterator it = mTagActions.constBegin();
     QMap<qint64, KToggleAction *>::const_iterator end = mTagActions.constEnd();
@@ -235,6 +244,7 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Ak
             it.value()->setEnabled(true);
             if (numberOfSelectedMessages == 1) {
                 const bool hasTag = selectedItem.hasTag(Akonadi::Tag(it.key()));
+                qDebug() << "hasTag  " << hasTag;
                 it.value()->setChecked(hasTag);
                 it.value()->setText(i18n("Message Tag: %1", label));
             } else {
@@ -312,6 +322,7 @@ void TagActionManager::checkTags(const QList<qint64> &tags)
 {
     for (const qint64 id : tags) {
         if (mTagActions.contains(id)) {
+            qDebug() << " SSSSSSSSSSSSSfdgdfgdf";
             mTagActions[id]->setChecked(true);
         }
     }
