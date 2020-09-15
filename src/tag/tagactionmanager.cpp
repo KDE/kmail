@@ -218,7 +218,6 @@ void TagActionManager::createTagActions(const QVector<MailCommon::Tag::Ptr> &tag
 
 void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
 {
-    qDebug() << " mMessageInfo.selectedItem " << mMessageInfo.selectedItem.tags();
     if (mTagFetchInProgress) {
         mMessageInfo.numberOfSelectedMessages = numberOfSelectedMessages;
         mMessageInfo.selectedItem = selectedItem;
@@ -320,7 +319,6 @@ void TagActionManager::checkTags(const QList<qint64> &tags)
 {
     for (const qint64 id : tags) {
         if (mTagActions.contains(id)) {
-            qDebug() << " SSSSSSSSSSSSSfdgdfgdf";
             mTagActions[id]->setChecked(true);
         }
     }
