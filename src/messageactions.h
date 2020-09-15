@@ -24,6 +24,7 @@ class QMenu;
 
 namespace Akonadi {
 class Item;
+class StandardMailActionManager;
 }
 
 namespace TemplateParser {
@@ -90,6 +91,7 @@ public:
     QAction *exportToPdfAction() const;
     void setExportToPdfAction(QAction *exportToPdfAction);
 
+    void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
     // action has finished.

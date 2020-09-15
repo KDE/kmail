@@ -101,21 +101,6 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     mStatusMenu = new KActionMenu(i18n("Mar&k Message"), this);
     ac->addAction(QStringLiteral("set_status"), mStatusMenu);
 
-    KMMainWidget *mainwin = kmkernel->getKMMainWidget();
-    if (mainwin) {
-        QAction *action = mainwin->akonadiStandardAction(Akonadi::StandardMailActionManager::MarkMailAsRead);
-        mStatusMenu->addAction(action);
-
-        action = mainwin->akonadiStandardAction(Akonadi::StandardMailActionManager::MarkMailAsUnread);
-        mStatusMenu->addAction(action);
-
-        mStatusMenu->addSeparator();
-        action = mainwin->akonadiStandardAction(Akonadi::StandardMailActionManager::MarkMailAsImportant);
-        mStatusMenu->addAction(action);
-
-        action = mainwin->akonadiStandardAction(Akonadi::StandardMailActionManager::MarkMailAsActionItem);
-        mStatusMenu->addAction(action);
-    }
 
     mAnnotateAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-notes")), i18n("Add Note..."), this);
     ac->addAction(QStringLiteral("annotate"), mAnnotateAction);
@@ -205,6 +190,22 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 MessageActions::~MessageActions()
 {
     delete mCustomTemplatesMenu;
+}
+
+void MessageActions::fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager)
+{
+    QAction *action = akonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkMailAsRead);
+    mStatusMenu->addAction(action);
+
+    action = akonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkMailAsUnread);
+    mStatusMenu->addAction(action);
+
+    mStatusMenu->addSeparator();
+    action = akonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkMailAsImportant);
+    mStatusMenu->addAction(action);
+
+    action = akonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkMailAsActionItem);
+    mStatusMenu->addAction(action);
 }
 
 TemplateParser::CustomTemplatesMenu *MessageActions::customTemplatesMenu() const

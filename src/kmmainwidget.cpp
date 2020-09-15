@@ -2823,6 +2823,7 @@ void KMMainWidget::setupActions()
     KMailPluginInterface::self()->setParentWidget(this);
     KMailPluginInterface::self()->createPluginInterface();
     mMsgActions = new KMail::MessageActions(actionCollection(), this);
+    mMsgActions->fillAkonadiStandardAction(mAkonadiStandardActionManager);
     mMsgActions->setMessageView(mMsgView);
 
     //----- File Menu

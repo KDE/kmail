@@ -424,12 +424,31 @@ void KMReaderMainWin::slotConfigChanged()
     mMsgActions->setupForwardingActionsList(this);
 }
 
+void KMReaderMainWin::initializeAkonadiStandardAction()
+{
+    const auto mailActions = {
+        Akonadi::StandardMailActionManager::MarkAllMailAsRead,
+        Akonadi::StandardMailActionManager::MarkMailAsRead,
+        Akonadi::StandardMailActionManager::MarkMailAsUnread,
+        Akonadi::StandardMailActionManager::MarkMailAsImportant,
+        Akonadi::StandardMailActionManager::MarkMailAsActionItem
+    };
+
+    for (Akonadi::StandardMailActionManager::Type mailAction : mailActions) {
+        mAkonadiStandardActionManager->createAction(mailAction);
+    }
+
+}
+
 void KMReaderMainWin::setupAccel()
 {
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
         setComponentName(kmkernel->xmlGuiInstanceName(), i18n("KMail2"));
     }
     mMsgActions = new KMail::MessageActions(actionCollection(), this);
+    mAkonadiStandardActionManager = new Akonadi::StandardMailActionManager(actionCollection(), this);
+    initializeAkonadiStandardAction();
+    mMsgActions->fillAkonadiStandardAction(mAkonadiStandardActionManager);
     mMsgActions->setMessageView(mReaderWin);
     connect(mMsgActions, &KMail::MessageActions::replyActionFinished, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 

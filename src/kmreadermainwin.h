@@ -23,7 +23,9 @@ namespace KMail {
 class MessageActions;
 class TagActionManager;
 }
-
+namespace Akonadi {
+class StandardMailActionManager;
+}
 namespace KMime {
 class Message;
 class Content;
@@ -103,6 +105,7 @@ private:
     void showPreviousMessage();
     void updateButtons();
     void slotToggleMenubar(bool dontShowWarning);
+    void initializeAkonadiStandardAction();
 
     QVector<KMime::Message::Ptr> mListMessage;
     int mCurrentMessageIndex = 0;
@@ -116,6 +119,7 @@ private:
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
     KMail::TagActionManager *mTagActionManager = nullptr;
     KToggleAction *mHideMenuBarAction = nullptr;
+    Akonadi::StandardMailActionManager *mAkonadiStandardActionManager = nullptr;
 };
 
 #endif /*KMReaderMainWin_h*/
