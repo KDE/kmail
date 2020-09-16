@@ -25,10 +25,6 @@
 
 #include <QPointer>
 
-#include <AkonadiCore/TagFetchJob>
-#include <AkonadiCore/TagFetchScope>
-#include <AkonadiCore/TagAttribute>
-
 using namespace KMail;
 
 static int s_numberMaxTag = 10;
