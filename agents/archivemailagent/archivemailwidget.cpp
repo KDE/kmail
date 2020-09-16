@@ -69,9 +69,8 @@ ArchiveMailInfo *ArchiveMailItem::info() const
 
 ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
     : Akonadi::AgentConfigurationBase(config, parent, args)
-    , mChanged(false)
 {
-    ArchiveMailKernel *archiveMailKernel = new ArchiveMailKernel(this);
+    ArchiveMailKernel *archiveMailKernel = ArchiveMailKernel::self();
     CommonKernel->registerKernelIf(archiveMailKernel);   //register KernelIf early, it is used by the Filter classes
     CommonKernel->registerSettingsIf(archiveMailKernel);   //SettingsIf is used in FolderTreeWidget
 
