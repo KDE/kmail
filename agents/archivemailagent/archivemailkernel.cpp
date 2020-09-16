@@ -37,6 +37,12 @@ ArchiveMailKernel::ArchiveMailKernel(QObject *parent)
     mJobScheduler = new MailCommon::JobScheduler(this);
 }
 
+ArchiveMailKernel *ArchiveMailKernel::self()
+{
+    static ArchiveMailKernel s_self;
+    return &s_self;
+}
+
 KIdentityManagement::IdentityManager *ArchiveMailKernel::identityManager()
 {
     return mIdentityManager;

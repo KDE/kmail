@@ -25,6 +25,8 @@ class ArchiveMailKernel : public QObject, public MailCommon::IKernel, public Mai
 public:
     explicit ArchiveMailKernel(QObject *parent = nullptr);
 
+    static ArchiveMailKernel *self();
+
     KIdentityManagement::IdentityManager *identityManager() override;
     MessageComposer::MessageSender *msgSender() override;
 
