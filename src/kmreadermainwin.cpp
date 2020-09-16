@@ -159,6 +159,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     }
     mMsg = msg;
     mMsgActions->setCurrentMessage(msg);
+    mAkonadiStandardActionManager->setItems({mMsg});
 
     const bool canChange = mParentCollection.isValid() ? static_cast<bool>(mParentCollection.rights() & Akonadi::Collection::CanDeleteItem) : false;
     mTrashAction->setEnabled(canChange);
@@ -212,6 +213,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const QVector<KMime::
     mCurrentMessageIndex = 0;
     initializeMessage(mListMessage.at(mCurrentMessageIndex));
     mReaderWin->hasMultiMessages(message.count() > 1);
+    mAkonadiStandardActionManager->setItems({});
     updateButtons();
 }
 
@@ -229,6 +231,7 @@ void KMReaderMainWin::initializeMessage(const KMime::Message::Ptr &message)
     setCaption(message->subject()->asUnicodeString());
 
     mTrashAction->setEnabled(false);
+    mAkonadiStandardActionManager->setItems({mMsg});
     updateActions();
 }
 
