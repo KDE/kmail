@@ -92,6 +92,8 @@ public:
     void setExportToPdfAction(QAction *exportToPdfAction);
 
     void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
+    Q_REQUIRED_RESULT Akonadi::Item currentItem() const;
+
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
     // action has finished.

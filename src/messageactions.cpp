@@ -775,6 +775,11 @@ void MessageActions::slotExportToPdf()
     }
 }
 
+Akonadi::Item MessageActions::currentItem() const
+{
+    return mCurrentItem;
+}
+
 QAction *MessageActions::exportToPdfAction() const
 {
     return mExportToPdfAction;

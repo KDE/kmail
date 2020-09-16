@@ -106,6 +106,7 @@ private:
     void updateButtons();
     void slotToggleMenubar(bool dontShowWarning);
     void initializeAkonadiStandardAction();
+    void slotMarkMailAs();
 
     QVector<KMime::Message::Ptr> mListMessage;
     int mCurrentMessageIndex = 0;
