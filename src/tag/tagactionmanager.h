@@ -89,18 +89,6 @@ Q_SIGNALS:
     void tagMoreActionClicked();
 
 private:
-    struct MessagesInfo {
-        int numberOfSelectedMessages = -1;
-        Akonadi::Item selectedItem;
-        Q_REQUIRED_RESULT bool hasMessageInfo() const {
-            return numberOfSelectedMessages != -1;
-        }
-        void clear() {
-            numberOfSelectedMessages = -1;
-            selectedItem = {};
-        }
-    };
-
     Q_DISABLE_COPY(TagActionManager)
     void newTagActionClicked();
     void onSignalMapped(const QString &tag);
@@ -126,10 +114,8 @@ private:
     // The actions of all tags that are in the toolbar
     QList<QAction *> mToolbarActions;
 
-    MessagesInfo mMessageInfo;
     // Uri of a newly created tag
     qint64 mNewTagId = -1;
-    bool mTagFetchInProgress = false;
 };
 }
 

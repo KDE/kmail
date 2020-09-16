@@ -181,18 +181,10 @@ void TagActionManager::createTagActions(const QVector<MailCommon::Tag::Ptr> &tag
     if (!mToolbarActions.isEmpty() && mGUIClient->factory()) {
         mGUIClient->plugActionList(QStringLiteral("toolbar_messagetag_actions"), mToolbarActions);
     }
-    if (mMessageInfo.hasMessageInfo()) {
-        updateActionStates(mMessageInfo.numberOfSelectedMessages, mMessageInfo.selectedItem);
-    }
 }
 
 void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
 {
-    if (mTagFetchInProgress) {
-        mMessageInfo.numberOfSelectedMessages = numberOfSelectedMessages;
-        mMessageInfo.selectedItem = selectedItem;
-        return;
-    }
     mNewTagId = -1;
     QMap<qint64, KToggleAction *>::const_iterator it = mTagActions.constBegin();
     QMap<qint64, KToggleAction *>::const_iterator end = mTagActions.constEnd();
