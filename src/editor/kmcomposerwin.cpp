@@ -313,8 +313,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mLblSubject = new QLabel(i18nc("@label:textbox Subject of email.", "S&ubject:"), mHeadersArea);
     mShowHeaders = KMailSettings::self()->headers();
     mDone = false;
-    mGrid = nullptr;
-    mFixedFontAction = nullptr;
     // the attachment view is separated from the editor by a splitter
     mSplitter = new QSplitter(Qt::Vertical, mMainWidget);
     mSplitter->setObjectName(QStringLiteral("mSplitter"));
