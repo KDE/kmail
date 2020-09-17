@@ -511,7 +511,7 @@ private:
     ConfigureDialog *mConfigureDialog = nullptr;
 
     QTimer *mBackgroundTasksTimer = nullptr;
-    MailCommon::JobScheduler *mJobScheduler = nullptr;
+    MailCommon::JobScheduler *const mJobScheduler;
     KMail::MailServiceImpl *mMailService = nullptr;
 
     bool mSystemNetworkStatus = true;
@@ -527,7 +527,7 @@ private:
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
     PimCommon::AutoCorrection *mAutoCorrection = nullptr;
-    FolderArchiveManager *mFolderArchiveManager = nullptr;
+    FolderArchiveManager *const mFolderArchiveManager;
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
     MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;

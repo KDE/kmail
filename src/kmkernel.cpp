@@ -126,6 +126,8 @@ static bool s_askingToGoOnline = false;
 /********************************************************************/
 KMKernel::KMKernel(QObject *parent)
     : QObject(parent)
+    , mJobScheduler(new JobScheduler(this))
+    , mFolderArchiveManager(new FolderArchiveManager(this))
 {
     //Initialize kmail sieveimap interface
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
@@ -143,8 +145,6 @@ KMKernel::KMKernel(QObject *parent)
     mySelf = this;
     the_firstInstance = true;
 
-    the_undoStack = nullptr;
-    the_msgSender = nullptr;
     mFilterEditDialog = nullptr;
     // make sure that we check for config updates before doing anything else
     KMKernel::config();
@@ -152,8 +152,6 @@ KMKernel::KMKernel(QObject *parent)
     // so better do it here, than in some code where changing the group of config()
     // would be unexpected
     KMailSettings::self();
-
-    mJobScheduler = new JobScheduler(this);
 
     mAutoCorrection = new PimCommon::AutoCorrection();
     KMime::setUseOutlookAttachmentEncoding(MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments());
@@ -225,7 +223,7 @@ KMKernel::KMKernel(QObject *parent)
     CommonKernel->registerKernelIf(this);
     CommonKernel->registerSettingsIf(this);
     CommonKernel->registerFilterIf(this);
-    mFolderArchiveManager = new FolderArchiveManager(this);
+
     mIndexedItems = new Akonadi::Search::PIM::IndexedItems(this);
     mCheckIndexingManager = new CheckIndexingManager(mIndexedItems, this);
     mUnityServiceManager = new KMail::UnityServiceManager(this);
