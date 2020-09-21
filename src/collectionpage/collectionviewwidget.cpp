@@ -5,12 +5,23 @@
 */
 
 #include "collectionviewwidget.h"
+#include "kmail_debug.h"
 #include <QVBoxLayout>
 #include <KLocalizedString>
+
+#include <MessageList/AggregationComboBox>
+#include <MessageList/AggregationConfigButton>
+#include <MessageList/ThemeComboBox>
+#include <MessageList/ThemeConfigButton>
+#include <Akonadi/KMime/MessageFolderAttribute>
+
+#include <MessageViewer/Viewer>
+
 #include <QLabel>
 #include <QComboBox>
 #include <QGroupBox>
 #include <QCheckBox>
+#include <QRadioButton>
 
 CollectionViewWidget::CollectionViewWidget(QWidget *parent)
     : QWidget(parent)
@@ -43,7 +54,7 @@ CollectionViewWidget::CollectionViewWidget(QWidget *parent)
     // message list aggregation
     mUseDefaultAggregationCheckBox = new QCheckBox(i18n("Use default aggregation"), messageListGroup);
     messageListGroupLayout->addWidget(mUseDefaultAggregationCheckBox);
-    connect(mUseDefaultAggregationCheckBox, &QCheckBox::stateChanged, this, &CollectionViewPage::slotAggregationCheckboxChanged);
+    connect(mUseDefaultAggregationCheckBox, &QCheckBox::stateChanged, this, &CollectionViewWidget::slotAggregationCheckboxChanged);
 
     mAggregationComboBox = new MessageList::Utils::AggregationComboBox(messageListGroup);
 
@@ -53,7 +64,7 @@ CollectionViewWidget::CollectionViewWidget(QWidget *parent)
     using MessageList::Utils::AggregationConfigButton;
     AggregationConfigButton *aggregationConfigButton = new AggregationConfigButton(messageListGroup, mAggregationComboBox);
     // Make sure any changes made in the aggregations configure dialog are reflected in the combo.
-    connect(aggregationConfigButton, &AggregationConfigButton::configureDialogCompleted, this, &CollectionViewPage::slotSelectFolderAggregation);
+    connect(aggregationConfigButton, &AggregationConfigButton::configureDialogCompleted, this, &CollectionViewWidget::slotSelectFolderAggregation);
 
     QHBoxLayout *aggregationLayout = new QHBoxLayout();
     aggregationLayout->addWidget(aggregationLabel, 1);
@@ -64,7 +75,7 @@ CollectionViewWidget::CollectionViewWidget(QWidget *parent)
     // message list theme
     mUseDefaultThemeCheckBox = new QCheckBox(i18n("Use default theme"), messageListGroup);
     messageListGroupLayout->addWidget(mUseDefaultThemeCheckBox);
-    connect(mUseDefaultThemeCheckBox, &QCheckBox::stateChanged, this, &CollectionViewPage::slotThemeCheckboxChanged);
+    connect(mUseDefaultThemeCheckBox, &QCheckBox::stateChanged, this, &CollectionViewWidget::slotThemeCheckboxChanged);
 
     mThemeComboBox = new MessageList::Utils::ThemeComboBox(messageListGroup);
 
@@ -74,7 +85,7 @@ CollectionViewWidget::CollectionViewWidget(QWidget *parent)
     using MessageList::Utils::ThemeConfigButton;
     ThemeConfigButton *themeConfigButton = new ThemeConfigButton(messageListGroup, mThemeComboBox);
     // Make sure any changes made in the themes configure dialog are reflected in the combo.
-    connect(themeConfigButton, &ThemeConfigButton::configureDialogCompleted, this, &CollectionViewPage::slotSelectFolderTheme);
+    connect(themeConfigButton, &ThemeConfigButton::configureDialogCompleted, this, &CollectionViewWidget::slotSelectFolderTheme);
 
     QHBoxLayout *themeLayout = new QHBoxLayout();
     themeLayout->addWidget(themeLabel, 1);
@@ -95,8 +106,6 @@ CollectionViewWidget::CollectionViewWidget(QWidget *parent)
     topLayout->addWidget(messageFormatGroup);
 
     topLayout->addStretch(100);
-
-    //TODO
 }
 
 CollectionViewWidget::~CollectionViewWidget()
@@ -106,6 +115,7 @@ CollectionViewWidget::~CollectionViewWidget()
 
 void CollectionViewWidget::load(const Akonadi::Collection &col)
 {
+    mFolderCollection = MailCommon::FolderSettings::forCollection(col);
     if (col.hasAttribute<Akonadi::MessageFolderAttribute>()) {
         const bool outboundFolder = col.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder();
         if (outboundFolder) {
@@ -174,4 +184,28 @@ void CollectionViewWidget::save(Akonadi::Collection &col)
     }
     mFolderCollection->setFormatMessage(formatMessage);
     mFolderCollection->writeConfig();
+}
+
+void CollectionViewWidget::slotSelectFolderAggregation()
+{
+    bool usesPrivateAggregation = false;
+    mAggregationComboBox->readStorageModelConfig(mCurrentCollection, usesPrivateAggregation);
+    mUseDefaultAggregationCheckBox->setChecked(!usesPrivateAggregation);
+}
+
+void CollectionViewWidget::slotSelectFolderTheme()
+{
+    bool usesPrivateTheme = false;
+    mThemeComboBox->readStorageModelConfig(mCurrentCollection, usesPrivateTheme);
+    mUseDefaultThemeCheckBox->setChecked(!usesPrivateTheme);
+}
+
+void CollectionViewWidget::slotAggregationCheckboxChanged()
+{
+    mAggregationComboBox->setEnabled(!mUseDefaultAggregationCheckBox->isChecked());
+}
+
+void CollectionViewWidget::slotThemeCheckboxChanged()
+{
+    mThemeComboBox->setEnabled(!mUseDefaultThemeCheckBox->isChecked());
 }

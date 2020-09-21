@@ -15,6 +15,7 @@ class QLabel;
 class QComboBox;
 class KIconButton;
 class QRadioButton;
+class CollectionViewWidget;
 template<typename T> class QSharedPointer;
 
 namespace MessageList {
@@ -36,28 +37,15 @@ public:
 
 private:
     void slotChangeIcon(const QString &icon);
-    void slotAggregationCheckboxChanged();
-    void slotThemeCheckboxChanged();
-    void slotSelectFolderAggregation();
-    void slotSelectFolderTheme();
 
     void init(const Akonadi::Collection &);
+    CollectionViewWidget *mCollectionViewWidget = nullptr;
     QSharedPointer<MailCommon::FolderSettings> mFolderCollection;
     QCheckBox *mIconsCheckBox = nullptr;
     QLabel *mNormalIconLabel = nullptr;
     KIconButton *mNormalIconButton = nullptr;
     QLabel *mUnreadIconLabel = nullptr;
     KIconButton *mUnreadIconButton = nullptr;
-    QComboBox *mShowSenderReceiverComboBox = nullptr;
-    QCheckBox *mUseDefaultAggregationCheckBox = nullptr;
-    MessageList::Utils::AggregationComboBox *mAggregationComboBox = nullptr;
-    QCheckBox *mUseDefaultThemeCheckBox = nullptr;
-    MessageList::Utils::ThemeComboBox *mThemeComboBox = nullptr;
-    QRadioButton *mPreferHtmlToText = nullptr;
-    QRadioButton *mPreferTextToHtml = nullptr;
-    QRadioButton *mUseGlobalSettings = nullptr;
-    Akonadi::Collection mCurrentCollection;
-    int mShowSenderReceiverValue = -1;
     bool mIsLocalSystemFolder = false;
 };
 
