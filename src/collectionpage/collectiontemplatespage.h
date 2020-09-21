@@ -7,8 +7,9 @@
 #ifndef COLLECTIONTEMPLATESPAGE_H
 #define COLLECTIONTEMPLATESPAGE_H
 #include <AkonadiWidgets/collectionpropertiespage.h>
-
+namespace MailCommon {
 class CollectionTemplatesWidget;
+}
 template<typename T> class QSharedPointer;
 
 class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
@@ -26,7 +27,7 @@ private:
     void slotCopyGlobal();
     void slotChanged();
     void init();
-    CollectionTemplatesWidget *mCollectionTemplateWidget = nullptr;
+    MailCommon::CollectionTemplatesWidget *mCollectionTemplateWidget = nullptr;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage)

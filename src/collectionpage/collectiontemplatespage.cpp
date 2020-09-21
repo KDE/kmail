@@ -5,7 +5,7 @@
 */
 
 #include "collectiontemplatespage.h"
-#include "collectiontemplateswidget.h"
+#include <MailCommon/CollectionTemplatesWidget>
 
 #include <MailCommon/MailKernel>
 #include <MailCommon/FolderSettings>
@@ -40,7 +40,7 @@ void CollectionTemplatesPage::init()
 {
     QVBoxLayout *topLayout = new QVBoxLayout(this);
     topLayout->setContentsMargins({});
-    mCollectionTemplateWidget = new CollectionTemplatesWidget(this);
+    mCollectionTemplateWidget = new MailCommon::CollectionTemplatesWidget(this);
     topLayout->addWidget(mCollectionTemplateWidget);
 }
 
