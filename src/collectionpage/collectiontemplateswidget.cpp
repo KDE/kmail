@@ -9,7 +9,9 @@
 #include <KLocalizedString>
 #include "templatesconfiguration_kfg.h"
 
+#include <MailCommon/FolderSettings>
 #include <QCheckBox>
+#include <QSharedPointer>
 #include <QVBoxLayout>
 #include <TemplateParser/TemplatesConfiguration>
 
@@ -53,7 +55,7 @@ CollectionTemplatesWidget::~CollectionTemplatesWidget()
 
 }
 
-void CollectionTemplatesWidget::save(const Akonadi::Collection &collection)
+void CollectionTemplatesWidget::save(const Akonadi::Collection &)
 {
     if (mChanged && !mCollectionId.isEmpty()) {
         TemplateParser::Templates t(mCollectionId);
@@ -77,4 +79,23 @@ void CollectionTemplatesWidget::slotCopyGlobal()
 void CollectionTemplatesWidget::slotChanged()
 {
     mChanged = true;
+}
+
+void CollectionTemplatesWidget::load(const Akonadi::Collection &col)
+{
+    const QSharedPointer<MailCommon::FolderSettings> fd = MailCommon::FolderSettings::forCollection(col, false);
+    if (!fd) {
+        return;
+    }
+
+    mCollectionId = QString::number(col.id());
+
+    TemplateParser::Templates t(mCollectionId);
+
+    mCustom->setChecked(t.useCustomTemplates());
+
+    mIdentity = fd->identity();
+
+    mWidget->loadFromFolder(mCollectionId, mIdentity);
+    mChanged = false;
 }

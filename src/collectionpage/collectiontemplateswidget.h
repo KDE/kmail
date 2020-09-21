@@ -21,7 +21,8 @@ class CollectionTemplatesWidget : public QWidget
 public:
     explicit CollectionTemplatesWidget(QWidget *parent = nullptr);
     ~CollectionTemplatesWidget();
-    void save(const Akonadi::Collection &collection);
+    void save(const Akonadi::Collection &);
+    void load(const Akonadi::Collection &col);
 private:
     void slotCopyGlobal();
     void slotChanged();

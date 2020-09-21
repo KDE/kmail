@@ -8,11 +8,7 @@
 #define COLLECTIONTEMPLATESPAGE_H
 #include <AkonadiWidgets/collectionpropertiespage.h>
 
-class QCheckBox;
-namespace TemplateParser {
-class TemplatesConfiguration;
-}
-
+class CollectionTemplatesWidget;
 template<typename T> class QSharedPointer;
 
 class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
@@ -30,11 +26,7 @@ private:
     void slotCopyGlobal();
     void slotChanged();
     void init();
-    QCheckBox *mCustom = nullptr;
-    TemplateParser::TemplatesConfiguration *mWidget = nullptr;
-    QString mCollectionId;
-    uint mIdentity = 0;
-    bool mChanged = false;
+    CollectionTemplatesWidget *mCollectionTemplateWidget = nullptr;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage)
