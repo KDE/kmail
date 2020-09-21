@@ -43,6 +43,7 @@ set(kmailprivate_folderarchive_LIB_SRCS
     )
 set(kmailprivate_collectionpage_LIB_SRCS
     collectionpage/collectiontemplatespage.cpp
+    collectionpage/collectiontemplateswidget.cpp
     collectionpage/collectionviewpage.cpp
     collectionpage/collectionquotapage.cpp
     collectionpage/collectionquotawidget.cpp
