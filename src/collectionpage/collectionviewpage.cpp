@@ -19,7 +19,6 @@
 #include <KLocalizedString>
 #include <KIconButton>
 #include <QRadioButton>
-#include "collectionviewwidget.h"
 #include "kmail_debug.h"
 
 #include <MessageList/AggregationComboBox>
@@ -27,6 +26,7 @@
 #include <MessageList/ThemeComboBox>
 #include <MessageList/ThemeConfigButton>
 
+#include <MailCommon/CollectionViewWidget>
 #include <MailCommon/FolderSettings>
 
 using namespace MailCommon;
@@ -98,7 +98,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         connect(mNormalIconButton, &KIconButton::iconChanged, this, &CollectionViewPage::slotChangeIcon);
     }
 
-    mCollectionViewWidget = new CollectionViewWidget(this);
+    mCollectionViewWidget = new MailCommon::CollectionViewWidget(this);
     topLayout->addWidget(mCollectionViewWidget);
 
     topLayout->addStretch(100);

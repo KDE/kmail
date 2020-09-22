@@ -48,7 +48,6 @@ set(kmailprivate_collectionpage_LIB_SRCS
     collectionpage/collectionquotawidget.cpp
     collectionpage/collectionmailinglistpage.cpp
     collectionpage/collectionshortcutpage.cpp
-    collectionpage/collectionviewwidget.cpp
     )
 set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configagentdelegate.cpp

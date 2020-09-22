@@ -24,7 +24,9 @@ class AggregationComboBox;
 class ThemeComboBox;
 }
 }
-
+namespace MailCommon {
+class CollectionViewWidget;
+}
 class CollectionViewPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
@@ -39,7 +41,7 @@ private:
     void slotChangeIcon(const QString &icon);
 
     void init(const Akonadi::Collection &);
-    CollectionViewWidget *mCollectionViewWidget = nullptr;
+    MailCommon::CollectionViewWidget *mCollectionViewWidget = nullptr;
     QSharedPointer<MailCommon::FolderSettings> mFolderCollection;
     QCheckBox *mIconsCheckBox = nullptr;
     QLabel *mNormalIconLabel = nullptr;
