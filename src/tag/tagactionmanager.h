@@ -12,14 +12,12 @@
 #include <QMap>
 #include <QVector>
 #include <AkonadiCore/Item>
-class KJob;
 class KActionCollection;
 class KXMLGUIClient;
 class KToggleAction;
 class QAction;
 namespace Akonadi {
 class Item;
-class Monitor;
 class Tag;
 }
 

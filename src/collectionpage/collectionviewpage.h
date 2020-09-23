@@ -12,18 +12,10 @@
 #include <MailCommon/FolderSettings>
 class QCheckBox;
 class QLabel;
-class QComboBox;
 class KIconButton;
-class QRadioButton;
 class CollectionViewWidget;
 template<typename T> class QSharedPointer;
 
-namespace MessageList {
-namespace Utils {
-class AggregationComboBox;
-class ThemeComboBox;
-}
-}
 namespace MailCommon {
 class CollectionViewWidget;
 }
