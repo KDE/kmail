@@ -551,7 +551,6 @@ void KTNEFMain::openWith(const KService::Ptr &offer)
         KIO::ApplicationLauncherJob *job = new KIO::ApplicationLauncherJob(offer);
         job->setUrls(lst);
         job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-        job->setAutoDelete(false);
         job->start();
     }
 }
