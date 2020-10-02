@@ -22,7 +22,7 @@ public:
 
     void fillList(const QStringList &lst);
 private:
-    QListWidget *mListWidget = nullptr;
+    QListWidget *const mListWidget = nullptr;
 };
 
 #endif // POTENTIALPHISHINGDETAILWIDGET_H

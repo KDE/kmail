@@ -15,6 +15,7 @@
 
 PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     : QWidget(parent)
+    , mListWidget(new QListWidget(this))
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -22,7 +23,6 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     lab->setObjectName(QStringLiteral("label"));
     mainLayout->addWidget(lab);
 
-    mListWidget = new QListWidget(this);
     mListWidget->setObjectName(QStringLiteral("list_widget"));
     mainLayout->addWidget(mListWidget);
 }

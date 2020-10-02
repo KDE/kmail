@@ -165,7 +165,6 @@ bool QWinMetaFile::load(QBuffer &buffer)
     WmfEnhMetaHeader eheader;
     WmfMetaHeader header;
     WmfPlaceableHeader pheader;
-    WORD checksum;
     int filePos, idx, i;
     WmfCmd *cmd, *last;
     DWORD rdSize;
@@ -194,7 +193,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
         st >> pheader.inch;
         st >> pheader.reserved;
         st >> pheader.checksum;
-        checksum = calcCheckSum(&pheader);
+        const WORD checksum = calcCheckSum(&pheader);
         if (pheader.checksum != checksum) {
             mIsPlaceable = false;
         }
