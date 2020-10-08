@@ -35,12 +35,12 @@
 
 SendLaterAgent::SendLaterAgent(const QString &id)
     : Akonadi::AgentBase(id)
+    , mManager(new SendLaterManager(this))
 {
     Kdelibs4ConfigMigrator migrate(QStringLiteral("sendlateragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_sendlater_agentrc") << QStringLiteral("akonadi_sendlater_agent.notifyrc"));
     migrate.migrate();
 
-    mManager = new SendLaterManager(this);
     connect(mManager, &SendLaterManager::needUpdateConfigDialogBox, this, &SendLaterAgent::needUpdateConfigDialogBox);
     new SendLaterAgentAdaptor(this);
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/SendLaterAgent"), this, QDBusConnection::ExportAdaptors);

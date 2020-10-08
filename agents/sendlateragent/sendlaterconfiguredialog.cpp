@@ -20,6 +20,7 @@
 
 SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
     : QDialog(parent)
+    , mWidget(new SendLaterWidget(this))
 {
     setWindowTitle(i18nc("@title:window", "Configure"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
@@ -30,7 +31,6 @@ SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &SendLaterConfigureDialog::reject);
 
-    mWidget = new SendLaterWidget(this);
     mWidget->setObjectName(QStringLiteral("sendlaterwidget"));
     connect(mWidget, &SendLaterWidget::sendNow, this, &SendLaterConfigureDialog::sendNow);
     mainLayout->addWidget(mWidget);

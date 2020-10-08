@@ -28,7 +28,7 @@ private:
     void slotItemFetchJobDone(KJob *job);
     void slotItemModifiedResult(KJob *job);
     void closeTodo();
-    Akonadi::Item::Id mTodoId;
+    const Akonadi::Item::Id mTodoId;
 };
 
 #endif // FOLLOWUPREMINDERFINISHTASKJOB_H

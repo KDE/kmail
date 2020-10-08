@@ -45,7 +45,7 @@ private:
     void slotSendNow(Akonadi::Item::Id id);
     void slotStartAgent();
     bool mAgentInitialized = false;
-    SendLaterManager *mManager = nullptr;
+    SendLaterManager *const mManager;
 };
 
 #endif // SENDLATERAGENT_H

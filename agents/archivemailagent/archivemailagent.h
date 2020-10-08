@@ -45,7 +45,7 @@ protected:
 private:
     void mailCollectionRemoved(const Akonadi::Collection &collection);
     QTimer *mTimer = nullptr;
-    ArchiveMailManager *mArchiveManager = nullptr;
+    ArchiveMailManager *const mArchiveManager;
 };
 
 #endif /* ARCHIVEMAILAGENT_H */

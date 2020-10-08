@@ -102,9 +102,6 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     mLogPatternDescBox->setChecked(
         FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternDescription));
     connect(mLogPatternDescBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
-    // TODO
-    //QWhatsThis::add( mLogPatternDescBox,
-    //    i18n( "" ) );
 
     mLogRuleEvaluationBox = new QCheckBox(i18n("Log filter &rule evaluation"));
     layout->addWidget(mLogRuleEvaluationBox);

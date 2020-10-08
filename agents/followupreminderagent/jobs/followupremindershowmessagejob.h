@@ -21,7 +21,7 @@ public:
 
 private:
     Q_DISABLE_COPY(FollowUpReminderShowMessageJob)
-    Akonadi::Item::Id mId;
+    const Akonadi::Item::Id mId;
 };
 
 #endif // FOLLOWUPREMINDERSHOWMESSAGEJOB_H

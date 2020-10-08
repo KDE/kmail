@@ -32,7 +32,7 @@ private:
     QStandardItemModel *mBoxModel = nullptr;
     UnifiedMailboxManager &mBoxManager;
     MailKernel *const mKernel;
-    KSharedConfigPtr mConfig;
+    const KSharedConfigPtr mConfig;
 };
 
 #endif

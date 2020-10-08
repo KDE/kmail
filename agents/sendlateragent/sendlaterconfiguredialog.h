@@ -29,7 +29,7 @@ private:
     void slotSave();
     void readConfig();
     void writeConfig();
-    SendLaterWidget *mWidget = nullptr;
+    SendLaterWidget *const mWidget;
 };
 
 #endif // SENDLATERCONFIGUREDIALOG_H

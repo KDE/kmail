@@ -25,7 +25,7 @@ private:
     Q_DISABLE_COPY(SendLaterRemoveMessageJob)
     void slotItemDeleteDone(KJob *job);
     void deleteItem();
-    QVector<Akonadi::Item::Id> mListItems;
+    const QVector<Akonadi::Item::Id> mListItems;
     int mIndex = 0;
 };
 

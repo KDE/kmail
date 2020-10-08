@@ -24,6 +24,7 @@
 
 ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     : Akonadi::AgentBase(id)
+    , mArchiveManager(new ArchiveMailManager(this))
 {
     Kdelibs4ConfigMigrator migrate(QStringLiteral("archivemailagent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_archivemail_agentrc") << QStringLiteral("akonadi_archivemail_agent.notifyrc"));
@@ -31,7 +32,6 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
 
     connect(this, &Akonadi::AgentBase::reloadConfiguration, this, &ArchiveMailAgent::reload);
 
-    mArchiveManager = new ArchiveMailManager(this);
     connect(mArchiveManager, &ArchiveMailManager::needUpdateConfigDialogBox, this, &ArchiveMailAgent::needUpdateConfigDialogBox);
 
     Akonadi::Monitor *collectionMonitor = new Akonadi::Monitor(this);
