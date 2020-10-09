@@ -56,8 +56,6 @@ void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
 
 VacationScriptIndicatorWidget::VacationScriptIndicatorWidget(QWidget *parent)
     : QWidget(parent)
-    , mBoxLayout(nullptr)
-    , mInfo(nullptr)
 {
 }
 

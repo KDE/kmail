@@ -148,12 +148,12 @@ private:
     QPointer<QProgressDialog> mProgressDialog;
     //Currently only one async command allowed at a time
     static int mCountJobs;
-    int mCountMsgs;
-    Result mResult;
+    int mCountMsgs = 0;
+    Result mResult = Undefined;
     bool mDeletesItself : 1;
     bool mEmitsCompletedItself : 1;
 
-    QWidget *mParent = nullptr;
+    QWidget *const mParent;
     Akonadi::Item::List mMsgList;
     Akonadi::ItemFetchScope mFetchScope;
 };

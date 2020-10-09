@@ -147,18 +147,14 @@ static void showJobError(KJob *job)
 }
 
 KMCommand::KMCommand(QWidget *parent)
-    : mCountMsgs(0)
-    , mResult(Undefined)
-    , mDeletesItself(false)
+    : mDeletesItself(false)
     , mEmitsCompletedItself(false)
     , mParent(parent)
 {
 }
 
 KMCommand::KMCommand(QWidget *parent, const Akonadi::Item &msg)
-    : mCountMsgs(0)
-    , mResult(Undefined)
-    , mDeletesItself(false)
+    : mDeletesItself(false)
     , mEmitsCompletedItself(false)
     , mParent(parent)
 {
@@ -168,9 +164,7 @@ KMCommand::KMCommand(QWidget *parent, const Akonadi::Item &msg)
 }
 
 KMCommand::KMCommand(QWidget *parent, const Akonadi::Item::List &msgList)
-    : mCountMsgs(0)
-    , mResult(Undefined)
-    , mDeletesItself(false)
+    : mDeletesItself(false)
     , mEmitsCompletedItself(false)
     , mParent(parent)
 {
