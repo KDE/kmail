@@ -17,10 +17,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KLocalizedString>
 #include <QHBoxLayout>
 
-#include <WebEngineViewer/NetworkPluginUrlInterceptorConfigureWidget>
-#include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
-#include <WebEngineViewer/NetworkPluginUrlInterceptor>
-
 #ifdef WITH_KUSERFEEDBACK
 #include <KUserFeedback/FeedbackConfigWidget>
 #endif
