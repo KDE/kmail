@@ -8,7 +8,6 @@
 
 #include <QApplication>
 #include <QDBusInterface>
-#include <QDBusPendingCall>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <PimCommonAkonadi/MailUtil>

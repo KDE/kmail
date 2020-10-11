@@ -11,14 +11,12 @@
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <Akonadi/KMime/MessageFolderAttribute>
 
-#include <QGroupBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <KLocalizedString>
 #include <KIconButton>
-#include <QRadioButton>
 #include "kmail_debug.h"
 
 #include <MessageList/AggregationComboBox>
