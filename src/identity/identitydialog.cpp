@@ -137,8 +137,8 @@ public:
 
 private:
     void keyGenerated(const GpgME::KeyGenerationResult &result);
-    QString mName;
-    QString mEmail;
+    const QString mName;
+    const QString mEmail;
     QGpgME::Job *mJob = nullptr;
 };
 
