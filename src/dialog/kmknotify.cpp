@@ -34,7 +34,7 @@ KMKnotify::KMKnotify(QWidget *parent)
     mainLayout->addWidget(m_notifyWidget);
     m_comboNotify->setFocus();
 
-    mainLayout->addWidget(new KSeparator);
+    mainLayout->addWidget(new KSeparator(this));
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);

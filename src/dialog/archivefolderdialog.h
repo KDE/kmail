@@ -40,7 +40,7 @@ private:
     Q_REQUIRED_RESULT bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
     Q_REQUIRED_RESULT QString standardArchivePath(const QString &folderName);
 
-    QWidget *mParentWidget = nullptr;
+    QWidget *const mParentWidget;
     QCheckBox *mDeleteCheckBox = nullptr;
     QCheckBox *mRecursiveCheckBox = nullptr;
     MailCommon::FolderRequester *mFolderRequester = nullptr;
