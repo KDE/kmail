@@ -55,7 +55,7 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     mMMTab.setupUi(this);
     //replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
     QHBoxLayout *layout = new QHBoxLayout;
-    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins({});
     mMMTab.mOnStartupOpenFolder->setLayout(layout);
     mOnStartupOpenFolder = new FolderRequester(mMMTab.mOnStartupOpenFolder);
     layout->addWidget(mOnStartupOpenFolder);
@@ -121,7 +121,7 @@ MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)
 {
     mInvitationUi = new MessageViewer::InvitationSettings(this);
     QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
+    l->setContentsMargins({});
     l->addWidget(mInvitationUi);
     connect(mInvitationUi, &MessageViewer::InvitationSettings::changed, this, &MiscPageInviteTab::slotEmitChanged);
 }
@@ -146,7 +146,7 @@ MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
 {
     mPrintingUi = new MessageViewer::PrintingSettings(this);
     QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
+    l->setContentsMargins({});
     l->addWidget(mPrintingUi);
     connect(mPrintingUi, &MessageViewer::PrintingSettings::changed, this, &MiscPagePrintingTab::slotEmitChanged);
 }
@@ -172,7 +172,7 @@ KuserFeedBackPageTab::KuserFeedBackPageTab(QWidget *parent)
 {
     mUserFeedbackWidget = new KUserFeedback::FeedbackConfigWidget(this);
     QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
+    l->setContentsMargins({});
     l->addWidget(mUserFeedbackWidget);
     connect(mUserFeedbackWidget, &KUserFeedback::FeedbackConfigWidget::configurationChanged, this, &KuserFeedBackPageTab::slotEmitChanged);
 

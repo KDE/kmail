@@ -94,7 +94,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     vlay->addWidget(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
 
     TransportManagementWidget *tmw = new TransportManagementWidget(this);
-    tmw->layout()->setContentsMargins(0, 0, 0, 0);
+    tmw->layout()->setContentsMargins({});
     vlay->addWidget(tmw);
 
     // "Common options" groupbox:
@@ -404,7 +404,7 @@ LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins({});
 
     mLdapConfigureWidget = new KLDAP::LdapConfigureWidget(this);
     layout->addWidget(mLdapConfigureWidget);

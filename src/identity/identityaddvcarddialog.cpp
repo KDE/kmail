@@ -36,7 +36,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     mainLayout->addWidget(buttonBox);
 
     QVBoxLayout *vlay = new QVBoxLayout(mainWidget);
-    vlay->setContentsMargins(0, 0, 0, 0);
+    vlay->setContentsMargins({});
 
     mButtonGroup = new QButtonGroup(this);
     mButtonGroup->setObjectName(QStringLiteral("buttongroup"));

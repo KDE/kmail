@@ -209,7 +209,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mDestructed = false;
     mActionCollection = actionCollection;
     mTopLayout = new QVBoxLayout(this);
-    mTopLayout->setContentsMargins(0, 0, 0, 0);
+    mTopLayout->setContentsMargins({});
     mConfig = config;
     mGUIClient = aGUIClient;
     mFolderTreeWidget = nullptr;

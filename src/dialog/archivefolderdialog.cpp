@@ -64,7 +64,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     topLayout->addWidget(mainWidget);
     topLayout->addWidget(buttonBox);
     QGridLayout *mainLayout = new QGridLayout(mainWidget);
-    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setContentsMargins({});
 
     int row = 0;
 

@@ -663,7 +663,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
             QWidget *hbox = new QWidget(mDateDisplayBox);
             QHBoxLayout *hboxHBoxLayout = new QHBoxLayout(hbox);
-            hboxHBoxLayout->setContentsMargins(0, 0, 0, 0);
+            hboxHBoxLayout->setContentsMargins({});
             QRadioButton *radio = new QRadioButton(buttonLabel, hbox);
             hboxHBoxLayout->addWidget(radio);
             mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);

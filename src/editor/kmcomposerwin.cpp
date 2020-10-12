@@ -260,7 +260,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mHeadersToEditorSplitter->setSizes(defaultSizes);
 
     QVBoxLayout *v = new QVBoxLayout(mMainWidget);
-    v->setContentsMargins(0, 0, 0, 0);
+    v->setContentsMargins({});
     v->addWidget(mHeadersToEditorSplitter);
     KIdentityManagement::IdentityCombo *identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(),
                                                                                           mHeadersArea);
@@ -326,7 +326,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     QVBoxLayout *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
-    vbox->setContentsMargins(0, 0, 0, 0);
+    vbox->setContentsMargins({});
 
     mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);

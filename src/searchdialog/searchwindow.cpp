@@ -72,7 +72,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
 
     QWidget *topWidget = new QWidget;
     QVBoxLayout *lay = new QVBoxLayout(topWidget);
-    lay->setContentsMargins(0, 0, 0, 0);
+    lay->setContentsMargins({});
     mSearchPatternWidget = new SearchPatternWarning;
     lay->addWidget(mSearchPatternWidget);
     mainLayout->addWidget(topWidget);
@@ -88,7 +88,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     KGuiItem::assign(mSearchButton, mStartSearchGuiItem);
     mUi.mButtonBox->addButton(mSearchButton, QDialogButtonBox::ActionRole);
     connect(mUi.mButtonBox, &QDialogButtonBox::rejected, this, &SearchWindow::slotClose);
-    searchWidget->layout()->setContentsMargins(0, 0, 0, 0);
+    searchWidget->layout()->setContentsMargins({});
 
     mUi.mCbxFolders->setMustBeReadWrite(false);
     mUi.mCbxFolders->setNotAllowToCreateNewFolder(true);

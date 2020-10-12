@@ -14,7 +14,7 @@ ConfigurePluginPage::ConfigurePluginPage(QWidget *parent)
     : ConfigModule(parent)
 {
     QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
+    l->setContentsMargins({});
     mConfigurePlugins = new PimCommon::ConfigurePluginsWidget(new ConfigurePluginsListWidget(this), this);
     l->addWidget(mConfigurePlugins);
 

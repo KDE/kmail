@@ -14,7 +14,7 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
 {
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
-    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setContentsMargins({});
     QLabel *label = new QLabel(i18n("Please close KMail/Kontact before using it."));
     QFont f = label->font();
     f.setBold(true);

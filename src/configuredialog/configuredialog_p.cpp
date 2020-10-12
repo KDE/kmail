@@ -20,7 +20,7 @@ ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent)
     : ConfigModule(parent)
 {
     QVBoxLayout *vlay = new QVBoxLayout(this);
-    vlay->setContentsMargins(0, 0, 0, 0);
+    vlay->setContentsMargins({});
     mTabWidget = new QTabWidget(this);
     vlay->addWidget(mTabWidget);
 }

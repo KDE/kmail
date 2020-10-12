@@ -13,7 +13,7 @@ RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
 {
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
-    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setContentsMargins({});
 
     mTextEdit = new QPlainTextEdit(this);
     mTextEdit->setObjectName(QStringLiteral("textedit"));
