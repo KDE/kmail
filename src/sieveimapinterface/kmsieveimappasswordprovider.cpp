@@ -11,7 +11,7 @@
 #include <memory>
 
 KMSieveImapPasswordProvider::KMSieveImapPasswordProvider(WId wid)
-    : m_wid(wid)
+    : mWid(wid)
 {
 }
 
@@ -27,7 +27,7 @@ QString KMSieveImapPasswordProvider::sieveCustomPassword(const QString &identifi
 
 QString KMSieveImapPasswordProvider::walletPassword(const QString &identifier)
 {
-    std::unique_ptr<KWallet::Wallet> wallet(KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), m_wid));
+    std::unique_ptr<KWallet::Wallet> wallet(KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), mWid));
     if (wallet) {
         if (wallet->hasFolder(QStringLiteral("imap"))) {
             QString pwd;

@@ -22,7 +22,7 @@ public:
 private:
     Q_REQUIRED_RESULT QString walletPassword(const QString &identifier);
 
-    WId m_wid;
+    const WId mWid;
 };
 
 #endif
