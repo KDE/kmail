@@ -517,7 +517,6 @@ private:
     void slotRestartAccount();
     void slotAccountSettings();
     void updateDisplayFormatMessage();
-    void slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent);
 
     // Message actions
     QAction *mDeleteAction = nullptr;

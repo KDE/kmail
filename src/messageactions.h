@@ -89,7 +89,6 @@ public:
     QAction *editAsNewAction() const;
 
     QAction *exportToPdfAction() const;
-    void setExportToPdfAction(QAction *exportToPdfAction);
 
     void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
     Q_REQUIRED_RESULT Akonadi::Item currentItem() const;
