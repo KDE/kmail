@@ -67,6 +67,10 @@ void OpenComposerJob::start()
     if (!mOpenComposerSettings.mReplyTo.isEmpty()) {
         mMsg->replyTo()->fromUnicodeString(mOpenComposerSettings.mReplyTo, "utf-8");
     }
+    if (!mOpenComposerSettings.mInReplyTo.isEmpty()) {
+        mMsg->inReplyTo()->fromUnicodeString(mOpenComposerSettings.mInReplyTo, "utf-8");
+    }
+
 
     if (!mOpenComposerSettings.mMessageFile.isEmpty() && QFile::exists(mOpenComposerSettings.mMessageFile)) {
         QFile f(mOpenComposerSettings.mMessageFile);
@@ -107,7 +111,7 @@ void OpenComposerJob::slotOpenComposer()
     if (!mOpenComposerSettings.mTo.isEmpty()) {
         cWin->setFocusToSubject();
     }
-    QList<QUrl> attachURLs = QUrl::fromStringList(mOpenComposerSettings.mAttachmentPaths);
+    const QList<QUrl> attachURLs = QUrl::fromStringList(mOpenComposerSettings.mAttachmentPaths);
     QList<QUrl>::ConstIterator endAttachment(attachURLs.constEnd());
     QVector<KMail::Composer::AttachmentInfo> infoList;
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
