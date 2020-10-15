@@ -13,7 +13,6 @@
 struct OpenComposerSettings
 {
     OpenComposerSettings()
-        : mHidden(false)
     {
     }
 
