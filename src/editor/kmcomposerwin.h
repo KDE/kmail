@@ -508,11 +508,6 @@ private:
     // helper method for rethinkFields
     int calcColumnWidth(int which, long allShowing, int width) const;
 
-    /** Initialize header fields. Should be called on new messages
-      if they are not set manually. E.g. before composing. Calling
-      of setAutomaticFields(), see below, is still required. */
-    void initHeader(KMime::Message *message, uint identity = 0);
-
     inline bool encryptToSelf() const;
 
 private:

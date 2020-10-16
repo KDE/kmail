@@ -32,8 +32,6 @@ public:
     void moveFailed(const QString &msg);
     void moveDone();
 
-    void collectionRemoved(const Akonadi::Collection &collection);
-
     FolderArchiveCache *folderArchiveCache() const;
     void reloadConfig();
 

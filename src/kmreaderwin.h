@@ -79,7 +79,6 @@ public:
 
     /** Override default html mail setting */
     Q_REQUIRED_RESULT bool htmlOverride() const;
-    void setHtmlOverride(bool override);
     Q_REQUIRED_RESULT MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
     void setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format);
 

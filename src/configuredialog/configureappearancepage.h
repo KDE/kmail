@@ -53,7 +53,6 @@ public:
 private:
     void slotFontSelectorChanged(int);
     void doLoadOther() override;
-    void updateFontSelector();
     void doResetToDefaultsOther() override;
 
 private:

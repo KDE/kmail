@@ -24,8 +24,6 @@ public:
     Q_REQUIRED_RESULT bool canHandle(const Akonadi::Collection &collection) const override;
 
 private:
-    void slotCopyGlobal();
-    void slotChanged();
     void init();
     MailCommon::CollectionTemplatesWidget *mCollectionTemplateWidget = nullptr;
 };

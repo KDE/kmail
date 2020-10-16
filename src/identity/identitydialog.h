@@ -79,7 +79,6 @@ private:
 
     Q_REQUIRED_RESULT bool keyMatchesEmailAddress(const GpgME::Key &key, const QString &email);
     Q_REQUIRED_RESULT bool checkFolderExists(const QString &folder);
-    Q_REQUIRED_RESULT bool validateAddresses(const QString &addresses);
     void updateVcardButton();
     void editVcard(const QString &filename);
     void unregisterSpecialCollection(qint64 id);
