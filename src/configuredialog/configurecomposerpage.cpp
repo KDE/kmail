@@ -683,6 +683,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
                                                 i18n("A&dd..."), i18n("Re&move"),
                                                 i18n("Mod&ify..."),
                                                 i18n("Enter new reply prefix:"));
+    mReplyListEditor->setRemoveDialogLabel(i18n("Do you want to remove reply prefix?"));
     connect(mReplyListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
     // row 2: "replace [...]" check box:
@@ -712,6 +713,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
                                                 i18n("Remo&ve"),
                                                 i18n("Modify..."),
                                                 i18n("Enter new forward prefix:"));
+    mForwardListEditor->setRemoveDialogLabel(i18n("Do you want to remove forward prefix?"));
     connect(mForwardListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
     // row 3: "replace [...]" check box:
@@ -1158,6 +1160,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
                                                 i18n("A&dd..."), i18n("Re&move"),
                                                 i18n("Mod&ify..."),
                                                 i18n("Enter new key word:"));
+    mAttachWordsListEditor->setRemoveDialogLabel(i18n("Do you want to remove this attachment word?"));
     connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mAttachWordsListEditor);
 

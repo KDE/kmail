@@ -99,6 +99,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
     connect(mSGTab.mCheckMailUrlTracking, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
     connect(mSGTab.scamWhiteList, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     mSGTab.scamWhiteList->setAddDialogLabel(i18n("Email Address:"));
+    mSGTab.scamWhiteList->setRemoveDialogLabel(i18n("Do you want to remove this email address?"));
 }
 
 void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
