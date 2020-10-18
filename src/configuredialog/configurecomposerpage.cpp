@@ -760,6 +760,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
         = new PimCommon::SimpleStringListEditor(this, PimCommon::SimpleStringListEditor::All,
                                                 i18n("A&dd..."), i18n("Remo&ve"),
                                                 i18n("&Modify..."), i18n("Enter charset:"));
+    mCharsetListEditor->setRemoveDialogLabel(i18n("Do you want to remove this selected charset?"));
     mCharsetListEditor->setUpDownAutoRepeat(true);
     connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
