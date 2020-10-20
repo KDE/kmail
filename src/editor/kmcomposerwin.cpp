@@ -73,7 +73,7 @@
 
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
-#include <followupreminder.h>
+
 
 #include <KCursorSaver>
 
@@ -113,6 +113,13 @@
 #include <MessageComposer/StatusBarLabelToggledState>
 #include <MessageComposer/ConvertSnippetVariablesJob>
 #include <MessageComposer/ComposerViewInterface>
+#include <MessageComposer/SendLaterDialog>
+#include <MessageComposer/SendLaterInfo>
+#include <MessageComposer/SendLaterUtil>
+#include <MessageComposer/PluginEditorConverterInitialData>
+#include <MessageComposer/PluginEditorConverterBeforeConvertingData>
+#include <MessageComposer/FollowupReminder>
+
 
 #include <Sonnet/DictionaryComboBox>
 
@@ -132,10 +139,6 @@
 #include <PimCommon/KActionMenuChangeCase>
 #include <PimCommon/LineEditWithAutoCorrection>
 #include <PimCommon/CustomToolsPluginManager>
-
-#include <MessageComposer/SendLaterDialog>
-#include <MessageComposer/SendLaterInfo>
-#include <MessageComposer/SendLaterUtil>
 
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
@@ -178,8 +181,6 @@
 #include <QStandardPaths>
 #include <QStatusBar>
 #include <QMenuBar>
-#include <MessageComposer/PluginEditorConverterInitialData>
-#include <MessageComposer/PluginEditorConverterBeforeConvertingData>
 
 // GPGME
 #include <gpgme++/keylistresult.h>
@@ -648,7 +649,7 @@ void KMComposerWin::addAttachment(const QString &name, KMime::Headers::contentEn
     mComposerBase->addAttachment(name, name, charset, data, mimeType);
 }
 
-void KMComposerWin::readConfig(bool reload /* = false */)
+void KMComposerWin::readConfig(bool reload)
 {
     mEdtFrom->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
     mComposerBase->recipientsEditor()->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
@@ -1024,7 +1025,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
 void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
 {
     const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
-    const Akonadi::Item::List items = fetchJob->items();
+    //const Akonadi::Item::List items = fetchJob->items();
 
     //Readd ? const TemplateParser::TemplateParserJob::Mode mode = static_cast<TemplateParser::TemplateParserJob::Mode>(fetchJob->property("mode").toInt());
     const uint uoid = fetchJob->property("uoid").toUInt();
@@ -1461,12 +1462,12 @@ void KMComposerWin::initializePluginActions()
         }
         //Initialize statusbar
         const QList<QWidget *> statusbarWidgetList = mPluginEditorManagerInterface->statusBarWidgetList();
-        for (int i = 0; i < statusbarWidgetList.count(); ++i) {
-            statusBar()->addPermanentWidget(statusbarWidgetList.at(i), 0);
+        for (int index = 0; index < statusbarWidgetList.count(); ++index) {
+            statusBar()->addPermanentWidget(statusbarWidgetList.at(index), 0);
         }
         const QList<QWidget *> statusbarWidgetListConverter = mPluginEditorConvertTextManagerInterface->statusBarWidgetList();
-        for (int i = 0; i < statusbarWidgetListConverter.count(); ++i) {
-            statusBar()->addPermanentWidget(statusbarWidgetListConverter.at(i), 0);
+        for (int index = 0; index < statusbarWidgetListConverter.count(); ++index) {
+            statusBar()->addPermanentWidget(statusbarWidgetListConverter.at(index), 0);
         }
     }
 }
@@ -2308,7 +2309,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
         return;
     }
 
-    if (items.first().mimeType() == KMime::Message::mimeType()) {
+    if (items.constFirst().mimeType() == KMime::Message::mimeType()) {
         uint identity = 0;
         if (items.at(0).isValid()) {
             const Akonadi::Collection parentCollection = items.at(0).parentCollection();
