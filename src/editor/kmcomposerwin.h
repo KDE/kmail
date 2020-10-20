@@ -22,18 +22,16 @@
 #include <QList>
 #include <QVector>
 
-// LIBKDEPIM includes
 #include <MessageComposer/RichTextComposerNg>
+#include <MessageComposer/ComposerViewBase>
 
 #include <MessageComposer/MessageSender>
 
-// KDEPIMLIBS includes
 #include <kmime/kmime_message.h>
 #include <kmime/kmime_headers.h>
 
 // Other includes
 #include <Libkleo/Enum>
-#include <MessageComposer/ComposerViewBase>
 
 class QUrl;
 

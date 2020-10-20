@@ -95,7 +95,6 @@
 #include <Libkdepim/ProgressManager>
 #include <PimCommon/BroadcastStatus>
 
-// KDEPIMLIBS includes
 #include <AkonadiCore/AgentManager>
 #include <AkonadiCore/AttributeFactory>
 #include <AkonadiCore/itemfetchjob.h>

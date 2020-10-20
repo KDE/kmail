@@ -36,7 +36,6 @@ using PimCommon::RecentAddresses;
 // kdepim includes
 #include "kmail-version.h"
 
-// kdepimlibs includes
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <MailTransport/Transport>
