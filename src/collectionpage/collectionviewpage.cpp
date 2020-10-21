@@ -107,7 +107,6 @@ void CollectionViewPage::slotChangeIcon(const QString &icon)
     mUnreadIconButton->setIcon(icon);
 }
 
-
 void CollectionViewPage::load(const Akonadi::Collection &col)
 {
     init(col);

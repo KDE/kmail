@@ -27,7 +27,6 @@ TagMonitorManager::TagMonitorManager(QObject *parent)
 
 TagMonitorManager::~TagMonitorManager()
 {
-
 }
 
 TagMonitorManager *TagMonitorManager::self()

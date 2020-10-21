@@ -442,14 +442,12 @@ void KMReaderMainWin::initializeAkonadiStandardAction()
         mAkonadiStandardActionManager->interceptAction(mailAction);
         connect(act, &QAction::triggered, this, &KMReaderMainWin::slotMarkMailAs);
     }
-
 }
 
 void KMReaderMainWin::slotMarkMailAs()
 {
     const QAction *action = qobject_cast<QAction *>(sender());
     Q_ASSERT(action);
-
 
     const QByteArray typeStr = action->data().toByteArray();
 

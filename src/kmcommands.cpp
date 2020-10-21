@@ -1418,7 +1418,7 @@ KMCopyDecryptedCommand::KMCopyDecryptedCommand(const Akonadi::Collection &destFo
 }
 
 KMCopyDecryptedCommand::KMCopyDecryptedCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg)
-    : KMCopyDecryptedCommand(destFolder, Akonadi::Item::List{ msg })
+    : KMCopyDecryptedCommand(destFolder, Akonadi::Item::List { msg })
 {
 }
 
@@ -1604,7 +1604,7 @@ KMTrashMsgCommand::TrashOperation KMTrashMsgCommand::operation() const
 }
 
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref)
-    : KMTrashMsgCommand(srcFolder, Akonadi::Item::List{msg}, ref)
+    : KMTrashMsgCommand(srcFolder, Akonadi::Item::List {msg}, ref)
 {
 }
 

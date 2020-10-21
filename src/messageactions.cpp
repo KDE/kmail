@@ -101,7 +101,6 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     mStatusMenu = new KActionMenu(i18n("Mar&k Message"), this);
     ac->addAction(QStringLiteral("set_status"), mStatusMenu);
 
-
     mAnnotateAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-notes")), i18n("Add Note..."), this);
     ac->addAction(QStringLiteral("annotate"), mAnnotateAction);
     connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);

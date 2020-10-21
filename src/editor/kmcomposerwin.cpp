@@ -74,7 +74,6 @@
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
 
-
 #include <KCursorSaver>
 
 #include <Libkleo/KeySelectionDialog>
@@ -119,7 +118,6 @@
 #include <MessageComposer/PluginEditorConverterInitialData>
 #include <MessageComposer/PluginEditorConverterBeforeConvertingData>
 #include <MessageComposer/FollowupReminder>
-
 
 #include <Sonnet/DictionaryComboBox>
 

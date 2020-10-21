@@ -71,7 +71,6 @@ void OpenComposerJob::start()
         mMsg->inReplyTo()->fromUnicodeString(mOpenComposerSettings.mInReplyTo, "utf-8");
     }
 
-
     if (!mOpenComposerSettings.mMessageFile.isEmpty() && QFile::exists(mOpenComposerSettings.mMessageFile)) {
         QFile f(mOpenComposerSettings.mMessageFile);
         QByteArray str;

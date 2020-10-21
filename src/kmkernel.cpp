@@ -1663,7 +1663,7 @@ void KMKernel::updatedTemplates()
 void KMKernel::cleanupTemporaryFiles()
 {
     QDir dir(QDir::tempPath());
-    const QStringList lst = dir.entryList(QStringList{QStringLiteral("messageviewer_*")});
+    const QStringList lst = dir.entryList(QStringList {QStringLiteral("messageviewer_*")});
     qCDebug(KMAIL_LOG) << " list file to delete " << lst;
     for (const QString &file : lst) {
         QFile tempFile(QDir::tempPath() + QLatin1Char('/') + file);
@@ -1673,7 +1673,7 @@ void KMKernel::cleanupTemporaryFiles()
             fprintf(stderr, "%s was removed .\n", qPrintable(tempFile.fileName()));
         }
     }
-    const QStringList lstRepo = dir.entryList(QStringList{QStringLiteral("messageviewer_*.index.*")});
+    const QStringList lstRepo = dir.entryList(QStringList {QStringLiteral("messageviewer_*.index.*")});
     qCDebug(KMAIL_LOG) << " list repo to delete " << lstRepo;
     for (const QString &file : lstRepo) {
         QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file);

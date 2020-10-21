@@ -24,7 +24,6 @@ public:
 
     static TagMonitorManager *self();
 
-
     Q_REQUIRED_RESULT QVector<MailCommon::Tag::Ptr> tags() const;
 
 Q_SIGNALS:

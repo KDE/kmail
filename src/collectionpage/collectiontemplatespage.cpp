@@ -53,4 +53,3 @@ void CollectionTemplatesPage::save(Collection &col)
 {
     mCollectionTemplateWidget->save(col);
 }
-

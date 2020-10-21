@@ -137,10 +137,10 @@ void RefreshSettingsCleanupPage::initCleanupDialogSettings(const QString &config
                                      QStringLiteral("MailSourceWebEngineViewer"),
                                      QStringLiteral("SelectAddressBookDialog"),
                                      QStringLiteral("VCardViewer"),
-                                    QStringLiteral("MailSourceWebEngineViewer"),
-                                    QStringLiteral("ConfigurePluginsWidget"),
-                                    QStringLiteral("ConfigureAgentsWidget"),
-                                    QStringLiteral("AuditLogViewer")};
+                                     QStringLiteral("MailSourceWebEngineViewer"),
+                                     QStringLiteral("ConfigurePluginsWidget"),
+                                     QStringLiteral("ConfigureAgentsWidget"),
+                                     QStringLiteral("AuditLogViewer")};
     for (const QString &str : dialogListName) {
         KConfigGroup oldGroup = settingsrc->group(str);
         cleanupFolderSettings(oldGroup);

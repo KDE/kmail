@@ -366,7 +366,7 @@ private Q_SLOTS:
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
         item.setParentCollection(inboxSourceCol);
-        item.setPayload(QByteArray{"Hello world!"});
+        item.setPayload(QByteArray {"Hello world!"});
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();
@@ -426,7 +426,7 @@ private Q_SLOTS:
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
         item.setParentCollection(inboxSourceCol);
-        item.setPayload(QByteArray{"Hello world!"});
+        item.setPayload(QByteArray {"Hello world!"});
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();
@@ -500,7 +500,7 @@ private Q_SLOTS:
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
         item.setParentCollection(inboxSourceCol);
-        item.setPayload(QByteArray{"Hello world!"});
+        item.setPayload(QByteArray {"Hello world!"});
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();
