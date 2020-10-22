@@ -21,7 +21,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <Libkleo/KeySelectionDialog>
 
 #include <KLocalizedString>
-#include <KCMultiDialog>
 #include <KMessageBox>
 #include "kmail_debug.h"
 

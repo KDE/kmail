@@ -8,8 +8,6 @@
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include "composer.h"
-#include "editor/kmcomposerwin.h"
-#include <KMime/Message>
 #include <MessageCore/StringUtil>
 #include <TemplateParser/TemplateParserJob>
 #include <KIdentityManagement/IdentityManager>

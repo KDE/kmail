@@ -11,8 +11,6 @@
 #include <math.h>
 #include <assert.h>
 
-#include <QImage>
-#include <QPainter>
 #include <QPainterPath>
 #include <QDataStream>
 #include <QBuffer>

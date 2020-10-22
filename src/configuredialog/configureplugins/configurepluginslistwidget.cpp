@@ -19,7 +19,6 @@
 #include <MessageComposer/PluginEditorGrammarManager>
 #include <PimCommon/GenericPluginManager>
 #include <AkonadiCore/ServerManager>
-#include <PimCommon/PluginUtil>
 #include <PimCommon/CustomToolsPlugin>
 #include <KSharedConfig>
 #include <KLocalizedString>

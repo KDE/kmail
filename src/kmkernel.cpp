@@ -2,7 +2,6 @@
 
 #include "kmkernel.h"
 
-#include "settings/kmailsettings.h"
 #include <PimCommon/BroadcastStatus>
 #include "job/opencomposerjob.h"
 #include "job/newmessagejob.h"
@@ -68,7 +67,6 @@ using KMail::MailServiceImpl;
 
 #include <KMessageBox>
 #include <KNotification>
-#include <Libkdepim/ProgressManager>
 
 #include <KConfig>
 #include <KConfigGroup>

@@ -49,8 +49,6 @@
 #include <tag/tagactionmanager.h>
 #include <tag/tagselectdialog.h>
 
-#include <MessageViewer/Viewer>
-#include <AkonadiCore/item.h>
 #include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemcreatejob.h>
 #include <AkonadiCore/itemmovejob.h>

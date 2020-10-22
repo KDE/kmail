@@ -9,7 +9,6 @@
 #include <KUserFeedback/PlatformInfoSource>
 #include <KUserFeedback/ScreenInfoSource>
 #include <KUserFeedback/QtVersionSource>
-#include <KUserFeedback/Provider>
 #include <KUserFeedback/StartCountSource>
 #include <KUserFeedback/UsageTimeSource>
 #include <KUserFeedback/LocaleInfoSource>

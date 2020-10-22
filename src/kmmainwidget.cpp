@@ -21,7 +21,6 @@
 #include "kmmainwin.h"
 #include <TemplateParser/CustomTemplatesMenu>
 #include <MailCommon/FolderSelectionDialog>
-#include <MailCommon/FolderTreeWidget>
 #include <PimCommonAkonadi/MailUtil>
 #include "util.h"
 
@@ -150,7 +149,6 @@
 #include <KStringHandler>
 #include <KConfigGroup>
 #include <KXMLGUIFactory>
-#include <KXMLGUIClient>
 #include <QStatusBar>
 #include <QAction>
 #include <KRecentFilesAction>

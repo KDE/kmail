@@ -5,7 +5,6 @@
 */
 #include "folderarchiveaccountinfo.h"
 
-#include <KConfigGroup>
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo()
 {

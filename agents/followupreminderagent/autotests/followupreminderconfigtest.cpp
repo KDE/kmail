@@ -9,8 +9,6 @@
 #include "../followupreminderinfo.h"
 
 #include <QTest>
-#include <KSharedConfig>
-#include <QRegularExpression>
 
 FollowUpReminderConfigTest::FollowUpReminderConfigTest(QObject *parent)
     : QObject(parent)

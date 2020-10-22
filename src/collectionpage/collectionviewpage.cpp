@@ -7,7 +7,6 @@
 #include "collectionviewpage.h"
 #include <MailCommon/MailKernel>
 
-#include <AkonadiCore/collection.h>
 #include <AkonadiCore/entitydisplayattribute.h>
 #include <Akonadi/KMime/MessageFolderAttribute>
 
@@ -25,7 +24,6 @@
 #include <MessageList/ThemeConfigButton>
 
 #include <MailCommon/CollectionViewWidget>
-#include <MailCommon/FolderSettings>
 
 using namespace MailCommon;
 

@@ -18,7 +18,6 @@
 #include "kmail_debug.h"
 #include <QMenu>
 #include <KLocalizedString>
-#include <QAction>
 
 #include "widgets/kactionmenutransport.h"
 

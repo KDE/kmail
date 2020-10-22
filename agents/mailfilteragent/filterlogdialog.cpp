@@ -8,7 +8,6 @@
 #include "filterlogdialog.h"
 #include <MailCommon/FilterLog>
 #include <KPIMTextEdit/PlainTextEditorWidget>
-#include <KPIMTextEdit/PlainTextEditor>
 #include "mailfilterpurposemenuwidget.h"
 
 #include "mailfilteragent_debug.h"

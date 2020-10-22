@@ -8,7 +8,6 @@
 #include "kmail_debug.h"
 #include <MessageComposer/PluginEditorConvertText>
 #include <MessageComposer/PluginEditorConvertTextManager>
-#include <MessageComposer/PluginEditorConvertTextInterface>
 #include <QAction>
 
 KMailPluginEditorConvertTextManagerInterface::KMailPluginEditorConvertTextManagerInterface(QObject *parent)

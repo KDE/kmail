@@ -8,7 +8,6 @@
 #include "widgets/formatcombobox.h"
 #include "widgets/unitcombobox.h"
 #include <MailCommon/FolderRequester>
-#include <Collection>
 
 #include <KLocalizedString>
 #include <KUrlRequester>

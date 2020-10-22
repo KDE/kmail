@@ -8,7 +8,6 @@
 #include "followupreminderinfo.h"
 #include "followupreminderagent_debug.h"
 
-#include <AkonadiCore/Item>
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemModifyJob>
 #include <KCalendarCore/Todo>

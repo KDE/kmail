@@ -9,7 +9,6 @@
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
 
-#include <KMime/Message>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 

@@ -15,7 +15,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <Libkdepim/LineEditCatchReturnKey>
 #include "messagelistsettings.h"
 #include <MailCommon/TagWidget>
-#include "MailCommon/Tag"
 #include "kmkernel.h"
 
 #include "util.h"

@@ -12,7 +12,6 @@
 #include <MessageComposer/SendLaterInfo>
 #include <MessageComposer/Util>
 
-#include <KSharedConfig>
 #include <KConfigGroup>
 #include <KMessageBox>
 #include <KLocalizedString>

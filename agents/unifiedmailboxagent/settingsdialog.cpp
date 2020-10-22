@@ -5,7 +5,6 @@
 */
 
 #include "settingsdialog.h"
-#include "unifiedmailboxmanager.h"
 #include "unifiedmailboxeditor.h"
 #include "unifiedmailbox.h"
 #include "mailkernel.h"

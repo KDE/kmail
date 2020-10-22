@@ -37,7 +37,6 @@ using MessageViewer::CSSHelper;
 #include <kmime/kmime_mdn.h>
 #include <akonadi/kmime/messageflags.h>
 
-#include <MessageViewer/Viewer>
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 

@@ -118,7 +118,6 @@
 #include <QByteArray>
 #include <QFileDialog>
 #include <QFontDatabase>
-#include <QList>
 #include <QProgressDialog>
 #include <QStandardPaths>
 

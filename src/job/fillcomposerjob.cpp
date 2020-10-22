@@ -10,7 +10,6 @@
 #include "editor/kmcomposerwin.h"
 #include <MessageViewer/MessageViewerSettings>
 
-#include <KMime/Message>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 

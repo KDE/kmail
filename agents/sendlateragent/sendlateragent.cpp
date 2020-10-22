@@ -29,7 +29,6 @@
 #include <Kdelibs4ConfigMigrator>
 
 #include <QPointer>
-#include <sendlaterinfo.h>
 
 //#define DEBUG_SENDLATERAGENT 1
 

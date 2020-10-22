@@ -11,7 +11,6 @@
 
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionCreateJob>
-#include <QDate>
 
 FolderArchiveAgentCheckCollection::FolderArchiveAgentCheckCollection(FolderArchiveAccountInfo *info, QObject *parent)
     : QObject(parent)

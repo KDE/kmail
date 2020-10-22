@@ -6,10 +6,8 @@
 
 #include "searchdescriptionattribute.h"
 
-#include <QByteArray>
 #include <QDataStream>
 
-#include <AkonadiCore/Collection>
 
 using namespace Akonadi;
 

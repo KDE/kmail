@@ -7,11 +7,9 @@
 #include "unifiedmailboxmanager.h"
 #include "unifiedmailbox.h"
 #include "unifiedmailboxagent_debug.h"
-#include "utils.h"
 #include "common.h"
 #include "settings.h"
 
-#include <KSharedConfig>
 #include <KLocalizedString>
 
 #include <AkonadiCore/SpecialCollectionAttribute>

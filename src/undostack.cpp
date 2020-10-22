@@ -18,7 +18,6 @@
 #include <KLocalizedString>
 #include "kmail_debug.h"
 
-#include <QList>
 
 using namespace KMail;
 

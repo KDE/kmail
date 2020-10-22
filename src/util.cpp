@@ -18,7 +18,6 @@
 #include <QAction>
 #include <QStandardPaths>
 
-#include <MailCommon/FolderSettings>
 
 using namespace MailCommon;
 using namespace KMail;

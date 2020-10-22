@@ -8,7 +8,6 @@
 #include <QHBoxLayout>
 #include <KLocalizedString>
 #include <KSharedConfig>
-#include <KConfigGroup>
 #include <QPushButton>
 #include <QRegularExpression>
 

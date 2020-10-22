@@ -11,7 +11,6 @@
 #include <MessageComposer/SendLaterInfo>
 #include <MessageComposer/SendLaterDialog>
 
-#include <KConfigGroup>
 #include <KLocalizedString>
 #include <QMenu>
 #include <KMessageBox>

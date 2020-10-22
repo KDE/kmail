@@ -17,7 +17,6 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MailTransport/TransportManagementWidget>
 using MailTransport::TransportManagementWidget;
-#include "ui_accountspagereceivingtab.h"
 #include <MailCommon/MailUtil>
 
 #include <AkonadiCore/agentfilterproxymodel.h>

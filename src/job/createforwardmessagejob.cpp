@@ -9,7 +9,6 @@
 #include "../util.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
-#include <KMime/Message>
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
 

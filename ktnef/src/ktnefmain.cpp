@@ -22,7 +22,6 @@
 #include <KTNEF/KTNEFProperty>
 
 #include <KFileItemActions>
-#include <KService>
 #include <QAction>
 #include <KActionCollection>
 #include "ktnef_debug.h"

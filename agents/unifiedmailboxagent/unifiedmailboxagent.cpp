@@ -24,7 +24,6 @@
 #include <AkonadiCore/LinkJob>
 #include <AkonadiCore/UnlinkJob>
 #include <AkonadiCore/ServerManager>
-#include <Akonadi/KMime/SpecialMailCollections>
 
 #include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Identity>

@@ -16,7 +16,6 @@
 
 #include <KConfigGroup>
 #include <KConfig>
-#include <KSharedConfig>
 #include <KNotification>
 #include <KLocalizedString>
 #include <QRegularExpression>

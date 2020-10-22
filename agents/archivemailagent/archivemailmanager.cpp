@@ -14,7 +14,6 @@
 #include <MailCommon/MailUtil>
 
 #include <KConfigGroup>
-#include <KSharedConfig>
 #include "archivemailagent_debug.h"
 
 #include <QDate>
