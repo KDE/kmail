@@ -2994,7 +2994,7 @@ void KMMainWidget::setupActions()
             &ManageShowCollectionProperties::slotShowFolderShortcutDialog);
     // FIXME: this action is not currently enabled in the rc file, but even if
     // it were there is inconsistency between the action name and action.
-    // "Expiration Settings" implies that this will lead to a settings dialogue
+    // "Expiration Settings" implies that this will lead to a settings dialog
     // and it should be followed by a "...", but slotExpireFolder() performs
     // an immediate expiry.
     //

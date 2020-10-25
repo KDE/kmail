@@ -65,7 +65,7 @@ start working with it right away. For more in-depth information see the
           <phrase>Account Wizard</phrase>
         </textobject>
         <caption>
-        <para>The "Provide personal data" dialogue</para>
+        <para>The "Provide personal data" dialog</para>
         </caption>
       </mediaobject>
     </screenshot>
@@ -90,7 +90,7 @@ start working with it right away. For more in-depth information see the
           <phrase>Account Wizard 2</phrase>
         </textobject>
         <caption>
-        <para>The encryption options dialogue</para>
+        <para>The encryption options dialog</para>
         </caption>
       </mediaobject>
     </screenshot>
@@ -121,7 +121,7 @@ start working with it right away. For more in-depth information see the
           <phrase>Account Wizard 2</phrase>
         </textobject>
         <caption>
-        <para>The account type selection dialogue</para>
+        <para>The account type selection dialog</para>
         </caption>
       </mediaobject>
     </screenshot>
@@ -148,7 +148,7 @@ start working with it right away. For more in-depth information see the
           <phrase>Account Wizard 2</phrase>
         </textobject>
         <caption>
-        <para>The "Personal Settings" dialogue</para>
+        <para>The "Personal Settings" dialog</para>
         </caption>
       </mediaobject>
     </screenshot>
@@ -208,13 +208,13 @@ start working with it right away. For more in-depth information see the
       A small pop-up window will appear.</para>
   
     <screenshot>
-    <screeninfo>The new identity dialogue</screeninfo>
+    <screeninfo>The new identity dialog</screeninfo>
       <mediaobject>
         <imageobject>
           <imagedata fileref="newidentity.png" format="PNG"/>
         </imageobject>
         <textobject>
-          <phrase>The new identity dialogue</phrase>
+          <phrase>The new identity dialog</phrase>
         </textobject>
         <caption>
         <para>Adding a new identity</para>
@@ -228,13 +228,13 @@ start working with it right away. For more in-depth information see the
     <para>&nbsp;</para> <!-- whitespace -->
     
     <screenshot>
-    <screeninfo>The new identity dialogue continues</screeninfo>
+    <screeninfo>The new identity dialog continues</screeninfo>
       <mediaobject>
         <imageobject>
           <imagedata fileref="newidentity2.png" format="PNG"/>
         </imageobject>
         <textobject>
-          <phrase>The new identity dialogue continues</phrase>
+          <phrase>The new identity dialog continues</phrase>
         </textobject>
         <caption>
         <para>Configuring the new identity</para>
@@ -325,13 +325,13 @@ start working with it right away. For more in-depth information see the
   <para>&nbsp;</para> <!-- whitespace -->
 
   <screenshot>
-    <screeninfo>The sending configuration dialogue</screeninfo>
+    <screeninfo>The sending configuration dialog</screeninfo>
       <mediaobject>
         <imageobject>
           <imagedata fileref="sending2.png" format="PNG"/>
         </imageobject>
         <textobject>
-          <phrase>The sending configuration dialogue</phrase>
+          <phrase>The sending configuration dialog</phrase>
         </textobject>
         <caption>
         <para>Configuring an &SMTP; account</para>
@@ -376,13 +376,13 @@ start working with it right away. For more in-depth information see the
     about file locking</link>.</para>
     
   <screenshot>
-    <screeninfo>The receiving configuration dialogue</screeninfo>
+    <screeninfo>The receiving configuration dialog</screeninfo>
       <mediaobject>
         <imageobject>
           <imagedata fileref="receiving.png" format="PNG"/>
         </imageobject>
         <textobject>
-          <phrase>The receiving configuration dialogue</phrase>
+          <phrase>The receiving configuration dialog</phrase>
         </textobject>
         <caption>
         <para>Configuring an &IMAP; account</para>
