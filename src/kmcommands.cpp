@@ -1866,3 +1866,19 @@ Akonadi::Item KMFetchMessageCommand::item() const
 {
     return mItem;
 }
+
+QDebug operator <<(QDebug d, const KMPrintCommandInfo &t)
+{
+    d << "item id " << t.mMsg.id();
+    d << "mOverrideFont " << t.mOverrideFont;
+    d << "mEncoding " << t.mEncoding;
+    d << "mFormat " << t.mFormat;
+    d << "mHtmlLoadExtOverride " << t.mHtmlLoadExtOverride;
+    d << "mUseFixedFont " << t.mUseFixedFont;
+    d << "mPrintPreview " << t.mPrintPreview;
+    d << "mShowSignatureDetails " << t.mShowSignatureDetails;
+    d << "mShowEncryptionDetails " << t.mShowEncryptionDetails;
+    d << "mAttachmentStrategy " << t.mAttachmentStrategy;
+    d << "mHeaderStylePlugin " << t.mHeaderStylePlugin;
+    return d;
+}

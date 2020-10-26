@@ -402,6 +402,8 @@ struct KMAILTESTS_TESTS_EXPORT KMPrintCommandInfo
     bool mShowEncryptionDetails = false;
 };
 
+QDebug operator <<(QDebug d, const KMPrintCommandInfo &t);
+
 class KMAILTESTS_TESTS_EXPORT KMPrintCommand : public KMCommand
 {
     Q_OBJECT
