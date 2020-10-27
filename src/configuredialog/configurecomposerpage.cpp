@@ -225,7 +225,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mWordWrapCheck->setWhatsThis(helpText);
 
     mWrapColumnSpin = new QSpinBox(this);
-    mWrapColumnSpin->setMaximum(78 /*max*/);
+    mWrapColumnSpin->setMaximum(200 /*max*/);
     mWrapColumnSpin->setMinimum(30 /*min*/);
     mWrapColumnSpin->setSingleStep(1 /*step*/);
     mWrapColumnSpin->setValue(78 /*init*/);
