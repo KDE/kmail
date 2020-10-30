@@ -466,7 +466,7 @@ or <link linkend="pgp-sign-your-messages">digitally signed</link> message, selec
 <guiicon>Sign</guiicon> and / or <guiicon>Encrypt</guiicon> icon in the toolbar.
 Use the <menuchoice><guimenuitem>Options</guimenuitem><guisubmenu>Cryptographic Message
 Format &gt;</guisubmenu></menuchoice> dropdown list to select the format used to encrypt the 
-message. (The <guilabel>Optons</guilabel> menu also lets you sign / encrypt the message.)
+message. (The <guilabel>Options</guilabel> menu also lets you sign / encrypt the message.)
 You may choose one of five formatting options.
 </para>
 
@@ -2269,7 +2269,7 @@ to send you one or more of their public keys.</para>
 <para>Compose your message as usual in the composer
 window. Before you send the message, check the <guibutton>Sign</guibutton>
 icon on the toolbar of the composer window, or select <menuchoice>
-<guimenu>Options></guimenu><guimenuitem>Sign Message</guimenuitem></menuchoice>. Then, you can send
+<guimenu>Options</guimenu><guimenuitem>Sign Message</guimenuitem></menuchoice>. Then, you can send
 the message. The identity you are using to write the current message needs to 
 be connected to an <guilabel>OpenPGP Key</guilabel> in the <guilabel>Identity</guilabel>
 section of the <guilabel>Configure</guilabel> dialog.
@@ -2287,7 +2287,7 @@ message will be signed automatically.</para>
 public key is on your gpg key ring, simply create the message in the composer window.
 Before you send the message, check the <guibutton>Encrypt</guibutton> 
 button in the toolbar of the composer window (or select <menuchoice>
-<guimenu>Options></guimenu><guimenuitem>Encrypt Message</guimenuitem></menuchoice>).
+<guimenu>Options</guimenu><guimenuitem>Encrypt Message</guimenuitem></menuchoice>).
 Then send the message.</para>
 
 <para>
