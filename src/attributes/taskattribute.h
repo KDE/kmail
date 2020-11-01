@@ -29,7 +29,7 @@ public:
     Akonadi::Item::Id taskId() const;
 
 private:
-    Akonadi::Item::Id mId;
+    Akonadi::Item::Id mId = {-1};
 };
 
 #endif

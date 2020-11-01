@@ -11,7 +11,6 @@
 
 TaskAttribute::TaskAttribute()
     : Akonadi::Attribute()
-    , mId(-1)
 {
 }
 
