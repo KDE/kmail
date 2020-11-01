@@ -18,7 +18,6 @@
 #include <QAction>
 #include <QStandardPaths>
 
-
 using namespace MailCommon;
 using namespace KMail;
 KMime::Types::Mailbox::List Util::mailingListsFromMessage(const Akonadi::Item &item)

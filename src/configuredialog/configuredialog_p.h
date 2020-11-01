@@ -18,7 +18,6 @@ class ConfigModuleTab : public QWidget
 public:
     explicit ConfigModuleTab(QWidget *parent = nullptr)
         : QWidget(parent)
-         
     {
     }
 

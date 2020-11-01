@@ -35,7 +35,6 @@ EXPORT_KONTACT_PLUGIN_WITH_JSON(KMailPlugin, "kmailplugin.json")
 
 KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
     : KontactInterface::Plugin(core, core, "kmail2")
-     
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 

@@ -5,7 +5,6 @@
 */
 #include "folderarchiveaccountinfo.h"
 
-
 FolderArchiveAccountInfo::FolderArchiveAccountInfo()
 = default;
 

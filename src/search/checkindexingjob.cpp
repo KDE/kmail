@@ -38,7 +38,7 @@ void CheckIndexingJob::start()
 {
     if (mCollection.isValid()) {
         auto *fetch = new Akonadi::CollectionFetchJob(mCollection,
-                                                                             Akonadi::CollectionFetchJob::Base);
+                                                      Akonadi::CollectionFetchJob::Base);
         fetch->fetchScope().setIncludeStatistics(true);
         connect(fetch, &KJob::result, this, &CheckIndexingJob::slotCollectionPropertiesFinished);
     } else {

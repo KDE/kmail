@@ -37,7 +37,6 @@
 
 AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
     : QDialog(parent)
-     
 {
     setModal(true);
 

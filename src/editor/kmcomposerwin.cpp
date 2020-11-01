@@ -262,7 +262,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     v->setContentsMargins({});
     v->addWidget(mHeadersToEditorSplitter);
     auto *identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(),
-                                                                                          mHeadersArea);
+                                                            mHeadersArea);
     identity->setCurrentIdentity(mId);
     connect(identity, &KIdentityManagement::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
     connect(identity, &KIdentityManagement::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);

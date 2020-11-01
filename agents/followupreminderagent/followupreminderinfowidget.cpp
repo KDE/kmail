@@ -49,7 +49,6 @@ FollowUpReminder::FollowUpReminderInfo *FollowUpReminderInfoItem::info() const
 
 FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     : QWidget(parent)
-     
 {
     setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
     auto *hbox = new QHBoxLayout(this);

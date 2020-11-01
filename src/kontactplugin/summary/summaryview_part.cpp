@@ -209,11 +209,11 @@ void SummaryViewPart::updateWidgets()
     }
 
     auto *lspacer = new QSpacerItem(1, 10,
-                                           QSizePolicy::MinimumExpanding,
-                                           QSizePolicy::MinimumExpanding);
+                                    QSizePolicy::MinimumExpanding,
+                                    QSizePolicy::MinimumExpanding);
     auto *rspacer = new QSpacerItem(1, 10,
-                                           QSizePolicy::MinimumExpanding,
-                                           QSizePolicy::MinimumExpanding);
+                                    QSizePolicy::MinimumExpanding,
+                                    QSizePolicy::MinimumExpanding);
     mLeftColumn->addSpacerItem(lspacer);
     mRightColumn->addSpacerItem(rspacer);
 
