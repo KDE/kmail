@@ -98,7 +98,7 @@ void IdentityListViewItem::init(const KIdentityManagement::Identity &ident)
 
 IdentityListView::IdentityListView(QWidget *parent)
     : QTreeWidget(parent)
-    , mIdentityManager(nullptr)
+     
 {
 #ifndef QT_NO_DRAGANDDROP
     setDragEnabled(true);

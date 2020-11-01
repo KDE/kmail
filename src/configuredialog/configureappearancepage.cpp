@@ -138,7 +138,7 @@ static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
 AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     : ConfigModuleTab(parent)
-    , mActiveFontIndex(-1)
+     
 {
     assert(numFontNames == sizeof mFont / sizeof *mFont);
 
@@ -585,7 +585,7 @@ static const int numDateDisplayConfig
 
 AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent)
-    , mCustomDateFormatEdit(nullptr)
+     
 {
     auto *vlay = new QVBoxLayout(this);
 

@@ -693,8 +693,8 @@ KMCommand::Result KMSaveMsgCommand::execute()
 KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url, const QString &encoding, KMMainWidget *main)
     : KMCommand(parent)
     , mUrl(url)
-    , mJob(nullptr)
-    , mEncoding(encoding)
+    , 
+     mEncoding(encoding)
     , mMainWidget(main)
 {
     qCDebug(KMAIL_LOG) << "url :" << url;
@@ -1467,8 +1467,8 @@ void KMCopyDecryptedCommand::slotAppendResult(KJob *job)
 KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
     : KMCommand(nullptr, msgList)
     , mDestFolder(destFolder)
-    , mProgressItem(nullptr)
-    , mRef(ref)
+    , 
+     mRef(ref)
 {
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
@@ -1476,8 +1476,8 @@ KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder, const Akonad
 KMMoveCommand::KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref)
     : KMCommand(nullptr, msg)
     , mDestFolder(destFolder)
-    , mProgressItem(nullptr)
-    , mRef(ref)
+    , 
+     mRef(ref)
 {
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }

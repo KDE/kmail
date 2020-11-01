@@ -60,7 +60,7 @@ private:
     QComboBox *mFontLocationCombo = nullptr;
     KFontChooser *mFontChooser = nullptr;
 
-    int mActiveFontIndex;
+    int mActiveFontIndex{-1};
     QFont mFont[8];
 };
 

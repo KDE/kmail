@@ -37,7 +37,7 @@
 
 AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
     : QDialog(parent)
-    , mAttach(nullptr)
+     
 {
     setModal(true);
 

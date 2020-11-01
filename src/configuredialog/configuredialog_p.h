@@ -18,7 +18,7 @@ class ConfigModuleTab : public QWidget
 public:
     explicit ConfigModuleTab(QWidget *parent = nullptr)
         : QWidget(parent)
-        , mEmitChanges(true)
+         
     {
     }
 
@@ -35,7 +35,7 @@ public Q_SLOTS:
     void slotEmitChanged();
     void load();
 protected:
-    bool mEmitChanges;
+    bool mEmitChanges{true};
 private:
     // reimplement this for loading values of settings which are available
     // via GlobalSettings
