@@ -360,6 +360,5 @@ AboutData::AboutData()
 }
 
 AboutData::~AboutData()
-{
-}
+= default;
 } // namespace KMail

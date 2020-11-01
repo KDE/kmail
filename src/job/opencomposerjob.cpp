@@ -29,8 +29,7 @@ void OpenComposerJob::setOpenComposerSettings(const OpenComposerSettings &openCo
 }
 
 OpenComposerJob::~OpenComposerJob()
-{
-}
+= default;
 
 void OpenComposerJob::start()
 {

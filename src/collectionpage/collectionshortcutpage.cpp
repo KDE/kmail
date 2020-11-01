@@ -29,8 +29,7 @@ CollectionShortcutPage::CollectionShortcutPage(QWidget *parent)
 }
 
 CollectionShortcutPage::~CollectionShortcutPage()
-{
-}
+= default;
 
 void CollectionShortcutPage::init(const Akonadi::Collection &col)
 {

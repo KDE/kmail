@@ -19,8 +19,7 @@ SearchPatternWarning::SearchPatternWarning(QWidget *parent)
 }
 
 SearchPatternWarning::~SearchPatternWarning()
-{
-}
+= default;
 
 void SearchPatternWarning::setError(const QStringList &lstError)
 {

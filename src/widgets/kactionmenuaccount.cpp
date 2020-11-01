@@ -23,8 +23,7 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
 }
 
 KActionMenuAccount::~KActionMenuAccount()
-{
-}
+= default;
 
 void KActionMenuAccount::setAccountOrder(const QStringList &identifier)
 {

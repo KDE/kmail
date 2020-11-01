@@ -20,8 +20,7 @@ KMComposerGlobalAction::KMComposerGlobalAction(KMComposerWin *composerWin, QObje
 }
 
 KMComposerGlobalAction::~KMComposerGlobalAction()
-{
-}
+= default;
 
 void KMComposerGlobalAction::slotUndo()
 {

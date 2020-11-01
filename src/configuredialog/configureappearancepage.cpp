@@ -929,8 +929,7 @@ TagListWidgetItem::TagListWidgetItem(const QIcon &icon, const QString &text, QLi
 }
 
 TagListWidgetItem::~TagListWidgetItem()
-{
-}
+= default;
 
 void TagListWidgetItem::setKMailTag(const MailCommon::Tag::Ptr &tag)
 {
@@ -1054,8 +1053,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
 }
 
 AppearancePageMessageTagTab::~AppearancePageMessageTagTab()
-{
-}
+= default;
 
 void AppearancePage::MessageTagTab::slotEmitChangeCheck()
 {

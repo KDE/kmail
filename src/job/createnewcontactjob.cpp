@@ -31,8 +31,7 @@ CreateNewContactJob::CreateNewContactJob(QWidget *parentWidget, QObject *parent)
 }
 
 CreateNewContactJob::~CreateNewContactJob()
-{
-}
+= default;
 
 void CreateNewContactJob::start()
 {

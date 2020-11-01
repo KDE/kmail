@@ -59,8 +59,7 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
 }
 
 FollowUpReminderAgent::~FollowUpReminderAgent()
-{
-}
+= default;
 
 void FollowUpReminderAgent::setEnableAgent(bool enabled)
 {

@@ -51,8 +51,7 @@ class IdentityListView : public QTreeWidget
 public:
     explicit IdentityListView(QWidget *parent = nullptr);
     ~IdentityListView() override
-    {
-    }
+    = default;
 
 public:
     void editItem(QTreeWidgetItem *item, int column = 0);

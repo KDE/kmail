@@ -10,8 +10,7 @@
 #include <AkonadiCore/AgentManager>
 
 KMailSieveImapInstanceInterface::KMailSieveImapInstanceInterface()
-{
-}
+= default;
 
 QVector<KSieveUi::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapInstances()
 {

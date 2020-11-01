@@ -77,8 +77,7 @@ AccountsPage::AccountsPage(QWidget *parent)
 }
 
 AccountsPageSendingTab::~AccountsPageSendingTab()
-{
-}
+= default;
 
 QString AccountsPage::SendingTab::helpAnchor() const
 {
@@ -412,8 +411,7 @@ LdapCompetionTab::LdapCompetionTab(QWidget *parent)
 }
 
 LdapCompetionTab::~LdapCompetionTab()
-{
-}
+= default;
 
 QString LdapCompetionTab::helpAnchor() const
 {

@@ -23,8 +23,7 @@ AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &
 }
 
 AddEmailToExistingContactJob::~AddEmailToExistingContactJob()
-{
-}
+= default;
 
 void AddEmailToExistingContactJob::start()
 {

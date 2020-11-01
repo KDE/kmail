@@ -43,8 +43,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
 }
 
 CryptoStateIndicatorWidget::~CryptoStateIndicatorWidget()
-{
-}
+= default;
 
 void CryptoStateIndicatorWidget::setShowAlwaysIndicator(bool status)
 {

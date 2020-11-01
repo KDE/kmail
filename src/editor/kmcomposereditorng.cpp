@@ -38,8 +38,7 @@ KMComposerEditorNg::KMComposerEditorNg(KMComposerWin *win, QWidget *parent)
 }
 
 KMComposerEditorNg::~KMComposerEditorNg()
-{
-}
+= default;
 
 void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {

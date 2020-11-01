@@ -25,8 +25,7 @@ FolderArchiveAgentJob::FolderArchiveAgentJob(FolderArchiveManager *manager, Fold
 }
 
 FolderArchiveAgentJob::~FolderArchiveAgentJob()
-{
-}
+= default;
 
 void FolderArchiveAgentJob::start()
 {

@@ -46,8 +46,7 @@ CodecAction::CodecAction(Mode mode, QObject *parent)
 }
 
 CodecAction::~CodecAction()
-{
-}
+= default;
 
 QVector<QByteArray> CodecAction::mimeCharsets() const
 {

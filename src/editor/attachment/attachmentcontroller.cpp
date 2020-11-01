@@ -56,8 +56,7 @@ AttachmentController::AttachmentController(MessageComposer::AttachmentModel *mod
 }
 
 AttachmentController::~AttachmentController()
-{
-}
+= default;
 
 void AttachmentController::slotSelectAllAttachment()
 {

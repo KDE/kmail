@@ -212,8 +212,7 @@ bool KMReaderWin::isFixedFont() const
 }
 
 KMReaderWin::~KMReaderWin()
-{
-}
+= default;
 
 void KMReaderWin::readConfig()
 {

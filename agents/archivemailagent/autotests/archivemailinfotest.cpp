@@ -19,8 +19,7 @@ ArchiveMailInfoTest::ArchiveMailInfoTest(QObject *parent)
 }
 
 ArchiveMailInfoTest::~ArchiveMailInfoTest()
-{
-}
+= default;
 
 void ArchiveMailInfoTest::shouldHaveDefaultValue()
 {

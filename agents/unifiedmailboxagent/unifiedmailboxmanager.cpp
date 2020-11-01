@@ -184,8 +184,7 @@ UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QOb
 }
 
 UnifiedMailboxManager::~UnifiedMailboxManager()
-{
-}
+= default;
 
 Akonadi::ChangeRecorder &UnifiedMailboxManager::changeRecorder()
 {

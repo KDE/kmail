@@ -19,8 +19,7 @@ UndoSendCreateJob::UndoSendCreateJob(QObject *parent)
 }
 
 UndoSendCreateJob::~UndoSendCreateJob()
-{
-}
+= default;
 
 bool UndoSendCreateJob::canStart() const
 {

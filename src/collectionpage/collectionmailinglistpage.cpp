@@ -41,8 +41,7 @@ CollectionMailingListPage::CollectionMailingListPage(QWidget *parent)
 }
 
 CollectionMailingListPage::~CollectionMailingListPage()
-{
-}
+= default;
 
 void CollectionMailingListPage::slotConfigChanged()
 {

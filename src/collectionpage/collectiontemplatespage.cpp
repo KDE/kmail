@@ -27,8 +27,7 @@ CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent)
 }
 
 CollectionTemplatesPage::~CollectionTemplatesPage()
-{
-}
+= default;
 
 bool CollectionTemplatesPage::canHandle(const Collection &collection) const
 {

@@ -12,8 +12,7 @@ MailfilterPurposeMenuWidget::MailfilterPurposeMenuWidget(QWidget *parentWidget, 
 }
 
 MailfilterPurposeMenuWidget::~MailfilterPurposeMenuWidget()
-{
-}
+= default;
 
 QByteArray MailfilterPurposeMenuWidget::text()
 {

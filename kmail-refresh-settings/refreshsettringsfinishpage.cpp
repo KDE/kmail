@@ -23,8 +23,7 @@ RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
 }
 
 RefreshSettringsFinishPage::~RefreshSettringsFinishPage()
-{
-}
+= default;
 
 void RefreshSettringsFinishPage::slotCleanDoneInfo(const QString &str)
 {

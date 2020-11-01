@@ -19,8 +19,7 @@ NewMessageJob::NewMessageJob(QObject *parent)
 }
 
 NewMessageJob::~NewMessageJob()
-{
-}
+= default;
 
 void NewMessageJob::start()
 {

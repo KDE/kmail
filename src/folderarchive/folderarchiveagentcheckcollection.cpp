@@ -20,8 +20,7 @@ FolderArchiveAgentCheckCollection::FolderArchiveAgentCheckCollection(FolderArchi
 }
 
 FolderArchiveAgentCheckCollection::~FolderArchiveAgentCheckCollection()
-{
-}
+= default;
 
 void FolderArchiveAgentCheckCollection::start()
 {

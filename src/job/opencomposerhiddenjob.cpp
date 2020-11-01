@@ -19,8 +19,7 @@ OpenComposerHiddenJob::OpenComposerHiddenJob(QObject *parent)
 }
 
 OpenComposerHiddenJob::~OpenComposerHiddenJob()
-{
-}
+= default;
 
 void OpenComposerHiddenJob::start()
 {

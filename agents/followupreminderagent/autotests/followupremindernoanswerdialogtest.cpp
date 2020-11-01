@@ -19,8 +19,7 @@ FollowupReminderNoAnswerDialogTest::FollowupReminderNoAnswerDialogTest(QObject *
 }
 
 FollowupReminderNoAnswerDialogTest::~FollowupReminderNoAnswerDialogTest()
-{
-}
+= default;
 
 void FollowupReminderNoAnswerDialogTest::initTestCase()
 {

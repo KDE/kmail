@@ -21,8 +21,7 @@ CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedIt
 }
 
 CheckIndexingJob::~CheckIndexingJob()
-{
-}
+= default;
 
 void CheckIndexingJob::askForNextCheck(quint64 id, bool needToReindex)
 {

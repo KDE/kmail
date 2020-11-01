@@ -38,5 +38,4 @@ KMailUserFeedbackProvider::KMailUserFeedbackProvider(QObject *parent)
 }
 
 KMailUserFeedbackProvider::~KMailUserFeedbackProvider()
-{
-}
+= default;

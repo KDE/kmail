@@ -38,8 +38,7 @@ FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KShared
 }
 
 FollowUpReminderInfoConfigWidget::~FollowUpReminderInfoConfigWidget()
-{
-}
+= default;
 
 void FollowUpReminderInfoConfigWidget::load()
 {

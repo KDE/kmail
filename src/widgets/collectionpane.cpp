@@ -22,8 +22,7 @@ CollectionPane::CollectionPane(bool restoreSession, QAbstractItemModel *model, Q
 }
 
 CollectionPane::~CollectionPane()
-{
-}
+= default;
 
 void CollectionPane::writeConfig(bool /*restoreSession*/)
 {
@@ -41,8 +40,7 @@ CollectionStorageModel::CollectionStorageModel(QAbstractItemModel *model, QItemS
 }
 
 CollectionStorageModel::~CollectionStorageModel()
-{
-}
+= default;
 
 bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) const
 {

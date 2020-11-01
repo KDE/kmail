@@ -67,8 +67,7 @@ IdentityPage::IdentityPage(QWidget *parent)
 }
 
 IdentityPage::~IdentityPage()
-{
-}
+= default;
 
 void IdentityPage::load()
 {

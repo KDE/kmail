@@ -72,8 +72,7 @@ PluginView::PluginView(QWidget *parent)
 }
 
 PluginView::~PluginView()
-{
-}
+= default;
 
 KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     : KCModule(parent)

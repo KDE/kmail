@@ -35,8 +35,7 @@ CollectionViewPage::CollectionViewPage(QWidget *parent)
 }
 
 CollectionViewPage::~CollectionViewPage()
-{
-}
+= default;
 
 void CollectionViewPage::init(const Akonadi::Collection &col)
 {

@@ -18,8 +18,7 @@ ArchiveMailWidgetTest::ArchiveMailWidgetTest(QObject *parent)
 }
 
 ArchiveMailWidgetTest::~ArchiveMailWidgetTest()
-{
-}
+= default;
 
 void ArchiveMailWidgetTest::shouldHaveDefaultValue()
 {

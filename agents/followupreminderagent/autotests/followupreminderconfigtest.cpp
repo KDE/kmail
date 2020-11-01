@@ -16,8 +16,7 @@ FollowUpReminderConfigTest::FollowUpReminderConfigTest(QObject *parent)
 }
 
 FollowUpReminderConfigTest::~FollowUpReminderConfigTest()
-{
-}
+= default;
 
 void FollowUpReminderConfigTest::init()
 {

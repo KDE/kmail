@@ -20,8 +20,7 @@ FollowUpReminderJob::FollowUpReminderJob(QObject *parent)
 }
 
 FollowUpReminderJob::~FollowUpReminderJob()
-{
-}
+= default;
 
 void FollowUpReminderJob::start()
 {

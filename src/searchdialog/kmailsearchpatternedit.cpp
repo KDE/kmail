@@ -15,5 +15,4 @@ KMailSearchPatternEdit::KMailSearchPatternEdit(QWidget *parent)
 }
 
 KMailSearchPatternEdit::~KMailSearchPatternEdit()
-{
-}
+= default;

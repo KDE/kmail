@@ -14,8 +14,7 @@
 #include <QTest>
 
 identityaddvcarddialogtest::identityaddvcarddialogtest()
-{
-}
+= default;
 
 void identityaddvcarddialogtest::shouldHaveDefaultValue()
 {

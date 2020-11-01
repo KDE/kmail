@@ -55,8 +55,7 @@ void ConfigureDialog::hideEvent(QHideEvent *ev)
 }
 
 ConfigureDialog::~ConfigureDialog()
-{
-}
+= default;
 
 void ConfigureDialog::slotApply()
 {

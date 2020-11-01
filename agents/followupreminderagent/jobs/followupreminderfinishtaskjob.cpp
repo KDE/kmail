@@ -19,8 +19,7 @@ FollowUpReminderFinishTaskJob::FollowUpReminderFinishTaskJob(Akonadi::Item::Id i
 }
 
 FollowUpReminderFinishTaskJob::~FollowUpReminderFinishTaskJob()
-{
-}
+= default;
 
 void FollowUpReminderFinishTaskJob::start()
 {

@@ -29,8 +29,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
 }
 
 PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
-{
-}
+= default;
 
 void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {

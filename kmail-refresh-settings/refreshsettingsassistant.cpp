@@ -32,8 +32,7 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
 }
 
 RefreshSettingsAssistant::~RefreshSettingsAssistant()
-{
-}
+= default;
 
 void RefreshSettingsAssistant::initializePages()
 {

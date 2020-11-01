@@ -18,8 +18,7 @@ FollowUpReminderShowMessageJob::FollowUpReminderShowMessageJob(Akonadi::Item::Id
 }
 
 FollowUpReminderShowMessageJob::~FollowUpReminderShowMessageJob()
-{
-}
+= default;
 
 void FollowUpReminderShowMessageJob::start()
 {

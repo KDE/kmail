@@ -43,8 +43,7 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
 }
 
 DisplayMessageFormatActionMenu::~DisplayMessageFormatActionMenu()
-{
-}
+= default;
 
 void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat(QAction *act)
 {

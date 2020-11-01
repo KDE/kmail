@@ -9,8 +9,7 @@
 using namespace FollowUpReminder;
 
 FollowUpReminderInfo::FollowUpReminderInfo()
-{
-}
+= default;
 
 FollowUpReminderInfo::FollowUpReminderInfo(const KConfigGroup &config)
 {

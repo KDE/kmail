@@ -24,8 +24,7 @@ public:
     }
 
     ~ConfigModule() override
-    {
-    }
+    = default;
 
     void defaults() override
     {

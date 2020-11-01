@@ -19,8 +19,7 @@ FormatComboBox::FormatComboBox(QWidget *parent)
 }
 
 FormatComboBox::~FormatComboBox()
-{
-}
+= default;
 
 void FormatComboBox::setFormat(MailCommon::BackupJob::ArchiveType type)
 {

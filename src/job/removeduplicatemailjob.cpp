@@ -25,8 +25,7 @@ RemoveDuplicateMailJob::RemoveDuplicateMailJob(QItemSelectionModel *selectionMod
 }
 
 RemoveDuplicateMailJob::~RemoveDuplicateMailJob()
-{
-}
+= default;
 
 void RemoveDuplicateMailJob::start()
 {

@@ -18,8 +18,7 @@ SendLaterConfigureDialogTest::SendLaterConfigureDialogTest(QObject *parent)
 }
 
 SendLaterConfigureDialogTest::~SendLaterConfigureDialogTest()
-{
-}
+= default;
 
 void SendLaterConfigureDialogTest::initTestCase()
 {

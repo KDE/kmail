@@ -20,8 +20,7 @@ ValidateSendMailShortcut::ValidateSendMailShortcut(KActionCollection *actionColl
 }
 
 ValidateSendMailShortcut::~ValidateSendMailShortcut()
-{
-}
+= default;
 
 bool ValidateSendMailShortcut::validate()
 {

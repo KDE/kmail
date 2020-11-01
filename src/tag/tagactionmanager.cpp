@@ -45,8 +45,7 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
 }
 
 TagActionManager::~TagActionManager()
-{
-}
+= default;
 
 void TagActionManager::clearActions()
 {

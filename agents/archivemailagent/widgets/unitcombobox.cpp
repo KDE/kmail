@@ -17,8 +17,7 @@ UnitComboBox::UnitComboBox(QWidget *parent)
 }
 
 UnitComboBox::~UnitComboBox()
-{
-}
+= default;
 
 void UnitComboBox::setUnit(ArchiveMailInfo::ArchiveUnit unit)
 {

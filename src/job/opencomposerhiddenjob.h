@@ -13,8 +13,7 @@
 struct OpenComposerHiddenJobSettings
 {
     OpenComposerHiddenJobSettings()
-    {
-    }
+    = default;
 
     OpenComposerHiddenJobSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden)
         : mTo(to)

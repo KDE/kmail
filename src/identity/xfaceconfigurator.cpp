@@ -151,8 +151,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
 }
 
 XFaceConfigurator::~XFaceConfigurator()
-{
-}
+= default;
 
 bool XFaceConfigurator::isXFaceEnabled() const
 {

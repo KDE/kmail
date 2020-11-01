@@ -18,8 +18,7 @@ KMComposerUpdateTemplateJob::KMComposerUpdateTemplateJob(QObject *parent)
 }
 
 KMComposerUpdateTemplateJob::~KMComposerUpdateTemplateJob()
-{
-}
+= default;
 
 void KMComposerUpdateTemplateJob::start()
 {

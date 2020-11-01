@@ -20,8 +20,7 @@ SaveDraftJob::SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collec
 }
 
 SaveDraftJob::~SaveDraftJob()
-{
-}
+= default;
 
 void SaveDraftJob::start()
 {

@@ -14,8 +14,7 @@ FormatComboBoxTest::FormatComboBoxTest(QObject *parent)
 }
 
 FormatComboBoxTest::~FormatComboBoxTest()
-{
-}
+= default;
 
 void FormatComboBoxTest::shouldHaveDefaultValue()
 {

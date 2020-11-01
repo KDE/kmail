@@ -14,8 +14,7 @@ UnitComboBoxTest::UnitComboBoxTest(QObject *parent)
 }
 
 UnitComboBoxTest::~UnitComboBoxTest()
-{
-}
+= default;
 
 void UnitComboBoxTest::shouldHaveDefaultValue()
 {

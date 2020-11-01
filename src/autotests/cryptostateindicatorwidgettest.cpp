@@ -13,8 +13,7 @@ CryptoStateIndicatorWidgetTest::CryptoStateIndicatorWidgetTest(QObject *parent) 
 }
 
 CryptoStateIndicatorWidgetTest::~CryptoStateIndicatorWidgetTest()
-{
-}
+= default;
 
 void CryptoStateIndicatorWidgetTest::shouldHaveDefaultValue()
 {

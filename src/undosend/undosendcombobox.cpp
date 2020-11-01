@@ -14,8 +14,7 @@ UndoSendCombobox::UndoSendCombobox(QWidget *parent)
 }
 
 UndoSendCombobox::~UndoSendCombobox()
-{
-}
+= default;
 
 void UndoSendCombobox::initialize()
 {

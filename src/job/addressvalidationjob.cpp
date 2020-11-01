@@ -27,8 +27,7 @@ AddressValidationJob::AddressValidationJob(const QString &emailAddresses, QWidge
 }
 
 AddressValidationJob::~AddressValidationJob()
-{
-}
+= default;
 
 void AddressValidationJob::setDefaultDomain(const QString &domainName)
 {

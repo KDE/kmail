@@ -101,8 +101,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
 }
 
 ArchiveMailWidget::~ArchiveMailWidget()
-{
-}
+= default;
 
 void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
 {

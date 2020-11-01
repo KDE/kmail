@@ -70,8 +70,7 @@ SendLaterAgent::SendLaterAgent(const QString &id)
 }
 
 SendLaterAgent::~SendLaterAgent()
-{
-}
+= default;
 
 void SendLaterAgent::slotStartAgent()
 {

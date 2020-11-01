@@ -21,8 +21,7 @@ RemoveCollectionJob::RemoveCollectionJob(QObject *parent)
 }
 
 RemoveCollectionJob::~RemoveCollectionJob()
-{
-}
+= default;
 
 void RemoveCollectionJob::setMainWidget(KMMainWidget *mainWidget)
 {

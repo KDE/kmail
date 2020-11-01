@@ -24,8 +24,7 @@ RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
 }
 
 RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage()
-{
-}
+= default;
 
 void RefreshSettingsCleanupPage::cleanSettings()
 {

@@ -19,8 +19,7 @@ SaveAsFileJob::SaveAsFileJob(QObject *parent)
 }
 
 SaveAsFileJob::~SaveAsFileJob()
-{
-}
+= default;
 
 void SaveAsFileJob::start()
 {

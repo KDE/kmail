@@ -130,8 +130,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
 }
 
 AddArchiveMailDialog::~AddArchiveMailDialog()
-{
-}
+= default;
 
 void AddArchiveMailDialog::load(ArchiveMailInfo *info)
 {

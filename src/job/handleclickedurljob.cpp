@@ -20,8 +20,7 @@ HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
 }
 
 HandleClickedUrlJob::~HandleClickedUrlJob()
-{
-}
+= default;
 
 void HandleClickedUrlJob::start()
 {

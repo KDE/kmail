@@ -16,8 +16,7 @@ PotentialPhishingEmailWarningTest::PotentialPhishingEmailWarningTest(QObject *pa
 }
 
 PotentialPhishingEmailWarningTest::~PotentialPhishingEmailWarningTest()
-{
-}
+= default;
 
 void PotentialPhishingEmailWarningTest::shouldHaveDefaultValue()
 {

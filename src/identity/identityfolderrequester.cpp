@@ -16,8 +16,7 @@ IdentityFolderRequester::IdentityFolderRequester(QWidget *parent)
 }
 
 IdentityFolderRequester::~IdentityFolderRequester()
-{
-}
+= default;
 
 void IdentityFolderRequester::setIsInvalidFolder(const Akonadi::Collection &col)
 {

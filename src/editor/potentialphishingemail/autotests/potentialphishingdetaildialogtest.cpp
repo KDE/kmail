@@ -16,8 +16,7 @@ PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *pa
 }
 
 PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
-{
-}
+= default;
 
 void PotentialPhishingDetailDialogTest::initTestCase()
 {

@@ -21,8 +21,7 @@ RemoveDuplicateMessageInFolderAndSubFolderJob::RemoveDuplicateMessageInFolderAnd
 }
 
 RemoveDuplicateMessageInFolderAndSubFolderJob::~RemoveDuplicateMessageInFolderAndSubFolderJob()
-{
-}
+= default;
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::start()
 {

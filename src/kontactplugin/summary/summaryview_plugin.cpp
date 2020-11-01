@@ -69,8 +69,7 @@ void SummaryView::syncAccount(QAction *act)
 }
 
 SummaryView::~SummaryView()
-{
-}
+= default;
 
 void SummaryView::doSync()
 {

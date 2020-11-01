@@ -17,8 +17,7 @@ PotentialPhishingEmailJobTest::PotentialPhishingEmailJobTest(QObject *parent)
 }
 
 PotentialPhishingEmailJobTest::~PotentialPhishingEmailJobTest()
-{
-}
+= default;
 
 void PotentialPhishingEmailJobTest::shouldNotStartIfNoEmails()
 {

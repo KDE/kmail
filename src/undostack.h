@@ -24,8 +24,7 @@ class UndoInfo
 {
 public:
     UndoInfo()
-    {
-    }
+    = default;
 
     int id = -1;
     Akonadi::Item::List items;

@@ -14,8 +14,7 @@ KActionMenuTransportTest::KActionMenuTransportTest(QObject *parent)
 }
 
 KActionMenuTransportTest::~KActionMenuTransportTest()
-{
-}
+= default;
 
 void KActionMenuTransportTest::shouldHaveDefaultValue()
 {

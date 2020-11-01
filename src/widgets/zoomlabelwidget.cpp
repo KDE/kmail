@@ -13,8 +13,7 @@ ZoomLabelWidget::ZoomLabelWidget(QWidget *parent)
 }
 
 ZoomLabelWidget::~ZoomLabelWidget()
-{
-}
+= default;
 
 void ZoomLabelWidget::setZoom(qreal zoomFactor)
 {

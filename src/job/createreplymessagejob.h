@@ -17,8 +17,7 @@
 struct KMAILTESTS_TESTS_EXPORT CreateReplyMessageJobSettings
 {
     CreateReplyMessageJobSettings()
-    {
-    }
+    = default;
 
     QUrl url;
     QString selection;

@@ -23,8 +23,7 @@ public:
     }
 
     ~ConfigModuleTab()
-    {
-    }
+    = default;
 
     virtual void save() = 0;
     void defaults();
@@ -66,8 +65,7 @@ class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule
 public:
     explicit ConfigModuleWithTabs(QWidget *parent = nullptr);
     ~ConfigModuleWithTabs() override
-    {
-    }
+    = default;
 
     // don't reimplement any of those methods
     void load() override;

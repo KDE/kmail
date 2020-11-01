@@ -10,8 +10,7 @@
 #include <QDir>
 
 ArchiveMailInfo::ArchiveMailInfo()
-{
-}
+= default;
 
 ArchiveMailInfo::ArchiveMailInfo(const KConfigGroup &config)
 {
@@ -32,8 +31,7 @@ ArchiveMailInfo::ArchiveMailInfo(const ArchiveMailInfo &info)
 }
 
 ArchiveMailInfo::~ArchiveMailInfo()
-{
-}
+= default;
 
 ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
 {

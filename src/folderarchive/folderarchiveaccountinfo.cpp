@@ -7,8 +7,7 @@
 
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo()
-{
-}
+= default;
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo(const KConfigGroup &config)
 {
@@ -16,8 +15,7 @@ FolderArchiveAccountInfo::FolderArchiveAccountInfo(const KConfigGroup &config)
 }
 
 FolderArchiveAccountInfo::~FolderArchiveAccountInfo()
-{
-}
+= default;
 
 bool FolderArchiveAccountInfo::isValid() const
 {

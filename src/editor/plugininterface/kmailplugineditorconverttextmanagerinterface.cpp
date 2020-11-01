@@ -16,8 +16,7 @@ KMailPluginEditorConvertTextManagerInterface::KMailPluginEditorConvertTextManage
 }
 
 KMailPluginEditorConvertTextManagerInterface::~KMailPluginEditorConvertTextManagerInterface()
-{
-}
+= default;
 
 void KMailPluginEditorConvertTextManagerInterface::enableDisablePluginActions(bool richText)
 {

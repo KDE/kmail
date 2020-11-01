@@ -150,8 +150,7 @@ KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, Ke
 }
 
 KeyGenerationJob::~KeyGenerationJob()
-{
-}
+= default;
 
 void KeyGenerationJob::slotCancel()
 {
@@ -195,8 +194,7 @@ KeySelectionCombo::KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, 
 }
 
 KeySelectionCombo::~KeySelectionCombo()
-{
-}
+= default;
 
 void KeySelectionCombo::setIdentity(const QString &name, const QString &email)
 {

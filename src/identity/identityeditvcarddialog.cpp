@@ -49,8 +49,7 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
 }
 
 IdentityEditVcardDialog::~IdentityEditVcardDialog()
-{
-}
+= default;
 
 void IdentityEditVcardDialog::slotDeleteCurrentVCard()
 {

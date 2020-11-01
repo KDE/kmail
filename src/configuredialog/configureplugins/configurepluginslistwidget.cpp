@@ -102,8 +102,7 @@ ConfigurePluginsListWidget::ConfigurePluginsListWidget(QWidget *parent)
 }
 
 ConfigurePluginsListWidget::~ConfigurePluginsListWidget()
-{
-}
+= default;
 
 void ConfigurePluginsListWidget::save()
 {

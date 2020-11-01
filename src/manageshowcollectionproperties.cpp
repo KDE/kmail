@@ -37,8 +37,7 @@ ManageShowCollectionProperties::ManageShowCollectionProperties(KMMainWidget *mai
 }
 
 ManageShowCollectionProperties::~ManageShowCollectionProperties()
-{
-}
+= default;
 
 void ManageShowCollectionProperties::slotCollectionProperties()
 {

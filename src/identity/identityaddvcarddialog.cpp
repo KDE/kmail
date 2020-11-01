@@ -102,8 +102,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
 }
 
 IdentityAddVcardDialog::~IdentityAddVcardDialog()
-{
-}
+= default;
 
 IdentityAddVcardDialog::DuplicateMode IdentityAddVcardDialog::duplicateMode() const
 {

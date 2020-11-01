@@ -63,8 +63,7 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
 }
 
 ArchiveMailAgent::~ArchiveMailAgent()
-{
-}
+= default;
 
 void ArchiveMailAgent::setEnableAgent(bool enabled)
 {

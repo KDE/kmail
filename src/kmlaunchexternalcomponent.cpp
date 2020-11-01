@@ -29,8 +29,7 @@ KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObj
 }
 
 KMLaunchExternalComponent::~KMLaunchExternalComponent()
-{
-}
+= default;
 
 void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {

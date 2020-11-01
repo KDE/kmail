@@ -21,8 +21,7 @@ TaskAttribute::TaskAttribute(Akonadi::Item::Id id)
 }
 
 TaskAttribute::~TaskAttribute()
-{
-}
+= default;
 
 TaskAttribute *TaskAttribute::clone() const
 {

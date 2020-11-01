@@ -23,8 +23,7 @@ CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, QObject *parent)
 }
 
 CreateTaskJob::~CreateTaskJob()
-{
-}
+= default;
 
 void CreateTaskJob::start()
 {

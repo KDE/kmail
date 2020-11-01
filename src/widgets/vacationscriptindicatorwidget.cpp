@@ -25,8 +25,7 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
 }
 
 ServerLabel::~ServerLabel()
-{
-}
+= default;
 
 void ServerLabel::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -45,8 +44,7 @@ VacationLabel::VacationLabel(const QString &text, QWidget *parent)
 }
 
 VacationLabel::~VacationLabel()
-{
-}
+= default;
 
 void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -60,8 +58,7 @@ VacationScriptIndicatorWidget::VacationScriptIndicatorWidget(QWidget *parent)
 }
 
 VacationScriptIndicatorWidget::~VacationScriptIndicatorWidget()
-{
-}
+= default;
 
 void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const QString &serverName)
 {

@@ -79,8 +79,7 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
 }
 
 FollowUpReminderInfoWidget::~FollowUpReminderInfoWidget()
-{
-}
+= default;
 
 void FollowUpReminderInfoWidget::setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &infoList)
 {

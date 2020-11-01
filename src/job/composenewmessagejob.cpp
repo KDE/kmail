@@ -19,8 +19,7 @@ ComposeNewMessageJob::ComposeNewMessageJob(QObject *parent)
 }
 
 ComposeNewMessageJob::~ComposeNewMessageJob()
-{
-}
+= default;
 
 void ComposeNewMessageJob::setCurrentCollection(const Akonadi::Collection &col)
 {

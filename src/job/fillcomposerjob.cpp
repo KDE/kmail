@@ -19,8 +19,7 @@ FillComposerJob::FillComposerJob(QObject *parent)
 }
 
 FillComposerJob::~FillComposerJob()
-{
-}
+= default;
 
 void FillComposerJob::start()
 {

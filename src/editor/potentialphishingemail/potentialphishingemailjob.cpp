@@ -16,8 +16,7 @@ PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
 }
 
 PotentialPhishingEmailJob::~PotentialPhishingEmailJob()
-{
-}
+= default;
 
 void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
 {

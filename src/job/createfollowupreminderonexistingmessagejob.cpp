@@ -17,8 +17,7 @@ CreateFollowupReminderOnExistingMessageJob::CreateFollowupReminderOnExistingMess
 }
 
 CreateFollowupReminderOnExistingMessageJob::~CreateFollowupReminderOnExistingMessageJob()
-{
-}
+= default;
 
 void CreateFollowupReminderOnExistingMessageJob::start()
 {

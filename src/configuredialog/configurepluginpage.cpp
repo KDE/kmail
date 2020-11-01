@@ -22,8 +22,7 @@ ConfigurePluginPage::ConfigurePluginPage(QWidget *parent)
 }
 
 ConfigurePluginPage::~ConfigurePluginPage()
-{
-}
+= default;
 
 void ConfigurePluginPage::save()
 {

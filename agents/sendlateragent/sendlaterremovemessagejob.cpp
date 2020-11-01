@@ -15,8 +15,7 @@ SendLaterRemoveMessageJob::SendLaterRemoveMessageJob(const QVector<Akonadi::Item
 }
 
 SendLaterRemoveMessageJob::~SendLaterRemoveMessageJob()
-{
-}
+= default;
 
 void SendLaterRemoveMessageJob::start()
 {

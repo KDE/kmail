@@ -28,8 +28,7 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
 }
 
 PotentialPhishingDetailWidget::~PotentialPhishingDetailWidget()
-{
-}
+= default;
 
 void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
 {

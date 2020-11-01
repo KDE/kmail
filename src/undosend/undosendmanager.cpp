@@ -14,8 +14,7 @@ UndoSendManager::UndoSendManager(QObject *parent)
 }
 
 UndoSendManager::~UndoSendManager()
-{
-}
+= default;
 
 UndoSendManager *UndoSendManager::self()
 {

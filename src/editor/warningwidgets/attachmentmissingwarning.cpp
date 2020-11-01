@@ -30,8 +30,7 @@ AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
 }
 
 AttachmentMissingWarning::~AttachmentMissingWarning()
-{
-}
+= default;
 
 void AttachmentMissingWarning::slotAttachFile()
 {

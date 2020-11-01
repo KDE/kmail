@@ -171,8 +171,7 @@ KMCommand::KMCommand(QWidget *parent, const Akonadi::Item::List &msgList)
 }
 
 KMCommand::~KMCommand()
-{
-}
+= default;
 
 KMCommand::Result KMCommand::result() const
 {
@@ -571,8 +570,7 @@ KMEditItemCommand::KMEditItemCommand(QWidget *parent, const Akonadi::Item &msg, 
 }
 
 KMEditItemCommand::~KMEditItemCommand()
-{
-}
+= default;
 
 KMCommand::Result KMEditItemCommand::execute()
 {

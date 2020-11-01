@@ -18,8 +18,7 @@ KMComposerCreateNewComposerJob::KMComposerCreateNewComposerJob(QObject *parent)
 }
 
 KMComposerCreateNewComposerJob::~KMComposerCreateNewComposerJob()
-{
-}
+= default;
 
 void KMComposerCreateNewComposerJob::start()
 {

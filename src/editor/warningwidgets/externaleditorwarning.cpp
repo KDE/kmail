@@ -19,5 +19,4 @@ ExternalEditorWarning::ExternalEditorWarning(QWidget *parent)
 }
 
 ExternalEditorWarning::~ExternalEditorWarning()
-{
-}
+= default;

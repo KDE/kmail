@@ -62,8 +62,7 @@ Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
 }
 
 Attachment::~Attachment()
-{
-}
+= default;
 
 //----------------------------------------------------------------------------//
 
@@ -82,8 +81,7 @@ KTNEFView::KTNEFView(QWidget *parent)
 }
 
 KTNEFView::~KTNEFView()
-{
-}
+= default;
 
 void KTNEFView::setAttachments(const QList<KTNEFAttach *> &list)
 {

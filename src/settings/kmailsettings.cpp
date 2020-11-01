@@ -41,5 +41,4 @@ void KMailSettings::slotSyncNow()
 }
 
 KMailSettings::~KMailSettings()
-{
-}
+= default;

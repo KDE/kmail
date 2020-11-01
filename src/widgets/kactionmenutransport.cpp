@@ -18,8 +18,7 @@ KActionMenuTransport::KActionMenuTransport(QObject *parent)
 }
 
 KActionMenuTransport::~KActionMenuTransport()
-{
-}
+= default;
 
 void KActionMenuTransport::slotCheckTransportMenu()
 {

@@ -20,8 +20,7 @@ class CollectionQuotaWidget : public QWidget
 public:
     explicit CollectionQuotaWidget(QWidget *parent);
     ~CollectionQuotaWidget()
-    {
-    }
+    = default;
 
     void setQuotaInfo(qint64 currentValue, qint64 maxValue);
 

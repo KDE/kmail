@@ -16,8 +16,7 @@ KMailPluginInterface::KMailPluginInterface(QObject *parent)
 }
 
 KMailPluginInterface::~KMailPluginInterface()
-{
-}
+= default;
 
 KMailPluginInterface *KMailPluginInterface::self()
 {

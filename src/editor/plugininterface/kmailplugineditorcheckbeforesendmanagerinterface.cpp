@@ -17,8 +17,7 @@ KMailPluginEditorCheckBeforeSendManagerInterface::KMailPluginEditorCheckBeforeSe
 }
 
 KMailPluginEditorCheckBeforeSendManagerInterface::~KMailPluginEditorCheckBeforeSendManagerInterface()
-{
-}
+= default;
 
 QWidget *KMailPluginEditorCheckBeforeSendManagerInterface::parentWidget() const
 {

@@ -19,8 +19,7 @@ KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *pa
 }
 
 KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface()
-{
-}
+= default;
 
 KPIMTextEdit::RichTextEditor *KMailPluginEditorManagerInterface::richTextEditor() const
 {

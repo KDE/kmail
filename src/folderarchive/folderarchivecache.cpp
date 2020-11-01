@@ -13,8 +13,7 @@ FolderArchiveCache::FolderArchiveCache(QObject *parent)
 }
 
 FolderArchiveCache::~FolderArchiveCache()
-{
-}
+= default;
 
 void FolderArchiveCache::clearCache()
 {
