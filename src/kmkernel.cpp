@@ -1168,7 +1168,7 @@ void KMKernel::action(bool mailto, bool check, bool startInTray, const QString &
                       const QString &inReplyTo, const QString &identity)
 {
     if (mailto) {
-        openComposer(to, cc, bcc, subj, body, 0,
+        openComposer(to, cc, bcc, subj, body, false,
                      messageFile.toLocalFile(), QUrl::toStringList(attachURLs),
                      customHeaders, replyTo, inReplyTo, identity);
     } else {
