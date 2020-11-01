@@ -137,7 +137,7 @@ static void showJobError(KJob *job)
     assert(job);
     // we can be called from the KJob::kill, where we are no longer a KIO::Job
     // so better safe than sorry
-    KIO::Job *kiojob = qobject_cast<KIO::Job *>(job);
+    auto *kiojob = qobject_cast<KIO::Job *>(job);
     if (kiojob && kiojob->uiDelegate()) {
         kiojob->uiDelegate()->showErrorMessage();
     } else {
@@ -433,7 +433,7 @@ KMCommand::Result KMMailtoReplyCommand::execute()
     settings.replyStrategy = MessageComposer::ReplyNone;
     settings.replyAsHtml = mReplyAsHtml;
 
-    CreateReplyMessageJob *job = new CreateReplyMessageJob;
+    auto *job = new CreateReplyMessageJob;
     job->setSettings(settings);
     job->start();
 
@@ -471,7 +471,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
     settings.msg = msg;
     settings.url = mUrl;
 
-    CreateForwardMessageJob *job = new CreateForwardMessageJob;
+    auto *job = new CreateForwardMessageJob;
     job->setSettings(settings);
     job->start();
     return OK;
@@ -587,7 +587,7 @@ KMCommand::Result KMEditItemCommand::execute()
 
     if (mDeleteFromSource) {
         setDeletesItself(true);
-        Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob(item);
+        auto *job = new Akonadi::ItemDeleteJob(item);
         connect(job, &KIO::Job::result, this, &KMEditItemCommand::slotDeleteItem);
     }
     KMail::Composer *win = KMail::makeComposer();
@@ -776,7 +776,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         bool multipleMessages = true;
         int endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "), startOfMessage);
         while (endOfMessage != -1) {
-            KMime::Message *msg = new KMime::Message;
+            auto *msg = new KMime::Message;
             msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
             msg->parse();
             if (!msg->hasContent()) {
@@ -793,7 +793,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         if (endOfMessage == -1) {
             endOfMessage = mMsgString.length();
             multipleMessages = false;
-            KMime::Message *msg = new KMime::Message;
+            auto *msg = new KMime::Message;
             msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
             msg->parse();
             if (!msg->hasContent()) {
@@ -850,7 +850,7 @@ KMCommand::Result KMReplyCommand::execute()
     settings.replyAsHtml = mReplyAsHtml;
     qDebug() << " settings " << mReplyAsHtml;
 
-    CreateReplyMessageJob *job = new CreateReplyMessageJob;
+    auto *job = new CreateReplyMessageJob;
     job->setSettings(settings);
     job->start();
 
@@ -902,7 +902,7 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
     settings.templateStr = mTemplate;
     settings.selection = mSelection;
 
-    CreateForwardMessageJob *job = new CreateForwardMessageJob;
+    auto *job = new CreateForwardMessageJob;
     job->setSettings(settings);
     job->start();
     return OK;
@@ -1055,7 +1055,7 @@ KMCommand::Result KMRedirectCommand::execute()
         factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
 
         if (transportId == -1) {
-            const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+            const auto *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
             if (transportAttribute) {
                 transportId = transportAttribute->transportId();
                 const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById(transportId);
@@ -1065,7 +1065,7 @@ KMCommand::Result KMRedirectCommand::execute()
             }
         }
 
-        const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
+        const auto *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
         QString fcc;
         if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
             fcc = QString::number(sentAttribute->moveToCollection().id());
@@ -1105,7 +1105,7 @@ KMPrintCommand::KMPrintCommand(QWidget *parent, const KMPrintCommandInfo &comman
 
 KMCommand::Result KMPrintCommand::execute()
 {
-    KMReaderWin *printerWin = new KMReaderWin(nullptr, parentWidget(), nullptr);
+    auto *printerWin = new KMReaderWin(nullptr, parentWidget(), nullptr);
     printerWin->setPrinting(true);
     printerWin->readConfig();
     printerWin->setPrintElementBackground(MessageViewer::MessageViewerSettings::self()->printBackgroundColorImages());
@@ -1195,7 +1195,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     if (itemsToModify.isEmpty()) {
         slotModifyItemDone(nullptr);   // pretend we did something
     } else {
-        Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
+        auto *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
         modifyJob->disableRevisionCheck();
         modifyJob->setIgnorePayload(true);
         connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &KMSetStatusCommand::slotModifyItemDone);
@@ -1223,7 +1223,7 @@ KMCommand::Result KMSetTagCommand::execute()
 {
     for (const Akonadi::Tag &tag : qAsConst(mTags)) {
         if (!tag.isValid()) {
-            Akonadi::TagCreateJob *createJob = new Akonadi::TagCreateJob(tag, this);
+            auto *createJob = new Akonadi::TagCreateJob(tag, this);
             connect(createJob, &Akonadi::TagCreateJob::result, this, &KMSetTagCommand::slotModifyItemDone);
         } else {
             mCreatedTags << tag;
@@ -1269,7 +1269,7 @@ void KMSetTagCommand::setTags()
         }
         itemsToModify << item;
     }
-    Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
+    auto *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
     modifyJob->disableRevisionCheck();
     modifyJob->setIgnorePayload(true);
     connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &KMSetTagCommand::slotModifyItemDone);
@@ -1501,7 +1501,7 @@ KMCommand::Result KMMoveCommand::execute()
     Akonadi::Item::List retrievedList = retrievedMsgs();
     if (!retrievedList.isEmpty()) {
         if (mDestFolder.isValid()) {
-            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(retrievedList, mDestFolder, this);
+            auto *job = new Akonadi::ItemMoveJob(retrievedList, mDestFolder, this);
             connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
 
             // group by source folder for undo
@@ -1522,7 +1522,7 @@ KMCommand::Result KMMoveCommand::execute()
                 kmkernel->undoStack()->addMsgToAction(undoId, item);
             }
         } else {
-            Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob(retrievedList, this);
+            auto *job = new Akonadi::ItemDeleteJob(retrievedList, this);
             connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
         }
     } else {
@@ -1627,7 +1627,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     for (auto trashIt = mTrashFolders.begin(), end = mTrashFolders.end(); trashIt != end; ++trashIt) {
         const auto trash = trashIt.key();
         if (trash.isValid()) {
-            Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(*trashIt, trash, this);
+            auto *job = new Akonadi::ItemMoveJob(*trashIt, trash, this);
             connect(job, &KIO::Job::result, this, &KMTrashMsgCommand::slotMoveResult);
             mPendingMoves.push_back(job);
 
@@ -1649,7 +1649,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
                 kmkernel->undoStack()->addMsgToAction(undoId, item);
             }
         } else {
-            Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob(*trashIt, this);
+            auto *job = new Akonadi::ItemDeleteJob(*trashIt, this);
             connect(job, &KIO::Job::result, this, &KMTrashMsgCommand::slotDeleteResult);
             mPendingDeletes.push_back(job);
         }

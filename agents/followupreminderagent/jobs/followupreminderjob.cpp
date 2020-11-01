@@ -30,7 +30,7 @@ void FollowUpReminderJob::start()
         deleteLater();
         return;
     }
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mItem);
+    auto *job = new Akonadi::ItemFetchJob(mItem);
     job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Envelope, true);
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 

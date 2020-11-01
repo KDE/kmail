@@ -61,57 +61,57 @@ ComposerPage::ComposerPage(QWidget *parent)
     //
     // "General" tab:
     //
-    GeneralTab *generalTab = new GeneralTab();
+    auto *generalTab = new GeneralTab();
     addTab(generalTab, i18nc("General settings for the composer.", "General"));
     addConfig(KMailSettings::self(), generalTab);
 
     //
     // "Templates" tab:
     //
-    TemplatesTab *templatesTab = new TemplatesTab();
+    auto *templatesTab = new TemplatesTab();
     addTab(templatesTab, i18n("Standard Templates"));
 
     //
     // "Custom Templates" tab:
     //
-    CustomTemplatesTab *customTemplatesTab = new CustomTemplatesTab();
+    auto *customTemplatesTab = new CustomTemplatesTab();
     addTab(customTemplatesTab, i18n("Custom Templates"));
 
     //
     // "Subject" tab:
     //
-    SubjectTab *subjectTab = new SubjectTab();
+    auto *subjectTab = new SubjectTab();
     addTab(subjectTab, i18nc("Settings regarding the subject when composing a message.", "Subject"));
     addConfig(KMailSettings::self(), subjectTab);
 
     //
     // "Charset" tab:
     //
-    CharsetTab *charsetTab = new CharsetTab();
+    auto *charsetTab = new CharsetTab();
     addTab(charsetTab, i18n("Charset"));
 
     //
     // "Headers" tab:
     //
-    HeadersTab *headersTab = new HeadersTab();
+    auto *headersTab = new HeadersTab();
     addTab(headersTab, i18n("Headers"));
 
     //
     // "Attachments" tab:
     //
-    AttachmentsTab *attachmentsTab = new AttachmentsTab();
+    auto *attachmentsTab = new AttachmentsTab();
     addTab(attachmentsTab, i18nc("Config->Composer->Attachments", "Attachments"));
 
     //
     // "autocorrection" tab:
     //
-    AutoCorrectionTab *autoCorrectionTab = new AutoCorrectionTab();
+    auto *autoCorrectionTab = new AutoCorrectionTab();
     addTab(autoCorrectionTab, i18n("Autocorrection"));
 
     //
     // "autoresize" tab:
     //
-    AutoImageResizeTab *autoImageResizeTab = new AutoImageResizeTab();
+    auto *autoImageResizeTab = new AutoImageResizeTab();
     addTab(autoImageResizeTab, i18n("Auto Resize Image"));
 }
 
@@ -124,11 +124,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     // Main layout
-    QGridLayout *grid = new QGridLayout(this);
+    auto *grid = new QGridLayout(this);
 
     // "Signature" group
     QGroupBox *groupBox = new QGroupBox(i18nc("@title:group", "Signature"));
-    QVBoxLayout *groupVBoxLayout = new QVBoxLayout();
+    auto *groupVBoxLayout = new QVBoxLayout();
 
     // "Automatically insert signature" checkbox
     mAutoAppSignFileCheck = new QCheckBox(
@@ -187,7 +187,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // "Format" group
     groupBox = new QGroupBox(i18nc("@title:group", "Format"));
-    QGridLayout *groupGridLayout = new QGridLayout();
+    auto *groupGridLayout = new QGridLayout();
     int row = 0;
 
     // "Only quote selected text when replying" checkbox
@@ -593,7 +593,7 @@ QString ComposerPage::TemplatesTab::helpAnchor() const
 ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
 
     mWidget = new TemplateParser::TemplatesConfiguration(this);
     vlay->addWidget(mWidget);
@@ -624,7 +624,7 @@ QString ComposerPage::CustomTemplatesTab::helpAnchor() const
 ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
 
     mWidget = new TemplateParser::CustomTemplates(kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection *>(), this);
     vlay->addWidget(mWidget);
@@ -653,7 +653,7 @@ QString ComposerPage::SubjectTab::helpAnchor() const
 ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
 
     QGroupBox *group = new QGroupBox(i18n("Repl&y Subject Prefixes"), this);
     QLayout *layout = new QVBoxLayout(group);
@@ -665,7 +665,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     label->setAlignment(Qt::AlignLeft);
 
     // row 1, string list editor:
-    PimCommon::SimpleStringListEditor::ButtonCode buttonCode
+    auto buttonCode
         = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
     mReplyListEditor
         = new PimCommon::SimpleStringListEditor(group, buttonCode,
@@ -750,7 +750,7 @@ QString ComposerPage::CharsetTab::helpAnchor() const
 ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
 
     QLabel *label = new QLabel(i18n("This list is checked for every outgoing message "
                                     "from the top to the bottom for a charset that "
@@ -864,7 +864,7 @@ QString ComposerPage::HeadersTab::helpAnchor() const
 ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
 
     // "Use custom Message-Id suffix" checkbox:
     mCreateOwnMessageIdCheck
@@ -873,7 +873,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     vlay->addWidget(mCreateOwnMessageIdCheck);
 
     // "Message-Id suffix" line edit and label:
-    QHBoxLayout *hlay = new QHBoxLayout(); // inherits spacing
+    auto *hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
     mMessageIdSuffixEdit = new QLineEdit(this);
     mMessageIdSuffixEdit->setClearButtonEnabled(true);
@@ -896,7 +896,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     vlay->addWidget(new QLabel(i18n("Define custom mime header fields:"), this));
 
     // "custom header fields" listbox:
-    QGridLayout *glay = new QGridLayout(); // inherits spacing
+    auto *glay = new QGridLayout(); // inherits spacing
     vlay->addLayout(glay);
     glay->setRowStretch(2, 1);
     glay->setColumnStretch(1, 1);
@@ -985,7 +985,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged(const QString &text)
 
 void ComposerPage::HeadersTab::slotNewMimeHeader()
 {
-    QTreeWidgetItem *listItem = new QTreeWidgetItem(mHeaderList);
+    auto *listItem = new QTreeWidgetItem(mHeaderList);
     mHeaderList->setCurrentItem(listItem);
     slotEmitChanged();
 }
@@ -1113,7 +1113,7 @@ QString ComposerPage::AttachmentsTab::helpAnchor() const
 ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
 
     // "Outlook compatible attachment naming" check box
     mOutlookCompatibleCheck
@@ -1142,7 +1142,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
 
     vlay->addWidget(label);
 
-    PimCommon::SimpleStringListEditor::ButtonCode buttonCode
+    auto buttonCode
         = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
     mAttachWordsListEditor
         = new PimCommon::SimpleStringListEditor(this, buttonCode,
@@ -1156,7 +1156,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled, label, &QWidget::setEnabled);
     connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled, mAttachWordsListEditor, &QWidget::setEnabled);
 
-    QHBoxLayout *layAttachment = new QHBoxLayout;
+    auto *layAttachment = new QHBoxLayout;
     label = new QLabel(i18n("Maximum Attachment Size:"), this);
     label->setAlignment(Qt::AlignLeft);
     layAttachment->addWidget(label);
@@ -1208,7 +1208,7 @@ void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
 ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
     vlay->setSpacing(0);
     vlay->setContentsMargins({});
     autocorrectionWidget = new PimCommon::AutoCorrectionWidget(this);
@@ -1242,7 +1242,7 @@ void ComposerPageAutoCorrectionTab::doResetToDefaultsOther()
 ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
     vlay->setSpacing(0);
     vlay->setContentsMargins({});
     autoResizeWidget = new MessageComposer::ImageScalingWidget(this);

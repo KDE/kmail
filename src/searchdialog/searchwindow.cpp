@@ -68,10 +68,10 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
 {
     setWindowTitle(i18nc("@title:window", "Find Messages"));
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
 
     QWidget *topWidget = new QWidget;
-    QVBoxLayout *lay = new QVBoxLayout(topWidget);
+    auto *lay = new QVBoxLayout(topWidget);
     lay->setContentsMargins({});
     mSearchPatternWidget = new SearchPatternWarning;
     lay->addWidget(mSearchPatternWidget);
@@ -142,7 +142,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     connect(mUi.mButtonBox->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &SearchWindow::slotClose);
 
     // give focus to the value field of the first search rule
-    KLineEdit *r = mUi.mPatternEdit->findChild<KLineEdit *>(QStringLiteral("regExpLineEdit"));
+    auto *r = mUi.mPatternEdit->findChild<KLineEdit *>(QStringLiteral("regExpLineEdit"));
     if (r) {
         r->setFocus();
     } else {
@@ -251,7 +251,7 @@ void SearchWindow::createSearchModel()
     mResultModel = new KMSearchMessageModel(monitor, this);
     mResultModel->setCollectionMonitored(mFolder);
     monitor->setParent(mResultModel);
-    QSortFilterProxyModel *sortproxy = new QSortFilterProxyModel(mResultModel);
+    auto *sortproxy = new QSortFilterProxyModel(mResultModel);
     sortproxy->setDynamicSortFilter(true);
     sortproxy->setSortRole(Qt::EditRole);
     sortproxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -325,7 +325,7 @@ void SearchWindow::activateFolder(const Akonadi::Collection &collection)
         if (collection.hasAttribute<Akonadi::SearchDescriptionAttribute>()) {
             currentFolderIsSearchFolder = true; // FIXME is there a better way to tell?
 
-            const Akonadi::SearchDescriptionAttribute *searchDescription = collection.attribute<Akonadi::SearchDescriptionAttribute>();
+            const auto *searchDescription = collection.attribute<Akonadi::SearchDescriptionAttribute>();
             mSearchPattern.deserialize(searchDescription->description());
 
             const QList<Akonadi::Collection::Id> lst = searchDescription->listCollection();
@@ -388,7 +388,7 @@ void SearchWindow::slotSearchCollectionsFetched(KJob *job)
     if (job->error()) {
         qCWarning(KMAIL_LOG) << job->errorString();
     }
-    Akonadi::CollectionFetchJob *fetchJob = static_cast<Akonadi::CollectionFetchJob *>(job);
+    auto *fetchJob = static_cast<Akonadi::CollectionFetchJob *>(job);
     const Akonadi::Collection::List lstCol = fetchJob->collections();
     for (const Akonadi::Collection &col : lstCol) {
         if (col.name() == mUi.mSearchFolderEdt->text()) {
@@ -499,7 +499,7 @@ void SearchWindow::doSearch()
         mSearchJob = searchJob;
     } else {
         qCDebug(KMAIL_LOG) << " use existing folder " << mFolder.id();
-        Akonadi::PersistentSearchAttribute *attribute = new Akonadi::PersistentSearchAttribute();
+        auto *attribute = new Akonadi::PersistentSearchAttribute();
         mFolder.setContentMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
         attribute->setQueryString(QString::fromLatin1(mQuery.toJSON()));
         attribute->setQueryCollections(searchCollections);
@@ -546,7 +546,7 @@ void SearchWindow::searchDone(KJob *job)
         // the server, for easy retrieval when editing it again
         const QByteArray search = mSearchPattern.serialize();
         Q_ASSERT(!search.isEmpty());
-        Akonadi::SearchDescriptionAttribute *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>(Akonadi::Collection::AddIfMissing);
+        auto *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>(Akonadi::Collection::AddIfMissing);
         searchDescription->setDescription(search);
         if (mUi.mChkMultiFolders->isChecked()) {
             searchDescription->setBaseCollection(Akonadi::Collection());
@@ -564,7 +564,7 @@ void SearchWindow::searchDone(KJob *job)
         }
         searchDescription->setRecursive(mUi.mChkSubFolders->isChecked());
         new Akonadi::CollectionModifyJob(mFolder, this);
-        Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mFolder, Akonadi::CollectionFetchJob::Base, this);
+        auto *fetch = new Akonadi::CollectionFetchJob(mFolder, Akonadi::CollectionFetchJob::Base, this);
         fetch->fetchScope().setIncludeStatistics(true);
         connect(fetch, &KJob::result, this, &SearchWindow::slotCollectionStatisticsRetrieved);
 
@@ -584,7 +584,7 @@ void SearchWindow::searchDone(KJob *job)
 
 void SearchWindow::slotCollectionStatisticsRetrieved(KJob *job)
 {
-    Akonadi::CollectionFetchJob *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    auto *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
     if (!fetch || fetch->error()) {
         return;
     }
@@ -650,7 +650,7 @@ void SearchWindow::renameSearchFolder()
         const QString oldFolderName = mFolder.name();
         if (oldFolderName != name) {
             mFolder.setName(name);
-            Akonadi::CollectionModifyJob *job = new Akonadi::CollectionModifyJob(mFolder, this);
+            auto *job = new Akonadi::CollectionModifyJob(mFolder, this);
             job->setProperty("oldfoldername", oldFolderName);
             connect(job, &Akonadi::CollectionModifyJob::result, this, &SearchWindow::slotSearchFolderRenameDone);
         }

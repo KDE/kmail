@@ -44,12 +44,12 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
     for (int i = 0; i < numberOfItems; ++i) {
         KConfigGroup group = mConfig->group(itemList.at(i));
 
-        FollowUpReminderInfo *info = new FollowUpReminderInfo(group);
+        auto *info = new FollowUpReminderInfo(group);
         if (info->isValid()) {
             if (!info->answerWasReceived()) {
                 mFollowUpReminderInfoList.append(info);
                 if (!mInitialize) {
-                    FollowUpReminderInfo *noAnswerInfo = new FollowUpReminderInfo(*info);
+                    auto *noAnswerInfo = new FollowUpReminderInfo(*info);
                     noAnswerList.append(noAnswerInfo);
                 } else {
                     delete info;
@@ -104,7 +104,7 @@ void FollowUpReminderManager::checkFollowUp(const Akonadi::Item &item, const Ako
         break;
     }
 
-    FollowUpReminderJob *job = new FollowUpReminderJob(this);
+    auto *job = new FollowUpReminderJob(this);
     connect(job, &FollowUpReminderJob::finished, this, &FollowUpReminderManager::slotCheckFollowUpFinished);
     job->setItem(item);
     job->start();
@@ -122,7 +122,7 @@ void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId
             info->setAnswerWasReceived(true);
             answerReceived(info->to());
             if (info->todoId() != -1) {
-                FollowUpReminderFinishTaskJob *job = new FollowUpReminderFinishTaskJob(info->todoId(), this);
+                auto *job = new FollowUpReminderFinishTaskJob(info->todoId(), this);
                 connect(job, &FollowUpReminderFinishTaskJob::finishTaskDone, this, &FollowUpReminderManager::slotFinishTaskDone);
                 connect(job, &FollowUpReminderFinishTaskJob::finishTaskFailed, this, &FollowUpReminderManager::slotFinishTaskFailed);
                 job->start();

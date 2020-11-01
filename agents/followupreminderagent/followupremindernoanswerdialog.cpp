@@ -34,7 +34,7 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     setAttribute(Qt::WA_DeleteOnClose);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
 
     QLabel *lab = new QLabel(i18n("You still wait an answer about this mail:"), this);
     mainLayout->addWidget(lab);

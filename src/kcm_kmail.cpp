@@ -27,7 +27,7 @@ extern "C"
 {
 Q_DECL_EXPORT KCModule *create_kmail_config_misc(QWidget *parent, const char *)
 {
-    MiscPage *page = new MiscPage(parent);
+    auto *page = new MiscPage(parent);
     page->setObjectName(QStringLiteral("kcmkmail_config_misc"));
     return page;
 }
@@ -37,7 +37,7 @@ extern "C"
 {
 Q_DECL_EXPORT KCModule *create_kmail_config_appearance(QWidget *parent, const char *)
 {
-    AppearancePage *page
+    auto *page
         = new AppearancePage(parent);
     page->setObjectName(QStringLiteral("kcmkmail_config_appearance"));
     return page;
@@ -48,7 +48,7 @@ extern "C"
 {
 Q_DECL_EXPORT KCModule *create_kmail_config_composer(QWidget *parent, const char *)
 {
-    ComposerPage *page = new ComposerPage(parent);
+    auto *page = new ComposerPage(parent);
     page->setObjectName(QStringLiteral("kcmkmail_config_composer"));
     return page;
 }
@@ -58,7 +58,7 @@ extern "C"
 {
 Q_DECL_EXPORT KCModule *create_kmail_config_accounts(QWidget *parent, const char *)
 {
-    AccountsPage *page = new AccountsPage(parent);
+    auto *page = new AccountsPage(parent);
     page->setObjectName(QStringLiteral("kcmkmail_config_accounts"));
     return page;
 }
@@ -68,7 +68,7 @@ extern "C"
 {
 Q_DECL_EXPORT KCModule *create_kmail_config_security(QWidget *parent, const char *)
 {
-    SecurityPage *page = new SecurityPage(parent);
+    auto *page = new SecurityPage(parent);
     page->setObjectName(QStringLiteral("kcmkmail_config_security"));
     return page;
 }
@@ -78,7 +78,7 @@ extern "C"
 {
 Q_DECL_EXPORT KCModule *create_kmail_config_plugins(QWidget *parent, const char *)
 {
-    ConfigurePluginPage *page = new ConfigurePluginPage(parent);
+    auto *page = new ConfigurePluginPage(parent);
     page->setObjectName(QStringLiteral("kcmkmail_config_plugins"));
     return page;
 }

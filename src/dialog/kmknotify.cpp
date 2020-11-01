@@ -24,7 +24,7 @@ KMKnotify::KMKnotify(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18nc("@title:window", "Notification"));
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
 
     m_comboNotify = new QComboBox(this);
     m_comboNotify->setSizeAdjustPolicy(QComboBox::AdjustToContents);

@@ -19,7 +19,7 @@ ExternalEditorWarningTest::ExternalEditorWarningTest(QObject *parent)
 void ExternalEditorWarningTest::shouldHaveDefaultValue()
 {
     QWidget *wid = new QWidget;
-    QHBoxLayout *layout = new QHBoxLayout(wid);
+    auto *layout = new QHBoxLayout(wid);
     ExternalEditorWarning w;
     layout->addWidget(&w);
     wid->show();

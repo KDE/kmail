@@ -35,9 +35,9 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     setModal(true);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    auto *topLayout = new QVBoxLayout(this);
 
-    QGridLayout *mainLayout = new QGridLayout;
+    auto *mainLayout = new QGridLayout;
     mainLayout->setContentsMargins({});
 
     int row = 0;
@@ -84,7 +84,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     dateLabel->setObjectName(QStringLiteral("date_label"));
     mainLayout->addWidget(dateLabel, row, 0);
 
-    QHBoxLayout *hlayout = new QHBoxLayout;
+    auto *hlayout = new QHBoxLayout;
     mDays = new QSpinBox(this);
     mDays->setMinimum(1);
     mDays->setMaximum(3600);

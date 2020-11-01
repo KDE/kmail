@@ -86,7 +86,7 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
             progressItem->setUsesBusyIndicator(true);
             progressItem->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
-            Akonadi::CollectionAttributesSynchronizationJob *sync
+            auto *sync
                 = new Akonadi::CollectionAttributesSynchronizationJob(col);
             sync->setProperty("collectionId", id);
             sync->setProperty("pageToShow", pageToShow);          // note for dialog later
@@ -113,7 +113,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesContinued(KJob *job
     QPointer<KPIM::ProgressItem> progressItem;
 
     if (job) {
-        Akonadi::CollectionAttributesSynchronizationJob *sync
+        auto *sync
             = qobject_cast<Akonadi::CollectionAttributesSynchronizationJob *>(job);
         Q_ASSERT(sync);
         if (sync->property("collectionId") != mMainWidget->currentCollection().id()) {
@@ -170,7 +170,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
     progressItem->setComplete();
     progressItem->setStatus(i18n("Done"));
 
-    Akonadi::CollectionFetchJob *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    auto *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
     Q_ASSERT(fetch);
     if (fetch->collections().isEmpty()) {
         qCWarning(KMAIL_LOG) << "no collection";

@@ -55,7 +55,7 @@ QString UndoStack::undoInfo() const
 
 int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
 {
-    UndoInfo *info = new UndoInfo;
+    auto *info = new UndoInfo;
     info->id = ++mLastId;
     info->srcFolder = srcFolder;
     info->destFolder = destFolder;
@@ -96,7 +96,7 @@ void UndoStack::undo()
     if (!mStack.isEmpty()) {
         UndoInfo *info = mStack.takeFirst();
         Q_EMIT undoStackChanged();
-        Akonadi::ItemMoveJob *job = new Akonadi::ItemMoveJob(info->items, info->srcFolder, this);
+        auto *job = new Akonadi::ItemMoveJob(info->items, info->srcFolder, this);
         connect(job, &Akonadi::ItemMoveJob::result, this, &UndoStack::slotMoveResult);
         delete info;
     } else {

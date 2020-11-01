@@ -180,7 +180,7 @@ void KeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
         return;
     }
 
-    KeySelectionCombo *combo = qobject_cast<KeySelectionCombo *>(parent());
+    auto *combo = qobject_cast<KeySelectionCombo *>(parent());
     combo->setDefaultKey(QLatin1String(result.fingerprint()));
     connect(combo, &KeySelectionCombo::keyListingFinished,
             this, &KeyGenerationJob::done);
@@ -249,7 +249,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18nc("@title:window", "Edit Identity"));
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
     connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &IdentityDialog::slotHelp);
@@ -266,7 +266,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     QWidget *page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
-    QVBoxLayout *vlay = new QVBoxLayout(page);
+    auto *vlay = new QVBoxLayout(page);
     vlay->setContentsMargins({});
     mTabWidget = new QTabWidget(page);
     mTabWidget->setObjectName(QStringLiteral("config-identity-tab"));
@@ -274,7 +274,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     QWidget *tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18nc("@title:tab General identity settings.", "General"));
-    QGridLayout *glay = new QGridLayout(tab);
+    auto *glay = new QGridLayout(tab);
     glay->setRowStretch(3, 1);
     glay->setColumnStretch(1, 1);
 
@@ -329,14 +329,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setWhatsThis(msg);
     mEmailEdit->setWhatsThis(msg);
 
-    PimCommon::EmailValidator *emailValidator = new PimCommon::EmailValidator(this);
+    auto *emailValidator = new PimCommon::EmailValidator(this);
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
     ++row;
     mAliasEdit = new KEditListWidget(tab);
 
-    PimCommon::EmailValidator *emailValidator1 = new PimCommon::EmailValidator(this);
+    auto *emailValidator1 = new PimCommon::EmailValidator(this);
     mAliasEdit->lineEdit()->setValidator(emailValidator1);
 
     glay->addWidget(mAliasEdit, row, 1);
@@ -472,7 +472,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     row = -1;
     tab = new QWidget(mTabWidget);
-    QVBoxLayout *advancedMainLayout = new QVBoxLayout(tab);
+    auto *advancedMainLayout = new QVBoxLayout(tab);
     mIdentityInvalidFolder = new IdentityInvalidFolder(tab);
     advancedMainLayout->addWidget(mIdentityInvalidFolder);
     mTabWidget->addTab(tab, i18nc("@title:tab Advanced identity settings.", "Advanced"));
@@ -607,12 +607,12 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "default domain" input field:
     ++row;
-    QHBoxLayout *hbox = new QHBoxLayout;
+    auto *hbox = new QHBoxLayout;
     mDefaultDomainEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mDefaultDomainEdit, this);
     mDefaultDomainEdit->setClearButtonEnabled(true);
     hbox->addWidget(mDefaultDomainEdit);
-    QToolButton *restoreDefaultDomainName = new QToolButton;
+    auto *restoreDefaultDomainName = new QToolButton;
     restoreDefaultDomainName->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
     restoreDefaultDomainName->setToolTip(i18n("Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
@@ -640,7 +640,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     tab = new QWidget(mTabWidget);
     vlay = new QVBoxLayout(tab);
 
-    QHBoxLayout *tlay = new QHBoxLayout();
+    auto *tlay = new QHBoxLayout();
     vlay->addLayout(tlay);
 
     mCustom = new QCheckBox(i18n("&Use custom message templates for this identity"), tab);
@@ -656,7 +656,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     vlay->addWidget(mWidget);
 
-    QHBoxLayout *btns = new QHBoxLayout();
+    auto *btns = new QHBoxLayout();
     mCopyGlobal = new QPushButton(i18n("&Copy Global Templates"), tab);
     mCopyGlobal->setEnabled(false);
     btns->addWidget(mCopyGlobal);
@@ -749,7 +749,7 @@ void IdentityDialog::slotAccepted()
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
     const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String(", ") + mBccEdit->text().trimmed() + QLatin1String(", ") + mCcEdit->text().trimmed();
-    AddressValidationJob *job = new AddressValidationJob(recipients, this, this);
+    auto *job = new AddressValidationJob(recipients, this, this);
     //Use default Value
     job->setDefaultDomain(mDefaultDomainEdit->text());
     job->setProperty("email", email);
@@ -1008,7 +1008,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     }
     if (collection.isValid()) {
         ident.setFcc(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("mail-folder-sent"));
         // It will also start a CollectionModifyJob
         Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::SentMail, collection);
@@ -1022,7 +1022,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     }
     if (collection.isValid()) {
         ident.setDrafts(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-properties"));
         // It will also start a CollectionModifyJob
         Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Drafts, collection);
@@ -1036,7 +1036,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     }
     if (collection.isValid()) {
         ident.setTemplates(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-new"));
         // It will also start a CollectionModifyJob
         Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Templates, collection);

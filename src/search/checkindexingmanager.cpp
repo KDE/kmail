@@ -64,7 +64,7 @@ void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
 
 void CheckIndexingManager::createJob()
 {
-    CheckIndexingJob *job = new CheckIndexingJob(mIndexedItems, this);
+    auto *job = new CheckIndexingJob(mIndexedItems, this);
     job->setCollection(mListCollection.at(mIndex));
     connect(job, &CheckIndexingJob::finished, this, &CheckIndexingManager::indexingFinished);
     job->start();

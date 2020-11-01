@@ -270,7 +270,7 @@ void KMSystemTray::updateStatus(int count)
 
 void KMSystemTray::slotSelectCollection(QAction *act)
 {
-    const Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
+    const auto id = act->data().value<Akonadi::Collection::Id>();
     kmkernel->selectCollectionFromId(id);
     KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
     if (!mainWidget) {

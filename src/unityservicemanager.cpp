@@ -170,7 +170,7 @@ void UnityServiceManager::initUnity()
 
     // QDBusConnectionInterface::isServiceRegistered blocks
     QDBusPendingCall listNamesCall = QDBusConnection::sessionBus().interface()->asyncCall(QStringLiteral("ListNames"));
-    QDBusPendingCallWatcher *callWatcher = new QDBusPendingCallWatcher(listNamesCall, this);
+    auto *callWatcher = new QDBusPendingCallWatcher(listNamesCall, this);
     connect(callWatcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
         QDBusPendingReply<QStringList> reply = *watcher;
         watcher->deleteLater();

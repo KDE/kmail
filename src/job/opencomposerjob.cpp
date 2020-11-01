@@ -83,7 +83,7 @@ void OpenComposerJob::start()
             mMsg->setBody(str);
             slotOpenComposer();
         } else {
-            TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+            auto *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
             connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &OpenComposerJob::slotOpenComposer);
             parser->setIdentityManager(KMKernel::self()->identityManager());
             parser->process(mMsg);
@@ -95,7 +95,7 @@ void OpenComposerJob::start()
         mMsg->parse();
         slotOpenComposer();
     } else {
-        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        auto *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
         connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &OpenComposerJob::slotOpenComposer);
         parser->setIdentityManager(KMKernel::self()->identityManager());
         parser->process(mMsg);

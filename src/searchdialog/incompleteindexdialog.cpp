@@ -98,7 +98,7 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
     : QDialog(parent)
     , mUi(new Ui::IncompleteIndexDialog)
 {
-    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    auto *mainLayout = new QHBoxLayout(this);
     mainLayout->setContentsMargins({});
     QWidget *w = new QWidget(this);
     mainLayout->addWidget(w);
@@ -107,16 +107,16 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
     mUi->setupUi(w);
 
     Akonadi::EntityTreeModel *etm = KMKernel::self()->entityTreeModel();
-    Akonadi::EntityMimeTypeFilterModel *mimeProxy = new Akonadi::EntityMimeTypeFilterModel(this);
+    auto *mimeProxy = new Akonadi::EntityMimeTypeFilterModel(this);
     mimeProxy->addMimeTypeInclusionFilter(Akonadi::Collection::mimeType());
     mimeProxy->setSourceModel(etm);
 
-    KDescendantsProxyModel *flatProxy = new KDescendantsProxyModel(this);
+    auto *flatProxy = new KDescendantsProxyModel(this);
     flatProxy->setDisplayAncestorData(true);
     flatProxy->setAncestorSeparator(QStringLiteral(" / "));
     flatProxy->setSourceModel(mimeProxy);
 
-    SearchCollectionProxyModel *proxy = new SearchCollectionProxyModel(unindexedCollections, this);
+    auto *proxy = new SearchCollectionProxyModel(unindexedCollections, this);
     proxy->setSourceModel(flatProxy);
 
     mUi->collectionView->setModel(proxy);

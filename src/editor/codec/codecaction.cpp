@@ -79,7 +79,7 @@ static QString selectCharset(KSelectAction *root, const QString &encoding)
 {
     const QList<QAction *> lstActs = root->actions();
     for (QAction *action : lstActs) {
-        KSelectAction *subMenu = qobject_cast<KSelectAction *>(action);
+        auto *subMenu = qobject_cast<KSelectAction *>(action);
         if (subMenu) {
             const QString codecNameToSet = selectCharset(subMenu, encoding);
             if (!codecNameToSet.isEmpty()) {

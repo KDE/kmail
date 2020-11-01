@@ -32,7 +32,7 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
 {
     mMessage = msg;
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     setWindowTitle(i18nc("@title:window", "Message Properties"));
     mListView = new QTreeWidget(this);
     mainLayout->addWidget(mListView);
@@ -43,7 +43,7 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &MessagePropertyDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &MessagePropertyDialog::reject);
     mainLayout->addWidget(buttonBox);
-    QPushButton *user1Button = new QPushButton;
+    auto *user1Button = new QPushButton;
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(user1Button, &QPushButton::clicked, this, &MessagePropertyDialog::slotSaveProperty);
 

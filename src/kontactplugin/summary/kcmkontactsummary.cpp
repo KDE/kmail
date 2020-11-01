@@ -79,7 +79,7 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     : KCModule(parent)
 {
     setButtons(NoAdditionalButton);
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    auto *layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
     QLabel *label
@@ -143,7 +143,7 @@ void KCMKontactSummary::load()
 
         QVariant var = it->property(QStringLiteral("X-KDE-KontactPluginHasSummary"));
         if (var.isValid() && var.toBool() == true) {
-            PluginItem *item = new PluginItem(*it, mPluginView);
+            auto *item = new PluginItem(*it, mPluginView);
 
             if (activeSummaries.contains(it->pluginName())) {
                 item->setCheckState(0, Qt::Checked);
@@ -160,7 +160,7 @@ void KCMKontactSummary::save()
 
     QTreeWidgetItemIterator it(mPluginView);
     while (*it) {
-        PluginItem *item = static_cast<PluginItem *>(*it);
+        auto *item = static_cast<PluginItem *>(*it);
         if (item->checkState(0) == Qt::Checked) {
             activeSummaries.append(item->pluginInfo().pluginName());
         }

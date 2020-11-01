@@ -26,7 +26,7 @@ FolderArchiveAgentCheckCollection::~FolderArchiveAgentCheckCollection()
 void FolderArchiveAgentCheckCollection::start()
 {
     Akonadi::Collection col(mInfo->archiveTopLevel());
-    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::FirstLevel);
+    auto *job = new Akonadi::CollectionFetchJob(col, Akonadi::CollectionFetchJob::FirstLevel);
     connect(job, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelDone);
 }
 
@@ -57,7 +57,7 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelD
         return;
     }
 
-    Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    auto *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
 
     const Akonadi::Collection::List cols = fetchJob->collections();
     for (const Akonadi::Collection &collection : cols) {
@@ -77,7 +77,7 @@ void FolderArchiveAgentCheckCollection::createNewFolder(const QString &name)
     collection.setName(name);
     collection.setContentMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
 
-    Akonadi::CollectionCreateJob *job = new Akonadi::CollectionCreateJob(collection);
+    auto *job = new Akonadi::CollectionCreateJob(collection);
     connect(job, &Akonadi::CollectionCreateJob::result, this, &FolderArchiveAgentCheckCollection::slotCreateNewFolder);
 }
 
@@ -88,6 +88,6 @@ void FolderArchiveAgentCheckCollection::slotCreateNewFolder(KJob *job)
         Q_EMIT checkFailed(i18n("Unable to create folder. %1", job->errorString()));
         return;
     }
-    Akonadi::CollectionCreateJob *createJob = qobject_cast<Akonadi::CollectionCreateJob *>(job);
+    auto *createJob = qobject_cast<Akonadi::CollectionCreateJob *>(job);
     Q_EMIT collectionIdFound(createJob->collection());
 }

@@ -17,7 +17,7 @@
 CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
     : QWidget(parent)
 {
-    QGridLayout *layout = new QGridLayout(this);
+    auto *layout = new QGridLayout(this);
 
     QLabel *lab = new QLabel(i18n("Usage:"), this);
     layout->addWidget(lab, 0, 0);

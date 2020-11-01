@@ -53,7 +53,7 @@ Akonadi::Item::Id Util::putRepliesInSameFolder(const Akonadi::Item &item)
 bool Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
 {
     if (url.scheme() == QLatin1String("mailto")) {
-        HandleClickedUrlJob *job = new HandleClickedUrlJob;
+        auto *job = new HandleClickedUrlJob;
         job->setUrl(url);
         job->setFolder(folder);
         job->setCurrentCollection(collection);

@@ -27,7 +27,7 @@ void PotentialPhishingDetailDialogTest::initTestCase()
 void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
 {
     PotentialPhishingDetailDialog dlg;
-    PotentialPhishingDetailWidget *w = dlg.findChild<PotentialPhishingDetailWidget *>(QStringLiteral("potentialphising_widget"));
+    auto *w = dlg.findChild<PotentialPhishingDetailWidget *>(QStringLiteral("potentialphising_widget"));
     QVERIFY(w);
 }
 

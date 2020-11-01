@@ -38,7 +38,7 @@ TagMonitorManager *TagMonitorManager::self()
 void TagMonitorManager::createActions()
 {
     if (mTags.isEmpty()) {
-        Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
+        auto *fetchJob = new Akonadi::TagFetchJob(this);
         fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
         connect(fetchJob, &Akonadi::TagFetchJob::result, this, &TagMonitorManager::finishedTagListing);
     }
@@ -49,7 +49,7 @@ void TagMonitorManager::finishedTagListing(KJob *job)
     if (job->error()) {
         qCWarning(KMAIL_LOG) << job->errorString();
     }
-    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
+    auto *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
     const Akonadi::Tag::List lstTags = fetchJob->tags();
     for (const Akonadi::Tag &result : lstTags) {
         mTags.append(MailCommon::Tag::fromAkonadi(result));

@@ -217,7 +217,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     connect(mVacationManager, &KSieveUi::VacationManager::updateVacationScriptStatus, this, qOverload<bool, const QString &>(&KMMainWidget::updateVacationScriptStatus));
 
 #ifdef WITH_KUSERFEEDBACK
-    KUserFeedback::NotificationPopup *userFeedBackNotificationPopup = new KUserFeedback::NotificationPopup(this);
+    auto *userFeedBackNotificationPopup = new KUserFeedback::NotificationPopup(this);
     userFeedBackNotificationPopup->setFeedbackProvider(kmkernel->userFeedbackProvider());
 #endif
 
@@ -281,7 +281,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
         }
     }
 
-    KMainWindow *mainWin = qobject_cast<KMainWindow *>(window());
+    auto *mainWin = qobject_cast<KMainWindow *>(window());
     mCurrentStatusBar = mainWin ? mainWin->statusBar() : nullptr;
     mVacationScriptIndicator = new KMail::VacationScriptIndicatorWidget(mCurrentStatusBar);
     mVacationScriptIndicator->hide();
@@ -336,7 +336,7 @@ QWidget *KMMainWidget::dkimWidgetInfo() const
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
 {
-    ETMViewStateSaver *saver = new ETMViewStateSaver;
+    auto *saver = new ETMViewStateSaver;
     saver->setView(mFolderTreeWidget->folderTreeView());
     const KConfigGroup cfg(KMKernel::self()->config(), "CollectionFolderView");
     mFolderTreeWidget->restoreHeaderState(cfg.readEntry("HeaderState", QByteArray()));
@@ -1319,7 +1319,7 @@ void KMMainWidget::slotCheckMailOnStartup()
 
 void KMMainWidget::slotCompose()
 {
-    ComposeNewMessageJob *job = new ComposeNewMessageJob;
+    auto *job = new ComposeNewMessageJob;
     job->setFolderSettings(mCurrentFolderSettings);
     job->setCurrentCollection(mCurrentCollection);
     job->start();
@@ -1345,7 +1345,7 @@ void KMMainWidget::slotShowNewFromTemplate()
 
     mTemplateMenu->menu()->clear();
 
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mTemplateFolder);
+    auto *job = new Akonadi::ItemFetchJob(mTemplateFolder);
     job->fetchScope().setAncestorRetrieval(ItemFetchScope::Parent);
     job->fetchScope().fetchFullPayload();
     connect(job, &Akonadi::ItemFetchJob::result, this, &KMMainWidget::slotDelayedShowNewFromTemplate);
@@ -1353,7 +1353,7 @@ void KMMainWidget::slotShowNewFromTemplate()
 
 void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
 {
-    Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    auto *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
 
     const Akonadi::Item::List items = fetchJob->items();
     const int numberOfItems = items.count();
@@ -1518,7 +1518,7 @@ void KMMainWidget::slotRemoveFolder()
         return;
     }
 
-    RemoveCollectionJob *job = new RemoveCollectionJob(this);
+    auto *job = new RemoveCollectionJob(this);
     connect(job, &RemoveCollectionJob::clearCurrentFolder, this, &KMMainWidget::slotClearCurrentFolder);
     job->setMainWidget(this);
     job->setCurrentFolder(mCurrentCollection);
@@ -1611,7 +1611,7 @@ void KMMainWidget::slotForwardAttachedMessage()
     if (selectedMessages.isEmpty()) {
         return;
     }
-    KMForwardAttachedCommand *command = new KMForwardAttachedCommand(
+    auto *command = new KMForwardAttachedCommand(
         this, selectedMessages, mCurrentFolderSettings->identity()
         );
 
@@ -1654,7 +1654,7 @@ void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReferenc
     }
     mMessagePane->markMessageItemsAsAboutToBeRemoved(ref, true);
     // And stuff them into a KMMoveCommand :)
-    KMMoveCommand *command = new KMMoveCommand(dest, selectMsg, ref);
+    auto *command = new KMMoveCommand(dest, selectMsg, ref);
     QObject::connect(
         command, &KMMoveCommand::moveDone,
         this, &KMMainWidget::slotMoveMessagesCompleted
@@ -1845,7 +1845,7 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
 
     // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
     // And stuff them into a KMTrashMsgCommand :)
-    KMTrashMsgCommand *command = new KMTrashMsgCommand(mCurrentCollection, select, ref);
+    auto *command = new KMTrashMsgCommand(mCurrentCollection, select, ref);
 
     QObject::connect(command, &KMTrashMsgCommand::moveDone,
                      this, &KMMainWidget::slotTrashMessagesCompleted);
@@ -2077,7 +2077,7 @@ void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl)
 
     qCDebug(KMAIL_LOG) << "Reply to All with template:" << tmpl;
 
-    KMReplyCommand *command = new KMReplyCommand(this,
+    auto *command = new KMReplyCommand(this,
                                                  msg,
                                                  MessageComposer::ReplyAll,
                                                  text,
@@ -2102,7 +2102,7 @@ void KMMainWidget::slotCustomForwardMsg(const QString &tmpl)
     }
     const QString text = mMsgView ? mMsgView->copyText() : QString();
     qCDebug(KMAIL_LOG) << "Forward with template:" << tmpl;
-    KMForwardCommand *command = new KMForwardCommand(
+    auto *command = new KMForwardCommand(
         this, selectedMessages, mCurrentFolderSettings->identity(), tmpl, text
         );
 
@@ -2222,7 +2222,7 @@ void KMMainWidget::slotApplyFilterOnFolder(bool recursive)
 {
     if (mCurrentCollection.isValid()) {
         const Akonadi::Collection::List cols = applyFilterOnCollection(recursive);
-        QAction *action = qobject_cast<QAction *>(sender());
+        auto *action = qobject_cast<QAction *>(sender());
         applyFilter(cols, action->property("filter_id").toString());
     }
 }
@@ -2295,7 +2295,7 @@ void KMMainWidget::slotSaveMsg()
     if (selectedMessages.isEmpty()) {
         return;
     }
-    KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand(this, selectedMessages);
+    auto *saveCommand = new KMSaveMsgCommand(this, selectedMessages);
     saveCommand->start();
 }
 
@@ -2558,7 +2558,7 @@ void KMMainWidget::slotMessageActivated(const Akonadi::Item &msg)
         win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
     }
     // Try to fetch the mail, even in offline mode, it might be cached
-    KMFetchMessageCommand *cmd = new KMFetchMessageCommand(this, msg, win ? win->viewer() : mMsgView->viewer(), win);
+    auto *cmd = new KMFetchMessageCommand(this, msg, win ? win->viewer() : mMsgView->viewer(), win);
     connect(cmd, &KMCommand::completed,
             this, &KMMainWidget::slotItemsFetchedForActivation);
     cmd->start();
@@ -2572,7 +2572,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
         return;
     }
 
-    KMFetchMessageCommand *fetchCmd = qobject_cast<KMFetchMessageCommand *>(command);
+    auto *fetchCmd = qobject_cast<KMFetchMessageCommand *>(command);
     const Item msg = fetchCmd->item();
     KMReaderMainWin *win = fetchCmd->readerMainWin();
 
@@ -2623,7 +2623,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const WebEngineVie
 
     const QString email = KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
     if (aUrl.scheme() == QLatin1String("mailto") && !email.isEmpty()) {
-        Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
+        auto *job = new Akonadi::ContactSearchJob(this);
         job->setLimit(1);
         job->setQuery(Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch);
         job->setProperty("msg", QVariant::fromValue(msg));
@@ -4501,7 +4501,7 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
             if (MessageViewer::MessageViewerSettings::self()->delayedMarkAsRead()
                 && MessageViewer::MessageViewerSettings::self()->delayedMarkTime() == 0) {
                 item.setFlag(Akonadi::MessageFlags::Seen);
-                Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob(item, this);
+                auto *modifyJob = new Akonadi::ItemModifyJob(item, this);
                 modifyJob->disableRevisionCheck();
                 modifyJob->setIgnorePayload(true);
             }
@@ -4568,7 +4568,7 @@ StandardMailActionManager *KMMainWidget::standardMailActionManager() const
 
 void KMMainWidget::slotRemoveDuplicates()
 {
-    RemoveDuplicateMailJob *job = new RemoveDuplicateMailJob(mFolderTreeWidget->folderTreeView()->selectionModel(), this, this);
+    auto *job = new RemoveDuplicateMailJob(mFolderTreeWidget->folderTreeView()->selectionModel(), this, this);
     job->start();
 }
 
@@ -4577,7 +4577,7 @@ void KMMainWidget::slotServerSideSubscription()
     if (!mCurrentCollection.isValid()) {
         return;
     }
-    PimCommon::ManageServerSideSubscriptionJob *job = new PimCommon::ManageServerSideSubscriptionJob(this);
+    auto *job = new PimCommon::ManageServerSideSubscriptionJob(this);
     job->setCurrentCollection(mCurrentCollection);
     job->setParentWidget(this);
     job->start();
@@ -4627,7 +4627,7 @@ void KMMainWidget::updatePaneTagComboBox()
 
 void KMMainWidget::slotCreateAddressBookContact()
 {
-    CreateNewContactJob *job = new CreateNewContactJob(this, this);
+    auto *job = new CreateNewContactJob(this, this);
     job->start();
 }
 
@@ -4713,7 +4713,7 @@ void KMMainWidget::slotCollectionRemoved(const Akonadi::Collection &col)
 void KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder()
 {
     if (mCurrentCollection.isValid()) {
-        MarkAllMessagesAsReadInFolderAndSubFolderJob *job = new MarkAllMessagesAsReadInFolderAndSubFolderJob(this);
+        auto *job = new MarkAllMessagesAsReadInFolderAndSubFolderJob(this);
         job->setTopLevelCollection(mCurrentCollection);
         job->start();
     }
@@ -4722,7 +4722,7 @@ void KMMainWidget::slotMarkAllMessageAsReadInCurrentFolderAndSubfolder()
 void KMMainWidget::slotRemoveDuplicateRecursive()
 {
     if (mCurrentCollection.isValid()) {
-        RemoveDuplicateMessageInFolderAndSubFolderJob *job = new RemoveDuplicateMessageInFolderAndSubFolderJob(this, this);
+        auto *job = new RemoveDuplicateMessageInFolderAndSubFolderJob(this, this);
         job->setTopLevelCollection(mCurrentCollection);
         job->start();
     }
@@ -4758,7 +4758,7 @@ void KMMainWidget::printCurrentMessage(bool preview)
         commandInfo.mShowSignatureDetails = messageView()->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
         commandInfo.mShowEncryptionDetails = messageView()->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
 
-        KMPrintCommand *command
+        auto *command
             = new KMPrintCommand(this, commandInfo);
         command->start();
     }

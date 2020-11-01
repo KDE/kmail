@@ -17,7 +17,7 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     : QWidget(parent)
     , mListWidget(new QListWidget(this))
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins({});
     QLabel *lab = new QLabel(i18n("Select email to put in whitelist:"), this);
     lab->setObjectName(QStringLiteral("label"));
@@ -37,7 +37,7 @@ void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
     QStringList emailsAdded;
     for (const QString &mail : lst) {
         if (!emailsAdded.contains(mail)) {
-            QListWidgetItem *item = new QListWidgetItem(mListWidget);
+            auto *item = new QListWidgetItem(mListWidget);
             item->setCheckState(Qt::Unchecked);
             item->setText(mail);
             emailsAdded << mail;

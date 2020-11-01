@@ -36,7 +36,7 @@ void FollowUpReminderFinishTaskJob::start()
 void FollowUpReminderFinishTaskJob::closeTodo()
 {
     Akonadi::Item item(mTodoId);
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(item, this);
+    auto *job = new Akonadi::ItemFetchJob(item, this);
     connect(job, &Akonadi::ItemFetchJob::result, this, &FollowUpReminderFinishTaskJob::slotItemFetchJobDone);
 }
 
@@ -63,7 +63,7 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
         Akonadi::Item updateItem = item;
         updateItem.setPayload<KCalendarCore::Todo::Ptr>(todo);
 
-        Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob(updateItem);
+        auto *job = new Akonadi::ItemModifyJob(updateItem);
         connect(job, &Akonadi::ItemModifyJob::result, this, &FollowUpReminderFinishTaskJob::slotItemModifiedResult);
     } else {
         qCWarning(FOLLOWUPREMINDERAGENT_LOG) << " Found item different from 1: " << lst.count();

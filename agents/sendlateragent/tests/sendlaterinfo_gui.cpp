@@ -19,7 +19,7 @@ int main(int argc, char **argv)
     parser.addVersionOption();
     parser.addHelpOption();
     parser.process(app);
-    MessageComposer::SendLaterDialog *dialog = new MessageComposer::SendLaterDialog(nullptr);
+    auto *dialog = new MessageComposer::SendLaterDialog(nullptr);
     dialog->exec();
     delete dialog;
     return 0;

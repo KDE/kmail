@@ -122,7 +122,7 @@ IdentityListView::IdentityListView(QWidget *parent)
 void IdentityListView::editItem(QTreeWidgetItem *item, int column)
 {
     if (column == 0 && item) {
-        IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem *>(item);
+        auto *lvItem = dynamic_cast<IdentityListViewItem *>(item);
         if (lvItem) {
             KIdentityManagement::Identity &ident = lvItem->identity();
             if (ident.isDefault()) {
@@ -142,7 +142,7 @@ void IdentityListView::commitData(QWidget *editor)
     qCDebug(KMAIL_LOG) << "after editing";
 
     if (!selectedItems().isEmpty()) {
-        QLineEdit *edit = qobject_cast<QLineEdit *>(editor);
+        auto *edit = qobject_cast<QLineEdit *>(editor);
         if (edit) {
             IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(selectedItems().at(0));
             const QString text = edit->text();
@@ -155,7 +155,7 @@ void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
 {
     QTreeWidgetItem *item = itemAt(pos);
     if (item) {
-        IdentityListViewItem *lvItem = dynamic_cast<IdentityListViewItem *>(item);
+        auto *lvItem = dynamic_cast<IdentityListViewItem *>(item);
         if (lvItem) {
             Q_EMIT contextMenu(lvItem, viewport()->mapToGlobal(pos));
         }
@@ -167,13 +167,13 @@ void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
 #ifndef QT_NO_DRAGANDDROP
 void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
 {
-    IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(currentItem());
+    auto *item = dynamic_cast<IdentityListViewItem *>(currentItem());
     if (!item) {
         return;
     }
 
-    QDrag *drag = new QDrag(viewport());
-    QMimeData *md = new QMimeData;
+    auto *drag = new QDrag(viewport());
+    auto *md = new QMimeData;
     drag->setMimeData(md);
     item->identity().populateMimeData(md);
     drag->setPixmap(QIcon::fromTheme(QStringLiteral("user-identity")).pixmap(16, 16));

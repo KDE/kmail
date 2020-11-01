@@ -34,13 +34,13 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     , mSelectedItem(selectedItem)
 {
     setWindowTitle(i18nc("@title:window", "Select Tags"));
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
 
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    QPushButton *user1Button = new QPushButton;
+    auto *user1Button = new QPushButton;
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &TagSelectDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &TagSelectDialog::reject);
@@ -51,12 +51,12 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     mainLayout->addWidget(mainWidget);
     mainLayout->addWidget(buttonBox);
 
-    QVBoxLayout *vbox = new QVBoxLayout;
+    auto *vbox = new QVBoxLayout;
     mainWidget->setLayout(vbox);
     vbox->setContentsMargins({});
     mListTag = new QListWidget(this);
     mListTag->setObjectName(QStringLiteral("listtag"));
-    KListWidgetSearchLine *listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
+    auto *listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
     listWidgetSearchLine->setObjectName(QStringLiteral("searchline"));
 
     listWidgetSearchLine->setPlaceholderText(i18n("Search tag"));
@@ -106,7 +106,7 @@ void TagSelectDialog::slotAddNewTag()
 
 void TagSelectDialog::createTagList(bool updateList)
 {
-    Akonadi::TagFetchJob *fetchJob = new Akonadi::TagFetchJob(this);
+    auto *fetchJob = new Akonadi::TagFetchJob(this);
     fetchJob->setProperty("updatelist", updateList);
     fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
     connect(fetchJob, &Akonadi::TagFetchJob::result, this, &TagSelectDialog::slotTagsFetched);
@@ -123,7 +123,7 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
         qCWarning(KMAIL_LOG) << "Failed to load tags " << job->errorString();
         return;
     }
-    Akonadi::TagFetchJob *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
+    auto *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
     bool updatelist = fetchJob->property("updatelist").toBool();
 
     const Akonadi::Tag::List lstTags = fetchJob->tags();

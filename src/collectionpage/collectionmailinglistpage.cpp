@@ -62,7 +62,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     mCurrentCollection = col;
     mFolder = FolderSettings::forCollection(col, false);
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    auto *topLayout = new QVBoxLayout(this);
 
     mHoldsMailingList = new QCheckBox(i18n("Folder holds a mailing list"), this);
     connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotHoldsML);
@@ -70,7 +70,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     topLayout->addWidget(mHoldsMailingList);
 
     mGroupWidget = new QWidget(this);
-    QGridLayout *groupLayout = new QGridLayout(mGroupWidget);
+    auto *groupLayout = new QGridLayout(mGroupWidget);
 
     mDetectButton = new QPushButton(i18n("Detect Automatically"), mGroupWidget);
     connect(mDetectButton, &QPushButton::pressed, this, &CollectionMailingListPage::slotDetectMailingList);
@@ -179,7 +179,7 @@ void CollectionMailingListPage::slotDetectMailingList()
     // next try the 5 most recently added messages
     if (!(mMailingList.features() & MailingList::Post)) {
         //FIXME not load all folder
-        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mCurrentCollection, this);
+        auto *job = new Akonadi::ItemFetchJob(mCurrentCollection, this);
         job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header);
         connect(job, &Akonadi::ItemFetchJob::result, this, &CollectionMailingListPage::slotFetchDone);
         //Don't allow to reactive it
@@ -196,7 +196,7 @@ void CollectionMailingListPage::slotFetchDone(KJob *job)
     if (MailCommon::Util::showJobErrorMessage(job)) {
         return;
     }
-    Akonadi::ItemFetchJob *fjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    auto *fjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     Q_ASSERT(fjob);
     Akonadi::Item::List items = fjob->items();
     const int maxchecks = 5;

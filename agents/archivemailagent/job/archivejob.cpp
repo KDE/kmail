@@ -64,7 +64,7 @@ void ArchiveJob::execute()
             return;
         }
 
-        MailCommon::BackupJob *backupJob = new MailCommon::BackupJob();
+        auto *backupJob = new MailCommon::BackupJob();
         backupJob->setRootFolder(Akonadi::EntityTreeModel::updatedCollection(mManager->kernel()->collectionModel(), collection));
 
         backupJob->setSaveLocation(archivePath);

@@ -64,7 +64,7 @@ SendLaterAgent::SendLaterAgent(const QString &id)
     }
     // For extra safety, check list every hour, in case we didn't properly get
     // notified about the network going up or down.
-    QTimer *reloadListTimer = new QTimer(this);
+    auto *reloadListTimer = new QTimer(this);
     connect(reloadListTimer, &QTimer::timeout, this, &SendLaterAgent::reload);
     reloadListTimer->start(1000 * 60 * 60); //1 hour
 }
@@ -134,7 +134,7 @@ void SendLaterAgent::configure(WId windowId)
         const QVector<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
         if (!listMessage.isEmpty()) {
             //Will delete in specific job when done.
-            SendLaterRemoveMessageJob *sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);
+            auto *sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);
             sendlaterremovejob->start();
         }
     }

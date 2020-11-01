@@ -94,7 +94,7 @@ void AttachmentController::slotActionsCreated()
 
 void AttachmentController::addAttachmentItems(const Akonadi::Item::List &items)
 {
-    Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
+    auto *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
     itemFetchJob->fetchScope().fetchFullPayload(true);
     itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     connect(itemFetchJob, &Akonadi::ItemFetchJob::result, mComposer, &KMComposerWin::slotFetchJob);

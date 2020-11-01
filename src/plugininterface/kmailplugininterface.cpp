@@ -36,7 +36,7 @@ void KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGeneri
         qCCritical(KMAIL_LOG) << "mainwindows not defined";
         return;
     }
-    PimCommon::GenericPluginInterface *interface = static_cast<PimCommon::GenericPluginInterface *>(abstractInterface);
+    auto *interface = static_cast<PimCommon::GenericPluginInterface *>(abstractInterface);
     PimCommon::GenericPluginInterface::RequireTypes requires = interface->requires();
     if (requires & PimCommon::GenericPluginInterface::CurrentItems) {
         interface->setItems(mMainWindow->currentSelection());

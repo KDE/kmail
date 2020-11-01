@@ -16,7 +16,7 @@
 searchdbustest::searchdbustest(QWidget *parent)
     : QWidget(parent)
 {
-    QVBoxLayout *mainlayout = new QVBoxLayout(this);
+    auto *mainlayout = new QVBoxLayout(this);
     QPushButton *button = new QPushButton(QStringLiteral("reindex collections"), this);
     mainlayout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &searchdbustest::slotReindexCollections);
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    searchdbustest *w = new searchdbustest;
+    auto *w = new searchdbustest;
     w->show();
     app.exec();
     delete w;

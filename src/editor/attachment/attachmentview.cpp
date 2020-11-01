@@ -41,7 +41,7 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     , grp(KMKernel::self()->config()->group("AttachmentView"))
 {
     mWidget = new QWidget();
-    QHBoxLayout *lay = new QHBoxLayout(mWidget);
+    auto *lay = new QHBoxLayout(mWidget);
     lay->setContentsMargins({});
     mToolButton = new QToolButton;
     connect(mToolButton, &QAbstractButton::toggled, this, &AttachmentView::slotShowHideAttchementList);
@@ -58,7 +58,7 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     connect(model, &MessageComposer::AttachmentModel::encryptEnabled, this, &AttachmentView::setEncryptEnabled);
     connect(model, &MessageComposer::AttachmentModel::signEnabled, this, &AttachmentView::setSignEnabled);
 
-    QSortFilterProxyModel *sortModel = new QSortFilterProxyModel(this);
+    auto *sortModel = new QSortFilterProxyModel(this);
     sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     sortModel->setSourceModel(model);
     setModel(sortModel);
@@ -183,7 +183,7 @@ void AttachmentView::startDrag(Qt::DropActions supportedActions)
     const QModelIndexList selection = selectionModel()->selectedRows();
     if (!selection.isEmpty()) {
         QMimeData *mimeData = model()->mimeData(selection);
-        QDrag *drag = new QDrag(this);
+        auto *drag = new QDrag(this);
         drag->setMimeData(mimeData);
         drag->exec(Qt::CopyAction);
     }

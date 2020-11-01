@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     KMSieveImapPasswordProvider provider(0);
-    KSieveUi::ManageSieveScriptsDialog *dlg = new KSieveUi::ManageSieveScriptsDialog(&provider);
+    auto *dlg = new KSieveUi::ManageSieveScriptsDialog(&provider);
     dlg->show();
     return app.exec();
 }

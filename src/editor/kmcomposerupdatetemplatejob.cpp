@@ -23,7 +23,7 @@ KMComposerUpdateTemplateJob::~KMComposerUpdateTemplateJob()
 
 void KMComposerUpdateTemplateJob::start()
 {
-    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
+    auto *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &KMComposerUpdateTemplateJob::slotFinished);
     parser->setSelection(mTextSelection);
     parser->setAllowDecryption(true);

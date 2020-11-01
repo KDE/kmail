@@ -38,7 +38,7 @@ void CheckIndexingJob::setCollection(const Akonadi::Collection &col)
 void CheckIndexingJob::start()
 {
     if (mCollection.isValid()) {
-        Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mCollection,
+        auto *fetch = new Akonadi::CollectionFetchJob(mCollection,
                                                                              Akonadi::CollectionFetchJob::Base);
         fetch->fetchScope().setIncludeStatistics(true);
         connect(fetch, &KJob::result, this, &CheckIndexingJob::slotCollectionPropertiesFinished);
@@ -50,7 +50,7 @@ void CheckIndexingJob::start()
 
 void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
 {
-    Akonadi::CollectionFetchJob *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    auto *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
     Q_ASSERT(fetch);
     if (fetch->collections().isEmpty()) {
         qCWarning(KMAIL_LOG) << "No collection fetched";

@@ -58,7 +58,7 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
     uint progress = index.model()->data(index, AgentInstanceModel::ProgressRole).toUInt();
     const QString statusMessage = index.model()->data(index, AgentInstanceModel::StatusMessageRole).toString();
 
-    QTextDocument *document = new QTextDocument(nullptr);
+    auto *document = new QTextDocument(nullptr);
 
     const QSize decorationSize(KIconLoader::global()->currentSize(KIconLoader::Desktop), KIconLoader::global()->currentSize(KIconLoader::Desktop));
     const QVariant data = index.model()->data(index, Qt::DecorationRole);
@@ -173,7 +173,7 @@ bool ConfigAgentDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, 
         return false;
     }
 
-    QMouseEvent *me = static_cast<QMouseEvent *>(event);
+    auto *me = static_cast<QMouseEvent *>(event);
     const QPoint mousePos = me->pos() - option.rect.topLeft();
 
     QStyleOptionButton buttonOpt = buttonOption(option);

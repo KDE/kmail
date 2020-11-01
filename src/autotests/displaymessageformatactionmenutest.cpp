@@ -22,11 +22,11 @@ void DisplayMessageFormatActionMenuTest::shouldHaveDefaultValue()
 {
     DisplayMessageFormatActionMenu menu;
     QVERIFY(menu.menu());
-    KToggleAction *prefereHtml = menu.findChild<KToggleAction *>(QStringLiteral("prefer-html-action"));
+    auto *prefereHtml = menu.findChild<KToggleAction *>(QStringLiteral("prefer-html-action"));
     QVERIFY(prefereHtml);
-    KToggleAction *prefereText = menu.findChild<KToggleAction *>(QStringLiteral("prefer-text-action"));
+    auto *prefereText = menu.findChild<KToggleAction *>(QStringLiteral("prefer-text-action"));
     QVERIFY(prefereText);
-    KToggleAction *useGlobalSetting = menu.findChild<KToggleAction *>(QStringLiteral("use-global-setting-action"));
+    auto *useGlobalSetting = menu.findChild<KToggleAction *>(QStringLiteral("use-global-setting-action"));
     QVERIFY(useGlobalSetting);
     QCOMPARE(useGlobalSetting->isChecked(), true);
     QCOMPARE(menu.menu()->actions().count(), 3);
@@ -35,7 +35,7 @@ void DisplayMessageFormatActionMenuTest::shouldHaveDefaultValue()
 void DisplayMessageFormatActionMenuTest::shouldEmitSignalWhenClickOnSubMenu()
 {
     DisplayMessageFormatActionMenu menu;
-    KToggleAction *prefereHtml = menu.findChild<KToggleAction *>(QStringLiteral("prefer-html-action"));
+    auto *prefereHtml = menu.findChild<KToggleAction *>(QStringLiteral("prefer-html-action"));
     QSignalSpy spy(&menu, &DisplayMessageFormatActionMenu::changeDisplayMessageFormat);
     prefereHtml->trigger();
     QCOMPARE(spy.count(), 1);
@@ -45,12 +45,12 @@ void DisplayMessageFormatActionMenuTest::shouldEmitSignalWhenClickOnSubMenu()
 void DisplayMessageFormatActionMenuTest::shouldSelectItemWhenChangeFormat()
 {
     DisplayMessageFormatActionMenu menu;
-    KToggleAction *useGlobalSetting = menu.findChild<KToggleAction *>(QStringLiteral("use-global-setting-action"));
+    auto *useGlobalSetting = menu.findChild<KToggleAction *>(QStringLiteral("use-global-setting-action"));
     QCOMPARE(useGlobalSetting->isChecked(), true);
     menu.setDisplayMessageFormat(MessageViewer::Viewer::Text);
-    KToggleAction *prefereText = menu.findChild<KToggleAction *>(QStringLiteral("prefer-text-action"));
+    auto *prefereText = menu.findChild<KToggleAction *>(QStringLiteral("prefer-text-action"));
     QCOMPARE(prefereText->isChecked(), true);
-    KToggleAction *prefereHtml = menu.findChild<KToggleAction *>(QStringLiteral("prefer-html-action"));
+    auto *prefereHtml = menu.findChild<KToggleAction *>(QStringLiteral("prefer-html-action"));
     QCOMPARE(prefereHtml->isChecked(), false);
     QCOMPARE(useGlobalSetting->isChecked(), false);
 }

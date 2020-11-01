@@ -27,7 +27,7 @@ void ArchiveMailWidgetTest::shouldHaveDefaultValue()
     new QHBoxLayout(&parent);
     ArchiveMailWidget mailwidget({}, &parent, {QStringLiteral("akonadi_archivemail_agent")});
 
-    QTreeWidget *treeWidget = parent.findChild<QTreeWidget *>(QStringLiteral("treewidget"));
+    auto *treeWidget = parent.findChild<QTreeWidget *>(QStringLiteral("treewidget"));
     QVERIFY(treeWidget);
 
     QCOMPARE(treeWidget->topLevelItemCount(), 0);

@@ -41,7 +41,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18nc("@title:window", "Filter Log Viewer"));
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
     mUser1Button = new QPushButton(this);
     buttonBox->addButton(mUser1Button, QDialogButtonBox::ActionRole);
@@ -56,7 +56,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     KGuiItem::assign(mUser2Button, KStandardGuiItem::saveAs());
     QFrame *page = new QFrame(this);
 
-    QVBoxLayout *pageVBoxLayout = new QVBoxLayout;
+    auto *pageVBoxLayout = new QVBoxLayout;
     page->setLayout(pageVBoxLayout);
     pageVBoxLayout->setContentsMargins({});
     mainLayout->addWidget(page);
@@ -73,7 +73,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
         mTextEdit->editor()->appendHtml(*it);
     }
 
-    MailfilterPurposeMenuWidget *purposeMenu = new MailfilterPurposeMenuWidget(this, this);
+    auto *purposeMenu = new MailfilterPurposeMenuWidget(this, this);
     QPushButton *mShareButton = new QPushButton(i18n("Share..."), this);
     mShareButton->setMenu(purposeMenu->menu());
     mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
@@ -91,7 +91,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
 
     mLogDetailsBox = new QGroupBox(i18n("Logging Details"), page);
     pageVBoxLayout->addWidget(mLogDetailsBox);
-    QVBoxLayout *layout = new QVBoxLayout;
+    auto *layout = new QVBoxLayout;
     mLogDetailsBox->setLayout(layout);
     mLogDetailsBox->setEnabled(mLogActiveBox->isChecked());
     connect(mLogActiveBox, &QCheckBox::toggled, mLogDetailsBox, &QGroupBox::setEnabled);
@@ -134,7 +134,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     //    i18n( "" ) );
 
     QWidget *hbox = new QWidget(page);
-    QHBoxLayout *hboxHBoxLayout = new QHBoxLayout;
+    auto *hboxHBoxLayout = new QHBoxLayout;
     hbox->setLayout(hboxHBoxLayout);
     hboxHBoxLayout->setContentsMargins({});
     pageVBoxLayout->addWidget(hbox);
@@ -360,7 +360,7 @@ void FilterLogTextEdit::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {
     Q_UNUSED(pos);
     if (!document()->isEmpty()) {
-        QAction *sep = new QAction(menu);
+        auto *sep = new QAction(menu);
         sep->setSeparator(true);
         menu->addAction(sep);
         QAction *clearAllAction = KStandardAction::clear(this, &FilterLogTextEdit::clear, menu);

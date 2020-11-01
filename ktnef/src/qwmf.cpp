@@ -700,7 +700,7 @@ void QWinMetaFile::setTextAlign(long, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::textOut(long num, short *parm)
 {
-    short *copyParm = new short[ num + 1 ];
+    auto *copyParm = new short[ num + 1 ];
 
     // re-order parameters
     int idxOffset = (parm[ 0 ] / 2) + 1 + (parm[ 0 ] & 1);
@@ -864,7 +864,7 @@ void QWinMetaFile::stretchDib(long num, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::dibCreatePatternBrush(long num, short *parm)
 {
-    WinObjPatternBrushHandle *handle = new WinObjPatternBrushHandle;
+    auto *handle = new WinObjPatternBrushHandle;
     addHandle(handle);
     QImage bmpSrc;
 
@@ -895,7 +895,7 @@ void QWinMetaFile::deleteObject(long, short *parm)
 void QWinMetaFile::createEmptyObject(long, short *)
 {
     // allocation of an empty object (to keep object counting in sync)
-    WinObjPenHandle *handle = new WinObjPenHandle;
+    auto *handle = new WinObjPenHandle;
     addHandle(handle);
     qCDebug(KTNEFAPPS_LOG) << "QWinMetaFile: unimplemented createObject";
 }
@@ -923,7 +923,7 @@ void QWinMetaFile::createBrushIndirect(long, short *parm)
     };
     Qt::BrushStyle style;
     short arg;
-    WinObjBrushHandle *handle = new WinObjBrushHandle;
+    auto *handle = new WinObjBrushHandle;
     addHandle(handle);
 
     arg = parm[ 0 ];
@@ -953,7 +953,7 @@ void QWinMetaFile::createPenIndirect(long, short *parm)
         Qt::NoPen, Qt::SolidLine
     };
     Qt::PenStyle style;
-    WinObjPenHandle *handle = new WinObjPenHandle;
+    auto *handle = new WinObjPenHandle;
     addHandle(handle);
 
     if (parm[ 0 ] >= 0 && parm[ 0 ] < 6) {
@@ -985,7 +985,7 @@ void QWinMetaFile::createPenIndirect(long, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::createFontIndirect(long, short *parm)
 {
-    WinObjFontHandle *handle = new WinObjFontHandle;
+    auto *handle = new WinObjFontHandle;
     addHandle(handle);
 
     QString family(QLatin1String((const char *)&parm[ 9 ]));

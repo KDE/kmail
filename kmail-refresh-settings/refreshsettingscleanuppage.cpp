@@ -14,7 +14,7 @@
 RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
     : QWidget(parent)
 {
-    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    auto *mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
     mainLayout->setContentsMargins({});
     QPushButton *button = new QPushButton(i18n("Clean"), this);

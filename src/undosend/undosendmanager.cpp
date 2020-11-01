@@ -25,7 +25,7 @@ UndoSendManager *UndoSendManager::self()
 
 void UndoSendManager::addItem(qint64 index, const QString &subject, int delay)
 {
-    UndoSendCreateJob *job = new UndoSendCreateJob(this);
+    auto *job = new UndoSendCreateJob(this);
     job->setAkonadiIndex(index);
     job->setSubject(subject);
     job->setDelay(delay);

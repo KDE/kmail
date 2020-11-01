@@ -22,7 +22,7 @@ PotentialPhishingEmailJobTest::~PotentialPhishingEmailJobTest()
 
 void PotentialPhishingEmailJobTest::shouldNotStartIfNoEmails()
 {
-    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
+    auto *job = new PotentialPhishingEmailJob;
     QVERIFY(!job->start());
     QVERIFY(job->potentialPhisingEmails().isEmpty());
 }
@@ -63,7 +63,7 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
     QFETCH(QStringList, whiteListEmail);
     QFETCH(bool, hasPotentialPhishing);
 
-    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
+    auto *job = new PotentialPhishingEmailJob;
     job->setEmailWhiteList(whiteListEmail);
     job->setPotentialPhishingEmails(listEmails);
     QVERIFY(job->start());
@@ -72,7 +72,7 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
 
 void PotentialPhishingEmailJobTest::shouldEmitSignal()
 {
-    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
+    auto *job = new PotentialPhishingEmailJob;
     QSignalSpy spy(job, &PotentialPhishingEmailJob::potentialPhishingEmailsFound);
     job->setPotentialPhishingEmails((QStringList() << QStringLiteral("\"bla@kde.org\" <foo@kde.org>")));
     QVERIFY(job->start());
@@ -114,7 +114,7 @@ void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails()
 {
     QFETCH(QStringList, emails);
     QFETCH(QStringList, createdListOfEmails);
-    PotentialPhishingEmailJob *job = new PotentialPhishingEmailJob;
+    auto *job = new PotentialPhishingEmailJob;
     job->setPotentialPhishingEmails(emails);
     QCOMPARE(job->checkEmails(), createdListOfEmails);
     delete job;

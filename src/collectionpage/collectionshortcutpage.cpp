@@ -37,7 +37,7 @@ void CollectionShortcutPage::init(const Akonadi::Collection &col)
     mCurrentCollection = col;
     mFolder = FolderSettings::forCollection(col, false);
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    auto *topLayout = new QVBoxLayout(this);
 
     QLabel *label = new QLabel(i18n("<qt>To choose a key or a combination "
                                     "of keys which select the current folder, "
@@ -46,7 +46,7 @@ void CollectionShortcutPage::init(const Akonadi::Collection &col)
     label->setWordWrap(true);
     topLayout->addWidget(label);
 
-    QHBoxLayout *hbHBoxLayout = new QHBoxLayout;
+    auto *hbHBoxLayout = new QHBoxLayout;
 
     mKeySeqWidget = new KKeySequenceWidget(this);
     hbHBoxLayout->addWidget(mKeySeqWidget);

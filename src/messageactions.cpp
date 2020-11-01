@@ -372,7 +372,7 @@ void MessageActions::updateActions()
         if (mCurrentItem.loadedPayloadParts().contains("RFC822")) {
             updateMailingListActions(mCurrentItem);
         } else {
-            Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mCurrentItem);
+            auto *job = new Akonadi::ItemFetchJob(mCurrentItem);
             job->fetchScope().fetchAllAttributes();
             job->fetchScope().fetchFullPayload(true);
             job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header);
@@ -389,7 +389,7 @@ void MessageActions::slotUpdateActionsFetchDone(KJob *job)
         return;
     }
 
-    Akonadi::ItemFetchJob *fetchJob = static_cast<Akonadi::ItemFetchJob *>(job);
+    auto *fetchJob = static_cast<Akonadi::ItemFetchJob *>(job);
     if (fetchJob->items().isEmpty()) {
         return;
     }
@@ -605,7 +605,7 @@ void MessageActions::printMessage(bool preview)
             commandInfo.mShowSignatureDetails = mMessageView->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
             commandInfo.mShowEncryptionDetails = mMessageView->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
 
-            KMPrintCommand *command
+            auto *command
                 = new KMPrintCommand(mParent, commandInfo);
             command->start();
         }
@@ -754,7 +754,7 @@ void MessageActions::slotAddFollowupReminder()
     QPointer<MessageComposer::FollowUpReminderSelectDateDialog> dlg = new MessageComposer::FollowUpReminderSelectDateDialog(mParent);
     if (dlg->exec()) {
         const QDate date = dlg->selectedDate();
-        CreateFollowupReminderOnExistingMessageJob *job = new CreateFollowupReminderOnExistingMessageJob(this);
+        auto *job = new CreateFollowupReminderOnExistingMessageJob(this);
         job->setDate(date);
         job->setCollection(dlg->collection());
         job->setMessageItem(mCurrentItem);

@@ -19,7 +19,7 @@
 ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent)
     : ConfigModule(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto *vlay = new QVBoxLayout(this);
     vlay->setContentsMargins({});
     mTabWidget = new QTabWidget(this);
     vlay->addWidget(mTabWidget);
@@ -42,7 +42,7 @@ void ConfigModuleWithTabs::load()
 {
     const int numberOfTab = mTabWidget->count();
     for (int i = 0; i < numberOfTab; ++i) {
-        ConfigModuleTab *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
+        auto *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
         if (tab) {
             tab->load();
         }
@@ -56,7 +56,7 @@ void ConfigModuleWithTabs::save()
         KCModule::save();
         const int numberOfTab = mTabWidget->count();
         for (int i = 0; i < numberOfTab; ++i) {
-            ConfigModuleTab *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
+            auto *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
             if (tab) {
                 tab->save();
             }
@@ -66,7 +66,7 @@ void ConfigModuleWithTabs::save()
 
 void ConfigModuleWithTabs::defaults()
 {
-    ConfigModuleTab *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->currentWidget());
+    auto *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->currentWidget());
     if (tab) {
         tab->defaults();
     }

@@ -37,7 +37,7 @@ void AddEmailToExistingContactJob::start()
             emails.append(mEmail);
             address.setEmails(emails);
             mItem.setPayload<KContacts::Addressee>(address);
-            Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob(mItem);
+            auto *job = new Akonadi::ItemModifyJob(mItem);
             connect(job, &Akonadi::ItemModifyJob::result, this, &AddEmailToExistingContactJob::slotAddEmailDone);
         }
     } else {

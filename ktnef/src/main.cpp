@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
     KDBusService service;
 
-    KTNEFMain *tnef = new KTNEFMain();
+    auto *tnef = new KTNEFMain();
     tnef->show();
     const QStringList &args = parser.positionalArguments();
 

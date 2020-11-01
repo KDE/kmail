@@ -34,7 +34,7 @@ bool CollectionQuotaPage::canHandle(const Akonadi::Collection &collection) const
 
 void CollectionQuotaPage::init()
 {
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    auto *topLayout = new QVBoxLayout(this);
     mQuotaWidget = new CollectionQuotaWidget(this);
     topLayout->addWidget(mQuotaWidget);
 }

@@ -36,7 +36,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     scope.fetchFullPayload(true);
     scope.fetchAttribute<Akonadi::EntityDisplayAttribute>();
 
-    Akonadi::ChangeRecorder *changeRecorder = new Akonadi::ChangeRecorder(this);
+    auto *changeRecorder = new Akonadi::ChangeRecorder(this);
     changeRecorder->setSession(session);
     changeRecorder->fetchCollection(true);
     changeRecorder->setItemFetchScope(scope);
@@ -44,10 +44,10 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     //Just select address no group
     changeRecorder->setMimeTypeMonitored(KContacts::Addressee::mimeType(), true);
 
-    Akonadi::ContactsTreeModel *model = new Akonadi::ContactsTreeModel(changeRecorder, this);
+    auto *model = new Akonadi::ContactsTreeModel(changeRecorder, this);
 
     mEmailSelectionWidget = new Akonadi::EmailAddressSelectionWidget(false, model, this);
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(mEmailSelectionWidget);
     mEmailSelectionWidget->view()->setSelectionMode(QAbstractItemView::SingleSelection);
     readConfig();

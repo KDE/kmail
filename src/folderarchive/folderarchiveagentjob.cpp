@@ -48,7 +48,7 @@ void FolderArchiveAgentJob::start()
             Akonadi::CollectionFetchJob *fetchCollection = new Akonadi::CollectionFetchJob(Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base);
             connect(fetchCollection, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentJob::slotFetchCollection);
         } else {
-            FolderArchiveAgentCheckCollection *checkCol = new FolderArchiveAgentCheckCollection(mInfo, this);
+            auto *checkCol = new FolderArchiveAgentCheckCollection(mInfo, this);
             connect(checkCol, &FolderArchiveAgentCheckCollection::collectionIdFound, this, &FolderArchiveAgentJob::slotCollectionIdFound);
             connect(checkCol, &FolderArchiveAgentCheckCollection::checkFailed, this, &FolderArchiveAgentJob::slotCheckFailed);
             checkCol->start();
@@ -67,7 +67,7 @@ void FolderArchiveAgentJob::slotFetchCollection(KJob *job)
         sendError(i18n("Cannot fetch collection. %1", job->errorString()));
         return;
     }
-    Akonadi::CollectionFetchJob *fetchCollectionJob = static_cast<Akonadi::CollectionFetchJob *>(job);
+    auto *fetchCollectionJob = static_cast<Akonadi::CollectionFetchJob *>(job);
     Akonadi::Collection::List collections = fetchCollectionJob->collections();
     if (collections.isEmpty()) {
         sendError(i18n("List of collections is empty. %1", job->errorString()));
@@ -85,7 +85,7 @@ void FolderArchiveAgentJob::slotCollectionIdFound(const Akonadi::Collection &col
 void FolderArchiveAgentJob::sloMoveMailsToCollection(const Akonadi::Collection &col)
 {
     if (Akonadi::Collection::CanCreateItem &col.rights()) {
-        KMMoveCommand *command = new KMMoveCommand(col, mListItem, -1);
+        auto *command = new KMMoveCommand(col, mListItem, -1);
         connect(command, &KMMoveCommand::moveDone, this, &FolderArchiveAgentJob::slotMoveMessages);
         command->start();
     } else {

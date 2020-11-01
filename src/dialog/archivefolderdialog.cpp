@@ -51,7 +51,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 {
     setObjectName(QStringLiteral("archive_folder_dialog"));
     setWindowTitle(i18nc("@title:window for archiving a folder", "Archive Folder"));
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    auto *topLayout = new QVBoxLayout(this);
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -63,7 +63,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     QWidget *mainWidget = new QWidget(this);
     topLayout->addWidget(mainWidget);
     topLayout->addWidget(buttonBox);
-    QGridLayout *mainLayout = new QGridLayout(mainWidget);
+    auto *mainLayout = new QGridLayout(mainWidget);
     mainLayout->setContentsMargins({});
 
     int row = 0;
@@ -178,7 +178,7 @@ void ArchiveFolderDialog::slotAccepted()
         return;
     }
 
-    MailCommon::BackupJob *backupJob = new MailCommon::BackupJob(mParentWidget);
+    auto *backupJob = new MailCommon::BackupJob(mParentWidget);
     backupJob->setRootFolder(mFolderRequester->collection());
     backupJob->setSaveLocation(mUrlRequester->url());
     backupJob->setArchiveType(static_cast<BackupJob::ArchiveType>(mFormatComboBox->currentIndex()));

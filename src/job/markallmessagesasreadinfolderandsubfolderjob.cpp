@@ -56,7 +56,7 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone(const
 {
     Akonadi::MessageStatus messageStatus;
     messageStatus.setRead(true);
-    Akonadi::MarkAsCommand *markAsReadAllJob = new Akonadi::MarkAsCommand(messageStatus, list);
+    auto *markAsReadAllJob = new Akonadi::MarkAsCommand(messageStatus, list);
     connect(markAsReadAllJob, &Akonadi::MarkAsCommand::result, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotMarkAsResult);
     markAsReadAllJob->execute();
 }

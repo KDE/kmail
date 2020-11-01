@@ -43,7 +43,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     mFolderCollection = FolderSettings::forCollection(col);
     mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || mFolderCollection->isStructural() || Kernel::folderIsInbox(col);
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    auto *topLayout = new QVBoxLayout(this);
     // Musn't be able to edit details for non-resource, system folder.
     if (!mIsLocalSystemFolder) {
         // icons
@@ -76,7 +76,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         mUnreadIconButton->setIcon(QStringLiteral("folder-open"));
         mUnreadIconButton->setEnabled(false);
 
-        QHBoxLayout *iconHLayout = new QHBoxLayout();
+        auto *iconHLayout = new QHBoxLayout();
         iconHLayout->addWidget(mIconsCheckBox);
         iconHLayout->addStretch(2);
         iconHLayout->addWidget(mNormalIconLabel);

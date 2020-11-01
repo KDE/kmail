@@ -150,7 +150,7 @@ void ArchiveMailWidget::load()
     const int numberOfCollection = collectionList.count();
     for (int i = 0; i < numberOfCollection; ++i) {
         KConfigGroup collectionGroup = config()->group(collectionList.at(i));
-        ArchiveMailInfo *info = new ArchiveMailInfo(collectionGroup);
+        auto *info = new ArchiveMailInfo(collectionGroup);
         if (info->isValid()) {
             createOrUpdateItem(info);
         } else {
@@ -207,7 +207,7 @@ bool ArchiveMailWidget::save() const
 
     const int numberOfItem(mWidget.treeWidget->topLevelItemCount());
     for (int i = 0; i < numberOfItem; ++i) {
-        ArchiveMailItem *mailItem = static_cast<ArchiveMailItem *>(mWidget.treeWidget->topLevelItem(i));
+        auto *mailItem = static_cast<ArchiveMailItem *>(mWidget.treeWidget->topLevelItem(i));
         if (mailItem->info()) {
             KConfigGroup group = config()->group(ArchiveMailAgentUtil::archivePattern.arg(mailItem->info()->saveCollectionId()));
             mailItem->info()->writeConfig(group);
@@ -242,7 +242,7 @@ void ArchiveMailWidget::slotModifyItem()
         if (!item) {
             return;
         }
-        ArchiveMailItem *archiveItem = static_cast<ArchiveMailItem *>(item);
+        auto *archiveItem = static_cast<ArchiveMailItem *>(item);
         QPointer<AddArchiveMailDialog> dialog = new AddArchiveMailDialog(archiveItem->info(), parentWidget());
         if (dialog->exec()) {
             ArchiveMailInfo *info = dialog->info();
@@ -274,7 +274,7 @@ bool ArchiveMailWidget::verifyExistingArchive(ArchiveMailInfo *info) const
 {
     const int numberOfItem(mWidget.treeWidget->topLevelItemCount());
     for (int i = 0; i < numberOfItem; ++i) {
-        ArchiveMailItem *mailItem = static_cast<ArchiveMailItem *>(mWidget.treeWidget->topLevelItem(i));
+        auto *mailItem = static_cast<ArchiveMailItem *>(mWidget.treeWidget->topLevelItem(i));
         ArchiveMailInfo *archiveItemInfo = mailItem->info();
         if (archiveItemInfo) {
             if (info->saveCollectionId() == archiveItemInfo->saveCollectionId()) {
@@ -293,11 +293,11 @@ void ArchiveMailWidget::slotOpenFolder()
         if (!item) {
             return;
         }
-        ArchiveMailItem *archiveItem = static_cast<ArchiveMailItem *>(item);
+        auto *archiveItem = static_cast<ArchiveMailItem *>(item);
         ArchiveMailInfo *archiveItemInfo = archiveItem->info();
         if (archiveItemInfo) {
             const QUrl url = archiveItemInfo->url();
-            KIO::OpenUrlJob *job = new KIO::OpenUrlJob(url);
+            auto *job = new KIO::OpenUrlJob(url);
             job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, parentWidget()));
             job->setRunExecutables(false);
             job->start();
@@ -308,7 +308,7 @@ void ArchiveMailWidget::slotOpenFolder()
 void ArchiveMailWidget::slotItemChanged(QTreeWidgetItem *item, int col)
 {
     if (item) {
-        ArchiveMailItem *archiveItem = static_cast<ArchiveMailItem *>(item);
+        auto *archiveItem = static_cast<ArchiveMailItem *>(item);
         if (archiveItem->info()) {
             if (col == ArchiveMailWidget::Name) {
                 archiveItem->info()->setEnabled(archiveItem->checkState(ArchiveMailWidget::Name) == Qt::Checked);
