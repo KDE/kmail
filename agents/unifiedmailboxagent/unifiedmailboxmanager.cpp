@@ -22,6 +22,8 @@
 
 #include <QTimer>
 
+#include <stdexcept> // for std::out_of_range
+
 namespace {
 /**
  * A little RAII helper to make sure changeProcessed() and replayNext() gets
