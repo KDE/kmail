@@ -1085,7 +1085,7 @@ QColor QWinMetaFile::color(short *parm)
     green = (colorRef >> 8) & 255;
     blue = (colorRef >> 16) & 255;
 
-    return QColor(red, green, blue);
+    return {red, green, blue};
 }
 
 //-----------------------------------------------------------------------------

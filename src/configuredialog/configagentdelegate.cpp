@@ -153,7 +153,7 @@ QSize ConfigAgentDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     const int iconHeight = KIconLoader::global()->currentSize(KIconLoader::Desktop) + (s_delegatePaddingSize * 2);  //icon height + padding either side
     const int textHeight = option.fontMetrics.height() + qMax(option.fontMetrics.height(), 16) + (s_delegatePaddingSize * 2);   //height of text + icon/text + padding either side
 
-    return QSize(1, qMax(iconHeight, textHeight));    //any width,the view will give us the whole thing in list mode
+    return {1, qMax(iconHeight, textHeight)};    //any width,the view will give us the whole thing in list mode
 }
 
 QWidget *ConfigAgentDelegate::createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const

@@ -59,8 +59,8 @@ public:
     explicit MiscPage(QWidget *parent = nullptr);
     QString helpAnchor() const override;
 
-    typedef MiscPageFolderTab FolderTab;
-    typedef MiscPageInviteTab InviteTab;
+    using FolderTab = MiscPageFolderTab;
+    using InviteTab = MiscPageInviteTab;
 };
 
 class MiscPagePrintingTab : public ConfigModuleTab

@@ -235,15 +235,15 @@ public:
     QString helpAnchor() const override;
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:
-    typedef ComposerPageGeneralTab GeneralTab;
-    typedef ComposerPageTemplatesTab TemplatesTab;
-    typedef ComposerPageCustomTemplatesTab CustomTemplatesTab;
-    typedef ComposerPageSubjectTab SubjectTab;
-    typedef ComposerPageCharsetTab CharsetTab;
-    typedef ComposerPageHeadersTab HeadersTab;
-    typedef ComposerPageAttachmentsTab AttachmentsTab;
-    typedef ComposerPageAutoCorrectionTab AutoCorrectionTab;
-    typedef ComposerPageAutoImageResizeTab AutoImageResizeTab;
+    using GeneralTab = ComposerPageGeneralTab;
+    using TemplatesTab = ComposerPageTemplatesTab;
+    using CustomTemplatesTab = ComposerPageCustomTemplatesTab;
+    using SubjectTab = ComposerPageSubjectTab;
+    using CharsetTab = ComposerPageCharsetTab;
+    using HeadersTab = ComposerPageHeadersTab;
+    using AttachmentsTab = ComposerPageAttachmentsTab;
+    using AutoCorrectionTab = ComposerPageAutoCorrectionTab;
+    using AutoImageResizeTab = ComposerPageAutoImageResizeTab;
 };
 
 #endif // CONFIGURECOMPOSERPAGE_H

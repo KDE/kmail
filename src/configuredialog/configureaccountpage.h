@@ -109,8 +109,8 @@ public:
     QString helpAnchor() const override;
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:
-    typedef AccountsPageSendingTab SendingTab;
-    typedef AccountsPageReceivingTab ReceivingTab;
+    using SendingTab = AccountsPageSendingTab;
+    using ReceivingTab = AccountsPageReceivingTab;
 
 Q_SIGNALS:
     void accountListChanged(const QStringList &);

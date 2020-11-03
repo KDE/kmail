@@ -6,10 +6,10 @@
 #ifndef wmfstruct_h
 #define wmfstruct_h
 
-typedef short WORD;
-typedef int DWORD;
-typedef qint32 LONG;
-typedef void *_HANDLE;
+using WORD = short;
+using DWORD = int;
+using LONG = qint32;
+using _HANDLE = void *;
 
 typedef struct _RECT {
     WORD left;

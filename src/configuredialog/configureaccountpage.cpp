@@ -358,7 +358,7 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
 {
     const auto instance = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_newmailnotifier_agent"));
     if (instance.isValid()) {
-        std::unique_ptr<Akonadi::AgentConfigurationDialog>(new Akonadi::AgentConfigurationDialog(instance, this))->exec();
+        std::make_unique<Akonadi::AgentConfigurationDialog>(instance, this)->exec();
     } else {
         KMessageBox::error(this, i18n("New Mail Notifier Agent not registered. Please contact your administrator."));
     }

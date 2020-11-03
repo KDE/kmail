@@ -138,11 +138,11 @@ public:
 
     QString helpAnchor() const override;
 
-    typedef SecurityPageGeneralTab ReadingTab;
-    typedef SecurityPageMDNTab MDNTab;
-    typedef SecurityPageComposerCryptoTab ComposerCryptoTab;
-    typedef SecurityPageWarningTab WarningTab;
-    typedef SecurityPageSMimeTab SMimeTab;
+    using ReadingTab = SecurityPageGeneralTab;
+    using MDNTab = SecurityPageMDNTab;
+    using ComposerCryptoTab = SecurityPageComposerCryptoTab;
+    using WarningTab = SecurityPageWarningTab;
+    using SMimeTab = SecurityPageSMimeTab;
 };
 
 #endif // CONFIGURESECURITYPAGE_H

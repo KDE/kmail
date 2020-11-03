@@ -42,7 +42,7 @@ public:
         HDR_DICTIONARY = 0x800,
         HDR_ALL = 0xfff
     };
-    typedef QFlags<VisibleHeaderFlag> VisibleHeaderFlags;
+    using VisibleHeaderFlags = QFlags<VisibleHeaderFlag>;
 
     struct AttachmentInfo {
         QString comment;

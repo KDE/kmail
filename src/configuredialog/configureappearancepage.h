@@ -35,7 +35,7 @@ class ThemeComboBox;
 
 namespace MailCommon {
 class Tag;
-typedef QSharedPointer<Tag> TagPtr;
+using TagPtr = QSharedPointer<Tag>;
 }
 
 namespace MailCommon {
@@ -264,12 +264,12 @@ public:
     QString helpAnchor() const override;
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:
-    typedef AppearancePageFontsTab FontsTab;
-    typedef AppearancePageColorsTab ColorsTab;
-    typedef AppearancePageLayoutTab LayoutTab;
-    typedef AppearancePageHeadersTab HeadersTab;
-    typedef AppearancePageGeneralTab ReaderTab;
-    typedef AppearancePageMessageTagTab MessageTagTab;
+    using FontsTab = AppearancePageFontsTab;
+    using ColorsTab = AppearancePageColorsTab;
+    using LayoutTab = AppearancePageLayoutTab;
+    using HeadersTab = AppearancePageHeadersTab;
+    using ReaderTab = AppearancePageGeneralTab;
+    using MessageTagTab = AppearancePageMessageTagTab;
 };
 
 #endif // CONFIGUREAPPEARANCEPAGE_H
