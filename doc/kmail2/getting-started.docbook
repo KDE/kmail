@@ -52,7 +52,7 @@ start working with it right away. For more in-depth information see the
   <step id="Provide-personal-data">
     <para>The first screen of the wizard is <guilabel>Provide personal data</guilabel>. It will prompt you for your basic account information: <guilabel>Full name:</guilabel>, <guilabel>E-mail address</guilabel>, and <guilabel>Password</guilabel>.
     By default, the <guilabel>Find provider settings on the Internet</guilabel> option is checked, so the wizard will attempt to retrieve the necessary
-    information from the email server. Uncheck this option if you are an expert user and you want to set up advanced configuration. Click the 
+    information from the email server. Uncheck this option if you are an expert user and you want to set up an advanced configuration. Click the 
     <guibutton>Next</guibutton> button when finished.</para>
     
     <screenshot>
@@ -189,7 +189,7 @@ start working with it right away. For more in-depth information see the
   <para>The <menuchoice><guimenu>Settings</guimenu><guisubmenu><inlinemediaobject><imageobject><imagedata fileref="configurebutton.png" 
     format="PNG"/></imageobject></inlinemediaobject>Configure &kmail;...</guisubmenu></menuchoice> window consists of six sections:
     <guilabel>Accounts</guilabel>, <guilabel>Appearance</guilabel>, <guilabel>Composer</guilabel>,
-    <guilabel>Security</guilabel>, <guilabel>Misc</guilabel>, and <guilabel>Plugins</guilabel>.</para>
+    <guilabel>Security</guilabel>, <guilabel>Misc</guilabel>, and <guilabel>Plugins</guilabel>. </para>
 
   <para>To begin sending and receiving messages you will only have to
     change some settings on the <guilabel>Accounts</guilabel> page.  
