@@ -18,7 +18,7 @@
 </authorgroup>
 
 <date>2020-09-12</date>
-<releaseinfo>KDE 5.14.2 (20.04.2)</releaseinfo>
+<releaseinfo>5.14.2 (Applications 20.04.2)</releaseinfo>
 </chapterinfo>
 
 <title>Using &kmail;</title>
@@ -463,7 +463,9 @@ to preview the message, and <menuchoice><guimenu>Message</guimenu><guimenuitem>P
 <para>
 If you want to send an <link linkend="pgp-encrypt-your-messages">encrypted</link>
 or <link linkend="pgp-sign-your-messages">digitally signed</link> message, select the
-<guiicon>Sign</guiicon> and / or <guiicon>Encrypt</guiicon> icon in the toolbar.
+<guiicon><inlinemediaobject><imageobject><imagedata fileref="document-edit.png" format="PNG"/>
+</imageobject></inlinemediaobject> Sign</guiicon> and / or <guiicon><inlinemediaobject><imageobject><imagedata
+fileref="document-decrypt.png" format="PNG"/></imageobject></inlinemediaobject> Encrypt</guiicon> icon in the toolbar.
 Use the <menuchoice><guimenuitem>Options</guimenuitem><guisubmenu>Cryptographic Message
 Format &gt;</guisubmenu></menuchoice> dropdown list to select the format used to encrypt the 
 message. (The <guilabel>Optons</guilabel> menu also lets you sign / encrypt the message.)
@@ -526,8 +528,9 @@ allowed.</para>
 <para>To create &HTML; messages, you must first enable
 the markup tools. To do this, enable <guimenuitem>Rich Text Editing</guimenuitem>
 in the <menuchoice><guimenu>Options</guimenu></menuchoice> menu, or click on
-the <guiicon>Rich Text</guiicon> icon on the &kmail; toolbar. A toolbar with several
-formatting tools will appear. Via the &HTML; toolbar you can choose
+the <guiicon><inlinemediaobject><imageobject><imagedata fileref="preferences-desktop-font.png"
+format="PNG"/></imageobject></inlinemediaobject> Rich Text</guiicon> icon on the &kmail; toolbar.
+An additional toolbar with several formatting tools will appear. Via the &HTML; toolbar you can choose
 standard text or bulleted / numbered lists. (Use the <guilabel>None <inlinemediaobject><imageobject>
 <imagedata fileref="go-down.png" format="PNG"/></imageobject></inlinemediaobject></guilabel>
 drop-down list at the left edge of the toolbar to control the style of bulleted / numbered lists.)
@@ -655,7 +658,7 @@ snippetDelimiter=$
   <title>Using the Built-in Translator</title>
   <para>The &kmail; 2 composer provides a built-in translator that can be accessed by selecting
     <menuchoice><guimenu>Tools</guimenu><guimenuitem>Translator</guimenuitem></menuchoice> from the
-    menubar. A new panel will appear at the bottom of the composer window.</para>
+    menu bar. A new panel will appear at the bottom of the composer window.</para>
     <para> To translate a section of text, first enter the text you would like translated in the
 	box labeled <guilabel>Drag text that you want to translate.</guilabel>. Select the language in
     which it is written in the <guilabel>From:</guilabel> drop down box. Select the language you
@@ -1263,7 +1266,8 @@ that allow you to fine tune your filtering.</para>
 <para>Using the first row of check boxes, you can toggle when the
 filter is applied: the <guilabel>Apply this filter to incoming messages</guilabel>
 option means that the filter is applied to messages when you receive
-them (&ie; on <guiicon>Check Mail</guiicon>).
+them (&ie; on <guiicon><inlinemediaobject><imageobject><imagedata fileref="mail-receive.png"
+format="PNG"/></imageobject></inlinemediaobject> Check Mail</guiicon>).
 The filter can be applied to all messages, to all but online IMAP accounts, or
 to particular incoming email accounts.</para>
 <para>The <guilabel>Apply this filter to sent
@@ -1303,7 +1307,9 @@ processing here</guilabel> option.</para>
 </variablelist>
 
 <note><para>Filters are automatically named unless you explicitly
-rename them using the <guibutton>Rename...</guibutton> button.
+rename them using the <guibutton><inlinemediaobject><imageobject>
+<imagedata fileref="document.png" format="PNG"/>
+</imageobject></inlinemediaobject> Rename...</guibutton> button.
 The dialog assumes that it should continue auto-naming the filter
 as long as the filter name starts with <quote>&lt;</quote>.
 </para>
@@ -1749,7 +1755,8 @@ If you want to flag all <quote>urgent</quote> messages as being
 <step>
 <para>Open up the <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
 Filters...</guimenuitem></menuchoice> dialog and click the
-<guiicon>New</guiicon> icon below the <guilabel>Available Filters</guilabel>
+<guiicon><inlinemediaobject><imageobject><imagedata fileref="document-new.png" format="PNG"/>
+</imageobject></inlinemediaobject> New</guiicon> icon below the <guilabel>Available Filters</guilabel>
 list.</para>
 </step>
 <step>
@@ -1815,7 +1822,8 @@ quite perfect, because this fails for cross-posted messages.</para>
 Filters...</guimenuitem></menuchoice>.</para>
 </step>
 <step>
-<para>Press the <guibutton>New</guibutton> button to create an empty
+<para>Press the <guibutton><inlinemediaobject><imageobject><imagedata fileref="document-new.png"
+format="PNG"/></imageobject></inlinemediaobject></guibutton> button to create an empty
 filter. It will appear as <guilabel>&lt;unknown&gt;</guilabel>.</para>
 </step>
 <step>
@@ -2267,9 +2275,13 @@ to send you one or more of their public keys.</para>
 <title>Sign your Messages</title>
 
 <para>Compose your message as usual in the composer
-window. Before you send the message, check the <guibutton>Sign</guibutton>
+window. Before you send the message, check the <guibutton><inlinemediaobject>
+<imageobject><imagedata fileref="document-edit.png" format="PNG"/>
+</imageobject></inlinemediaobject> Sign</guibutton>
 icon on the toolbar of the composer window, or select <menuchoice>
-<guimenu>Options></guimenu><guimenuitem>Sign Message</guimenuitem></menuchoice>. Then, you can send
+<guimenu>Options></guimenu><guimenuitem><inlinemediaobject><imageobject>
+<imagedata fileref="document-edit.png" format="PNG"/></imageobject>
+</inlinemediaobject> Sign Message</guimenuitem></menuchoice>. Then, you can send
 the message. The identity you are using to write the current message needs to 
 be connected to an <guilabel>OpenPGP Key</guilabel> in the <guilabel>Identity</guilabel>
 section of the <guilabel>Configure</guilabel> dialog.
@@ -2285,13 +2297,19 @@ message will be signed automatically.</para>
 
 <para>To send an encrypted message to somebody whose
 public key is on your gpg key ring, simply create the message in the composer window.
-Before you send the message, check the <guibutton>Encrypt</guibutton> 
+Before you send the message, check the <guibutton><inlinemediaobject><imageobject>
+<imagedata fileref="document-decrypt.png" format="PNG"/>
+</imageobject></inlinemediaobject> Encrypt</guibutton> 
 button in the toolbar of the composer window (or select <menuchoice>
-<guimenu>Options></guimenu><guimenuitem>Encrypt Message</guimenuitem></menuchoice>).
+<guimenu>Options></guimenu><guimenuitem><inlinemediaobject><imageobject>
+<imagedata fileref="document-decrypt.png" format="PNG"/>
+</imageobject></inlinemediaobject> Encrypt Message</guimenuitem></menuchoice>).
 Then send the message.</para>
 
 <para>
-If you checked the <guibutton>Encrypt</guibutton> button and &kmail;
+If you checked the <guibutton><inlinemediaobject><imageobject>
+<imagedata fileref="document-decrypt.png" format="PNG"/>
+</imageobject></inlinemediaobject> Encrypt</guibutton> button and &kmail;
 cannot find a matching key for a recipient, it will allow you to modify
 your key ring before trying again.
 If &kmail; finds more than one trusted key for a recipient, it will
