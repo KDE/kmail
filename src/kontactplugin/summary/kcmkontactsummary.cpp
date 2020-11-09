@@ -60,7 +60,7 @@ public:
 
 private:
     Q_DISABLE_COPY(PluginItem)
-    KPluginInfo mInfo;
+    const KPluginInfo mInfo;
 };
 
 PluginView::PluginView(QWidget *parent)
