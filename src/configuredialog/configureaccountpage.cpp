@@ -347,7 +347,7 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 {
     auto *action = qobject_cast< QAction * >(sender());
-    QString ident = action->data().toString();
+    const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
     opts->OfflineOnShutdown = checked;
@@ -410,8 +410,7 @@ LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     connect(mLdapConfigureWidget, &KLDAP::LdapConfigureWidget::changed, this, qOverload<bool>(&LdapCompetionTab::changed));
 }
 
-LdapCompetionTab::~LdapCompetionTab()
-= default;
+LdapCompetionTab::~LdapCompetionTab() = default;
 
 QString LdapCompetionTab::helpAnchor() const
 {

@@ -52,7 +52,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     setObjectName(QStringLiteral("archive_folder_dialog"));
     setWindowTitle(i18nc("@title:window for archiving a folder", "Archive Folder"));
     auto *topLayout = new QVBoxLayout(this);
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &ArchiveFolderDialog::slotAccepted);
@@ -60,7 +60,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mOkButton->setDefault(true);
     mOkButton->setText(i18nc("@action", "Archive"));
     setModal(true);
-    QWidget *mainWidget = new QWidget(this);
+    auto *mainWidget = new QWidget(this);
     topLayout->addWidget(mainWidget);
     topLayout->addWidget(buttonBox);
     auto *mainLayout = new QGridLayout(mainWidget);
@@ -70,7 +70,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 
     // TODO: Explanation label
 
-    QLabel *folderLabel = new QLabel(i18n("&Folder:"), mainWidget);
+    auto *folderLabel = new QLabel(i18n("&Folder:"), mainWidget);
     mainLayout->addWidget(folderLabel, row, 0);
     mFolderRequester = new FolderRequester(mainWidget);
     mFolderRequester->setMustBeReadWrite(false);

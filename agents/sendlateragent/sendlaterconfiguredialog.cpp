@@ -25,7 +25,7 @@ SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
     setWindowTitle(i18nc("@title:window", "Configure"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     auto *mainLayout = new QVBoxLayout(this);
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
+    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);

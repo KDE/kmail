@@ -42,11 +42,11 @@ AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
 
     auto *mainLayout = new QVBoxLayout(this);
 
-    QWidget *mainWidget = new QWidget(this);
+    auto *mainWidget = new QWidget(this);
     mUI.setupUi(mainWidget);
     mUI.mProperties->setHeaderHidden(true);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
+    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
     auto *user1Button = new QPushButton;
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AttachPropertyDialog::reject);
