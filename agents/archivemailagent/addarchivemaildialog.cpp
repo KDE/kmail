@@ -167,7 +167,7 @@ void AddArchiveMailDialog::slotUpdateOkButton()
 
 void AddArchiveMailDialog::slotFolderChanged(const Akonadi::Collection &collection)
 {
-    Q_UNUSED(collection);
+    Q_UNUSED(collection)
     slotUpdateOkButton();
 }
 

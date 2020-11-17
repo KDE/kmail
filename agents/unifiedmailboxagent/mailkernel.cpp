@@ -118,7 +118,7 @@ Akonadi::Collection::Id MailKernel::lastSelectedFolder()
 
 void MailKernel::setLastSelectedFolder(Akonadi::Collection::Id col)
 {
-    Q_UNUSED(col);
+    Q_UNUSED(col)
 }
 
 void MailKernel::expunge(Akonadi::Collection::Id id, bool sync)

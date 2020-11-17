@@ -1060,9 +1060,9 @@ void AppearancePage::MessageTagTab::slotEmitChangeCheck()
 
 void AppearancePage::MessageTagTab::slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow)
 {
-    Q_UNUSED(sourceEnd);
-    Q_UNUSED(sourcestart);
-    Q_UNUSED(destinationRow);
+    Q_UNUSED(sourceEnd)
+    Q_UNUSED(sourcestart)
+    Q_UNUSED(destinationRow)
     updateButtons();
     slotEmitChangeCheck();
 }

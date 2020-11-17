@@ -218,7 +218,7 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
 bool UnifiedMailboxAgent::retrieveItem(const Akonadi::Item &item, const QSet<QByteArray> &parts)
 {
     // This method should never be called by Akonadi
-    Q_UNUSED(parts);
+    Q_UNUSED(parts)
     qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "retrieveItem() for item" << item.id() << "called but we can't own any items! This is a bug in Akonadi";
     return false;
 }

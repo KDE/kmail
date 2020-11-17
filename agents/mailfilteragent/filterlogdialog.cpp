@@ -358,7 +358,7 @@ FilterLogTextEdit::FilterLogTextEdit(QWidget *parent)
 
 void FilterLogTextEdit::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {
-    Q_UNUSED(pos);
+    Q_UNUSED(pos)
     if (!document()->isEmpty()) {
         auto *sep = new QAction(menu);
         sep->setSeparator(true);

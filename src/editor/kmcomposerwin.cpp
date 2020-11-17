@@ -643,7 +643,7 @@ void KMComposerWin::addAttachment(const QVector<KMail::Composer::AttachmentInfo>
 
 void KMComposerWin::addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType)
 {
-    Q_UNUSED(cte);
+    Q_UNUSED(cte)
     mComposerBase->addAttachment(name, name, charset, data, mimeType);
 }
 
@@ -3742,7 +3742,7 @@ void KMComposerWin::slotIdentityDeleted(uint uoid)
 
 void KMComposerWin::slotTransportRemoved(int id, const QString &name)
 {
-    Q_UNUSED(name);
+    Q_UNUSED(name)
     if (mComposerBase->transportComboBox()->currentTransportId() == id) {
         mIncorrectIdentityFolderWarning->mailTransportIsInvalid();
     }

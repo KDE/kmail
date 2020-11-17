@@ -1500,7 +1500,7 @@ MessageComposer::MessageSender *KMKernel::msgSender()
 
 void KMKernel::transportRemoved(int id, const QString &name)
 {
-    Q_UNUSED(id);
+    Q_UNUSED(id)
 
     // reset all identities using the deleted transport
     QStringList changedIdents;
@@ -1531,7 +1531,7 @@ void KMKernel::transportRemoved(int id, const QString &name)
 
 void KMKernel::transportRenamed(int id, const QString &oldName, const QString &newName)
 {
-    Q_UNUSED(id);
+    Q_UNUSED(id)
 
     QStringList changedIdents;
     KIdentityManagement::IdentityManager *im = identityManager();
@@ -1959,8 +1959,8 @@ void KMKernel::setShuttingDown(bool flag)
 
 void KMKernel::expunge(Akonadi::Collection::Id col, bool sync)
 {
-    Q_UNUSED(col);
-    Q_UNUSED(sync);
+    Q_UNUSED(col)
+    Q_UNUSED(sync)
 }
 
 #ifdef WITH_KUSERFEEDBACK

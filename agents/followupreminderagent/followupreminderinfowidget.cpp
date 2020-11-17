@@ -172,7 +172,7 @@ bool FollowUpReminderInfoWidget::save() const
 
 void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &pos)
 {
-    Q_UNUSED(pos);
+    Q_UNUSED(pos)
     const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();
     const int nbElementSelected = listItems.count();
     if (nbElementSelected > 0) {

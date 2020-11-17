@@ -99,7 +99,7 @@ void AttachmentView::saveHeaderState()
 
 void AttachmentView::contextMenuEvent(QContextMenuEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     Q_EMIT contextMenuRequested();
 }
 
@@ -178,7 +178,7 @@ void AttachmentView::selectNewAttachment()
 
 void AttachmentView::startDrag(Qt::DropActions supportedActions)
 {
-    Q_UNUSED(supportedActions);
+    Q_UNUSED(supportedActions)
 
     const QModelIndexList selection = selectionModel()->selectedRows();
     if (!selection.isEmpty()) {

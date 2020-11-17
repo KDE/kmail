@@ -316,7 +316,7 @@ void MessageActions::slotItemRemoved(const Akonadi::Item &item)
 
 void MessageActions::slotItemModified(const Akonadi::Item &item, const QSet< QByteArray > &partIdentifiers)
 {
-    Q_UNUSED(partIdentifiers);
+    Q_UNUSED(partIdentifiers)
     if (item == mCurrentItem) {
         mCurrentItem = item;
         const int numberOfVisibleItems = mVisibleItems.count();

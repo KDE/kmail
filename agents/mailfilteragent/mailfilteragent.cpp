@@ -129,7 +129,7 @@ MailFilterAgent::~MailFilterAgent()
 
 void MailFilterAgent::configure(WId windowId)
 {
-    Q_UNUSED(windowId);
+    Q_UNUSED(windowId)
 }
 
 void MailFilterAgent::initializeCollections()

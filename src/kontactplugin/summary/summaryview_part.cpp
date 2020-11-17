@@ -43,7 +43,7 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData 
     : KParts::Part(parent)
     , mCore(core)
 {
-    Q_UNUSED(aboutData);
+    Q_UNUSED(aboutData)
     setComponentName(QStringLiteral("kontactsummary"), i18n("Kontact Summary"));
 
     loadLayout();

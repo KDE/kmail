@@ -117,7 +117,7 @@ void CreateNewContactJob::createContact()
 
 void CreateNewContactJob::contactStored(const Akonadi::Item &item)
 {
-    Q_UNUSED(item);
+    Q_UNUSED(item)
     PimCommon::BroadcastStatus::instance()->setStatusMsg(i18n("Contact created successfully"));
 }
 

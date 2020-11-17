@@ -92,7 +92,7 @@ void SummaryWidget::slotCollectionChanged()
 
 void SummaryWidget::updateSummary(bool force)
 {
-    Q_UNUSED(force);
+    Q_UNUSED(force)
     QTimer::singleShot(0, this, &SummaryWidget::slotUpdateFolderList);
 }
 

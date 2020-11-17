@@ -88,8 +88,8 @@ void FollowUpReminderNoAnswerDialog::wakeUp()
 void FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged(
     const QString &interface, const QVariantMap &changedProperties, const QStringList &invalidatedProperties)
 {
-    Q_UNUSED(interface); // always "org.freedesktop.Notifications"
-    Q_UNUSED(invalidatedProperties);
+    Q_UNUSED(interface) // always "org.freedesktop.Notifications"
+    Q_UNUSED(invalidatedProperties)
     const auto it = changedProperties.find(QStringLiteral("Inhibited"));
     if (it != changedProperties.end()) {
         const bool inhibited = it.value().toBool();

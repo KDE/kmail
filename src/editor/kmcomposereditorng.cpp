@@ -42,7 +42,7 @@ KMComposerEditorNg::~KMComposerEditorNg()
 
 void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {
-    Q_UNUSED(pos);
+    Q_UNUSED(pos)
     const QList<QAction *> lstAct = mComposerWin->pluginToolsActionListForPopupMenu();
     for (QAction *a : lstAct) {
         menu->addSeparator();
@@ -111,7 +111,7 @@ QString KMComposerEditorNg::smartQuote(const QString &msg)
 
 void KMComposerEditorNg::showSpellConfigDialog(const QString &configFileName)
 {
-    Q_UNUSED(configFileName);
+    Q_UNUSED(configFileName)
     QPointer<SpellCheckerConfigDialog> dialog = new SpellCheckerConfigDialog(this);
     if (!spellCheckingLanguage().isEmpty()) {
         dialog->setLanguage(spellCheckingLanguage());
