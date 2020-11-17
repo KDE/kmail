@@ -93,7 +93,7 @@ static QString selectCharset(KSelectAction *root, const QString &encoding)
             }
         }
     }
-    return QString();
+    return {};
 }
 
 void CodecAction::setCharset(const QByteArray &charset)

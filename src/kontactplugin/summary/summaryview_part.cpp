@@ -539,5 +539,5 @@ QString SummaryViewPart::widgetName(QWidget *widget) const
         }
     }
 
-    return QString();
+    return {};
 }

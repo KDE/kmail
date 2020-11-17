@@ -54,7 +54,7 @@ public:
         } else if (column == 1) {
             return mInfo.comment();
         } else {
-            return QString();
+            return {};
         }
     }
 

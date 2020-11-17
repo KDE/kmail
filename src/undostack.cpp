@@ -48,7 +48,7 @@ QString UndoStack::undoInfo() const
         UndoInfo *info = mStack.first();
         return info->moveToTrash ? i18n("Move To Trash") : i18np("Move Message", "Move Messages", info->items.count());
     } else {
-        return QString();
+        return {};
     }
 }
 
