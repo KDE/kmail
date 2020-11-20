@@ -212,7 +212,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mFolderTreeWidget = nullptr;
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
     mFavoritesModel = nullptr;
-    mSievePasswordProvider = new KMSieveImapPasswordProvider(winId());
+    mSievePasswordProvider = new KMSieveImapPasswordProvider(this);
     mVacationManager = new KSieveUi::VacationManager(mSievePasswordProvider, this);
     connect(mVacationManager, &KSieveUi::VacationManager::updateVacationScriptStatus, this, qOverload<bool, const QString &>(&KMMainWidget::updateVacationScriptStatus));
 

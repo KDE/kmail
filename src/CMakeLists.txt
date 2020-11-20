@@ -357,6 +357,7 @@ target_link_libraries(kmailprivate
     KF5::WebEngineViewer
     KF5::SyntaxHighlighting
     KF5::GuiAddons
+    qt5keychain
     ${kmail_userfeedback_LIB}
     )
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)

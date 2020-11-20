@@ -5,37 +5,55 @@
 */
 
 #include "kmsieveimappasswordprovider.h"
-
-#include <KWallet>
-
-#include <memory>
-
-KMSieveImapPasswordProvider::KMSieveImapPasswordProvider(WId wid)
-    : mWid(wid)
+#include "kmail_debug.h"
+using namespace QKeychain;
+KMSieveImapPasswordProvider::KMSieveImapPasswordProvider(QObject *parent)
+    : KSieveUi::SieveImapPasswordProvider(parent)
 {
 }
 
-QString KMSieveImapPasswordProvider::password(const QString &identifier)
+KMSieveImapPasswordProvider::~KMSieveImapPasswordProvider()
 {
-    return walletPassword(identifier);
+
 }
 
-QString KMSieveImapPasswordProvider::sieveCustomPassword(const QString &identifier)
+void KMSieveImapPasswordProvider::passwords(const QString &identifier)
 {
-    return walletPassword(QStringLiteral("custom_sieve_") + identifier);
+    mIdentifier = identifier;
+
+    auto readJob = new ReadPasswordJob(QStringLiteral("imap"), this);
+    connect(readJob, &Job::finished, this, &KMSieveImapPasswordProvider::readSieveServerPasswordFinished);
+    readJob->setKey(mIdentifier + QStringLiteral("rc"));
+    readJob->start();
 }
 
-QString KMSieveImapPasswordProvider::walletPassword(const QString &identifier)
+void KMSieveImapPasswordProvider::readSieveServerPasswordFinished(QKeychain::Job *baseJob)
 {
-    std::unique_ptr<KWallet::Wallet> wallet(KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), mWid));
-    if (wallet) {
-        if (wallet->hasFolder(QStringLiteral("imap"))) {
-            QString pwd;
-            wallet->setFolder(QStringLiteral("imap"));
-            wallet->readPassword(identifier + QStringLiteral("rc"), pwd);
-            return pwd;
-        }
+    auto *job = qobject_cast<ReadPasswordJob *>(baseJob);
+    Q_ASSERT(job);
+    if (job->error()) {
+        qCWarning(KMAIL_LOG) << "An error occurred while reading password: " << job->errorString();
+    } else {
+        mSievePassword = job->textData();
     }
 
-    return {};
+    auto readJob = new ReadPasswordJob(QStringLiteral("imap"), this);
+    connect(readJob, &Job::finished, this, &KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished);
+    readJob->setKey(QStringLiteral("custom_sieve_") + mIdentifier + QStringLiteral("rc"));
+    readJob->start();
+}
+
+void KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished(QKeychain::Job *baseJob)
+{
+    auto *job = qobject_cast<ReadPasswordJob *>(baseJob);
+    Q_ASSERT(job);
+    if (job->error()) {
+        qCWarning(KMAIL_LOG) << "An error occurred while reading password: " << job->errorString();
+    } else {
+        mSieveCustomPassword = job->textData();
+    }
+    Q_EMIT passwordsRequested(mSievePassword, mSieveCustomPassword);
+    //Don't store it.
+    mSievePassword.clear();
+    mSieveCustomPassword.clear();
 }

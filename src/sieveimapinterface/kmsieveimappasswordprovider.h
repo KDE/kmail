@@ -8,21 +8,23 @@
 #define KMSIEVEIMAPPASSWORDPROVIDER_H
 #include "kmail_private_export.h"
 #include <KSieveUi/SieveImapPasswordProvider>
-
-#include <QWidget> // for WId
-
+#include <qt5keychain/keychain.h>
 class KMAILTESTS_TESTS_EXPORT KMSieveImapPasswordProvider : public KSieveUi::SieveImapPasswordProvider
 {
+    Q_OBJECT
 public:
-    KMSieveImapPasswordProvider(WId wid);
+    explicit KMSieveImapPasswordProvider(QObject *parent = nullptr);
+    ~KMSieveImapPasswordProvider() override;
 
-    Q_REQUIRED_RESULT QString password(const QString &identifier) override;
-    Q_REQUIRED_RESULT QString sieveCustomPassword(const QString &identifier) override;
+    void passwords(const QString &identifier) override;
 
 private:
+    void readSieveServerPasswordFinished(QKeychain::Job *baseJob);
+    void readSieveServerCustomPasswordFinished(QKeychain::Job *baseJob);
     Q_REQUIRED_RESULT QString walletPassword(const QString &identifier);
-
-    const WId mWid;
+    QString mIdentifier;
+    QString mSievePassword;
+    QString mSieveCustomPassword;
 };
 
 #endif

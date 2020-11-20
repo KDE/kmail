@@ -71,7 +71,7 @@ set(MESSAGELIB_LIB_VERSION "5.15.80")
 set(LIBKLEO_LIB_VERSION "5.15.80")
 set(PIMCOMMON_LIB_VERSION "5.15.80")
 set(LIBKDEPIM_LIB_VERSION "5.15.80")
-set(LIBKSIEVE_LIB_VERSION "5.15.80")
+set(LIBKSIEVE_LIB_VERSION "5.16.42")
 set(AKONADI_SEARCH_VERSION "5.15.80")
 
 find_package(KF5WebEngineViewer ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
@@ -137,7 +137,6 @@ find_package(KF5TemplateParser ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
 find_package(MailTransportDBusService CONFIG REQUIRED)
 
-#it will replace kwallet support
 find_package(Qt5Keychain CONFIG)
 set_package_properties(Qt5Keychain PROPERTIES
                                    DESCRIPTION "Provides support for secure credentials storage"
