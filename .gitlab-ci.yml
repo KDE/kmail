@@ -9,7 +9,7 @@ build_clazy_clang_tidy:
   #only:
   #  - merge_requests
   before_script:
-    - zypper install -y clazy
+    - zypper install -y clazy clang11
     - git clone --depth=1 https://invent.kde.org/sysadmin/ci-tooling.git $CI_TOOLING
     - git clone --depth=1 https://invent.kde.org/sysadmin/repo-metadata.git $CI_TOOLING/repo-metadata
     - git clone --depth=1 https://invent.kde.org/sysadmin/kde-build-metadata.git $CI_TOOLING/kde-build-metadata
