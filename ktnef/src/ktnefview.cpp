@@ -125,7 +125,7 @@ QList<KTNEFAttach *> KTNEFView::getSelection()
 
 void KTNEFView::startDrag(Qt::DropActions dropAction)
 {
-    Q_UNUSED(dropAction);
+    Q_UNUSED(dropAction)
 
     QTreeWidgetItemIterator it(this, QTreeWidgetItemIterator::Selected);
     QList<KTNEFAttach *> list;
