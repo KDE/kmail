@@ -15,14 +15,12 @@
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KXMLGUIClient>
-#include <KActionMenu>
-#include <QMenu>
 #include <KLocalizedString>
-#include <KJob>
 #include <QIcon>
 #include <AkonadiCore/Monitor>
 #include "kmail_debug.h"
-
+#include <KActionMenu>
+#include <QMenu>
 #include <QPointer>
 
 using namespace KMail;

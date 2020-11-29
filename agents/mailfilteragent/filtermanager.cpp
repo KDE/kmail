@@ -19,7 +19,6 @@
 #include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <Akonadi/KMime/MessageParts>
-#include <KConfig>
 #include "mailfilteragent_debug.h"
 #include <KLocalizedString>
 #include <KNotification>

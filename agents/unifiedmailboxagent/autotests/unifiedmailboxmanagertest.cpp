@@ -9,7 +9,6 @@
 #include "../common.h"
 
 #include <KSharedConfig>
-#include <KConfigGroup>
 
 #include <AkonadiCore/SpecialCollectionAttribute>
 #include <AkonadiCore/CollectionFetchJob>
