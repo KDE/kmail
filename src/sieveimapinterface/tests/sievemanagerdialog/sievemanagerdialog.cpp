@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     QApplication::setApplicationVersion(QStringLiteral("1.0"));
 
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
-    KMSieveImapPasswordProvider provider(0);
+    KMSieveImapPasswordProvider provider(nullptr);
     auto *dlg = new KSieveUi::ManageSieveScriptsDialog(&provider);
     dlg->show();
     return app.exec();

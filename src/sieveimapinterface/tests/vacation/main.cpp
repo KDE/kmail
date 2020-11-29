@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 
     app.setQuitOnLastWindowClosed(true);
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
-    KMSieveImapPasswordProvider provider(0);
+    KMSieveImapPasswordProvider provider(nullptr);
     KSieveUi::MultiImapVacationManager manager(&provider);
     KSieveUi::MultiImapVacationDialog dlg(&manager);
     QObject::connect(&dlg, &KSieveUi::MultiImapVacationDialog::okClicked, &app, &QApplication::quit);
