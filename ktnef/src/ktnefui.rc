@@ -1,5 +1,6 @@
-<!DOCTYPE kpartgui>
-<kpartgui name="kups" version="2">
+<?xml version="1.0"?>
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui name="kups" version="2">
 <MenuBar>
   <Menu name="action"><text>&amp;Action</text>
     <Action name="view_file" />
@@ -33,4 +34,4 @@
   <Action name="msg_properties" />
   <Action name="msg_text" />
 </ToolBar>
-</kpartgui>
+</gui>

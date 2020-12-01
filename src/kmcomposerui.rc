@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd" >
 <gui version="521" name="kmcomposer" translationDomain="kmail">
  <MenuBar>
