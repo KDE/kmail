@@ -48,7 +48,9 @@ void KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished(QKeychai
     auto *job = qobject_cast<ReadPasswordJob *>(baseJob);
     Q_ASSERT(job);
     if (job->error()) {
-        qCWarning(KMAIL_LOG) << "An error occurred while reading password: " << job->errorString();
+        if (job->error() != QKeychain::EntryNotFound) {
+            qCWarning(KMAIL_LOG) << "An error occurred while reading password: " << job->errorString();
+        }
     } else {
         mSieveCustomPassword = job->textData();
     }
