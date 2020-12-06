@@ -4,7 +4,7 @@ include:
 
 build_clazy_clang_tidy:
   stage: build
-  image: kdeorg/ci-suse-qt514
+  image: kdeorg/ci-suse-qt515
   extends: .linux
   #only:
   #  - merge_requests
@@ -26,5 +26,5 @@ build_clazy_clang_tidy:
     - python3 -u $CI_TOOLING/helpers/compile-build.py --product $PRODUCT --project $PROJECT --branchGroup $BRANCH_GROUP --platform $PLATFORM --usingInstall $INSTALL_PREFIX
     - cd build && run-clang-tidy
   variables:
-    PLATFORM: SUSEQt5.14
+    PLATFORM: SUSEQt5.15
     BRANCH_GROUP: kf5-qt5
