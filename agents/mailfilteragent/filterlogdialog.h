@@ -44,7 +44,7 @@ class FilterLogDialog : public QDialog
 public:
     /** constructor */
     explicit FilterLogDialog(QWidget *parent);
-    ~FilterLogDialog();
+    ~FilterLogDialog() override;
 
 private:
     void slotTextChanged();

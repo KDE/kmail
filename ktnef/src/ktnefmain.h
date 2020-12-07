@@ -37,7 +37,7 @@ class KTNEFMain : public KXmlGuiWindow
 
 public:
     explicit KTNEFMain(QWidget *parent = nullptr);
-    ~KTNEFMain();
+    ~KTNEFMain() override;
 
     void loadFile(const QString &filename);
 

@@ -16,7 +16,7 @@ class FollowUpReminderJob : public QObject
     Q_OBJECT
 public:
     explicit FollowUpReminderJob(QObject *parent = nullptr);
-    ~FollowUpReminderJob();
+    ~FollowUpReminderJob() override;
 
     void setItem(const Akonadi::Item &item);
 

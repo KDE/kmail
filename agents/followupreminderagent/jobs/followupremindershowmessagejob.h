@@ -15,7 +15,7 @@ class FollowUpReminderShowMessageJob : public QObject
     Q_OBJECT
 public:
     explicit FollowUpReminderShowMessageJob(Akonadi::Item::Id id, QObject *parent = nullptr);
-    ~FollowUpReminderShowMessageJob();
+    ~FollowUpReminderShowMessageJob() override;
 
     void start();
 

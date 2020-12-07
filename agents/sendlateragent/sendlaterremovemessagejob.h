@@ -17,7 +17,7 @@ class SendLaterRemoveMessageJob : public QObject
     Q_OBJECT
 public:
     explicit SendLaterRemoveMessageJob(const QVector<Akonadi::Item::Id> &listItem, QObject *parent = nullptr);
-    ~SendLaterRemoveMessageJob();
+    ~SendLaterRemoveMessageJob() override;
 
     void start();
 

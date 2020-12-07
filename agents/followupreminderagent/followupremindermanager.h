@@ -20,7 +20,7 @@ class FollowUpReminderManager : public QObject
     Q_OBJECT
 public:
     explicit FollowUpReminderManager(QObject *parent = nullptr);
-    ~FollowUpReminderManager();
+    ~FollowUpReminderManager() override;
 
     void load(bool forceReloadConfig = false);
     void addReminder(FollowUpReminder::FollowUpReminderInfo *reminder); // takes ownership

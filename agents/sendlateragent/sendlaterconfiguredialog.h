@@ -15,7 +15,7 @@ class SendLaterConfigureDialog : public QDialog
     Q_OBJECT
 public:
     explicit SendLaterConfigureDialog(QWidget *parent = nullptr);
-    ~SendLaterConfigureDialog();
+    ~SendLaterConfigureDialog() override;
 
     Q_REQUIRED_RESULT QVector<Akonadi::Item::Id> messagesToRemove() const;
 

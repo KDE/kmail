@@ -21,7 +21,7 @@ class SendLaterItem : public QTreeWidgetItem
 {
 public:
     explicit SendLaterItem(QTreeWidget *parent = nullptr);
-    ~SendLaterItem();
+    ~SendLaterItem() override;
 
     void setInfo(MessageComposer::SendLaterInfo *info);
     MessageComposer::SendLaterInfo *info() const;
@@ -35,7 +35,7 @@ class SendLaterWidget : public QWidget
     Q_OBJECT
 public:
     explicit SendLaterWidget(QWidget *parent = nullptr);
-    ~SendLaterWidget();
+    ~SendLaterWidget() override;
 
     enum SendLaterColumn {
         To = 0,

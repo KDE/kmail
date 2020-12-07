@@ -28,7 +28,7 @@ class MessagePropertyDialog : public QDialog
     Q_OBJECT
 public:
     explicit MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg);
-    ~MessagePropertyDialog();
+    ~MessagePropertyDialog() override;
 
 private:
     void slotSaveProperty();

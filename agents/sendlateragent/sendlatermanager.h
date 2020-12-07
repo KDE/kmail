@@ -35,7 +35,7 @@ public:
     };
 
     explicit SendLaterManager(QObject *parent);
-    ~SendLaterManager();
+    ~SendLaterManager() override;
 
     void sendDone(MessageComposer::SendLaterInfo *info);
     void sendError(MessageComposer::SendLaterInfo *info, ErrorType type);

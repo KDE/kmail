@@ -15,7 +15,7 @@ class FollowUpReminderFinishTaskJob : public QObject
     Q_OBJECT
 public:
     explicit FollowUpReminderFinishTaskJob(Akonadi::Item::Id id, QObject *parent = nullptr);
-    ~FollowUpReminderFinishTaskJob();
+    ~FollowUpReminderFinishTaskJob() override;
 
     void start();
 
