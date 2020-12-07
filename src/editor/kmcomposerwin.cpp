@@ -665,14 +665,14 @@ void KMComposerWin::readConfig(bool reload)
     mEdtSubject->setFont(mBodyFont);
 
     if (!reload) {
-        QSize siz = KMailSettings::self()->composerSize();
-        if (siz.width() < 200) {
-            siz.setWidth(200);
+        QSize composerSize = KMailSettings::self()->composerSize();
+        if (composerSize.width() < 200) {
+            composerSize.setWidth(200);
         }
-        if (siz.height() < 200) {
-            siz.setHeight(200);
+        if (composerSize.height() < 200) {
+            composerSize.setHeight(200);
         }
-        resize(siz);
+        resize(composerSize);
 
         if (!KMailSettings::self()->snippetSplitterPosition().isEmpty()) {
             mSnippetSplitter->setSizes(KMailSettings::self()->snippetSplitterPosition());
