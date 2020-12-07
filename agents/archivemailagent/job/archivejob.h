@@ -43,7 +43,7 @@ public:
     {
     }
 
-    ~ScheduledArchiveTask()
+    ~ScheduledArchiveTask() override
     = default;
 
     MailCommon::ScheduledJob *run() override;

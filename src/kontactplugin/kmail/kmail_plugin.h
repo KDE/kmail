@@ -38,7 +38,7 @@ class KMailPlugin : public KontactInterface::Plugin
 
 public:
     KMailPlugin(KontactInterface::Core *core, const QVariantList &);
-    ~KMailPlugin();
+    ~KMailPlugin() override;
 
     Q_REQUIRED_RESULT bool isRunningStandalone() const override;
     KontactInterface::Summary *createSummaryWidget(QWidget *parent) override;

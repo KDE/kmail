@@ -237,7 +237,7 @@ class KMAILTESTS_TESTS_EXPORT KMEditItemCommand : public KMCommand
 
 public:
     explicit KMEditItemCommand(QWidget *parent, const Akonadi::Item &msg, bool deleteFromSource = true);
-    ~KMEditItemCommand();
+    ~KMEditItemCommand() override;
 private Q_SLOTS:
     void slotDeleteItem(KJob *job);
 private:
