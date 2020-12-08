@@ -72,7 +72,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     mReplyAuthorAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply to A&uthor..."), this);
     ac->addAction(QStringLiteral("reply_author"), mReplyAuthorAction);
-    ac->setDefaultShortcut(mReplyAuthorAction, Qt::SHIFT + Qt::Key_A);
+    ac->setDefaultShortcut(mReplyAuthorAction, Qt::SHIFT | Qt::Key_A);
     connect(mReplyAuthorAction, &QAction::triggered, this, &MessageActions::slotReplyAuthorToMsg);
     mReplyActionMenu->addAction(mReplyAuthorAction);
 
@@ -91,7 +91,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     mNoQuoteReplyAction = new QAction(i18n("Reply Without &Quote..."), this);
     ac->addAction(QStringLiteral("noquotereply"), mNoQuoteReplyAction);
-    ac->setDefaultShortcut(mNoQuoteReplyAction, Qt::SHIFT + Qt::Key_R);
+    ac->setDefaultShortcut(mNoQuoteReplyAction, Qt::SHIFT | Qt::Key_R);
     connect(mNoQuoteReplyAction, &QAction::triggered, this, &MessageActions::slotNoQuoteReplyToMsg);
 
     mListFilterAction = new QAction(i18n("Filter on Mailing-&List..."), this);
@@ -177,7 +177,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     mNewMessageFromTemplateAction = new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Message From &Template"), this);
     ac->addAction(QStringLiteral("use_template"), mNewMessageFromTemplateAction);
     connect(mNewMessageFromTemplateAction, &QAction::triggered, this, &MessageActions::slotUseTemplate);
-    ac->setDefaultShortcut(mNewMessageFromTemplateAction, QKeySequence(Qt::SHIFT + Qt::Key_N));
+    ac->setDefaultShortcut(mNewMessageFromTemplateAction, QKeySequence(Qt::SHIFT | Qt::Key_N));
 
     mExportToPdfAction = new QAction(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("Export to PDF..."), this);
     ac->addAction(QStringLiteral("file_export_pdf"), mExportToPdfAction);
@@ -503,14 +503,14 @@ void MessageActions::setupForwardActions(KActionCollection *ac)
         mForwardActionMenu->insertAction(mRedirectAction, mForwardInlineAction);
         mForwardActionMenu->insertAction(mRedirectAction, mForwardAttachedAction);
         ac->setDefaultShortcut(mForwardInlineAction, QKeySequence(Qt::Key_F));
-        ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT + Qt::Key_F));
+        ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT | Qt::Key_F));
         QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)),
                          mParent, SLOT(slotForwardInlineMsg()));
     } else {
         mForwardActionMenu->insertAction(mRedirectAction, mForwardAttachedAction);
         mForwardActionMenu->insertAction(mRedirectAction, mForwardInlineAction);
         ac->setDefaultShortcut(mForwardInlineAction, QKeySequence(Qt::Key_F));
-        ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT + Qt::Key_F));
+        ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT | Qt::Key_F));
         QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)),
                          mParent, SLOT(slotForwardAttachedMessage()));
     }
