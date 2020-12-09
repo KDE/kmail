@@ -4,7 +4,7 @@ set( kmail_potentialphishingemailjobtest_SRCS potentialphishingemailjobtest.cpp 
 add_executable( kmail_potentialphishingemailjobtest ${kmail_potentialphishingemailjobtest_SRCS})
 add_test(NAME kmail_potentialphishingemailjobtest COMMAND kmail_potentialphishingemailjobtest)
 ecm_mark_as_test(kmail_potentialphishingemailjobtest)
-target_link_libraries( kmail_potentialphishingemailjobtest Qt5::Test  KF5::Codecs KF5::PimCommon kmailprivate)
+target_link_libraries( kmail_potentialphishingemailjobtest Qt5::Test KF5::PimCommon kmailprivate)
 
 
 set( kmail_potentialphishingdetaildialogtest_SRCS potentialphishingdetaildialogtest.cpp)
