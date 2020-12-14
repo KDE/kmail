@@ -318,6 +318,10 @@ endif()
 
 
 add_library(kmailprivate ${kmailprivate_LIB_SRCS})
+if (COMPILE_WITH_CMAKE_SUPPORT)
+    set_target_properties(kmailprivate PROPERTIES UNITY_BUILD ON)
+endif()
+
 generate_export_header(kmailprivate BASE_NAME kmail)
 target_link_libraries(kmailprivate
     PRIVATE

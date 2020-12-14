@@ -33,6 +33,10 @@ qt5_add_dbus_interface(followupreminderagent_SRCS org.freedesktop.DBus.Propertie
 
 
 add_library(followupreminderagent STATIC ${followupreminderagent_SRCS})
+if (COMPILE_WITH_CMAKE_SUPPORT)
+    set_target_properties(followupreminderagent PROPERTIES UNITY_BUILD ON)
+endif()
+
 target_link_libraries(followupreminderagent
     KF5::AkonadiCore
     KF5::IdentityManagement

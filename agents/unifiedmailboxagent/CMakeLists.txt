@@ -25,7 +25,9 @@ kconfig_add_kcfg_files(unifiedmailbox_agent_SRCS
 qt5_add_dbus_adaptor(unifiedmailbox_agent_SRCS org.freedesktop.Akonadi.UnifiedMailboxAgent.xml unifiedmailboxagent.h UnifiedMailboxAgent)
 
 add_executable(akonadi_unifiedmailbox_agent ${unifiedmailbox_agent_SRCS})
-
+if (COMPILE_WITH_CMAKE_SUPPORT)
+    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES UNITY_BUILD ON)
+endif()
 target_link_libraries(akonadi_unifiedmailbox_agent
     KF5::AkonadiAgentBase
     KF5::AkonadiMime

@@ -37,6 +37,10 @@ qt5_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.
 ki18n_wrap_ui(libsendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
 kconfig_add_kcfg_files(libsendlateragent_SRCS sendlateragentsettings.kcfgc)
 add_library(sendlateragent STATIC ${libsendlateragent_SRCS})
+if (COMPILE_WITH_CMAKE_SUPPORT)
+    set_target_properties(sendlateragent PROPERTIES UNITY_BUILD ON)
+endif()
+
 target_link_libraries(sendlateragent
     KF5::AkonadiCore
     KF5::AkonadiMime
