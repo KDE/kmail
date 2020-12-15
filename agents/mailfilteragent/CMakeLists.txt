@@ -21,7 +21,7 @@ ecm_qt_declare_logging_category(akonadi_mailfilter_agent_SRCS HEADER mailfiltera
 
 
 add_executable(akonadi_mailfilter_agent ${akonadi_mailfilter_agent_SRCS})
-if (COMPILE_WITH_CMAKE_SUPPORT)
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(akonadi_mailfilter_agent PROPERTIES UNITY_BUILD ON)
 endif()
 

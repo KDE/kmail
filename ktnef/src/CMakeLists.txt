@@ -24,7 +24,7 @@ ecm_add_app_icon(ktnef_SRCS ICONS ${ICONS_SRCS})
 ki18n_wrap_ui(ktnef_SRCS ui/attachpropertywidgetbase.ui)
 
 add_executable(ktnef ${ktnef_SRCS})
-if (COMPILE_WITH_CMAKE_SUPPORT)
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(ktnef PROPERTIES UNITY_BUILD ON)
 endif()
 

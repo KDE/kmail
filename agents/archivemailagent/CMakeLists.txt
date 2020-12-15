@@ -25,7 +25,7 @@ ecm_qt_declare_logging_category(libarchivemailagent_SRCS HEADER archivemailagent
 ki18n_wrap_ui(libarchivemailagent_SRCS ui/archivemailwidget.ui )
 
 add_library(archivemailagent STATIC ${libarchivemailagent_SRCS})
-if (COMPILE_WITH_CMAKE_SUPPORT)
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(archivemailagent PROPERTIES UNITY_BUILD ON)
 endif()
 target_link_libraries(archivemailagent
@@ -89,7 +89,7 @@ target_link_libraries(archivemailagentconfig
     KF5::XmlGui
     KF5::I18n
 )
-if (COMPILE_WITH_CMAKE_SUPPORT)
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(archivemailagentconfig PROPERTIES UNITY_BUILD ON)
 endif()
 
