@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     QStandardPaths::setTestModeEnabled(true);
 
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
-    KMSieveImapPasswordProvider provider(0);
+    KMSieveImapPasswordProvider provider(nullptr);
     auto *dlg = new KSieveUi::SieveDebugDialog(&provider);
     dlg->exec();
     delete dlg;
