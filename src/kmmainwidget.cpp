@@ -3070,7 +3070,7 @@ void KMMainWidget::setupActions()
 
     mTemplateMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("document-new")), i18n("Message From &Template"),
                                     actionCollection());
-    mTemplateMenu->setDelayed(true);
+    mTemplateMenu->setPopupMode(QToolButton::DelayedPopup);
     actionCollection()->addAction(QStringLiteral("new_from_template"), mTemplateMenu);
     connect(mTemplateMenu->menu(), &QMenu::aboutToShow, this,
             &KMMainWidget::slotShowNewFromTemplate);
