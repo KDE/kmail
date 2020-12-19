@@ -13,6 +13,9 @@ ecm_qt_declare_logging_category(kmail-refresh-settings_SRCS HEADER kmail-refresh
 
 
 add_executable(kmail-refresh-settings ${kmail-refresh-settings_SRCS})
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+    set_target_properties(kmail-refresh-settings PROPERTIES UNITY_BUILD ON)
+endif()
 target_link_libraries(kmail-refresh-settings KF5::I18n KF5::AkonadiWidgets KF5::DBusAddons KF5::Crash KF5::XmlGui)
 
 

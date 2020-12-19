@@ -21,9 +21,9 @@ ecm_qt_declare_logging_category(akonadi_mailfilter_agent_SRCS HEADER mailfiltera
 
 
 add_executable(akonadi_mailfilter_agent ${akonadi_mailfilter_agent_SRCS})
-#if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
-#    set_target_properties(akonadi_mailfilter_agent PROPERTIES UNITY_BUILD ON)
-#endif()
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+    set_target_properties(akonadi_mailfilter_agent PROPERTIES UNITY_BUILD ON)
+endif()
 
 if( APPLE )
     set_target_properties(akonadi_mailfilter_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
