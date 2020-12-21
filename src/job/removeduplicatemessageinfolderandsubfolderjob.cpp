@@ -72,7 +72,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone(cons
         item->setUsesBusyIndicator(true);
         item->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
-        auto *job = new Akonadi::RemoveDuplicatesJob(lst, this);
+        auto job = new Akonadi::RemoveDuplicatesJob(lst, this);
         job->setProperty("ProgressItem", QVariant::fromValue(item));
         item->setProperty("RemoveDuplicatesJob", QVariant::fromValue(qobject_cast<Akonadi::Job *>(job)));
         connect(job, &Akonadi::RemoveDuplicatesJob::finished, this, &RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished);

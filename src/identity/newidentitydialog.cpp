@@ -36,8 +36,8 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     , mIdentityManager(manager)
 {
     setWindowTitle(i18nc("@title:window", "New Identity"));
-    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
-    auto *mainLayout = new QVBoxLayout(this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
+    auto mainLayout = new QVBoxLayout(this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -48,11 +48,11 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     QWidget *page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
-    auto *vlay = new QVBoxLayout(page);
+    auto vlay = new QVBoxLayout(page);
     vlay->setContentsMargins({});
 
     // row 0: line edit with label
-    auto *hlay = new QHBoxLayout();  // inherits spacing
+    auto hlay = new QHBoxLayout();  // inherits spacing
     vlay->addLayout(hlay);
     mLineEdit = new QLineEdit(page);
     mLineEdit->setFocus();

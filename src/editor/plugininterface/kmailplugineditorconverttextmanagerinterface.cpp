@@ -140,7 +140,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                 }
                 QList<QAction *> lst = mActionHash.value(type);
                 if (!lst.isEmpty()) {
-                    auto *act = new QAction(this);
+                    auto act = new QAction(this);
                     act->setSeparator(true);
                     lst << act << currentAction;
                     mActionHash.insert(type, lst);
@@ -152,7 +152,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                     if (currentAction) {
                         lst = mActionHash.value(type);
                         if (!lst.isEmpty()) {
-                            auto *act = new QAction(this);
+                            auto act = new QAction(this);
                             act->setSeparator(true);
                             lst << act << currentAction;
                             mActionHash.insert(type, lst);
@@ -165,7 +165,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                     type = MessageComposer::PluginActionType::ToolBar;
                     lst = mActionHash.value(type);
                     if (!lst.isEmpty()) {
-                        auto *act = new QAction(this);
+                        auto act = new QAction(this);
                         act->setSeparator(true);
                         lst << act << currentAction;
                         mActionHash.insert(type, lst);

@@ -41,7 +41,7 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
     : KontactInterface::Summary(parent)
     , mPlugin(plugin)
 {
-    auto *mainLayout = new QVBoxLayout(this);
+    auto mainLayout = new QVBoxLayout(this);
     mainLayout->setSpacing(3);
     mainLayout->setContentsMargins(3, 3, 3, 3);
 
@@ -208,7 +208,7 @@ void SummaryWidget::slotUpdateFolderList()
 bool SummaryWidget::eventFilter(QObject *obj, QEvent *e)
 {
     if (obj->inherits("KUrlLabel")) {
-        auto *label = static_cast<KUrlLabel *>(obj);
+        auto label = static_cast<KUrlLabel *>(obj);
         if (e->type() == QEvent::Enter) {
             Q_EMIT message(i18n("Open Folder: \"%1\"", label->text()));
         } else if (e->type() == QEvent::Leave) {

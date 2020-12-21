@@ -89,7 +89,7 @@ void VacationScriptIndicatorWidget::createIndicator()
     connect(mInfo, &VacationLabel::vacationLabelClicked, this, &VacationScriptIndicatorWidget::slotVacationLabelClicked);
     mBoxLayout->addWidget(mInfo);
     for (const QString &server : qAsConst(mServerActive)) {
-        auto *lab = new ServerLabel(server);
+        auto lab = new ServerLabel(server);
         connect(lab, &ServerLabel::clicked, this, &VacationScriptIndicatorWidget::clicked);
         mBoxLayout->addWidget(lab);
     }

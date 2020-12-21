@@ -359,7 +359,7 @@ void FilterManager::agentRemoved(const QString &identifier)
 
 void FilterManager::filter(const Akonadi::Item &item, FilterManager::FilterSet set, const QString &resourceId)
 {
-    auto *job = new Akonadi::ItemFetchJob(item, this);
+    auto job = new Akonadi::ItemFetchJob(item, this);
     job->setProperty("filterSet", static_cast<int>(set));
     job->setProperty("resourceId", resourceId);
     SearchRule::RequiredPart requestedPart = requiredPart(resourceId);
@@ -379,7 +379,7 @@ void FilterManager::filter(const Akonadi::Item &item, FilterManager::FilterSet s
 
 void FilterManager::filter(const Akonadi::Item &item, const QString &filterId, const QString &resourceId)
 {
-    auto *job = new Akonadi::ItemFetchJob(item, this);
+    auto job = new Akonadi::ItemFetchJob(item, this);
     job->setProperty("filterId", filterId);
 
     SearchRule::RequiredPart requestedPart = requiredPart(resourceId);
@@ -445,7 +445,7 @@ bool FilterManager::processContextItem(ItemContext context)
     const bool itemCanDelete = (col.rights() & Akonadi::Collection::CanDeleteItem);
     if (context.deleteItem()) {
         if (itemCanDelete) {
-            auto *deleteJob = new Akonadi::ItemDeleteJob(context.item(), this);
+            auto deleteJob = new Akonadi::ItemDeleteJob(context.item(), this);
             connect(deleteJob, &Akonadi::ItemDeleteJob::result, this, [this](KJob *job) {
                 d->deleteJobResult(job);
             });
@@ -470,7 +470,7 @@ bool FilterManager::processContextItem(ItemContext context)
             //remoteid still holds the old one. Without clearing it, we try to enforce that on the new location, which is
             //anything but good (and the server replies with "NO Only resources can modify remote identifiers"
             item.setRemoteId(QString());
-            auto *modifyJob = new Akonadi::ItemModifyJob(item, this);
+            auto modifyJob = new Akonadi::ItemModifyJob(item, this);
             modifyJob->disableRevisionCheck(); //no conflict handling for mails as no other process could change the mail body and we don't care about flag conflicts
             //The below is a safety check to ignore modifying payloads if it was not requested,
             //as in that case we might change the payload to an invalid one
@@ -586,7 +586,7 @@ void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMess
     d->mTotalProgressCount = selectedMessages.size();
     d->mCurrentProgressCount = 0;
 
-    auto *itemFetchJob = new Akonadi::ItemFetchJob(selectedMessages, this);
+    auto itemFetchJob = new Akonadi::ItemFetchJob(selectedMessages, this);
     if (requiredPart == SearchRule::CompleteMessage) {
         itemFetchJob->fetchScope().fetchFullPayload(true);
     } else if (requiredPart == SearchRule::Header) {
@@ -614,7 +614,7 @@ void FilterManager::applyFilters(const Akonadi::Item::List &selectedMessages, Fi
     d->mTotalProgressCount = selectedMessages.size();
     d->mCurrentProgressCount = 0;
 
-    auto *itemFetchJob = new Akonadi::ItemFetchJob(selectedMessages, this);
+    auto itemFetchJob = new Akonadi::ItemFetchJob(selectedMessages, this);
     SearchRule::RequiredPart requiredParts = requiredPart(QString());
     if (requiredParts == SearchRule::CompleteMessage) {
         itemFetchJob->fetchScope().fetchFullPayload(true);

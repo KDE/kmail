@@ -36,7 +36,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     scope.fetchFullPayload(true);
     scope.fetchAttribute<Akonadi::EntityDisplayAttribute>();
 
-    auto *changeRecorder = new Akonadi::ChangeRecorder(this);
+    auto changeRecorder = new Akonadi::ChangeRecorder(this);
     changeRecorder->setSession(session);
     changeRecorder->fetchCollection(true);
     changeRecorder->setItemFetchScope(scope);
@@ -44,16 +44,16 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     //Just select address no group
     changeRecorder->setMimeTypeMonitored(KContacts::Addressee::mimeType(), true);
 
-    auto *model = new Akonadi::ContactsTreeModel(changeRecorder, this);
+    auto model = new Akonadi::ContactsTreeModel(changeRecorder, this);
 
     mEmailSelectionWidget = new Akonadi::EmailAddressSelectionWidget(false, model, this);
-    auto *mainLayout = new QVBoxLayout(this);
+    auto mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(mEmailSelectionWidget);
     mEmailSelectionWidget->view()->setSelectionMode(QAbstractItemView::SingleSelection);
     readConfig();
     connect(mEmailSelectionWidget->view()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &AddEmailToExistingContactDialog::slotSelectionChanged);
     connect(mEmailSelectionWidget->view(), &QTreeView::doubleClicked, this, &AddEmailToExistingContactDialog::slotDoubleClicked);
-    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);

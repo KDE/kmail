@@ -53,26 +53,26 @@ AccountsPage::AccountsPage(QWidget *parent)
     : ConfigModuleWithTabs(parent)
 {
     //Identity Tab:
-    auto *identityTab = new KMail::IdentityPage();
+    auto identityTab = new KMail::IdentityPage();
     addTab(identityTab, i18nc("@title:tab Tab page where the user configures identities", "Identities"));
 
     //
     // "Receiving" tab:
     //
-    auto *receivingTab = new ReceivingTab();
+    auto receivingTab = new ReceivingTab();
     addTab(receivingTab, i18nc("@title:tab Tab page where the user configures accounts to receive mail", "Receiving"));
     connect(receivingTab, &ReceivingTab::accountListChanged, this, &AccountsPage::accountListChanged);
 
     //
     // "Sending" tab:
     //
-    auto *sendingTab = new SendingTab();
+    auto sendingTab = new SendingTab();
     addTab(sendingTab, i18nc("@title:tab Tab page where the user configures accounts to send mail", "Sending"));
 
     //
     // "Sending" tab:
     //
-    auto *ldapCompletionTab = new LdapCompetionTab();
+    auto ldapCompletionTab = new LdapCompetionTab();
     addTab(ldapCompletionTab, i18nc("@title:tab Tab page where the user configures ldap server", "LDAP server"));
 }
 
@@ -87,11 +87,11 @@ QString AccountsPage::SendingTab::helpAnchor() const
 AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    auto *vlay = new QVBoxLayout(this);
+    auto vlay = new QVBoxLayout(this);
     // label: zero stretch ### FIXME more
     vlay->addWidget(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
 
-    auto *tmw = new TransportManagementWidget(this);
+    auto tmw = new TransportManagementWidget(this);
     tmw->layout()->setContentsMargins({});
     vlay->addWidget(tmw);
 
@@ -100,7 +100,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     vlay->addWidget(group);
 
     // a grid layout for the contents of the "common options" group box
-    auto *glay = new QGridLayout();
+    auto glay = new QGridLayout();
     group->setLayout(glay);
     glay->setColumnStretch(2, 10);
 
@@ -215,7 +215,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
         KConfigGroup grp = specialMailCollection.group(QStringLiteral("SpecialCollections"));
         mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(QStringLiteral("DefaultResourceId")));
     }
-    auto *configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
+    auto configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
     connect(configDelegate, &ConfigAgentDelegate::optionsClicked, this, &AccountsPageReceivingTab::slotShowMailCheckMenu);
 
@@ -224,7 +224,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
     connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);
     mAccountsReceiving.mAccountsReceiving->disconnectAddAccountButton();
-    auto *accountMenu = new QMenu(this);
+    auto accountMenu = new QMenu(this);
     accountMenu->addAction(i18n("Add Mail Account..."), this, &AccountsPageReceivingTab::slotAddMailAccount);
     accountMenu->addAction(i18n("Custom Account..."), this, &AccountsPageReceivingTab::slotAddCustomAccount);
     mAccountsReceiving.mAccountsReceiving->addAccountButton()->setMenu(accountMenu);
@@ -326,7 +326,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
 
 void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
 {
-    auto *action = qobject_cast< QAction * >(sender());
+    auto action = qobject_cast< QAction * >(sender());
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
@@ -336,7 +336,7 @@ void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
 
 void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 {
-    auto *action = qobject_cast< QAction * >(sender());
+    auto action = qobject_cast< QAction * >(sender());
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
@@ -346,7 +346,7 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 
 void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 {
-    auto *action = qobject_cast< QAction * >(sender());
+    auto action = qobject_cast< QAction * >(sender());
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
@@ -401,7 +401,7 @@ void AccountsPage::ReceivingTab::save()
 LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    auto *layout = new QVBoxLayout(this);
+    auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
     mLdapConfigureWidget = new KLDAP::LdapConfigureWidget(this);

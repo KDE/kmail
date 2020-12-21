@@ -77,7 +77,7 @@ void KMailPluginGrammarEditorManagerInterface::initializePlugins()
     const QVector<PimCommon::CustomToolsPlugin *> lstPlugin = MessageComposer::PluginEditorGrammarManager::self()->pluginsList();
     for (PimCommon::CustomToolsPlugin *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
-            auto *interface = static_cast<MessageComposer::PluginEditorGrammarCustomToolsViewInterface *>(plugin->createView(mActionCollection, mCustomToolsWidget));
+            auto interface = static_cast<MessageComposer::PluginEditorGrammarCustomToolsViewInterface *>(plugin->createView(mActionCollection, mCustomToolsWidget));
             mCustomToolsWidget->addCustomToolViewInterface(interface);
             interface->setParentWidget(mParentWidget);
             interface->setRichTextEditor(mRichTextEditor);

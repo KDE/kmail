@@ -35,14 +35,14 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     setModal(true);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
 
-    auto *topLayout = new QVBoxLayout(this);
+    auto topLayout = new QVBoxLayout(this);
 
-    auto *mainLayout = new QGridLayout;
+    auto mainLayout = new QGridLayout;
     mainLayout->setContentsMargins({});
 
     int row = 0;
 
-    auto *folderLabel = new QLabel(i18n("&Folder:"), this);
+    auto folderLabel = new QLabel(i18n("&Folder:"), this);
     mainLayout->addWidget(folderLabel, row, 0);
     mFolderRequester = new MailCommon::FolderRequester(this);
     mFolderRequester->setObjectName(QStringLiteral("folder_requester"));
@@ -84,7 +84,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     dateLabel->setObjectName(QStringLiteral("date_label"));
     mainLayout->addWidget(dateLabel, row, 0);
 
-    auto *hlayout = new QHBoxLayout;
+    auto hlayout = new QHBoxLayout;
     mDays = new QSpinBox(this);
     mDays->setMinimum(1);
     mDays->setMaximum(3600);
@@ -110,7 +110,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->setColumnStretch(1, 1);
     mainLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), row, 0);
 
-    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);

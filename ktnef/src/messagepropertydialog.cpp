@@ -32,18 +32,18 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
 {
     mMessage = msg;
 
-    auto *mainLayout = new QVBoxLayout(this);
+    auto mainLayout = new QVBoxLayout(this);
     setWindowTitle(i18nc("@title:window", "Message Properties"));
     mListView = new QTreeWidget(this);
     mainLayout->addWidget(mListView);
-    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &MessagePropertyDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &MessagePropertyDialog::reject);
     mainLayout->addWidget(buttonBox);
-    auto *user1Button = new QPushButton;
+    auto user1Button = new QPushButton;
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(user1Button, &QPushButton::clicked, this, &MessagePropertyDialog::slotSaveProperty);
 

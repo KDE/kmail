@@ -117,7 +117,7 @@ QList<KTNEFAttach *> KTNEFView::getSelection()
     QList<QTreeWidgetItem *>::const_iterator end(list.constEnd());
     mAttachments.reserve(list.count());
     for (it = list.constBegin(); it != end; ++it) {
-        auto *a = static_cast<Attachment *>(*it);
+        auto a = static_cast<Attachment *>(*it);
         mAttachments.append(a->getAttachment());
     }
     return mAttachments;
@@ -130,7 +130,7 @@ void KTNEFView::startDrag(Qt::DropActions dropAction)
     QTreeWidgetItemIterator it(this, QTreeWidgetItemIterator::Selected);
     QList<KTNEFAttach *> list;
     while (*it) {
-        auto *a = static_cast<Attachment *>(*it);
+        auto a = static_cast<Attachment *>(*it);
         list << a->getAttachment();
         ++it;
     }

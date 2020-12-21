@@ -41,7 +41,7 @@ void NewMessageJob::start()
     mMsg->assemble();
 
     mCollection = mNewMessageJobSettings.mCurrentCollection;
-    auto *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
+    auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &NewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     parser->process(mMsg, mCollection.id());

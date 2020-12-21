@@ -16,7 +16,7 @@
 CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     : QWidget(parent)
 {
-    auto *hbox = new QHBoxLayout(this);
+    auto hbox = new QHBoxLayout(this);
     hbox->setContentsMargins({});
     mSignatureStateIndicator = new QLabel(this);
     mSignatureStateIndicator->setAlignment(Qt::AlignHCenter);

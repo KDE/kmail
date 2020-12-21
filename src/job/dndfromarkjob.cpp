@@ -45,7 +45,7 @@ bool DndFromArkJob::extract(const QMimeData *source)
         const QString tmpPath = QDir::tempPath() + QLatin1String("/attachments_ark");
         QDir().mkpath(tmpPath);
 
-        auto *linkDir = new QTemporaryDir(tmpPath);
+        auto linkDir = new QTemporaryDir(tmpPath);
         const QString arkPath = linkDir->path();
         QDBusMessage message = QDBusMessage::createMethodCall(remoteDBusClient, remoteDBusPath,
                                                               QStringLiteral("org.kde.ark.DndExtract"), QStringLiteral("extractSelectedFilesTo"));

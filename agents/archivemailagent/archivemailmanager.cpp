@@ -43,7 +43,7 @@ void ArchiveMailManager::load()
     const int numberOfCollection = collectionList.count();
     for (int i = 0; i < numberOfCollection; ++i) {
         KConfigGroup group = mConfig->group(collectionList.at(i));
-        auto *info = new ArchiveMailInfo(group);
+        auto info = new ArchiveMailInfo(group);
 
         if (ArchiveMailAgentUtil::needToArchive(info)) {
             for (ArchiveMailInfo *oldInfo : qAsConst(mListArchiveInfo)) {
@@ -180,7 +180,7 @@ QString ArchiveMailManager::printArchiveListInfo() const
 
 void ArchiveMailManager::archiveFolder(const QString &path, Akonadi::Collection::Id collectionId)
 {
-    auto *info = new ArchiveMailInfo;
+    auto info = new ArchiveMailInfo;
     info->setSaveCollectionId(collectionId);
     info->setUrl(QUrl::fromLocalFile(path));
     mListArchiveInfo.append(info);

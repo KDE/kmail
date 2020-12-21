@@ -39,7 +39,7 @@ SecurityPage::SecurityPage(QWidget *parent)
     //
     // "Reading" tab:
     //
-    auto *generalTab = new ReadingTab();
+    auto generalTab = new ReadingTab();
     addTab(generalTab, i18n("Reading"));
 
     addTab(new MDNTab(), i18n("Message Disposition Notifications"));
@@ -47,19 +47,19 @@ SecurityPage::SecurityPage(QWidget *parent)
     //
     // "Composing" tab:
     //
-    auto *composerCryptoTab = new ComposerCryptoTab();
+    auto composerCryptoTab = new ComposerCryptoTab();
     addTab(composerCryptoTab, i18n("Composing"));
 
     //
     // "Warnings" tab:
     //
-    auto *warningTab = new WarningTab();
+    auto warningTab = new WarningTab();
     addTab(warningTab, i18n("Miscellaneous"));
 
     //
     // "S/MIME Validation" tab:
     //
-    auto *sMimeTab = new SMimeTab();
+    auto sMimeTab = new SMimeTab();
     addTab(sMimeTab, i18n("S/MIME Validation"));
 }
 
@@ -383,7 +383,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
     mWidget->setupUi(this);
 
     // Button-group for exclusive radiobuttons
-    auto *bg = new QButtonGroup(this);
+    auto bg = new QButtonGroup(this);
     bg->addButton(mWidget->CRLRB);
     bg->addButton(mWidget->OCSPRB);
 
@@ -420,7 +420,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
     connect(mWidget->ignoreHTTPDPCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotUpdateHTTPActions);
 
     // Button-group for exclusive radiobuttons
-    auto *bgHTTPProxy = new QButtonGroup(this);
+    auto bgHTTPProxy = new QButtonGroup(this);
     bgHTTPProxy->addButton(mWidget->honorHTTPProxyRB);
     bgHTTPProxy->addButton(mWidget->useCustomHTTPProxyRB);
 

@@ -546,13 +546,13 @@ void KMKernel::openReader(bool onlyCheck, bool startInTray)
 
     bool activate;
     if (ktmw) {
-        auto *win = static_cast<KMMainWin *>(ktmw);
+        auto win = static_cast<KMMainWin *>(ktmw);
         activate = !onlyCheck; // existing window: only activate if not --check
         if (activate) {
             win->showAndActivateWindow();
         }
     } else {
-        auto *win = new KMMainWin;
+        auto win = new KMMainWin;
         if (!startInTray && !KMailSettings::self()->startInTray()) {
             win->showAndActivateWindow();
         }
@@ -570,7 +570,7 @@ void KMKernel::openComposer(const QString &to, const QString &cc, const QString 
                                         attachmentPaths,
                                         customHeaders,
                                         replyTo, inReplyTo, identity);
-    auto *job = new OpenComposerJob(this);
+    auto job = new OpenComposerJob(this);
     job->setOpenComposerSettings(settings);
     job->start();
 }
@@ -615,7 +615,7 @@ void KMKernel::fillComposer(bool hidden, const QString &to, const QString &cc, c
                                            attachCharset,
                                            identity,
                                            forceShowWindow);
-    auto *job = new FillComposerJob;
+    auto job = new FillComposerJob;
     job->setSettings(settings);
     job->start();
 }
@@ -626,7 +626,7 @@ void KMKernel::openComposer(const QString &to, const QString &cc, const QString 
                                                  bcc,
                                                  subject,
                                                  body, hidden);
-    auto *job = new OpenComposerHiddenJob(this);
+    auto job = new OpenComposerHiddenJob(this);
     job->setSettings(settings);
     job->start();
 }
@@ -652,7 +652,7 @@ void KMKernel::newMessage(const QString &to, const QString &cc, const QString &b
                                          id,
                                          col);
 
-    auto *job = new NewMessageJob(this);
+    auto job = new NewMessageJob(this);
     job->setNewMessageJobSettings(settings);
     job->start();
 }
@@ -1228,7 +1228,7 @@ void KMKernel::slotShowConfigurationDialog()
         // ensure that there is a main widget available
         // as parts of the configure dialog (identity) rely on this
         // and this slot can be called when there is only a KMComposeWin showing
-        auto *win = new KMMainWin;
+        auto win = new KMMainWin;
         win->show();
     }
 

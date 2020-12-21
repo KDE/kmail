@@ -51,7 +51,7 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     : QWidget(parent)
 {
     setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
-    auto *hbox = new QHBoxLayout(this);
+    auto hbox = new QHBoxLayout(this);
     hbox->setContentsMargins({});
     mTreeWidget = new QTreeWidget(this);
     mTreeWidget->setObjectName(QStringLiteral("treewidget"));
@@ -100,7 +100,7 @@ void FollowUpReminderInfoWidget::load()
     for (int i = 0; i < numberOfItem; ++i) {
         KConfigGroup group = config->group(filterGroups.at(i));
 
-        auto *info = new FollowUpReminder::FollowUpReminderInfo(group);
+        auto info = new FollowUpReminder::FollowUpReminderInfo(group);
         if (info->isValid()) {
             createOrUpdateItem(info);
         } else {
@@ -157,7 +157,7 @@ bool FollowUpReminderInfoWidget::save() const
     const int numberOfItem(mTreeWidget->topLevelItemCount());
     int i = 0;
     for (; i < numberOfItem; ++i) {
-        auto *mailItem = static_cast<FollowUpReminderInfoItem *>(mTreeWidget->topLevelItem(i));
+        auto mailItem = static_cast<FollowUpReminderInfoItem *>(mTreeWidget->topLevelItem(i));
         if (mailItem->info()) {
             KConfigGroup group = config->group(FollowUpReminder::FollowUpReminderUtil::followUpReminderPattern().arg(i));
             mailItem->info()->writeConfig(group, i);
@@ -200,7 +200,7 @@ void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &po
 
 void FollowUpReminderInfoWidget::openShowMessage(Akonadi::Item::Id id)
 {
-    auto *job = new FollowUpReminderShowMessageJob(id);
+    auto job = new FollowUpReminderShowMessageJob(id);
     job->start();
 }
 
@@ -212,7 +212,7 @@ void FollowUpReminderInfoWidget::removeItem(const QList<QTreeWidgetItem *> &mail
         if (KMessageBox::Yes == KMessageBox::warningYesNo(this,
                                                           i18np("Do you want to remove this selected item?", "Do you want to remove these %1 selected items?", mailItemLst.count()), i18n("Delete"))) {
             for (QTreeWidgetItem *item : mailItemLst) {
-                auto *mailItem = static_cast<FollowUpReminderInfoItem *>(item);
+                auto mailItem = static_cast<FollowUpReminderInfoItem *>(item);
                 mListRemoveId << mailItem->info()->uniqueIdentifier();
                 delete mailItem;
             }

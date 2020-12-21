@@ -18,13 +18,13 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18nc("@title:window", "Details"));
-    auto *topLayout = new QVBoxLayout(this);
+    auto topLayout = new QVBoxLayout(this);
     setModal(true);
 
     mPotentialPhishingDetailWidget = new PotentialPhishingDetailWidget(this);
     mPotentialPhishingDetailWidget->setObjectName(QStringLiteral("potentialphising_widget"));
 
-    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);

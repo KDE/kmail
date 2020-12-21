@@ -22,8 +22,8 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     : QDialog(parent)
 {
     setWindowTitle(i18nc("@title:window", "Create own vCard"));
-    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    auto *mainLayout = new QVBoxLayout(this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto mainLayout = new QVBoxLayout(this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -31,11 +31,11 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityAddVcardDialog::reject);
     setModal(true);
 
-    auto *mainWidget = new QWidget(this);
+    auto mainWidget = new QWidget(this);
     mainLayout->addWidget(mainWidget);
     mainLayout->addWidget(buttonBox);
 
-    auto *vlay = new QVBoxLayout(mainWidget);
+    auto vlay = new QVBoxLayout(mainWidget);
     vlay->setContentsMargins({});
 
     mButtonGroup = new QButtonGroup(this);
@@ -53,7 +53,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     mButtonGroup->addButton(fromExistingVCard, static_cast<int>(FromExistingVCard));
 
     // row 3: KUrlRequester
-    auto *hlay = new QHBoxLayout(); // inherits spacing
+    auto hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
 
     mVCardPath = new KUrlRequester(this);

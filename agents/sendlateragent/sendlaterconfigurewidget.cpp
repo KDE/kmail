@@ -103,7 +103,7 @@ void SendLaterWidget::slotSendNow()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
     if (listItems.count() == 1) {
-        auto *mailItem = static_cast<SendLaterItem *>(listItems.first());
+        auto mailItem = static_cast<SendLaterItem *>(listItems.first());
         Q_EMIT sendNow(mailItem->info()->itemId());
     }
 }
@@ -182,7 +182,7 @@ void SendLaterWidget::save()
 
     const int numberOfItem(mWidget->treeWidget->topLevelItemCount());
     for (int i = 0; i < numberOfItem; ++i) {
-        auto *mailItem = static_cast<SendLaterItem *>(mWidget->treeWidget->topLevelItem(i));
+        auto mailItem = static_cast<SendLaterItem *>(mWidget->treeWidget->topLevelItem(i));
         if (mailItem->info()) {
             SendLaterUtil::writeSendLaterInfo(config, mailItem->info());
         }
@@ -210,7 +210,7 @@ void SendLaterWidget::slotRemoveItem()
 
     for (QTreeWidgetItem *item : listItems) {
         if (removeMessage) {
-            auto *mailItem = static_cast<SendLaterItem *>(item);
+            auto mailItem = static_cast<SendLaterItem *>(item);
             if (mailItem->info()) {
                 Akonadi::Item::Id id = mailItem->info()->itemId();
                 if (id != -1) {
@@ -233,7 +233,7 @@ void SendLaterWidget::slotModifyItem()
         if (!item) {
             return;
         }
-        auto *mailItem = static_cast<SendLaterItem *>(item);
+        auto mailItem = static_cast<SendLaterItem *>(item);
 
         QPointer<MessageComposer::SendLaterDialog> dialog = new MessageComposer::SendLaterDialog(mailItem->info(), this);
         if (dialog->exec()) {

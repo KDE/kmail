@@ -43,7 +43,7 @@ void RemoveDuplicateMailJob::start()
         }
     }
 
-    auto *job = new Akonadi::RemoveDuplicatesJob(collections, this);
+    auto job = new Akonadi::RemoveDuplicatesJob(collections, this);
     job->setProperty("ProgressItem", QVariant::fromValue(item));
     item->setProperty("RemoveDuplicatesJob", QVariant::fromValue(job));
     connect(job, &KJob::finished, this, &RemoveDuplicateMailJob::slotRemoveDuplicatesDone);

@@ -40,14 +40,14 @@ AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
 {
     setModal(true);
 
-    auto *mainLayout = new QVBoxLayout(this);
+    auto mainLayout = new QVBoxLayout(this);
 
-    auto *mainWidget = new QWidget(this);
+    auto mainWidget = new QWidget(this);
     mUI.setupUi(mainWidget);
     mUI.mProperties->setHeaderHidden(true);
 
-    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-    auto *user1Button = new QPushButton;
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
+    auto user1Button = new QPushButton;
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AttachPropertyDialog::reject);
     buttonBox->button(QDialogButtonBox::Close)->setDefault(true);

@@ -108,7 +108,7 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
         return;
     }
 
-    auto *command = new FolderShortcutCommand(mParent, col);
+    auto command = new FolderShortcutCommand(mParent, col);
     mFolderShortcutCommands.insert(col.id(), command);
 
     QIcon icon(QStringLiteral("folder"));

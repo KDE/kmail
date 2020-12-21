@@ -37,7 +37,7 @@ bool CollectionTemplatesPage::canHandle(const Collection &collection) const
 
 void CollectionTemplatesPage::init()
 {
-    auto *topLayout = new QVBoxLayout(this);
+    auto topLayout = new QVBoxLayout(this);
     topLayout->setContentsMargins({});
     mCollectionTemplateWidget = new MailCommon::CollectionTemplatesWidget(this);
     topLayout->addWidget(mCollectionTemplateWidget);

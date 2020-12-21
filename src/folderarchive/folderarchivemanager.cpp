@@ -96,7 +96,7 @@ void FolderArchiveManager::slotFetchCollection(KJob *job)
         qCDebug(KMAIL_LOG) << "cannot fetch collection " << job->errorString();
         return;
     }
-    auto *jobCol = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    auto jobCol = qobject_cast<Akonadi::CollectionFetchJob *>(job);
     if (jobCol->collections().isEmpty()) {
         moveFailed(i18n("Unable to return list of folders."));
         qCDebug(KMAIL_LOG) << "List of folder is empty";
@@ -111,7 +111,7 @@ void FolderArchiveManager::setArchiveItems(const Akonadi::Item::List &items, con
 {
     FolderArchiveAccountInfo *info = infoFromInstanceName(instanceName);
     if (info) {
-        auto *job = new FolderArchiveAgentJob(this, info, items);
+        auto job = new FolderArchiveAgentJob(this, info, items);
         if (mCurrentJob) {
             mJobQueue.enqueue(job);
         } else {
@@ -152,7 +152,7 @@ void FolderArchiveManager::load()
     const QStringList accountList = config.groupList().filter(QRegularExpression(FolderArchive::FolderArchiveUtil::groupConfigPattern()));
     for (const QString &account : accountList) {
         KConfigGroup group = config.group(account);
-        auto *info = new FolderArchiveAccountInfo(group);
+        auto info = new FolderArchiveAccountInfo(group);
         if (info->enabled()) {
             mListAccountInfo.append(info);
         } else {

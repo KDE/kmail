@@ -99,7 +99,7 @@ bool MailServiceImpl::sendMessage(const QString &from, const QString &to, const 
         msg->setBody(body.toUtf8());
     }
 
-    auto *part = new KMime::Content;
+    auto part = new KMime::Content;
     part->contentTransferEncoding()->setEncoding(KMime::Headers::CEbase64);
     part->setBody(attachment);   //TODO: check it!
     msg->addContent(part);

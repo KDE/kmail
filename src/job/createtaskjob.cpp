@@ -36,7 +36,7 @@ void CreateTaskJob::start()
 
 void CreateTaskJob::fetchItems()
 {
-    auto *job = new Akonadi::ItemFetchJob(mListItem, this);
+    auto job = new Akonadi::ItemFetchJob(mListItem, this);
     job->fetchScope().fetchFullPayload(true);
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     job->fetchScope().fetchAttribute<TaskAttribute>();
@@ -51,7 +51,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    auto *fetchjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    auto fetchjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     const Akonadi::Item::List lst = fetchjob->items();
     if (lst.isEmpty()) {
         emitResult();
@@ -106,7 +106,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
     if (itemsToModify.isEmpty()) {
         slotModifyItemDone(nullptr);
     } else {
-        auto *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
+        auto modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
         modifyJob->disableRevisionCheck();
         modifyJob->setIgnorePayload(true);
         connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &CreateTaskJob::slotModifyItemDone);

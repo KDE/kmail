@@ -58,8 +58,8 @@ void KMailPluginEditorManagerInterface::initializePlugins()
     const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
     for (MessageComposer::PluginEditor *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
-            auto *interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(this));
-            auto *composerInterface = new MessageComposer::PluginComposerInterface;
+            auto interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(this));
+            auto composerInterface = new MessageComposer::PluginComposerInterface;
             composerInterface->setComposerViewBase(mComposerInterface);
             interface->setComposerInterface(composerInterface);
             interface->setRichTextEditor(mRichTextEditor);
@@ -144,7 +144,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
             }
             QList<QAction *> lst = mActionHash.value(type);
             if (!lst.isEmpty()) {
-                auto *act = new QAction(this);
+                auto act = new QAction(this);
                 act->setSeparator(true);
                 lst << act << actionType.action();
                 mActionHash.insert(type, lst);
@@ -155,7 +155,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                 type = MessageComposer::PluginActionType::PopupMenu;
                 lst = mActionHash.value(type);
                 if (!lst.isEmpty()) {
-                    auto *act = new QAction(this);
+                    auto act = new QAction(this);
                     act->setSeparator(true);
                     lst << act << actionType.action();
                     mActionHash.insert(type, lst);
@@ -167,7 +167,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
                 type = MessageComposer::PluginActionType::ToolBar;
                 lst = mActionHash.value(type);
                 if (!lst.isEmpty()) {
-                    auto *act = new QAction(this);
+                    auto act = new QAction(this);
                     act->setSeparator(true);
                     lst << act << actionType.action();
                     mActionHash.insert(type, lst);

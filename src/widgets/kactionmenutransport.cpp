@@ -42,7 +42,7 @@ void KActionMenuTransport::updateTransportMenu()
         QMapIterator<QString, int> i(menuTransportLst);
         while (i.hasNext()) {
             i.next();
-            auto *action = new QAction(i.key(), this);
+            auto action = new QAction(i.key(), this);
             action->setData(i.value());
             menu()->addAction(action);
         }

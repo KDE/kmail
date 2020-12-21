@@ -141,7 +141,7 @@ void IdentityListView::commitData(QWidget *editor)
     qCDebug(KMAIL_LOG) << "after editing";
 
     if (!selectedItems().isEmpty()) {
-        auto *edit = qobject_cast<QLineEdit *>(editor);
+        auto edit = qobject_cast<QLineEdit *>(editor);
         if (edit) {
             IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(selectedItems().at(0));
             const QString text = edit->text();
@@ -171,8 +171,8 @@ void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
         return;
     }
 
-    auto *drag = new QDrag(viewport());
-    auto *md = new QMimeData;
+    auto drag = new QDrag(viewport());
+    auto md = new QMimeData;
     drag->setMimeData(md);
     item->identity().populateMimeData(md);
     drag->setPixmap(QIcon::fromTheme(QStringLiteral("user-identity")).pixmap(16, 16));

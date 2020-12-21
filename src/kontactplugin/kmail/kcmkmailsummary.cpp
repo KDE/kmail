@@ -61,7 +61,7 @@ void KCMKMailSummary::modified()
 
 void KCMKMailSummary::initGUI()
 {
-    auto *layout = new QVBoxLayout(this);
+    auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
     mCheckedCollectionWidget = new PimCommon::CheckedCollectionWidget(KMime::Message::mimeType());

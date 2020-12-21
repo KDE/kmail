@@ -16,10 +16,10 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
 {
     setText(i18n("Message Default Format"));
     delete menu();
-    auto *subMenu = new QMenu;
+    auto subMenu = new QMenu;
     setMenu(subMenu);
 
-    auto *actionGroup = new QActionGroup(this);
+    auto actionGroup = new QActionGroup(this);
 
     KToggleAction *act = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
     act->setObjectName(QStringLiteral("prefer-html-action"));

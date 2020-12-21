@@ -39,9 +39,9 @@ using namespace KMail;
 XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     : QWidget(parent)
 {
-    auto *vlay = new QVBoxLayout(this);
+    auto vlay = new QVBoxLayout(this);
     vlay->setObjectName(QStringLiteral("main layout"));
-    auto *hlay = new QHBoxLayout();
+    auto hlay = new QHBoxLayout();
     vlay->addLayout(hlay);
 
     // "enable X-Face" checkbox:
@@ -65,7 +65,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     // "obtain X-Face from" combo and label:
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
-    auto *sourceCombo = new QComboBox(this);
+    auto sourceCombo = new QComboBox(this);
     sourceCombo->setWhatsThis(
         i18n("Click on the widgets below to obtain help on the input methods."));
     sourceCombo->setEnabled(false);   // since !mEnableCheck->isChecked()
@@ -81,7 +81,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     hlay->addWidget(sourceCombo, 1);
 
     // widget stack that is controlled by the source combo:
-    auto *widgetStack = new QStackedWidget(this);
+    auto widgetStack = new QStackedWidget(this);
     widgetStack->setEnabled(false);   // since !mEnableCheck->isChecked()
     vlay->addWidget(widgetStack, 1);
     connect(sourceCombo, qOverload<int>(&QComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
@@ -97,7 +97,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     // page 0: create X-Face from image file or address book entry
     QWidget *page = new QWidget(widgetStack);
     widgetStack->insertWidget(pageno, page);   // force sequential numbers (play safe)
-    auto *page_vlay = new QVBoxLayout(page);
+    auto page_vlay = new QVBoxLayout(page);
     page_vlay->setContentsMargins({});
     hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
     page_vlay->addLayout(hlay);
@@ -211,7 +211,7 @@ void XFaceConfigurator::slotSelectFromAddressbook()
     const Identity defaultIdentity = manager.defaultIdentity();
     const QString email = defaultIdentity.primaryEmailAddress().toLower();
 
-    auto *job = new Akonadi::ContactSearchJob(this);
+    auto job = new Akonadi::ContactSearchJob(this);
     job->setLimit(1);
     job->setQuery(Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch);
     connect(job, &Akonadi::ContactSearchJob::result, this, &XFaceConfigurator::slotDelayedSelectFromAddressbook);

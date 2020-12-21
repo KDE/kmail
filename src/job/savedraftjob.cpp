@@ -30,7 +30,7 @@ void SaveDraftJob::start()
     item.setFlag(Akonadi::MessageFlags::Seen);
     Akonadi::MessageFlags::copyMessageFlags(*mMsg, item);
 
-    auto *createJob = new Akonadi::ItemCreateJob(item, mCollection);
+    auto createJob = new Akonadi::ItemCreateJob(item, mCollection);
     connect(createJob, &Akonadi::ItemCreateJob::result, this, &SaveDraftJob::slotStoreDone);
 }
 

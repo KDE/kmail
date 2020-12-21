@@ -31,14 +31,14 @@ void CreateFollowupReminderOnExistingMessageJob::start()
 
 void CreateFollowupReminderOnExistingMessageJob::doStart()
 {
-    auto *job = new Akonadi::ItemFetchJob(mMessageItem, this);
+    auto job = new Akonadi::ItemFetchJob(mMessageItem, this);
     job->fetchScope().fetchFullPayload(true);
     connect(job, &KJob::result, this, &CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone);
 }
 
 void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
 {
-    auto *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    auto fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     if (fetchJob->items().count() == 1) {
         mMessageItem = fetchJob->items().constFirst();
     } else {
@@ -53,7 +53,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
     }
     KMime::Message::Ptr msg = mMessageItem.payload<KMime::Message::Ptr>();
     if (msg) {
-        auto *reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
+        auto reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
         KMime::Headers::MessageID *messageID = msg->messageID(false);
         if (messageID) {
             const QString messageIdStr = messageID->asUnicodeString();

@@ -179,7 +179,7 @@ void KeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
         return;
     }
 
-    auto *combo = qobject_cast<KeySelectionCombo *>(parent());
+    auto combo = qobject_cast<KeySelectionCombo *>(parent());
     combo->setDefaultKey(QLatin1String(result.fingerprint()));
     connect(combo, &KeySelectionCombo::keyListingFinished,
             this, &KeyGenerationJob::done);
@@ -247,9 +247,9 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(i18nc("@title:window", "Edit Identity"));
-    auto *mainLayout = new QVBoxLayout(this);
+    auto mainLayout = new QVBoxLayout(this);
 
-    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
     connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &IdentityDialog::slotHelp);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
@@ -264,7 +264,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     QWidget *page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
-    auto *vlay = new QVBoxLayout(page);
+    auto vlay = new QVBoxLayout(page);
     vlay->setContentsMargins({});
     mTabWidget = new QTabWidget(page);
     mTabWidget->setObjectName(QStringLiteral("config-identity-tab"));
@@ -272,7 +272,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     QWidget *tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18nc("@title:tab General identity settings.", "General"));
-    auto *glay = new QGridLayout(tab);
+    auto glay = new QGridLayout(tab);
     glay->setRowStretch(3, 1);
     glay->setColumnStretch(1, 1);
 
@@ -327,14 +327,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setWhatsThis(msg);
     mEmailEdit->setWhatsThis(msg);
 
-    auto *emailValidator = new PimCommon::EmailValidator(this);
+    auto emailValidator = new PimCommon::EmailValidator(this);
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
     ++row;
     mAliasEdit = new KEditListWidget(tab);
 
-    auto *emailValidator1 = new PimCommon::EmailValidator(this);
+    auto emailValidator1 = new PimCommon::EmailValidator(this);
     mAliasEdit->lineEdit()->setValidator(emailValidator1);
 
     glay->addWidget(mAliasEdit, row, 1);
@@ -470,7 +470,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     row = -1;
     tab = new QWidget(mTabWidget);
-    auto *advancedMainLayout = new QVBoxLayout(tab);
+    auto advancedMainLayout = new QVBoxLayout(tab);
     mIdentityInvalidFolder = new IdentityInvalidFolder(tab);
     advancedMainLayout->addWidget(mIdentityInvalidFolder);
     mTabWidget->addTab(tab, i18nc("@title:tab Advanced identity settings.", "Advanced"));
@@ -605,12 +605,12 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "default domain" input field:
     ++row;
-    auto *hbox = new QHBoxLayout;
+    auto hbox = new QHBoxLayout;
     mDefaultDomainEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mDefaultDomainEdit, this);
     mDefaultDomainEdit->setClearButtonEnabled(true);
     hbox->addWidget(mDefaultDomainEdit);
-    auto *restoreDefaultDomainName = new QToolButton;
+    auto restoreDefaultDomainName = new QToolButton;
     restoreDefaultDomainName->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
     restoreDefaultDomainName->setToolTip(i18n("Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
@@ -638,7 +638,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     tab = new QWidget(mTabWidget);
     vlay = new QVBoxLayout(tab);
 
-    auto *tlay = new QHBoxLayout();
+    auto tlay = new QHBoxLayout();
     vlay->addLayout(tlay);
 
     mCustom = new QCheckBox(i18n("&Use custom message templates for this identity"), tab);
@@ -654,7 +654,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     vlay->addWidget(mWidget);
 
-    auto *btns = new QHBoxLayout();
+    auto btns = new QHBoxLayout();
     mCopyGlobal = new QPushButton(i18n("&Copy Global Templates"), tab);
     mCopyGlobal->setEnabled(false);
     btns->addWidget(mCopyGlobal);
@@ -747,7 +747,7 @@ void IdentityDialog::slotAccepted()
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
     const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String(", ") + mBccEdit->text().trimmed() + QLatin1String(", ") + mCcEdit->text().trimmed();
-    auto *job = new AddressValidationJob(recipients, this, this);
+    auto job = new AddressValidationJob(recipients, this, this);
     //Use default Value
     job->setDefaultDomain(mDefaultDomainEdit->text());
     job->setProperty("email", email);

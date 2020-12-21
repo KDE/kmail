@@ -79,38 +79,38 @@ AppearancePage::AppearancePage(QWidget *parent)
     //
     // "General" tab:
     //
-    auto *readerTab = new ReaderTab();
+    auto readerTab = new ReaderTab();
     addTab(readerTab, i18n("General"));
     addConfig(MessageViewer::MessageViewerSettings::self(), readerTab);
 
     //
     // "Fonts" tab:
     //
-    auto *fontsTab = new FontsTab();
+    auto fontsTab = new FontsTab();
     addTab(fontsTab, i18n("Fonts"));
 
     //
     // "Colors" tab:
     //
-    auto *colorsTab = new ColorsTab();
+    auto colorsTab = new ColorsTab();
     addTab(colorsTab, i18n("Colors"));
 
     //
     // "Layout" tab:
     //
-    auto *layoutTab = new LayoutTab();
+    auto layoutTab = new LayoutTab();
     addTab(layoutTab, i18n("Layout"));
 
     //
     // "Headers" tab:
     //
-    auto *headersTab = new HeadersTab();
+    auto headersTab = new HeadersTab();
     addTab(headersTab, i18n("Message List"));
 
     //
     // "Message Tag" tab:
     //
-    auto *messageTagTab = new MessageTagTab();
+    auto messageTagTab = new MessageTagTab();
     addTab(messageTagTab, i18n("Message Tags"));
 }
 
@@ -142,7 +142,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     assert(numFontNames == sizeof mFont / sizeof *mFont);
 
     // "Use custom fonts" checkbox, followed by <hr>
-    auto *vlay = new QVBoxLayout(this);
+    auto vlay = new QVBoxLayout(this);
     mCustomFontCheck = new QCheckBox(i18n("&Use custom fonts"), this);
     vlay->addWidget(mCustomFontCheck);
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
@@ -150,7 +150,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
             this, &ConfigModuleTab::slotEmitChanged);
 
     // "font location" combo box and label:
-    auto *hlay = new QHBoxLayout(); // inherites spacing
+    auto hlay = new QHBoxLayout(); // inherites spacing
     vlay->addLayout(hlay);
     mFontLocationCombo = new QComboBox(this);
     mFontLocationCombo->setEnabled(false);   // !mCustomFontCheck->isChecked()
@@ -325,7 +325,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     // "use custom colors" check box
-    auto *vlay = new QVBoxLayout(this);
+    auto vlay = new QVBoxLayout(this);
     mCustomColorCheck = new QCheckBox(i18n("&Use custom colors"), this);
     vlay->addWidget(mCustomColorCheck);
     connect(mCustomColorCheck, &QCheckBox::stateChanged,
@@ -353,7 +353,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
             this, &ConfigModuleTab::slotEmitChanged);
 
     // close to quota threshold
-    auto *hbox = new QHBoxLayout();
+    auto hbox = new QHBoxLayout();
     vlay->addLayout(hbox);
     QLabel *l = new QLabel(i18n("Close to quota threshold:"), this);
     hbox->addWidget(l);
@@ -472,7 +472,7 @@ QString AppearancePage::LayoutTab::helpAnchor() const
 AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    auto *vlay = new QVBoxLayout(this);
+    auto vlay = new QVBoxLayout(this);
 
     // "folder list" radio buttons:
     populateButtonGroup(mFolderListGroupBox = new QGroupBox(this),
@@ -481,7 +481,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     vlay->addWidget(mFolderListGroupBox);
     connect(mFolderListGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
-    auto *folderCBHLayout = new QHBoxLayout;
+    auto folderCBHLayout = new QHBoxLayout;
     mFolderQuickSearchCB = new QCheckBox(i18n("Show folder quick search field"), this);
     connect(mFolderQuickSearchCB, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
     folderCBHLayout->addWidget(mFolderQuickSearchCB);
@@ -585,11 +585,11 @@ static const int numDateDisplayConfig
 AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    auto *vlay = new QVBoxLayout(this);
+    auto vlay = new QVBoxLayout(this);
 
     // "General Options" group:
     QGroupBox *group = new QGroupBox(i18nc("General options for the message list.", "General"), this);
-    auto *gvlay = new QVBoxLayout(group);
+    auto gvlay = new QVBoxLayout(group);
 
     mDisplayMessageToolTips = new QCheckBox(
         MessageList::MessageListSettings::self()->messageToolTipEnabledItem()->label(), group);
@@ -606,9 +606,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     aggregationLabel->setBuddy(mAggregationComboBox);
 
     using MessageList::Utils::AggregationConfigButton;
-    auto *aggregationConfigButton = new AggregationConfigButton(group, mAggregationComboBox);
+    auto aggregationConfigButton = new AggregationConfigButton(group, mAggregationComboBox);
 
-    auto *aggregationLayout = new QHBoxLayout();
+    auto aggregationLayout = new QHBoxLayout();
     aggregationLayout->addWidget(aggregationLabel, 1);
     aggregationLayout->addWidget(mAggregationComboBox, 1);
     aggregationLayout->addWidget(aggregationConfigButton, 0);
@@ -627,9 +627,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     themeLabel->setBuddy(mThemeComboBox);
 
     using MessageList::Utils::ThemeConfigButton;
-    auto *themeConfigButton = new ThemeConfigButton(group, mThemeComboBox);
+    auto themeConfigButton = new ThemeConfigButton(group, mThemeComboBox);
 
-    auto *themeLayout = new QHBoxLayout();
+    auto themeLayout = new QHBoxLayout();
     themeLayout->addWidget(themeLabel, 1);
     themeLayout->addWidget(mThemeComboBox, 1);
     themeLayout->addWidget(themeConfigButton, 0);
@@ -659,9 +659,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
         }
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
             QWidget *hbox = new QWidget(mDateDisplayBox);
-            auto *hboxHBoxLayout = new QHBoxLayout(hbox);
+            auto hboxHBoxLayout = new QHBoxLayout(hbox);
             hboxHBoxLayout->setContentsMargins({});
-            auto *radio = new QRadioButton(buttonLabel, hbox);
+            auto radio = new QRadioButton(buttonLabel, hbox);
             hboxHBoxLayout->addWidget(radio);
             mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
 
@@ -719,7 +719,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             radio->setWhatsThis(mCustomDateWhatsThis);
             gvlay->addWidget(hbox);
         } else {
-            auto *radio = new QRadioButton(buttonLabel, mDateDisplayBox);
+            auto radio = new QRadioButton(buttonLabel, mDateDisplayBox);
             gvlay->addWidget(radio);
             mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
         }
@@ -829,12 +829,12 @@ QString AppearancePage::ReaderTab::helpAnchor() const
 AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    auto *topLayout = new QVBoxLayout(this);
+    auto topLayout = new QVBoxLayout(this);
 
     QGroupBox *readerBox = new QGroupBox(i18n("Message Window"), this);
     topLayout->addWidget(readerBox);
 
-    auto *readerBoxLayout = new QVBoxLayout(readerBox);
+    auto readerBoxLayout = new QVBoxLayout(readerBox);
 
     // "Close message window after replying or forwarding" check box:
     populateCheckBox(mCloseAfterReplyOrForwardCheck = new QCheckBox(this),
@@ -853,7 +853,7 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     QGroupBox *systrayBox = new QGroupBox(i18n("System Tray"), this);
     topLayout->addWidget(systrayBox);
 
-    auto *systrayBoxlayout = new QVBoxLayout(systrayBox);
+    auto systrayBoxlayout = new QVBoxLayout(systrayBox);
 
     // "Enable system tray applet" check box
     mSystemTrayCheck = new QCheckBox(i18n("Enable system tray icon"), this);
@@ -943,17 +943,17 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mPreviousTag = -1;
-    auto *maingrid = new QHBoxLayout(this);
+    auto maingrid = new QHBoxLayout(this);
 
     //Lefthand side Listbox and friends
 
     //Groupbox frame
     mTagsGroupBox = new QGroupBox(i18n("A&vailable Tags"), this);
     maingrid->addWidget(mTagsGroupBox);
-    auto *tageditgrid = new QVBoxLayout(mTagsGroupBox);
+    auto tageditgrid = new QVBoxLayout(mTagsGroupBox);
 
     //Listbox, add, remove row
-    auto *addremovegrid = new QHBoxLayout();
+    auto addremovegrid = new QHBoxLayout();
     tageditgrid->addLayout(addremovegrid);
 
     mTagAddLineEdit = new QLineEdit(mTagsGroupBox);
@@ -971,7 +971,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     addremovegrid->addWidget(mTagRemoveButton);
 
     //Up and down buttons
-    auto *updowngrid = new QHBoxLayout();
+    auto updowngrid = new QHBoxLayout();
     tageditgrid->addLayout(updowngrid);
 
     mTagUpButton = new QPushButton(mTagsGroupBox);
@@ -987,7 +987,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     updowngrid->addWidget(mTagDownButton);
 
     //Listbox for tag names
-    auto *listboxgrid = new QHBoxLayout();
+    auto listboxgrid = new QHBoxLayout();
     tageditgrid->addLayout(listboxgrid);
     mTagListBox = new QListWidget(mTagsGroupBox);
     mTagListBox->setDragDropMode(QAbstractItemView::InternalMove);
@@ -999,7 +999,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     //RHS for individual tag settings
 
     //Extra VBoxLayout for stretchers around settings
-    auto *tagsettinggrid = new QVBoxLayout();
+    auto tagsettinggrid = new QVBoxLayout();
     maingrid->addLayout(tagsettinggrid);
 
     //Groupbox frame
@@ -1011,7 +1011,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
         actionCollections = kmkernel->getKMMainWidget()->actionCollections();
     }
 
-    auto *lay = new QHBoxLayout(mTagSettingGroupBox);
+    auto lay = new QHBoxLayout(mTagSettingGroupBox);
     mTagWidget = new MailCommon::TagWidget(actionCollections, this);
     lay->addWidget(mTagWidget);
 
@@ -1121,7 +1121,7 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings(int aIndex)
         return;
     }
     QListWidgetItem *item = mTagListBox->item(aIndex);
-    auto *tagItem = static_cast<TagListWidgetItem *>(item);
+    auto tagItem = static_cast<TagListWidgetItem *>(item);
 
     MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
@@ -1146,7 +1146,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets(int aIndex)
     mTagUpButton->setEnabled((0 != aIndex));
     mTagDownButton->setEnabled(((int(mTagListBox->count()) - 1) != aIndex));
     QListWidgetItem *item = mTagListBox->currentItem();
-    auto *tagItem = static_cast<TagListWidgetItem *>(item);
+    auto tagItem = static_cast<TagListWidgetItem *>(item);
     MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
     disconnect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged,
@@ -1189,7 +1189,7 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
     if (tmp_index >= 0) {
         if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Do you want to remove tag \'%1\'?", mTagListBox->item(mTagListBox->currentRow())->text()))) {
             QListWidgetItem *item = mTagListBox->takeItem(mTagListBox->currentRow());
-            auto *tagItem = static_cast<TagListWidgetItem *>(item);
+            auto tagItem = static_cast<TagListWidgetItem *>(item);
             MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
             if (tmp_desc->tag().isValid()) {
                 new Akonadi::TagDeleteJob(tmp_desc->tag());
@@ -1293,7 +1293,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
 {
     mTagListBox->clear();
 
-    auto *fetchJob = new Akonadi::TagFetchJob(this);
+    auto fetchJob = new Akonadi::TagFetchJob(this);
     fetchJob->fetchScope().fetchAttribute<Akonadi::TagAttribute>();
     connect(fetchJob, &KJob::result, this, &AppearancePageMessageTagTab::slotTagsFetched);
 }
@@ -1304,7 +1304,7 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
         qCWarning(KMAIL_LOG) << "Failed to load tags " << job->errorString();
         return;
     }
-    auto *fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
+    auto fetchJob = static_cast<Akonadi::TagFetchJob *>(job);
 
     QList<MailCommon::TagPtr> msgTagList;
     const Akonadi::Tag::List tagList = fetchJob->tags();
@@ -1361,7 +1361,7 @@ void AppearancePage::MessageTagTab::save()
     slotRecordTagSettings(currentRow);
     const int numberOfMsgTagList = count;
     for (int i = 0; i < numberOfMsgTagList; ++i) {
-        auto *tagItem = static_cast<TagListWidgetItem *>(mTagListBox->item(i));
+        auto tagItem = static_cast<TagListWidgetItem *>(mTagListBox->item(i));
         if ((i >= mOriginalMsgTagList.count()) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i])) {
             MailCommon::Tag::Ptr tag = tagItem->kmailTag();
             tag->priority = i;

@@ -181,7 +181,7 @@ void SummaryViewPart::updateWidgets()
     QFrame *vline = new QFrame(mFrame);
     vline->setFrameStyle(QFrame::VLine | QFrame::Plain);
 
-    auto *layout = new QHBoxLayout(mFrame);
+    auto layout = new QHBoxLayout(mFrame);
 
     int margin = 20; // margin width: insert margins so there is space to dnd a
     // summary when either column is empty. looks nicer too.
@@ -208,10 +208,10 @@ void SummaryViewPart::updateWidgets()
         }
     }
 
-    auto *lspacer = new QSpacerItem(1, 10,
+    auto lspacer = new QSpacerItem(1, 10,
                                     QSizePolicy::MinimumExpanding,
                                     QSizePolicy::MinimumExpanding);
-    auto *rspacer = new QSpacerItem(1, 10,
+    auto rspacer = new QSpacerItem(1, 10,
                                     QSizePolicy::MinimumExpanding,
                                     QSizePolicy::MinimumExpanding);
     mLeftColumn->addSpacerItem(lspacer);
@@ -451,7 +451,7 @@ QStringList SummaryViewPart::configModules() const
 
 void SummaryViewPart::initGUI(KontactInterface::Core *core)
 {
-    auto *sa = new QScrollArea(core);
+    auto sa = new QScrollArea(core);
 
     sa->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     sa->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
@@ -469,7 +469,7 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
 
     mMainLayout = new QVBoxLayout(mMainWidget);
 
-    auto *hbl = new QHBoxLayout();
+    auto hbl = new QHBoxLayout();
     mMainLayout->addItem(hbl);
     mUsernameLabel = new QLabel(mMainWidget);
     mDateLabel = new QLabel(mMainWidget);

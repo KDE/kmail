@@ -66,7 +66,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     connect(m_filterManager, &FilterManager::percent, this, &MailFilterAgent::emitProgress);
     connect(m_filterManager, &FilterManager::progressMessage, this, &MailFilterAgent::emitProgressMessage);
 
-    auto *collectionMonitor = new Akonadi::Monitor(this);
+    auto collectionMonitor = new Akonadi::Monitor(this);
     collectionMonitor->setObjectName(QStringLiteral("MailFilterCollectionMonitor"));
     collectionMonitor->fetchCollection(true);
     collectionMonitor->ignoreSession(Akonadi::Session::defaultSession());
@@ -210,7 +210,7 @@ void MailFilterAgent::filterItem(const Akonadi::Item &item, const Akonadi::Colle
 {
     MailCommon::SearchRule::RequiredPart requiredPart = m_filterManager->requiredPart(collection.resource());
 
-    auto *job = new Akonadi::ItemFetchJob(item);
+    auto job = new Akonadi::ItemFetchJob(item);
     connect(job, &Akonadi::ItemFetchJob::itemsReceived,
             this, &MailFilterAgent::itemsReceiviedForFiltering);
     if (requiredPart == MailCommon::SearchRule::CompleteMessage) {

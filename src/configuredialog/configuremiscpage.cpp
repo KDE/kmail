@@ -30,16 +30,16 @@ QString MiscPage::helpAnchor() const
 MiscPage::MiscPage(QWidget *parent)
     : ConfigModuleWithTabs(parent)
 {
-    auto *folderTab = new FolderTab();
+    auto folderTab = new FolderTab();
     addTab(folderTab, i18n("Folders"));
 
-    auto *inviteTab = new InviteTab();
+    auto inviteTab = new InviteTab();
     addTab(inviteTab, i18n("Invitations"));
 
-    auto *printingTab = new MiscPagePrintingTab();
+    auto printingTab = new MiscPagePrintingTab();
     addTab(printingTab, i18n("Printing"));
 #ifdef WITH_KUSERFEEDBACK
-    auto *userFeedBackTab = new KuserFeedBackPageTab();
+    auto userFeedBackTab = new KuserFeedBackPageTab();
     addTab(userFeedBackTab, i18n("User Feedback"));
 #endif
 }
@@ -54,7 +54,7 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
 {
     mMMTab.setupUi(this);
     //replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
-    auto *layout = new QHBoxLayout;
+    auto layout = new QHBoxLayout;
     layout->setContentsMargins({});
     mMMTab.mOnStartupOpenFolder->setLayout(layout);
     mOnStartupOpenFolder = new FolderRequester(mMMTab.mOnStartupOpenFolder);
@@ -120,7 +120,7 @@ MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mInvitationUi = new MessageViewer::InvitationSettings(this);
-    auto *l = new QHBoxLayout(this);
+    auto l = new QHBoxLayout(this);
     l->setContentsMargins({});
     l->addWidget(mInvitationUi);
     connect(mInvitationUi, &MessageViewer::InvitationSettings::changed, this, &MiscPageInviteTab::slotEmitChanged);
@@ -145,7 +145,7 @@ MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mPrintingUi = new MessageViewer::PrintingSettings(this);
-    auto *l = new QHBoxLayout(this);
+    auto l = new QHBoxLayout(this);
     l->setContentsMargins({});
     l->addWidget(mPrintingUi);
     connect(mPrintingUi, &MessageViewer::PrintingSettings::changed, this, &MiscPagePrintingTab::slotEmitChanged);
@@ -171,7 +171,7 @@ KuserFeedBackPageTab::KuserFeedBackPageTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mUserFeedbackWidget = new KUserFeedback::FeedbackConfigWidget(this);
-    auto *l = new QHBoxLayout(this);
+    auto l = new QHBoxLayout(this);
     l->setContentsMargins({});
     l->addWidget(mUserFeedbackWidget);
     connect(mUserFeedbackWidget, &KUserFeedback::FeedbackConfigWidget::configurationChanged, this, &KuserFeedBackPageTab::slotEmitChanged);

@@ -237,7 +237,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mdbusObjectPath = QLatin1String("/Composer_") + QString::number(++s_composerNumber);
     QDBusConnection::sessionBus().registerObject(mdbusObjectPath, this);
 
-    auto *sigController = new MessageComposer::SignatureController(this);
+    auto sigController = new MessageComposer::SignatureController(this);
     connect(sigController, &MessageComposer::SignatureController::enableHtml, this, &KMComposerWin::enableHtml);
     mComposerBase->setSignatureController(sigController);
 
@@ -258,10 +258,10 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     };
     mHeadersToEditorSplitter->setSizes(defaultSizes);
 
-    auto *v = new QVBoxLayout(mMainWidget);
+    auto v = new QVBoxLayout(mMainWidget);
     v->setContentsMargins({});
     v->addWidget(mHeadersToEditorSplitter);
-    auto *identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(),
+    auto identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(),
                                                             mHeadersArea);
     identity->setCurrentIdentity(mId);
     connect(identity, &KIdentityManagement::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
@@ -271,7 +271,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     sigController->setIdentityCombo(identity);
     sigController->suspend(); // we have to do identity change tracking ourselves due to the template code
 
-    auto *dictionaryCombo = new DictionaryComboBox(mHeadersArea);
+    auto dictionaryCombo = new DictionaryComboBox(mHeadersArea);
     dictionaryCombo->setToolTip(i18n("Select the dictionary to use when spell-checking this message"));
     mComposerBase->setDictionary(dictionaryCombo);
 
@@ -283,7 +283,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(mFccFolder, &MailCommon::FolderRequester::folderChanged, this, &KMComposerWin::slotFccFolderChanged);
     connect(mFccFolder, &MailCommon::FolderRequester::invalidFolder, this, &KMComposerWin::slotFccIsInvalid);
 
-    auto *transport = new MailTransport::TransportComboBox(mHeadersArea);
+    auto transport = new MailTransport::TransportComboBox(mHeadersArea);
     transport->setToolTip(i18n("Select the outgoing account to use for sending this message"));
     mComposerBase->setTransportCombo(transport);
     connect(transport, qOverload<int>(&MailTransport::TransportComboBox::activated), this, &KMComposerWin::slotTransportChanged);
@@ -293,7 +293,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     mEdtFrom->setToolTip(i18n("Set the \"From:\" email address for this message"));
 
-    auto *recipientsEditor = new MessageComposer::RecipientsEditor(mHeadersArea);
+    auto recipientsEditor = new MessageComposer::RecipientsEditor(mHeadersArea);
     recipientsEditor->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::sizeHintChanged, this, &KMComposerWin::recipientEditorSizeHintChanged);
@@ -324,7 +324,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mCryptoStateIndicatorWidget = new CryptoStateIndicatorWidget(this);
     mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
-    auto *vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
+    auto vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setContentsMargins({});
 
     mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
@@ -336,7 +336,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     connect(mAttachmentMissing, &AttachmentMissingWarning::explicitClosedMissingAttachment, this, &KMComposerWin::slotExplicitClosedMissingAttachment);
     vbox->addWidget(mAttachmentMissing);
 
-    auto *composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
+    auto composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
     mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
 
     connect(composerEditorNg, &KMComposerEditorNg::insertEmoticon, mGlobalAction, &KMComposerGlobalAction::slotInsertEmoticon);
@@ -388,11 +388,11 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mSplitter->addWidget(mCustomToolsWidget);
     connect(mCustomToolsWidget, &PimCommon::CustomToolsWidgetNg::insertText, this, &KMComposerWin::slotInsertShortUrl);
 
-    auto *attachmentModel = new MessageComposer::AttachmentModel(this);
-    auto *attachmentView = new KMail::AttachmentView(attachmentModel, mSplitter);
+    auto attachmentModel = new MessageComposer::AttachmentModel(this);
+    auto attachmentView = new KMail::AttachmentView(attachmentModel, mSplitter);
     attachmentView->hideIfEmpty();
     connect(attachmentView, &KMail::AttachmentView::modified, this, &KMComposerWin::setModified);
-    auto *attachmentController = new KMail::AttachmentController(attachmentModel, attachmentView, this);
+    auto attachmentController = new KMail::AttachmentController(attachmentModel, attachmentView, this);
 
     mComposerBase->setAttachmentModel(attachmentModel);
     mComposerBase->setAttachmentController(attachmentController);
@@ -493,7 +493,7 @@ KMComposerWin::~KMComposerWin()
     // Note that when we save the message or sent it, mFolder is set back to 0.
     // So this for example kicks in when opening a draft and then closing the window.
     if (mFolder.isValid() && mMsg && isModified()) {
-        auto *saveDraftJob = new SaveDraftJob(mMsg, mFolder);
+        auto saveDraftJob = new SaveDraftJob(mMsg, mFolder);
         saveDraftJob->start();
     }
 
@@ -530,9 +530,9 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
         if (!info.attachment.isEmpty()) {
             const QStringList lst = info.attachment.split(QLatin1Char(','));
             for (const QString &attach : lst) {
-                auto *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+                auto job = new MessageComposer::ConvertSnippetVariablesJob(this);
                 job->setText(attach);
-                auto *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+                auto interface = new MessageComposer::ComposerViewInterface(mComposerBase);
                 job->setComposerViewInterface(interface);
                 connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
                     if (!str.isEmpty()) {
@@ -549,9 +549,9 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
     {
         if (!info.subject.isEmpty()) {
             //Convert subject
-            auto *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+            auto job = new MessageComposer::ConvertSnippetVariablesJob(this);
             job->setText(info.subject);
-            auto *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+            auto interface = new MessageComposer::ComposerViewInterface(mComposerBase);
             job->setComposerViewInterface(interface);
             connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
                 if (!str.isEmpty()) {
@@ -566,9 +566,9 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
     {
         if (!info.text.isEmpty()) {
             //Convert plain text
-            auto *job = new MessageComposer::ConvertSnippetVariablesJob(this);
+            auto job = new MessageComposer::ConvertSnippetVariablesJob(this);
             job->setText(info.text);
-            auto *interface = new MessageComposer::ComposerViewInterface(mComposerBase);
+            auto interface = new MessageComposer::ComposerViewInterface(mComposerBase);
             job->setComposerViewInterface(interface);
             connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
                 mComposerBase->editor()->insertPlainText(str);
@@ -983,12 +983,12 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
         return;
     }
 
-    auto *header = new KMime::Headers::Generic("X-KMail-Templates");
+    auto header = new KMime::Headers::Generic("X-KMail-Templates");
     header->fromUnicodeString(ident.templates(), "utf-8");
     mMsg->setHeader(header);
 
     if (mode == TemplateParser::TemplateParserJob::NewMessage) {
-        auto *job = new KMComposerUpdateTemplateJob;
+        auto job = new KMComposerUpdateTemplateJob;
         connect(job, &KMComposerUpdateTemplateJob::updateComposer, this, &KMComposerWin::slotUpdateComposer);
         job->setMsg(mMsg);
         job->setCustomTemplate(mCustomTemplate);
@@ -1008,7 +1008,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
                 items << Akonadi::Item(serNumStr.toLongLong());
             }
 
-            auto *job = new Akonadi::ItemFetchJob(items, this);
+            auto job = new Akonadi::ItemFetchJob(items, this);
             job->fetchScope().fetchFullPayload(true);
             job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
             job->setProperty("mode", static_cast<int>(mode));
@@ -1736,7 +1736,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg, bool lastSignS
         mComposerBase->dictionary()->setCurrentByDictionaryName(ident.dictionary());
     }
 
-    auto *msgContent = new KMime::Content;
+    auto msgContent = new KMime::Content;
     msgContent->setContent(mMsg->encodedContent());
     msgContent->parse();
     MimeTreeParser::SimpleObjectTreeSource emptySource;
@@ -2041,7 +2041,7 @@ void KMComposerWin::slotInsertRecentFile(const QUrl &u)
         qCDebug(KMAIL_LOG) << " encoding not found so we can't insert text"; //see InsertTextFileJob
         return;
     }
-    auto *job = new MessageComposer::InsertTextFileJob(mComposerBase->editor(), u);
+    auto job = new MessageComposer::InsertTextFileJob(mComposerBase->editor(), u);
     job->setEncoding(encoding);
     connect(job, &KJob::result, this, &KMComposerWin::slotInsertTextFile);
     job->start();
@@ -2191,7 +2191,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         addAttachment(attName, KMime::Headers::CEbase64, QString(), imageData, "image/png");
         return true;
     } else {
-        auto *job = new DndFromArkJob(this);
+        auto job = new DndFromArkJob(this);
         job->setComposerWin(this);
         if (job->extract(source)) {
             return true;
@@ -2256,7 +2256,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
             return true;
         } else {
             if (!items.isEmpty()) {
-                auto *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
+                auto itemFetchJob = new Akonadi::ItemFetchJob(items, this);
                 itemFetchJob->fetchScope().fetchFullPayload(true);
                 itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
                 connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMComposerWin::slotFetchJob);
@@ -2297,7 +2297,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
     if (showErrorMessage(job)) {
         return;
     }
-    auto *fjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    auto fjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     if (!fjob) {
         return;
     }
@@ -2336,7 +2336,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
             } else if (item.hasPayload<KContacts::ContactGroup>()) {
                 const KContacts::ContactGroup group = item.payload<KContacts::ContactGroup>();
                 attachmentName = group.name() + QLatin1String(".vcf");
-                auto *expandJob = new Akonadi::ContactGroupExpandJob(group, this);
+                auto expandJob = new Akonadi::ContactGroupExpandJob(group, this);
                 expandJob->setProperty("groupName", attachmentName);
                 connect(expandJob, &KJob::result, this, &KMComposerWin::slotExpandGroupResult);
                 expandJob->start();
@@ -2349,7 +2349,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
 
 void KMComposerWin::slotExpandGroupResult(KJob *job)
 {
-    auto *expandJob = qobject_cast<Akonadi::ContactGroupExpandJob *>(job);
+    auto expandJob = qobject_cast<Akonadi::ContactGroupExpandJob *>(job);
     Q_ASSERT(expandJob);
 
     const QString attachmentName = expandJob->property("groupName").toString();
@@ -2367,7 +2367,7 @@ void KMComposerWin::slotClose()
 
 void KMComposerWin::slotNewComposer()
 {
-    auto *job = new KMComposerCreateNewComposerJob;
+    auto job = new KMComposerCreateNewComposerJob;
     job->setCollectionForNewMessage(mCollectionForNewMessage);
 
     job->setCurrentIdentity(currentIdentity());
@@ -2574,7 +2574,7 @@ void KMComposerWin::slotPrintComposeResult(KJob *job)
 void KMComposerWin::printComposeResult(KJob *job, bool preview)
 {
     Q_ASSERT(dynamic_cast< MessageComposer::Composer * >(job));
-    auto *composer = qobject_cast< MessageComposer::Composer * >(job);
+    auto composer = qobject_cast< MessageComposer::Composer * >(job);
     Q_ASSERT(mMiscComposers.contains(composer));
     mMiscComposers.removeAll(composer);
 
@@ -2590,7 +2590,7 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
         commandInfo.mFormat = format;
         commandInfo.mHtmlLoadExtOverride = isHtml;
         commandInfo.mPrintPreview = preview;
-        auto *command = new KMPrintCommand(this, commandInfo);
+        auto command = new KMPrintCommand(this, commandInfo);
         command->start();
     } else {
         showErrorMessage(job);
@@ -2965,7 +2965,7 @@ void KMComposerWin::slotCheckSendNow()
     if (lst.isEmpty()) {
         slotCheckSendNowStep2();
     } else {
-        auto *job = new PotentialPhishingEmailJob(this);
+        auto job = new PotentialPhishingEmailJob(this);
         KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
         const QStringList whiteList = group.readEntry("whiteList", QStringList());
         job->setEmailWhiteList(whiteList);
@@ -3145,7 +3145,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
     if (ident.organization().isEmpty()) {
         mMsg->removeHeader<KMime::Headers::Organization>();
     } else {
-        auto *const organization = new KMime::Headers::Organization;
+        auto const organization = new KMime::Headers::Organization;
         organization->fromUnicodeString(ident.organization(), "utf-8");
         mMsg->setHeader(organization);
     }
@@ -3158,7 +3158,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             for (int i = numNL; i > 0; --i) {
                 xface.insert(i * 70, QStringLiteral("\n\t"));
             }
-            auto *header = new KMime::Headers::Generic("X-Face");
+            auto header = new KMime::Headers::Generic("X-Face");
             header->fromUnicodeString(xface, "utf-8");
             mMsg->setHeader(header);
         }
@@ -3171,7 +3171,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
                 int transportId = mailtransportStr.toInt();
                 const Transport *transport = TransportManager::self()->transportById(transportId, false); /*don't return default transport */
                 if (transport) {
-                    auto *header = new KMime::Headers::Generic("X-KMail-Transport");
+                    auto header = new KMime::Headers::Generic("X-KMail-Transport");
                     header->fromUnicodeString(QString::number(transport->id()), "utf-8");
                     mMsg->setHeader(header);
                     mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
@@ -3180,7 +3180,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
                         const QString identityStrName = hrd->asUnicodeString();
                         const Transport *transport = TransportManager::self()->transportByName(identityStrName, true);
                         if (transport) {
-                            auto *header = new KMime::Headers::Generic("X-KMail-Transport");
+                            auto header = new KMime::Headers::Generic("X-KMail-Transport");
                             header->fromUnicodeString(QString::number(transport->id()), "utf-8");
                             mMsg->setHeader(header);
                             mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
@@ -3196,7 +3196,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
             const Transport *transport = TransportManager::self()->transportById(transportId, true);
             if (transport) {
-                auto *header = new KMime::Headers::Generic("X-KMail-Transport");
+                auto header = new KMime::Headers::Generic("X-KMail-Transport");
                 header->fromUnicodeString(QString::number(transport->id()), "utf-8");
                 mMsg->setHeader(header);
                 mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
@@ -3211,7 +3211,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             mMsg->removeHeader("X-KMail-Transport");
             mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
         } else {
-            auto *header = new KMime::Headers::Generic("X-KMail-Transport");
+            auto header = new KMime::Headers::Generic("X-KMail-Transport");
             header->fromUnicodeString(QString::number(transport->id()), "utf-8");
             mMsg->setHeader(header);
             mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
@@ -3220,7 +3220,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
 
     const bool fccIsDisabled = ident.disabledFcc();
     if (fccIsDisabled) {
-        auto *header = new KMime::Headers::Generic("X-KMail-FccDisabled");
+        auto header = new KMime::Headers::Generic("X-KMail-FccDisabled");
         header->fromUnicodeString(QStringLiteral("true"), "utf-8");
         mMsg->setHeader(header);
     } else {
@@ -3414,7 +3414,7 @@ void KMComposerWin::slotFccFolderChanged(const Akonadi::Collection &collection)
 
 void KMComposerWin::slotSaveAsFile()
 {
-    auto *job = new SaveAsFileJob(this);
+    auto job = new SaveAsFileJob(this);
     job->setParentWidget(this);
     job->setHtmlMode(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
     job->setTextDocument(mComposerBase->editor()->document());

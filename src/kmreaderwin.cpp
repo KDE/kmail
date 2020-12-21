@@ -75,7 +75,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     , mActionCollection(actionCollection)
 {
     createActions();
-    auto *vlay = new QVBoxLayout(this);
+    auto vlay = new QVBoxLayout(this);
     vlay->setContentsMargins(0, 4, 0, 0);
     mViewer = new Viewer(this, mainWindow, mActionCollection);
     connect(mViewer, qOverload<const Akonadi::Item &, const QUrl &>(&Viewer::urlClicked), this, &KMReaderWin::slotUrlClicked);
@@ -442,7 +442,7 @@ void KMReaderWin::slotMailtoAddAddrBook()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url);
 
-    auto *job = new Akonadi::AddEmailAddressJob(emailString, mMainWindow, this);
+    auto job = new Akonadi::AddEmailAddressJob(emailString, mMainWindow, this);
     job->setInteractive(true);
     connect(job, &Akonadi::AddEmailAddressJob::successMessage, this, [](const QString &message) {
         PimCommon::BroadcastStatus::instance()->setStatusMsg(message);
@@ -461,7 +461,7 @@ void KMReaderWin::slotMailToAddToExistingContact()
     if (dlg->exec()) {
         Akonadi::Item item = dlg->selectedContact();
         if (item.isValid()) {
-            auto *job = new AddEmailToExistingContactJob(item, emailString, this);
+            auto job = new AddEmailToExistingContactJob(item, emailString, this);
             job->start();
         }
     }
@@ -476,7 +476,7 @@ void KMReaderWin::slotMailtoOpenAddrBook()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    auto *job = new Akonadi::OpenEmailAddressJob(emailString, mMainWindow, this);
+    auto job = new Akonadi::OpenEmailAddressJob(emailString, mMainWindow, this);
     job->start();
 }
 
@@ -740,7 +740,7 @@ bool KMReaderWin::printSelectedText(bool preview)
     if (str.isEmpty()) {
         return false;
     }
-    auto *composer = new ::MessageComposer::Composer;
+    auto composer = new ::MessageComposer::Composer;
     composer->textPart()->setCleanPlainText(str);
     composer->textPart()->setWrappedPlainText(str);
     KMime::Message::Ptr messagePtr = messageItem().payload<KMime::Message::Ptr>();
@@ -757,7 +757,7 @@ bool KMReaderWin::printSelectedText(bool preview)
 void KMReaderWin::slotPrintComposeResult(KJob *job)
 {
     const bool preview = job->property("preview").toBool();
-    auto *composer = qobject_cast< ::MessageComposer::Composer * >(job);
+    auto composer = qobject_cast< ::MessageComposer::Composer * >(job);
     Q_ASSERT(composer);
     if (composer->error() == ::MessageComposer::Composer::NoError) {
         Q_ASSERT(composer->resultMessages().size() == 1);
@@ -778,7 +778,7 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         commandInfo.mShowSignatureDetails = mViewer->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
         commandInfo.mShowEncryptionDetails = mViewer->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
 
-        auto *command = new KMPrintCommand(this, commandInfo);
+        auto command = new KMPrintCommand(this, commandInfo);
         command->start();
     } else {
         if (static_cast<KIO::Job *>(job)->uiDelegate()) {
@@ -831,7 +831,7 @@ void KMReaderWin::slotContactHtmlOptions()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    auto *job = new Akonadi::AddEmailDisplayJob(emailString, mMainWindow, this);
+    auto job = new Akonadi::AddEmailDisplayJob(emailString, mMainWindow, this);
     job->setMessageId(mViewer->messageItem().id());
     connect(job, &Akonadi::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
     job->setRemoteContent(mLoadExternalReference->isChecked());

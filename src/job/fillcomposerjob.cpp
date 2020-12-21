@@ -39,7 +39,7 @@ void FillComposerJob::start()
         mMsg->to()->fromUnicodeString(mSettings.mTo, "utf-8");
     }
     if (mSettings.mIdentity > 0) {
-        auto *h = new KMime::Headers::Generic("X-KMail-Identity");
+        auto h = new KMime::Headers::Generic("X-KMail-Identity");
         h->from7BitString(QByteArray::number(mSettings.mIdentity));
         mMsg->setHeader(h);
     }
@@ -47,7 +47,7 @@ void FillComposerJob::start()
         mMsg->setBody(mSettings.mBody.toUtf8());
         slotOpenComposer();
     } else {
-        auto *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
+        auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
         connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &FillComposerJob::slotOpenComposer);
         parser->setIdentityManager(KMKernel::self()->identityManager());
         parser->process(KMime::Message::Ptr());

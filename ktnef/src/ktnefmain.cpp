@@ -248,7 +248,7 @@ void KTNEFMain::viewFile()
         } else {
             qCDebug(KTNEFAPPS_LOG) << "Mime type from attachment object: " << mimename;
         }
-        auto *job = new KIO::OpenUrlJob(url, mimename);
+        auto job = new KIO::OpenUrlJob(url, mimename);
         job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
         job->setDeleteTemporaryFile(true);
         job->start();
@@ -282,7 +282,7 @@ void KTNEFMain::viewFileAs()
 
         if (!list.isEmpty()) {
             // Creating ApplicationLauncherJob without any args will invoke the open-with dialog
-            auto *job = new KIO::ApplicationLauncherJob();
+            auto job = new KIO::ApplicationLauncherJob();
             job->setUrls(list);
             job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
             job->start();
@@ -460,10 +460,10 @@ void KTNEFMain::viewDragRequested(const QList<KTnef::KTNEFAttach *> &list)
     }
 
     if (!list.isEmpty()) {
-        auto *mimeData = new QMimeData;
+        auto mimeData = new QMimeData;
         mimeData->setUrls(urlList);
 
-        auto *drag = new QDrag(this);
+        auto drag = new QDrag(this);
         drag->setMimeData(mimeData);
     }
 }
@@ -547,7 +547,7 @@ void KTNEFMain::openWith(const KService::Ptr &offer)
         KTNEFAttach *attach = mView->getSelection().at(0);
         const QUrl url = QUrl::fromLocalFile(extractTemp(attach));
         const QList<QUrl> lst{url};
-        auto *job = new KIO::ApplicationLauncherJob(offer);
+        auto job = new KIO::ApplicationLauncherJob(offer);
         job->setUrls(lst);
         job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
         job->start();
@@ -563,7 +563,7 @@ QAction *KTNEFMain::createAppAction(const KService::Ptr &service, bool singleOff
         actionName = i18nc("@item:inmenu Open With, %1 is application name", "%1", actionName);
     }
 
-    auto *act = new QAction(parent);
+    auto act = new QAction(parent);
     act->setIcon(QIcon::fromTheme(service->icon()));
     act->setText(actionName);
     actionGroup->addAction(act);
@@ -582,7 +582,7 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
     const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename, QString());
     if (!offers.isEmpty()) {
         QMenu *menu = topMenu;
-        auto *actionGroup = new QActionGroup(menu);
+        auto actionGroup = new QActionGroup(menu);
         connect(actionGroup, &QActionGroup::triggered, this, &KTNEFMain::slotOpenWithAction);
 
         if (offers.count() > 1) { // submenu 'open with'
@@ -607,12 +607,12 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
         } else {
             openWithActionName = i18nc("@title:menu", "&Open With...");
         }
-        auto *openWithAct = new QAction(menu);
+        auto openWithAct = new QAction(menu);
         openWithAct->setText(openWithActionName);
         connect(openWithAct, &QAction::triggered, this, &KTNEFMain::viewFileAs);
         menu->addAction(openWithAct);
     } else { // no app offers -> Open With...
-        auto *act = new QAction(topMenu);
+        auto act = new QAction(topMenu);
         act->setText(i18nc("@title:menu", "&Open With..."));
         connect(act, &QAction::triggered, this, &KTNEFMain::viewFileAs);
         topMenu->addAction(act);

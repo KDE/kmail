@@ -35,7 +35,7 @@ void RemoveCollectionJob::setCurrentFolder(const Akonadi::Collection &currentFol
 
 void RemoveCollectionJob::start()
 {
-    auto *job = new Akonadi::CollectionFetchJob(mCurrentCollection, Akonadi::CollectionFetchJob::FirstLevel, this);
+    auto job = new Akonadi::CollectionFetchJob(mCurrentCollection, Akonadi::CollectionFetchJob::FirstLevel, this);
     job->fetchScope().setContentMimeTypes(QStringList() << KMime::Message::mimeType());
     job->setProperty("collectionId", mCurrentCollection.id());
     connect(job, &KJob::result, this, &RemoveCollectionJob::slotDelayedRemoveFolder);
@@ -103,7 +103,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
             Q_EMIT clearCurrentFolder();
         }
 
-        auto *job = new Akonadi::CollectionDeleteJob(col);
+        auto job = new Akonadi::CollectionDeleteJob(col);
         connect(job, &KJob::result, this, &RemoveCollectionJob::slotDeletionCollectionResult);
     } else {
         deleteLater();

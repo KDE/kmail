@@ -34,7 +34,7 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
 
     connect(mArchiveManager, &ArchiveMailManager::needUpdateConfigDialogBox, this, &ArchiveMailAgent::needUpdateConfigDialogBox);
 
-    auto *collectionMonitor = new Akonadi::Monitor(this);
+    auto collectionMonitor = new Akonadi::Monitor(this);
     collectionMonitor->setObjectName(QStringLiteral("ArchiveMailCollectionMonitor"));
     collectionMonitor->fetchCollection(true);
     collectionMonitor->ignoreSession(Akonadi::Session::defaultSession());

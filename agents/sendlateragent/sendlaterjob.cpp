@@ -41,7 +41,7 @@ void SendLaterJob::start()
     if (mInfo) {
         if (mInfo->itemId() > -1) {
             const Akonadi::Item item = Akonadi::Item(mInfo->itemId());
-            auto *fetch = new Akonadi::ItemFetchJob(item, this);
+            auto fetch = new Akonadi::ItemFetchJob(item, this);
             mFetchScope.fetchAttribute<MailTransport::TransportAttribute>();
             mFetchScope.fetchAttribute<MailTransport::SentBehaviourAttribute>();
             mFetchScope.setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
@@ -100,7 +100,7 @@ void SendLaterJob::slotJobFinished(KJob *job)
             sendError(i18n("Cannot send message."), SendLaterManager::MailDispatchDoesntWork);
         } else {
             if (!mInfo->isRecurrence()) {
-                auto *fetch = new Akonadi::ItemDeleteJob(mItem, this);
+                auto fetch = new Akonadi::ItemDeleteJob(mItem, this);
                 connect(fetch, &Akonadi::ItemDeleteJob::result, this, &SendLaterJob::slotDeleteItem);
             } else {
                 sendDone();

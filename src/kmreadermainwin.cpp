@@ -366,7 +366,7 @@ void KMReaderMainWin::slotRedirectMessage()
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    auto *command = new KMRedirectCommand(this, currentItem);
+    auto command = new KMRedirectCommand(this, currentItem);
     connect(command, &KMRedirectCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
@@ -531,7 +531,7 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 {
     KMMainWidget *mainwin = kmkernel->getKMMainWidget();
     if (mainwin) {
-        auto *action = new KActionMenu(menu);
+        auto action = new KActionMenu(menu);
         action->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
         action->setText(i18n("Copy Message To..."));
         mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::CopyItemToMenu);
@@ -545,7 +545,7 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
 {
     KMMainWidget *mainwin = kmkernel->getKMMainWidget();
     if (mainwin) {
-        auto *action = new KActionMenu(menu);
+        auto action = new KActionMenu(menu);
         action->setText(i18n("Move Message To..."));
         mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::MoveItemToMenu);
         connect(action->menu(), &QMenu::triggered, this, &KMReaderMainWin::slotMoveItem);
@@ -568,14 +568,14 @@ void KMReaderMainWin::copyOrMoveItem(const Akonadi::Collection &collection, bool
 {
     if (mMsg.isValid()) {
         if (move) {
-            auto *job = new Akonadi::ItemMoveJob(mMsg, collection, this);
+            auto job = new Akonadi::ItemMoveJob(mMsg, collection, this);
             connect(job, &KJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
         } else {
-            auto *job = new Akonadi::ItemCopyJob(mMsg, collection, this);
+            auto job = new Akonadi::ItemCopyJob(mMsg, collection, this);
             connect(job, &KJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
         }
     } else {
-        auto *job = new Akonadi::ItemCreateJob(mMsg, collection, this);
+        auto job = new Akonadi::ItemCreateJob(mMsg, collection, this);
         connect(job, &KJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
     }
 }
@@ -604,7 +604,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const WebEngin
 
     const QString email = KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
     if (aUrl.scheme() == QLatin1String("mailto") && !email.isEmpty()) {
-        auto *job = new Akonadi::ContactSearchJob(this);
+        auto job = new Akonadi::ContactSearchJob(this);
         job->setLimit(1);
         job->setQuery(Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch);
         job->setProperty("msg", QVariant::fromValue(mMsg));

@@ -47,7 +47,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     migrate.migrate();
 
     //local, do the init
-    auto *mKMailKernel = new KMKernel();
+    auto mKMailKernel = new KMKernel();
     mKMailKernel->init();
     mKMailKernel->setXmlGuiInstanceName(QStringLiteral("kmail2"));
 
@@ -69,11 +69,11 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mainWidget = new KMMainWidget(canvas, this, actionCollection(),
                                   KSharedConfig::openConfig());
     mainWidget->setObjectName(QStringLiteral("partmainwidget"));
-    auto *topLayout = new QVBoxLayout(canvas);
+    auto topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);
     topLayout->setContentsMargins({});
     mainWidget->setFocusPolicy(Qt::ClickFocus);
-    auto *statusBar = new KParts::StatusBarExtension(this);
+    auto statusBar = new KParts::StatusBarExtension(this);
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
     statusBar->addStatusBarItem(mainWidget->zoomLabelIndicator(), 3, false);
     statusBar->addStatusBarItem(mainWidget->dkimWidgetInfo(), 4, false);

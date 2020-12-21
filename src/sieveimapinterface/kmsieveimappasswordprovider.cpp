@@ -29,7 +29,7 @@ void KMSieveImapPasswordProvider::passwords(const QString &identifier)
 
 void KMSieveImapPasswordProvider::readSieveServerPasswordFinished(QKeychain::Job *baseJob)
 {
-    auto *job = qobject_cast<ReadPasswordJob *>(baseJob);
+    auto job = qobject_cast<ReadPasswordJob *>(baseJob);
     Q_ASSERT(job);
     if (job->error()) {
         qCWarning(KMAIL_LOG) << "An error occurred while reading password: " << job->errorString();
@@ -45,7 +45,7 @@ void KMSieveImapPasswordProvider::readSieveServerPasswordFinished(QKeychain::Job
 
 void KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished(QKeychain::Job *baseJob)
 {
-    auto *job = qobject_cast<ReadPasswordJob *>(baseJob);
+    auto job = qobject_cast<ReadPasswordJob *>(baseJob);
     Q_ASSERT(job);
     if (job->error()) {
         if (job->error() != QKeychain::EntryNotFound) {
