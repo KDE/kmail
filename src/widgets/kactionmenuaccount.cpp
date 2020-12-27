@@ -14,7 +14,7 @@
 KActionMenuAccount::KActionMenuAccount(QObject *parent)
     : KActionMenu(parent)
 {
-    setDelayed(true);
+    setPopupMode(QToolButton::DelayedPopup);
     connect(menu(), &QMenu::aboutToShow, this, &KActionMenuAccount::slotCheckTransportMenu);
     connect(menu(), &QMenu::triggered, this, &KActionMenuAccount::slotSelectAccount);
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceNameChanged, this, &KActionMenuAccount::updateAccountMenu);

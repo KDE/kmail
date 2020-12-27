@@ -11,7 +11,7 @@
 KActionMenuTransport::KActionMenuTransport(QObject *parent)
     : KActionMenu(parent)
 {
-    setDelayed(true);
+    setPopupMode(QToolButton::DelayedPopup);
     connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportsChanged, this, &KActionMenuTransport::updateTransportMenu);
     connect(menu(), &QMenu::aboutToShow, this, &KActionMenuTransport::slotCheckTransportMenu);
     connect(menu(), &QMenu::triggered, this, &KActionMenuTransport::slotSelectTransport);
