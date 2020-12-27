@@ -48,6 +48,9 @@
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
 #include "undosend/undosendmanager.h"
+
+#include <kwidgetsaddons_version.h>
+
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <Akonadi/KMime/MessageFlags>
 #include <Akonadi/KMime/MessageStatus>
@@ -1356,7 +1359,11 @@ void KMComposerWin::setupActions()
 
     mCryptoModuleAction = new KSelectAction(i18n("&Cryptographic Message Format"), this);
     actionCollection()->addAction(QStringLiteral("options_select_crypto"), mCryptoModuleAction);
+#if KWIDGETSADDONS_VERSION < QT_VERSION_CHECK(5, 78, 0)
     connect(mCryptoModuleAction, qOverload<int>(&KSelectAction::triggered), this, &KMComposerWin::slotCryptoModuleSelected);
+#else
+    connect(mCryptoModuleAction, &KSelectAction::indexTriggered, this, &KMComposerWin::slotCryptoModuleSelected);
+#endif
     mCryptoModuleAction->setToolTip(i18n("Select a cryptographic format for this message"));
     mCryptoModuleAction->setItems(listCryptoFormat);
 
