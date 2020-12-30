@@ -21,7 +21,6 @@ public:
 private:
     void readSieveServerPasswordFinished(QKeychain::Job *baseJob);
     void readSieveServerCustomPasswordFinished(QKeychain::Job *baseJob);
-    Q_REQUIRED_RESULT QString walletPassword(const QString &identifier);
     QString mIdentifier;
     QString mSievePassword;
     QString mSieveCustomPassword;
