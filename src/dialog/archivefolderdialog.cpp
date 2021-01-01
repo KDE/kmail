@@ -1,6 +1,6 @@
 /*
    SPDX-FileCopyrightText: 2009 Klarälvdalens Datakonsult AB
-   SPDX-FileCopyrightText: 2020 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2020-2021 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only OR LicenseRef-KDE-Accepted-GPL
 */

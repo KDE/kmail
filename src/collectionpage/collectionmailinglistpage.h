@@ -1,7 +1,7 @@
 /*
   This file is part of KMail, the KDE mail client.
   SPDX-FileCopyrightText: 2005 Till Adam <adam@kde.org>
-  SPDX-FileCopyrightText: 2011-2020 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2011-2021 Laurent Montel <montel@kde.org>
   SPDX-FileCopyrightText: 2012 Jonathan Marten <jjm@keelhaul.me.uk>
 
   SPDX-License-Identifier: GPL-2.0-only

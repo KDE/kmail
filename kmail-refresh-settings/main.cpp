@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2019-2020 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2019-2021 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
                          QStringLiteral("0.1"),
                          i18n("KMail Assistant for refreshing settings"),
                          KAboutLicense::LGPL,
-                         i18n("(c) 2019-2020 Laurent Montel <montel@kde.org>"));
+                         i18n("(c) 2019-2021 Laurent Montel <montel@kde.org>"));
     aboutData.addAuthor(i18n("Laurent Montel"), i18n("Author"), QStringLiteral("montel@kde.org"));
 
     app.setOrganizationDomain(QStringLiteral("kde.org"));

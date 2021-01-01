@@ -340,7 +340,7 @@ AboutData::AboutData()
                  QStringLiteral(KDEPIM_VERSION),
                  i18n("KDE Email Client"),
                  KAboutLicense::GPL,
-                 i18n("Copyright © 1997–2020, KMail authors"),
+                 i18n("Copyright © 1997–2021, KMail authors"),
                  QString(),
                  QStringLiteral("https://userbase.kde.org/KMail"))
 {

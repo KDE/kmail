@@ -2,7 +2,7 @@
   This file is part of Kontact.
 
   SPDX-FileCopyrightText: 2004 Tobias Koenig <tokoe@kde.org>
-  SPDX-FileCopyrightText: 2013-2020 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2021 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
 */

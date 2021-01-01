@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2003 Andreas Gungl <a.gungl@gmx.de>
-    SPDX-FileCopyrightText: 2012-2020 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2012-2021 Laurent Montel <montel@kde.org>
 
     SPDX-License-Identifier: GPL-2.0-only
 */
