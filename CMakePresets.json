@@ -1,0 +1,43 @@
+{
+    "version": 1,
+    "configurePresets": [
+        {
+            "name": "dev",
+            "displayName": "Build as debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "asan",
+            "displayName": "Build with Asan support.",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-asan",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
+            }
+        },
+        {
+            "name": "unity",
+            "displayName": "Build with CMake unity support.",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-unity",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+		"USE_UNITY_CMAKE_SUPPORT": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Build as release mode.",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ]
+}
