@@ -31,7 +31,6 @@ public:
     Q_REQUIRED_RESULT QString printCurrentListInfo() const;
     void archiveFolder(const QString &path, Akonadi::Collection::Id collectionId);
 Q_SIGNALS:
-    void archiveNow(ArchiveMailInfo *info);
     void needUpdateConfigDialogBox();
 
 public Q_SLOTS:

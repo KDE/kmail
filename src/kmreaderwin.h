@@ -78,7 +78,6 @@ public:
     Q_REQUIRED_RESULT QString copyText() const;
 
     /** Override default html mail setting */
-    Q_REQUIRED_RESULT bool htmlOverride() const;
     Q_REQUIRED_RESULT MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
     void setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format);
 
