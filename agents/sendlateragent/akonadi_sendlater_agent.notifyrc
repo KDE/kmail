@@ -46,6 +46,7 @@ Comment[zh_TW]=稍後傳送代理程式
 [Event/mailsend]
 Name=Mail is sent
 Name[ar]=أُرسل البريد
+Name[bg]=Писмото е изпратено
 Name[bs]=Pošta je poslana
 Name[ca]=S'ha enviat el correu
 Name[ca@valencia]=S'ha enviat el correu
@@ -91,6 +92,7 @@ Action=Popup
 [Event/mailsendfailed]
 Name=Send mail failed
 Name[ar]=اكتمل إرسال البريد
+Name[bg]=Грешка при изпращане на писмото
 Name[bs]=Slaneje pošte neuspjelo
 Name[ca]=Ha fallat en enviar el correu
 Name[ca@valencia]=Ha fallat en enviar el correu
