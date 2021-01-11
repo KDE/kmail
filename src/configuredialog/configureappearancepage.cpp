@@ -54,7 +54,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QIcon>
 #include "kmail_debug.h"
 
-#include <kmime/kmime_dateformatter.h>
+#include <KMime/DateFormatter>
 using KMime::DateFormatter;
 
 #include <QWhatsThis>
