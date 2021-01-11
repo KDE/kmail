@@ -29,7 +29,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <MessageList/MessageListUtil>
 #include <MessageCore/MessageCoreSettings>
-#include <MessageCore/MessageCoreUtil>
+#include <MessageCore/ColorUtil>
 #include "settings/kmailsettings.h"
 
 #include <MailCommon/MailUtil>
