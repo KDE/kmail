@@ -23,32 +23,6 @@
       <string>HTML Messages</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelWarnHTML">
-        <property name="contextMenuPolicy">
-         <enum>Qt::NoContextMenu</enum>
-        </property>
-        <property name="text">
-         <string>&lt;b&gt;WARNING:&lt;/b&gt; Allowing HTML in email may increase the risk that your system will be compromised by present and anticipated security exploits. &lt;a href=&quot;whatsthis1&quot;&gt;More about HTML mails...&lt;/a&gt; &lt;a href=&quot;whatsthis2&quot;&gt;More about external references...&lt;/a&gt;</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-        <property name="textInteractionFlags">
-         <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="mHtmlMailCheck">
-        <property name="whatsThis">
-         <string>&lt;qt&gt;&lt;p&gt;Messages sometimes come in both formats. This option controls whether you want the HTML part or the plain text part to be displayed.&lt;/p&gt;&lt;p&gt;Displaying the HTML part makes the message look better, but at the same time increases the risk of security holes being exploited.&lt;/p&gt;&lt;p&gt;Displaying the plain text part loses much of the message's formatting, but makes it almost &lt;em&gt;impossible&lt;/em&gt; to exploit security holes in the HTML renderer (QtWebEngine).&lt;/p&gt;&lt;p&gt;The option below guards against one common misuse of HTML messages, but it cannot guard against security issues that were not known at the time this version of KMail was written.&lt;/p&gt;&lt;p&gt;It is therefore advisable to &lt;em&gt;not&lt;/em&gt; prefer HTML to plain text.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; You can set this option on a per-folder basis from the &lt;i&gt;Folder&lt;/i&gt; menu of KMail's main window.&lt;/p&gt;&lt;/qt&gt;</string>
-        </property>
-        <property name="text">
-         <string>Prefer HTML to plain text</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
        <widget class="QCheckBox" name="mExternalReferences">
         <property name="whatsThis">
@@ -76,6 +50,32 @@
        <widget class="QPushButton" name="mConfigureExternalReference">
         <property name="text">
          <string>Exceptions</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QLabel" name="labelWarnHTML">
+        <property name="contextMenuPolicy">
+         <enum>Qt::NoContextMenu</enum>
+        </property>
+        <property name="text">
+         <string>&lt;b&gt;WARNING:&lt;/b&gt; Allowing HTML in email may increase the risk that your system will be compromised by present and anticipated security exploits. &lt;a href=&quot;whatsthis1&quot;&gt;More about HTML mails...&lt;/a&gt; &lt;a href=&quot;whatsthis2&quot;&gt;More about external references...&lt;/a&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <widget class="QCheckBox" name="mHtmlMailCheck">
+        <property name="whatsThis">
+         <string>&lt;qt&gt;&lt;p&gt;Messages sometimes come in both formats. This option controls whether you want the HTML part or the plain text part to be displayed.&lt;/p&gt;&lt;p&gt;Displaying the HTML part makes the message look better, but at the same time increases the risk of security holes being exploited.&lt;/p&gt;&lt;p&gt;Displaying the plain text part loses much of the message's formatting, but makes it almost &lt;em&gt;impossible&lt;/em&gt; to exploit security holes in the HTML renderer (QtWebEngine).&lt;/p&gt;&lt;p&gt;The option below guards against one common misuse of HTML messages, but it cannot guard against security issues that were not known at the time this version of KMail was written.&lt;/p&gt;&lt;p&gt;It is therefore advisable to &lt;em&gt;not&lt;/em&gt; prefer HTML to plain text.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; You can set this option on a per-folder basis from the &lt;i&gt;Folder&lt;/i&gt; menu of KMail's main window.&lt;/p&gt;&lt;/qt&gt;</string>
+        </property>
+        <property name="text">
+         <string>Prefer HTML to plain text</string>
         </property>
        </widget>
       </item>
