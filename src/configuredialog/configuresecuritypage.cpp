@@ -10,6 +10,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageViewer/MessageViewerSettings>
 #include <MessageComposer/MessageComposerSettings>
 #include <WebEngineViewer/CheckPhishingUrlCache>
+#include <MessageViewer/RemoteContentConfigureDialog>
 #include <MailCommon/FolderSettings>
 #include "settings/kmailsettings.h"
 
@@ -27,6 +28,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QButtonGroup>
 #include <QDBusConnection>
 #include <QWhatsThis>
+#include <QPointer>
 
 QString SecurityPage::helpAnchor() const
 {
@@ -73,6 +75,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
 {
     mSGTab.setupUi(this);
 
+    connect(mSGTab.mConfigureExternalReference, &QPushButton::clicked, this, &SecurityPageGeneralTab::slotOpenExternalReferenceExceptions);
     connect(mSGTab.mHtmlMailCheck, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
     connect(mSGTab.mExternalReferences, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
     connect(mSGTab.labelWarnHTML, &QLabel::linkActivated, this, &SecurityPageGeneralTab::slotLinkClicked);
@@ -88,6 +91,13 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
     connect(mSGTab.scamWhiteList, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     mSGTab.scamWhiteList->setAddDialogLabel(i18n("Email Address:"));
     mSGTab.scamWhiteList->setRemoveDialogLabel(i18n("Do you want to remove this email address?"));
+}
+
+void SecurityPageGeneralTab::slotOpenExternalReferenceExceptions()
+{
+    QPointer<MessageViewer::RemoteContentConfigureDialog> dlg = new MessageViewer::RemoteContentConfigureDialog(this);
+    dlg->exec();
+    delete dlg;
 }
 
 void SecurityPageGeneralTab::slotLinkClicked(const QString &link)

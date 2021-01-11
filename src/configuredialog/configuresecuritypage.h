@@ -34,6 +34,7 @@ private:
     void doLoadOther() override;
 
 private:
+    void slotOpenExternalReferenceExceptions();
     void slotLinkClicked(const QString &link);
     Ui_SecurityPageGeneralTab mSGTab;
 };
