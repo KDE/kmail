@@ -39,6 +39,15 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
+        },
+        {
+            "name": "profile",
+            "displayName": "profile",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-profile",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+            }
         }
     ]
 }
