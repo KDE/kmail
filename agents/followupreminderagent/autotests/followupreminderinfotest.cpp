@@ -98,4 +98,4 @@ void FollowUpReminderInfoTest::shouldCopyReminderInfo()
     QCOMPARE(info, copyInfo);
 }
 
-QTEST_MAIN(FollowUpReminderInfoTest)
+QTEST_GUILESS_MAIN(FollowUpReminderInfoTest)

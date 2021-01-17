@@ -47,4 +47,4 @@ void SendLaterUtilTest::shouldRestoreFromSettings()
     QCOMPARE(info, *restoreInfo);
 }
 
-QTEST_MAIN(SendLaterUtilTest)
+QTEST_GUILESS_MAIN(SendLaterUtilTest)
