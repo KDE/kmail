@@ -2972,7 +2972,9 @@ void KMComposerWin::slotCheckSendNow()
         job->setEmailWhiteList(whiteList);
         job->setPotentialPhishingEmails(lst);
         connect(job, &PotentialPhishingEmailJob::potentialPhishingEmailsFound, this, &KMComposerWin::slotPotentialPhishingEmailsFound);
-        job->start();
+        if (!job->start()) {
+            qCWarning(KMAIL_LOG) << "PotentialPhishingEmailJob can't start";
+        }
     }
 }
 
