@@ -43,7 +43,7 @@ class MessageActions : public QObject
     Q_OBJECT
 public:
     explicit MessageActions(KActionCollection *ac, QWidget *parent);
-    ~MessageActions();
+    ~MessageActions() override;
     void setMessageView(KMReaderWin *msgView);
 
     /**

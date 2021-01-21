@@ -50,7 +50,7 @@ public:
         */
     TagActionManager(QObject *parent, KActionCollection *actionCollection, MessageActions *messageActions, KXMLGUIClient *guiClient);
 
-    ~TagActionManager();
+    ~TagActionManager() override;
 
     /**
         * Removes all actions from the GUI again

@@ -28,7 +28,7 @@ public:
     /** constructor */
     explicit KMSystemTray(QObject *parent = nullptr);
     /** destructor */
-    ~KMSystemTray();
+    ~KMSystemTray() override;
 
     void hideKMail();
 

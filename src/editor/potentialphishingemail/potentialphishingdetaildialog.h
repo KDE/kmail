@@ -16,7 +16,7 @@ class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailDialog : public QDialog
     Q_OBJECT
 public:
     explicit PotentialPhishingDetailDialog(QWidget *parent = nullptr);
-    ~PotentialPhishingDetailDialog();
+    ~PotentialPhishingDetailDialog() override;
 
     void fillList(const QStringList &lst);
 

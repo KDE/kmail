@@ -19,7 +19,7 @@ class KMailPluginEditorCheckBeforeSendManagerInterface : public QObject
     Q_OBJECT
 public:
     explicit KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent = nullptr);
-    ~KMailPluginEditorCheckBeforeSendManagerInterface();
+    ~KMailPluginEditorCheckBeforeSendManagerInterface() override;
 
     QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);

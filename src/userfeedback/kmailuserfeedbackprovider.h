@@ -15,7 +15,7 @@ class KMAIL_EXPORT KMailUserFeedbackProvider : public KUserFeedback::Provider
     Q_OBJECT
 public:
     explicit KMailUserFeedbackProvider(QObject *parent = nullptr);
-    ~KMailUserFeedbackProvider();
+    ~KMailUserFeedbackProvider() override;
 };
 
 #endif // KMAILUSERFEEDBACKPROVIDER_H

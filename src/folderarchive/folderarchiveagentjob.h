@@ -17,7 +17,7 @@ class FolderArchiveAgentJob : public QObject
     Q_OBJECT
 public:
     explicit FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const Akonadi::Item::List &lstItem, QObject *parent = nullptr);
-    ~FolderArchiveAgentJob();
+    ~FolderArchiveAgentJob() override;
 
     void start();
 

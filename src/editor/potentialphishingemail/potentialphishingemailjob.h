@@ -17,7 +17,7 @@ class KMAILTESTS_TESTS_EXPORT PotentialPhishingEmailJob : public QObject
     Q_OBJECT
 public:
     explicit PotentialPhishingEmailJob(QObject *parent = nullptr);
-    ~PotentialPhishingEmailJob();
+    ~PotentialPhishingEmailJob() override;
 
     void setEmailWhiteList(const QStringList &emails);
     void setPotentialPhishingEmails(const QStringList &emails);

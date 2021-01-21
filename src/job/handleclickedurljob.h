@@ -17,7 +17,7 @@ class KMAILTESTS_TESTS_EXPORT HandleClickedUrlJob : public QObject
     Q_OBJECT
 public:
     explicit HandleClickedUrlJob(QObject *parent = nullptr);
-    ~HandleClickedUrlJob();
+    ~HandleClickedUrlJob() override;
 
     void start();
 

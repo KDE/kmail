@@ -20,7 +20,7 @@ class TagMonitorManager : public QObject
     Q_OBJECT
 public:
     explicit TagMonitorManager(QObject *parent = nullptr);
-    ~TagMonitorManager();
+    ~TagMonitorManager() override;
 
     static TagMonitorManager *self();
 

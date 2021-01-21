@@ -14,7 +14,7 @@ class SaveAsFileJob : public QObject
     Q_OBJECT
 public:
     explicit SaveAsFileJob(QObject *parent = nullptr);
-    ~SaveAsFileJob();
+    ~SaveAsFileJob() override;
     void start();
 
     void setHtmlMode(bool htmlMode);

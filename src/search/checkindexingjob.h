@@ -22,7 +22,7 @@ class CheckIndexingJob : public QObject
     Q_OBJECT
 public:
     explicit CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent = nullptr);
-    ~CheckIndexingJob();
+    ~CheckIndexingJob() override;
 
     void setCollection(const Akonadi::Collection &col);
 

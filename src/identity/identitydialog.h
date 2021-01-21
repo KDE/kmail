@@ -60,7 +60,7 @@ class IdentityDialog : public QDialog
     Q_OBJECT
 public:
     explicit IdentityDialog(QWidget *parent = nullptr);
-    ~IdentityDialog();
+    ~IdentityDialog() override;
 
     void setIdentity(/*_not_ const*/ KIdentityManagement::Identity &ident);
 

@@ -14,7 +14,7 @@ class KMComposerGlobalAction : public QObject
     Q_OBJECT
 public:
     explicit KMComposerGlobalAction(KMComposerWin *composerWin, QObject *parent = nullptr);
-    ~KMComposerGlobalAction();
+    ~KMComposerGlobalAction() override;
 
 public Q_SLOTS:
     void slotUndo();

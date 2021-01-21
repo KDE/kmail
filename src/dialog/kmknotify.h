@@ -17,7 +17,7 @@ class KMKnotify : public QDialog
     Q_OBJECT
 public:
     explicit KMKnotify(QWidget *parent);
-    ~KMKnotify();
+    ~KMKnotify() override;
 
     void setCurrentNotification(const QString &name);
 

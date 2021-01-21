@@ -18,7 +18,7 @@ class KMAILTESTS_TESTS_EXPORT CreateFollowupReminderOnExistingMessageJob : publi
     Q_OBJECT
 public:
     explicit CreateFollowupReminderOnExistingMessageJob(QObject *parent = nullptr);
-    ~CreateFollowupReminderOnExistingMessageJob();
+    ~CreateFollowupReminderOnExistingMessageJob() override;
 
     void start();
 

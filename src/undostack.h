@@ -39,7 +39,7 @@ class KMAILTESTS_TESTS_EXPORT UndoStack : public QObject
 
 public:
     explicit UndoStack(int size);
-    ~UndoStack();
+    ~UndoStack() override;
 
     void clear();
     Q_REQUIRED_RESULT int  size() const;

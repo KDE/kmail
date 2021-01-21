@@ -34,7 +34,7 @@ class KMAILTESTS_TESTS_EXPORT CreateReplyMessageJob : public QObject
     Q_OBJECT
 public:
     explicit CreateReplyMessageJob(QObject *parent = nullptr);
-    ~CreateReplyMessageJob();
+    ~CreateReplyMessageJob() override;
 
     void start();
 

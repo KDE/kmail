@@ -19,7 +19,7 @@ class RemoveDuplicateMailJob : public QObject
     Q_OBJECT
 public:
     explicit RemoveDuplicateMailJob(QItemSelectionModel *selectionModel, QWidget *widget, QObject *parent = nullptr);
-    ~RemoveDuplicateMailJob();
+    ~RemoveDuplicateMailJob() override;
 
     void start();
 

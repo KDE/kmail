@@ -15,7 +15,7 @@ class SearchPatternWarning : public KMessageWidget
     Q_OBJECT
 public:
     explicit SearchPatternWarning(QWidget *parent = nullptr);
-    ~SearchPatternWarning();
+    ~SearchPatternWarning() override;
 
     void showWarningPattern(const QStringList &lstError);
     void hideWarningPattern();

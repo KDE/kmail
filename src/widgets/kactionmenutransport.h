@@ -18,7 +18,7 @@ class KMAILTESTS_TESTS_EXPORT KActionMenuTransport : public KActionMenu
     Q_OBJECT
 public:
     explicit KActionMenuTransport(QObject *parent = nullptr);
-    ~KActionMenuTransport();
+    ~KActionMenuTransport() override;
 
 Q_SIGNALS:
     void transportSelected(MailTransport::Transport *transport);

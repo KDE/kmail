@@ -16,7 +16,7 @@ class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailWidget : public QWidget
     Q_OBJECT
 public:
     explicit PotentialPhishingDetailWidget(QWidget *parent = nullptr);
-    ~PotentialPhishingDetailWidget();
+    ~PotentialPhishingDetailWidget() override;
 
     void save();
 

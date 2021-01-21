@@ -29,7 +29,7 @@ class KMAILTESTS_TESTS_EXPORT CreateForwardMessageJob : public QObject
     Q_OBJECT
 public:
     explicit CreateForwardMessageJob(QObject *parent = nullptr);
-    ~CreateForwardMessageJob();
+    ~CreateForwardMessageJob() override;
     void start();
 
     void setSettings(const CreateForwardMessageJobSettings &value);

@@ -16,7 +16,7 @@ class KMAILTESTS_TESTS_EXPORT UndoSendCreateJob : public QObject
     Q_OBJECT
 public:
     explicit UndoSendCreateJob(QObject *parent = nullptr);
-    ~UndoSendCreateJob();
+    ~UndoSendCreateJob() override;
     Q_REQUIRED_RESULT bool canStart() const;
     Q_REQUIRED_RESULT bool start();
 

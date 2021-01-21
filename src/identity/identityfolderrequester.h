@@ -19,7 +19,7 @@ class IdentityFolderRequester : public MailCommon::FolderRequester
     Q_OBJECT
 public:
     explicit IdentityFolderRequester(QWidget *parent = nullptr);
-    ~IdentityFolderRequester();
+    ~IdentityFolderRequester() override;
 
     void setIsInvalidFolder(const Akonadi::Collection &col);
 private:

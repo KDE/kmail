@@ -28,7 +28,7 @@ class XFaceConfigurator : public QWidget
     Q_OBJECT
 public:
     explicit XFaceConfigurator(QWidget *parent = nullptr);
-    ~XFaceConfigurator();
+    ~XFaceConfigurator() override;
 
     Q_REQUIRED_RESULT bool isXFaceEnabled() const;
     void setXFaceEnabled(bool enable);

@@ -14,7 +14,7 @@ class AttachmentMissingWarning : public KMessageWidget
     Q_OBJECT
 public:
     explicit AttachmentMissingWarning(QWidget *parent = nullptr);
-    ~AttachmentMissingWarning();
+    ~AttachmentMissingWarning() override;
     void slotFileAttached();
 
 Q_SIGNALS:

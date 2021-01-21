@@ -17,7 +17,7 @@ class KMailPluginEditorInitManagerInterface : public QObject
     Q_OBJECT
 public:
     explicit KMailPluginEditorInitManagerInterface(QObject *parent = nullptr);
-    ~KMailPluginEditorInitManagerInterface() = default;
+    ~KMailPluginEditorInitManagerInterface() override = default;
 
     KPIMTextEdit::RichTextComposer *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);

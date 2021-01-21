@@ -38,7 +38,7 @@ class OpenComposerHiddenJob : public QObject
     Q_OBJECT
 public:
     explicit OpenComposerHiddenJob(QObject *parent = nullptr);
-    ~OpenComposerHiddenJob();
+    ~OpenComposerHiddenJob() override;
     void start();
     void setSettings(const OpenComposerHiddenJobSettings &settings);
 

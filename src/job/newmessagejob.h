@@ -42,7 +42,7 @@ class NewMessageJob : public QObject
     Q_OBJECT
 public:
     explicit NewMessageJob(QObject *parent = nullptr);
-    ~NewMessageJob();
+    ~NewMessageJob() override;
     void start();
 
     void setNewMessageJobSettings(const NewMessageJobSettings &newMessageJobSettings);

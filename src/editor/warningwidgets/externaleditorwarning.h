@@ -14,7 +14,7 @@ class KMAILTESTS_TESTS_EXPORT ExternalEditorWarning : public KMessageWidget
     Q_OBJECT
 public:
     explicit ExternalEditorWarning(QWidget *parent = nullptr);
-    ~ExternalEditorWarning();
+    ~ExternalEditorWarning() override;
 };
 
 #endif // EXTERNALEDITORWARNING_H

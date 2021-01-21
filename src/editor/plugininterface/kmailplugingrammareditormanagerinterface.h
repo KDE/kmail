@@ -20,7 +20,7 @@ class KMailPluginGrammarEditorManagerInterface : public QObject
     Q_OBJECT
 public:
     explicit KMailPluginGrammarEditorManagerInterface(QObject *parent = nullptr);
-    ~KMailPluginGrammarEditorManagerInterface() = default;
+    ~KMailPluginGrammarEditorManagerInterface() override = default;
 
     KPIMTextEdit::RichTextComposer *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);

@@ -15,7 +15,7 @@ class AttachmentAddedFromExternalWarning : public KMessageWidget
     Q_OBJECT
 public:
     explicit AttachmentAddedFromExternalWarning(QWidget *parent = nullptr);
-    ~AttachmentAddedFromExternalWarning();
+    ~AttachmentAddedFromExternalWarning() override;
 
     void setAttachmentNames(const QStringList &lst);
 };

@@ -15,7 +15,7 @@ class KMAILTESTS_TESTS_EXPORT PotentialPhishingEmailWarning : public KMessageWid
     Q_OBJECT
 public:
     explicit PotentialPhishingEmailWarning(QWidget *parent = nullptr);
-    ~PotentialPhishingEmailWarning();
+    ~PotentialPhishingEmailWarning() override;
 
     void setPotentialPhisingEmail(const QStringList &lst);
 

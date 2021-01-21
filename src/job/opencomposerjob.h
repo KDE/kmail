@@ -51,7 +51,7 @@ class OpenComposerJob : public QObject
     Q_OBJECT
 public:
     explicit OpenComposerJob(QObject *parent = nullptr);
-    ~OpenComposerJob();
+    ~OpenComposerJob() override;
     void start();
 
     void setOpenComposerSettings(const OpenComposerSettings &openComposerSettings);

@@ -13,7 +13,7 @@ class KMLaunchExternalComponent : public QObject
     Q_OBJECT
 public:
     explicit KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent = nullptr);
-    ~KMLaunchExternalComponent();
+    ~KMLaunchExternalComponent() override;
 
 public Q_SLOTS:
     void slotConfigureSendLater();

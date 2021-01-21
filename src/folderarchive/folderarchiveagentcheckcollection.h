@@ -15,7 +15,7 @@ class FolderArchiveAgentCheckCollection : public QObject
     Q_OBJECT
 public:
     explicit FolderArchiveAgentCheckCollection(FolderArchiveAccountInfo *info, QObject *parent = nullptr);
-    ~FolderArchiveAgentCheckCollection();
+    ~FolderArchiveAgentCheckCollection() override;
 
     void start();
 

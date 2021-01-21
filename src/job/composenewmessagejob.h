@@ -16,7 +16,7 @@ class ComposeNewMessageJob : public QObject
     Q_OBJECT
 public:
     explicit ComposeNewMessageJob(QObject *parent = nullptr);
-    ~ComposeNewMessageJob();
+    ~ComposeNewMessageJob() override;
     void start();
     void setFolderSettings(const QSharedPointer<MailCommon::FolderSettings> &folder);
 

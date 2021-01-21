@@ -18,7 +18,7 @@ class AddEmailToExistingContactDialog : public QDialog
     Q_OBJECT
 public:
     explicit AddEmailToExistingContactDialog(QWidget *parent);
-    ~AddEmailToExistingContactDialog();
+    ~AddEmailToExistingContactDialog() override;
 
     Q_REQUIRED_RESULT Akonadi::Item selectedContact() const;
 

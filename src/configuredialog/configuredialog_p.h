@@ -21,7 +21,7 @@ public:
     {
     }
 
-    ~ConfigModuleTab()
+    ~ConfigModuleTab() override
     = default;
 
     virtual void save() = 0;

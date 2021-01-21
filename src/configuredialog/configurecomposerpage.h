@@ -36,7 +36,7 @@ class ComposerPageGeneralTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageGeneralTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
 private:

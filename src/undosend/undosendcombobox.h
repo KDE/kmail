@@ -15,7 +15,7 @@ class KMAILTESTS_TESTS_EXPORT UndoSendCombobox : public QComboBox
     Q_OBJECT
 public:
     explicit UndoSendCombobox(QWidget *parent = nullptr);
-    ~UndoSendCombobox();
+    ~UndoSendCombobox() override;
 
     Q_REQUIRED_RESULT int delay() const;
     void setDelay(int val);

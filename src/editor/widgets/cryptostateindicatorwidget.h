@@ -16,7 +16,7 @@ class KMAILTESTS_TESTS_EXPORT CryptoStateIndicatorWidget : public QWidget
     Q_OBJECT
 public:
     explicit CryptoStateIndicatorWidget(QWidget *parent = nullptr);
-    ~CryptoStateIndicatorWidget();
+    ~CryptoStateIndicatorWidget() override;
 
     void updateSignatureAndEncrypionStateIndicators(bool isSign, bool isEncrypted);
 

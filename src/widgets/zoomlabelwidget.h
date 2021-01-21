@@ -14,7 +14,7 @@ class ZoomLabelWidget : public QLabel
     Q_OBJECT
 public:
     explicit ZoomLabelWidget(QWidget *parent = nullptr);
-    ~ZoomLabelWidget();
+    ~ZoomLabelWidget() override;
 
     void setZoom(qreal zoomFactor);
 };

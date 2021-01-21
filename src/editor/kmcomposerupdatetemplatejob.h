@@ -17,7 +17,7 @@ class KMComposerUpdateTemplateJob : public QObject
     Q_OBJECT
 public:
     explicit KMComposerUpdateTemplateJob(QObject *parent = nullptr);
-    ~KMComposerUpdateTemplateJob();
+    ~KMComposerUpdateTemplateJob() override;
     void start();
     void setMsg(const KMime::Message::Ptr &msg);
 

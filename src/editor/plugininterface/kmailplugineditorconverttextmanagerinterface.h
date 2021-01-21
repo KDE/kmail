@@ -20,7 +20,7 @@ class KMailPluginEditorConvertTextManagerInterface : public QObject
     Q_OBJECT
 public:
     explicit KMailPluginEditorConvertTextManagerInterface(QObject *parent = nullptr);
-    ~KMailPluginEditorConvertTextManagerInterface();
+    ~KMailPluginEditorConvertTextManagerInterface() override;
     QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 

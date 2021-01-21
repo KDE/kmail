@@ -23,7 +23,7 @@ class FolderArchiveManager : public QObject
     Q_OBJECT
 public:
     explicit FolderArchiveManager(QObject *parent = nullptr);
-    ~FolderArchiveManager();
+    ~FolderArchiveManager() override;
 
     void load();
     void setArchiveItems(const Akonadi::Item::List &items, const QString &instanceName);

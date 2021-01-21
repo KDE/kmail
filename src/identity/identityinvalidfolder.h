@@ -14,7 +14,7 @@ class IdentityInvalidFolder : public KMessageWidget
     Q_OBJECT
 public:
     explicit IdentityInvalidFolder(QWidget *parent = nullptr);
-    ~IdentityInvalidFolder();
+    ~IdentityInvalidFolder() override;
 
     void setErrorMessage(const QString &msg);
 };

@@ -32,7 +32,7 @@ class KActionMenuAccount : public KActionMenu
     Q_OBJECT
 public:
     explicit KActionMenuAccount(QObject *parent = nullptr);
-    ~KActionMenuAccount();
+    ~KActionMenuAccount() override;
 
     void setAccountOrder(const QStringList &identifier);
 

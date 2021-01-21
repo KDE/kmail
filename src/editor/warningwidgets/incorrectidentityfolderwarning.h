@@ -15,7 +15,7 @@ class KMAILTESTS_TESTS_EXPORT IncorrectIdentityFolderWarning : public KMessageWi
     Q_OBJECT
 public:
     explicit IncorrectIdentityFolderWarning(QWidget *parent = nullptr);
-    ~IncorrectIdentityFolderWarning();
+    ~IncorrectIdentityFolderWarning() override;
 
     void mailTransportIsInvalid();
     void fccIsInvalid();

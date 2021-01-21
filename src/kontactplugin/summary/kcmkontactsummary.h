@@ -19,7 +19,7 @@ class PluginView : public QTreeWidget
 
 public:
     explicit PluginView(QWidget *parent);
-    ~PluginView();
+    ~PluginView() override;
 };
 
 class KCMKontactSummary : public KCModule

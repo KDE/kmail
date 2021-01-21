@@ -16,7 +16,7 @@ class KMComposerCreateNewComposerJob : public QObject
     Q_OBJECT
 public:
     explicit KMComposerCreateNewComposerJob(QObject *parent = nullptr);
-    ~KMComposerCreateNewComposerJob();
+    ~KMComposerCreateNewComposerJob() override;
     void start();
     void setCollectionForNewMessage(const Akonadi::Collection &collectionForNewMessage);
 

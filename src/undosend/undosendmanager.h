@@ -14,7 +14,7 @@ class UndoSendManager : public QObject
     Q_OBJECT
 public:
     explicit UndoSendManager(QObject *parent = nullptr);
-    ~UndoSendManager();
+    ~UndoSendManager() override;
     static UndoSendManager *self();
 
     void addItem(qint64 index, const QString &subject, int delay);

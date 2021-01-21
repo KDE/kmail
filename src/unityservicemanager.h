@@ -19,7 +19,7 @@ class UnityServiceManager : public QObject
     Q_OBJECT
 public:
     explicit UnityServiceManager(QObject *parent = nullptr);
-    ~UnityServiceManager();
+    ~UnityServiceManager() override;
 
     void updateSystemTray();
     Q_REQUIRED_RESULT bool haveSystemTrayApplet() const;

@@ -24,7 +24,7 @@ class FolderShortcutCommand : public QObject
 
 public:
     FolderShortcutCommand(QWidget *mainwidget, const Akonadi::Collection &col);
-    ~FolderShortcutCommand();
+    ~FolderShortcutCommand() override;
 
 public Q_SLOTS:
     void start();

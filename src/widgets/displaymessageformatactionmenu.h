@@ -16,7 +16,7 @@ class KMAILTESTS_TESTS_EXPORT DisplayMessageFormatActionMenu : public KActionMen
     Q_OBJECT
 public:
     explicit DisplayMessageFormatActionMenu(QObject *parent = nullptr);
-    ~DisplayMessageFormatActionMenu();
+    ~DisplayMessageFormatActionMenu() override;
 
     Q_REQUIRED_RESULT MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat() const;
     void setDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat);

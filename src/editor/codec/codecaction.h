@@ -29,7 +29,7 @@ public:
     };
 
     explicit CodecAction(Mode mode, QObject *parent = nullptr);
-    ~CodecAction();
+    ~CodecAction() override;
 
     /**
       The name of the charset, if a specific encoding was selected, or a list
