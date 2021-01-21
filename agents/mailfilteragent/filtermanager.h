@@ -12,7 +12,7 @@
 #include <AkonadiCore/item.h>
 
 #include <MailCommon/SearchPattern>
-
+#include <memory>
 namespace MailCommon {
 class MailFilter;
 class ItemContext;
@@ -139,7 +139,7 @@ Q_SIGNALS:
 private:
     //@cond PRIVATE
     class Private;
-    Private *d;
+    std::unique_ptr<Private> const d;
     //@endcond
 };
 

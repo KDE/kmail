@@ -289,8 +289,6 @@ FilterManager::FilterManager(QObject *parent)
 FilterManager::~FilterManager()
 {
     clear();
-
-    delete d;
 }
 
 void FilterManager::clear()
