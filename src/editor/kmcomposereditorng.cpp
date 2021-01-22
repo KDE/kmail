@@ -17,6 +17,7 @@
 #include <QMimeData>
 #include <QCheckBox>
 #include <MessageCore/MessageCoreSettings>
+#include <MessageCore/ColorUtil>
 #include <Sonnet/ConfigDialog>
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
 #include <sonnet/dictionarycombobox.h>

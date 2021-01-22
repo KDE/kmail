@@ -5,7 +5,7 @@
 */
 
 #include "cryptostateindicatorwidget.h"
-#include <MessageCore/MessageCoreUtil>
+#include <MessageCore/ColorUtil>
 
 #include <KColorScheme>
 #include <KLocalizedString>

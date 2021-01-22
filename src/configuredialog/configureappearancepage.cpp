@@ -29,7 +29,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <MessageList/MessageListUtil>
 #include <MessageCore/MessageCoreSettings>
-#include <MessageCore/MessageCoreUtil>
+#include <MessageCore/ColorUtil>
 #include "settings/kmailsettings.h"
 
 #include <MailCommon/MailUtil>
@@ -54,7 +54,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QIcon>
 #include "kmail_debug.h"
 
-#include <kmime/kmime_dateformatter.h>
+#include <KMime/DateFormatter>
 using KMime::DateFormatter;
 
 #include <QWhatsThis>
