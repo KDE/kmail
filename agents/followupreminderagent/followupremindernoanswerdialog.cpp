@@ -36,7 +36,7 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
 
     auto mainLayout = new QVBoxLayout(this);
 
-    QLabel *lab = new QLabel(i18n("You still wait an answer about this mail:"), this);
+    auto lab = new QLabel(i18n("You still wait an answer about this mail:"), this);
     mainLayout->addWidget(lab);
     mWidget = new FollowUpReminderInfoWidget(this);
     mWidget->setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
@@ -54,7 +54,7 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     readConfig();
     QDBusConnection dbusConn = QDBusConnection::sessionBus();
     if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
-        OrgFreedesktopDBusPropertiesInterface *propsIface = new OrgFreedesktopDBusPropertiesInterface(
+        auto propsIface = new OrgFreedesktopDBusPropertiesInterface(
             QString::fromLatin1(s_fdo_notifications_service),
             QString::fromLatin1(s_fdo_notifications_path),
             dbusConn, this);

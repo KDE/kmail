@@ -32,7 +32,7 @@ ColorListBox::ColorListBox(QWidget *parent)
 
 void ColorListBox::addColor(const QString &text, const QColor &color)
 {
-    QTreeWidgetItem *item = new QTreeWidgetItem(QStringList() << text);
+    auto item = new QTreeWidgetItem(QStringList() << text);
     item->setData(0, Qt::DecorationRole, color);
     addTopLevelItem(item);
 }

@@ -35,7 +35,7 @@ CreateNewContactJob::~CreateNewContactJob()
 
 void CreateNewContactJob::start()
 {
-    Akonadi::CollectionFetchJob *const addressBookJob
+    auto *const addressBookJob
         = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(),
                                           Akonadi::CollectionFetchJob::Recursive);
 

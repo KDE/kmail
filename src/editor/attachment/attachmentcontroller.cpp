@@ -119,11 +119,11 @@ void AttachmentController::onShowAttachment(KMime::Content *content, const QByte
         KMime::Message::Ptr m(new KMime::Message);
         m->setContent(content->bodyAsMessage()->encodedContent());
         m->parse();
-        KMReaderMainWin *win = new KMReaderMainWin();
+        auto win = new KMReaderMainWin();
         win->showMessage(charsetStr, m);
         win->show();
     } else {
-        KMReaderMainWin *win
+        auto *win
             = new KMReaderMainWin(content, MessageViewer::Viewer::Text, charsetStr);
         win->show();
     }

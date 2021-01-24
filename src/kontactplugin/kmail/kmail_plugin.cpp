@@ -38,7 +38,7 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 
-    QAction *action
+    auto *action
         = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")),
                       i18nc("@action:inmenu", "New Message..."), this);
     actionCollection()->addAction(QStringLiteral("new_mail"), action);
@@ -52,7 +52,7 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
     connect(action, &QAction::triggered, this, &KMailPlugin::slotNewMail);
     insertNewAction(action);
 
-    QAction *syncAction
+    auto *syncAction
         = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
                       i18nc("@action:inmenu", "Sync Mail"), this);
     //syncAction->setHelpText(

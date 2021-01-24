@@ -321,7 +321,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg, bool lastSignState
     mSnippetSplitter->setObjectName(QStringLiteral("mSnippetSplitter"));
     mSplitter->addWidget(mSnippetSplitter);
 
-    QWidget *editorAndCryptoStateIndicators = new QWidget(mSplitter);
+    auto editorAndCryptoStateIndicators = new QWidget(mSplitter);
     mCryptoStateIndicatorWidget = new CryptoStateIndicatorWidget(this);
     mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
@@ -1091,7 +1091,7 @@ void KMComposerWin::setupActions()
 
     if (MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
         //default = send now, alternative = queue
-        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("&Send Mail"), this);
+        auto action = new QAction(QIcon::fromTheme(QStringLiteral("mail-send")), i18n("&Send Mail"), this);
         actionCollection()->addAction(QStringLiteral("send_default"), action);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL | Qt::Key_Return));
         connect(action, &QAction::triggered, this, &KMComposerWin::slotSendNowByShortcut);
@@ -1115,7 +1115,7 @@ void KMComposerWin::setupActions()
         actionCollection()->addAction(QStringLiteral("send_alternative_via"), actActionLaterMenu);
     } else {
         //default = queue, alternative = send now
-        QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-queue")), i18n("Send &Later"), this);
+        auto action = new QAction(QIcon::fromTheme(QStringLiteral("mail-queue")), i18n("Send &Later"), this);
         actionCollection()->addAction(QStringLiteral("send_default"), action);
         connect(action, &QAction::triggered, this, &KMComposerWin::slotSendLater);
         actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL | Qt::Key_Return));
@@ -1144,7 +1144,7 @@ void KMComposerWin::setupActions()
     connect(actActionLaterMenu, &KActionMenuTransport::transportSelected, this,
             &KMComposerWin::slotSendLaterVia);
 
-    QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save as &Draft"), this);
+    auto action = new QAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save as &Draft"), this);
     actionCollection()->addAction(QStringLiteral("save_in_drafts"), action);
     KMail::Util::addQActionHelpText(action, i18n("Save email in Draft folder"));
     actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL | Qt::Key_S));
@@ -1973,7 +1973,7 @@ void KMComposerWin::addAttach(KMime::Content *msgPart)
 
 void KMComposerWin::slotAddressBook()
 {
-    KIO::CommandLauncherJob *job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
+    auto job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
     job->setDesktopName(QStringLiteral("org.kde.kaddressbook"));
     job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
     job->start();
@@ -2711,7 +2711,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         setEnabled(false);
 
         // Validate the To:, CC: and BCC fields
-        AddressValidationJob *job = new AddressValidationJob(recipients.join(QLatin1String(", ")), this, this);
+        auto job = new AddressValidationJob(recipients.join(QLatin1String(", ")), this, this);
         job->setDefaultDomain(defaultDomainName);
         job->setProperty("method", static_cast<int>(method));
         job->setProperty("saveIn", static_cast<int>(saveIn));

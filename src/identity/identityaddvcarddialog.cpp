@@ -42,13 +42,13 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     mButtonGroup->setObjectName(QStringLiteral("buttongroup"));
 
     // row 1: radio button
-    QRadioButton *radio = new QRadioButton(i18n("&With empty fields"), this);
+    auto radio = new QRadioButton(i18n("&With empty fields"), this);
     radio->setChecked(true);
     vlay->addWidget(radio);
     mButtonGroup->addButton(radio, static_cast<int>(Empty));
 
     // row 2: radio button
-    QRadioButton *fromExistingVCard = new QRadioButton(i18n("&From existing vCard"), this);
+    auto fromExistingVCard = new QRadioButton(i18n("&From existing vCard"), this);
     vlay->addWidget(fromExistingVCard);
     mButtonGroup->addButton(fromExistingVCard, static_cast<int>(FromExistingVCard));
 
@@ -61,7 +61,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     mVCardPath->setMimeTypeFilters({QStringLiteral("text/vcard"), QStringLiteral("all/allfiles")});
 
     mVCardPath->setMode(KFile::LocalOnly | KFile::File);
-    QLabel *label = new QLabel(i18n("&vCard path:"), this);
+    auto label = new QLabel(i18n("&vCard path:"), this);
     label->setBuddy(mVCardPath);
     label->setEnabled(false);
     mVCardPath->setEnabled(false);
@@ -72,7 +72,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     connect(fromExistingVCard, &QRadioButton::toggled, mVCardPath, &KUrlRequester::setEnabled);
 
     // row 4: radio button
-    QRadioButton *duplicateExistingVCard = new QRadioButton(i18n("&Duplicate existing vCard"), this);
+    auto duplicateExistingVCard = new QRadioButton(i18n("&Duplicate existing vCard"), this);
     vlay->addWidget(duplicateExistingVCard);
     mButtonGroup->addButton(duplicateExistingVCard, static_cast<int>(ExistingEntry));
 

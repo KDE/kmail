@@ -261,7 +261,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // Tab Widget: General
     //
     int row = -1;
-    QWidget *page = new QWidget(this);
+    auto page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
     auto vlay = new QVBoxLayout(page);
@@ -270,7 +270,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mTabWidget->setObjectName(QStringLiteral("config-identity-tab"));
     vlay->addWidget(mTabWidget);
 
-    QWidget *tab = new QWidget(mTabWidget);
+    auto tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18nc("@title:tab General identity settings.", "General"));
     auto glay = new QGridLayout(tab);
     glay->setRowStretch(3, 1);
@@ -281,7 +281,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mNameEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mNameEdit, this);
     glay->addWidget(mNameEdit, row, 1);
-    QLabel *label = new QLabel(i18n("&Your name:"), tab);
+    auto label = new QLabel(i18n("&Your name:"), tab);
     label->setBuddy(mNameEdit);
     glay->addWidget(label, row, 0);
     QString msg = i18n("<qt><h3>Your name</h3>"

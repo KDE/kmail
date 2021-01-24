@@ -64,7 +64,7 @@ FolderArchiveAccountInfo *FolderArchiveManager::infoFromInstanceName(const QStri
 
 void FolderArchiveManager::setArchiveItem(qlonglong itemId)
 {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(Akonadi::Item(itemId), this);
+    auto job = new Akonadi::ItemFetchJob(Akonadi::Item(itemId), this);
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     job->fetchScope().setFetchRemoteIdentification(true);
     connect(job, &Akonadi::ItemFetchJob::result, this, &FolderArchiveManager::slotFetchParentCollection);
@@ -83,7 +83,7 @@ void FolderArchiveManager::slotFetchParentCollection(KJob *job)
         moveFailed(i18n("No folder returned."));
         qCDebug(KMAIL_LOG) << "Fetch list is empty";
     } else {
-        Akonadi::CollectionFetchJob *jobCol = new Akonadi::CollectionFetchJob(Akonadi::Collection(items.first().parentCollection().id()), Akonadi::CollectionFetchJob::Base, this);
+        auto jobCol = new Akonadi::CollectionFetchJob(Akonadi::Collection(items.first().parentCollection().id()), Akonadi::CollectionFetchJob::Base, this);
         jobCol->setProperty("itemId", items.first().id());
         connect(jobCol, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveManager::slotFetchCollection);
     }

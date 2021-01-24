@@ -174,7 +174,7 @@ KMKernel::KMKernel(QObject *parent)
     }
     // until here ================================================
 
-    Akonadi::Session *session = new Akonadi::Session("KMail Kernel ETM", this);
+    auto session = new Akonadi::Session("KMail Kernel ETM", this);
 
     mFolderCollectionMonitor = new FolderCollectionMonitor(session, this);
 
@@ -659,14 +659,14 @@ void KMKernel::newMessage(const QString &to, const QString &cc, const QString &b
 
 void KMKernel::viewMessage(const QUrl &url)
 {
-    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(nullptr, url);
+    auto openCommand = new KMOpenMsgCommand(nullptr, url);
 
     openCommand->start();
 }
 
 int KMKernel::viewMessage(const QString &messageFile)
 {
-    KMOpenMsgCommand *openCommand = new KMOpenMsgCommand(nullptr, QUrl::fromLocalFile(messageFile));
+    auto openCommand = new KMOpenMsgCommand(nullptr, QUrl::fromLocalFile(messageFile));
 
     openCommand->start();
     return 1;
@@ -702,12 +702,12 @@ bool KMKernel::showMail(qint64 serialNumber)
         }
     }
     if (mainWidget) {
-        Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
+        auto job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
         job->fetchScope().fetchFullPayload();
         job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
         if (job->exec()) {
             if (job->items().count() >= 1) {
-                KMReaderMainWin *win = new KMReaderMainWin(MessageViewer::Viewer::UseGlobalSetting, false);
+                auto win = new KMReaderMainWin(MessageViewer::Viewer::UseGlobalSetting, false);
                 const auto item = job->items().at(0);
                 win->showMessage(MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding(),
                                  item, item.parentCollection());

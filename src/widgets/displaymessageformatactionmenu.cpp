@@ -21,7 +21,7 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
 
     auto actionGroup = new QActionGroup(this);
 
-    KToggleAction *act = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
+    auto act = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
     act->setObjectName(QStringLiteral("prefer-html-action"));
     act->setData(MessageViewer::Viewer::Html);
     actionGroup->addAction(act);

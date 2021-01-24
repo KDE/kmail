@@ -92,7 +92,7 @@ void KMLaunchExternalComponent::slotExportData()
 
 void KMLaunchExternalComponent::slotRunAddressBook()
 {
-    KIO::CommandLauncherJob *job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
+    auto job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
     job->setDesktopName(QStringLiteral("org.kde.kaddressbook"));
     job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
     job->start();

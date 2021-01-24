@@ -162,7 +162,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     }
     mFontLocationCombo->addItems(fontDescriptions);
 
-    QLabel *label = new QLabel(i18n("Apply &to:"), this);
+    auto label = new QLabel(i18n("Apply &to:"), this);
     label->setBuddy(mFontLocationCombo);
     label->setEnabled(false);   // since !mCustomFontCheck->isChecked()
     hlay->addWidget(label);
@@ -355,7 +355,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     // close to quota threshold
     auto hbox = new QHBoxLayout();
     vlay->addLayout(hbox);
-    QLabel *l = new QLabel(i18n("Close to quota threshold:"), this);
+    auto l = new QLabel(i18n("Close to quota threshold:"), this);
     hbox->addWidget(l);
     mCloseToQuotaThreshold = new QSpinBox(this);
     mCloseToQuotaThreshold->setRange(0, 100);
@@ -494,15 +494,15 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFavoriteFoldersViewGroup = new QButtonGroup(this);
     connect(mFavoriteFoldersViewGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
-    QRadioButton *favoriteFoldersViewHiddenRadio = new QRadioButton(i18n("Never"), mFavoriteFoldersViewGroupBox);
+    auto favoriteFoldersViewHiddenRadio = new QRadioButton(i18n("Never"), mFavoriteFoldersViewGroupBox);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewHiddenRadio, static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode));
     mFavoriteFoldersViewGroupBox->layout()->addWidget(favoriteFoldersViewHiddenRadio);
 
-    QRadioButton *favoriteFoldersViewIconsRadio = new QRadioButton(i18n("As icons"), mFavoriteFoldersViewGroupBox);
+    auto favoriteFoldersViewIconsRadio = new QRadioButton(i18n("As icons"), mFavoriteFoldersViewGroupBox);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewIconsRadio, static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::IconMode));
     mFavoriteFoldersViewGroupBox->layout()->addWidget(favoriteFoldersViewIconsRadio);
 
-    QRadioButton *favoriteFoldersViewListRadio = new QRadioButton(i18n("As list"), mFavoriteFoldersViewGroupBox);
+    auto favoriteFoldersViewListRadio = new QRadioButton(i18n("As list"), mFavoriteFoldersViewGroupBox);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewListRadio, static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode));
     mFavoriteFoldersViewGroupBox->layout()->addWidget(favoriteFoldersViewListRadio);
 
@@ -515,11 +515,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFolderToolTipsGroup = new QButtonGroup(this);
     connect(mFolderToolTipsGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
 
-    QRadioButton *folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), mFolderToolTipsGroupBox);
+    auto folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), mFolderToolTipsGroupBox);
     mFolderToolTipsGroup->addButton(folderToolTipsAlwaysRadio, static_cast< int >(FolderTreeWidget::DisplayAlways));
     mFolderToolTipsGroupBox->layout()->addWidget(folderToolTipsAlwaysRadio);
 
-    QRadioButton *folderToolTipsNeverRadio = new QRadioButton(i18n("Never"), mFolderToolTipsGroupBox);
+    auto folderToolTipsNeverRadio = new QRadioButton(i18n("Never"), mFolderToolTipsGroupBox);
     mFolderToolTipsGroup->addButton(folderToolTipsNeverRadio, static_cast< int >(FolderTreeWidget::DisplayNever));
     mFolderToolTipsGroupBox->layout()->addWidget(folderToolTipsNeverRadio);
 
@@ -588,7 +588,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
 
     // "General Options" group:
-    QGroupBox *group = new QGroupBox(i18nc("General options for the message list.", "General"), this);
+    auto group = new QGroupBox(i18nc("General options for the message list.", "General"), this);
     auto gvlay = new QVBoxLayout(group);
 
     mDisplayMessageToolTips = new QCheckBox(
@@ -602,7 +602,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     using MessageList::Utils::AggregationComboBox;
     mAggregationComboBox = new AggregationComboBox(group);
 
-    QLabel *aggregationLabel = new QLabel(i18n("Default aggregation:"), group);
+    auto aggregationLabel = new QLabel(i18n("Default aggregation:"), group);
     aggregationLabel->setBuddy(mAggregationComboBox);
 
     using MessageList::Utils::AggregationConfigButton;
@@ -623,7 +623,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     using MessageList::Utils::ThemeComboBox;
     mThemeComboBox = new ThemeComboBox(group);
 
-    QLabel *themeLabel = new QLabel(i18n("Default theme:"), group);
+    auto themeLabel = new QLabel(i18n("Default theme:"), group);
     themeLabel->setBuddy(mThemeComboBox);
 
     using MessageList::Utils::ThemeConfigButton;
@@ -658,7 +658,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             buttonLabel = i18n(label);
         }
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
-            QWidget *hbox = new QWidget(mDateDisplayBox);
+            auto hbox = new QWidget(mDateDisplayBox);
             auto hboxHBoxLayout = new QHBoxLayout(hbox);
             hboxHBoxLayout->setContentsMargins({});
             auto radio = new QRadioButton(buttonLabel, hbox);
@@ -676,7 +676,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             connect(mCustomDateFormatEdit, &QLineEdit::textChanged,
                     this, &ConfigModuleTab::slotEmitChanged);
 
-            QLabel *formatHelp = new QLabel(
+            auto formatHelp = new QLabel(
                 i18n("<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), hbox);
             formatHelp->setContextMenuPolicy(Qt::NoContextMenu);
             connect(formatHelp, &QLabel::linkActivated,
@@ -831,7 +831,7 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
 {
     auto topLayout = new QVBoxLayout(this);
 
-    QGroupBox *readerBox = new QGroupBox(i18n("Message Window"), this);
+    auto readerBox = new QGroupBox(i18n("Message Window"), this);
     topLayout->addWidget(readerBox);
 
     auto readerBoxLayout = new QVBoxLayout(readerBox);
@@ -850,7 +850,7 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
             this, &ConfigModuleTab::slotEmitChanged);
     readerBoxLayout->addWidget(mViewerSettings);
 
-    QGroupBox *systrayBox = new QGroupBox(i18n("System Tray"), this);
+    auto systrayBox = new QGroupBox(i18n("System Tray"), this);
     topLayout->addWidget(systrayBox);
 
     auto systrayBoxlayout = new QVBoxLayout(systrayBox);
@@ -1282,7 +1282,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
     tag->priority = tmp_priority;
 
     slotEmitChangeCheck();
-    TagListWidgetItem *newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), newTagName, mTagListBox);
+    auto newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), newTagName, mTagListBox);
     newItem->setKMailTag(tag);
     mTagListBox->addItem(newItem);
     mTagListBox->setCurrentItem(newItem);
@@ -1317,7 +1317,7 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
     std::sort(msgTagList.begin(), msgTagList.end(), MailCommon::Tag::compare);
 
     for (const MailCommon::Tag::Ptr &tag : qAsConst(msgTagList)) {
-        TagListWidgetItem *newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mTagListBox);
+        auto newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mTagListBox);
         newItem->setKMailTag(tag);
         if (tag->priority == -1) {
             tag->priority = mTagListBox->count() - 1;

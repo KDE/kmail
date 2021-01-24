@@ -44,7 +44,7 @@ KCMKMailSummary::KCMKMailSummary(QWidget *parent)
     KAcceleratorManager::manage(this);
 
     load();
-    KAboutData *about = new KAboutData(QStringLiteral("kcmkmailsummary"),
+    auto about = new KAboutData(QStringLiteral("kcmkmailsummary"),
                                        i18n("kcmkmailsummary"),
                                        QString(),
                                        i18n("Mail Summary Configuration Dialog"),

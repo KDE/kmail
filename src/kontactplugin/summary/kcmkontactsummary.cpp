@@ -81,7 +81,7 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
-    QLabel *label
+    auto *label
         = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
     layout->addWidget(label);
 
@@ -93,7 +93,7 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     load();
     connect(mPluginView, &QTreeWidget::itemChanged,
             this, &KCMKontactSummary::markAsChanged);
-    KAboutData *about = new KAboutData(QStringLiteral("kontactsummary"),
+    auto about = new KAboutData(QStringLiteral("kontactsummary"),
                                        i18n("kontactsummary"),
                                        QString(),
                                        i18n("KDE Kontact Summary"),

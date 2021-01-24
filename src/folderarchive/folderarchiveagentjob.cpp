@@ -39,12 +39,12 @@ void FolderArchiveAgentJob::start()
     }
 
     if (mInfo->folderArchiveType() == FolderArchiveAccountInfo::UniqueFolder) {
-        Akonadi::CollectionFetchJob *fetchCollection = new Akonadi::CollectionFetchJob(Akonadi::Collection(mInfo->archiveTopLevel()), Akonadi::CollectionFetchJob::Base);
+        auto fetchCollection = new Akonadi::CollectionFetchJob(Akonadi::Collection(mInfo->archiveTopLevel()), Akonadi::CollectionFetchJob::Base);
         connect(fetchCollection, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentJob::slotFetchCollection);
     } else {
         Akonadi::Collection::Id id = mManager->folderArchiveCache()->collectionId(mInfo);
         if (id != -1) {
-            Akonadi::CollectionFetchJob *fetchCollection = new Akonadi::CollectionFetchJob(Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base);
+            auto fetchCollection = new Akonadi::CollectionFetchJob(Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base);
             connect(fetchCollection, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentJob::slotFetchCollection);
         } else {
             auto checkCol = new FolderArchiveAgentCheckCollection(mInfo, this);

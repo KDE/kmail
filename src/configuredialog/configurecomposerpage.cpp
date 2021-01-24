@@ -127,7 +127,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     auto grid = new QGridLayout(this);
 
     // "Signature" group
-    QGroupBox *groupBox = new QGroupBox(i18nc("@title:group", "Signature"));
+    auto groupBox = new QGroupBox(i18nc("@title:group", "Signature"));
     auto groupVBoxLayout = new QVBoxLayout();
 
     // "Automatically insert signature" checkbox
@@ -425,7 +425,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // Configure All Address settings
-    QPushButton *configureCompletionButton = new QPushButton(i18n("Configure Completion..."), this);
+    auto configureCompletionButton = new QPushButton(i18n("Configure Completion..."), this);
     connect(configureCompletionButton, &QAbstractButton::clicked, this, &ComposerPageGeneralTab::slotConfigureAddressCompletion);
     groupGridLayout->addWidget(configureCompletionButton, row, 1, 1, 2);
     groupGridLayout->setRowStretch(row, 1);
@@ -655,11 +655,11 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 {
     auto vlay = new QVBoxLayout(this);
 
-    QGroupBox *group = new QGroupBox(i18n("Repl&y Subject Prefixes"), this);
+    auto group = new QGroupBox(i18n("Repl&y Subject Prefixes"), this);
     QLayout *layout = new QVBoxLayout(group);
 
     // row 0: help text:
-    QLabel *label = new QLabel(i18n("Recognize any sequence of the following prefixes\n"
+    auto label = new QLabel(i18n("Recognize any sequence of the following prefixes\n"
                                     "(entries are case-insensitive regular expressions):"), group);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignLeft);
@@ -752,7 +752,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
 {
     auto vlay = new QVBoxLayout(this);
 
-    QLabel *label = new QLabel(i18n("This list is checked for every outgoing message "
+    auto label = new QLabel(i18n("This list is checked for every outgoing message "
                                     "from the top to the bottom for a charset that "
                                     "contains all required characters."), this);
     label->setWordWrap(true);
@@ -878,10 +878,10 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mMessageIdSuffixEdit = new QLineEdit(this);
     mMessageIdSuffixEdit->setClearButtonEnabled(true);
     // only ASCII letters, digits, plus, minus and dots are allowed
-    QRegularExpressionValidator *messageIdSuffixValidator
+    auto *messageIdSuffixValidator
         = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
     mMessageIdSuffixEdit->setValidator(messageIdSuffixValidator);
-    QLabel *label = new QLabel(i18n("Custom message-&id suffix:"), this);
+    auto label = new QLabel(i18n("Custom message-&id suffix:"), this);
     label->setBuddy(mMessageIdSuffixEdit);
     label->setEnabled(false);   // since !mCreateOwnMessageIdCheck->isChecked()
     mMessageIdSuffixEdit->setEnabled(false);
@@ -910,7 +910,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     glay->addWidget(mHeaderList, 0, 0, 3, 2);
 
     // "new" and "remove" buttons:
-    QPushButton *button = new QPushButton(i18nc("@action:button Add new mime header field.", "Ne&w"), this);
+    auto button = new QPushButton(i18nc("@action:button Add new mime header field.", "Ne&w"), this);
     connect(button, &QAbstractButton::clicked, this, &ComposerPageHeadersTab::slotNewMimeHeader);
     button->setAutoDefault(false);
     glay->addWidget(button, 0, 2);
@@ -1135,7 +1135,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     vlay->addWidget(mMissingAttachmentDetectionCheck);
 
     // "Attachment key words" label and string list editor
-    QLabel *label = new QLabel(i18n("Recognize any of the following key words as "
+    auto label = new QLabel(i18n("Recognize any of the following key words as "
                                     "intention to attach a file:"), this);
     label->setAlignment(Qt::AlignLeft);
     label->setWordWrap(true);

@@ -500,13 +500,13 @@ void KTNEFMain::slotShowMessageText()
 
     QString rtf = mParser->message()->rtfString();
     if (!rtf.isEmpty()) {
-        QTemporaryFile *tmpFile = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/ktnef/") + QLatin1String("ktnef_XXXXXX.rtf"));
+        auto tmpFile = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/ktnef/") + QLatin1String("ktnef_XXXXXX.rtf"));
         tmpFile->setAutoRemove(false);
         tmpFile->open();
         tmpFile->setPermissions(QFile::ReadUser);
         tmpFile->write(rtf.toLocal8Bit());
         tmpFile->close();
-        KIO::OpenUrlJob *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"));
+        auto job = new KIO::OpenUrlJob(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"));
         job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
         job->setDeleteTemporaryFile(true);
         job->start();

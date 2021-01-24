@@ -310,7 +310,7 @@ void KMReaderMainWin::slotTrashMessage()
     if (!mMsg.isValid()) {
         return;
     }
-    KMTrashMsgCommand *command = new KMTrashMsgCommand(parentCollection(), mMsg, -1);
+    auto command = new KMTrashMsgCommand(parentCollection(), mMsg, -1);
     command->start();
     close();
 }
@@ -377,7 +377,7 @@ void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMReplyCommand *command = new KMReplyCommand(this,
+    auto command = new KMReplyCommand(this,
                                                  currentItem,
                                                  MessageComposer::ReplySmart,
                                                  mReaderWin->copyText(),
@@ -393,7 +393,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMReplyCommand *command = new KMReplyCommand(this,
+    auto command = new KMReplyCommand(this,
                                                  currentItem,
                                                  MessageComposer::ReplyAll,
                                                  mReaderWin->copyText(),
@@ -410,7 +410,7 @@ void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMForwardCommand *command = new KMForwardCommand(this,
+    auto command = new KMForwardCommand(this,
                                                      currentItem,
                                                      0, tmpl, mReaderWin->copyText());
     connect(command, &KMForwardCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);

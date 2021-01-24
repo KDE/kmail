@@ -77,7 +77,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
 
     groupLayout->addItem(new QSpacerItem(0, 10), 3, 0);
 
-    QLabel *label = new QLabel(i18n("Mailing list description:"), mGroupWidget);
+    auto label = new QLabel(i18n("Mailing list description:"), mGroupWidget);
     groupLayout->addWidget(label, 4, 0);
     mMLId = new KSqueezedTextLabel(QString(), mGroupWidget);
     mMLId->setTextElideMode(Qt::ElideRight);
@@ -102,7 +102,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     //FIXME: if the mailing list actions have either QAction's or toolbar buttons
     //       associated with them - remove this button since it's really silly
     //       here
-    QPushButton *handleButton = new QPushButton(i18n("Invoke Handler"), mGroupWidget);
+    auto handleButton = new QPushButton(i18n("Invoke Handler"), mGroupWidget);
     if (mFolder) {
         connect(handleButton, &QPushButton::clicked, this, &CollectionMailingListPage::slotInvokeHandler);
     } else {

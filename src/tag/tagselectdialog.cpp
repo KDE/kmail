@@ -134,7 +134,7 @@ void TagSelectDialog::slotTagsFetched(KJob *job)
     std::sort(mTagList.begin(), mTagList.end(), MailCommon::Tag::compare);
 
     for (const MailCommon::Tag::Ptr &tag : qAsConst(mTagList)) {
-        QListWidgetItem *item = new QListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mListTag);
+        auto item = new QListWidgetItem(QIcon::fromTheme(tag->iconName), tag->tagName, mListTag);
         item->setData(UrlTag, tag->tag().url().url());
         item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
         item->setCheckState(Qt::Unchecked);

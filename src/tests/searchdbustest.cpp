@@ -17,7 +17,7 @@ searchdbustest::searchdbustest(QWidget *parent)
     : QWidget(parent)
 {
     auto mainlayout = new QVBoxLayout(this);
-    QPushButton *button = new QPushButton(QStringLiteral("reindex collections"), this);
+    auto button = new QPushButton(QStringLiteral("reindex collections"), this);
     mainlayout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &searchdbustest::slotReindexCollections);
 }

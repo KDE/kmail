@@ -96,7 +96,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     vlay->addWidget(tmw);
 
     // "Common options" groupbox:
-    QGroupBox *group = new QGroupBox(i18n("Common Options"), this);
+    auto group = new QGroupBox(i18n("Common Options"), this);
     vlay->addWidget(group);
 
     // a grid layout for the contents of the "common options" group box
@@ -133,7 +133,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     connect(mSendMethodCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // labels:
-    QLabel *l = new QLabel(i18n("Send &messages in outbox folder:"), group);
+    auto l = new QLabel(i18n("Send &messages in outbox folder:"), group);
     l->setBuddy(mSendOnCheckCombo);
     glay->addWidget(l, 2, 0);
 
@@ -298,7 +298,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
     }
 
     if (!MailCommon::Util::isVirtualCollection(ident)) {
-        QAction *manualMailCheck = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check"), &menu);
+        auto manualMailCheck = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check"), &menu);
         manualMailCheck->setCheckable(true);
         manualMailCheck->setChecked(IncludeInManualChecks);
         manualMailCheck->setData(ident);
@@ -306,14 +306,14 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         connect(manualMailCheck, &QAction::toggled, this, &AccountsPageReceivingTab::slotIncludeInCheckChanged);
     }
 
-    QAction *switchOffline = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown"), &menu);
+    auto switchOffline = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown"), &menu);
     switchOffline->setCheckable(true);
     switchOffline->setChecked(OfflineOnShutdown);
     switchOffline->setData(ident);
     menu.addAction(switchOffline);
     connect(switchOffline, &QAction::toggled, this, &AccountsPageReceivingTab::slotOfflineOnShutdownChanged);
 
-    QAction *checkOnStartup = new QAction(i18n("Check mail on startup"), &menu);
+    auto checkOnStartup = new QAction(i18n("Check mail on startup"), &menu);
     checkOnStartup->setCheckable(true);
     checkOnStartup->setChecked(CheckOnStartup);
     checkOnStartup->setData(ident);

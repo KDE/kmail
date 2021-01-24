@@ -17,7 +17,7 @@ IncorrectIdentityFolderWarningTest::IncorrectIdentityFolderWarningTest(QObject *
 
 void IncorrectIdentityFolderWarningTest::shouldHaveDefaultValues()
 {
-    QWidget *wid = new QWidget;
+    auto wid = new QWidget;
     auto layout = new QHBoxLayout(wid);
     IncorrectIdentityFolderWarning w;
     layout->addWidget(&w);
@@ -30,7 +30,7 @@ void IncorrectIdentityFolderWarningTest::shouldHaveDefaultValues()
 
 void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidIdentity()
 {
-    QWidget *wid = new QWidget;
+    auto wid = new QWidget;
     auto layout = new QHBoxLayout(wid);
     IncorrectIdentityFolderWarning w;
     layout->addWidget(&w);
@@ -43,7 +43,7 @@ void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidIdentity()
 
 void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidMailTransport()
 {
-    QWidget *wid = new QWidget;
+    auto wid = new QWidget;
     auto layout = new QHBoxLayout(wid);
     IncorrectIdentityFolderWarning w;
     layout->addWidget(&w);
@@ -56,7 +56,7 @@ void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidMailTransport()
 
 void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidFcc()
 {
-    QWidget *wid = new QWidget;
+    auto wid = new QWidget;
     auto layout = new QHBoxLayout(wid);
     IncorrectIdentityFolderWarning w;
     layout->addWidget(&w);

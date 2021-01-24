@@ -57,7 +57,7 @@ void ArchiveMailManager::load()
             if (info) {
                 //Store task started
                 mListArchiveInfo.append(info);
-                ScheduledArchiveTask *task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), /*immediate*/ false);
+                auto task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), /*immediate*/ false);
                 mArchiveMailKernel->jobScheduler()->registerTask(task);
             }
         } else {
@@ -184,6 +184,6 @@ void ArchiveMailManager::archiveFolder(const QString &path, Akonadi::Collection:
     info->setSaveCollectionId(collectionId);
     info->setUrl(QUrl::fromLocalFile(path));
     mListArchiveInfo.append(info);
-    ScheduledArchiveTask *task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), true /*immediat*/);
+    auto task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), true /*immediat*/);
     mArchiveMailKernel->jobScheduler()->registerTask(task);
 }

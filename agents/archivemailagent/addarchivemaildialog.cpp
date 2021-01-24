@@ -56,7 +56,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->addWidget(mFolderRequester, row, 1);
     ++row;
 
-    QLabel *formatLabel = new QLabel(i18n("Format:"), this);
+    auto formatLabel = new QLabel(i18n("Format:"), this);
     formatLabel->setObjectName(QStringLiteral("label_format"));
     mainLayout->addWidget(formatLabel, row, 0);
 
@@ -70,7 +70,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mRecursiveCheckBox->setChecked(true);
     ++row;
 
-    QLabel *pathLabel = new QLabel(i18n("Path:"), this);
+    auto pathLabel = new QLabel(i18n("Path:"), this);
     mainLayout->addWidget(pathLabel, row, 0);
     pathLabel->setObjectName(QStringLiteral("path_label"));
     mPath = new KUrlRequester(this);
@@ -80,7 +80,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->addWidget(mPath);
     ++row;
 
-    QLabel *dateLabel = new QLabel(i18n("Backup each:"), this);
+    auto dateLabel = new QLabel(i18n("Backup each:"), this);
     dateLabel->setObjectName(QStringLiteral("date_label"));
     mainLayout->addWidget(dateLabel, row, 0);
 
@@ -96,7 +96,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->addLayout(hlayout, row, 1);
     ++row;
 
-    QLabel *maxCountlabel = new QLabel(i18n("Maximum number of archive:"), this);
+    auto maxCountlabel = new QLabel(i18n("Maximum number of archive:"), this);
     mainLayout->addWidget(maxCountlabel, row, 0);
     mMaximumArchive = new QSpinBox(this);
     mMaximumArchive->setMinimum(0);

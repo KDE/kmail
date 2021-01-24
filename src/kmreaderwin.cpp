@@ -167,7 +167,7 @@ void KMReaderWin::createActions()
     connect(mUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotUrlSave);
 
     // find text
-    QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("&Find in Message..."), this);
+    auto action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("&Find in Message..."), this);
     ac->addAction(QStringLiteral("find_in_messages"), action);
     connect(action, &QAction::triggered, this, &KMReaderWin::slotFind);
     ac->setDefaultShortcut(action, KStandardShortcut::find().first());
@@ -514,7 +514,7 @@ void KMReaderWin::slotSaveImageOnDisk()
 
 void KMReaderWin::slotMailtoReply()
 {
-    KMMailtoReplyCommand *command = new KMMailtoReplyCommand(mMainWindow, urlClicked(),
+    auto command = new KMMailtoReplyCommand(mMainWindow, urlClicked(),
                                                              messageItem(), copyText());
     command->setReplyAsHtml(htmlMail());
     command->start();
@@ -718,13 +718,13 @@ void KMReaderWin::slotUrlClicked(const Akonadi::Item &item, const QUrl &url)
 void KMReaderWin::slotShowReader(KMime::Content *msgPart, bool html, const QString &encoding)
 {
     const MessageViewer::Viewer::DisplayFormatMessage format = html ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;
-    KMReaderMainWin *win = new KMReaderMainWin(msgPart, format, encoding);
+    auto win = new KMReaderMainWin(msgPart, format, encoding);
     win->show();
 }
 
 void KMReaderWin::slotShowMessage(const KMime::Message::Ptr &message, const QString &encoding)
 {
-    KMReaderMainWin *win = new KMReaderMainWin();
+    auto win = new KMReaderMainWin();
     win->showMessage(encoding, message);
     win->show();
 }
@@ -734,7 +734,7 @@ void KMReaderWin::slotDeleteMessage(const Akonadi::Item &item)
     if (!item.isValid()) {
         return;
     }
-    KMTrashMsgCommand *command = new KMTrashMsgCommand(item.parentCollection(), item, -1);
+    auto command = new KMTrashMsgCommand(item.parentCollection(), item, -1);
     command->start();
 }
 

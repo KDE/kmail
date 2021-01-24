@@ -61,7 +61,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
     CommonKernel->registerKernelIf(archiveMailKernel);   //register KernelIf early, it is used by the Filter classes
     CommonKernel->registerSettingsIf(archiveMailKernel);   //SettingsIf is used in FolderTreeWidget
 
-    QWidget *w = new QWidget(parent);
+    auto w = new QWidget(parent);
     mWidget.setupUi(w);
     parent->layout()->addWidget(w);
 

@@ -54,7 +54,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
     KGuiItem::assign(mUser1Button, KStandardGuiItem::clear());
     KGuiItem::assign(mUser2Button, KStandardGuiItem::saveAs());
-    QFrame *page = new QFrame(this);
+    auto page = new QFrame(this);
 
     auto pageVBoxLayout = new QVBoxLayout;
     page->setLayout(pageVBoxLayout);
@@ -74,7 +74,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     }
 
     auto purposeMenu = new MailfilterPurposeMenuWidget(this, this);
-    QPushButton *mShareButton = new QPushButton(i18n("Share..."), this);
+    auto mShareButton = new QPushButton(i18n("Share..."), this);
     mShareButton->setMenu(purposeMenu->menu());
     mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
     purposeMenu->setEditorWidget(mTextEdit->editor());
@@ -133,12 +133,12 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     //QWhatsThis::add( mLogFilterActionBox,
     //    i18n( "" ) );
 
-    QWidget *hbox = new QWidget(page);
+    auto hbox = new QWidget(page);
     auto hboxHBoxLayout = new QHBoxLayout;
     hbox->setLayout(hboxHBoxLayout);
     hboxHBoxLayout->setContentsMargins({});
     pageVBoxLayout->addWidget(hbox);
-    QLabel *logSizeLab = new QLabel(i18n("Log size limit:"), hbox);
+    auto logSizeLab = new QLabel(i18n("Log size limit:"), hbox);
     hboxHBoxLayout->addWidget(logSizeLab);
     mLogMemLimitSpin = new QSpinBox(hbox);
     hboxHBoxLayout->addWidget(mLogMemLimitSpin);

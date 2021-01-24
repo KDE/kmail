@@ -70,14 +70,14 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
 
     auto mainLayout = new QVBoxLayout(this);
 
-    QWidget *topWidget = new QWidget;
+    auto topWidget = new QWidget;
     auto lay = new QVBoxLayout(topWidget);
     lay->setContentsMargins({});
     mSearchPatternWidget = new SearchPatternWarning;
     lay->addWidget(mSearchPatternWidget);
     mainLayout->addWidget(topWidget);
 
-    QWidget *searchWidget = new QWidget(this);
+    auto searchWidget = new QWidget(this);
     mUi.setupUi(searchWidget);
 
     lay->addWidget(searchWidget);
@@ -379,7 +379,7 @@ void SearchWindow::slotSearch()
     //We're going to try to create a new search folder, let's ensure first the name is not yet used.
 
     //Fetch all search collections
-    Akonadi::CollectionFetchJob *fetchJob = new Akonadi::CollectionFetchJob(Akonadi::Collection(1), Akonadi::CollectionFetchJob::FirstLevel);
+    auto fetchJob = new Akonadi::CollectionFetchJob(Akonadi::Collection(1), Akonadi::CollectionFetchJob::FirstLevel);
     connect(fetchJob, &Akonadi::CollectionFetchJob::result, this, &SearchWindow::slotSearchCollectionsFetched);
 }
 
@@ -491,7 +491,7 @@ void SearchWindow::doSearch()
 
     if (!mFolder.isValid()) {
         qCDebug(KMAIL_LOG) << " create new folder " << mUi.mSearchFolderEdt->text();
-        Akonadi::SearchCreateJob *searchJob = new Akonadi::SearchCreateJob(mUi.mSearchFolderEdt->text(), mQuery, this);
+        auto searchJob = new Akonadi::SearchCreateJob(mUi.mSearchFolderEdt->text(), mQuery, this);
         searchJob->setSearchMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
         searchJob->setSearchCollections(searchCollections);
         searchJob->setRecursive(recursive);
@@ -820,13 +820,13 @@ void SearchWindow::slotForwardAttachedMsg()
 
 void SearchWindow::slotSaveMsg()
 {
-    KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand(this, selectedMessages());
+    auto saveCommand = new KMSaveMsgCommand(this, selectedMessages());
     saveCommand->start();
 }
 
 void SearchWindow::slotSaveAttachments()
 {
-    KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand(this, selectedMessages(), nullptr);
+    auto saveCommand = new KMSaveAttachmentsCommand(this, selectedMessages(), nullptr);
     saveCommand->start();
 }
 

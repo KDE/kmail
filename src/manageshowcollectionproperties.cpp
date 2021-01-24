@@ -142,7 +142,7 @@ void ManageShowCollectionProperties::showCollectionPropertiesContinued(const QSt
                 KPIM::ProgressManager::instance(), &KPIM::ProgressManager::slotStandardCancelHandler);
     }
 
-    Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mMainWidget->currentCollection(),
+    auto fetch = new Akonadi::CollectionFetchJob(mMainWidget->currentCollection(),
                                                                          Akonadi::CollectionFetchJob::Base);
     connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()));
     fetch->fetchScope().setIncludeStatistics(true);

@@ -740,7 +740,7 @@ void KMOpenMsgCommand::doesNotContainMessage()
     // Emulate closing of a secondary window so that KMail exits in case it
     // was started with the --view command line option. Otherwise an
     // invisible KMail would keep running.
-    SecondaryWindow *win = new SecondaryWindow();
+    auto win = new SecondaryWindow();
     win->close();
     win->deleteLater();
     deleteLater();
@@ -802,7 +802,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             KMime::Message::Ptr mMsg(msg);
             listMessages << mMsg;
         }
-        KMReaderMainWin *win = new KMReaderMainWin();
+        auto win = new KMReaderMainWin();
         win->showMessage(mEncoding, listMessages);
         win->show();
         if (multipleMessages) {
@@ -1385,7 +1385,7 @@ KMCommand::Result KMCopyCommand::execute()
     setDeletesItself(true);
 
     Akonadi::Item::List listItem = retrievedMsgs();
-    Akonadi::ItemCopyJob *job = new Akonadi::ItemCopyJob(listItem, Akonadi::Collection(mDestFolder.id()), this);
+    auto job = new Akonadi::ItemCopyJob(listItem, Akonadi::Collection(mDestFolder.id()), this);
     connect(job, &KIO::Job::result, this, &KMCopyCommand::slotCopyResult);
 
     return OK;

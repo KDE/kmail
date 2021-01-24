@@ -11,29 +11,29 @@ using DWORD = int;
 using LONG = qint32;
 using _HANDLE = void *;
 
-typedef struct _RECT {
+using RECT = struct _RECT {
     WORD left;
     WORD top;
     WORD right;
     WORD bottom;
-} RECT;
+};
 
-typedef struct _RECTL {
+using RECTL = struct _RECTL {
     LONG left;
     LONG top;
     LONG right;
     LONG bottom;
-} RECTL;
+};
 
-typedef struct _SIZE {
+using SIZE = struct _SIZE {
     WORD width;
     WORD height;
-} SIZE;
+};
 
-typedef struct _SIZEL {
+using SIZEL = struct _SIZEL {
     LONG width;
     LONG height;
-} SIZEL;
+};
 
 struct WmfEnhMetaHeader {
     DWORD iType;                // Record type EMR_HEADER

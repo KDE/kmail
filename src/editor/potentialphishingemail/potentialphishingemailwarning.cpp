@@ -22,7 +22,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     setText(i18n("Found potential phishing email addresses <a href=\"phishingdetails\">(details...)</a>"));
 
     connect(this, &KMessageWidget::linkActivated, this, &PotentialPhishingEmailWarning::slotShowDetails);
-    QAction *action = new QAction(i18n("Send Now"), this);
+    auto action = new QAction(i18n("Send Now"), this);
     action->setObjectName(QStringLiteral("sendnow"));
     connect(action, &QAction::triggered, this, &PotentialPhishingEmailWarning::sendNow);
     addAction(action);

@@ -96,7 +96,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     if (config->hasGroup("FilterLog")) {
         KConfigGroup group(config, "FilterLog");
         if (group.readEntry("Enabled", false)) {
-            KNotification *notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
+            auto notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
             notify->setComponentName(QApplication::applicationDisplayName());
             notify->setIconName(QStringLiteral("view-filter"));
             notify->setText(i18nc("Notification when the filter log was enabled", "Mail Filter Log Enabled"));
@@ -136,7 +136,7 @@ void MailFilterAgent::initializeCollections()
 {
     m_filterManager->readConfig();
 
-    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(),
+    auto job = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(),
                                                                        Akonadi::CollectionFetchJob::Recursive,
                                                                        this);
     job->fetchScope().setContentMimeTypes({ KMime::Message::mimeType() });

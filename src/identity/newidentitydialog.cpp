@@ -45,7 +45,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     connect(buttonBox, &QDialogButtonBox::rejected, this, &NewIdentityDialog::reject);
     connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &NewIdentityDialog::slotHelp);
 
-    QWidget *page = new QWidget(this);
+    auto page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
     auto vlay = new QVBoxLayout(page);
@@ -58,7 +58,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     mLineEdit->setFocus();
     mLineEdit->setClearButtonEnabled(true);
     new KPIM::LineEditCatchReturnKey(mLineEdit, this);
-    QLabel *l = new QLabel(i18n("&New identity:"), page);
+    auto l = new QLabel(i18n("&New identity:"), page);
     l->setBuddy(mLineEdit);
     hlay->addWidget(l);
     hlay->addWidget(mLineEdit, 1);
@@ -67,7 +67,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     mButtonGroup = new QButtonGroup(page);
 
     // row 1: radio button
-    QRadioButton *radio = new QRadioButton(i18n("&With empty fields"), page);
+    auto radio = new QRadioButton(i18n("&With empty fields"), page);
     radio->setChecked(true);
     vlay->addWidget(radio);
     mButtonGroup->addButton(radio, static_cast<int>(Empty));
@@ -88,7 +88,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     mComboBox = new QComboBox(page);
     mComboBox->addItems(manager->shadowIdentities());
     mComboBox->setEnabled(false);
-    QLabel *label = new QLabel(i18n("&Existing identities:"), page);
+    auto label = new QLabel(i18n("&Existing identities:"), page);
     label->setBuddy(mComboBox);
     label->setEnabled(false);
     hlay->addWidget(label);

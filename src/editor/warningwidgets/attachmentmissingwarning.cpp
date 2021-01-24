@@ -18,7 +18,7 @@ AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
     setText(i18n("The message you have composed seems to refer to an attached file but you have not attached anything. Do you want to attach a file to your message?"));
     setWordWrap(true);
 
-    QAction *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("&Attach file"), this);
+    auto action = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("&Attach file"), this);
     action->setObjectName(QStringLiteral("attachfileaction"));
     connect(action, &QAction::triggered, this, &AttachmentMissingWarning::slotAttachFile);
     addAction(action);

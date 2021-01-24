@@ -74,7 +74,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
                                    "External Source")
                           << i18nc("continuation of \"obtain picture from\"",
                                    "Input Field Below"));
-    QLabel *label = new QLabel(i18n("Obtain pic&ture from:"), this);
+    auto label = new QLabel(i18n("Obtain pic&ture from:"), this);
     label->setBuddy(sourceCombo);
     label->setEnabled(false);   // since !mEnableCheck->isChecked()
     hlay->addWidget(label);
@@ -95,13 +95,13 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
 
     int pageno = 0;
     // page 0: create X-Face from image file or address book entry
-    QWidget *page = new QWidget(widgetStack);
+    auto page = new QWidget(widgetStack);
     widgetStack->insertWidget(pageno, page);   // force sequential numbers (play safe)
     auto page_vlay = new QVBoxLayout(page);
     page_vlay->setContentsMargins({});
     hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
     page_vlay->addLayout(hlay);
-    QPushButton *mFromFileBtn = new QPushButton(i18n("Select File..."), page);
+    auto mFromFileBtn = new QPushButton(i18n("Select File..."), page);
     mFromFileBtn->setWhatsThis(
         i18n("Use this to select an image file to create the picture from. "
              "The image should be of high contrast and nearly quadratic shape. "
@@ -109,14 +109,14 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     mFromFileBtn->setAutoDefault(false);
     page_vlay->addWidget(mFromFileBtn, 1);
     connect(mFromFileBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFile);
-    QPushButton *mFromAddrbkBtn = new QPushButton(i18n("Set From Address Book"), page);
+    auto mFromAddrbkBtn = new QPushButton(i18n("Set From Address Book"), page);
     mFromAddrbkBtn->setWhatsThis(
         i18n("You can use a scaled-down version of the picture "
              "you have set in your address book entry."));
     mFromAddrbkBtn->setAutoDefault(false);
     page_vlay->addWidget(mFromAddrbkBtn, 1);
     connect(mFromAddrbkBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFromAddressbook);
-    QLabel *label1 = new QLabel(i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
+    auto label1 = new QLabel(i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
                                      "monochrome picture with every message. "
                                      "For example, this could be a picture of you or a glyph. "
                                      "It is shown in the recipient's mail client (if supported).</qt>"), page);
@@ -139,7 +139,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     mTextEdit->editor()->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     mTextEdit->editor()->setWordWrapMode(QTextOption::WrapAnywhere);
     mTextEdit->editor()->setSearchSupport(false);
-    QLabel *label2 = new QLabel(i18n("Examples are available at <a "
+    auto label2 = new QLabel(i18n("Examples are available at <a "
                                      "href=\"https://ace.home.xs4all.nl/X-Faces/\">"
                                      "https://ace.home.xs4all.nl/X-Faces/</a>."), page);
     label2->setOpenExternalLinks(true);

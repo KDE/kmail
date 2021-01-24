@@ -1208,13 +1208,13 @@ QPainter::CompositionMode QWinMetaFile::winToQtComposition(long parm) const
 //-----------------------------------------------------------------------------
 bool QWinMetaFile::dibToBmp(QImage &bmp, const char *dib, long size)
 {
-    typedef struct _BMPFILEHEADER {
+    using BMPFILEHEADER = struct _BMPFILEHEADER {
         WORD bmType;
         DWORD bmSize;
         WORD bmReserved1;
         WORD bmReserved2;
         DWORD bmOffBits;
-    }  BMPFILEHEADER;
+    };
 
     int sizeBmp = size + 14;
     QByteArray pattern;       // BMP header and DIB data

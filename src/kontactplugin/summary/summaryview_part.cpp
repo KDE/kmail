@@ -178,7 +178,7 @@ void SummaryViewPart::updateWidgets()
     }
 
     // Add vertical line between the two rows of summary widgets.
-    QFrame *vline = new QFrame(mFrame);
+    auto vline = new QFrame(mFrame);
     vline->setFrameStyle(QFrame::VLine | QFrame::Plain);
 
     auto layout = new QHBoxLayout(mFrame);
@@ -485,7 +485,7 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
         hbl->addWidget(mUsernameLabel);
     }
 
-    QFrame *hline = new QFrame(mMainWidget);
+    auto hline = new QFrame(mMainWidget);
     hline->setFrameStyle(QFrame::HLine | QFrame::Plain);
     mMainLayout->insertWidget(1, hline);
 

@@ -482,7 +482,7 @@ void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
     }
 
     const QString text = mMessageView ? mMessageView->copyText() : QString();
-    KMReplyCommand *command = new KMReplyCommand(mParent, mCurrentItem, strategy, text);
+    auto command = new KMReplyCommand(mParent, mCurrentItem, strategy, text);
     command->setReplyAsHtml(mMessageView ? mMessageView->viewer()->htmlMail() : false);
     connect(command, &KMCommand::completed, this, &MessageActions::replyActionFinished);
     command->start();
@@ -556,7 +556,7 @@ void MessageActions::slotNoQuoteReplyToMsg()
     if (!mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    KMReplyCommand *command = new KMReplyCommand(mParent, mCurrentItem, MessageComposer::ReplySmart, QString(), true);
+    auto command = new KMReplyCommand(mParent, mCurrentItem, MessageComposer::ReplySmart, QString(), true);
     command->setReplyAsHtml(mMessageView ? mMessageView->viewer()->htmlMail() : false);
 
     command->start();
@@ -566,7 +566,7 @@ void MessageActions::slotRunUrl(QAction *urlAction)
 {
     const QVariant q = urlAction->data();
     if (q.type() == QVariant::Url) {
-        KIO::OpenUrlJob *job = new KIO::OpenUrlJob(q.toUrl());
+        auto job = new KIO::OpenUrlJob(q.toUrl());
         job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParent));
         job->start();
     }
@@ -654,7 +654,7 @@ void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
         protocol = i18n("web");
     }
     // item is a mailing list url description passed from the updateActions method above.
-    QAction *act
+    auto *act
         = new QAction(i18nc("%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)", item, protocol), this);
     mMailListActionList.append(act);
     const QVariant v(url);

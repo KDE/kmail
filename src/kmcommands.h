@@ -47,7 +47,7 @@ class Job;
 namespace KMail {
 class Composer;
 }
-typedef QMap<KMime::Content *, Akonadi::Item> PartNodeMessageMap;
+using PartNodeMessageMap = QMap<KMime::Content *, Akonadi::Item>;
 /// Small helper structure which encapsulates the KMMessage created when creating a reply, and
 
 class KMAILTESTS_TESTS_EXPORT KMCommand : public QObject

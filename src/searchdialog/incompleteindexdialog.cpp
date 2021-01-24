@@ -100,7 +100,7 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
 {
     auto mainLayout = new QHBoxLayout(this);
     mainLayout->setContentsMargins({});
-    QWidget *w = new QWidget(this);
+    auto w = new QWidget(this);
     mainLayout->addWidget(w);
     qDBusRegisterMetaType<QVector<qint64> >();
 

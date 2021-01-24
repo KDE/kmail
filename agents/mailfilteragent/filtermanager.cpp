@@ -208,7 +208,7 @@ void FilterManager::Private::modifyJobResult(KJob *job)
 
 void FilterManager::Private::showNotification(const QString &errorMsg, const QString &jobErrorString)
 {
-    KNotification *notify = new KNotification(QStringLiteral("mailfilterjoberror"));
+    auto notify = new KNotification(QStringLiteral("mailfilterjoberror"));
     notify->setComponentName(QStringLiteral("akonadi_mailfilter_agent"));
     notify->setIconName(QStringLiteral("view-filter"));
     notify->setText(errorMsg + QLatin1Char('\n') + jobErrorString);
@@ -453,7 +453,7 @@ bool FilterManager::processContextItem(ItemContext context)
     } else {
         if (context.moveTargetCollection().isValid() && context.item().storageCollectionId() != context.moveTargetCollection().id()) {
             if (itemCanDelete) {
-                Akonadi::ItemMoveJob *moveJob = new Akonadi::ItemMoveJob(context.item(), context.moveTargetCollection(), this);
+                auto moveJob = new Akonadi::ItemMoveJob(context.item(), context.moveTargetCollection(), this);
                 connect(moveJob, &Akonadi::ItemMoveJob::result, this, [this](KJob *job) {
                     d->moveJobResult(job);
                 });

@@ -30,7 +30,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     setWindowTitle(i18nc("@title:window", "Select Contact"));
     setModal(true);
 
-    Akonadi::Session *session = new Akonadi::Session("AddEmailToExistingContactDialog", this);
+    auto session = new Akonadi::Session("AddEmailToExistingContactDialog", this);
 
     Akonadi::ItemFetchScope scope;
     scope.fetchFullPayload(true);

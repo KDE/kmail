@@ -28,10 +28,10 @@ void TagSelectDialogTest::initTestCase()
 void TagSelectDialogTest::shouldHaveDefaultValue()
 {
     TagSelectDialog dlg(nullptr, 1, Akonadi::Item());
-    QListWidget *listWidget = dlg.findChild<QListWidget *>(QStringLiteral("listtag"));
+    auto *listWidget = dlg.findChild<QListWidget *>(QStringLiteral("listtag"));
     QVERIFY(listWidget);
 
-    KListWidgetSearchLine *listWidgetSearchLine = dlg.findChild<KListWidgetSearchLine *>(QStringLiteral("searchline"));
+    auto *listWidgetSearchLine = dlg.findChild<KListWidgetSearchLine *>(QStringLiteral("searchline"));
     QVERIFY(listWidgetSearchLine);
     QVERIFY(listWidgetSearchLine->isClearButtonEnabled());
 }

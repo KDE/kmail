@@ -62,7 +62,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/KMailPart"), this);
 
     // create a canvas to insert our widget
-    QWidget *canvas = new QWidget(parentWidget);
+    auto canvas = new QWidget(parentWidget);
     canvas->setFocusPolicy(Qt::ClickFocus);
     canvas->setObjectName(QStringLiteral("canvas"));
     setWidget(canvas);

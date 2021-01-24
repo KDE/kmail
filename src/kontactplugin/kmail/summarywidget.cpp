@@ -152,7 +152,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
                 connect(urlLabel, qOverload<const QString &>(&KUrlLabel::leftClickedUrl), this, &SummaryWidget::selectFolder);
 
                 // Read and unread count.
-                QLabel *label = new QLabel(i18nc("%1: number of unread messages "
+                auto label = new QLabel(i18nc("%1: number of unread messages "
                                                  "%2: total number of messages",
                                                  "%1 / %2", stats.unreadCount(), stats.count()), this);
 
@@ -192,7 +192,7 @@ void SummaryWidget::slotUpdateFolderList()
     displayModel(QModelIndex(), counter, showFolderPaths, QStringList());
 
     if (counter == 0) {
-        QLabel *label = new QLabel(i18n("No unread messages in your monitored folders"), this);
+        auto label = new QLabel(i18n("No unread messages in your monitored folders"), this);
         label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         mLayout->addWidget(label, 0, 0);
         mLabels.append(label);

@@ -156,7 +156,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
 void AttachPropertyDialog::formatPropertySet(KTNEFPropertySet *pSet, QTreeWidget *lv)
 {
     formatProperties(pSet->properties(), lv, nullptr, QStringLiteral("prop"));
-    QTreeWidgetItem *item
+    auto *item
         = new QTreeWidgetItem(lv,
                               QStringList(i18nc("@label", "TNEF Attributes")));
     item->setExpanded(true);
