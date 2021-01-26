@@ -9,8 +9,8 @@
 
 #include <MessageComposer/SendLaterRemoveJob>
 
-#include <KNotification>
 #include <KLocalizedString>
+#include <KNotification>
 #include <QTimer>
 
 UndoSendCreateJob::UndoSendCreateJob(QObject *parent)
@@ -18,8 +18,7 @@ UndoSendCreateJob::UndoSendCreateJob(QObject *parent)
 {
 }
 
-UndoSendCreateJob::~UndoSendCreateJob()
-= default;
+UndoSendCreateJob::~UndoSendCreateJob() = default;
 
 bool UndoSendCreateJob::canStart() const
 {
@@ -40,8 +39,7 @@ bool UndoSendCreateJob::start()
     connect(mTimer, &QTimer::timeout, this, &UndoSendCreateJob::slotTimeOut);
     mTimer->setSingleShot(true);
     mTimer->start(mDelay * 1000);
-    mNotification = new KNotification(QStringLiteral("undosend"),
-                                      KNotification::Persistent);
+    mNotification = new KNotification(QStringLiteral("undosend"), KNotification::Persistent);
     mNotification->setText(mSubject);
     mNotification->setActions(QStringList() << i18n("Undo send"));
 
@@ -66,7 +64,7 @@ void UndoSendCreateJob::slotNotificationClosed()
 
 void UndoSendCreateJob::slotActivateNotificationAction(unsigned int index)
 {
-    //Index == 0 => is the default action. We don't have it.
+    // Index == 0 => is the default action. We don't have it.
     switch (index) {
     case 1:
         undoSendEmail();

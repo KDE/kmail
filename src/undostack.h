@@ -11,20 +11,20 @@
 #define UNDOSTACK_H
 
 #include "kmail_private_export.h"
-#include <QList>
-#include <QObject>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/item.h>
+#include <QList>
+#include <QObject>
 
 class KJob;
 
-namespace KMail {
+namespace KMail
+{
 /** A class for storing Undo information. */
 class UndoInfo
 {
 public:
-    UndoInfo()
-    = default;
+    UndoInfo() = default;
 
     int id = -1;
     Akonadi::Item::List items;
@@ -42,8 +42,8 @@ public:
     ~UndoStack() override;
 
     void clear();
-    Q_REQUIRED_RESULT int  size() const;
-    Q_REQUIRED_RESULT int  newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
+    Q_REQUIRED_RESULT int size() const;
+    Q_REQUIRED_RESULT int newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
     void addMsgToAction(int undoId, const Akonadi::Item &item);
     Q_REQUIRED_RESULT bool isEmpty() const;
     void undo();

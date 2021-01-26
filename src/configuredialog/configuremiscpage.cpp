@@ -7,12 +7,12 @@
 #include "configuremiscpage.h"
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include "settings/kmailsettings.h"
 #include "kmkernel.h"
+#include "settings/kmailsettings.h"
 #include <MailCommon/FolderRequester>
 #include <MessageViewer/InvitationSettings>
-#include <MessageViewer/PrintingSettings>
 #include <MessageViewer/MessageViewerSettings>
+#include <MessageViewer/PrintingSettings>
 
 #include <KLocalizedString>
 #include <QHBoxLayout>
@@ -53,15 +53,14 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mMMTab.setupUi(this);
-    //replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
+    // replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
     auto layout = new QHBoxLayout;
     layout->setContentsMargins({});
     mMMTab.mOnStartupOpenFolder->setLayout(layout);
     mOnStartupOpenFolder = new FolderRequester(mMMTab.mOnStartupOpenFolder);
     layout->addWidget(mOnStartupOpenFolder);
 
-    mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
-        i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8().constData()));
+    mMMTab.mExcludeImportantFromExpiry->setWhatsThis(i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8().constData()));
 
     connect(mMMTab.mExcludeImportantFromExpiry, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mLoopOnGotoUnread, qOverload<int>(&QComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);

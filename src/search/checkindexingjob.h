@@ -7,11 +7,14 @@
 #ifndef CHECKINDEXINGJOB_H
 #define CHECKINDEXINGJOB_H
 
-#include <QObject>
 #include <AkonadiCore/Collection>
-namespace Akonadi {
-namespace Search {
-namespace PIM {
+#include <QObject>
+namespace Akonadi
+{
+namespace Search
+{
+namespace PIM
+{
 class IndexedItems;
 }
 }

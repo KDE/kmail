@@ -8,7 +8,8 @@
 #define IDENTITYINVALIDFOLDER_H
 
 #include <KMessageWidget>
-namespace KMail {
+namespace KMail
+{
 class IdentityInvalidFolder : public KMessageWidget
 {
     Q_OBJECT

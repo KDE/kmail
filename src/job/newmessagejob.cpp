@@ -5,9 +5,9 @@
 */
 
 #include "newmessagejob.h"
-#include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
@@ -18,8 +18,7 @@ NewMessageJob::NewMessageJob(QObject *parent)
 {
 }
 
-NewMessageJob::~NewMessageJob()
-= default;
+NewMessageJob::~NewMessageJob() = default;
 
 void NewMessageJob::start()
 {
@@ -27,7 +26,7 @@ void NewMessageJob::start()
     mMsg = KMime::Message::Ptr(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mNewMessageJobSettings.mIdentity);
     mMsg->contentType()->setCharset("utf-8");
-    //set basic headers
+    // set basic headers
     if (!mNewMessageJobSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mNewMessageJobSettings.mCc, "utf-8");
     }
@@ -52,7 +51,7 @@ void NewMessageJob::slotOpenComposer()
     KMail::Composer *win = makeComposer(mMsg, false, false, KMail::Composer::New, mNewMessageJobSettings.mIdentity);
 
     win->setCollectionForNewMessage(mCollection);
-    //Add the attachment if we have one
+    // Add the attachment if we have one
 
     if (!mAttachURL.isEmpty() && mAttachURL.isValid()) {
         QVector<KMail::Composer::AttachmentInfo> infoList;
@@ -62,7 +61,7 @@ void NewMessageJob::slotOpenComposer()
         win->addAttachment(infoList, false);
     }
 
-    //only show window when required
+    // only show window when required
     if (!mNewMessageJobSettings.mHidden) {
         win->show();
     }

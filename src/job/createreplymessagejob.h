@@ -7,17 +7,15 @@
 #ifndef CREATEREPLYMESSAGEJOB_H
 #define CREATEREPLYMESSAGEJOB_H
 
-#include <QObject>
 #include "kmail_private_export.h"
 #include <AkonadiCore/Item>
 #include <KMime/Message>
 #include <MessageComposer/MessageFactoryNG>
+#include <QObject>
 #include <QUrl>
 
-struct KMAILTESTS_TESTS_EXPORT CreateReplyMessageJobSettings
-{
-    CreateReplyMessageJobSettings()
-    = default;
+struct KMAILTESTS_TESTS_EXPORT CreateReplyMessageJobSettings {
+    CreateReplyMessageJobSettings() = default;
 
     QUrl url;
     QString selection;

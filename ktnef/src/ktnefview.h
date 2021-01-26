@@ -16,7 +16,8 @@
 
 #include <QTreeWidget>
 
-namespace KTnef {
+namespace KTnef
+{
 class KTNEFAttach;
 }
 using namespace KTnef;

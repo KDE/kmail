@@ -21,7 +21,8 @@
 #include <QMap>
 #include <QPixmap>
 
-namespace KTnef {
+namespace KTnef
+{
 class KTNEFAttach;
 class KTNEFProperty;
 class KTNEFPropertySet;

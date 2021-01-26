@@ -8,14 +8,13 @@
 #define CREATEFORWARDMESSAGEJOB_H
 
 #include "kmail_private_export.h"
+#include <AkonadiCore/Item>
+#include <KMime/Message>
+#include <MessageComposer/MessageFactoryNG>
 #include <QObject>
 #include <QUrl>
-#include <KMime/Message>
-#include <AkonadiCore/Item>
-#include <MessageComposer/MessageFactoryNG>
 
-struct KMAILTESTS_TESTS_EXPORT CreateForwardMessageJobSettings
-{
+struct KMAILTESTS_TESTS_EXPORT CreateForwardMessageJobSettings {
     QUrl url;
     Akonadi::Item item;
     KMime::Message::Ptr msg = nullptr;

@@ -10,8 +10,7 @@
 
 using namespace Akonadi;
 
-SearchDescriptionAttribute::SearchDescriptionAttribute()
-= default;
+SearchDescriptionAttribute::SearchDescriptionAttribute() = default;
 
 QByteArray SearchDescriptionAttribute::type() const
 {

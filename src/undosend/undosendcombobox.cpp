@@ -13,8 +13,7 @@ UndoSendCombobox::UndoSendCombobox(QWidget *parent)
     initialize();
 }
 
-UndoSendCombobox::~UndoSendCombobox()
-= default;
+UndoSendCombobox::~UndoSendCombobox() = default;
 
 void UndoSendCombobox::initialize()
 {

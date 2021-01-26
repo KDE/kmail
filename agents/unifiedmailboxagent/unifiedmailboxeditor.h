@@ -20,6 +20,7 @@ public:
     explicit UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KSharedConfigPtr &config, QWidget *parent = nullptr);
 
     ~UnifiedMailboxEditor() override;
+
 private:
     void writeConfig();
     void readConfig();

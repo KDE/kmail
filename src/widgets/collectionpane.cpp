@@ -8,11 +8,11 @@
 #include "kmkernel.h"
 #include <MailCommon/MailKernel>
 
+#include <Akonadi/KMime/MessageFolderAttribute>
+#include <KIdentityManagement/kidentitymanagement/identity.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <MailCommon/FolderSettings>
 #include <PimCommonAkonadi/MailUtil>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <Akonadi/KMime/MessageFolderAttribute>
 
 using namespace MailCommon;
 
@@ -21,8 +21,7 @@ CollectionPane::CollectionPane(bool restoreSession, QAbstractItemModel *model, Q
 {
 }
 
-CollectionPane::~CollectionPane()
-= default;
+CollectionPane::~CollectionPane() = default;
 
 void CollectionPane::writeConfig(bool /*restoreSession*/)
 {
@@ -39,8 +38,7 @@ CollectionStorageModel::CollectionStorageModel(QAbstractItemModel *model, QItemS
 {
 }
 
-CollectionStorageModel::~CollectionStorageModel()
-= default;
+CollectionStorageModel::~CollectionStorageModel() = default;
 
 bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) const
 {
@@ -51,26 +49,19 @@ bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) cons
     if (fd) {
         const QString folderId(QString::number(c.id()));
         // default setting
-        const KIdentityManagement::Identity &identity
-            = kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());
+        const KIdentityManagement::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());
 
         bool isOnline = false;
-        if (CommonKernel->isSystemFolderCollection(c)
-            && !PimCommon::MailUtil::isImapFolder(c, isOnline)) {
+        if (CommonKernel->isSystemFolderCollection(c) && !PimCommon::MailUtil::isImapFolder(c, isOnline)) {
             // local system folders
-            if (c == CommonKernel->inboxCollectionFolder()
-                || c == CommonKernel->trashCollectionFolder()) {
+            if (c == CommonKernel->inboxCollectionFolder() || c == CommonKernel->trashCollectionFolder()) {
                 return false;
             }
-            if (c == CommonKernel->outboxCollectionFolder()
-                || c == CommonKernel->sentCollectionFolder()
-                || c == CommonKernel->templatesCollectionFolder()
+            if (c == CommonKernel->outboxCollectionFolder() || c == CommonKernel->sentCollectionFolder() || c == CommonKernel->templatesCollectionFolder()
                 || c == CommonKernel->draftsCollectionFolder()) {
                 return true;
             }
-        } else if (identity.drafts() == folderId
-                   || identity.templates() == folderId
-                   || identity.fcc() == folderId) {
+        } else if (identity.drafts() == folderId || identity.templates() == folderId || identity.fcc() == folderId) {
             // drafts, templates or sent of the identity
             return true;
         } else {

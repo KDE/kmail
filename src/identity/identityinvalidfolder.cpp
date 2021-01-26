@@ -16,8 +16,7 @@ IdentityInvalidFolder::IdentityInvalidFolder(QWidget *parent)
     hide();
 }
 
-IdentityInvalidFolder::~IdentityInvalidFolder()
-= default;
+IdentityInvalidFolder::~IdentityInvalidFolder() = default;
 
 void IdentityInvalidFolder::setErrorMessage(const QString &msg)
 {

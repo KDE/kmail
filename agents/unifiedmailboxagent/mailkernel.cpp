@@ -6,15 +6,15 @@
 
 #include "mailkernel.h"
 
-#include <MailCommon/MailKernel>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include <MessageComposer/AkonadiSender>
-#include <MailCommon/FolderCollectionMonitor>
-#include <AkonadiCore/session.h>
-#include <AkonadiCore/entitytreemodel.h>
-#include <AkonadiCore/entitymimetypefiltermodel.h>
 #include <AkonadiCore/changerecorder.h>
+#include <AkonadiCore/entitymimetypefiltermodel.h>
+#include <AkonadiCore/entitytreemodel.h>
+#include <AkonadiCore/session.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KSharedConfig>
+#include <MailCommon/FolderCollectionMonitor>
+#include <MailCommon/MailKernel>
+#include <MessageComposer/AkonadiSender>
 
 MailKernel::MailKernel(const KSharedConfigPtr &config, QObject *parent)
     : QObject(parent)

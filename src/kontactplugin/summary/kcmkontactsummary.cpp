@@ -12,17 +12,16 @@
 #include <KontactInterface/Plugin>
 
 #include <KAboutData>
-#include <QIcon>
+#include <KConfig>
 #include <KLocalizedString>
 #include <KPluginInfo>
 #include <KService>
 #include <KServiceTypeTrader>
-#include <KConfig>
+#include <QIcon>
 
 #include <QLabel>
 #include <QVBoxLayout>
-extern "C"
-{
+extern "C" {
 Q_DECL_EXPORT KCModule *create_kontactsummary(QWidget *parent, const char *)
 {
     return new KCMKontactSummary(parent);
@@ -71,8 +70,7 @@ PluginView::PluginView(QWidget *parent)
     setRootIsDecorated(false);
 }
 
-PluginView::~PluginView()
-= default;
+PluginView::~PluginView() = default;
 
 KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     : KCModule(parent)
@@ -81,8 +79,7 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
-    auto *label
-        = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
+    auto *label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
     layout->addWidget(label);
 
     mPluginView = new PluginView(this);
@@ -91,23 +88,21 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     layout->setStretchFactor(mPluginView, 1);
 
     load();
-    connect(mPluginView, &QTreeWidget::itemChanged,
-            this, &KCMKontactSummary::markAsChanged);
+    connect(mPluginView, &QTreeWidget::itemChanged, this, &KCMKontactSummary::markAsChanged);
     auto about = new KAboutData(QStringLiteral("kontactsummary"),
-                                       i18n("kontactsummary"),
-                                       QString(),
-                                       i18n("KDE Kontact Summary"),
-                                       KAboutLicense::GPL,
-                                       i18n("(c), 2004 Tobias Koenig"));
+                                i18n("kontactsummary"),
+                                QString(),
+                                i18n("KDE Kontact Summary"),
+                                KAboutLicense::GPL,
+                                i18n("(c), 2004 Tobias Koenig"));
     about->addAuthor(ki18n("Tobias Koenig").toString(), QString(), QStringLiteral("tokoe@kde.org"));
     setAboutData(about);
 }
 
 void KCMKontactSummary::load()
 {
-    KService::List offers = KServiceTypeTrader::self()->query(
-        QStringLiteral("Kontact/Plugin"),
-        QStringLiteral("[X-KDE-KontactPluginVersion] == %1").arg(KONTACT_PLUGIN_VERSION));
+    KService::List offers =
+        KServiceTypeTrader::self()->query(QStringLiteral("Kontact/Plugin"), QStringLiteral("[X-KDE-KontactPluginVersion] == %1").arg(KONTACT_PLUGIN_VERSION));
 
     QStringList activeSummaries;
 
@@ -129,8 +124,7 @@ void KCMKontactSummary::load()
 
     mPluginView->clear();
 
-    KPluginInfo::List pluginList
-        = KPluginInfo::fromServices(offers, KConfigGroup(&config, "Plugins"));
+    KPluginInfo::List pluginList = KPluginInfo::fromServices(offers, KConfigGroup(&config, "Plugins"));
     KPluginInfo::List::Iterator it;
     KPluginInfo::List::Iterator end(pluginList.end());
     for (it = pluginList.begin(); it != end; ++it) {

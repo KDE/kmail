@@ -7,17 +7,17 @@
 #include "followupremindermanager.h"
 #include "followupreminderagent_debug.h"
 #include "followupreminderinfo.h"
-#include "followupreminderutil.h"
 #include "followupremindernoanswerdialog.h"
-#include "jobs/followupreminderjob.h"
+#include "followupreminderutil.h"
 #include "jobs/followupreminderfinishtaskjob.h"
+#include "jobs/followupreminderjob.h"
 
 #include <Akonadi/KMime/SpecialMailCollections>
 
-#include <KConfigGroup>
 #include <KConfig>
-#include <KNotification>
+#include <KConfigGroup>
 #include <KLocalizedString>
+#include <KNotification>
 #include <QRegularExpression>
 using namespace FollowUpReminder;
 
@@ -65,7 +65,10 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
         mInitialize = true;
         if (!mNoAnswerDialog.data()) {
             mNoAnswerDialog = new FollowUpReminderNoAnswerDialog;
-            connect(mNoAnswerDialog.data(), &FollowUpReminderNoAnswerDialog::needToReparseConfiguration, this, &FollowUpReminderManager::slotReparseConfiguration);
+            connect(mNoAnswerDialog.data(),
+                    &FollowUpReminderNoAnswerDialog::needToReparseConfiguration,
+                    this,
+                    &FollowUpReminderManager::slotReparseConfiguration);
         }
         mNoAnswerDialog->setInfo(noAnswerList);
         mNoAnswerDialog->wakeUp();
@@ -127,7 +130,7 @@ void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId
                 connect(job, &FollowUpReminderFinishTaskJob::finishTaskFailed, this, &FollowUpReminderManager::slotFinishTaskFailed);
                 job->start();
             }
-            //Save item
+            // Save item
             FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), info, true);
             break;
         }
@@ -137,13 +140,13 @@ void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId
 void FollowUpReminderManager::slotFinishTaskDone()
 {
     qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Task Done";
-    //TODO
+    // TODO
 }
 
 void FollowUpReminderManager::slotFinishTaskFailed()
 {
     qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Task Failed";
-    //TODO
+    // TODO
 }
 
 void FollowUpReminderManager::answerReceived(const QString &from)

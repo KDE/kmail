@@ -5,16 +5,16 @@
 */
 
 #include "archivemailmanager.h"
-#include "archivemailinfo.h"
-#include "job/archivejob.h"
-#include "archivemailkernel.h"
 #include "archivemailagentutil.h"
+#include "archivemailinfo.h"
+#include "archivemailkernel.h"
+#include "job/archivejob.h"
 
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
-#include <KConfigGroup>
 #include "archivemailagent_debug.h"
+#include <KConfigGroup>
 
 #include <QDate>
 #include <QFile>
@@ -24,8 +24,8 @@ ArchiveMailManager::ArchiveMailManager(QObject *parent)
     : QObject(parent)
 {
     mArchiveMailKernel = ArchiveMailKernel::self();
-    CommonKernel->registerKernelIf(mArchiveMailKernel);   //register KernelIf early, it is used by the Filter classes
-    CommonKernel->registerSettingsIf(mArchiveMailKernel);   //SettingsIf is used in FolderTreeWidget
+    CommonKernel->registerKernelIf(mArchiveMailKernel); // register KernelIf early, it is used by the Filter classes
+    CommonKernel->registerSettingsIf(mArchiveMailKernel); // SettingsIf is used in FolderTreeWidget
     mConfig = KSharedConfig::openConfig();
 }
 
@@ -48,14 +48,14 @@ void ArchiveMailManager::load()
         if (ArchiveMailAgentUtil::needToArchive(info)) {
             for (ArchiveMailInfo *oldInfo : qAsConst(mListArchiveInfo)) {
                 if (oldInfo->saveCollectionId() == info->saveCollectionId()) {
-                    //already in jobscheduler
+                    // already in jobscheduler
                     delete info;
                     info = nullptr;
                     break;
                 }
             }
             if (info) {
-                //Store task started
+                // Store task started
                 mListArchiveInfo.append(info);
                 auto task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), /*immediate*/ false);
                 mArchiveMailKernel->jobScheduler()->registerTask(task);
@@ -92,7 +92,7 @@ void ArchiveMailManager::backupDone(ArchiveMailInfo *info)
 {
     info->setLastDateSaved(QDate::currentDate());
     const QString groupname = ArchiveMailAgentUtil::archivePattern.arg(info->saveCollectionId());
-    //Don't store it if we removed this task
+    // Don't store it if we removed this task
     if (mConfig->hasGroup(groupname)) {
         KConfigGroup group = mConfig->group(groupname);
         info->writeConfig(group);

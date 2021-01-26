@@ -7,8 +7,8 @@
 #ifndef REMOVECOLLECTIONJOB_H
 #define REMOVECOLLECTIONJOB_H
 
-#include <QObject>
 #include <AkonadiCore/Collection>
+#include <QObject>
 class KMMainWidget;
 class KJob;
 class RemoveCollectionJob : public QObject

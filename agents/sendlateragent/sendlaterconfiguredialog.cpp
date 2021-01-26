@@ -5,18 +5,18 @@
 */
 
 #include "sendlaterconfiguredialog.h"
-#include "sendlaterconfigurewidget.h"
 #include "kmail-version.h"
+#include "sendlaterconfigurewidget.h"
 
+#include <KAboutData>
 #include <KConfigGroup>
+#include <KHelpMenu>
 #include <KLocalizedString>
 #include <KSharedConfig>
-#include <KHelpMenu>
-#include <QMenu>
-#include <KAboutData>
-#include <QIcon>
-#include <QDialogButtonBox>
 #include <QApplication>
+#include <QDialogButtonBox>
+#include <QIcon>
+#include <QMenu>
 
 SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
     : QDialog(parent)
@@ -39,23 +39,20 @@ SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
 
     readConfig();
 
-    KAboutData aboutData = KAboutData(
-        QStringLiteral("sendlateragent"),
-        i18n("Send Later Agent"),
-        QStringLiteral(KDEPIM_VERSION),
-        i18n("Send emails later agent."),
-        KAboutLicense::GPL_V2,
-        i18n("Copyright (C) 2013-2020 Laurent Montel"));
+    KAboutData aboutData = KAboutData(QStringLiteral("sendlateragent"),
+                                      i18n("Send Later Agent"),
+                                      QStringLiteral(KDEPIM_VERSION),
+                                      i18n("Send emails later agent."),
+                                      KAboutLicense::GPL_V2,
+                                      i18n("Copyright (C) 2013-2020 Laurent Montel"));
 
-    aboutData.addAuthor(i18n("Laurent Montel"),
-                        i18n("Maintainer"), QStringLiteral("montel@kde.org"));
+    aboutData.addAuthor(i18n("Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
 
     QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
-    aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"),
-                            i18nc("EMAIL OF TRANSLATORS", "Your emails"));
+    aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 
     auto helpMenu = new KHelpMenu(this, aboutData, true);
-    //Initialize menu
+    // Initialize menu
     QMenu *menu = helpMenu->menu();
     helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     buttonBox->button(QDialogButtonBox::Help)->setMenu(menu);

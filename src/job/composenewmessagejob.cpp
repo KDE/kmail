@@ -5,9 +5,9 @@
 */
 
 #include "composenewmessagejob.h"
-#include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
@@ -18,8 +18,7 @@ ComposeNewMessageJob::ComposeNewMessageJob(QObject *parent)
 {
 }
 
-ComposeNewMessageJob::~ComposeNewMessageJob()
-= default;
+ComposeNewMessageJob::~ComposeNewMessageJob() = default;
 
 void ComposeNewMessageJob::setCurrentCollection(const Akonadi::Collection &col)
 {

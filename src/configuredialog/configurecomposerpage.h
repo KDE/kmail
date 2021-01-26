@@ -7,9 +7,9 @@
 #ifndef CONFIGURECOMPOSERPAGE_H
 #define CONFIGURECOMPOSERPAGE_H
 
+#include "configuredialog_p.h"
 #include "kmail_export.h"
 #include <config-enterprise.h>
-#include "configuredialog_p.h"
 class QCheckBox;
 class QSpinBox;
 class QSpinBox;
@@ -19,15 +19,18 @@ class ListView;
 class QPushButton;
 class QLabel;
 class KPluralHandlingSpinBox;
-namespace TemplateParser {
+namespace TemplateParser
+{
 class CustomTemplates;
 class TemplatesConfiguration;
 }
-namespace PimCommon {
+namespace PimCommon
+{
 class AutoCorrectionWidget;
 class SimpleStringListEditor;
 }
-namespace MessageComposer {
+namespace MessageComposer
+{
 class ImageScalingWidget;
 }
 
@@ -39,6 +42,7 @@ public:
     Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
+
 private:
     void slotConfigureAddressCompletion();
     void doLoadFromGlobalSettings() override;
@@ -80,6 +84,7 @@ public:
 private:
     void doLoadFromGlobalSettings() override;
     void doResetToDefaultsOther() override;
+
 private:
     TemplateParser::TemplatesConfiguration *mWidget = nullptr;
 };

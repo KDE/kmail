@@ -15,14 +15,13 @@ PotentialPhishingEmailWarningTest::PotentialPhishingEmailWarningTest(QObject *pa
 {
 }
 
-PotentialPhishingEmailWarningTest::~PotentialPhishingEmailWarningTest()
-= default;
+PotentialPhishingEmailWarningTest::~PotentialPhishingEmailWarningTest() = default;
 
 void PotentialPhishingEmailWarningTest::shouldHaveDefaultValue()
 {
     PotentialPhishingEmailWarning w;
     QVERIFY(!w.isVisible());
-    //Verify QVERIFY(w.isCloseButtonVisible());
+    // Verify QVERIFY(w.isCloseButtonVisible());
     auto act = w.findChild<QAction *>(QStringLiteral("sendnow"));
     QVERIFY(act);
 }

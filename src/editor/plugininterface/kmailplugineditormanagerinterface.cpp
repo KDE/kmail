@@ -5,10 +5,10 @@
 */
 
 #include "kmailplugineditormanagerinterface.h"
-#include <MessageComposer/PluginEditorManager>
-#include <MessageComposer/PluginEditor>
-#include <MessageComposer/PluginComposerInterface>
 #include "kmail_debug.h"
+#include <MessageComposer/PluginComposerInterface>
+#include <MessageComposer/PluginEditor>
+#include <MessageComposer/PluginEditorManager>
 
 #include <QAction>
 #include <QVector>
@@ -18,8 +18,7 @@ KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *pa
 {
 }
 
-KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface()
-= default;
+KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface() = default;
 
 KPIMTextEdit::RichTextEditor *KMailPluginEditorManagerInterface::richTextEditor() const
 {
@@ -130,7 +129,7 @@ QList<QWidget *> KMailPluginEditorManagerInterface::statusBarWidgetList()
     return mStatusBarWidget;
 }
 
-QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType()
+QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEditorManagerInterface::actionsType()
 {
     if (mActionHash.isEmpty() && !mListPluginInterface.isEmpty()) {
         for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
@@ -138,7 +137,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEdi
             MessageComposer::PluginActionType::Type type = actionType.type();
             const bool needSelectedText = interface->needSelectedText();
             if (needSelectedText) {
-                //Disable by default as we don't have selection by default.
+                // Disable by default as we don't have selection by default.
                 actionType.action()->setEnabled(false);
                 connect(this, &KMailPluginEditorManagerInterface::textSelectionChanged, actionType.action(), &QAction::setEnabled);
             }

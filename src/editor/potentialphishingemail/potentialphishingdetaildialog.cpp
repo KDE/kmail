@@ -7,12 +7,12 @@
 
 #include "potentialphishingdetaildialog.h"
 #include "potentialphishingdetailwidget.h"
-#include <KSharedConfig>
-#include <KLocalizedString>
 #include <KConfigGroup>
-#include <QVBoxLayout>
-#include <QPushButton>
+#include <KLocalizedString>
+#include <KSharedConfig>
 #include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)

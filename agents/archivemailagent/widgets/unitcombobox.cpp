@@ -16,8 +16,7 @@ UnitComboBox::UnitComboBox(QWidget *parent)
     addItem(i18n("Years"), static_cast<int>(ArchiveMailInfo::ArchiveYears));
 }
 
-UnitComboBox::~UnitComboBox()
-= default;
+UnitComboBox::~UnitComboBox() = default;
 
 void UnitComboBox::setUnit(ArchiveMailInfo::ArchiveUnit unit)
 {

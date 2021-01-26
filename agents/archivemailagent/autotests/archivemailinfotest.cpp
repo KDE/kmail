@@ -7,10 +7,10 @@
 #include "archivemailinfotest.h"
 #include "../archivemailinfo.h"
 #include <AkonadiCore/Collection>
-#include <QTest>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <QStandardPaths>
+#include <QTest>
 
 ArchiveMailInfoTest::ArchiveMailInfoTest(QObject *parent)
     : QObject(parent)
@@ -18,8 +18,7 @@ ArchiveMailInfoTest::ArchiveMailInfoTest(QObject *parent)
     QStandardPaths::setTestModeEnabled(true);
 }
 
-ArchiveMailInfoTest::~ArchiveMailInfoTest()
-= default;
+ArchiveMailInfoTest::~ArchiveMailInfoTest() = default;
 
 void ArchiveMailInfoTest::shouldHaveDefaultValue()
 {

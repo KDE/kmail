@@ -21,8 +21,7 @@ ConfigurePluginPage::ConfigurePluginPage(QWidget *parent)
     connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::changed, this, &ConfigurePluginPage::slotConfigureChanged);
 }
 
-ConfigurePluginPage::~ConfigurePluginPage()
-= default;
+ConfigurePluginPage::~ConfigurePluginPage() = default;
 
 void ConfigurePluginPage::save()
 {

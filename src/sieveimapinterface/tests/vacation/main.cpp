@@ -8,11 +8,11 @@
 #include <QCommandLineParser>
 #include <QStandardPaths>
 
+#include "../../../sieveimapinterface/kmailsieveimapinstanceinterface.h"
+#include "../../../sieveimapinterface/kmsieveimappasswordprovider.h"
 #include <KSieveUi/MultiImapVacationDialog>
 #include <KSieveUi/MultiImapVacationManager>
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
-#include "../../../sieveimapinterface/kmailsieveimapinstanceinterface.h"
-#include "../../../sieveimapinterface/kmsieveimappasswordprovider.h"
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);

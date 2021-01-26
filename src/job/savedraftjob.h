@@ -8,8 +8,8 @@
 #ifndef SAVEDRAFTJOB_H
 #define SAVEDRAFTJOB_H
 
-#include <KJob>
 #include <AkonadiCore/Collection>
+#include <KJob>
 #include <KMime/KMimeMessage>
 
 class SaveDraftJob : public KJob

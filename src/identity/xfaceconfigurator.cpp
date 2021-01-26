@@ -15,21 +15,21 @@
 #include <KPIMTextEdit/PlainTextEditorWidget>
 #include <MessageViewer/KXFace>
 
+#include <KIO/StoredTransferJob>
 #include <KJobWidgets>
-#include <QComboBox>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KIO/StoredTransferJob>
+#include <QComboBox>
 
 #include <QCheckBox>
+#include <QFileDialog>
+#include <QFontDatabase>
 #include <QHBoxLayout>
+#include <QImageReader>
 #include <QLabel>
 #include <QPushButton>
 #include <QStackedWidget>
 #include <QVBoxLayout>
-#include <QFontDatabase>
-#include <QImageReader>
-#include <QFileDialog>
 using namespace KContacts;
 using namespace KIO;
 using namespace KMail;
@@ -53,8 +53,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     hlay->addWidget(mEnableCheck, Qt::AlignLeft | Qt::AlignVCenter);
 
     mXFaceLabel = new QLabel(this);
-    mXFaceLabel->setWhatsThis(
-        i18n("This is a preview of the picture selected/entered below."));
+    mXFaceLabel->setWhatsThis(i18n("This is a preview of the picture selected/entered below."));
     mXFaceLabel->setFixedSize(48, 48);
     mXFaceLabel->setFrameShape(QFrame::Box);
     hlay->addWidget(mXFaceLabel);
@@ -66,23 +65,19 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
     auto sourceCombo = new QComboBox(this);
-    sourceCombo->setWhatsThis(
-        i18n("Click on the widgets below to obtain help on the input methods."));
-    sourceCombo->setEnabled(false);   // since !mEnableCheck->isChecked()
-    sourceCombo->addItems(QStringList()
-                          << i18nc("continuation of \"obtain picture from\"",
-                                   "External Source")
-                          << i18nc("continuation of \"obtain picture from\"",
-                                   "Input Field Below"));
+    sourceCombo->setWhatsThis(i18n("Click on the widgets below to obtain help on the input methods."));
+    sourceCombo->setEnabled(false); // since !mEnableCheck->isChecked()
+    sourceCombo->addItems(QStringList() << i18nc("continuation of \"obtain picture from\"", "External Source")
+                                        << i18nc("continuation of \"obtain picture from\"", "Input Field Below"));
     auto label = new QLabel(i18n("Obtain pic&ture from:"), this);
     label->setBuddy(sourceCombo);
-    label->setEnabled(false);   // since !mEnableCheck->isChecked()
+    label->setEnabled(false); // since !mEnableCheck->isChecked()
     hlay->addWidget(label);
     hlay->addWidget(sourceCombo, 1);
 
     // widget stack that is controlled by the source combo:
     auto widgetStack = new QStackedWidget(this);
-    widgetStack->setEnabled(false);   // since !mEnableCheck->isChecked()
+    widgetStack->setEnabled(false); // since !mEnableCheck->isChecked()
     vlay->addWidget(widgetStack, 1);
     connect(sourceCombo, qOverload<int>(&QComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
     connect(sourceCombo, qOverload<int>(&QComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
@@ -90,13 +85,12 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     connect(mEnableCheck, &QCheckBox::toggled, widgetStack, &QStackedWidget::setEnabled);
     connect(mEnableCheck, &QCheckBox::toggled, label, &QLabel::setEnabled);
     // The focus might be still in the widget that is disabled
-    connect(mEnableCheck, &QAbstractButton::clicked,
-            mEnableCheck, qOverload<>(&QWidget::setFocus));
+    connect(mEnableCheck, &QAbstractButton::clicked, mEnableCheck, qOverload<>(&QWidget::setFocus));
 
     int pageno = 0;
     // page 0: create X-Face from image file or address book entry
     auto page = new QWidget(widgetStack);
-    widgetStack->insertWidget(pageno, page);   // force sequential numbers (play safe)
+    widgetStack->insertWidget(pageno, page); // force sequential numbers (play safe)
     auto page_vlay = new QVBoxLayout(page);
     page_vlay->setContentsMargins({});
     hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
@@ -117,14 +111,15 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     page_vlay->addWidget(mFromAddrbkBtn, 1);
     connect(mFromAddrbkBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFromAddressbook);
     auto label1 = new QLabel(i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
-                                     "monochrome picture with every message. "
-                                     "For example, this could be a picture of you or a glyph. "
-                                     "It is shown in the recipient's mail client (if supported).</qt>"), page);
+                                  "monochrome picture with every message. "
+                                  "For example, this could be a picture of you or a glyph. "
+                                  "It is shown in the recipient's mail client (if supported).</qt>"),
+                             page);
     label1->setAlignment(Qt::AlignVCenter);
     label1->setWordWrap(true);
     page_vlay->addWidget(label1);
     page_vlay->addStretch();
-    widgetStack->setCurrentIndex(0);   // since sourceCombo->currentItem() == 0
+    widgetStack->setCurrentIndex(0); // since sourceCombo->currentItem() == 0
 
     // page 1: input field for direct entering
     ++pageno;
@@ -140,8 +135,9 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     mTextEdit->editor()->setWordWrapMode(QTextOption::WrapAnywhere);
     mTextEdit->editor()->setSearchSupport(false);
     auto label2 = new QLabel(i18n("Examples are available at <a "
-                                     "href=\"https://ace.home.xs4all.nl/X-Faces/\">"
-                                     "https://ace.home.xs4all.nl/X-Faces/</a>."), page);
+                                  "href=\"https://ace.home.xs4all.nl/X-Faces/\">"
+                                  "https://ace.home.xs4all.nl/X-Faces/</a>."),
+                             page);
     label2->setOpenExternalLinks(true);
     label2->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
@@ -150,8 +146,7 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     connect(mTextEdit->editor(), &KPIMTextEdit::PlainTextEditor::textChanged, this, &XFaceConfigurator::slotUpdateXFace);
 }
 
-XFaceConfigurator::~XFaceConfigurator()
-= default;
+XFaceConfigurator::~XFaceConfigurator() = default;
 
 bool XFaceConfigurator::isXFaceEnabled() const
 {

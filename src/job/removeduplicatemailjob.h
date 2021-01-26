@@ -10,7 +10,8 @@
 #include <QObject>
 class QWidget;
 class QItemSelectionModel;
-namespace KPIM {
+namespace KPIM
+{
 class ProgressItem;
 }
 class KJob;

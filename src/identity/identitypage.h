@@ -16,11 +16,13 @@
 
 #include "configuredialog/configuredialog_p.h"
 #include "ui_identitypage.h"
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class IdentityManager;
 }
 
-namespace KMail {
+namespace KMail
+{
 class IdentityDialog;
 class IdentityListView;
 class IdentityListViewItem;

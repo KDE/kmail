@@ -8,26 +8,26 @@
 
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
+#include "tag/tagactionmanager.h"
+#include "util.h"
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
 #include <PimCommon/BroadcastStatus>
-#include "util.h"
-#include "tag/tagactionmanager.h"
 
-#include <QTimer>
-#include <QStatusBar>
-#include <QApplication>
 #include <KConfigGroup>
+#include <QApplication>
+#include <QStatusBar>
+#include <QTimer>
 
-#include <KConfigGui>
-#include <QMenuBar>
-#include <KLocalizedString>
-#include <KEditToolBar>
-#include <KConfig>
-#include <KMessageBox>
-#include <KXMLGUIFactory>
-#include <KStandardAction>
 #include "kmail_debug.h"
+#include <KConfig>
+#include <KConfigGui>
+#include <KEditToolBar>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KStandardAction>
+#include <KXMLGUIFactory>
+#include <QMenuBar>
 #include <ktip.h>
 
 #include <QLabel>
@@ -40,7 +40,7 @@ KMMainWin::KMMainWin(QWidget *)
     // modal subdialogs will only affect this dialog, not the other windows
     setAttribute(Qt::WA_GroupLeader);
 
-    resize(700, 500);   // The default size
+    resize(700, 500); // The default size
 
     mKMMainWidget = new KMMainWidget(this, this, actionCollection());
     connect(mKMMainWidget, &KMMainWidget::recreateGui, this, &KMMainWin::slotUpdateGui);
@@ -51,25 +51,21 @@ KMMainWin::KMMainWin(QWidget *)
     }
     setStandardToolBarMenuEnabled(true);
 
-    KStandardAction::configureToolbars(this, &KMMainWin::slotEditToolbars,
-                                       actionCollection());
+    KStandardAction::configureToolbars(this, &KMMainWin::slotEditToolbars, actionCollection());
 
-    KStandardAction::keyBindings(this, &KMMainWin::slotConfigureShortcuts,
-                                 actionCollection());
+    KStandardAction::keyBindings(this, &KMMainWin::slotConfigureShortcuts, actionCollection());
 
     mHideMenuBarAction = KStandardAction::showMenubar(this, &KMMainWin::slotToggleMenubar, actionCollection());
 
     KStandardAction::quit(this, &KMMainWin::slotQuit, actionCollection());
     createGUI(QStringLiteral("kmmainwin.rc"));
 
-    //must be after createGUI, otherwise e.g toolbar settings are not loaded
+    // must be after createGUI, otherwise e.g toolbar settings are not loaded
     setAutoSaveSettings(KMKernel::self()->config()->group("Main Window"));
 
-    connect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg,
-            this, &KMMainWin::displayStatusMessage);
+    connect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg, this, &KMMainWin::displayStatusMessage);
 
-    connect(mKMMainWidget, &KMMainWidget::captionChangeRequest,
-            this, qOverload<const QString &>(&KMainWindow::setCaption));
+    connect(mKMMainWidget, &KMMainWidget::captionChangeRequest, this, qOverload<const QString &>(&KMainWindow::setCaption));
 
     mKMMainWidget->updateQuickSearchLineText();
     mHideMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
@@ -93,11 +89,9 @@ void KMMainWin::displayStatusMessage(const QString &aText)
     if (!statusBar() || !mProgressBar->littleProgress()) {
         return;
     }
-    const int statusWidth = statusBar()->width() - mProgressBar->littleProgress()->width()
-                            - fontMetrics().maxWidth();
+    const int statusWidth = statusBar()->width() - mProgressBar->littleProgress()->width() - fontMetrics().maxWidth();
 
-    const QString text = fontMetrics().elidedText(QLatin1Char(' ') + aText, Qt::ElideRight,
-                                                  statusWidth);
+    const QString text = fontMetrics().elidedText(QLatin1Char(' ') + aText, Qt::ElideRight, statusWidth);
 
     // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
     // but this code would double the size of the status bar if the user hovers
@@ -119,8 +113,10 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
                 const QString accel = mHideMenuBarAction->shortcut().toString();
                 KMessageBox::information(this,
                                          i18n("<qt>This will hide the menu bar completely."
-                                              " You can show it again by typing %1.</qt>", accel),
-                                         i18n("Hide menu bar"), QStringLiteral("HideMenuBarWarning"));
+                                              " You can show it again by typing %1.</qt>",
+                                              accel),
+                                         i18n("Hide menu bar"),
+                                         QStringLiteral("HideMenuBarWarning"));
             }
             menuBar()->hide();
         }
@@ -152,7 +148,7 @@ void KMMainWin::slotUpdateGui()
     // plug dynamically created actions again
     mKMMainWidget->initializeFilterActions(false);
     mKMMainWidget->tagActionManager()->createActions();
-    //FIXME mKMMainWidget->initializePluginActions();
+    // FIXME mKMMainWidget->initializePluginActions();
 }
 
 void KMMainWin::setupStatusBar()

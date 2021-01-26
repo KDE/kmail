@@ -15,20 +15,20 @@
 
 // KMail includes
 #include "editor/composer.h"
-#include <MessageComposer/RecipientsEditor>
 #include <MessageComposer/PluginEditorConvertTextInterface>
+#include <MessageComposer/RecipientsEditor>
 // Qt includes
 #include <QFont>
 #include <QList>
 #include <QVector>
 
-#include <MessageComposer/RichTextComposerNg>
 #include <MessageComposer/ComposerViewBase>
+#include <MessageComposer/RichTextComposerNg>
 
 #include <MessageComposer/MessageSender>
 
-#include <kmime/kmime_message.h>
 #include <kmime/kmime_headers.h>
+#include <kmime/kmime_message.h>
 
 // Other includes
 #include <Libkleo/Enum>
@@ -61,40 +61,48 @@ class IncorrectIdentityFolderWarning;
 class KMailPluginEditorConvertTextManagerInterface;
 class KMailPluginGrammarEditorManagerInterface;
 class AttachmentAddedFromExternalWarning;
-namespace MailTransport {
+namespace MailTransport
+{
 class Transport;
 }
 
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class Identity;
 }
 
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class RichTextEditorWidget;
 }
 
-namespace KIO {
+namespace KIO
+{
 class Job;
 }
 
-namespace MessageComposer {
+namespace MessageComposer
+{
 class ComposerLineEdit;
 class Composer;
 class StatusBarLabelToggledState;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 class SnippetTreeView;
 struct SnippetInfo;
 }
 
-namespace PimCommon {
+namespace PimCommon
+{
 class CustomToolsWidgetNg;
 class LineEditWithAutoCorrection;
 }
 
-namespace GpgME {
+namespace GpgME
+{
 class KeyListResult;
 class Key;
 class UserID;
@@ -109,31 +117,47 @@ class KMComposerWin : public KMail::Composer
     friend class ::KMComposerEditor;
 
 private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposerWin(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0, const QString &textSelection = QString(), const QString &customTemplate = QString());
+    explicit KMComposerWin(const KMime::Message::Ptr &msg,
+                           bool lastSignState,
+                           bool lastEncryptState,
+                           TemplateContext context = NoTemplate,
+                           uint identity = 0,
+                           const QString &textSelection = QString(),
+                           const QString &customTemplate = QString());
     ~KMComposerWin() override;
 
 public:
-    static Composer *create(const KMime::Message::Ptr &msg, bool lastSignState, bool lastEncryptState, TemplateContext context = NoTemplate, uint identity = 0, const QString &textSelection = QString(), const QString &customTemplate = QString());
+    static Composer *create(const KMime::Message::Ptr &msg,
+                            bool lastSignState,
+                            bool lastEncryptState,
+                            TemplateContext context = NoTemplate,
+                            uint identity = 0,
+                            const QString &textSelection = QString(),
+                            const QString &customTemplate = QString());
 
     Q_REQUIRED_RESULT QString dbusObjectPath() const override;
     Q_REQUIRED_RESULT QString smartQuote(const QString &msg);
 
     /**
-    * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
-    * otherwise they can't be accessed.
-    */
+     * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
+     * otherwise they can't be accessed.
+     */
 public Q_SLOTS:
 
     Q_SCRIPTABLE void send(int how) override;
     /**
-    * End of D-Bus callable stuff
-    */
+     * End of D-Bus callable stuff
+     */
 
     void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) override;
 
     void addAttachment(const QVector<KMail::Composer::AttachmentInfo> &infos, bool showWarning) override;
 
-    void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) override;
+    void addAttachment(const QString &name,
+                       KMime::Headers::contentEncoding cte,
+                       const QString &charset,
+                       const QByteArray &data,
+                       const QByteArray &mimeType) override;
 
 Q_SIGNALS:
     void identityChanged(const KIdentityManagement::Identity &identity);
@@ -143,7 +167,12 @@ public: // kmkernel, kmcommands, callback
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true, bool allowDecryption = false, bool isModified = false) override;
+    void setMessage(const KMime::Message::Ptr &newMsg,
+                    bool lastSignState = false,
+                    bool lastEncryptState = false,
+                    bool mayAutoSign = true,
+                    bool allowDecryption = false,
+                    bool isModified = false) override;
 
     void setCurrentTransport(int transportId) override;
 
@@ -155,24 +184,24 @@ public: // kmkernel, kmcommands, callback
     void setFcc(const QString &idString) override;
 
     /**
-      * Disables word wrap completely. No wrapping at all will occur, not even
-      * at the right end of the editor.
-      * This is useful when sending invitations.
-      */
+     * Disables word wrap completely. No wrapping at all will occur, not even
+     * at the right end of the editor.
+     * This is useful when sending invitations.
+     */
     void disableWordWrap() override;
 
     /**
-      * Disables HTML completely. It disables HTML at the point of calling this and disables it
-      * again when sending the message, to be sure. Useful when sending invitations.
-      * This will <b>not</b> remove the actions for activating HTML mode again, it is only
-      * meant for automatic invitation sending.
-      * Also calls @sa disableHtml() internally.
-      */
+     * Disables HTML completely. It disables HTML at the point of calling this and disables it
+     * again when sending the message, to be sure. Useful when sending invitations.
+     * This will <b>not</b> remove the actions for activating HTML mode again, it is only
+     * meant for automatic invitation sending.
+     * Also calls @sa disableHtml() internally.
+     */
     void forceDisableHtml() override;
 
     /**
-      * Returns @c true while the message composing is in progress.
-      */
+     * Returns @c true while the message composing is in progress.
+     */
     Q_REQUIRED_RESULT bool isComposing() const override;
 
     /** Disabled signing and encryption completely for this composer window. */
@@ -201,10 +230,11 @@ public: // kmkernel, kmcommands, callback
 
     Q_REQUIRED_RESULT MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart);
     Q_REQUIRED_RESULT bool processModifyText(QKeyEvent *event);
+
 private:
     /**
-    * Write settings to app's config file.
-    */
+     * Write settings to app's config file.
+     */
     void writeConfig();
 
     /**
@@ -234,9 +264,9 @@ public Q_SLOTS: // kmkernel, callback
 
 private Q_SLOTS:
     /**
-      * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
-      * "Formatting" action. Also, removes all rich-text formatting.
-      */
+     * Disables the HTML mode, by hiding the HTML toolbar and unchecking the
+     * "Formatting" action. Also, removes all rich-text formatting.
+     */
     void disableHtml(MessageComposer::ComposerViewBase::Confirmation confirmation);
     /**
      * Enables HTML mode, by showing the HTML toolbar and checking the
@@ -388,6 +418,7 @@ private Q_SLOTS:
 
     void slotDelayedCheckSendNow();
     void slotUpdateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
+
 public: // kmcommand
     void addAttach(KMime::Content *msgPart) override;
 
@@ -399,6 +430,7 @@ public: // kmcommand
     Q_REQUIRED_RESULT uint currentIdentity() const;
     QList<KToggleAction *> customToolsList() const;
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
+
 private:
     void enableDisablePluginActions(bool richText);
     /**
@@ -449,7 +481,7 @@ private:
     /**
      * Checks how many recipients are and warns if there are too many.
      * @return true, if the user accepted the warning and the message should be sent
-    */
+     */
     Q_REQUIRED_RESULT bool checkRecipientNumber() const;
 
     /**
@@ -486,7 +518,9 @@ private:
     /**
      * Send the message.
      */
-    void doSend(MessageComposer::MessageSender::SendMethod method = MessageComposer::MessageSender::SendDefault, MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone, bool willSendItWithoutReediting = false);
+    void doSend(MessageComposer::MessageSender::SendMethod method = MessageComposer::MessageSender::SendDefault,
+                MessageComposer::MessageSender::SaveIn saveIn = MessageComposer::MessageSender::SaveInNone,
+                bool willSendItWithoutReediting = false);
 
     void doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn);
 
@@ -509,12 +543,7 @@ private:
     inline bool encryptToSelf() const;
 
 private:
-    enum CryptoKeyState {
-        NoState = 0,
-        InProgress,
-        KeyOk,
-        NoKey
-    };
+    enum CryptoKeyState { NoState = 0, InProgress, KeyOk, NoKey };
     void slotToggleMenubar(bool dontShowWarning);
 
     void slotCryptoModuleSelected();
@@ -563,7 +592,7 @@ private:
     bool mLastIdentityHasEncryptionKey = false;
     Akonadi::Collection mFolder;
     long mShowHeaders = 0;
-    bool mForceDisableHtml = false;     // Completely disable any HTML. Useful when sending invitations in the
+    bool mForceDisableHtml = false; // Completely disable any HTML. Useful when sending invitations in the
     // mail body.
     int mNumHeaders = 0;
     QFont mBodyFont;
@@ -612,7 +641,7 @@ private:
 
     MessageComposer::Composer *mDummyComposer = nullptr;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
-    QVector< MessageComposer::Composer * > mMiscComposers;
+    QVector<MessageComposer::Composer *> mMiscComposers;
 
     int mLabelWidth = 0;
 

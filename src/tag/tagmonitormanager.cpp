@@ -8,9 +8,9 @@
 #include "kmail_debug.h"
 
 #include <AkonadiCore/Monitor>
+#include <AkonadiCore/TagAttribute>
 #include <AkonadiCore/TagFetchJob>
 #include <AkonadiCore/TagFetchScope>
-#include <AkonadiCore/TagAttribute>
 
 TagMonitorManager::TagMonitorManager(QObject *parent)
     : QObject(parent)
@@ -25,8 +25,7 @@ TagMonitorManager::TagMonitorManager(QObject *parent)
     createActions();
 }
 
-TagMonitorManager::~TagMonitorManager()
-= default;
+TagMonitorManager::~TagMonitorManager() = default;
 
 TagMonitorManager *TagMonitorManager::self()
 {

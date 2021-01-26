@@ -8,8 +8,8 @@
 #ifndef POTENTIALPHISHINGDETAILDIALOG_H
 #define POTENTIALPHISHINGDETAILDIALOG_H
 
-#include <QDialog>
 #include "kmail_private_export.h"
+#include <QDialog>
 class PotentialPhishingDetailWidget;
 class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailDialog : public QDialog
 {

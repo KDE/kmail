@@ -7,8 +7,8 @@
 #include "vacationscriptindicatorwidget.h"
 
 #include "util.h"
-#include <QIcon>
 #include <KLocalizedString>
+#include <QIcon>
 
 #include <QHBoxLayout>
 
@@ -24,8 +24,7 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
     setContentsMargins(2, 0, 4, 0);
 }
 
-ServerLabel::~ServerLabel()
-= default;
+ServerLabel::~ServerLabel() = default;
 
 void ServerLabel::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -43,8 +42,7 @@ VacationLabel::VacationLabel(const QString &text, QWidget *parent)
     setCursor(QCursor(Qt::PointingHandCursor));
 }
 
-VacationLabel::~VacationLabel()
-= default;
+VacationLabel::~VacationLabel() = default;
 
 void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -57,8 +55,7 @@ VacationScriptIndicatorWidget::VacationScriptIndicatorWidget(QWidget *parent)
 {
 }
 
-VacationScriptIndicatorWidget::~VacationScriptIndicatorWidget()
-= default;
+VacationScriptIndicatorWidget::~VacationScriptIndicatorWidget() = default;
 
 void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const QString &serverName)
 {

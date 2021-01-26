@@ -7,9 +7,9 @@
 #ifndef UNIFIEDMAILBOX_H
 #define UNIFIEDMAILBOX_H
 
-#include <QString>
 #include <QMetaType>
 #include <QSet>
+#include <QString>
 
 class KConfigGroup;
 class UnifiedMailboxManager;
@@ -17,6 +17,7 @@ class UnifiedMailboxManager;
 class UnifiedMailbox
 {
     friend class UnifiedMailboxManager;
+
 public:
     UnifiedMailbox() = default;
     UnifiedMailbox(UnifiedMailbox &&) = default;

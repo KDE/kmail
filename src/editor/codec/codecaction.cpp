@@ -31,7 +31,7 @@ CodecAction::CodecAction(Mode mode, QObject *parent)
         // FIXME is there a better way?
         QList<QAction *> oldActions = actions();
         removeAllActions();
-        addAction(oldActions.takeFirst());   // 'Default'
+        addAction(oldActions.takeFirst()); // 'Default'
         addAction(i18nc("Encodings menu", "us-ascii"));
         for (QAction *a : qAsConst(oldActions)) {
             addAction(a);
@@ -45,8 +45,7 @@ CodecAction::CodecAction(Mode mode, QObject *parent)
     setText(i18nc("Menu item", "Encoding"));
 }
 
-CodecAction::~CodecAction()
-= default;
+CodecAction::~CodecAction() = default;
 
 QVector<QByteArray> CodecAction::mimeCharsets() const
 {
@@ -86,9 +85,7 @@ static QString selectCharset(KSelectAction *root, const QString &encoding)
             }
         } else {
             const QString fixedActionText = MimeTreeParser::NodeHelper::fixEncoding(action->text());
-            if (KCharsets::charsets()->codecForName(
-                    KCharsets::charsets()->encodingForName(fixedActionText))
-                == KCharsets::charsets()->codecForName(encoding)) {
+            if (KCharsets::charsets()->codecForName(KCharsets::charsets()->encodingForName(fixedActionText)) == KCharsets::charsets()->codecForName(encoding)) {
                 return action->text();
             }
         }

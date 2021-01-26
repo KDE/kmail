@@ -11,27 +11,28 @@
 #include "kmail_export.h"
 #include "secondarywindow.h"
 
+#include <AkonadiCore/collection.h>
 #include <QUrl>
 #include <kmime/kmime_message.h>
-#include <AkonadiCore/collection.h>
 
-namespace KMime {
+namespace KMime
+{
 class Content;
 }
 
-namespace KMail {
+namespace KMail
+{
 class KMAIL_EXPORT Composer : public KMail::SecondaryWindow
 {
     Q_OBJECT
 protected:
-    Composer(const QString &name = QString()) : KMail::SecondaryWindow(name)
+    Composer(const QString &name = QString())
+        : KMail::SecondaryWindow(name)
     {
     }
 
 public:
-    enum TemplateContext {
-        New, Reply, ReplyToAll, Forward, NoTemplate
-    };
+    enum TemplateContext { New, Reply, ReplyToAll, Forward, NoTemplate };
     enum VisibleHeaderFlag {
         HDR_FROM = 0x01,
         HDR_REPLY_TO = 0x02,
@@ -56,15 +57,23 @@ public: // mailserviceimpl
     virtual void send(int how) = 0;
     virtual void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) = 0;
     virtual void addAttachment(const QVector<AttachmentInfo> &url, bool showWarning) = 0;
-    virtual void addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) = 0;
+    virtual void
+    addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) = 0;
+
 public: // kmcommand
     virtual Q_REQUIRED_RESULT QString dbusObjectPath() const = 0;
+
 public: // kmkernel, kmcommands, callback
     /**
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    virtual void setMessage(const KMime::Message::Ptr &newMsg, bool lastSignState = false, bool lastEncryptState = false, bool mayAutoSign = true, bool allowDecryption = false, bool isModified = false) = 0;
+    virtual void setMessage(const KMime::Message::Ptr &newMsg,
+                            bool lastSignState = false,
+                            bool lastEncryptState = false,
+                            bool mayAutoSign = true,
+                            bool allowDecryption = false,
+                            bool isModified = false) = 0;
     virtual void setCurrentTransport(int transportId) = 0;
 
     virtual void setFcc(const QString &idString) = 0;
@@ -124,8 +133,13 @@ public: // kmcommand
     virtual void addAttach(KMime::Content *msgPart) = 0;
 };
 
-KMAIL_EXPORT Composer *makeComposer(
-    const KMime::Message::Ptr &msg = KMime::Message::Ptr(), bool lastSignState = false, bool lastEncryptState = false, Composer::TemplateContext context = Composer::NoTemplate, uint identity = 0, const QString &textSelection = QString(), const QString &customTemplate = QString());
+KMAIL_EXPORT Composer *makeComposer(const KMime::Message::Ptr &msg = KMime::Message::Ptr(),
+                                    bool lastSignState = false,
+                                    bool lastEncryptState = false,
+                                    Composer::TemplateContext context = Composer::NoTemplate,
+                                    uint identity = 0,
+                                    const QString &textSelection = QString(),
+                                    const QString &customTemplate = QString());
 }
 
 #endif // KMAIL_COMPOSER_H

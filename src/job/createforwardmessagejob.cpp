@@ -5,10 +5,10 @@
 */
 
 #include "createforwardmessagejob.h"
-#include "kmkernel.h"
 #include "../util.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
 
@@ -30,8 +30,7 @@ void CreateForwardMessageJob::setSettings(const CreateForwardMessageJobSettings 
 void CreateForwardMessageJob::start()
 {
     const auto col = CommonKernel->collectionFromId(mSettings.item.parentCollection().id());
-    mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.msg, mSettings.item.id(),
-                                                            col);
+    mMessageFactory = new MessageComposer::MessageFactoryNG(mSettings.msg, mSettings.item.id(), col);
     connect(mMessageFactory, &MessageComposer::MessageFactoryNG::createForwardDone, this, &CreateForwardMessageJob::slotCreateForwardDone);
     mMessageFactory->setIdentityManager(KMKernel::self()->identityManager());
     mMessageFactory->setFolderIdentity(MailCommon::Util::folderIdentity(mSettings.item));

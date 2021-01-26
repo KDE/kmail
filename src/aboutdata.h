@@ -13,7 +13,8 @@
 #include "kmail_export.h"
 #include <KAboutData>
 
-namespace KMail {
+namespace KMail
+{
 class KMAIL_EXPORT AboutData : public KAboutData
 {
 public:

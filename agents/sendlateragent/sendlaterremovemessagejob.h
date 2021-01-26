@@ -7,8 +7,8 @@
 #ifndef SENDLATERREMOVEMESSAGEJOB_H
 #define SENDLATERREMOVEMESSAGEJOB_H
 
-#include <QObject>
 #include <Item>
+#include <QObject>
 
 class KJob;
 

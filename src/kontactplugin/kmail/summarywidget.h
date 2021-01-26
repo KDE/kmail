@@ -14,14 +14,16 @@
 
 #include <KViewStateMaintainer>
 
-namespace Akonadi {
+namespace Akonadi
+{
 class ChangeRecorder;
 class Collection;
 class EntityTreeModel;
 class ETMViewStateSaver;
 }
 
-namespace KontactInterface {
+namespace KontactInterface
+{
 class Plugin;
 }
 

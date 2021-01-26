@@ -5,16 +5,14 @@
 */
 #include "folderarchiveaccountinfo.h"
 
-FolderArchiveAccountInfo::FolderArchiveAccountInfo()
-= default;
+FolderArchiveAccountInfo::FolderArchiveAccountInfo() = default;
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo(const KConfigGroup &config)
 {
     readConfig(config);
 }
 
-FolderArchiveAccountInfo::~FolderArchiveAccountInfo()
-= default;
+FolderArchiveAccountInfo::~FolderArchiveAccountInfo() = default;
 
 bool FolderArchiveAccountInfo::isValid() const
 {
@@ -96,9 +94,6 @@ void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
 
 bool FolderArchiveAccountInfo::operator==(const FolderArchiveAccountInfo &other) const
 {
-    return (mInstanceName == other.instanceName())
-           && (mArchiveTopLevelCollectionId == other.archiveTopLevel())
-           && (mArchiveType == other.folderArchiveType())
-           && (mEnabled == other.enabled())
-           && (mKeepExistingStructure == other.keepExistingStructure());
+    return (mInstanceName == other.instanceName()) && (mArchiveTopLevelCollectionId == other.archiveTopLevel()) && (mArchiveType == other.folderArchiveType())
+        && (mEnabled == other.enabled()) && (mKeepExistingStructure == other.keepExistingStructure());
 }

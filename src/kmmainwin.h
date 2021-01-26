@@ -15,7 +15,8 @@
 class KMMainWidget;
 class KToggleAction;
 class QLabel;
-namespace KPIM {
+namespace KPIM
+{
 class ProgressStatusBarWidget;
 }
 class KMAIL_EXPORT KMMainWin : public KXmlGuiWindow
@@ -42,7 +43,6 @@ public Q_SLOTS:
     void setupStatusBar();
 
 protected:
-
     /// Reimplemented to save the docked state
     void saveProperties(KConfigGroup &) override;
 

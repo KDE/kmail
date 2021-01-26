@@ -5,26 +5,28 @@
 
 #include "kmail_private_export.h"
 
+#include <MailCommon/SearchPattern>
 #include <MessageComposer/MessageFactoryNG>
 #include <MessageList/View>
-#include <MailCommon/SearchPattern>
 #include <MessageViewer/Viewer>
 
 #include <Akonadi/KMime/MessageStatus>
 #include <kio/job.h>
 #include <kmime/kmime_message.h>
 
-#include <QPointer>
-#include <QList>
+#include <AkonadiCore/collection.h>
 #include <AkonadiCore/item.h>
 #include <AkonadiCore/itemfetchscope.h>
-#include <AkonadiCore/collection.h>
+#include <QList>
+#include <QPointer>
 #include <QUrl>
-namespace Akonadi {
+namespace Akonadi
+{
 class Tag;
 }
 
-namespace KPIM {
+namespace KPIM
+{
 class ProgressItem;
 }
 
@@ -36,15 +38,18 @@ class KMReaderMainWin;
 
 template<typename T> class QSharedPointer;
 
-namespace MessageViewer {
+namespace MessageViewer
+{
 class HeaderStyle;
 class AttachmentStrategy;
 }
 
-namespace KIO {
+namespace KIO
+{
 class Job;
 }
-namespace KMail {
+namespace KMail
+{
 class Composer;
 }
 using PartNodeMessageMap = QMap<KMime::Content *, Akonadi::Item>;
@@ -55,9 +60,7 @@ class KMAILTESTS_TESTS_EXPORT KMCommand : public QObject
     Q_OBJECT
 
 public:
-    enum Result {
-        Undefined, OK, Canceled, Failed
-    };
+    enum Result { Undefined, OK, Canceled, Failed };
 
     // Trivial constructor, don't retrieve any messages
     explicit KMCommand(QWidget *parent = nullptr);
@@ -128,7 +131,7 @@ private:
     virtual Result execute() = 0;
 
     /** transfers the list of (imap)-messages
-    *  this is a necessary preparation for e.g. forwarding */
+     *  this is a necessary preparation for e.g. forwarding */
     void transferSelectedMsgs();
 
 private Q_SLOTS:
@@ -146,7 +149,7 @@ protected:
 private:
     // ProgressDialog for transferring messages
     QPointer<QProgressDialog> mProgressDialog;
-    //Currently only one async command allowed at a time
+    // Currently only one async command allowed at a time
     static int mCountJobs;
     int mCountMsgs = 0;
     Result mResult = Undefined;
@@ -240,6 +243,7 @@ public:
     ~KMEditItemCommand() override;
 private Q_SLOTS:
     void slotDeleteItem(KJob *job);
+
 private:
     Result execute() override;
     bool mDeleteFromSource = false;
@@ -251,6 +255,7 @@ class KMAILTESTS_TESTS_EXPORT KMEditMessageCommand : public KMCommand
 
 public:
     explicit KMEditMessageCommand(QWidget *parent, const KMime::Message::Ptr &msg);
+
 private:
     Result execute() override;
     KMime::Message::Ptr mMessage;
@@ -327,7 +332,12 @@ class KMAILTESTS_TESTS_EXPORT KMReplyCommand : public KMCommand
 {
     Q_OBJECT
 public:
-    KMReplyCommand(QWidget *parent, const Akonadi::Item &msg, MessageComposer::ReplyStrategy replyStrategy, const QString &selection = QString(), bool noquote = false, const QString &templateName = QString());
+    KMReplyCommand(QWidget *parent,
+                   const Akonadi::Item &msg,
+                   MessageComposer::ReplyStrategy replyStrategy,
+                   const QString &selection = QString(),
+                   bool noquote = false,
+                   const QString &templateName = QString());
     Q_REQUIRED_RESULT bool replyAsHtml() const;
     void setReplyAsHtml(bool replyAsHtml);
 
@@ -347,8 +357,16 @@ class KMAILTESTS_TESTS_EXPORT KMForwardCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMForwardCommand(QWidget *parent, const Akonadi::Item::List &msgList, uint identity = 0, const QString &templateName = QString(), const QString &selection = QString());
-    KMForwardCommand(QWidget *parent, const Akonadi::Item &msg, uint identity = 0, const QString &templateName = QString(), const QString &selection = QString());
+    KMForwardCommand(QWidget *parent,
+                     const Akonadi::Item::List &msgList,
+                     uint identity = 0,
+                     const QString &templateName = QString(),
+                     const QString &selection = QString());
+    KMForwardCommand(QWidget *parent,
+                     const Akonadi::Item &msg,
+                     uint identity = 0,
+                     const QString &templateName = QString(),
+                     const QString &selection = QString());
 
 private:
     KMCommand::Result createComposer(const Akonadi::Item &item);
@@ -387,8 +405,7 @@ private:
     Result execute() override;
 };
 
-struct KMAILTESTS_TESTS_EXPORT KMPrintCommandInfo
-{
+struct KMAILTESTS_TESTS_EXPORT KMPrintCommandInfo {
     Akonadi::Item mMsg;
     QFont mOverrideFont;
     QString mEncoding;
@@ -402,7 +419,7 @@ struct KMAILTESTS_TESTS_EXPORT KMPrintCommandInfo
     bool mShowEncryptionDetails = false;
 };
 
-QDebug operator <<(QDebug d, const KMPrintCommandInfo &t);
+QDebug operator<<(QDebug d, const KMPrintCommandInfo &t);
 
 class KMAILTESTS_TESTS_EXPORT KMPrintCommand : public KMCommand
 {
@@ -410,6 +427,7 @@ class KMAILTESTS_TESTS_EXPORT KMPrintCommand : public KMCommand
 
 public:
     KMPrintCommand(QWidget *parent, const KMPrintCommandInfo &commandInfo);
+
 private:
     Result execute() override;
 
@@ -441,9 +459,7 @@ class KMAILTESTS_TESTS_EXPORT KMSetTagCommand : public KMCommand
     Q_OBJECT
 
 public:
-    enum SetTagMode {
-        AddIfNotExisting, Toggle, CleanExistingAndAddNew
-    };
+    enum SetTagMode { AddIfNotExisting, Toggle, CleanExistingAndAddNew };
 
     KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::Item::List &item, SetTagMode mode = AddIfNotExisting);
 
@@ -511,6 +527,7 @@ public:
 
 protected Q_SLOTS:
     void slotCopyResult(KJob *job);
+
 private:
     Result execute() override;
 
@@ -540,7 +557,9 @@ class KMAILTESTS_TESTS_EXPORT KMMoveCommand : public KMCommand
 
 public:
     KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref);
-    KMMoveCommand(const Akonadi::Collection &destFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref = MessageList::Core::MessageItemSetReference());
+    KMMoveCommand(const Akonadi::Collection &destFolder,
+                  const Akonadi::Item &msg,
+                  MessageList::Core::MessageItemSetReference ref = MessageList::Core::MessageItemSetReference());
     Akonadi::Collection destFolder() const
     {
         return mDestFolder;
@@ -554,6 +573,7 @@ public:
 public Q_SLOTS:
     void slotMoveCanceled();
     void slotMoveResult(KJob *job);
+
 protected:
     void setDestFolder(const Akonadi::Collection &folder)
     {
@@ -577,12 +597,7 @@ class KMAILTESTS_TESTS_EXPORT KMTrashMsgCommand final : public KMCommand
     Q_OBJECT
 
 public:
-    enum TrashOperation {
-        Unknown,
-        MoveToTrash,
-        Delete,
-        Both
-    };
+    enum TrashOperation { Unknown, MoveToTrash, Delete, Both };
 
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref);
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref);

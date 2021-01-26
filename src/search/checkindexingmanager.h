@@ -7,12 +7,15 @@
 #ifndef CHECKINDEXINGMANAGER_H
 #define CHECKINDEXINGMANAGER_H
 
-#include <QObject>
 #include <AkonadiCore/Collection>
 #include <QAbstractItemModel>
-namespace Akonadi {
-namespace Search {
-namespace PIM {
+#include <QObject>
+namespace Akonadi
+{
+namespace Search
+{
+namespace PIM
+{
 class IndexedItems;
 }
 }

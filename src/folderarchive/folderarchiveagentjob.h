@@ -6,8 +6,8 @@
 #ifndef FOLDERARCHIVEAGENTJOB_H
 #define FOLDERARCHIVEAGENTJOB_H
 
-#include <QObject>
 #include <AkonadiCore/Item>
+#include <QObject>
 class KJob;
 class FolderArchiveAccountInfo;
 class FolderArchiveManager;
@@ -16,7 +16,10 @@ class FolderArchiveAgentJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit FolderArchiveAgentJob(FolderArchiveManager *manager, FolderArchiveAccountInfo *info, const Akonadi::Item::List &lstItem, QObject *parent = nullptr);
+    explicit FolderArchiveAgentJob(FolderArchiveManager *manager,
+                                   FolderArchiveAccountInfo *info,
+                                   const Akonadi::Item::List &lstItem,
+                                   QObject *parent = nullptr);
     ~FolderArchiveAgentJob() override;
 
     void start();

@@ -12,8 +12,8 @@
 #include "configuredialog.h"
 #include "configuredialog_p.h"
 
-#include "settings/kmailsettings.h"
 #include "kmkernel.h"
+#include "settings/kmailsettings.h"
 
 #include <QPushButton>
 
@@ -21,9 +21,8 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     : KCMultiDialog(parent)
 {
     setFaceType(List);
-    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help
-                       |QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel
-                       |QDialogButtonBox::Apply | QDialogButtonBox::Reset);
+    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help | QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel | QDialogButtonBox::Apply
+                       | QDialogButtonBox::Reset);
     setModal(modal);
     addModule(QStringLiteral("kmail_config_accounts"));
     addModule(QStringLiteral("kmail_config_appearance"));
@@ -54,8 +53,7 @@ void ConfigureDialog::hideEvent(QHideEvent *ev)
     KPageDialog::hideEvent(ev);
 }
 
-ConfigureDialog::~ConfigureDialog()
-= default;
+ConfigureDialog::~ConfigureDialog() = default;
 
 void ConfigureDialog::slotApply()
 {

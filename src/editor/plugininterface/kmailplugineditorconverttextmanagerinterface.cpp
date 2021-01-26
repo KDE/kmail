@@ -15,8 +15,7 @@ KMailPluginEditorConvertTextManagerInterface::KMailPluginEditorConvertTextManage
 {
 }
 
-KMailPluginEditorConvertTextManagerInterface::~KMailPluginEditorConvertTextManagerInterface()
-= default;
+KMailPluginEditorConvertTextManagerInterface::~KMailPluginEditorConvertTextManagerInterface() = default;
 
 void KMailPluginEditorConvertTextManagerInterface::enableDisablePluginActions(bool richText)
 {
@@ -29,16 +28,18 @@ void KMailPluginEditorConvertTextManagerInterface::reformatText()
 {
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
         if (interface->reformatText()) {
-            //TODO signal that it was reformating.
-            //Stop it.?
+            // TODO signal that it was reformating.
+            // Stop it.?
         }
     }
     Q_EMIT reformatingTextDone();
 }
 
-MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
+MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus
+KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageComposer::TextPart *textPart)
 {
-    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus status = MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
+    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus status =
+        MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
     for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
         switch (interface->convertTextToFormat(textPart)) {
         case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted:
@@ -128,7 +129,7 @@ void KMailPluginEditorConvertTextManagerInterface::setRichTextEditor(KPIMTextEdi
     mRichTextEditor = richTextEditor;
 }
 
-QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > KMailPluginEditorConvertTextManagerInterface::actionsType()
+QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEditorConvertTextManagerInterface::actionsType()
 {
     if (mActionHash.isEmpty()) {
         for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {

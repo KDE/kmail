@@ -8,8 +8,8 @@
 
 #include <kontactinterface/pimuniqueapplication.h>
 
-#include "kmkernel.h" //control center
 #include "kmail_options.h"
+#include "kmkernel.h" //control center
 #include "kmmigrateapplication.h"
 
 #include "kmail_debug.h"
@@ -17,15 +17,15 @@
 
 #include "aboutdata.h"
 
-#include <QDir>
-#include <QApplication>
-#include <QSessionManager>
 #include <KCrash>
+#include <QApplication>
+#include <QDir>
+#include <QSessionManager>
 #include <QWebEngineUrlScheme>
 
 #ifdef WITH_KUSERFEEDBACK
-#include <KUserFeedback/Provider>
 #include "userfeedback/kmailuserfeedbackprovider.h"
+#include <KUserFeedback/Provider>
 
 #endif
 
@@ -55,7 +55,7 @@ protected:
 void KMailApplication::commitData(QSessionManager &)
 {
     kmkernel->dumpDeadLetters();
-    kmkernel->setShuttingDown(true);   // Prevent further dumpDeadLetters calls
+    kmkernel->setShuttingDown(true); // Prevent further dumpDeadLetters calls
 }
 
 void KMailApplication::setEventLoopReached()
@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-    //Necessary for "cid" support in kmail.
+    // Necessary for "cid" support in kmail.
     QWebEngineUrlScheme cidScheme("cid");
     cidScheme.setFlags(QWebEngineUrlScheme::SecureScheme | QWebEngineUrlScheme::ContentSecurityPolicyIgnored);
     cidScheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
     KMMigrateApplication migrate;
     migrate.migrate();
 
-    //local, do the init
+    // local, do the init
     KMKernel kmailKernel;
     kmailKernel.init();
 
@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
 
-    //If the instance hasn't been created yet, do that now
+    // If the instance hasn't been created yet, do that now
     app.setEventLoopReached();
     app.delayedInstanceCreation(args, QDir::currentPath());
 

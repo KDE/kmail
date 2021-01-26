@@ -12,7 +12,8 @@
 
 #include <QByteArray>
 
-namespace Akonadi {
+namespace Akonadi
+{
 class SearchDescriptionAttribute : public Akonadi::Attribute
 {
 public:

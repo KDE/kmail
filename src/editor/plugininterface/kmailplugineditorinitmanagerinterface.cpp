@@ -6,9 +6,9 @@
 
 #include "kmailplugineditorinitmanagerinterface.h"
 #include "kmail_debug.h"
-#include <MessageComposer/PluginEditorInitManager>
 #include <MessageComposer/PluginEditorInit>
 #include <MessageComposer/PluginEditorInitInterface>
+#include <MessageComposer/PluginEditorInitManager>
 
 KMailPluginEditorInitManagerInterface::KMailPluginEditorInitManagerInterface(QObject *parent)
     : QObject(parent)

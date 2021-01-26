@@ -10,8 +10,8 @@
 
 #include "identitylistview.h"
 
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KIdentityManagement/kidentitymanagement/identity.h>
+#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
 #ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
@@ -73,10 +73,12 @@ void IdentityListViewItem::init(const KIdentityManagement::Identity &ident)
 {
     if (ident.isDefault()) {
         // Add "(Default)" to the end of the default identity's name:
-        setText(0, i18nc("%1: identity name. Used in the config "
-                         "dialog, section Identity, to indicate the "
-                         "default identity", "%1 (Default)",
-                         ident.identityName()));
+        setText(0,
+                i18nc("%1: identity name. Used in the config "
+                      "dialog, section Identity, to indicate the "
+                      "default identity",
+                      "%1 (Default)",
+                      ident.identityName()));
         QFont fontItem(font(0));
         fontItem.setBold(true);
         setFont(0, fontItem);

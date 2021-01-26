@@ -5,8 +5,8 @@
 #ifndef CONFIGURE_DIALOG_PRIVATE_H
 #define CONFIGURE_DIALOG_PRIVATE_H
 
-#include "kmail_export.h"
 #include "configmodule.h"
+#include "kmail_export.h"
 
 class QTabWidget;
 class ConfigureDialog;
@@ -21,8 +21,7 @@ public:
     {
     }
 
-    ~ConfigModuleTab() override
-    = default;
+    ~ConfigModuleTab() override = default;
 
     virtual void save() = 0;
     void defaults();
@@ -32,8 +31,10 @@ Q_SIGNALS:
 public Q_SLOTS:
     void slotEmitChanged();
     void load();
+
 protected:
     bool mEmitChanges{true};
+
 private:
     // reimplement this for loading values of settings which are available
     // via GlobalSettings
@@ -63,8 +64,7 @@ class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule
     Q_OBJECT
 public:
     explicit ConfigModuleWithTabs(QWidget *parent = nullptr);
-    ~ConfigModuleWithTabs() override
-    = default;
+    ~ConfigModuleWithTabs() override = default;
 
     // don't reimplement any of those methods
     void load() override;

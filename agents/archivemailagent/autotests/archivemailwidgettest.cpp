@@ -7,9 +7,9 @@
 #include "archivemailwidgettest.h"
 #include "../archivemailwidget.h"
 
+#include <QStandardPaths>
 #include <QTest>
 #include <QTreeWidget>
-#include <QStandardPaths>
 
 ArchiveMailWidgetTest::ArchiveMailWidgetTest(QObject *parent)
     : QObject(parent)
@@ -17,8 +17,7 @@ ArchiveMailWidgetTest::ArchiveMailWidgetTest(QObject *parent)
     QStandardPaths::setTestModeEnabled(true);
 }
 
-ArchiveMailWidgetTest::~ArchiveMailWidgetTest()
-= default;
+ArchiveMailWidgetTest::~ArchiveMailWidgetTest() = default;
 
 void ArchiveMailWidgetTest::shouldHaveDefaultValue()
 {

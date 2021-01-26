@@ -7,11 +7,11 @@
 #include "collectiontemplatespage.h"
 #include <MailCommon/CollectionTemplatesWidget>
 
-#include <MailCommon/MailKernel>
-#include <MailCommon/FolderSettings>
-#include <TemplateParser/TemplatesConfiguration>
 #include "templatesconfiguration_kfg.h"
 #include <AkonadiCore/collection.h>
+#include <MailCommon/FolderSettings>
+#include <MailCommon/MailKernel>
+#include <TemplateParser/TemplatesConfiguration>
 
 #include <KLocalizedString>
 
@@ -26,13 +26,11 @@ CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent)
     init();
 }
 
-CollectionTemplatesPage::~CollectionTemplatesPage()
-= default;
+CollectionTemplatesPage::~CollectionTemplatesPage() = default;
 
 bool CollectionTemplatesPage::canHandle(const Collection &collection) const
 {
-    return !CommonKernel->isSystemFolderCollection(collection)
-           || CommonKernel->isMainFolderCollection(collection);
+    return !CommonKernel->isSystemFolderCollection(collection) || CommonKernel->isMainFolderCollection(collection);
 }
 
 void CollectionTemplatesPage::init()

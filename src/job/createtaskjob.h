@@ -8,8 +8,8 @@
 #ifndef CREATETASKJOB_H
 #define CREATETASKJOB_H
 
-#include <KJob>
 #include <AkonadiCore/Item>
+#include <KJob>
 
 class CreateTaskJob : public KJob
 {
@@ -19,6 +19,7 @@ public:
     ~CreateTaskJob() override;
 
     void start() override;
+
 private:
     void itemFetchJobDone(KJob *job);
 

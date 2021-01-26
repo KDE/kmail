@@ -7,10 +7,10 @@
 #include "followupreminderinfotest.h"
 #include "../followupreminderinfo.h"
 
-#include <QTest>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <QStandardPaths>
+#include <QTest>
 
 FollowUpReminderInfoTest::FollowUpReminderInfoTest(QObject *parent)
     : QObject(parent)
@@ -32,7 +32,7 @@ void FollowUpReminderInfoTest::shouldHaveDefaultValue()
 void FollowUpReminderInfoTest::shoudBeNotValid()
 {
     FollowUpReminder::FollowUpReminderInfo info;
-    //We need a messageId not empty and a valid date and a "To" not empty
+    // We need a messageId not empty and a valid date and a "To" not empty
     info.setMessageId(QStringLiteral("foo"));
     QCOMPARE(info.isValid(), false);
 
@@ -51,7 +51,7 @@ void FollowUpReminderInfoTest::shoudBeNotValid()
 void FollowUpReminderInfoTest::shoudBeValidEvenIfSubjectIsEmpty()
 {
     FollowUpReminder::FollowUpReminderInfo info;
-    //We need a Akonadi::Id valid and a messageId not empty and a valid date and a "To" not empty
+    // We need a Akonadi::Id valid and a messageId not empty and a valid date and a "To" not empty
     info.setMessageId(QStringLiteral("foo"));
     const QDate date(2014, 1, 1);
     info.setFollowUpReminderDate(QDate(date));

@@ -11,35 +11,39 @@
 #define KMAIL_KMMAINWIDGET
 
 #include "kmail_export.h"
-#include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
+#include "kmreaderwin.h" //for inline actions
 
 #include <MailCommon/FolderTreeWidget>
 
-#include <KXMLGUIClient>
 #include "messageactions.h"
-#include <KActionCollection>
-#include <MailCommon/FolderSettings>
-#include <QPointer>
-#include <QTimer>
 #include <Akonadi/KMime/StandardMailActionManager>
 #include <AkonadiCore/tag.h>
+#include <KActionCollection>
+#include <KXMLGUIClient>
+#include <MailCommon/FolderSettings>
 #include <MessageList/View>
+#include <QPointer>
+#include <QTimer>
 
 #ifdef WITH_KUSERFEEDBACK
-namespace KUserFeedback {
+namespace KUserFeedback
+{
 class NotificationPopup;
 }
 #endif
 
-namespace MailTransport {
+namespace MailTransport
+{
 class Transport;
 }
-namespace Akonadi {
+namespace Akonadi
+{
 class Tag;
 }
 
-namespace KMime {
+namespace KMime
+{
 class Message;
 }
 class QUrl;
@@ -61,23 +65,27 @@ class KActionMenuTransport;
 class KActionMenuAccount;
 class ZoomLabelWidget;
 
-namespace KIO {
+namespace KIO
+{
 class Job;
 }
 
-namespace KMail {
+namespace KMail
+{
 class SearchWindow;
 class VacationScriptIndicatorWidget;
 class TagActionManager;
 class FolderShortcutActionManager;
 }
 
-namespace KSieveUi {
+namespace KSieveUi
+{
 class SieveImapPasswordProvider;
 class ManageSieveScriptsDialog;
 class VacationManager;
 }
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderSelectionDialog;
 class FavoriteCollectionWidget;
 class MailFilter;
@@ -90,7 +98,10 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
 public:
     using PtrList = QList<KMMainWidget *>;
 
-    KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, const KSharedConfig::Ptr &config = KMKernel::self()->config());
+    KMMainWidget(QWidget *parent,
+                 KXMLGUIClient *aGUIClient,
+                 KActionCollection *actionCollection,
+                 const KSharedConfig::Ptr &config = KMKernel::self()->config());
     ~KMMainWidget() override;
     void destruct();
 
@@ -337,7 +348,13 @@ private:
 
     void openFilterDialog(const QByteArray &field, const QString &value);
 
-    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
+    void showMessagePopup(const Akonadi::Item &msg,
+                          const QUrl &aUrl,
+                          const QUrl &imageUrl,
+                          const QPoint &aPoint,
+                          bool contactAlreadyExists,
+                          bool uniqueContactFound,
+                          const WebEngineViewer::WebHitTestResult &result);
 
     void setZoomChanged(qreal zoomFactor);
 
@@ -358,7 +375,7 @@ private Q_SLOTS:
     void slotOverrideHtmlLoadExt();
     void slotUseTemplate();
     void slotTrashThread();
-    void slotDeleteThread(bool confirmDelete);    // completely delete thread
+    void slotDeleteThread(bool confirmDelete); // completely delete thread
     void slotUndo();
     void slotReadOn();
     void slotSaveMsg();
@@ -500,9 +517,10 @@ private Q_SLOTS:
     void slotRedirectCurrentMessage();
     void slotEditCurrentVacation();
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
+
 private:
     void slotSetFocusToViewer();
-    void deleteSelectedMessages(bool confirmDelete);    // completely delete message
+    void deleteSelectedMessages(bool confirmDelete); // completely delete message
     bool showSearchDialog();
     void clearCurrentFolder();
     void setCurrentCollection(const Akonadi::Collection &col);

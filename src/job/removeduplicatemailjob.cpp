@@ -6,12 +6,12 @@
 
 #include "removeduplicatemailjob.h"
 
-#include <Libkdepim/ProgressManager>
+#include <AkonadiCore/Collection>
+#include <AkonadiCore/EntityTreeModel>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <AkonadiCore/Collection>
+#include <Libkdepim/ProgressManager>
 #include <akonadi/kmime/removeduplicatesjob.h>
-#include <AkonadiCore/EntityTreeModel>
 
 #include <QItemSelectionModel>
 Q_DECLARE_METATYPE(KPIM::ProgressItem *)
@@ -24,8 +24,7 @@ RemoveDuplicateMailJob::RemoveDuplicateMailJob(QItemSelectionModel *selectionMod
 {
 }
 
-RemoveDuplicateMailJob::~RemoveDuplicateMailJob()
-= default;
+RemoveDuplicateMailJob::~RemoveDuplicateMailJob() = default;
 
 void RemoveDuplicateMailJob::start()
 {

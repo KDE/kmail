@@ -5,20 +5,20 @@
 */
 
 #include "sendlaterutil.h"
-#include "sendlateragentsettings.h"
 #include "sendlateragent_debug.h"
+#include "sendlateragentsettings.h"
 
 #include <MessageComposer/SendLaterInfo>
 
-#include <KConfigGroup>
 #include <AkonadiCore/ServerManager>
+#include <KConfigGroup>
 
 #include <QStringList>
 
 bool SendLaterUtil::compareSendLaterInfo(MessageComposer::SendLaterInfo *left, MessageComposer::SendLaterInfo *right)
 {
     if (left->dateTime() == right->dateTime()) {
-        //Set no recursive first.
+        // Set no recursive first.
         if (left->isRecurrence()) {
             return false;
         }
@@ -56,7 +56,8 @@ void SendLaterUtil::changeRecurrentDate(MessageComposer::SendLaterInfo *info)
             newInfoDateTime = updateRecurence(info, newInfoDateTime);
         }
         info->setDateTime(newInfoDateTime);
-        qCDebug(SENDLATERAGENT_LOG) << "AFTER SendLaterUtil::changeRecurrentDate " << info->dateTime().toString() << " info" << info << "New date" << newInfoDateTime;
+        qCDebug(SENDLATERAGENT_LOG) << "AFTER SendLaterUtil::changeRecurrentDate " << info->dateTime().toString() << " info" << info << "New date"
+                                    << newInfoDateTime;
         writeSendLaterInfo(defaultConfig(), info);
     }
 }
@@ -75,7 +76,8 @@ MessageComposer::SendLaterInfo *SendLaterUtil::readSendLaterInfo(KConfigGroup &c
     info->setDateTime(config.readEntry("date", QDateTime::currentDateTime()));
     info->setRecurrence(config.readEntry("recurrence", false));
     info->setRecurrenceEachValue(config.readEntry("recurrenceValue", 1));
-    info->setRecurrenceUnit(static_cast<MessageComposer::SendLaterInfo::RecurrenceUnit>(config.readEntry("recurrenceUnit", static_cast<int>(MessageComposer::SendLaterInfo::Days))));
+    info->setRecurrenceUnit(static_cast<MessageComposer::SendLaterInfo::RecurrenceUnit>(
+        config.readEntry("recurrenceUnit", static_cast<int>(MessageComposer::SendLaterInfo::Days))));
     info->setItemId(config.readEntry("itemId", -1));
     info->setSubject(config.readEntry("subject"));
     info->setTo(config.readEntry("to"));

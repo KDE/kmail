@@ -7,13 +7,15 @@
 #ifndef KMAILPLUGINEDITORMANAGERINTERFACE_H
 #define KMAILPLUGINEDITORMANAGERINTERFACE_H
 
-#include <QObject>
-#include <QHash>
 #include <MessageComposer/PluginEditorInterface>
-namespace KPIMTextEdit {
+#include <QHash>
+#include <QObject>
+namespace KPIMTextEdit
+{
 class RichTextEditor;
 }
-namespace MessageComposer {
+namespace MessageComposer
+{
 class PluginEditorInterface;
 class ComposerViewBase;
 }
@@ -36,7 +38,7 @@ public:
     KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
-    Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
+    Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> actionsType();
     Q_REQUIRED_RESULT QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
     Q_REQUIRED_RESULT QList<QWidget *> statusBarWidgetList();
 
@@ -58,7 +60,7 @@ private:
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;
     QList<MessageComposer::PluginEditorInterface *> mListPluginInterface;
-    QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > mActionHash;
+    QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> mActionHash;
     QList<QWidget *> mStatusBarWidget;
 };
 

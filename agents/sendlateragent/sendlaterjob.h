@@ -11,11 +11,12 @@
 
 #include "sendlatermanager.h"
 
-#include <KMime/Message>
-#include <ItemFetchScope>
 #include <Item>
+#include <ItemFetchScope>
+#include <KMime/Message>
 
-namespace MessageComposer {
+namespace MessageComposer
+{
 class SendLaterInfo;
 }
 class KJob;

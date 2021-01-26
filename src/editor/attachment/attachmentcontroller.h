@@ -11,15 +11,17 @@
 #ifndef KMAIL_ATTACHMENTCONTROLLER_H
 #define KMAIL_ATTACHMENTCONTROLLER_H
 
-#include <MessageComposer/AttachmentControllerBase>
 #include <AkonadiCore/Item>
+#include <MessageComposer/AttachmentControllerBase>
 class KMComposerWin;
 class QModelIndex;
-namespace MessageComposer {
+namespace MessageComposer
+{
 class AttachmentModel;
 }
 
-namespace KMail {
+namespace KMail
+{
 class AttachmentView;
 
 class AttachmentController : public MessageComposer::AttachmentControllerBase

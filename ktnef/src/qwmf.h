@@ -9,12 +9,12 @@
 #ifndef qwmf_h
 #define qwmf_h
 
-#include <QString>
-#include <QPainter>
-#include <QTransform>
 #include <QColor>
 #include <QImage>
+#include <QPainter>
 #include <QRect>
+#include <QString>
+#include <QTransform>
 
 class QBuffer;
 class QString;
@@ -209,7 +209,7 @@ protected:
 
     // coordinate system
     bool mAbsoluteCoord;
-    QTransform mInternalWorldMatrix;    // memorisation of WMF matrix transformation
+    QTransform mInternalWorldMatrix; // memorisation of WMF matrix transformation
     QRect mHeaderBoundingBox;
     QRect mBBox;
 

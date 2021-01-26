@@ -6,10 +6,10 @@
 #ifndef FOLDERARCHIVECACHE_H
 #define FOLDERARCHIVECACHE_H
 
-#include <QObject>
+#include <AkonadiCore/Collection>
 #include <QDateTime>
 #include <QHash>
-#include <AkonadiCore/Collection>
+#include <QObject>
 
 class FolderArchiveAccountInfo;
 

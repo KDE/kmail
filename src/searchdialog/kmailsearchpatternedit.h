@@ -9,7 +9,8 @@
 
 #include <MailCommon/SearchPatternEdit>
 
-namespace KMail {
+namespace KMail
+{
 class KMailSearchPatternEdit : public MailCommon::SearchPatternEdit
 {
     Q_OBJECT

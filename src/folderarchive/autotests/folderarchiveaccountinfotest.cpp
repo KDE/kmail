@@ -6,9 +6,9 @@
 #include "folderarchiveaccountinfotest.h"
 #include "../folderarchiveaccountinfo.h"
 #include <AkonadiCore/Collection>
-#include <QTest>
 #include <KSharedConfig>
 #include <QStandardPaths>
+#include <QTest>
 
 FolderArchiveAccountInfoTest::FolderArchiveAccountInfoTest(QObject *parent)
     : QObject(parent)
@@ -16,8 +16,7 @@ FolderArchiveAccountInfoTest::FolderArchiveAccountInfoTest(QObject *parent)
     QStandardPaths::setTestModeEnabled(true);
 }
 
-FolderArchiveAccountInfoTest::~FolderArchiveAccountInfoTest()
-= default;
+FolderArchiveAccountInfoTest::~FolderArchiveAccountInfoTest() = default;
 
 void FolderArchiveAccountInfoTest::shouldHaveDefaultValue()
 {

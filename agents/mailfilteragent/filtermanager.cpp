@@ -7,32 +7,32 @@
  */
 #include "filtermanager.h"
 
+#include "mailfilteragent_debug.h"
+#include <Akonadi/KMime/MessageParts>
+#include <AkonadiCore/EntityMimeTypeFilterModel>
+#include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/agentmanager.h>
 #include <AkonadiCore/changerecorder.h>
 #include <AkonadiCore/collectionfetchjob.h>
 #include <AkonadiCore/collectionfetchscope.h>
+#include <AkonadiCore/itemdeletejob.h>
 #include <AkonadiCore/itemfetchjob.h>
 #include <AkonadiCore/itemfetchscope.h>
 #include <AkonadiCore/itemmodifyjob.h>
 #include <AkonadiCore/itemmovejob.h>
-#include <AkonadiCore/itemdeletejob.h>
-#include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/EntityMimeTypeFilterModel>
-#include <Akonadi/KMime/MessageParts>
-#include "mailfilteragent_debug.h"
 #include <KLocalizedString>
 #include <KNotification>
-#include <kmime/kmime_message.h>
 #include <MailCommon/FilterImporterExporter>
 #include <MailCommon/FilterLog>
 #include <MailCommon/MailFilter>
 #include <MailCommon/MailKernel>
+#include <kmime/kmime_message.h>
 
 // other headers
-#include <algorithm>
-#include <errno.h>
 #include <KSharedConfig>
 #include <QLocale>
+#include <algorithm>
+#include <errno.h>
 
 using namespace MailCommon;
 
@@ -77,7 +77,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
     QVector<MailFilter *> listMailFilters;
     if (q->sender()->property("listFilters").isValid()) {
         const QStringList listFilters = q->sender()->property("listFilters").toStringList();
-        //TODO improve it
+        // TODO improve it
         for (const QString &filterId : listFilters) {
             for (MailCommon::MailFilter *filter : qAsConst(mFilters)) {
                 if (filter->identifier() == filterId) {
@@ -98,8 +98,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
         ++mCurrentProgressCount;
 
         if ((mTotalProgressCount > 0) && (mCurrentProgressCount != mTotalProgressCount)) {
-            const QString statusMsg
-                = i18n("Filtering message %1 of %2", mCurrentProgressCount, mTotalProgressCount);
+            const QString statusMsg = i18n("Filtering message %1 of %2", mCurrentProgressCount, mTotalProgressCount);
             Q_EMIT q->progressMessage(statusMsg);
             Q_EMIT q->percent(mCurrentProgressCount * 100 / mTotalProgressCount);
         } else {
@@ -116,7 +115,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
         if (!filterResult) {
             Q_EMIT q->filteringFailed(item);
             // something went horribly wrong (out of space?)
-            //CommonKernel->emergencyExit( i18n( "Unable to process messages: " ) + QString::fromLocal8Bit( strerror( errno ) ) );
+            // CommonKernel->emergencyExit( i18n( "Unable to process messages: " ) + QString::fromLocal8Bit( strerror( errno ) ) );
         }
     }
 }
@@ -185,7 +184,7 @@ void FilterManager::Private::moveJobResult(KJob *job)
         } else {
             qCCritical(MAILFILTERAGENT_LOG) << "Error while moving items. " << job->error() << job->errorString();
         }
-        //Laurent: not real info and when we have 200 errors it's very long to click all the time on ok.
+        // Laurent: not real info and when we have 200 errors it's very long to click all the time on ok.
         showNotification(i18n("Error applying mail filter move"), job->errorString());
     }
 }
@@ -226,8 +225,7 @@ bool FilterManager::Private::isMatching(const Akonadi::Item &item, const MailCom
 
     if (filter->pattern()->matches(item)) {
         if (FilterLog::instance()->isLogging()) {
-            FilterLog::instance()->add(i18n("<b>Filter rules have matched.</b>"),
-                                       FilterLog::PatternResult);
+            FilterLog::instance()->add(i18n("<b>Filter rules have matched.</b>"), FilterLog::PatternResult);
         }
 
         result = true;
@@ -246,8 +244,7 @@ void FilterManager::Private::beginFiltering(const Akonadi::Item &item) const
             const QString from = msg->from()->asUnicodeString();
             const QDateTime dateTime = msg->date()->dateTime();
             const QString date = QLocale().toString(dateTime, QLocale::LongFormat);
-            const QString logText(i18n("<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>",
-                                       subject, from, date));
+            const QString logText(i18n("<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>", subject, from, date));
             FilterLog::instance()->add(logText, FilterLog::PatternDescription);
         }
     }
@@ -313,8 +310,7 @@ void FilterManager::readConfig()
         for (const Akonadi::AgentInstance &agent : agents) {
             const QString id = agent.identifier();
 
-            auto it = std::max_element(d->mFilters.constBegin(), d->mFilters.constEnd(),
-                                       [id](MailCommon::MailFilter *lhs, MailCommon::MailFilter *rhs) {
+            auto it = std::max_element(d->mFilters.constBegin(), d->mFilters.constEnd(), [id](MailCommon::MailFilter *lhs, MailCommon::MailFilter *rhs) {
                 return lhs->requiredPart(id) < rhs->requiredPart(id);
             });
             d->mRequiredParts[id] = (*it)->requiredPart(id);
@@ -323,9 +319,7 @@ void FilterManager::readConfig()
     }
     // check if at least one filter is to be applied on inbound mail
 
-    for (auto i = d->mFilters.cbegin(), e = d->mFilters.cend();
-         i != e && (!d->mInboundFiltersExist || !d->mAllFoldersFiltersExist);
-         ++i) {
+    for (auto i = d->mFilters.cbegin(), e = d->mFilters.cend(); i != e && (!d->mInboundFiltersExist || !d->mAllFoldersFiltersExist); ++i) {
         if ((*i)->applyOnInbound()) {
             d->mInboundFiltersExist = true;
         }
@@ -340,8 +334,7 @@ void FilterManager::readConfig()
 void FilterManager::mailCollectionRemoved(const Akonadi::Collection &collection)
 {
     QVector<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
-    for (QVector<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
-         it != end; ++it) {
+    for (QVector<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin(); it != end; ++it) {
         (*it)->folderRemoved(collection, Akonadi::Collection());
     }
 }
@@ -349,8 +342,7 @@ void FilterManager::mailCollectionRemoved(const Akonadi::Collection &collection)
 void FilterManager::agentRemoved(const QString &identifier)
 {
     QVector<MailCommon::MailFilter *>::const_iterator end(d->mFilters.constEnd());
-    for (QVector<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin();
-         it != end; ++it) {
+    for (QVector<MailCommon::MailFilter *>::const_iterator it = d->mFilters.constBegin(); it != end; ++it) {
         (*it)->agentRemoved(identifier);
     }
 }
@@ -438,8 +430,7 @@ bool FilterManager::processContextItem(ItemContext context)
     const KMime::Message::Ptr msg = context.item().payload<KMime::Message::Ptr>();
     msg->assemble();
 
-    auto col = Akonadi::EntityTreeModel::updatedCollection(MailCommon::Kernel::self()->kernelIf()->collectionModel(),
-                                                           context.item().parentCollection());
+    auto col = Akonadi::EntityTreeModel::updatedCollection(MailCommon::Kernel::self()->kernelIf()->collectionModel(), context.item().parentCollection());
     const bool itemCanDelete = (col.rights() & Akonadi::Collection::CanDeleteItem);
     if (context.deleteItem()) {
         if (itemCanDelete) {
@@ -463,15 +454,16 @@ bool FilterManager::processContextItem(ItemContext context)
         }
         if (context.needsPayloadStore() || context.needsFlagStore()) {
             Akonadi::Item item = context.item();
-            //the item might be in a new collection with a different remote id, so don't try to force on it
-            //the previous remote id. Example: move to another collection on another resource => new remoteId, but our context.item()
-            //remoteid still holds the old one. Without clearing it, we try to enforce that on the new location, which is
-            //anything but good (and the server replies with "NO Only resources can modify remote identifiers"
+            // the item might be in a new collection with a different remote id, so don't try to force on it
+            // the previous remote id. Example: move to another collection on another resource => new remoteId, but our context.item()
+            // remoteid still holds the old one. Without clearing it, we try to enforce that on the new location, which is
+            // anything but good (and the server replies with "NO Only resources can modify remote identifiers"
             item.setRemoteId(QString());
             auto modifyJob = new Akonadi::ItemModifyJob(item, this);
-            modifyJob->disableRevisionCheck(); //no conflict handling for mails as no other process could change the mail body and we don't care about flag conflicts
-            //The below is a safety check to ignore modifying payloads if it was not requested,
-            //as in that case we might change the payload to an invalid one
+            modifyJob->disableRevisionCheck(); // no conflict handling for mails as no other process could change the mail body and we don't care about flag
+                                               // conflicts
+            // The below is a safety check to ignore modifying payloads if it was not requested,
+            // as in that case we might change the payload to an invalid one
             modifyJob->setIgnorePayload(!context.needsFullPayload());
             connect(modifyJob, &Akonadi::ItemModifyJob::result, this, [this](KJob *job) {
                 d->modifyJobResult(job);
@@ -482,7 +474,12 @@ bool FilterManager::processContextItem(ItemContext context)
     return true;
 }
 
-bool FilterManager::process(const QVector< MailFilter * > &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterManager::FilterSet set, bool account, const QString &accountId)
+bool FilterManager::process(const QVector<MailFilter *> &mailFilters,
+                            const Akonadi::Item &item,
+                            bool needsFullPayload,
+                            FilterManager::FilterSet set,
+                            bool account,
+                            const QString &accountId)
 {
     if (set == NoSet) {
         qCDebug(MAILFILTERAGENT_LOG) << "FilterManager: process() called with not filter set selected";
@@ -503,8 +500,7 @@ bool FilterManager::process(const QVector< MailFilter * > &mailFilters, const Ak
 
     const bool applyOnOutbound = ((set & Outbound) || (set & BeforeOutbound));
 
-    for (QVector<MailCommon::MailFilter *>::const_iterator it = mailFilters.constBegin();
-         !stopIt && it != end; ++it) {
+    for (QVector<MailCommon::MailFilter *>::const_iterator it = mailFilters.constBegin(); !stopIt && it != end; ++it) {
         if ((*it)->isEnabled()) {
             const bool inboundOk = ((set & Inbound) && (*it)->applyOnInbound());
             const bool outboundOk = ((set & Outbound) && (*it)->applyOnOutbound());
@@ -553,8 +549,7 @@ QString FilterManager::createUniqueName(const QString &name) const
                 found = true;
                 ++counter;
                 uniqueName = name;
-                uniqueName += QLatin1String(" (") + QString::number(counter)
-                              + QLatin1String(")");
+                uniqueName += QLatin1String(" (") + QString::number(counter) + QLatin1String(")");
                 break;
             }
         }
@@ -578,7 +573,10 @@ void FilterManager::dump() const
     }
 }
 
-void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMessages, SearchRule::RequiredPart requiredPart, const QStringList &listFilters, FilterSet filterSet)
+void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMessages,
+                                         SearchRule::RequiredPart requiredPart,
+                                         const QStringList &listFilters,
+                                         FilterSet filterSet)
 {
     Q_EMIT progressMessage(i18n("Filtering messages"));
     d->mTotalProgressCount = selectedMessages.size();

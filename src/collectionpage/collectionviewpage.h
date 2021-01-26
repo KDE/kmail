@@ -7,8 +7,8 @@
 #ifndef COLLECTIONVIEWPAGE_H
 #define COLLECTIONVIEWPAGE_H
 
-#include <AkonadiWidgets/collectionpropertiespage.h>
 #include <AkonadiCore/collection.h>
+#include <AkonadiWidgets/collectionpropertiespage.h>
 #include <MailCommon/FolderSettings>
 class QCheckBox;
 class QLabel;
@@ -16,7 +16,8 @@ class KIconButton;
 class CollectionViewWidget;
 template<typename T> class QSharedPointer;
 
-namespace MailCommon {
+namespace MailCommon
+{
 class CollectionViewWidget;
 }
 class CollectionViewPage : public Akonadi::CollectionPropertiesPage

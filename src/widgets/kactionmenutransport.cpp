@@ -5,8 +5,8 @@
 */
 
 #include "kactionmenutransport.h"
-#include <QMenu>
 #include <MailTransport/TransportManager>
+#include <QMenu>
 
 KActionMenuTransport::KActionMenuTransport(QObject *parent)
     : KActionMenu(parent)
@@ -17,8 +17,7 @@ KActionMenuTransport::KActionMenuTransport(QObject *parent)
     connect(menu(), &QMenu::triggered, this, &KActionMenuTransport::slotSelectTransport);
 }
 
-KActionMenuTransport::~KActionMenuTransport()
-= default;
+KActionMenuTransport::~KActionMenuTransport() = default;
 
 void KActionMenuTransport::slotCheckTransportMenu()
 {

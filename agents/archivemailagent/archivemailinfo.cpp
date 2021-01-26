@@ -5,12 +5,11 @@
 */
 #include "archivemailinfo.h"
 
-#include <KLocalizedString>
 #include "archivemailagent_debug.h"
+#include <KLocalizedString>
 #include <QDir>
 
-ArchiveMailInfo::ArchiveMailInfo()
-= default;
+ArchiveMailInfo::ArchiveMailInfo() = default;
 
 ArchiveMailInfo::ArchiveMailInfo(const KConfigGroup &config)
 {
@@ -30,8 +29,7 @@ ArchiveMailInfo::ArchiveMailInfo(const ArchiveMailInfo &info)
     mIsEnabled = info.isEnabled();
 }
 
-ArchiveMailInfo::~ArchiveMailInfo()
-= default;
+ArchiveMailInfo::~ArchiveMailInfo() = default;
 
 ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
 {
@@ -72,12 +70,11 @@ QUrl ArchiveMailInfo::realUrl(const QString &folderName, bool &dirExist) const
 {
     const int numExtensions = 4;
     // The extensions here are also sorted, like the enum order of BackupJob::ArchiveType
-    const char *extensions[numExtensions] = { ".zip", ".tar", ".tar.bz2", ".tar.gz" };
+    const char *extensions[numExtensions] = {".zip", ".tar", ".tar.bz2", ".tar.gz"};
     const QString dirPath = dirArchive(dirExist);
 
-    const QString path = dirPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive")
-                         + QLatin1Char('_') + normalizeFolderName(folderName) + QLatin1Char('_')
-                         + QDate::currentDate().toString(Qt::ISODate) + QString::fromLatin1(extensions[mArchiveType]);
+    const QString path = dirPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_')
+        + normalizeFolderName(folderName) + QLatin1Char('_') + QDate::currentDate().toString(Qt::ISODate) + QString::fromLatin1(extensions[mArchiveType]);
     QUrl real(QUrl::fromLocalFile(path));
     return real;
 }
@@ -86,14 +83,14 @@ QStringList ArchiveMailInfo::listOfArchive(const QString &folderName, bool &dirE
 {
     const int numExtensions = 4;
     // The extensions here are also sorted, like the enum order of BackupJob::ArchiveType
-    const char *extensions[numExtensions] = { ".zip", ".tar", ".tar.bz2", ".tar.gz" };
+    const char *extensions[numExtensions] = {".zip", ".tar", ".tar.bz2", ".tar.gz"};
     const QString dirPath = dirArchive(dirExist);
 
     QDir dir(dirPath);
 
     QStringList nameFilters;
-    nameFilters << i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_')
-        +normalizeFolderName(folderName) + QLatin1Char('_') + QLatin1String("*") + QString::fromLatin1(extensions[mArchiveType]);
+    nameFilters << i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + normalizeFolderName(folderName) + QLatin1Char('_')
+            + QLatin1String("*") + QString::fromLatin1(extensions[mArchiveType]);
     const QStringList lst = dir.entryList(nameFilters, QDir::Files | QDir::NoDotAndDotDot, QDir::Time | QDir::Reversed);
     return lst;
 }
@@ -235,13 +232,7 @@ void ArchiveMailInfo::setEnabled(bool b)
 
 bool ArchiveMailInfo::operator==(const ArchiveMailInfo &other) const
 {
-    return saveCollectionId() == other.saveCollectionId()
-           && saveSubCollection() == other.saveSubCollection()
-           && url() == other.url()
-           && archiveType() == other.archiveType()
-           && archiveUnit() == other.archiveUnit()
-           && archiveAge() == other.archiveAge()
-           && lastDateSaved() == other.lastDateSaved()
-           && maximumArchiveCount() == other.maximumArchiveCount()
-           && isEnabled() == other.isEnabled();
+    return saveCollectionId() == other.saveCollectionId() && saveSubCollection() == other.saveSubCollection() && url() == other.url()
+        && archiveType() == other.archiveType() && archiveUnit() == other.archiveUnit() && archiveAge() == other.archiveAge()
+        && lastDateSaved() == other.lastDateSaved() && maximumArchiveCount() == other.maximumArchiveCount() && isEnabled() == other.isEnabled();
 }

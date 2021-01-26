@@ -42,8 +42,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     hide();
 }
 
-CryptoStateIndicatorWidget::~CryptoStateIndicatorWidget()
-= default;
+CryptoStateIndicatorWidget::~CryptoStateIndicatorWidget() = default;
 
 void CryptoStateIndicatorWidget::setShowAlwaysIndicator(bool status)
 {
@@ -75,11 +74,7 @@ void CryptoStateIndicatorWidget::updateSignatureAndEncrypionStateIndicators(bool
     mIsEncrypted = isEncrypted;
     mIsSign = isSign;
 
-    mSignatureStateIndicator->setText(isSign
-                                      ? i18n("Message will be signed")
-                                      : i18n("Message will not be signed"));
-    mEncryptionStateIndicator->setText(isEncrypted
-                                       ? i18n("Message will be encrypted")
-                                       : i18n("Message will not be encrypted"));
+    mSignatureStateIndicator->setText(isSign ? i18n("Message will be signed") : i18n("Message will not be signed"));
+    mEncryptionStateIndicator->setText(isEncrypted ? i18n("Message will be encrypted") : i18n("Message will not be encrypted"));
     updateShowAlwaysIndicator();
 }

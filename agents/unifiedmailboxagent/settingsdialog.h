@@ -22,6 +22,7 @@ class SettingsDialog : public QDialog
 public:
     explicit SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxManager &manager, WId windowId, QWidget *parent = nullptr);
     ~SettingsDialog() override;
+
 private:
     void loadBoxes();
     void addBox(UnifiedMailbox *box);

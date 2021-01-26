@@ -7,8 +7,8 @@
 #ifndef INCORRECTIDENTITYFOLDERWARNING_H
 #define INCORRECTIDENTITYFOLDERWARNING_H
 
-#include <KMessageWidget>
 #include "kmail_private_export.h"
+#include <KMessageWidget>
 
 class KMAILTESTS_TESTS_EXPORT IncorrectIdentityFolderWarning : public KMessageWidget
 {

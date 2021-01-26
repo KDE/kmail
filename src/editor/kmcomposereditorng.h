@@ -9,7 +9,8 @@
 
 #include <MessageComposer/RichTextComposerNg>
 class KMComposerWin;
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class RichTextComposerEmailQuoteHighlighter;
 }
 class KMComposerEditorNg : public MessageComposer::RichTextComposerNg

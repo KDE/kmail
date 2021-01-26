@@ -7,11 +7,12 @@
 #ifndef FOLLOWUPREMINDERMANAGER_H
 #define FOLLOWUPREMINDERMANAGER_H
 
-#include <QObject>
-#include <KSharedConfig>
 #include <AkonadiCore/Item>
+#include <KSharedConfig>
+#include <QObject>
 #include <QPointer>
-namespace FollowUpReminder {
+namespace FollowUpReminder
+{
 class FollowUpReminderInfo;
 }
 class FollowUpReminderNoAnswerDialog;
@@ -27,6 +28,7 @@ public:
     void checkFollowUp(const Akonadi::Item &item, const Akonadi::Collection &col);
 
     Q_REQUIRED_RESULT QString printDebugInfo() const;
+
 private:
     Q_DISABLE_COPY(FollowUpReminderManager)
     void slotCheckFollowUpFinished(const QString &messageId, Akonadi::Item::Id id);

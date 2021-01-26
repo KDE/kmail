@@ -12,8 +12,7 @@
 class AgentIdentifier
 {
 public:
-    AgentIdentifier()
-    = default;
+    AgentIdentifier() = default;
 
     AgentIdentifier(const QString &identifier, const QString &name, int index = -1)
         : mIdentifier(identifier)

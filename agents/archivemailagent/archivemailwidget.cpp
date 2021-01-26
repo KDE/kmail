@@ -9,23 +9,24 @@
 #include "archivemailagentutil.h"
 #include "archivemailkernel.h"
 
-#include <KIO/OpenUrlJob>
 #include <KIO/JobUiDelegate>
+#include <KIO/OpenUrlJob>
 
 #include "kmail-version.h"
 
-#include <MailCommon/MailUtil>
 #include <MailCommon/MailKernel>
+#include <MailCommon/MailUtil>
 
-#include <QLocale>
-#include <KLocalizedString>
-#include <KSharedConfig>
-#include <KConfigGroup>
-#include <KMessageBox>
-#include <QMenu>
 #include <KAboutData>
+#include <KConfigGroup>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KSharedConfig>
+#include <QLocale>
+#include <QMenu>
 
-namespace {
+namespace
+{
 inline QString archiveMailCollectionPattern()
 {
     return QStringLiteral("ArchiveMailCollection \\d+");
@@ -58,8 +59,8 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
     : Akonadi::AgentConfigurationBase(config, parent, args)
 {
     ArchiveMailKernel *archiveMailKernel = ArchiveMailKernel::self();
-    CommonKernel->registerKernelIf(archiveMailKernel);   //register KernelIf early, it is used by the Filter classes
-    CommonKernel->registerSettingsIf(archiveMailKernel);   //SettingsIf is used in FolderTreeWidget
+    CommonKernel->registerKernelIf(archiveMailKernel); // register KernelIf early, it is used by the Filter classes
+    CommonKernel->registerSettingsIf(archiveMailKernel); // SettingsIf is used in FolderTreeWidget
 
     auto w = new QWidget(parent);
     mWidget.setupUi(w);
@@ -74,8 +75,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
     mWidget.treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
     mWidget.treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    connect(mWidget.treeWidget, &QWidget::customContextMenuRequested,
-            this, &ArchiveMailWidget::slotCustomContextMenuRequested);
+    connect(mWidget.treeWidget, &QWidget::customContextMenuRequested, this, &ArchiveMailWidget::slotCustomContextMenuRequested);
 
     connect(mWidget.removeItem, &QAbstractButton::clicked, this, &ArchiveMailWidget::slotRemoveItem);
     connect(mWidget.modifyItem, &QAbstractButton::clicked, this, &ArchiveMailWidget::slotModifyItem);
@@ -85,23 +85,19 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
     connect(mWidget.treeWidget, &QTreeWidget::itemDoubleClicked, this, &ArchiveMailWidget::slotModifyItem);
     updateButtons();
 
-    KAboutData aboutData(
-        QStringLiteral("archivemailagent"),
-        i18n("Archive Mail Agent"),
-        QStringLiteral(KDEPIM_VERSION),
-        i18n("Archive emails automatically."),
-        KAboutLicense::GPL_V2,
-        i18n("Copyright (C) 2014-2020 Laurent Montel"));
-    aboutData.addAuthor(i18n("Laurent Montel"),
-                        i18n("Maintainer"), QStringLiteral("montel@kde.org"));
+    KAboutData aboutData(QStringLiteral("archivemailagent"),
+                         i18n("Archive Mail Agent"),
+                         QStringLiteral(KDEPIM_VERSION),
+                         i18n("Archive emails automatically."),
+                         KAboutLicense::GPL_V2,
+                         i18n("Copyright (C) 2014-2020 Laurent Montel"));
+    aboutData.addAuthor(i18n("Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
 
-    aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"),
-                            i18nc("EMAIL OF TRANSLATORS", "Your emails"));
+    aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     setKAboutData(aboutData);
 }
 
-ArchiveMailWidget::~ArchiveMailWidget()
-= default;
+ArchiveMailWidget::~ArchiveMailWidget() = default;
 
 void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
 {
@@ -135,7 +131,7 @@ void ArchiveMailWidget::updateButtons()
 
 void ArchiveMailWidget::needReloadConfig()
 {
-    //TODO add messagebox which informs that we save settings here.
+    // TODO add messagebox which informs that we save settings here.
     mWidget.treeWidget->clear();
     load();
 }

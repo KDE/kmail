@@ -10,8 +10,8 @@
 
 #include <QObject>
 
-#include <Collection>
 #include <Akonadi/KMime/MarkAsCommand>
+#include <Collection>
 
 class MarkAllMessagesAsReadInFolderAndSubFolderJob : public QObject
 {
@@ -23,6 +23,7 @@ public:
     void setTopLevelCollection(const Akonadi::Collection &topLevelCollection);
 
     void start();
+
 private:
     Q_DISABLE_COPY(MarkAllMessagesAsReadInFolderAndSubFolderJob)
     void slotFetchCollectionFailed();

@@ -15,25 +15,25 @@
 #include "qwmf.h"
 
 #include <KTNEF/KTNEFAttach>
+#include <KTNEF/KTNEFDefs>
 #include <KTNEF/KTNEFProperty>
 #include <KTNEF/KTNEFPropertySet>
-#include <KTNEF/KTNEFDefs>
 
 #include "ktnef_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 
+#include <KConfigGroup>
+#include <KSharedConfig>
 #include <QBuffer>
 #include <QDataStream>
-#include <QTreeWidget>
-#include <KSharedConfig>
+#include <QDialogButtonBox>
+#include <QFileDialog>
 #include <QMimeDatabase>
 #include <QMimeType>
-#include <KConfigGroup>
-#include <QDialogButtonBox>
 #include <QPushButton>
+#include <QTreeWidget>
 #include <QVBoxLayout>
-#include <QFileDialog>
 
 AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
     : QDialog(parent)
@@ -82,9 +82,7 @@ void AttachPropertyDialog::writeConfig()
 
 void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
 {
-    QString s = attach->fileName().isEmpty()
-                ? attach->name()
-                : attach->fileName();
+    QString s = attach->fileName().isEmpty() ? attach->name() : attach->fileName();
     mUI.mFilename->setText(QLatin1String("<b>") + s + QLatin1String("</b>"));
     setWindowTitle(i18nc("@title:window", "Properties for Attachment %1", s));
     mUI.mDisplay->setText(attach->displayName());
@@ -132,17 +130,12 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
         QVariant value = (*it)->value();
         if (value.type() == QVariant::List) {
             newItem->setExpanded(true);
-            newItem->setText(0,
-                             newItem->text(0)
-                             +QLatin1String(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
+            newItem->setText(0, newItem->text(0) + QLatin1String(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
             int i = 0;
             QList<QVariant>::ConstIterator litEnd = value.toList().constEnd();
-            for (QList<QVariant>::ConstIterator lit = value.toList().constBegin();
-                 lit != litEnd; ++lit, ++i) {
+            for (QList<QVariant>::ConstIterator lit = value.toList().constBegin(); lit != litEnd; ++lit, ++i) {
                 new QTreeWidgetItem(newItem,
-                                    QStringList()
-                                    << QLatin1Char('[')  + QString::number(i) + QLatin1Char(']')
-                                    << QString(KTNEFProperty::formatValue(*lit)));
+                                    QStringList() << QLatin1Char('[') + QString::number(i) + QLatin1Char(']') << QString(KTNEFProperty::formatValue(*lit)));
             }
         } else if (value.type() == QVariant::DateTime) {
             newItem->setText(1, value.toDateTime().toString());
@@ -156,9 +149,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
 void AttachPropertyDialog::formatPropertySet(KTNEFPropertySet *pSet, QTreeWidget *lv)
 {
     formatProperties(pSet->properties(), lv, nullptr, QStringLiteral("prop"));
-    auto *item
-        = new QTreeWidgetItem(lv,
-                              QStringList(i18nc("@label", "TNEF Attributes")));
+    auto *item = new QTreeWidgetItem(lv, QStringList(i18nc("@label", "TNEF Attributes")));
     item->setExpanded(true);
     formatProperties(pSet->attributes(), nullptr, item, QStringLiteral("attr"));
 }
@@ -167,25 +158,17 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
 {
     QList<QTreeWidgetItem *> list = lv->selectedItems();
     if (list.isEmpty()) {
-        KMessageBox::error(
-            parent,
-            i18nc("@info",
-                  "Must select an item first."));
+        KMessageBox::error(parent, i18nc("@info", "Must select an item first."));
         return false;
     }
 
     QTreeWidgetItem *item = list.first();
     if (item->text(2).isEmpty()) {
-        KMessageBox::error(
-            parent,
-            i18nc("@info",
-                  "The selected item cannot be saved because it has an empty tag."));
+        KMessageBox::error(parent, i18nc("@info", "The selected item cannot be saved because it has an empty tag."));
     } else {
         QString tag = item->text(2);
         int key = tag.midRef(5).toInt();
-        QVariant prop = (tag.startsWith(QLatin1String("attr_"))
-                         ? pSet->attribute(key)
-                         : pSet->property(key));
+        QVariant prop = (tag.startsWith(QLatin1String("attr_")) ? pSet->attribute(key) : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {
             QFile f(filename);
@@ -194,8 +177,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
                 case QVariant::ByteArray:
                     f.write(prop.toByteArray().data(), prop.toByteArray().size());
                     break;
-                default:
-                {
+                default: {
                     QTextStream t(&f);
                     t << prop.toString();
                     break;
@@ -203,10 +185,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
                 }
                 f.close();
             } else {
-                KMessageBox::error(
-                    parent,
-                    i18nc("@info",
-                          "Unable to open file for writing, check file permissions."));
+                KMessageBox::error(parent, i18nc("@info", "Unable to open file for writing, check file permissions."));
             }
         }
     }

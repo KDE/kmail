@@ -11,15 +11,15 @@
 
 #include <MailCommon/AddTagDialog>
 
-#include <QAction>
+#include "kmail_debug.h"
+#include <AkonadiCore/Monitor>
 #include <KActionCollection>
+#include <KActionMenu>
+#include <KLocalizedString>
 #include <KToggleAction>
 #include <KXMLGUIClient>
-#include <KLocalizedString>
+#include <QAction>
 #include <QIcon>
-#include <AkonadiCore/Monitor>
-#include "kmail_debug.h"
-#include <KActionMenu>
 #include <QMenu>
 #include <QPointer>
 
@@ -42,12 +42,11 @@ TagActionManager::TagActionManager(QObject *parent, KActionCollection *actionCol
     connect(tagMonitorManager, &TagMonitorManager::fetchTagDone, this, &TagActionManager::createActions);
 }
 
-TagActionManager::~TagActionManager()
-= default;
+TagActionManager::~TagActionManager() = default;
 
 void TagActionManager::clearActions()
 {
-    //Remove the tag actions from the toolbar
+    // Remove the tag actions from the toolbar
     if (!mToolbarActions.isEmpty()) {
         if (mGUIClient->factory()) {
             mGUIClient->unplugActionList(QStringLiteral("toolbar_messagetag_actions"));
@@ -55,8 +54,8 @@ void TagActionManager::clearActions()
         mToolbarActions.clear();
     }
 
-    //Remove the tag actions from the status menu and the action collection,
-    //then delete them.
+    // Remove the tag actions from the status menu and the action collection,
+    // then delete them.
     for (KToggleAction *action : qAsConst(mTagActions)) {
         mMessageActions->messageStatusMenu()->removeAction(action);
 
@@ -87,8 +86,7 @@ void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool add
 {
     QString cleanName(i18n("Message Tag: %1", tag->tagName));
     cleanName.replace(QLatin1Char('&'), QStringLiteral("&&"));
-    auto const tagAction = new KToggleAction(QIcon::fromTheme(tag->iconName),
-                                                       cleanName, this);
+    auto const tagAction = new KToggleAction(QIcon::fromTheme(tag->iconName), cleanName, this);
     tagAction->setIconText(tag->name());
     tagAction->setChecked(tag->id() == mNewTagId);
 
@@ -132,7 +130,7 @@ void TagActionManager::createTagActions(const QVector<MailCommon::Tag::Ptr> &tag
     int i = 0;
     bool needToAddMoreAction = false;
     const int numberOfTag(tags.size());
-    //It is assumed the tags are sorted
+    // It is assumed the tags are sorted
     for (const MailCommon::Tag::Ptr &tag : tags) {
         if (i < s_numberMaxTag) {
             createTagAction(tag, true);
@@ -169,8 +167,7 @@ void TagActionManager::createTagActions(const QVector<MailCommon::Tag::Ptr> &tag
 
         if (!mMoreAction) {
             mMoreAction = new QAction(i18n("More..."), this);
-            connect(mMoreAction, &QAction::triggered,
-                    this, &TagActionManager::tagMoreActionClicked);
+            connect(mMoreAction, &QAction::triggered, this, &TagActionManager::tagMoreActionClicked);
         }
         mMessageActions->messageStatusMenu()->menu()->addAction(mMoreAction);
     }
@@ -188,7 +185,7 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Ak
     if (numberOfSelectedMessages >= 1) {
         Q_ASSERT(selectedItem.isValid());
         for (; it != end; ++it) {
-            //FIXME Not very performant tag label retrieval
+            // FIXME Not very performant tag label retrieval
             QString label(i18n("Tag not Found"));
             const auto tags = TagMonitorManager::self()->tags();
             for (const MailCommon::Tag::Ptr &tag : tags) {

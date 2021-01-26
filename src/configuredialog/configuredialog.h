@@ -31,13 +31,13 @@ protected:
     QSize sizeHint() const override;
 protected Q_SLOTS:
     /** @b reimplemented
-    * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
-    */
+     * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
+     */
     void slotApply();
 
     /** @b reimplemented
-    * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
-    */
+     * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
+     */
     void slotOk();
 };
 

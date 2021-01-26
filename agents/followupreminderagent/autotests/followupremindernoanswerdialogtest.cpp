@@ -5,21 +5,20 @@
 */
 
 #include "followupremindernoanswerdialogtest.h"
-#include "../followupremindernoanswerdialog.h"
-#include "../followupreminderinfowidget.h"
 #include "../followupreminderinfo.h"
+#include "../followupreminderinfowidget.h"
+#include "../followupremindernoanswerdialog.h"
 
-#include <QTreeWidget>
-#include <QTest>
 #include <QStandardPaths>
+#include <QTest>
+#include <QTreeWidget>
 
 FollowupReminderNoAnswerDialogTest::FollowupReminderNoAnswerDialogTest(QObject *parent)
     : QObject(parent)
 {
 }
 
-FollowupReminderNoAnswerDialogTest::~FollowupReminderNoAnswerDialogTest()
-= default;
+FollowupReminderNoAnswerDialogTest::~FollowupReminderNoAnswerDialogTest() = default;
 
 void FollowupReminderNoAnswerDialogTest::initTestCase()
 {
@@ -50,11 +49,11 @@ void FollowupReminderNoAnswerDialogTest::shouldAddItemInTreeList()
         lstInfo.append(info);
     }
     dlg.setInfo(lstInfo);
-    //We load invalid infos.
+    // We load invalid infos.
     QCOMPARE(treeWidget->topLevelItemCount(), 0);
     lstInfo.clear();
 
-    //Load valid infos
+    // Load valid infos
     for (int i = 0; i < 10; ++i) {
         auto info = new FollowUpReminder::FollowUpReminderInfo();
         info->setOriginalMessageItemId(42);
@@ -75,7 +74,7 @@ void FollowupReminderNoAnswerDialogTest::shouldItemHaveInfo()
     auto treeWidget = infowidget->findChild<QTreeWidget *>(QStringLiteral("treewidget"));
     QList<FollowUpReminder::FollowUpReminderInfo *> lstInfo;
 
-    //Load valid infos
+    // Load valid infos
     for (int i = 0; i < 10; ++i) {
         auto info = new FollowUpReminder::FollowUpReminderInfo();
         info->setOriginalMessageItemId(42);

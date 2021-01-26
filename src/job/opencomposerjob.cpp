@@ -5,18 +5,18 @@
 */
 
 #include "opencomposerjob.h"
+#include "composer.h"
 #include "kmail_debug.h"
 #include "kmkernel.h"
-#include "composer.h"
-#include <MessageCore/StringUtil>
-#include <TemplateParser/TemplateParserJob>
-#include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Identity>
-#include <MessageComposer/MessageHelper>
-#include <QMimeDatabase>
-#include <QFile>
-#include <KMessageBox>
+#include <KIdentityManagement/IdentityManager>
 #include <KLocalizedString>
+#include <KMessageBox>
+#include <MessageComposer/MessageHelper>
+#include <MessageCore/StringUtil>
+#include <QFile>
+#include <QMimeDatabase>
+#include <TemplateParser/TemplateParserJob>
 
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent)
@@ -28,8 +28,7 @@ void OpenComposerJob::setOpenComposerSettings(const OpenComposerSettings &openCo
     mOpenComposerSettings = openComposerSettings;
 }
 
-OpenComposerJob::~OpenComposerJob()
-= default;
+OpenComposerJob::~OpenComposerJob() = default;
 
 void OpenComposerJob::start()
 {
@@ -113,7 +112,8 @@ void OpenComposerJob::slotOpenComposer()
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
         if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
-            if (KMessageBox::questionYesNo(nullptr, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder")) == KMessageBox::No) {
+            if (KMessageBox::questionYesNo(nullptr, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder"))
+                == KMessageBox::No) {
                 continue;
             }
         }

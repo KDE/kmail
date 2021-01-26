@@ -10,11 +10,11 @@
 #ifndef COLLECTIONMAILINGLISTPAGE_H
 #define COLLECTIONMAILINGLISTPAGE_H
 
-#include <MessageCore/MailingList>
 #include <MailCommon/FolderSettings>
+#include <MessageCore/MailingList>
 
-#include <AkonadiWidgets/collectionpropertiespage.h>
 #include <AkonadiCore/collection.h>
+#include <AkonadiWidgets/collectionpropertiespage.h>
 
 class QCheckBox;
 class QPushButton;
@@ -42,8 +42,8 @@ private:
     void slotFetchDone(KJob *job);
     void init(const Akonadi::Collection &);
     /*
-    * Detects mailing-list related stuff
-    */
+     * Detects mailing-list related stuff
+     */
     void slotDetectMailingList();
     void slotInvokeHandler();
     void slotMLHandling(int element);

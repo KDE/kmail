@@ -7,27 +7,27 @@
 
 #include "archivefolderdialog.h"
 
-#include <MailCommon/BackupJob>
 #include "kmkernel.h"
 #include "kmmainwidget.h"
+#include <MailCommon/BackupJob>
 #include <MailCommon/FolderRequester>
 #include <MessageViewer/MessageViewerUtil>
 
 #include <AkonadiCore/Collection>
 
 #include <KLocalizedString>
-#include <QComboBox>
-#include <KUrlRequester>
 #include <KMessageBox>
 #include <KSeparator>
+#include <KUrlRequester>
+#include <QComboBox>
 
-#include <QLabel>
 #include <QCheckBox>
-#include <QGridLayout>
-#include <QStandardPaths>
-#include <QMimeDatabase>
 #include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QMimeDatabase>
 #include <QPushButton>
+#include <QStandardPaths>
 #include <QVBoxLayout>
 
 using namespace KMail;
@@ -40,9 +40,8 @@ QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
     if (!dir.exists()) {
         currentPath = QDir::homePath();
     }
-    return currentPath + QLatin1Char('/')
-           +i18nc("Start of the filename for a mail archive file",
-                  "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_') + QDate::currentDate().toString(Qt::ISODate) + QLatin1String(".tar.bz2");
+    return currentPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_')
+        + QDate::currentDate().toString(Qt::ISODate) + QLatin1String(".tar.bz2");
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
@@ -133,12 +132,8 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 bool canRemoveFolder(const Akonadi::Collection &col)
 {
     const QSharedPointer<FolderSettings> folder = FolderSettings::forCollection(col, false);
-    return folder
-           && col.isValid()
-           && !col.isVirtual()
-           && (col.rights() & Akonadi::Collection::CanDeleteCollection)
-           && !folder->isStructural()
-           && !folder->isSystemFolder();
+    return folder && col.isValid() && !col.isVirtual() && (col.rights() & Akonadi::Collection::CanDeleteCollection) && !folder->isStructural()
+        && !folder->isSystemFolder();
 }
 
 void ArchiveFolderDialog::slotRecursiveCheckboxClicked()
@@ -173,8 +168,7 @@ void ArchiveFolderDialog::slotAccepted()
     }
 
     if (!mFolderRequester->hasCollection()) {
-        KMessageBox::information(this, i18n("Please select the folder that should be archived."),
-                                 i18n("No folder selected"));
+        KMessageBox::information(this, i18n("Please select the folder that should be archived."), i18n("No folder selected"));
         return;
     }
 
@@ -192,12 +186,11 @@ void ArchiveFolderDialog::slotFixFileExtension()
 {
     const int numExtensions = 4;
     // The extensions here are also sorted, like the enum order of BackupJob::ArchiveType
-    const char *extensions[numExtensions] = { ".zip", ".tar", ".tar.bz2", ".tar.gz" };
+    const char *extensions[numExtensions] = {".zip", ".tar", ".tar.bz2", ".tar.gz"};
 
     QString fileName = mUrlRequester->url().path();
     if (fileName.isEmpty()) {
-        fileName = standardArchivePath(mFolderRequester->hasCollection()
-                                       ? mFolderRequester->collection().name() : QString());
+        fileName = standardArchivePath(mFolderRequester->hasCollection() ? mFolderRequester->collection().name() : QString());
     }
 
     QMimeDatabase db;

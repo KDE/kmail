@@ -8,11 +8,8 @@
 
 using namespace KMail;
 KMailSearchPatternEdit::KMailSearchPatternEdit(QWidget *parent)
-    : MailCommon::SearchPatternEdit(parent,
-                                    static_cast<MailCommon::SearchPatternEdit::SearchPatternEditOptions>(SearchPatternEdit::NotShowTags),
-                                    BalooMode)
+    : MailCommon::SearchPatternEdit(parent, static_cast<MailCommon::SearchPatternEdit::SearchPatternEditOptions>(SearchPatternEdit::NotShowTags), BalooMode)
 {
 }
 
-KMailSearchPatternEdit::~KMailSearchPatternEdit()
-= default;
+KMailSearchPatternEdit::~KMailSearchPatternEdit() = default;

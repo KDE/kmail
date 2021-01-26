@@ -7,14 +7,15 @@
 #ifndef KMMIGRATEAPPLICATION_H
 #define KMMIGRATEAPPLICATION_H
 
-#include <PimCommon/MigrateApplicationFiles>
 #include "kmail_export.h"
+#include <PimCommon/MigrateApplicationFiles>
 class KMAIL_EXPORT KMMigrateApplication
 {
 public:
     KMMigrateApplication();
 
     void migrate();
+
 private:
     void initializeMigrator();
     void migrateAlwaysEncrypt();

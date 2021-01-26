@@ -8,7 +8,8 @@
 #define KMAILPLUGINEDITORINITMANAGERINTERFACE_H
 
 #include <QObject>
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class RichTextComposer;
 }
 
@@ -26,6 +27,7 @@ public:
     void setParentWidget(QWidget *parentWidget);
 
     void initializePlugins();
+
 private:
     Q_DISABLE_COPY(KMailPluginEditorInitManagerInterface)
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;

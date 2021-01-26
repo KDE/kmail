@@ -22,6 +22,7 @@ private Q_SLOTS:
     void testReply();
     void testReplyWithoutDefaultGPGSign();
     void initTestCase();
+
 private:
     void resetIdentities();
     void verifySignature(bool sign);

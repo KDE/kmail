@@ -7,8 +7,8 @@
 #ifndef ADDEMAILTOEXISTINGCONTACTJOB_H
 #define ADDEMAILTOEXISTINGCONTACTJOB_H
 
-#include <KJob>
 #include <AkonadiCore/Item>
+#include <KJob>
 
 class AddEmailToExistingContactJob : public KJob
 {

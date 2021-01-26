@@ -7,14 +7,13 @@
 #include "identityaddvcarddialogtest.h"
 #include "../identity/identityaddvcarddialog.h"
 
-#include <QComboBox>
 #include <KUrlRequester>
 #include <QButtonGroup>
+#include <QComboBox>
 
 #include <QTest>
 
-identityaddvcarddialogtest::identityaddvcarddialogtest()
-= default;
+identityaddvcarddialogtest::identityaddvcarddialogtest() = default;
 
 void identityaddvcarddialogtest::shouldHaveDefaultValue()
 {

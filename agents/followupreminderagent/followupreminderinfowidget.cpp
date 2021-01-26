@@ -4,23 +4,24 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "followupreminderinfowidget.h"
+#include "followupreminderagent_debug.h"
 #include "followupreminderinfo.h"
 #include "followupreminderutil.h"
 #include "jobs/followupremindershowmessagejob.h"
-#include "followupreminderagent_debug.h"
 
-#include <QTreeWidget>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KSharedConfig>
 #include <QHBoxLayout>
 #include <QHeaderView>
-#include <QLocale>
 #include <QIcon>
+#include <QLocale>
 #include <QMenu>
-#include <KLocalizedString>
-#include <KSharedConfig>
-#include <KMessageBox>
+#include <QTreeWidget>
 
 // #define DEBUG_MESSAGE_ID
-namespace {
+namespace
+{
 inline QString followUpItemPattern()
 {
     return QStringLiteral("FollowupReminderItem \\d+");
@@ -56,15 +57,11 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     mTreeWidget = new QTreeWidget(this);
     mTreeWidget->setObjectName(QStringLiteral("treewidget"));
     QStringList headers;
-    headers << i18n("To")
-            << i18n("Subject")
-            << i18n("Dead Line")
-            << i18n("Answer")
+    headers << i18n("To") << i18n("Subject") << i18n("Dead Line") << i18n("Answer")
 #ifdef DEBUG_MESSAGE_ID
-        << QStringLiteral("Message Id")
-        << QStringLiteral("Answer Message Id")
+            << QStringLiteral("Message Id") << QStringLiteral("Answer Message Id")
 #endif
-    ;
+        ;
 
     mTreeWidget->setHeaderLabels(headers);
     mTreeWidget->setSortingEnabled(true);
@@ -77,8 +74,7 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     hbox->addWidget(mTreeWidget);
 }
 
-FollowUpReminderInfoWidget::~FollowUpReminderInfoWidget()
-= default;
+FollowUpReminderInfoWidget::~FollowUpReminderInfoWidget() = default;
 
 void FollowUpReminderInfoWidget::setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &infoList)
 {
@@ -209,8 +205,11 @@ void FollowUpReminderInfoWidget::removeItem(const QList<QTreeWidgetItem *> &mail
     if (mailItemLst.isEmpty()) {
         qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "Not item selected";
     } else {
-        if (KMessageBox::Yes == KMessageBox::warningYesNo(this,
-                                                          i18np("Do you want to remove this selected item?", "Do you want to remove these %1 selected items?", mailItemLst.count()), i18n("Delete"))) {
+        if (KMessageBox::Yes
+            == KMessageBox::warningYesNo(
+                this,
+                i18np("Do you want to remove this selected item?", "Do you want to remove these %1 selected items?", mailItemLst.count()),
+                i18n("Delete"))) {
             for (QTreeWidgetItem *item : mailItemLst) {
                 auto mailItem = static_cast<FollowUpReminderInfoItem *>(item);
                 mListRemoveId << mailItem->info()->uniqueIdentifier();

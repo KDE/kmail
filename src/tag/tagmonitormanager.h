@@ -7,10 +7,11 @@
 #ifndef TAGMONITORMANAGER_H
 #define TAGMONITORMANAGER_H
 
-#include <QObject>
 #include <AkonadiCore/Tag>
+#include <QObject>
 #include <mailcommon/tag.h>
-namespace Akonadi {
+namespace Akonadi
+{
 class Monitor;
 }
 class KJob;

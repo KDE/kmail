@@ -14,8 +14,8 @@
 #ifndef KTNEFMAIN_H
 #define KTNEFMAIN_H
 
-#include <KXmlGuiWindow>
 #include <KService>
+#include <KXmlGuiWindow>
 class QActionGroup;
 class QAction;
 class QContextMenuEvent;
@@ -23,7 +23,8 @@ class QTreeWidgetItem;
 class KRecentFilesAction;
 class QUrl;
 
-namespace KTnef {
+namespace KTnef
+{
 class KTNEFParser;
 class KTNEFAttach;
 }

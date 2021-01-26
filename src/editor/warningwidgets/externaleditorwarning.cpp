@@ -18,5 +18,4 @@ ExternalEditorWarning::ExternalEditorWarning(QWidget *parent)
     setWordWrap(true);
 }
 
-ExternalEditorWarning::~ExternalEditorWarning()
-= default;
+ExternalEditorWarning::~ExternalEditorWarning() = default;

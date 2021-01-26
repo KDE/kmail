@@ -7,19 +7,18 @@
 
 #include "saveasfilejob.h"
 #include "kmail_debug.h"
+#include <KLocalizedString>
 #include <QFileDialog>
 #include <QPointer>
-#include <QTextDocumentWriter>
-#include <KLocalizedString>
 #include <QTextDocument>
+#include <QTextDocumentWriter>
 
 SaveAsFileJob::SaveAsFileJob(QObject *parent)
     : QObject(parent)
 {
 }
 
-SaveAsFileJob::~SaveAsFileJob()
-= default;
+SaveAsFileJob::~SaveAsFileJob() = default;
 
 void SaveAsFileJob::start()
 {

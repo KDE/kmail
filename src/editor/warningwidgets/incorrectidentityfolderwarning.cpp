@@ -17,8 +17,7 @@ IncorrectIdentityFolderWarning::IncorrectIdentityFolderWarning(QWidget *parent)
     connect(this, &IncorrectIdentityFolderWarning::hideAnimationFinished, this, &IncorrectIdentityFolderWarning::slotHideAnnimationFinished);
 }
 
-IncorrectIdentityFolderWarning::~IncorrectIdentityFolderWarning()
-= default;
+IncorrectIdentityFolderWarning::~IncorrectIdentityFolderWarning() = default;
 
 void IncorrectIdentityFolderWarning::mailTransportIsInvalid()
 {

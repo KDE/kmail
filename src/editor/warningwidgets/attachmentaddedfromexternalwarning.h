@@ -7,8 +7,8 @@
 #ifndef ATTACHMENTADDEDFROMEXTERNALWARNING_H
 #define ATTACHMENTADDEDFROMEXTERNALWARNING_H
 
-#include <QWidget>
 #include <KMessageWidget>
+#include <QWidget>
 
 class AttachmentAddedFromExternalWarning : public KMessageWidget
 {

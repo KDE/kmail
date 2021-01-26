@@ -5,8 +5,8 @@
 */
 
 #include "followupreminderconfigtest.h"
-#include "../followupreminderutil.h"
 #include "../followupreminderinfo.h"
+#include "../followupreminderutil.h"
 
 #include <QTest>
 
@@ -15,8 +15,7 @@ FollowUpReminderConfigTest::FollowUpReminderConfigTest(QObject *parent)
 {
 }
 
-FollowUpReminderConfigTest::~FollowUpReminderConfigTest()
-= default;
+FollowUpReminderConfigTest::~FollowUpReminderConfigTest() = default;
 
 void FollowUpReminderConfigTest::init()
 {
@@ -37,7 +36,7 @@ void FollowUpReminderConfigTest::cleanup()
 
 void FollowUpReminderConfigTest::cleanupTestCase()
 {
-    //Make sure to clean config
+    // Make sure to clean config
     cleanup();
 }
 
@@ -120,7 +119,7 @@ void FollowUpReminderConfigTest::shouldAddSeveralItem()
     itemList = mConfig->groupList().filter(mFollowupRegExpFilter);
     QCOMPARE(itemList.count(), 3);
 
-    //Replace It
+    // Replace It
 
     info.setUniqueIdentifier(uniq);
     info.setTo(QStringLiteral("kontact.org"));

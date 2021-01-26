@@ -22,8 +22,7 @@ AddEmailToExistingContactJob::AddEmailToExistingContactJob(const Akonadi::Item &
     KContacts::Addressee::parseEmailAddress(email, name, mEmail);
 }
 
-AddEmailToExistingContactJob::~AddEmailToExistingContactJob()
-= default;
+AddEmailToExistingContactJob::~AddEmailToExistingContactJob() = default;
 
 void AddEmailToExistingContactJob::start()
 {
@@ -41,7 +40,7 @@ void AddEmailToExistingContactJob::start()
         }
     } else {
         qCDebug(KMAIL_LOG) << " not a KContacts::Addressee item ";
-        //TODO add error
+        // TODO add error
         emitResult();
     }
 }

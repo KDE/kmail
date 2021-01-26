@@ -7,10 +7,10 @@
 #ifndef KMCOMPOSERUPDATETEMPLATEJOB_H
 #define KMCOMPOSERUPDATETEMPLATEJOB_H
 
-#include <QObject>
-#include <KMime/Message>
 #include <AkonadiCore/Collection>
 #include <KIdentityManagement/Identity>
+#include <KMime/Message>
+#include <QObject>
 
 class KMComposerUpdateTemplateJob : public QObject
 {

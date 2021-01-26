@@ -26,8 +26,7 @@ AddressValidationJob::AddressValidationJob(const QString &emailAddresses, QWidge
 {
 }
 
-AddressValidationJob::~AddressValidationJob()
-= default;
+AddressValidationJob::~AddressValidationJob() = default;
 
 void AddressValidationJob::setDefaultDomain(const QString &domainName)
 {
@@ -76,16 +75,14 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
         }
         errorMsg = i18np("Distribution list %2 is empty, it cannot be used.",
                          "Distribution lists %2 are empty, they cannot be used.",
-                         numberOfDistributionList, listOfDistributionList);
+                         numberOfDistributionList,
+                         listOfDistributionList);
         KMessageBox::sorry(mParentWidget, errorMsg, i18n("Invalid Email Address"));
         mIsValid = false;
     } else {
-        if (!(errorCode == KEmailAddress::AddressOk
-              || errorCode == KEmailAddress::AddressEmpty)) {
-            const QString errorMsg(QLatin1String("<qt><p><b>") + brokenAddress
-                                   +QLatin1String("</b></p><p>")
-                                   +KEmailAddress::emailParseResultToString(errorCode)
-                                   +QLatin1String("</p></qt>"));
+        if (!(errorCode == KEmailAddress::AddressOk || errorCode == KEmailAddress::AddressEmpty)) {
+            const QString errorMsg(QLatin1String("<qt><p><b>") + brokenAddress + QLatin1String("</b></p><p>")
+                                   + KEmailAddress::emailParseResultToString(errorCode) + QLatin1String("</p></qt>"));
             KMessageBox::sorry(mParentWidget, errorMsg, i18n("Invalid Email Address"));
             mIsValid = false;
         }

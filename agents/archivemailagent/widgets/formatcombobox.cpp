@@ -18,8 +18,7 @@ FormatComboBox::FormatComboBox(QWidget *parent)
     setCurrentIndex(findData(static_cast<int>(MailCommon::BackupJob::TarBz2)));
 }
 
-FormatComboBox::~FormatComboBox()
-= default;
+FormatComboBox::~FormatComboBox() = default;
 
 void FormatComboBox::setFormat(MailCommon::BackupJob::ArchiveType type)
 {

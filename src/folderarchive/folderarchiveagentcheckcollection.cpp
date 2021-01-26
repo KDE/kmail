@@ -4,13 +4,13 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "folderarchiveagentcheckcollection.h"
-#include "kmail_debug.h"
 #include "folderarchiveaccountinfo.h"
+#include "kmail_debug.h"
 
 #include <KLocalizedString>
 
-#include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionCreateJob>
+#include <AkonadiCore/CollectionFetchJob>
 
 FolderArchiveAgentCheckCollection::FolderArchiveAgentCheckCollection(FolderArchiveAccountInfo *info, QObject *parent)
     : QObject(parent)
@@ -19,8 +19,7 @@ FolderArchiveAgentCheckCollection::FolderArchiveAgentCheckCollection(FolderArchi
 {
 }
 
-FolderArchiveAgentCheckCollection::~FolderArchiveAgentCheckCollection()
-= default;
+FolderArchiveAgentCheckCollection::~FolderArchiveAgentCheckCollection() = default;
 
 void FolderArchiveAgentCheckCollection::start()
 {
@@ -40,10 +39,10 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelD
     QString folderName;
     switch (mInfo->folderArchiveType()) {
     case FolderArchiveAccountInfo::UniqueFolder:
-        //Nothing
+        // Nothing
         break;
     case FolderArchiveAccountInfo::FolderByMonths:
-        //TODO translate ?
+        // TODO translate ?
         folderName = QStringLiteral("%1-%2").arg(mCurrentDate.month()).arg(mCurrentDate.year());
         break;
     case FolderArchiveAccountInfo::FolderByYears:

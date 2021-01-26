@@ -8,8 +8,8 @@
 #include "tag/tagselectdialog.h"
 #include <KListWidgetSearchLine>
 #include <QListWidget>
-#include <QTest>
 #include <QStandardPaths>
+#include <QTest>
 
 TagSelectDialogTest::TagSelectDialogTest(QObject *parent)
     : QObject(parent)

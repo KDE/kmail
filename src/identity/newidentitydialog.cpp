@@ -12,12 +12,12 @@
 #include "newidentitydialog.h"
 
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KLocalizedString>
+#include <KSeparator>
 #include <Libkdepim/LineEditCatchReturnKey>
 #include <PimCommon/PimUtil>
 #include <QComboBox>
 #include <QLineEdit>
-#include <KLocalizedString>
-#include <KSeparator>
 
 #include <QButtonGroup>
 #include <QHBoxLayout>
@@ -25,9 +25,9 @@
 #include <QRadioButton>
 #include <QVBoxLayout>
 
-#include <assert.h>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <assert.h>
 
 using namespace KMail;
 
@@ -52,7 +52,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     vlay->setContentsMargins({});
 
     // row 0: line edit with label
-    auto hlay = new QHBoxLayout();  // inherits spacing
+    auto hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
     mLineEdit = new QLineEdit(page);
     mLineEdit->setFocus();
@@ -95,14 +95,14 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     hlay->addWidget(mComboBox, 1);
 
     vlay->addWidget(new KSeparator);
-    vlay->addStretch(1);   // spacer
+    vlay->addStretch(1); // spacer
 
     // enable/disable combobox and label depending on the third radio
     // button's state:
     connect(radio, &QRadioButton::toggled, label, &QLabel::setEnabled);
     connect(radio, &QRadioButton::toggled, mComboBox, &QComboBox::setEnabled);
 
-    mOkButton->setEnabled(false);   // since line edit is empty
+    mOkButton->setEnabled(false); // since line edit is empty
 
     resize(400, 180);
 }
@@ -115,9 +115,7 @@ void NewIdentityDialog::slotHelp()
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const
 {
     const int id = mButtonGroup->checkedId();
-    assert(id == static_cast<int>(Empty)
-           || id == static_cast<int>(ControlCenter)
-           || id == static_cast<int>(ExistingEntry));
+    assert(id == static_cast<int>(Empty) || id == static_cast<int>(ControlCenter) || id == static_cast<int>(ExistingEntry));
     return static_cast<DuplicateMode>(id);
 }
 

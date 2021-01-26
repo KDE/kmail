@@ -7,12 +7,12 @@
 #ifndef TAGSELECTDIALOG_H
 #define TAGSELECTDIALOG_H
 
+#include "MailCommon/Tag"
 #include "kmail_private_export.h"
-#include <QDialog>
-#include <QVector>
 #include <AkonadiCore/Item>
 #include <AkonadiCore/Tag>
-#include "MailCommon/Tag"
+#include <QDialog>
+#include <QVector>
 
 class QListWidget;
 class KActionCollection;
@@ -32,9 +32,7 @@ private:
     void writeConfig();
     void readConfig();
     void createTagList(bool updateList);
-    enum ItemType {
-        UrlTag = Qt::UserRole + 1
-    };
+    enum ItemType { UrlTag = Qt::UserRole + 1 };
     const int mNumberOfSelectedMessages = -1;
     const Akonadi::Item mSelectedItem;
 

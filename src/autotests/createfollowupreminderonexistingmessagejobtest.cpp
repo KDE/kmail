@@ -12,8 +12,7 @@ CreateFollowupReminderOnExistingMessageJobTest::CreateFollowupReminderOnExisting
 {
 }
 
-CreateFollowupReminderOnExistingMessageJobTest::~CreateFollowupReminderOnExistingMessageJobTest()
-= default;
+CreateFollowupReminderOnExistingMessageJobTest::~CreateFollowupReminderOnExistingMessageJobTest() = default;
 
 void CreateFollowupReminderOnExistingMessageJobTest::shouldHaveDefaultValue()
 {

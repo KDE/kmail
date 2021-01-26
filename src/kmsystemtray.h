@@ -10,8 +10,8 @@
 #include <AkonadiCore/collection.h>
 #include <KStatusNotifierItem>
 
-#include <QAction>
 #include <QAbstractItemModel>
+#include <QAction>
 
 class QMenu;
 
@@ -19,7 +19,8 @@ class QMenu;
  * KMSystemTray extends KStatusNotifierItem and handles system
  * tray notification for KMail
  */
-namespace KMail {
+namespace KMail
+{
 class UnityServiceManager;
 class KMSystemTray : public KStatusNotifierItem
 {

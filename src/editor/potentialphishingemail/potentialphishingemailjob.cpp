@@ -6,17 +6,16 @@
 */
 
 #include "potentialphishingemailjob.h"
+#include "kmail_debug.h"
 #include <KEmailAddress>
 #include <PimCommon/PimUtil>
-#include "kmail_debug.h"
 
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)
 {
 }
 
-PotentialPhishingEmailJob::~PotentialPhishingEmailJob()
-= default;
+PotentialPhishingEmailJob::~PotentialPhishingEmailJob() = default;
 
 void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
 {
@@ -49,12 +48,12 @@ bool PotentialPhishingEmailJob::start()
     for (const QString &addr : qAsConst(mEmails)) {
         if (!mEmailWhiteList.contains(addr.trimmed())) {
             QString tname, temail;
-            KEmailAddress::extractEmailAddressAndName(addr, temail, tname);    // ignore return value
+            KEmailAddress::extractEmailAddressAndName(addr, temail, tname); // ignore return value
             // which is always false
-            if (tname.startsWith(QLatin1Char('@'))) { //Special case when name is just @foo <...> it mustn't recognize as a valid email
+            if (tname.startsWith(QLatin1Char('@'))) { // Special case when name is just @foo <...> it mustn't recognize as a valid email
                 continue;
             }
-            if (tname.contains(QLatin1Char('@'))) { //Potential address
+            if (tname.contains(QLatin1Char('@'))) { // Potential address
                 if (tname.startsWith(QLatin1Char('<')) && tname.endsWith(QLatin1Char('>'))) {
                     tname = tname.mid(1, tname.length() - 2);
                 }

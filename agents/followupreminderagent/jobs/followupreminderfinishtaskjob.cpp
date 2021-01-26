@@ -5,8 +5,8 @@
 */
 
 #include "followupreminderfinishtaskjob.h"
-#include "followupreminderinfo.h"
 #include "followupreminderagent_debug.h"
+#include "followupreminderinfo.h"
 
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemModifyJob>
@@ -18,8 +18,7 @@ FollowUpReminderFinishTaskJob::FollowUpReminderFinishTaskJob(Akonadi::Item::Id i
 {
 }
 
-FollowUpReminderFinishTaskJob::~FollowUpReminderFinishTaskJob()
-= default;
+FollowUpReminderFinishTaskJob::~FollowUpReminderFinishTaskJob() = default;
 
 void FollowUpReminderFinishTaskJob::start()
 {
@@ -42,7 +41,7 @@ void FollowUpReminderFinishTaskJob::closeTodo()
 void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
 {
     if (job->error()) {
-        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "Failed to fetch item in FollowUpReminderFinishTaskJob : " <<  job->errorString();
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "Failed to fetch item in FollowUpReminderFinishTaskJob : " << job->errorString();
         Q_EMIT finishTaskFailed();
         deleteLater();
         return;

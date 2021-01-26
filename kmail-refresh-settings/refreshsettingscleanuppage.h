@@ -7,8 +7,8 @@
 #ifndef REFRESHSETTINGSCLEANUPPAGE_H
 #define REFRESHSETTINGSCLEANUPPAGE_H
 
-#include <QWidget>
 #include <KConfigGroup>
+#include <QWidget>
 
 class RefreshSettingsCleanupPage : public QWidget
 {

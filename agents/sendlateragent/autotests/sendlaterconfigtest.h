@@ -7,8 +7,8 @@
 #ifndef SENDLATERCONFIGTEST_H
 #define SENDLATERCONFIGTEST_H
 
-#include <QObject>
 #include <KSharedConfig>
+#include <QObject>
 #include <QRegularExpression>
 
 class SendLaterConfigTest : public QObject
@@ -25,6 +25,7 @@ private Q_SLOTS:
     void shouldConfigBeEmpty();
     void shouldAddAnItem();
     void shouldNotAddInvalidItem();
+
 private:
     KSharedConfig::Ptr mConfig;
     QRegularExpression mSendlaterRegExpFilter;

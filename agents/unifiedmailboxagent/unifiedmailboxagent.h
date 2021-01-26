@@ -7,8 +7,8 @@
 #ifndef UNIFIEDMAILBOXAGENT_H
 #define UNIFIEDMAILBOXAGENT_H
 
-#include <AkonadiAgentBase/ResourceBase>
 #include <Akonadi/KMime/SpecialMailCollections>
+#include <AkonadiAgentBase/ResourceBase>
 
 #include "unifiedmailboxmanager.h"
 
@@ -37,6 +37,7 @@ public:
     void retrieveCollections() override;
     void retrieveItems(const Akonadi::Collection &collection) override;
     Q_REQUIRED_RESULT bool retrieveItem(const Akonadi::Item &item, const QSet<QByteArray> &parts) override;
+
 private:
     void delayedInit();
 

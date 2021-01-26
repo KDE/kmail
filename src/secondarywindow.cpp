@@ -26,8 +26,7 @@ SecondaryWindow::SecondaryWindow(const QString &name)
 }
 
 //---------------------------------------------------------------------------
-SecondaryWindow::~SecondaryWindow()
-= default;
+SecondaryWindow::~SecondaryWindow() = default;
 
 //---------------------------------------------------------------------------
 void SecondaryWindow::closeEvent(QCloseEvent *e)

@@ -20,37 +20,46 @@ class QLineEdit;
 class QPushButton;
 class QTabWidget;
 
-namespace GpgME {
+namespace GpgME
+{
 class Key;
 }
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class Identity;
 class SignatureConfigurator;
 }
-namespace KMail {
+namespace KMail
+{
 class XFaceConfigurator;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 }
-namespace Sonnet {
+namespace Sonnet
+{
 class DictionaryComboBox;
 }
 
-namespace MailTransport {
+namespace MailTransport
+{
 class TransportComboBox;
 }
 
-namespace TemplateParser {
+namespace TemplateParser
+{
 class TemplatesConfiguration;
 }
 
-namespace PimCommon {
+namespace PimCommon
+{
 class AutoCorrectionLanguage;
 }
 
-namespace KMail {
+namespace KMail
+{
 class IdentityFolderRequester;
 class IdentityInvalidFolder;
 class KeySelectionCombo;

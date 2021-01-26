@@ -14,49 +14,49 @@
 // widgets like a toolbar.
 
 #include "kmreadermainwin.h"
+#include "kmmainwidget.h"
 #include "kmreaderwin.h"
 #include "widgets/zoomlabelwidget.h"
-#include "kmmainwidget.h"
 
+#include "kmail_debug.h"
+#include "kmcommands.h"
+#include "messageactions.h"
+#include "util.h"
+#include <KAcceleratorManager>
 #include <KActionMenu>
 #include <KEditToolBar>
 #include <KLocalizedString>
-#include <KStandardShortcut>
-#include <QAction>
-#include <KStandardAction>
-#include "kmail_debug.h"
-#include <QStatusBar>
 #include <KMessageBox>
+#include <KStandardAction>
+#include <KStandardShortcut>
 #include <KToolBar>
-#include <KAcceleratorManager>
-#include "kmcommands.h"
-#include <QMenuBar>
-#include <QMenu>
-#include <TemplateParser/CustomTemplatesMenu>
-#include "messageactions.h"
-#include "util.h"
-#include <MailCommon/MailKernel>
 #include <MailCommon/FolderSettings>
-#include <MessageViewer/HeaderStylePlugin>
+#include <MailCommon/MailKernel>
 #include <MessageViewer/HeaderStyle>
+#include <MessageViewer/HeaderStylePlugin>
 #include <MessageViewer/MessageViewerSettings>
+#include <QAction>
+#include <QMenu>
+#include <QMenuBar>
+#include <QStatusBar>
+#include <TemplateParser/CustomTemplatesMenu>
 
-#include <KActionCollection>
 #include <Akonadi/Contact/ContactSearchJob>
+#include <KActionCollection>
 #include <KEmailAddress>
 #include <WebEngineViewer/WebHitTestResult>
 #include <kmime/kmime_message.h>
 #include <tag/tagactionmanager.h>
 #include <tag/tagselectdialog.h>
 
+#include <Akonadi/KMime/MessageFlags>
 #include <AkonadiCore/itemcopyjob.h>
 #include <AkonadiCore/itemcreatejob.h>
 #include <AkonadiCore/itemmovejob.h>
-#include <Akonadi/KMime/MessageFlags>
 #include <KPIMTextEdit/TextToSpeech>
 #include <MailCommon/MailUtil>
-#include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/DKIMViewerMenu>
+#include <MessageViewer/DKIMWidgetInfo>
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
@@ -268,7 +268,7 @@ void KMReaderMainWin::slotSelectMoreMessageTagList()
     }
 
     QPointer<TagSelectDialog> dlg = new TagSelectDialog(this, selectedMessages.count(), selectedMessages.first());
-    dlg->setActionCollection(QList<KActionCollection *> { actionCollection() });
+    dlg->setActionCollection(QList<KActionCollection *>{actionCollection()});
     if (dlg->exec()) {
         const Akonadi::Tag::List lst = dlg->selectedTag();
         KMCommand *command = new KMSetTagCommand(lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew);
@@ -325,8 +325,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     if (parentCol.isValid()) {
         QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
         if (fd) {
-            command = new KMForwardCommand(this, mReaderWin->messageItem(),
-                                           fd->identity(), QString(), mReaderWin->copyText());
+            command = new KMForwardCommand(this, mReaderWin->messageItem(), fd->identity(), QString(), mReaderWin->copyText());
         } else {
             command = new KMForwardCommand(this, mReaderWin->messageItem(), 0, QString(), mReaderWin->copyText());
         }
@@ -347,8 +346,7 @@ void KMReaderMainWin::slotForwardAttachedMessage()
     if (parentCol.isValid()) {
         QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
         if (fd) {
-            command = new KMForwardAttachedCommand(this, mReaderWin->messageItem(),
-                                                   fd->identity());
+            command = new KMForwardAttachedCommand(this, mReaderWin->messageItem(), fd->identity());
         } else {
             command = new KMForwardAttachedCommand(this, mReaderWin->messageItem());
         }
@@ -377,11 +375,7 @@ void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    auto command = new KMReplyCommand(this,
-                                                 currentItem,
-                                                 MessageComposer::ReplySmart,
-                                                 mReaderWin->copyText(),
-                                                 false, tmpl);
+    auto command = new KMReplyCommand(this, currentItem, MessageComposer::ReplySmart, mReaderWin->copyText(), false, tmpl);
     command->setReplyAsHtml(mReaderWin->htmlMail());
     connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
@@ -393,11 +387,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    auto command = new KMReplyCommand(this,
-                                                 currentItem,
-                                                 MessageComposer::ReplyAll,
-                                                 mReaderWin->copyText(),
-                                                 false, tmpl);
+    auto command = new KMReplyCommand(this, currentItem, MessageComposer::ReplyAll, mReaderWin->copyText(), false, tmpl);
     command->setReplyAsHtml(mReaderWin->htmlMail());
     connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
@@ -410,9 +400,7 @@ void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
     if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
         return;
     }
-    auto command = new KMForwardCommand(this,
-                                                     currentItem,
-                                                     0, tmpl, mReaderWin->copyText());
+    auto command = new KMForwardCommand(this, currentItem, 0, tmpl, mReaderWin->copyText());
     connect(command, &KMForwardCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
 
     command->start();
@@ -420,20 +408,18 @@ void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
 
 void KMReaderMainWin::slotConfigChanged()
 {
-    //readConfig();
+    // readConfig();
     mMsgActions->setupForwardActions(actionCollection());
     mMsgActions->setupForwardingActionsList(this);
 }
 
 void KMReaderMainWin::initializeAkonadiStandardAction()
 {
-    const auto mailActions = {
-        Akonadi::StandardMailActionManager::MarkAllMailAsRead,
-        Akonadi::StandardMailActionManager::MarkMailAsRead,
-        Akonadi::StandardMailActionManager::MarkMailAsUnread,
-        Akonadi::StandardMailActionManager::MarkMailAsImportant,
-        Akonadi::StandardMailActionManager::MarkMailAsActionItem
-    };
+    const auto mailActions = {Akonadi::StandardMailActionManager::MarkAllMailAsRead,
+                              Akonadi::StandardMailActionManager::MarkMailAsRead,
+                              Akonadi::StandardMailActionManager::MarkMailAsUnread,
+                              Akonadi::StandardMailActionManager::MarkMailAsImportant,
+                              Akonadi::StandardMailActionManager::MarkMailAsActionItem};
 
     for (Akonadi::StandardMailActionManager::Type mailAction : mailActions) {
         QAction *act = mAkonadiStandardActionManager->createAction(mailAction);
@@ -480,13 +466,10 @@ void KMReaderMainWin::setupAccel()
     QList<QKeySequence> closeShortcut = closeAction->shortcuts();
     closeAction->setShortcuts(closeShortcut << QKeySequence(Qt::Key_Escape));
 
-    mTagActionManager = new KMail::TagActionManager(this, actionCollection(), mMsgActions,
-                                                    this);
-    connect(mTagActionManager, &KMail::TagActionManager::tagActionTriggered,
-            this, &KMReaderMainWin::slotUpdateMessageTagList);
+    mTagActionManager = new KMail::TagActionManager(this, actionCollection(), mMsgActions, this);
+    connect(mTagActionManager, &KMail::TagActionManager::tagActionTriggered, this, &KMReaderMainWin::slotUpdateMessageTagList);
 
-    connect(mTagActionManager, &KMail::TagActionManager::tagMoreActionClicked,
-            this, &KMReaderMainWin::slotSelectMoreMessageTagList);
+    connect(mTagActionManager, &KMail::TagActionManager::tagMoreActionClicked, this, &KMReaderMainWin::slotSelectMoreMessageTagList);
 
     mTagActionManager->createActions();
     if (mReaderWin->messageItem().isValid()) {
@@ -518,8 +501,10 @@ void KMReaderMainWin::slotToggleMenubar(bool dontShowWarning)
                 const QString accel = mHideMenuBarAction->shortcut().toString();
                 KMessageBox::information(this,
                                          i18n("<qt>This will hide the menu bar completely."
-                                              " You can show it again by typing %1.</qt>", accel),
-                                         i18n("Hide menu bar"), QStringLiteral("HideMenuBarWarning"));
+                                              " You can show it again by typing %1.</qt>",
+                                              accel),
+                                         i18n("Hide menu bar"),
+                                         QStringLiteral("HideMenuBarWarning"));
             }
             menuBar()->hide();
         }
@@ -640,7 +625,13 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound, result);
 }
 
-void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result)
+void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
+                                       const QUrl &url,
+                                       const QUrl &imageUrl,
+                                       const QPoint &aPoint,
+                                       bool contactAlreadyExists,
+                                       bool uniqueContactFound,
+                                       const WebEngineViewer::WebHitTestResult &result)
 {
     QMenu *menu = nullptr;
 
@@ -732,9 +723,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg, const QUrl &url
             bool replyForwardMenu = false;
             Akonadi::Collection col = parentCollection();
             if (col.isValid()) {
-                if (!(CommonKernel->folderIsSentMailFolder(col)
-                      || CommonKernel->folderIsDrafts(col)
-                      || CommonKernel->folderIsTemplates(col))) {
+                if (!(CommonKernel->folderIsSentMailFolder(col) || CommonKernel->folderIsDrafts(col) || CommonKernel->folderIsTemplates(col))) {
                     replyForwardMenu = true;
                 }
             } else if (messageHasPayload) {

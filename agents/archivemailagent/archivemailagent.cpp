@@ -6,17 +6,17 @@
 
 #include "archivemailagent.h"
 #include "archivemailagentadaptor.h"
-#include "archivemailmanager.h"
 #include "archivemailagentsettings.h"
+#include "archivemailmanager.h"
 #include <AkonadiCore/ServerManager>
 
-#include <MailCommon/MailKernel>
-#include <QDBusConnection>
-#include <Monitor>
-#include <Session>
 #include <CollectionFetchScope>
 #include <KMime/Message>
+#include <MailCommon/MailKernel>
+#include <Monitor>
+#include <QDBusConnection>
 #include <QTimer>
+#include <Session>
 
 #include <Kdelibs4ConfigMigrator>
 
@@ -62,8 +62,7 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     mTimer->start(24 * 60 * 60 * 1000);
 }
 
-ArchiveMailAgent::~ArchiveMailAgent()
-= default;
+ArchiveMailAgent::~ArchiveMailAgent() = default;
 
 void ArchiveMailAgent::setEnableAgent(bool enabled)
 {

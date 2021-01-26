@@ -16,8 +16,7 @@ MarkAllMessagesAsReadInFolderAndSubFolderJob::MarkAllMessagesAsReadInFolderAndSu
 {
 }
 
-MarkAllMessagesAsReadInFolderAndSubFolderJob::~MarkAllMessagesAsReadInFolderAndSubFolderJob()
-= default;
+MarkAllMessagesAsReadInFolderAndSubFolderJob::~MarkAllMessagesAsReadInFolderAndSubFolderJob() = default;
 
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::setTopLevelCollection(const Akonadi::Collection &topLevelCollection)
 {
@@ -29,8 +28,7 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::start()
     if (mTopLevelCollection.isValid()) {
         auto fetchJob = new Akonadi::CollectionFetchJob(mTopLevelCollection, Akonadi::CollectionFetchJob::Recursive, this);
         fetchJob->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
-        connect(fetchJob, &Akonadi::CollectionFetchJob::finished,
-                this, [this](KJob *job) {
+        connect(fetchJob, &Akonadi::CollectionFetchJob::finished, this, [this](KJob *job) {
             if (job->error()) {
                 qCWarning(KMAIL_LOG) << job->errorString();
                 slotFetchCollectionFailed();

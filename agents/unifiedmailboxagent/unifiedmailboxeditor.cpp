@@ -5,25 +5,26 @@
 */
 
 #include "unifiedmailboxeditor.h"
-#include "unifiedmailbox.h"
 #include "mailkernel.h"
+#include "unifiedmailbox.h"
 
-#include <QVBoxLayout>
+#include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QDialogButtonBox>
 #include <QSortFilterProxyModel>
+#include <QVBoxLayout>
 
-#include <KIconDialog>
-#include <KLocalizedString>
 #include <KCheckableProxyModel>
 #include <KConfigGroup>
+#include <KIconDialog>
+#include <KLocalizedString>
 
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/FolderTreeWidget>
 
-namespace {
+namespace
+{
 static constexpr const char *EditorGroup = "UnifiedMailboxEditorDialog";
 
 class SelfFilterProxyModel : public QSortFilterProxyModel
@@ -92,16 +93,13 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
         nameEdit->setReadOnly(true);
     }
     f->addRow(i18n("Name:"), nameEdit);
-    connect(nameEdit, &QLineEdit::textChanged,
-            this, [this](const QString &name) {
+    connect(nameEdit, &QLineEdit::textChanged, this, [this](const QString &name) {
         mMailbox->setName(name.trimmed());
     });
 
-    auto iconButton = new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))),
-                                      i18n("Pick icon..."));
+    auto iconButton = new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))), i18n("Pick icon..."));
     f->addRow(i18n("Icon:"), iconButton);
-    connect(iconButton, &QPushButton::clicked,
-            this, [iconButton, this]() {
+    connect(iconButton, &QPushButton::clicked, this, [iconButton, this]() {
         const auto iconName = KIconDialog::getIcon();
         if (!iconName.isEmpty()) {
             mMailbox->setIcon(iconName);
@@ -112,10 +110,11 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
 
     l->addSpacing(10);
 
-    auto ftw = new MailCommon::FolderTreeWidget(nullptr, nullptr,
+    auto ftw = new MailCommon::FolderTreeWidget(nullptr,
+                                                nullptr,
                                                 MailCommon::FolderTreeWidget::TreeViewOptions(MailCommon::FolderTreeWidget::UseDistinctSelectionModel
-                                                                                              |MailCommon::FolderTreeWidget::HideStatistics
-                                                                                              |MailCommon::FolderTreeWidget::HideHeaderViewMenu));
+                                                                                              | MailCommon::FolderTreeWidget::HideStatistics
+                                                                                              | MailCommon::FolderTreeWidget::HideHeaderViewMenu));
     ftw->folderTreeView()->setDragEnabled(false);
     l->addWidget(ftw);
 
@@ -150,8 +149,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
         accept();
     });
     connect(box, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    connect(nameEdit, &QLineEdit::textChanged,
-            box, [box](const QString &name) {
+    connect(nameEdit, &QLineEdit::textChanged, box, [box](const QString &name) {
         box->button(QDialogButtonBox::Ok)->setEnabled(!name.trimmed().isEmpty());
     });
     box->button(QDialogButtonBox::Ok)->setEnabled(!nameEdit->text().trimmed().isEmpty());

@@ -8,15 +8,14 @@
 #include "potentialphishingdetaildialogtest.h"
 #include "../potentialphishingdetaildialog.h"
 #include "../potentialphishingdetailwidget.h"
-#include <QTest>
 #include <QStandardPaths>
+#include <QTest>
 PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *parent)
     : QObject(parent)
 {
 }
 
-PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
-= default;
+PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest() = default;
 
 void PotentialPhishingDetailDialogTest::initTestCase()
 {

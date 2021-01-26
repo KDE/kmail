@@ -16,8 +16,7 @@ PotentialPhishingDetailWidgetTest::PotentialPhishingDetailWidgetTest(QObject *pa
 {
 }
 
-PotentialPhishingDetailWidgetTest::~PotentialPhishingDetailWidgetTest()
-= default;
+PotentialPhishingDetailWidgetTest::~PotentialPhishingDetailWidgetTest() = default;
 
 void PotentialPhishingDetailWidgetTest::shouldHaveDefaultValue()
 {

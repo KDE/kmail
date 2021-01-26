@@ -10,14 +10,14 @@
 #ifndef KMAIL_SEARCHWINDOW_H
 #define KMAIL_SEARCHWINDOW_H
 
-#include <MailCommon/SearchPattern>
 #include "ui_searchwindow.h"
+#include <MailCommon/SearchPattern>
 
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/item.h>
-#include <QDialog>
-#include <KXMLGUIClient>
 #include <KGuiItem>
+#include <KXMLGUIClient>
+#include <QDialog>
 #include <QTimer>
 
 class QCloseEvent;
@@ -27,25 +27,29 @@ class KJob;
 class KMMainWidget;
 class KMSearchMessageModel;
 
-namespace PimCommon {
+namespace PimCommon
+{
 class SelectMultiCollectionDialog;
 }
 
-namespace Akonadi {
+namespace Akonadi
+{
 class StandardMailActionManager;
 }
 
-namespace KMime {
+namespace KMime
+{
 class Message;
 }
 
-namespace KMail {
+namespace KMail
+{
 /**
-   * The SearchWindow class provides a dialog for triggering a search on
-   * folders and storing that search as a search folder. It shows the search
-   * results in a listview and allows triggering of operations such as printing
-   * or moving on them.
-   */
+ * The SearchWindow class provides a dialog for triggering a search on
+ * folders and storing that search as a search folder. It shows the search
+ * results in a listview and allows triggering of operations such as printing
+ * or moving on them.
+ */
 class SearchPatternWarning;
 class SearchWindow : public QDialog, public KXMLGUIClient
 {

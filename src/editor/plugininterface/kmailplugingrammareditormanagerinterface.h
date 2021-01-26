@@ -8,10 +8,12 @@
 #define KMAILPLUGINGrammarEDITORMANAGERINTERFACE_H
 
 #include <QObject>
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class RichTextComposer;
 }
-namespace PimCommon {
+namespace PimCommon
+{
 class CustomToolsWidgetNg;
 }
 class KActionCollection;

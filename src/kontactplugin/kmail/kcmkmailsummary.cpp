@@ -9,23 +9,22 @@
 
 #include "kcmkmailsummary.h"
 
-#include <PimCommonAkonadi/CheckedCollectionWidget>
 #include <AkonadiWidgets/ETMViewStateSaver>
 #include <KMime/KMimeMessage>
+#include <PimCommonAkonadi/CheckedCollectionWidget>
 
+#include "kmailplugin_debug.h"
 #include <KAboutData>
 #include <KAcceleratorManager>
-#include "kmailplugin_debug.h"
+#include <KConfig>
 #include <KLocalizedString>
 #include <KSharedConfig>
-#include <KConfig>
 
 #include <QCheckBox>
 #include <QTreeView>
 #include <QVBoxLayout>
 
-extern "C"
-{
+extern "C" {
 Q_DECL_EXPORT KCModule *create_kmailsummary(QWidget *parent, const char *)
 {
     return new KCMKMailSummary(parent);
@@ -37,19 +36,18 @@ KCMKMailSummary::KCMKMailSummary(QWidget *parent)
 {
     initGUI();
 
-    connect(mCheckedCollectionWidget->folderTreeView(), &QAbstractItemView::clicked,
-            this, &KCMKMailSummary::modified);
+    connect(mCheckedCollectionWidget->folderTreeView(), &QAbstractItemView::clicked, this, &KCMKMailSummary::modified);
     connect(mFullPath, &QCheckBox::toggled, this, &KCMKMailSummary::modified);
 
     KAcceleratorManager::manage(this);
 
     load();
     auto about = new KAboutData(QStringLiteral("kcmkmailsummary"),
-                                       i18n("kcmkmailsummary"),
-                                       QString(),
-                                       i18n("Mail Summary Configuration Dialog"),
-                                       KAboutLicense::GPL,
-                                       i18n("Copyright © 2004–2010 Tobias Koenig"));
+                                i18n("kcmkmailsummary"),
+                                QString(),
+                                i18n("Mail Summary Configuration Dialog"),
+                                KAboutLicense::GPL,
+                                i18n("Copyright © 2004–2010 Tobias Koenig"));
     about->addAuthor(ki18n("Tobias Koenig").toString(), QString(), QStringLiteral("tokoe@kde.org"));
     setAboutData(about);
 }
@@ -67,13 +65,11 @@ void KCMKMailSummary::initGUI()
     mCheckedCollectionWidget = new PimCommon::CheckedCollectionWidget(KMime::Message::mimeType());
 
     mFullPath = new QCheckBox(i18n("Show full path for folders"), this);
-    mFullPath->setToolTip(
-        i18nc("@info:tooltip", "Show full path for each folder"));
-    mFullPath->setWhatsThis(
-        i18nc("@info:whatsthis",
-              "Enable this option if you want to see the full path "
-              "for each folder listed in the summary. If this option is "
-              "not enabled, then only the base folder path will be shown."));
+    mFullPath->setToolTip(i18nc("@info:tooltip", "Show full path for each folder"));
+    mFullPath->setWhatsThis(i18nc("@info:whatsthis",
+                                  "Enable this option if you want to see the full path "
+                                  "for each folder listed in the summary. If this option is "
+                                  "not enabled, then only the base folder path will be shown."));
     layout->addWidget(mCheckedCollectionWidget);
     layout->addWidget(mFullPath);
 }
@@ -82,8 +78,7 @@ void KCMKMailSummary::initFolders()
 {
     KSharedConfigPtr _config = KSharedConfig::openConfig(QStringLiteral("kcmkmailsummaryrc"));
 
-    mModelState
-        = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group("CheckState"), this);
+    mModelState = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group("CheckState"), this);
     mModelState->setSelectionModel(mCheckedCollectionWidget->selectionModel());
 }
 

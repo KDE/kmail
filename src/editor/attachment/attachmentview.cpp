@@ -19,19 +19,19 @@
 #include <MessageComposer/AttachmentModel>
 
 #include <QContextMenuEvent>
+#include <QDrag>
+#include <QHBoxLayout>
 #include <QHeaderView>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QSortFilterProxyModel>
 #include <QToolButton>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QDrag>
 
-#include <QIcon>
 #include <KLocalizedString>
+#include <QIcon>
 
-#include <MessageCore/AttachmentPart>
 #include <KFormat>
+#include <MessageCore/AttachmentPart>
 using MessageCore::AttachmentPart;
 
 using namespace KMail;
@@ -112,8 +112,7 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
         const QModelIndexList selectedIndexes = selectionModel()->selectedRows();
         toRemove.reserve(selectedIndexes.count());
         for (const QModelIndex &index : selectedIndexes) {
-            AttachmentPart::Ptr part = model()->data(
-                index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+            AttachmentPart::Ptr part = model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
             toRemove.append(part);
         }
         for (const AttachmentPart::Ptr &part : qAsConst(toRemove)) {
@@ -171,8 +170,7 @@ void AttachmentView::updateAttachmentLabel()
 void AttachmentView::selectNewAttachment()
 {
     if (selectionModel()->selectedRows().isEmpty()) {
-        selectionModel()->select(selectionModel()->currentIndex(),
-                                 QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        selectionModel()->select(selectionModel()->currentIndex(), QItemSelectionModel::Select | QItemSelectionModel::Rows);
     }
 }
 

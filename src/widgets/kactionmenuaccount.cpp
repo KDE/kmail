@@ -5,10 +5,10 @@
 */
 
 #include "kactionmenuaccount.h"
+#include "kmail_debug.h"
 #include <AkonadiCore/AgentInstance>
 #include <AkonadiCore/AgentManager>
 #include <MailCommon/MailUtil>
-#include "kmail_debug.h"
 #include <QMenu>
 
 KActionMenuAccount::KActionMenuAccount(QObject *parent)
@@ -22,8 +22,7 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &KActionMenuAccount::updateAccountMenu);
 }
 
-KActionMenuAccount::~KActionMenuAccount()
-= default;
+KActionMenuAccount::~KActionMenuAccount() = default;
 
 void KActionMenuAccount::setAccountOrder(const QStringList &identifier)
 {

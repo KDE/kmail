@@ -4,22 +4,22 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "folderarchivemanager.h"
-#include "folderarchiveagentjob.h"
 #include "folderarchiveaccountinfo.h"
+#include "folderarchiveagentjob.h"
 #include "folderarchivecache.h"
 #include "folderarchiveutil.h"
 
 #include "util.h"
 
 #include <AkonadiCore/AgentManager>
+#include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemFetchScope>
-#include <AkonadiCore/CollectionFetchJob>
 
-#include <KSharedConfig>
-#include <KNotification>
-#include <KLocalizedString>
 #include "kmail_debug.h"
+#include <KLocalizedString>
+#include <KNotification>
+#include <KSharedConfig>
 
 #include <QRegularExpression>
 
@@ -145,7 +145,7 @@ void FolderArchiveManager::load()
 {
     qDeleteAll(mListAccountInfo);
     mListAccountInfo.clear();
-    //Be sure to clear cache.
+    // Be sure to clear cache.
     mFolderArchiveCache->clearCache();
 
     KConfig config(FolderArchive::FolderArchiveUtil::configFileName());

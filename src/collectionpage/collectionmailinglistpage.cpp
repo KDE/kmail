@@ -8,28 +8,28 @@
 */
 
 #include "collectionmailinglistpage.h"
+#include "util.h"
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
-#include "util.h"
 
+#include <Akonadi/KMime/MessageParts>
 #include <AkonadiCore/itemfetchjob.h>
 #include <AkonadiCore/itemfetchscope.h>
-#include <Akonadi/KMime/MessageParts>
 
+#include <QCheckBox>
 #include <QGridLayout>
 #include <QLabel>
-#include <QCheckBox>
 #include <QPushButton>
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
-#include <QComboBox>
-#include <QLineEdit>
+#include "kmail_debug.h"
 #include <KEditListWidget>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KSqueezedTextLabel>
-#include "kmail_debug.h"
+#include <QComboBox>
+#include <QLineEdit>
 
 using namespace MailCommon;
 
@@ -40,8 +40,7 @@ CollectionMailingListPage::CollectionMailingListPage(QWidget *parent)
     setPageTitle(i18nc("@title:tab Mailing list settings for a folder.", "Mailing List"));
 }
 
-CollectionMailingListPage::~CollectionMailingListPage()
-= default;
+CollectionMailingListPage::~CollectionMailingListPage() = default;
 
 void CollectionMailingListPage::slotConfigChanged()
 {
@@ -51,9 +50,7 @@ void CollectionMailingListPage::slotConfigChanged()
 bool CollectionMailingListPage::canHandle(const Akonadi::Collection &col) const
 {
     QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(col, false);
-    return !CommonKernel->isSystemFolderCollection(col)
-           && !fd->isStructural()
-           && !MailCommon::Util::isVirtualCollection(col);
+    return !CommonKernel->isSystemFolderCollection(col) && !fd->isStructural() && !MailCommon::Util::isVirtualCollection(col);
 }
 
 void CollectionMailingListPage::init(const Akonadi::Collection &col)
@@ -83,7 +80,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     mMLId->setTextElideMode(Qt::ElideRight);
     groupLayout->addWidget(mMLId, 4, 1, 1, 2);
 
-    //FIXME: add QWhatsThis
+    // FIXME: add QWhatsThis
     label = new QLabel(i18n("Preferred handler:"), mGroupWidget);
     groupLayout->addWidget(label, 5, 0);
     mMLHandlerCombo = new QComboBox(mGroupWidget);
@@ -99,7 +96,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     label->setBuddy(mAddressCombo);
     groupLayout->addWidget(mAddressCombo, 6, 1);
 
-    //FIXME: if the mailing list actions have either QAction's or toolbar buttons
+    // FIXME: if the mailing list actions have either QAction's or toolbar buttons
     //       associated with them - remove this button since it's really silly
     //       here
     auto handleButton = new QPushButton(i18n("Invoke Handler"), mGroupWidget);
@@ -116,11 +113,9 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     connect(mEditList, &KEditListWidget::changed, this, &CollectionMailingListPage::slotConfigChanged);
     groupLayout->addWidget(mEditList, 7, 0, 1, 4);
 
-    //Order is important because the activate handler and fillMLFromWidgets
-    //depend on it
-    const QStringList el {
-        i18n("Post to List"), i18n("Subscribe to List"), i18n("Unsubscribe From List"), i18n("List Archives"), i18n("List Help")
-    };
+    // Order is important because the activate handler and fillMLFromWidgets
+    // depend on it
+    const QStringList el{i18n("Post to List"), i18n("Subscribe to List"), i18n("Unsubscribe From List"), i18n("List Archives"), i18n("List Help")};
     mAddressCombo->addItems(el);
     connect(mAddressCombo, qOverload<int>(&QComboBox::activated), this, &CollectionMailingListPage::slotAddressChanged);
 
@@ -170,18 +165,18 @@ void CollectionMailingListPage::slotHoldsML(bool holdsML)
 void CollectionMailingListPage::slotDetectMailingList()
 {
     if (!mFolder) {
-        return;    // in case the folder was just created
+        return; // in case the folder was just created
     }
 
     qCDebug(KMAIL_LOG) << "Detecting mailing list";
 
     // next try the 5 most recently added messages
     if (!(mMailingList.features() & MailingList::Post)) {
-        //FIXME not load all folder
+        // FIXME not load all folder
         auto job = new Akonadi::ItemFetchJob(mCurrentCollection, this);
         job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header);
         connect(job, &Akonadi::ItemFetchJob::result, this, &CollectionMailingListPage::slotFetchDone);
-        //Don't allow to reactive it
+        // Don't allow to reactive it
         mDetectButton->setEnabled(false);
     } else {
         mMLId->setText((mMailingList.id().isEmpty() ? i18n("Not available.") : mMailingList.id()));
@@ -212,8 +207,7 @@ void CollectionMailingListPage::slotFetchDone(KJob *job)
     }
     if (!(mMailingList.features() & MailingList::Post)) {
         if (mMailingList.features() == MailingList::None) {
-            KMessageBox::error(this,
-                               i18n("KMail was unable to detect any mailing list in this folder."));
+            KMessageBox::error(this, i18n("KMail was unable to detect any mailing list in this folder."));
         } else {
             KMessageBox::error(this,
                                i18n("KMail was unable to fully detect a mailing list in this folder. "
@@ -254,8 +248,8 @@ void CollectionMailingListPage::fillMLFromWidgets()
     QStringList newList; // the correct string list
     QStringList::ConstIterator end = oldList.constEnd();
     for (QStringList::ConstIterator it = oldList.constBegin(); it != end; ++it) {
-        if (!(*it).startsWith(QLatin1String("http:")) && !(*it).startsWith(QLatin1String("https:"))
-            && !(*it).startsWith(QLatin1String("mailto:")) && ((*it).contains(QLatin1Char('@')))) {
+        if (!(*it).startsWith(QLatin1String("http:")) && !(*it).startsWith(QLatin1String("https:")) && !(*it).startsWith(QLatin1String("mailto:"))
+            && ((*it).contains(QLatin1Char('@')))) {
             listChanged = true;
             newList << QStringLiteral("mailto:") + *it;
         } else {
@@ -267,7 +261,7 @@ void CollectionMailingListPage::fillMLFromWidgets()
         mEditList->insertStringList(newList);
     }
 
-    //mMailingList.setHandler( static_cast<MailingList::Handler>( mMLHandlerCombo->currentIndex() ) );
+    // mMailingList.setHandler( static_cast<MailingList::Handler>( mMLHandlerCombo->currentIndex() ) );
     switch (mLastItem) {
     case 0:
         mMailingList.setPostUrls(QUrl::fromStringList(mEditList->items()));

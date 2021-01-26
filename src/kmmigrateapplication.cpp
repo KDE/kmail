@@ -5,10 +5,10 @@
 */
 
 #include "kmmigrateapplication.h"
-#include <MessageComposer/MessageComposerSettings>
-#include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 #include <Kdelibs4ConfigMigrator>
+#include <MessageComposer/MessageComposerSettings>
 
 KMMigrateApplication::KMMigrateApplication()
 {
@@ -21,10 +21,10 @@ void KMMigrateApplication::migrate()
     Kdelibs4ConfigMigrator migrate(QStringLiteral("kmail"));
 
     migrate.setConfigFiles(QStringList() << QStringLiteral("kmail2rc") << QStringLiteral("kmail2.notifyrc") << QStringLiteral("kmailsnippetrc")
-                                         << QStringLiteral("customtemplatesrc") << QStringLiteral("templatesconfigurationrc") << QStringLiteral("kpimcompletionorder")
-                                         << QStringLiteral("messageviewer.notifyrc") << QStringLiteral("sievetemplaterc") << QStringLiteral("foldermailarchiverc")
-                                         << QStringLiteral("kpimbalooblacklist"));
-    migrate.setUiFiles(QStringList() << QStringLiteral("kmail_part.rc") << QStringLiteral("kmcomposerui.rc") <<  QStringLiteral("kmmainwin.rc")
+                                         << QStringLiteral("customtemplatesrc") << QStringLiteral("templatesconfigurationrc")
+                                         << QStringLiteral("kpimcompletionorder") << QStringLiteral("messageviewer.notifyrc")
+                                         << QStringLiteral("sievetemplaterc") << QStringLiteral("foldermailarchiverc") << QStringLiteral("kpimbalooblacklist"));
+    migrate.setUiFiles(QStringList() << QStringLiteral("kmail_part.rc") << QStringLiteral("kmcomposerui.rc") << QStringLiteral("kmmainwin.rc")
                                      << QStringLiteral("kmreadermainwin.rc"));
     migrate.migrate();
 
@@ -54,7 +54,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoAutoSave.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAutoSave);
 
-    //MessageViewer
+    // MessageViewer
     PimCommon::MigrateFileInfo migrateInfoMessageViewer;
     migrateInfoMessageViewer.setFolder(true);
     migrateInfoMessageViewer.setType(QStringLiteral("data"));
@@ -62,7 +62,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoMessageViewer.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoMessageViewer);
 
-    //autocorrect
+    // autocorrect
     PimCommon::MigrateFileInfo migrateInfoAutocorrect;
     migrateInfoAutocorrect.setFolder(true);
     migrateInfoAutocorrect.setType(QStringLiteral("data"));
@@ -70,7 +70,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoAutocorrect.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAutocorrect);
 
-    //gravatar
+    // gravatar
     PimCommon::MigrateFileInfo migrateInfoGravatar;
     migrateInfoGravatar.setFolder(true);
     migrateInfoGravatar.setType(QStringLiteral("data"));
@@ -78,7 +78,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoGravatar.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoGravatar);
 
-    //adblock
+    // adblock
     PimCommon::MigrateFileInfo migrateInfoAdblockrules;
     migrateInfoAdblockrules.setFolder(false);
     migrateInfoAdblockrules.setType(QStringLiteral("data"));
@@ -87,7 +87,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoAdblockrules.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAdblockrules);
 
-    //vcard from identity
+    // vcard from identity
     PimCommon::MigrateFileInfo migrateInfoVCardFromIdentity;
     migrateInfoVCardFromIdentity.setFolder(false);
     migrateInfoVCardFromIdentity.setType(QStringLiteral("data"));

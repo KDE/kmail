@@ -7,10 +7,10 @@
 #ifndef HANDLECLICKEDURLJOB_H
 #define HANDLECLICKEDURLJOB_H
 
+#include "kmail_private_export.h"
+#include <MailCommon/FolderSettings>
 #include <QObject>
 #include <QSharedPointer>
-#include <MailCommon/FolderSettings>
-#include "kmail_private_export.h"
 
 class KMAILTESTS_TESTS_EXPORT HandleClickedUrlJob : public QObject
 {
@@ -24,6 +24,7 @@ public:
     void setUrl(const QUrl &url);
     void setFolder(const QSharedPointer<MailCommon::FolderSettings> &folder);
     void setCurrentCollection(const Akonadi::Collection &currentCollection);
+
 private:
     Q_DISABLE_COPY(HandleClickedUrlJob)
     void slotOpenComposer();

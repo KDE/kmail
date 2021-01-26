@@ -5,12 +5,12 @@
 */
 
 #include "accountinfosource.h"
-#include <QVariant>
-#include <KUserFeedback/Provider>
-#include <KLocalizedString>
-#include <MailCommon/MailUtil>
 #include <AkonadiCore/AgentInstance>
+#include <KLocalizedString>
+#include <KUserFeedback/Provider>
+#include <MailCommon/MailUtil>
 #include <MailTransport/TransportManager>
+#include <QVariant>
 
 AccountInfoSource::AccountInfoSource()
     : KUserFeedback::AbstractDataSource(QStringLiteral("accounts"), KUserFeedback::Provider::DetailedSystemInformation)
@@ -48,7 +48,7 @@ QVariant AccountInfoSource::data()
         } else if (identifier.startsWith(QLatin1String("akonadi_maildir_resource"))) {
             numberOfMaildir++;
         }
-        //TODO add more
+        // TODO add more
     }
     QVariantList l;
     if (numberOfImap > 0) {
@@ -82,7 +82,7 @@ QVariant AccountInfoSource::data()
         l.push_back(m);
     }
 
-    //Mail Transport
+    // Mail Transport
     QVariantMap m;
     m.insert(QStringLiteral("name"), QStringLiteral("sender"));
     m.insert(QStringLiteral("number"), MailTransport::TransportManager::self()->transports().count());

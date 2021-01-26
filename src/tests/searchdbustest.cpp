@@ -6,12 +6,12 @@
 
 #include "searchdbustest.h"
 
+#include <PimCommonAkonadi/MailUtil>
 #include <QApplication>
 #include <QDBusInterface>
+#include <QDebug>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <PimCommonAkonadi/MailUtil>
-#include <QDebug>
 
 searchdbustest::searchdbustest(QWidget *parent)
     : QWidget(parent)
@@ -28,7 +28,7 @@ void searchdbustest::slotReindexCollections()
     if (interfaceAkonadiIndexer.isValid()) {
         const QList<qlonglong> lst = {100, 300};
         qDebug() << "reindex " << lst;
-        //qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
+        // qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
         interfaceAkonadiIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(lst));
     } else {
         qDebug() << " interface is not valid";

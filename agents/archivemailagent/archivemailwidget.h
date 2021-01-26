@@ -7,8 +7,8 @@
 #ifndef ARCHIVEMAILWIDGET_H
 #define ARCHIVEMAILWIDGET_H
 
-#include "ui_archivemailwidget.h"
 #include "archivemailinfo.h"
+#include "ui_archivemailwidget.h"
 #include <QTreeWidgetItem>
 
 #include <AkonadiCore/AgentConfigurationBase>
@@ -33,12 +33,7 @@ public:
     explicit ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *parentWidget, const QVariantList &args);
     ~ArchiveMailWidget() override;
 
-    enum ArchiveMailColumn {
-        Name = 0,
-        LastArchiveDate,
-        NextArchive,
-        StorageDirectory
-    };
+    enum ArchiveMailColumn { Name = 0, LastArchiveDate, NextArchive, StorageDirectory };
 
     Q_REQUIRED_RESULT bool save() const override;
     void load() override;

@@ -6,18 +6,17 @@
 
 #include "createfollowupreminderonexistingmessagejob.h"
 #include "kmail_debug.h"
-#include <MessageComposer/FollowupReminderCreateJob>
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemFetchScope>
 #include <KMime/Message>
+#include <MessageComposer/FollowupReminderCreateJob>
 
 CreateFollowupReminderOnExistingMessageJob::CreateFollowupReminderOnExistingMessageJob(QObject *parent)
     : QObject(parent)
 {
 }
 
-CreateFollowupReminderOnExistingMessageJob::~CreateFollowupReminderOnExistingMessageJob()
-= default;
+CreateFollowupReminderOnExistingMessageJob::~CreateFollowupReminderOnExistingMessageJob() = default;
 
 void CreateFollowupReminderOnExistingMessageJob::start()
 {
@@ -90,7 +89,7 @@ void CreateFollowupReminderOnExistingMessageJob::slotReminderDone(KJob *job)
     if (job->error()) {
         qCDebug(KMAIL_LOG) << "CreateFollowupReminderOnExistingMessageJob::slotReminderDone  :" << job->errorString();
     } else {
-        //TODO update dialog if opened
+        // TODO update dialog if opened
     }
     deleteLater();
 }

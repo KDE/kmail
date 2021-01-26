@@ -6,10 +6,10 @@
 
 #include "createreplymessagejob.h"
 
-#include "kmkernel.h"
 #include "../util.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
 
@@ -72,7 +72,8 @@ void CreateReplyMessageJob::slotCreateReplyDone(const MessageComposer::MessageFa
                                                lastEncrypt,
                                                (mSettings.replyStrategy == MessageComposer::ReplyNone) ? KMail::Composer::Reply : replyContext(reply),
                                                0,
-                                               mSettings.selection, mSettings.templateStr);
+                                               mSettings.selection,
+                                               mSettings.templateStr);
     win->setFocusToEditor();
     win->show();
     deleteLater();

@@ -5,9 +5,9 @@
 */
 
 #include "refreshsettingscleanuppage.h"
-#include <QHBoxLayout>
 #include <KLocalizedString>
 #include <KSharedConfig>
+#include <QHBoxLayout>
 #include <QPushButton>
 #include <QRegularExpression>
 
@@ -23,13 +23,12 @@ RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
     connect(button, &QPushButton::clicked, this, &RefreshSettingsCleanupPage::cleanSettings);
 }
 
-RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage()
-= default;
+RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage() = default;
 
 void RefreshSettingsCleanupPage::cleanSettings()
 {
-    const QStringList configNameFiles {QStringLiteral("kmail2rc"), QStringLiteral("kontactrc")};
-    for (const QString &configName: configNameFiles) {
+    const QStringList configNameFiles{QStringLiteral("kmail2rc"), QStringLiteral("kontactrc")};
+    for (const QString &configName : configNameFiles) {
         initCleanupFolderSettings(configName);
         initCleanupFiltersSettings(configName);
         initCleanDialogSettings(configName);

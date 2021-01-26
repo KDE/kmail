@@ -7,8 +7,8 @@
 #ifndef CRYPTOSTATEINDICATORWIDGET_H
 #define CRYPTOSTATEINDICATORWIDGET_H
 
-#include <QWidget>
 #include "kmail_private_export.h"
+#include <QWidget>
 class QLabel;
 
 class KMAILTESTS_TESTS_EXPORT CryptoStateIndicatorWidget : public QWidget

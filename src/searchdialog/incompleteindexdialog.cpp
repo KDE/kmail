@@ -5,28 +5,28 @@
  */
 
 #include "incompleteindexdialog.h"
-#include "ui_incompleteindexdialog.h"
-#include "kmkernel.h"
 #include "kmail_debug.h"
+#include "kmkernel.h"
+#include "ui_incompleteindexdialog.h"
 
-#include <QAbstractItemView>
-#include <QProgressDialog>
 #include <KDescendantsProxyModel>
 #include <KLocalizedString>
+#include <QAbstractItemView>
+#include <QProgressDialog>
 
-#include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
+#include <AkonadiCore/EntityTreeModel>
 
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>
 
-#include <QDBusInterface>
-#include <QDBusMetaType>
-#include <QTimer>
-#include <QHBoxLayout>
-#include <QDialogButtonBox>
 #include <KConfigGroup>
 #include <KSharedConfig>
+#include <QDBusInterface>
+#include <QDBusMetaType>
+#include <QDialogButtonBox>
+#include <QHBoxLayout>
+#include <QTimer>
 Q_DECLARE_METATYPE(Qt::CheckState)
 Q_DECLARE_METATYPE(QVector<qint64>)
 
@@ -102,7 +102,7 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCol
     mainLayout->setContentsMargins({});
     auto w = new QWidget(this);
     mainLayout->addWidget(w);
-    qDBusRegisterMetaType<QVector<qint64> >();
+    qDBusRegisterMetaType<QVector<qint64>>();
 
     mUi->setupUi(w);
 
@@ -188,9 +188,11 @@ QList<qlonglong> IncompleteIndexDialog::collectionsToReindex() const
 
 void IncompleteIndexDialog::waitForIndexer()
 {
-    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"),
+    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(),
+                                  QStringLiteral("/"),
                                   QStringLiteral("org.freedesktop.Akonadi.Indexer"),
-                                  QDBusConnection::sessionBus(), this);
+                                  QDBusConnection::sessionBus(),
+                                  this);
 
     if (!mIndexer->isValid()) {
         qCWarning(KMAIL_LOG) << "Invalid indexer dbus interface ";
@@ -210,8 +212,7 @@ void IncompleteIndexDialog::waitForIndexer()
     mProgressDialog->setLabelText(i18n("Indexing Collections..."));
     connect(mProgressDialog, &QDialog::rejected, this, &IncompleteIndexDialog::slotStopIndexing);
 
-    connect(mIndexer, SIGNAL(collectionIndexingFinished(qlonglong)),
-            this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
+    connect(mIndexer, SIGNAL(collectionIndexingFinished(qlonglong)), this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
 
     mIndexer->asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mIndexingQueue));
     mProgressDialog->show();

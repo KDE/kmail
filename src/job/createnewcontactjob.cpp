@@ -13,12 +13,12 @@
 #include <KContacts/Addressee>
 #include <KContacts/ContactGroup>
 
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/AgentInstanceCreateJob>
-#include <AkonadiWidgets/AgentTypeDialog>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/AgentFilterProxyModel>
 #include <Akonadi/Contact/ContactEditorDialog>
+#include <AkonadiCore/AgentFilterProxyModel>
+#include <AkonadiCore/AgentInstanceCreateJob>
+#include <AkonadiCore/CollectionFetchJob>
+#include <AkonadiCore/CollectionFetchScope>
+#include <AkonadiWidgets/AgentTypeDialog>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -30,14 +30,11 @@ CreateNewContactJob::CreateNewContactJob(QWidget *parentWidget, QObject *parent)
 {
 }
 
-CreateNewContactJob::~CreateNewContactJob()
-= default;
+CreateNewContactJob::~CreateNewContactJob() = default;
 
 void CreateNewContactJob::start()
 {
-    auto *const addressBookJob
-        = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(),
-                                          Akonadi::CollectionFetchJob::Recursive);
+    auto *const addressBookJob = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive);
 
     addressBookJob->fetchScope().setContentMimeTypes(QStringList() << KContacts::Addressee::mimeType());
     connect(addressBookJob, &KJob::result, this, &CreateNewContactJob::slotCollectionsFetched);
@@ -58,7 +55,7 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
 
     const Akonadi::Collection::List lstAddressCollection = addressBookJob->collections();
     for (const Akonadi::Collection &collection : lstAddressCollection) {
-        if (Akonadi::Collection::CanCreateItem &collection.rights()) {
+        if (Akonadi::Collection::CanCreateItem & collection.rights()) {
             canCreateItemCollections.append(collection);
         }
     }
@@ -78,12 +75,12 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
                 job->configure(mParentWidget);
                 job->start();
                 return;
-            } else { //if agent is not valid => return error and finish job
+            } else { // if agent is not valid => return error and finish job
                 setError(UserDefinedError);
                 emitResult();
                 return;
             }
-        } else { //dialog canceled => return error and finish job
+        } else { // dialog canceled => return error and finish job
             delete dlg;
             setError(UserDefinedError);
             emitResult();

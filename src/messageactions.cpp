@@ -6,52 +6,52 @@
 
 #include "messageactions.h"
 
-#include "settings/kmailsettings.h"
-#include "kmreaderwin.h"
-#include "kmkernel.h"
-#include <MailCommon/MailKernel>
-#include "kmmainwidget.h"
-#include "util.h"
 #include "kmcommands.h"
+#include "kmkernel.h"
+#include "kmmainwidget.h"
+#include "kmreaderwin.h"
+#include "settings/kmailsettings.h"
+#include "util.h"
+#include <MailCommon/MailKernel>
 #include <TemplateParser/CustomTemplatesMenu>
 
-#include <PimCommonAkonadi/AnnotationDialog>
-#include <MessageCore/MessageCoreSettings>
 #include <MessageCore/MailingList>
+#include <MessageCore/MessageCoreSettings>
 #include <MessageCore/StringUtil>
-#include <MessageViewer/MessageViewerSettings>
 #include <MessageViewer/HeaderStylePlugin>
+#include <MessageViewer/MessageViewerSettings>
+#include <PimCommonAkonadi/AnnotationDialog>
 
-#include <AkonadiCore/itemfetchjob.h>
 #include <Akonadi/KMime/MessageParts>
 #include <AkonadiCore/ChangeRecorder>
-#include <QAction>
+#include <AkonadiCore/itemfetchjob.h>
 #include <AkonadiSearch/Debug/akonadisearchdebugdialog.h>
 #include <KIO/KUriFilterSearchProviderActions>
+#include <QAction>
 
-#include <MessageComposer/FollowUpReminderSelectDateDialog>
 #include "job/createfollowupreminderonexistingmessagejob.h"
+#include <MessageComposer/FollowUpReminderSelectDateDialog>
 
-#include <AkonadiCore/ItemFetchJob>
-#include <KActionMenu>
-#include <KActionCollection>
 #include "kmail_debug.h"
-#include <KLocalizedString>
-#include <KXMLGUIClient>
-#include <KIO/OpenUrlJob>
+#include <AkonadiCore/ItemFetchJob>
+#include <KActionCollection>
+#include <KActionMenu>
 #include <KIO/JobUiDelegate>
-#include <QMenu>
-#include <KUriFilter>
+#include <KIO/OpenUrlJob>
+#include <KLocalizedString>
 #include <KStringHandler>
-#include <QIcon>
+#include <KUriFilter>
+#include <KXMLGUIClient>
 #include <QFileDialog>
+#include <QIcon>
+#include <QMenu>
 
-#include <QVariant>
-#include <QWidget>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entityannotationsattribute.h>
 #include <MailCommon/MailUtil>
 #include <MessageViewer/MessageViewerUtil>
+#include <QVariant>
+#include <QWidget>
 
 using namespace KMail;
 
@@ -116,18 +116,13 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     mForwardActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this);
     ac->addAction(QStringLiteral("message_forward"), mForwardActionMenu);
 
-    mForwardAttachedAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")),
-                                         i18nc("@action:inmenu Message->Forward->",
-                                               "As &Attachment..."),
-                                         this);
+    mForwardAttachedAction =
+        new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Message->Forward->", "As &Attachment..."), this);
     connect(mForwardAttachedAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardAttachedMessage()));
 
     ac->addAction(QStringLiteral("message_forward_as_attachment"), mForwardAttachedAction);
 
-    mForwardInlineAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")),
-                                       i18nc("@action:inmenu Message->Forward->",
-                                             "&Inline..."),
-                                       this);
+    mForwardInlineAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Message->Forward->", "&Inline..."), this);
     connect(mForwardInlineAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardInlineMsg()));
 
     ac->addAction(QStringLiteral("message_forward_inline"), mForwardInlineAction);
@@ -162,7 +157,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     replyMenu()->addAction(mCustomTemplatesMenu->replyActionMenu());
     replyMenu()->addAction(mCustomTemplatesMenu->replyAllActionMenu());
 
-    //Don't translate it. Shown only when we set env variable AKONADI_SEARCH_DEBUG
+    // Don't translate it. Shown only when we set env variable AKONADI_SEARCH_DEBUG
     mDebugAkonadiSearchAction = new QAction(QStringLiteral("Debug Akonadi Search..."), this);
     connect(mDebugAkonadiSearchAction, &QAction::triggered, this, &MessageActions::slotDebugAkonadiSearch);
 
@@ -314,7 +309,7 @@ void MessageActions::slotItemRemoved(const Akonadi::Item &item)
     }
 }
 
-void MessageActions::slotItemModified(const Akonadi::Item &item, const QSet< QByteArray > &partIdentifiers)
+void MessageActions::slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers)
 {
     Q_UNUSED(partIdentifiers)
     if (item == mCurrentItem) {
@@ -430,7 +425,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
                 listId.truncate(start - 1);
             } else if (start == 0) {
                 const int end = listId.lastIndexOf(QLatin1Char('>'));
-                if (end < 1) {   // shouldn't happen but account for it anyway
+                if (end < 1) { // shouldn't happen but account for it anyway
                     listId.remove(0, 1);
                 } else {
                     listId = listId.mid(1, end - 1);
@@ -504,15 +499,13 @@ void MessageActions::setupForwardActions(KActionCollection *ac)
         mForwardActionMenu->insertAction(mRedirectAction, mForwardAttachedAction);
         ac->setDefaultShortcut(mForwardInlineAction, QKeySequence(Qt::Key_F));
         ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT | Qt::Key_F));
-        QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)),
-                         mParent, SLOT(slotForwardInlineMsg()));
+        QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)), mParent, SLOT(slotForwardInlineMsg()));
     } else {
         mForwardActionMenu->insertAction(mRedirectAction, mForwardAttachedAction);
         mForwardActionMenu->insertAction(mRedirectAction, mForwardInlineAction);
         ac->setDefaultShortcut(mForwardInlineAction, QKeySequence(Qt::Key_F));
         ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT | Qt::Key_F));
-        QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)),
-                         mParent, SLOT(slotForwardAttachedMessage()));
+        QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)), mParent, SLOT(slotForwardAttachedMessage()));
     }
 }
 
@@ -602,11 +595,12 @@ void MessageActions::printMessage(bool preview)
             commandInfo.mPrintPreview = preview;
             commandInfo.mUseFixedFont = useFixedFont;
             commandInfo.mOverrideFont = overrideEncoding;
-            commandInfo.mShowSignatureDetails = mMessageView->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
-            commandInfo.mShowEncryptionDetails = mMessageView->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
+            commandInfo.mShowSignatureDetails =
+                mMessageView->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
+            commandInfo.mShowEncryptionDetails =
+                mMessageView->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
 
-            auto *command
-                = new KMPrintCommand(mParent, commandInfo);
+            auto *command = new KMPrintCommand(mParent, commandInfo);
             command->start();
         }
     } else {
@@ -649,13 +643,17 @@ void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
     QString prettyUrl = url.toDisplayString();
     if (protocol == QLatin1String("mailto")) {
         protocol = i18n("email");
-        prettyUrl.remove(0, 7);   // length( "mailto:" )
+        prettyUrl.remove(0, 7); // length( "mailto:" )
     } else if (protocol.startsWith(QLatin1String("http"))) {
         protocol = i18n("web");
     }
     // item is a mailing list url description passed from the updateActions method above.
-    auto *act
-        = new QAction(i18nc("%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant", "%1 (%2)", item, protocol), this);
+    auto *act =
+        new QAction(i18nc("%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant",
+                          "%1 (%2)",
+                          item,
+                          protocol),
+                    this);
     mMailListActionList.append(act);
     const QVariant v(url);
     act->setData(v);
@@ -671,10 +669,7 @@ void MessageActions::editCurrentMessage()
         qCDebug(KMAIL_LOG) << " mCurrentItem.parentCollection()" << mCurrentItem.parentCollection();
         // edit, unlike send again, removes the message from the folder
         // we only want that for templates and drafts folders
-        if (col.isValid()
-            && (CommonKernel->folderIsDraftOrOutbox(col)
-                || CommonKernel->folderIsTemplates(col))
-            ) {
+        if (col.isValid() && (CommonKernel->folderIsDraftOrOutbox(col) || CommonKernel->folderIsTemplates(col))) {
             command = new KMEditItemCommand(mParent, mCurrentItem, true);
         } else {
             command = new KMEditItemCommand(mParent, mCurrentItem, false);
@@ -766,9 +761,7 @@ void MessageActions::slotAddFollowupReminder()
 void MessageActions::slotExportToPdf()
 {
     QString fileName = MessageViewer::Util::generateFileNameForExtension(mCurrentItem, QStringLiteral(".pdf"));
-    fileName = QFileDialog::getSaveFileName(mParent, i18n("Export to PDF"),
-                                            QDir::homePath() + QLatin1Char('/') + fileName,
-                                            i18n("PDF document (*.pdf)"));
+    fileName = QFileDialog::getSaveFileName(mParent, i18n("Export to PDF"), QDir::homePath() + QLatin1Char('/') + fileName, i18n("PDF document (*.pdf)"));
     if (!fileName.isEmpty()) {
         mMessageView->viewer()->exportToPdf(fileName);
     }

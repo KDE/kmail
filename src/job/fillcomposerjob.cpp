@@ -5,9 +5,9 @@
 */
 
 #include "fillcomposerjob.h"
-#include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
 #include <MessageViewer/MessageViewerSettings>
 
 #include <MessageComposer/MessageHelper>
@@ -18,8 +18,7 @@ FillComposerJob::FillComposerJob(QObject *parent)
 {
 }
 
-FillComposerJob::~FillComposerJob()
-= default;
+FillComposerJob::~FillComposerJob() = default;
 
 void FillComposerJob::start()
 {
@@ -62,22 +61,19 @@ void FillComposerJob::slotOpenComposer()
     bool noWordWrap = false;
     bool isICalInvitation = false;
     if (!mSettings.mAttachData.isEmpty()) {
-        isICalInvitation = (mSettings.mAttachName == QLatin1String("cal.ics"))
-                           && mSettings.mAttachType == "text"
-                           && mSettings.mAttachSubType == "calendar"
-                           && mSettings.mAttachParamAttr == "method";
+        isICalInvitation = (mSettings.mAttachName == QLatin1String("cal.ics")) && mSettings.mAttachType == "text" && mSettings.mAttachSubType == "calendar"
+            && mSettings.mAttachParamAttr == "method";
         // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
         if (isICalInvitation && mSettings.mBcc.isEmpty()) {
             mMsg->removeHeader<KMime::Headers::Bcc>();
         }
-        if (isICalInvitation
-            && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
+        if (isICalInvitation && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
             // KOrganizer invitation caught and to be sent as body instead
             mMsg->setBody(mSettings.mAttachData);
-            mMsg->contentType()->from7BitString(
-                QStringLiteral("text/calendar; method=%1; "
-                               "charset=\"utf-8\"").
-                arg(mSettings.mAttachParamValue).toLatin1());
+            mMsg->contentType()->from7BitString(QStringLiteral("text/calendar; method=%1; "
+                                                               "charset=\"utf-8\"")
+                                                    .arg(mSettings.mAttachParamValue)
+                                                    .toLatin1());
 
             iCalAutoSend = true; // no point in editing raw ICAL
             noWordWrap = true; // we shouldn't word wrap inline invitations
@@ -85,10 +81,11 @@ void FillComposerJob::slotOpenComposer()
             // Just do what we're told to do
             msgPart = new KMime::Content;
             msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1String(mSettings.mAttachCte), "utf-8");
-            msgPart->setBody(mSettings.mAttachData);   //TODO: check if was setBodyEncoded
-            auto ct = msgPart->contentType(); //Create
-            ct->setMimeType(mSettings.mAttachType + '/' +  mSettings.mAttachSubType);
-            ct->setParameter(QLatin1String(mSettings.mAttachParamAttr), mSettings.mAttachParamValue);   //TODO: Check if the content disposition parameter needs to be set!
+            msgPart->setBody(mSettings.mAttachData); // TODO: check if was setBodyEncoded
+            auto ct = msgPart->contentType(); // Create
+            ct->setMimeType(mSettings.mAttachType + '/' + mSettings.mAttachSubType);
+            ct->setParameter(QLatin1String(mSettings.mAttachParamAttr),
+                             mSettings.mAttachParamValue); // TODO: Check if the content disposition parameter needs to be set!
             if (!MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
                 msgPart->contentDisposition()->fromUnicodeString(QLatin1String(mSettings.mAttachContDisp), "utf-8");
             }
@@ -112,8 +109,7 @@ void FillComposerJob::slotOpenComposer()
 
     KMail::Composer *cWin = KMail::makeComposer(KMime::Message::Ptr(), false, false, context);
     cWin->setMessage(mMsg, false, false, !isICalInvitation /* mayAutoSign */);
-    cWin->setSigningAndEncryptionDisabled(isICalInvitation
-                                          && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites());
+    cWin->setSigningAndEncryptionDisabled(isICalInvitation && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites());
     if (noWordWrap) {
         cWin->disableWordWrap();
     }

@@ -11,7 +11,8 @@
 #include <QDate>
 
 class KConfigGroup;
-namespace FollowUpReminder {
+namespace FollowUpReminder
+{
 /** Follow up reminder information. */
 class FollowUpReminderInfo
 {
@@ -20,7 +21,7 @@ public:
     FollowUpReminderInfo(const KConfigGroup &config);
     FollowUpReminderInfo(const FollowUpReminderInfo &info);
 
-    //Can be invalid.
+    // Can be invalid.
     Q_REQUIRED_RESULT Akonadi::Item::Id originalMessageItemId() const;
     void setOriginalMessageItemId(Akonadi::Item::Id value);
 
@@ -43,7 +44,7 @@ public:
     Q_REQUIRED_RESULT QString subject() const;
     void setSubject(const QString &subject);
 
-    bool operator ==(const FollowUpReminderInfo &other) const;
+    bool operator==(const FollowUpReminderInfo &other) const;
 
     Q_REQUIRED_RESULT bool answerWasReceived() const;
     void setAnswerWasReceived(bool answerWasReceived);

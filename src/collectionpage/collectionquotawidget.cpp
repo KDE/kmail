@@ -8,11 +8,11 @@
 
 #include "collectionquotawidget.h"
 
+#include <KFormat>
 #include <KLocalizedString>
 #include <QGridLayout>
 #include <QLabel>
 #include <QProgressBar>
-#include <KFormat>
 
 CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
     : QWidget(parent)

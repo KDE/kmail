@@ -7,9 +7,9 @@
 #ifndef KMCOMPOSERCREATENEWCOMPOSERJOB_H
 #define KMCOMPOSERCREATENEWCOMPOSERJOB_H
 
-#include <QObject>
-#include <KMime/Message>
 #include <AkonadiCore/Collection>
+#include <KMime/Message>
+#include <QObject>
 
 class KMComposerCreateNewComposerJob : public QObject
 {

@@ -7,17 +7,17 @@
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
-#include "unityservicemanager.h"
 #include "settings/kmailsettings.h"
-#include <MailCommon/MailUtil>
-#include <MailCommon/MailKernel>
-#include <MailCommon/FolderTreeView>
+#include "unityservicemanager.h"
 #include <Akonadi/KMime/NewMailNotifierAttribute>
+#include <MailCommon/FolderTreeView>
+#include <MailCommon/MailKernel>
+#include <MailCommon/MailUtil>
 
-#include <KWindowSystem>
 #include "kmail_debug.h"
-#include <QMenu>
 #include <KLocalizedString>
+#include <KWindowSystem>
+#include <QMenu>
 
 #include "widgets/kactionmenutransport.h"
 
@@ -53,8 +53,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     }
 
     connect(this, &KMSystemTray::activateRequested, this, &KMSystemTray::slotActivated);
-    connect(contextMenu(), &QMenu::aboutToShow,
-            this, &KMSystemTray::slotContextMenuAboutToShow);
+    connect(contextMenu(), &QMenu::aboutToShow, this, &KMSystemTray::slotContextMenuAboutToShow);
 }
 
 bool KMSystemTray::buildPopupMenu()
@@ -253,10 +252,7 @@ void KMSystemTray::hideKMail()
 
 void KMSystemTray::updateToolTip(int count)
 {
-    setToolTipSubTitle(count == 0 ? i18n("There are no unread messages")
-                       : i18np("1 unread message",
-                               "%1 unread messages",
-                               count));
+    setToolTipSubTitle(count == 0 ? i18n("There are no unread messages") : i18np("1 unread message", "%1 unread messages", count));
 }
 
 void KMSystemTray::updateStatus(int count)

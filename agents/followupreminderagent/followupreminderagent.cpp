@@ -5,11 +5,11 @@
 */
 
 #include "followupreminderagent.h"
-#include "followupremindermanager.h"
-#include "followupreminderutil.h"
 #include "followupreminderadaptor.h"
 #include "followupreminderagentsettings.h"
 #include "followupreminderinfo.h"
+#include "followupremindermanager.h"
+#include "followupreminderutil.h"
 
 #include <KMime/Message>
 
@@ -17,10 +17,10 @@
 #include <AkonadiCore/ItemFetchScope>
 #include <QDBusConnection>
 
-#include <Kdelibs4ConfigMigrator>
-#include <AkonadiCore/Session>
 #include <AkonadiCore/CollectionFetchScope>
 #include <AkonadiCore/ServerManager>
+#include <AkonadiCore/Session>
+#include <Kdelibs4ConfigMigrator>
 
 #include "followupreminderagent_debug.h"
 #include <QTimer>
@@ -54,12 +54,11 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
 
     mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &FollowUpReminderAgent::reload);
-    //Reload all each 24hours
+    // Reload all each 24hours
     mTimer->start(24 * 60 * 60 * 1000);
 }
 
-FollowUpReminderAgent::~FollowUpReminderAgent()
-= default;
+FollowUpReminderAgent::~FollowUpReminderAgent() = default;
 
 void FollowUpReminderAgent::setEnableAgent(bool enabled)
 {
@@ -103,7 +102,12 @@ void FollowUpReminderAgent::reload()
     }
 }
 
-void FollowUpReminderAgent::addReminder(const QString &messageId, Akonadi::Item::Id messageItemId, const QString &to, const QString &subject, const QDate &followupDate, Akonadi::Item::Id todoId)
+void FollowUpReminderAgent::addReminder(const QString &messageId,
+                                        Akonadi::Item::Id messageItemId,
+                                        const QString &to,
+                                        const QString &subject,
+                                        const QDate &followupDate,
+                                        Akonadi::Item::Id todoId)
 {
     auto info = new FollowUpReminder::FollowUpReminderInfo();
     info->setMessageId(messageId);

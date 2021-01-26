@@ -10,19 +10,19 @@
 #include "kmailinterface.h"
 #include "summarywidget.h"
 
-#include <KContacts/VCardDrag>
-#include <KCalendarCore/MemoryCalendar>
-#include <KCalendarCore/FileStorage>
 #include <KCalUtils/ICalDrag>
 #include <KCalUtils/VCalDrag>
+#include <KCalendarCore/FileStorage>
+#include <KCalendarCore/MemoryCalendar>
+#include <KContacts/VCardDrag>
 
 #include <KontactInterface/Core>
 
-#include <QAction>
-#include <KActionCollection>
 #include "kmailplugin_debug.h"
-#include <QIcon>
+#include <KActionCollection>
 #include <KLocalizedString>
+#include <QAction>
+#include <QIcon>
 #include <QTemporaryFile>
 
 #include <QDropEvent>
@@ -38,42 +38,31 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 
-    auto *action
-        = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")),
-                      i18nc("@action:inmenu", "New Message..."), this);
+    auto *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18nc("@action:inmenu", "New Message..."), this);
     actionCollection()->addAction(QStringLiteral("new_mail"), action);
     actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_M));
-    //action->setHelpText(
+    // action->setHelpText(
     //            i18nc( "@info:status", "Create a new mail message" ) );
-    action->setWhatsThis(
-        i18nc("@info:whatsthis",
-              "You will be presented with a dialog where you can create "
-              "and send a new email message."));
+    action->setWhatsThis(i18nc("@info:whatsthis",
+                               "You will be presented with a dialog where you can create "
+                               "and send a new email message."));
     connect(action, &QAction::triggered, this, &KMailPlugin::slotNewMail);
     insertNewAction(action);
 
-    auto *syncAction
-        = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")),
-                      i18nc("@action:inmenu", "Sync Mail"), this);
-    //syncAction->setHelpText(
+    auto *syncAction = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18nc("@action:inmenu", "Sync Mail"), this);
+    // syncAction->setHelpText(
     //            i18nc( "@info:status", "Synchronize groupware mail" ) );
-    syncAction->setWhatsThis(
-        i18nc("@info:whatsthis",
-              "Choose this option to synchronize your groupware email."));
+    syncAction->setWhatsThis(i18nc("@info:whatsthis", "Choose this option to synchronize your groupware email."));
     connect(syncAction, &QAction::triggered, this, &KMailPlugin::slotSyncFolders);
     actionCollection()->addAction(QStringLiteral("sync_mail"), syncAction);
     insertSyncAction(syncAction);
 
-    mUniqueAppWatcher = new KontactInterface::UniqueAppWatcher(
-        new KontactInterface::UniqueAppHandlerFactory<KMailUniqueAppHandler>(), this);
+    mUniqueAppWatcher = new KontactInterface::UniqueAppWatcher(new KontactInterface::UniqueAppHandlerFactory<KMailUniqueAppHandler>(), this);
 }
 
 bool KMailPlugin::canDecodeMimeData(const QMimeData *mimeData) const
 {
-    return
-        ICalDrag::canDecode(mimeData)
-        || VCalDrag::canDecode(mimeData)
-        || KContacts::VCardDrag::canDecode(mimeData);
+    return ICalDrag::canDecode(mimeData) || VCalDrag::canDecode(mimeData) || KContacts::VCardDrag::canDecode(mimeData);
 }
 
 void KMailPlugin::shortcutChanged()
@@ -117,12 +106,11 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
 
 void KMailPlugin::openComposer(const QUrl &attach)
 {
-    (void)part();  // ensure part is loaded
+    (void)part(); // ensure part is loaded
     Q_ASSERT(m_instance);
     if (m_instance) {
         if (attach.isValid()) {
-            m_instance->newMessage(QString(), QString(), QString(), false, true, QString(), attach.isLocalFile()
-                                   ? attach.toLocalFile() : attach.path());
+            m_instance->newMessage(QString(), QString(), QString(), false, true, QString(), attach.isLocalFile() ? attach.toLocalFile() : attach.path());
         } else {
             m_instance->newMessage(QString(), QString(), QString(), false, true, QString(), QString());
         }
@@ -131,7 +119,7 @@ void KMailPlugin::openComposer(const QUrl &attach)
 
 void KMailPlugin::openComposer(const QString &to)
 {
-    (void)part();  // ensure part is loaded
+    (void)part(); // ensure part is loaded
     Q_ASSERT(m_instance);
     if (m_instance) {
         m_instance->newMessage(to, QString(), QString(), false, true, QString(), QString());
@@ -145,10 +133,10 @@ void KMailPlugin::slotNewMail()
 
 void KMailPlugin::slotSyncFolders()
 {
-    QDBusMessage message
-        = QDBusMessage::createMethodCall(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"),
-                                         QStringLiteral("org.kde.kmail.kmail"),
-                                         QStringLiteral("checkMail"));
+    QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.kde.kmail"),
+                                                          QStringLiteral("/KMail"),
+                                                          QStringLiteral("org.kde.kmail.kmail"),
+                                                          QStringLiteral("checkMail"));
     QDBusConnection::sessionBus().send(message);
 }
 
@@ -165,8 +153,7 @@ KParts::Part *KMailPlugin::createPart()
         return nullptr;
     }
 
-    m_instance = new OrgKdeKmailKmailInterface(
-        QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+    m_instance = new OrgKdeKmailKmailInterface(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
 
     return part;
 }
@@ -208,7 +195,7 @@ int KMailUniqueAppHandler::activate(const QStringList &args, const QString &work
 
     if (reply.isValid()) {
         bool handled = reply;
-        if (!handled) {   // no args -> simply bring kmail plugin to front
+        if (!handled) { // no args -> simply bring kmail plugin to front
             return KontactInterface::UniqueAppHandler::activate(args, workingDir);
         }
     }

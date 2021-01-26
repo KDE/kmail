@@ -6,17 +6,17 @@
 
 #include "identityaddvcarddialog.h"
 
-#include <QComboBox>
 #include <KLocalizedString>
 #include <KSeparator>
 #include <KUrlRequester>
+#include <QComboBox>
 
 #include <QButtonGroup>
-#include <QVBoxLayout>
-#include <QRadioButton>
-#include <QLabel>
 #include <QDialogButtonBox>
+#include <QLabel>
 #include <QPushButton>
+#include <QRadioButton>
+#include <QVBoxLayout>
 
 IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)
     : QDialog(parent)
@@ -92,7 +92,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     hlay->addWidget(mComboBox, 1);
 
     vlay->addWidget(new KSeparator);
-    vlay->addStretch(1);   // spacer
+    vlay->addStretch(1); // spacer
 
     // enable/disable combobox and label depending on the third radio
     // button's state:
@@ -101,8 +101,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     resize(350, 130);
 }
 
-IdentityAddVcardDialog::~IdentityAddVcardDialog()
-= default;
+IdentityAddVcardDialog::~IdentityAddVcardDialog() = default;
 
 IdentityAddVcardDialog::DuplicateMode IdentityAddVcardDialog::duplicateMode() const
 {

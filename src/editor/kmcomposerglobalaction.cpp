@@ -19,8 +19,7 @@ KMComposerGlobalAction::KMComposerGlobalAction(KMComposerWin *composerWin, QObje
 {
 }
 
-KMComposerGlobalAction::~KMComposerGlobalAction()
-= default;
+KMComposerGlobalAction::~KMComposerGlobalAction() = default;
 
 void KMComposerGlobalAction::slotUndo()
 {
@@ -130,8 +129,8 @@ void KMComposerGlobalAction::slotInsertEmoticon(const QString &str)
         static_cast<QTextEdit *>(fw)->insertPlainText(str);
     }
     //} else if (::qobject_cast<KLineEdit *>(fw)) {
-    //Don't insert emoticon in mail linedit
-    //static_cast<KLineEdit *>(fw)->insert(str);
+    // Don't insert emoticon in mail linedit
+    // static_cast<KLineEdit *>(fw)->insert(str);
 }
 
 void KMComposerGlobalAction::slotInsertText(const QString &str)
@@ -146,6 +145,6 @@ void KMComposerGlobalAction::slotInsertText(const QString &str)
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
         static_cast<QTextEdit *>(fw)->insertPlainText(str);
     }
-    //Don't insert text in mail linedit
+    // Don't insert text in mail linedit
     //} else if (::qobject_cast<KLineEdit *>(fw)) {
 }

@@ -9,10 +9,12 @@
 
 #include <QDateTime>
 
-namespace SendLater {
+namespace SendLater
+{
 class SendLaterInfo;
 
-namespace SendLaterUtil {
+namespace SendLaterUtil
+{
 Q_REQUIRED_RESULT QDateTime updateRecurence(SendLater::SendLaterInfo *info, QDateTime dateTime);
 }
 }

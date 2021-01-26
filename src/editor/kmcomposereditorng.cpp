@@ -5,24 +5,25 @@
 */
 
 #include "kmcomposereditorng.h"
+#include "dialog/spellcheckerconfigdialog.h"
+#include "job/dndfromarkjob.h"
+#include "kmail_debug.h"
 #include "kmcomposerwin.h"
 #include "kmkernel.h"
 #include "util.h"
-#include "kmail_debug.h"
-#include "job/dndfromarkjob.h"
-#include "dialog/spellcheckerconfigdialog.h"
 
-#include <QMenu>
-#include <KToggleAction>
-#include <QMimeData>
-#include <QCheckBox>
-#include <MessageCore/MessageCoreSettings>
-#include <MessageCore/ColorUtil>
-#include <Sonnet/ConfigDialog>
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
+#include <KToggleAction>
+#include <MessageCore/ColorUtil>
+#include <MessageCore/MessageCoreSettings>
+#include <QCheckBox>
+#include <QMenu>
+#include <QMimeData>
+#include <Sonnet/ConfigDialog>
 #include <sonnet/dictionarycombobox.h>
 
-namespace {
+namespace
+{
 inline QString textSnippetMimeType()
 {
     return QStringLiteral("text/x-kmail-textsnippet");
@@ -38,8 +39,7 @@ KMComposerEditorNg::KMComposerEditorNg(KMComposerWin *win, QWidget *parent)
     createHighlighter();
 }
 
-KMComposerEditorNg::~KMComposerEditorNg()
-= default;
+KMComposerEditorNg::~KMComposerEditorNg() = default;
 
 void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, QPoint pos)
 {
@@ -101,8 +101,7 @@ void KMComposerEditorNg::setHighlighterColors(KPIMTextEdit::RichTextComposerEmai
         color3 = MessageCore::MessageCoreSettings::self()->quotedText3();
     }
 
-    highlighter->setQuoteColor(Qt::black /* ignored anyway */,
-                               color1, color2, color3, misspelled);
+    highlighter->setQuoteColor(Qt::black /* ignored anyway */, color1, color2, color3, misspelled);
 }
 
 QString KMComposerEditorNg::smartQuote(const QString &msg)

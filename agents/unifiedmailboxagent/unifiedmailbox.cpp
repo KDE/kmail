@@ -5,9 +5,9 @@
 */
 
 #include "unifiedmailbox.h"
+#include "common.h"
 #include "unifiedmailboxmanager.h"
 #include "utils.h"
-#include "common.h"
 
 #include <KConfigGroup>
 
@@ -21,7 +21,7 @@ void UnifiedMailbox::load(const KConfigGroup &group)
     mId = group.name();
     mName = group.readEntry("name");
     mIcon = group.readEntry("icon", QStringLiteral("folder-mail"));
-    mSources = listToSet(group.readEntry("sources", QList<qint64> {}));
+    mSources = listToSet(group.readEntry("sources", QList<qint64>{}));
     // This is not authoritative, we will do collection discovery anyway
     mCollectionId = group.readEntry("collectionId", -1ll);
 }
@@ -37,9 +37,7 @@ void UnifiedMailbox::save(KConfigGroup &group) const
 
 bool UnifiedMailbox::isSpecial() const
 {
-    return mId == Common::InboxBoxId
-           || mId == Common::SentBoxId
-           || mId == Common::DraftsBoxId;
+    return mId == Common::InboxBoxId || mId == Common::SentBoxId || mId == Common::DraftsBoxId;
 }
 
 void UnifiedMailbox::setCollectionId(qint64 id)
@@ -86,8 +84,8 @@ void UnifiedMailbox::addSourceCollection(qint64 source)
 {
     mSources.insert(source);
     if (mManager) {
-        mManager->mMonitor.setCollectionMonitored(Akonadi::Collection {source});
-        mManager->mSourceToBoxMap.insert({ source, this });
+        mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source});
+        mManager->mSourceToBoxMap.insert({source, this});
     }
 }
 
@@ -95,7 +93,7 @@ void UnifiedMailbox::removeSourceCollection(qint64 source)
 {
     mSources.remove(source);
     if (mManager) {
-        mManager->mMonitor.setCollectionMonitored(Akonadi::Collection {source}, false);
+        mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source}, false);
         mManager->mSourceToBoxMap.erase(source);
     }
 }
@@ -121,12 +119,12 @@ void UnifiedMailbox::attachManager(UnifiedMailboxManager *manager)
         if (manager) {
             // Force that we start monitoring all the collections
             for (const auto source : qAsConst(mSources)) {
-                manager->mMonitor.setCollectionMonitored(Akonadi::Collection {source});
-                manager->mSourceToBoxMap.insert({ source, this });
+                manager->mMonitor.setCollectionMonitored(Akonadi::Collection{source});
+                manager->mSourceToBoxMap.insert({source, this});
             }
         } else {
             for (const auto &source : qAsConst(mSources)) {
-                mManager->mMonitor.setCollectionMonitored(Akonadi::Collection {source}, false);
+                mManager->mMonitor.setCollectionMonitored(Akonadi::Collection{source}, false);
                 mManager->mSourceToBoxMap.erase(source);
             }
         }

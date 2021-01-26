@@ -5,28 +5,28 @@
 */
 
 #include "unifiedmailboxagent.h"
+#include "common.h"
+#include "settings.h"
+#include "settingsdialog.h"
 #include "unifiedmailbox.h"
 #include "unifiedmailboxagent_debug.h"
 #include "unifiedmailboxagentadaptor.h"
-#include "settingsdialog.h"
-#include "settings.h"
-#include "common.h"
 
 #include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/Session>
+#include <AkonadiCore/CollectionDeleteJob>
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/CollectionDeleteJob>
-#include <AkonadiCore/SpecialCollectionAttribute>
 #include <AkonadiCore/EntityDisplayAttribute>
-#include <AkonadiCore/ItemFetchScope>
 #include <AkonadiCore/ItemFetchJob>
+#include <AkonadiCore/ItemFetchScope>
 #include <AkonadiCore/LinkJob>
-#include <AkonadiCore/UnlinkJob>
 #include <AkonadiCore/ServerManager>
+#include <AkonadiCore/Session>
+#include <AkonadiCore/SpecialCollectionAttribute>
+#include <AkonadiCore/UnlinkJob>
 
-#include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 
 #include <KLocalizedString>
 #include <QDBusConnection>
@@ -34,9 +34,9 @@
 #include <QPointer>
 #include <QTimer>
 
+#include <chrono>
 #include <memory>
 #include <unordered_set>
-#include <chrono>
 
 UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     : Akonadi::ResourceBase(id)
@@ -49,8 +49,7 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     const auto service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Resource, identifier());
     QDBusConnection::sessionBus().registerService(service);
 
-    connect(&mBoxManager, &UnifiedMailboxManager::updateBox,
-            this, [this](const UnifiedMailbox *box) {
+    connect(&mBoxManager, &UnifiedMailboxManager::updateBox, this, [this](const UnifiedMailbox *box) {
         if (box->collectionId() <= -1) {
             qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "MailboxManager wants us to update Box but does not have its CollectionId!?";
             return;
@@ -105,8 +104,7 @@ void UnifiedMailboxAgent::setEnableAgent(bool enabled)
             setOnline(false);
             auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
             fetch->fetchScope().setResource(identifier());
-            connect(fetch, &Akonadi::CollectionFetchJob::collectionsReceived,
-                    this, [this](const Akonadi::Collection::List &cols) {
+            connect(fetch, &Akonadi::CollectionFetchJob::collectionsReceived, this, [this](const Akonadi::Collection::List &cols) {
                 for (const auto &col : cols) {
                     new Akonadi::CollectionDeleteJob(col, this);
                 }
@@ -176,16 +174,14 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
     }
 
     const auto sources = unifiedBox->sourceCollections();
-    for (auto source  : sources) {
+    for (auto source : sources) {
         auto fetch = new Akonadi::ItemFetchJob(Akonadi::Collection(source), this);
         fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
         fetch->fetchScope().setFetchVirtualReferences(true);
         fetch->fetchScope().setCacheOnly(true);
-        connect(fetch, &Akonadi::ItemFetchJob::itemsReceived,
-                this, [this, c](const Akonadi::Item::List &items) {
+        connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, [this, c](const Akonadi::Item::List &items) {
             Akonadi::Item::List toLink;
-            std::copy_if(items.cbegin(), items.cend(), std::back_inserter(toLink),
-                         [&c](const Akonadi::Item &item) {
+            std::copy_if(items.cbegin(), items.cend(), std::back_inserter(toLink), [&c](const Akonadi::Item &item) {
                 return !item.virtualReferences().contains(c);
             });
             if (!toLink.isEmpty()) {
@@ -198,20 +194,17 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
     fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
     fetch->fetchScope().setCacheOnly(true);
     fetch->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-    connect(fetch, &Akonadi::ItemFetchJob::itemsReceived,
-            this, [this, unifiedBox, c](const Akonadi::Item::List &items) {
+    connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, [this, unifiedBox, c](const Akonadi::Item::List &items) {
         Akonadi::Item::List toUnlink;
-        std::copy_if(items.cbegin(), items.cend(), std::back_inserter(toUnlink),
-                     [&unifiedBox](const Akonadi::Item &item) {
+        std::copy_if(items.cbegin(), items.cend(), std::back_inserter(toUnlink), [&unifiedBox](const Akonadi::Item &item) {
             return !unifiedBox->sourceCollections().contains(item.storageCollectionId());
         });
         if (!toUnlink.isEmpty()) {
             new Akonadi::UnlinkJob(c, toUnlink, this);
         }
     });
-    connect(fetch, &Akonadi::ItemFetchJob::result,
-            this, [this]() {
-        itemsRetrievedIncremental({}, {});         // fake incremental retrieval
+    connect(fetch, &Akonadi::ItemFetchJob::result, this, [this]() {
+        itemsRetrievedIncremental({}, {}); // fake incremental retrieval
     });
 }
 
@@ -233,13 +226,14 @@ void UnifiedMailboxAgent::fixSpecialCollection(const QString &colId, Akonadi::Sp
     // we have to retrieve it first.
     connect(new Akonadi::CollectionFetchJob(Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base, this),
             &Akonadi::CollectionFetchJob::collectionsReceived,
-            this, [type](const Akonadi::Collection::List &cols) {
-        if (cols.count() != 1) {
-            qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "Identity special collection retrieval did not find a valid collection";
-            return;
-        }
-        Akonadi::SpecialMailCollections::self()->registerCollection(type, cols.first());
-    });
+            this,
+            [type](const Akonadi::Collection::List &cols) {
+                if (cols.count() != 1) {
+                    qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "Identity special collection retrieval did not find a valid collection";
+                    return;
+                }
+                Akonadi::SpecialMailCollections::self()->registerCollection(type, cols.first());
+            });
 }
 
 void UnifiedMailboxAgent::fixSpecialCollections()

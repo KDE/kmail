@@ -5,15 +5,15 @@
 */
 
 #include "kmailuserfeedbackprovider.h"
-#include <KUserFeedback/ApplicationVersionSource>
-#include <KUserFeedback/PlatformInfoSource>
-#include <KUserFeedback/ScreenInfoSource>
-#include <KUserFeedback/QtVersionSource>
-#include <KUserFeedback/StartCountSource>
-#include <KUserFeedback/UsageTimeSource>
-#include <KUserFeedback/LocaleInfoSource>
 #include "userfeedback/accountinfosource.h"
 #include "userfeedback/plugininfosource.h"
+#include <KUserFeedback/ApplicationVersionSource>
+#include <KUserFeedback/LocaleInfoSource>
+#include <KUserFeedback/PlatformInfoSource>
+#include <KUserFeedback/QtVersionSource>
+#include <KUserFeedback/ScreenInfoSource>
+#include <KUserFeedback/StartCountSource>
+#include <KUserFeedback/UsageTimeSource>
 
 KMailUserFeedbackProvider::KMailUserFeedbackProvider(QObject *parent)
     : KUserFeedback::Provider(parent)
@@ -34,8 +34,7 @@ KMailUserFeedbackProvider::KMailUserFeedbackProvider(QObject *parent)
 
     addDataSource(new KUserFeedback::LocaleInfoSource);
     addDataSource(new AccountInfoSource);
-    //addDataSource(new PluginInfoSource);
+    // addDataSource(new PluginInfoSource);
 }
 
-KMailUserFeedbackProvider::~KMailUserFeedbackProvider()
-= default;
+KMailUserFeedbackProvider::~KMailUserFeedbackProvider() = default;

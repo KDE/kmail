@@ -13,15 +13,18 @@ class QCheckBox;
 class KUrlRequester;
 class QComboBox;
 class QPushButton;
-namespace Akonadi {
+namespace Akonadi
+{
 class Collection;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 }
 
-namespace KMail {
+namespace KMail
+{
 class ArchiveFolderDialog : public QDialog
 {
     Q_OBJECT

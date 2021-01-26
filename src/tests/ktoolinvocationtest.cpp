@@ -6,9 +6,9 @@
 
 #include <QDebug>
 
-#include <QCoreApplication>
-#include <QCommandLineParser>
 #include <KToolInvocation>
+#include <QCommandLineParser>
+#include <QCoreApplication>
 #include <QStandardPaths>
 
 int main(int argc, char **argv)

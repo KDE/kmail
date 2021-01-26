@@ -7,9 +7,10 @@
 #ifndef KACTIONMENUTRANSPORT_H
 #define KACTIONMENUTRANSPORT_H
 
-#include <KActionMenu>
 #include "kmail_private_export.h"
-namespace MailTransport {
+#include <KActionMenu>
+namespace MailTransport
+{
 class Transport;
 }
 

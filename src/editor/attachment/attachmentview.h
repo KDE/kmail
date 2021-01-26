@@ -13,17 +13,19 @@
 #ifndef KMAIL_ATTACHMENTVIEW_H
 #define KMAIL_ATTACHMENTVIEW_H
 
-#include <QTreeView>
 #include <KConfigGroup>
+#include <QTreeView>
 
 class QContextMenuEvent;
 class QToolButton;
 class QLabel;
-namespace MessageComposer {
+namespace MessageComposer
+{
 class AttachmentModel;
 }
 
-namespace KMail {
+namespace KMail
+{
 class AttachmentView : public QTreeView
 {
     Q_OBJECT

@@ -7,26 +7,29 @@
 
 #include "secondarywindow.h"
 
-#include <QUrl>
 #include <KMime/Message>
+#include <QUrl>
 
-#include <AkonadiCore/item.h>
 #include <AkonadiCore/collection.h>
-#include <QModelIndex>
+#include <AkonadiCore/item.h>
 #include <MessageViewer/Viewer>
+#include <QModelIndex>
 class KMReaderWin;
 class QAction;
 class KJob;
 class ZoomLabelWidget;
 
-namespace KMail {
+namespace KMail
+{
 class MessageActions;
 class TagActionManager;
 }
-namespace Akonadi {
+namespace Akonadi
+{
 class StandardMailActionManager;
 }
-namespace KMime {
+namespace KMime
+{
 class Message;
 class Content;
 }
@@ -46,22 +49,28 @@ public:
 
     MessageViewer::Viewer *viewer() const;
     /**
-    * take ownership of and show @p msg
-    *
-    * The last two parameters, serNumOfOriginalMessage and nodeIdOffset, are needed when @p msg
-    * is derived from another message, e.g. the user views an encapsulated message in this window.
-    * Then, the reader needs to know about that original message, so those to parameters are passed
-    * onto setOriginalMsg() of KMReaderWin.
-    *
-    * @param encoding The message encoding.
-    * @param msg The message.
-    * @param parentCollection An Akonadi parent collection.
-    */
+     * take ownership of and show @p msg
+     *
+     * The last two parameters, serNumOfOriginalMessage and nodeIdOffset, are needed when @p msg
+     * is derived from another message, e.g. the user views an encapsulated message in this window.
+     * Then, the reader needs to know about that original message, so those to parameters are passed
+     * onto setOriginalMsg() of KMReaderWin.
+     *
+     * @param encoding The message encoding.
+     * @param msg The message.
+     * @param parentCollection An Akonadi parent collection.
+     */
     void showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection = Akonadi::Collection());
 
     void showMessage(const QString &encoding, const QVector<KMime::Message::Ptr> &message);
     void showMessage(const QString &encoding, const KMime::Message::Ptr &message);
-    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
+    void showMessagePopup(const Akonadi::Item &msg,
+                          const QUrl &aUrl,
+                          const QUrl &imageUrl,
+                          const QPoint &aPoint,
+                          bool contactAlreadyExists,
+                          bool uniqueContactFound,
+                          const WebEngineViewer::WebHitTestResult &result);
     void showAndActivateWindow();
 public Q_SLOTS:
     void slotForwardInlineMsg();

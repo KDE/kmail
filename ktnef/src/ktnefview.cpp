@@ -20,10 +20,10 @@
 
 #include <QIcon>
 
-#include <QPixmap>
-#include <QTimer>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QPixmap>
+#include <QTimer>
 
 class Attachment : public QTreeWidgetItem
 {
@@ -61,18 +61,15 @@ Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
     }
 }
 
-Attachment::~Attachment()
-= default;
+Attachment::~Attachment() = default;
 
 //----------------------------------------------------------------------------//
 
 KTNEFView::KTNEFView(QWidget *parent)
     : QTreeWidget(parent)
 {
-    const QStringList headerLabels
-        = (QStringList(i18nc("@title:column file name", "File Name"))
-           << i18nc("@title:column file type", "File Type")
-           << i18nc("@title:column file size", "Size"));
+    const QStringList headerLabels = (QStringList(i18nc("@title:column file name", "File Name"))
+                                      << i18nc("@title:column file type", "File Type") << i18nc("@title:column file size", "Size"));
     setHeaderLabels(headerLabels);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     setDragEnabled(true);
@@ -80,8 +77,7 @@ KTNEFView::KTNEFView(QWidget *parent)
     QTimer::singleShot(0, this, &KTNEFView::adjustColumnWidth);
 }
 
-KTNEFView::~KTNEFView()
-= default;
+KTNEFView::~KTNEFView() = default;
 
 void KTNEFView::setAttachments(const QList<KTNEFAttach *> &list)
 {

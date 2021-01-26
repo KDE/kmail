@@ -7,8 +7,8 @@
 #ifndef EXTERNALEDITORWARNING_H
 #define EXTERNALEDITORWARNING_H
 
-#include <KMessageWidget>
 #include "kmail_private_export.h"
+#include <KMessageWidget>
 class KMAILTESTS_TESTS_EXPORT ExternalEditorWarning : public KMessageWidget
 {
     Q_OBJECT

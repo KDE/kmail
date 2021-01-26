@@ -5,8 +5,8 @@
 */
 
 #include "kmailplugininterface.h"
-#include <kmmainwidget.h>
 #include "kmail_debug.h"
+#include <kmmainwidget.h>
 
 KMailPluginInterface::KMailPluginInterface(QObject *parent)
     : PimCommon::PluginInterface(parent)
@@ -15,8 +15,7 @@ KMailPluginInterface::KMailPluginInterface(QObject *parent)
     setPluginDirectory(QStringLiteral("kmail/mainview"));
 }
 
-KMailPluginInterface::~KMailPluginInterface()
-= default;
+KMailPluginInterface::~KMailPluginInterface() = default;
 
 KMailPluginInterface *KMailPluginInterface::self()
 {

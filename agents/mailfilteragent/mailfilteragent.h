@@ -9,9 +9,9 @@
 
 #include <AkonadiAgentBase/agentbase.h>
 
-#include <MailCommon/SearchPattern>
-#include <Collection>
 #include <AkonadiCore/item.h>
+#include <Collection>
+#include <MailCommon/SearchPattern>
 
 #include <AkonadiCore/AgentInstance>
 
@@ -20,7 +20,8 @@ class FilterManager;
 class KJob;
 class DummyKernel;
 
-namespace Akonadi {
+namespace Akonadi
+{
 class Monitor;
 }
 
@@ -33,12 +34,12 @@ public:
     ~MailFilterAgent() override;
 
     Q_REQUIRED_RESULT QString createUniqueName(const QString &nameTemplate);
-    void filterItems(const QList< qint64 > &itemIds, int filterSet);
+    void filterItems(const QList<qint64> &itemIds, int filterSet);
 
     void filterItem(qint64 item, int filterSet, const QString &resourceId);
     void filter(qint64 item, const QString &filterIdentifier, const QString &resourceId);
     void filterCollections(const QList<qint64> &collections, int filterSet);
-    void applySpecificFilters(const QList< qint64 > &itemIds, int requiresPart, const QStringList &listFilters);
+    void applySpecificFilters(const QList<qint64> &itemIds, int requiresPart, const QStringList &listFilters);
     void applySpecificFiltersOnCollections(const QList<qint64> &colIds, const QStringList &listFilters, int filterSet);
 
     void reload();
@@ -47,6 +48,7 @@ public:
     Q_REQUIRED_RESULT QString printCollectionMonitored() const;
 
     void expunge(qint64 collectionId);
+
 protected:
     void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) override;
 

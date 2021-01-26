@@ -14,7 +14,6 @@ KMSieveImapPasswordProvider::KMSieveImapPasswordProvider(QObject *parent)
 
 KMSieveImapPasswordProvider::~KMSieveImapPasswordProvider()
 {
-
 }
 
 void KMSieveImapPasswordProvider::passwords(const QString &identifier)
@@ -55,7 +54,7 @@ void KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished(QKeychai
         mSieveCustomPassword = job->textData();
     }
     Q_EMIT passwordsRequested(mSievePassword, mSieveCustomPassword);
-    //Don't store it.
+    // Don't store it.
     mSievePassword.clear();
     mSieveCustomPassword.clear();
 }

@@ -6,9 +6,9 @@
 #ifndef CONFIGUREAPPEARANCEPAGE_H
 #define CONFIGUREAPPEARANCEPAGE_H
 
-#include "kmail_export.h"
-#include "configuredialog_p.h"
 #include "MailCommon/Tag"
+#include "configuredialog_p.h"
+#include "kmail_export.h"
 #include <QListWidgetItem>
 
 class QPushButton;
@@ -22,23 +22,28 @@ class QSpinBox;
 class QLineEdit;
 class QModelIndex;
 class KJob;
-namespace MessageViewer {
+namespace MessageViewer
+{
 class ConfigureWidget;
 }
 
-namespace MessageList {
-namespace Utils {
+namespace MessageList
+{
+namespace Utils
+{
 class AggregationComboBox;
 class ThemeComboBox;
 }
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class Tag;
 using TagPtr = QSharedPointer<Tag>;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class TagWidget;
 }
 
@@ -169,6 +174,7 @@ public:
     ~TagListWidgetItem();
     void setKMailTag(const MailCommon::Tag::Ptr &tag);
     MailCommon::Tag::Ptr kmailTag() const;
+
 private:
     MailCommon::Tag::Ptr mTag;
 };

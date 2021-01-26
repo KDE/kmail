@@ -6,9 +6,9 @@
 
 #include "followupreminderjob.h"
 
+#include <Akonadi/KMime/MessageParts>
 #include <AkonadiCore/ItemFetchJob>
 #include <AkonadiCore/ItemFetchScope>
-#include <Akonadi/KMime/MessageParts>
 
 #include <KMime/Message>
 
@@ -19,8 +19,7 @@ FollowUpReminderJob::FollowUpReminderJob(QObject *parent)
 {
 }
 
-FollowUpReminderJob::~FollowUpReminderJob()
-= default;
+FollowUpReminderJob::~FollowUpReminderJob() = default;
 
 void FollowUpReminderJob::start()
 {

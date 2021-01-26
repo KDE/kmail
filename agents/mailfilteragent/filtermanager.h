@@ -13,7 +13,8 @@
 
 #include <MailCommon/SearchPattern>
 #include <memory>
-namespace MailCommon {
+namespace MailCommon
+{
 class MailFilter;
 class ItemContext;
 }
@@ -36,11 +37,7 @@ public:
         All = Inbound | BeforeOutbound | Outbound | Explicit | AllFolders
     };
 
-    enum FilterRequires {
-        Unknown = 0,
-        HeaderMessage = 1,
-        FullMessage = 2
-    };
+    enum FilterRequires { Unknown = 0, HeaderMessage = 1, FullMessage = 2 };
 
     /**
      * Creates a new filter manager.
@@ -82,9 +79,15 @@ public:
      *
      *  @return true if the filtering was successful, false in case of any error
      */
-    Q_REQUIRED_RESULT bool process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
+    Q_REQUIRED_RESULT bool
+    process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
 
-    Q_REQUIRED_RESULT bool process(const QVector<MailCommon::MailFilter *> &mailFilters, const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
+    Q_REQUIRED_RESULT bool process(const QVector<MailCommon::MailFilter *> &mailFilters,
+                                   const Akonadi::Item &item,
+                                   bool needsFullPayload,
+                                   FilterSet set = Inbound,
+                                   bool account = false,
+                                   const QString &accountId = QString());
 
     /**
      * For ad-hoc filters.
@@ -97,7 +100,10 @@ public:
     void filter(const Akonadi::Item &item, FilterManager::FilterSet set, const QString &resourceId);
     void filter(const Akonadi::Item &item, const QString &filterId, const QString &resourceId);
 
-    void applySpecificFilters(const Akonadi::Item::List &selectedMessages, MailCommon::SearchRule::RequiredPart requiredPart, const QStringList &listFilters, FilterSet set = Explicit);
+    void applySpecificFilters(const Akonadi::Item::List &selectedMessages,
+                              MailCommon::SearchRule::RequiredPart requiredPart,
+                              const QStringList &listFilters,
+                              FilterSet set = Explicit);
 
     /**
      * Applies the filters on the given @p messages.

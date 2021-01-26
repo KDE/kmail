@@ -5,12 +5,11 @@
 */
 
 #include "kmailsieveimapinstanceinterface.h"
-#include <KSieveUi/SieveImapInstance>
 #include <AkonadiCore/AgentInstance>
 #include <AkonadiCore/AgentManager>
+#include <KSieveUi/SieveImapInstance>
 
-KMailSieveImapInstanceInterface::KMailSieveImapInstanceInterface()
-= default;
+KMailSieveImapInstanceInterface::KMailSieveImapInstanceInterface() = default;
 
 QVector<KSieveUi::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapInstances()
 {

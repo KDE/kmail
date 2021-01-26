@@ -10,8 +10,8 @@
 
 #include "colorlistbox.h"
 
-#include <QColorDialog>
 #include <KColorMimeData>
+#include <QColorDialog>
 
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>

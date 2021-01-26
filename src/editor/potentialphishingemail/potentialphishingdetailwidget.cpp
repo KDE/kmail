@@ -7,11 +7,11 @@
 #include "potentialphishingdetailwidget.h"
 
 #include <KConfigGroup>
+#include <KLocalizedString>
+#include <KSharedConfig>
 #include <QLabel>
 #include <QListWidget>
 #include <QVBoxLayout>
-#include <KSharedConfig>
-#include <KLocalizedString>
 
 PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     : QWidget(parent)
@@ -27,8 +27,7 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     mainLayout->addWidget(mListWidget);
 }
 
-PotentialPhishingDetailWidget::~PotentialPhishingDetailWidget()
-= default;
+PotentialPhishingDetailWidget::~PotentialPhishingDetailWidget() = default;
 
 void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
 {

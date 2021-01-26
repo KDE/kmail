@@ -10,53 +10,53 @@
 // filehtmlwriter.out in the current working directory
 #include "kmreaderwin.h"
 
-#include "settings/kmailsettings.h"
-#include "kmmainwidget.h"
-#include "kmreadermainwin.h"
-#include <MailCommon/MailKernel>
 #include "dialog/addemailtoexistingcontactdialog.h"
 #include "job/addemailtoexistingcontactjob.h"
+#include "kmmainwidget.h"
+#include "kmreadermainwin.h"
+#include "settings/kmailsettings.h"
+#include <MailCommon/MailKernel>
 
 #include "kmail-version.h"
-#include <KEmailAddress>
-#include <Akonadi/Contact/AddEmailAddressJob>
-#include <Akonadi/Contact/OpenEmailAddressJob>
-#include <Akonadi/Contact/AddEmailDisplayJob>
-#include <PimCommon/BroadcastStatus>
 #include "kmcommands.h"
-#include <MailCommon/SendMdnHandler>
+#include <Akonadi/Contact/AddEmailAddressJob>
+#include <Akonadi/Contact/AddEmailDisplayJob>
+#include <Akonadi/Contact/OpenEmailAddressJob>
+#include <KEmailAddress>
 #include <MailCommon/MailUtil>
-#include <QVBoxLayout>
+#include <MailCommon/SendMdnHandler>
+#include <MessageViewer/CSSHelper>
 #include <MessageViewer/HeaderStrategy>
 #include <MessageViewer/MarkMessageReadHandler>
 #include <MessageViewer/MessageViewerSettings>
-#include <MessageViewer/CSSHelper>
+#include <PimCommon/BroadcastStatus>
+#include <QVBoxLayout>
 using MessageViewer::CSSHelper;
 #include "util.h"
 #include <MessageCore/StringUtil>
 #include <QCryptographicHash>
-#include <kmime/kmime_mdn.h>
 #include <akonadi/kmime/messageflags.h>
+#include <kmime/kmime_mdn.h>
 
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 
-#include <MessageViewer/AttachmentStrategy>
-#include <MessageComposer/MessageSender>
 #include <MessageComposer/Composer>
-#include <MessageComposer/TextPart>
 #include <MessageComposer/InfoPart>
+#include <MessageComposer/MessageSender>
+#include <MessageComposer/TextPart>
+#include <MessageViewer/AttachmentStrategy>
 
 #include <KIO/JobUiDelegate>
 
 #include <Akonadi/Contact/ContactEditorDialog>
 
 #include "kmail_debug.h"
-#include <KLocalizedString>
-#include <QAction>
-#include <KToggleAction>
 #include <KActionCollection>
+#include <KLocalizedString>
 #include <KMessageBox>
+#include <KToggleAction>
+#include <QAction>
 #include <QMenu>
 
 #include <QClipboard>
@@ -81,7 +81,11 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     mViewer = new Viewer(this, mainWindow, mActionCollection);
     mViewer->setIdentityManager(kmkernel->identityManager());
     connect(mViewer, qOverload<const Akonadi::Item &, const QUrl &>(&Viewer::urlClicked), this, &KMReaderWin::slotUrlClicked);
-    connect(mViewer, &Viewer::requestConfigSync, kmkernel, &KMKernel::slotRequestConfigSync, Qt::QueuedConnection);   // happens anyway on shutdown, so we can skip it there with using a queued connection
+    connect(mViewer,
+            &Viewer::requestConfigSync,
+            kmkernel,
+            &KMKernel::slotRequestConfigSync,
+            Qt::QueuedConnection); // happens anyway on shutdown, so we can skip it there with using a queued connection
     connect(mViewer, &Viewer::makeResourceOnline, kmkernel, &KMKernel::makeResourceOnline);
     connect(mViewer, &MessageViewer::Viewer::showReader, this, &KMReaderWin::slotShowReader);
     connect(mViewer, &MessageViewer::Viewer::showMessage, this, &KMReaderWin::slotShowMessage);
@@ -109,42 +113,36 @@ void KMReaderWin::createActions()
     // Message Menu
     //
     // new message to
-    mMailToComposeAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")),
-                                       i18n("New Message To..."), this);
+    mMailToComposeAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18n("New Message To..."), this);
     ac->addAction(QStringLiteral("mail_new"), mMailToComposeAction);
     ac->setShortcutsConfigurable(mMailToComposeAction, false);
     connect(mMailToComposeAction, &QAction::triggered, this, &KMReaderWin::slotMailtoCompose);
 
     // reply to
-    mMailToReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")),
-                                     i18n("Reply To..."), this);
+    mMailToReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply To..."), this);
     ac->addAction(QStringLiteral("mailto_reply"), mMailToReplyAction);
     ac->setShortcutsConfigurable(mMailToReplyAction, false);
     connect(mMailToReplyAction, &QAction::triggered, this, &KMReaderWin::slotMailtoReply);
 
     // forward to
-    mMailToForwardAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")),
-                                       i18n("Forward To..."), this);
+    mMailToForwardAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18n("Forward To..."), this);
     ac->setShortcutsConfigurable(mMailToForwardAction, false);
     ac->addAction(QStringLiteral("mailto_forward"), mMailToForwardAction);
     connect(mMailToForwardAction, &QAction::triggered, this, &KMReaderWin::slotMailtoForward);
 
     // add to addressbook
-    mAddAddrBookAction = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")),
-                                     i18n("Add to Address Book"), this);
+    mAddAddrBookAction = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")), i18n("Add to Address Book"), this);
     ac->setShortcutsConfigurable(mAddAddrBookAction, false);
     ac->addAction(QStringLiteral("add_addr_book"), mAddAddrBookAction);
     connect(mAddAddrBookAction, &QAction::triggered, this, &KMReaderWin::slotMailtoAddAddrBook);
 
-    mAddEmailToExistingContactAction = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")),
-                                                   i18n("Add to Existing Contact"), this);
+    mAddEmailToExistingContactAction = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")), i18n("Add to Existing Contact"), this);
     ac->setShortcutsConfigurable(mAddEmailToExistingContactAction, false);
     ac->addAction(QStringLiteral("add_to_existing_contact"), mAddAddrBookAction);
     connect(mAddEmailToExistingContactAction, &QAction::triggered, this, &KMReaderWin::slotMailToAddToExistingContact);
 
     // open in addressbook
-    mOpenAddrBookAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")),
-                                      i18n("Open in Address Book"), this);
+    mOpenAddrBookAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Open in Address Book"), this);
     ac->setShortcutsConfigurable(mOpenAddrBookAction, false);
     ac->addAction(QStringLiteral("openin_addr_book"), mOpenAddrBookAction);
     connect(mOpenAddrBookAction, &QAction::triggered, this, &KMReaderWin::slotMailtoOpenAddrBook);
@@ -154,8 +152,7 @@ void KMReaderWin::createActions()
     ac->addAction(QStringLiteral("add_bookmarks"), mAddBookmarksAction);
     connect(mAddBookmarksAction, &QAction::triggered, this, &KMReaderWin::slotAddBookmarks);
 
-    mEditContactAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")),
-                                     i18n("Edit contact..."), this);
+    mEditContactAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Edit contact..."), this);
     ac->setShortcutsConfigurable(mEditContactAction, false);
     ac->addAction(QStringLiteral("edit_contact"), mOpenAddrBookAction);
     connect(mEditContactAction, &QAction::triggered, this, &KMReaderWin::slotEditContact);
@@ -213,8 +210,7 @@ bool KMReaderWin::isFixedFont() const
     return mViewer->isFixedFont();
 }
 
-KMReaderWin::~KMReaderWin()
-= default;
+KMReaderWin::~KMReaderWin() = default;
 
 void KMReaderWin::readConfig()
 {
@@ -249,10 +245,8 @@ void KMReaderWin::hasMultiMessages(bool multi)
 // enter items for the "Important changes" list here:
 static const char *const kmailChanges[] = {
     I18N_NOOP("KMail is now based on the Akonadi Personal Information Management framework, which brings many "
-              "changes all around.")
-};
-static const int numKMailChanges
-    = sizeof kmailChanges / sizeof *kmailChanges;
+              "changes all around.")};
+static const int numKMailChanges = sizeof kmailChanges / sizeof *kmailChanges;
 
 // enter items for the "new features" list here, so the main body of
 // the welcome page can be left untouched (probably much easier for
@@ -269,10 +263,9 @@ static const char *const kmailNewFeatures[] = {
     I18N_NOOP("Added Check DKIM"),
     I18N_NOOP("Added Markdown Editing Support"),
 };
-static const int numKMailNewFeatures
-    = sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
+static const int numKMailNewFeatures = sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
 
-//static
+// static
 QString KMReaderWin::newFeaturesMD5()
 {
     QByteArray str;
@@ -305,32 +298,26 @@ void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantH
 
 void KMReaderWin::displayBusyPage()
 {
-    displaySplashPage(QStringLiteral("status.html"), {
-        { QStringLiteral("title"), i18n("Retrieving Folder Contents") },
-        { QStringLiteral("subtext"), i18n("Please wait . . .") }
-    });
+    displaySplashPage(QStringLiteral("status.html"),
+                      {{QStringLiteral("title"), i18n("Retrieving Folder Contents")}, {QStringLiteral("subtext"), i18n("Please wait . . .")}});
 }
 
 void KMReaderWin::displayOfflinePage()
 {
-    displaySplashPage(QStringLiteral("status.html"), {
-        { QStringLiteral("title"), i18n("Offline") },
-        {
-            QStringLiteral("subtext"), i18n("KMail is currently in offline mode. "
-                                            "Click <a href=\"kmail:goOnline\">here</a> to go online . . .</p>")
-        }
-    });
+    displaySplashPage(QStringLiteral("status.html"),
+                      {{QStringLiteral("title"), i18n("Offline")},
+                       {QStringLiteral("subtext"),
+                        i18n("KMail is currently in offline mode. "
+                             "Click <a href=\"kmail:goOnline\">here</a> to go online . . .</p>")}});
 }
 
 void KMReaderWin::displayResourceOfflinePage()
 {
-    displaySplashPage(QStringLiteral("status.html"), {
-        { QStringLiteral("title"), i18n("Offline") },
-        {
-            QStringLiteral("subtext"), i18n("Account is currently in offline mode. "
-                                            "Click <a href=\"kmail:goResourceOnline\">here</a> to go online . . .</p>")
-        }
-    });
+    displaySplashPage(QStringLiteral("status.html"),
+                      {{QStringLiteral("title"), i18n("Offline")},
+                       {QStringLiteral("subtext"),
+                        i18n("Account is currently in offline mode. "
+                             "Click <a href=\"kmail:goResourceOnline\">here</a> to go online . . .</p>")}});
 }
 
 void KMReaderWin::displayAboutPage()
@@ -431,8 +418,7 @@ void KMReaderWin::slotMailtoCompose()
 
 void KMReaderWin::slotMailtoForward()
 {
-    KMCommand *command = new KMMailtoForwardCommand(mMainWindow, urlClicked(),
-                                                    messageItem());
+    KMCommand *command = new KMMailtoForwardCommand(mMainWindow, urlClicked(), messageItem());
     command->start();
 }
 
@@ -514,8 +500,7 @@ void KMReaderWin::slotSaveImageOnDisk()
 
 void KMReaderWin::slotMailtoReply()
 {
-    auto command = new KMMailtoReplyCommand(mMainWindow, urlClicked(),
-                                                             messageItem(), copyText());
+    auto command = new KMMailtoReplyCommand(mMainWindow, urlClicked(), messageItem(), copyText());
     command->setReplyAsHtml(htmlMail());
     command->start();
 }
@@ -711,7 +696,7 @@ void KMReaderWin::slotUrlClicked(const Akonadi::Item &item, const QUrl &url)
         KMail::Util::handleClickedURL(url, fd, item.parentCollection());
         return;
     }
-    //No folder so we can't have identity and template.
+    // No folder so we can't have identity and template.
     KMail::Util::handleClickedURL(url);
 }
 
@@ -761,7 +746,7 @@ bool KMReaderWin::printSelectedText(bool preview)
 void KMReaderWin::slotPrintComposeResult(KJob *job)
 {
     const bool preview = job->property("preview").toBool();
-    auto composer = qobject_cast< ::MessageComposer::Composer * >(job);
+    auto composer = qobject_cast<::MessageComposer::Composer *>(job);
     Q_ASSERT(composer);
     if (composer->error() == ::MessageComposer::Composer::NoError) {
         Q_ASSERT(composer->resultMessages().size() == 1);
@@ -779,8 +764,10 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         commandInfo.mPrintPreview = preview;
         commandInfo.mUseFixedFont = useFixedFont;
         commandInfo.mOverrideFont = overrideEncoding;
-        commandInfo.mShowSignatureDetails = mViewer->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
-        commandInfo.mShowEncryptionDetails = mViewer->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
+        commandInfo.mShowSignatureDetails =
+            mViewer->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
+        commandInfo.mShowEncryptionDetails =
+            mViewer->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
 
         auto command = new KMPrintCommand(this, commandInfo);
         command->start();
@@ -855,8 +842,7 @@ void KMReaderWin::slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact
 void KMReaderWin::slotEditContact()
 {
     if (mSearchedContact.isValid()) {
-        QPointer<Akonadi::ContactEditorDialog> dlg
-            = new Akonadi::ContactEditorDialog(Akonadi::ContactEditorDialog::EditMode, this);
+        QPointer<Akonadi::ContactEditorDialog> dlg = new Akonadi::ContactEditorDialog(Akonadi::ContactEditorDialog::EditMode, this);
         connect(dlg.data(), &Akonadi::ContactEditorDialog::contactStored, this, &KMReaderWin::contactStored);
         connect(dlg.data(), &Akonadi::ContactEditorDialog::error, this, &KMReaderWin::slotContactEditorError);
         dlg->setContact(mSearchedContact);

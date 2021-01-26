@@ -9,11 +9,11 @@
 
 #include <MessageComposer/SendLaterInfo>
 
-#include <QTest>
-#include <QDateTime>
 #include <KConfigGroup>
 #include <KSharedConfig>
+#include <QDateTime>
 #include <QStandardPaths>
+#include <QTest>
 #include <sendlaterinfo.h>
 
 SendLaterUtilTest::SendLaterUtilTest(QObject *parent)

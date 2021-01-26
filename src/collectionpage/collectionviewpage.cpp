@@ -7,16 +7,16 @@
 #include "collectionviewpage.h"
 #include <MailCommon/MailKernel>
 
-#include <AkonadiCore/entitydisplayattribute.h>
 #include <Akonadi/KMime/MessageFolderAttribute>
+#include <AkonadiCore/entitydisplayattribute.h>
 
+#include "kmail_debug.h"
+#include <KIconButton>
+#include <KLocalizedString>
+#include <QCheckBox>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QCheckBox>
 #include <QVBoxLayout>
-#include <KLocalizedString>
-#include <KIconButton>
-#include "kmail_debug.h"
 
 #include <MessageList/AggregationComboBox>
 #include <MessageList/AggregationConfigButton>
@@ -34,8 +34,7 @@ CollectionViewPage::CollectionViewPage(QWidget *parent)
     setPageTitle(i18nc("@title:tab View settings for a folder.", "View"));
 }
 
-CollectionViewPage::~CollectionViewPage()
-= default;
+CollectionViewPage::~CollectionViewPage() = default;
 
 void CollectionViewPage::init(const Akonadi::Collection &col)
 {

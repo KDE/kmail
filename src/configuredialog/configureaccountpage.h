@@ -7,15 +7,16 @@
 #ifndef CONFIGUREACCOUNTPAGE_H
 #define CONFIGUREACCOUNTPAGE_H
 
-#include "kmail_export.h"
 #include "configuredialog_p.h"
+#include "kmail_export.h"
 #include "ui_accountspagereceivingtab.h"
 
 class QCheckBox;
 class QComboBox;
 class UndoSendCombobox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
-namespace KLDAP {
+namespace KLDAP
+{
 class LdapConfigureWidget;
 }
 // subclasses: one class per tab:
@@ -92,7 +93,7 @@ private:
         bool CheckOnStartup = false;
     };
 
-    QHash<QString, QSharedPointer<RetrievalOptions> > mRetrievalHash;
+    QHash<QString, QSharedPointer<RetrievalOptions>> mRetrievalHash;
 
 private:
     void slotAddCustomAccount();

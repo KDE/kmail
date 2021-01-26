@@ -8,8 +8,8 @@
 #ifndef POTENTIALPHISHINGEMAILWARNING_H
 #define POTENTIALPHISHINGEMAILWARNING_H
 
-#include <KMessageWidget>
 #include "kmail_private_export.h"
+#include <KMessageWidget>
 class KMAILTESTS_TESTS_EXPORT PotentialPhishingEmailWarning : public KMessageWidget
 {
     Q_OBJECT

@@ -8,8 +8,8 @@
 
 #include "collectionquotapage.h"
 #include "collectionquotawidget.h"
-#include <AkonadiCore/collectionquotaattribute.h>
 #include <AkonadiCore/collection.h>
+#include <AkonadiCore/collectionquotaattribute.h>
 
 #include <KLocalizedString>
 #include <QVBoxLayout>
@@ -45,7 +45,7 @@ void CollectionQuotaPage::load(const Akonadi::Collection &col)
         const qint64 currentValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->currentValue();
 
         const qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue();
-        //Test over quota.
+        // Test over quota.
         mQuotaWidget->setQuotaInfo(qMin(currentValue, maximumValue), maximumValue);
     }
 }

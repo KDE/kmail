@@ -7,8 +7,8 @@
 #ifndef KMAILUSERFEEDBACKPROVIDER_H
 #define KMAILUSERFEEDBACKPROVIDER_H
 
-#include <KUserFeedback/Provider>
 #include "kmail_export.h"
+#include <KUserFeedback/Provider>
 
 class KMAIL_EXPORT KMailUserFeedbackProvider : public KUserFeedback::Provider
 {

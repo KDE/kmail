@@ -5,22 +5,21 @@
 */
 
 #include "handleclickedurljob.h"
-#include "kmkernel.h"
 #include "composer.h"
-#include "kmail_debug.h"
 #include "editor/kmcomposerwin.h"
+#include "kmail_debug.h"
+#include "kmkernel.h"
 #include <KMime/Message>
+#include <MessageComposer/MessageHelper>
 #include <MessageCore/StringUtil>
 #include <TemplateParser/TemplateParserJob>
-#include <MessageComposer/MessageHelper>
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
     : QObject(parent)
 {
 }
 
-HandleClickedUrlJob::~HandleClickedUrlJob()
-= default;
+HandleClickedUrlJob::~HandleClickedUrlJob() = default;
 
 void HandleClickedUrlJob::start()
 {
@@ -29,7 +28,7 @@ void HandleClickedUrlJob::start()
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
     mMsg->contentType()->setCharset("utf-8");
 
-    const QVector<QPair<QString, QString> > fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
+    const QVector<QPair<QString, QString>> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
     for (int i = 0; i < fields.count(); ++i) {
         const QPair<QString, QString> element = fields.at(i);
         if (element.first == QLatin1String("to")) {
@@ -58,7 +57,7 @@ void HandleClickedUrlJob::start()
             const QString attach = element.second;
             if (!attach.isEmpty()) {
                 qCDebug(KMAIL_LOG) << "Attachment not supported yet";
-                //TODO
+                // TODO
             }
         }
     }

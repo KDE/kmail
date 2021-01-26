@@ -9,11 +9,13 @@
 
 #include <MailCommon/FolderRequester>
 
-namespace Akonadi {
+namespace Akonadi
+{
 class Collection;
 }
 
-namespace KMail {
+namespace KMail
+{
 class IdentityFolderRequester : public MailCommon::FolderRequester
 {
     Q_OBJECT
@@ -22,6 +24,7 @@ public:
     ~IdentityFolderRequester() override;
 
     void setIsInvalidFolder(const Akonadi::Collection &col);
+
 private:
     void slotFolderChanged(const Akonadi::Collection &col);
 };

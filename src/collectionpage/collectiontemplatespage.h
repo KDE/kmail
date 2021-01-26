@@ -7,7 +7,8 @@
 #ifndef COLLECTIONTEMPLATESPAGE_H
 #define COLLECTIONTEMPLATESPAGE_H
 #include <AkonadiWidgets/collectionpropertiespage.h>
-namespace MailCommon {
+namespace MailCommon
+{
 class CollectionTemplatesWidget;
 }
 template<typename T> class QSharedPointer;

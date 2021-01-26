@@ -22,19 +22,23 @@ class KXMLGUIClient;
 class KMReaderWin;
 class QMenu;
 
-namespace Akonadi {
+namespace Akonadi
+{
 class Item;
 class StandardMailActionManager;
 }
 
-namespace TemplateParser {
+namespace TemplateParser
+{
 class CustomTemplatesMenu;
 }
 
-namespace KIO {
+namespace KIO
+{
 class KUriFilterSearchProviderActions;
 }
-namespace KMail {
+namespace KMail
+{
 /**
   Manages common actions that can be performed on one or more messages.
 */
@@ -115,7 +119,7 @@ private:
     void clearMailingListActions();
 
 private Q_SLOTS:
-    void slotItemModified(const Akonadi::Item &item, const QSet< QByteArray > &partIdentifiers);
+    void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
     void slotItemRemoved(const Akonadi::Item &item);
 
     void slotReplyToMsg();

@@ -8,7 +8,8 @@
 #define MAILFILTERPURPOSEMENUWIDGET_H
 
 #include <PimCommon/PurposeMenuWidget>
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class PlainTextEditor;
 }
 class MailfilterPurposeMenuWidget : public PimCommon::PurposeMenuWidget
@@ -20,6 +21,7 @@ public:
 
     Q_REQUIRED_RESULT QByteArray text() override;
     void setEditorWidget(KPIMTextEdit::PlainTextEditor *editor);
+
 private:
     KPIMTextEdit::PlainTextEditor *mEditor = nullptr;
 };

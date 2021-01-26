@@ -7,8 +7,8 @@
 #include "kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "kmail_debug.h"
 
-#include <MessageComposer/PluginEditorCheckBeforeSendInterface>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
+#include <MessageComposer/PluginEditorCheckBeforeSendInterface>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
 
 KMailPluginEditorCheckBeforeSendManagerInterface::KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent)
@@ -16,8 +16,7 @@ KMailPluginEditorCheckBeforeSendManagerInterface::KMailPluginEditorCheckBeforeSe
 {
 }
 
-KMailPluginEditorCheckBeforeSendManagerInterface::~KMailPluginEditorCheckBeforeSendManagerInterface()
-= default;
+KMailPluginEditorCheckBeforeSendManagerInterface::~KMailPluginEditorCheckBeforeSendManagerInterface() = default;
 
 QWidget *KMailPluginEditorCheckBeforeSendManagerInterface::parentWidget() const
 {

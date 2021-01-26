@@ -9,7 +9,8 @@
 
 #include <QString>
 
-namespace Common {
+namespace Common
+{
 static const auto MailMimeType = QStringLiteral("message/rfc822");
 
 static const auto InboxBoxId = QStringLiteral("inbox");

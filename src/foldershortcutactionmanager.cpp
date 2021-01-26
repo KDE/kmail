@@ -9,12 +9,12 @@
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/EntityDisplayAttribute>
-#include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
+#include <AkonadiCore/EntityTreeModel>
 
-#include <QAction>
 #include <KActionCollection>
 #include <KLocalizedString>
+#include <QAction>
 #include <QIcon>
 
 using namespace KMail;
@@ -59,10 +59,12 @@ void FolderShortcutActionManager::createActions()
     // rows are inserted in the ETM, see if we have new collections that we can assign shortcuts
     // to.
     const QAbstractItemModel *model = KernelIf->collectionModel();
-    connect(model, &QAbstractItemModel::rowsInserted,
-            this, &FolderShortcutActionManager::slotRowsInserted, Qt::UniqueConnection);
-    connect(KernelIf->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved,
-            this, &FolderShortcutActionManager::slotCollectionRemoved, Qt::UniqueConnection);
+    connect(model, &QAbstractItemModel::rowsInserted, this, &FolderShortcutActionManager::slotRowsInserted, Qt::UniqueConnection);
+    connect(KernelIf->folderCollectionMonitor(),
+            &Akonadi::Monitor::collectionRemoved,
+            this,
+            &FolderShortcutActionManager::slotCollectionRemoved,
+            Qt::UniqueConnection);
 
     const int rowCount(model->rowCount());
     if (rowCount > 0) {
@@ -81,8 +83,7 @@ void FolderShortcutActionManager::updateShortcutsForIndex(const QModelIndex &par
     for (int i = start; i <= end; ++i) {
         if (model->hasIndex(i, 0, parent)) {
             const QModelIndex child = model->index(i, 0, parent);
-            Akonadi::Collection collection
-                = model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+            Akonadi::Collection collection = model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
             if (collection.isValid()) {
                 shortcutChanged(collection);
             }
@@ -112,8 +113,7 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
     mFolderShortcutCommands.insert(col.id(), command);
 
     QIcon icon(QStringLiteral("folder"));
-    if (col.hasAttribute<Akonadi::EntityDisplayAttribute>()
-        && !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty()) {
+    if (col.hasAttribute<Akonadi::EntityDisplayAttribute>() && !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty()) {
         icon = QIcon(col.attribute<Akonadi::EntityDisplayAttribute>()->iconName());
     }
 
@@ -130,5 +130,5 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
     action->setIcon(icon);
 
     connect(action, &QAction::triggered, command, &FolderShortcutCommand::start);
-    command->setAction(action);   // will be deleted along with the command
+    command->setAction(action); // will be deleted along with the command
 }

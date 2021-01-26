@@ -8,11 +8,11 @@
 #include "removeduplicatemessageinfolderandsubfolderjob.h"
 #include "kmail_debug.h"
 #include <Akonadi/KMime/RemoveDuplicatesJob>
-#include <Libkdepim/ProgressManager>
-#include <KLocalizedString>
-#include <KMessageBox>
 #include <AkonadiCore/CollectionFetchJob>
 #include <AkonadiCore/CollectionFetchScope>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <Libkdepim/ProgressManager>
 
 RemoveDuplicateMessageInFolderAndSubFolderJob::RemoveDuplicateMessageInFolderAndSubFolderJob(QObject *parent, QWidget *parentWidget)
     : QObject(parent)
@@ -20,16 +20,14 @@ RemoveDuplicateMessageInFolderAndSubFolderJob::RemoveDuplicateMessageInFolderAnd
 {
 }
 
-RemoveDuplicateMessageInFolderAndSubFolderJob::~RemoveDuplicateMessageInFolderAndSubFolderJob()
-= default;
+RemoveDuplicateMessageInFolderAndSubFolderJob::~RemoveDuplicateMessageInFolderAndSubFolderJob() = default;
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::start()
 {
     if (mTopLevelCollection.isValid()) {
         auto fetchJob = new Akonadi::CollectionFetchJob(mTopLevelCollection, Akonadi::CollectionFetchJob::Recursive, this);
         fetchJob->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
-        connect(fetchJob, &Akonadi::CollectionFetchJob::result,
-                this, [this](KJob *job) {
+        connect(fetchJob, &Akonadi::CollectionFetchJob::result, this, [this](KJob *job) {
             if (job->error()) {
                 qCWarning(KMAIL_LOG) << job->errorString();
                 slotFetchCollectionFailed();
@@ -91,7 +89,9 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
     }
     if (job->error()) {
         qCDebug(KMAIL_LOG()) << " Error during remove duplicates " << job->errorString();
-        KMessageBox::error(mParentWidget, i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()), i18n("Error while removing duplicates"));
+        KMessageBox::error(mParentWidget,
+                           i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()),
+                           i18n("Error while removing duplicates"));
     }
 
     deleteLater();

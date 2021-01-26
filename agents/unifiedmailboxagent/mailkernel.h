@@ -7,15 +7,17 @@
 #ifndef MAILKERNEL_H
 #define MAILKERNEL_H
 
-#include <QObject>
 #include <MailCommon/MailInterfaces>
+#include <QObject>
 
-namespace Akonadi {
+namespace Akonadi
+{
 class EntityTreeModel;
 class EntityMimeTypeFilterModel;
 }
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderCollectionMonitor;
 }
 

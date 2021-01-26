@@ -9,7 +9,8 @@
 
 #include <QDialog>
 
-namespace Akonadi {
+namespace Akonadi
+{
 class AkonadiContactEditor;
 }
 
@@ -20,14 +21,14 @@ public:
     explicit IdentityEditVcardDialog(const QString &fileName, QWidget *parent = nullptr);
     ~IdentityEditVcardDialog() override;
     /**
-    * @brief loadVcard load vcard in a contact editor
-    * @param vcardFileName
-    */
+     * @brief loadVcard load vcard in a contact editor
+     * @param vcardFileName
+     */
     void loadVcard(const QString &vcardFileName);
     /**
-    * @brief saveVcard
-    * @return The file path for current vcard.
-    */
+     * @brief saveVcard
+     * @return The file path for current vcard.
+     */
     Q_REQUIRED_RESULT QString saveVcard() const;
 
     void reject() override;

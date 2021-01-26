@@ -6,13 +6,13 @@
 #include "folderarchiveagentjob.h"
 #include "folderarchiveaccountinfo.h"
 #include "folderarchiveagentcheckcollection.h"
-#include "folderarchivemanager.h"
 #include "folderarchivecache.h"
+#include "folderarchivemanager.h"
 
 #include "kmcommands.h"
 
-#include <AkonadiCore/ItemMoveJob>
 #include <AkonadiCore/CollectionFetchJob>
+#include <AkonadiCore/ItemMoveJob>
 
 #include <KLocalizedString>
 
@@ -24,8 +24,7 @@ FolderArchiveAgentJob::FolderArchiveAgentJob(FolderArchiveManager *manager, Fold
 {
 }
 
-FolderArchiveAgentJob::~FolderArchiveAgentJob()
-= default;
+FolderArchiveAgentJob::~FolderArchiveAgentJob() = default;
 
 void FolderArchiveAgentJob::start()
 {
@@ -83,7 +82,7 @@ void FolderArchiveAgentJob::slotCollectionIdFound(const Akonadi::Collection &col
 
 void FolderArchiveAgentJob::sloMoveMailsToCollection(const Akonadi::Collection &col)
 {
-    if (Akonadi::Collection::CanCreateItem &col.rights()) {
+    if (Akonadi::Collection::CanCreateItem & col.rights()) {
         auto command = new KMMoveCommand(col, mListItem, -1);
         connect(command, &KMMoveCommand::moveDone, this, &FolderArchiveAgentJob::slotMoveMessages);
         command->start();

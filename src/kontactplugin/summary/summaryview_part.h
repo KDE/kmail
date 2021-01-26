@@ -16,7 +16,8 @@
 
 class DropWidget;
 
-namespace KontactInterface {
+namespace KontactInterface
+{
 class Core;
 class Summary;
 }

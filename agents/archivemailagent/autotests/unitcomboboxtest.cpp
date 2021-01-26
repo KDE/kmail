@@ -13,8 +13,7 @@ UnitComboBoxTest::UnitComboBoxTest(QObject *parent)
 {
 }
 
-UnitComboBoxTest::~UnitComboBoxTest()
-= default;
+UnitComboBoxTest::~UnitComboBoxTest() = default;
 
 void UnitComboBoxTest::shouldHaveDefaultValue()
 {
@@ -26,11 +25,11 @@ void UnitComboBoxTest::changeCurrentItem_data()
 {
     QTest::addColumn<int>("input");
     QTest::addColumn<int>("output");
-    QTest::newRow("first") <<  0 << 0;
-    QTest::newRow("second") <<  1 << 1;
-    QTest::newRow("third") <<  2 << 2;
-    QTest::newRow("fourth") <<  3 << 3;
-    QTest::newRow("invalid") <<  5 << 0;
+    QTest::newRow("first") << 0 << 0;
+    QTest::newRow("second") << 1 << 1;
+    QTest::newRow("third") << 2 << 2;
+    QTest::newRow("fourth") << 3 << 3;
+    QTest::newRow("invalid") << 5 << 0;
 }
 
 void UnitComboBoxTest::changeCurrentItem()

@@ -10,30 +10,29 @@
 
 #include "kmail_part.h"
 
-#include "kmmainwin.h"
 #include "kmmainwidget.h"
+#include "kmmainwin.h"
 
 #include <QVBoxLayout>
 
-#include <KParts/GUIActivateEvent>
-#include <kparts/statusbarextension.h>
-#include <kparts/mainwindow.h>
-#include <KPluginFactory>
+#include "foldershortcutactionmanager.h"
 #include "kmail_debug.h"
-#include <ksettings/dispatcher.h>
-#include <kmailpartadaptor.h>
+#include "kmmigrateapplication.h"
+#include "tag/tagactionmanager.h"
+#include <AkonadiCore/changerecorder.h>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/entitydisplayattribute.h>
-#include <AkonadiCore/changerecorder.h>
-#include <MailCommon/FolderTreeView>
-#include "tag/tagactionmanager.h"
-#include "foldershortcutactionmanager.h"
-#include "kmmigrateapplication.h"
 #include <KLocalizedString>
+#include <KParts/GUIActivateEvent>
+#include <KPluginFactory>
 #include <KSharedConfig>
+#include <MailCommon/FolderTreeView>
+#include <kmailpartadaptor.h>
+#include <kparts/mainwindow.h>
+#include <kparts/statusbarextension.h>
+#include <ksettings/dispatcher.h>
 
-K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();
-                 )
+K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();)
 
 using namespace KMail;
 
@@ -46,7 +45,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     KMMigrateApplication migrate;
     migrate.migrate();
 
-    //local, do the init
+    // local, do the init
     auto mKMailKernel = new KMKernel();
     mKMailKernel->init();
     mKMailKernel->setXmlGuiInstanceName(QStringLiteral("kmail2"));
@@ -66,8 +65,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     canvas->setFocusPolicy(Qt::ClickFocus);
     canvas->setObjectName(QStringLiteral("canvas"));
     setWidget(canvas);
-    mainWidget = new KMMainWidget(canvas, this, actionCollection(),
-                                  KSharedConfig::openConfig());
+    mainWidget = new KMMainWidget(canvas, this, actionCollection(), KSharedConfig::openConfig());
     mainWidget->setObjectName(QStringLiteral("partmainwidget"));
     auto topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);

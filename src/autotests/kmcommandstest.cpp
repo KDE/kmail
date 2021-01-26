@@ -7,19 +7,19 @@
 #include "kmcommandstest.h"
 #include "kmcommands.h"
 #include "kmkernel.h"
-#include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 
-#include <AkonadiCore/Item>
 #include <AkonadiCore/Collection>
+#include <AkonadiCore/Item>
 
 #include <KMime/Message>
 
 #include <QEventLoop>
 #include <QLabel>
 #include <QStandardPaths>
-#include <QTest>
 #include <QTemporaryDir>
+#include <QTest>
 
 Akonadi::Item createItem(const KIdentityManagement::Identity &ident)
 {

@@ -7,10 +7,10 @@
 #ifndef ADDARCHIVEMAILDIALOG_H
 #define ADDARCHIVEMAILDIALOG_H
 
-#include <MailCommon/BackupJob>
 #include "archivemailinfo.h"
-#include <QDialog>
 #include <Collection>
+#include <MailCommon/BackupJob>
+#include <QDialog>
 class QUrl;
 class QCheckBox;
 class KUrlRequester;
@@ -19,7 +19,8 @@ class QPushButton;
 
 class FormatComboBox;
 class UnitComboBox;
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 }
 

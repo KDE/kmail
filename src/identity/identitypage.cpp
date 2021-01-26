@@ -23,10 +23,10 @@
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
+#include "kmail_debug.h"
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <QMenu>
-#include <KLocalizedString>
-#include "kmail_debug.h"
 
 #include <QTreeWidgetItem>
 
@@ -51,23 +51,23 @@ IdentityPage::IdentityPage(QWidget *parent)
 
     connect(mIPage.mIdentityList, &QTreeWidget::itemSelectionChanged, this, &IdentityPage::slotIdentitySelectionChanged);
     connect(this, qOverload<bool>(&IdentityPage::changed), this, &IdentityPage::slotIdentitySelectionChanged);
-    connect(mIPage.mIdentityList, qOverload<KMail::IdentityListViewItem *, const QString &>(&IdentityListView::rename),
-            this, &IdentityPage::slotRenameIdentityFromItem);
+    connect(mIPage.mIdentityList,
+            qOverload<KMail::IdentityListViewItem *, const QString &>(&IdentityListView::rename),
+            this,
+            &IdentityPage::slotRenameIdentityFromItem);
     connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked, this, &IdentityPage::slotModifyIdentity);
     connect(mIPage.mIdentityList, &IdentityListView::contextMenu, this, &IdentityPage::slotContextMenu);
     // ### connect dragged(...), ...
 
     connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityPage::slotNewIdentity);
     connect(mIPage.mModifyButton, &QPushButton::clicked, this, &IdentityPage::slotModifyIdentity);
-    connect(mIPage.mRenameButton, &QPushButton::clicked,
-            this, &IdentityPage::slotRenameIdentity);
+    connect(mIPage.mRenameButton, &QPushButton::clicked, this, &IdentityPage::slotRenameIdentity);
     connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityPage::slotRemoveIdentity);
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityPage::slotSetAsDefault);
     load();
 }
 
-IdentityPage::~IdentityPage()
-= default;
+IdentityPage::~IdentityPage() = default;
 
 void IdentityPage::load()
 {
@@ -118,8 +118,7 @@ void IdentityPage::slotNewIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(
-                                                 mIdentityManager, this));
+    QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(mIdentityManager, this));
     dialog->setObjectName(QStringLiteral("new"));
 
     if (dialog->exec() == QDialog::Accepted && dialog) {
@@ -130,8 +129,7 @@ void IdentityPage::slotNewIdentity()
         // Construct a new Identity:
         //
         switch (dialog->duplicateMode()) {
-        case NewIdentityDialog::ExistingEntry:
-        {
+        case NewIdentityDialog::ExistingEntry: {
             KIdentityManagement::Identity &dupThis = mIdentityManager->modifyIdentityForName(dialog->duplicateIdentity());
             mIdentityManager->newFromExisting(dupThis, identityName);
             break;
@@ -141,8 +139,7 @@ void IdentityPage::slotNewIdentity()
             break;
         case NewIdentityDialog::Empty:
             mIdentityManager->newFromScratch(identityName);
-        default:
-            ;
+        default:;
         }
 
         //
@@ -218,11 +215,16 @@ void IdentityPage::slotRemoveIdentity()
         }
         identityName = item->identity().identityName();
     }
-    const QString msg = numberOfIdentity == 1 ? i18n("<qt>Do you really want to remove the identity named "
-                                                     "<b>%1</b>?</qt>", identityName) : i18np("Do you really want to remove this %1 identity?", "Do you really want to remove these %1 identities?", numberOfIdentity);
-    if (KMessageBox::warningContinueCancel(this, msg, i18np("Remove Identity", "Remove Identities", numberOfIdentity),
-                                           KGuiItem(i18n("&Remove"),
-                                                    QStringLiteral("edit-delete")))
+    const QString msg = numberOfIdentity == 1
+        ? i18n(
+            "<qt>Do you really want to remove the identity named "
+            "<b>%1</b>?</qt>",
+            identityName)
+        : i18np("Do you really want to remove this %1 identity?", "Do you really want to remove these %1 identities?", numberOfIdentity);
+    if (KMessageBox::warningContinueCancel(this,
+                                           msg,
+                                           i18np("Remove Identity", "Remove Identities", numberOfIdentity),
+                                           KGuiItem(i18n("&Remove"), QStringLiteral("edit-delete")))
         == KMessageBox::Continue) {
         for (QTreeWidgetItem *selecteditem : selectedItems) {
             auto *identityItem = dynamic_cast<IdentityListViewItem *>(item);
@@ -262,8 +264,7 @@ void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item,
     }
 
     const QString newName = text.trimmed();
-    if (!newName.isEmpty()
-        && !mIdentityManager->shadowIdentities().contains(newName)) {
+    if (!newName.isEmpty() && !mIdentityManager->shadowIdentities().contains(newName)) {
         KIdentityManagement::Identity &ident = item->identity();
         ident.setIdentityName(newName);
         save();

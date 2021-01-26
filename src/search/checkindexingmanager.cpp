@@ -5,20 +5,20 @@
 */
 
 #include "checkindexingmanager.h"
-#include "kmail_debug.h"
 #include "checkindexingjob.h"
-#include <AkonadiCore/EntityTreeModel>
+#include "kmail_debug.h"
 #include <AkonadiCore/CachePolicy>
-#include <KSharedConfig>
-#include <KConfigGroup>
+#include <AkonadiCore/EntityTreeModel>
 #include <AkonadiCore/ServerManager>
+#include <AkonadiCore/entityhiddenattribute.h>
+#include <AkonadiSearch/PIM/indexeditems.h>
+#include <KConfigGroup>
+#include <KSharedConfig>
 #include <MailCommon/MailUtil>
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>
-#include <AkonadiSearch/PIM/indexeditems.h>
-#include <QTimer>
 #include <QDBusInterface>
-#include <AkonadiCore/entityhiddenattribute.h>
+#include <QTimer>
 
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
     : QObject(parent)
@@ -26,7 +26,7 @@ CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *i
 {
     mTimer = new QTimer(this);
     mTimer->setSingleShot(true);
-    mTimer->setInterval(5 * 1000); //5 secondes
+    mTimer->setInterval(5 * 1000); // 5 secondes
     connect(mTimer, &QTimer::timeout, this, &CheckIndexingManager::checkNextCollection);
 }
 
@@ -44,7 +44,7 @@ void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
         const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
         KConfigGroup grp = cfg->group(QStringLiteral("General"));
         const QDateTime lastDateTime = grp.readEntry(QStringLiteral("lastCheck"), QDateTime());
-        //Check each 7 days
+        // Check each 7 days
         QDateTime today = QDateTime::currentDateTime();
         if (!lastDateTime.isValid() || today > lastDateTime.addDays(7)) {
             mIndex = 0;
@@ -80,7 +80,8 @@ void CheckIndexingManager::checkNextCollection()
 void CheckIndexingManager::callToReindexCollection()
 {
     if (!mCollectionsNeedToBeReIndexed.isEmpty()) {
-        QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"),
+        QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(),
+                                               QStringLiteral("/"),
                                                QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceAkonadiIndexer.isValid()) {
             qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
@@ -128,9 +129,7 @@ void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, c
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
         const QModelIndex index = model->index(row, 0, parentIndex);
-        const Akonadi::Collection collection
-            = model->data(
-                  index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
 
         if (!collection.isValid() || MailCommon::Util::isVirtualCollection(collection)) {
             continue;

@@ -7,22 +7,22 @@
 #include "addemailtoexistingcontactdialog.h"
 #include "kmkernel.h"
 
-#include <Akonadi/Contact/EmailAddressSelectionWidget>
-#include <AkonadiCore/Session>
-#include <AkonadiCore/ItemFetchScope>
-#include <AkonadiCore/EntityDisplayAttribute>
 #include <Akonadi/Contact/ContactsTreeModel>
+#include <Akonadi/Contact/EmailAddressSelectionWidget>
 #include <AkonadiCore/ChangeRecorder>
+#include <AkonadiCore/EntityDisplayAttribute>
+#include <AkonadiCore/ItemFetchScope>
+#include <AkonadiCore/Session>
 
 #include <KContacts/Addressee>
 
 #include <KLocalizedString>
 
-#include <QTreeView>
-#include <QDialogButtonBox>
-#include <QVBoxLayout>
-#include <QPushButton>
 #include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QTreeView>
+#include <QVBoxLayout>
 
 AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent)
     : QDialog(parent)
@@ -41,7 +41,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     changeRecorder->fetchCollection(true);
     changeRecorder->setItemFetchScope(scope);
     changeRecorder->setCollectionMonitored(Akonadi::Collection::root());
-    //Just select address no group
+    // Just select address no group
     changeRecorder->setMimeTypeMonitored(KContacts::Addressee::mimeType(), true);
 
     auto model = new Akonadi::ContactsTreeModel(changeRecorder, this);
@@ -51,7 +51,10 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     mainLayout->addWidget(mEmailSelectionWidget);
     mEmailSelectionWidget->view()->setSelectionMode(QAbstractItemView::SingleSelection);
     readConfig();
-    connect(mEmailSelectionWidget->view()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &AddEmailToExistingContactDialog::slotSelectionChanged);
+    connect(mEmailSelectionWidget->view()->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &AddEmailToExistingContactDialog::slotSelectionChanged);
     connect(mEmailSelectionWidget->view(), &QTreeView::doubleClicked, this, &AddEmailToExistingContactDialog::slotDoubleClicked);
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);

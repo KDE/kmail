@@ -10,7 +10,8 @@
 #include "configuredialog_p.h"
 
 #include <QWidget>
-namespace PimCommon {
+namespace PimCommon
+{
 class ConfigurePluginsWidget;
 }
 class KMAIL_EXPORT ConfigurePluginPage : public ConfigModule
@@ -24,6 +25,7 @@ public:
     void load() override;
     void save() override;
     void defaults() override;
+
 private:
     void slotConfigureChanged();
     PimCommon::ConfigurePluginsWidget *mConfigurePlugins = nullptr;

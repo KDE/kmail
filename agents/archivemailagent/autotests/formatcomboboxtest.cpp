@@ -5,16 +5,15 @@
 */
 
 #include "formatcomboboxtest.h"
-#include <QTest>
 #include "../widgets/formatcombobox.h"
+#include <QTest>
 
 FormatComboBoxTest::FormatComboBoxTest(QObject *parent)
     : QObject(parent)
 {
 }
 
-FormatComboBoxTest::~FormatComboBoxTest()
-= default;
+FormatComboBoxTest::~FormatComboBoxTest() = default;
 
 void FormatComboBoxTest::shouldHaveDefaultValue()
 {
@@ -26,11 +25,11 @@ void FormatComboBoxTest::changeCurrentItem_data()
 {
     QTest::addColumn<int>("input");
     QTest::addColumn<int>("output");
-    QTest::newRow("first") <<  0 << 0;
-    QTest::newRow("second") <<  1 << 1;
-    QTest::newRow("third") <<  2 << 2;
-    QTest::newRow("fourth") <<  3 << 3;
-    QTest::newRow("invalid") <<  5 << 0;
+    QTest::newRow("first") << 0 << 0;
+    QTest::newRow("second") << 1 << 1;
+    QTest::newRow("third") << 2 << 2;
+    QTest::newRow("fourth") << 3 << 3;
+    QTest::newRow("invalid") << 5 << 0;
 }
 
 void FormatComboBoxTest::changeCurrentItem()

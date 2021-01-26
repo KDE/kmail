@@ -14,17 +14,19 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-namespace KIdentityManagement {
+namespace KIdentityManagement
+{
 class Identity;
 class IdentityManager;
 }
 
-namespace KMail {
+namespace KMail
+{
 class IdentityListView;
 
 /** @short A QWidgetTreeItem for use in IdentityListView
-   *  @author Marc Mutz <mutz@kde.org>
-   **/
+ *  @author Marc Mutz <mutz@kde.org>
+ **/
 class IdentityListViewItem : public QTreeWidgetItem
 {
 public:
@@ -43,15 +45,14 @@ private:
 };
 
 /** @short A QTreeWidget for KIdentityManagement::Identity
-    * @author Marc Mutz <mutz@kde.org>
-    **/
+ * @author Marc Mutz <mutz@kde.org>
+ **/
 class IdentityListView : public QTreeWidget
 {
     Q_OBJECT
 public:
     explicit IdentityListView(QWidget *parent = nullptr);
-    ~IdentityListView() override
-    = default;
+    ~IdentityListView() override = default;
 
 public:
     void editItem(QTreeWidgetItem *item, int column = 0);

@@ -7,8 +7,8 @@
 #include "tagselectdialog.h"
 
 #include "kmail_debug.h"
-#include "tag.h"
 #include "kmkernel.h"
+#include "tag.h"
 #include "util.h"
 
 #include <MailCommon/AddTagDialog>
@@ -17,12 +17,12 @@
 #include <KLocalizedString>
 #include <QIcon>
 
-#include <QListWidget>
+#include <AkonadiCore/TagAttribute>
 #include <AkonadiCore/TagFetchJob>
 #include <AkonadiCore/TagFetchScope>
-#include <AkonadiCore/TagAttribute>
-#include <QDialogButtonBox>
 #include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QListWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
 

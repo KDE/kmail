@@ -9,17 +9,17 @@
 #include "widgets/unitcombobox.h"
 #include <MailCommon/FolderRequester>
 
-#include <KLocalizedString>
-#include <KUrlRequester>
 #include <KLineEdit>
-#include <QSpinBox>
+#include <KLocalizedString>
 #include <KSeparator>
+#include <KUrlRequester>
 #include <QIcon>
+#include <QSpinBox>
 
-#include <QGridLayout>
-#include <QLabel>
 #include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -49,7 +49,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mFolderRequester->setMustBeReadWrite(false);
     mFolderRequester->setNotAllowToCreateNewFolder(true);
     connect(mFolderRequester, &MailCommon::FolderRequester::folderChanged, this, &AddArchiveMailDialog::slotFolderChanged);
-    if (info) { //Don't autorize to modify folder when we just modify item.
+    if (info) { // Don't autorize to modify folder when we just modify item.
         mFolderRequester->setEnabled(false);
     }
     folderLabel->setBuddy(mFolderRequester);
@@ -129,8 +129,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     resize(500, minimumSize().height());
 }
 
-AddArchiveMailDialog::~AddArchiveMailDialog()
-= default;
+AddArchiveMailDialog::~AddArchiveMailDialog() = default;
 
 void AddArchiveMailDialog::load(ArchiveMailInfo *info)
 {

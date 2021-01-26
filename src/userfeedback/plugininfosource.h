@@ -6,8 +6,8 @@
 
 #ifndef PLUGININFOSOURCE_H
 #define PLUGININFOSOURCE_H
-#include <KUserFeedback/AbstractDataSource>
 #include "kmail_private_export.h"
+#include <KUserFeedback/AbstractDataSource>
 
 class KMAILTESTS_TESTS_EXPORT PluginInfoSource : public KUserFeedback::AbstractDataSource
 {

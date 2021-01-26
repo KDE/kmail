@@ -7,8 +7,8 @@
 #ifndef UNDOSENDCREATEJOB_H
 #define UNDOSENDCREATEJOB_H
 
-#include <QObject>
 #include "kmail_private_export.h"
+#include <QObject>
 class KNotification;
 class QTimer;
 class KMAILTESTS_TESTS_EXPORT UndoSendCreateJob : public QObject

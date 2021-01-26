@@ -5,9 +5,9 @@
 */
 
 #include "opencomposerhiddenjob.h"
-#include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
 
 #include <MessageComposer/MessageHelper>
 
@@ -18,8 +18,7 @@ OpenComposerHiddenJob::OpenComposerHiddenJob(QObject *parent)
 {
 }
 
-OpenComposerHiddenJob::~OpenComposerHiddenJob()
-= default;
+OpenComposerHiddenJob::~OpenComposerHiddenJob() = default;
 
 void OpenComposerHiddenJob::start()
 {
@@ -52,8 +51,7 @@ void OpenComposerHiddenJob::start()
 void OpenComposerHiddenJob::slotOpenComposer()
 {
     mMsg->assemble();
-    const KMail::Composer::TemplateContext context = mSettings.mBody.isEmpty() ? KMail::Composer::New
-                                                     : KMail::Composer::NoTemplate;
+    const KMail::Composer::TemplateContext context = mSettings.mBody.isEmpty() ? KMail::Composer::New : KMail::Composer::NoTemplate;
     KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, context);
     if (!mSettings.mHidden) {
         cWin->showAndActivateComposer();

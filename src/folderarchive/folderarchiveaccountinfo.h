@@ -7,8 +7,8 @@
 #define FOLDERARCHIVEACCOUNTINFO_H
 
 #include "kmail_private_export.h"
-#include <KConfigGroup>
 #include <AkonadiCore/Collection>
+#include <KConfigGroup>
 
 class KMAILTESTS_TESTS_EXPORT FolderArchiveAccountInfo
 {
@@ -17,11 +17,7 @@ public:
     FolderArchiveAccountInfo(const KConfigGroup &config);
     ~FolderArchiveAccountInfo();
 
-    enum FolderArchiveType {
-        UniqueFolder,
-        FolderByMonths,
-        FolderByYears
-    };
+    enum FolderArchiveType { UniqueFolder, FolderByMonths, FolderByYears };
 
     Q_REQUIRED_RESULT bool isValid() const;
 

@@ -7,21 +7,21 @@
 #include "sendlaterjob.h"
 
 #include <MessageComposer/AkonadiSender>
-#include <MessageComposer/Util>
 #include <MessageComposer/SendLaterInfo>
+#include <MessageComposer/Util>
 #include <MessageCore/StringUtil>
 
-#include <MailTransportAkonadi/TransportAttribute>
-#include <MailTransportAkonadi/SentBehaviourAttribute>
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
+#include <MailTransportAkonadi/SentBehaviourAttribute>
+#include <MailTransportAkonadi/TransportAttribute>
 
-#include <ItemFetchJob>
 #include <ItemDeleteJob>
+#include <ItemFetchJob>
 
-#include <KNotification>
-#include <KLocalizedString>
 #include "sendlateragent_debug.h"
+#include <KLocalizedString>
+#include <KNotification>
 
 SendLaterJob::SendLaterJob(SendLaterManager *manager, MessageComposer::SendLaterInfo *info, QObject *parent)
     : QObject(parent)
@@ -67,7 +67,7 @@ void SendLaterJob::slotMessageTransfered(const Akonadi::Item::List &items)
         qCDebug(SENDLATERAGENT_LOG) << " slotMessageTransfered failed !";
         return;
     } else if (items.count() == 1) {
-        //Success
+        // Success
         mItem = items.first();
         return;
     }
@@ -93,7 +93,7 @@ void SendLaterJob::slotJobFinished(KJob *job)
             sendError(i18n("Message is not a real message"), SendLaterManager::CanNotFetchItem);
             return;
         }
-        //TODO verify encryption + signed
+        // TODO verify encryption + signed
         updateAndCleanMessageBeforeSending(msg);
 
         if (!mManager->sender()->send(msg, MessageComposer::MessageSender::SendImmediate)) {

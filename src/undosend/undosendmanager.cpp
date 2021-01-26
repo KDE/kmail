@@ -5,16 +5,15 @@
 */
 
 #include "undosendmanager.h"
-#include "undosendcreatejob.h"
 #include "kmail_debug.h"
+#include "undosendcreatejob.h"
 
 UndoSendManager::UndoSendManager(QObject *parent)
     : QObject(parent)
 {
 }
 
-UndoSendManager::~UndoSendManager()
-= default;
+UndoSendManager::~UndoSendManager() = default;
 
 UndoSendManager *UndoSendManager::self()
 {

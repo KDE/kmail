@@ -7,9 +7,9 @@
 #ifndef KMAILCONFIGUREPLUGINSLISTWIDGET_H
 #define KMAILCONFIGUREPLUGINSLISTWIDGET_H
 
-#include <QVector>
 #include <PimCommon/ConfigurePluginsListWidget>
 #include <PimCommon/PluginUtil>
+#include <QVector>
 class ConfigurePluginsListWidget : public PimCommon::ConfigurePluginsListWidget
 {
     Q_OBJECT

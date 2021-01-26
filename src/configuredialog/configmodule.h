@@ -23,8 +23,7 @@ public:
     {
     }
 
-    ~ConfigModule() override
-    = default;
+    ~ConfigModule() override = default;
 
     void defaults() override
     {

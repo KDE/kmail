@@ -5,25 +5,25 @@
 */
 
 #include "sendlateragent.h"
-#include "sendlatermanager.h"
-#include "sendlaterconfiguredialog.h"
-#include "sendlaterinfo.h"
-#include "sendlaterutil.h"
+#include "sendlateragent_debug.h"
 #include "sendlateragentadaptor.h"
 #include "sendlateragentsettings.h"
+#include "sendlaterconfiguredialog.h"
+#include "sendlaterinfo.h"
+#include "sendlatermanager.h"
 #include "sendlaterremovemessagejob.h"
-#include "sendlateragent_debug.h"
-#include <AkonadiCore/ServerManager>
-#include <Akonadi/KMime/SpecialMailCollections>
+#include "sendlaterutil.h"
 #include <AgentInstance>
 #include <AgentManager>
-#include <QDBusConnection>
-#include <changerecorder.h>
-#include <itemfetchscope.h>
+#include <Akonadi/KMime/SpecialMailCollections>
+#include <AkonadiCore/ServerManager>
 #include <AkonadiCore/session.h>
 #include <AttributeFactory>
 #include <CollectionFetchScope>
 #include <KMime/Message>
+#include <QDBusConnection>
+#include <changerecorder.h>
+#include <itemfetchscope.h>
 
 #include <KWindowSystem>
 #include <Kdelibs4ConfigMigrator>
@@ -66,11 +66,10 @@ SendLaterAgent::SendLaterAgent(const QString &id)
     // notified about the network going up or down.
     auto reloadListTimer = new QTimer(this);
     connect(reloadListTimer, &QTimer::timeout, this, &SendLaterAgent::reload);
-    reloadListTimer->start(1000 * 60 * 60); //1 hour
+    reloadListTimer->start(1000 * 60 * 60); // 1 hour
 }
 
-SendLaterAgent::~SendLaterAgent()
-= default;
+SendLaterAgent::~SendLaterAgent() = default;
 
 void SendLaterAgent::slotStartAgent()
 {
@@ -132,7 +131,7 @@ void SendLaterAgent::configure(WId windowId)
         mManager->load();
         const QVector<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
         if (!listMessage.isEmpty()) {
-            //Will delete in specific job when done.
+            // Will delete in specific job when done.
             auto sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);
             sendlaterremovejob->start();
         }
@@ -147,7 +146,13 @@ void SendLaterAgent::removeItem(qint64 item)
     }
 }
 
-void SendLaterAgent::addItem(qint64 timestamp, bool recurrence, int recurrenceValue, int recurrenceUnit, Akonadi::Item::Id id, const QString &subject, const QString &to)
+void SendLaterAgent::addItem(qint64 timestamp,
+                             bool recurrence,
+                             int recurrenceValue,
+                             int recurrenceUnit,
+                             Akonadi::Item::Id id,
+                             const QString &subject,
+                             const QString &to)
 {
     auto info = new MessageComposer::SendLaterInfo;
     info->setDateTime(QDateTime::fromSecsSinceEpoch(timestamp));
@@ -180,7 +185,9 @@ void SendLaterAgent::itemsRemoved(const Akonadi::Item::List &items)
     }
 }
 
-void SendLaterAgent::itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection & /*sourceCollection*/, const Akonadi::Collection &destinationCollection)
+void SendLaterAgent::itemsMoved(const Akonadi::Item::List &items,
+                                const Akonadi::Collection & /*sourceCollection*/,
+                                const Akonadi::Collection &destinationCollection)
 {
     if (Akonadi::SpecialMailCollections::self()->specialCollectionType(destinationCollection) != Akonadi::SpecialMailCollections::Trash) {
         return;

@@ -19,13 +19,13 @@
 #include <KLocalizedString>
 #include <KStandardGuiItem>
 
-#include <QTreeWidget>
 #include <KConfigGroup>
 #include <KGuiItem>
-#include <QDialogButtonBox>
-#include <QPushButton>
 #include <KSharedConfig>
+#include <QDialogButtonBox>
 #include <QHeaderView>
+#include <QPushButton>
+#include <QTreeWidget>
 
 MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     : QDialog(parent)
@@ -47,9 +47,7 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(user1Button, &QPushButton::clicked, this, &MessagePropertyDialog::slotSaveProperty);
 
-    const QStringList headerLabels
-        = (QStringList(i18nc("@title:column property name", "Name"))
-           << i18nc("@title:column property value", "Value"));
+    const QStringList headerLabels = (QStringList(i18nc("@title:column property name", "Name")) << i18nc("@title:column property value", "Value"));
     mListView->setHeaderLabels(headerLabels);
     mListView->setAllColumnsShowFocus(true);
     mListView->setWordWrap(true);

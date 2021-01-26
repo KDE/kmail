@@ -6,14 +6,14 @@
 
 #include "archivemailkernel.h"
 
+#include <AkonadiCore/changerecorder.h>
+#include <AkonadiCore/entitymimetypefiltermodel.h>
+#include <AkonadiCore/entitytreemodel.h>
+#include <AkonadiCore/session.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KSharedConfig>
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/JobScheduler>
-#include <AkonadiCore/session.h>
-#include <AkonadiCore/entitytreemodel.h>
-#include <AkonadiCore/entitymimetypefiltermodel.h>
-#include <AkonadiCore/changerecorder.h>
-#include <KSharedConfig>
 
 ArchiveMailKernel::ArchiveMailKernel(QObject *parent)
     : QObject(parent)

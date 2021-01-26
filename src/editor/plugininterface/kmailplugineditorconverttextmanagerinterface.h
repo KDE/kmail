@@ -7,11 +7,12 @@
 #ifndef KMAILPLUGINEDITORCONVERTTEXTMANAGERINTERFACE_H
 #define KMAILPLUGINEDITORCONVERTTEXTMANAGERINTERFACE_H
 
-#include <QObject>
 #include <MessageComposer/PluginEditorConvertTextInterface>
 #include <QHash>
+#include <QObject>
 class QWidget;
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class RichTextComposer;
 }
 class KActionCollection;
@@ -32,7 +33,7 @@ public:
     KPIMTextEdit::RichTextComposer *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);
 
-    Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > actionsType();
+    Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> actionsType();
     Q_REQUIRED_RESULT QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
     void reformatText();
@@ -49,7 +50,7 @@ Q_SIGNALS:
 private:
     Q_DISABLE_COPY(KMailPluginEditorConvertTextManagerInterface)
     QList<MessageComposer::PluginEditorConvertTextInterface *> mListPluginInterface;
-    QHash<MessageComposer::PluginActionType::Type, QList<QAction *> > mActionHash;
+    QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> mActionHash;
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;

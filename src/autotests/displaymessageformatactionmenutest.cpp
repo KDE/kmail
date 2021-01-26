@@ -6,16 +6,16 @@
 
 #include "displaymessageformatactionmenutest.h"
 #include "../widgets/displaymessageformatactionmenu.h"
+#include <KToggleAction>
+#include <QMenu>
+#include <QSignalSpy>
 #include <QTest>
 #include <qtestmouse.h>
-#include <QMenu>
-#include <KToggleAction>
-#include <QSignalSpy>
 Q_DECLARE_METATYPE(MessageViewer::Viewer::DisplayFormatMessage)
 DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest(QObject *parent)
     : QObject(parent)
 {
-    qRegisterMetaType<MessageViewer::Viewer::DisplayFormatMessage >();
+    qRegisterMetaType<MessageViewer::Viewer::DisplayFormatMessage>();
 }
 
 void DisplayMessageFormatActionMenuTest::shouldHaveDefaultValue()

@@ -7,13 +7,13 @@
 #include "util.h"
 #include "kmkernel.h"
 
-#include <MessageCore/StringUtil>
-#include <MessageComposer/MessageHelper>
 #include "job/handleclickedurljob.h"
+#include <MessageComposer/MessageHelper>
+#include <MessageCore/StringUtil>
 
-#include <kmime/kmime_message.h>
-#include <KLocalizedString>
 #include "kmail_debug.h"
+#include <KLocalizedString>
+#include <kmime/kmime_message.h>
 
 #include <QAction>
 #include <QStandardPaths>
@@ -66,8 +66,7 @@ bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCom
 
 bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
 {
-    const QString handler = (folder->mailingList().handler() == MailingList::KMail)
-                            ? QStringLiteral("mailto") : QStringLiteral("https");
+    const QString handler = (folder->mailingList().handler() == MailingList::KMail) ? QStringLiteral("mailto") : QStringLiteral("https");
 
     QUrl urlToHandle;
     QList<QUrl>::ConstIterator end(lst.constEnd());
@@ -149,7 +148,7 @@ void KMail::Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
     if (action) {
         action->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
         action->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete-shred")) : QIcon::fromTheme(QStringLiteral("edit-delete")));
-        //Use same text as in Text property. Change it in kf5
+        // Use same text as in Text property. Change it in kf5
         action->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "Delete") : i18n("Move to Trash"));
     }
 }

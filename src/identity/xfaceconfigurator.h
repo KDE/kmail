@@ -19,10 +19,12 @@ class QUrl;
 
 class QCheckBox;
 class QLabel;
-namespace KPIMTextEdit {
+namespace KPIMTextEdit
+{
 class PlainTextEditorWidget;
 }
-namespace KMail {
+namespace KMail
+{
 class XFaceConfigurator : public QWidget
 {
     Q_OBJECT

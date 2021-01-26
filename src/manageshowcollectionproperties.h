@@ -7,13 +7,14 @@
 #ifndef MANAGESHOWCOLLECTIONPROPERTIES_H
 #define MANAGESHOWCOLLECTIONPROPERTIES_H
 
+#include <MailCommon/FolderSettings>
 #include <QObject>
 #include <QPointer>
-#include <MailCommon/FolderSettings>
 
 #include <Libkdepim/ProgressManager>
 
-namespace Akonadi {
+namespace Akonadi
+{
 class CollectionPropertiesDialog;
 }
 
@@ -39,7 +40,7 @@ private:
     void showCollectionProperties(const QString &pageToShow);
     void showCollectionPropertiesContinued(const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem);
 
-    QHash<Akonadi::Collection::Id, QPointer<Akonadi::CollectionPropertiesDialog> > mHashDialogBox;
+    QHash<Akonadi::Collection::Id, QPointer<Akonadi::CollectionPropertiesDialog>> mHashDialogBox;
     const QStringList mPages;
     KMMainWidget *const mMainWidget;
 };

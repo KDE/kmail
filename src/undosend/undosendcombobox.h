@@ -7,8 +7,8 @@
 #ifndef UNDOSENDCOMBOBOX_H
 #define UNDOSENDCOMBOBOX_H
 
-#include <QComboBox>
 #include "kmail_private_export.h"
+#include <QComboBox>
 
 class KMAILTESTS_TESTS_EXPORT UndoSendCombobox : public QComboBox
 {
@@ -19,6 +19,7 @@ public:
 
     Q_REQUIRED_RESULT int delay() const;
     void setDelay(int val);
+
 private:
     void initialize();
 };

@@ -17,7 +17,8 @@ class QAction;
 
 class KActionCollection;
 
-namespace KMail {
+namespace KMail
+{
 class FolderShortcutCommand : public QObject
 {
     Q_OBJECT
@@ -29,8 +30,8 @@ public:
 public Q_SLOTS:
     void start();
     /** Assign a QAction to the command which is used to trigger it. This
-    * action will be deleted along with the command, so you don't need to
-    * keep track of it separately. */
+     * action will be deleted along with the command, so you don't need to
+     * keep track of it separately. */
     void setAction(QAction *);
 
 Q_SIGNALS:
@@ -54,15 +55,15 @@ public:
 public Q_SLOTS:
 
     /**
-       * Updates the shortcut action for this collection. Call this when a shortcut was
-       * added, removed or changed.
-       */
+     * Updates the shortcut action for this collection. Call this when a shortcut was
+     * added, removed or changed.
+     */
     void shortcutChanged(const Akonadi::Collection &collection);
 
 private:
     /**
-       * Removes the shortcut actions associated with a folder.
-       */
+     * Removes the shortcut actions associated with a folder.
+     */
     void slotCollectionRemoved(const Akonadi::Collection &collection);
 
     void slotRowsInserted(const QModelIndex &parent, int start, int end);
@@ -70,7 +71,7 @@ private:
 private:
     Q_DISABLE_COPY(FolderShortcutActionManager)
     void updateShortcutsForIndex(const QModelIndex &parent, int start, int end);
-    QHash< Akonadi::Collection::Id, FolderShortcutCommand * > mFolderShortcutCommands;
+    QHash<Akonadi::Collection::Id, FolderShortcutCommand *> mFolderShortcutCommands;
     KActionCollection *mActionCollection = nullptr;
     QWidget *mParent = nullptr;
 };

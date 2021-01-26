@@ -9,12 +9,14 @@
 
 #include <KSharedConfig>
 
-namespace MessageComposer {
+namespace MessageComposer
+{
 class SendLaterInfo;
 }
 
 /** Send later utilities. */
-namespace SendLaterUtil {
+namespace SendLaterUtil
+{
 Q_REQUIRED_RESULT bool compareSendLaterInfo(MessageComposer::SendLaterInfo *left, MessageComposer::SendLaterInfo *right);
 
 Q_REQUIRED_RESULT KSharedConfig::Ptr defaultConfig();

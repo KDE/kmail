@@ -7,8 +7,8 @@
 #ifndef UNITCOMBOBOX_H
 #define UNITCOMBOBOX_H
 
-#include <QComboBox>
 #include "archivemailinfo.h"
+#include <QComboBox>
 
 class UnitComboBox : public QComboBox
 {

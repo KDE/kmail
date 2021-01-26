@@ -8,17 +8,16 @@
 #include "../sendlaterconfiguredialog.h"
 #include "../sendlaterconfigurewidget.h"
 
-#include <QTreeWidget>
 #include <QStandardPaths>
 #include <QTest>
+#include <QTreeWidget>
 
 SendLaterConfigureDialogTest::SendLaterConfigureDialogTest(QObject *parent)
     : QObject(parent)
 {
 }
 
-SendLaterConfigureDialogTest::~SendLaterConfigureDialogTest()
-= default;
+SendLaterConfigureDialogTest::~SendLaterConfigureDialogTest() = default;
 
 void SendLaterConfigureDialogTest::initTestCase()
 {

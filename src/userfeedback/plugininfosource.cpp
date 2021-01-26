@@ -5,9 +5,9 @@
 */
 
 #include "plugininfosource.h"
-#include <QVariant>
-#include <KUserFeedback/Provider>
 #include <KLocalizedString>
+#include <KUserFeedback/Provider>
+#include <QVariant>
 
 PluginInfoSource::PluginInfoSource()
     : KUserFeedback::AbstractDataSource(QStringLiteral("plugins"), KUserFeedback::Provider::DetailedSystemInformation)
@@ -26,6 +26,6 @@ QString PluginInfoSource::description() const
 
 QVariant PluginInfoSource::data()
 {
-    //TODO add list of plugins.
+    // TODO add list of plugins.
     return {};
 }

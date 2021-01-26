@@ -7,17 +7,18 @@
 #ifndef CONFIGURESECURITYPAGE_H
 #define CONFIGURESECURITYPAGE_H
 
-#include "kmail_export.h"
 #include "configuredialog_p.h"
+#include "kmail_export.h"
+#include "ui_composercryptoconfiguration.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_securitypagemdntab.h"
-#include "ui_composercryptoconfiguration.h"
-#include "ui_warningconfiguration.h"
 #include "ui_smimeconfiguration.h"
+#include "ui_warningconfiguration.h"
 
 #include <KCMultiDialog>
 
-namespace QGpgME {
+namespace QGpgME
+{
 class CryptoConfig;
 }
 
@@ -126,6 +127,7 @@ class GpgSettingsDialog : public KCMultiDialog
 public:
     explicit GpgSettingsDialog(QWidget *parent = nullptr);
     ~GpgSettingsDialog();
+
 private:
     void readConfig();
     void saveConfig();

@@ -30,7 +30,6 @@ public:
     void updatePreferredCharsets();
 
 private:
-
     // Singleton.  The only instance lives in sInstance->instance
     CodecManager();
 

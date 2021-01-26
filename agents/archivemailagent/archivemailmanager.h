@@ -9,8 +9,8 @@
 
 #include <QObject>
 
-#include <KSharedConfig>
 #include <Collection>
+#include <KSharedConfig>
 
 class ArchiveMailKernel;
 class ArchiveMailInfo;

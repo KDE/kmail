@@ -7,9 +7,9 @@
 #ifndef FOLLOWUPREMINDERCONFIGTEST_H
 #define FOLLOWUPREMINDERCONFIGTEST_H
 
+#include <KSharedConfig>
 #include <QObject>
 #include <QRegularExpression>
-#include <KSharedConfig>
 
 class FollowUpReminderConfigTest : public QObject
 {

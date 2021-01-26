@@ -5,18 +5,18 @@
 */
 
 #include "archivejob.h"
-#include "archivemailinfo.h"
-#include "archivemailmanager.h"
-#include "archivemailkernel.h"
 #include "archivemailagent_debug.h"
+#include "archivemailinfo.h"
+#include "archivemailkernel.h"
+#include "archivemailmanager.h"
 
-#include <MailCommon/MailUtil>
 #include <MailCommon/BackupJob>
+#include <MailCommon/MailUtil>
 
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 
-#include <KNotification>
 #include <KLocalizedString>
+#include <KNotification>
 
 ArchiveJob::ArchiveJob(ArchiveMailManager *manager, ArchiveMailInfo *info, const Akonadi::Collection &folder, bool immediate)
     : MailCommon::ScheduledJob(folder, immediate)

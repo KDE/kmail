@@ -37,7 +37,7 @@ void SendLaterConfigTest::cleanup()
 
 void SendLaterConfigTest::cleanupTestCase()
 {
-    //Make sure to clean config
+    // Make sure to clean config
     cleanup();
 }
 

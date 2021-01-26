@@ -5,27 +5,27 @@
 */
 
 #include "unityservicemanager.h"
+#include "kmail_debug.h"
 #include "kmkernel.h"
 #include "kmsystemtray.h"
 #include "settings/kmailsettings.h"
-#include "kmail_debug.h"
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
+#include <QApplication>
 #include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QDBusMessage>
-#include <QDBusServiceWatcher>
 #include <QDBusPendingCallWatcher>
 #include <QDBusPendingReply>
-#include <QDBusConnectionInterface>
-#include <QApplication>
+#include <QDBusServiceWatcher>
 #include <QTimer>
 
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/EntityMimeTypeFilterModel>
-#include <AkonadiCore/CollectionStatistics>
 #include <Akonadi/KMime/NewMailNotifierAttribute>
+#include <AkonadiCore/ChangeRecorder>
+#include <AkonadiCore/CollectionStatistics>
+#include <AkonadiCore/EntityMimeTypeFilterModel>
+#include <AkonadiCore/EntityTreeModel>
 
 using namespace KMail;
 
@@ -53,10 +53,8 @@ bool UnityServiceManager::excludeFolder(const Akonadi::Collection &collection) c
     if (!collection.isValid() || !collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
         return true;
     }
-    if (CommonKernel->outboxCollectionFolder() == collection
-        || CommonKernel->sentCollectionFolder() == collection
-        || CommonKernel->templatesCollectionFolder() == collection
-        || CommonKernel->trashCollectionFolder() == collection
+    if (CommonKernel->outboxCollectionFolder() == collection || CommonKernel->sentCollectionFolder() == collection
+        || CommonKernel->templatesCollectionFolder() == collection || CommonKernel->trashCollectionFolder() == collection
         || CommonKernel->draftsCollectionFolder() == collection) {
         return true;
     }
@@ -112,18 +110,16 @@ void UnityServiceManager::initListOfCollection()
         mSystemTray->updateStatus(mCount);
     }
 
-    //qCDebug(KMAIL_LOG)<<" mCount :"<<mCount;
+    // qCDebug(KMAIL_LOG)<<" mCount :"<<mCount;
     updateCount();
 }
 
 void UnityServiceManager::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &)
 {
-    //Exclude sent mail folder
+    // Exclude sent mail folder
 
-    if (CommonKernel->outboxCollectionFolder().id() == id
-        || CommonKernel->sentCollectionFolder().id() == id
-        || CommonKernel->templatesCollectionFolder().id() == id
-        || CommonKernel->trashCollectionFolder().id() == id
+    if (CommonKernel->outboxCollectionFolder().id() == id || CommonKernel->sentCollectionFolder().id() == id
+        || CommonKernel->templatesCollectionFolder().id() == id || CommonKernel->trashCollectionFolder().id() == id
         || CommonKernel->draftsCollectionFolder().id() == id) {
         return;
     }
@@ -139,10 +135,7 @@ void UnityServiceManager::updateCount()
     if (mUnityServiceAvailable) {
         const QString launcherId = qApp->desktopFileName() + QLatin1String(".desktop");
         const int unreadEmail = KMailSettings::self()->showUnreadInTaskbar() ? mCount : 0;
-        const QVariantMap properties{
-            {QStringLiteral("count-visible"), unreadEmail > 0},
-            {QStringLiteral("count"), unreadEmail}
-        };
+        const QVariantMap properties{{QStringLiteral("count-visible"), unreadEmail > 0}, {QStringLiteral("count"), unreadEmail}};
 
         QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/org/kmail2/UnityLauncher"),
                                                           QStringLiteral("com.canonical.Unity.LauncherEntry"),

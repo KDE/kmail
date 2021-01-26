@@ -8,10 +8,11 @@
 #ifndef REMOVEDUPLICATEMESSAGEINFOLDERANDSUBFOLDERJOB_H
 #define REMOVEDUPLICATEMESSAGEINFOLDERANDSUBFOLDERJOB_H
 
-#include <QObject>
 #include <AkonadiCore/Collection>
+#include <QObject>
 class KJob;
-namespace KPIM {
+namespace KPIM
+{
 class ProgressItem;
 }
 class RemoveDuplicateMessageInFolderAndSubFolderJob : public QObject

@@ -7,12 +7,13 @@
 #ifndef UNITYSERVICEMANAGER_H
 #define UNITYSERVICEMANAGER_H
 
+#include <AkonadiCore/Collection>
 #include <QModelIndex>
 #include <QObject>
-#include <AkonadiCore/Collection>
 class QDBusServiceWatcher;
 class QAbstractItemModel;
-namespace KMail {
+namespace KMail
+{
 class KMSystemTray;
 class UnityServiceManager : public QObject
 {
@@ -30,6 +31,7 @@ public:
     Q_REQUIRED_RESULT bool excludeFolder(const Akonadi::Collection &collection) const;
     Q_REQUIRED_RESULT bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
     void updateCount();
+
 private:
     Q_DISABLE_COPY(UnityServiceManager)
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = {});

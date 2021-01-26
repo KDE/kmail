@@ -5,43 +5,46 @@
 */
 
 #include "../unifiedmailboxmanager.h"
-#include "../unifiedmailbox.h"
 #include "../common.h"
+#include "../unifiedmailbox.h"
 
-#include <KSharedConfig>
 #include <KConfigGroup>
+#include <KSharedConfig>
 
-#include <AkonadiCore/SpecialCollectionAttribute>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionFetchScope>
 #include <AkonadiCore/CollectionCreateJob>
 #include <AkonadiCore/CollectionDeleteJob>
+#include <AkonadiCore/CollectionFetchJob>
+#include <AkonadiCore/CollectionFetchScope>
 #include <AkonadiCore/CollectionModifyJob>
 #include <AkonadiCore/ItemCreateJob>
 #include <AkonadiCore/ItemDeleteJob>
 #include <AkonadiCore/ItemModifyJob>
 #include <AkonadiCore/ItemMoveJob>
+#include <AkonadiCore/SpecialCollectionAttribute>
 #include <AkonadiCore/qtest_akonadi.h>
 
 #include <QTest>
 
-#include <memory>
 #include <chrono>
+#include <memory>
 
 using namespace std::chrono;
 using namespace std::chrono_literals;
 
-namespace {
-#define AKVERIFY_RET(statement, ret) \
-    do { \
-        if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__)) { \
-            return ret;} \
+namespace
+{
+#define AKVERIFY_RET(statement, ret)                                                                                                                           \
+    do {                                                                                                                                                       \
+        if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__)) {                                                               \
+            return ret;                                                                                                                                        \
+        }                                                                                                                                                      \
     } while (false)
 
-#define AKCOMPARE_RET(actual, expected, ret) \
-    do { \
-        if (!QTest::qCompare(actual, expected, #actual, #expected, __FILE__, __LINE__)) { \
-            return ret;} \
+#define AKCOMPARE_RET(actual, expected, ret)                                                                                                                   \
+    do {                                                                                                                                                       \
+        if (!QTest::qCompare(actual, expected, #actual, #expected, __FILE__, __LINE__)) {                                                                      \
+            return ret;                                                                                                                                        \
+        }                                                                                                                                                      \
     } while (false)
 
 Akonadi::Collection collectionForId(qint64 id)
@@ -62,8 +65,8 @@ Akonadi::Collection collectionForRid(const QString &rid)
     AKVERIFY_RET(fetch->exec(), {});
     const auto cols = fetch->collections();
     auto colIt = std::find_if(cols.cbegin(), cols.cend(), [&rid](const Akonadi::Collection &col) {
-            return col.remoteId() == rid;
-        });
+        return col.remoteId() == rid;
+    });
     AKVERIFY_RET(colIt != cols.cend(), {});
     return *colIt;
 }
@@ -164,23 +167,22 @@ private Q_SLOTS:
         // Check all the three boxes were created
         bool success;
         const auto verifyBox = [&manager, &success](const QString &id, int numSources) {
-                                   success = false;
-                                   auto boxIt = std::find_if(manager.begin(), manager.end(),
-                                                             [&id](const UnifiedMailboxManager::Entry &e) {
+            success = false;
+            auto boxIt = std::find_if(manager.begin(), manager.end(), [&id](const UnifiedMailboxManager::Entry &e) {
                 return e.second->id() == id;
             });
-                                   QVERIFY(boxIt != manager.end());
-                                   const auto &box = boxIt->second;
-                                   const auto sourceCollections = box->sourceCollections();
-                                   QCOMPARE(sourceCollections.size(), numSources);
-                                   for (auto source : sourceCollections) {
-                                       auto col = collectionForId(source);
-                                       QVERIFY(col.isValid());
-                                       QVERIFY(col.hasAttribute<Akonadi::SpecialCollectionAttribute>());
-                                       QCOMPARE(col.attribute<Akonadi::SpecialCollectionAttribute>()->collectionType(), id.toLatin1());
-                                   }
-                                   success = true;
-                               };
+            QVERIFY(boxIt != manager.end());
+            const auto &box = boxIt->second;
+            const auto sourceCollections = box->sourceCollections();
+            QCOMPARE(sourceCollections.size(), numSources);
+            for (auto source : sourceCollections) {
+                auto col = collectionForId(source);
+                QVERIFY(col.isValid());
+                QVERIFY(col.hasAttribute<Akonadi::SpecialCollectionAttribute>());
+                QCOMPARE(col.attribute<Akonadi::SpecialCollectionAttribute>()->collectionType(), id.toLatin1());
+            }
+            success = true;
+        };
         verifyBox(Common::InboxBoxId, 2);
         QVERIFY(success);
         verifyBox(Common::SentBoxId, 2);
@@ -208,8 +210,7 @@ private Q_SLOTS:
         QVERIFY(recorder.collectionsMonitored().isEmpty());
 
         // Create a new unified mailbox and passit to the manager
-        auto mailbox = createUnifiedMailbox(QStringLiteral("Test1"), QStringLiteral("Test 1"),
-                                            { QStringLiteral("res1_inbox") });
+        auto mailbox = createUnifiedMailbox(QStringLiteral("Test1"), QStringLiteral("Test 1"), {QStringLiteral("res1_inbox")});
         QVERIFY(mailbox);
         const auto sourceCol = mailbox->sourceCollections().values().first();
         manager.insertBox(std::move(mailbox));
@@ -235,8 +236,7 @@ private Q_SLOTS:
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
         auto boxesGroup = kcfg->group("UnifiedMailboxes");
-        auto mailbox = createUnifiedMailbox(QStringLiteral("Test1"), QStringLiteral("Test 1"),
-                                            { QStringLiteral("res1_foo"), QStringLiteral("res2_foo") });
+        auto mailbox = createUnifiedMailbox(QStringLiteral("Test1"), QStringLiteral("Test 1"), {QStringLiteral("res1_foo"), QStringLiteral("res2_foo")});
         QVERIFY(mailbox);
         auto group = boxesGroup.group(mailbox->id());
         mailbox->save(group);
@@ -286,12 +286,10 @@ private Q_SLOTS:
         auto boxesGroup = kcfg->group("UnifiedMailboxes");
         UnifiedMailboxManager manager(kcfg);
         EntityDeleter deleter;
-        const auto inbox = createUnifiedMailbox(Common::InboxBoxId, QStringLiteral("Inbox"),
-                                                { QStringLiteral("res1_inbox"), QStringLiteral("res2_inbox") });
+        const auto inbox = createUnifiedMailbox(Common::InboxBoxId, QStringLiteral("Inbox"), {QStringLiteral("res1_inbox"), QStringLiteral("res2_inbox")});
         auto boxGroup = boxesGroup.group(inbox->id());
         inbox->save(boxGroup);
-        const auto sentBox = createUnifiedMailbox(Common::SentBoxId, QStringLiteral("Sent"),
-                                                  { QStringLiteral("res1_sent"), QStringLiteral("res2_sent") });
+        const auto sentBox = createUnifiedMailbox(Common::SentBoxId, QStringLiteral("Sent"), {QStringLiteral("res1_sent"), QStringLiteral("res2_sent")});
         boxGroup = boxesGroup.group(sentBox->id());
         sentBox->save(boxGroup);
 
@@ -366,7 +364,7 @@ private Q_SLOTS:
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
         item.setParentCollection(inboxSourceCol);
-        item.setPayload(QByteArray {"Hello world!"});
+        item.setPayload(QByteArray{"Hello world!"});
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();
@@ -426,7 +424,7 @@ private Q_SLOTS:
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
         item.setParentCollection(inboxSourceCol);
-        item.setPayload(QByteArray {"Hello world!"});
+        item.setPayload(QByteArray{"Hello world!"});
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();
@@ -500,7 +498,7 @@ private Q_SLOTS:
         Akonadi::Item item;
         item.setMimeType(QStringLiteral("application/octet-stream"));
         item.setParentCollection(inboxSourceCol);
-        item.setPayload(QByteArray {"Hello world!"});
+        item.setPayload(QByteArray{"Hello world!"});
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
         AKVERIFYEXEC(createItem);
         item = createItem->item();

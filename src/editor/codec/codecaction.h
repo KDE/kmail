@@ -22,9 +22,9 @@ class CodecAction : public KCodecAction
 
 public:
     enum Mode {
-        ComposerMode,         ///< Used in the composer.  Show a 'Default' menu entry,
+        ComposerMode, ///< Used in the composer.  Show a 'Default' menu entry,
         ///  which uses one of the preferred codecs.  Also show 'us-ascii'.
-        ReaderMode            ///< Used in the reader.  Show an 'Auto' entry for each language,
+        ReaderMode ///< Used in the reader.  Show an 'Auto' entry for each language,
         ///  and detect any charset.
     };
 
@@ -41,6 +41,7 @@ public:
 
     void setAutoCharset();
     void setCharset(const QByteArray &charset);
+
 private:
     const CodecAction::Mode mMode;
 };

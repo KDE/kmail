@@ -16,24 +16,24 @@
 
 #include <AkonadiCore/ChangeRecorder>
 #include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/collectionstatistics.h>
 #include <AkonadiCore/EntityTreeModel>
+#include <AkonadiCore/collectionstatistics.h>
 #include <AkonadiWidgets/ETMViewStateSaver>
 
 #include <KMime/KMimeMessage>
 
+#include "kmailplugin_debug.h"
 #include <KCheckableProxyModel>
 #include <KConfigGroup>
-#include "kmailplugin_debug.h"
 #include <KLocalizedString>
-#include <KUrlLabel>
 #include <KSharedConfig>
+#include <KUrlLabel>
 
 #include <QEvent>
-#include <QIcon>
 #include <QGridLayout>
-#include <QVBoxLayout>
+#include <QIcon>
 #include <QItemSelectionModel>
+#include <QVBoxLayout>
 
 #include <ctime>
 
@@ -70,8 +70,7 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
 
     KSharedConfigPtr _config = KSharedConfig::openConfig(QStringLiteral("kcmkmailsummaryrc"));
 
-    mModelState
-        = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group("CheckState"), this);
+    mModelState = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group("CheckState"), this);
     mModelState->setSelectionModel(mSelectionModel);
 
     connect(mChangeRecorder, qOverload<const Akonadi::Collection &>(&Akonadi::ChangeRecorder::collectionChanged), this, &SummaryWidget::slotCollectionChanged);
@@ -113,11 +112,8 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
     const int nbCol = mModelProxy->rowCount(parent);
     for (int i = 0; i < nbCol; ++i) {
         const QModelIndex child = mModelProxy->index(i, 0, parent);
-        const Akonadi::Collection col
-            = mModelProxy->data(child,
-                                Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        const int showCollection
-            = mModelProxy->data(child, Qt::CheckStateRole).toInt();
+        const Akonadi::Collection col = mModelProxy->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const int showCollection = mModelProxy->data(child, Qt::CheckStateRole).toInt();
 
         if (col.isValid()) {
             const Akonadi::CollectionStatistics stats = col.statistics();
@@ -128,8 +124,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
                 if (showFolderPaths) {
                     // Construct the full path string.
                     parentTreeNames.insert(parentTreeNames.size(), col.name());
-                    urlLabel = new KUrlLabel(QString::number(col.id()),
-                                             parentTreeNames.join(QLatin1Char('/')), this);
+                    urlLabel = new KUrlLabel(QString::number(col.id()), parentTreeNames.join(QLatin1Char('/')), this);
                     parentTreeNames.removeLast();
                 } else {
                     urlLabel = new KUrlLabel(QString::number(col.id()), col.name(), this);
@@ -142,19 +137,23 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
                 mLabels.append(urlLabel);
 
                 // tooltip
-                urlLabel->setToolTip(i18n("<qt><b>%1</b>"
-                                          "<br/>Total: %2<br/>"
-                                          "Unread: %3</qt>",
-                                          col.name(),
-                                          stats.count(),
-                                          stats.unreadCount()));
+                urlLabel->setToolTip(
+                    i18n("<qt><b>%1</b>"
+                         "<br/>Total: %2<br/>"
+                         "Unread: %3</qt>",
+                         col.name(),
+                         stats.count(),
+                         stats.unreadCount()));
 
                 connect(urlLabel, qOverload<const QString &>(&KUrlLabel::leftClickedUrl), this, &SummaryWidget::selectFolder);
 
                 // Read and unread count.
                 auto label = new QLabel(i18nc("%1: number of unread messages "
-                                                 "%2: total number of messages",
-                                                 "%1 / %2", stats.unreadCount(), stats.count()), this);
+                                              "%2: total number of messages",
+                                              "%1 / %2",
+                                              stats.unreadCount(),
+                                              stats.count()),
+                                        this);
 
                 label->setAlignment(Qt::AlignLeft);
                 mLayout->addWidget(label, counter, 2);

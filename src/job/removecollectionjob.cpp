@@ -5,23 +5,22 @@
 */
 
 #include "removecollectionjob.h"
-#include <AkonadiCore/CollectionFetchJob>
+#include "kmkernel.h"
+#include "kmmainwidget.h"
 #include <AkonadiCore/CollectionDeleteJob>
+#include <AkonadiCore/CollectionFetchJob>
+#include <KGuiItem>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KGuiItem>
-#include "kmmainwidget.h"
-#include <MailCommon/MailUtil>
 #include <MailCommon/MailKernel>
-#include "kmkernel.h"
+#include <MailCommon/MailUtil>
 
 RemoveCollectionJob::RemoveCollectionJob(QObject *parent)
     : QObject(parent)
 {
 }
 
-RemoveCollectionJob::~RemoveCollectionJob()
-= default;
+RemoveCollectionJob::~RemoveCollectionJob() = default;
 
 void RemoveCollectionJob::setMainWidget(KMMainWidget *mainWidget)
 {
@@ -54,47 +53,55 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
     QString buttonLabel;
     if (col.resource() == QLatin1String("akonadi_search_resource")) {
         title = i18n("Delete Search");
-        str = i18n("<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
-                   "Any messages it shows will still be available in their original folder.</qt>",
-                   col.name().toHtmlEscaped());
+        str = i18n(
+            "<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
+            "Any messages it shows will still be available in their original folder.</qt>",
+            col.name().toHtmlEscaped());
         buttonLabel = i18nc("@action:button Delete search", "&Delete");
     } else {
         title = i18n("Delete Folder");
 
         if (col.statistics().count() == 0) {
             if (hasNotSubDirectory) {
-                str = i18n("<qt>Are you sure you want to delete the empty folder "
-                           "<b>%1</b>?</qt>",
-                           col.name().toHtmlEscaped());
+                str = i18n(
+                    "<qt>Are you sure you want to delete the empty folder "
+                    "<b>%1</b>?</qt>",
+                    col.name().toHtmlEscaped());
             } else {
-                str = i18n("<qt>Are you sure you want to delete the empty folder "
-                           "<resource>%1</resource> and all its subfolders? Those subfolders might "
-                           "not be empty and their contents will be discarded as well. "
-                           "<p><b>Beware</b> that discarded messages are not saved "
-                           "into your Trash folder and are permanently deleted.</p></qt>",
-                           col.name().toHtmlEscaped());
+                str = i18n(
+                    "<qt>Are you sure you want to delete the empty folder "
+                    "<resource>%1</resource> and all its subfolders? Those subfolders might "
+                    "not be empty and their contents will be discarded as well. "
+                    "<p><b>Beware</b> that discarded messages are not saved "
+                    "into your Trash folder and are permanently deleted.</p></qt>",
+                    col.name().toHtmlEscaped());
             }
         } else {
             if (hasNotSubDirectory) {
-                str = i18n("<qt>Are you sure you want to delete the folder "
-                           "<resource>%1</resource>, discarding its contents? "
-                           "<p><b>Beware</b> that discarded messages are not saved "
-                           "into your Trash folder and are permanently deleted.</p></qt>",
-                           col.name().toHtmlEscaped());
+                str = i18n(
+                    "<qt>Are you sure you want to delete the folder "
+                    "<resource>%1</resource>, discarding its contents? "
+                    "<p><b>Beware</b> that discarded messages are not saved "
+                    "into your Trash folder and are permanently deleted.</p></qt>",
+                    col.name().toHtmlEscaped());
             } else {
-                str = i18n("<qt>Are you sure you want to delete the folder <resource>%1</resource> "
-                           "and all its subfolders, discarding their contents? "
-                           "<p><b>Beware</b> that discarded messages are not saved "
-                           "into your Trash folder and are permanently deleted.</p></qt>",
-                           col.name().toHtmlEscaped());
+                str = i18n(
+                    "<qt>Are you sure you want to delete the folder <resource>%1</resource> "
+                    "and all its subfolders, discarding their contents? "
+                    "<p><b>Beware</b> that discarded messages are not saved "
+                    "into your Trash folder and are permanently deleted.</p></qt>",
+                    col.name().toHtmlEscaped());
             }
         }
         buttonLabel = i18nc("@action:button Delete folder", "&Delete");
     }
 
-    if (KMessageBox::warningContinueCancel(mMainWidget, str, title,
+    if (KMessageBox::warningContinueCancel(mMainWidget,
+                                           str,
+                                           title,
                                            KGuiItem(buttonLabel, QStringLiteral("edit-delete")),
-                                           KStandardGuiItem::cancel(), QString(),
+                                           KStandardGuiItem::cancel(),
+                                           QString(),
                                            KMessageBox::Notify | KMessageBox::Dangerous)
         == KMessageBox::Continue) {
         kmkernel->checkFolderFromResources(listOfCollection << col);
@@ -114,7 +121,7 @@ void RemoveCollectionJob::slotDeletionCollectionResult(KJob *job)
 {
     if (job) {
         if (!MailCommon::Util::showJobErrorMessage(job)) {
-            //TODO
+            // TODO
         }
     }
     deleteLater();

@@ -9,42 +9,42 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
 
+#include "configuredialog/configuredialoglistview.h"
+#include "globalsettings_templateparser.h"
 #include "kmmainwidget.h"
-#include <PimCommon/AutoCorrectionWidget>
+#include "settings/kmailsettings.h"
+#include "templatesconfiguration_kfg.h"
 #include <MessageComposer/ImageScalingWidget>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageCore/MessageCoreSettings>
-#include "settings/kmailsettings.h"
-#include "configuredialog/configuredialoglistview.h"
+#include <PimCommon/AutoCorrectionWidget>
 #include <PimCommon/SimpleStringListEditor>
-#include "templatesconfiguration_kfg.h"
-#include <TemplateParser/TemplatesConfiguration>
 #include <TemplateParser/CustomTemplates>
-#include "globalsettings_templateparser.h"
+#include <TemplateParser/TemplatesConfiguration>
 
-#include <PimCommonAkonadi/RecentAddresses>
 #include <KLDAP/LdapClientSearch>
 #include <PimCommonAkonadi/CompletionOrderEditor>
+#include <PimCommonAkonadi/RecentAddresses>
 using PimCommon::RecentAddresses;
 
-#include <KLocalizedString>
-#include <KSeparator>
-#include <KCharsets>
-#include <QHBoxLayout>
-#include <KMessageBox>
-#include <QSpinBox>
-#include <KPluralHandlingSpinBox>
 #include "kmail_debug.h"
+#include <KCharsets>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KPluralHandlingSpinBox>
+#include <KSeparator>
+#include <QHBoxLayout>
+#include <QSpinBox>
 
-#include <QLabel>
-#include <QGroupBox>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QTextCodec>
-#include <QCheckBox>
 #include <KConfigGroup>
+#include <QCheckBox>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QLabel>
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
+#include <QTextCodec>
+#include <QVBoxLayout>
 
 #include <PimCommonAkonadi/CompletionConfigureDialog>
 #ifdef KDEPIM_ENTERPRISE_BUILD
@@ -131,12 +131,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     auto groupVBoxLayout = new QVBoxLayout();
 
     // "Automatically insert signature" checkbox
-    mAutoAppSignFileCheck = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(),
-        this);
+    mAutoAppSignFileCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(), this);
 
-    QString helpText = i18n("Automatically insert the configured signature\n"
-                            "when starting to compose a message");
+    QString helpText = i18n(
+        "Automatically insert the configured signature\n"
+        "when starting to compose a message");
     mAutoAppSignFileCheck->setToolTip(helpText);
     mAutoAppSignFileCheck->setWhatsThis(helpText);
 
@@ -144,8 +143,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupVBoxLayout->addWidget(mAutoAppSignFileCheck);
 
     // "Insert signature above quoted text" checkbox
-    mTopQuoteCheck = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->prependSignatureItem()->label(), this);
+    mTopQuoteCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->prependSignatureItem()->label(), this);
     mTopQuoteCheck->setEnabled(false);
 
     helpText = i18n("Insert the signature above any quoted text");
@@ -157,12 +155,12 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupVBoxLayout->addWidget(mTopQuoteCheck);
 
     // "Prepend separator to signature" checkbox
-    mDashDashCheck = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this);
+    mDashDashCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this);
     mDashDashCheck->setEnabled(false);
 
-    helpText = i18n("Insert the RFC-compliant signature separator\n"
-                    "(two dashes and a space on a line) before the signature");
+    helpText = i18n(
+        "Insert the RFC-compliant signature separator\n"
+        "(two dashes and a space on a line) before the signature");
     mDashDashCheck->setToolTip(helpText);
     mDashDashCheck->setWhatsThis(helpText);
 
@@ -171,8 +169,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupVBoxLayout->addWidget(mDashDashCheck);
 
     // "Remove signature when replying" checkbox
-    mStripSignatureCheck = new QCheckBox(TemplateParser::TemplateParserSettings::self()->stripSignatureItem()->label(),
-                                         this);
+    mStripSignatureCheck = new QCheckBox(TemplateParser::TemplateParserSettings::self()->stripSignatureItem()->label(), this);
 
     helpText = i18n("When replying, do not quote any existing signature");
     mStripSignatureCheck->setToolTip(helpText);
@@ -191,11 +188,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     int row = 0;
 
     // "Only quote selected text when replying" checkbox
-    mQuoteSelectionOnlyCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(),
-                                             this);
-    helpText = i18n("When replying, only quote the selected text\n"
-                    "(instead of the complete message), if\n"
-                    "there is text selected in the message window.");
+    mQuoteSelectionOnlyCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(), this);
+    helpText = i18n(
+        "When replying, only quote the selected text\n"
+        "(instead of the complete message), if\n"
+        "there is text selected in the message window.");
     mQuoteSelectionOnlyCheck->setToolTip(helpText);
     mQuoteSelectionOnlyCheck->setWhatsThis(helpText);
 
@@ -204,11 +201,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // "Use smart quoting" checkbox
-    mSmartQuoteCheck = new QCheckBox(
-        TemplateParser::TemplateParserSettings::self()->smartQuoteItem()->label(), this);
-    helpText = i18n("When replying, add quote signs in front of all lines of the quoted text,\n"
-                    "even when the line was created by adding an additional line break while\n"
-                    "word-wrapping the text.");
+    mSmartQuoteCheck = new QCheckBox(TemplateParser::TemplateParserSettings::self()->smartQuoteItem()->label(), this);
+    helpText = i18n(
+        "When replying, add quote signs in front of all lines of the quoted text,\n"
+        "even when the line was created by adding an additional line break while\n"
+        "word-wrapping the text.");
     mSmartQuoteCheck->setToolTip(helpText);
     mSmartQuoteCheck->setWhatsThis(helpText);
 
@@ -217,8 +214,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // "Word wrap at column" checkbox/spinbox
-    mWordWrapCheck = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->wordWrapItem()->label(), this);
+    mWordWrapCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->wordWrapItem()->label(), this);
 
     helpText = i18n("Enable automatic word wrapping at the specified width");
     mWordWrapCheck->setToolTip(helpText);
@@ -229,7 +225,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mWrapColumnSpin->setMinimum(30 /*min*/);
     mWrapColumnSpin->setSingleStep(1 /*step*/);
     mWrapColumnSpin->setValue(78 /*init*/);
-    mWrapColumnSpin->setEnabled(false);   // since !mWordWrapCheck->isChecked()
+    mWrapColumnSpin->setEnabled(false); // since !mWordWrapCheck->isChecked()
 
     helpText = i18n("Set the text width for automatic word wrapping");
     mWrapColumnSpin->setToolTip(helpText);
@@ -249,9 +245,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // "Reply/Forward using HTML if present" checkbox
     mReplyUsingVisualFormat = new QCheckBox(TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem()->label(), this);
-    helpText = i18n("When replying or forwarding, quote the message\n"
-                    "in the original format it was received.\n"
-                    "If unchecked, the reply will be as plain text by default.");
+    helpText = i18n(
+        "When replying or forwarding, quote the message\n"
+        "in the original format it was received.\n"
+        "If unchecked, the reply will be as plain text by default.");
     mReplyUsingVisualFormat->setToolTip(helpText);
     mReplyUsingVisualFormat->setWhatsThis(helpText);
 
@@ -263,9 +260,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mImprovePlainTextOfHtmlMessage = new QCheckBox(MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessageItem()->label(), this);
 
     // For what is supported see http://www.grantlee.org/apidox/classGrantlee_1_1PlainTextMarkupBuilder.html
-    helpText = i18n("Format the plain text part of a message from the HTML markup.\n"
-                    "Bold, italic and underlined text, lists, and external references\n"
-                    "are supported.");
+    helpText = i18n(
+        "Format the plain text part of a message from the HTML markup.\n"
+        "Bold, italic and underlined text, lists, and external references\n"
+        "are supported.");
     mImprovePlainTextOfHtmlMessage->setToolTip(helpText);
     mImprovePlainTextOfHtmlMessage->setWhatsThis(helpText);
 
@@ -277,9 +275,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
     // "Default forwarding type" combobox
     mForwardTypeCombo = new QComboBox(this);
-    mForwardTypeCombo->addItems(QStringList() << i18nc("@item:inlistbox Inline mail forwarding",
-                                                       "Inline")
-                                              << i18n("As Attachment"));
+    mForwardTypeCombo->addItems(QStringList() << i18nc("@item:inlistbox Inline mail forwarding", "Inline") << i18n("As Attachment"));
 
     helpText = i18n("Set the default forwarded message format");
     mForwardTypeCombo->setToolTip(helpText);
@@ -304,11 +300,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     row = 0;
 
     // "Automatically request MDNs" checkbox
-    mAutoRequestMDNCheck = new QCheckBox(KMailSettings::self()->requestMDNItem()->label(),
-                                         this);
+    mAutoRequestMDNCheck = new QCheckBox(KMailSettings::self()->requestMDNItem()->label(), this);
 
-    helpText = i18n("By default, request an MDN when starting to compose a message.\n"
-                    "You can select this on a per-message basis using \"Options - Request Disposition Notification\"");
+    helpText = i18n(
+        "By default, request an MDN when starting to compose a message.\n"
+        "You can select this on a per-message basis using \"Options - Request Disposition Notification\"");
     mAutoRequestMDNCheck->setToolTip(helpText);
     mAutoRequestMDNCheck->setWhatsThis(helpText);
 
@@ -320,9 +316,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // "Use Baloo search in composer" checkbox
-    mShowAkonadiSearchAddressesInComposer = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(),
-        this);
+    mShowAkonadiSearchAddressesInComposer = new QCheckBox(MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(), this);
 
     connect(mShowAkonadiSearchAddressesInComposer, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mShowAkonadiSearchAddressesInComposer, row, 0, 1, -1);
@@ -330,8 +324,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
 #ifdef KDEPIM_ENTERPRISE_BUILD
     // "Warn if too many recipients" checkbox/spinbox
-    mRecipientCheck = new QCheckBox(
-        KMailSettings::self()->tooManyRecipientsItem()->label(), this);
+    mRecipientCheck = new QCheckBox(KMailSettings::self()->tooManyRecipientsItem()->label(), this);
     mRecipientCheck->setObjectName(QStringLiteral("kcfg_TooManyRecipients"));
     helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8().constData());
     mRecipientCheck->setWhatsThis(helpText);
@@ -365,12 +358,13 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecipients->setSingleStep(1);
     mMaximumRecipients->setValue(1);
 
-    helpText = i18n("Only allow this many recipients to be specified for the message.\n"
-                    "This applies to doing a \"Reply to All\", entering recipients manually\n"
-                    "or using the \"Select...\" picker.  Setting this limit helps you to\n"
-                    "avoid accidentally sending a message to too many people.  Note,\n"
-                    "however, that it does not take account of distribution lists or\n"
-                    "mailing lists.");
+    helpText = i18n(
+        "Only allow this many recipients to be specified for the message.\n"
+        "This applies to doing a \"Reply to All\", entering recipients manually\n"
+        "or using the \"Select...\" picker.  Setting this limit helps you to\n"
+        "avoid accidentally sending a message to too many people.  Note,\n"
+        "however, that it does not take account of distribution lists or\n"
+        "mailing lists.");
     mMaximumRecipients->setToolTip(helpText);
     mMaximumRecipients->setWhatsThis(helpText);
 
@@ -387,12 +381,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // "Use recent addresses for autocompletion" checkbox
-    mShowRecentAddressesInComposer = new QCheckBox(
-        MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem()->label(),
-        this);
+    mShowRecentAddressesInComposer = new QCheckBox(MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem()->label(), this);
 
-    helpText = i18n("Remember recent addresses entered,\n"
-                    "and offer them for recipient completion");
+    helpText = i18n(
+        "Remember recent addresses entered,\n"
+        "and offer them for recipient completion");
     mShowRecentAddressesInComposer->setToolTip(helpText);
     mShowRecentAddressesInComposer->setWhatsThis(helpText);
 
@@ -411,8 +404,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label->setBuddy(mMaximumRecentAddress);
     label->setEnabled(false);
 
-    helpText = i18n("The maximum number of recently entered addresses that will\n"
-                    "be remembered for completion");
+    helpText = i18n(
+        "The maximum number of recently entered addresses that will\n"
+        "be remembered for completion");
     mMaximumRecentAddress->setToolTip(helpText);
     mMaximumRecentAddress->setWhatsThis(helpText);
 
@@ -501,8 +495,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
 {
     // various check boxes:
 
-    mAutoAppSignFileCheck->setChecked(
-        MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String("auto"));
+    mAutoAppSignFileCheck->setChecked(MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String("auto"));
     loadWidget(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem());
     loadWidget(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
     loadWidget(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
@@ -545,8 +538,8 @@ void ComposerPage::GeneralTab::save()
     saveCheckBox(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
-    MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(
-        mAutoAppSignFileCheck->isChecked() ? QStringLiteral("auto") : QStringLiteral("manual"));
+    MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(mAutoAppSignFileCheck->isChecked() ? QStringLiteral("auto")
+                                                                                                              : QStringLiteral("manual"));
     saveSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem());
     saveSpinBox(mMaximumRecipients, MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
     KMailSettings::self()->setAutosaveInterval(mAutoSave->value());
@@ -626,7 +619,8 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
 {
     auto vlay = new QVBoxLayout(this);
 
-    mWidget = new TemplateParser::CustomTemplates(kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection *>(), this);
+    mWidget = new TemplateParser::CustomTemplates(kmkernel->getKMMainWidget() ? kmkernel->getKMMainWidget()->actionCollections() : QList<KActionCollection *>(),
+                                                  this);
     vlay->addWidget(mWidget);
 
     connect(mWidget, &TemplateParser::CustomTemplates::changed, this, &ConfigModuleTab::slotEmitChanged);
@@ -660,25 +654,21 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 0: help text:
     auto label = new QLabel(i18n("Recognize any sequence of the following prefixes\n"
-                                    "(entries are case-insensitive regular expressions):"), group);
+                                 "(entries are case-insensitive regular expressions):"),
+                            group);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignLeft);
 
     // row 1, string list editor:
-    auto buttonCode
-        = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
-    mReplyListEditor
-        = new PimCommon::SimpleStringListEditor(group, buttonCode,
-                                                i18n("A&dd..."), i18n("Re&move"),
-                                                i18n("Mod&ify..."),
-                                                i18n("Enter new reply prefix:"));
+    auto buttonCode = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(
+        PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
+    mReplyListEditor =
+        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("A&dd..."), i18n("Re&move"), i18n("Mod&ify..."), i18n("Enter new reply prefix:"));
     mReplyListEditor->setRemoveDialogLabel(i18n("Do you want to remove reply prefix?"));
     connect(mReplyListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
     // row 2: "replace [...]" check box:
-    mReplaceReplyPrefixCheck = new QCheckBox(
-        MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem()->label(),
-        group);
+    mReplaceReplyPrefixCheck = new QCheckBox(MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem()->label(), group);
     connect(mReplaceReplyPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
     layout->addWidget(mReplyListEditor);
@@ -691,24 +681,19 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 0: help text:
     label = new QLabel(i18n("Recognize any sequence of the following prefixes\n"
-                            "(entries are case-insensitive regular expressions):"), group);
+                            "(entries are case-insensitive regular expressions):"),
+                       group);
     label->setAlignment(Qt::AlignLeft);
     label->setWordWrap(true);
 
     // row 1: string list editor
-    mForwardListEditor
-        = new PimCommon::SimpleStringListEditor(group, buttonCode,
-                                                i18n("Add..."),
-                                                i18n("Remo&ve"),
-                                                i18n("Modify..."),
-                                                i18n("Enter new forward prefix:"));
+    mForwardListEditor =
+        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("Add..."), i18n("Remo&ve"), i18n("Modify..."), i18n("Enter new forward prefix:"));
     mForwardListEditor->setRemoveDialogLabel(i18n("Do you want to remove forward prefix?"));
     connect(mForwardListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
     // row 3: "replace [...]" check box:
-    mReplaceForwardPrefixCheck = new QCheckBox(
-        MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem()->label(),
-        group);
+    mReplaceForwardPrefixCheck = new QCheckBox(MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem()->label(), group);
     connect(mReplaceForwardPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     layout->addWidget(label);
     layout->addWidget(mForwardListEditor);
@@ -753,15 +738,18 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
 
     auto label = new QLabel(i18n("This list is checked for every outgoing message "
-                                    "from the top to the bottom for a charset that "
-                                    "contains all required characters."), this);
+                                 "from the top to the bottom for a charset that "
+                                 "contains all required characters."),
+                            this);
     label->setWordWrap(true);
     vlay->addWidget(label);
 
-    mCharsetListEditor
-        = new PimCommon::SimpleStringListEditor(this, PimCommon::SimpleStringListEditor::All,
-                                                i18n("A&dd..."), i18n("Remo&ve"),
-                                                i18n("&Modify..."), i18n("Enter charset:"));
+    mCharsetListEditor = new PimCommon::SimpleStringListEditor(this,
+                                                               PimCommon::SimpleStringListEditor::All,
+                                                               i18n("A&dd..."),
+                                                               i18n("Remo&ve"),
+                                                               i18n("&Modify..."),
+                                                               i18n("Enter charset:"));
     mCharsetListEditor->setRemoveDialogLabel(i18n("Do you want to remove this selected charset?"));
     mCharsetListEditor->setUpDownAutoRepeat(true);
     connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
@@ -770,7 +758,8 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
 
     mKeepReplyCharsetCheck = new QCheckBox(i18n("&Keep original charset when "
                                                 "replying or forwarding (if "
-                                                "possible)"), this);
+                                                "possible)"),
+                                           this);
     connect(mKeepReplyCharsetCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mKeepReplyCharsetCheck);
 
@@ -791,8 +780,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset(QString &charset)
         charset = QStringLiteral("us-ascii");
         return;
     } else if (charsetLower == QLatin1String("locale")) {
-        charset = QStringLiteral("%1 (locale)")
-                  .arg(QString::fromLatin1(kmkernel->networkCodec()->name()).toLower());
+        charset = QStringLiteral("%1 (locale)").arg(QString::fromLatin1(kmkernel->networkCodec()->name()).toLower());
         return;
     }
 
@@ -814,8 +802,7 @@ void ComposerPage::CharsetTab::doLoadOther()
     }
     QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
     QStringList::Iterator end(charsets.end());
-    for (QStringList::Iterator it = charsets.begin();
-         it != end; ++it) {
+    for (QStringList::Iterator it = charsets.begin(); it != end; ++it) {
         if ((*it) == QLatin1String("locale")) {
             QByteArray cset = kmkernel->networkCodec()->name();
             cset = cset.toLower();
@@ -867,8 +854,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
 
     // "Use custom Message-Id suffix" checkbox:
-    mCreateOwnMessageIdCheck
-        = new QCheckBox(i18n("&Use custom message-id suffix"), this);
+    mCreateOwnMessageIdCheck = new QCheckBox(i18n("&Use custom message-id suffix"), this);
     connect(mCreateOwnMessageIdCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mCreateOwnMessageIdCheck);
 
@@ -878,12 +864,11 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mMessageIdSuffixEdit = new QLineEdit(this);
     mMessageIdSuffixEdit->setClearButtonEnabled(true);
     // only ASCII letters, digits, plus, minus and dots are allowed
-    auto *messageIdSuffixValidator
-        = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
+    auto *messageIdSuffixValidator = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
     mMessageIdSuffixEdit->setValidator(messageIdSuffixValidator);
     auto label = new QLabel(i18n("Custom message-&id suffix:"), this);
     label->setBuddy(mMessageIdSuffixEdit);
-    label->setEnabled(false);   // since !mCreateOwnMessageIdCheck->isChecked()
+    label->setEnabled(false); // since !mCreateOwnMessageIdCheck->isChecked()
     mMessageIdSuffixEdit->setEnabled(false);
     hlay->addWidget(label);
     hlay->addWidget(mMessageIdSuffixEdit, 1);
@@ -1011,9 +996,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     } else if (mHeaderList->topLevelItemCount() > 0) {
         delete item;
         item = nullptr;
-        mHeaderList->setCurrentItem(
-            mHeaderList->topLevelItem(mHeaderList->topLevelItemCount() - 1)
-            );
+        mHeaderList->setCurrentItem(mHeaderList->topLevelItem(mHeaderList->topLevelItemCount() - 1));
     }
 
     slotEmitChanged();
@@ -1022,8 +1005,8 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 void ComposerPage::HeadersTab::doLoadOther()
 {
     mMessageIdSuffixEdit->setText(MessageComposer::MessageComposerSettings::customMsgIDSuffix());
-    const bool state = (!MessageComposer::MessageComposerSettings::customMsgIDSuffix().isEmpty()
-                        && MessageComposer::MessageComposerSettings::useCustomMessageIdSuffix());
+    const bool state =
+        (!MessageComposer::MessageComposerSettings::customMsgIDSuffix().isEmpty() && MessageComposer::MessageComposerSettings::useCustomMessageIdSuffix());
     mCreateOwnMessageIdCheck->setChecked(state);
 
     mHeaderList->clear();
@@ -1034,8 +1017,7 @@ void ComposerPage::HeadersTab::doLoadOther()
 
     const int count = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < count; ++i) {
-        KConfigGroup config(KMKernel::self()->config(),
-                            QLatin1String("Mime #") + QString::number(i));
+        KConfigGroup config(KMKernel::self()->config(), QLatin1String("Mime #") + QString::number(i));
         const QString name = config.readEntry("name");
         const QString value = config.readEntry("value");
         if (!name.isEmpty()) {
@@ -1057,7 +1039,7 @@ void ComposerPage::HeadersTab::save()
     MessageComposer::MessageComposerSettings::self()->setCustomMsgIDSuffix(mMessageIdSuffixEdit->text());
     MessageComposer::MessageComposerSettings::self()->setUseCustomMessageIdSuffix(mCreateOwnMessageIdCheck->isChecked());
 
-    //Clean config
+    // Clean config
     const int oldHeadersCount = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < oldHeadersCount; ++i) {
         const QString groupMimeName = QStringLiteral("Mime #%1").arg(i);
@@ -1116,39 +1098,35 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
 
     // "Outlook compatible attachment naming" check box
-    mOutlookCompatibleCheck
-        = new QCheckBox(i18n("Outlook-compatible attachment naming"), this);
+    mOutlookCompatibleCheck = new QCheckBox(i18n("Outlook-compatible attachment naming"), this);
     mOutlookCompatibleCheck->setChecked(false);
-    mOutlookCompatibleCheck->setToolTip(i18n(
-                                            "Turn this option on to make Outlook(tm) understand attachment names "
-                                            "containing non-English characters"));
+    mOutlookCompatibleCheck->setToolTip(
+        i18n("Turn this option on to make Outlook(tm) understand attachment names "
+             "containing non-English characters"));
     connect(mOutlookCompatibleCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     connect(mOutlookCompatibleCheck, &QAbstractButton::clicked, this, &ComposerPageAttachmentsTab::slotOutlookCompatibleClicked);
     vlay->addWidget(mOutlookCompatibleCheck);
     vlay->addSpacing(5);
 
     // "Enable detection of missing attachments" check box
-    mMissingAttachmentDetectionCheck
-        = new QCheckBox(i18n("E&nable detection of missing attachments"), this);
+    mMissingAttachmentDetectionCheck = new QCheckBox(i18n("E&nable detection of missing attachments"), this);
     mMissingAttachmentDetectionCheck->setChecked(true);
     connect(mMissingAttachmentDetectionCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mMissingAttachmentDetectionCheck);
 
     // "Attachment key words" label and string list editor
     auto label = new QLabel(i18n("Recognize any of the following key words as "
-                                    "intention to attach a file:"), this);
+                                 "intention to attach a file:"),
+                            this);
     label->setAlignment(Qt::AlignLeft);
     label->setWordWrap(true);
 
     vlay->addWidget(label);
 
-    auto buttonCode
-        = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
-    mAttachWordsListEditor
-        = new PimCommon::SimpleStringListEditor(this, buttonCode,
-                                                i18n("A&dd..."), i18n("Re&move"),
-                                                i18n("Mod&ify..."),
-                                                i18n("Enter new key word:"));
+    auto buttonCode = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(
+        PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
+    mAttachWordsListEditor =
+        new PimCommon::SimpleStringListEditor(this, buttonCode, i18n("A&dd..."), i18n("Re&move"), i18n("Mod&ify..."), i18n("Enter new key word:"));
     mAttachWordsListEditor->setRemoveDialogLabel(i18n("Do you want to remove this attachment word?"));
     connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mAttachWordsListEditor);
@@ -1194,14 +1172,15 @@ void ComposerPage::AttachmentsTab::save()
 void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
 {
     if (mOutlookCompatibleCheck->isChecked()) {
-        KMessageBox::information(nullptr, i18n("You have chosen to "
-                                               "encode attachment names containing non-English characters in a way that "
-                                               "is understood by Outlook(tm) and other mail clients that do not "
-                                               "support standard-compliant encoded attachment names.\n"
-                                               "Note that KMail may create non-standard compliant messages, "
-                                               "and consequently it is possible that your messages will not be "
-                                               "understood by standard-compliant mail clients; so, unless you have no "
-                                               "other choice, you should not enable this option."));
+        KMessageBox::information(nullptr,
+                                 i18n("You have chosen to "
+                                      "encode attachment names containing non-English characters in a way that "
+                                      "is understood by Outlook(tm) and other mail clients that do not "
+                                      "support standard-compliant encoded attachment names.\n"
+                                      "Note that KMail may create non-standard compliant messages, "
+                                      "and consequently it is possible that your messages will not be "
+                                      "understood by standard-compliant mail clients; so, unless you have no "
+                                      "other choice, you should not enable this option."));
     }
 }
 

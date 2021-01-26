@@ -7,8 +7,8 @@
 #ifndef SENDLATERCONFIGUREDIALOG_H
 #define SENDLATERCONFIGUREDIALOG_H
 
-#include <QDialog>
 #include <AkonadiCore/Item>
+#include <QDialog>
 class SendLaterWidget;
 class SendLaterConfigureDialog : public QDialog
 {

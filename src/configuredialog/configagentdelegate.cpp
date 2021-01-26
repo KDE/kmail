@@ -8,21 +8,21 @@
 
 #include "configagentdelegate.h"
 
-#include <AkonadiCore/AgentInstanceModel>
 #include <AkonadiCore/AgentInstance>
+#include <AkonadiCore/AgentInstanceModel>
 
-#include <QIcon>
-#include <KLocalizedString>
 #include <KIconLoader>
+#include <KLocalizedString>
+#include <QIcon>
 
-#include <QUrl>
 #include <QApplication>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QTextDocument>
-#include <QMouseEvent>
+#include <QUrl>
 
-using Akonadi::AgentInstanceModel;
 using Akonadi::AgentInstance;
+using Akonadi::AgentInstanceModel;
 
 static const int s_delegatePaddingSize = 7;
 
@@ -63,8 +63,7 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
     const QSize decorationSize(KIconLoader::global()->currentSize(KIconLoader::Desktop), KIconLoader::global()->currentSize(KIconLoader::Desktop));
     const QVariant data = index.model()->data(index, Qt::DecorationRole);
     if (data.isValid() && data.type() == QVariant::Icon) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("agent_icon")),
-                              qvariant_cast<QIcon>(data).pixmap(decorationSize));
+        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("agent_icon")), qvariant_cast<QIcon>(data).pixmap(decorationSize));
     }
 
     if (!index.data(AgentInstanceModel::OnlineRole).toBool()) {
@@ -90,18 +89,21 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
     }
 
     const QString content = QStringLiteral(
-        "<html style=\"color:%1\">"
-        "<body>"
-        "<table>"
-        "<tr>"
-        "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
-        "<td><b>%2</b></td>"
-        "</tr>").arg(textColor.name().toUpper(), name)
-                            + QStringLiteral(
-        "<tr>"
-        "<td><img src=\"status_icon\"/> %1 %2</td>"
-        "</tr>").arg(statusMessage).arg(status == 1 ? QStringLiteral("(%1%)").arg(progress) : QLatin1String(""))
-                            + QLatin1String("</table></body></html>");
+                                "<html style=\"color:%1\">"
+                                "<body>"
+                                "<table>"
+                                "<tr>"
+                                "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
+                                "<td><b>%2</b></td>"
+                                "</tr>")
+                                .arg(textColor.name().toUpper(), name)
+        + QStringLiteral(
+              "<tr>"
+              "<td><img src=\"status_icon\"/> %1 %2</td>"
+              "</tr>")
+              .arg(statusMessage)
+              .arg(status == 1 ? QStringLiteral("(%1%)").arg(progress) : QLatin1String(""))
+        + QLatin1String("</table></body></html>");
 
     document->setHtml(content);
 
@@ -126,10 +128,10 @@ void ConfigAgentDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     QPen pen = painter->pen();
 
-//    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
-//    if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
-//        cg = QPalette::Inactive;
-//    }
+    //    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
+    //    if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
+    //        cg = QPalette::Inactive;
+    //    }
 
     QStyleOptionViewItem opt(option);
     opt.showDecorationSelected = true;
@@ -150,10 +152,11 @@ void ConfigAgentDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
 QSize ConfigAgentDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &) const
 {
-    const int iconHeight = KIconLoader::global()->currentSize(KIconLoader::Desktop) + (s_delegatePaddingSize * 2);  //icon height + padding either side
-    const int textHeight = option.fontMetrics.height() + qMax(option.fontMetrics.height(), 16) + (s_delegatePaddingSize * 2);   //height of text + icon/text + padding either side
+    const int iconHeight = KIconLoader::global()->currentSize(KIconLoader::Desktop) + (s_delegatePaddingSize * 2); // icon height + padding either side
+    const int textHeight =
+        option.fontMetrics.height() + qMax(option.fontMetrics.height(), 16) + (s_delegatePaddingSize * 2); // height of text + icon/text + padding either side
 
-    return {1, qMax(iconHeight, textHeight)};    //any width,the view will give us the whole thing in list mode
+    return {1, qMax(iconHeight, textHeight)}; // any width,the view will give us the whole thing in list mode
 }
 
 QWidget *ConfigAgentDelegate::createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const
@@ -167,9 +170,7 @@ bool ConfigAgentDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, 
     if (!index.isValid()) {
         return false;
     }
-    if (!((event->type() == QEvent::MouseButtonRelease)
-          || (event->type() == QEvent::MouseButtonPress)
-          || (event->type() == QEvent::MouseMove))) {
+    if (!((event->type() == QEvent::MouseButtonRelease) || (event->type() == QEvent::MouseButtonPress) || (event->type() == QEvent::MouseMove))) {
         return false;
     }
 
@@ -182,8 +183,7 @@ bool ConfigAgentDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, 
         switch (event->type()) {
         case QEvent::MouseButtonPress:
             return false;
-        case QEvent::MouseButtonRelease:
-        {
+        case QEvent::MouseButtonRelease: {
             QPoint pos = buttonOpt.rect.bottomLeft() + option.rect.topLeft();
             const QString ident = index.data(Akonadi::AgentInstanceModel::InstanceIdentifierRole).toString();
             Q_EMIT optionsClicked(ident, pos);
@@ -204,8 +204,7 @@ void ConfigAgentDelegate::drawFocus(QPainter *painter, const QStyleOptionViewIte
         o.rect = rect;
         o.state |= QStyle::State_KeyboardFocusChange;
         QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
-        o.backgroundColor = option.palette.color(cg, (option.state & QStyle::State_Selected)
-                                                 ? QPalette::Highlight : QPalette::Window);
+        o.backgroundColor = option.palette.color(cg, (option.state & QStyle::State_Selected) ? QPalette::Highlight : QPalette::Window);
         QApplication::style()->drawPrimitive(QStyle::PE_FrameFocusRect, &o, painter);
     }
 }
@@ -216,7 +215,7 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption(const QStyleOptionViewItem 
     QStyleOptionButton buttonOpt;
     QRect buttonRect = option.rect;
     int height = option.rect.height() / 2;
-    int width = 22 + option.fontMetrics.boundingRect(label).width() + 40;   // icon size + label size + arrow and padding
+    int width = 22 + option.fontMetrics.boundingRect(label).width() + 40; // icon size + label size + arrow and padding
     buttonRect.setTop(0);
     buttonRect.setHeight(height);
     buttonRect.setLeft(option.rect.right() - width);
@@ -228,7 +227,7 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption(const QStyleOptionViewItem 
     buttonOpt.palette = option.palette;
     buttonOpt.features = QStyleOptionButton::HasMenu;
     buttonOpt.icon = s_icons->checkMailIcon;
-    buttonOpt.iconSize = QSize(22, 22);    // FIXME don't hardcode this icon size
+    buttonOpt.iconSize = QSize(22, 22); // FIXME don't hardcode this icon size
 
     return buttonOpt;
 }

@@ -5,9 +5,9 @@
 */
 
 #include "kmcomposercreatenewcomposerjob.h"
-#include "kmkernel.h"
 #include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
 
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
@@ -17,8 +17,7 @@ KMComposerCreateNewComposerJob::KMComposerCreateNewComposerJob(QObject *parent)
 {
 }
 
-KMComposerCreateNewComposerJob::~KMComposerCreateNewComposerJob()
-= default;
+KMComposerCreateNewComposerJob::~KMComposerCreateNewComposerJob() = default;
 
 void KMComposerCreateNewComposerJob::start()
 {

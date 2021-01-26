@@ -5,23 +5,24 @@
 */
 
 #include "followupremindernoanswerdialog.h"
-#include "followupreminderinfowidget.h"
-#include "followupreminderinfo.h"
 #include "followupreminderagent_debug.h"
+#include "followupreminderinfo.h"
+#include "followupreminderinfowidget.h"
 
 #include <KLocalizedString>
 #include <KSharedConfig>
 
-#include <QLabel>
-#include <QDialogButtonBox>
 #include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
 
-#include "notifications_interface.h" // DBUS-generated
 #include "dbusproperties.h" // DBUS-generated
+#include "notifications_interface.h" // DBUS-generated
 
-namespace {
+namespace
+{
 static constexpr const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";
 static constexpr const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
 static constexpr const char DialogGroup[] = "FollowUpReminderNoAnswerDialog";
@@ -54,12 +55,14 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     readConfig();
     QDBusConnection dbusConn = QDBusConnection::sessionBus();
     if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
-        auto propsIface = new OrgFreedesktopDBusPropertiesInterface(
-            QString::fromLatin1(s_fdo_notifications_service),
-            QString::fromLatin1(s_fdo_notifications_path),
-            dbusConn, this);
-        connect(propsIface, &OrgFreedesktopDBusPropertiesInterface::PropertiesChanged,
-                this, &FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged);
+        auto propsIface = new OrgFreedesktopDBusPropertiesInterface(QString::fromLatin1(s_fdo_notifications_service),
+                                                                    QString::fromLatin1(s_fdo_notifications_path),
+                                                                    dbusConn,
+                                                                    this);
+        connect(propsIface,
+                &OrgFreedesktopDBusPropertiesInterface::PropertiesChanged,
+                this,
+                &FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged);
     }
 }
 
@@ -74,10 +77,7 @@ void FollowUpReminderNoAnswerDialog::wakeUp()
     // In that case, we'll wait until they are allowed again (see slotDBusNotificationsPropertiesChanged)
     QDBusConnection dbusConn = QDBusConnection::sessionBus();
     if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
-        OrgFreedesktopNotificationsInterface iface(
-            QString::fromLatin1(s_fdo_notifications_service),
-            QString::fromLatin1(s_fdo_notifications_path),
-            dbusConn);
+        OrgFreedesktopNotificationsInterface iface(QString::fromLatin1(s_fdo_notifications_service), QString::fromLatin1(s_fdo_notifications_path), dbusConn);
         if (iface.inhibited()) {
             return;
         }
@@ -85,8 +85,9 @@ void FollowUpReminderNoAnswerDialog::wakeUp()
     show();
 }
 
-void FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged(
-    const QString &interface, const QVariantMap &changedProperties, const QStringList &invalidatedProperties)
+void FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged(const QString &interface,
+                                                                            const QVariantMap &changedProperties,
+                                                                            const QStringList &invalidatedProperties)
 {
     Q_UNUSED(interface) // always "org.freedesktop.Notifications"
     Q_UNUSED(invalidatedProperties)

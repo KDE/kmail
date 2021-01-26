@@ -7,8 +7,8 @@
 #ifndef ARCHIVEJOB_H
 #define ARCHIVEJOB_H
 
-#include <MailCommon/JobScheduler>
 #include <Collection>
+#include <MailCommon/JobScheduler>
 class ArchiveMailInfo;
 class ArchiveMailManager;
 
@@ -43,8 +43,7 @@ public:
     {
     }
 
-    ~ScheduledArchiveTask() override
-    = default;
+    ~ScheduledArchiveTask() override = default;
 
     MailCommon::ScheduledJob *run() override;
 

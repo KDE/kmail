@@ -20,8 +20,7 @@ CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedIt
 {
 }
 
-CheckIndexingJob::~CheckIndexingJob()
-= default;
+CheckIndexingJob::~CheckIndexingJob() = default;
 
 void CheckIndexingJob::askForNextCheck(quint64 id, bool needToReindex)
 {
@@ -37,8 +36,7 @@ void CheckIndexingJob::setCollection(const Akonadi::Collection &col)
 void CheckIndexingJob::start()
 {
     if (mCollection.isValid()) {
-        auto fetch = new Akonadi::CollectionFetchJob(mCollection,
-                                                      Akonadi::CollectionFetchJob::Base);
+        auto fetch = new Akonadi::CollectionFetchJob(mCollection, Akonadi::CollectionFetchJob::Base);
         fetch->fetchScope().setIncludeStatistics(true);
         connect(fetch, &KJob::result, this, &CheckIndexingJob::slotCollectionPropertiesFinished);
     } else {
@@ -60,10 +58,12 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
     mCollection = fetch->collections().constFirst();
     const qlonglong result = mIndexedItems->indexedItems(mCollection.id());
     bool needToReindex = false;
-    qCDebug(KMAIL_LOG) << "name :" << mCollection.name() << " mCollection.statistics().count() " << mCollection.statistics().count() << "stats.value(mCollection.id())" << result;
+    qCDebug(KMAIL_LOG) << "name :" << mCollection.name() << " mCollection.statistics().count() " << mCollection.statistics().count()
+                       << "stats.value(mCollection.id())" << result;
     if (mCollection.statistics().count() != result) {
         needToReindex = true;
-        qCDebug(KMAIL_LOG) << "Reindex collection :" << "name :" << mCollection.name();
+        qCDebug(KMAIL_LOG) << "Reindex collection :"
+                           << "name :" << mCollection.name();
     }
     askForNextCheck(mCollection.id(), needToReindex);
 }

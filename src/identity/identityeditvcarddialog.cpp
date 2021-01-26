@@ -6,15 +6,15 @@
 
 #include "identityeditvcarddialog.h"
 
+#include "kmail_debug.h"
+#include <Akonadi/Contact/ContactEditor>
 #include <KContacts/VCardConverter>
 #include <KLocalizedString>
-#include <Akonadi/Contact/ContactEditor>
-#include "kmail_debug.h"
 #include <KMessageBox>
 #include <QStandardPaths>
 
-#include <QFileInfo>
 #include <QDialogButtonBox>
+#include <QFileInfo>
 #include <QPushButton>
 #include <QVBoxLayout>
 
@@ -48,8 +48,7 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
     loadVcard(fileName);
 }
 
-IdentityEditVcardDialog::~IdentityEditVcardDialog()
-= default;
+IdentityEditVcardDialog::~IdentityEditVcardDialog() = default;
 
 void IdentityEditVcardDialog::slotDeleteCurrentVCard()
 {
@@ -118,10 +117,7 @@ QString IdentityEditVcardDialog::saveVcard() const
 
 void IdentityEditVcardDialog::reject()
 {
-    if (KMessageBox::questionYesNo(
-            this,
-            i18nc("@info", "Do you really want to cancel?"),
-            i18nc("@title:window", "Confirmation")) == KMessageBox::Yes) {
+    if (KMessageBox::questionYesNo(this, i18nc("@info", "Do you really want to cancel?"), i18nc("@title:window", "Confirmation")) == KMessageBox::Yes) {
         QDialog::reject(); // Discard current changes
     }
 }

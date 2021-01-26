@@ -5,40 +5,40 @@
 */
 
 #include "configureaccountpage.h"
-#include "dialog/kmknotify.h"
-#include "newmailnotifierinterface.h"
-#include "kmkernel.h"
-#include "settings/kmailsettings.h"
 #include "configagentdelegate.h"
+#include "dialog/kmknotify.h"
+#include "kmkernel.h"
+#include "newmailnotifierinterface.h"
+#include "settings/kmailsettings.h"
 #include "undosend/undosendcombobox.h"
-#include <MessageComposer/MessageComposerSettings>
 #include <MailCommon/AccountConfigOrderDialog>
+#include <MessageComposer/MessageComposerSettings>
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MailTransport/TransportManagementWidget>
 using MailTransport::TransportManagementWidget;
 #include <MailCommon/MailUtil>
 
+#include "kmail_debug.h"
 #include <AkonadiCore/agentfilterproxymodel.h>
-#include <AkonadiCore/agentinstancemodel.h>
-#include <AkonadiCore/agenttype.h>
-#include <AkonadiCore/agentmanager.h>
-#include <AkonadiWidgets/agenttypedialog.h>
-#include <AkonadiWidgets/AgentConfigurationDialog>
 #include <AkonadiCore/agentinstancecreatejob.h>
-#include <identity/identitypage.h>
-#include <KLDAP/LdapConfigureWidget>
-#include <QComboBox>
+#include <AkonadiCore/agentinstancemodel.h>
+#include <AkonadiCore/agentmanager.h>
+#include <AkonadiCore/agenttype.h>
+#include <AkonadiWidgets/AgentConfigurationDialog>
+#include <AkonadiWidgets/agenttypedialog.h>
 #include <KConfigGroup>
+#include <KLDAP/LdapConfigureWidget>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include "kmail_debug.h"
+#include <QComboBox>
+#include <identity/identitypage.h>
 
 #include <QAbstractItemView>
 #include <QGridLayout>
 #include <QGroupBox>
-#include <QMenu>
 #include <QLabel>
+#include <QMenu>
 #include <QProcess>
 #include <QVBoxLayout>
 
@@ -52,7 +52,7 @@ QString AccountsPage::helpAnchor() const
 AccountsPage::AccountsPage(QWidget *parent)
     : ConfigModuleWithTabs(parent)
 {
-    //Identity Tab:
+    // Identity Tab:
     auto identityTab = new KMail::IdentityPage();
     addTab(identityTab, i18nc("@title:tab Tab page where the user configures identities", "Identities"));
 
@@ -76,8 +76,7 @@ AccountsPage::AccountsPage(QWidget *parent)
     addTab(ldapCompletionTab, i18nc("@title:tab Tab page where the user configures ldap server", "LDAP server"));
 }
 
-AccountsPageSendingTab::~AccountsPageSendingTab()
-= default;
+AccountsPageSendingTab::~AccountsPageSendingTab() = default;
 
 QString AccountsPage::SendingTab::helpAnchor() const
 {
@@ -116,19 +115,14 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     // "send on check" combo:
     mSendOnCheckCombo = new QComboBox(group);
     mSendOnCheckCombo->setEditable(false);
-    mSendOnCheckCombo->addItems(QStringList()
-                                << i18n("Never Automatically")
-                                << i18n("On Manual Mail Checks")
-                                << i18n("On All Mail Checks"));
+    mSendOnCheckCombo->addItems(QStringList() << i18n("Never Automatically") << i18n("On Manual Mail Checks") << i18n("On All Mail Checks"));
     glay->addWidget(mSendOnCheckCombo, 2, 1);
     connect(mSendOnCheckCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "default send method" combo:
     mSendMethodCombo = new QComboBox(group);
     mSendMethodCombo->setEditable(false);
-    mSendMethodCombo->addItems(QStringList()
-                               << i18n("Send Now")
-                               << i18n("Send Later"));
+    mSendMethodCombo->addItems(QStringList() << i18n("Send Now") << i18n("Send Later"));
     glay->addWidget(mSendMethodCombo, 3, 1);
     connect(mSendMethodCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
@@ -195,10 +189,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_newmailnotifier_agent"));
-    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(service,
-                                                                                  QStringLiteral("/NewMailNotifierAgent"),
-                                                                                  QDBusConnection::sessionBus(),
-                                                                                  this);
+    mNewMailNotifierInterface =
+        new OrgFreedesktopAkonadiNewMailNotifierInterface(service, QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
     if (!mNewMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
         delete mNewMailNotifierInterface;
@@ -208,7 +200,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
 
     mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType());
     mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QStringLiteral("Resource"));
-    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QStringLiteral("MailTransport") << QStringLiteral("Notes") << QStringLiteral("Autostart"));
+    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList()
+                                                                  << QStringLiteral("MailTransport") << QStringLiteral("Notes") << QStringLiteral("Autostart"));
 
     KConfig specialMailCollection(QStringLiteral("specialmailcollectionsrc"));
     if (specialMailCollection.hasGroup(QStringLiteral("SpecialCollections"))) {
@@ -243,12 +236,13 @@ void AccountsPageReceivingTab::slotAddCustomAccount()
 
 void AccountsPageReceivingTab::slotAddMailAccount()
 {
-    const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822") };
+    const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822")};
 
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
     if (!QProcess::startDetached(path, lst)) {
-        KMessageBox::error(this, i18n("Could not start the account wizard. "
-                                      "Please make sure you have AccountWizard properly installed."),
+        KMessageBox::error(this,
+                           i18n("Could not start the account wizard. "
+                                "Please make sure you have AccountWizard properly installed."),
                            i18n("Unable to start account wizard"));
     }
 }
@@ -326,7 +320,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
 
 void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
 {
-    auto action = qobject_cast< QAction * >(sender());
+    auto action = qobject_cast<QAction *>(sender());
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
@@ -336,7 +330,7 @@ void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
 
 void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 {
-    auto action = qobject_cast< QAction * >(sender());
+    auto action = qobject_cast<QAction *>(sender());
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
@@ -346,7 +340,7 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 
 void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 {
-    auto action = qobject_cast< QAction * >(sender());
+    auto action = qobject_cast<QAction *>(sender());
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
@@ -379,8 +373,8 @@ void AccountsPage::ReceivingTab::save()
     }
 
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
-    QHash<QString, QSharedPointer<RetrievalOptions> >::const_iterator it = mRetrievalHash.cbegin();
-    const QHash<QString, QSharedPointer<RetrievalOptions> >::const_iterator itEnd = mRetrievalHash.cend();
+    QHash<QString, QSharedPointer<RetrievalOptions>>::const_iterator it = mRetrievalHash.cbegin();
+    const QHash<QString, QSharedPointer<RetrievalOptions>>::const_iterator itEnd = mRetrievalHash.cend();
     for (; it != itEnd; ++it) {
         KConfigGroup group;
         KConfig *conf = nullptr;

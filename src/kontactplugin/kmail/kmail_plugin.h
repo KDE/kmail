@@ -15,7 +15,8 @@
 #include <QUrl>
 class OrgKdeKmailKmailInterface;
 
-namespace KontactInterface {
+namespace KontactInterface
+{
 class UniqueAppWatcher;
 }
 

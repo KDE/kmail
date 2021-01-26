@@ -5,9 +5,9 @@
 */
 #ifndef FOLDERARCHIVEAGENTCHECKCOLLECTION_H
 #define FOLDERARCHIVEAGENTCHECKCOLLECTION_H
-#include <QObject>
 #include <AkonadiCore/Collection>
 #include <QDate>
+#include <QObject>
 class KJob;
 class FolderArchiveAccountInfo;
 class FolderArchiveAgentCheckCollection : public QObject

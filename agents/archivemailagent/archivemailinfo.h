@@ -6,11 +6,11 @@
 #ifndef ARCHIVEMAILINFO_H
 #define ARCHIVEMAILINFO_H
 
-#include <MailCommon/BackupJob>
-#include <KConfigGroup>
 #include <Collection>
-#include <QUrl>
+#include <KConfigGroup>
+#include <MailCommon/BackupJob>
 #include <QDate>
+#include <QUrl>
 
 class ArchiveMailInfo
 {
@@ -22,12 +22,7 @@ public:
 
     ArchiveMailInfo &operator=(const ArchiveMailInfo &old);
 
-    enum ArchiveUnit {
-        ArchiveDays = 0,
-        ArchiveWeeks,
-        ArchiveMonths,
-        ArchiveYears
-    };
+    enum ArchiveUnit { ArchiveDays = 0, ArchiveWeeks, ArchiveMonths, ArchiveYears };
 
     Q_REQUIRED_RESULT QUrl realUrl(const QString &folderName, bool &dirExist) const;
 
@@ -65,7 +60,7 @@ public:
     Q_REQUIRED_RESULT bool isEnabled() const;
     void setEnabled(bool b);
 
-    Q_REQUIRED_RESULT bool operator ==(const ArchiveMailInfo &other) const;
+    Q_REQUIRED_RESULT bool operator==(const ArchiveMailInfo &other) const;
 
 private:
     QString dirArchive(bool &dirExit) const;

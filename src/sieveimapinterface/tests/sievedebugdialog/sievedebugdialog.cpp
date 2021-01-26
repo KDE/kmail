@@ -4,10 +4,10 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include <KSieveUi/SieveDebugDialog>
-#include <KSieveUi/SieveImapInstanceInterfaceManager>
 #include "../../../sieveimapinterface/kmailsieveimapinstanceinterface.h"
 #include "../../../sieveimapinterface/kmsieveimappasswordprovider.h"
+#include <KSieveUi/SieveDebugDialog>
+#include <KSieveUi/SieveImapInstanceInterfaceManager>
 
 #include <QApplication>
 #include <QStandardPaths>

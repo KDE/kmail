@@ -7,8 +7,8 @@
 
 #include "potentialphishingemailwarning.h"
 #include "potentialphishingdetaildialog.h"
-#include <QAction>
 #include <KLocalizedString>
+#include <QAction>
 #include <QPointer>
 
 PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
@@ -28,8 +28,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     addAction(action);
 }
 
-PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning()
-= default;
+PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning() = default;
 
 void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {

@@ -7,15 +7,23 @@
 #ifndef OPENCOMPOSERJOB_H
 #define OPENCOMPOSERJOB_H
 
-#include <QObject>
-#include <KMime/Message>
 #include "editor/kmcomposerwin.h"
-struct OpenComposerSettings
-{
-    OpenComposerSettings()
-    = default;
+#include <KMime/Message>
+#include <QObject>
+struct OpenComposerSettings {
+    OpenComposerSettings() = default;
 
-    OpenComposerSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden, const QString &messageFile, const QStringList &attachmentPaths, const QStringList &customHeaders, const QString &replyTo, const QString &inReplyTo,
+    OpenComposerSettings(const QString &to,
+                         const QString &cc,
+                         const QString &bcc,
+                         const QString &subject,
+                         const QString &body,
+                         bool hidden,
+                         const QString &messageFile,
+                         const QStringList &attachmentPaths,
+                         const QStringList &customHeaders,
+                         const QString &replyTo,
+                         const QString &inReplyTo,
                          const QString &identity)
         : mAttachmentPaths(attachmentPaths)
         , mCustomHeaders(customHeaders)

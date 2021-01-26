@@ -9,7 +9,8 @@
 
 #include <QObject>
 
-namespace MessageComposer {
+namespace MessageComposer
+{
 class PluginEditorCheckBeforeSendInterface;
 class PluginEditorCheckBeforeSendParams;
 }
@@ -24,12 +25,13 @@ public:
     QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
-    //TODO add Identity
-    //TODO add Emails
-    //TODO add body ? or editor
+    // TODO add Identity
+    // TODO add Emails
+    // TODO add body ? or editor
 
     void initializePlugins();
     bool execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const;
+
 private:
     Q_DISABLE_COPY(KMailPluginEditorCheckBeforeSendManagerInterface)
     QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;

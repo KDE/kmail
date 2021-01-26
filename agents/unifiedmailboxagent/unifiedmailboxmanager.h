@@ -17,18 +17,19 @@
 
 #include <AkonadiCore/ChangeRecorder>
 
-#include <unordered_map>
 #include <functional>
 #include <memory>
+#include <unordered_map>
 
 class UnifiedMailbox;
 class UnifiedMailboxManager : public QObject
 {
     Q_OBJECT
     friend class UnifiedMailbox;
+
 public:
-    using FinishedCallback = std::function<void ()>;
-    using Entry = std::pair<const QString, std::unique_ptr<UnifiedMailbox> >;
+    using FinishedCallback = std::function<void()>;
+    using Entry = std::pair<const QString, std::unique_ptr<UnifiedMailbox>>;
 
     explicit UnifiedMailboxManager(const KSharedConfigPtr &config, QObject *parent = nullptr);
     ~UnifiedMailboxManager() override;
@@ -68,7 +69,7 @@ private:
 
     // Using std::unique_ptr because QScopedPointer is not movable
     // Using std::unordered_map because Qt containers do not support movable-only types,
-    std::unordered_map<QString, std::unique_ptr<UnifiedMailbox> > mMailboxes;
+    std::unordered_map<QString, std::unique_ptr<UnifiedMailbox>> mMailboxes;
     std::unordered_map<qint64, UnifiedMailbox *> mSourceToBoxMap;
 
     Akonadi::ChangeRecorder mMonitor;

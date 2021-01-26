@@ -8,10 +8,10 @@
 #define CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
 
 #include "kmail_private_export.h"
-#include <QObject>
 #include <AkonadiCore/Collection>
-#include <QDate>
 #include <AkonadiCore/Item>
+#include <QDate>
+#include <QObject>
 
 class KMAILTESTS_TESTS_EXPORT CreateFollowupReminderOnExistingMessageJob : public QObject
 {

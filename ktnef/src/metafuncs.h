@@ -5,9 +5,9 @@
  */
 #ifndef metafunc_h
 #define metafunc_h
-
+// clang-format off
+#include "qwmf.h"
 class QWinMetaFile;
-
 static const struct MetaFuncRec {
     const char *name;
     unsigned short func;
@@ -85,5 +85,5 @@ static const struct MetaFuncRec {
     // always the latest in the table : in case of unknown function
     { nullptr, 0, &QWinMetaFile::noop },
 };
-
+// clang-format on
 #endif /*metafunc_h*/

@@ -18,8 +18,7 @@ SearchPatternWarning::SearchPatternWarning(QWidget *parent)
     setWordWrap(true);
 }
 
-SearchPatternWarning::~SearchPatternWarning()
-= default;
+SearchPatternWarning::~SearchPatternWarning() = default;
 
 void SearchPatternWarning::setError(const QStringList &lstError)
 {

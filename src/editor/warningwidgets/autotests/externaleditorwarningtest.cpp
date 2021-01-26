@@ -24,7 +24,7 @@ void ExternalEditorWarningTest::shouldHaveDefaultValue()
     layout->addWidget(&w);
     wid->show();
     QVERIFY(!w.isVisible());
-    //QVERIFY(w.isCloseButtonVisible());
+    // QVERIFY(w.isCloseButtonVisible());
     QCOMPARE(w.messageType(), KMessageWidget::Information);
     QVERIFY(w.wordWrap());
     QVERIFY(!w.text().isEmpty());

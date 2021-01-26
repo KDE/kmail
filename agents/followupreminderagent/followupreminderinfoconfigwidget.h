@@ -7,12 +7,13 @@
 #ifndef FOLLOWUPREMINDERINFOCONFIGWIDGET_H
 #define FOLLOWUPREMINDERINFOCONFIGWIDGET_H
 
-#include <QWidget>
-#include <QVariantList>
-#include <AkonadiCore/Item>
 #include <AkonadiCore/AgentConfigurationBase>
+#include <AkonadiCore/Item>
+#include <QVariantList>
+#include <QWidget>
 class FollowUpReminderInfoWidget;
-namespace FollowUpReminder {
+namespace FollowUpReminder
+{
 class FollowUpReminderInfo;
 }
 
@@ -27,6 +28,7 @@ public:
     void load() override;
     QSize restoreDialogSize() const override;
     void saveDialogSize(const QSize &size) override;
+
 private:
     FollowUpReminderInfoWidget *mWidget = nullptr;
 };

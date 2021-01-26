@@ -7,9 +7,9 @@
 #ifndef COMPOSENEWMESSAGEJOB_H
 #define COMPOSENEWMESSAGEJOB_H
 
+#include <MailCommon/FolderSettings>
 #include <QObject>
 #include <QSharedPointer>
-#include <MailCommon/FolderSettings>
 
 class ComposeNewMessageJob : public QObject
 {
@@ -21,6 +21,7 @@ public:
     void setFolderSettings(const QSharedPointer<MailCommon::FolderSettings> &folder);
 
     void setCurrentCollection(const Akonadi::Collection &col);
+
 private:
     Q_DISABLE_COPY(ComposeNewMessageJob)
     void slotOpenComposer(bool forceCursorPosition);

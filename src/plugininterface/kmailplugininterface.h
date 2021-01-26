@@ -7,8 +7,8 @@
 #ifndef KMAILPLUGININTERFACE_H
 #define KMAILPLUGININTERFACE_H
 
-#include <QObject>
 #include <PimCommonAkonadi/PluginInterface>
+#include <QObject>
 class KMMainWidget;
 class KMailPluginInterface : public PimCommon::PluginInterface
 {
@@ -20,6 +20,7 @@ public:
     void setMainWidget(KMMainWidget *mainwindow);
     void initializeInterfaceRequires(PimCommon::AbstractGenericPluginInterface *interface) override;
     static KMailPluginInterface *self();
+
 private:
     KMMainWidget *mMainWindow = nullptr;
 };

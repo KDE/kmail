@@ -11,22 +11,24 @@
 
 #include "kmail_export.h"
 
-#include <QWidget>
-#include <QUrl>
-#include <MessageViewer/Viewer>
-#include <MimeTreeParser/BodyPart>
 #include <AkonadiCore/Item>
 #include <KContacts/Addressee>
+#include <MessageViewer/Viewer>
+#include <MimeTreeParser/BodyPart>
+#include <QUrl>
+#include <QWidget>
 class KActionCollection;
 class QAction;
 class KToggleAction;
 class QMenu;
-namespace MessageViewer {
+namespace MessageViewer
+{
 class CSSHelper;
 class DKIMViewerMenu;
 }
 
-namespace MimeTreeParser {
+namespace MimeTreeParser
+{
 class AttachmentStrategy;
 }
 

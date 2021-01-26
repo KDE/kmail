@@ -6,10 +6,11 @@
 #ifndef FOLDERARCHIVEMANAGER_H
 #define FOLDERARCHIVEMANAGER_H
 
+#include <AkonadiCore/Item>
 #include <QObject>
 #include <QQueue>
-#include <AkonadiCore/Item>
-namespace Akonadi {
+namespace Akonadi
+{
 class AgentInstance;
 class Collection;
 }

@@ -7,8 +7,8 @@
 #ifndef FOLLOWUPREMINDERFINISHTASKJOB_H
 #define FOLLOWUPREMINDERFINISHTASKJOB_H
 
-#include <QObject>
 #include <AkonadiCore/Item>
+#include <QObject>
 class KJob;
 class FollowUpReminderFinishTaskJob : public QObject
 {

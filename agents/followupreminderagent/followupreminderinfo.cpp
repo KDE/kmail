@@ -8,8 +8,7 @@
 #include <KConfigGroup>
 using namespace FollowUpReminder;
 
-FollowUpReminderInfo::FollowUpReminderInfo()
-= default;
+FollowUpReminderInfo::FollowUpReminderInfo() = default;
 
 FollowUpReminderInfo::FollowUpReminderInfo(const KConfigGroup &config)
 {
@@ -123,9 +122,7 @@ void FollowUpReminderInfo::setTodoId(Akonadi::Item::Id value)
 
 bool FollowUpReminderInfo::isValid() const
 {
-    return !mMessageId.isEmpty()
-           && mFollowUpReminderDate.isValid()
-           && !mTo.isEmpty();
+    return !mMessageId.isEmpty() && mFollowUpReminderDate.isValid() && !mTo.isEmpty();
 }
 
 QString FollowUpReminderInfo::messageId() const
@@ -160,15 +157,9 @@ void FollowUpReminderInfo::setFollowUpReminderDate(QDate followUpReminderDate)
 
 bool FollowUpReminderInfo::operator==(const FollowUpReminderInfo &other) const
 {
-    return mOriginalMessageItemId == other.originalMessageItemId()
-           && mMessageId == other.messageId()
-           && mTo == other.to()
-           && mFollowUpReminderDate == other.followUpReminderDate()
-           && mSubject == other.subject()
-           && mAnswerWasReceived == other.answerWasReceived()
-           && mAnswerMessageItemId == other.answerMessageItemId()
-           && mUniqueIdentifier == other.uniqueIdentifier()
-           && mTodoId == other.todoId();
+    return mOriginalMessageItemId == other.originalMessageItemId() && mMessageId == other.messageId() && mTo == other.to()
+        && mFollowUpReminderDate == other.followUpReminderDate() && mSubject == other.subject() && mAnswerWasReceived == other.answerWasReceived()
+        && mAnswerMessageItemId == other.answerMessageItemId() && mUniqueIdentifier == other.uniqueIdentifier() && mTodoId == other.todoId();
 }
 
 QDebug operator<<(QDebug d, const FollowUpReminderInfo &other)

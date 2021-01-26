@@ -5,15 +5,15 @@
 */
 
 #include "cryptostateindicatorwidgettest.h"
-#include <QTest>
 #include "src/editor/widgets/cryptostateindicatorwidget.h"
 #include <QLabel>
-CryptoStateIndicatorWidgetTest::CryptoStateIndicatorWidgetTest(QObject *parent) : QObject(parent)
+#include <QTest>
+CryptoStateIndicatorWidgetTest::CryptoStateIndicatorWidgetTest(QObject *parent)
+    : QObject(parent)
 {
 }
 
-CryptoStateIndicatorWidgetTest::~CryptoStateIndicatorWidgetTest()
-= default;
+CryptoStateIndicatorWidgetTest::~CryptoStateIndicatorWidgetTest() = default;
 
 void CryptoStateIndicatorWidgetTest::shouldHaveDefaultValue()
 {

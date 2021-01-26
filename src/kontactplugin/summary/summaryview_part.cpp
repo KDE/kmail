@@ -22,22 +22,22 @@ using PimCommon::BroadcastStatus;
 #include <KontactInterface/Plugin>
 #include <KontactInterface/Summary>
 
-#include <QAction>
 #include <KActionCollection>
 #include <KCMultiDialog>
+#include <KConfig>
 #include <KConfigGroup>
-#include <QIcon>
 #include <KLocalizedString>
 #include <KParts/PartActivateEvent>
-#include <KConfig>
+#include <QAction>
 #include <QApplication>
 #include <QDate>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QLabel>
+#include <QLocale>
 #include <QScrollArea>
 #include <QTimer>
 #include <QVBoxLayout>
-#include <QLocale>
 
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
     : KParts::Part(parent)
@@ -59,11 +59,10 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData 
     const QString str = i18n("Configure the summary view");
     mConfigAction->setStatusTip(str);
     mConfigAction->setToolTip(str);
-    mConfigAction->setWhatsThis(
-        i18nc("@info:whatsthis",
-              "Choosing this will show a dialog where you can select which "
-              "summaries you want to see and also allow you to configure "
-              "the summaries to your liking."));
+    mConfigAction->setWhatsThis(i18nc("@info:whatsthis",
+                                      "Choosing this will show a dialog where you can select which "
+                                      "summaries you want to see and also allow you to configure "
+                                      "the summaries to your liking."));
 
     setXMLFile(QStringLiteral("kontactsummary_part.rc"));
 
@@ -143,13 +142,10 @@ void SummaryViewPart::updateWidgets()
             if (summary->summaryHeight() > 0) {
                 mSummaries.insert(plugin->identifier(), summary);
 
-                connect(summary, &KontactInterface::Summary::message,
-                        BroadcastStatus::instance(), &PimCommon::BroadcastStatus::setStatusMsg);
-                connect(summary, &KontactInterface::Summary::summaryWidgetDropped,
-                        this, &SummaryViewPart::summaryWidgetMoved);
+                connect(summary, &KontactInterface::Summary::message, BroadcastStatus::instance(), &PimCommon::BroadcastStatus::setStatusMsg);
+                connect(summary, &KontactInterface::Summary::summaryWidgetDropped, this, &SummaryViewPart::summaryWidgetMoved);
 
-                if (!mLeftColumnSummaries.contains(plugin->identifier())
-                    && !mRightColumnSummaries.contains(plugin->identifier())) {
+                if (!mLeftColumnSummaries.contains(plugin->identifier()) && !mRightColumnSummaries.contains(plugin->identifier())) {
                     mLeftColumnSummaries.append(plugin->identifier());
                 }
 
@@ -198,22 +194,18 @@ void SummaryViewPart::updateWidgets()
     QStringList::ConstIterator strEnd(mLeftColumnSummaries.constEnd());
     for (strIt = mLeftColumnSummaries.constBegin(); strIt != strEnd; ++strIt) {
         if (mSummaries.contains(*strIt)) {
-            mLeftColumn->addWidget(mSummaries[ *strIt ]);
+            mLeftColumn->addWidget(mSummaries[*strIt]);
         }
     }
     strEnd = mRightColumnSummaries.constEnd();
     for (strIt = mRightColumnSummaries.constBegin(); strIt != strEnd; ++strIt) {
         if (mSummaries.contains(*strIt)) {
-            mRightColumn->addWidget(mSummaries[ *strIt ]);
+            mRightColumn->addWidget(mSummaries[*strIt]);
         }
     }
 
-    auto lspacer = new QSpacerItem(1, 10,
-                                    QSizePolicy::MinimumExpanding,
-                                    QSizePolicy::MinimumExpanding);
-    auto rspacer = new QSpacerItem(1, 10,
-                                    QSizePolicy::MinimumExpanding,
-                                    QSizePolicy::MinimumExpanding);
+    auto lspacer = new QSpacerItem(1, 10, QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    auto rspacer = new QSpacerItem(1, 10, QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     mLeftColumn->addSpacerItem(lspacer);
     mRightColumn->addSpacerItem(rspacer);
 
@@ -416,8 +408,7 @@ void SummaryViewPart::slotConfigure()
 
     QStringList modules = configModules();
     modules.prepend(QStringLiteral("kcmkontactsummary.desktop"));
-    connect(dlg.data(), qOverload<>(&KCMultiDialog::configCommitted),
-            this, &SummaryViewPart::updateWidgets);
+    connect(dlg.data(), qOverload<>(&KCMultiDialog::configCommitted), this, &SummaryViewPart::updateWidgets);
 
     QStringList::ConstIterator strIt;
     QStringList::ConstIterator end(modules.constEnd());
@@ -463,8 +454,8 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
     mMainWidget->setFocusPolicy(Qt::StrongFocus);
     setWidget(sa);
 
-    //KF5: port it
-    //connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayPaletteChanged, this, &SummaryViewPart::slotAdjustPalette);
+    // KF5: port it
+    // connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayPaletteChanged, this, &SummaryViewPart::slotAdjustPalette);
     slotAdjustPalette();
 
     mMainLayout = new QVBoxLayout(mMainWidget);

@@ -7,17 +7,17 @@
  */
 
 #include "summaryview_plugin.h"
-#include "summaryview_part.h"
 #include "kmail-version.h"
 #include "kmailinterface.h"
+#include "summaryview_part.h"
 
 #include <KontactInterface/Core>
 
 #include <KAboutData>
 #include <KActionCollection>
-#include <QIcon>
 #include <KLocalizedString>
 #include <KSelectAction>
+#include <QIcon>
 
 #include <QMenu>
 
@@ -60,15 +60,13 @@ void SummaryView::syncAccount(QAction *act)
     if (act == mAllSync) {
         doSync();
     } else {
-        org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"),
-                                     QDBusConnection::sessionBus());
+        org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
         kmail.checkAccount(act->text());
     }
     fillSyncActionSubEntries();
 }
 
-SummaryView::~SummaryView()
-= default;
+SummaryView::~SummaryView() = default;
 
 void SummaryView::doSync()
 {
@@ -98,20 +96,16 @@ KParts::Part *SummaryView::createPart()
 
 const KAboutData SummaryView::aboutData()
 {
-    KAboutData aboutData = KAboutData(
-        QStringLiteral("kontactsummary"),
-        i18n("Kontact Summary"),
-        QStringLiteral(KDEPIM_VERSION),
-        i18n("Kontact Summary View"),
-        KAboutLicense::LGPL,
-        i18n("(c) 2003-2019 The Kontact developers"));
+    KAboutData aboutData = KAboutData(QStringLiteral("kontactsummary"),
+                                      i18n("Kontact Summary"),
+                                      QStringLiteral(KDEPIM_VERSION),
+                                      i18n("Kontact Summary View"),
+                                      KAboutLicense::LGPL,
+                                      i18n("(c) 2003-2019 The Kontact developers"));
 
-    aboutData.addAuthor(i18n("Sven Lueppken"),
-                        QString(), QStringLiteral("sven@kde.org"));
-    aboutData.addAuthor(i18n("Cornelius Schumacher"),
-                        QString(), QStringLiteral("schumacher@kde.org"));
-    aboutData.addAuthor(i18n("Tobias Koenig"),
-                        QString(), QStringLiteral("tokoe@kde.org"));
+    aboutData.addAuthor(i18n("Sven Lueppken"), QString(), QStringLiteral("sven@kde.org"));
+    aboutData.addAuthor(i18n("Cornelius Schumacher"), QString(), QStringLiteral("schumacher@kde.org"));
+    aboutData.addAuthor(i18n("Tobias Koenig"), QString(), QStringLiteral("tokoe@kde.org"));
     aboutData.setProductName(QByteArrayLiteral("kontact/summary"));
     return aboutData;
 }

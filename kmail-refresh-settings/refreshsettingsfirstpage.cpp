@@ -5,9 +5,9 @@
 */
 
 #include "refreshsettingsfirstpage.h"
-#include <QLabel>
-#include <QHBoxLayout>
 #include <KLocalizedString>
+#include <QHBoxLayout>
+#include <QLabel>
 
 RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     : QWidget(parent)
@@ -24,5 +24,4 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     mainLayout->addWidget(label, 0, Qt::AlignHCenter);
 }
 
-RefreshSettingsFirstPage::~RefreshSettingsFirstPage()
-= default;
+RefreshSettingsFirstPage::~RefreshSettingsFirstPage() = default;

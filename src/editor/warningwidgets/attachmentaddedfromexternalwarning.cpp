@@ -16,8 +16,7 @@ AttachmentAddedFromExternalWarning::AttachmentAddedFromExternalWarning(QWidget *
     setWordWrap(true);
 }
 
-AttachmentAddedFromExternalWarning::~AttachmentAddedFromExternalWarning()
-= default;
+AttachmentAddedFromExternalWarning::~AttachmentAddedFromExternalWarning() = default;
 
 void AttachmentAddedFromExternalWarning::setAttachmentNames(const QStringList &lst)
 {

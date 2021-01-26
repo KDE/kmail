@@ -22,8 +22,7 @@ CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, QObject *parent)
 {
 }
 
-CreateTaskJob::~CreateTaskJob()
-= default;
+CreateTaskJob::~CreateTaskJob() = default;
 
 void CreateTaskJob::start()
 {
@@ -73,7 +72,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
 
     Akonadi::Item::List itemsToModify;
     for (const Akonadi::Item &it : lst) {
-        //qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
+        // qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
         if (it.isValid()) {
             bool myStatus;
             Akonadi::MessageStatus itemStatus;
@@ -93,13 +92,13 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
             item.clearFlag(flag);
             itemsToModify.push_back(item);
             if (item.hasAttribute<TaskAttribute>()) {
-                //Change todo as done.
+                // Change todo as done.
                 item.removeAttribute<TaskAttribute>();
             }
         } else {
             item.setFlag(flag);
             itemsToModify.push_back(item);
-            //TODO add TaskAttribute();
+            // TODO add TaskAttribute();
         }
     }
 
@@ -115,7 +114,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
 
 void CreateTaskJob::slotModifyItemDone(KJob *job)
 {
-    //TODO
+    // TODO
     if (job && job->error()) {
         qCDebug(KMAIL_LOG) << " error " << job->errorString();
     }

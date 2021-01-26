@@ -7,13 +7,11 @@
 #ifndef OPENCOMPOSERHIDDENJOB_H
 #define OPENCOMPOSERHIDDENJOB_H
 
-#include <QObject>
 #include <KMime/Message>
+#include <QObject>
 
-struct OpenComposerHiddenJobSettings
-{
-    OpenComposerHiddenJobSettings()
-    = default;
+struct OpenComposerHiddenJobSettings {
+    OpenComposerHiddenJobSettings() = default;
 
     OpenComposerHiddenJobSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden)
         : mTo(to)

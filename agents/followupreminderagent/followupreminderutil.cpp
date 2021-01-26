@@ -8,14 +8,14 @@
 #include "followupreminderinfo.h"
 #include <AkonadiCore/ServerManager>
 
-#include <QDBusInterface>
 #include "followupreminderagentsettings.h"
+#include <QDBusInterface>
 
-namespace {
+namespace
+{
 QString serviceName()
 {
-    return Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent,
-                                                    QStringLiteral("akonadi_followupreminder_agent"));
+    return Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_followupreminder_agent"));
 }
 
 QString dbusPath()
@@ -54,7 +54,9 @@ KSharedConfig::Ptr FollowUpReminder::FollowUpReminderUtil::defaultConfig()
     return KSharedConfig::openConfig(QStringLiteral("akonadi_followupreminder_agentrc"), KConfig::SimpleConfig);
 }
 
-void FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(KSharedConfig::Ptr config, FollowUpReminder::FollowUpReminderInfo *info, bool forceReload)
+void FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(KSharedConfig::Ptr config,
+                                                                       FollowUpReminder::FollowUpReminderInfo *info,
+                                                                       bool forceReload)
 {
     if (!info || !info->isValid()) {
         return;

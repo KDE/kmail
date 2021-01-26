@@ -5,17 +5,17 @@
 */
 
 #include "sendlatermanager.h"
-#include "sendlaterutil.h"
 #include "sendlaterjob.h"
+#include "sendlaterutil.h"
 
 #include <MessageComposer/AkonadiSender>
 #include <MessageComposer/SendLaterInfo>
 #include <MessageComposer/Util>
 
-#include <KConfigGroup>
-#include <KMessageBox>
-#include <KLocalizedString>
 #include "sendlateragent_debug.h"
+#include <KConfigGroup>
+#include <KLocalizedString>
+#include <KMessageBox>
 
 #include <QRegularExpression>
 #include <QStringList>
@@ -71,17 +71,17 @@ void SendLaterManager::createSendInfoList()
     mCurrentInfo = nullptr;
     std::sort(mListSendLaterInfo.begin(), mListSendLaterInfo.end(), SendLaterUtil::compareSendLaterInfo);
 
-    //Look at QQueue
+    // Look at QQueue
     if (mSendLaterQueue.isEmpty()) {
         if (!mListSendLaterInfo.isEmpty()) {
             mCurrentInfo = mListSendLaterInfo.constFirst();
             const QDateTime now = QDateTime::currentDateTime();
             const qint64 seconds = now.secsTo(mCurrentInfo->dateTime());
             if (seconds > 0) {
-                //qCDebug(SENDLATERAGENT_LOG)<<" seconds"<<seconds;
+                // qCDebug(SENDLATERAGENT_LOG)<<" seconds"<<seconds;
                 mTimer->start(seconds * 1000);
             } else {
-                //Create job when seconds <0
+                // Create job when seconds <0
                 slotCreateJob();
             }
         } else {
@@ -93,7 +93,7 @@ void SendLaterManager::createSendInfoList()
         if (info) {
             mCurrentInfo = info;
             slotCreateJob();
-        } else { //If removed.
+        } else { // If removed.
             createSendInfoList();
         }
     }
@@ -130,7 +130,7 @@ void SendLaterManager::sendNow(Akonadi::Item::Id id)
             }
         }
     } else {
-        //Add to QQueue
+        // Add to QQueue
         mSendLaterQueue.enqueue(id);
     }
 }
@@ -170,16 +170,16 @@ void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType
         switch (type) {
         case UnknownError:
         case ItemNotFound:
-            //Don't try to resend it. Remove it.
+            // Don't try to resend it. Remove it.
             removeLaterInfo(info);
             break;
         case MailDispatchDoesntWork:
-            //Force to make online maildispatcher
-            //Don't remove it.
+            // Force to make online maildispatcher
+            // Don't remove it.
             if (!MessageComposer::Util::sendMailDispatcherIsOnline(nullptr)) {
                 qCWarning(SENDLATERAGENT_LOG) << " Impossible to make online send dispatcher";
             }
-            //Remove item which create error ?
+            // Remove item which create error ?
             if (!info->isRecurrence()) {
                 removeLaterInfo(info);
             }

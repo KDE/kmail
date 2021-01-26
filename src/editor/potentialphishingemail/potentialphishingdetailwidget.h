@@ -8,8 +8,8 @@
 #ifndef POTENTIALPHISHINGDETAILWIDGET_H
 #define POTENTIALPHISHINGDETAILWIDGET_H
 
-#include <QWidget>
 #include "kmail_private_export.h"
+#include <QWidget>
 class QListWidget;
 class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailWidget : public QWidget
 {
@@ -21,6 +21,7 @@ public:
     void save();
 
     void fillList(const QStringList &lst);
+
 private:
     QListWidget *const mListWidget = nullptr;
 };

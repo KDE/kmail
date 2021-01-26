@@ -6,15 +6,14 @@
 
 #include "kactionmenutransporttest.h"
 #include "../widgets/kactionmenutransport.h"
-#include <QTest>
 #include <QMenu>
+#include <QTest>
 KActionMenuTransportTest::KActionMenuTransportTest(QObject *parent)
     : QObject(parent)
 {
 }
 
-KActionMenuTransportTest::~KActionMenuTransportTest()
-= default;
+KActionMenuTransportTest::~KActionMenuTransportTest() = default;
 
 void KActionMenuTransportTest::shouldHaveDefaultValue()
 {

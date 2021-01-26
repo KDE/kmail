@@ -9,14 +9,14 @@
 
 #include "undostack.h"
 
-#include "kmmainwin.h"
 #include "kmkernel.h"
-#include <KJob>
+#include "kmmainwin.h"
 #include <AkonadiCore/itemmovejob.h>
+#include <KJob>
 
-#include <KMessageBox>
-#include <KLocalizedString>
 #include "kmail_debug.h"
+#include <KLocalizedString>
+#include <KMessageBox>
 
 using namespace KMail;
 
@@ -122,9 +122,7 @@ void UndoStack::folderDestroyed(const Akonadi::Collection &folder)
     QList<UndoInfo *>::iterator it = mStack.begin();
     while (it != mStack.end()) {
         UndoInfo *info = *it;
-        if (info
-            && ((info->srcFolder == folder)
-                || (info->destFolder == folder))) {
+        if (info && ((info->srcFolder == folder) || (info->destFolder == folder))) {
             delete info;
             it = mStack.erase(it);
         } else {

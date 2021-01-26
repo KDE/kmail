@@ -7,14 +7,16 @@
 #ifndef CONFIGUREMISCPAGE_H
 #define CONFIGUREMISCPAGE_H
 
+#include "configuredialog_p.h"
 #include "kmail_export.h"
 #include "ui_miscpagemaintab.h"
-#include "configuredialog_p.h"
 
-namespace MailCommon {
+namespace MailCommon
+{
 class FolderRequester;
 }
-namespace MessageViewer {
+namespace MessageViewer
+{
 class InvitationSettings;
 class PrintingSettings;
 }
@@ -79,7 +81,8 @@ private:
 };
 
 #ifdef WITH_KUSERFEEDBACK
-namespace KUserFeedback {
+namespace KUserFeedback
+{
 class FeedbackConfigWidget;
 }
 class KuserFeedBackPageTab : public ConfigModuleTab

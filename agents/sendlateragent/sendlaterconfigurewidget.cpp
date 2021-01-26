@@ -5,19 +5,20 @@
 */
 
 #include "sendlaterconfigurewidget.h"
-#include "sendlaterutil.h"
 #include "sendlaterdialog.h"
+#include "sendlaterutil.h"
 
-#include <MessageComposer/SendLaterInfo>
 #include <MessageComposer/SendLaterDialog>
+#include <MessageComposer/SendLaterInfo>
 
 #include <KLocalizedString>
-#include <QMenu>
 #include <KMessageBox>
 #include <QIcon>
+#include <QMenu>
 #include <QPointer>
 
-namespace {
+namespace
+{
 inline QString sendLaterItemPattern()
 {
     return QStringLiteral("SendLaterItem \\d+");
@@ -52,14 +53,11 @@ SendLaterWidget::SendLaterWidget(QWidget *parent)
     mWidget = new Ui::SendLaterConfigureWidget;
     mWidget->setupUi(this);
     QStringList headers;
-    headers << i18n("To")
-            << i18n("Subject")
-            << i18n("Send around")
-            << i18n("Recurrent")
+    headers << i18n("To") << i18n("Subject") << i18n("Send around") << i18n("Recurrent")
 #ifdef DEBUG_MESSAGE_ID
-        << i18n("Message Id");
+            << i18n("Message Id");
 #else
-    ;
+        ;
 #endif
 
     mWidget->treeWidget->setObjectName(QStringLiteral("treewidget"));
@@ -199,7 +197,10 @@ void SendLaterWidget::slotRemoveItem()
         return;
     }
     const int numberOfItems(listItems.count());
-    if (KMessageBox::warningYesNo(this, i18np("Do you want to delete the selected item?", "Do you want to delete the selected items?", numberOfItems), i18n("Remove items")) == KMessageBox::No) {
+    if (KMessageBox::warningYesNo(this,
+                                  i18np("Do you want to delete the selected item?", "Do you want to delete the selected items?", numberOfItems),
+                                  i18n("Remove items"))
+        == KMessageBox::No) {
         return;
     }
 

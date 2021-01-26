@@ -7,12 +7,13 @@
 #ifndef FOLLOWUPREMINDERINFOWIDGET_H
 #define FOLLOWUPREMINDERINFOWIDGET_H
 
-#include <QWidget>
+#include <AkonadiCore/Item>
 #include <KConfigGroup>
 #include <QTreeWidgetItem>
-#include <AkonadiCore/Item>
+#include <QWidget>
 class QTreeWidget;
-namespace FollowUpReminder {
+namespace FollowUpReminder
+{
 class FollowUpReminderInfo;
 }
 
@@ -51,19 +52,9 @@ private:
     void createOrUpdateItem(FollowUpReminder::FollowUpReminderInfo *info, FollowUpReminderInfoItem *item = nullptr);
     void removeItem(const QList<QTreeWidgetItem *> &mailItem);
     void openShowMessage(Akonadi::Item::Id id);
-    enum ItemData {
-        AnswerItemId = Qt::UserRole + 1,
-        AnswerItemFound = Qt::UserRole + 2
-    };
+    enum ItemData { AnswerItemId = Qt::UserRole + 1, AnswerItemFound = Qt::UserRole + 2 };
 
-    enum FollowUpReminderColumn {
-        To = 0,
-        Subject,
-        DeadLine,
-        AnswerWasReceived,
-        MessageId,
-        AnswerMessageId
-    };
+    enum FollowUpReminderColumn { To = 0, Subject, DeadLine, AnswerWasReceived, MessageId, AnswerMessageId };
     QList<qint32> mListRemoveId;
     QTreeWidget *mTreeWidget = nullptr;
     bool mChanged = false;

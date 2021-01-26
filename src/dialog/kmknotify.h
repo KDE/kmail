@@ -11,7 +11,8 @@
 class QComboBox;
 class KNotifyConfigWidget;
 
-namespace KMail {
+namespace KMail
+{
 class KMKnotify : public QDialog
 {
     Q_OBJECT

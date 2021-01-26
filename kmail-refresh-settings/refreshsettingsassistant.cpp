@@ -9,9 +9,9 @@
 #include "refreshsettingsfirstpage.h"
 #include "refreshsettringsfinishpage.h"
 #include <AkonadiWidgets/controlgui.h>
+#include <KAboutData>
 #include <KHelpMenu>
 #include <KLocalizedString>
-#include <KAboutData>
 #include <QMenu>
 #include <QPushButton>
 
@@ -25,14 +25,13 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
     initializePages();
     auto helpMenu = new KHelpMenu(this, KAboutData::applicationData(), true);
-    //Initialize menu
+    // Initialize menu
     QMenu *menu = helpMenu->menu();
     helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     button(QDialogButtonBox::Help)->setMenu(menu);
 }
 
-RefreshSettingsAssistant::~RefreshSettingsAssistant()
-= default;
+RefreshSettingsAssistant::~RefreshSettingsAssistant() = default;
 
 void RefreshSettingsAssistant::initializePages()
 {

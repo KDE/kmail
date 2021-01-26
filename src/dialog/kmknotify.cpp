@@ -7,16 +7,16 @@
 #include "kmknotify.h"
 #include "kmkernel.h"
 
-#include <QVBoxLayout>
-#include <QComboBox>
-#include <KNotifyConfigWidget>
-#include <KLocalizedString>
 #include <KConfig>
-#include <KSeparator>
-#include <QStandardPaths>
-#include <QDialogButtonBox>
 #include <KConfigGroup>
+#include <KLocalizedString>
+#include <KNotifyConfigWidget>
+#include <KSeparator>
+#include <QComboBox>
+#include <QDialogButtonBox>
 #include <QPushButton>
+#include <QStandardPaths>
+#include <QVBoxLayout>
 
 using namespace KMail;
 
@@ -83,15 +83,12 @@ void KMKnotify::setCurrentNotification(const QString &name)
 
 void KMKnotify::initCombobox()
 {
-    const QStringList lstNotify = QStringList() << QStringLiteral("kmail2.notifyrc")
-                                                << QStringLiteral("akonadi_maildispatcher_agent.notifyrc")
-                                                << QStringLiteral("akonadi_mailfilter_agent.notifyrc")
-                                                << QStringLiteral("akonadi_archivemail_agent.notifyrc")
+    const QStringList lstNotify = QStringList() << QStringLiteral("kmail2.notifyrc") << QStringLiteral("akonadi_maildispatcher_agent.notifyrc")
+                                                << QStringLiteral("akonadi_mailfilter_agent.notifyrc") << QStringLiteral("akonadi_archivemail_agent.notifyrc")
                                                 << QStringLiteral("akonadi_sendlater_agent.notifyrc")
                                                 << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc")
-                                                << QStringLiteral("akonadi_followupreminder_agent.notifyrc")
-                                                << QStringLiteral("messageviewer.notifyrc");
-    //TODO add other notifyrc here if necessary
+                                                << QStringLiteral("akonadi_followupreminder_agent.notifyrc") << QStringLiteral("messageviewer.notifyrc");
+    // TODO add other notifyrc here if necessary
 
     for (const QString &notify : lstNotify) {
         const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("knotifications5/") + notify);

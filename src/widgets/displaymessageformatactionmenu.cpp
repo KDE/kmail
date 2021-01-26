@@ -7,9 +7,9 @@
 #include "displaymessageformatactionmenu.h"
 
 #include <KLocalizedString>
+#include <KToggleAction>
 #include <QAction>
 #include <QMenu>
-#include <KToggleAction>
 
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     : KActionMenu(parent)
@@ -42,8 +42,7 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     updateMenu();
 }
 
-DisplayMessageFormatActionMenu::~DisplayMessageFormatActionMenu()
-= default;
+DisplayMessageFormatActionMenu::~DisplayMessageFormatActionMenu() = default;
 
 void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat(QAction *act)
 {
