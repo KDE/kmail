@@ -41,8 +41,8 @@ private:
     void showCollectionPropertiesContinued(const QString &pageToShow, QPointer<KPIM::ProgressItem> progressItem);
 
     QHash<Akonadi::Collection::Id, QPointer<Akonadi::CollectionPropertiesDialog>> mHashDialogBox;
-    const QStringList mPages;
     KMMainWidget *const mMainWidget;
+    const QStringList mPages;
 };
 
 #endif // MANAGESHOWCOLLECTIONPROPERTIES_H
