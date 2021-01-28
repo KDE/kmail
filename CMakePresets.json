@@ -18,7 +18,8 @@
             "binaryDir": "${sourceDir}/build-asan",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "ECM_ENABLE_SANITIZERS" : "'address;undefined'"
+                "ECM_ENABLE_SANITIZERS" : "'address;undefined'",
+		"CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         },
         {
@@ -28,7 +29,8 @@
             "binaryDir": "${sourceDir}/build-unity",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-		"USE_UNITY_CMAKE_SUPPORT": "ON"
+		"USE_UNITY_CMAKE_SUPPORT": "ON",
+		"CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         },
         {
@@ -46,7 +48,8 @@
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build-profile",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+		"CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
         }
     ]
