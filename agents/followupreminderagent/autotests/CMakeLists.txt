@@ -12,7 +12,7 @@ macro( followupreminder_agent _source )
     ecm_add_test(${_test}
         TEST_NAME ${_name}
         NAME_PREFIX "followupreminder-"
-        LINK_LIBRARIES followupreminderagent Qt5::Test KF5::AkonadiCore Qt5::Widgets KF5::I18n KF5::XmlGui KF5::Service
+        LINK_LIBRARIES followupreminderagent Qt::Test KF5::AkonadiCore Qt::Widgets KF5::I18n KF5::XmlGui KF5::Service
         )
 endmacro()
 
