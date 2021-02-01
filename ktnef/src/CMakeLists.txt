@@ -29,7 +29,7 @@ if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 endif()
 
 target_link_libraries(ktnef
-    Qt::Widgets
+    Qt5::Widgets
     KF5::Tnef
     KF5::DBusAddons
     KF5::Crash
