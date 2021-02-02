@@ -244,6 +244,7 @@ set(kmailprivate_LIB_SRCS
     ${kmailprivate_sieveimapinstanceinterface_LIB_SRCS}
     ${kmailprivate_undosend_LIB_SRCS}
     ${kmailprivate_userfeedback_LIB_SRCS}
+    kmail.qrc
     )
 
 qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
@@ -292,8 +293,6 @@ ki18n_wrap_ui(kmailprivate_LIB_SRCS
     ui/searchwindow.ui
     ui/incompleteindexdialog.ui
     )
-
-qt5_add_resources(kmailprivate_LIB_SRCS kmail.qrc)
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put
 # in the build directory.

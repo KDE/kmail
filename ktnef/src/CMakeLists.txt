@@ -9,8 +9,8 @@ set(ktnef_SRCS
     main.cpp
     messagepropertydialog.cpp
     qwmf.cpp
+    ktnef.qrc
     )
-qt5_add_resources(ktnef_SRCS ktnef.qrc)
 
 ecm_qt_declare_logging_category(ktnef_SRCS HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME org.kde.pim.ktnefapps
         DESCRIPTION "kmail-refresh-settings"

@@ -1,8 +1,7 @@
 
 ########### next target ###############
 
-set(kontact_summaryplugin_PART_SRCS summaryview_plugin.cpp summaryview_part.cpp dropwidget.cpp)
-qt5_add_resources(kontact_summaryplugin_PART_SRCS summaryview.qrc)
+set(kontact_summaryplugin_PART_SRCS summaryview_plugin.cpp summaryview_part.cpp dropwidget.cpp summaryview.qrc)
 
 qt5_add_dbus_interfaces(kontact_summaryplugin_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
 
