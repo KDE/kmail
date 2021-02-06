@@ -118,7 +118,7 @@ void AttachmentController::onShowAttachment(KMime::Content *content, const QByte
         win->showMessage(charsetStr, m);
         win->show();
     } else {
-        auto *win = new KMReaderMainWin(content, MessageViewer::Viewer::Text, charsetStr);
+        auto win = new KMReaderMainWin(content, MessageViewer::Viewer::Text, charsetStr);
         win->show();
     }
 }

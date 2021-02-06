@@ -864,7 +864,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mMessageIdSuffixEdit = new QLineEdit(this);
     mMessageIdSuffixEdit->setClearButtonEnabled(true);
     // only ASCII letters, digits, plus, minus and dots are allowed
-    auto *messageIdSuffixValidator = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
+    auto messageIdSuffixValidator = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
     mMessageIdSuffixEdit->setValidator(messageIdSuffixValidator);
     auto label = new QLabel(i18n("Custom message-&id suffix:"), this);
     label->setBuddy(mMessageIdSuffixEdit);

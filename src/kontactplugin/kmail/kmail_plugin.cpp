@@ -38,7 +38,7 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 
-    auto *action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18nc("@action:inmenu", "New Message..."), this);
+    auto action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18nc("@action:inmenu", "New Message..."), this);
     actionCollection()->addAction(QStringLiteral("new_mail"), action);
     actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_M));
     // action->setHelpText(
@@ -49,7 +49,7 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const QVariantList &)
     connect(action, &QAction::triggered, this, &KMailPlugin::slotNewMail);
     insertNewAction(action);
 
-    auto *syncAction = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18nc("@action:inmenu", "Sync Mail"), this);
+    auto syncAction = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18nc("@action:inmenu", "Sync Mail"), this);
     // syncAction->setHelpText(
     //            i18nc( "@info:status", "Synchronize groupware mail" ) );
     syncAction->setWhatsThis(i18nc("@info:whatsthis", "Choose this option to synchronize your groupware email."));

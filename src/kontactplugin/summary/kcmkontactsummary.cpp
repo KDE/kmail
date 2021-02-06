@@ -79,7 +79,7 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
-    auto *label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
+    auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
     layout->addWidget(label);
 
     mPluginView = new PluginView(this);

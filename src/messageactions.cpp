@@ -600,7 +600,7 @@ void MessageActions::printMessage(bool preview)
             commandInfo.mShowEncryptionDetails =
                 mMessageView->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
 
-            auto *command = new KMPrintCommand(mParent, commandInfo);
+            auto command = new KMPrintCommand(mParent, commandInfo);
             command->start();
         }
     } else {

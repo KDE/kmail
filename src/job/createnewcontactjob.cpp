@@ -34,7 +34,7 @@ CreateNewContactJob::~CreateNewContactJob() = default;
 
 void CreateNewContactJob::start()
 {
-    auto *const addressBookJob = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive);
+    auto const addressBookJob = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive);
 
     addressBookJob->fetchScope().setContentMimeTypes(QStringList() << KContacts::Addressee::mimeType());
     connect(addressBookJob, &KJob::result, this, &CreateNewContactJob::slotCollectionsFetched);

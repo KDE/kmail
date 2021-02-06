@@ -4643,7 +4643,7 @@ void KMMainWidget::printCurrentMessage(bool preview)
         commandInfo.mShowEncryptionDetails =
             messageView()->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
 
-        auto *command = new KMPrintCommand(this, commandInfo);
+        auto command = new KMPrintCommand(this, commandInfo);
         command->start();
     }
 }

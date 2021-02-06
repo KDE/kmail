@@ -35,7 +35,7 @@ Q_DECL_EXPORT KCModule *create_kmail_config_misc(QWidget *parent, const char *)
 extern "C" {
 Q_DECL_EXPORT KCModule *create_kmail_config_appearance(QWidget *parent, const char *)
 {
-    auto *page = new AppearancePage(parent);
+    auto page = new AppearancePage(parent);
     page->setObjectName(QStringLiteral("kcmkmail_config_appearance"));
     return page;
 }
