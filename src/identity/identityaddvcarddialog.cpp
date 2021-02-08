@@ -20,6 +20,7 @@
 
 IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)
     : QDialog(parent)
+    , mButtonGroup(new QButtonGroup(this))
 {
     setWindowTitle(i18nc("@title:window", "Create own vCard"));
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
@@ -38,7 +39,6 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     auto vlay = new QVBoxLayout(mainWidget);
     vlay->setContentsMargins({});
 
-    mButtonGroup = new QButtonGroup(this);
     mButtonGroup->setObjectName(QStringLiteral("buttongroup"));
 
     // row 1: radio button

@@ -27,7 +27,7 @@ public:
     Q_REQUIRED_RESULT QUrl existingVCard() const;
 
 private:
-    QButtonGroup *mButtonGroup = nullptr;
+    QButtonGroup *const mButtonGroup;
     QComboBox *mComboBox = nullptr;
     KUrlRequester *mVCardPath = nullptr;
 };
