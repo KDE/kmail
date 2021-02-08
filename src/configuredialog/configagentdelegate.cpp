@@ -54,8 +54,8 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
     }
 
     const QString name = index.model()->data(index, Qt::DisplayRole).toString();
-    int status = index.model()->data(index, AgentInstanceModel::StatusRole).toInt();
-    uint progress = index.model()->data(index, AgentInstanceModel::ProgressRole).toUInt();
+    const int status = index.model()->data(index, AgentInstanceModel::StatusRole).toInt();
+    const uint progress = index.model()->data(index, AgentInstanceModel::ProgressRole).toUInt();
     const QString statusMessage = index.model()->data(index, AgentInstanceModel::StatusMessageRole).toString();
 
     auto document = new QTextDocument(nullptr);
@@ -214,8 +214,8 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption(const QStyleOptionViewItem 
     const QString label = i18n("Retrieval Options");
     QStyleOptionButton buttonOpt;
     QRect buttonRect = option.rect;
-    int height = option.rect.height() / 2;
-    int width = 22 + option.fontMetrics.boundingRect(label).width() + 40; // icon size + label size + arrow and padding
+    const int height = option.rect.height() / 2;
+    const int width = 22 + option.fontMetrics.boundingRect(label).width() + 40; // icon size + label size + arrow and padding
     buttonRect.setTop(0);
     buttonRect.setHeight(height);
     buttonRect.setLeft(option.rect.right() - width);
