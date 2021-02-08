@@ -35,21 +35,21 @@ void KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGeneri
         return;
     }
     auto interface = static_cast<PimCommon::GenericPluginInterface *>(abstractInterface);
-    PimCommon::GenericPluginInterface::RequireTypes requires = interface->requires();
-    if (requires & PimCommon::GenericPluginInterface::CurrentItems) {
+    PimCommon::GenericPluginInterface::RequireTypes requiresFeatures = interface->requires();
+    if (requiresFeatures & PimCommon::GenericPluginInterface::CurrentItems) {
         interface->setItems(mMainWindow->currentSelection());
     }
-    if (requires & PimCommon::GenericPluginInterface::Items) {
+    if (requiresFeatures & PimCommon::GenericPluginInterface::Items) {
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Items not implemented";
     }
-    if (requires & PimCommon::GenericPluginInterface::CurrentCollection) {
+    if (requiresFeatures & PimCommon::GenericPluginInterface::CurrentCollection) {
         if (mMainWindow->currentCollection().isValid()) {
             interface->setCurrentCollection(mMainWindow->currentCollection());
         } else {
             qCDebug(KMAIL_LOG) << "Current Collection not defined";
         }
     }
-    if (requires & PimCommon::GenericPluginInterface::Collections) {
+    if (requiresFeatures & PimCommon::GenericPluginInterface::Collections) {
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Collection not implemented";
     }
 }
