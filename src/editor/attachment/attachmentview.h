@@ -64,10 +64,10 @@ Q_SIGNALS:
     void modified(bool);
 
 private:
-    MessageComposer::AttachmentModel *mModel = nullptr;
-    QToolButton *mToolButton = nullptr;
-    QLabel *mInfoAttachment = nullptr;
-    QWidget *mWidget = nullptr;
+    MessageComposer::AttachmentModel *const mModel;
+    QToolButton *const mToolButton;
+    QLabel *const mInfoAttachment;
+    QWidget *const mWidget;
     KConfigGroup grp;
 };
 } // namespace KMail

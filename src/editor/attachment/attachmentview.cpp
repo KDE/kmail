@@ -38,23 +38,23 @@ using namespace KMail;
 
 AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent)
     : QTreeView(parent)
+    , mModel(model)
+    , mToolButton(new QToolButton(this))
+    , mInfoAttachment(new QLabel(this))
+    , mWidget(new QWidget())
     , grp(KMKernel::self()->config()->group("AttachmentView"))
 {
-    mWidget = new QWidget();
     auto lay = new QHBoxLayout(mWidget);
     lay->setContentsMargins({});
-    mToolButton = new QToolButton;
     connect(mToolButton, &QAbstractButton::toggled, this, &AttachmentView::slotShowHideAttchementList);
     mToolButton->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
     mToolButton->setAutoRaise(true);
     mToolButton->setCheckable(true);
     lay->addWidget(mToolButton);
-    mInfoAttachment = new QLabel;
     mInfoAttachment->setContentsMargins({});
     mInfoAttachment->setTextFormat(Qt::PlainText);
     lay->addWidget(mInfoAttachment);
 
-    mModel = model;
     connect(model, &MessageComposer::AttachmentModel::encryptEnabled, this, &AttachmentView::setEncryptEnabled);
     connect(model, &MessageComposer::AttachmentModel::signEnabled, this, &AttachmentView::setSignEnabled);
 
