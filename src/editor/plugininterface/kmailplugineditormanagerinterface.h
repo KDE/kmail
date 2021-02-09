@@ -47,6 +47,7 @@ public:
 
     Q_REQUIRED_RESULT bool processProcessKeyEvent(QKeyEvent *event);
 
+    void setStatusBarWidgetEnabled(bool status);
 Q_SIGNALS:
     void textSelectionChanged(bool hasSelection);
     void message(const QString &str);

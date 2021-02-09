@@ -117,6 +117,13 @@ QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer:
     return mActionHash.value(type);
 }
 
+void KMailPluginEditorManagerInterface::setStatusBarWidgetEnabled(bool status)
+{
+    for (QWidget *w : qAsConst(mStatusBarWidget)) {
+        w->setEnabled(status);
+    }
+}
+
 QList<QWidget *> KMailPluginEditorManagerInterface::statusBarWidgetList()
 {
     if (mStatusBarWidget.isEmpty() && !mListPluginInterface.isEmpty()) {
