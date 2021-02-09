@@ -42,7 +42,7 @@ private:
 
     Akonadi::Search::PIM::IndexedItems *const mIndexedItems;
     Akonadi::Collection::List mListCollection;
-    QTimer *mTimer = nullptr;
+    QTimer *const mTimer;
     QList<qint64> mCollectionsIndexed;
     QList<qint64> mCollectionsNeedToBeReIndexed;
     int mIndex = 0;

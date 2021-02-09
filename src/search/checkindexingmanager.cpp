@@ -23,8 +23,8 @@
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
     : QObject(parent)
     , mIndexedItems(indexer)
+    , mTimer(new QTimer(this))
 {
-    mTimer = new QTimer(this);
     mTimer->setSingleShot(true);
     mTimer->setInterval(5 * 1000); // 5 secondes
     connect(mTimer, &QTimer::timeout, this, &CheckIndexingManager::checkNextCollection);

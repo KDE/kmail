@@ -48,7 +48,7 @@ class VacationScriptIndicatorWidget : public QWidget
     Q_OBJECT
 public:
     explicit VacationScriptIndicatorWidget(QWidget *parent = nullptr);
-    ~VacationScriptIndicatorWidget();
+    ~VacationScriptIndicatorWidget() override;
 
     void setVacationScriptActive(bool active, const QString &serverName);
 
