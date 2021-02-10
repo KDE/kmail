@@ -117,10 +117,14 @@ QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer:
     return mActionHash.value(type);
 }
 
-void KMailPluginEditorManagerInterface::setStatusBarWidgetEnabled(bool status)
+void KMailPluginEditorManagerInterface::setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType type)
 {
-    for (QWidget *w : qAsConst(mStatusBarWidget)) {
-        w->setEnabled(status);
+    if (!mStatusBarWidget.isEmpty()) {
+        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
+            if (interface->applyOnFieldTypes() & type) {
+                interface->statusBarWidget()->setEnabled((interface->applyOnFieldTypes() & type));
+            }
+        }
     }
 }
 
