@@ -165,7 +165,7 @@ find_package(KUserFeedback 1.0.0 CONFIG)
 set_package_properties(KUserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional). It can be disable in apps.")
 
 option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" FALSE)
-
+option(USE_PRECOMPILED_HEADERS "Use precompiled headers" ON) # Set to OFF when using clazy and such
 set(COMPILE_WITH_UNITY_CMAKE_SUPPORT false)
 if (USE_UNITY_CMAKE_SUPPORT)
     if(${CMAKE_VERSION} VERSION_LESS "3.16.0")
@@ -174,6 +174,23 @@ if (USE_UNITY_CMAKE_SUPPORT)
         set(COMPILE_WITH_UNITY_CMAKE_SUPPORT true)
     endif()
 endif()
+
+option(USE_PRECOMPILED_HEADERS "Use precompiled headers" OFF) # Set to OFF when using clazy and such
+set(COMPILE_WITH_CMAKE_PCH_SUPPORT false)
+macro(pim_target_precompile_headers)
+    if (USE_PRECOMPILED_HEADERS)
+        if(${CMAKE_VERSION} VERSION_LESS "3.16.0")
+            message(STATUS "CMAKE version is less than 3.16.0 . We can't use cmake pch build support")
+        else()
+            set(COMPILE_WITH_CMAKE_PCH_SUPPORT true)
+        endif()
+
+        if (COMPILE_WITH_CMAKE_PCH_SUPPORT)
+            target_precompile_headers(${ARGV})
+        endif()
+    endif()
+endmacro()
+
 
 add_subdirectory(src)
 add_subdirectory(agents)

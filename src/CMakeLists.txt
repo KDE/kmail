@@ -317,6 +317,7 @@ endif()
 
 
 add_library(kmailprivate ${kmailprivate_LIB_SRCS})
+pim_target_precompile_headers(kmailprivate PUBLIC ../kmail_pch.h)
 if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(kmailprivate PROPERTIES UNITY_BUILD ON)
 endif()
@@ -374,6 +375,7 @@ set_target_properties(kmailprivate
 ########### kcm_kmail ###############
 set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
 add_library(kcm_kmail MODULE ${kcm_kmail_PART_SRCS})
+pim_target_precompile_headers(kcm_kmail PUBLIC ../kmail_pch.h)
 target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
 
 ########### kmailpart ###############
@@ -385,6 +387,7 @@ qt5_add_dbus_adaptor(kmailpart_PART_SRCS
     )
 qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
 add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
+pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
 
 target_link_libraries(kmailpart
     kmailprivate

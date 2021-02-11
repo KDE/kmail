@@ -33,6 +33,7 @@ qt5_add_dbus_interface(followupreminderagent_SRCS org.freedesktop.DBus.Propertie
 
 
 add_library(followupreminderagent STATIC ${followupreminderagent_SRCS})
+pim_target_precompile_headers(followupreminderagent PUBLIC ../../kmail_pch.h)
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(followupreminderagent PROPERTIES UNITY_BUILD ON)
 #endif()

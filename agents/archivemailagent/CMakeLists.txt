@@ -25,6 +25,7 @@ ecm_qt_declare_logging_category(libarchivemailagent_SRCS HEADER archivemailagent
 ki18n_wrap_ui(libarchivemailagent_SRCS ui/archivemailwidget.ui )
 
 add_library(archivemailagent STATIC ${libarchivemailagent_SRCS})
+pim_target_precompile_headers(archivemailagent PUBLIC ../../kmail_pch.h)
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(archivemailagent PROPERTIES UNITY_BUILD ON)
 #endif()
