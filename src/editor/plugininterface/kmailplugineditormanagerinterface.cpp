@@ -121,8 +121,8 @@ void KMailPluginEditorManagerInterface::setStatusBarWidgetEnabled(MessageCompose
 {
     if (!mStatusBarWidget.isEmpty()) {
         for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
-            if (interface->applyOnFieldTypes() & type) {
-                interface->statusBarWidget()->setEnabled((interface->applyOnFieldTypes() & type));
+            if (auto w = interface->statusBarWidget()) {
+                w->setEnabled((interface->applyOnFieldTypes() & type));
             }
         }
     }

@@ -302,6 +302,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(transport, qOverload<int>(&MailTransport::TransportComboBox::activated), this, &KMComposerWin::slotTransportChanged);
     connect(transport, &MailTransport::TransportComboBox::transportRemoved, this, &KMComposerWin::slotTransportRemoved);
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
+    mEdtFrom->installEventFilter(this);
     mEdtFrom->setObjectName(QStringLiteral("fromLine"));
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     mEdtFrom->setToolTip(i18n("Set the \"From:\" email address for this message"));
@@ -312,8 +313,10 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::sizeHintChanged, this, &KMComposerWin::recipientEditorSizeHintChanged);
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::lineAdded, this, &KMComposerWin::slotRecipientEditorLineAdded);
     mComposerBase->setRecipientsEditor(recipientsEditor);
+    recipientsEditor->installEventFilter(this);
 
     mEdtSubject = new PimCommon::LineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
+    mEdtSubject->installEventFilter(this);
     mEdtSubject->setActivateLanguageMenu(false);
     mEdtSubject->setToolTip(i18n("Set a subject for this message"));
     mEdtSubject->setAutocorrection(KMKernel::self()->composerAutoCorrection());
@@ -351,6 +354,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     auto composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
     mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
+    composerEditorNg->installEventFilter(this);
 
     connect(composerEditorNg, &KMComposerEditorNg::insertEmoticon, mGlobalAction, &KMComposerGlobalAction::slotInsertEmoticon);
     // Don't use new connect api here. It crashes
@@ -513,6 +517,29 @@ KMComposerWin::~KMComposerWin()
     }
 
     delete mComposerBase;
+}
+
+bool KMComposerWin::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == mEdtSubject) {
+            // qDebug() << " subject";
+            mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::SubjectField);
+        } else if (obj == mComposerBase->recipientsEditor()) {
+            // qDebug() << " recipient";
+            mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::EmailFields);
+        } else if (obj == mRichTextEditorwidget->editor()) {
+            mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::Composer);
+            // qDebug() << " EDITOR";
+        } else if (obj == mEdtFrom) {
+            mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::EmailFields);
+            // mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::Fr);
+            // qDebug() << " From";
+        } else {
+            qDebug() << " sssssssssss";
+        }
+    }
+    return KMail::Composer::eventFilter(obj, event);
 }
 
 void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)

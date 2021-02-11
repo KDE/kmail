@@ -431,6 +431,9 @@ public: // kmcommand
     QList<KToggleAction *> customToolsList() const;
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
 private:
     void enableDisablePluginActions(bool richText);
     /**
