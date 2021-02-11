@@ -566,6 +566,7 @@ private:
     void slotEditorPluginInsertText(const QString &str);
     void insertSnippetInfo(const MailCommon::SnippetInfo &info);
     Q_REQUIRED_RESULT bool sendLaterRegistered() const;
+    void slotRecipientEditorLineFocused();
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;

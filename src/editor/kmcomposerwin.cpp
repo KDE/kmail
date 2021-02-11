@@ -313,8 +313,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::sizeHintChanged, this, &KMComposerWin::recipientEditorSizeHintChanged);
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::lineAdded, this, &KMComposerWin::slotRecipientEditorLineAdded);
+    connect(recipientsEditor, &MessageComposer::RecipientsEditor::focusInRecipientLineEdit, this, &KMComposerWin::slotRecipientEditorLineFocused);
     mComposerBase->setRecipientsEditor(recipientsEditor);
-    recipientsEditor->installEventFilter(this);
 
     mEdtSubject = new PimCommon::LineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
     mEdtSubject->installEventFilter(this);
@@ -520,24 +520,20 @@ KMComposerWin::~KMComposerWin()
     delete mComposerBase;
 }
 
+void KMComposerWin::slotRecipientEditorLineFocused()
+{
+    mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::EmailFields);
+}
+
 bool KMComposerWin::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn) {
         if (obj == mEdtSubject) {
-            // qDebug() << " subject";
             mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::SubjectField);
         } else if (obj == mComposerBase->recipientsEditor()) {
-            // qDebug() << " recipient";
             mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::EmailFields);
-        } else if (obj == mRichTextEditorwidget->editor()) {
-            mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::Composer);
-            // qDebug() << " EDITOR";
         } else if (obj == mEdtFrom) {
             mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::EmailFields);
-            // mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::Fr);
-            // qDebug() << " From";
-        } else {
-            qDebug() << " sssssssssss";
         }
     }
     return KMail::Composer::eventFilter(obj, event);
