@@ -145,7 +145,9 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
                          stats.count(),
                          stats.unreadCount()));
 
-                connect(urlLabel, qOverload<const QString &>(&KUrlLabel::leftClickedUrl), this, &SummaryWidget::selectFolder);
+                connect(urlLabel, qOverload<>(&KUrlLabel::leftClickedUrl), this, [this, urlLabel]() {
+                    selectFolder(urlLabel->url());
+                });
 
                 // Read and unread count.
                 auto label = new QLabel(i18nc("%1: number of unread messages "
