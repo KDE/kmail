@@ -16,7 +16,6 @@
 // KMail includes
 #include "editor/composer.h"
 #include <MessageComposer/PluginEditorConvertTextInterface>
-#include <MessageComposer/RecipientsEditor>
 // Qt includes
 #include <QFont>
 #include <QList>
@@ -86,6 +85,7 @@ namespace MessageComposer
 class ComposerLineEdit;
 class Composer;
 class StatusBarLabelToggledState;
+class RecipientLineNG;
 }
 
 namespace MailCommon

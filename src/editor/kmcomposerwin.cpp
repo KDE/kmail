@@ -110,6 +110,7 @@
 #include <MessageComposer/PluginEditorConverterBeforeConvertingData>
 #include <MessageComposer/PluginEditorConverterInitialData>
 #include <MessageComposer/PluginEditorInterface>
+#include <MessageComposer/RecipientsEditor>
 #include <MessageComposer/RichTextComposerSignatures>
 #include <MessageComposer/SendLaterDialog>
 #include <MessageComposer/SendLaterInfo>
