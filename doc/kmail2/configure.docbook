@@ -255,7 +255,7 @@ address</guilabel> field.</para></example>
 <para>This field contains alias addresses that also 
 belong to this identity (as opposed to representing 
 a different identity). You may define multiple aliases. To add another
-alias. enter an email address in the <guilabel>Email aliases:</guilabel>
+alias enter an email address in the <guilabel>Email aliases:</guilabel>
 field, then click the <guibutton>&plus; Add</guibutton> button</para>
 <example>
 <title>Email aliases</title>
@@ -487,7 +487,7 @@ message sent from this identity. A short dialog will ensue.</para>
         <varlistentry>
         <term><guilabel>From existing vCard</guilabel></term>
         <listitem><para>This option opens a browse directories dialog which
-        allows you to to select a .vcf file. (Hint: Use &kaddressbook;
+        allows you to select a .vcf file. (Hint: Use &kaddressbook;
         to export a vCard file that can be used here.)</para></listitem>
         </varlistentry>        
         <varlistentry>
@@ -1164,9 +1164,9 @@ the threads that have been active today. Otherwise the same as Current Activity,
 <varlistentry>
 <term>Senders/Receivers, Flat</term>
 <listitem><para>This view groups the messages by senders or receivers (depending on the folder type).
-You may specify senders (or receivers) in the <menuchoice><guimenu>Folders</guimenu>
+You may specify senders (or receivers) in the <menuchoice><guimenu>Folder</guimenu>
 <guimenuitem>Folder Properties</guimenuitem></menuchoice> dialog ("View" tab, <guilabel>Show
-Column:</guilabel>).Messages are not threaded.</para></listitem>
+Column:</guilabel>). Messages are not threaded.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>Standard Mailing List</term>
