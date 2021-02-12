@@ -462,16 +462,6 @@ tab</link> of the <link linkend="configure-accounts">
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>Templates folder:</guilabel></term>
-<listitem>
-<para>Select the folder in which templates should be saved when using
-this identity. Please see <link linkend="new-compose-from-templates">Compose
-from templates</link> for more information about templates.</para>
-<para>&nbsp;</para><!-- add whitespace -->
-</listitem>
-</varlistentry>
-
-<varlistentry>
 <term><guilabel>Attach my vCard to message</guilabel></term>
 <listitem>
 <para>Choose this option if you want to attach a vCard file to each
