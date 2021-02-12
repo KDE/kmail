@@ -18,3 +18,4 @@ Makefile
 .cmake/
 CMakeLists.txt.user*
 *.unc-backup*
+compile_commands.json
