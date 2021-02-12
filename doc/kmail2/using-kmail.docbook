@@ -405,13 +405,13 @@ message lists, and with shorter menus.</para>
         </listitem>
       </itemizedlist>
 
-<para>There are a variety of shortcuts to help
-you write messages. The <guibutton>Select...</guibutton> button next to
+<para>There are a variety of shortcuts to help you select
+recipients. The <guibutton>Select...</guibutton> button next to
 the <guilabel>To:</guilabel>, <guilabel>CC:</guilabel>, and
 <guilabel>BCC:</guilabel> fields opens a list from &kaddressbook; so you can
-select one or more recipients.</para>
+select one or more people who should receive this message.</para>
 
-<para>Alternatively, when you start typing an address in the
+<para>Alternatively, when you start typing an address in one of the
 <guilabel>To:</guilabel>/<guilabel>CC:</guilabel>/<guilabel>BCC:</guilabel>
 fields, a popup will appear that suggests similar recently used addresses
 and closely matching addresses from &kaddressbook;; if you do not like this automatic 
@@ -608,7 +608,7 @@ keys and x.509 certificates are (usually) handled as file attachments.</para>
 
 <para>&kmail; can automatically check the spelling of your message
 and underline unknown words in red. If there are too many
-unknown words &kmail; will disable its checking. To select the language
+unknown words, &kmail; will disable its checking. To select the language
 used when checking, select <menuchoice><guimenu>View</guimenu>
 <guimenuitem>Dictionary</guimenuitem></menuchoice>. You can disable
 automatic spell checking in the <menuchoice><guimenu>Options</guimenu></menuchoice> menu.</para>
@@ -1308,7 +1308,7 @@ processing here</guilabel> option.</para>
 
 <note><para>Filters are automatically named unless you explicitly
 rename them using the <guibutton><inlinemediaobject><imageobject>
-<imagedata fileref="document.png" format="PNG"/>
+<imagedata fileref="document-edit.png" format="PNG"/>
 </imageobject></inlinemediaobject> Rename...</guibutton> button.
 The dialog assumes that it should continue auto-naming the filter
 as long as the filter name starts with <quote>&lt;</quote>.
