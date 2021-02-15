@@ -692,8 +692,8 @@ void KMComposerWin::addAttachment(const QString &name,
 
 void KMComposerWin::readConfig(bool reload)
 {
-    mEdtFrom->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
-    mComposerBase->recipientsEditor()->setCompletionMode((KCompletion::CompletionMode)KMailSettings::self()->completionMode());
+    mEdtFrom->setCompletionMode(static_cast<KCompletion::CompletionMode>(KMailSettings::self()->completionMode()));
+    mComposerBase->recipientsEditor()->setCompletionMode(static_cast<KCompletion::CompletionMode>(KMailSettings::self()->completionMode()));
 
     if (MessageCore::MessageCoreSettings::self()->useDefaultFonts()) {
         mBodyFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
