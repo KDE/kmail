@@ -262,6 +262,9 @@ static const char *const kmailNewFeatures[] = {
     I18N_NOOP("Added Check for Phishing URL"),
     I18N_NOOP("Added Check DKIM"),
     I18N_NOOP("Added Markdown Editing Support"),
+    I18N_NOOP("Added Grammar Plugin Support"),
+    I18N_NOOP("Added etesync resource support"),
+    I18N_NOOP("Added Microsoft Exchange Web Services resource support"),
 };
 static const int numKMailNewFeatures = sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
 
