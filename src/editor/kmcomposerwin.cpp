@@ -1631,7 +1631,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     data.setNewMessage(mContext == TemplateContext::New);
     mPluginEditorConvertTextManagerInterface->setInitialData(data);
 
-    KIdentityManagement::IdentityManager *im = KMKernel::self()->identityManager();
+    auto im = KMKernel::self()->identityManager();
 
     mEdtFrom->setText(mMsg->from()->asUnicodeString());
     mEdtSubject->setText(mMsg->subject()->asUnicodeString());
@@ -1646,11 +1646,11 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     if (auto hrd = newMsg->headerByType("X-KMail-Identity")) {
         const QString identityStr = hrd->asUnicodeString();
         if (!identityStr.isEmpty()) {
-            const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid(identityStr.toUInt());
+            const auto ident = im->identityForUoid(identityStr.toUInt());
             if (ident.isNull()) {
                 if (auto hrd = newMsg->headerByType("X-KMail-Identity-Name")) {
                     const QString identityStrName = hrd->asUnicodeString();
-                    const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(identityStrName);
+                    const auto id = im->modifyIdentityForName(identityStrName);
                     if (!id.isNull()) {
                         mId = id.uoid();
                     } else {
@@ -1666,7 +1666,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     } else {
         if (auto hrd = newMsg->headerByType("X-KMail-Identity-Name")) {
             const QString identityStrName = hrd->asUnicodeString();
-            const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(identityStrName);
+            const auto id = im->modifyIdentityForName(identityStrName);
             if (!id.isNull()) {
                 mId = id.uoid();
             } else {
