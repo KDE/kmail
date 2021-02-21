@@ -123,6 +123,7 @@
 #include <Sonnet/DictionaryComboBox>
 
 #include <MessageCore/AttachmentPart>
+#include <MessageCore/AutocryptStorage>
 #include <MessageCore/MessageCoreSettings>
 #include <MessageCore/NodeHelper>
 #include <MessageCore/StringUtil>
@@ -3726,7 +3727,52 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
     }
 
     line->setProperty("keyLookupJob", QVariant());
-    if (key.isNull()) {
+    if (key.isNull() && identity().autocryptEnabled()) {
+        const QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
+        QIcon overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
+        QString tooltip;
+
+        QString dummy, addrSpec;
+        if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
+            addrSpec = recipient->email();
+        }
+        const auto storage = MessageCore::AutocryptStorage::self();
+        const auto rec = storage->getRecipient(addrSpec.toUtf8());
+        GpgME::Key autocryptKey;
+        if (rec) {
+            const auto key = rec->gpgKey();
+            if (!key.isNull() && !key.isRevoked() && !key.isExpired() && !key.isDisabled() && key.canEncrypt()) {
+                autocryptKey = key;
+                if (rec->prefer_encrypt()) {
+                    overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
+                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified."
+                                   "The recipient prefers encrypted replies.");
+                } else {
+                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified."
+                                   "The recipient does not prefere encrypted replies.");
+                }
+            } else {
+                const auto gossipKey = rec->gossipKey();
+                if (!gossipKey.isNull() && !gossipKey.isRevoked() && !gossipKey.isExpired() && !gossipKey.isDisabled() && gossipKey.canEncrypt()) {
+                    autocryptKey = gossipKey;
+                    tooltip = i18n("Autocrypt gossip key is used for this recipient. This key is not verified.");
+                }
+            }
+        }
+
+        if (!autocryptKey.isNull()) {
+            recipient->setEncryptionAction(Kleo::DoIt);
+            recipient->setKey(autocryptKey);
+            line->setProperty("keyStatus", KeyOk);
+            line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
+
+            slotRecipientEditorFocusChanged();
+        } else {
+            recipient->setEncryptionAction(Kleo::Impossible); // no key
+            line->setIcon(QIcon());
+            line->setProperty("keyStatus", InProgress);
+        }
+    } else if(key.isNull()) {
         recipient->setEncryptionAction(Kleo::Impossible); // no key
         line->setIcon(QIcon());
         line->setProperty("keyStatus", InProgress);
