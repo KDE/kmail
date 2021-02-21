@@ -1,4 +1,5 @@
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
+add_definitions( -DTEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data" )
 include_directories(
     BEFORE
     ${kmail_SOURCE_DIR}
@@ -42,6 +43,9 @@ target_link_libraries( kactionmenutransporttest Qt5::Test  KF5::MailTransportAko
 if (KDEPIM_RUN_AKONADI_TEST)
     set(KDEPIMLIBS_RUN_ISOLATED_TESTS TRUE)
     set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
+
+    add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp ""
+    "Qt5::Test;KF5::IdentityManagement;KF5::MessageCore;KF5::TemplateParser;KF5::XmlGui;Qt5::Widgets;KF5::ConfigWidgets;KF5::I18n;kmailprivate")
 
     add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "" "kmailprivate;KF5::MailCommon;KF5::Libkdepim;KF5::ItemViews;KF5::TemplateParser;KF5::XmlGui;KF5::Completion;KF5::I18n")
 

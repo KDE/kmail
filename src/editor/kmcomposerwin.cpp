@@ -278,6 +278,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     v->addWidget(mHeadersToEditorSplitter);
     auto identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
     identity->setCurrentIdentity(mId);
+    identity->setObjectName(QStringLiteral("identitycombo"));
     connect(identity, &KIdentityManagement::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
     connect(identity, &KIdentityManagement::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);
     mComposerBase->setIdentityCombo(identity);
