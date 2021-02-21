@@ -462,7 +462,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
         slotIdentityChanged(val);
     });
     connect(kmkernel->identityManager(), qOverload<uint>(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
-        if (mComposerBase->identityCombo()->currentIdentity() == val) {
+        if (currentIdentity() == val) {
             slotIdentityChanged(val);
         }
     });
@@ -742,7 +742,7 @@ void KMComposerWin::writeConfig()
 {
     KMailSettings::self()->setHeaders(mShowHeaders);
     KMailSettings::self()->setCurrentTransport(mComposerBase->transportComboBox()->currentText());
-    KMailSettings::self()->setPreviousIdentity(mComposerBase->identityCombo()->currentIdentity());
+    KMailSettings::self()->setPreviousIdentity(currentIdentity());
     KMailSettings::self()->setPreviousFcc(QString::number(mFccFolder->collection().id()));
     KMailSettings::self()->setPreviousDictionary(mComposerBase->dictionary()->currentDictionaryName());
     KMailSettings::self()->setAutoSpellChecking(mAutoSpellCheckingAction->isChecked());
@@ -1363,8 +1363,7 @@ void KMComposerWin::setupActions()
     mSignAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("document-sign")), i18n("&Sign Message"), this);
     mSignAction->setIconText(i18n("Sign"));
     actionCollection()->addAction(QStringLiteral("sign_message"), mSignAction);
-    const KIdentityManagement::Identity &ident =
-        KMKernel::self()->identityManager()->identityForUoidOrDefault(mComposerBase->identityCombo()->currentIdentity());
+    const auto ident = identity();
     // PENDING(marc): check the uses of this member and split it into
     // smime/openpgp and or enc/sign, if necessary:
     mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
@@ -1507,8 +1506,7 @@ void KMComposerWin::initializePluginActions()
 
 void KMComposerWin::changeCryptoAction()
 {
-    const KIdentityManagement::Identity &ident =
-        KMKernel::self()->identityManager()->identityForUoidOrDefault(mComposerBase->identityCombo()->currentIdentity());
+    const auto ident = identity();
 
     if (!QGpgME::openpgp() && !QGpgME::smime()) {
         // no crypto whatsoever
@@ -1695,7 +1693,6 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     // Fixing the identities with auto signing activated
     mLastSignActionState = mSignAction->isChecked();
 
-    const KIdentityManagement::Identity &ident = im->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
 
     // check for the presence of a DNT header, indicating that MDN's were requested
     if (auto hdr = newMsg->headerByType("Disposition-Notification-To")) {
@@ -1715,6 +1712,8 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
             mUrgentAction->setChecked(true);
         }
     }
+
+    const auto &ident = identity();
 
     if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
         mMsg->removeHeader("X-Face");
@@ -1991,7 +1990,7 @@ void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
 
 const KIdentityManagement::Identity &KMComposerWin::identity() const
 {
-    return KMKernel::self()->identityManager()->identityForUoidOrDefault(mComposerBase->identityCombo()->currentIdentity());
+    return KMKernel::self()->identityManager()->identityForUoidOrDefault(currentIdentity());
 }
 
 Kleo::CryptoMessageFormat KMComposerWin::cryptoMessageFormat() const
@@ -2714,10 +2713,10 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         MessageComposer::PluginEditorCheckBeforeSendParams params;
         params.setSubject(subject());
         params.setHtmlMail(mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich);
-        params.setIdentity(mComposerBase->identityCombo()->currentIdentity());
+        params.setIdentity(currentIdentity());
         params.setHasAttachment(mComposerBase->attachmentModel()->rowCount() > 0);
         params.setTransportId(mComposerBase->transportComboBox()->currentTransportId());
-        const KIdentityManagement::Identity &ident = KMKernel::self()->identityManager()->identityForUoid(mComposerBase->identityCombo()->currentIdentity());
+        const auto ident = identity();
         QString defaultDomainName;
         if (!ident.isNull()) {
             defaultDomainName = ident.defaultDomainName();
@@ -3765,7 +3764,7 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
 
 void KMComposerWin::slotIdentityDeleted(uint uoid)
 {
-    if (mComposerBase->identityCombo()->currentIdentity() == uoid) {
+    if (currentIdentity() == uoid) {
         mIncorrectIdentityFolderWarning->identityInvalid();
     }
 }
