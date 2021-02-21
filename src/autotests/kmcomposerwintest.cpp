@@ -217,6 +217,7 @@ void KMComposerWinTest::testChangeIdentity()
         auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
         QVERIFY(identCombo);
         identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
         QEventLoop loop;
         QTimer::singleShot(50, &loop, SLOT(quit()));
         loop.exec();
@@ -231,6 +232,7 @@ void KMComposerWinTest::testChangeIdentity()
         auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
         QVERIFY(identCombo);
         identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
         QEventLoop loop;
         QTimer::singleShot(50, &loop, SLOT(quit()));
         loop.exec();
