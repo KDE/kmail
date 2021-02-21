@@ -3358,7 +3358,7 @@ void KMComposerWin::setFocusToSubject()
 
 void KMComposerWin::slotCompletionModeChanged(KCompletion::CompletionMode mode)
 {
-    KMailSettings::self()->setCompletionMode((int)mode);
+    KMailSettings::self()->setCompletionMode(static_cast<int>(mode));
 
     // sync all the lineedits to the same completion mode
     mEdtFrom->setCompletionMode(mode);
