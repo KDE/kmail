@@ -1634,26 +1634,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         mLastEncryptActionState = true;
     }
 
-    mComposerBase->setMessage(newMsg, allowDecryption);
-    mMsg = newMsg;
-
-    // Add initial data.
-    MessageComposer::PluginEditorConverterInitialData data;
-    data.setMewMsg(mMsg);
-    data.setNewMessage(mContext == TemplateContext::New);
-    mPluginEditorConvertTextManagerInterface->setInitialData(data);
-
     auto im = KMKernel::self()->identityManager();
-
-    mEdtFrom->setText(mMsg->from()->asUnicodeString());
-    mEdtSubject->setText(mMsg->subject()->asUnicodeString());
-
-    // Restore the quote prefix. We can't just use the global quote prefix here,
-    // since the prefix is different for each message, it might for example depend
-    // on the original sender in a reply.
-    if (auto hdr = mMsg->headerByType("X-KMail-QuotePrefix")) {
-        mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
-    }
 
     if (auto hrd = newMsg->headerByType("X-KMail-Identity")) {
         const QString identityStr = hrd->asUnicodeString();
@@ -1698,6 +1679,9 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         slotIdentityChanged(val);
     });
 
+    mComposerBase->setMessage(newMsg, allowDecryption);
+    mMsg = newMsg;
+
     // manually load the identity's value into the fields; either the one from the
     // message, where appropriate, or the one from the sticky identity. What's in
     // mId might have changed meanwhile, thus the save value
@@ -1705,6 +1689,21 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     // Fixing the identities with auto signing activated
     mLastSignActionState = mSignAction->isChecked();
 
+    // Add initial data.
+    MessageComposer::PluginEditorConverterInitialData data;
+    data.setMewMsg(mMsg);
+    data.setNewMessage(mContext == TemplateContext::New);
+    mPluginEditorConvertTextManagerInterface->setInitialData(data);
+
+    mEdtFrom->setText(mMsg->from()->asUnicodeString());
+    mEdtSubject->setText(mMsg->subject()->asUnicodeString());
+
+    // Restore the quote prefix. We can't just use the global quote prefix here,
+    // since the prefix is different for each message, it might for example depend
+    // on the original sender in a reply.
+    if (auto hdr = mMsg->headerByType("X-KMail-QuotePrefix")) {
+        mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
+    }
 
     // check for the presence of a DNT header, indicating that MDN's were requested
     if (auto hdr = newMsg->headerByType("Disposition-Notification-To")) {

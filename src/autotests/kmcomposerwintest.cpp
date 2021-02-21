@@ -186,7 +186,6 @@ void KMComposerWinTest::testEncryption()
     QCoreApplication::processEvents(QEventLoop::AllEvents);
     auto *encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(encryption);
-    QEXPECT_FAIL("autocrypt@example.com", "No autocrypt support for the moment.", Continue);
     QCOMPARE(encryption->isVisible(), encrypt);
     composer->close();
 }
