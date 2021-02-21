@@ -3327,6 +3327,15 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
     // make sure the From and BCC fields are shown if necessary
     rethinkFields(false);
     setModified(wasModified);
+
+    // Update encryption status of all recipients, if encryption state is not set by user
+    const bool setByUser = mEncryptAction->property("setByUser").toBool();
+    if (!setByUser && ident.pgpAutoEncrypt()) {
+        const auto lst = mComposerBase->recipientsEditor()->lines();
+        for (auto line : lst) {
+            slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG *>(line));
+        }
+    }
 }
 
 void KMComposerWin::slotSpellcheckConfig()

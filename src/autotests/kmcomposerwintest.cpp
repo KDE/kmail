@@ -221,7 +221,6 @@ void KMComposerWinTest::testChangeIdentity()
         QTimer::singleShot(50, &loop, SLOT(quit()));
         loop.exec();
         QCoreApplication::processEvents(QEventLoop::AllEvents);
-        QEXPECT_FAIL("", "Encryption state is not update correctly.", Continue);
         QCOMPARE(encryption->isVisible(), true);
         QCOMPARE(signature->isVisible(), true);
     }
