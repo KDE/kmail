@@ -3597,6 +3597,12 @@ void KMComposerWin::slotRecipientEditorFocusChanged()
         return;
     }
 
+    // Identity has no encryption key so no encryption is possible.
+    if (identity().pgpEncryptionKey().isEmpty()) {
+        setEncryption(false, false);
+        return;
+    }
+
     // Focus changed, which basically means that user "committed" a new recipient.
     // If we have at least one recipient that does not have a key, disable encryption
     // (unless user enabled it manually), because we want to encrypt by default,
