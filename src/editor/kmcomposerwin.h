@@ -127,6 +127,9 @@ private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
     ~KMComposerWin() override;
 
 public:
+    enum ModeType { ComposerType = 0, TemplateType };
+    Q_ENUMS(ModeType)
+
     static Composer *create(const KMime::Message::Ptr &msg,
                             bool lastSignState,
                             bool lastEncryptState,
@@ -431,6 +434,9 @@ public: // kmcommand
     QList<KToggleAction *> customToolsList() const;
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 
+    Q_REQUIRED_RESULT ModeType modeType() const;
+    void setModeType(const ModeType &modeType);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 
@@ -683,6 +689,8 @@ private:
     KMailPluginGrammarEditorManagerInterface *mPluginEditorGrammarManagerInterface = nullptr;
 
     AttachmentAddedFromExternalWarning *mAttachmentFromExternalMissing = nullptr;
+
+    ModeType mModeType = ModeType::ComposerType;
 };
 
 #endif

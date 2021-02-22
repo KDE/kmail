@@ -526,6 +526,16 @@ void KMComposerWin::slotRecipientEditorLineFocused()
     mPluginEditorManagerInterface->setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType::EmailFields);
 }
 
+KMComposerWin::ModeType KMComposerWin::modeType() const
+{
+    return mModeType;
+}
+
+void KMComposerWin::setModeType(const ModeType &modeType)
+{
+    mModeType = modeType;
+}
+
 bool KMComposerWin::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn) {
