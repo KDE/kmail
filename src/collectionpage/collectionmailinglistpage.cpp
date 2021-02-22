@@ -29,7 +29,6 @@
 #include <KMessageBox>
 #include <KSqueezedTextLabel>
 #include <QComboBox>
-#include <QLineEdit>
 
 using namespace MailCommon;
 

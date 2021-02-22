@@ -8,7 +8,6 @@
 #define UTILS_H_
 
 #include <QHash>
-#include <QString>
 #include <functional>
 
 template<typename T> inline QList<T> setToList(QSet<T> &&set)

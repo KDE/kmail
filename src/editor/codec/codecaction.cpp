@@ -15,7 +15,6 @@
 
 #include <KCharsets>
 // Qt
-#include <QTextCodec>
 
 // KDE libs
 #include "kmail_debug.h"
