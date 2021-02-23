@@ -583,7 +583,7 @@ DKIMViewerMenu *KMReaderWin::dkimViewerMenu() const
     return mViewer->dkimViewerMenu();
 }
 
-RemoteContentMenu *KMReaderWin::RemoteContentMenu() const
+RemoteContentMenu *KMReaderWin::remoteContentMenu() const
 {
     return mViewer->remoteContentMenu();
 }

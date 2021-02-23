@@ -175,6 +175,7 @@
 
 #include <MessageViewer/DKIMViewerMenu>
 #include <MessageViewer/DKIMWidgetInfo>
+#include <MessageViewer/RemoteContentMenu>
 #ifdef WITH_KUSERFEEDBACK
 #include <KUserFeedback/NotificationPopup>
 #include <KUserFeedback/Provider>
@@ -2728,6 +2729,11 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
                 menu.addMenu(mMsgView->dkimViewerMenu()->menu());
                 menu.addSeparator();
             }
+            if (mMsgView->remoteContentMenu()) {
+                menu.addMenu(mMsgView->remoteContentMenu());
+                menu.addSeparator();
+            }
+
             menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             menu.addSeparator();
         }
