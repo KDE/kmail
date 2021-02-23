@@ -57,6 +57,7 @@
 #include <MailCommon/MailUtil>
 #include <MessageViewer/DKIMViewerMenu>
 #include <MessageViewer/DKIMWidgetInfo>
+#include <MessageViewer/RemoteContentMenu>
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
@@ -775,6 +776,10 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
                     menu->addMenu(mReaderWin->dkimViewerMenu()->menu());
                 }
                 menu->addSeparator();
+                if (mReaderWin->remoteContentMenu()) {
+                    menu->addMenu(mReaderWin->remoteContentMenu());
+                    menu->addSeparator();
+                }
                 menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             }
         } else {
