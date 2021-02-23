@@ -578,9 +578,14 @@ KActionMenu *KMReaderWin::shareServiceUrlMenu() const
     return mViewer->shareServiceUrlMenu();
 }
 
-DKIMViewerMenu *KMReaderWin::dkimViewerMenu()
+DKIMViewerMenu *KMReaderWin::dkimViewerMenu() const
 {
     return mViewer->dkimViewerMenu();
+}
+
+RemoteContentMenu *KMReaderWin::RemoteContentMenu() const
+{
+    return mViewer->remoteContentMenu();
 }
 
 QList<QAction *> KMReaderWin::viewerPluginActionList(ViewerPluginInterface::SpecificFeatureTypes features)

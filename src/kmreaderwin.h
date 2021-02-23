@@ -159,7 +159,7 @@ public:
 
     Q_REQUIRED_RESULT bool mimePartTreeIsEmpty() const;
     KActionMenu *shareServiceUrlMenu() const;
-    MessageViewer::DKIMViewerMenu *dkimViewerMenu();
+    MessageViewer::DKIMViewerMenu *dkimViewerMenu() const;
     Q_REQUIRED_RESULT QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
     Q_REQUIRED_RESULT QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
@@ -171,6 +171,7 @@ public:
     void hasMultiMessages(bool multi);
 
     void updateShowMultiMessagesButton(bool enablePreviousButton, bool enableNextButton);
+    MessageViewer::RemoteContentMenu *RemoteContentMenu() const;
 Q_SIGNALS:
     void showStatusBarMessage(const QString &message);
     void zoomChanged(qreal factor);
