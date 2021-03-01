@@ -187,6 +187,7 @@ void MailMergeAgent::itemsMoved(const Akonadi::Item::List &items,
 QString MailMergeAgent::printDebugInfo() const
 {
     //    return mManager->printDebugInfo();
+    return {};
 }
 
 AKONADI_AGENT_MAIN(MailMergeAgent)

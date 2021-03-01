@@ -21,6 +21,7 @@ public:
     void setEnableAgent(bool b);
     Q_REQUIRED_RESULT bool enabledAgent() const;
 
+    void removeItem(qint64 item);
 Q_SIGNALS:
     void needUpdateConfigDialogBox();
 
@@ -29,6 +30,7 @@ public Q_SLOTS:
     void configure(WId windowId) override;
 
 protected:
+    void addItem(qint64 timestamp, bool recurrence, int recurrenceValue, int recurrenceUnit, Akonadi::Item::Id id, const QString &subject, const QString &to);
     void itemsRemoved(const Akonadi::Item::List &item) override;
     void itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection &sourceCollection, const Akonadi::Collection &destinationCollection) override;
     void doSetOnline(bool online) override;
