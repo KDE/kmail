@@ -27,7 +27,7 @@ set(mailmergeagent_SRCS
 
 
 #ki18n_wrap_ui(libsendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
-#kconfig_add_kcfg_files(libsendlateragent_SRCS sendlateragentsettings.kcfgc)
+kconfig_add_kcfg_files(libmailmergeagent_SRCS mailmergeagentsettings.kcfgc)
 add_library(mailmergeagent STATIC ${libmailmergeagent_SRCS})
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(sendlateragent PROPERTIES UNITY_BUILD ON)
