@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Mail Merge Agent
+Comment=Mail Merge Agent
+Type=AkonadiAgent
+Exec=akonadi_mailmerge_agent
+Icon=kmail
+X-Akonadi-MimeTypes=message/rfc822
+X-Akonadi-Capabilities=Unique,Autostart
+X-Akonadi-Identifier=akonadi_mailmerge_agent
