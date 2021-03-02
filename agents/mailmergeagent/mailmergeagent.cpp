@@ -5,6 +5,7 @@
 */
 
 #include "mailmergeagent.h"
+#include "mailmergemanager.h"
 #include <AgentInstance>
 #include <AgentManager>
 #include <Akonadi/KMime/SpecialMailCollections>
@@ -25,13 +26,14 @@
 
 MailMergeAgent::MailMergeAgent(const QString &id)
     : Akonadi::AgentBase(id)
+    , mManager(new MailMergeManager(this))
 {
 #if 0
     connect(mManager, &SendLaterManager::needUpdateConfigDialogBox, this, &MailMergeAgent::needUpdateConfigDialogBox);
     new MailMergeAgentAdaptor(this);
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailMergeAgent"), this, QDBusConnection::ExportAdaptors);
 
-    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_sendlater_agent"));
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mergemail_agent"));
 
     QDBusConnection::sessionBus().registerService(service);
 
@@ -186,8 +188,7 @@ void MailMergeAgent::itemsMoved(const Akonadi::Item::List &items,
 
 QString MailMergeAgent::printDebugInfo() const
 {
-    //    return mManager->printDebugInfo();
-    return {};
+    return mManager->printDebugInfo();
 }
 
 AKONADI_AGENT_MAIN(MailMergeAgent)

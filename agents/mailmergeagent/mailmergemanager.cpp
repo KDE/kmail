@@ -14,3 +14,9 @@ MailMergeManager::MailMergeManager(QObject *parent)
 MailMergeManager::~MailMergeManager()
 {
 }
+
+QString MailMergeManager::printDebugInfo() const
+{
+    // TODO
+    return {};
+}

@@ -14,4 +14,5 @@ class MailMergeManager : public QObject
 public:
     explicit MailMergeManager(QObject *parent = nullptr);
     ~MailMergeManager() override;
+    Q_REQUIRED_RESULT QString printDebugInfo() const;
 };

@@ -7,7 +7,7 @@
 #pragma once
 #include <agentbase.h>
 
-class SendLaterManager;
+class MailMergeManager;
 
 class MailMergeAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
 {
@@ -38,5 +38,6 @@ protected:
 private:
     void slotSendNow(Akonadi::Item::Id id);
     void slotStartAgent();
+    MailMergeManager *const mManager;
     bool mAgentInitialized = false;
 };
