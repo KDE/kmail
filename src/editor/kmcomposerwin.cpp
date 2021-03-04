@@ -2995,11 +2995,11 @@ void KMComposerWin::slotCheckSendNow()
     QStringList lst{mComposerBase->to()};
     const QString ccStr = mComposerBase->cc();
     if (!ccStr.isEmpty()) {
-        lst << ccStr.split(QLatin1Char(','));
+        lst << KEmailAddress::splitAddressList(ccStr);
     }
     const QString bccStr = mComposerBase->bcc();
     if (!bccStr.isEmpty()) {
-        lst << bccStr.split(QLatin1Char(','));
+        lst << KEmailAddress::splitAddressList(bccStr);
     }
     if (lst.isEmpty()) {
         slotCheckSendNowStep2();
