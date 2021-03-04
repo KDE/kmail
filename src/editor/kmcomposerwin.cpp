@@ -554,7 +554,7 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
 {
     {
         if (!info.to.isEmpty()) {
-            const QStringList lst = info.to.split(QLatin1Char(','));
+            const QStringList lst = KEmailAddress::splitAddressList(info.to);
             for (const QString &addr : lst) {
                 mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::To);
             }
@@ -562,7 +562,7 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
     }
     {
         if (!info.cc.isEmpty()) {
-            const QStringList lst = info.cc.split(QLatin1Char(','));
+            const QStringList lst = KEmailAddress::splitAddressList(info.cc);
             for (const QString &addr : lst) {
                 mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::Cc);
             }
@@ -570,7 +570,7 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
     }
     {
         if (!info.bcc.isEmpty()) {
-            const QStringList lst = info.bcc.split(QLatin1Char(','));
+            const QStringList lst = KEmailAddress::splitAddressList(info.bcc);
             for (const QString &addr : lst) {
                 mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::Bcc);
             }
