@@ -2,6 +2,7 @@
 Name=Mail Merge Agent
 Name[ca]=Agent per a fusionar el correu
 Name[es]=Agente de fusión de correo
+Name[fr]=Agent de fusion de messages
 Name[nl]=Agent voor samenvoegen in e-mail
 Name[pt]=Agente de Junção de E-mail
 Name[sl]=Posrednik za zlivanje pošte
@@ -11,6 +12,7 @@ Name[x-test]=xxMail Merge Agentxx
 Comment=Mail Merge Agent
 Comment[ca]=Agent per a fusionar el correu
 Comment[es]=Agente de fusión de correo
+Comment[fr]=Agent de fusion de messages
 Comment[nl]=Agent voor samenvoegen in e-mail
 Comment[pt]=Agente de Junção de E-mail
 Comment[sl]=Posrednik za zlivanje pošte
