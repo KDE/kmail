@@ -47,7 +47,7 @@ SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
                                       i18n("Copyright (C) 2013-2020 Laurent Montel"));
 
     aboutData.addAuthor(i18n("Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
-
+    aboutData.setProductName(QByteArrayLiteral("Akonadi/SendLaterAgent"));
     QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 
