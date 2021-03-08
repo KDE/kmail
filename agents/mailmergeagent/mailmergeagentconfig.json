@@ -1,0 +1,5 @@
+{
+    "X-Akonadi-PluginType": "AgentConfig",
+    "X-Akonadi-Library": "mailmergeagentconfig",
+    "X-Akonadi-AgentConfig-Type": "akonadi_mailmerge_agent"
+}

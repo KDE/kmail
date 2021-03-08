@@ -44,8 +44,8 @@ target_link_libraries(mailmergeagent
     KF5::DBusAddons
     KF5::WindowSystem
     KF5::XmlGui
-    KF5::Notifications
     KF5::I18n
+    KF5::Notifications
     )
 
 
@@ -65,8 +65,8 @@ install(TARGETS akonadi_mailmerge_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
 install(FILES mailmergeagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 #install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
 
-#kcoreaddons_add_plugin(sendlateragentconfig
-#    JSON sendlateragentconfig.json
-#    SOURCES ${sendlateragentconfig_SRCS}
+#kcoreaddons_add_plugin(mailmergeagentconfig
+#    JSON mailmergeagentconfig.json
+#    SOURCES ${mailmergeagentconfig_SRCS}
 #    INSTALL_NAMESPACE akonadi/config
-#)
+#    )
