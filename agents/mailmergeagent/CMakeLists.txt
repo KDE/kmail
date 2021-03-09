@@ -63,7 +63,7 @@ endif ()
 install(TARGETS akonadi_mailmerge_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
 
 install(FILES mailmergeagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
-#install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
+install(FILES akonadi_mailmerge_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
 
 #kcoreaddons_add_plugin(mailmergeagentconfig
 #    JSON mailmergeagentconfig.json
