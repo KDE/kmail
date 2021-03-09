@@ -23,7 +23,7 @@ set(mailmergeagent_SRCS
     mailmergemanager.cpp
     )
 
-#qt5_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.xml sendlateragent.h SendLaterAgent)
+qt5_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)
 
 
 #ki18n_wrap_ui(libsendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
