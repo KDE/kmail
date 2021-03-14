@@ -123,6 +123,7 @@
 #include <Sonnet/DictionaryComboBox>
 
 #include <MessageCore/AttachmentPart>
+#include <MessageCore/AutocryptStorage>
 #include <MessageCore/MessageCoreSettings>
 #include <MessageCore/NodeHelper>
 #include <MessageCore/StringUtil>
@@ -1633,26 +1634,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         mLastEncryptActionState = true;
     }
 
-    mComposerBase->setMessage(newMsg, allowDecryption);
-    mMsg = newMsg;
-
-    // Add initial data.
-    MessageComposer::PluginEditorConverterInitialData data;
-    data.setMewMsg(mMsg);
-    data.setNewMessage(mContext == TemplateContext::New);
-    mPluginEditorConvertTextManagerInterface->setInitialData(data);
-
     auto im = KMKernel::self()->identityManager();
-
-    mEdtFrom->setText(mMsg->from()->asUnicodeString());
-    mEdtSubject->setText(mMsg->subject()->asUnicodeString());
-
-    // Restore the quote prefix. We can't just use the global quote prefix here,
-    // since the prefix is different for each message, it might for example depend
-    // on the original sender in a reply.
-    if (auto hdr = mMsg->headerByType("X-KMail-QuotePrefix")) {
-        mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
-    }
 
     if (auto hrd = newMsg->headerByType("X-KMail-Identity")) {
         const QString identityStr = hrd->asUnicodeString();
@@ -1697,6 +1679,9 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         slotIdentityChanged(val);
     });
 
+    mComposerBase->setMessage(newMsg, allowDecryption);
+    mMsg = newMsg;
+
     // manually load the identity's value into the fields; either the one from the
     // message, where appropriate, or the one from the sticky identity. What's in
     // mId might have changed meanwhile, thus the save value
@@ -1704,6 +1689,21 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     // Fixing the identities with auto signing activated
     mLastSignActionState = mSignAction->isChecked();
 
+    // Add initial data.
+    MessageComposer::PluginEditorConverterInitialData data;
+    data.setMewMsg(mMsg);
+    data.setNewMessage(mContext == TemplateContext::New);
+    mPluginEditorConvertTextManagerInterface->setInitialData(data);
+
+    mEdtFrom->setText(mMsg->from()->asUnicodeString());
+    mEdtSubject->setText(mMsg->subject()->asUnicodeString());
+
+    // Restore the quote prefix. We can't just use the global quote prefix here,
+    // since the prefix is different for each message, it might for example depend
+    // on the original sender in a reply.
+    if (auto hdr = mMsg->headerByType("X-KMail-QuotePrefix")) {
+        mComposerBase->editor()->setQuotePrefixName(hdr->asUnicodeString());
+    }
 
     // check for the presence of a DNT header, indicating that MDN's were requested
     if (auto hdr = newMsg->headerByType("Disposition-Notification-To")) {
@@ -3327,6 +3327,15 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
     // make sure the From and BCC fields are shown if necessary
     rethinkFields(false);
     setModified(wasModified);
+
+    // Update encryption status of all recipients, if encryption state is not set by user
+    const bool setByUser = mEncryptAction->property("setByUser").toBool();
+    if (!setByUser && ident.pgpAutoEncrypt()) {
+        const auto lst = mComposerBase->recipientsEditor()->lines();
+        for (auto line : lst) {
+            slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG *>(line));
+        }
+    }
 }
 
 void KMComposerWin::slotSpellcheckConfig()
@@ -3588,6 +3597,12 @@ void KMComposerWin::slotRecipientEditorFocusChanged()
         return;
     }
 
+    // Identity has no encryption key so no encryption is possible.
+    if (identity().pgpEncryptionKey().isEmpty()) {
+        setEncryption(false, false);
+        return;
+    }
+
     // Focus changed, which basically means that user "committed" a new recipient.
     // If we have at least one recipient that does not have a key, disable encryption
     // (unless user enabled it manually), because we want to encrypt by default,
@@ -3726,7 +3741,52 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
     }
 
     line->setProperty("keyLookupJob", QVariant());
-    if (key.isNull()) {
+    if (key.isNull() && identity().autocryptEnabled()) {
+        const QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
+        QIcon overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
+        QString tooltip;
+
+        QString dummy, addrSpec;
+        if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
+            addrSpec = recipient->email();
+        }
+        const auto storage = MessageCore::AutocryptStorage::self();
+        const auto rec = storage->getRecipient(addrSpec.toUtf8());
+        GpgME::Key autocryptKey;
+        if (rec) {
+            const auto key = rec->gpgKey();
+            if (!key.isNull() && !key.isRevoked() && !key.isExpired() && !key.isDisabled() && key.canEncrypt()) {
+                autocryptKey = key;
+                if (rec->prefer_encrypt()) {
+                    overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
+                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified."
+                                   "The recipient prefers encrypted replies.");
+                } else {
+                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified."
+                                   "The recipient does not prefere encrypted replies.");
+                }
+            } else {
+                const auto gossipKey = rec->gossipKey();
+                if (!gossipKey.isNull() && !gossipKey.isRevoked() && !gossipKey.isExpired() && !gossipKey.isDisabled() && gossipKey.canEncrypt()) {
+                    autocryptKey = gossipKey;
+                    tooltip = i18n("Autocrypt gossip key is used for this recipient. This key is not verified.");
+                }
+            }
+        }
+
+        if (!autocryptKey.isNull()) {
+            recipient->setEncryptionAction(Kleo::DoIt);
+            recipient->setKey(autocryptKey);
+            line->setProperty("keyStatus", KeyOk);
+            line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
+
+            slotRecipientEditorFocusChanged();
+        } else {
+            recipient->setEncryptionAction(Kleo::Impossible); // no key
+            line->setIcon(QIcon());
+            line->setProperty("keyStatus", InProgress);
+        }
+    } else if(key.isNull()) {
         recipient->setEncryptionAction(Kleo::Impossible); // no key
         line->setIcon(QIcon());
         line->setProperty("keyStatus", InProgress);

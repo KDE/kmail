@@ -186,7 +186,6 @@ void KMComposerWinTest::testEncryption()
     QCoreApplication::processEvents(QEventLoop::AllEvents);
     auto *encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(encryption);
-    QEXPECT_FAIL("autocrypt@example.com", "No autocrypt support for the moment.", Continue);
     QCOMPARE(encryption->isVisible(), encrypt);
     composer->close();
 }
@@ -222,7 +221,6 @@ void KMComposerWinTest::testChangeIdentity()
         QTimer::singleShot(50, &loop, SLOT(quit()));
         loop.exec();
         QCoreApplication::processEvents(QEventLoop::AllEvents);
-        QEXPECT_FAIL("", "Encryption state is not update correctly.", Continue);
         QCOMPARE(encryption->isVisible(), true);
         QCOMPARE(signature->isVisible(), true);
     }
