@@ -36,7 +36,6 @@ protected:
     void doSetOnline(bool online) override;
 
 private:
-    void slotSendNow(Akonadi::Item::Id id);
     void slotStartAgent();
     MailMergeManager *const mManager;
     bool mAgentInitialized = false;

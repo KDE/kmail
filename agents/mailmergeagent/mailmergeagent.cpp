@@ -23,6 +23,7 @@
 #include <KWindowSystem>
 
 #include <QPointer>
+#include <QTimer>
 
 //#define DEBUG_MAILMERGEAGENT 1
 
@@ -31,34 +32,36 @@ MailMergeAgent::MailMergeAgent(const QString &id)
     , mManager(new MailMergeManager(this))
 {
 #if 0
-    connect(mManager, &SendLaterManager::needUpdateConfigDialogBox, this, &MailMergeAgent::needUpdateConfigDialogBox);
+    connect(mManager, &MailMergeManager::needUpdateConfigDialogBox, this, &MailMergeAgent::needUpdateConfigDialogBox);
     new MailMergeAgentAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailMergeAgent"), this, QDBusConnection::ExportAdaptors);
+#endif
+  QDBusConnection::sessionBus().registerObject(
+      QStringLiteral("/MailMergeAgent"), this, QDBusConnection::ExportAdaptors);
 
-    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mergemail_agent"));
+  const QString service = Akonadi::ServerManager::self()->agentServiceName(
+      Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mergemail_agent"));
 
-    QDBusConnection::sessionBus().registerService(service);
+  QDBusConnection::sessionBus().registerService(service);
 
-    changeRecorder()->setMimeTypeMonitored(KMime::Message::mimeType());
-    changeRecorder()->itemFetchScope().setCacheOnly(true);
-    changeRecorder()->itemFetchScope().setFetchModificationTime(false);
-    changeRecorder()->setChangeRecordingEnabled(false);
-    changeRecorder()->ignoreSession(Akonadi::Session::defaultSession());
-    setNeedsNetwork(true);
+  changeRecorder()->setMimeTypeMonitored(KMime::Message::mimeType());
+  changeRecorder()->itemFetchScope().setCacheOnly(true);
+  changeRecorder()->itemFetchScope().setFetchModificationTime(false);
+  changeRecorder()->setChangeRecordingEnabled(false);
+  changeRecorder()->ignoreSession(Akonadi::Session::defaultSession());
+  setNeedsNetwork(true);
 
-    if (MailMergeAgentSettings::enabled()) {
+  if (MailMergeAgentSettings::enabled()) {
 #ifdef DEBUG_MailMergeAgent
         QTimer::singleShot(1000, this, &MailMergeAgent::slotStartAgent);
 #else
         QTimer::singleShot(1000 * 60 * 4, this, &MailMergeAgent::slotStartAgent);
 #endif
-    }
+  }
     // For extra safety, check list every hour, in case we didn't properly get
     // notified about the network going up or down.
     auto reloadListTimer = new QTimer(this);
     connect(reloadListTimer, &QTimer::timeout, this, &MailMergeAgent::reload);
     reloadListTimer->start(1000 * 60 * 60); // 1 hour
-#endif
 }
 
 MailMergeAgent::~MailMergeAgent() = default;
@@ -107,8 +110,7 @@ void MailMergeAgent::setEnableAgent(bool enabled)
 
 bool MailMergeAgent::enabledAgent() const
 {
-    // return MailMergeAgentSettings::enabled();
-    return false;
+  return MailMergeAgentSettings::enabled();
 }
 
 void MailMergeAgent::configure(WId windowId)
@@ -158,11 +160,6 @@ void MailMergeAgent::addItem(qint64 timestamp,
 
     //    SendLaterUtil::writeSendLaterInfo(SendLaterUtil::defaultConfig(), info);
     //    reload();
-}
-
-void MailMergeAgent::slotSendNow(Akonadi::Item::Id id)
-{
-    // mManager->sendNow(id);
 }
 
 void MailMergeAgent::itemsRemoved(const Akonadi::Item::List &items)
