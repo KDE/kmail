@@ -3759,11 +3759,11 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
                 autocryptKey = key;
                 if (rec->prefer_encrypt()) {
                     overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
-                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified."
+                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified. "
                                    "The recipient prefers encrypted replies.");
                 } else {
-                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified."
-                                   "The recipient does not prefere encrypted replies.");
+                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified. "
+                                   "The recipient does not prefer encrypted replies.");
                 }
             } else {
                 const auto gossipKey = rec->gossipKey();
