@@ -20,3 +20,7 @@ QString MailMergeManager::printDebugInfo() const
     // TODO
     return {};
 }
+
+void MailMergeManager::load(bool state) {}
+
+void MailMergeManager::stopAll() {}

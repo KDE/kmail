@@ -5,6 +5,8 @@
 */
 
 #include "mailmergeagent.h"
+#include "mailmergeagent_debug.h"
+#include "mailmergeagentsettings.h"
 #include "mailmergemanager.h"
 #include <AgentInstance>
 #include <AgentManager>
@@ -22,7 +24,7 @@
 
 #include <QPointer>
 
-//#define DEBUG_MailMergeAgent 1
+//#define DEBUG_MAILMERGEAGENT 1
 
 MailMergeAgent::MailMergeAgent(const QString &id)
     : Akonadi::AgentBase(id)
@@ -65,7 +67,7 @@ void MailMergeAgent::slotStartAgent()
 {
     mAgentInitialized = true;
     if (isOnline()) {
-        // mManager->load();
+      mManager->load();
     }
 }
 
@@ -75,32 +77,32 @@ void MailMergeAgent::doSetOnline(bool online)
         if (online) {
             reload();
         } else {
-            // mManager->stopAll();
+          mManager->stopAll();
         }
     }
 }
 
 void MailMergeAgent::reload()
 {
-    //    qCDebug(MailMergeAgent_LOG) << " void MailMergeAgent::reload()";
-    //    if (MailMergeAgentSettings::enabled()) {
-    //        mManager->load(true);
-    //    }
+  qCDebug(MAILMERGEAGENT_LOG) << " void MailMergeAgent::reload()";
+  if (MailMergeAgentSettings::enabled()) {
+    mManager->load(true);
+  }
 }
 
 void MailMergeAgent::setEnableAgent(bool enabled)
 {
-    //    if (MailMergeAgentSettings::enabled() == enabled) {
-    //        return;
-    //    }
+  if (MailMergeAgentSettings::enabled() == enabled) {
+    return;
+  }
 
-    //    MailMergeAgentSettings::setEnabled(enabled);
-    //    MailMergeAgentSettings::self()->save();
-    //    if (enabled) {
-    //        mManager->load();
-    //    } else {
-    //        mManager->stopAll();
-    //    }
+  MailMergeAgentSettings::setEnabled(enabled);
+  MailMergeAgentSettings::self()->save();
+  if (enabled) {
+    mManager->load();
+  } else {
+    mManager->stopAll();
+  }
 }
 
 bool MailMergeAgent::enabledAgent() const
