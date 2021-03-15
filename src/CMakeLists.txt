@@ -9,14 +9,6 @@ add_custom_target(kmail_xml ALL
     COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
     )
 
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}
-    ${GPGME_INCLUDES}
-    ${AKONADI_INCLUDE_DIR}
-    )
-
-
-
 if (TARGET KUserFeedbackWidgets)
     add_definitions(-DWITH_KUSERFEEDBACK)
 endif()
