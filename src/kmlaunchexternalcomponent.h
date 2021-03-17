@@ -16,6 +16,7 @@ public:
     ~KMLaunchExternalComponent() override;
 
 public Q_SLOTS:
+    void slotConfigureMailMerge();
     void slotConfigureSendLater();
     void slotConfigureAutomaticArchiving();
     void slotConfigureFollowupReminder();

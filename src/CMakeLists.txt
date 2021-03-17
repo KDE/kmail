@@ -262,6 +262,10 @@ qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     )
 
 qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ../agents/mailmergeagent/org.freedesktop.Akonadi.MailMergeAgent.xml
+    )
+
+qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
     dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
     )
 
