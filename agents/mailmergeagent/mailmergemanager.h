@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <AkonadiCore/Item>
 #include <QObject>
 
 class MailMergeManager : public QObject
@@ -17,4 +18,5 @@ public:
     Q_REQUIRED_RESULT QString printDebugInfo() const;
     void load(bool state = false);
     void stopAll();
+    Q_REQUIRED_RESULT bool itemRemoved(Akonadi::Item::Id id);
 };

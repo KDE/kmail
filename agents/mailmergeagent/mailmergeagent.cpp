@@ -136,9 +136,9 @@ void MailMergeAgent::configure(WId windowId)
 
 void MailMergeAgent::removeItem(qint64 item)
 {
-    //    if (mManager->itemRemoved(item)) {
-    //        reload();
-    //    }
+    if (mManager->itemRemoved(item)) {
+        reload();
+    }
 }
 
 void MailMergeAgent::addItem(qint64 timestamp,
@@ -164,15 +164,15 @@ void MailMergeAgent::addItem(qint64 timestamp,
 
 void MailMergeAgent::itemsRemoved(const Akonadi::Item::List &items)
 {
-    //    bool needToReload = false;
-    //    for (const Akonadi::Item &item : items) {
-    //        if (mManager->itemRemoved(item.id())) {
-    //            needToReload = true;
-    //        }
-    //    }
-    //    if (needToReload) {
-    //        reload();
-    //    }
+    bool needToReload = false;
+    for (const Akonadi::Item &item : items) {
+        if (mManager->itemRemoved(item.id())) {
+            needToReload = true;
+        }
+    }
+    if (needToReload) {
+        reload();
+    }
 }
 
 void MailMergeAgent::itemsMoved(const Akonadi::Item::List &items,

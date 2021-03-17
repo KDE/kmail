@@ -24,3 +24,15 @@ QString MailMergeManager::printDebugInfo() const
 void MailMergeManager::load(bool state) {}
 
 void MailMergeManager::stopAll() {}
+
+bool MailMergeManager::itemRemoved(Akonadi::Item::Id id)
+{
+    // TODO
+    //    if (mConfig->hasGroup(SendLaterUtil::sendLaterPattern().arg(id))) {
+    //        removeInfo(id);
+    //        mConfig->reparseConfiguration();
+    //        Q_EMIT needUpdateConfigDialogBox();
+    //        return true;
+    //    }
+    return false;
+}
