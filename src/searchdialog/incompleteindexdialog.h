@@ -9,7 +9,7 @@
 
 #include <QDialog>
 #include <QList>
-
+#include <memory>
 class QProgressDialog;
 class QDBusInterface;
 
@@ -36,7 +36,7 @@ private:
     void waitForIndexer();
     void updateAllSelection(bool select);
 
-    QScopedPointer<Ui_IncompleteIndexDialog> mUi;
+    std::unique_ptr<Ui_IncompleteIndexDialog> mUi;
     QProgressDialog *mProgressDialog = nullptr;
     QDBusInterface *mIndexer = nullptr;
     QList<qlonglong> mIndexingQueue;
