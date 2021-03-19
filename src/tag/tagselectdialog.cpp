@@ -32,6 +32,7 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     : QDialog(parent)
     , mNumberOfSelectedMessages(numberOfSelectedMessages)
     , mSelectedItem(selectedItem)
+    , mListTag(new QListWidget(this))
 {
     setWindowTitle(i18nc("@title:window", "Select Tags"));
     auto mainLayout = new QVBoxLayout(this);
@@ -54,7 +55,6 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     auto vbox = new QVBoxLayout;
     mainWidget->setLayout(vbox);
     vbox->setContentsMargins({});
-    mListTag = new QListWidget(this);
     mListTag->setObjectName(QStringLiteral("listtag"));
     auto listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
     listWidgetSearchLine->setObjectName(QStringLiteral("searchline"));
