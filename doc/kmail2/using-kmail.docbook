@@ -123,6 +123,7 @@ see <link linkend="customize-messagelist-theme">Configure Appearance of Message 
   </mediaobject>
 </screenshot>
 <para>&nbsp;</para> <!-- whitespace -->
+<anchor id="the-preview-pane-headers" />
 <para>This pane displays the currently selected message. Here are some ways to adjust the Preview pane.</para>
 <para>The top of the Preview pane displays the message headers. Several display options are available. Go to 
 <menuchoice><guimenu>View</guimenu><guisubmenu>Headers</guisubmenu></menuchoice>
@@ -2279,7 +2280,7 @@ window. Before you send the message, check the <guibutton><inlinemediaobject>
 <imageobject><imagedata fileref="document-edit.png" format="PNG"/>
 </imageobject></inlinemediaobject> Sign</guibutton>
 icon on the toolbar of the composer window, or select <menuchoice>
-<guimenu>Options</guimenu><guimenuitem><inlinemediaobject><imageobject>
+<guimenu>Options></guimenu><guimenuitem><inlinemediaobject><imageobject>
 <imagedata fileref="document-edit.png" format="PNG"/></imageobject>
 </inlinemediaobject> Sign Message</guimenuitem></menuchoice>. Then, you can send
 the message. The identity you are using to write the current message needs to 
@@ -2301,7 +2302,7 @@ Before you send the message, check the <guibutton><inlinemediaobject><imageobjec
 <imagedata fileref="document-decrypt.png" format="PNG"/>
 </imageobject></inlinemediaobject> Encrypt</guibutton> 
 button in the toolbar of the composer window (or select <menuchoice>
-<guimenu>Options</guimenu><guimenuitem><inlinemediaobject><imageobject>
+<guimenu>Options></guimenu><guimenuitem><inlinemediaobject><imageobject>
 <imagedata fileref="document-decrypt.png" format="PNG"/>
 </imageobject></inlinemediaobject> Encrypt Message</guimenuitem></menuchoice>).
 Then send the message.</para>

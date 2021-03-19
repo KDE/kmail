@@ -33,7 +33,7 @@
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<date>2020-11-03</date>
+<date>2021-02-13</date>
 <releaseinfo>5.14.2 (Applications 20.04.2)</releaseinfo>
 </chapterinfo>
 
@@ -255,7 +255,7 @@ address</guilabel> field.</para></example>
 <para>This field contains alias addresses that also 
 belong to this identity (as opposed to representing 
 a different identity). You may define multiple aliases. To add another
-alias enter an email address in the <guilabel>Email aliases:</guilabel>
+alias. enter an email address in the <guilabel>Email aliases:</guilabel>
 field, then click the <guibutton>&plus; Add</guibutton> button</para>
 <example>
 <title>Email aliases</title>
@@ -477,7 +477,7 @@ message sent from this identity. A short dialog will ensue.</para>
         <varlistentry>
         <term><guilabel>From existing vCard</guilabel></term>
         <listitem><para>This option opens a browse directories dialog which
-        allows you to select a .vcf file. (Hint: Use &kaddressbook;
+        allows you to to select a .vcf file. (Hint: Use &kaddressbook;
         to export a vCard file that can be used here.)</para></listitem>
         </varlistentry>        
         <varlistentry>
@@ -1154,7 +1154,7 @@ the threads that have been active today. Otherwise the same as Current Activity,
 <varlistentry>
 <term>Senders/Receivers, Flat</term>
 <listitem><para>This view groups the messages by senders or receivers (depending on the folder type).
-You may specify senders (or receivers) in the <menuchoice><guimenu>Folder</guimenu>
+You may specify senders (or receivers) in the <menuchoice><guimenu>Folders</guimenu>
 <guimenuitem>Folder Properties</guimenuitem></menuchoice> dialog ("View" tab, <guilabel>Show
 Column:</guilabel>). Messages are not threaded.</para></listitem>
 </varlistentry>
@@ -1853,7 +1853,7 @@ dialog. You may choose any or all of six options.</para>
       / &calligra; installation, via the <guibutton>Import ... <inlinemediaobject>
       <imageobject><imagedata fileref="go-down.png" format="PNG"/></imageobject>
       </inlinemediaobject></guibutton> button. If you need to save your settings for 
-      another installation or application, use the <guibutton>Export</guibutton> button.
+      another installation or application, use the <guibutton>Export...</guibutton> button.
     </para>
     
     <para>
@@ -3283,68 +3283,696 @@ modifying it by hand.</para>
     <title>Plugins Page</title>
     
     <para>
-      This section of the documentation is still under construction.
+      &kmail; contains a large number of special functions that may or may not 
+      be useful for particular users. You may select one or more of these special
+      functions by choosing it / them on the "plugins" configuration page. Or, if
+      you don't want or need a particular function, you can conserve time and storage
+      space by deselecting the associated plugin module.
     </para>
     
-    <!-- <para>Add verbiage about the new "Plugins" page.</para>
+    <para>
+      You can get a rough idea of what a particular plugin does by simply highlighting
+      the name of the plugin on the &kmail; configuration page. A brief description
+      of that plugin's function will then appear on the right hand side of the dialog.
+    </para>
+    
+    <para>
+      The various plugins currently available in &kmail; (2021) are listed below.
+      Note that the set of "default" plugins is based on the openSUSE version
+      of &kmail; (5.14.2) used as a reference for this edition of the documentation.
+      The actual defaults on your system may be different; they're distro dependent.
+    </para>
+    
+    <para>  
+      Because new functionality is added from time to time, this list may grow 
+      longer as time passes. There are two general rules governing plugin
+      structure you can count on even if the particular plugin you are
+      confronting is not listed below.
+    </para>
+    
+    <para>
+      1. If the plugin has configurable variables, you can open the configuration
+      dialog for that plugin by clicking the <guibutton>&nbsp;<inlinemediaobject>
+      <imageobject><imagedata fileref="configurebutton.png" format="PNG"/></imageobject>
+      </inlinemediaobject>&nbsp;</guibutton> button appearing next to the plugin's name.
+    </para>
+    
+    <para>
+      2. Whenever a plugin is selected or deselected, &kmail; must be restarted before
+      the desired change(s) can take effect.
+    </para>
+    <para>&nbsp;</para><!-- add whitespace -->
     
     <sect2 id="configure-plugins-akonadi">
-        <title>Akonadi</title>
-        <para>Describe Akonadi plugins here.</para>
-    </sect2>
+    <title>Akonadi and Check Before Send</title>
+    <screenshot>
+      <screeninfo>Plugins Picture No. One</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin01.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase>Plugins Picture No. One</phrase>
+          </textobject>
+          <caption>
+            <para>Plugins: Akonadi &amp; Check Before Send</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para>&nbsp;</para><!-- add whitespace -->
     
-    <sect2 id="configure-plugins-check-before-send">
-        <title>Check Before Send</title>
-        <para>Describe Check Before Send plugins here.</para>
+    <variablelist>
+        
+      <varlistentry>
+        <term><guilabel>Archive Mail Agent</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable automatic archiving. See the <ulink 
+            url="help:/akonadi_archivemail_agent">Archive Mail Agent</ulink>
+            documentation for detailed information. You may also wish to read
+            the <link linkend="archiving">Archiving</link> section of this 
+            handbook. This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Followup Reminder Agent</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable followup reminders. See the <ulink 
+            url="help:/akonadi_followupreminder_agent">Followup Reminder Agent</ulink>
+            documentation for additional information. This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>New Email Notifier</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable new email notifications. You may tailor the
+            fields to be displayed in the "standard" notification message. You may also
+            select audio signals (spoken text, pre-recorded sounds), create log file entries,
+            &etc; This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Send Later Agent</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable delayed dispatching. See the <ulink 
+            url="help:/akonadi_sendlater_agent">Send Later Agent</ulink>
+            documentation for additional information. This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Unified Mailbox Agent</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to create a set of "unified" mailboxes. &kmail;
+            will automatically create three of these, labeled Inbox, Drafts, and
+            Sent. If you have defined both a Local Folders inbox and one or more
+            &IMAP; inbox destinations, &kmail; will display all the various inbox
+            files as one consolidated virtual Inbox folder. You may use the 
+            configuration dialog to create additional virtual mailboxes, tailoring
+            each one as you see fit. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term><guilabel>Automatic Add Contacts</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add new addresses to one of your address books
+            whenever you send email to a new contact. Use the configuration dialog
+            to associate address books with identities. This plugin is disabled
+            by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Check Before Send</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to apply a few rules before actually sending a
+            message. This plugin is enabled by default, and will automatically
+            notify you when you are trying to send more than one copy of the
+            message to the same person.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Confirm Address</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable address screening on outgoing messages.
+            Use the configuration dialog to define a white list and/or a black
+            list for each defined identity. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para>&nbsp;</para><!-- add whitespace -->
     </sect2>
     
     <sect2 id="configure-plugins-composer">
-        <title>Composer / External Editor</title>
-        <para>Describe Composer / External Editor plugin here.</para>
-    </sect2>
+    <title>Composer / Editor</title>
+    <screenshot>
+      <screeninfo>Plugins Picture No. Two</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin02.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase>Plugins Picture No. Two</phrase>
+          </textobject>
+          <caption>
+            <para>Composer &amp; Editor</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para>&nbsp;</para><!-- add whitespace -->
     
-    <sect2 id="configure-plugins-editor">
-        <title>Built-in Editor</title>
-        <para>Describe Editor plugins here.</para>
+    <variablelist>
+        
+      <varlistentry>
+        <term><guilabel>Open external composer</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to force the composer to open an external text editor
+            when it starts up. Use the configuration dialog for this plugin to specify
+            the editor that will be called. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Autocorrection</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Tools</guimenu>
+            <guimenuitem>Autocorrect Text &gt;</guimenuitem></menuchoice>
+            function to the composer. This plugin is disabled by default, and
+            is apparently still under construction.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Change Case</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Edit</guimenu>
+            <guimenuitem>Change Case &gt;</guimenuitem></menuchoice> function
+            to the composer. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Insert Email</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Edit</guimenu>
+            <guimenuitem>Insert Email...</guimenuitem></menuchoice> function
+            to the composer. This lets you insert a selected email address from
+            an address book into the body of your message with a simple point and
+            click of the &LMB;. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Insert Non Breaking Space</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Edit</guimenu>
+            <guimenuitem>Insert Non Breaking Space</guimenuitem></menuchoice>
+            function to the composer. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Insert Short URL</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add a tiny bit of not quite functional code. This
+            plugin is still under construction, and is also disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Insert Special Character</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Edit</guimenu>
+            <guimenuitem>Insert Special Character...</guimenuitem></menuchoice>
+            function to the composer. This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Quick Text</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>View</guimenu>
+            <guimenuitem>Snippets</guimenuitem></menuchoice> feature to the
+            composer. This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Share Text</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Message</guimenu>
+            <guimenuitem>Share Mail Text &gt;</guimenuitem></menuchoice> function
+            to the composer. Four options are offered: Nextcloud, Pastebin, Bluetooth,
+            and Email (opens a second composer window). This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Zoom Text</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Edit</guimenu>
+            <guimenuitem>Zoom... &gt;</guimenuitem></menuchoice> function
+            to the composer. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist> 
+    <para>&nbsp;</para><!-- add whitespace -->
     </sect2>
-    
+        
     <sect2 id="configure-plugins-grammar">
-        <title>Grammar Check</title>
-        <para>Describe Grammar Check plugins here.</para>
-    </sect2>
+    <title>Grammar Check / Header Styles</title>
+    <screenshot>
+      <screeninfo>Plugins Picture No. Three</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin03.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase>Plugins Picture No. Three</phrase>
+          </textobject>
+          <caption>
+            <para>Grammar Checkers &amp; Header Styles</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para>&nbsp;</para><!-- add whitespace -->
     
-    <sect2 id="configure-plugins-header-style">
-        <title>Header Styles</title>
-        <para>Describe Header Style plugins here.</para>
-    </sect2>
+    <variablelist>
+        
+      <varlistentry>
+        <term><guilabel>French Grammar Checker</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Tools</guimenu>
+            <guimenuitem>Check Grammar (Grammalecte)</guimenuitem></menuchoice>
+            option to the Composer window. This option is special, for the French
+            language only.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Grammar Checker (Language Tool)</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Tools</guimenu>
+            <guimenuitem>Check Grammar (Language Tool)</guimenuitem></menuchoice>
+            option to the Composer window. This is a multi-purpose tool, with
+            support for checking grammar in many different languages.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>&nbsp;</para><!-- add whitespace -->  
     
-    <sect2 id="configure-plugins-message-viewer">
-        <title>Message Viewer</title>
-        <para>Describe Message Viewer plugins here.</para>
+    <para>
+      The following six plugins permit you to decide which header styles can
+      be selected from the <guimenu>View</guimenu> menu. See <link
+      linkend="the-preview-pane-headers">the description of various header
+      views</link> in the "Using &kmail;" chapter for more information.
+    </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term><guilabel>Brief Header Style</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable the display of "Brief" headers.
+            This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Default Grantlee Header Style</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable the display of "KMail 5.2" headers.
+            This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Fancy Header Style</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable the display of "Fancy" headers.
+            This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Grantlee Header Style</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable the display of "Cute" headers.
+            This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Long Header Style</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable the display of "Long" headers.
+            This plugin is disabled by default. (Long headers are similar
+            to standard headers, but will display some less common header
+            information, like "Reply-to", when such headers are present.)
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Standards Header Style</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable the display of "Standard" headers.
+            This plugin is disabled by default. (Standard headers are the 
+            same as Fancy headers, but without the shaded background.)
+          </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist> 
+    <para>&nbsp;</para><!-- add whitespace -->
     </sect2>
     
     <sect2 id="configure-plugins-misc">
-        <title>Miscellaneous</title>
-        <para>Describe Miscellaneous plugins here.</para>
+    <title>Message Viewer / Miscellaneous</title>
+    <screenshot>
+      <screeninfo>Plugins Picture No. Four</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin04.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase>Plugins Picture No. Four</phrase>
+          </textobject>
+          <caption>
+            <para>Message Viewer &amp; Miscellaneous</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para>&nbsp;</para><!-- add whitespace -->
+    
+    <para>
+      The next six plugins all provide special functions that can only be invoked
+      with a toolbar button. Use the <menuchoice><guimenu>Settings</guimenu>
+      <guimenuitem><inlinemediaobject><imageobject><imagedata fileref="configurebutton.png"
+      format="PNG"/></imageobject></inlinemediaobject> Configure Toolbars... </guimenuitem>
+      </menuchoice> dialog to add or remove the toolbar buttons associated with these
+      functions after you select or disable one of these plugins.
+    </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term><guilabel>Create Event</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to permit the creation of a calendar event while
+            viewing a &kmail; message. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Create Note</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to permit the creation of a &kontact; note while
+            viewing a &kmail; message. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Create Todo</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to permit the creation of a todo item in &korganizer;
+            while viewing a &kmail; message. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Expand URL</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable the "Expand URL" function.
+            This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>External Script</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to permit the invocation of an executable command
+            from the toolbar. Use the associated configuration dialog to select
+            the executable, and to give it a name. The name you choose can later
+            be added to the toolbar as a button, so you may invoke the script at
+            will. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Translator</guilabel></term>
+        <listitem>
+          <para>
+            The <link linkend="using-the-translator">translator function</link>
+            is available in the composer by default. Use this plugin (via the toolbar)
+            to make the tranlator available in the message preview window. This plugin
+            is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist> 
+    <para>&nbsp;</para><!-- add whitespace -->
+    
+    <para>
+      The next four items are not really plugins; they are built-in
+      &kmail; functions. Each one of these can be configured separately, 
+      by using the <guibutton>&nbsp;<inlinemediaobject><imageobject>
+      <imagedata fileref="configurebutton.png" format="PNG"/></imageobject>
+      </inlinemediaobject>&nbsp;</guibutton> button appearing next to the
+      function's name. No restart is neeeded to make these configuration
+      variables take effect.
+    </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term><guilabel>DKIM Checker</guilabel></term>
+        <listitem>
+          <para>
+            This dialog allows you to control DomainKeys Identified Mail (DKIM)
+            processing. DKIM is a cryptographic protocol that can assure you
+            that a particular message originated from the internet domain
+            it claims to be from. If the sender has set up DKIM properly and
+            DKIM is enabled here, you will see a message "DKIM valid" and
+            the name of the entity that signed the message in the status bar
+            at the bottom of the message preview window.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Expire Trash Folder</guilabel></term>
+        <listitem>
+          <para>
+            Use this configuration dialog to set expiry criteria for your
+            trash folder(s). See <link linkend="folders-properties-expiry">"Folder
+            Properties"</link> documentation for more information.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Folder Settings</guilabel></term>
+        <listitem>
+          <para>
+            Use this configuration dialog to set custom folder properties for several
+            different folders at once. You can select the folders to be modified
+            from a tree view of all your folders on the left, and select properties
+            to be set from the General, View, Templates, and Expiry tabs of the 
+            <link linkend="folders-properties-window">"Folder Properties"</link> dialog.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Gravatar</guilabel></term>
+        <listitem>
+          <para>
+            Use this configuration dialog to enable / disable Gravatar
+            (Globally Recognized Avatar) support.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para>&nbsp;</para><!-- add whitespace -->
     </sect2>
     
     <sect2 id="configure-plugins-tools">
         <title>Tools</title>
-    <para>Describe Tools plugins here.</para> -->
-<!-- <sect2 id="configure-composer-general-external-editor">
-   <title>External Editor</title>
-   <variablelist>
-     <varlistentry>
-       <term><guilabel>Use external editor instead of composer</guilabel></term>
-       <listitem>
-         <para>This selection allows you to use a different editor. Please note that the composer window will still open,
-           and the external editor will open on top of the composer window. When you are  done, save the text and exit the editor.
-           The text will now appear in the composer window, where you can send it. Note that your editor may not return immediately, you have to use &eg;
-           <userinput><command> gvim <option>-f</option> <varname>%f</varname></command></userinput> for <application>gvim</application>.</para>
-       </listitem>
-     </varlistentry>
-   </variablelist>
- </sect2> -->    
+
+    <screenshot>
+      <screeninfo>Plugins Picture No. Five</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin05.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase>Plugins Picture No. Five</phrase>
+          </textobject>
+          <caption>
+            <para>Tools &amp; Webengine</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para>&nbsp;</para><!-- add whitespace -->
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term><guilabel>Antispam</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <link linkend="the-anti-spam-wizard">Anti-Spam
+            Wizard</link> to the <guimenu>Tools</guimenu> menu. This plugin is disabled
+            by default. Note that once you have installed anti-spam software, this plugin
+            may be safely disabled; the plugin is only needed for installing anti-spam
+            software, not for running it.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Antivirus</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <link linkend="the-anti-virus-wizard">Anti-Virus
+            Wizard</link> to the <guimenu>Tools</guimenu> menu. This plugin is disabled
+            by default. Note that once you have installed anti-virus software, this plugin
+            may be safely disabled; the plugin is only needed for installing anti-virus
+            software, not for running it.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Expert Plugin</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <menuchoice><guimenu>Message</guimenu>
+            <guimenuitem>Show Message Structure Ctrl+Alt+D</guimenuitem></menuchoice>
+            function in the message preview window. This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Log Activities</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to enable <link linkend="filter-logging">mail
+            filter logging</link>. This plugin is disabled by default. This
+            &kmail; feature appears to be a built-in function; my testing shows
+            that mail filter logging will work both with and without this "plugin".
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Adblock</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to add the <ulink url="https://adblockplus.org">Adblock
+            Plus</ulink> filters to &kmail;. If you choose to activate this plugin, be
+            prepared to spend a good deal of time tweaking the configuration file to get
+            the filters you really want. This plugin is disabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><guilabel>Do Not Track</guilabel></term>
+        <listitem>
+          <para>
+            Select this option to force &kmail; to send a "Do Not Track" request to a
+            remote server when an &HTML; message asks to download remote content. The
+            effect of a "Do Not Track" request depends on the policy adopted by the web
+            server receiving the request. Some sites honor it. Others don't.
+          </para>
+          <para>
+            Advertisers have their eyes everywhere. &HTML;-encoded messages often include
+            a 0x0- or 1x1-pixel "image" (aka a "tracking pixel") that is actually a tracking
+            &URL; in disguise. When &kmail; fetches image data from a web server, it must
+            utilize the &URL;s embedded in the message; the server can use information
+            embedded in the &URL; to infer that you have opened the message, &etc;
+          </para>
+          <para>
+            Sending a "Do Not Track" request may enhance your privacy slightly. But the
+            only certain way to avoid tracking pixels is never to download remote images
+            encoded in &HTML; messages. This plugin is enabled by default.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    </sect2>
     
 </sect1>
 
@@ -3424,7 +4052,7 @@ In versions prior to 1.9, &kmail; saved all attachments
 to disk with permissions set to 600 &mdash; only readable or writable
 by the owner of the file. In response to user feedback, this was made
 configurable in &kmail; version 1.9, with the defaults changed to
-honour the umask set on the user account while saving files to disk.
+honor the umask set on the user account while saving files to disk.
 To enable this feature, add to the <quote>[General]</quote> section:
 </para>
 <itemizedlist>
@@ -3441,7 +4069,7 @@ To enable this feature, add to the <quote>[General]</quote> section:
 <listitem>
 <para>
 With this option enabled, &kmail; will check on every startup if there is an
-active out-of-office configured and show a warning if this is the case.
+active out-of-office reply configured, and show a warning if this is the case.
 To disable the feature, add to the <quote>[OutOfOffice]</quote> section:
 </para>
 <itemizedlist>
