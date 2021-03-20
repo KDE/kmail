@@ -3791,7 +3791,7 @@ modifying it by hand.</para>
           <para>
             The <link linkend="using-the-translator">translator function</link>
             is available in the composer by default. Use this plugin (via the toolbar)
-            to make the tranlator available in the message preview window. This plugin
+            to make the translator available in the message preview window. This plugin
             is enabled by default.
           </para>
         </listitem>
@@ -3806,7 +3806,7 @@ modifying it by hand.</para>
       by using the <guibutton>&nbsp;<inlinemediaobject><imageobject>
       <imagedata fileref="configurebutton.png" format="PNG"/></imageobject>
       </inlinemediaobject>&nbsp;</guibutton> button appearing next to the
-      function's name. No restart is neeeded to make these configuration
+      function's name. No restart is needed to make these configuration
       variables take effect.
     </para>
     
