@@ -9,7 +9,9 @@
 #include <KToggleAction>
 #include <QSignalSpy>
 #include <QTest>
+#include <QMenu>
 #include <qtestmouse.h>
+
 Q_DECLARE_METATYPE(MessageViewer::Viewer::DisplayFormatMessage)
 DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest(QObject *parent)
     : QObject(parent)

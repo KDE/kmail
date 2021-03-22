@@ -8,6 +8,7 @@
 #define DisplayMessageFormatActionMenu_H
 
 #include "kmail_private_export.h"
+#include <QMenu>
 #include <KActionMenu>
 #include <MessageViewer/Viewer>
 

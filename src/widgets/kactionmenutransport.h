@@ -9,6 +9,8 @@
 
 #include "kmail_private_export.h"
 #include <KActionMenu>
+#include <QMenu>
+
 namespace MailTransport
 {
 class Transport;

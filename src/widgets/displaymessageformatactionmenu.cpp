@@ -9,7 +9,6 @@
 #include <KLocalizedString>
 #include <KToggleAction>
 #include <QAction>
-#include <QMenu>
 
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     : KActionMenu(parent)
