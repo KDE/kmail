@@ -8,6 +8,7 @@
 #define KMCOMPOSERWINTEST_H
 
 #include <QObject>
+#include <QDir>
 
 class KMKernel;
 

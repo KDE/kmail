@@ -20,7 +20,7 @@
 #include <QTimer>
 #include <QTemporaryDir>
 #include <QTest>
-#include <QDir>
+
 
 QTEST_MAIN(KMComposerWinTest)
 
