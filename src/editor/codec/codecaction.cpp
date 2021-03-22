@@ -14,6 +14,7 @@
 #include <MimeTreeParser/NodeHelper>
 
 #include <KCharsets>
+#include <QTextCodec>
 // Qt
 
 // KDE libs
