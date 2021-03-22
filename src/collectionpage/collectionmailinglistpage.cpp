@@ -19,6 +19,7 @@
 #include <QCheckBox>
 #include <QGridLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QSpacerItem>
 #include <QVBoxLayout>
