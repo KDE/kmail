@@ -5,8 +5,7 @@
 
 */
 
-#ifndef REMOVEDUPLICATEMESSAGEINFOLDERANDSUBFOLDERJOB_H
-#define REMOVEDUPLICATEMESSAGEINFOLDERANDSUBFOLDERJOB_H
+#pragma once
 
 #include <AkonadiCore/Collection>
 #include <QObject>
@@ -37,4 +36,3 @@ private:
     QWidget *const mParentWidget;
 };
 
-#endif // REMOVEDUPLICATEMESSAGEINFOLDERANDSUBFOLDERJOB_H

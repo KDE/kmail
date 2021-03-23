@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: LGPL-2.0-only
  */
-#ifndef wmfstruct_h
-#define wmfstruct_h
+#pragma once
 
 using WORD = short;
 using DWORD = int;
@@ -91,4 +90,3 @@ struct WmfEnhMetaRecord {
     DWORD dParm[1]; // DWORD array of parameters
 };
 
-#endif /*wmfstruct_h*/

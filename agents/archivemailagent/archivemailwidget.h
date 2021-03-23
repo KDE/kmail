@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEMAILWIDGET_H
-#define ARCHIVEMAILWIDGET_H
+#pragma once
 
 #include "archivemailinfo.h"
 #include "ui_archivemailwidget.h"
@@ -62,4 +61,3 @@ private:
 
 AKONADI_AGENTCONFIG_FACTORY(ArchiveMailAgentConfigFactory, "archivemailagentconfig.json", ArchiveMailWidget)
 
-#endif // ARCHIVEMAILWIDGET_H

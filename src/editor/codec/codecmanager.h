@@ -5,8 +5,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef CODECMANAGER_H
-#define CODECMANAGER_H
+#pragma once
 
 #include <QByteArray>
 #include <QVector>
@@ -36,4 +35,3 @@ private:
     QVector<QByteArray> mPreferredCharsets;
 };
 
-#endif /* CODECMANAGER_H */

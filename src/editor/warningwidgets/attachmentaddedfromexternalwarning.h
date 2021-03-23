@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ATTACHMENTADDEDFROMEXTERNALWARNING_H
-#define ATTACHMENTADDEDFROMEXTERNALWARNING_H
+#pragma once
 
 #include <KMessageWidget>
 #include <QWidget>
@@ -20,4 +19,3 @@ public:
     void setAttachmentNames(const QStringList &lst);
 };
 
-#endif // ATTACHMENTADDEDFROMEXTERNALWARNING_H

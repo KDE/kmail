@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef KMCOMPOSERCREATENEWCOMPOSERJOB_H
-#define KMCOMPOSERCREATENEWCOMPOSERJOB_H
+#pragma once
 
 #include <AkonadiCore/Collection>
 #include <KMime/Message>
@@ -30,4 +29,3 @@ private:
     uint mCurrentIdentity = 0;
 };
 
-#endif // KMCOMPOSERCREATENEWCOMPOSERJOB_H

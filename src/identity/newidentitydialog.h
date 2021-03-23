@@ -9,8 +9,7 @@
  *
  */
 
-#ifndef NEWIDENTITYDIALOG_H
-#define NEWIDENTITYDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -48,4 +47,3 @@ private:
 };
 }
 
-#endif

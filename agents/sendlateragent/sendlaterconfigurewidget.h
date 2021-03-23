@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERCONFIGUREWIDGET_H
-#define SENDLATERCONFIGUREWIDGET_H
+#pragma once
 #include "ui_sendlaterconfigurewidget.h"
 
 #include <AkonadiCore/Item>
@@ -62,4 +61,3 @@ private:
     Ui::SendLaterConfigureWidget *mWidget = nullptr;
 };
 
-#endif // SENDLATERCONFIGUREWIDGET_H

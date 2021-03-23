@@ -5,8 +5,7 @@
 
 */
 
-#ifndef POTENTIALPHISHINGEMAILJOB_H
-#define POTENTIALPHISHINGEMAILJOB_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <QObject>
@@ -37,4 +36,3 @@ private:
     QStringList mEmailWhiteList;
 };
 
-#endif // POTENTIALPHISHINGEMAILJOB_H

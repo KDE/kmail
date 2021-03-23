@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef IDENTITYEDITVCARDDIALOG_H
-#define IDENTITYEDITVCARDDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -42,4 +41,3 @@ private:
     Akonadi::AkonadiContactEditor *mContactEditor = nullptr;
 };
 
-#endif // IDENTITYEDITVCARDDIALOG_H

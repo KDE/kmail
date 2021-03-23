@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ADDEMAILTOEXISTINGCONTACTJOB_H
-#define ADDEMAILTOEXISTINGCONTACTJOB_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <KJob>
@@ -25,4 +24,3 @@ private:
     Akonadi::Item mItem;
 };
 
-#endif // ADDEMAILTOEXISTINGCONTACTJOB_H

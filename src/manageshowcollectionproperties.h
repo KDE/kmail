@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef MANAGESHOWCOLLECTIONPROPERTIES_H
-#define MANAGESHOWCOLLECTIONPROPERTIES_H
+#pragma once
 
 #include <MailCommon/FolderSettings>
 #include <QObject>
@@ -45,4 +44,3 @@ private:
     const QStringList mPages;
 };
 
-#endif // MANAGESHOWCOLLECTIONPROPERTIES_H

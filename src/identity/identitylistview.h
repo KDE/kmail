@@ -8,8 +8,7 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_IDENTITYLISTVIEW_H
-#define KMAIL_IDENTITYLISTVIEW_H
+#pragma once
 
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
@@ -77,4 +76,3 @@ private:
 };
 } // namespace KMail
 
-#endif // KMAIL_IDENTITYLISTVIEW_H

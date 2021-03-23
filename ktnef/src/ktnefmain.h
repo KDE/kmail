@@ -11,8 +11,7 @@
   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef KTNEFMAIN_H
-#define KTNEFMAIN_H
+#pragma once
 
 #include <KService>
 #include <KXmlGuiWindow>
@@ -92,4 +91,3 @@ private:
     KRecentFilesAction *mOpenRecentFileAction = nullptr;
 };
 Q_DECLARE_METATYPE(KService::Ptr)
-#endif

@@ -3,8 +3,7 @@
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
-#ifndef KMLAUNCHEXTERNALCOMPONENT_H
-#define KMLAUNCHEXTERNALCOMPONENT_H
+#pragma once
 
 #include <QObject>
 
@@ -33,4 +32,3 @@ private:
     QWidget *const mParentWidget;
 };
 
-#endif // KMLAUNCHEXTERNALCOMPONENT_H

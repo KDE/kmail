@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERFINISHTASKJOB_H
-#define FOLLOWUPREMINDERFINISHTASKJOB_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <QObject>
@@ -31,4 +30,3 @@ private:
     const Akonadi::Item::Id mTodoId;
 };
 
-#endif // FOLLOWUPREMINDERFINISHTASKJOB_H

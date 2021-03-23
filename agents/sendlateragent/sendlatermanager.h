@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERMANAGER_H
-#define SENDLATERMANAGER_H
+#pragma once
 
 #include <QObject>
 #include <QQueue>
@@ -67,4 +66,3 @@ private:
     QQueue<Akonadi::Item::Id> mSendLaterQueue;
 };
 
-#endif // SENDLATERMANAGER_H

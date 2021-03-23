@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILSIEVEIMAPINSTANCEINTERFACE_H
-#define KMAILSIEVEIMAPINSTANCEINTERFACE_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <KSieveUi/SieveImapInstanceInterface>
@@ -21,4 +20,3 @@ private:
     Q_DISABLE_COPY(KMailSieveImapInstanceInterface)
 };
 
-#endif // KMAILSIEVEIMAPINSTANCEINTERFACE_H

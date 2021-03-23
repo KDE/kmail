@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILPLUGINEDITORINITMANAGERINTERFACE_H
-#define KMAILPLUGINEDITORINITMANAGERINTERFACE_H
+#pragma once
 
 #include <QObject>
 namespace KPIMTextEdit
@@ -35,4 +34,3 @@ private:
     bool mWasInitialized = false;
 };
 
-#endif // KMAILPLUGINEDITORINITMANAGERINTERFACE_H

@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMCOMPOSEREDITORNG_H
-#define KMCOMPOSEREDITORNG_H
+#pragma once
 
 #include <MessageComposer/RichTextComposerNg>
 class KMComposerWin;
@@ -40,4 +39,3 @@ private:
     KMComposerWin *const mComposerWin;
 };
 
-#endif // KMCOMPOSEREDITORNG_H

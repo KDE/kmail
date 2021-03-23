@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNDOSENDMANAGER_H
-#define UNDOSENDMANAGER_H
+#pragma once
 
 #include <QObject>
 
@@ -20,4 +19,3 @@ public:
     void addItem(qint64 index, const QString &subject, int delay);
 };
 
-#endif // UNDOSENDMANAGER_H

@@ -4,8 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef INCOMPLETEINDEXDIALOG_H
-#define INCOMPLETEINDEXDIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <QList>
@@ -42,4 +41,3 @@ private:
     QList<qlonglong> mIndexingQueue;
 };
 
-#endif

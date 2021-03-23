@@ -3,8 +3,7 @@
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
-#ifndef ARCHIVEMAILINFO_H
-#define ARCHIVEMAILINFO_H
+#pragma once
 
 #include <Collection>
 #include <KConfigGroup>
@@ -75,4 +74,3 @@ private:
     bool mIsEnabled = true;
 };
 
-#endif // ARCHIVEMAILINFO_H

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEMAILMANAGER_H
-#define ARCHIVEMAILMANAGER_H
+#pragma once
 
 #include <QObject>
 
@@ -53,4 +52,3 @@ private:
     ArchiveMailKernel *mArchiveMailKernel = nullptr;
 };
 
-#endif /* ARCHIVEMAILMANAGER_H */

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNIFIEDMAILBOX_H
-#define UNIFIEDMAILBOX_H
+#pragma once
 
 #include <QMetaType>
 #include <QSet>
@@ -65,4 +64,3 @@ private:
 
 Q_DECLARE_METATYPE(UnifiedMailbox *)
 
-#endif

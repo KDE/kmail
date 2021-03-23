@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H
-#define KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H
+#pragma once
 
 #include <QObject>
 
@@ -38,4 +37,3 @@ private:
     QWidget *mParentWidget = nullptr;
 };
 
-#endif // KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H

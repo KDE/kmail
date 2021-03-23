@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FORMATCOMBOBOX_H
-#define FORMATCOMBOBOX_H
+#pragma once
 #include <MailCommon/BackupJob>
 
 #include <QComboBox>
@@ -21,4 +20,3 @@ public:
     void setFormat(MailCommon::BackupJob::ArchiveType type);
 };
 
-#endif // FORMATCOMBOBOX_H

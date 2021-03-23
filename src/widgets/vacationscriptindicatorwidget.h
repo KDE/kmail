@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef VACATIONSCRIPTINDICATORWIDGET_H
-#define VACATIONSCRIPTINDICATORWIDGET_H
+#pragma once
 
 #include <QLabel>
 class QHBoxLayout;
@@ -68,4 +67,3 @@ private:
 };
 }
 
-#endif // VACATIONSCRIPTINDICATORWIDGET_H

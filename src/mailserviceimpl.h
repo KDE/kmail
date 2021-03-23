@@ -6,8 +6,7 @@
  *  SPDX-License-Identifier: GPL-2.0-only
  */
 
-#ifndef MAILSERVICEIMPL_H
-#define MAILSERVICEIMPL_H
+#pragma once
 
 class QByteArray;
 class QString;
@@ -43,4 +42,3 @@ private:
 };
 }
 
-#endif

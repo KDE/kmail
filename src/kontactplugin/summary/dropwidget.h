@@ -6,8 +6,7 @@
   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef DROP_WIDGET_H
-#define DROP_WIDGET_H
+#pragma once
 
 #include <QWidget>
 
@@ -29,4 +28,3 @@ protected:
     void dropEvent(QDropEvent *) override;
 };
 
-#endif

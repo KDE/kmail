@@ -3,8 +3,7 @@
 
     SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
 */
-#ifndef PIMMESSAGEBOX_H
-#define PIMMESSAGEBOX_H
+#pragma once
 
 #include <KMessageBox>
 #include <QDialogButtonBox>
@@ -22,4 +21,3 @@ public:
                                                           const QString &button3Text = QString(),
                                                           KMessageBox::Options options = KMessageBox::Notify);
 };
-#endif

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef DNDFROMARKJOB_H
-#define DNDFROMARKJOB_H
+#pragma once
 
 #include <QObject>
 
@@ -24,4 +23,3 @@ private:
     KMComposerWin *mComposerWin = nullptr;
 };
 
-#endif // DNDFROMARKJOB_H

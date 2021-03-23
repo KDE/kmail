@@ -5,8 +5,7 @@
 
 */
 
-#ifndef POTENTIALPHISHINGDETAILDIALOGTEST_H
-#define POTENTIALPHISHINGDETAILDIALOGTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -21,4 +20,3 @@ private Q_SLOTS:
     void initTestCase();
 };
 
-#endif // POTENTIALPHISHINGDETAILDIALOGTEST_H

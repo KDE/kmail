@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef MAILFILTERPURPOSEMENUWIDGET_H
-#define MAILFILTERPURPOSEMENUWIDGET_H
+#pragma once
 
 #include <PimCommon/PurposeMenuWidget>
 namespace KPIMTextEdit
@@ -26,4 +25,3 @@ private:
     KPIMTextEdit::PlainTextEditor *mEditor = nullptr;
 };
 
-#endif // MAILFILTERPURPOSEMENUWIDGET_H

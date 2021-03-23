@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: GPL-2.0-only
  */
-#ifndef KMSEARCHMESSAGEMODEL_H
-#define KMSEARCHMESSAGEMODEL_H
+#pragma once
 
 #include <Akonadi/KMime/MessageModel>
 #include <QHash>
@@ -29,4 +28,3 @@ private:
     mutable QHash<Akonadi::Collection::Id, QString> m_collectionFullPathCache;
 };
 
-#endif

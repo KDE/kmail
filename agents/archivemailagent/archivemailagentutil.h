@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEMAILAGENTUTIL_H
-#define ARCHIVEMAILAGENTUTIL_H
+#pragma once
 
 #include "archivemailinfo.h"
 #include <QDate>
@@ -17,4 +16,3 @@ Q_REQUIRED_RESULT QDate diffDate(ArchiveMailInfo *info);
 Q_REQUIRED_RESULT bool needToArchive(ArchiveMailInfo *info);
 }
 
-#endif // ARCHIVEMAILAGENTUTIL_H

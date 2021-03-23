@@ -1,6 +1,5 @@
 /*  -*- mode: C++; c-file-style: "gnu" -*- */
-#ifndef KMAIL_OPTIONS_H
-#define KMAIL_OPTIONS_H
+#pragma once
 
 #include <KLocalizedString>
 #include <QCommandLineParser>
@@ -34,4 +33,3 @@ static void kmail_options(QCommandLineParser *parser)
                                   QStringLiteral("address|URL"));
 }
 
-#endif

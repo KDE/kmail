@@ -5,8 +5,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#ifndef KMAIL_KMMAINWIN_H
-#define KMAIL_KMMAINWIN_H
+#pragma once
 
 #include "kmail_export.h"
 
@@ -61,4 +60,3 @@ private:
     bool mReallyClose = false;
 };
 
-#endif

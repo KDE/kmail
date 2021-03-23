@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERCONFIGUREDIALOG_H
-#define SENDLATERCONFIGUREDIALOG_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <QDialog>
@@ -32,4 +31,3 @@ private:
     SendLaterWidget *const mWidget;
 };
 
-#endif // SENDLATERCONFIGUREDIALOG_H

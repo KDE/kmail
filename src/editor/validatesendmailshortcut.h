@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef VALIDATESENDMAILSHORTCUT_H
-#define VALIDATESENDMAILSHORTCUT_H
+#pragma once
 
 #include <QWidget>
 class KActionCollection;
@@ -22,4 +21,3 @@ private:
     KActionCollection *const mActionCollection;
 };
 
-#endif // VALIDATESENDMAILSHORTCUT_H

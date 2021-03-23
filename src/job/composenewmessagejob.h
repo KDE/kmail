@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef COMPOSENEWMESSAGEJOB_H
-#define COMPOSENEWMESSAGEJOB_H
+#pragma once
 
 #include <MailCommon/FolderSettings>
 #include <QObject>
@@ -31,4 +30,3 @@ private:
     KMime::Message::Ptr mMsg = nullptr;
 };
 
-#endif // COMPOSENEWMESSAGEJOB_H

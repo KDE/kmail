@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef CREATEFORWARDMESSAGEJOB_H
-#define CREATEFORWARDMESSAGEJOB_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <AkonadiCore/Item>
@@ -40,4 +39,3 @@ private:
     CreateForwardMessageJobSettings mSettings;
 };
 
-#endif // CREATEFORWARDMESSAGEJOB_H

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef COLLECTIONVIEWPAGE_H
-#define COLLECTIONVIEWPAGE_H
+#pragma once
 
 #include <AkonadiCore/collection.h>
 #include <AkonadiWidgets/collectionpropertiespage.h>
@@ -46,4 +45,3 @@ private:
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage)
 
-#endif /* COLLECTIONVIEWPAGE_H */

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef EXTERNALEDITORWARNING_H
-#define EXTERNALEDITORWARNING_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <KMessageWidget>
@@ -17,4 +16,3 @@ public:
     ~ExternalEditorWarning() override;
 };
 
-#endif // EXTERNALEDITORWARNING_H

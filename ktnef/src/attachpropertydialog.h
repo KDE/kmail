@@ -11,8 +11,7 @@
   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
 */
 
-#ifndef ATTACHPROPERTYDIALOG_H
-#define ATTACHPROPERTYDIALOG_H
+#pragma once
 
 #include "ui_attachpropertywidgetbase.h"
 
@@ -56,4 +55,3 @@ private:
     KTNEFAttach *mAttach = nullptr;
 };
 
-#endif

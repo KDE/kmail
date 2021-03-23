@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ATTACHMENTMISSINGWARNING_H
-#define ATTACHMENTMISSINGWARNING_H
+#pragma once
 
 #include <KMessageWidget>
 
@@ -27,4 +26,3 @@ private:
     void slotAttachFile();
 };
 
-#endif // ATTACHMENTMISSINGWARNING_H

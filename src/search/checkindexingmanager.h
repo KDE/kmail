@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef CHECKINDEXINGMANAGER_H
-#define CHECKINDEXINGMANAGER_H
+#pragma once
 
 #include <AkonadiCore/Collection>
 #include <QAbstractItemModel>
@@ -49,4 +48,3 @@ private:
     bool mIsReady = true;
 };
 
-#endif // CHECKINDEXINGMANAGER_H

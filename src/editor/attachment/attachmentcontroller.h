@@ -8,8 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef KMAIL_ATTACHMENTCONTROLLER_H
-#define KMAIL_ATTACHMENTCONTROLLER_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <MessageComposer/AttachmentControllerBase>
@@ -49,4 +48,3 @@ private:
 };
 } // namespace KMail
 
-#endif // KMAIL_ATTACHMENTCONTROLLER_H

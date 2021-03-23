@@ -7,8 +7,7 @@
   SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
 */
 
-#ifndef KCMKMAILSUMMARY_H
-#define KCMKMAILSUMMARY_H
+#pragma once
 
 #include <KCModule>
 #include <KViewStateMaintainer>
@@ -47,4 +46,3 @@ private:
     KViewStateMaintainer<Akonadi::ETMViewStateSaver> *mModelState = nullptr;
 };
 
-#endif

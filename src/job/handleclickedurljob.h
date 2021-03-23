@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef HANDLECLICKEDURLJOB_H
-#define HANDLECLICKEDURLJOB_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <MailCommon/FolderSettings>
@@ -35,4 +34,3 @@ private:
     KMime::Message::Ptr mMsg = nullptr;
 };
 
-#endif // HANDLECLICKEDURLJOB_H

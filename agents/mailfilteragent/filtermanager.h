@@ -5,8 +5,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#ifndef FILTERMANAGER_H
-#define FILTERMANAGER_H
+#pragma once
 
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/item.h>
@@ -149,4 +148,3 @@ private:
     //@endcond
 };
 
-#endif

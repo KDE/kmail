@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAILCONFIGUREPLUGINSLISTWIDGET_H
-#define KMAILCONFIGUREPLUGINSLISTWIDGET_H
+#pragma once
 
 #include <PimCommon/ConfigurePluginsListWidget>
 #include <PimCommon/PluginUtil>
@@ -44,4 +43,3 @@ private:
     QVector<PimCommon::PluginUtilData> mPluginUtilDataList;
 };
 
-#endif // KMAILCONFIGUREPLUGINSLISTWIDGET_H

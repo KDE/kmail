@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef REFRESHSETTINGSCLEANUPPAGE_H
-#define REFRESHSETTINGSCLEANUPPAGE_H
+#pragma once
 
 #include <KConfigGroup>
 #include <QWidget>
@@ -31,4 +30,3 @@ private:
     void initCleanupDialogSettings(const QString &configName);
 };
 
-#endif // REFRESHSETTINGSCLEANUPPAGE_H

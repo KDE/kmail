@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef CONFIGURE_DIALOG_H
-#define CONFIGURE_DIALOG_H
+#pragma once
 
 #include <KCMultiDialog>
 
@@ -41,4 +40,3 @@ protected Q_SLOTS:
     void slotOk();
 };
 
-#endif

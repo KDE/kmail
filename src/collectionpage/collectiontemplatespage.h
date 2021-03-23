@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef COLLECTIONTEMPLATESPAGE_H
-#define COLLECTIONTEMPLATESPAGE_H
+#pragma once
 #include <AkonadiWidgets/collectionpropertiespage.h>
 namespace MailCommon
 {
@@ -31,4 +30,3 @@ private:
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage)
 
-#endif /* COLLECTIONTEMPLATESPAGE_H */

@@ -1,8 +1,7 @@
 /*
  *   kmail: KDE mail client
  */
-#ifndef configuredialoglistview_h
-#define configuredialoglistview_h
+#pragma once
 
 #include <QTreeWidget>
 
@@ -25,4 +24,3 @@ private:
     void resizeColums();
 };
 
-#endif // configuredialoglistview_h

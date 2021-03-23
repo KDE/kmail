@@ -7,8 +7,7 @@
  *
  */
 
-#ifndef KMAIL_SEARCHWINDOW_H
-#define KMAIL_SEARCHWINDOW_H
+#pragma once
 
 #include "ui_searchwindow.h"
 #include <MailCommon/SearchPattern>
@@ -187,4 +186,3 @@ private:
 };
 }
 
-#endif

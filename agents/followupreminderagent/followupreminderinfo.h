@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERINFO_H
-#define FOLLOWUPREMINDERINFO_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <QDate>
@@ -71,4 +70,3 @@ private:
 
 QDebug operator<<(QDebug debug, const FollowUpReminder::FollowUpReminderInfo &info);
 
-#endif // FOLLOWUPREMINDERINFO_H

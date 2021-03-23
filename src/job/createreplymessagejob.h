@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef CREATEREPLYMESSAGEJOB_H
-#define CREATEREPLYMESSAGEJOB_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <AkonadiCore/Item>
@@ -45,4 +44,3 @@ private:
     CreateReplyMessageJobSettings mSettings;
 };
 
-#endif // CREATEREPLYMESSAGEJOB_H

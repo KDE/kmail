@@ -5,8 +5,7 @@
 
 */
 
-#ifndef POTENTIALPHISHINGDETAILWIDGET_H
-#define POTENTIALPHISHINGDETAILWIDGET_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <QWidget>
@@ -26,4 +25,3 @@ private:
     QListWidget *const mListWidget = nullptr;
 };
 
-#endif // POTENTIALPHISHINGDETAILWIDGET_H

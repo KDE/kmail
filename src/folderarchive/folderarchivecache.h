@@ -3,8 +3,7 @@
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
-#ifndef FOLDERARCHIVECACHE_H
-#define FOLDERARCHIVECACHE_H
+#pragma once
 
 #include <AkonadiCore/Collection>
 #include <QDateTime>
@@ -38,4 +37,3 @@ private:
     QHash<QString, ArchiveCache> mCache;
 };
 
-#endif // FOLDERARCHIVECACHE_H

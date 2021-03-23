@@ -7,8 +7,7 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_IDENTITYDIALOG_H
-#define KMAIL_IDENTITYDIALOG_H
+#pragma once
 
 #include <QDialog>
 class QCheckBox;
@@ -137,4 +136,3 @@ private:
 };
 } // namespace KMail
 
-#endif // KMAIL_IDENTITYDIALOG_H

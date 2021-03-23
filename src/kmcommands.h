@@ -1,7 +1,6 @@
 //
 
-#ifndef KMCommands_h
-#define KMCommands_h
+#pragma once
 
 #include "kmail_private_export.h"
 
@@ -673,4 +672,3 @@ private:
     KMReaderMainWin *mReaderMainWin = nullptr;
 };
 
-#endif /*KMCommands_h*/

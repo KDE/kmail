@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KACTIONMENUTRANSPORTTEST_H
-#define KACTIONMENUTRANSPORTTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -19,4 +18,3 @@ private Q_SLOTS:
     void shouldHaveDefaultValue();
 };
 
-#endif // KACTIONMENUTRANSPORTTEST_H

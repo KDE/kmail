@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERMANAGER_H
-#define FOLLOWUPREMINDERMANAGER_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <KSharedConfig>
@@ -45,4 +44,3 @@ private:
     bool mInitialize = false;
 };
 
-#endif // FOLLOWUPREMINDERMANAGER_H

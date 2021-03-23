@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNIFIEDMAILBOXEDITOR_H
-#define UNIFIEDMAILBOXEDITOR_H
+#pragma once
 
 #include <QDialog>
 
@@ -28,4 +27,3 @@ private:
     KSharedConfigPtr mConfig;
 };
 
-#endif

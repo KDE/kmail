@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef COLLECTIONPANE_H
-#define COLLECTIONPANE_H
+#pragma once
 
 #include <MessageList/Pane>
 #include <MessageList/StorageModel>
@@ -33,4 +32,3 @@ public:
     Q_REQUIRED_RESULT bool isOutBoundFolder(const Akonadi::Collection &c) const override;
 };
 
-#endif /* COLLECTIONPANE_H */

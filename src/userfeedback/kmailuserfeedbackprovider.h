@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILUSERFEEDBACKPROVIDER_H
-#define KMAILUSERFEEDBACKPROVIDER_H
+#pragma once
 
 #include "kmail_export.h"
 #include <KUserFeedback/Provider>
@@ -18,4 +17,3 @@ public:
     ~KMailUserFeedbackProvider() override;
 };
 
-#endif // KMAILUSERFEEDBACKPROVIDER_H

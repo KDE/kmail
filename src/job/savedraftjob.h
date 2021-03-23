@@ -5,8 +5,7 @@
 
 */
 
-#ifndef SAVEDRAFTJOB_H
-#define SAVEDRAFTJOB_H
+#pragma once
 
 #include <AkonadiCore/Collection>
 #include <KJob>
@@ -27,4 +26,3 @@ private:
     const Akonadi::Collection mCollection;
 };
 
-#endif // SAVEDRAFTJOB_H

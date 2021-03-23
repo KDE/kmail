@@ -7,8 +7,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_KMMAINWIDGET
-#define KMAIL_KMMAINWIDGET
+#pragma once
 
 #include "kmail_export.h"
 #include "kmkernel.h" // for access to config
@@ -659,4 +658,3 @@ private:
 #endif
 };
 
-#endif

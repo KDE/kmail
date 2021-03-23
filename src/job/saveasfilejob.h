@@ -4,8 +4,7 @@
   SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
-#ifndef SAVEASFILEJOB_H
-#define SAVEASFILEJOB_H
+#pragma once
 
 #include <QObject>
 class QTextDocument;
@@ -30,4 +29,3 @@ private:
     QWidget *mParentWidget = nullptr;
 };
 
-#endif // SAVEASFILEJOB_H

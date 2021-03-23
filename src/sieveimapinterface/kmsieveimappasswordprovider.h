@@ -4,8 +4,7 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef KMSIEVEIMAPPASSWORDPROVIDER_H
-#define KMSIEVEIMAPPASSWORDPROVIDER_H
+#pragma once
 #include "kmail_private_export.h"
 #include <KSieveUi/SieveImapPasswordProvider>
 #include <qt5keychain/keychain.h>
@@ -26,4 +25,3 @@ private:
     QString mSieveCustomPassword;
 };
 
-#endif

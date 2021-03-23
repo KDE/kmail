@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMSYSTEMTRAY_H
-#define KMSYSTEMTRAY_H
+#pragma once
 
 #include <AkonadiCore/collection.h>
 #include <KStatusNotifierItem>
@@ -57,4 +56,3 @@ private:
     KMail::UnityServiceManager *mUnityServiceManager = nullptr;
 };
 }
-#endif

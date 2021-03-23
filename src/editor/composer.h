@@ -5,8 +5,7 @@
   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAIL_COMPOSER_H
-#define KMAIL_COMPOSER_H
+#pragma once
 
 #include "kmail_export.h"
 #include "secondarywindow.h"
@@ -142,4 +141,3 @@ KMAIL_EXPORT Composer *makeComposer(const KMime::Message::Ptr &msg = KMime::Mess
                                     const QString &customTemplate = QString());
 }
 
-#endif // KMAIL_COMPOSER_H

@@ -6,8 +6,7 @@
   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef SUMMARYVIEW_PLUGIN_H
-#define SUMMARYVIEW_PLUGIN_H
+#pragma once
 
 #include <KontactInterface/Plugin>
 
@@ -41,4 +40,3 @@ private:
     QAction *mAllSync = nullptr;
 };
 
-#endif

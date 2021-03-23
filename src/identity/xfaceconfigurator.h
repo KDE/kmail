@@ -9,8 +9,7 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_XFACECONFIGURATOR_H
-#define KMAIL_XFACECONFIGURATOR_H
+#pragma once
 
 #include <QWidget>
 
@@ -52,4 +51,3 @@ private:
 };
 } // namespace KMail
 
-#endif // KMAIL_XFACECONFIGURATOR_H

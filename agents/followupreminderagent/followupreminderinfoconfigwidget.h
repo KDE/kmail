@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERINFOCONFIGWIDGET_H
-#define FOLLOWUPREMINDERINFOCONFIGWIDGET_H
+#pragma once
 
 #include <AkonadiCore/AgentConfigurationBase>
 #include <AkonadiCore/Item>
@@ -33,4 +32,3 @@ private:
     FollowUpReminderInfoWidget *mWidget = nullptr;
 };
 AKONADI_AGENTCONFIG_FACTORY(FollowUpReminderInfoAgentConfigFactory, "followupreminderagentconfig.json", FollowUpReminderInfoConfigWidget)
-#endif // FOLLOWUPREMINDERINFOConfigWIDGET_H

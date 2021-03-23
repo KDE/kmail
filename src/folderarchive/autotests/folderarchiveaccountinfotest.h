@@ -3,8 +3,7 @@
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
-#ifndef FOLDERARCHIVEACCOUNTINFOTEST_H
-#define FOLDERARCHIVEACCOUNTINFOTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -21,4 +20,3 @@ private Q_SLOTS:
     void shouldRestoreFromSettings();
 };
 
-#endif // FOLDERARCHIVEACCOUNTINFOTEST_H

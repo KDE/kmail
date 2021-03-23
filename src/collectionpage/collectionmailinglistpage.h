@@ -7,8 +7,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef COLLECTIONMAILINGLISTPAGE_H
-#define COLLECTIONMAILINGLISTPAGE_H
+#pragma once
 
 #include <MailCommon/FolderSettings>
 #include <MessageCore/MailingList>
@@ -70,4 +69,3 @@ private:
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMailingListPageFactory, CollectionMailingListPage)
 
-#endif /* COLLECTIONMAILINGLISTPAGE_H */

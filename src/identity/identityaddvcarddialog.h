@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef IDENTITYADDVCARDDIALOG_H
-#define IDENTITYADDVCARDDIALOG_H
+#pragma once
 #include "kmail_private_export.h"
 #include <QDialog>
 #include <QUrl>
@@ -32,4 +31,3 @@ private:
     KUrlRequester *mVCardPath = nullptr;
 };
 
-#endif // IDENTITYADDVCARDDIALOG_H

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERAGENT_H
-#define SENDLATERAGENT_H
+#pragma once
 
 #include <agentbase.h>
 
@@ -49,4 +48,3 @@ private:
     SendLaterManager *const mManager;
 };
 
-#endif // SENDLATERAGENT_H

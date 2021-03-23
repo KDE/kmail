@@ -3,8 +3,7 @@
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
-#ifndef FOLDERARCHIVEAGENTCHECKCOLLECTION_H
-#define FOLDERARCHIVEAGENTCHECKCOLLECTION_H
+#pragma once
 #include <AkonadiCore/Collection>
 #include <QDate>
 #include <QObject>
@@ -32,4 +31,3 @@ private:
     FolderArchiveAccountInfo *const mInfo;
 };
 
-#endif // FOLDERARCHIVEAGENTCHECKCOLLECTION_H

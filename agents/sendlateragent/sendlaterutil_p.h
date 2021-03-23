@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERUTIL_P_H
-#define SENDLATERUTIL_P_H
+#pragma once
 
 #include <QDateTime>
 
@@ -18,4 +17,3 @@ namespace SendLaterUtil
 Q_REQUIRED_RESULT QDateTime updateRecurence(SendLater::SendLaterInfo *info, QDateTime dateTime);
 }
 }
-#endif // SENDLATERUTIL_P_H

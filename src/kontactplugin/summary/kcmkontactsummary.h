@@ -7,8 +7,7 @@
   SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
 */
 
-#ifndef KCMKONTACTSUMMARY_H
-#define KCMKONTACTSUMMARY_H
+#pragma once
 
 #include <KCModule>
 #include <QTreeWidget>
@@ -36,4 +35,3 @@ private:
     PluginView *mPluginView = nullptr;
 };
 
-#endif

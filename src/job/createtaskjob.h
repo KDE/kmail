@@ -5,8 +5,7 @@
 
 */
 
-#ifndef CREATETASKJOB_H
-#define CREATETASKJOB_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <KJob>
@@ -29,4 +28,3 @@ private:
     const Akonadi::Item::List mListItem;
 };
 
-#endif // CREATETASKJOB_H

@@ -5,8 +5,7 @@
 
 */
 
-#ifndef POTENTIALPHISHINGDETAILWIDGETTEST_H
-#define POTENTIALPHISHINGDETAILWIDGETTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -23,4 +22,3 @@ private Q_SLOTS:
     void shouldNotAddDuplicateEntries();
 };
 
-#endif // POTENTIALPHISHINGDETAILWIDGETTEST_H

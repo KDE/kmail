@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNDOSENDCREATEJOB_H
-#define UNDOSENDCREATEJOB_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <QObject>
@@ -41,4 +40,3 @@ private:
     int mDelay = -1;
 };
 
-#endif // UNDOSENDCREATEJOB_H

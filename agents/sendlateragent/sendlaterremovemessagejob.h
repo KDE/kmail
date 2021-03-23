@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERREMOVEMESSAGEJOB_H
-#define SENDLATERREMOVEMESSAGEJOB_H
+#pragma once
 
 #include <Item>
 #include <QObject>
@@ -29,4 +28,3 @@ private:
     int mIndex = 0;
 };
 
-#endif // SENDLATERREMOVEMESSAGEJOB_H

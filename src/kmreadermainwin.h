@@ -1,7 +1,6 @@
 //
 
-#ifndef KMReaderMainWin_h
-#define KMReaderMainWin_h
+#pragma once
 
 #include "kmail_export.h"
 
@@ -132,4 +131,3 @@ private:
     Akonadi::StandardMailActionManager *mAkonadiStandardActionManager = nullptr;
 };
 
-#endif /*KMReaderMainWin_h*/

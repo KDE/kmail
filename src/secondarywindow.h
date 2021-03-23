@@ -7,8 +7,7 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_SECONDARYWINDOW_H
-#define KMAIL_SECONDARYWINDOW_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <kxmlguiwindow.h>
@@ -46,4 +45,3 @@ protected:
 };
 } // namespace KMail
 
-#endif // KMAIL_SECONDARYWINDOW_H

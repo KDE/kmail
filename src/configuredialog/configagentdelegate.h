@@ -6,8 +6,7 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef CONFIGAGENTDELEGATE_H
-#define CONFIGAGENTDELEGATE_H
+#pragma once
 
 #include <QStyledItemDelegate>
 
@@ -40,4 +39,3 @@ private:
     QStyleOptionButton buttonOption(const QStyleOptionViewItem &option) const;
 };
 
-#endif // CONFIGAGENTDELEGATE_H

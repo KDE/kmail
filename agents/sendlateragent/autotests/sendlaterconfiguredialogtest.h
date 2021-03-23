@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERCONFIGUREDIALOGTEST_H
-#define SENDLATERCONFIGUREDIALOGTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -20,4 +19,3 @@ private Q_SLOTS:
     void initTestCase();
 };
 
-#endif // SENDLATERCONFIGUREDIALOGTEST_H

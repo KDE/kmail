@@ -10,8 +10,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef KMAIL_ATTACHMENTVIEW_H
-#define KMAIL_ATTACHMENTVIEW_H
+#pragma once
 
 #include <KConfigGroup>
 #include <QTreeView>
@@ -72,4 +71,3 @@ private:
 };
 } // namespace KMail
 
-#endif // KMAIL_ATTACHMENTVIEW_H

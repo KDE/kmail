@@ -5,8 +5,7 @@
 
 */
 
-#ifndef POTENTIALPHISHINGEMAILWARNINGTEST_H
-#define POTENTIALPHISHINGEMAILWARNINGTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -20,4 +19,3 @@ private Q_SLOTS:
     void shouldHaveDefaultValue();
 };
 
-#endif // POTENTIALPHISHINGEMAILWARNINGTEST_H

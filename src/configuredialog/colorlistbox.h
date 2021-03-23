@@ -8,8 +8,7 @@
  *
  */
 
-#ifndef COLORLISTBOX_H
-#define COLORLISTBOX_H
+#pragma once
 
 #include <QTreeWidget>
 
@@ -44,4 +43,3 @@ private:
     QTreeWidgetItem *mCurrentOnDragEnter = nullptr;
 };
 
-#endif

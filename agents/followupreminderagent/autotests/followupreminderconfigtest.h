@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERCONFIGTEST_H
-#define FOLLOWUPREMINDERCONFIGTEST_H
+#pragma once
 
 #include <KSharedConfig>
 #include <QObject>
@@ -35,4 +34,3 @@ private:
     QRegularExpression mFollowupRegExpFilter;
 };
 
-#endif // FOLLOWUPREMINDERCONFIGTEST_H

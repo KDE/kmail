@@ -3,8 +3,7 @@
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
-#ifndef FOLDERARCHIVEMANAGER_H
-#define FOLDERARCHIVEMANAGER_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <QObject>
@@ -54,4 +53,3 @@ private:
     FolderArchiveCache *const mFolderArchiveCache;
 };
 
-#endif // FOLDERARCHIVEMANAGER_H

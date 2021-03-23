@@ -3,8 +3,7 @@
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
-#ifndef FOLDERARCHIVEACCOUNTINFO_H
-#define FOLDERARCHIVEACCOUNTINFO_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <AkonadiCore/Collection>
@@ -49,4 +48,3 @@ private:
     bool mKeepExistingStructure = false;
 };
 
-#endif // FOLDERARCHIVEACCOUNTINFO_H

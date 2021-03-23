@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SETTINGSDIALOG_H_
-#define SETTINGSDIALOG_H_
+#pragma once
 
 #include <QDialog>
 
@@ -36,4 +35,3 @@ private:
     const KSharedConfigPtr mConfig;
 };
 
-#endif

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef REMOVEDUPLICATEMAILJOB_H
-#define REMOVEDUPLICATEMAILJOB_H
+#pragma once
 
 #include <QObject>
 class QWidget;
@@ -33,4 +32,3 @@ private:
     QItemSelectionModel *const mSelectionModel;
 };
 
-#endif // REMOVEDUPLICATEMAILJOB_H

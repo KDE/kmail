@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNDOSENDCOMBOBOX_H
-#define UNDOSENDCOMBOBOX_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <QComboBox>
@@ -24,4 +23,3 @@ private:
     void initialize();
 };
 
-#endif // UNDOSENDCOMBOBOX_H

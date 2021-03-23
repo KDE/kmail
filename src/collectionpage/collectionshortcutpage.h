@@ -6,8 +6,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef COLLECTIONSHORTCUTPAGE_H
-#define COLLECTIONSHORTCUTPAGE_H
+#pragma once
 
 #include <MailCommon/FolderSettings>
 
@@ -38,4 +37,3 @@ private:
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionShortcutPageFactory, CollectionShortcutPage)
 
-#endif /* COLLECTIONSHORTCUTPAGE_H */

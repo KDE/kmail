@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef IDENTITYFOLDERREQUESTER_H
-#define IDENTITYFOLDERREQUESTER_H
+#pragma once
 
 #include <MailCommon/FolderRequester>
 
@@ -29,4 +28,3 @@ private:
     void slotFolderChanged(const Akonadi::Collection &col);
 };
 }
-#endif // IDENTITYFOLDERREQUESTER_H

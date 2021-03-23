@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef CRYPTOSTATEINDICATORWIDGET_H
-#define CRYPTOSTATEINDICATORWIDGET_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <QWidget>
@@ -31,4 +30,3 @@ private:
     bool mIsEncrypted = false;
 };
 
-#endif // CRYPTOSTATEINDICATORWIDGET_H

@@ -2,8 +2,7 @@
 // configuredialog_p.h: classes internal to ConfigureDialog
 // see configuredialog.h for details.
 
-#ifndef CONFIGURE_DIALOG_PRIVATE_H
-#define CONFIGURE_DIALOG_PRIVATE_H
+#pragma once
 
 #include "configmodule.h"
 #include "kmail_export.h"
@@ -80,4 +79,3 @@ private:
     bool mWasInitialized = false;
 };
 
-#endif // _CONFIGURE_DIALOG_PRIVATE_H_

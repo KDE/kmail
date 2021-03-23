@@ -4,8 +4,7 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef MAILFILTERAGENT_H
-#define MAILFILTERAGENT_H
+#pragma once
 
 #include <AkonadiAgentBase/agentbase.h>
 
@@ -82,4 +81,3 @@ private:
     void filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection);
 };
 
-#endif

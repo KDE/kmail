@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef ADDEMAILTOEXISTINGCONTACTDIALOG_H
-#define ADDEMAILTOEXISTINGCONTACTDIALOG_H
+#pragma once
 
 #include <QDialog>
 class QPushButton;
@@ -33,4 +32,3 @@ private:
     QPushButton *mOkButton = nullptr;
 };
 
-#endif // ADDEMAILTOEXISTINGCONTACTDIALOG_H

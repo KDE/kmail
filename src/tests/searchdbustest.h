@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SEARCHDBUSTEST_H
-#define SEARCHDBUSTEST_H
+#pragma once
 
 #include <QWidget>
 
@@ -19,4 +18,3 @@ private Q_SLOTS:
     void slotReindexCollections();
 };
 
-#endif // SEARCHDBUSTEST_H

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UTILS_H_
-#define UTILS_H_
+#pragma once
 
 #include <QHash>
 #include <functional>
@@ -36,4 +35,3 @@ template<typename T> inline QSet<T> listToSet(QList<T> &&list)
     return rv;
 }
 
-#endif

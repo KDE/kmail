@@ -6,8 +6,7 @@
   SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
 */
 
-#ifndef KMAIL_PLUGIN_H
-#define KMAIL_PLUGIN_H
+#pragma once
 
 #include <KontactInterface/Plugin>
 #include <KontactInterface/UniqueAppHandler>
@@ -66,4 +65,3 @@ private:
     KontactInterface::UniqueAppWatcher *mUniqueAppWatcher = nullptr;
 };
 
-#endif

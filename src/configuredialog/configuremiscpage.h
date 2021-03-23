@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef CONFIGUREMISCPAGE_H
-#define CONFIGUREMISCPAGE_H
+#pragma once
 
 #include "configuredialog_p.h"
 #include "kmail_export.h"
@@ -99,4 +98,3 @@ private:
 };
 #endif
 
-#endif // CONFIGUREMISCPAGE_H

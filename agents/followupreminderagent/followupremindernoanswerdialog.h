@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERNOANSWERDIALOG_H
-#define FOLLOWUPREMINDERNOANSWERDIALOG_H
+#pragma once
 
 #include <QDialog>
 namespace FollowUpReminder
@@ -34,4 +33,3 @@ private:
     FollowUpReminderInfoWidget *mWidget = nullptr;
 };
 
-#endif // FOLLOWUPREMINDERNOANSWERDIALOG_H

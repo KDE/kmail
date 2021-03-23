@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNIFIEDMAILBOXMANAGER_H
-#define UNIFIEDMAILBOXMANAGER_H
+#pragma once
 
 #include "utils.h"
 
@@ -77,4 +76,3 @@ private:
 
     KSharedConfigPtr mConfig;
 };
-#endif

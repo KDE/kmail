@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILPLUGINEDITORMANAGERINTERFACE_H
-#define KMAILPLUGINEDITORMANAGERINTERFACE_H
+#pragma once
 
 #include <MessageComposer/PluginEditorInterface>
 #include <QHash>
@@ -65,4 +64,3 @@ private:
     QList<QWidget *> mStatusBarWidget;
 };
 
-#endif // KMAILPLUGINEDITORMANAGERINTERFACE_H

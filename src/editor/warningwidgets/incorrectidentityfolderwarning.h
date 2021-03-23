@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef INCORRECTIDENTITYFOLDERWARNING_H
-#define INCORRECTIDENTITYFOLDERWARNING_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <KMessageWidget>
@@ -33,4 +32,3 @@ private:
     bool mDictionaryIsInvalid = false;
 };
 
-#endif // INCORRECTIDENTITYFOLDERWARNING_H

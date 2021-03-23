@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef DisplayMessageFormatActionMenu_H
-#define DisplayMessageFormatActionMenu_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <KActionMenu>
@@ -30,4 +29,3 @@ private:
     MessageViewer::Viewer::DisplayFormatMessage mDisplayMessageFormat = MessageViewer::Viewer::UseGlobalSetting;
 };
 
-#endif // DisplayMessageFormatActionMenu_H

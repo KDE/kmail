@@ -4,8 +4,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAIL_MESSAGEACTIONS_H
-#define KMAIL_MESSAGEACTIONS_H
+#pragma once
 
 #include <MessageComposer/MessageFactoryNG>
 #include <QUrl>
@@ -175,4 +174,3 @@ private:
 };
 }
 
-#endif

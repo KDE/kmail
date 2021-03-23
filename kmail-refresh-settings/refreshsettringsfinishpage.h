@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef REFRESHSETTRINGSFINISHPAGE_H
-#define REFRESHSETTRINGSFINISHPAGE_H
+#pragma once
 
 #include <QWidget>
 class QPlainTextEdit;
@@ -24,4 +23,3 @@ private:
     QPlainTextEdit *mTextEdit = nullptr;
 };
 
-#endif // REFRESHSETTRINGSFINISHPAGE_H

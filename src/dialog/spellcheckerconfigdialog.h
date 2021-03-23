@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SPELLCHECKERCONFIGDIALOG_H
-#define SPELLCHECKERCONFIGDIALOG_H
+#pragma once
 
 #include <Sonnet/ConfigDialog>
 
@@ -21,4 +20,3 @@ private:
     void writeConfig();
 };
 
-#endif // SPELLCHECKERCONFIGDIALOG_H

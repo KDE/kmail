@@ -5,8 +5,7 @@
 
 */
 
-#ifndef CREATENEWCONTACTJOB_H
-#define CREATENEWCONTACTJOB_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <KJob>
@@ -48,4 +47,3 @@ private:
     QWidget *const mParentWidget;
 };
 
-#endif // CREATENEWCONTACTJOB_H

@@ -3,8 +3,7 @@
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
-#ifndef FOLDERARCHIVEAGENTJOB_H
-#define FOLDERARCHIVEAGENTJOB_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <QObject>
@@ -38,4 +37,3 @@ private:
     FolderArchiveAccountInfo *const mInfo;
 };
 
-#endif // FOLDERARCHIVEAGENTJOB_H

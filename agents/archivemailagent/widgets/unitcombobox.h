@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNITCOMBOBOX_H
-#define UNITCOMBOBOX_H
+#pragma once
 
 #include "archivemailinfo.h"
 #include <QComboBox>
@@ -20,4 +19,3 @@ public:
     void setUnit(ArchiveMailInfo::ArchiveUnit unit);
 };
 
-#endif // UNITCOMBOBOX_H

@@ -3,8 +3,7 @@
 
   SPDX-License-Identifier: GPL-2.0-only
 */
-#ifndef CONFIGUREAPPEARANCEPAGE_H
-#define CONFIGUREAPPEARANCEPAGE_H
+#pragma once
 
 #include "MailCommon/Tag"
 #include "configuredialog_p.h"
@@ -278,4 +277,3 @@ public:
     using MessageTagTab = AppearancePageMessageTagTab;
 };
 
-#endif // CONFIGUREAPPEARANCEPAGE_H

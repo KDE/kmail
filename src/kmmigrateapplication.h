@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMMIGRATEAPPLICATION_H
-#define KMMIGRATEAPPLICATION_H
+#pragma once
 
 #include "kmail_export.h"
 #include <PimCommon/MigrateApplicationFiles>
@@ -23,4 +22,3 @@ private:
     PimCommon::MigrateApplicationFiles mMigrator;
 };
 
-#endif // KMMIGRATEAPPLICATION_H

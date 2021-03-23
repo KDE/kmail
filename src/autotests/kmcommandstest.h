@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMCOMMANDSTEST_H
-#define KMCOMMANDSTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -31,4 +30,3 @@ private:
     KMKernel *mKernel = nullptr;
 };
 
-#endif // KMCOMMANDSTEST_H

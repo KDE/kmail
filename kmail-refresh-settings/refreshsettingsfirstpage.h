@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef REFRESHSETTINGSFIRSTPAGE_H
-#define REFRESHSETTINGSFIRSTPAGE_H
+#pragma once
 
 #include <QWidget>
 
@@ -17,4 +16,3 @@ public:
     ~RefreshSettingsFirstPage() override;
 };
 
-#endif // REFRESHSETTINGSFIRSTPAGE_H

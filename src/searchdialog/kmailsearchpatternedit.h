@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMailSearchPatternEdit_H
-#define KMailSearchPatternEdit_H
+#pragma once
 
 #include <MailCommon/SearchPatternEdit>
 
@@ -19,4 +18,3 @@ public:
     ~KMailSearchPatternEdit() override;
 };
 }
-#endif // KMailSearchPatternEdit_H

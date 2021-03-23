@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERJOB_H
-#define SENDLATERJOB_H
+#pragma once
 
 #include <QObject>
 
@@ -42,4 +41,3 @@ private:
     Akonadi::Item mItem;
 };
 
-#endif // SENDLATERJOB_H

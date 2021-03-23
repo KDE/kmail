@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEMAILKERNEL_H
-#define ARCHIVEMAILKERNEL_H
+#pragma once
 
 #include <MailCommon/MailInterfaces>
 
@@ -56,4 +55,3 @@ private:
     MailCommon::JobScheduler *mJobScheduler = nullptr;
 };
 
-#endif

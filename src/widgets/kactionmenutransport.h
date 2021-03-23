@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KACTIONMENUTRANSPORT_H
-#define KACTIONMENUTRANSPORT_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <KActionMenu>
@@ -32,4 +31,3 @@ private:
     bool mInitialized = false;
 };
 
-#endif // KACTIONMENUTRANSPORT_H

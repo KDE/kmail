@@ -4,8 +4,7 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef AKONADI_SEARCHDESCRIPTIONATTRIBUTE_H
-#define AKONADI_SEARCHDESCRIPTIONATTRIBUTE_H
+#pragma once
 
 #include <AkonadiCore/Attribute>
 #include <AkonadiCore/Collection>
@@ -41,4 +40,3 @@ private:
 };
 }
 
-#endif

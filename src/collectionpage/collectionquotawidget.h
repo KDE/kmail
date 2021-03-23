@@ -6,8 +6,7 @@
  * SPDX-License-Identifier: GPL-2.0-only
  */
 
-#ifndef COLLECTIONQUOTAWIDGET_H
-#define COLLECTIONQUOTAWIDGET_H
+#pragma once
 
 #include <QWidget>
 
@@ -28,4 +27,3 @@ private:
     QLabel *const mUsage;
 };
 
-#endif /* COLLECTIONQUOTAWIDGET_H */

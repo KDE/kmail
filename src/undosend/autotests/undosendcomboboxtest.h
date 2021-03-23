@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNDOSENDCOMBOBOXTEST_H
-#define UNDOSENDCOMBOBOXTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -19,4 +18,3 @@ private Q_SLOTS:
     void shouldHaveDefaultValues();
 };
 
-#endif // UNDOSENDCOMBOBOXTEST_H

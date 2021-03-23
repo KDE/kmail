@@ -9,8 +9,7 @@
  *
  */
 
-#ifndef IDENTITYPAGE_H
-#define IDENTITYPAGE_H
+#pragma once
 
 #include "kmail_export.h"
 
@@ -64,4 +63,3 @@ private: // data members
 };
 }
 
-#endif

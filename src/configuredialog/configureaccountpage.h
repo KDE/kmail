@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef CONFIGUREACCOUNTPAGE_H
-#define CONFIGUREACCOUNTPAGE_H
+#pragma once
 
 #include "configuredialog_p.h"
 #include "kmail_export.h"
@@ -117,4 +116,3 @@ Q_SIGNALS:
     void accountListChanged(const QStringList &);
 };
 
-#endif // CONFIGUREACCOUNTPAGE_H

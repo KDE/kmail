@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILPLUGINEDITORCONVERTTEXTMANAGERINTERFACE_H
-#define KMAILPLUGINEDITORCONVERTTEXTMANAGERINTERFACE_H
+#pragma once
 
 #include <MessageComposer/PluginEditorConvertTextInterface>
 #include <QHash>
@@ -57,4 +56,3 @@ private:
     QList<QWidget *> mStatusBarWidget;
 };
 
-#endif // KMAILPLUGINEDITORCONVERTTEXTMANAGERINTERFACE_H

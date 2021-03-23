@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef CONFIGURESECURITYPAGE_H
-#define CONFIGURESECURITYPAGE_H
+#pragma once
 
 #include "configuredialog_p.h"
 #include "kmail_export.h"
@@ -148,4 +147,3 @@ public:
     using SMimeTab = SecurityPageSMimeTab;
 };
 
-#endif // CONFIGURESECURITYPAGE_H

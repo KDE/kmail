@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SEARCHPATTERNWARNING_H
-#define SEARCHPATTERNWARNING_H
+#pragma once
 
 #include <KMessageWidget>
 
@@ -26,4 +25,3 @@ private:
 };
 }
 
-#endif // SEARCHPATTERNWARNING_H

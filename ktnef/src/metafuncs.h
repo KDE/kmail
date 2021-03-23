@@ -3,8 +3,7 @@
  *
  * SPDX-License-Identifier: LGPL-2.0-only
  */
-#ifndef metafunc_h
-#define metafunc_h
+#pragma once
 // clang-format off
 #include "qwmf.h"
 class QWinMetaFile;
@@ -86,4 +85,3 @@ static const struct MetaFuncRec {
     { nullptr, 0, &QWinMetaFile::noop },
 };
 // clang-format on
-#endif /*metafunc_h*/

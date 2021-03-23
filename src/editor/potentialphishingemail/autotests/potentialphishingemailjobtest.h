@@ -5,8 +5,7 @@
 
 */
 
-#ifndef POTENTIALPHISHINGEMAILJOBTEST_H
-#define POTENTIALPHISHINGEMAILJOBTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -26,4 +25,3 @@ private Q_SLOTS:
     void shouldCreateCorrectListOfEmails();
 };
 
-#endif // POTENTIALPHISHINGEMAILJOBTEST_H

@@ -5,8 +5,7 @@
 
 */
 
-#ifndef POTENTIALPHISHINGDETAILDIALOG_H
-#define POTENTIALPHISHINGDETAILDIALOG_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <QDialog>
@@ -27,4 +26,3 @@ private:
     PotentialPhishingDetailWidget *mPotentialPhishingDetailWidget = nullptr;
 };
 
-#endif // POTENTIALPHISHINGDETAILDIALOG_H

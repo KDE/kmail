@@ -9,8 +9,7 @@
  *
  */
 
-#ifndef KMAIL_CONFIGMODULE_H
-#define KMAIL_CONFIGMODULE_H
+#pragma once
 
 #include "kmail_export.h"
 
@@ -33,4 +32,3 @@ public:
     virtual QString helpAnchor() const = 0;
 };
 
-#endif

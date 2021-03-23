@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEMAILAGENT_H
-#define ARCHIVEMAILAGENT_H
+#pragma once
 
 #include <AkonadiAgentBase/agentbase.h>
 
@@ -46,4 +45,3 @@ private:
     ArchiveMailManager *const mArchiveManager;
 };
 
-#endif /* ARCHIVEMAILAGENT_H */

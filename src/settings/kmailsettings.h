@@ -6,8 +6,7 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_SETTINGS_H
-#define KMAIL_SETTINGS_H
+#pragma once
 
 #include "globalsettings_kmail.h"
 
@@ -37,4 +36,3 @@ private:
     QTimer *mConfigSyncTimer = nullptr;
 };
 
-#endif /* KMAIL_SETTINGS_H */

@@ -6,8 +6,7 @@
 
     SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
 */
-#ifndef KMail_PART_H
-#define KMail_PART_H
+#pragma once
 
 #include <kparts/part.h>
 #include <kparts/readonlypart.h>
@@ -41,4 +40,3 @@ private:
     QWidget *const mParentWidget;
 };
 
-#endif

@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef IDENTITYINVALIDFOLDER_H
-#define IDENTITYINVALIDFOLDER_H
+#pragma once
 
 #include <KMessageWidget>
 namespace KMail
@@ -20,4 +19,3 @@ public:
     void setErrorMessage(const QString &msg);
 };
 }
-#endif // IDENTITYINVALIDFOLDER_H

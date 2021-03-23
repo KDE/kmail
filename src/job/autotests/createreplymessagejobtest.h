@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef CREATEREPLYMESSAGEJOBTEST_H
-#define CREATEREPLYMESSAGEJOBTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -19,4 +18,3 @@ private Q_SLOTS:
     void shouldHaveDefaultValue();
 };
 
-#endif // CREATEREPLYMESSAGEJOBTEST_H

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMKNOTIFY_H
-#define KMKNOTIFY_H
+#pragma once
 
 #include <QDialog>
 class QComboBox;
@@ -36,4 +35,3 @@ private:
 };
 }
 
-#endif /* KMKNOTIFY_H */

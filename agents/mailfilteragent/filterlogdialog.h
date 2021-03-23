@@ -4,8 +4,7 @@
 
     SPDX-License-Identifier: GPL-2.0-only
 */
-#ifndef FILTERLOGDIALOG_H
-#define FILTERLOGDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -76,4 +75,3 @@ private:
     bool mIsInitialized = false;
 };
 
-#endif

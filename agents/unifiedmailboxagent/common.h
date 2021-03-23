@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef COMMON_H
-#define COMMON_H
+#pragma once
 
 #include <QString>
 
@@ -24,4 +23,3 @@ static constexpr auto SpecialCollectionDrafts = "drafts";
 static const auto AgentIdentifier = QStringLiteral("akonadi_unifiedmailbox_agent");
 }
 
-#endif

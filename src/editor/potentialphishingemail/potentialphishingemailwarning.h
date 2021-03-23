@@ -5,8 +5,7 @@
 
 */
 
-#ifndef POTENTIALPHISHINGEMAILWARNING_H
-#define POTENTIALPHISHINGEMAILWARNING_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <KMessageWidget>
@@ -27,4 +26,3 @@ private:
     QStringList mPotentialPhishingEmails;
 };
 
-#endif // POTENTIALPHISHINGEMAILWARNING_H

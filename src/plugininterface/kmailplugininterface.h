@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILPLUGININTERFACE_H
-#define KMAILPLUGININTERFACE_H
+#pragma once
 
 #include <PimCommonAkonadi/PluginInterface>
 #include <QObject>
@@ -25,4 +24,3 @@ private:
     KMMainWidget *mMainWindow = nullptr;
 };
 
-#endif // KMAILPLUGININTERFACE_H

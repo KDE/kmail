@@ -8,8 +8,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef ADDRESSVALIDATIONJOB_H
-#define ADDRESSVALIDATIONJOB_H
+#pragma once
 
 #include <KJob>
 
@@ -35,4 +34,3 @@ private:
     QWidget *const mParentWidget;
 };
 
-#endif

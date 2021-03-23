@@ -1,7 +1,6 @@
 //
 
-#ifndef KMKERNEL_H
-#define KMKERNEL_H
+#pragma once
 
 #include <MailCommon/MailInterfaces>
 
@@ -616,4 +615,3 @@ private:
     bool mDebug = false;
 };
 
-#endif // _KMKERNEL_H

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERINFOWIDGET_H
-#define FOLLOWUPREMINDERINFOWIDGET_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <KConfigGroup>
@@ -59,4 +58,3 @@ private:
     QTreeWidget *mTreeWidget = nullptr;
     bool mChanged = false;
 };
-#endif // FOLLOWUPREMINDERINFOWIDGET_H

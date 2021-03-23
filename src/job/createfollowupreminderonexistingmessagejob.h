@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
-#define CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <AkonadiCore/Collection>
@@ -44,4 +43,3 @@ private:
     QDate mDate;
 };
 
-#endif // CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H

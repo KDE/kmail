@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMCOMPOSERWINTEST_H
-#define KMCOMPOSERWINTEST_H
+#pragma once
 
 #include <QDir>
 #include <QObject>
@@ -36,4 +35,3 @@ private:
     QDir autocryptDir;
 };
 
-#endif // KMCOMPOSERWINTEST_H

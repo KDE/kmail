@@ -4,8 +4,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILUTIL_H
-#define KMAILUTIL_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <AkonadiCore/Collection>
@@ -62,4 +61,3 @@ KMAILTESTS_TESTS_EXPORT void setActionTrashOrDelete(QAction *action, bool isInTr
 }
 }
 
-#endif

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERAGENT_H
-#define FOLLOWUPREMINDERAGENT_H
+#pragma once
 
 #include <AkonadiAgentBase/agentbase.h>
 class FollowUpReminderManager;
@@ -38,4 +37,3 @@ private:
     QTimer *mTimer = nullptr;
 };
 
-#endif // FOLLOWUPREMINDERAGENT_H

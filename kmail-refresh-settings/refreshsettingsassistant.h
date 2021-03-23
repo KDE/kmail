@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef REFRESHSETTINGSASSISTANT_H
-#define REFRESHSETTINGSASSISTANT_H
+#pragma once
 
 #include <KAssistantDialog>
 class RefreshSettingsCleanupPage;
@@ -31,4 +30,3 @@ private:
     RefreshSettringsFinishPage *mFinishPage = nullptr;
 };
 
-#endif // REFRESHSETTINGSASSISTANT_H

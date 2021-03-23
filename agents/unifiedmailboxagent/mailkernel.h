@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef MAILKERNEL_H
-#define MAILKERNEL_H
+#pragma once
 
 #include <MailCommon/MailInterfaces>
 #include <QObject>
@@ -57,4 +56,3 @@ private:
     Akonadi::EntityMimeTypeFilterModel *mCollectionModel = nullptr;
 };
 
-#endif

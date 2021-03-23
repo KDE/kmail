@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef ZOOMLABELWIDGET_H
-#define ZOOMLABELWIDGET_H
+#pragma once
 
 #include <QLabel>
 
@@ -19,4 +18,3 @@ public:
     void setZoom(qreal zoomFactor);
 };
 
-#endif // ZOOMLABELWIDGET_H

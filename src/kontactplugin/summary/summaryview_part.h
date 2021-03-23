@@ -8,8 +8,7 @@
   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef SUMMARYVIEW_PART_H
-#define SUMMARYVIEW_PART_H
+#pragma once
 
 #include <KParts/Part>
 #include <QMap>
@@ -78,4 +77,3 @@ private:
     QAction *mConfigAction = nullptr;
 };
 
-#endif

@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KACTIONMENUACCOUNT_H
-#define KACTIONMENUACCOUNT_H
+#pragma once
 
 #include <KActionMenu>
 
@@ -44,4 +43,3 @@ private:
     bool mInitialized = false;
 };
 
-#endif // KACTIONMENUACCOUNT_H

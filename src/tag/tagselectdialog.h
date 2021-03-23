@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef TAGSELECTDIALOG_H
-#define TAGSELECTDIALOG_H
+#pragma once
 
 #include "MailCommon/Tag"
 #include "kmail_private_export.h"
@@ -42,4 +41,3 @@ private:
     QListWidget *const mListTag;
 };
 
-#endif /* TAGSELECTDIALOG_H */

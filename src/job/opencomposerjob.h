@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef OPENCOMPOSERJOB_H
-#define OPENCOMPOSERJOB_H
+#pragma once
 
 #include "editor/kmcomposerwin.h"
 #include <KMime/Message>
@@ -73,4 +72,3 @@ private:
     uint mIdentityId = 0;
 };
 
-#endif // OPENCOMPOSERJOB_H

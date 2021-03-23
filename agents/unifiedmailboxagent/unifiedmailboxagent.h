@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef UNIFIEDMAILBOXAGENT_H
-#define UNIFIEDMAILBOXAGENT_H
+#pragma once
 
 #include <Akonadi/KMime/SpecialMailCollections>
 #include <AkonadiAgentBase/ResourceBase>
@@ -47,4 +46,3 @@ private:
     UnifiedMailboxManager mBoxManager;
 };
 
-#endif

@@ -6,8 +6,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef qwmf_h
-#define qwmf_h
+#pragma once
 
 #include <QColor>
 #include <QImage>
@@ -225,4 +224,3 @@ protected:
     QPoint mLastPos;
 };
 
-#endif /*qwmf_h*/

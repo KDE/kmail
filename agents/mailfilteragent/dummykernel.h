@@ -1,5 +1,4 @@
-#ifndef DUMMYKERNEL_H
-#define DUMMYKERNEL_H
+#pragma once
 
 #include <MailCommon/MailInterfaces>
 
@@ -47,4 +46,3 @@ private:
     Akonadi::EntityMimeTypeFilterModel *mCollectionModel = nullptr;
 };
 
-#endif

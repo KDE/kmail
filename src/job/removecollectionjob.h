@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef REMOVECOLLECTIONJOB_H
-#define REMOVECOLLECTIONJOB_H
+#pragma once
 
 #include <AkonadiCore/Collection>
 #include <QObject>
@@ -36,4 +35,3 @@ private:
     Akonadi::Collection mCurrentCollection;
 };
 
-#endif // REMOVECOLLECTIONJOB_H

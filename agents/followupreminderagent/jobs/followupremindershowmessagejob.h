@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERSHOWMESSAGEJOB_H
-#define FOLLOWUPREMINDERSHOWMESSAGEJOB_H
+#pragma once
 
 #include <AkonadiCore/Item>
 #include <QObject>
@@ -24,4 +23,3 @@ private:
     const Akonadi::Item::Id mId;
 };
 
-#endif // FOLLOWUPREMINDERSHOWMESSAGEJOB_H

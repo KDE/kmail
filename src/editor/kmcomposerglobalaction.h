@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMCOMPOSERGLOBALACTION_H
-#define KMCOMPOSERGLOBALACTION_H
+#pragma once
 
 #include <QObject>
 class KMComposerWin;
@@ -31,4 +30,3 @@ private:
     KMComposerWin *const mComposerWin;
 };
 
-#endif // KMCOMPOSERGLOBALACTION_H

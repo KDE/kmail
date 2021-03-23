@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef OPENCOMPOSERHIDDENJOB_H
-#define OPENCOMPOSERHIDDENJOB_H
+#pragma once
 
 #include <KMime/Message>
 #include <QObject>
@@ -47,4 +46,3 @@ private:
     KMime::Message::Ptr mMsg = nullptr;
 };
 
-#endif // OPENCOMPOSERHIDDENJOB_H

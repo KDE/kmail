@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERUTIL_H
-#define FOLLOWUPREMINDERUTIL_H
+#pragma once
 
 #include <KSharedConfig>
 
@@ -34,4 +33,3 @@ Q_REQUIRED_RESULT QString followUpReminderPattern();
 }
 }
 
-#endif // FOLLOWUPREMINDERUTIL_H

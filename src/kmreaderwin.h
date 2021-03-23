@@ -6,8 +6,7 @@
   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMREADERWIN_H
-#define KMREADERWIN_H
+#pragma once
 
 #include "kmail_export.h"
 
@@ -243,4 +242,3 @@ private:
     MessageViewer::Viewer *mViewer = nullptr;
 };
 
-#endif

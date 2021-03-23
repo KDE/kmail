@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef CONFIGUREPLUGINPAGE_H
-#define CONFIGUREPLUGINPAGE_H
+#pragma once
 
 #include "configuredialog_p.h"
 
@@ -31,4 +30,3 @@ private:
     PimCommon::ConfigurePluginsWidget *mConfigurePlugins = nullptr;
 };
 
-#endif // CONFIGUREPLUGINPAGE_H

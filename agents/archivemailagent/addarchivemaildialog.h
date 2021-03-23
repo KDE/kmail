@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ADDARCHIVEMAILDIALOG_H
-#define ADDARCHIVEMAILDIALOG_H
+#pragma once
 
 #include "archivemailinfo.h"
 #include <Collection>
@@ -65,4 +64,3 @@ private:
     QPushButton *mOkButton = nullptr;
 };
 
-#endif // ADDARCHIVEMAILDIALOG_H

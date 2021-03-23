@@ -5,8 +5,7 @@
 
 */
 
-#ifndef MARKALLMESSAGESASREADINFOLDERANDSUBFOLDERJOB_H
-#define MARKALLMESSAGESASREADINFOLDERANDSUBFOLDERJOB_H
+#pragma once
 
 #include <QObject>
 
@@ -32,4 +31,3 @@ private:
     Akonadi::Collection mTopLevelCollection;
 };
 
-#endif // MARKALLMESSAGESASREADINFOLDERANDSUBFOLDERJOB_H

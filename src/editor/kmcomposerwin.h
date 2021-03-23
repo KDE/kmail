@@ -10,8 +10,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef KMAIL_KMCOMPOSERWIN_H
-#define KMAIL_KMCOMPOSERWIN_H
+#pragma once
 
 // KMail includes
 #include "editor/composer.h"
@@ -693,4 +692,3 @@ private:
     ModeType mModeType = ModeType::ComposerType;
 };
 
-#endif

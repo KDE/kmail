@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FORMATCOMBOBOXTEST_H
-#define FORMATCOMBOBOXTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -21,4 +20,3 @@ private Q_SLOTS:
     void changeCurrentItem();
 };
 
-#endif // FORMATCOMBOBOXTEST_H

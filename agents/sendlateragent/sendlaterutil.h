@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERUTIL_H
-#define SENDLATERUTIL_H
+#pragma once
 
 #include <KSharedConfig>
 
@@ -32,4 +31,3 @@ void forceReparseConfiguration();
 Q_REQUIRED_RESULT QString sendLaterPattern();
 }
 
-#endif // SENDLATERUTIL_H

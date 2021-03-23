@@ -7,8 +7,7 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_ABOUTDATA_H
-#define KMAIL_ABOUTDATA_H
+#pragma once
 
 #include "kmail_export.h"
 #include <KAboutData>
@@ -23,4 +22,3 @@ public:
 };
 } // namespace KMail
 
-#endif // KMAIL_ABOUTDATA_H

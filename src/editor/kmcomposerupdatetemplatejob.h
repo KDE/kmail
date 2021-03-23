@@ -4,8 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef KMCOMPOSERUPDATETEMPLATEJOB_H
-#define KMCOMPOSERUPDATETEMPLATEJOB_H
+#pragma once
 
 #include <AkonadiCore/Collection>
 #include <KIdentityManagement/Identity>
@@ -51,4 +50,3 @@ private:
     bool mWasModified = false;
 };
 
-#endif // KMCOMPOSERUPDATETEMPLATEJOB_H

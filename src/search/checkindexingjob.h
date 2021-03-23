@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef CHECKINDEXINGJOB_H
-#define CHECKINDEXINGJOB_H
+#pragma once
 
 #include <AkonadiCore/Collection>
 #include <QObject>
@@ -42,4 +41,3 @@ private:
     Akonadi::Search::PIM::IndexedItems *const mIndexedItems;
 };
 
-#endif // CHECKINDEXINGJOB_H

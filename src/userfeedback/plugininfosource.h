@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef PLUGININFOSOURCE_H
-#define PLUGININFOSOURCE_H
+#pragma once
 #include "kmail_private_export.h"
 #include <KUserFeedback/AbstractDataSource>
 
@@ -20,4 +19,3 @@ public:
     Q_REQUIRED_RESULT QVariant data() override;
 };
 
-#endif // PLUGININFOSOURCE_H

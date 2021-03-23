@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEMAILINFOTEST_H
-#define ARCHIVEMAILINFOTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -22,4 +21,3 @@ private Q_SLOTS:
     void shouldRestoreFromSettings();
 };
 
-#endif // ARCHIVEMAILINFOTEST_H

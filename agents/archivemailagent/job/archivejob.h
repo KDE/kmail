@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEJOB_H
-#define ARCHIVEJOB_H
+#pragma once
 
 #include <Collection>
 #include <MailCommon/JobScheduler>
@@ -57,4 +56,3 @@ private:
     ArchiveMailManager *mManager = nullptr;
 };
 
-#endif // ARCHIVEJOB_H

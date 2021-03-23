@@ -6,8 +6,7 @@
  * SPDX-License-Identifier: GPL-2.0-only
  */
 
-#ifndef COLLECTIONQUOTAPAGE_H
-#define COLLECTIONQUOTAPAGE_H
+#pragma once
 #include <AkonadiWidgets/collectionpropertiespage.h>
 
 class CollectionQuotaWidget;
@@ -31,4 +30,3 @@ private:
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionQuotaPageFactory, CollectionQuotaPage)
 
-#endif /* COLLECTIONQUOTAPAGE_H */

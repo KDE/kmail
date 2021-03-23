@@ -4,8 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERCONFIGTEST_H
-#define SENDLATERCONFIGTEST_H
+#pragma once
 
 #include <KSharedConfig>
 #include <QObject>
@@ -31,4 +30,3 @@ private:
     QRegularExpression mSendlaterRegExpFilter;
 };
 
-#endif // SENDLATERCONFIGTEST_H

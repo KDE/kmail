@@ -4,8 +4,7 @@
   SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_TASK_ATTRIBUTE_H
-#define KMAIL_TASK_ATTRIBUTE_H
+#pragma once
 
 #include <AkonadiCore/Attribute>
 #include <AkonadiCore/Item>
@@ -32,4 +31,3 @@ private:
     Akonadi::Item::Id mId = {-1};
 };
 
-#endif

@@ -7,8 +7,7 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef UNDOSTACK_H
-#define UNDOSTACK_H
+#pragma once
 
 #include "kmail_private_export.h"
 #include <AkonadiCore/collection.h>
@@ -66,4 +65,3 @@ private:
 };
 }
 
-#endif
