@@ -20,6 +20,7 @@
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QIcon>
+#include <QTextCodec>
 
 CodecAction::CodecAction(Mode mode, QObject *parent)
     : KCodecAction(parent, mode == ReaderMode)
