@@ -24,8 +24,8 @@ public:
     void setQuotaInfo(qint64 currentValue, qint64 maxValue);
 
 private:
-    QProgressBar *mProgressBar = nullptr;
-    QLabel *mUsage = nullptr;
+    QProgressBar *const mProgressBar;
+    QLabel *const mUsage;
 };
 
 #endif /* COLLECTIONQUOTAWIDGET_H */

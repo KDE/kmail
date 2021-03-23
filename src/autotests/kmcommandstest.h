@@ -16,7 +16,7 @@ class KMCommandsTest : public QObject
     Q_OBJECT
 public:
     explicit KMCommandsTest(QObject *parent = nullptr);
-    ~KMCommandsTest();
+    ~KMCommandsTest() override;
 private Q_SLOTS:
     void testMailtoReply();
     void testReply();

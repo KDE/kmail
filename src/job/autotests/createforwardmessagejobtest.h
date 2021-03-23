@@ -14,7 +14,7 @@ class CreateForwardMessageJobTest : public QObject
     Q_OBJECT
 public:
     explicit CreateForwardMessageJobTest(QObject *parent = nullptr);
-    ~CreateForwardMessageJobTest() = default;
+    ~CreateForwardMessageJobTest() override = default;
 private Q_SLOTS:
     void shouldHaveDefaultValues();
 };

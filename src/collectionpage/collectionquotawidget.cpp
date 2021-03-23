@@ -16,19 +16,19 @@
 
 CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
     : QWidget(parent)
+    , mUsage(new QLabel(this))
+    , mProgressBar(new QProgressBar(this))
 {
     auto layout = new QGridLayout(this);
 
     auto lab = new QLabel(i18n("Usage:"), this);
     layout->addWidget(lab, 0, 0);
 
-    mUsage = new QLabel(this);
     mUsage->setTextFormat(Qt::PlainText);
     layout->addWidget(mUsage, 0, 1);
 
     auto Status = new QLabel(i18n("Status:"), this);
     layout->addWidget(Status, 1, 0);
-    mProgressBar = new QProgressBar(this);
     // xgettext: no-c-format
     mProgressBar->setFormat(i18n("%p% full"));
     layout->addWidget(mProgressBar, 1, 1);

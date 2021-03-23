@@ -13,7 +13,10 @@
 
 #include <QTest>
 
-identityaddvcarddialogtest::identityaddvcarddialogtest() = default;
+identityaddvcarddialogtest::identityaddvcarddialogtest(QObject *parent)
+    : QObject(parent)
+{
+}
 
 void identityaddvcarddialogtest::shouldHaveDefaultValue()
 {

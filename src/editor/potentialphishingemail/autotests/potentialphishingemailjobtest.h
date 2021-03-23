@@ -15,7 +15,7 @@ class PotentialPhishingEmailJobTest : public QObject
     Q_OBJECT
 public:
     explicit PotentialPhishingEmailJobTest(QObject *parent = nullptr);
-    ~PotentialPhishingEmailJobTest();
+    ~PotentialPhishingEmailJobTest() override;
 
 private Q_SLOTS:
     void shouldNotStartIfNoEmails();

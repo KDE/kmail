@@ -15,7 +15,7 @@ class RefreshSettingsCleanupPage : public QWidget
     Q_OBJECT
 public:
     explicit RefreshSettingsCleanupPage(QWidget *parent = nullptr);
-    ~RefreshSettingsCleanupPage();
+    ~RefreshSettingsCleanupPage() override;
 
 Q_SIGNALS:
     void cleanDoneInfo(const QString &msg);

@@ -14,7 +14,7 @@ class searchdbustest : public QWidget
     Q_OBJECT
 public:
     explicit searchdbustest(QWidget *parent = nullptr);
-    ~searchdbustest() = default;
+    ~searchdbustest() override = default;
 private Q_SLOTS:
     void slotReindexCollections();
 };

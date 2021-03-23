@@ -13,7 +13,7 @@ class FolderArchiveAccountInfoTest : public QObject
     Q_OBJECT
 public:
     explicit FolderArchiveAccountInfoTest(QObject *parent = nullptr);
-    ~FolderArchiveAccountInfoTest();
+    ~FolderArchiveAccountInfoTest() override;
 
 private Q_SLOTS:
     void shouldHaveDefaultValue();

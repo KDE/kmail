@@ -14,7 +14,7 @@ class RefreshSettingsFirstPage : public QWidget
     Q_OBJECT
 public:
     explicit RefreshSettingsFirstPage(QWidget *parent = nullptr);
-    ~RefreshSettingsFirstPage();
+    ~RefreshSettingsFirstPage() override;
 };
 
 #endif // REFRESHSETTINGSFIRSTPAGE_H

@@ -14,7 +14,7 @@ class RefreshSettringsFinishPage : public QWidget
     Q_OBJECT
 public:
     explicit RefreshSettringsFinishPage(QWidget *parent = nullptr);
-    ~RefreshSettringsFinishPage();
+    ~RefreshSettringsFinishPage() override;
 
 Q_SIGNALS:
     void cleanDoneInfo(const QString &info);

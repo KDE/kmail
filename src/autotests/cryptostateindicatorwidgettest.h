@@ -14,7 +14,7 @@ class CryptoStateIndicatorWidgetTest : public QObject
     Q_OBJECT
 public:
     explicit CryptoStateIndicatorWidgetTest(QObject *parent = nullptr);
-    ~CryptoStateIndicatorWidgetTest();
+    ~CryptoStateIndicatorWidgetTest() override;
 private Q_SLOTS:
     void shouldHaveDefaultValue();
     void shouldBeNotVisibleWhenShowAlwaysIsFalse();

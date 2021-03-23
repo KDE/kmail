@@ -7,8 +7,8 @@
 #ifndef KMCOMPOSERWINTEST_H
 #define KMCOMPOSERWINTEST_H
 
+#include <QDir>
 #include <QObject>
-
 class KMKernel;
 
 class KMComposerWinTest : public QObject
@@ -16,8 +16,8 @@ class KMComposerWinTest : public QObject
     Q_OBJECT
 public:
     explicit KMComposerWinTest(QObject *parent = nullptr);
-    ~KMComposerWinTest();
-    
+    ~KMComposerWinTest() override;
+
 private Q_SLOTS:
     void init();
     void cleanup();

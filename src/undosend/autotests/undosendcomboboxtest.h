@@ -14,7 +14,7 @@ class UndoSendComboboxTest : public QObject
     Q_OBJECT
 public:
     explicit UndoSendComboboxTest(QObject *parent = nullptr);
-    ~UndoSendComboboxTest() = default;
+    ~UndoSendComboboxTest() override = default;
 private Q_SLOTS:
     void shouldHaveDefaultValues();
 };
