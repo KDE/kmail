@@ -15,7 +15,7 @@ class PotentialPhishingDetailWidgetTest : public QObject
     Q_OBJECT
 public:
     explicit PotentialPhishingDetailWidgetTest(QObject *parent = nullptr);
-    ~PotentialPhishingDetailWidgetTest();
+    ~PotentialPhishingDetailWidgetTest() override;
 private Q_SLOTS:
     void shouldHaveDefaultValue();
     void shouldFillList();

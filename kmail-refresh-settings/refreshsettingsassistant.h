@@ -16,7 +16,7 @@ class RefreshSettingsAssistant : public KAssistantDialog
     Q_OBJECT
 public:
     explicit RefreshSettingsAssistant(QWidget *parent = nullptr);
-    ~RefreshSettingsAssistant();
+    ~RefreshSettingsAssistant() override;
 
 private:
     void initializePages();

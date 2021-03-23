@@ -14,7 +14,7 @@ class TagSelectDialogTest : public QObject
     Q_OBJECT
 public:
     explicit TagSelectDialogTest(QObject *parent = nullptr);
-    ~TagSelectDialogTest();
+    ~TagSelectDialogTest() override;
 private Q_SLOTS:
     void shouldHaveDefaultValue();
     void initTestCase();

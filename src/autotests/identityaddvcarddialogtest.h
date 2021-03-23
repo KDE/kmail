@@ -13,7 +13,7 @@ class identityaddvcarddialogtest : public QObject
 {
     Q_OBJECT
 public:
-    identityaddvcarddialogtest();
+    explicit identityaddvcarddialogtest(QObject *parent = nullptr);
 
 private Q_SLOTS:
     void shouldHaveDefaultValue();

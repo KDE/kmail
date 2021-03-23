@@ -14,7 +14,7 @@ class CreateReplyMessageJobTest : public QObject
     Q_OBJECT
 public:
     explicit CreateReplyMessageJobTest(QObject *parent = nullptr);
-    ~CreateReplyMessageJobTest() = default;
+    ~CreateReplyMessageJobTest() override = default;
 private Q_SLOTS:
     void shouldHaveDefaultValue();
 };
