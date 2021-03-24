@@ -39,7 +39,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     KAboutData aboutData = KAboutData(QStringLiteral("mailmergeagent"),
                                       i18n("Mail Merge Agent"),
                                       QStringLiteral(KDEPIM_VERSION),
-                                      i18n("Send emails later agent."),
+                                      i18n("Merge email addresses agent."),
                                       KAboutLicense::GPL_V2,
                                       i18n("Copyright (C) 2021 Laurent Montel"));
 
