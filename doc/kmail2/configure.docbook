@@ -3818,12 +3818,19 @@ modifying it by hand.</para>
           <para>
             This dialog allows you to control DomainKeys Identified Mail (DKIM)
             processing. DKIM is a cryptographic protocol that can assure you
-            that a particular message originated from the internet domain
+            a particular message originated from the internet domain
             it claims to be from. If the sender has set up DKIM properly and
-            DKIM is enabled here, you will see a message "DKIM valid" and
-            the name of the entity that signed the message in the status bar
+            DKIM is enabled here, you will see a message "DKIM valid", and sometimes
+            the name of the entity that signed the message, in the status bar
             at the bottom of the message preview window.
           </para>
+          <note><para>
+            If you enable this option, be sure to change the default value
+            ("Nothing") in the spin box labeled "Save Record Key" to some
+            other value. The DKIM Checker does not work correctly if that
+            variable is set to "Nothing".
+          </para></note>
+          <para>&nbsp;</para><!-- add whitespace -->
         </listitem>
       </varlistentry>
       
@@ -3927,10 +3934,11 @@ modifying it by hand.</para>
         <term><guilabel>Log Activities</guilabel></term>
         <listitem>
           <para>
-            Select this option to enable <link linkend="filter-logging">mail
-            filter logging</link>. This plugin is disabled by default. This
-            &kmail; feature appears to be a built-in function; my testing shows
-            that mail filter logging will work both with and without this "plugin".
+            Select this option to enable the Activity Log function, which is disabled
+            by default. This plugin adds a new entry <guilabel>Log Activities</guilabel>
+            to the <guilabel>Tools</guilabel> menu. Primarily for use by program developers --
+            the default log function does not provide much information (just a time stamp
+            and "Ready", for most "events").
           </para>
         </listitem>
       </varlistentry>
