@@ -22,6 +22,7 @@ set(mailmergeagent_SRCS
     mailmergeagent.cpp
     mailmergemanager.cpp
     mailmergeconfiguredialog.cpp
+    mailmergeconfigurewidget.cpp
     )
 
 qt5_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)
