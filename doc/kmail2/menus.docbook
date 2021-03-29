@@ -1342,7 +1342,7 @@ Menu</ulink> of the &kde; Fundamentals, with one additional item.</para>
 
 <variablelist>
 <varlistentry id="reader-help-intro">
-  <term><menuchoice><guimenu>Help</guimenu><guimenuitem>&kmail;Introduction</guimenuitem></menuchoice></term>
+  <term><menuchoice><guimenu>Help</guimenu><guimenuitem>&kmail; Introduction</guimenuitem></menuchoice></term>
   <listitem><para>Opens the <link linkend="intro">Introduction</link> welcome screen.</para></listitem>
 </varlistentry>
 </variablelist>
