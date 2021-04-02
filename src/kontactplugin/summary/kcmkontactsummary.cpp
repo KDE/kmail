@@ -15,8 +15,7 @@
 #include <KConfig>
 #include <KLocalizedString>
 #include <KPluginInfo>
-#include <KService>
-#include <KServiceTypeTrader>
+#include <KPluginMetaData>
 #include <QIcon>
 
 #include <QLabel>
@@ -101,8 +100,9 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent)
 
 void KCMKontactSummary::load()
 {
-    KService::List offers =
-        KServiceTypeTrader::self()->query(QStringLiteral("Kontact/Plugin"), QStringLiteral("[X-KDE-KontactPluginVersion] == %1").arg(KONTACT_PLUGIN_VERSION));
+    const QVector<KPluginMetaData> pluginMetaDatas = KPluginLoader::findPlugins(QStringLiteral("kontact5"), [](const KPluginMetaData &data) {
+        return data.rawData().value(QStringLiteral("X-KDE-KontactPluginVersion")).toInt() == KONTACT_PLUGIN_VERSION;
+    });
 
     QStringList activeSummaries;
 
@@ -124,10 +124,11 @@ void KCMKontactSummary::load()
 
     mPluginView->clear();
 
-    KPluginInfo::List pluginList = KPluginInfo::fromServices(offers, KConfigGroup(&config, "Plugins"));
+    KPluginInfo::List pluginList = KPluginInfo::fromMetaData(pluginMetaDatas);
     KPluginInfo::List::Iterator it;
     KPluginInfo::List::Iterator end(pluginList.end());
     for (it = pluginList.begin(); it != end; ++it) {
+        it->setConfig(KConfigGroup(&config, "Plugins"));
         it->load();
 
         if (!it->isPluginEnabled()) {
