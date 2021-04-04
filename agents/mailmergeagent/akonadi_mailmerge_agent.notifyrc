@@ -3,6 +3,7 @@ IconName=kmail
 Comment=Mail Merge Agent
 Comment[ca]=Agent per a fusionar el correu
 Comment[ca@valencia]=Agent per a fusionar el correu
+Comment[en_GB]=Mail Merge Agent
 Comment[es]=Agente de fusión de correo
 Comment[fr]=Agent de fusion de messages
 Comment[ia]=Agente de fusion de posta
