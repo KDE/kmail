@@ -16,8 +16,8 @@
 
 CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
     : QWidget(parent)
-    , mUsage(new QLabel(this))
     , mProgressBar(new QProgressBar(this))
+    , mUsage(new QLabel(this))
 {
     auto layout = new QGridLayout(this);
 
