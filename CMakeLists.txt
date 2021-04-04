@@ -150,9 +150,8 @@ configure_file(kmail-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h
 if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
-
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f00)
-#add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055100) #Need to find a convert method for KPluginInfo::fromServices
+add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055100)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
