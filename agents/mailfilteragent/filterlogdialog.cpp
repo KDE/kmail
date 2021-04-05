@@ -33,7 +33,7 @@
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QPushButton>
-#include <errno.h>
+#include <cerrno>
 
 using namespace MailCommon;
 

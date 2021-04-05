@@ -32,7 +32,7 @@
 #include <KSharedConfig>
 #include <QLocale>
 #include <algorithm>
-#include <errno.h>
+#include <cerrno>
 
 using namespace MailCommon;
 
