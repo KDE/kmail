@@ -6,6 +6,7 @@
 
 #include "mailmergeconfiguredialog.h"
 #include "kmail-version.h"
+#include "mailmergeconfigurewidget.h"
 #include <KAboutData>
 #include <KHelpMenu>
 #include <KLocalizedString>
@@ -18,6 +19,7 @@
 
 MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     : QDialog(parent)
+    , mWidget(new MailMergeConfigureWidget(this))
 {
     setWindowTitle(i18nc("@title:window", "Configure"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
@@ -28,9 +30,9 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &MailMergeConfigureDialog::reject);
 
-    //    mWidget->setObjectName(QStringLiteral("sendlaterwidget"));
+    mWidget->setObjectName(QStringLiteral("mailmergewidget"));
     //    connect(mWidget, &SendLaterWidget::sendNow, this, &SendLaterConfigureDialog::sendNow);
-    //    mainLayout->addWidget(mWidget);
+    mainLayout->addWidget(mWidget);
     mainLayout->addWidget(buttonBox);
     //    connect(okButton, &QPushButton::clicked, this, &SendLaterConfigureDialog::slotSave);
 

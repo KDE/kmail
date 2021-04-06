@@ -7,11 +7,13 @@
 #pragma once
 
 #include <QDialog>
-
+class MailMergeConfigureWidget;
 class MailMergeConfigureDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit MailMergeConfigureDialog(QWidget *parent = nullptr);
     ~MailMergeConfigureDialog() override;
+private:
+    MailMergeConfigureWidget *const mWidget;
 };
