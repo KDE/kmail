@@ -533,6 +533,7 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
     if (mainwin) {
         auto action = new KActionMenu(menu);
         action->setText(i18n("Move Message To..."));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
         mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::MoveItemToMenu);
         connect(action->menu(), &QMenu::triggered, this, &KMReaderMainWin::slotMoveItem);
 
