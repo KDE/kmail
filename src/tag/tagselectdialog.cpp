@@ -78,7 +78,7 @@ TagSelectDialog::~TagSelectDialog()
 
 void TagSelectDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "TagSelectDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "TagSelectDialog");
     const QSize size = group.readEntry("Size", QSize(500, 300));
     if (size.isValid()) {
         resize(size);
@@ -87,7 +87,7 @@ void TagSelectDialog::readConfig()
 
 void TagSelectDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "TagSelectDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "TagSelectDialog");
     group.writeEntry("Size", size());
 }
 

@@ -66,7 +66,7 @@ AttachPropertyDialog::~AttachPropertyDialog()
 
 void AttachPropertyDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "AttachPropertyDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "AttachPropertyDialog");
     const QSize size = group.readEntry("Size", QSize(500, 400));
     if (size.isValid()) {
         resize(size);
@@ -75,7 +75,7 @@ void AttachPropertyDialog::readConfig()
 
 void AttachPropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "AttachPropertyDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "AttachPropertyDialog");
     group.writeEntry("Size", size());
     group.sync();
 }

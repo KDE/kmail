@@ -108,7 +108,7 @@ void FollowUpReminderNoAnswerDialog::setInfo(const QList<FollowUpReminder::Follo
 
 void FollowUpReminderNoAnswerDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), DialogGroup);
+    KConfigGroup group(KSharedConfig::openStateConfig(), DialogGroup);
     const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
     if (sizeDialog.isValid()) {
         resize(sizeDialog);
@@ -118,7 +118,7 @@ void FollowUpReminderNoAnswerDialog::readConfig()
 
 void FollowUpReminderNoAnswerDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), DialogGroup);
+    KConfigGroup group(KSharedConfig::openStateConfig(), DialogGroup);
     group.writeEntry("Size", size());
     mWidget->saveTreeWidgetHeader(group);
 }

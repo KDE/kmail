@@ -22,6 +22,6 @@ public:
     void fillList(const QStringList &lst);
 
 private:
-    QListWidget *const mListWidget = nullptr;
+    QListWidget *const mListWidget;
 };
 

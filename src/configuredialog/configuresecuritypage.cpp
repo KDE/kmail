@@ -721,7 +721,7 @@ GpgSettingsDialog::~GpgSettingsDialog()
 
 void GpgSettingsDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "GpgSettingsDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "GpgSettingsDialog");
     const QSize size = group.readEntry("Size", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
@@ -730,7 +730,7 @@ void GpgSettingsDialog::readConfig()
 
 void GpgSettingsDialog::saveConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "GpgSettingsDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "GpgSettingsDialog");
     group.writeEntry("Size", size());
     group.sync();
 }

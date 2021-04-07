@@ -49,7 +49,7 @@ void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 
 void PotentialPhishingDetailDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishingDetailDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "PotentialPhishingDetailDialog");
     const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
     if (sizeDialog.isValid()) {
         resize(sizeDialog);
@@ -58,7 +58,7 @@ void PotentialPhishingDetailDialog::readConfig()
 
 void PotentialPhishingDetailDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishingDetailDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "PotentialPhishingDetailDialog");
     group.writeEntry("Size", size());
 }
 

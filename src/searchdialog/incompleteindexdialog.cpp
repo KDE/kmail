@@ -137,7 +137,7 @@ IncompleteIndexDialog::~IncompleteIndexDialog()
 
 void IncompleteIndexDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "IncompleteIndexDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "IncompleteIndexDialog");
     const QSize size = group.readEntry("Size", QSize(500, 400));
     if (size.isValid()) {
         resize(size);
@@ -146,7 +146,7 @@ void IncompleteIndexDialog::readConfig()
 
 void IncompleteIndexDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "IncompleteIndexDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "IncompleteIndexDialog");
     group.writeEntry("Size", size());
     group.sync();
 }

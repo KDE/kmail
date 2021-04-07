@@ -81,7 +81,7 @@ void SendLaterConfigureDialog::slotNeedToReloadConfig()
 
 void SendLaterConfigureDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "SendLaterConfigureDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "SendLaterConfigureDialog");
     const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
     if (sizeDialog.isValid()) {
         resize(sizeDialog);
@@ -91,7 +91,7 @@ void SendLaterConfigureDialog::readConfig()
 
 void SendLaterConfigureDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "SendLaterConfigureDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "SendLaterConfigureDialog");
     group.writeEntry("Size", size());
     mWidget->saveTreeWidgetHeader(group);
 }

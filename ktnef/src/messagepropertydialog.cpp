@@ -71,7 +71,7 @@ void MessagePropertyDialog::slotSaveProperty()
 
 void MessagePropertyDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "MessagePropertyDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "MessagePropertyDialog");
     const QSize size = group.readEntry("Size", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
@@ -84,7 +84,7 @@ void MessagePropertyDialog::readConfig()
 
 void MessagePropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "MessagePropertyDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), "MessagePropertyDialog");
     group.writeEntry("Size", size());
     group.writeEntry("HeaderState", mListView->header()->saveState());
     group.sync();
