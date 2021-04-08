@@ -1354,123 +1354,127 @@ Menu</ulink> of the &kde; Fundamentals, with one additional item.</para>
 
 <sect2 id="composer-file-menu">
 <title>Message Menu</title>
+<screenshot>
+<screeninfo>The Message Menu</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Message Menu</phrase>
+    </textobject>
+    <caption>
+      <para>The Message Menu</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para><!-- add whitespace -->
+
 <variablelist>
 <varlistentry id="composer-message-new-composer">
-<term><menuchoice>
-<shortcut>
-<keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo>
-</shortcut>
-<guimenu>Message</guimenu>
-<guimenuitem>New Composer</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Opens up a new composer window.</action></para></listitem>
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo></shortcut>
+  <guimenu>Message</guimenu><guimenuitem>New Composer</guimenuitem></menuchoice></term>
+  <listitem><para>Opens a new composer window so you can create a message.</para></listitem>
 </varlistentry>
-<varlistentry id="composer-message-new-main-window">
+
+<!-- <varlistentry id="composer-message-new-main-window">
 <term><menuchoice>
 <guimenu>Message</guimenu>
 <guimenuitem>New Main Window</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Creates a new main window.</action></para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-new-addressbook-contact">
 <term><menuchoice>
 <guimenu>Message</guimenu>
 <guimenuitem>New AddressBook Contact</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Brings up the &kontact; New Contact Dialog</action> to add a new contact your addressbook.</para></listitem>
-</varlistentry>
+</varlistentry> Thes options not available in 5.14.2 @dcb2021088. -->
+
 <varlistentry id="composer-message-send-mail">
-<term><menuchoice>
-<shortcut>
-<keycombo action="simul">&Ctrl;<keycap>Return</keycap></keycombo>
-</shortcut>
-<guimenu>Message</guimenu>
-<guimenuitem>Send Mail</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Sends the message immediately.</action> If you use &SMTP; to send your
- messages and the &SMTP; server is not reachable, the message will be put into the outbox and you will get an error message.
- After the connection issues are resolved, you can send the messages in the outbox using <menuchoice><guimenu>File</guimenu><guimenuitem>Send Queued Messages</guimenuitem></menuchoice>.</para></listitem>
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;<keycap>Return</keycap></keycombo></shortcut>
+  <guimenu>Message</guimenu><guimenuitem>Send Mail</guimenuitem></menuchoice></term>
+  <listitem><para>Sends the message immediately. If you use &SMTP; to send your messages and the &SMTP;
+  server is not reachable, the message will remain in the outbox and you will get an error message.
+  After the connection issues have been resolved, you can send the messages in the outbox using <link
+  linkend="reader-send-queued-messages"><menuchoice><guimenu>File</guimenu><guimenuitem>Send Queued
+  Messages</guimenuitem></menuchoice></link> (in the reader window).</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-send-mail-via">
-<term><menuchoice>
-<guimenu>Message</guimenu>
-<guimenuitem>Send Mail Via</guimenuitem>
-</menuchoice></term>
-<listitem><para>Allows you to select which outgoing mail server you wish to use to send the message.</para></listitem>
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Send Mail Via &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Allows you to specify which outgoing mail server will be used to send the message.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-send-later">
-<term><menuchoice>
-<guimenu>Message</guimenu>
-<guimenuitem>Send Later</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Brings up the send later dialog.</action>
- Please see <link linkend="send-later">Send Later</link> for details.</para></listitem>
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Send Later</guimenuitem></menuchoice></term>
+  <listitem><para>Launches the send later dialog. Please see the <ulink url="help:/akonadi_sendlater_agent">Send
+  Later</ulink> documentation for details.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-send-later-via">
-<term><menuchoice>
-<guimenu>Message</guimenu>
-<guimenuitem>Send Later Via</guimenuitem>
-</menuchoice></term>
-<listitem><para>Allows you to choose which outgoing account to send your send later configured message.</para></listitem>
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Send Later Via &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Allows you to specify which outgoing mail server will be used
+  to send the delayed message.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-save-as-file">
-<term><menuchoice>
-<guimenu>Message</guimenu>
-<guimenuitem>Save as File</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Saves the message as a text document.</action></para></listitem>
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Save as File</guimenuitem></menuchoice></term>
+  <listitem><para>Saves the message as a file. Three formats are supported: Rich Text (.html),
+  plain text (.txt), and Open Document Format (.odt).</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-save-as-draft">
-<term><menuchoice>
-<shortcut>
-<keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo>
-</shortcut>
-<guimenu>Message</guimenu>
-<guimenuitem>Save as Draft</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Save the message in the <guilabel>drafts</guilabel> folder</action> so you can later edit and send it.</para></listitem>
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;<keycap>S</keycap></keycombo></shortcut>
+  <guimenu>Message</guimenu><guimenuitem>Save as Draft</guimenuitem></menuchoice></term>
+  <listitem><para>Saves the message in the <guilabel>drafts</guilabel> folder
+  so you can finish it later.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-save-as-template">
-<term><menuchoice>
-<guimenu>Message</guimenu>
-<guimenuitem>Save as Template</guimenuitem>
-</menuchoice></term>
-<listitem><para>Allows you to <action>save your message as a template.</action>
- Please see <link linkend="new-compose-from-templates">Compose from templates</link> for details on templates.</para></listitem>
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Save as Template</guimenuitem></menuchoice></term>
+  <listitem><para>Lets you save your message as a template. Please see <link
+  linkend="new-compose-from-templates">Compose from templates</link> for more information.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-insert-text-file">
-<term><menuchoice>
-<guimenu>Message</guimenu>
-<guimenuitem>Insert Text File...</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Inserts a text file into the message text,</action> starting at the cursor position.</para></listitem>
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Insert Text File...</guimenuitem></menuchoice></term>
+  <listitem><para>Inserts a text file into the message text, starting at the cursor position.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-message-insert-recent-text-file">
-<term><menuchoice>
-<guimenu>Message</guimenu>
-<guimenuitem>Insert Recent Text File...</guimenuitem>
-</menuchoice></term>
-<listitem><para>Allows you to choose from a list of recently inserted text files to insert into your message. Select <guimenuitem>Clear List</guimenuitem> to clear the list.</para></listitem>
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Insert Recent Text File &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Lets you choose from a list of recently inserted text files, and inserts that file into
+  your message. Select <guimenuitem>Clear List</guimenuitem> to clear the list.</para></listitem>
 </varlistentry>
+
+<varlistentry id="composer-message-print-preview">
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Print Preview</guimenuitem></menuchoice></term>
+  <listitem><para>Opens a print preview window and displays your message, formatted for printing.</para></listitem>
+</varlistentry>
+
 <varlistentry id="composer-message-print">
-<term><menuchoice>
-<shortcut>
-<keycombo action="simul">&Ctrl;<keycap>P</keycap></keycombo>
-</shortcut>
-<guimenu>Message</guimenu>
-<guimenuitem>Print...</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Prints the current text.</action></para></listitem>
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;<keycap>P</keycap></keycombo></shortcut>
+  <guimenu>Message</guimenu><guimenuitem>Print...</guimenuitem></menuchoice></term>
+  <listitem><para>Formats and prints the message you have composed.</para></listitem>
 </varlistentry>
+
+<varlistentry id="composer-message-share">
+  <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Share Mail Text... &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Lets you make a second copy of your message somewhere else. Four options are provided:
+  Nextcloud (an OSS file-sharing app), Pastebin <ulink url="https://pastebin.com">(a freely available web
+  site)</ulink>, Bluetooth, and Email (opens another composer window, and adds the current message to that new
+  message, as an attachment). This option is not available unless the <guilabel>Share Text</guilabel>
+  plugin is active.</para></listitem>
+</varlistentry>
+
 <varlistentry id="composer-message-close">
-<term><menuchoice>
-<shortcut>
-<keycombo action="simul">&Ctrl;<keycap>W</keycap></keycombo>
-</shortcut>
-<guimenu>Message</guimenu>
-<guimenuitem>Close</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Closes this composer window.</action></para></listitem>
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;<keycap>W</keycap></keycombo></shortcut>
+  <guimenu>Message</guimenu><guimenuitem>Close</guimenuitem></menuchoice></term>
+  <listitem><para>Closes this composer window.</para>
+  <para>&nbsp;</para></listitem>
 </varlistentry>
 </variablelist>
 
@@ -1479,235 +1483,320 @@ Menu</ulink> of the &kde; Fundamentals, with one additional item.</para>
 
 <sect2 id="composer-edit-menu">
 <title>Edit Menu</title>
-<para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/menus.html#menus-edit">Edit Menu</ulink> of the &kde; Fundamentals.
-  The items listed here are &kmail; specific.</para>
+<screenshot>
+<screeninfo>The Edit Menu</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Edit Menu</phrase>
+    </textobject>
+    <caption>
+      <para>The Edit Menu</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para><!-- add whitespace -->
+
+<para>If the menu item you are looking for is missing, please see the <ulink
+url="help:/fundamentals/menus.html#menus-edit">Edit Menu</ulink> section of the
+&kde; Fundamentals Handbook. The items listed here are &kmail; specific.</para>
+
 <variablelist>
 <varlistentry id="composer-edit-paste-quotation">
-<term><menuchoice>
-<shortcut>
-<keycombo action="simul">&Ctrl;&Shift;<keycap>O</keycap></keycombo>
-</shortcut>
-<guimenu>Edit</guimenu>
-<guimenuitem>Paste as Quotation</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Pastes the text from the clipboard</action> marked as quotation.</para></listitem>
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>O</keycap></keycombo></shortcut>
+  <guimenu>Edit</guimenu><guimenuitem>Paste as Quotation</guimenuitem></menuchoice></term>
+  <listitem><para>Pastes the text from the clipboard and marks it as a quotation (&ie;,
+  each line preceded by "&gt;" and a space).</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-edit-paste-attachment">
-<term><menuchoice>
-<guimenu>Edit</guimenu>
-<guimenuitem>Paste as Attachment</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Pastes the text from the clipboard</action> as an attachment.</para></listitem>
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Paste as Attachment</guimenuitem></menuchoice></term>
+  <listitem><para>Pastes a file that has been copied to the clipboard (&eg;, by using
+  the &dolphin; file manager) as an attachment.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-edit-paste-without-formatting">
-<term><menuchoice>
-<shortcut>
-<keycombo action="simul">&Ctrl;&Shift;<keycap>V</keycap></keycombo>
-</shortcut>
-<guimenu>Edit</guimenu>
-<guimenuitem>Paste Without Formatting</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Pastes the text from the clipboard</action> exactly as is, with no formatting.</para></listitem>
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>V</keycap></keycombo></shortcut>
+  <guimenu>Edit</guimenu><guimenuitem>Paste Without Formatting</guimenuitem></menuchoice></term>
+  <listitem><para>Pastes data from the clipboard as plain text, with no &HTML; formatting.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-edit-clean-spaces">
-<term><menuchoice>
-<guimenu>Edit</guimenu>
-<guimenuitem>Clean Spaces</guimenuitem>
-</menuchoice></term>
-<listitem><para>This replaces multiple line breaks or spaces with single line breaks or spaces.
-It works on the current selection or the complete message text if there is no selection.</para></listitem>
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Clean Spaces</guimenuitem></menuchoice></term>
+  <listitem><para>This option supposedly replaces multiple adjacent newline characters or spaces with
+  single line breaks / spaces, but in testing, it apparently does absolutely nothing.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-edit-add-quote-characters">
-<term><menuchoice>
-<guimenu>Edit</guimenu>
-<guimenuitem>Add Quote Characters</guimenuitem>
-</menuchoice></term>
-<listitem><para>Prepends the selected text with quotation marks.</para></listitem>
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Add Quote Characters</guimenuitem></menuchoice></term>
+  <listitem><para>Prepends each line of the selected text with the quotation indicator (&gt; and a space, by
+  default). If no selection is made, adds the indicator to every line in the message.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-edit-remove-quote-characters">
-<term><menuchoice>
-<guimenu>Edit</guimenu>
-<guimenuitem>Remove Quote Characters</guimenuitem>
-</menuchoice></term>
-<listitem><para>Removes the left-most quotation marks from the selected text.</para></listitem>
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Remove Quote Characters</guimenuitem></menuchoice></term>
+  <listitem><para>Removes the left-most quotation indicator from the selected text.</para></listitem>
 </varlistentry>
-<varlistentry id="composer-edit-uppercase">
+
+<varlistentry id="composer-edit-insert-email">
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Insert Email...</guimenuitem></menuchoice></term>
+  <listitem><para>Displays a list of all the names in your address book, then inserts the chosen email address at
+  the cursor position (after you make a selection and click the <guibutton>OK</guibutton> button). This option
+  is only available when the <guimenuitem>Insert Email</guimenuitem> plugin has been loaded.</para></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-nbsp">
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&Space;</keycombo></shortcut>
+  <guimenu>Edit</guimenu><guimenuitem>Insert  Non Breaking Space</guimenuitem></menuchoice></term>
+  <listitem><para>Inserts a non breaking space at the cursor position. This option is only available
+  when the <guimenuitem>Insert Non Breaking Space</guimenuitem> plugin has been loaded.</para></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-edit-uppercase">
 <term><menuchoice>
 <guimenu>Edit</guimenu>
 <guimenuitem>Uppercase</guimenuitem>
 </menuchoice></term>
 <listitem><para>Convert the selected text to uppercase.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-edit-lowercase">
 <term><menuchoice>
 <guimenu>Edit</guimenu>
 <guimenuitem>Lowercase</guimenuitem>
 </menuchoice></term>
 <listitem><para>Convert the selected text to lowercase.</para></listitem>
+</varlistentry> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+
+<varlistentry id="composer-edit-insert-special-character">
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Insert Special Character...</guimenuitem></menuchoice></term>
+  <listitem><para>Lets you insert a special character at the cursor position. A large number of Unicode
+  characters are made available. This option is only provided if the <guimenuitem>Insert Special
+  Character</guimenuitem> plugin has been activated.</para></listitem>
 </varlistentry>
-<varlistentry id="composer-edit-insert-special-characters">
-<term><menuchoice>
-<guimenu>Edit</guimenu>
-<guimenuitem>Insert Special Characters</guimenuitem>
-</menuchoice></term>
-<listitem><para>It allows you to insert special character in composer.</para></listitem>
+
+<varlistentry id="composer-edit-change-case">
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Change Case &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Helps you modify the capitalization of the selected text. There are four options:
+  <guilabel>Uppercase</guilabel> (capitalizes the selected characters), <guilabel>Lowercase</guilabel>
+  (forces selected text to all lower case), <guilabel>Sentence case</guilabel> (capitalizes the first
+  letter of the selection and makes the rest lower case), and <guilabel>Reverse Case</guilabel> (converts
+  capital letters to lower case, and vice versa). This option is only provided if the <guimenuitem>Change
+  Case</guimenuitem> plugin has been activated. This menu item remains grayed out until some snippet of
+  text has been selected for modification.</para></listitem>
 </varlistentry>
+
+<varlistentry id="composer-edit-zoom">
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Zoom... &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Lets you zoom in or zoom out on the message you are composing. This is the same function
+  appearing as <menuchoice><guimenu>View</guimenu><guisubmenu>Zoom &gt;</guisubmenu></menuchoice> in
+  the message preview window. This option is not available unless the <guimenuitem>Zoom Text</guimenuitem>
+  plugin has been loaded.</para></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-variables">
+  <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Variables &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Lets you insert the contents of a named field at the cursor position. You may choose
+  among <guilabel>To &gt;</guilabel>, <guilabel>From &gt;</guilabel>, <guilabel>CC &gt;</guilabel>,
+  <guilabel>Attachment &gt;</guilabel>, <guilabel>Date/Time &gt;</guilabel>, and <guilabel>Misc &gt;</guilabel>
+  (which has just one associated submenu item, "Subject"). There is one notable quirk: the date/time diplayed
+  in the submenu selections is fixed at the time the Composer window was opened, but the value actually inserted
+  in a message is taken from the system clock.</para>
+  <para>&nbsp;</para></listitem>
+</varlistentry>
+
 </variablelist>
 
 </sect2>
 
 <sect2 id="composer-view-menu">
 <title>View Menu</title>
+<screenshot>
+<screeninfo>The View Menu</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The View Menu</phrase>
+    </textobject>
+    <caption>
+      <para>The View Menu</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para><!-- add whitespace -->
 
-<para>This menu lets you toggle the display of the header fields and other
-options in the composer window.</para>
-<para>Currently visible items will have a checkmark shown next to their name in the
-menu.</para>
+<para>This menu lets you toggle the display of the header fields and a few other items in the
+composer window. Selected items will be marked (check box colored in) in the menu.</para>
 
-<para>Options available are:</para>
+<para>Several options are available:</para>
 
 <itemizedlist>
   <listitem>
-    <para><guimenuitem>All Fields</guimenuitem></para>
+    <para><guimenuitem>All Fields</guimenuitem>. Displays all six of the following fields.</para>
   </listitem>
   <listitem>
-    <para><guimenuitem>Identity</guimenuitem></para>
+    <para><guimenuitem>Identity</guimenuitem>. If you have defined more than one identity,
+    this will be a drop down box.</para>
   </listitem>
   <listitem>
-    <para><guimenuitem>Dictionary</guimenuitem></para>
+    <para><guimenuitem>Dictionary</guimenuitem> used for spell checking. If multiple dictionaries
+    are installed, this will be a drop down box.</para>
   </listitem>
   <listitem>
-    <para><guimenuitem>Sent-Mail folder</guimenuitem></para>
+    <para><guimenuitem>Sent-Mail Folder</guimenuitem>. The <guilabel>&nbsp;<inlinemediaobject><imageobject>
+    <imagedata fileref="document-open.png" format="PNG"/></imageobject></inlinemediaobject>&nbsp;</guilabel>
+    button appearing on the right when this option is checked opens a folder selection dialog.</para>
   </listitem>
   <listitem>
-    <para><guimenuitem>Mail Transport</guimenuitem></para>
+    <para><guimenuitem>Mail Transport</guimenuitem>. If you have created more than one outgoing
+    account, this will be a drop down box.</para>
   </listitem>
   <listitem>
-    <para><guimenuitem>From</guimenuitem></para>
+    <para><guimenuitem>From</guimenuitem>. The contents of this field may vary, depending on the Identity you use.</para>
   </listitem>
   <listitem>
-    <para><guimenuitem>Reply To</guimenuitem></para>
-  </listitem>
-  <listitem>
-    <para><guimenuitem>Subject</guimenuitem></para>
+    <para><guimenuitem>Subject</guimenuitem>. Use this field to describe your message, briefly.</para>
   </listitem>
 </itemizedlist>
 
-<para>Please see <link linkend="composer-headers">Composer Headers</link> for details on these options.</para>
+<para>The <guilabel>To <inlinemediaobject><imageobject><imagedata fileref="go-down.png" format="PNG"/></imageobject>
+  </inlinemediaobject></guilabel> drop down box is always present at the top of the composer window. Use
+  it to select <guilabel>CC</guilabel>, <guilabel>BCC</guilabel>, and <guilabel>Reply-To</guilabel>
+  addresses, as needed. Please see <link linkend="composer-headers">Composer Headers</link> for
+  further details on message headers.</para>
+  
+<para>&nbsp;</para>
 
 <variablelist>
 <varlistentry id="composer-view-use-fixed-font">
-<term><menuchoice>
-<guimenu>View</guimenu>
-<guimenuitem>Use Fixed Font</guimenuitem>
-</menuchoice></term>
-<listitem><para>Uses a fixed width (monospaced) font to display the currently
-edited message. The font to be used can be configured in the
-<guilabel>Appearance</guilabel> section of &kmail;'s configuration dialog.</para></listitem>
+  <term><menuchoice><guimenu>View</guimenu><guimenuitem>Use Fixed Font</guimenuitem></menuchoice></term>
+  <listitem><para>Uses a fixed width (monospaced) font to display the currently
+  edited message. The particular font to be used can be configured in the
+  <guilabel>Appearance</guilabel> section of &kmail;'s configuration dialog.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-view-snippets">
-<term><menuchoice>
-<guimenu>View</guimenu>
-<guimenuitem>Snippets</guimenuitem>
-</menuchoice></term>
-<listitem><para>Displays a column on the right side of the composer window that allows you to use and create snippets.
-Please see <link linkend="setup-text-snippets">Snippets</link> for more information.</para></listitem>
-</varlistentry>
-<varlistentry id="composer-view-translator">
-<term><menuchoice>
-<guimenu>View</guimenu>
-<guimenuitem>Translator</guimenuitem>
-</menuchoice></term>
-<listitem><para>Displays the translator tool at the bottom of the composer window. Please see
-<link linkend="using-the-translator">Using the Translator</link> for more information.</para></listitem>
-</varlistentry>
+  <term><menuchoice><guimenu>View</guimenu><guimenuitem>Snippets</guimenuitem></menuchoice></term>
+  <listitem><para>Displays a column on the right hand side of the composer window that allows you to use and create
+  snippets. Please see <link linkend="setup-text-snippets">Snippets</link> for more information.</para>
+  <para>&nbsp;</para></listitem>
+  </varlistentry>
+  
 </variablelist>
 
 </sect2>
 
 <sect2 id="composer-options-menu">
 <title>Options Menu</title>
-<para>This menu lets you toggle various options for the current message.</para>
-<para>Currently used options will have a checkmark shown next to their name in the
-menu.</para>
+<screenshot>
+<screeninfo>The Options Menu</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeroptions.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Options Menu</phrase>
+    </textobject>
+    <caption>
+      <para>The Options Menu</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para><!-- add whitespace -->
+
+<para>This menu lets you toggle various options for the current message. Selected
+items will be marked (check box colored in) in the menu.</para>
+
 <variablelist>
 
 <varlistentry id="composer-options-urgent">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guimenuitem>Urgent</guimenuitem>
-</menuchoice></term>
-<listitem><para>Sets the priority of the message to Urgent. The receiver's email client has to support
-this or it will have no effect. &kmail; itself does not support priorities for incoming messages.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guimenuitem>Urgent</guimenuitem></menuchoice></term>
+  <listitem><para>Sets the priority of the message to Urgent by inserting two header lines:
+  "X-PRIORITY: 2 (High)" and "Priority: urgent". The receiver's email client must provide support
+  for these headers; otherwise they will have no effect. &kmail; itself does not support priorities
+  for incoming messages (although you can <link linkend="reader-mark-messages">mark messages</link>
+  as Important).</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-options-request-mdn">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guimenuitem>Request Disposition Notification</guimenuitem>
-</menuchoice></term>
-<listitem><para>If you choose this option, you request a confirmation
-email once your message is downloaded and read by its
-recipient. This has to be supported and enabled by the
-receiver's email client in order to work.</para>
-<para>See <xref linkend="configure-security-reading-mdns"/>
-for background information and ways to customize the
-read receipts that &kmail; itself sends.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guimenuitem>Request Disposition
+  Notification</guimenuitem></menuchoice></term>
+  <listitem><para>If you choose this option, &kmail; will
+  insert a Disposition-Notification-To: header line in the
+  message, which is a request to receive an email notification
+  once your message has been downloaded and read by the recipient.
+  This function must be supported, and enabled by the receiver's
+  email client; otherwise, it will not work.</para>
+  <para>See <xref linkend="configure-security-reading-mdns"/>
+  for background information and several ways to customize the
+  read receipts that &kmail; itself sends in response to a
+  received Disposition-Notification-To: header line.</para></listitem>
 </varlistentry>
+
+<varlistentry id="composer-options-request-confirm">
+  <term><menuchoice><guimenu>Options</guimenu><guimenuitem>Request Delivery
+  Confirmation</guimenuitem></menuchoice></term>
+  <listitem><para>If you choose this option, &kmail; will
+  insert a Return-Receipt-To: header line in the message, which
+  is a request to receive an email notification once your message
+  has been uploaded by your email server and delivered to the
+  recipient. This function must be supported by your outgoing
+  email server; otherwise, it will not work.</para></listitem>
+</varlistentry>
+
 <varlistentry id="composer-options-sign-message">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guisubmenu>Sign Message</guisubmenu>
-</menuchoice></term>
-<listitem><para>Digitally sign the message using <application>OpenPGP</application>.
-You can learn more about this in the <link linkend="pgp">chapter on OpenPGP</link>.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guisubmenu>Sign Message</guisubmenu></menuchoice></term>
+  <listitem><para>Digitally signs the message using <application>OpenPGP</application> or an X.509 certificate.
+  You can learn more about this option in the <link linkend="pgp">chapter on OpenPGP</link>.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-options-encrypt-message">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guisubmenu>Encrypt Message</guisubmenu>
-</menuchoice></term>
-<listitem><para>Encrypt the message using <application>OpenPGP</application>.
-You can learn more about this in the <link linkend="pgp">chapter on OpenPGP</link>.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guisubmenu>Encrypt Message</guisubmenu></menuchoice></term>
+  <listitem><para>Encrypts the message using <application>OpenPGP</application> or an X.509 certificate.
+  You can learn more about encryption in the <link linkend="pgp">chapter on OpenPGP</link>.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-options-select-crypto-message-format">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guisubmenu>Cryptographic Message Format</guisubmenu>
-</menuchoice></term>
-<listitem><para>Choose the cryptographic message format to use to
-digitally sign and/or encrypt the message in. Please see <link linkend="cryptographic-message-formats">
-Cryptographic Message Formats</link> for more information.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guisubmenu>Cryptographic Message Format &gt;</guisubmenu></menuchoice></term>
+  <listitem><para>Lets you choose the cryptographic message format to use when
+  digitally signing and/or encrypting this message. Please see <link 
+  linkend="cryptographic-message-formats">Cryptographic Message
+  Formats</link> for more information.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-options-rich-text-editing">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guisubmenu>Rich Text Editing</guisubmenu>
-</menuchoice></term>
-<listitem><para>Enables Rich Text/&HTML; editing.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guisubmenu>Rich Text Editing</guisubmenu></menuchoice></term>
+  <listitem><para>Enables Rich Text (&ie;, &HTML;) editing.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-options-encoding">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guisubmenu>Encoding</guisubmenu>
-</menuchoice></term>
-<listitem><para>Set the charset encoding of this message. The chosen encoding will appear in the header of
-the outgoing mail. You can use <guilabel>Auto</guilabel> for almost all
-cases, &kmail; will tell you if you need to select a different encoding manually.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guisubmenu>Encoding &gt;</guisubmenu></menuchoice></term>
+  <listitem><para>Sets the charset encoding of this message. The chosen encoding will be identified
+  by a header line in the outgoing message. You can use <guilabel>Auto</guilabel> in almost every
+  case; &kmail; will notify you if you must select a different encoding manually.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-options-wordwrap">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guimenuitem>Wordwrap</guimenuitem>
-</menuchoice></term>
-<listitem><para>Toggles the automatic wordwrap. It may be useful to turn it off if you want
-to paste long lines that should not wrap.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guimenuitem>Wordwrap</guimenuitem></menuchoice></term>
+  <listitem><para>Toggles the automatic wordwrap feature. You may wish to turn this off when
+  pasting long lines (&eg;, &URL;s) that should not be wrapped.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-options-automatic-spellchecking">
-<term><menuchoice>
-<guimenu>Options</guimenu>
-<guimenuitem>Automatic Spellchecking</guimenuitem>
-</menuchoice></term>
-<listitem><para>Toggles automatic spellchecking.</para></listitem>
+  <term><menuchoice><guimenu>Options</guimenu><guimenuitem>Automatic Spellchecking</guimenuitem></menuchoice></term>
+  <listitem><para>Toggles automatic spellchecking on or off.</para></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-followup">
+  <term><menuchoice><guimenu>Options</guimenu><guimenuitem>Create Follow Up Reminder...</guimenuitem></menuchoice></term>
+  <listitem><para>Initiates a dialog allowing you to add a "To Do" item to your calendar. This item
+  is grayed out if the <ulink url="help:/akonadi_followupreminder_agent">Followup Reminder Agent</ulink>
+  plugin has not been activated.</para>
+  <para>&nbsp;</para></listitem>
 </varlistentry>
 
 </variablelist>
@@ -1717,96 +1806,114 @@ to paste long lines that should not wrap.</para></listitem>
 
 <sect2 id="composer-attach-menu">
 <title>Attach Menu</title>
+<screenshot>
+<screeninfo>The Attach Menu</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerattachmenu.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Attach Menu</phrase>
+    </textobject>
+    <caption>
+      <para>The Attach Menu</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para><!-- add whitespace -->
 
 <para>This menu lets you select attachment options.</para>
 
 <variablelist>
 
 <varlistentry id="composer-attach-append-signature">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guimenuitem>Append Signature</guimenuitem>
-</menuchoice></term>
-<listitem><para>Appends your signature (<quote>footer</quote>) to the end of the message. Please see
-<link linkend="configure-identity-signature">Configure Identity Signature</link> for details on
-configuring your signature.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guimenuitem>Append Signature</guimenuitem></menuchoice></term>
+  <listitem><para>Appends your signature (<quote>footer</quote>) to the end of the message. Please see
+  <link linkend="configure-identity-signature">Configure Identity Signature</link> for details on
+  configuring your signature.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-attach-prepend-signature">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guimenuitem>Prepend Signature</guimenuitem>
-</menuchoice></term>
-<listitem><para>Prepends your signature (<quote>header</quote>) to the beginning of the message. Please see
-<link linkend="configure-identity-signature">Configure Identity Signature</link> for details on
-configuring your signature.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guimenuitem>Prepend Signature</guimenuitem></menuchoice></term>
+  <listitem><para>Prepends your signature (<quote>header</quote>) at the beginning of the message.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-attach-cursor-signature">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guimenuitem>Append Signature At Cursor Position</guimenuitem>
-</menuchoice></term>
-<listitem><para>Appends your signature to the current location  of your cursor to the message. Please see
-<link linkend="configure-identity-signature">Configure Identity Signature</link> for details on
-configuring your signature.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guimenuitem>Insert Signature At
+  Cursor Position</guimenuitem></menuchoice></term>
+  <listitem><para>Inserts your signature at the current cursor location.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-attach-public-key">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guimenuitem>Attach Public Key...</guimenuitem>
-</menuchoice></term>
-<listitem><para>Opens the <guilabel>Attach Public OpenPGP Key</guilabel> dialog. Please see
-<link linkend="configure-identity-cryptography-openpgp-sign">Configure Identity Cryptography OpenPGP Signing</link> for details.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guimenuitem>Attach Public Key...</guimenuitem></menuchoice></term>
+  <listitem><para>Opens the <guilabel>Attach Public OpenPGP Key</guilabel> dialog. Please see
+  <link linkend="configure-identity-cryptography-openpgp-sign">Configure Identity Cryptography
+  OpenPGP Signing</link> for details.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-attach-attach-my-public-key">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guimenuitem>Attach My Public Key</guimenuitem>
-</menuchoice></term>
-<listitem><para>Attaches your <application>GnuPG</application> public key to your message.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guimenuitem>Attach My Public Key</guimenuitem></menuchoice></term>
+  <listitem><para>Attaches your <application>GnuPG</application> public key, or your X.509 certificate,
+  (&ie;, the public key associated with your current identity) to your message.</para>
+  <para>&nbsp;</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-attach-file">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guisubmenu>Attach</guisubmenu>
-<guimenuitem>Attach File...</guimenuitem>
-</menuchoice></term>
-<listitem><para>Attaches one or more files to the current message. By default attachments are not
-encrypted, please see <link linkend="cryptographic-message-formats">Cryptographic Message Formats</link> for information
-on encryption and attachments.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guisubmenu>Attach &gt;</guisubmenu>
+  <guimenuitem>Attach File...</guimenuitem></menuchoice></term>
+  <listitem><para>Attaches one or more files to the current message. Attachments are encrypted
+  by default (if the message is encrypted). Please see <link linkend="cryptographic-message-formats">Cryptographic
+  Message Formats</link> for more information on encryption and attachments.</para></listitem>
 </varlistentry>
+
+<varlistentry id="composer-attach-directory">
+  <term><menuchoice><guimenu>Attach</guimenu><guisubmenu>Attach &gt;</guisubmenu>
+  <guimenuitem>Attach Directory...</guimenuitem></menuchoice></term>
+  <listitem><para>Creates a ZIP archive containing the selected Directory,
+  and attaches the archive to this message.</para></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-ownvcard">
+  <term><menuchoice><guimenu>Attach</guimenu><guisubmenu>Attach &gt;</guisubmenu>
+  <guimenuitem>Attach Own vCard</guimenuitem></menuchoice></term>
+  <listitem><para>Attaches your vCard to the current message.</para></listitem>
+</varlistentry>
+
 <varlistentry id="composer-attach-vcard">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guisubmenu>Attach</guisubmenu>
-<guimenuitem>Attach Own vCard</guimenuitem>
-</menuchoice></term>
-<listitem><para>Attaches your vCard to the current message.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guisubmenu>Attach &gt;</guisubmenu>
+  <guimenuitem>Attach vCards...</guimenuitem></menuchoice></term>
+  <listitem><para>Opens a dialog with &kaddressbook; that lets you select one or more
+  people (&Ctrl; and left-click), and then attaches vCards for all those selected.</para></listitem>
 </varlistentry>
+
+<varlistentry id="composer-attach-clipboard">
+  <term><menuchoice><guimenu>Attach</guimenu><guisubmenu>Attach &gt;</guisubmenu>
+  <guimenuitem>Attach Text From Clipboard...</guimenuitem></menuchoice></term>
+  <listitem><para>If the topmost item saved on the clipboard contains at least two bytes,
+  a file name dialog will open. &kmail; will create an attachment containing the text
+  from the clipboard, and give the attachment the name you have chosen.</para>
+  <para>&nbsp;</para></listitem>
+</varlistentry>
+
 <varlistentry id="composer-attach-remove-attachment">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guimenuitem>Remove Attachment</guimenuitem>
-</menuchoice></term>
-<listitem><para>Removes the attachment that is selected in the attachment part of the composer.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guimenuitem>Remove Attachment</guimenuitem></menuchoice></term>
+  <listitem><para>Removes the selected attachment (selected via the attachment
+  area beneath the main composer window).</para>
+  <note><para>This menu item, and the next two, will be grayed out until an attachment is
+  selected.</para></note></listitem>
 </varlistentry>
+
 <varlistentry id="composer-attach-save-attachment">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guimenuitem>Save Attachment As...</guimenuitem>
-</menuchoice></term>
-<listitem><para>Saves the attachment that is selected in the attachment window to a file.</para></listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guimenuitem>Save Attachment As...</guimenuitem></menuchoice></term>
+  <listitem><para>Saves the attachment selected in the attachment window as a file.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-attach-attachment-properties">
-<term><menuchoice>
-<guimenu>Attach</guimenu>
-<guimenuitem>Attachment Properties</guimenuitem>
-</menuchoice>
-</term>
-<listitem>
-<para>Displays the <link linkend="attachments">properties of the attachment</link> that is selected in the
-attachment window. It also allows you to sign/encrypt the attachment. Please see <link linkend="configure-security-composing">Configure Security Composing</link> to set
-up encryption.</para>
-</listitem>
+  <term><menuchoice><guimenu>Attach</guimenu><guimenuitem>Attachment Properties</guimenuitem></menuchoice></term>
+  <listitem><para>Displays the <link linkend="attachments">properties of the attachment</link> that has been
+  selected via the attachment window. It also lets you sign/encrypt the attachment, and alter some of its
+  other properties (name, description, &MIME; type, &etc;).</para>
+  <para>&nbsp;</para></listitem>
 </varlistentry>
 
 </variablelist>
@@ -1815,55 +1922,134 @@ up encryption.</para>
 
 <sect2 id="composer-tools-menu">
 <title>Tools Menu</title>
+<screenshot>
+<screeninfo>The Tools Menu</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Tools Menu</phrase>
+    </textobject>
+    <caption>
+      <para>The Tools Menu</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para><!-- add whitespace -->
+
 <para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/menus.html#menus-tools">Tools Menu</ulink> of the &kde; Fundamentals.
   The items listed here are &kmail; specific.</para>
+  
 <variablelist>
-<varlistentry id="composer-tools-select-recipients">
-<term><menuchoice>
-<guimenu>Tools</guimenu>
-<guimenuitem>Select Recipients...</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Opens up the <guilabel>Select Recipient</guilabel> dialog</action> with your personal contacts to select from.</para></listitem>
+  <varlistentry id="composer-tools-select-recipients">
+  <term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Select Recipients...</guimenuitem></menuchoice></term>
+  <listitem><para>Opens a <guilabel>Select Recipient</guilabel> dialog, with 
+  the contents of all your address books to select from.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-tools-addressbook">
-<term><menuchoice>
-<guimenu>Tools</guimenu>
-<guimenuitem>Addressbook...</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Opens up <ulink url="help:/kaddressbook">&kaddressbook;</ulink></action>.</para></listitem>
+  <term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Addressbook...</guimenuitem></menuchoice></term>
+  <listitem><para>Launches the <ulink url="help:/kaddressbook">&kaddressbook;</ulink> program.</para></listitem>
 </varlistentry>
+
 <varlistentry id="composer-tools-save-distribution-list">
-<term><menuchoice>
-<guimenu>Tools</guimenu>
-<guimenuitem>Save Distribution List...</guimenuitem>
-</menuchoice></term>
-<listitem><para><action>Opens a dialog</action> that allows you to save groups of contacts.</para></listitem>
+  <term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Save Distribution List...</guimenuitem></menuchoice></term>
+  <listitem><para>Opens a dialog that lets you save groups of contacts as a single named item. Very handy
+  if you frequently send the same message to all the members of a club, for instance.</para></listitem>
 </varlistentry>
+
+<varlistentry id="composer-tools-autocorrect">
+  <term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Autocorrect Text &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Performs autocorrection. You have two options: scan and autocorrect the
+  selected text, or apply <link linkend="configure-composer-autocorrection">autocorrection</link> to the whole
+  message. This menu item will not be present unless the <guilabel>Autocorrection</guilabel> plugin has been
+  loaded, and it won't work unless the Autocorrection function has been enabled on the Composer configuration
+  page.</para></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-translator">
+  <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&Alt;<keycap>T</keycap></keycombo></shortcut>
+  <guimenu>Tools</guimenu><guimenuitem>Translator</guimenuitem></menuchoice></term>
+  <listitem><para>Opens the <link linkend="using-the-translator">translator window</link>.</para></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-grammarcheck">
+  <term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Check Grammar (Language Tool)</guimenuitem></menuchoice></term>
+  <listitem><para>Opens the grammar check window and examines your message, highlighting any errors
+  that are found. This feature does not continuously update the scanned text as you type; you should
+  first compose your message, then invoke grammar check. This tool is not available unless the
+  <guilabel>Grammar Check</guilabel> plugin has been activated. Like the Translator function, Grammar Check
+  passes your message through a server (default server: https://languagetool.org/api/v2) on the internet.</para>
+  <para>&nbsp;</para></listitem>
+</varlistentry>
+
 </variablelist>
 
 </sect2>
 
 <sect2 id="composer-settings-menu">
 <title>Settings Menu</title>
-<para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/menus.html#menus-settings">Settings Menu</ulink> of the &kde; Fundamentals.
-  The items listed here are &kmail; specific.</para>
+<screenshot>
+<screeninfo>The Settings Menu</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Settings Menu</phrase>
+    </textobject>
+    <caption>
+      <para>The Settings Menu</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para><!-- add whitespace -->
+
+<para>If the menu item you seek is missing, please see <ulink url="help:/fundamentals/menus.html#menus-settings">Settings
+  Menu</ulink> of the &kde; Fundamentals. The items listed here are &kmail; specific.</para>
+  
 <variablelist>
-<varlistentry>
-<term><menuchoice>
-<guimenu>Settings</guimenu>
-<guimenuitem>Spellchecker...</guimenuitem>
-</menuchoice></term>
-<listitem>
-<para>Allows you to configure <ulink url="help:/sonnet/">&sonnet;</ulink>, &kde;'s spellchecker.</para>
-</listitem>
+<varlistentry id="composer-settings-toolbars">
+  <term><menuchoice><guimenu>Settings</guimenu><guimenuitem>Toolbars Shown &gt;</guimenuitem></menuchoice></term>
+  <listitem><para>Lets you control which toolbars are displayed. You may choose any combination of three options:
+  Main Toolbar (<guilabel>Send</guilabel>, <guilabel>Queue</guilabel>, <guilabel>Rich Text</guilabel>, &etc;),
+  HTML Toolbar (<guilabel>Style</guilabel>, <guilabel>Font / Size</guilabel>, &etc;), and
+  Text Direction (in case you write in Hebrew, I guess). Note that the HTML Toolbar is easily
+  toggled on and off via the <guibutton>Rich Text</guibutton> button on the Main Toolbar.</para></listitem>
 </varlistentry>
+
+<varlistentry id="composer-settings-spellcheck">
+  <term><menuchoice><guimenu>Settings</guimenu><guimenuitem>Spellchecker...</guimenuitem></menuchoice></term>
+  <listitem><para>Allows you to configure <ulink url="help:/sonnet/">&sonnet;</ulink>, &kde;'s spell
+  checker.</para><para>&nbsp;</para></listitem>
+</varlistentry>
+
 </variablelist>
 </sect2>
 
 <sect2>
 <title>Help Menu</title>
+<screenshot>
+<screeninfo>The Help Menu</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Help Menu</phrase>
+    </textobject>
+    <caption>
+      <para>The Help Menu</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para><!-- add whitespace -->
+
 <para>
-<ulink url="help:/fundamentals/menus.html#menus-help">Help Menu</ulink> of the &kde; Fundamentals.</para>
+  This is exactly like the <ulink url="help:/fundamentals/menus.html#menus-help">Help
+  Menu</ulink> of the &kde; Fundamentals.
+</para>
 </sect2>
 </sect1>
 
