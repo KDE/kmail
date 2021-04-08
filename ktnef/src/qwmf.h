@@ -16,7 +16,6 @@
 #include <QTransform>
 
 class QBuffer;
-class QString;
 class WmfCmd;
 class WinObjHandle;
 struct WmfPlaceableHeader;

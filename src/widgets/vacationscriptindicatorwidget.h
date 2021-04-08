@@ -8,7 +8,6 @@
 
 #include <QLabel>
 class QHBoxLayout;
-class QLabel;
 namespace KMail
 {
 class ServerLabel : public QLabel
