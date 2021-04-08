@@ -28,7 +28,7 @@ add_library(kcm_kmailsummary MODULE ${kcm_kmailsummary_PART_SRCS})
 pim_target_precompile_headers(kcm_kmailsummary PUBLIC ../../../kmail_pch.h)
 add_dependencies(kcm_kmailsummary kmail_xml)
 
-target_link_libraries(kcm_kmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt5::DBus KF5::ConfigWidgets KF5::I18n)
+target_link_libraries(kcm_kmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt::DBus KF5::ConfigWidgets KF5::I18n)
 
 ########### install files ###############
 

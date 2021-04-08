@@ -20,7 +20,7 @@ set(kcm_kontactsummary_PART_SRCS kcmkontactsummary.cpp)
 add_library(kcm_kontactsummary MODULE ${kcm_kontactsummary_PART_SRCS})
 pim_target_precompile_headers(kcm_kontactsummary PUBLIC ../../../kmail_pch.h)
 
-target_link_libraries(kcm_kontactsummary KF5::KCMUtils Qt5::Widgets KF5::KCMUtils KF5::I18n KF5::KontactInterface)
+target_link_libraries(kcm_kontactsummary KF5::KCMUtils Qt::Widgets KF5::KCMUtils KF5::I18n KF5::KontactInterface)
 
 ########### install files ###############
 

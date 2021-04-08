@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 set(PIM_VERSION "5.17.40")
 
 project(kmail VERSION ${PIM_VERSION})
@@ -60,7 +60,7 @@ set(GRANTLEETHEME_LIB_VERSION "5.17.40")
 set(KDEPIM_LIB_VERSION "${PIM_VERSION}")
 set(KDEPIM_LIB_SOVERSION "5")
 
-set(QT_REQUIRED_VERSION "5.14.0")
+set(QT_REQUIRED_VERSION "5.15.0")
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
 
 option(KDEPIM_RUN_AKONADI_TEST "Enable autotest based on Akonadi." TRUE)
@@ -151,32 +151,26 @@ if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f00)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055100)
+add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055200)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(KUserFeedback 1.0.0 CONFIG)
 set_package_properties(KUserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional). It can be disable in apps.")
 
-option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" FALSE)
-set(COMPILE_WITH_UNITY_CMAKE_SUPPORT false)
+option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
+
+set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)
 if (USE_UNITY_CMAKE_SUPPORT)
-    if(${CMAKE_VERSION} VERSION_LESS "3.16.0")
-        message(STATUS "CMAKE version is less than 3.16.0 . We can't use cmake unify build support")
-    else()
-        set(COMPILE_WITH_UNITY_CMAKE_SUPPORT true)
-    endif()
+    set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
 endif()
+
 
 option(USE_PRECOMPILED_HEADERS "Use precompiled headers" OFF) # Set to OFF when using clazy and such
 set(COMPILE_WITH_CMAKE_PCH_SUPPORT false)
 macro(pim_target_precompile_headers)
     if (USE_PRECOMPILED_HEADERS)
-        if(${CMAKE_VERSION} VERSION_LESS "3.16.0")
-            message(STATUS "CMAKE version is less than 3.16.0 . We can't use cmake pch build support")
-        else()
             set(COMPILE_WITH_CMAKE_PCH_SUPPORT true)
-        endif()
 
         if (COMPILE_WITH_CMAKE_PCH_SUPPORT)
             target_precompile_headers(${ARGV})

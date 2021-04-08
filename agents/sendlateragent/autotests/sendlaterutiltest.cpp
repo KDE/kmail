@@ -33,13 +33,8 @@ void SendLaterUtilTest::shouldRestoreFromSettings()
     info.setRecurrenceEachValue(5);
     info.setRecurrenceUnit(MessageComposer::SendLaterInfo::Years);
     const QDate date(2014, 1, 1);
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    info.setDateTime(QDateTime(date));
-    info.setLastDateTimeSend(QDateTime(date));
-#else
     info.setDateTime(QDateTime(date.startOfDay()));
     info.setLastDateTimeSend(QDateTime(date.startOfDay()));
-#endif
     SendLaterUtil::writeSendLaterInfo(KSharedConfig::openConfig(), &info);
 
     KConfigGroup grp(KSharedConfig::openConfig(), SendLaterUtil::sendLaterPattern().arg(42));

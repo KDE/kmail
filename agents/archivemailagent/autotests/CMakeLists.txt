@@ -11,7 +11,7 @@ macro( archivemail_agent _source)
     add_executable( ${_name} ${_test} )
     add_test(NAME ${_name} COMMAND ${_name} )
     ecm_mark_as_test(archivemailagent-${_name})
-    target_link_libraries( ${_name} archivemailagent Qt5::Test Qt5::Core KF5::MailCommon KF5::AkonadiCore KF5::XmlGui KF5::KIOWidgets KF5::I18n)
+    target_link_libraries( ${_name} archivemailagent Qt::Test Qt5::Core KF5::MailCommon KF5::AkonadiCore KF5::XmlGui KF5::KIOWidgets KF5::I18n)
 endmacro()
 
 archivemail_agent(archivemailinfotest.cpp )
