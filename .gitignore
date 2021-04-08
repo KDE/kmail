@@ -20,3 +20,6 @@ CMakeLists.txt.user*
 *.unc-backup*
 compile_commands.json
 .clang-format
+.clangd
+.idea
+/cmake-build*
