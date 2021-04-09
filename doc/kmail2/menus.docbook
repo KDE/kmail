@@ -1601,7 +1601,7 @@ url="help:/fundamentals/menus.html#menus-edit">Edit Menu</ulink> section of the
   <listitem><para>Lets you insert the contents of a named field at the cursor position. You may choose
   among <guilabel>To &gt;</guilabel>, <guilabel>From &gt;</guilabel>, <guilabel>CC &gt;</guilabel>,
   <guilabel>Attachment &gt;</guilabel>, <guilabel>Date/Time &gt;</guilabel>, and <guilabel>Misc &gt;</guilabel>
-  (which has just one associated submenu item, "Subject"). There is one notable quirk: the date/time diplayed
+  (which has just one associated submenu item, "Subject"). There is one notable quirk: the date/time displayed
   in the submenu selections is fixed at the time the Composer window was opened, but the value actually inserted
   in a message is taken from the system clock.</para>
   <para>&nbsp;</para></listitem>
