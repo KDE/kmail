@@ -75,6 +75,7 @@ public Q_SLOTS:
     void slotForwardInlineMsg();
     void slotForwardAttachedMessage();
     void slotRedirectMessage();
+    void slotNewMessageToRecipients();
     void slotCustomReplyToMsg(const QString &tmpl);
     void slotCustomReplyAllToMsg(const QString &tmpl);
     void slotCustomForwardMsg(const QString &tmpl);

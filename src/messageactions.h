@@ -68,6 +68,7 @@ public:
     QAction *forwardInlineAction() const;
     QAction *forwardAttachedAction() const;
     QAction *redirectAction() const;
+    QAction *newToRecipientsAction() const;
 
     KActionMenu *messageStatusMenu() const;
     KActionMenu *forwardMenu() const;
@@ -156,6 +157,7 @@ private:
     QAction *mForwardInlineAction = nullptr;
     QAction *mForwardAttachedAction = nullptr;
     QAction *mRedirectAction = nullptr;
+    QAction *mNewToRecipientsAction = nullptr;
     KActionMenu *mStatusMenu = nullptr;
     KActionMenu *mForwardActionMenu = nullptr;
     KActionMenu *mMailingListActionMenu = nullptr;

@@ -129,6 +129,10 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     setupForwardActions(ac);
 
+    mNewToRecipientsAction = new QAction(i18n("New Message to Recipients..."), this);
+    ac->addAction(QStringLiteral("new_to_recipients"), mNewToRecipientsAction);
+    connect(mNewToRecipientsAction, SIGNAL(triggered(bool)), parent, SLOT(slotNewMessageToRecipients()));
+
     mRedirectAction = new QAction(i18nc("Message->Forward->", "&Redirect..."), this);
     ac->addAction(QStringLiteral("message_forward_redirect"), mRedirectAction);
     connect(mRedirectAction, SIGNAL(triggered(bool)), parent, SLOT(slotRedirectMessage()));
@@ -264,6 +268,11 @@ QAction *MessageActions::forwardAttachedAction() const
 QAction *MessageActions::redirectAction() const
 {
     return mRedirectAction;
+}
+
+QAction *MessageActions::newToRecipientsAction() const
+{
+    return mNewToRecipientsAction;
 }
 
 KActionMenu *MessageActions::messageStatusMenu() const

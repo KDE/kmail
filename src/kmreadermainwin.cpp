@@ -14,6 +14,7 @@
 // widgets like a toolbar.
 
 #include "kmreadermainwin.h"
+#include "job/composenewmessagejob.h"
 #include "kmmainwidget.h"
 #include "kmreaderwin.h"
 #include "widgets/zoomlabelwidget.h"
@@ -357,6 +358,24 @@ void KMReaderMainWin::slotForwardAttachedMessage()
 
     connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
+}
+
+void KMReaderMainWin::slotNewMessageToRecipients()
+{
+    ComposeNewMessageJob *job = new ComposeNewMessageJob;
+
+    const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection();
+    if (parentCol.isValid()) {
+        job->setCurrentCollection(parentCol);
+
+        QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
+        if (fd) {
+            job->setFolderSettings(fd);
+        }
+    }
+
+    job->setRecipientsFromMessage(mReaderWin->messageItem());
+    job->start();
 }
 
 void KMReaderMainWin::slotRedirectMessage()

@@ -2012,6 +2012,20 @@ void KMMainWidget::slotRedirectMessage()
     command->start();
 }
 
+void KMMainWidget::slotNewMessageToRecipients()
+{
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
+    if (selectedMessages.count() != 1) {
+        return;
+    }
+
+    ComposeNewMessageJob *job = new ComposeNewMessageJob;
+    job->setFolderSettings(mCurrentFolderSettings);
+    job->setCurrentCollection(mCurrentCollection);
+    job->setRecipientsFromMessage(selectedMessages.constFirst());
+    job->start();
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCustomReplyToMsg(const QString &tmpl)
 {
@@ -3709,6 +3723,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMsgActions->newMessageFromTemplateAction()->setEnabled(single_actions && CommonKernel->folderIsTemplates(mCurrentCollection));
     filterMenu()->setEnabled(single_actions);
     mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/ mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
+    mMsgActions->newToRecipientsAction()->setEnabled(single_actions);
 
     if (auto *menuCustom = mMsgActions->customTemplatesMenu()) {
         menuCustom->forwardActionMenu()->setEnabled(mass_actions);

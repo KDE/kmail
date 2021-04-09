@@ -25,6 +25,18 @@ void ComposeNewMessageJob::setCurrentCollection(const Akonadi::Collection &col)
     mCurrentCollection = col;
 }
 
+static void copyAddresses(const KMime::Headers::Generics::AddressList *from, KMime::Headers::Generics::AddressList *to)
+{
+    if (from == nullptr) { // no such headers to copy from
+        return;
+    }
+
+    const KMime::Types::Mailbox::List mailboxes = from->mailboxes();
+    for (const KMime::Types::Mailbox &mbox : mailboxes) {
+        to->addAddress(mbox);
+    }
+}
+
 void ComposeNewMessageJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message());
@@ -38,6 +50,19 @@ void ComposeNewMessageJob::start()
         parser->process(mMsg, mCurrentCollection.id());
     } else {
         parser->process(KMime::Message::Ptr());
+    }
+
+    if (mRecipientsFrom.isValid()) {
+        // Copy the recipient list from the original message
+        const KMime::Message::Ptr msg = MessageComposer::Util::message(mRecipientsFrom);
+        if (msg) {
+            copyAddresses(msg->to(false), mMsg->to());
+            copyAddresses(msg->cc(false), mMsg->cc());
+            copyAddresses(msg->bcc(false), mMsg->bcc());
+            copyAddresses(msg->replyTo(false), mMsg->replyTo());
+        } else {
+            qCWarning(KMAIL_LOG) << "Original message" << mRecipientsFrom.id() << "not found";
+        }
     }
 }
 
@@ -56,4 +81,9 @@ void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
 void ComposeNewMessageJob::setFolderSettings(const QSharedPointer<MailCommon::FolderSettings> &folder)
 {
     mFolder = folder;
+}
+
+void ComposeNewMessageJob::setRecipientsFromMessage(const Akonadi::Item &from)
+{
+    mRecipientsFrom = from;
 }

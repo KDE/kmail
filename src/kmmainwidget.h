@@ -449,6 +449,7 @@ private Q_SLOTS:
     void slotForwardInlineMsg();
     void slotForwardAttachedMessage();
     void slotRedirectMessage();
+    void slotNewMessageToRecipients();
     void slotCustomForwardMsg(const QString &tmpl);
     void slotSubjectFilter();
     void slotFromFilter();
