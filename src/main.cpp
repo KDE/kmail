@@ -109,6 +109,7 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args, const QS
 
 int main(int argc, char *argv[])
 {
+    qputenv("QTWEBENGINE_DISABLE_SANDBOX", "1");
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
