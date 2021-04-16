@@ -536,10 +536,12 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 {
     KMMainWidget *mainwin = kmkernel->getKMMainWidget();
     if (mainwin) {
-        auto action = new KActionMenu(menu);
-        action->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
-        action->setText(i18n("Copy Message To..."));
-        mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::CopyItemToMenu);
+        Akonadi::StandardActionManager *manager = mainwin->standardMailActionManager()->standardActionManager();
+        const auto *mainWinAction = manager->action(Akonadi::StandardActionManager::CopyItemToMenu);
+        auto *action = new KActionMenu(menu);
+        action->setIcon(mainWinAction->icon());
+        action->setText(mainWinAction->text());
+        manager->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::CopyItemToMenu);
         connect(action->menu(), &QMenu::triggered, this, &KMReaderMainWin::slotCopyItem);
         return action;
     }
@@ -550,12 +552,13 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
 {
     KMMainWidget *mainwin = kmkernel->getKMMainWidget();
     if (mainwin) {
-        auto action = new KActionMenu(menu);
-        action->setText(i18n("Move Message To..."));
-        action->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
-        mainwin->standardMailActionManager()->standardActionManager()->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::MoveItemToMenu);
+        Akonadi::StandardActionManager *manager = mainwin->standardMailActionManager()->standardActionManager();
+        const auto *mainWinAction = manager->action(Akonadi::StandardActionManager::MoveItemToMenu);
+        auto *action = new KActionMenu(menu);
+        action->setIcon(mainWinAction->icon());
+        action->setText(mainWinAction->text());
+        manager->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::MoveItemToMenu);
         connect(action->menu(), &QMenu::triggered, this, &KMReaderMainWin::slotMoveItem);
-
         return action;
     }
     return nullptr;
@@ -583,6 +586,11 @@ void KMReaderMainWin::copyOrMoveItem(const Akonadi::Collection &collection, bool
     } else {
         auto job = new Akonadi::ItemCreateJob(mMsg, collection, this);
         connect(job, &KJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
+    }
+
+    KMMainWidget *mainwin = kmkernel->getKMMainWidget();
+    if (mainwin) {
+        mainwin->standardMailActionManager()->standardActionManager()->addRecentCollection(collection.id());
     }
 }
 
