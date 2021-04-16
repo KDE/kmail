@@ -393,7 +393,7 @@ void SummaryViewPart::slotAdjustPalette()
     }
 }
 
-void SummaryViewPart::setDate(const QDate &newDate)
+void SummaryViewPart::setDate(QDate newDate)
 {
     QString date(QStringLiteral("<b>%1</b>"));
     date = date.arg(QLocale().toString(newDate));

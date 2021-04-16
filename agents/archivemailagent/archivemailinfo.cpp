@@ -130,7 +130,7 @@ MailCommon::BackupJob::ArchiveType ArchiveMailInfo::archiveType() const
     return mArchiveType;
 }
 
-void ArchiveMailInfo::setLastDateSaved(const QDate &date)
+void ArchiveMailInfo::setLastDateSaved(QDate date)
 {
     mLastDateSaved = date;
 }

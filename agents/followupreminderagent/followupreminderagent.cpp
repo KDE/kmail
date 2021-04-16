@@ -106,7 +106,7 @@ void FollowUpReminderAgent::addReminder(const QString &messageId,
                                         Akonadi::Item::Id messageItemId,
                                         const QString &to,
                                         const QString &subject,
-                                        const QDate &followupDate,
+                                        QDate followupDate,
                                         Akonadi::Item::Id todoId)
 {
     auto info = new FollowUpReminder::FollowUpReminderInfo();

@@ -48,7 +48,7 @@ public:
     void setArchiveAge(int age);
     Q_REQUIRED_RESULT int archiveAge() const;
 
-    void setLastDateSaved(const QDate &date);
+    void setLastDateSaved(QDate date);
     Q_REQUIRED_RESULT QDate lastDateSaved() const;
 
     Q_REQUIRED_RESULT int maximumArchiveCount() const;

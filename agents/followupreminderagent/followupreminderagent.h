@@ -7,6 +7,7 @@
 #pragma once
 
 #include <AkonadiAgentBase/agentbase.h>
+#include <QDate>
 class FollowUpReminderManager;
 class FollowUpReminderAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
 {
@@ -26,7 +27,7 @@ public Q_SLOTS:
                      Akonadi::Item::Id messageItemId,
                      const QString &to,
                      const QString &subject,
-                     const QDate &followupDate,
+                     QDate followupDate,
                      Akonadi::Item::Id todoId);
 
 protected:

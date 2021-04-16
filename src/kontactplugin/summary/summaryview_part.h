@@ -11,6 +11,7 @@
 #pragma once
 
 #include <KParts/Part>
+#include <QDate>
 #include <QMap>
 
 class DropWidget;
@@ -39,7 +40,7 @@ public:
 public Q_SLOTS:
     void slotTextChanged();
     void slotAdjustPalette();
-    void setDate(const QDate &newDate);
+    void setDate(QDate newDate);
     void updateSummaries();
 
 Q_SIGNALS:
