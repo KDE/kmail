@@ -165,7 +165,7 @@ UnifiedMailboxEditor::~UnifiedMailboxEditor()
 void UnifiedMailboxEditor::readConfig()
 {
     auto editorGrp = mConfig->group(EditorGroup);
-    const QSize size = editorGrp.readEntry("Size", QSize(500, 900));
+    const QSize size = editorGrp.readEntry("Size", QSize(600, 700));
     if (size.isValid()) {
         resize(size);
     }
