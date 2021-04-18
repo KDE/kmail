@@ -29,7 +29,7 @@ private:
 private:
     void readConfig();
     void writeConfig();
-    QStandardItemModel *mBoxModel = nullptr;
+    QStandardItemModel *const mBoxModel;
     UnifiedMailboxManager &mBoxManager;
     MailKernel *const mKernel;
     const KSharedConfigPtr mConfig;

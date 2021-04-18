@@ -30,6 +30,7 @@ static constexpr const char *DialogGroup = "UnifiedMailboxSettingsDialog";
 
 SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxManager &boxManager, WId, QWidget *parent)
     : QDialog(parent)
+    , mBoxModel(new QStandardItemModel(this))
     , mBoxManager(boxManager)
     , mKernel(new MailKernel(config, this))
     , mConfig(config)
@@ -39,7 +40,6 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
 
     auto h = new QHBoxLayout;
     l->addLayout(h);
-    mBoxModel = new QStandardItemModel(this);
     auto view = new QListView(this);
     view->setEditTriggers(QListView::NoEditTriggers);
     view->setModel(mBoxModel);
