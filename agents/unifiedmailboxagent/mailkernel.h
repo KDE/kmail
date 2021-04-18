@@ -49,8 +49,8 @@ private:
     Q_DISABLE_COPY(MailKernel)
 
     KSharedConfigPtr mConfig;
-    KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
-    MessageComposer::MessageSender *mMessageSender = nullptr;
+    KIdentityManagement::IdentityManager *const mIdentityManager;
+    MessageComposer::MessageSender *const mMessageSender;
     MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor = nullptr;
     Akonadi::EntityTreeModel *mEntityTreeModel = nullptr;
     Akonadi::EntityMimeTypeFilterModel *mCollectionModel = nullptr;

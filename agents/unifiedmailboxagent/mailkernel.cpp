@@ -19,9 +19,9 @@
 MailKernel::MailKernel(const KSharedConfigPtr &config, QObject *parent)
     : QObject(parent)
     , mConfig(config)
+    , mIdentityManager(new KIdentityManagement::IdentityManager(true, this))
+    , mMessageSender(new MessageComposer::AkonadiSender(this))
 {
-    mMessageSender = new MessageComposer::AkonadiSender(this);
-    mIdentityManager = new KIdentityManagement::IdentityManager(true, this);
     auto session = new Akonadi::Session("UnifiedMailbox Kernel ETM", this);
 
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
