@@ -2,6 +2,7 @@
 Name=Mail Merge Agent
 Name[ca]=Agent per a fusionar el correu
 Name[ca@valencia]=Agent per a fusionar el correu
+Name[de]=Agent für Serien- E-Mails
 Name[en_GB]=Mail Merge Agent
 Name[es]=Agente de fusión de correo
 Name[fr]=Agent de fusion de messages
@@ -18,6 +19,7 @@ Name[x-test]=xxMail Merge Agentxx
 Comment=Mail Merge Agent
 Comment[ca]=Agent per a fusionar el correu
 Comment[ca@valencia]=Agent per a fusionar el correu
+Comment[de]=Agent für Serien- E-Mails
 Comment[en_GB]=Mail Merge Agent
 Comment[es]=Agente de fusión de correo
 Comment[fr]=Agent de fusion de messages

@@ -523,6 +523,7 @@ Comment=A delayed email delivery is configured and can be canceled
 Comment[ca]=S'ha configurat un lliurament de correu retardat i es pot cancel·lar
 Comment[ca@valencia]=S'ha configurat un lliurament de correu retardat i es pot cancel·lar
 Comment[da]=En forsinket e-mail-afsendelse er blevet konfigureret og kan annulleres
+Comment[de]=Eine E-Mail zur späteren Versendung ist eingerichtet und kann abgebrochen werden
 Comment[el]=Μια καθυστερημένη παράδοση μηνύματος διαμορφώθηκε και μπορεί να ακυρωθεί
 Comment[en_GB]=A delayed email delivery is configured and can be cancelled
 Comment[es]=Se ha configurado un envío de correo aplazado, que se puede cancelar
