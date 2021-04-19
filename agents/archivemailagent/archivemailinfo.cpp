@@ -75,7 +75,7 @@ QUrl ArchiveMailInfo::realUrl(const QString &folderName, bool &dirExist) const
 
     const QString path = dirPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_')
         + normalizeFolderName(folderName) + QLatin1Char('_') + QDate::currentDate().toString(Qt::ISODate) + QString::fromLatin1(extensions[mArchiveType]);
-    QUrl real(QUrl::fromLocalFile(path));
+    const QUrl real(QUrl::fromLocalFile(path));
     return real;
 }
 

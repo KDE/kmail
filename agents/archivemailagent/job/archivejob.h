@@ -52,7 +52,7 @@ public:
     }
 
 private:
-    ArchiveMailInfo *mInfo = nullptr;
-    ArchiveMailManager *mManager = nullptr;
+    ArchiveMailInfo *const mInfo;
+    ArchiveMailManager *const mManager;
 };
 
