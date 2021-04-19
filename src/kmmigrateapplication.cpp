@@ -5,6 +5,7 @@
 */
 
 #include "kmmigrateapplication.h"
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 #include <Kdelibs4ConfigMigrator>
@@ -121,3 +122,4 @@ void KMMigrateApplication::migrateAlwaysEncrypt()
         mgr.commit();
     }
 }
+#endif

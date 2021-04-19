@@ -8,6 +8,8 @@
 
 #include "kmail_export.h"
 #include <PimCommon/MigrateApplicationFiles>
+#include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 class KMAIL_EXPORT KMMigrateApplication
 {
 public:
@@ -22,3 +24,4 @@ private:
     PimCommon::MigrateApplicationFiles mMigrator;
 };
 
+#endif

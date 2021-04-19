@@ -17,7 +17,10 @@
 
 #include "foldershortcutactionmanager.h"
 #include "kmail_debug.h"
+#include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include "kmmigrateapplication.h"
+#endif
 #include "tag/tagactionmanager.h"
 #include <AkonadiCore/changerecorder.h>
 #include <AkonadiCore/collection.h>
@@ -41,10 +44,10 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     , mParentWidget(parentWidget)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
-
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
     KMMigrateApplication migrate;
     migrate.migrate();
-
+#endif
     // local, do the init
     auto mKMailKernel = new KMKernel();
     mKMailKernel->init();

@@ -10,7 +10,10 @@
 
 #include "kmail_options.h"
 #include "kmkernel.h" //control center
+#include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include "kmmigrateapplication.h"
+#endif
 
 #include "kmail_debug.h"
 #undef Status // stupid X headers
@@ -146,10 +149,10 @@ int main(int argc, char *argv[])
         qCDebug(KMAIL_LOG) << "Another instance of KMail already running";
         return 0;
     }
-
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
     KMMigrateApplication migrate;
     migrate.migrate();
-
+#endif
     // local, do the init
     KMKernel kmailKernel;
     kmailKernel.init();
