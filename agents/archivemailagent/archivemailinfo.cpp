@@ -59,7 +59,7 @@ QString ArchiveMailInfo::dirArchive(bool &dirExit) const
     if (!dir.exists()) {
         dirExit = false;
         dirPath = QDir::homePath();
-        qCDebug(ARCHIVEMAILAGENT_LOG) << " Path doesn't exist" << dir.path();
+        qCWarning(ARCHIVEMAILAGENT_LOG) << " Path doesn't exist" << dir.path();
     } else {
         dirExit = true;
     }
