@@ -18,7 +18,10 @@
 #include <KCrash>
 #include <KDBusService>
 #include <KLocalizedString>
+#include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
+#endif
 #include <QApplication>
 #include <QCommandLineParser>
 
@@ -29,10 +32,12 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("ktnef");
     KCrash::initialize();
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("ktnef"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("ktnefrc"));
     migrate.setUiFiles(QStringList() << QStringLiteral("ktnefui.rc"));
     migrate.migrate();
+#endif
 
     KAboutData aboutData(QStringLiteral("ktnef"),
                          i18n("KTnef"),

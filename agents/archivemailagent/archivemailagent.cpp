@@ -17,18 +17,21 @@
 #include <QDBusConnection>
 #include <QTimer>
 #include <Session>
-
+#include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
-
+#endif
 //#define DEBUG_ARCHIVEMAILAGENT 1
 
 ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     : Akonadi::AgentBase(id)
     , mArchiveManager(new ArchiveMailManager(this))
 {
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("archivemailagent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_archivemail_agentrc") << QStringLiteral("akonadi_archivemail_agent.notifyrc"));
     migrate.migrate();
+#endif
 
     connect(this, &Akonadi::AgentBase::reloadConfiguration, this, &ArchiveMailAgent::reload);
 

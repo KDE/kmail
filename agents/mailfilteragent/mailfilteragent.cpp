@@ -36,8 +36,10 @@
 #include <KSharedConfig>
 #include <QTimer>
 
+#include <kcoreaddons_version.h>
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
-
+#endif
 bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collection) const
 {
     if (!collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
@@ -52,9 +54,11 @@ bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collecti
 MailFilterAgent::MailFilterAgent(const QString &id)
     : Akonadi::AgentBase(id)
 {
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("mailfilteragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_mailfilter_agentrc") << QStringLiteral("akonadi_mailfilter_agent.notifyrc"));
     migrate.migrate();
+#endif
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::Pop3ResourceAttribute>();
     mMailFilterKernel = new DummyKernel(this);
