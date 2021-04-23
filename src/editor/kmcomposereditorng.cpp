@@ -93,7 +93,7 @@ void KMComposerEditorNg::setHighlighterColors(KPIMTextEdit::RichTextComposerEmai
     QColor color1 = MessageCore::ColorUtil::self()->quoteLevel1DefaultTextColor();
     QColor color2 = MessageCore::ColorUtil::self()->quoteLevel2DefaultTextColor();
     QColor color3 = MessageCore::ColorUtil::self()->quoteLevel3DefaultTextColor();
-    QColor misspelled = MessageCore::ColorUtil::self()->misspelledDefaultTextColor();
+    const QColor misspelled = MessageCore::ColorUtil::self()->misspelledDefaultTextColor();
 
     if (!MessageCore::MessageCoreSettings::self()->useDefaultColors()) {
         color1 = MessageCore::MessageCoreSettings::self()->quotedText1();
