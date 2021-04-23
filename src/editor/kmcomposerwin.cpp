@@ -557,7 +557,9 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
         if (!info.to.isEmpty()) {
             const QStringList lst = KEmailAddress::splitAddressList(info.to);
             for (const QString &addr : lst) {
-                mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::To);
+                if (!mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::To)) {
+                    qCWarning(KMAIL_LOG) << "Impossible to add to entry";
+                }
             }
         }
     }
@@ -565,7 +567,9 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
         if (!info.cc.isEmpty()) {
             const QStringList lst = KEmailAddress::splitAddressList(info.cc);
             for (const QString &addr : lst) {
-                mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::Cc);
+                if (!mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::Cc)) {
+                    qCWarning(KMAIL_LOG) << "Impossible to add cc entry";
+                }
             }
         }
     }
@@ -573,7 +577,9 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
         if (!info.bcc.isEmpty()) {
             const QStringList lst = KEmailAddress::splitAddressList(info.bcc);
             for (const QString &addr : lst) {
-                mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::Bcc);
+                if (!mComposerBase->recipientsEditor()->addRecipient(addr, MessageComposer::Recipient::Bcc)) {
+                    qCWarning(KMAIL_LOG) << "Impossible to add bcc entry";
+                }
             }
         }
     }
