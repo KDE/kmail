@@ -58,13 +58,13 @@ using namespace KMail;
 MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     : QObject(parent)
     , mParent(parent)
+    , mReplyActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this))
+    , mReplyAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply..."), this))
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))
 {
-    mReplyActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this);
     ac->addAction(QStringLiteral("message_reply_menu"), mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
 
-    mReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply..."), this);
     ac->addAction(QStringLiteral("reply"), mReplyAction);
     ac->setDefaultShortcut(mReplyAction, Qt::Key_R);
     connect(mReplyAction, &QAction::triggered, this, &MessageActions::slotReplyToMsg);

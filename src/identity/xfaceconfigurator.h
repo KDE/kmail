@@ -45,9 +45,9 @@ private:
     void slotDelayedSelectFromAddressbook(KJob *);
     void slotUpdateXFace();
 
-    QCheckBox *mEnableCheck = nullptr;
+    QCheckBox *const mEnableCheck;
     KPIMTextEdit::PlainTextEditorWidget *mTextEdit = nullptr;
-    QLabel *mXFaceLabel = nullptr;
+    QLabel *const mXFaceLabel;
 };
 } // namespace KMail
 

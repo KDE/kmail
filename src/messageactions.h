@@ -148,8 +148,8 @@ private:
     QWidget *const mParent;
     KMReaderWin *mMessageView = nullptr;
 
-    KActionMenu *mReplyActionMenu = nullptr;
-    QAction *mReplyAction = nullptr;
+    KActionMenu *const mReplyActionMenu;
+    QAction *const mReplyAction;
     QAction *mReplyAllAction = nullptr;
     QAction *mReplyAuthorAction = nullptr;
     QAction *mReplyListAction = nullptr;

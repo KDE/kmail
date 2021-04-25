@@ -38,6 +38,8 @@ using namespace MessageViewer;
 using namespace KMail;
 XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     : QWidget(parent)
+    , mEnableCheck(new QCheckBox(i18n("&Send picture with every message"), this))
+    , mXFaceLabel(new QLabel(this))
 {
     auto vlay = new QVBoxLayout(this);
     vlay->setObjectName(QStringLiteral("main layout"));
@@ -45,14 +47,12 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     vlay->addLayout(hlay);
 
     // "enable X-Face" checkbox:
-    mEnableCheck = new QCheckBox(i18n("&Send picture with every message"), this);
     mEnableCheck->setWhatsThis(
         i18n("Check this box if you want KMail to add a so-called X-Face header to messages "
              "written with this identity. An X-Face is a small (48x48 pixels) black and "
              "white image that some mail clients are able to display."));
     hlay->addWidget(mEnableCheck, Qt::AlignLeft | Qt::AlignVCenter);
 
-    mXFaceLabel = new QLabel(this);
     mXFaceLabel->setWhatsThis(i18n("This is a preview of the picture selected/entered below."));
     mXFaceLabel->setFixedSize(48, 48);
     mXFaceLabel->setFrameShape(QFrame::Box);
