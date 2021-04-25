@@ -193,11 +193,11 @@ ecm_qt_install_logging_categories(
         DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
         )
 
-add_subdirectory(doc)
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 ki18n_install(po)
 if(KF5DocTools_FOUND)
     kdoctools_install(po)
+    add_subdirectory(doc)
 endif()
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
