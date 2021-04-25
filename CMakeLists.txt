@@ -89,7 +89,11 @@ find_package(KF5Config ${KF5_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF5ConfigWidgets ${KF5_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF5Crash ${KF5_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF5DBusAddons ${KF5_MIN_VERSION} CONFIG REQUIRED)
-find_package(KF5DocTools ${KF5_MIN_VERSION} REQUIRED)
+find_package(KF5DocTools ${KF5_MIN_VERSION})
+set_package_properties(KF5DocTools PROPERTIES DESCRIPTION
+    "Tools to generate documentation"
+    TYPE OPTIONAL
+)
 find_package(KF5GuiAddons ${KF5_MIN_VERSION} REQUIRED)
 find_package(KF5I18n ${KF5_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF5ItemViews ${KF5_MIN_VERSION} CONFIG REQUIRED)
@@ -192,6 +196,8 @@ ecm_qt_install_logging_categories(
 add_subdirectory(doc)
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 ki18n_install(po)
-kdoctools_install(po)
+if(KF5DocTools_FOUND)
+    kdoctools_install(po)
+endif()
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
