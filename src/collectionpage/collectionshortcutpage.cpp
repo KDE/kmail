@@ -23,6 +23,7 @@ using namespace MailCommon;
 
 CollectionShortcutPage::CollectionShortcutPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
+    , mKeySeqWidget(new KKeySequenceWidget(this))
 {
     setObjectName(QStringLiteral("KMail::CollectionShortcutPage"));
     setPageTitle(i18nc("@title:tab Shortcut settings for a folder.", "Shortcut"));
@@ -47,7 +48,6 @@ void CollectionShortcutPage::init(const Akonadi::Collection &col)
 
     auto hbHBoxLayout = new QHBoxLayout;
 
-    mKeySeqWidget = new KKeySequenceWidget(this);
     hbHBoxLayout->addWidget(mKeySeqWidget);
     mKeySeqWidget->setObjectName(QStringLiteral("FolderShortcutSelector"));
     connect(mKeySeqWidget, &KKeySequenceWidget::keySequenceChanged, this, &CollectionShortcutPage::slotShortcutChanged);

@@ -25,7 +25,7 @@ public:
 
 private:
     void init();
-    MailCommon::CollectionTemplatesWidget *mCollectionTemplateWidget = nullptr;
+    MailCommon::CollectionTemplatesWidget *const mCollectionTemplateWidget;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage)

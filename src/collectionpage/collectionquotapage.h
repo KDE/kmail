@@ -25,7 +25,7 @@ public:
 
 private:
     void init();
-    CollectionQuotaWidget *mQuotaWidget = nullptr;
+    CollectionQuotaWidget *const mQuotaWidget;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionQuotaPageFactory, CollectionQuotaPage)

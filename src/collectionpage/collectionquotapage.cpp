@@ -15,6 +15,7 @@
 #include <QVBoxLayout>
 CollectionQuotaPage::CollectionQuotaPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
+    , mQuotaWidget(new CollectionQuotaWidget(this))
 {
     setObjectName(QStringLiteral("KMail::CollectionQuotaPage"));
     setPageTitle(i18n("Quota"));
@@ -35,7 +36,6 @@ bool CollectionQuotaPage::canHandle(const Akonadi::Collection &collection) const
 void CollectionQuotaPage::init()
 {
     auto topLayout = new QVBoxLayout(this);
-    mQuotaWidget = new CollectionQuotaWidget(this);
     topLayout->addWidget(mQuotaWidget);
 }
 

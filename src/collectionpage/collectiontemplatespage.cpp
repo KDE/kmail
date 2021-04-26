@@ -20,6 +20,7 @@ using namespace MailCommon;
 
 CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
+    , mCollectionTemplateWidget(new MailCommon::CollectionTemplatesWidget(this))
 {
     setObjectName(QStringLiteral("KMail::CollectionTemplatesPage"));
     setPageTitle(i18n("Templates"));
@@ -37,7 +38,6 @@ void CollectionTemplatesPage::init()
 {
     auto topLayout = new QVBoxLayout(this);
     topLayout->setContentsMargins({});
-    mCollectionTemplateWidget = new MailCommon::CollectionTemplatesWidget(this);
     topLayout->addWidget(mCollectionTemplateWidget);
 }
 

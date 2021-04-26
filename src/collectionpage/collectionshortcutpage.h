@@ -31,7 +31,7 @@ private:
     void init(const Akonadi::Collection &);
     QSharedPointer<MailCommon::FolderSettings> mFolder;
     Akonadi::Collection mCurrentCollection;
-    KKeySequenceWidget *mKeySeqWidget = nullptr;
+    KKeySequenceWidget *const mKeySeqWidget;
     bool mShortcutChanged = false;
 };
 
