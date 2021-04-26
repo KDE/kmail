@@ -6,7 +6,6 @@
 
 #include "followupremindershowmessagejob.h"
 #include "followupreminderagent_debug.h"
-#include <KToolInvocation>
 #include <QDBusConnection>
 #include <QDBusConnectionInterface>
 #include <QDBusInterface>
@@ -30,7 +29,7 @@ void FollowUpReminderShowMessageJob::start()
     if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(kmailInterface)) {
         // Program is not already running, so start it
         QString errmsg;
-        if (KToolInvocation::startServiceByDesktopName(QStringLiteral("org.kde.kmail2"), QString(), &errmsg)) {
+        if (!QDBusConnection::sessionBus().interface()->startService(QStringLiteral("org.kde.kmail2")).isValid()) {
             qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Can not start kmail" << errmsg;
             deleteLater();
             return;
