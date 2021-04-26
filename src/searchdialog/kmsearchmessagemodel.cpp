@@ -35,8 +35,8 @@ static QString toolTip(const Akonadi::Item &item)
 {
     KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
 
-    QColor bckColor = QApplication::palette().color(QPalette::ToolTipBase);
-    QColor txtColor = QApplication::palette().color(QPalette::ToolTipText);
+    const QColor bckColor = QApplication::palette().color(QPalette::ToolTipBase);
+    const QColor txtColor = QApplication::palette().color(QPalette::ToolTipText);
 
     const QString bckColorName = bckColor.name();
     const QString txtColorName = txtColor.name();

@@ -31,7 +31,7 @@ void KMMigrateApplication::migrate()
 
     // Migrate folders and files.
     if (mMigrator.checkIfNecessary()) {
-        mMigrator.start();
+        (void)mMigrator.start();
     }
 
     // Migrate global "Always encrypt" option to per-identity options
