@@ -9,7 +9,7 @@ add_library(kontact_summaryplugin MODULE ${kontact_summaryplugin_PART_SRCS})
 pim_target_precompile_headers(kontact_summaryplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_summaryplugin kmail_xml)
 
-target_link_libraries(kontact_summaryplugin KF5::KCMUtils  KF5::IdentityManagement KF5::KontactInterface KF5::PimCommon KF5::ConfigCore)
+target_link_libraries(kontact_summaryplugin KF5::KCMUtils KF5::I18n KF5::IdentityManagement KF5::KontactInterface KF5::PimCommon KF5::ConfigCore)
 
 kcoreaddons_desktop_to_json(kontact_summaryplugin summaryplugin.desktop)
 
@@ -20,7 +20,7 @@ set(kcm_kontactsummary_PART_SRCS kcmkontactsummary.cpp)
 add_library(kcm_kontactsummary MODULE ${kcm_kontactsummary_PART_SRCS})
 pim_target_precompile_headers(kcm_kontactsummary PUBLIC ../../../kmail_pch.h)
 
-target_link_libraries(kcm_kontactsummary KF5::KCMUtils Qt::Widgets KF5::KCMUtils KF5::I18n KF5::KontactInterface)
+target_link_libraries(kcm_kontactsummary KF5::I18n KF5::KCMUtils Qt::Widgets KF5::KCMUtils KF5::I18n KF5::KontactInterface)
 
 ########### install files ###############
 

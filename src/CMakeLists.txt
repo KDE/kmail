@@ -387,6 +387,7 @@ pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
 
 target_link_libraries(kmailpart
     kmailprivate
+    KF5::I18n
     KF5::PimCommon
     KF5::KCMUtils
     KF5::Parts

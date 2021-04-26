@@ -18,7 +18,7 @@ add_library(kontact_kmailplugin MODULE ${kontact_kmailplugin_PART_SRCS})
 pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_kmailplugin kmail_xml)
 
-target_link_libraries(kontact_kmailplugin KF5::Mime  KF5::KontactInterface KF5::CalendarCore KF5::CalendarUtils KF5::AkonadiCore KF5::Contacts KF5::AkonadiWidgets)
+target_link_libraries(kontact_kmailplugin KF5::Mime KF5::I18n KF5::KontactInterface KF5::CalendarCore KF5::CalendarUtils KF5::AkonadiCore KF5::Contacts KF5::AkonadiWidgets)
 
 ########### next target ###############
 
