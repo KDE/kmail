@@ -37,7 +37,7 @@ public:
     }
 
 private:
-    KTNEFAttach *mAttach = nullptr;
+    KTNEFAttach *const mAttach;
 };
 
 Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
