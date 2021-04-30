@@ -838,7 +838,7 @@ KMCommand::Result KMReplyCommand::execute()
     settings.templateStr = mTemplate;
     settings.noQuote = mNoQuote;
     settings.replyAsHtml = mReplyAsHtml;
-    qDebug() << " settings " << mReplyAsHtml;
+    // qDebug() << " settings " << mReplyAsHtml;
 
     auto job = new CreateReplyMessageJob;
     job->setSettings(settings);
