@@ -232,19 +232,20 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mFolder(Akonadi::Collection(-1))
     , mId(id)
     , mContext(context)
+    , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
+    , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
+
 {
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
     mComposerBase->setIdentityManager(kmkernel->identityManager());
 
-    mPluginEditorManagerInterface = new KMailPluginEditorManagerInterface(this);
     connect(mPluginEditorManagerInterface, &KMailPluginEditorManagerInterface::message, this, &KMComposerWin::slotMessage);
     connect(mPluginEditorManagerInterface, &KMailPluginEditorManagerInterface::insertText, this, &KMComposerWin::slotEditorPluginInsertText);
     mPluginEditorCheckBeforeSendManagerInterface = new KMailPluginEditorCheckBeforeSendManagerInterface(this);
     mPluginEditorInitManagerInterface = new KMailPluginEditorInitManagerInterface(this);
     mPluginEditorConvertTextManagerInterface = new KMailPluginEditorConvertTextManagerInterface(this);
 
-    mPluginEditorGrammarManagerInterface = new KMailPluginGrammarEditorManagerInterface(this);
 
     connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposerWin::disableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposerWin::enableHtml);

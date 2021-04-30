@@ -681,11 +681,11 @@ private:
     KMComposerGlobalAction *mGlobalAction = nullptr;
     KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget = nullptr;
 
-    KMailPluginEditorManagerInterface *mPluginEditorManagerInterface = nullptr;
+    KMailPluginEditorManagerInterface *const mPluginEditorManagerInterface;
     KMailPluginEditorCheckBeforeSendManagerInterface *mPluginEditorCheckBeforeSendManagerInterface = nullptr;
     KMailPluginEditorInitManagerInterface *mPluginEditorInitManagerInterface = nullptr;
     KMailPluginEditorConvertTextManagerInterface *mPluginEditorConvertTextManagerInterface = nullptr;
-    KMailPluginGrammarEditorManagerInterface *mPluginEditorGrammarManagerInterface = nullptr;
+    KMailPluginGrammarEditorManagerInterface *const mPluginEditorGrammarManagerInterface;
 
     AttachmentAddedFromExternalWarning *mAttachmentFromExternalMissing = nullptr;
 
