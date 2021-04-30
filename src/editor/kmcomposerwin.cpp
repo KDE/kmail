@@ -1685,6 +1685,9 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     // manually load the identity's value into the fields; either the one from the
     // message, where appropriate, or the one from the sticky identity. What's in
     // mId might have changed meanwhile, thus the save value
+    if (mId == 0) {
+        mId = mComposerBase->identityCombo()->currentIdentity();
+    }
     slotIdentityChanged(mId, true /*initalChange*/);
     // Fixing the identities with auto signing activated
     mLastSignActionState = mSignAction->isChecked();
