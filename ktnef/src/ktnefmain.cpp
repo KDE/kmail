@@ -594,7 +594,7 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
 
 void KTNEFMain::slotOpenWithAction(QAction *act)
 {
-    KService::Ptr app = act->data().value<KService::Ptr>();
+    auto app = act->data().value<KService::Ptr>();
 
     openWith(app);
 }

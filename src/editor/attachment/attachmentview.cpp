@@ -112,7 +112,7 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
         const QModelIndexList selectedIndexes = selectionModel()->selectedRows();
         toRemove.reserve(selectedIndexes.count());
         for (const QModelIndex &index : selectedIndexes) {
-            AttachmentPart::Ptr part = model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+            auto part = model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
             toRemove.append(part);
         }
         for (const AttachmentPart::Ptr &part : qAsConst(toRemove)) {

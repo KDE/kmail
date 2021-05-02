@@ -36,7 +36,7 @@ void RemoveDuplicateMailJob::start()
     Akonadi::Collection::List collections;
 
     for (const QModelIndex &index : indexes) {
-        const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const auto collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         if (collection.isValid()) {
             collections << collection;
         }

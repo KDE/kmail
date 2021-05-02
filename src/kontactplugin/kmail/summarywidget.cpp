@@ -112,7 +112,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
     const int nbCol = mModelProxy->rowCount(parent);
     for (int i = 0; i < nbCol; ++i) {
         const QModelIndex child = mModelProxy->index(i, 0, parent);
-        const Akonadi::Collection col = mModelProxy->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const auto col = mModelProxy->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         const int showCollection = mModelProxy->data(child, Qt::CheckStateRole).toInt();
 
         if (col.isValid()) {
@@ -162,7 +162,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
                 mLabels.append(label);
 
                 // Folder icon.
-                QIcon icon = mModelProxy->data(child, Qt::DecorationRole).value<QIcon>();
+                auto icon = mModelProxy->data(child, Qt::DecorationRole).value<QIcon>();
                 label = new QLabel(this);
                 label->setPixmap(icon.pixmap(label->height() / 1.5));
                 label->setMaximumWidth(label->minimumSizeHint().width());

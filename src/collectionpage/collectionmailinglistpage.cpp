@@ -198,7 +198,7 @@ void CollectionMailingListPage::slotFetchDone(KJob *job)
     for (int i = --num; (i > num - maxchecks) && (i >= 0); --i) {
         Akonadi::Item item = items[i];
         if (item.hasPayload<KMime::Message::Ptr>()) {
-            KMime::Message::Ptr message = item.payload<KMime::Message::Ptr>();
+            auto message = item.payload<KMime::Message::Ptr>();
             mMailingList = MessageCore::MailingList::detect(message);
             if (mMailingList.features() & MailingList::Post) {
                 break;

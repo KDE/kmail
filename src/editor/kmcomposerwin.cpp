@@ -2209,7 +2209,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         if (!forceAttachment) {
             if (mComposerBase->editor()->textMode()
                 == MessageComposer::RichTextComposerNg::Rich /*&& mComposerBase->editor()->isEnableImageActions() Necessary ?*/) {
-                QImage image = qvariant_cast<QImage>(source->imageData());
+                auto image = qvariant_cast<QImage>(source->imageData());
                 QFileInfo fi(source->text());
 
                 QMenu menu(this);
@@ -2376,14 +2376,14 @@ void KMComposerWin::slotFetchJob(KJob *job)
         for (const Akonadi::Item &item : items) {
             QString attachmentName = QStringLiteral("attachment");
             if (item.hasPayload<KContacts::Addressee>()) {
-                const KContacts::Addressee contact = item.payload<KContacts::Addressee>();
+                const auto contact = item.payload<KContacts::Addressee>();
                 attachmentName = contact.realName() + QLatin1String(".vcf");
                 // Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();
                 KContacts::adaptIMAttributes(data);
                 addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard");
             } else if (item.hasPayload<KContacts::ContactGroup>()) {
-                const KContacts::ContactGroup group = item.payload<KContacts::ContactGroup>();
+                const auto group = item.payload<KContacts::ContactGroup>();
                 attachmentName = group.name() + QLatin1String(".vcf");
                 auto expandJob = new Akonadi::ContactGroupExpandJob(group, this);
                 expandJob->setProperty("groupName", attachmentName);

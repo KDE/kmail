@@ -153,7 +153,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
         return;
     }
 
-    QPointer<KPIM::ProgressItem> progressItem = job->property("progressItem").value<QPointer<KPIM::ProgressItem>>();
+    auto progressItem = job->property("progressItem").value<QPointer<KPIM::ProgressItem>>();
     // progressItem does not exist anymore, operation has been canceled
     if (!progressItem) {
         return;

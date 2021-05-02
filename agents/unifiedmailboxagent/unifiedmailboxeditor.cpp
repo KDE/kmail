@@ -40,7 +40,7 @@ public:
     {
         if (role == Qt::CheckStateRole) {
             // Make top-level collections uncheckable
-            const Akonadi::Collection col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+            const auto col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
             if (col.parentCollection() == Akonadi::Collection::root()) {
                 return {};
             }
@@ -52,7 +52,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const override
     {
         // Make top-level collections uncheckable
-        const Akonadi::Collection col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const auto col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         if (col.parentCollection() == Akonadi::Collection::root()) {
             return QSortFilterProxyModel::flags(index) & ~Qt::ItemIsUserCheckable;
         } else {
@@ -64,7 +64,7 @@ public:
     {
         // Hide ourselves
         const auto sourceIndex = sourceModel()->index(source_row, 0, source_parent);
-        const Akonadi::Collection col = sourceModel()->data(sourceIndex, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const auto col = sourceModel()->data(sourceIndex, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         return !UnifiedMailboxManager::isUnifiedMailbox(col);
     }
 };

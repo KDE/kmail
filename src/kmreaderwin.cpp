@@ -740,7 +740,7 @@ bool KMReaderWin::printSelectedText(bool preview)
     auto composer = new ::MessageComposer::Composer;
     composer->textPart()->setCleanPlainText(str);
     composer->textPart()->setWrappedPlainText(str);
-    KMime::Message::Ptr messagePtr = messageItem().payload<KMime::Message::Ptr>();
+    auto messagePtr = messageItem().payload<KMime::Message::Ptr>();
     composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
     composer->infoPart()->setTo(QStringList() << messagePtr->to()->asUnicodeString());
     composer->infoPart()->setCc(QStringList() << messagePtr->cc()->asUnicodeString());
@@ -867,7 +867,7 @@ void KMReaderWin::slotContactEditorError(const QString &error)
 void KMReaderWin::contactStored(const Akonadi::Item &item)
 {
     if (item.hasPayload<KContacts::Addressee>()) {
-        const KContacts::Addressee contact = item.payload<KContacts::Addressee>();
+        const auto contact = item.payload<KContacts::Addressee>();
         setContactItem(item, contact);
         mViewer->slotChangeDisplayMail(mViewAsHtml->isChecked() ? Viewer::Html : Viewer::Text, mLoadExternalReference->isChecked());
     }

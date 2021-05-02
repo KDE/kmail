@@ -56,7 +56,7 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
             deleteLater();
             return;
         }
-        KCalendarCore::Todo::Ptr todo = item.payload<KCalendarCore::Todo::Ptr>();
+        auto todo = item.payload<KCalendarCore::Todo::Ptr>();
         todo->setCompleted(true);
         Akonadi::Item updateItem = item;
         updateItem.setPayload<KCalendarCore::Todo::Ptr>(todo);

@@ -62,7 +62,7 @@ void FollowUpReminderJob::slotItemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    const KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+    const auto msg = item.payload<KMime::Message::Ptr>();
     if (msg) {
         KMime::Headers::InReplyTo *replyTo = msg->inReplyTo(false);
         if (replyTo) {

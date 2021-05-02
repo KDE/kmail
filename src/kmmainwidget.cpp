@@ -1217,7 +1217,7 @@ void KMMainWidget::slotCollectionChanged(const Akonadi::Collection &collection, 
         const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(KMKernel::self()->collectionModel(), collection);
         if (idx.isValid()) {
             const QString text = idx.data().toString();
-            const QIcon icon = idx.data(Qt::DecorationRole).value<QIcon>();
+            const auto icon = idx.data(Qt::DecorationRole).value<QIcon>();
             mMessagePane->updateTabIconText(collection, text, icon);
         }
     }
@@ -1370,7 +1370,7 @@ void KMMainWidget::slotNewFromTemplate(QAction *action)
     if (!mTemplateFolder.isValid()) {
         return;
     }
-    const Akonadi::Item item = action->data().value<Akonadi::Item>();
+    const auto item = action->data().value<Akonadi::Item>();
     newFromTemplate(item);
 }
 
@@ -2019,7 +2019,7 @@ void KMMainWidget::slotNewMessageToRecipients()
         return;
     }
 
-    ComposeNewMessageJob *job = new ComposeNewMessageJob;
+    auto *job = new ComposeNewMessageJob;
     job->setFolderSettings(mCurrentFolderSettings);
     job->setCurrentCollection(mCurrentCollection);
     job->setRecipientsFromMessage(selectedMessages.constFirst());
@@ -2601,11 +2601,11 @@ void KMMainWidget::slotContactSearchJobForMessagePopupDone(KJob *job)
     } else {
         mMsgView->clearContactItem();
     }
-    const Akonadi::Item msg = job->property("msg").value<Akonadi::Item>();
+    const auto msg = job->property("msg").value<Akonadi::Item>();
     const QPoint aPoint = job->property("point").toPoint();
     const QUrl imageUrl = job->property("imageUrl").toUrl();
     const QUrl url = job->property("url").toUrl();
-    const WebEngineViewer::WebHitTestResult result = job->property("webhitresult").value<WebEngineViewer::WebHitTestResult>();
+    const auto result = job->property("webhitresult").value<WebEngineViewer::WebHitTestResult>();
 
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound, result);
 }

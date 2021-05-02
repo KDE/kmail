@@ -239,7 +239,7 @@ void FilterManager::Private::beginFiltering(const Akonadi::Item &item) const
     if (FilterLog::instance()->isLogging()) {
         FilterLog::instance()->addSeparator();
         if (item.hasPayload<KMime::Message::Ptr>()) {
-            KMime::Message::Ptr msg = item.payload<KMime::Message::Ptr>();
+            auto msg = item.payload<KMime::Message::Ptr>();
             const QString subject = msg->subject()->asUnicodeString();
             const QString from = msg->from()->asUnicodeString();
             const QDateTime dateTime = msg->date()->dateTime();
@@ -427,7 +427,7 @@ bool FilterManager::process(const Akonadi::Item &item, bool needsFullPayload, co
 
 bool FilterManager::processContextItem(ItemContext context)
 {
-    const KMime::Message::Ptr msg = context.item().payload<KMime::Message::Ptr>();
+    const auto msg = context.item().payload<KMime::Message::Ptr>();
     msg->assemble();
 
     auto col = Akonadi::EntityTreeModel::updatedCollection(MailCommon::Kernel::self()->kernelIf()->collectionModel(), context.item().parentCollection());

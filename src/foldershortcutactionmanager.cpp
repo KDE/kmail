@@ -83,7 +83,7 @@ void FolderShortcutActionManager::updateShortcutsForIndex(const QModelIndex &par
     for (int i = start; i <= end; ++i) {
         if (model->hasIndex(i, 0, parent)) {
             const QModelIndex child = model->index(i, 0, parent);
-            Akonadi::Collection collection = model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+            auto collection = model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
             if (collection.isValid()) {
                 shortcutChanged(collection);
             }

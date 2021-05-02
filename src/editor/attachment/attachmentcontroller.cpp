@@ -101,7 +101,7 @@ void AttachmentController::selectionChanged()
     AttachmentPart::List selectedParts;
     selectedParts.reserve(selectedRows.count());
     for (const QModelIndex &index : selectedRows) {
-        AttachmentPart::Ptr part = mView->model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+        auto part = mView->model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
         selectedParts.append(part);
     }
     setSelectedParts(selectedParts);
@@ -132,7 +132,7 @@ void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
     // The itemClicked index will contain the column information. But we want to retrieve
     // the AttachmentPart, so we must recreate the QModelIndex without the column information
     const QModelIndex &properItemClickedIndex = mView->model()->index(itemClicked.row(), 0);
-    AttachmentPart::Ptr part = mView->model()->data(properItemClickedIndex, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+    auto part = mView->model()->data(properItemClickedIndex, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
 
     // We can't edit encapsulated messages, but we can view them.
     if (part->isMessageOrMessageCollection()) {

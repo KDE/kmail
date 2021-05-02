@@ -362,7 +362,7 @@ void KMReaderMainWin::slotForwardAttachedMessage()
 
 void KMReaderMainWin::slotNewMessageToRecipients()
 {
-    ComposeNewMessageJob *job = new ComposeNewMessageJob;
+    auto *job = new ComposeNewMessageJob;
 
     const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection();
     if (parentCol.isValid()) {
@@ -568,7 +568,7 @@ void KMReaderMainWin::slotMoveItem(QAction *action)
 {
     if (action) {
         const QModelIndex index = action->data().toModelIndex();
-        const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const auto collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         copyOrMoveItem(collection, true);
     }
 }
@@ -598,7 +598,7 @@ void KMReaderMainWin::slotCopyItem(QAction *action)
 {
     if (action) {
         const QModelIndex index = action->data().toModelIndex();
-        const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const auto collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         copyOrMoveItem(collection, false);
     }
 }
@@ -645,11 +645,11 @@ void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
         mReaderWin->clearContactItem();
     }
 
-    const Akonadi::Item msg = job->property("msg").value<Akonadi::Item>();
+    const auto msg = job->property("msg").value<Akonadi::Item>();
     const QPoint aPoint = job->property("point").toPoint();
     const QUrl imageUrl = job->property("imageUrl").toUrl();
     const QUrl url = job->property("url").toUrl();
-    const WebEngineViewer::WebHitTestResult result = job->property("webhitresult").value<WebEngineViewer::WebHitTestResult>();
+    const auto result = job->property("webhitresult").value<WebEngineViewer::WebHitTestResult>();
 
     showMessagePopup(msg, url, imageUrl, aPoint, contactAlreadyExists, uniqueContactFound, result);
 }

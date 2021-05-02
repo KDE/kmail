@@ -50,7 +50,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    KMime::Message::Ptr msg = mMessageItem.payload<KMime::Message::Ptr>();
+    auto msg = mMessageItem.payload<KMime::Message::Ptr>();
     if (msg) {
         auto reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
         KMime::Headers::MessageID *messageID = msg->messageID(false);
