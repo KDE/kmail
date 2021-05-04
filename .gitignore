@@ -23,3 +23,4 @@ compile_commands.json
 .clangd
 .idea
 /cmake-build*
+.cache
