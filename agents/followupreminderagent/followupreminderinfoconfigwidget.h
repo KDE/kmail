@@ -11,11 +11,6 @@
 #include <QVariantList>
 #include <QWidget>
 class FollowUpReminderInfoWidget;
-namespace FollowUpReminder
-{
-class FollowUpReminderInfo;
-}
-
 class FollowUpReminderInfoConfigWidget : public Akonadi::AgentConfigurationBase
 {
     Q_OBJECT

@@ -208,7 +208,6 @@ public Q_SLOTS:
 
     void slotUpdateConfig();
 Q_SIGNALS:
-    void messagesTransfered(bool);
     void captionChangeRequest(const QString &caption);
     void recreateGui();
 
