@@ -303,6 +303,8 @@
   <action name="set_status"/>
   <action name="thread_status"/>
   <Separator/>
+  <Action name="mailing_list"/>
+  <Separator/>
   <action name="create_filter"/>
   <action name="apply_filter_actions"/>
   <Separator/>
