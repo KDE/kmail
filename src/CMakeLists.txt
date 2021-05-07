@@ -1,7 +1,7 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"kmail\")
 
-qt5_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
-qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+qt_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
+qt_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
     DEPENDS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
@@ -239,41 +239,41 @@ set(kmailprivate_LIB_SRCS
     kmail.qrc
     )
 
-qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
+qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
     )
 
-qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
+qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml kmkernel.h KMKernel
     )
-qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
+qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${MAILTRANSPORT_DBUS_SERVICE} mailserviceimpl.h
     KMail::MailServiceImpl
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
     )
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
     )
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/sendlateragent/org.freedesktop.Akonadi.SendLaterAgent.xml
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/mailmergeagent/org.freedesktop.Akonadi.MailMergeAgent.xml
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/mailfilteragent/org.freedesktop.Akonadi.MailFilterAgent.xml
     )
 
@@ -377,11 +377,11 @@ target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion KF5:
 ########### kmailpart ###############
 
 set(kmailpart_PART_SRCS kmail_part.cpp ${kmail_common_SRCS})
-qt5_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
-qt5_add_dbus_adaptor(kmailpart_PART_SRCS
+qt_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
+qt_add_dbus_adaptor(kmailpart_PART_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
     )
-qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
+qt_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
 add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
 pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
 

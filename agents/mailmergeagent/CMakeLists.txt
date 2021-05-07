@@ -25,7 +25,7 @@ set(mailmergeagent_SRCS
     mailmergeconfigurewidget.cpp
     )
 
-qt5_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)
+qt_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)
 
 kconfig_add_kcfg_files(libmailmergeagent_SRCS mailmergeagentsettings.kcfgc)
 add_library(mailmergeagent STATIC ${libmailmergeagent_SRCS})

@@ -22,7 +22,7 @@ kconfig_add_kcfg_files(unifiedmailbox_agent_SRCS
     settings.kcfgc
 )
 
-qt5_add_dbus_adaptor(unifiedmailbox_agent_SRCS org.freedesktop.Akonadi.UnifiedMailboxAgent.xml unifiedmailboxagent.h UnifiedMailboxAgent)
+qt_add_dbus_adaptor(unifiedmailbox_agent_SRCS org.freedesktop.Akonadi.UnifiedMailboxAgent.xml unifiedmailboxagent.h UnifiedMailboxAgent)
 
 add_executable(akonadi_unifiedmailbox_agent ${unifiedmailbox_agent_SRCS})
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)

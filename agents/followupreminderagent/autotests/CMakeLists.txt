@@ -1,6 +1,6 @@
 set(followupreminderagent_test_SRCS)
-qt5_add_dbus_interface(followupreminderagent_test_SRCS ../org.freedesktop.Notifications.xml notifications_interface)
-qt5_add_dbus_interface(followupreminderagent_test_SRCS ../org.freedesktop.DBus.Properties.xml dbusproperties)
+qt_add_dbus_interface(followupreminderagent_test_SRCS ../org.freedesktop.Notifications.xml notifications_interface)
+qt_add_dbus_interface(followupreminderagent_test_SRCS ../org.freedesktop.DBus.Properties.xml dbusproperties)
 
 set(autotest_categories_followupreminderagent_SRCS)
 ecm_qt_declare_logging_category(autotest_categories_followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent)
