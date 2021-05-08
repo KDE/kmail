@@ -38,6 +38,7 @@
 #include <QStandardPaths>
 #include <QTemporaryFile>
 #include <QUrl>
+#include <kio_version.h>
 
 #include <KConfigGroup>
 #include <KRecentFilesAction>
@@ -549,8 +550,11 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
     }
     KTNEFAttach *attach = mView->getSelection().at(0);
     QString mimename(attach->mimeTag());
-
+#if KIO_VERSION < QT_VERSION_CHECK(5, 83, 0)
     const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename, QString());
+#else
+    const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename);
+#endif
     if (!offers.isEmpty()) {
         QMenu *menu = topMenu;
         auto actionGroup = new QActionGroup(menu);
