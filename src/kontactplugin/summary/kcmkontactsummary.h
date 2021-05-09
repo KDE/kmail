@@ -26,7 +26,7 @@ class KCMKontactSummary : public KCModule
     Q_OBJECT
 
 public:
-    explicit KCMKontactSummary(QWidget *parent = nullptr);
+    explicit KCMKontactSummary(QWidget *parent = nullptr, const QVariantList &args = {});
 
     void load() override;
     void save() override;

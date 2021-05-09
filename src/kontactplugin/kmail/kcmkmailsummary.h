@@ -28,7 +28,7 @@ class KCMKMailSummary : public KCModule
     Q_OBJECT
 
 public:
-    explicit KCMKMailSummary(QWidget *parent = nullptr);
+    explicit KCMKMailSummary(QWidget *parent = nullptr, const QVariantList &args = {});
 
     void load() override;
     void save() override;

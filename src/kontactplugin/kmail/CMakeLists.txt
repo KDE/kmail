@@ -26,6 +26,8 @@ set(kcm_kmailsummary_PART_SRCS kcmkmailsummary.cpp ${kontact_kmail_plugins_inter
 
 add_library(kcm_kmailsummary MODULE ${kcm_kmailsummary_PART_SRCS})
 pim_target_precompile_headers(kcm_kmailsummary PUBLIC ../../../kmail_pch.h)
+kcoreaddons_desktop_to_json(kcm_kmailsummary "kmailplugin.desktop" SERVICE_TYPES kcmodule.desktop)
+
 add_dependencies(kcm_kmailsummary kmail_xml)
 
 target_link_libraries(kcm_kmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt::DBus KF5::ConfigWidgets KF5::I18n)
@@ -37,7 +39,6 @@ install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact
 install(TARGETS kcm_kmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
 install(FILES kmailplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR}/kontact)
-kcoreaddons_desktop_to_json(kontact_kmailplugin kmailplugin.desktop)
 
 install(FILES kcmkmailsummary.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 

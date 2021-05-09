@@ -9,23 +9,17 @@
 
 #include "kcmkontactsummary.h"
 
-#include <KontactInterface/Plugin>
-
 #include <KAboutData>
 #include <KConfig>
 #include <KLocalizedString>
+#include <KPluginFactory>
 #include <KPluginInfo>
 #include <KPluginMetaData>
+#include <KontactInterface/Plugin>
 #include <QIcon>
 
 #include <QLabel>
 #include <QVBoxLayout>
-extern "C" {
-Q_DECL_EXPORT KCModule *create_kontactsummary(QWidget *parent, const char *)
-{
-    return new KCMKontactSummary(parent);
-}
-}
 
 class PluginItem : public QTreeWidgetItem
 {
@@ -71,8 +65,10 @@ PluginView::PluginView(QWidget *parent)
 
 PluginView::~PluginView() = default;
 
-KCMKontactSummary::KCMKontactSummary(QWidget *parent)
-    : KCModule(parent)
+K_PLUGIN_FACTORY_WITH_JSON(KCMKontactSummaryFactory, "kcmkontactsummary.json", registerPlugin<KCMKontactSummary>();)
+
+KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
+    : KCModule(parent, args)
 {
     setButtons(NoAdditionalButton);
     auto layout = new QVBoxLayout(this);
@@ -165,3 +161,4 @@ void KCMKontactSummary::save()
     KConfigGroup grp(&config, QString());
     grp.writeEntry("ActiveSummaries", activeSummaries);
 }
+#include "kcmkontactsummary.moc"

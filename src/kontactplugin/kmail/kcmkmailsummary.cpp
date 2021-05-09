@@ -18,21 +18,16 @@
 #include <KAcceleratorManager>
 #include <KConfig>
 #include <KLocalizedString>
+#include <KPluginFactory>
 #include <KSharedConfig>
 
 #include <QCheckBox>
 #include <QTreeView>
 #include <QVBoxLayout>
 
-extern "C" {
-Q_DECL_EXPORT KCModule *create_kmailsummary(QWidget *parent, const char *)
-{
-    return new KCMKMailSummary(parent);
-}
-}
-
-KCMKMailSummary::KCMKMailSummary(QWidget *parent)
-    : KCModule(parent)
+K_PLUGIN_FACTORY_WITH_JSON(KCMKMailSummaryFactory, "kmailplugin.json", registerPlugin<KCMKMailSummary>();)
+KCMKMailSummary::KCMKMailSummary(QWidget *parent, const QVariantList &args)
+    : KCModule(parent, args)
 {
     initGUI();
 
@@ -121,3 +116,4 @@ void KCMKMailSummary::defaults()
 
     Q_EMIT changed(true);
 }
+#include "kcmkmailsummary.moc"
