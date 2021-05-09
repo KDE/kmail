@@ -73,8 +73,8 @@ QString AppearancePage::helpAnchor() const
     return QStringLiteral("configure-appearance");
 }
 
-AppearancePage::AppearancePage(QWidget *parent)
-    : ConfigModuleWithTabs(parent)
+AppearancePage::AppearancePage(QWidget *parent, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, args)
 {
     //
     // "General" tab:

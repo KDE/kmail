@@ -49,8 +49,8 @@ QString AccountsPage::helpAnchor() const
     return QStringLiteral("configure-accounts");
 }
 
-AccountsPage::AccountsPage(QWidget *parent)
-    : ConfigModuleWithTabs(parent)
+AccountsPage::AccountsPage(QWidget *parent, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, args)
 {
     // Identity Tab:
     auto identityTab = new KMail::IdentityPage();

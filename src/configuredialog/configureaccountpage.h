@@ -105,7 +105,7 @@ class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AccountsPage(QWidget *parent = nullptr);
+    explicit AccountsPage(QWidget *parent = nullptr, const QVariantList &args = {});
     QString helpAnchor() const override;
 
     // hrmpf. moc doesn't like nested classes with slots/signals...:

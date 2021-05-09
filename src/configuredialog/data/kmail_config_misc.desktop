@@ -4,8 +4,7 @@ Type=Service
 X-KDE-ServiceTypes=KCModule
 
 X-KDE-ModuleType=Library
-X-KDE-Library=kcm_kmail
-X-KDE-FactoryName=kmail_config_misc
+X-KDE-Library=kcms/kcm_kmail_misc
 X-KDE-HasReadOnlyMode=false
 X-KDE-ParentApp=kmail
 X-KDE-ParentComponents=kmail,kontact_kmailplugin

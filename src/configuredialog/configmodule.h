@@ -17,8 +17,8 @@
 class ConfigModule : public KCModule
 {
 public:
-    explicit ConfigModule(QWidget *parent = nullptr)
-        : KCModule(parent)
+    explicit ConfigModule(QWidget *parent = nullptr, const QVariantList &args = {})
+        : KCModule(parent, args)
     {
     }
 

@@ -369,11 +369,37 @@ set_target_properties(kmailprivate
     )
 
 ########### kcm_kmail ###############
-set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
-add_library(kcm_kmail MODULE ${kcm_kmail_PART_SRCS})
-pim_target_precompile_headers(kcm_kmail PUBLIC ../kmail_pch.h)
-target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
+set(kcm_kmail_PART_SRCS kcm_kmail.cpp)
+add_library(kcm_kmail_static STATIC ${kcm_kmail_PART_SRCS})
+pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
+target_link_libraries(kcm_kmail_static  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
 
+
+kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_accounts.desktop" SERVICE_TYPES kcmodule.desktop)
+kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_appearance.desktop" SERVICE_TYPES kcmodule.desktop)
+kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_composer.desktop" SERVICE_TYPES kcmodule.desktop)
+kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_misc.desktop" SERVICE_TYPES kcmodule.desktop)
+kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_plugins.desktop" SERVICE_TYPES kcmodule.desktop)
+kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_security.desktop" SERVICE_TYPES kcmodule.desktop)
+
+
+kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "kcms")
+target_link_libraries(kcm_kmail_accounts kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_appearance SOURCES configuredialog/kcm_kmail_appearance.cpp INSTALL_NAMESPACE "kcms")
+target_link_libraries(kcm_kmail_appearance kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_composer SOURCES configuredialog/kcm_kmail_composer.cpp INSTALL_NAMESPACE "kcms")
+target_link_libraries(kcm_kmail_composer kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_misc SOURCES configuredialog/kcm_kmail_misc.cpp INSTALL_NAMESPACE "kcms")
+target_link_libraries(kcm_kmail_misc kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_plugins SOURCES configuredialog/kcm_kmail_plugins.cpp INSTALL_NAMESPACE "kcms")
+target_link_libraries(kcm_kmail_plugins kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_security.cpp INSTALL_NAMESPACE "kcms")
+target_link_libraries(kcm_kmail_security kcm_kmail_static)
 ########### kmailpart ###############
 
 set(kmailpart_PART_SRCS kmail_part.cpp ${kmail_common_SRCS})
@@ -424,10 +450,20 @@ if(BUILD_TESTING)
     add_subdirectory(job/autotests/)
 endif()
 ########### install files ###############
-
 install(TARGETS kmailprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 
 install(TARGETS kmail ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+
+install(FILES
+    configuredialog/data/kmail_config_misc.desktop
+    configuredialog/data/kmail_config_appearance.desktop
+    configuredialog/data/kmail_config_accounts.desktop
+    configuredialog/data/kmail_config_composer.desktop
+    configuredialog/data/kmail_config_security.desktop
+    configuredialog/data/kmail_config_plugins.desktop
+    DESTINATION ${KDE_INSTALL_KSERVICES5DIR}
+    )
+
 
 install(PROGRAMS data/org.kde.kmail2.desktop data/kmail_view.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES
@@ -435,20 +471,10 @@ install(FILES
     DESTINATION ${KDE_INSTALL_KCFGDIR}
     )
 install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-install(FILES
-    data/kmail_config_misc.desktop
-    data/kmail_config_appearance.desktop
-    data/kmail_config_accounts.desktop
-    data/kmail_config_composer.desktop
-    data/kmail_config_security.desktop
-    data/kmail_config_plugins.desktop
-    DESTINATION ${KDE_INSTALL_KSERVICES5DIR}
-    )
 
 install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
 install(TARGETS
     kmailpart
-    kcm_kmail
     DESTINATION ${KDE_INSTALL_PLUGINDIR}
     )
 install(FILES

@@ -264,7 +264,7 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AppearancePage(QWidget *parent = nullptr);
+    explicit AppearancePage(QWidget *parent = nullptr, const QVariantList &args = {});
 
     QString helpAnchor() const override;
 

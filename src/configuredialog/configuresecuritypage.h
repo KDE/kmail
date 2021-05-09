@@ -136,7 +136,7 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit SecurityPage(QWidget *parent = nullptr);
+    explicit SecurityPage(QWidget *parent = nullptr, const QVariantList &args = {});
 
     QString helpAnchor() const override;
 

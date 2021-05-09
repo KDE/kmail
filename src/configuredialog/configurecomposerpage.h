@@ -234,7 +234,7 @@ class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit ComposerPage(QWidget *parent = nullptr);
+    explicit ComposerPage(QWidget *parent = nullptr, const QVariantList &args = {});
 
     QString helpAnchor() const override;
 

@@ -16,8 +16,8 @@
 
 // Other headers:
 
-ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent)
-    : ConfigModule(parent)
+ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent, const QVariantList &args)
+    : ConfigModule(parent, args)
     , mTabWidget(new QTabWidget(this))
 {
     auto vlay = new QVBoxLayout(this);

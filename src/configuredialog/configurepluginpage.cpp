@@ -10,8 +10,8 @@
 
 #include <QHBoxLayout>
 
-ConfigurePluginPage::ConfigurePluginPage(QWidget *parent)
-    : ConfigModule(parent)
+ConfigurePluginPage::ConfigurePluginPage(QWidget *parent, const QVariantList &args)
+    : ConfigModule(parent, args)
 {
     auto l = new QHBoxLayout(this);
     l->setContentsMargins({});

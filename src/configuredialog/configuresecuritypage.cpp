@@ -35,8 +35,8 @@ QString SecurityPage::helpAnchor() const
     return QStringLiteral("configure-security");
 }
 
-SecurityPage::SecurityPage(QWidget *parent)
-    : ConfigModuleWithTabs(parent)
+SecurityPage::SecurityPage(QWidget *parent, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, args)
 {
     //
     // "Reading" tab:
