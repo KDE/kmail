@@ -1,5 +1,5 @@
 {
-    "version": 1,
+    "version": 2,
     "configurePresets": [
         {
             "name": "dev",
@@ -51,6 +51,35 @@
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo",
 		"CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             }
+        },
+        {
+            "name": "clazy",
+            "displayName": "clazy",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-clazy",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "environment": {
+                "CXX": "clazy",
+                "CCACHE_DISABLE": "ON"
+            }
+        }
+
+    ],
+    "buildPresets": [
+        {
+            "name": "dev",
+            "configurePreset": "dev"
+        },
+        {
+            "name": "clazy",
+            "configurePreset": "clazy",
+            "environment": {
+                "CLAZY_CHECKS" : "level2,detaching-member,heap-allocated-small-trivial-type,isempty-vs-count,qstring-varargs,qvariant-template-instantiation,raw-environment-function,reserve-candidates,signal-with-return-value,thread-with-slots,no-ctor-missing-parent-argument,no-missing-typeinfo",
+                "CCACHE_DISABLE" : "ON"
+            }
         }
     ]
+
 }
