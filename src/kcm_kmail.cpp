@@ -8,7 +8,6 @@
  *
  */
 
-// This must be first
 #include "configuredialog/configureaccountpage.h"
 #include "configuredialog/configureappearancepage.h"
 #include "configuredialog/configurecomposerpage.h"
@@ -17,6 +16,5 @@
 #include "configuredialog/configuremiscpage.h"
 #include "configuredialog/configurepluginpage.h"
 #include "configuredialog/configuresecuritypage.h"
-#include "identity/identitypage.h"
-#include <KCModule>
-
+//#include "identity/identitypage.h"
+//#include <KCModule>
