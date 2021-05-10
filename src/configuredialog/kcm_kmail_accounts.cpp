@@ -6,6 +6,6 @@
 #include "kcm_kmail.cpp"
 #include <KPluginFactory>
 
-K_PLUGIN_FACTORY_WITH_JSON(KMailAccountsConfigFactory, "kmail_config_accounts.json", registerPlugin<AccountsPage>();)
+K_PLUGIN_CLASS_WITH_JSON(AccountsPage, "kmail_config_accounts.json")
 
 #include "kcm_kmail_accounts.moc"

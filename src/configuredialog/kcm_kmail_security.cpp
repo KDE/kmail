@@ -6,6 +6,6 @@
 #include "kcm_kmail.cpp"
 #include <KPluginFactory>
 
-K_PLUGIN_FACTORY_WITH_JSON(KMailSecurityConfigFactory, "kmail_config_security.json", registerPlugin<SecurityPage>();)
+K_PLUGIN_CLASS_WITH_JSON(SecurityPage, "kmail_config_security.json")
 
 #include "kcm_kmail_security.moc"

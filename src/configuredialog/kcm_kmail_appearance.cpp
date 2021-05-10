@@ -6,6 +6,6 @@
 #include "kcm_kmail.cpp"
 #include <KPluginFactory>
 
-K_PLUGIN_FACTORY_WITH_JSON(KMailAppearenceConfigFactory, "kmail_config_appearance.json", registerPlugin<AppearancePage>();)
+K_PLUGIN_CLASS_WITH_JSON(AppearancePage, "kmail_config_appearance.json")
 
 #include "kcm_kmail_appearance.moc"
