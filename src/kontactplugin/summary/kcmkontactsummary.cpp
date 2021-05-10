@@ -65,7 +65,7 @@ PluginView::PluginView(QWidget *parent)
 
 PluginView::~PluginView() = default;
 
-K_PLUGIN_FACTORY_WITH_JSON(KCMKontactSummaryFactory, "kcmkontactsummary.json", registerPlugin<KCMKontactSummary>();)
+K_PLUGIN_CLASS_WITH_JSON(KCMKontactSummary, "kcmkontactsummary.json")
 
 KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)
