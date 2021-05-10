@@ -133,7 +133,8 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEdit
 {
     if (mActionHash.isEmpty()) {
         for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
-            for (const MessageComposer::PluginActionType &actionType : interface->actionTypes()) {
+            const auto actionTypes = interface->actionTypes();
+            for (const MessageComposer::PluginActionType &actionType : actionTypes) {
                 MessageComposer::PluginActionType::Type type = actionType.type();
                 QAction *currentAction = actionType.action();
                 if (!currentAction) {

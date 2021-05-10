@@ -143,7 +143,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     glay->addWidget(mUndoSend, 4, 0);
     connect(mUndoSend, &QCheckBox::toggled, this, [this](bool state) {
         mUndoSendComboBox->setEnabled(state);
-        Q_EMIT slotEmitChanged();
+        slotEmitChanged();
     });
 
     mUndoSendComboBox = new UndoSendCombobox(this);
