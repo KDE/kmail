@@ -310,7 +310,7 @@ private:
      * Set the status of the messages referenced by the specified set, eventually toggling it.
      * The set parameter must not be null and the ownership is passed to this function.
      */
-    void setMessageSetStatus(const Akonadi::Item::List &select, const Akonadi::MessageStatus &status, bool toggle);
+    void setMessageSetStatus(const Akonadi::Item::List &select, Akonadi::MessageStatus status, bool toggle);
     /**
      * Toggles a tag for the messages referenced by the specified set.
      * The set parameter must not be null and the ownership is passed to this function.
@@ -319,7 +319,7 @@ private:
     /**
      * This applies setMessageSetStatus() on the current thread.
      */
-    void setCurrentThreadStatus(const Akonadi::MessageStatus &status, bool toggle);
+    void setCurrentThreadStatus(Akonadi::MessageStatus status, bool toggle);
 
     void applyFilters(const Akonadi::Item::List &selectedMessages);
     void applyFilters(const Akonadi::Collection::List &selectedCols);

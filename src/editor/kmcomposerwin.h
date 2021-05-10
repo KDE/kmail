@@ -126,8 +126,11 @@ private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
     ~KMComposerWin() override;
 
 public:
-    enum ModeType { ComposerType = 0, TemplateType };
-    Q_ENUMS(ModeType)
+    enum ModeType {
+        ComposerType = 0,
+        TemplateType,
+    };
+    Q_ENUM(ModeType)
 
     static Composer *create(const KMime::Message::Ptr &msg,
                             bool lastSignState,

@@ -1949,13 +1949,13 @@ void KMMainWidget::refreshMessageListSelection()
 //
 // FIXME: The "selection" version of these functions is in MessageActions.
 //        We should probably move everything there....
-void KMMainWidget::setMessageSetStatus(const Akonadi::Item::List &select, const Akonadi::MessageStatus &status, bool toggle)
+void KMMainWidget::setMessageSetStatus(const Akonadi::Item::List &select, Akonadi::MessageStatus status, bool toggle)
 {
     KMCommand *command = new KMSetStatusCommand(status, select, toggle);
     command->start();
 }
 
-void KMMainWidget::setCurrentThreadStatus(const Akonadi::MessageStatus &status, bool toggle)
+void KMMainWidget::setCurrentThreadStatus(Akonadi::MessageStatus status, bool toggle)
 {
     const Akonadi::Item::List select = mMessagePane->currentThreadAsMessageList();
     if (select.isEmpty()) {
