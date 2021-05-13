@@ -19,7 +19,7 @@ class QActionGroup;
 class QAction;
 class QContextMenuEvent;
 class QTreeWidgetItem;
-class KRecentFilesAction;
+class KRecentFilesMenu;
 class QUrl;
 
 namespace KTnef
@@ -88,6 +88,6 @@ private:
     QString mLastDir;
     KTNEFView *mView = nullptr;
     KTNEFParser *mParser = nullptr;
-    KRecentFilesAction *mOpenRecentFileAction = nullptr;
+    KRecentFilesMenu *mOpenRecentFileMenu = nullptr;
 };
 Q_DECLARE_METATYPE(KService::Ptr)

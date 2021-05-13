@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE gui SYSTEM "kpartgui.dtd">
-<gui name="kups" version="2">
+<gui name="kups" version="3">
 <MenuBar>
+  <Menu name="file" >
+   <text>&amp;File</text>
+   <Action name="ktnef_file_open_recent"/>
+  </Menu>
   <Menu name="action"><text>&amp;Action</text>
     <Action name="view_file" />
     <Action name="view_file_as" />

@@ -41,7 +41,7 @@
 #include <kio_version.h>
 
 #include <KConfigGroup>
-#include <KRecentFilesAction>
+#include <KRecentFilesMenu>
 
 #include <KSharedConfig>
 #include <QContextMenuEvent>
@@ -62,9 +62,6 @@ KTNEFMain::KTNEFMain(QWidget *parent)
 
     KConfigGroup config(KSharedConfig::openConfig(), "Settings");
     mDefaultDir = config.readPathEntry("defaultdir", QStringLiteral("/tmp/"));
-
-    config = KConfigGroup(KSharedConfig::openConfig(), "Recent Files");
-    mOpenRecentFileAction->loadEntries(config);
 
     mLastDir = mDefaultDir;
 
@@ -102,7 +99,9 @@ void KTNEFMain::setupActions()
     // File menu
     KStandardAction::open(this, &KTNEFMain::openFile, actionCollection());
 
-    mOpenRecentFileAction = KStandardAction::openRecent(this, &KTNEFMain::openRecentFile, actionCollection());
+    mOpenRecentFileMenu = new KRecentFilesMenu(this);
+    actionCollection()->addAction(QStringLiteral("ktnef_file_open_recent"), mOpenRecentFileMenu->menuAction());
+    connect(mOpenRecentFileMenu, &KRecentFilesMenu::urlTriggered, this, &KTNEFMain::openRecentFile);
 
     // Action menu
     QAction *openAction = actionCollection()->addAction(QStringLiteral("view_file"));
@@ -219,10 +218,7 @@ void KTNEFMain::openRecentFile(const QUrl &url)
 
 void KTNEFMain::addRecentFile(const QUrl &url)
 {
-    mOpenRecentFileAction->addUrl(url);
-    KConfigGroup config(KSharedConfig::openConfig(), "Recent Files");
-    mOpenRecentFileAction->saveEntries(config);
-    config.sync();
+    mOpenRecentFileMenu->addUrl(url);
 }
 
 void KTNEFMain::viewFile()
