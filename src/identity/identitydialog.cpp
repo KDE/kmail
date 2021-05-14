@@ -205,10 +205,10 @@ void KeySelectionCombo::init()
     keyFilter->setIsOpenPGP(mProtocol == GpgME::OpenPGP ? Kleo::DefaultKeyFilter::Set : Kleo::DefaultKeyFilter::NotSet);
     if (mKeyType == SigningKey) {
         keyFilter->setCanSign(Kleo::DefaultKeyFilter::Set);
+        keyFilter->setHasSecret(Kleo::DefaultKeyFilter::Set);
     } else {
         keyFilter->setCanEncrypt(Kleo::DefaultKeyFilter::Set);
     }
-    keyFilter->setHasSecret(Kleo::DefaultKeyFilter::Set);
     setKeyFilter(keyFilter);
     prependCustomItem(QIcon(), i18n("No key"), QStringLiteral("no-key"));
     if (mProtocol == GpgME::OpenPGP) {
