@@ -453,11 +453,11 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     ++row;
     mAutoSign = new QCheckBox(i18n("Automatically sign messages"));
-    glay->addWidget(mAutoSign, row, 0);
+    glay->addWidget(mAutoSign, row, 0, 1, -1);
 
     ++row;
     mAutoEncrypt = new QCheckBox(i18n("Automatically encrypt messages when possible"));
-    glay->addWidget(mAutoEncrypt, row, 0);
+    glay->addWidget(mAutoEncrypt, row, 0, 1, -1);
 
     ++row;
     glay->setRowStretch(row, 1);
