@@ -17,6 +17,8 @@
 #include <Libkdepim/ProgressManager>
 #include <MessageViewer/Viewer>
 
+#include <memory>
+
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
@@ -92,6 +94,11 @@ namespace KUserFeedback
 class Provider;
 }
 #endif
+
+namespace Kleo
+{
+class KeyCache;
+}
 
 class QTimer;
 class KMainWindow;
@@ -611,6 +618,7 @@ private:
 #ifdef WITH_KUSERFEEDBACK
     KMailUserFeedbackProvider *mUserFeedbackProvider = nullptr;
 #endif
+    std::shared_ptr<const Kleo::KeyCache> mKeyCache;
 
     bool mDebug = false;
 };

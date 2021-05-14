@@ -88,6 +88,10 @@ using KMail::MailServiceImpl;
 #include <kmime/kmime_headers.h>
 #include <kmime/kmime_message.h>
 
+#include <Libkleo/FileSystemWatcher>
+#include <Libkleo/GnuPG>
+#include <Libkleo/KeyCache>
+
 #include <QDir>
 #include <QFileInfo>
 #include <QNetworkConfigurationManager>
@@ -1090,12 +1094,33 @@ static void kmCrashHandler(int sigId)
     }
 }
 
+namespace
+{
+auto initKeyCache()
+{
+    using namespace Kleo;
+
+    // set up automatic update of the key cache on changes in the key ring
+    const auto keyCache = KeyCache::mutableInstance();
+    auto watcher = std::make_shared<FileSystemWatcher>();
+    watcher->whitelistFiles(gnupgFileWhitelist());
+    watcher->addPath(gnupgHomeDirectory());
+    watcher->setDelay(1000);
+    keyCache->addFileSystemWatcher(watcher);
+
+    return KeyCache::instance();
+}
+}
+
 void KMKernel::init()
 {
     the_shuttingDown = false;
 
     the_firstStart = KMailSettings::self()->firstStart();
     KMailSettings::self()->setFirstStart(false);
+
+    // keep a reference on the key cache to avoid expensive reinitialization on each use
+    mKeyCache = initKeyCache();
 
     the_undoStack = new KMail::UndoStack(20);
 
