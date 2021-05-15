@@ -22,15 +22,15 @@ using namespace KMail;
 
 KMKnotify::KMKnotify(QWidget *parent)
     : QDialog(parent)
+    , m_comboNotify(new QComboBox(this))
+    , m_notifyWidget(new KNotifyConfigWidget(this))
 {
     setWindowTitle(i18nc("@title:window", "Notification"));
     auto mainLayout = new QVBoxLayout(this);
 
-    m_comboNotify = new QComboBox(this);
     m_comboNotify->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     mainLayout->addWidget(m_comboNotify);
 
-    m_notifyWidget = new KNotifyConfigWidget(this);
     mainLayout->addWidget(m_notifyWidget);
     m_comboNotify->setFocus();
 

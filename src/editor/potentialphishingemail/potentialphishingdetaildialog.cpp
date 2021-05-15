@@ -16,12 +16,12 @@
 
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)
+    , mPotentialPhishingDetailWidget(new PotentialPhishingDetailWidget(this))
 {
     setWindowTitle(i18nc("@title:window", "Details"));
     auto topLayout = new QVBoxLayout(this);
     setModal(true);
 
-    mPotentialPhishingDetailWidget = new PotentialPhishingDetailWidget(this);
     mPotentialPhishingDetailWidget->setObjectName(QStringLiteral("potentialphising_widget"));
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);

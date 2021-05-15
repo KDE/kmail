@@ -23,6 +23,6 @@ private:
     void slotSave();
     void readConfig();
     void writeConfig();
-    PotentialPhishingDetailWidget *mPotentialPhishingDetailWidget = nullptr;
+    PotentialPhishingDetailWidget *const mPotentialPhishingDetailWidget;
 };
 

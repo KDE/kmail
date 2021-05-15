@@ -21,6 +21,8 @@
 IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)
     : QDialog(parent)
     , mButtonGroup(new QButtonGroup(this))
+    , mComboBox(new QComboBox(this))
+    , mVCardPath(new KUrlRequester(this))
 {
     setWindowTitle(i18nc("@title:window", "Create own vCard"));
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
@@ -56,7 +58,6 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     auto hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
 
-    mVCardPath = new KUrlRequester(this);
     mVCardPath->setObjectName(QStringLiteral("kurlrequester_vcardpath"));
     mVCardPath->setMimeTypeFilters({QStringLiteral("text/vcard"), QStringLiteral("all/allfiles")});
 
@@ -79,7 +80,6 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     // row 5: combobox with existing identities and label
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
-    mComboBox = new QComboBox(this);
     mComboBox->setObjectName(QStringLiteral("identity_combobox"));
     mComboBox->setEditable(false);
 

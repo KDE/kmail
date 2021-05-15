@@ -27,7 +27,7 @@ public:
 
 private:
     QButtonGroup *const mButtonGroup;
-    QComboBox *mComboBox = nullptr;
-    KUrlRequester *mVCardPath = nullptr;
+    QComboBox *const mComboBox;
+    KUrlRequester *const mVCardPath;
 };
 

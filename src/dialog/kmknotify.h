@@ -29,8 +29,8 @@ private:
     void initCombobox();
     void writeConfig();
     void readConfig();
-    QComboBox *m_comboNotify = nullptr;
-    KNotifyConfigWidget *m_notifyWidget = nullptr;
+    QComboBox *const m_comboNotify;
+    KNotifyConfigWidget *const m_notifyWidget;
     bool m_changed = false;
 };
 }
