@@ -58,7 +58,7 @@ class CollectionPane;
 class KMCommand;
 class KMMoveCommand;
 class KMTrashMsgCommand;
-class KRecentFilesAction;
+class KRecentFilesMenu;
 class ManageShowCollectionProperties;
 class KActionMenuTransport;
 class KActionMenuAccount;
@@ -638,7 +638,7 @@ private:
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
     QAction *mServerSideSubscription = nullptr;
     QAction *mAccountSettings = nullptr;
-    KRecentFilesAction *mOpenRecentAction = nullptr;
+    KRecentFilesMenu *mOpenRecentMenu = nullptr;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
     QAction *mQuickSearchAction = nullptr;
     DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu = nullptr;

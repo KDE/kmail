@@ -145,7 +145,7 @@
 
 #include <KConfigGroup>
 #include <KNotification>
-#include <KRecentFilesAction>
+#include <KRecentFilesMenu>
 #include <KStandardAction>
 #include <KStringHandler>
 #include <KToggleAction>
@@ -2794,10 +2794,9 @@ void KMMainWidget::setupActions()
 
     mOpenAction = KStandardAction::open(this, &KMMainWidget::slotOpenMsg, actionCollection());
 
-    mOpenRecentAction = KStandardAction::openRecent(this, &KMMainWidget::slotOpenRecentMessage, actionCollection());
-    KConfigGroup grp = mConfig->group(QStringLiteral("Recent Files"));
-    mOpenRecentAction->loadEntries(grp);
-
+    mOpenRecentMenu = new KRecentFilesMenu(this);
+    actionCollection()->addAction(QStringLiteral("kmail_file_open_recent"), mOpenRecentMenu->menuAction());
+    connect(mOpenRecentMenu, &KRecentFilesMenu::urlTriggered, this, &KMMainWidget::slotOpenRecentMessage);
     {
         auto action = new QAction(i18n("&Expire All Folders"), this);
         actionCollection()->addAction(QStringLiteral("expire_all_folders"), action);
@@ -4539,12 +4538,9 @@ void KMMainWidget::slotOpenRecentMessage(const QUrl &url)
     openCommand->start();
 }
 
-void KMMainWidget::addRecentFile(const QUrl &mUrl)
+void KMMainWidget::addRecentFile(const QUrl &url)
 {
-    mOpenRecentAction->addUrl(mUrl);
-    KConfigGroup grp = mConfig->group(QStringLiteral("Recent Files"));
-    mOpenRecentAction->saveEntries(grp);
-    grp.sync();
+    mOpenRecentMenu->addUrl(url);
 }
 
 void KMMainWidget::slotMoveMessageToTrash()
