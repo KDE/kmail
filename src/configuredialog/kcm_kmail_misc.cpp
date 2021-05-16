@@ -6,6 +6,6 @@
 #include "kcm_kmail.cpp"
 #include <KPluginFactory>
 
-K_PLUGIN_CLASS_WITH_JSON(MiscPage, "kmail_config_misc.json");
+K_PLUGIN_CLASS_WITH_JSON(MiscPage, "kmail_config_misc.json")
 
 #include "kcm_kmail_misc.moc"
