@@ -11,13 +11,13 @@ set( kmail_potentialphishingdetaildialogtest_SRCS potentialphishingdetaildialogt
 add_executable( kmail_potentialphishingdetaildialogtest ${kmail_potentialphishingdetaildialogtest_SRCS})
 add_test(NAME kmail_potentialphishingdetaildialogtest COMMAND kmail_potentialphishingdetaildialogtest)
 ecm_mark_as_test(kmail_potentialphishingdetaildialogtest)
-target_link_libraries( kmail_potentialphishingdetaildialogtest Qt::Test Qt5::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons kmailprivate)
+target_link_libraries( kmail_potentialphishingdetaildialogtest Qt::Test Qt::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons kmailprivate)
 
 set( kmail_potentialphishingdetailwidgettest_SRCS potentialphishingdetailwidgettest.cpp)
 add_executable( kmail_potentialphishingdetailwidgettest ${kmail_potentialphishingdetailwidgettest_SRCS})
 add_test(NAME kmail_potentialphishingdetailwidgettest COMMAND kmail_potentialphishingdetailwidgettest)
 ecm_mark_as_test(kmail_potentialphishingdetailwidgettest)
-target_link_libraries( kmail_potentialphishingdetailwidgettest Qt::Test Qt5::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons KF5::PimCommon kmailprivate)
+target_link_libraries( kmail_potentialphishingdetailwidgettest Qt::Test Qt::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons KF5::PimCommon kmailprivate)
 
 
 
@@ -26,7 +26,7 @@ set( kmail_potentialphishingemailwarningtest_SRCS potentialphishingemailwarningt
 add_executable( kmail_potentialphishingemailwarningtest ${kmail_potentialphishingemailwarningtest_SRCS})
 add_test(NAME kmail_potentialphishingemailwarningtest COMMAND kmail_potentialphishingemailwarningtest)
 ecm_mark_as_test(kmail_potentialphishingemailwarningtest)
-target_link_libraries( kmail_potentialphishingemailwarningtest Qt::Test Qt5::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons kmailprivate)
+target_link_libraries( kmail_potentialphishingemailwarningtest Qt::Test Qt::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons kmailprivate)
 
 
 

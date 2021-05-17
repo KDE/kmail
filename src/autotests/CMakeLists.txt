@@ -17,21 +17,21 @@ target_link_libraries( displaymessageformatactionmenutest Qt::Test  KF5::Message
 set( kmail_identityaddvcarddialog_source identityaddvcarddialogtest.cpp )
 add_executable( identityaddvcarddialogtest  ${kmail_identityaddvcarddialog_source})
 ecm_mark_as_test(kmail-identityaddvcarddialogtest)
-target_link_libraries( identityaddvcarddialogtest Qt::Test Qt5::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n kmailprivate)
+target_link_libraries( identityaddvcarddialogtest Qt::Test Qt::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n kmailprivate)
 
 #####
 
 set( kmail_createfollowupreminderonexistingmessagejobtest_source createfollowupreminderonexistingmessagejobtest.cpp)
 add_executable( createfollowupreminderonexistingmessagejobtest ${kmail_createfollowupreminderonexistingmessagejobtest_source})
 ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
-target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt5::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime KF5::MessageComposer kmailprivate)
+target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime KF5::MessageComposer kmailprivate)
 #####
 
 set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.cpp)
 add_executable( cryptostateindicatorwidgettest ${kmail_cryptostateindicatorwidgettest_source})
 add_test(NAME cryptostateindicatorwidgettest COMMAND cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
-target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KF5::MessageCore Qt5::Widgets KF5::ConfigWidgets KF5::I18n kmailprivate)
+target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KF5::MessageCore Qt::Widgets KF5::ConfigWidgets KF5::I18n kmailprivate)
 #####
 
 set( kmail_kactionmenutransporttest_source kactionmenutransporttest.cpp)
@@ -45,10 +45,10 @@ if (KDEPIM_RUN_AKONADI_TEST)
     set(KDEPIMLIBS_RUN_SQLITE_ISOLATED_TESTS TRUE)
 
     add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp ""
-    "Qt::Test;KF5::IdentityManagement;KF5::MessageCore;KF5::TemplateParser;KF5::XmlGui;Qt5::Widgets;KF5::ConfigWidgets;KF5::I18n;kmailprivate")
+    "Qt::Test;KF5::IdentityManagement;KF5::MessageCore;KF5::TemplateParser;KF5::XmlGui;Qt::Widgets;KF5::ConfigWidgets;KF5::I18n;kmailprivate")
 
     add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "" "kmailprivate;KF5::MailCommon;KF5::Libkdepim;KF5::ItemViews;KF5::TemplateParser;KF5::XmlGui;KF5::Completion;KF5::I18n")
 
     add_akonadi_isolated_test_advanced(kmcommandstest.cpp ""
-	"Qt::Test;Qt5::Widgets;KF5::AkonadiCore;KF5::Bookmarks;KF5::ConfigWidgets;KF5::Contacts;KF5::I18n;KF5::IdentityManagement;KF5::KIOCore;KF5::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KF5::MailCommon;KF5::MailTransportAkonadi;KF5::Libkdepim;KF5::TemplateParser;kmailprivate")
+	"Qt::Test;Qt::Widgets;KF5::AkonadiCore;KF5::Bookmarks;KF5::ConfigWidgets;KF5::Contacts;KF5::I18n;KF5::IdentityManagement;KF5::KIOCore;KF5::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KF5::MailCommon;KF5::MailTransportAkonadi;KF5::Libkdepim;KF5::TemplateParser;kmailprivate")
 endif()

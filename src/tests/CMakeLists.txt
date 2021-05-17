@@ -10,7 +10,7 @@ target_link_libraries(dbustest KF5::KIOCore KF5::I18n Qt::DBus)
 #####
 set(searchdbustest_SRCS searchdbustest.cpp)
 add_executable(searchdbustest ${searchdbustest_SRCS})
-target_link_libraries(searchdbustest Qt::DBus Qt5::Widgets KF5::PimCommonAkonadi)
+target_link_libraries(searchdbustest Qt::DBus Qt::Widgets KF5::PimCommonAkonadi)
 
 #####
 set(searchmailertest_SRCS searchmailertest.cpp)
