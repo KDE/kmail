@@ -6,9 +6,6 @@ project(kmail VERSION ${PIM_VERSION})
 include(CheckIncludeFiles)
 
 
-if (POLICY CMP0063)
-    cmake_policy(SET CMP0063 NEW)
-endif()
 set(KF5_MIN_VERSION "5.82.0")
 
 find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
