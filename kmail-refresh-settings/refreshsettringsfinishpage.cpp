@@ -10,12 +10,12 @@
 
 RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
     : QWidget(parent)
+    , mTextEdit(new QPlainTextEdit(this))
 {
     auto mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
     mainLayout->setContentsMargins({});
 
-    mTextEdit = new QPlainTextEdit(this);
     mTextEdit->setObjectName(QStringLiteral("textedit"));
     mTextEdit->setReadOnly(true);
     mainLayout->addWidget(mTextEdit);

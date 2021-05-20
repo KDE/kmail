@@ -20,6 +20,6 @@ Q_SIGNALS:
 
 private:
     void slotCleanDoneInfo(const QString &info);
-    QPlainTextEdit *mTextEdit = nullptr;
+    QPlainTextEdit *const mTextEdit;
 };
 
