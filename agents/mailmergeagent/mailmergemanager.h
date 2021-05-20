@@ -19,4 +19,7 @@ public:
     void load(bool state = false);
     void stopAll();
     Q_REQUIRED_RESULT bool itemRemoved(Akonadi::Item::Id id);
+
+Q_SIGNALS:
+    void needUpdateConfigDialogBox();
 };

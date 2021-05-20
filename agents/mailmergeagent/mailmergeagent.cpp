@@ -6,6 +6,7 @@
 
 #include "mailmergeagent.h"
 #include "mailmergeagent_debug.h"
+#include "mailmergeagentadaptor.h"
 #include "mailmergeagentsettings.h"
 #include "mailmergemanager.h"
 #include <AgentInstance>
@@ -31,10 +32,8 @@ MailMergeAgent::MailMergeAgent(const QString &id)
     : Akonadi::AgentBase(id)
     , mManager(new MailMergeManager(this))
 {
-#if 0
     connect(mManager, &MailMergeManager::needUpdateConfigDialogBox, this, &MailMergeAgent::needUpdateConfigDialogBox);
     new MailMergeAgentAdaptor(this);
-#endif
     QDBusConnection::sessionBus().registerObject(
                 QStringLiteral("/MailMergeAgent"), this, QDBusConnection::ExportAdaptors);
 
