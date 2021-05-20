@@ -8,14 +8,21 @@
 #include "kmail-version.h"
 #include "mailmergeconfigurewidget.h"
 #include <KAboutData>
+#include <KConfigGroup>
 #include <KHelpMenu>
 #include <KLocalizedString>
+#include <KSharedConfig>
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QIcon>
 #include <QMenu>
 #include <QPushButton>
 #include <QVBoxLayout>
+
+namespace
+{
+static const char myConfigureMailMergeConfigureDialogGroupName[] = "MailMergeConfigureDialog";
+}
 
 MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     : QDialog(parent)
@@ -34,7 +41,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     //    connect(mWidget, &SendLaterWidget::sendNow, this, &SendLaterConfigureDialog::sendNow);
     mainLayout->addWidget(mWidget);
     mainLayout->addWidget(buttonBox);
-    //    connect(okButton, &QPushButton::clicked, this, &SendLaterConfigureDialog::slotSave);
+    connect(okButton, &QPushButton::clicked, this, &MailMergeConfigureDialog::slotSave);
 
     // readConfig();
 
@@ -59,4 +66,24 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
 
 MailMergeConfigureDialog::~MailMergeConfigureDialog()
 {
+}
+
+void MailMergeConfigureDialog::slotSave()
+{
+    // TODO
+}
+
+void MailMergeConfigureDialog::readConfig()
+{
+    KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureMailMergeConfigureDialogGroupName);
+    const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
+    if (sizeDialog.isValid()) {
+        resize(sizeDialog);
+    }
+}
+
+void MailMergeConfigureDialog::writeConfig()
+{
+    KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureMailMergeConfigureDialogGroupName);
+    group.writeEntry("Size", size());
 }

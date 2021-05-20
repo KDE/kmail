@@ -17,6 +17,10 @@
 #include <QDialogButtonBox>
 #include <QIcon>
 #include <QMenu>
+namespace
+{
+static const char myConfigureSendLaterConfigureDialogGroupName[] = "SendLaterConfigureDialog";
+}
 
 SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
     : QDialog(parent)
@@ -81,7 +85,7 @@ void SendLaterConfigureDialog::slotNeedToReloadConfig()
 
 void SendLaterConfigureDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "SendLaterConfigureDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureSendLaterConfigureDialogGroupName);
     const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
     if (sizeDialog.isValid()) {
         resize(sizeDialog);
@@ -91,7 +95,7 @@ void SendLaterConfigureDialog::readConfig()
 
 void SendLaterConfigureDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "SendLaterConfigureDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureSendLaterConfigureDialogGroupName);
     group.writeEntry("Size", size());
     mWidget->saveTreeWidgetHeader(group);
 }

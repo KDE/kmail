@@ -23,7 +23,10 @@
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
-
+namespace
+{
+static const char myAddEmailToExistingContactDialogGroupName[] = "AddEmailToExistingContactDialog";
+}
 AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent)
     : QDialog(parent)
 {
@@ -86,7 +89,7 @@ void AddEmailToExistingContactDialog::slotSelectionChanged()
 
 void AddEmailToExistingContactDialog::readConfig()
 {
-    KConfigGroup group(KMKernel::self()->config(), "AddEmailToExistingContactDialog");
+    KConfigGroup group(KMKernel::self()->config(), myAddEmailToExistingContactDialogGroupName);
     const QSize size = group.readEntry("Size", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
@@ -95,7 +98,7 @@ void AddEmailToExistingContactDialog::readConfig()
 
 void AddEmailToExistingContactDialog::writeConfig()
 {
-    KConfigGroup group(KMKernel::self()->config(), "AddEmailToExistingContactDialog");
+    KConfigGroup group(KMKernel::self()->config(), myAddEmailToExistingContactDialogGroupName);
     group.writeEntry("Size", size());
     group.sync();
 }

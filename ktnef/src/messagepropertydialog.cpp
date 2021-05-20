@@ -26,6 +26,10 @@
 #include <QHeaderView>
 #include <QPushButton>
 #include <QTreeWidget>
+namespace
+{
+static const char myMessagePropertyDialogGroupName[] = "MessagePropertyDialog";
+}
 
 MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     : QDialog(parent)
@@ -71,7 +75,7 @@ void MessagePropertyDialog::slotSaveProperty()
 
 void MessagePropertyDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "MessagePropertyDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myMessagePropertyDialogGroupName);
     const QSize size = group.readEntry("Size", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
@@ -84,7 +88,7 @@ void MessagePropertyDialog::readConfig()
 
 void MessagePropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "MessagePropertyDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myMessagePropertyDialogGroupName);
     group.writeEntry("Size", size());
     group.writeEntry("HeaderState", mListView->header()->saveState());
     group.sync();

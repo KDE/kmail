@@ -35,6 +35,11 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
+namespace
+{
+static const char myAttachPropertyDialogGroupName[] = "AttachPropertyDialog";
+}
+
 AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
     : QDialog(parent)
 {
@@ -66,7 +71,7 @@ AttachPropertyDialog::~AttachPropertyDialog()
 
 void AttachPropertyDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "AttachPropertyDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myAttachPropertyDialogGroupName);
     const QSize size = group.readEntry("Size", QSize(500, 400));
     if (size.isValid()) {
         resize(size);
@@ -75,7 +80,7 @@ void AttachPropertyDialog::readConfig()
 
 void AttachPropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "AttachPropertyDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myAttachPropertyDialogGroupName);
     group.writeEntry("Size", size());
     group.sync();
 }

@@ -14,6 +14,10 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+namespace
+{
+static const char myPotentialPhishingDetailDialogGroupName[] = "PotentialPhishingDetailDialog";
+}
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)
     , mPotentialPhishingDetailWidget(new PotentialPhishingDetailWidget(this))
@@ -49,7 +53,7 @@ void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 
 void PotentialPhishingDetailDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "PotentialPhishingDetailDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myPotentialPhishingDetailDialogGroupName);
     const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
     if (sizeDialog.isValid()) {
         resize(sizeDialog);
@@ -58,7 +62,7 @@ void PotentialPhishingDetailDialog::readConfig()
 
 void PotentialPhishingDetailDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "PotentialPhishingDetailDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myPotentialPhishingDetailDialogGroupName);
     group.writeEntry("Size", size());
 }
 
