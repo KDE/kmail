@@ -14,6 +14,7 @@
 class KMMainWidget;
 class KToggleAction;
 class QLabel;
+class KHamburgerMenu;
 namespace KPIM
 {
 class ProgressStatusBarWidget;
@@ -53,10 +54,12 @@ protected Q_SLOTS:
 private:
     void slotConfigureShortcuts();
     void slotToggleMenubar(bool dontShowWarning);
+    void updateHamburgerMenu();
     KPIM::ProgressStatusBarWidget *mProgressBar = nullptr;
     KMMainWidget *mKMMainWidget = nullptr;
-    KToggleAction *mHideMenuBarAction = nullptr;
+    KToggleAction *mShowMenuBarAction = nullptr;
     QLabel *mMessageLabel = nullptr;
+    KHamburgerMenu *mHamburgerMenu = nullptr;
     bool mReallyClose = false;
 };
 

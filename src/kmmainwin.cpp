@@ -15,6 +15,7 @@
 #include <PimCommon/BroadcastStatus>
 
 #include <KConfigGroup>
+#include <KToolBar>
 #include <QApplication>
 #include <QStatusBar>
 #include <QTimer>
@@ -55,7 +56,17 @@ KMMainWin::KMMainWin(QWidget *)
 
     KStandardAction::keyBindings(this, &KMMainWin::slotConfigureShortcuts, actionCollection());
 
-    mHideMenuBarAction = KStandardAction::showMenubar(this, &KMMainWin::slotToggleMenubar, actionCollection());
+    mShowMenuBarAction = KStandardAction::showMenubar(this, &KMMainWin::slotToggleMenubar, actionCollection());
+    mHamburgerMenu = KStandardAction::hamburgerMenu(nullptr, nullptr, actionCollection());
+    mHamburgerMenu->setShowMenuBarAction(mShowMenuBarAction);
+    mHamburgerMenu->setMenuBar(menuBar());
+    connect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, [this]() {
+        this->updateHamburgerMenu();
+        // Immediately disconnect. We only need to run this once, but on demand.
+        // NOTE: The nullptr at the end disconnects all connections between
+        // q and mHamburgerMenu's aboutToShowMenu signal.
+        disconnect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, nullptr);
+    });
 
     KStandardAction::quit(this, &KMMainWin::slotQuit, actionCollection());
     createGUI(QStringLiteral("kmmainwin.rc"));
@@ -68,7 +79,7 @@ KMMainWin::KMMainWin(QWidget *)
     connect(mKMMainWidget, &KMMainWidget::captionChangeRequest, this, qOverload<const QString &>(&KMainWindow::setCaption));
 
     mKMMainWidget->updateQuickSearchLineText();
-    mHideMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
+    mShowMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
     slotToggleMenubar(true);
 }
 
@@ -77,6 +88,24 @@ KMMainWin::~KMMainWin()
     // Avoids a crash if there are any Akonadi jobs running, which may
     // attempt to display a status message when they are killed.
     disconnect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg, this, nullptr);
+}
+
+void KMMainWin::updateHamburgerMenu()
+{
+    QMenu *menu = new QMenu;
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Open))));
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::OpenRecent))));
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Save))));
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::SaveAs))));
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Print))));
+    menu->addSeparator();
+    menu->addAction(actionCollection()->action(QStringLiteral("check_mail")));
+    menu->addAction(actionCollection()->action(QStringLiteral("check_mail_in")));
+    menu->addAction(actionCollection()->action(QStringLiteral("send_queued")));
+    menu->addAction(actionCollection()->action(QStringLiteral("send_queued_via")));
+    menu->addSeparator();
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Quit))));
+    mHamburgerMenu->setMenu(menu);
 }
 
 KMMainWidget *KMMainWin::mainKMWidget() const
@@ -106,11 +135,11 @@ void KMMainWin::displayStatusMessage(const QString &aText)
 void KMMainWin::slotToggleMenubar(bool dontShowWarning)
 {
     if (menuBar()) {
-        if (mHideMenuBarAction->isChecked()) {
+        if (mShowMenuBarAction->isChecked()) {
             menuBar()->show();
         } else {
-            if (!dontShowWarning) {
-                const QString accel = mHideMenuBarAction->shortcut().toString();
+            if (!dontShowWarning && (!toolBar()->isVisible() || !toolBar()->actions().contains(mHamburgerMenu))) {
+                const QString accel = mShowMenuBarAction->shortcut().toString();
                 KMessageBox::information(this,
                                          i18n("<qt>This will hide the menu bar completely."
                                               " You can show it again by typing %1.</qt>",
@@ -120,7 +149,7 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
             }
             menuBar()->hide();
         }
-        KMailSettings::self()->setShowMenuBar(mHideMenuBarAction->isChecked());
+        KMailSettings::self()->setShowMenuBar(mShowMenuBarAction->isChecked());
     }
 }
 
