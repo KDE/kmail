@@ -693,7 +693,7 @@ KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url, const QStri
 KMCommand::Result KMOpenMsgCommand::execute()
 {
     if (mUrl.isEmpty()) {
-        mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18n("Open Message"), QUrl(), QStringLiteral("%1 (*.mbox)").arg(i18n("Message")));
+        mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18n("Open Message"), QUrl(), QStringLiteral("%1 (*.mbox *.eml)").arg(i18n("Message")));
     }
     if (mUrl.isEmpty()) {
         return Canceled;
