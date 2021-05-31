@@ -94,8 +94,6 @@ void KMMainWin::updateHamburgerMenu()
 {
     QMenu *menu = new QMenu;
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Open))));
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::OpenRecent))));
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Save))));
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::SaveAs))));
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Print))));
     menu->addSeparator();
