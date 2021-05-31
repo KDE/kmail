@@ -15,9 +15,7 @@ kcoreaddons_desktop_to_json(kontact_summaryplugin summaryplugin.desktop)
 
 ########### next target ###############
 
-set(kcm_kontactsummary_PART_SRCS kcmkontactsummary.cpp)
-
-add_library(kcm_kontactsummary MODULE ${kcm_kontactsummary_PART_SRCS})
+add_library(kcm_kontactsummary MODULE kcmkontactsummary.cpp)
 kcoreaddons_desktop_to_json(kcm_kontactsummary "kcmkontactsummary.desktop" SERVICE_TYPES kcmodule.desktop)
 pim_target_precompile_headers(kcm_kontactsummary PUBLIC ../../../kmail_pch.h)
 
