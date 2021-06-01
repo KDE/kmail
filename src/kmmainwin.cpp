@@ -102,6 +102,11 @@ void KMMainWin::updateHamburgerMenu()
     menu->addAction(actionCollection()->action(QStringLiteral("send_queued")));
     menu->addAction(actionCollection()->action(QStringLiteral("send_queued_via")));
     menu->addSeparator();
+
+    menu->addAction(actionCollection()->action(QStringLiteral("kmail_configure_kmail")));
+    menu->addAction(actionCollection()->action(QStringLiteral("kmail_configure_notifications")));
+    menu->addSeparator();
+
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Quit))));
     mHamburgerMenu->setMenu(menu);
 }
