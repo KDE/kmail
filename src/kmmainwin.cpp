@@ -61,7 +61,7 @@ KMMainWin::KMMainWin(QWidget *)
     mHamburgerMenu->setShowMenuBarAction(mShowMenuBarAction);
     mHamburgerMenu->setMenuBar(menuBar());
     connect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, [this]() {
-        this->updateHamburgerMenu();
+        updateHamburgerMenu();
         // Immediately disconnect. We only need to run this once, but on demand.
         // NOTE: The nullptr at the end disconnects all connections between
         // q and mHamburgerMenu's aboutToShowMenu signal.
