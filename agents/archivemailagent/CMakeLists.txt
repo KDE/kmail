@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_archivemail_agent\")
 
-set(libarchivemailagent_SRCS
+add_library(archivemailagent STATIC)
+target_sources(archivemailagent PRIVATE
     archivemailkernel.cpp
     archivemailmanager.cpp
     archivemailinfo.cpp
@@ -10,23 +11,23 @@ set(libarchivemailagent_SRCS
     archivemailagentutil.cpp
     )
 
-kconfig_add_kcfg_files(libarchivemailagent_SRCS
+kconfig_add_kcfg_files(archivemailagent
     settings/archivemailagentsettings.kcfgc
     )
 
 
 qt_add_dbus_adaptor(libarchivemailagent_SRCS org.freedesktop.Akonadi.ArchiveMailAgent.xml archivemailagent.h ArchiveMailAgent)
+target_sources(archivemailagent PRIVATE ${libarchivemailagent_SRCS})
 
-ecm_qt_declare_logging_category(libarchivemailagent_SRCS HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME org.kde.pim.archivemailagent
+ecm_qt_declare_logging_category(archivemailagent HEADER archivemailagent_debug.h IDENTIFIER ARCHIVEMAILAGENT_LOG CATEGORY_NAME org.kde.pim.archivemailagent
         DESCRIPTION "kmail (archivemailagent)"
         OLD_CATEGORY_NAMES log_archivemailagent
         EXPORT KMAIL
     )
 
 
-ki18n_wrap_ui(libarchivemailagent_SRCS ui/archivemailwidget.ui )
+ki18n_wrap_ui(archivemailagent ui/archivemailwidget.ui )
 
-add_library(archivemailagent STATIC ${libarchivemailagent_SRCS})
 pim_target_precompile_headers(archivemailagent PUBLIC ../../kmail_pch.h)
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(archivemailagent PROPERTIES UNITY_BUILD ON)

@@ -1,4 +1,5 @@
-set(kmail-refresh-settings_SRCS
+add_executable(kmail-refresh-settings)
+target_sources(kmail-refresh-settings PRIVATE
     main.cpp
     refreshsettingsassistant.cpp
     refreshsettringsfinishpage.cpp
@@ -6,13 +7,12 @@ set(kmail-refresh-settings_SRCS
     refreshsettingsfirstpage.cpp
     )
 
-ecm_qt_declare_logging_category(kmail-refresh-settings_SRCS HEADER kmail-refresh-settings_debug.h IDENTIFIER KMAIL_REFRESH_SETTINGS_LOG CATEGORY_NAME org.kde.pim.kmail_refresh_settings
+ecm_qt_declare_logging_category(kmail-refresh-settings HEADER kmail-refresh-settings_debug.h IDENTIFIER KMAIL_REFRESH_SETTINGS_LOG CATEGORY_NAME org.kde.pim.kmail_refresh_settings
         DESCRIPTION "kmail-refresh-settings"
         EXPORT KMAIL
     )
 
 
-add_executable(kmail-refresh-settings ${kmail-refresh-settings_SRCS})
 if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(kmail-refresh-settings PROPERTIES UNITY_BUILD ON)
 endif()
