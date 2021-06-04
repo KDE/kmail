@@ -271,7 +271,7 @@ Name[tr]=Posta Arşivleme Hatası
 Name[uk]=Помилка під час архівування пошти
 Name[wa]=Åk n' a nén stî come dj' årtchivéve les emiles
 Name[x-test]=xxArchive Mail Errorxx
-Name[zh_CN]=邮件归档发生错误
+Name[zh_CN]=邮件归档错误
 Name[zh_TW]=封存郵件發生錯誤
 Action=Popup
 
