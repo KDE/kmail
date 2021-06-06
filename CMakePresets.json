@@ -73,6 +73,18 @@
             "configurePreset": "dev"
         },
         {
+            "name": "release",
+            "configurePreset": "release"
+        },
+        {
+            "name": "asan",
+            "configurePreset": "asan"
+        },
+        {
+            "name": "unity",
+            "configurePreset": "unity"
+        },
+        {
             "name": "clazy",
             "configurePreset": "clazy",
             "environment": {
@@ -80,6 +92,19 @@
                 "CCACHE_DISABLE" : "ON"
             }
         }
+    ],
+    "testPresets": [
+    { 
+      "name": "dev",
+      "configurePreset": "dev",
+      "output": {"outputOnFailure": true},
+      "execution": {"noTestsAction": "error", "stopOnFailure": false}
+    },
+    { 
+      "name": "asan",
+      "configurePreset": "asan",
+      "output": {"outputOnFailure": true},
+      "execution": {"noTestsAction": "error", "stopOnFailure": true}
+    }
     ]
-
 }
