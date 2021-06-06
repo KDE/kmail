@@ -1319,7 +1319,7 @@ your criteria.</para></listitem>
 </variablelist>
 </sect2>
 
-<sect2>
+<sect2 id="reader-help-menu">
 <title>Help Menu</title>
 <screenshot>
 <screeninfo>The Help Menu</screeninfo>
@@ -2028,7 +2028,7 @@ items will be marked (check box colored in) in the menu.</para>
 </variablelist>
 </sect2>
 
-<sect2>
+<sect2 id="composer-help-menu">
 <title>Help Menu</title>
 <screenshot>
 <screeninfo>The Help Menu</screeninfo>
