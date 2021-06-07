@@ -369,8 +369,8 @@ set_target_properties(kmailprivate
     )
 
 ########### kcm_kmail ###############
-set(kcm_kmail_PART_SRCS kcm_kmail.cpp)
 add_library(kcm_kmail_static STATIC ${kcm_kmail_PART_SRCS})
+target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
 pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
 target_link_libraries(kcm_kmail_static  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
 
