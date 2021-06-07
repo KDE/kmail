@@ -59,6 +59,7 @@ class IncorrectIdentityFolderWarning;
 class KMailPluginEditorConvertTextManagerInterface;
 class KMailPluginGrammarEditorManagerInterface;
 class AttachmentAddedFromExternalWarning;
+class KHamburgerMenu;
 namespace MailTransport
 {
 class Transport;
@@ -575,6 +576,7 @@ private:
     void insertSnippetInfo(const MailCommon::SnippetInfo &info);
     Q_REQUIRED_RESULT bool sendLaterRegistered() const;
     void slotRecipientEditorLineFocused();
+    void updateHamburgerMenu();
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
@@ -630,7 +632,7 @@ private:
     KToggleAction *mAutoSpellCheckingAction = nullptr;
     KToggleAction *mDictionaryAction = nullptr;
     KToggleAction *mSnippetAction = nullptr;
-    KToggleAction *mHideMenuBarAction = nullptr;
+    KToggleAction *mShowMenuBarAction = nullptr;
     QAction *mAppendSignature = nullptr;
     QAction *mPrependSignature = nullptr;
     QAction *mInsertSignatureAtCursorPosition = nullptr;
@@ -691,6 +693,7 @@ private:
     KMailPluginGrammarEditorManagerInterface *const mPluginEditorGrammarManagerInterface;
 
     AttachmentAddedFromExternalWarning *mAttachmentFromExternalMissing = nullptr;
+    KHamburgerMenu *mHamburgerMenu = nullptr;
 
     ModeType mModeType = ModeType::ComposerType;
 };

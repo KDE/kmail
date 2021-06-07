@@ -1421,9 +1421,20 @@ void KMComposerWin::setupActions()
     mPluginEditorConvertTextManagerInterface->initializePlugins();
     mPluginEditorGrammarManagerInterface->initializePlugins();
 
-    mHideMenuBarAction = KStandardAction::showMenubar(this, &KMComposerWin::slotToggleMenubar, actionCollection());
-    mHideMenuBarAction->setChecked(KMailSettings::self()->composerShowMenuBar());
+    mShowMenuBarAction = KStandardAction::showMenubar(this, &KMComposerWin::slotToggleMenubar, actionCollection());
+    mShowMenuBarAction->setChecked(KMailSettings::self()->composerShowMenuBar());
     slotToggleMenubar(true);
+
+    mHamburgerMenu = KStandardAction::hamburgerMenu(nullptr, nullptr, actionCollection());
+    mHamburgerMenu->setShowMenuBarAction(mShowMenuBarAction);
+    mHamburgerMenu->setMenuBar(menuBar());
+    connect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, [this]() {
+        updateHamburgerMenu();
+        // Immediately disconnect. We only need to run this once, but on demand.
+        // NOTE: The nullptr at the end disconnects all connections between
+        // q and mHamburgerMenu's aboutToShowMenu signal.
+        disconnect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, nullptr);
+    });
 
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();
@@ -1437,14 +1448,28 @@ void KMComposerWin::setupActions()
     }
 }
 
+void KMComposerWin::updateHamburgerMenu()
+{
+    QMenu *menu = new QMenu;
+    menu->addAction(actionCollection()->action(QStringLiteral("new_composer")));
+    menu->addSeparator();
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Print))));
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::PrintPreview))));
+    menu->addSeparator();
+    menu->addAction(actionCollection()->action(QStringLiteral("attach_menu")));
+    menu->addSeparator();
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Close))));
+    mHamburgerMenu->setMenu(menu);
+}
+
 void KMComposerWin::slotToggleMenubar(bool dontShowWarning)
 {
     if (menuBar()) {
-        if (mHideMenuBarAction->isChecked()) {
+        if (mShowMenuBarAction->isChecked()) {
             menuBar()->show();
         } else {
-            if (!dontShowWarning) {
-                const QString accel = mHideMenuBarAction->shortcut().toString();
+            if (!dontShowWarning && (!toolBar()->isVisible() || !toolBar()->actions().contains(mHamburgerMenu))) {
+                const QString accel = mShowMenuBarAction->shortcut().toString();
                 KMessageBox::information(this,
                                          i18n("<qt>This will hide the menu bar completely."
                                               " You can show it again by typing %1.</qt>",
@@ -1454,7 +1479,7 @@ void KMComposerWin::slotToggleMenubar(bool dontShowWarning)
             }
             menuBar()->hide();
         }
-        KMailSettings::self()->setComposerShowMenuBar(mHideMenuBarAction->isChecked());
+        KMailSettings::self()->setComposerShowMenuBar(mShowMenuBarAction->isChecked());
     }
 }
 
