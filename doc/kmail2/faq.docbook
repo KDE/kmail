@@ -132,7 +132,7 @@
     <guisubmenu>Message List</guisubmenu><guimenuitem>Aggregation</guimenuitem></menuchoice> to <guilabel>Standard 
     Mailing List</guilabel>. Now your &kmail; will look exactly like it did in early versions of the program.</para>
 
-    <para>In <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure&kmail;</guisubmenu> 
+    <para>In <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure &kmail;</guisubmenu> 
     <guimenuitem>Appearance</guimenuitem><guimenuitem>Fonts</guimenuitem></menuchoice> you can select 
     <guilabel>Use custom fonts</guilabel> to change the setting for the message list. You can also set
     the font size in the <guilabel>Use custom fonts</guilabel> dialog.</para>
@@ -296,7 +296,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
         linkend="faq-other-muas">this &FAQ;</link>.</para></listitem>
         <listitem><para>If your mail folder is on a volume which is
         mounted via NFS, and if the clock in the NFS server is behind the
-        clock in your computer, then the NFS server sometimes reports the wcrong
+        clock in your computer, then the NFS server sometimes reports the wrong
         file date for the index file. In this case &kmail; concludes that the index
         is outdated, although in reality it is not. To fix this problem
         you (or your system administrator) have to make sure that the clock in
@@ -312,7 +312,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
   <answer>
     <para><emphasis>Problem:</emphasis> You want to start &kmail; from a minimal desktop environment like <ulink 
     url="https://en.wikipedia.org/wiki/Fvwm2">fvwm2</ulink>. It does not start.</para>
-    <para><emphasis>Solution:</emphasis>This happens because you are missing <emphasis>dbus</emphasis> 
+    <para><emphasis>Solution:</emphasis> This happens because you are missing <emphasis>dbus</emphasis> 
     functionality. Start &kmail; from a terminal window using dbus-launch, like this:</para>
     <screen># dbus-launch kmail</screen><para>&nbsp;</para>
   </answer>
@@ -458,7 +458,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
     <filename class="directory">~/.local/share/kmail2/autosave/</filename>
     in case of a crash. The next time you start &kmail; the mail composer should appear with your
     message again; If it does not, try to open the files in <filename 
-    class="directory">~.local/share/kmail2/autosave/</filename> with an editor. If there are no files in
+    class="directory">~/.local/share/kmail2/autosave/</filename> with an editor. If there are no files in
     that folder then the crash was so bad that &kmail; could not save your message.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
