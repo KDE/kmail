@@ -2,11 +2,6 @@
 # SPDX-License-Identifier: BSD-3-Clause
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_followupreminder_agent\")
 
-set(followupreminderagent_job_SRCS
-    jobs/followupreminderjob.cpp
-    jobs/followupreminderfinishtaskjob.cpp
-    jobs/followupremindershowmessagejob.cpp
-    )
 
 set(followupreminderagent_SRCS
     followupremindermanager.cpp
@@ -14,7 +9,9 @@ set(followupreminderagent_SRCS
     followupreminderinfowidget.cpp
     followupreminderinfo.cpp
     followupreminderutil.cpp
-    ${followupreminderagent_job_SRCS}
+    jobs/followupreminderjob.cpp
+    jobs/followupreminderfinishtaskjob.cpp
+    jobs/followupremindershowmessagejob.cpp
     )
 
 
