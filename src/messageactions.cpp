@@ -60,6 +60,8 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     , mParent(parent)
     , mReplyActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this))
     , mReplyAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply..."), this))
+    , mReplyAllAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All..."), this))
+    , mReplyAuthorAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply to A&uthor..."), this))
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))
 {
     ac->addAction(QStringLiteral("message_reply_menu"), mReplyActionMenu);
@@ -70,13 +72,11 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     connect(mReplyAction, &QAction::triggered, this, &MessageActions::slotReplyToMsg);
     mReplyActionMenu->addAction(mReplyAction);
 
-    mReplyAuthorAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply to A&uthor..."), this);
     ac->addAction(QStringLiteral("reply_author"), mReplyAuthorAction);
     ac->setDefaultShortcut(mReplyAuthorAction, Qt::SHIFT | Qt::Key_A);
     connect(mReplyAuthorAction, &QAction::triggered, this, &MessageActions::slotReplyAuthorToMsg);
     mReplyActionMenu->addAction(mReplyAuthorAction);
 
-    mReplyAllAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All..."), this);
     ac->addAction(QStringLiteral("reply_all"), mReplyAllAction);
     ac->setDefaultShortcut(mReplyAllAction, Qt::Key_A);
     connect(mReplyAllAction, &QAction::triggered, this, &MessageActions::slotReplyAllToMsg);

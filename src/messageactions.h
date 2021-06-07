@@ -150,8 +150,8 @@ private:
 
     KActionMenu *const mReplyActionMenu;
     QAction *const mReplyAction;
-    QAction *mReplyAllAction = nullptr;
-    QAction *mReplyAuthorAction = nullptr;
+    QAction *const mReplyAllAction;
+    QAction *const mReplyAuthorAction;
     QAction *mReplyListAction = nullptr;
     QAction *mNoQuoteReplyAction = nullptr;
     QAction *mForwardInlineAction = nullptr;
