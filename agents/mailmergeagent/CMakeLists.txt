@@ -6,19 +6,17 @@ if(BUILD_TESTING)
     add_subdirectory(tests)
     add_subdirectory(autotests)
 endif()
+add_library(mailmergeagent STATIC)
 
-set(mailmerge_common_SRCS)
-ecm_qt_declare_logging_category(mailmerge_common_SRCS HEADER mailmergeagent_debug.h IDENTIFIER MAILMERGEAGENT_LOG CATEGORY_NAME org.kde.pim.mailmergeagent
+
+ecm_qt_declare_logging_category(mailmergeagent HEADER mailmergeagent_debug.h IDENTIFIER MAILMERGEAGENT_LOG CATEGORY_NAME org.kde.pim.mailmergeagent
         DESCRIPTION "kmail (mailmergeagent)"
         OLD_CATEGORY_NAMES log_mailmergeagent
         EXPORT KMAIL
     )
 
-set(libmailmergeagent_SRCS
-    ${mailmerge_common_SRCS}
-    )
 
-set(mailmergeagent_SRCS
+target_sources(mailmergeagent PRIVATE
     mailmergeagent.cpp
     mailmergemanager.cpp
     mailmergeconfiguredialog.cpp
@@ -27,8 +25,9 @@ set(mailmergeagent_SRCS
 
 qt_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)
 
-kconfig_add_kcfg_files(libmailmergeagent_SRCS mailmergeagentsettings.kcfgc)
-add_library(mailmergeagent STATIC ${libmailmergeagent_SRCS})
+target_sources(mailmergeagent PRIVATE ${mailmergeagent_SRCS})
+
+kconfig_add_kcfg_files(mailmergeagent mailmergeagentsettings.kcfgc)
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(sendlateragent PROPERTIES UNITY_BUILD ON)
 #endif()
@@ -46,14 +45,16 @@ target_link_libraries(mailmergeagent
     KF5::XmlGui
     KF5::I18n
     KF5::Notifications
+    KF5::AkonadiAgentBase
     )
 
-
-add_executable(akonadi_mailmerge_agent ${mailmergeagent_SRCS})
+add_executable(akonadi_mailmerge_agent)
 target_link_libraries(akonadi_mailmerge_agent
     mailmergeagent
     KF5::AkonadiAgentBase
     )
+
+
 
 if( APPLE )
     set_target_properties(akonadi_mailmerge_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
