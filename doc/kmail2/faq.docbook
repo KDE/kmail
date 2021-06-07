@@ -91,7 +91,7 @@
 
 <!-- FAQ #5 -->
 <qandaentry>
-  <question><para>How can I store encrypted messagess in unencrypted form?</para></question>
+  <question><para>How can I store encrypted messages in unencrypted form?</para></question>
   <answer>
     <para><emphasis>Problem:</emphasis> You exchange encrypted mail with a friend, but would like to store your 
     own copy unencrypted, once you have opened the message.</para>
@@ -387,7 +387,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
   <question><para>Why do some messages exhibit a value of "unknown"
   in the <guilabel>Date</guilabel> field? Why is the date sometimes incorrect?</para></question>
   <answer>
-    <para>Most likely, the "Date:" header of these messages isc
+    <para>Most likely, the "Date:" header of these messages is
     broken and &kmail; cannot interpret it. That is not a bug in &kmail;,
     but in the software that sent the mail.</para><para>&nbsp;</para>
   </answer>
@@ -414,7 +414,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
     <warning><para>You should not run &kmail; while another email client is already
     accessing the files in the mail directory; if you do, you may lose messages. Note that
     you should make backups of your messages -- and all your important data -- regularly.
-    That's just good dgital hygiene.</para></warning><para>&nbsp;</para>
+    That's just good digital hygiene.</para></warning><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
@@ -455,7 +455,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
   <question><para>&kmail; crashed while I was composing a message. Is that message lost now?</para></question>
   <answer>
     <para>&kmail; tries to save your mail to
-    <filename class="directory">~.local/share/kmail2/autosave/</filename>
+    <filename class="directory">~/.local/share/kmail2/autosave/</filename>
     in case of a crash. The next time you start &kmail; the mail composer should appear with your
     message again; If it does not, try to open the files in <filename 
     class="directory">~.local/share/kmail2/autosave/</filename> with an editor. If there are no files in
@@ -538,12 +538,14 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 
     <para>Modify your &kmail; configuration to fetch the mail via POP3 from 
         <userinput>localhost</userinput> and ssh will tunnel the connection for you.
+    </para>
 
     <note><para>If non-encrypted messages have already been sent
     via the Internet, the only advantage of using <application>ssh</application> is
     that your <emphasis>password</emphasis> will be sent encrypted to the POP3
     server.</para></note>
 
+    <para>
     For more details on setting up ssh, see <ulink
     url="http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html">this web page</ulink>.</para>
     <para>&nbsp;</para>
