@@ -246,8 +246,8 @@ private:
     /**
      * Returns true if the message was modified by the user.
      */
-    bool isModified() const;
-    bool isComposerModified() const;
+    Q_REQUIRED_RESULT bool isModified() const;
+    Q_REQUIRED_RESULT bool isComposerModified() const;
     void changeModifiedState(bool modified);
 
 public Q_SLOTS: // kmkernel, callback
@@ -547,15 +547,20 @@ private:
      */
     Q_REQUIRED_RESULT MessageComposer::Composer *createSimpleComposer();
 
-    bool canSignEncryptAttachments() const;
+    Q_REQUIRED_RESULT bool canSignEncryptAttachments() const;
 
     // helper method for rethinkFields
-    int calcColumnWidth(int which, long allShowing, int width) const;
+    Q_REQUIRED_RESULT int calcColumnWidth(int which, long allShowing, int width) const;
 
-    inline bool encryptToSelf() const;
+    Q_REQUIRED_RESULT inline bool encryptToSelf() const;
 
 private:
-    enum CryptoKeyState { NoState = 0, InProgress, KeyOk, NoKey };
+    enum CryptoKeyState {
+        NoState = 0,
+        InProgress,
+        KeyOk,
+        NoKey,
+    };
     void slotToggleMenubar(bool dontShowWarning);
 
     void slotCryptoModuleSelected();
