@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
-set(PIM_VERSION "5.17.2")
+set(PIM_VERSION "5.17.3")
 
 project(kmail VERSION ${PIM_VERSION})
 
@@ -34,7 +34,7 @@ include(ECMQtDeclareLoggingCategory)
 
 # Do NOT add quote
 set(KDEPIM_DEV_VERSION)
-set(RELEASE_SERVICE_VERSION "21.04.2")
+set(RELEASE_SERVICE_VERSION "21.04.3")
 
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
