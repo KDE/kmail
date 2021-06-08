@@ -57,16 +57,18 @@ KMMainWin::KMMainWin(QWidget *)
     KStandardAction::keyBindings(this, &KMMainWin::slotConfigureShortcuts, actionCollection());
 
     mShowMenuBarAction = KStandardAction::showMenubar(this, &KMMainWin::slotToggleMenubar, actionCollection());
-    mHamburgerMenu = KStandardAction::hamburgerMenu(nullptr, nullptr, actionCollection());
-    mHamburgerMenu->setShowMenuBarAction(mShowMenuBarAction);
-    mHamburgerMenu->setMenuBar(menuBar());
-    connect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, [this]() {
-        updateHamburgerMenu();
-        // Immediately disconnect. We only need to run this once, but on demand.
-        // NOTE: The nullptr at the end disconnects all connections between
-        // q and mHamburgerMenu's aboutToShowMenu signal.
-        disconnect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, nullptr);
-    });
+    if (menuBar()) {
+        mHamburgerMenu = KStandardAction::hamburgerMenu(nullptr, nullptr, actionCollection());
+        mHamburgerMenu->setShowMenuBarAction(mShowMenuBarAction);
+        mHamburgerMenu->setMenuBar(menuBar());
+        connect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, [this]() {
+            updateHamburgerMenu();
+            // Immediately disconnect. We only need to run this once, but on demand.
+            // NOTE: The nullptr at the end disconnects all connections between
+            // q and mHamburgerMenu's aboutToShowMenu signal.
+            disconnect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, nullptr);
+        });
+    }
 
     KStandardAction::quit(this, &KMMainWin::slotQuit, actionCollection());
     createGUI(QStringLiteral("kmmainwin.rc"));
