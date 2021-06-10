@@ -30,7 +30,6 @@ using PimCommon::BroadcastStatus;
 #include <KParts/PartActivateEvent>
 #include <QAction>
 #include <QApplication>
-#include <QDate>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
