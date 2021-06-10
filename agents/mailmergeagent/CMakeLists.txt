@@ -21,6 +21,7 @@ target_sources(mailmergeagent PRIVATE
     mailmergemanager.cpp
     mailmergeconfiguredialog.cpp
     mailmergeconfigurewidget.cpp
+    mailmergeutil.cpp
     )
 
 qt_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)

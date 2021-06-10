@@ -21,12 +21,19 @@ QString MailMergeManager::printDebugInfo() const
     return {};
 }
 
-void MailMergeManager::load(bool state) {}
+void MailMergeManager::load(bool state)
+{
+    // Load list of element
+}
 
-void MailMergeManager::stopAll() {}
+void MailMergeManager::stopAll()
+{
+    // TODO stop agent
+}
 
 bool MailMergeManager::itemRemoved(Akonadi::Item::Id id)
 {
+    // TODO remove id.
     // TODO
     //    if (mConfig->hasGroup(SendLaterUtil::sendLaterPattern().arg(id))) {
     //        removeInfo(id);
