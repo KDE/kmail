@@ -383,22 +383,22 @@ kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_
 kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_security.desktop" SERVICE_TYPES kcmodule.desktop)
 
 
-kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "kcms")
+kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
 target_link_libraries(kcm_kmail_accounts kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_appearance SOURCES configuredialog/kcm_kmail_appearance.cpp INSTALL_NAMESPACE "kcms")
+kcoreaddons_add_plugin(kcm_kmail_appearance SOURCES configuredialog/kcm_kmail_appearance.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
 target_link_libraries(kcm_kmail_appearance kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_composer SOURCES configuredialog/kcm_kmail_composer.cpp INSTALL_NAMESPACE "kcms")
+kcoreaddons_add_plugin(kcm_kmail_composer SOURCES configuredialog/kcm_kmail_composer.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
 target_link_libraries(kcm_kmail_composer kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_misc SOURCES configuredialog/kcm_kmail_misc.cpp INSTALL_NAMESPACE "kcms")
+kcoreaddons_add_plugin(kcm_kmail_misc SOURCES configuredialog/kcm_kmail_misc.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
 target_link_libraries(kcm_kmail_misc kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_plugins SOURCES configuredialog/kcm_kmail_plugins.cpp INSTALL_NAMESPACE "kcms")
+kcoreaddons_add_plugin(kcm_kmail_plugins SOURCES configuredialog/kcm_kmail_plugins.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
 target_link_libraries(kcm_kmail_plugins kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_security.cpp INSTALL_NAMESPACE "kcms")
+kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_security.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
 target_link_libraries(kcm_kmail_security kcm_kmail_static)
 ########### kmailpart ###############
 
