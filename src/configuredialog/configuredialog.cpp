@@ -15,6 +15,10 @@
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
 
+#include <kcmutils_version.h>
+
+#include <KPluginLoader>
+#include <KPluginMetaData>
 #include <QPushButton>
 
 ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
@@ -24,12 +28,15 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help | QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel | QDialogButtonBox::Apply
                        | QDialogButtonBox::Reset);
     setModal(modal);
-    addModule(QStringLiteral("kmail_config_accounts"));
-    addModule(QStringLiteral("kmail_config_appearance"));
-    addModule(QStringLiteral("kmail_config_composer"));
-    addModule(QStringLiteral("kmail_config_security"));
-    addModule(QStringLiteral("kmail_config_misc"));
-    addModule(QStringLiteral("kmail_config_plugins"));
+
+    const QVector<KPluginMetaData> availablePlugins = KPluginLoader::findPlugins(QStringLiteral("pim/kcms/kmail"));
+    for (const KPluginMetaData &metaData : availablePlugins) {
+#if KCMUTILS_VERSION >= QT_VERSION_CHECK(5, 84, 0)
+        addModule(metaData);
+#else
+        addModule(metaData.pluginId());
+#endif
+    }
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
     connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);
