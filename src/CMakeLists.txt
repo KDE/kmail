@@ -181,7 +181,7 @@ set(kmailprivate_undosend_LIB_SRCS
 
 set(kmailprivate_userfeedback_LIB_SRCS)
 if (TARGET KUserFeedbackWidgets)
-    set(kmailprivate_userfeedback_LIB_SRCS ${kmailprivate_userfeedback_LIB_SRCS}
+    set(kmailprivate_userfeedback_LIB_SRCS
         userfeedback/accountinfosource.cpp
 	userfeedback/plugininfosource.cpp
         userfeedback/kmailuserfeedbackprovider.cpp
