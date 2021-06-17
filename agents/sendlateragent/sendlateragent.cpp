@@ -31,6 +31,9 @@
 #include <Kdelibs4ConfigMigrator>
 #endif
 #include <QPointer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 //#define DEBUG_SENDLATERAGENT 1
 
@@ -63,14 +66,14 @@ SendLaterAgent::SendLaterAgent(const QString &id)
 #ifdef DEBUG_SENDLATERAGENT
         QTimer::singleShot(1000, this, &SendLaterAgent::slotStartAgent);
 #else
-        QTimer::singleShot(1000 * 60 * 4, this, &SendLaterAgent::slotStartAgent);
+        QTimer::singleShot(4min, this, &SendLaterAgent::slotStartAgent);
 #endif
     }
     // For extra safety, check list every hour, in case we didn't properly get
     // notified about the network going up or down.
     auto reloadListTimer = new QTimer(this);
     connect(reloadListTimer, &QTimer::timeout, this, &SendLaterAgent::reload);
-    reloadListTimer->start(1000 * 60 * 60); // 1 hour
+    reloadListTimer->start(1h); // 1 hour
 }
 
 SendLaterAgent::~SendLaterAgent() = default;

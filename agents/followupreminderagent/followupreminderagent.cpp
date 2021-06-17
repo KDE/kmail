@@ -26,6 +26,9 @@
 #endif
 #include "followupreminderagent_debug.h"
 #include <QTimer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     : Akonadi::AgentBase(id)
@@ -59,7 +62,7 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &FollowUpReminderAgent::reload);
     // Reload all each 24hours
-    mTimer->start(24 * 60 * 60 * 1000);
+    mTimer->start(24h);
 }
 
 FollowUpReminderAgent::~FollowUpReminderAgent() = default;

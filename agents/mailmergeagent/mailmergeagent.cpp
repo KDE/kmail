@@ -25,6 +25,9 @@
 
 #include <QPointer>
 #include <QTimer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 //#define DEBUG_MAILMERGEAGENT 1
 
@@ -53,14 +56,14 @@ MailMergeAgent::MailMergeAgent(const QString &id)
 #ifdef DEBUG_MailMergeAgent
         QTimer::singleShot(1000, this, &MailMergeAgent::slotStartAgent);
 #else
-        QTimer::singleShot(1000 * 60 * 4, this, &MailMergeAgent::slotStartAgent);
+        QTimer::singleShot(4min, this, &MailMergeAgent::slotStartAgent);
 #endif
     }
     // For extra safety, check list every hour, in case we didn't properly get
     // notified about the network going up or down.
     auto reloadListTimer = new QTimer(this);
     connect(reloadListTimer, &QTimer::timeout, this, &MailMergeAgent::reload);
-    reloadListTimer->start(1000 * 60 * 60); // 1 hour
+    reloadListTimer->start(1h); // 1 hour
 }
 
 MailMergeAgent::~MailMergeAgent() = default;
