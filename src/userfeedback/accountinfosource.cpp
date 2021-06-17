@@ -35,6 +35,7 @@ QVariant AccountInfoSource::data()
     int numberOfKolab = 0;
     int numberOfEws = 0;
     int numberOfMaildir = 0;
+    int numberOfMbox = 0;
     for (const Akonadi::AgentInstance &type : lst) {
         const QString identifier = type.identifier();
         if (identifier.startsWith(QLatin1String("akonadi_pop3_resource"))) {
@@ -47,6 +48,8 @@ QVariant AccountInfoSource::data()
             numberOfEws++;
         } else if (identifier.startsWith(QLatin1String("akonadi_maildir_resource"))) {
             numberOfMaildir++;
+        } else if (identifier.startsWith(QLatin1String("akonadi_mbox_resource"))) {
+            numberOfMbox++;
         }
         // TODO add more
     }
@@ -79,6 +82,12 @@ QVariant AccountInfoSource::data()
         QVariantMap m;
         m.insert(QStringLiteral("name"), QStringLiteral("maildir"));
         m.insert(QStringLiteral("number"), numberOfMaildir);
+        l.push_back(m);
+    }
+    if (numberOfMbox > 0) {
+        QVariantMap m;
+        m.insert(QStringLiteral("name"), QStringLiteral("mbox"));
+        m.insert(QStringLiteral("number"), numberOfMbox);
         l.push_back(m);
     }
 
