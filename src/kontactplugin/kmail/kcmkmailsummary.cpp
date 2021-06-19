@@ -25,7 +25,7 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 
-K_PLUGIN_CLASS_WITH_JSON(KCMKMailSummary, "kmailplugin.json")
+K_PLUGIN_CLASS_WITH_JSON(KCMKMailSummary, "kcmkmailsummary.json")
 KCMKMailSummary::KCMKMailSummary(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)
 {

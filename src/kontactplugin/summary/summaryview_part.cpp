@@ -28,6 +28,8 @@ using PimCommon::BroadcastStatus;
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KParts/PartActivateEvent>
+#include <KPluginLoader>
+#include <KPluginMetaData>
 #include <QAction>
 #include <QApplication>
 #include <QHBoxLayout>
@@ -37,6 +39,7 @@ using PimCommon::BroadcastStatus;
 #include <QScrollArea>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <kcmutils_version.h>
 
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
     : KParts::Part(parent)
@@ -404,15 +407,15 @@ void SummaryViewPart::slotConfigure()
     QPointer<KCMultiDialog> dlg = new KCMultiDialog(mMainWidget);
     dlg->setObjectName(QStringLiteral("ConfigDialog"));
     dlg->setModal(true);
-
-    QStringList modules = configModules();
-    modules.prepend(QStringLiteral("kcmkontactsummary.desktop"));
     connect(dlg.data(), qOverload<>(&KCMultiDialog::configCommitted), this, &SummaryViewPart::updateWidgets);
 
-    QStringList::ConstIterator strIt;
-    QStringList::ConstIterator end(modules.constEnd());
-    for (strIt = modules.constBegin(); strIt != end; ++strIt) {
-        dlg->addModule(*strIt);
+    const auto metaDataList = KPluginLoader::findPlugins(QStringLiteral("pim/kcms/summary/"));
+    for (const auto &metaData : metaDataList) {
+#if KCMUTILS_VERSION >= QT_VERSION_CHECK(5, 84, 0)
+        dlg->addModule(metaData);
+#else
+        dlg->addModule(metaData.pluginId());
+#endif
     }
 
     dlg->exec();

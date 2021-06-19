@@ -15,6 +15,7 @@ qt_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${kmail_BINARY_DIR}/
 set(kontact_kmailplugin_PART_SRCS kmail_plugin.cpp summarywidget.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 
 add_library(kontact_kmailplugin MODULE ${kontact_kmailplugin_PART_SRCS})
+kcoreaddons_desktop_to_json(kontact_kmailplugin "kmailplugin.desktop" SERVICE_TYPES kcmodule.desktop)
 pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_kmailplugin kmail_xml)
 
@@ -22,21 +23,21 @@ target_link_libraries(kontact_kmailplugin KF5::Mime KF5::I18n KF5::KontactInterf
 
 ########### next target ###############
 
-set(kcm_kmailsummary_PART_SRCS kcmkmailsummary.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
+set(kcmkmailsummary_PART_SRCS kcmkmailsummary.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 
-add_library(kcm_kmailsummary MODULE ${kcm_kmailsummary_PART_SRCS})
-pim_target_precompile_headers(kcm_kmailsummary PUBLIC ../../../kmail_pch.h)
-kcoreaddons_desktop_to_json(kcm_kmailsummary "kmailplugin.desktop" SERVICE_TYPES kcmodule.desktop)
+add_library(kcmkmailsummary MODULE ${kcmkmailsummary_PART_SRCS})
+pim_target_precompile_headers(kcmkmailsummary PUBLIC ../../../kmail_pch.h)
+kcoreaddons_desktop_to_json(kcmkmailsummary "kcmkmailsummary.desktop" SERVICE_TYPES kcmodule.desktop)
 
-add_dependencies(kcm_kmailsummary kmail_xml)
+add_dependencies(kcmkmailsummary kmail_xml)
 
-target_link_libraries(kcm_kmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt::DBus KF5::ConfigWidgets KF5::I18n)
+target_link_libraries(kcmkmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt::DBus KF5::ConfigWidgets KF5::I18n)
 
 ########### install files ###############
 
 install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact5)
 
-install(TARGETS kcm_kmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim/kcms/summary/)
 
 install(FILES kmailplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR}/kontact)
 

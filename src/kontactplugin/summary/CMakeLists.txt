@@ -15,16 +15,16 @@ kcoreaddons_desktop_to_json(kontact_summaryplugin summaryplugin.desktop)
 
 ########### next target ###############
 
-add_library(kcm_kontactsummary MODULE kcmkontactsummary.cpp)
-kcoreaddons_desktop_to_json(kcm_kontactsummary "kcmkontactsummary.desktop" SERVICE_TYPES kcmodule.desktop)
-pim_target_precompile_headers(kcm_kontactsummary PUBLIC ../../../kmail_pch.h)
+add_library(kcmkontactsummary MODULE kcmkontactsummary.cpp)
+kcoreaddons_desktop_to_json(kcmkontactsummary "kcmkontactsummary.desktop" SERVICE_TYPES kcmodule.desktop)
+pim_target_precompile_headers(kcmkontactsummary PUBLIC ../../../kmail_pch.h)
 
-target_link_libraries(kcm_kontactsummary KF5::I18n KF5::KCMUtils Qt::Widgets KF5::KCMUtils KF5::I18n KF5::KontactInterface)
+target_link_libraries(kcmkontactsummary KF5::I18n KF5::KCMUtils Qt::Widgets KF5::KCMUtils KF5::I18n KF5::KontactInterface)
 
 ########### install files ###############
 
 install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact5)
-install(TARGETS kcm_kontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(TARGETS kcmkontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim/kcms/summary)
 
 install(FILES summaryplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR}/kontact)
 install(FILES kcmkontactsummary.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
