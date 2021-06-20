@@ -17,9 +17,12 @@
 #include <QEventLoop>
 #include <QLabel>
 #include <QStandardPaths>
-#include <QTimer>
 #include <QTemporaryDir>
 #include <QTest>
+#include <QTimer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 QTEST_MAIN(KMComposerWinTest)
 
@@ -218,7 +221,7 @@ void KMComposerWinTest::testChangeIdentity()
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
-        QTimer::singleShot(50, &loop, SLOT(quit()));
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
         loop.exec();
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(encryption->isVisible(), true);
@@ -232,7 +235,7 @@ void KMComposerWinTest::testChangeIdentity()
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
-        QTimer::singleShot(50, &loop, SLOT(quit()));
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
         loop.exec();
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(encryption->isVisible(), false);

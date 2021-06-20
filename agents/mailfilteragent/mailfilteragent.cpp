@@ -36,6 +36,9 @@
 #include <KSharedConfig>
 #include <QTimer>
 
+#include <chrono>
+
+using namespace std::chrono_literals;
 #include <kcoreaddons_version.h>
 #if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
@@ -170,7 +173,7 @@ void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
     }
     Q_EMIT status(AgentBase::Idle, i18n("Ready"));
     Q_EMIT percent(100);
-    QTimer::singleShot(2000, this, &MailFilterAgent::clearMessage);
+    QTimer::singleShot(2s, this, &MailFilterAgent::clearMessage);
 }
 
 void MailFilterAgent::clearMessage()

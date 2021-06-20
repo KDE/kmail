@@ -27,6 +27,9 @@
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QTimer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 Q_DECLARE_METATYPE(Qt::CheckState)
 Q_DECLARE_METATYPE(QVector<qint64>)
 
@@ -231,7 +234,7 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
         mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
 
         if (mIndexingQueue.isEmpty()) {
-            QTimer::singleShot(1000, this, &IncompleteIndexDialog::accept);
+            QTimer::singleShot(1s, this, &IncompleteIndexDialog::accept);
         }
     }
 }

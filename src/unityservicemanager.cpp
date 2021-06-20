@@ -26,6 +26,9 @@
 #include <AkonadiCore/CollectionStatistics>
 #include <AkonadiCore/EntityMimeTypeFilterModel>
 #include <AkonadiCore/EntityTreeModel>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 using namespace KMail;
 
@@ -102,7 +105,7 @@ void UnityServiceManager::initListOfCollection()
     mCount = 0;
     const QAbstractItemModel *model = kmkernel->collectionModel();
     if (model->rowCount() == 0) {
-        QTimer::singleShot(1000, this, &UnityServiceManager::initListOfCollection);
+        QTimer::singleShot(1s, this, &UnityServiceManager::initListOfCollection);
         return;
     }
     unreadMail(model);

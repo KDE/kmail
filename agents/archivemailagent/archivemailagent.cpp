@@ -17,7 +17,9 @@
 #include <QDBusConnection>
 #include <QTimer>
 #include <Session>
+#include <chrono>
 #include <kcoreaddons_version.h>
+using namespace std::chrono_literals;
 #if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
 #endif
@@ -56,13 +58,13 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
 #ifdef DEBUG_ARCHIVEMAILAGENT
         QTimer::singleShot(1000, mArchiveManager, &ArchiveMailManager::load);
 #else
-        QTimer::singleShot(1000 * 60 * 5, mArchiveManager, &ArchiveMailManager::load);
+        QTimer::singleShot(5min, mArchiveManager, &ArchiveMailManager::load);
 #endif
     }
 
     mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &ArchiveMailAgent::reload);
-    mTimer->start(24 * 60 * 60 * 1000);
+    mTimer->start(24h);
 }
 
 ArchiveMailAgent::~ArchiveMailAgent() = default;

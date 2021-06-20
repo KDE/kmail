@@ -33,6 +33,9 @@
 #include <ktip.h>
 
 #include <QLabel>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow(nullptr)
@@ -197,7 +200,7 @@ void KMMainWin::setupStatusBar()
     mMessageLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     statusBar()->addWidget(mMessageLabel);
 
-    QTimer::singleShot(2000, PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::reset);
+    QTimer::singleShot(2s, PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::reset);
     statusBar()->addPermanentWidget(mKMMainWidget->dkimWidgetInfo());
     statusBar()->addPermanentWidget(mKMMainWidget->zoomLabelIndicator());
     statusBar()->addPermanentWidget(mKMMainWidget->vacationScriptIndicator());
