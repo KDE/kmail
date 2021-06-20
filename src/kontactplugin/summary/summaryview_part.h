@@ -60,7 +60,6 @@ private:
     void saveLayout();
     QString widgetName(QWidget *) const;
 
-    QStringList configModules() const;
     void drawLtoR(QWidget *target, QWidget *widget, int alignment);
     void drawRtoL(QWidget *target, QWidget *widget, int alignment);
 

@@ -422,26 +422,6 @@ void SummaryViewPart::slotConfigure()
     delete dlg;
 }
 
-QStringList SummaryViewPart::configModules() const
-{
-    QStringList modules;
-
-    QMap<QString, KontactInterface::Summary *>::ConstIterator it;
-    QMap<QString, KontactInterface::Summary *>::ConstIterator end(mSummaries.constEnd());
-    for (it = mSummaries.constBegin(); it != end; ++it) {
-        QStringList cm = it.value()->configModules();
-        QStringList::ConstIterator strIt;
-        QStringList::ConstIterator strEnd(cm.constEnd());
-        for (strIt = cm.constBegin(); strIt != strEnd; ++strIt) {
-            if (!(*strIt).isEmpty() && !modules.contains(*strIt)) {
-                modules.append(*strIt);
-            }
-        }
-    }
-
-    return modules;
-}
-
 void SummaryViewPart::initGUI(KontactInterface::Core *core)
 {
     auto sa = new QScrollArea(core);

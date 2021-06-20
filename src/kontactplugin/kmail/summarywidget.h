@@ -42,8 +42,6 @@ public:
 
     Q_REQUIRED_RESULT int summaryHeight() const override;
 
-    Q_REQUIRED_RESULT QStringList configModules() const override;
-
 protected:
     bool eventFilter(QObject *obj, QEvent *e) override;
 

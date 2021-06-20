@@ -219,8 +219,3 @@ bool SummaryWidget::eventFilter(QObject *obj, QEvent *e)
 
     return KontactInterface::Summary::eventFilter(obj, e);
 }
-
-QStringList SummaryWidget::configModules() const
-{
-    return QStringList() << QStringLiteral("kcmkmailsummary.desktop");
-}
