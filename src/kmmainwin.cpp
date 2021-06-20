@@ -31,6 +31,8 @@
 #include <QMenuBar>
 #include <ktip.h>
 
+#include <kxmlgui_version.h>
+
 #include <QLabel>
 
 KMMainWin::KMMainWin(QWidget *)
@@ -243,7 +245,15 @@ bool KMMainWin::queryClose()
 
 void KMMainWin::slotConfigureShortcuts()
 {
+#if KXMLGUI_VERSION >= QT_VERSION_CHECK(5, 84, 0)
+    connect(guiFactory(), &KXMLGUIFactory::shortcutsSaved, this, [this]() {
+        mKMMainWidget->updateQuickSearchLineText();
+    });
+
+    guiFactory()->showConfigureShortcutsDialog();
+#else
     if (guiFactory()->configureShortcuts()) {
         mKMMainWidget->updateQuickSearchLineText();
     }
+#endif
 }
