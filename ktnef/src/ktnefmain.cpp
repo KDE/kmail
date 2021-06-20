@@ -162,7 +162,7 @@ void KTNEFMain::setupActions()
 
 void KTNEFMain::slotConfigureKeys()
 {
-    KShortcutsDialog::configure(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, this);
+    KShortcutsDialog::showDialog(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, true, this);
 }
 
 void KTNEFMain::setupStatusbar()
