@@ -55,6 +55,7 @@ private:
     void slotConfigureShortcuts();
     void slotToggleMenubar(bool dontShowWarning);
     void updateHamburgerMenu();
+    void slotShortcutSaved();
     KPIM::ProgressStatusBarWidget *mProgressBar = nullptr;
     KMMainWidget *mKMMainWidget = nullptr;
     KToggleAction *mShowMenuBarAction = nullptr;

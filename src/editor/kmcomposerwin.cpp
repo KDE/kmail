@@ -48,6 +48,7 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
+#include <kxmlgui_version.h>
 
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <Akonadi/KMime/MessageFlags>
@@ -3399,7 +3400,11 @@ void KMComposerWin::slotUpdateToolbars()
 
 void KMComposerWin::slotEditKeys()
 {
+#if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 84, 0)
     KShortcutsDialog::configure(actionCollection(), KShortcutsEditor::LetterShortcutsDisallowed);
+#else
+    KShortcutsDialog::showDialog(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, /*isModal*/ true, this);
+#endif
 }
 
 void KMComposerWin::setFocusToEditor()
