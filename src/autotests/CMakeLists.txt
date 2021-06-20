@@ -7,35 +7,29 @@ include_directories(
     )
 
 ########### dbus test ###############
-set( kmail_displaymenu_source displaymessageformatactionmenutest.cpp)
-add_executable( displaymessageformatactionmenutest ${kmail_displaymenu_source} )
+add_executable( displaymessageformatactionmenutest displaymessageformatactionmenutest.cpp )
 add_test(NAME displaymessageformatactionmenutest COMMAND displaymessageformatactionmenutest )
 ecm_mark_as_test(kmail-displaymessageformatactionmenutest)
 target_link_libraries( displaymessageformatactionmenutest Qt::Test  KF5::MessageViewer KF5::I18n kmailprivate)
 
 #####
-set( kmail_identityaddvcarddialog_source identityaddvcarddialogtest.cpp )
-add_executable( identityaddvcarddialogtest  ${kmail_identityaddvcarddialog_source})
+add_executable( identityaddvcarddialogtest  identityaddvcarddialogtest.cpp)
 ecm_mark_as_test(kmail-identityaddvcarddialogtest)
 target_link_libraries( identityaddvcarddialogtest Qt::Test Qt::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n kmailprivate)
 
 #####
-
-set( kmail_createfollowupreminderonexistingmessagejobtest_source createfollowupreminderonexistingmessagejobtest.cpp)
-add_executable( createfollowupreminderonexistingmessagejobtest ${kmail_createfollowupreminderonexistingmessagejobtest_source})
+add_executable( createfollowupreminderonexistingmessagejobtest createfollowupreminderonexistingmessagejobtest.cpp)
 ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
 target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime KF5::MessageComposer kmailprivate)
 #####
 
-set( kmail_cryptostateindicatorwidgettest_source cryptostateindicatorwidgettest.cpp)
-add_executable( cryptostateindicatorwidgettest ${kmail_cryptostateindicatorwidgettest_source})
+add_executable( cryptostateindicatorwidgettest cryptostateindicatorwidgettest.cpp)
 add_test(NAME cryptostateindicatorwidgettest COMMAND cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
 target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KF5::MessageCore Qt::Widgets KF5::ConfigWidgets KF5::I18n kmailprivate)
 #####
 
-set( kmail_kactionmenutransporttest_source kactionmenutransporttest.cpp)
-add_executable( kactionmenutransporttest ${kmail_kactionmenutransporttest_source})
+add_executable( kactionmenutransporttest kactionmenutransporttest.cpp)
 add_test(NAME kactionmenutransporttest COMMAND kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt::Test  KF5::MailTransportAkonadi KF5::WidgetsAddons KF5::I18n KF5::ConfigGui kmailprivate)

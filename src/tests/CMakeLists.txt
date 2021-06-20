@@ -8,12 +8,10 @@ add_dependencies(dbustest kmail_xml)
 target_link_libraries(dbustest KF5::KIOCore KF5::I18n Qt::DBus)
 
 #####
-set(searchdbustest_SRCS searchdbustest.cpp)
-add_executable(searchdbustest ${searchdbustest_SRCS})
+add_executable(searchdbustest  searchdbustest.cpp)
 target_link_libraries(searchdbustest Qt::DBus Qt::Widgets KF5::PimCommonAkonadi)
 
 #####
-set(searchmailertest_SRCS searchmailertest.cpp)
-add_executable(searchmailertest ${searchmailertest_SRCS})
+add_executable(searchmailertest searchmailertest.cpp)
 target_link_libraries(searchmailertest KF5::MailCommon KF5::Ldap)
 
