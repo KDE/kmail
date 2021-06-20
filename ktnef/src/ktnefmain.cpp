@@ -39,6 +39,7 @@
 #include <QTemporaryFile>
 #include <QUrl>
 #include <kio_version.h>
+#include <kxmlgui_version.h>
 
 #include <KConfigGroup>
 #include <KRecentFilesMenu>
@@ -162,7 +163,11 @@ void KTNEFMain::setupActions()
 
 void KTNEFMain::slotConfigureKeys()
 {
-    KShortcutsDialog::showDialog(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, true, this);
+#if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 83, 0)
+    KShortcutsDialog::configure(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, this);
+#else
+    KShortcutsDialog::showDialog(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, /*isModal*/ true, this);
+#endif
 }
 
 void KTNEFMain::setupStatusbar()
