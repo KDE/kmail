@@ -8,6 +8,7 @@
 #include "mailmergeagent_debug.h"
 #include "mailmergeagentadaptor.h"
 #include "mailmergeagentsettings.h"
+#include "mailmergeconfiguredialog.h"
 #include "mailmergemanager.h"
 #include <AgentInstance>
 #include <AgentManager>
@@ -117,23 +118,24 @@ bool MailMergeAgent::enabledAgent() const
 
 void MailMergeAgent::configure(WId windowId)
 {
-    //    QPointer<SendLaterConfigureDialog> dialog = new SendLaterConfigureDialog();
-    //    if (windowId) {
-    //        dialog->setAttribute(Qt::WA_NativeWindow, true);
-    //        KWindowSystem::setMainWindow(dialog->windowHandle(), windowId);
-    //    }
-    //    connect(this, &MailMergeAgent::needUpdateConfigDialogBox, dialog.data(), &SendLaterConfigureDialog::slotNeedToReloadConfig);
+    QPointer<MailMergeConfigureDialog> dialog = new MailMergeConfigureDialog();
+    if (windowId) {
+        dialog->setAttribute(Qt::WA_NativeWindow, true);
+        KWindowSystem::setMainWindow(dialog->windowHandle(), windowId);
+    }
+    //    connect(this, &MailMergeAgent::needUpdateConfigDialogBox, dialog.data(), &MailMergeConfigureDialog::slotNeedToReloadConfig);
     //    connect(dialog.data(), &SendLaterConfigureDialog::sendNow, this, &MailMergeAgent::slotSendNow);
-    //    if (dialog->exec()) {
-    //        mManager->load();
-    //        const QVector<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
-    //        if (!listMessage.isEmpty()) {
-    //            // Will delete in specific job when done.
-    //            auto sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);
-    //            sendlaterremovejob->start();
-    //        }
-    //    }
-    //    delete dialog;
+    if (dialog->exec()) {
+        // TODO
+        //        mManager->load();
+        //        const QVector<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
+        //        if (!listMessage.isEmpty()) {
+        //            // Will delete in specific job when done.
+        //            auto sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);
+        //            sendlaterremovejob->start();
+        //        }
+    }
+    delete dialog;
 }
 
 void MailMergeAgent::removeItem(qint64 item)
