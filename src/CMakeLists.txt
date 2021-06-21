@@ -21,27 +21,39 @@ add_subdirectory(kontactplugin)
 ########### kmailprivate ###############
 
 
-set(kmailprivate_attributes_LIB_SRCS
-    attributes/taskattribute.cpp
+
+
+set(kmail_common_SRCS)
+ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail
+        DESCRIPTION "kmail (kmail)"
+        OLD_CATEGORY_NAMES log_kmail
+        EXPORT KMAIL
     )
 
-set(kmailprivate_folderarchive_LIB_SRCS
+add_library(kmailprivate ${kmailprivate_LIB_SRCS})
+if (TARGET KUserFeedbackWidgets)
+    target_sources(kmailprivate PRIVATE
+        userfeedback/accountinfosource.cpp
+        userfeedback/plugininfosource.cpp
+        userfeedback/kmailuserfeedbackprovider.cpp
+        )
+endif()
+
+target_sources(kmailprivate PRIVATE
+    ${kmail_common_SRCS}
+    attributes/taskattribute.cpp
     folderarchive/folderarchiveaccountinfo.cpp
     folderarchive/folderarchiveutil.cpp
     folderarchive/folderarchivecache.cpp
     folderarchive/folderarchiveagentcheckcollection.cpp
     folderarchive/folderarchivemanager.cpp
     folderarchive/folderarchiveagentjob.cpp
-    )
-set(kmailprivate_collectionpage_LIB_SRCS
     collectionpage/collectiontemplatespage.cpp
     collectionpage/collectionviewpage.cpp
     collectionpage/collectionquotapage.cpp
     collectionpage/collectionquotawidget.cpp
     collectionpage/collectionmailinglistpage.cpp
     collectionpage/collectionshortcutpage.cpp
-    )
-set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configagentdelegate.cpp
     configuredialog/configuredialoglistview.cpp
     configuredialog/configuredialog.cpp
@@ -53,21 +65,13 @@ set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configureaccountpage.cpp
     configuredialog/configurepluginpage.cpp
     configuredialog/colorlistbox.cpp
-    )
-
-set(kmailprivate_configureplugins_LIB_SRCS
     configuredialog/configureplugins/configurepluginslistwidget.cpp
-    )
-
-set(kmailprivate_searchdialog_LIB_SRCS
     searchdialog/kmsearchmessagemodel.cpp
     searchdialog/searchpatternwarning.cpp
     searchdialog/kmailsearchpatternedit.cpp
     searchdialog/searchwindow.cpp
     searchdialog/searchdescriptionattribute.cpp
     searchdialog/incompleteindexdialog.cpp
-    )
-set(kmailprivate_identity_LIB_SRCS
     identity/identitylistview.cpp
     identity/identitydialog.cpp
     identity/xfaceconfigurator.cpp
@@ -77,8 +81,6 @@ set(kmailprivate_identity_LIB_SRCS
     identity/identityaddvcarddialog.cpp
     identity/identityinvalidfolder.cpp
     identity/identityfolderrequester.cpp
-    )
-set(kmailprivate_editor_LIB_SRCS
     editor/kmcomposereditorng.cpp
     editor/composer.cpp
     editor/codec/codecaction.cpp
@@ -92,28 +94,18 @@ set(kmailprivate_editor_LIB_SRCS
     editor/kmcomposerupdatetemplatejob.cpp
     editor/kmcomposercreatenewcomposerjob.cpp
     editor/pimmessagebox.cpp
-    )
-
-set(kmailprivate_warningwidgets_LIB_SRCS
     editor/warningwidgets/externaleditorwarning.cpp
     editor/warningwidgets/attachmentmissingwarning.cpp
     editor/warningwidgets/incorrectidentityfolderwarning.cpp
     editor/warningwidgets/attachmentaddedfromexternalwarning.cpp
-    )
-
-set(kmailprivate_editor_potentialphishingemail_SRCS
     editor/potentialphishingemail/potentialphishingemailwarning.cpp
     editor/potentialphishingemail/potentialphishingemailjob.cpp
     editor/potentialphishingemail/potentialphishingdetaildialog.cpp
     editor/potentialphishingemail/potentialphishingdetailwidget.cpp
-    )
-set(kmailprivate_dialogs_LIB_SRCS
     dialog/archivefolderdialog.cpp
     dialog/addemailtoexistingcontactdialog.cpp
     dialog/kmknotify.cpp
     dialog/spellcheckerconfigdialog.cpp
-    )
-set(kmailprivate_job_LIB_SRCS
     job/addressvalidationjob.cpp
     job/createnewcontactjob.cpp
     job/addemailtoexistingcontactjob.cpp
@@ -134,69 +126,28 @@ set(kmailprivate_job_LIB_SRCS
     job/createreplymessagejob.cpp
     job/createforwardmessagejob.cpp
     job/dndfromarkjob.cpp
-    )
-
-set(kmailprivate_widgets_LIB_SRCS
     widgets/collectionpane.cpp
     widgets/vacationscriptindicatorwidget.cpp
     widgets/displaymessageformatactionmenu.cpp
     widgets/kactionmenutransport.cpp
     widgets/kactionmenuaccount.cpp
     widgets/zoomlabelwidget.cpp
-    )
-set(kmailprivate_tag_LIB_SRCS
     tag/tagactionmanager.cpp
     tag/tagselectdialog.cpp
     tag/tagmonitormanager.cpp
-    )
-
-
-set(kmailprivate_plugininterface_LIB_SRCS
     plugininterface/kmailplugininterface.cpp
-    )
-
-set(kmailprivate_editor_plugininterface_LIB_SRCS
     editor/plugininterface/kmailplugineditormanagerinterface.cpp
     editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.cpp
     editor/plugininterface/kmailplugineditorinitmanagerinterface.cpp
     editor/plugininterface/kmailplugineditorconverttextmanagerinterface.cpp
     editor/plugininterface/kmailplugingrammareditormanagerinterface.cpp
-    )
-
-set(kmailprivate_checkindexing_LIB_SRCS
     search/checkindexingmanager.cpp
     search/checkindexingjob.cpp
-    )
-    
-set(kmailprivate_sieveimapinstanceinterface_LIB_SRCS
     sieveimapinterface/kmailsieveimapinstanceinterface.cpp
     sieveimapinterface/kmsieveimappasswordprovider.cpp
-    )
-
-set(kmailprivate_undosend_LIB_SRCS
     undosend/undosendcombobox.cpp
     undosend/undosendmanager.cpp
     undosend/undosendcreatejob.cpp
-    )
-
-set(kmailprivate_userfeedback_LIB_SRCS)
-if (TARGET KUserFeedbackWidgets)
-    set(kmailprivate_userfeedback_LIB_SRCS
-        userfeedback/accountinfosource.cpp
-	userfeedback/plugininfosource.cpp
-        userfeedback/kmailuserfeedbackprovider.cpp
-        )
-endif()
-
-set(kmail_common_SRCS)
-ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail
-        DESCRIPTION "kmail (kmail)"
-        OLD_CATEGORY_NAMES log_kmail
-        EXPORT KMAIL
-    )
-
-set(kmailprivate_LIB_SRCS
-    ${kmail_common_SRCS}
     kmmainwin.cpp
     settings/kmailsettings.cpp
     kmreaderwin.cpp
@@ -216,26 +167,6 @@ set(kmailprivate_LIB_SRCS
     kmlaunchexternalcomponent.cpp
     manageshowcollectionproperties.cpp
     kmmigrateapplication.cpp
-    ${kmailprivate_configureplugins_LIB_SRCS}
-    ${kmailprivate_attributes_LIB_SRCS}
-    ${kmailprivate_tag_LIB_SRCS}
-    ${kmailprivate_job_LIB_SRCS}
-    ${kmailprivate_widgets_LIB_SRCS}
-    ${kmailprivate_dialogs_LIB_SRCS}
-    ${kmailprivate_warningwidgets_LIB_SRCS}
-    ${kmailprivate_folderarchive_LIB_SRCS}
-    ${kmailprivate_collectionpage_LIB_SRCS}
-    ${kmailprivate_configuredialog_LIB_SRCS}
-    ${kmailprivate_searchdialog_LIB_SRCS}
-    ${kmailprivate_identity_LIB_SRCS}
-    ${kmailprivate_editor_LIB_SRCS}
-    ${kmailprivate_editor_potentialphishingemail_SRCS}
-    ${kmailprivate_plugininterface_LIB_SRCS}
-    ${kmailprivate_editor_plugininterface_LIB_SRCS}
-    ${kmailprivate_checkindexing_LIB_SRCS}
-    ${kmailprivate_sieveimapinstanceinterface_LIB_SRCS}
-    ${kmailprivate_undosend_LIB_SRCS}
-    ${kmailprivate_userfeedback_LIB_SRCS}
     kmail.qrc
     )
 
@@ -277,7 +208,8 @@ qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/mailfilteragent/org.freedesktop.Akonadi.MailFilterAgent.xml
     )
 
-ki18n_wrap_ui(kmailprivate_LIB_SRCS
+
+ki18n_wrap_ui(kmailprivate
     ui/composercryptoconfiguration.ui
     ui/warningconfiguration.ui
     ui/smimeconfiguration.ui
@@ -311,8 +243,9 @@ if (TARGET KUserFeedbackWidgets)
     set(kmail_userfeedback_LIB KUserFeedbackWidgets)
 endif()
 
+target_sources(kmailprivate PRIVATE ${kmailprivate_LIB_SRCS})
 
-add_library(kmailprivate ${kmailprivate_LIB_SRCS})
+
 pim_target_precompile_headers(kmailprivate PUBLIC ../kmail_pch.h)
 if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(kmailprivate PROPERTIES UNITY_BUILD ON)
