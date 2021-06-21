@@ -24,10 +24,8 @@
 #include "xfaceconfigurator.h"
 #include <KEditListWidget>
 #include <MailCommon/FolderRequester>
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
-#endif
 
 #include <MailCommon/MailKernel>
 
@@ -105,9 +103,12 @@ class KeySelectionCombo : public Kleo::KeySelectionCombo
     Q_OBJECT
 
 public:
-    enum KeyType { SigningKey, EncryptionKey };
+    enum KeyType {
+        SigningKey,
+        EncryptionKey,
+    };
 
-    KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, QWidget *parent);
+    explicit KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, QWidget *parent);
     ~KeySelectionCombo() override;
 
     void setIdentity(const QString &name, const QString &email);
@@ -118,8 +119,8 @@ private:
     void onCustomItemSelected(const QVariant &type);
     QString mEmail;
     QString mName;
-    KeyType mKeyType;
-    GpgME::Protocol mProtocol;
+    const KeyType mKeyType;
+    const GpgME::Protocol mProtocol;
 };
 
 class KeyGenerationJob : public QGpgME::Job
@@ -127,7 +128,7 @@ class KeyGenerationJob : public QGpgME::Job
     Q_OBJECT
 
 public:
-    KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
+    explicit KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
     ~KeyGenerationJob() override;
 
     void slotCancel() override;
@@ -678,9 +679,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mXFaceConfigurator = new XFaceConfigurator(mTabWidget);
     mTabWidget->addTab(mXFaceConfigurator, i18n("Picture"));
 
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     resize(KMailSettings::self()->identityDialogSize());
-#endif
     mNameEdit->setFocus();
 
     connect(mTabWidget, &QTabWidget::currentChanged, this, &IdentityDialog::slotAboutToShow);
@@ -688,9 +687,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
 IdentityDialog::~IdentityDialog()
 {
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     KMailSettings::self()->setIdentityDialogSize(size());
-#endif
 }
 
 void IdentityDialog::slotHelp()

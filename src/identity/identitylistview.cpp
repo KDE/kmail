@@ -13,9 +13,7 @@
 #include <KIdentityManagement/kidentitymanagement/identity.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
-#endif
 
 #include "kmail_debug.h"
 #include <KLocalizedString>

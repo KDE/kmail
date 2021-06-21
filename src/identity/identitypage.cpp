@@ -13,10 +13,8 @@
 
 #include "identitydialog.h"
 #include "newidentitydialog.h"
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
-#endif
 
 #include <MailCommon/MailKernel>
 
@@ -96,7 +94,6 @@ void IdentityPage::save()
     mIdentityManager->sort();
     mIdentityManager->commit();
 
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     if (mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1) {
         // have more than one identity, so better show the combo in the
         // composer now:
@@ -111,7 +108,6 @@ void IdentityPage::save()
         showHeaders &= ~KMail::Composer::HDR_IDENTITY;
         KMailSettings::self()->setHeaders(showHeaders);
     }
-#endif
 }
 
 void IdentityPage::slotNewIdentity()
