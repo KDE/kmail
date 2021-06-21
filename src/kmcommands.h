@@ -59,7 +59,12 @@ class KMAILTESTS_TESTS_EXPORT KMCommand : public QObject
     Q_OBJECT
 
 public:
-    enum Result { Undefined, OK, Canceled, Failed };
+    enum Result {
+        Undefined,
+        OK,
+        Canceled,
+        Failed,
+    };
 
     // Trivial constructor, don't retrieve any messages
     explicit KMCommand(QWidget *parent = nullptr);
@@ -458,7 +463,11 @@ class KMAILTESTS_TESTS_EXPORT KMSetTagCommand : public KMCommand
     Q_OBJECT
 
 public:
-    enum SetTagMode { AddIfNotExisting, Toggle, CleanExistingAndAddNew };
+    enum SetTagMode {
+        AddIfNotExisting,
+        Toggle,
+        CleanExistingAndAddNew,
+    };
 
     KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::Item::List &item, SetTagMode mode = AddIfNotExisting);
 
@@ -596,7 +605,12 @@ class KMAILTESTS_TESTS_EXPORT KMTrashMsgCommand final : public KMCommand
     Q_OBJECT
 
 public:
-    enum TrashOperation { Unknown, MoveToTrash, Delete, Both };
+    enum TrashOperation {
+        Unknown,
+        MoveToTrash,
+        Delete,
+        Both,
+    };
 
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref);
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref);

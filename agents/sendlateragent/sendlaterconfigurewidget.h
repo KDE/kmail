@@ -37,7 +37,13 @@ public:
     explicit SendLaterWidget(QWidget *parent = nullptr);
     ~SendLaterWidget() override;
 
-    enum SendLaterColumn { To = 0, Subject, SendAround, Recursive, MessageId };
+    enum SendLaterColumn {
+        To = 0,
+        Subject,
+        SendAround,
+        Recursive,
+        MessageId,
+    };
 
     void save();
     void saveTreeWidgetHeader(KConfigGroup &group);

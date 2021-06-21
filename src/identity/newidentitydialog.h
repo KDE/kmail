@@ -29,7 +29,11 @@ class NewIdentityDialog : public QDialog
     Q_OBJECT
 
 public:
-    enum DuplicateMode { Empty = 0, ControlCenter, ExistingEntry };
+    enum DuplicateMode {
+        Empty = 0,
+        ControlCenter,
+        ExistingEntry,
+    };
     explicit NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent = nullptr);
 
     Q_REQUIRED_RESULT QString identityName() const;

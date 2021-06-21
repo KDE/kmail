@@ -33,10 +33,14 @@ public:
         Explicit = 0x4,
         BeforeOutbound = 0x8,
         AllFolders = 0x16,
-        All = Inbound | BeforeOutbound | Outbound | Explicit | AllFolders
+        All = Inbound | BeforeOutbound | Outbound | Explicit | AllFolders,
     };
 
-    enum FilterRequires { Unknown = 0, HeaderMessage = 1, FullMessage = 2 };
+    enum FilterRequires {
+        Unknown = 0,
+        HeaderMessage = 1,
+        FullMessage = 2,
+    };
 
     /**
      * Creates a new filter manager.

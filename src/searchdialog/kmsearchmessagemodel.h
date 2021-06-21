@@ -13,7 +13,14 @@ class KMSearchMessageModel : public Akonadi::MessageModel
     Q_OBJECT
 
 public:
-    enum Column { Collection, Subject, Sender, Receiver, Date, Size };
+    enum Column {
+        Collection,
+        Subject,
+        Sender,
+        Receiver,
+        Date,
+        Size,
+    };
     explicit KMSearchMessageModel(Akonadi::Monitor *monitor, QObject *parent = nullptr);
     ~KMSearchMessageModel() override;
 

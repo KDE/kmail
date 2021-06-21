@@ -25,7 +25,14 @@ class SendLaterManager : public QObject
 {
     Q_OBJECT
 public:
-    enum ErrorType { ItemNotFound = 0, TooManyItemFound = 1, CanNotFetchItem = 2, MailDispatchDoesntWork = 3, CanNotCreateTransport = 4, UnknownError = 5 };
+    enum ErrorType {
+        ItemNotFound = 0,
+        TooManyItemFound = 1,
+        CanNotFetchItem = 2,
+        MailDispatchDoesntWork = 3,
+        CanNotCreateTransport = 4,
+        UnknownError = 5,
+    };
 
     explicit SendLaterManager(QObject *parent);
     ~SendLaterManager() override;

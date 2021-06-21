@@ -31,7 +31,13 @@ protected:
     }
 
 public:
-    enum TemplateContext { New, Reply, ReplyToAll, Forward, NoTemplate };
+    enum TemplateContext {
+        New,
+        Reply,
+        ReplyToAll,
+        Forward,
+        NoTemplate,
+    };
     enum VisibleHeaderFlag {
         HDR_FROM = 0x01,
         HDR_REPLY_TO = 0x02,
@@ -40,7 +46,7 @@ public:
         HDR_TRANSPORT = 0x200,
         HDR_FCC = 0x400,
         HDR_DICTIONARY = 0x800,
-        HDR_ALL = 0xfff
+        HDR_ALL = 0xfff,
     };
     using VisibleHeaderFlags = QFlags<VisibleHeaderFlag>;
 

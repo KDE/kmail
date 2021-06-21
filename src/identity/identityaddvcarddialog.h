@@ -16,7 +16,11 @@ class KMAILTESTS_TESTS_EXPORT IdentityAddVcardDialog : public QDialog
 {
     Q_OBJECT
 public:
-    enum DuplicateMode { Empty, ExistingEntry, FromExistingVCard };
+    enum DuplicateMode {
+        Empty,
+        ExistingEntry,
+        FromExistingVCard,
+    };
 
     explicit IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent = nullptr);
     ~IdentityAddVcardDialog() override;

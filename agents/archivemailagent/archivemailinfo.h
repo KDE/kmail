@@ -21,7 +21,12 @@ public:
 
     ArchiveMailInfo &operator=(const ArchiveMailInfo &old);
 
-    enum ArchiveUnit { ArchiveDays = 0, ArchiveWeeks, ArchiveMonths, ArchiveYears };
+    enum ArchiveUnit {
+        ArchiveDays = 0,
+        ArchiveWeeks,
+        ArchiveMonths,
+        ArchiveYears,
+    };
 
     Q_REQUIRED_RESULT QUrl realUrl(const QString &folderName, bool &dirExist) const;
 

@@ -16,7 +16,11 @@ public:
     FolderArchiveAccountInfo(const KConfigGroup &config);
     ~FolderArchiveAccountInfo();
 
-    enum FolderArchiveType { UniqueFolder, FolderByMonths, FolderByYears };
+    enum FolderArchiveType {
+        UniqueFolder,
+        FolderByMonths,
+        FolderByYears,
+    };
 
     Q_REQUIRED_RESULT bool isValid() const;
 
