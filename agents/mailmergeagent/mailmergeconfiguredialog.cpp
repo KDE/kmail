@@ -38,12 +38,11 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     connect(buttonBox, &QDialogButtonBox::rejected, this, &MailMergeConfigureDialog::reject);
 
     mWidget->setObjectName(QStringLiteral("mailmergewidget"));
-    //    connect(mWidget, &SendLaterWidget::sendNow, this, &SendLaterConfigureDialog::sendNow);
     mainLayout->addWidget(mWidget);
     mainLayout->addWidget(buttonBox);
     connect(okButton, &QPushButton::clicked, this, &MailMergeConfigureDialog::slotSave);
 
-    // readConfig();
+    readConfig();
 
     KAboutData aboutData = KAboutData(QStringLiteral("mailmergeagent"),
                                       i18n("Mail Merge Agent"),
@@ -66,6 +65,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
 
 MailMergeConfigureDialog::~MailMergeConfigureDialog()
 {
+    writeConfig();
 }
 
 void MailMergeConfigureDialog::slotSave()
