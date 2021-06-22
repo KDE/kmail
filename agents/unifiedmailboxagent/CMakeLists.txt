@@ -5,15 +5,8 @@ if(BUILD_TESTING)
 endif()
 
 
-set(unifiedmailbox_agent_SRCS
-    unifiedmailbox.cpp
-    unifiedmailboxagent.cpp
-    unifiedmailboxmanager.cpp
-    unifiedmailboxeditor.cpp
-    settingsdialog.cpp
-    mailkernel.cpp
-)
-ecm_qt_declare_logging_category(unifiedmailbox_agent_SRCS HEADER unifiedmailboxagent_debug.h IDENTIFIER UNIFIEDMAILBOXAGENT_LOG CATEGORY_NAME org.kde.pim.unifiedmailboxagent
+add_executable(akonadi_unifiedmailbox_agent)
+ecm_qt_declare_logging_category(akonadi_unifiedmailbox_agent HEADER unifiedmailboxagent_debug.h IDENTIFIER UNIFIEDMAILBOXAGENT_LOG CATEGORY_NAME org.kde.pim.unifiedmailboxagent
         DESCRIPTION "kmail (unifiedmailboxagent)"
         EXPORT KMAIL
     )
@@ -23,8 +16,16 @@ kconfig_add_kcfg_files(unifiedmailbox_agent_SRCS
 )
 
 qt_add_dbus_adaptor(unifiedmailbox_agent_SRCS org.freedesktop.Akonadi.UnifiedMailboxAgent.xml unifiedmailboxagent.h UnifiedMailboxAgent)
+target_sources(akonadi_unifiedmailbox_agent PRIVATE
+    unifiedmailbox.cpp
+    unifiedmailboxagent.cpp
+    unifiedmailboxmanager.cpp
+    unifiedmailboxeditor.cpp
+    settingsdialog.cpp
+    mailkernel.cpp
+    ${unifiedmailbox_agent_SRCS}
+)
 
-add_executable(akonadi_unifiedmailbox_agent ${unifiedmailbox_agent_SRCS})
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES UNITY_BUILD ON)
 #endif()

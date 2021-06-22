@@ -2,24 +2,16 @@
 # SPDX-License-Identifier: BSD-3-Clause
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_followupreminder_agent\")
 
+add_library(followupreminderagent STATIC)
 
-set(followupreminderagent_SRCS
-    followupremindermanager.cpp
-    followupremindernoanswerdialog.cpp
-    followupreminderinfowidget.cpp
-    followupreminderinfo.cpp
-    followupreminderutil.cpp
-    jobs/followupreminderjob.cpp
-    jobs/followupreminderfinishtaskjob.cpp
-    jobs/followupremindershowmessagejob.cpp
-    )
+
 
 
 kconfig_add_kcfg_files(followupreminderagent_SRCS
         followupreminderagentsettings.kcfgc
     )
 
-ecm_qt_declare_logging_category(followupreminderagent_SRCS HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent
+ecm_qt_declare_logging_category(followupreminderagent HEADER followupreminderagent_debug.h IDENTIFIER FOLLOWUPREMINDERAGENT_LOG CATEGORY_NAME org.kde.pim.followupreminderagent
         DESCRIPTION "kmail (followupreminderagent)"
         OLD_CATEGORY_NAMES log_followupreminderagent
         EXPORT KMAIL
@@ -30,8 +22,18 @@ qt_add_dbus_adaptor(followupreminderagent_SRCS org.freedesktop.Akonadi.FollowUpR
 qt_add_dbus_interface(followupreminderagent_SRCS org.freedesktop.Notifications.xml notifications_interface)
 qt_add_dbus_interface(followupreminderagent_SRCS org.freedesktop.DBus.Properties.xml dbusproperties)
 
+target_sources(followupreminderagent PRIVATE
+    followupremindermanager.cpp
+    followupremindernoanswerdialog.cpp
+    followupreminderinfowidget.cpp
+    followupreminderinfo.cpp
+    followupreminderutil.cpp
+    jobs/followupreminderjob.cpp
+    jobs/followupreminderfinishtaskjob.cpp
+    jobs/followupremindershowmessagejob.cpp
+     ${followupreminderagent_SRCS}
+    )
 
-add_library(followupreminderagent STATIC ${followupreminderagent_SRCS})
 pim_target_precompile_headers(followupreminderagent PUBLIC ../../kmail_pch.h)
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(followupreminderagent PROPERTIES UNITY_BUILD ON)

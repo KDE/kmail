@@ -75,17 +75,16 @@ endif()
 
 ########## Configuration ##############
 
-set(archivemailagentconfig_SRCS
+
+kcoreaddons_add_plugin(archivemailagentconfig
+    JSON archivemailagentconfig.json
+    INSTALL_NAMESPACE akonadi/config
+)
+target_sources(archivemailagentconfig PRIVATE
     addarchivemaildialog.cpp
     archivemailwidget.cpp
     widgets/formatcombobox.cpp
     widgets/unitcombobox.cpp
-)
-
-kcoreaddons_add_plugin(archivemailagentconfig
-    JSON archivemailagentconfig.json
-    SOURCES ${archivemailagentconfig_SRCS}
-    INSTALL_NAMESPACE akonadi/config
 )
 target_link_libraries(archivemailagentconfig
     archivemailagent

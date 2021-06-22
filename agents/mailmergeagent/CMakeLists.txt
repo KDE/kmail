@@ -15,6 +15,7 @@ ecm_qt_declare_logging_category(mailmergeagent HEADER mailmergeagent_debug.h IDE
         EXPORT KMAIL
     )
 
+qt_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)
 
 target_sources(mailmergeagent PRIVATE
     mailmergeagent.cpp
@@ -22,11 +23,8 @@ target_sources(mailmergeagent PRIVATE
     mailmergeconfiguredialog.cpp
     mailmergeconfigurewidget.cpp
     mailmergeutil.cpp
+    ${mailmergeagent_SRCS}
     )
-
-qt_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)
-
-target_sources(mailmergeagent PRIVATE ${mailmergeagent_SRCS})
 
 kconfig_add_kcfg_files(mailmergeagent mailmergeagentsettings.kcfgc)
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)

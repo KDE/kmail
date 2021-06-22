@@ -2,25 +2,27 @@
 add_subdirectory( kconf_update )
 
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_mailfilter_agent\")
+add_executable(akonadi_mailfilter_agent)
 
-set(akonadi_mailfilter_agent_SRCS
+qt_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS org.freedesktop.Akonadi.MailFilterAgent.xml mailfilteragent.h MailFilterAgent)
+target_sources(akonadi_mailfilter_agent PRIVATE
     dummykernel.cpp
     filterlogdialog.cpp
     filtermanager.cpp
     mailfilteragent.cpp
     mailfilterpurposemenuwidget.cpp
+    ${akonadi_mailfilter_agent_SRCS}
     )
 
-qt_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS org.freedesktop.Akonadi.MailFilterAgent.xml mailfilteragent.h MailFilterAgent)
 
-ecm_qt_declare_logging_category(akonadi_mailfilter_agent_SRCS HEADER mailfilteragent_debug.h IDENTIFIER MAILFILTERAGENT_LOG CATEGORY_NAME org.kde.pim.mailfilteragent
+
+ecm_qt_declare_logging_category(akonadi_mailfilter_agent HEADER mailfilteragent_debug.h IDENTIFIER MAILFILTERAGENT_LOG CATEGORY_NAME org.kde.pim.mailfilteragent
         DESCRIPTION "kmail (mailfilter agent)"
         OLD_CATEGORY_NAMES log_mailfilteragent
         EXPORT KMAIL
     )
 
 
-add_executable(akonadi_mailfilter_agent ${akonadi_mailfilter_agent_SRCS})
 if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(akonadi_mailfilter_agent PROPERTIES UNITY_BUILD ON)
 endif()
