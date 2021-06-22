@@ -17,6 +17,8 @@ ecm_qt_declare_logging_category(mailmergeagent HEADER mailmergeagent_debug.h IDE
 
 qt_add_dbus_adaptor(mailmergeagent_SRCS org.freedesktop.Akonadi.MailMergeAgent.xml mailmergeagent.h MailMergeAgent)
 
+ki18n_wrap_ui(mailmergeagent_SRCS ui/mailmergeconfigurewidget.ui)
+
 target_sources(mailmergeagent PRIVATE
     mailmergeagent.cpp
     mailmergemanager.cpp

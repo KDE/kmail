@@ -5,13 +5,14 @@
 */
 
 #include "mailmergeconfigurewidget.h"
+#include "ui_mailmergeconfigurewidget.h"
 #include <QVBoxLayout>
 
 MailMergeConfigureWidget::MailMergeConfigureWidget(QWidget *parent)
     : QWidget(parent)
 {
-    auto mainLayout = new QVBoxLayout(this);
-    mainLayout->setObjectName(QStringLiteral("mainLayout"));
+    mWidget = new Ui::MailMergeConfigureWidget;
+    mWidget->setupUi(this);
 }
 
 MailMergeConfigureWidget::~MailMergeConfigureWidget()

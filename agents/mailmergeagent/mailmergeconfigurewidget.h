@@ -7,6 +7,10 @@
 #pragma once
 
 #include <QWidget>
+namespace Ui
+{
+class MailMergeConfigureWidget;
+};
 
 class MailMergeConfigureWidget : public QWidget
 {
@@ -14,4 +18,7 @@ class MailMergeConfigureWidget : public QWidget
 public:
     explicit MailMergeConfigureWidget(QWidget *parent = nullptr);
     ~MailMergeConfigureWidget() override;
+
+private:
+    Ui::MailMergeConfigureWidget *mWidget = nullptr;
 };
