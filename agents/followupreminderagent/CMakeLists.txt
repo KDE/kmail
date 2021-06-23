@@ -7,7 +7,7 @@ add_library(followupreminderagent STATIC)
 
 
 
-kconfig_add_kcfg_files(followupreminderagent_SRCS
+kconfig_add_kcfg_files(followupreminderagent
         followupreminderagentsettings.kcfgc
     )
 

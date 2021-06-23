@@ -11,7 +11,7 @@ ecm_qt_declare_logging_category(akonadi_unifiedmailbox_agent HEADER unifiedmailb
         EXPORT KMAIL
     )
 
-kconfig_add_kcfg_files(unifiedmailbox_agent_SRCS
+kconfig_add_kcfg_files(akonadi_unifiedmailbox_agent
     settings.kcfgc
 )
 
