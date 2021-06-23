@@ -53,7 +53,7 @@ public:
         return mMailboxes.end();
     }
 
-    static bool isUnifiedMailbox(const Akonadi::Collection &col);
+    Q_REQUIRED_RESULT static bool isUnifiedMailbox(const Akonadi::Collection &col);
 
     // Internal change recorder, for unittests
     Akonadi::ChangeRecorder &changeRecorder();
