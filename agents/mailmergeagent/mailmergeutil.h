@@ -5,9 +5,11 @@
 */
 
 #pragma once
-
-class MailMergeUtil
+#include <QString>
+/** Send later utilities. */
+namespace MailMergeUtil
 {
-public:
-    MailMergeUtil();
+Q_REQUIRED_RESULT QString mailMergePattern();
+Q_REQUIRED_RESULT bool mailMergeAgentEnabled();
+void forceReparseConfiguration();
 };

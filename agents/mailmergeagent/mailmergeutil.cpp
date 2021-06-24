@@ -5,7 +5,20 @@
 */
 
 #include "mailmergeutil.h"
+#include "mailmergeagentsettings.h"
 
-MailMergeUtil::MailMergeUtil()
+void MailMergeUtil::forceReparseConfiguration()
 {
+    MailMergeAgentSettings::self()->save();
+    MailMergeAgentSettings::self()->config()->reparseConfiguration();
+}
+
+bool MailMergeUtil::mailMergeAgentEnabled()
+{
+    return MailMergeAgentSettings::self()->enabled();
+}
+
+QString MailMergeUtil::mailMergePattern()
+{
+    return QStringLiteral("MailMergeItem %1");
 }
