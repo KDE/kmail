@@ -3403,7 +3403,7 @@ void KMComposerWin::slotEditKeys()
 #if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 84, 0)
     KShortcutsDialog::configure(actionCollection(), KShortcutsEditor::LetterShortcutsDisallowed);
 #else
-    KShortcutsDialog::showDialog(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, /*isModal*/ true, this);
+    KShortcutsDialog::showDialog(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, this);
 #endif
 }
 
