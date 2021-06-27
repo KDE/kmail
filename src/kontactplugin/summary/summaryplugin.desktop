@@ -11,7 +11,7 @@ X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-License=LGPL
 X-KDE-PluginInfo-EnabledByDefault=true
 X-KDE-ConfigModuleNamespace=pim/kcms/summary/
-X-KDE-Weight=10
+X-KDE-Weight=100
 
 Comment=Kontact SummaryView Plugin
 Comment[af]=Kontact opsomming aansig inprop module
