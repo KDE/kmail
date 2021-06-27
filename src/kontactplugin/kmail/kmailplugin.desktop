@@ -15,6 +15,8 @@ X-KDE-PluginInfo-Name=kontact_kmailplugin
 X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-License=GPL
 X-KDE-PluginInfo-EnabledByDefault=true
+X-KDE-ConfigModuleNamespace=pim/kcms/kmail/
+X-KDE-Weight=20
 
 Comment=Kontact KMail Plugin
 Comment[af]=Kontact kMail inprop module

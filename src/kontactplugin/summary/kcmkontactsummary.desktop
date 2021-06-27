@@ -9,7 +9,7 @@ X-KDE-FactoryName=kontactsummary
 X-KDE-ParentApp=kontact_summaryplugin
 X-KDE-ParentComponents=kontact_summaryplugin
 X-KDE-CfgDlgHierarchy=KontactSummary
-X-KDE-Weight=1
+X-KDE-Weight=100
 
 Name=Summaries
 Name[ar]=الملخّصات
