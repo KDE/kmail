@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2021 Laurent Montel <montel@kde.org>
+# SPDX-License-Identifier: CC0-1.0
 # Suppression file for ASAN/LSAN
 
 leak:libspeechd
