@@ -40,6 +40,7 @@ private:
     QVector<PluginItem *> mAgentPluginsItems;
     QVector<PluginItem *> mPluginConvertTextItems;
     QVector<PluginItem *> mPluginConfigureItems;
+    QVector<PluginItem *> mPluginCheckBeforeDeletingItems;
     QVector<PimCommon::PluginUtilData> mPluginUtilDataList;
 };
 

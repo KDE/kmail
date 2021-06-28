@@ -19,6 +19,8 @@
 #include <MessageComposer/PluginEditorInitManager>
 #include <MessageComposer/PluginEditorManager>
 #include <MessageViewer/HeaderStylePluginManager>
+#include <MessageViewer/MessageViewerCheckBeforeDeletingPlugin>
+#include <MessageViewer/MessageViewerCheckBeforeDeletingPluginManager>
 #include <MessageViewer/ViewerPluginManager>
 #include <PimCommon/CustomToolsPlugin>
 #include <PimCommon/GenericPluginManager>
@@ -40,6 +42,11 @@
 
 namespace
 {
+QString pluginEditorCheckBeforeDeletingGroupName()
+{
+    return QStringLiteral("plugincheckbeforedeletinggroupname");
+}
+
 QString pluginEditorGroupName()
 {
     return QStringLiteral("plugineditorgroupname");
@@ -133,6 +140,9 @@ void ConfigurePluginsListWidget::save()
     PimCommon::ConfigurePluginsListWidget::savePlugins(MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
                                                        MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
                                                        mPluginConvertTextItems);
+    PimCommon::ConfigurePluginsListWidget::savePlugins(MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->configGroupName(),
+                                                       MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->configPrefixSettingKey(),
+                                                       mPluginCheckBeforeDeletingItems);
     saveAkonadiAgent();
 }
 
@@ -166,6 +176,7 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
     changeState(mPluginEditorInitItems);
     changeState(mPluginConvertTextItems);
     changeState(mPluginEditorGrammarItems);
+    changeState(mPluginCheckBeforeDeletingItems);
 }
 
 void ConfigurePluginsListWidget::initialize()
@@ -248,6 +259,13 @@ void ConfigurePluginsListWidget::initialize()
                                                         mPluginConfigureItems,
                                                         configurePluginGroupName(),
                                                         false);
+
+    PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->pluginsDataList(),
+                                                        i18n("Misc"),
+                                                        MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->configGroupName(),
+                                                        MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->configPrefixSettingKey(),
+                                                        mPluginCheckBeforeDeletingItems,
+                                                        pluginEditorCheckBeforeDeletingGroupName());
 
     // Load Agent Plugin
     initializeAgentPlugins();
@@ -349,6 +367,10 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &groupName, 
         } else if (groupName == pluginEditorCheckBeforeGroupName()) {
             MessageComposer::PluginEditorCheckBeforeSend *plugin =
                 MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginFromIdentifier(identifier);
+            plugin->showConfigureDialog(this);
+        } else if (groupName == pluginEditorCheckBeforeDeletingGroupName()) {
+            MessageViewer::MessageViewerCheckBeforeDeletingPlugin *plugin =
+                MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
         } else if (groupName == pluginEditorConvertTextGroupName()) {
             MessageComposer::PluginEditorConvertText *plugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginFromIdentifier(identifier);
