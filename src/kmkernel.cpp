@@ -2011,6 +2011,37 @@ void KMKernel::reloadFolderArchiveConfig()
     mFolderArchiveManager->reloadConfig();
 }
 
+bool KMKernel::replyMail(qint64 serialNumber, bool replyToAll)
+{
+    KMMainWidget *mainWidget = nullptr;
+
+    // First look for a KMainWindow.
+    const auto lst = KMainWindow::memberList();
+    for (KMainWindow *window : lst) {
+        // Then look for a KMMainWidget.
+        QList<KMMainWidget *> l = window->findChildren<KMMainWidget *>();
+        if (!l.isEmpty() && l.first()) {
+            mainWidget = l.first();
+            if (window->isActiveWindow()) {
+                break;
+            }
+        }
+    }
+    if (mainWidget) {
+        auto job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
+        job->fetchScope().fetchFullPayload();
+        job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+        if (job->exec()) {
+            if (job->items().count() >= 1) {
+                const auto item = job->items().at(0);
+                mainWidget->replyMessageTo(item, replyToAll);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void KMKernel::slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set)
 {
     if (set.contains("newmailnotifierattribute")) {

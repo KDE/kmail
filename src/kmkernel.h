@@ -333,6 +333,8 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE void reloadFolderArchiveConfig();
 
+    Q_SCRIPTABLE bool replyMail(qint64 serialNumber, bool replyToAll);
+
     /**
      * End of D-Bus callable stuff
      */

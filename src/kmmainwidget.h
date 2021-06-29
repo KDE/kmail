@@ -185,6 +185,7 @@ public:
 
     void clearPluginActions();
 
+    void replyMessageTo(const Akonadi::Item &item, bool replyToAll);
 public Q_SLOTS:
 
     /**
@@ -526,7 +527,6 @@ private:
     void showMessageActivities(const QString &str);
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);
-    void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
     void setupUnifiedMailboxChecker();
     QAction *filterToAction(MailCommon::MailFilter *filter);
     Q_REQUIRED_RESULT Akonadi::Collection::List applyFilterOnCollection(bool recursive);

@@ -4682,18 +4682,11 @@ void KMMainWidget::slotRedirectCurrentMessage()
     }
 }
 
-void KMMainWidget::replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy)
+void KMMainWidget::replyMessageTo(const Akonadi::Item &item, bool replyToAll)
 {
-    if (messageView() && messageView()->viewer()) {
-        Akonadi::Item currentItem = messageView()->viewer()->messageItem();
-        if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
-            return;
-        }
-        const QString text = messageView()->copyText();
-        auto command = new KMReplyCommand(this, currentItem, strategy, text);
-        command->setReplyAsHtml(messageView()->htmlMail());
-        command->start();
-    }
+    auto command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
+    command->setReplyAsHtml(messageView()->htmlMail());
+    command->start();
 }
 
 void KMMainWidget::slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll)
@@ -4702,9 +4695,7 @@ void KMMainWidget::slotReplyMessageTo(const KMime::Message::Ptr &message, bool r
 
     item.setPayload<KMime::Message::Ptr>(message);
     item.setMimeType(KMime::Message::mimeType());
-    auto command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
-    command->setReplyAsHtml(messageView()->htmlMail());
-    command->start();
+    replyMessageTo(item, replyToAll);
 }
 
 void KMMainWidget::showMessageActivities(const QString &str)
