@@ -119,6 +119,7 @@
 #include <AkonadiWidgets/controlgui.h>
 #include <AkonadiWidgets/entitylistview.h>
 #include <AkonadiWidgets/etmviewstatesaver.h>
+#include <AkonadiWidgets/standardactionmanager.h>
 
 #include <KEmailAddress>
 #include <KSieveUi/ManageSieveScriptsDialog>
@@ -133,15 +134,14 @@
 
 #include <PimCommon/LogActivitiesManager>
 
-// KDELIBS includes
 #include "kmail_debug.h"
+// KF5 includes
 #include <KAcceleratorManager>
 #include <KActionMenu>
 #include <KCharsets>
 #include <KMessageBox>
 #include <KStandardShortcut>
 #include <KWindowSystem>
-#include <QMenu>
 
 #include <KConfigGroup>
 #include <KNotification>
@@ -150,20 +150,20 @@
 #include <KStringHandler>
 #include <KToggleAction>
 #include <KXMLGUIFactory>
-#include <QAction>
-#include <QStatusBar>
 
 // Qt includes
+#include <QAction>
 #include <QByteArray>
 #include <QHeaderView>
 #include <QList>
+#include <QMenu>
 #include <QProcess>
 #include <QShortcut>
 #include <QSplitter>
+#include <QStatusBar>
 #include <QVBoxLayout>
 #include <WebEngineViewer/WebHitTestResult>
 // System includes
-#include <AkonadiWidgets/standardactionmanager.h>
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusReply>
