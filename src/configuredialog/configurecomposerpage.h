@@ -64,7 +64,7 @@ private:
     QSpinBox *mMaximumRecipients = nullptr;
     QCheckBox *mImprovePlainTextOfHtmlMessage = nullptr;
     QSpinBox *mMaximumRecentAddress = nullptr;
-#ifdef KDEPIM_ENTERPRISE_BUILD
+#if KDEPIM_ENTERPRISE_BUILD
     QComboBox *mForwardTypeCombo = nullptr;
     QCheckBox *mRecipientCheck = nullptr;
     QSpinBox *mRecipientSpin = nullptr;
