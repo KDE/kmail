@@ -330,14 +330,16 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
         }
     }
 
-    if (parser.isSet(QStringLiteral("cc"))) {
+    const QStringList ccList = parser.values(QStringLiteral("cc"));
+    if (!ccList.isEmpty()) {
         mailto = true;
-        cc = parser.value(QStringLiteral("cc"));
+        cc = ccList.join(QStringLiteral(", "));
     }
 
-    if (parser.isSet(QStringLiteral("bcc"))) {
+    const QStringList bccList = parser.values(QStringLiteral("bcc"));
+    if (!bccList.isEmpty()) {
         mailto = true;
-        bcc = parser.value(QStringLiteral("bcc"));
+        bcc = bccList.join(QStringLiteral(", "));
     }
 
     if (parser.isSet(QStringLiteral("replyTo"))) {
@@ -359,12 +361,9 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     const QStringList attachList = parser.values(QStringLiteral("attach"));
     if (!attachList.isEmpty()) {
         mailto = true;
-        QStringList::ConstIterator end = attachList.constEnd();
-        for (QStringList::ConstIterator it = attachList.constBegin(); it != end; ++it) {
-            if (!(*it).isEmpty()) {
-                if ((*it) != QLatin1String("--")) {
-                    attachURLs.append(makeAbsoluteUrl(*it, workingDir));
-                }
+        for (const QString &attach : attachList) {
+            if (!attach.isEmpty()) {
+                attachURLs.append(makeAbsoluteUrl(attach, workingDir));
             }
         }
     }
