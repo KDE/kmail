@@ -79,7 +79,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
         const QStringList listFilters = q->sender()->property("listFilters").toStringList();
         // TODO improve it
         for (const QString &filterId : listFilters) {
-            for (MailCommon::MailFilter *filter : qAsConst(mFilters)) {
+            for (MailCommon::MailFilter *filter : std::as_const(mFilters)) {
                 if (filter->identifier() == filterId) {
                     listMailFilters << filter;
                     break;
@@ -94,7 +94,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
 
     bool needsFullPayload = q->sender()->property("needsFullPayload").toBool();
 
-    for (const Akonadi::Item &item : qAsConst(items)) {
+    for (const Akonadi::Item &item : std::as_const(items)) {
         ++mCurrentProgressCount;
 
         if ((mTotalProgressCount > 0) && (mCurrentProgressCount != mTotalProgressCount)) {
@@ -150,7 +150,7 @@ void FilterManager::Private::itemFetchJobForFilterDone(KJob *job)
 
         // find correct filter object
         MailCommon::MailFilter *wantedFilter = nullptr;
-        for (MailCommon::MailFilter *filter : qAsConst(mFilters)) {
+        for (MailCommon::MailFilter *filter : std::as_const(mFilters)) {
             if (filter->identifier() == filterId) {
                 wantedFilter = filter;
                 break;
@@ -256,7 +256,7 @@ void FilterManager::Private::endFiltering(const Akonadi::Item & /*item*/) const
 
 bool FilterManager::Private::atLeastOneFilterAppliesTo(const QString &accountId) const
 {
-    for (const MailCommon::MailFilter *filter : qAsConst(mFilters)) {
+    for (const MailCommon::MailFilter *filter : std::as_const(mFilters)) {
         if (filter->applyOnAccount(accountId)) {
             return true;
         }
@@ -267,7 +267,7 @@ bool FilterManager::Private::atLeastOneFilterAppliesTo(const QString &accountId)
 
 bool FilterManager::Private::atLeastOneIncomingFilterAppliesTo(const QString &accountId) const
 {
-    for (const MailCommon::MailFilter *filter : qAsConst(mFilters)) {
+    for (const MailCommon::MailFilter *filter : std::as_const(mFilters)) {
         if (filter->applyOnInbound() && filter->applyOnAccount(accountId)) {
             return true;
         }
@@ -544,7 +544,7 @@ QString FilterManager::createUniqueName(const QString &name) const
 
     while (found) {
         found = false;
-        for (const MailCommon::MailFilter *filter : qAsConst(d->mFilters)) {
+        for (const MailCommon::MailFilter *filter : std::as_const(d->mFilters)) {
             if (!filter->name().compare(uniqueName)) {
                 found = true;
                 ++counter;
@@ -568,7 +568,7 @@ MailCommon::SearchRule::RequiredPart FilterManager::requiredPart(const QString &
 
 void FilterManager::dump() const
 {
-    for (const MailCommon::MailFilter *filter : qAsConst(d->mFilters)) {
+    for (const MailCommon::MailFilter *filter : std::as_const(d->mFilters)) {
         qCDebug(MAILFILTERAGENT_LOG) << filter->asString();
     }
 }

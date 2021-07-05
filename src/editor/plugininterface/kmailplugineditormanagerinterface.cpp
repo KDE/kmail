@@ -91,7 +91,7 @@ void KMailPluginEditorManagerInterface::setComposerInterface(MessageComposer::Co
 bool KMailPluginEditorManagerInterface::processProcessKeyEvent(QKeyEvent *event)
 {
     if (!mListPluginInterface.isEmpty()) {
-        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
+        for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
             if (static_cast<MessageComposer::PluginEditor *>(interface->plugin())->canProcessKeyEvent()) {
                 if (interface->processProcessKeyEvent(event)) {
                     return true;
@@ -120,7 +120,7 @@ QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer:
 void KMailPluginEditorManagerInterface::setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType type)
 {
     if (!mStatusBarWidget.isEmpty()) {
-        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
+        for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
             if (auto w = interface->statusBarWidget()) {
                 w->setEnabled((interface->applyOnFieldTypes() & type));
             }
@@ -131,7 +131,7 @@ void KMailPluginEditorManagerInterface::setStatusBarWidgetEnabled(MessageCompose
 QList<QWidget *> KMailPluginEditorManagerInterface::statusBarWidgetList()
 {
     if (mStatusBarWidget.isEmpty() && !mListPluginInterface.isEmpty()) {
-        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
+        for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
             if (interface->plugin()->hasStatusBarSupport()) {
                 mStatusBarWidget.append(interface->statusBarWidget());
             }
@@ -143,7 +143,7 @@ QList<QWidget *> KMailPluginEditorManagerInterface::statusBarWidgetList()
 QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEditorManagerInterface::actionsType()
 {
     if (mActionHash.isEmpty() && !mListPluginInterface.isEmpty()) {
-        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
+        for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
             const MessageComposer::PluginActionType actionType = interface->actionType();
             MessageComposer::PluginActionType::Type type = actionType.type();
             const bool needSelectedText = interface->needSelectedText();

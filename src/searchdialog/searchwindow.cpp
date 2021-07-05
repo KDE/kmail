@@ -548,7 +548,7 @@ void SearchWindow::searchDone(KJob *job)
             searchDescription->setBaseCollection(Akonadi::Collection());
             QList<Akonadi::Collection::Id> lst;
             lst.reserve(mCollectionId.count());
-            for (const Akonadi::Collection &col : qAsConst(mCollectionId)) {
+            for (const Akonadi::Collection &col : std::as_const(mCollectionId)) {
                 lst << col.id();
             }
             searchDescription->setListCollection(lst);
@@ -859,7 +859,7 @@ void SearchWindow::slotSelectMultipleFolders()
     if (!mSelectMultiCollectionDialog) {
         QList<Akonadi::Collection::Id> lst;
         lst.reserve(mCollectionId.count());
-        for (const Akonadi::Collection &col : qAsConst(mCollectionId)) {
+        for (const Akonadi::Collection &col : std::as_const(mCollectionId)) {
             lst << col.id();
         }
         mSelectMultiCollectionDialog = new PimCommon::SelectMultiCollectionDialog(KMime::Message::mimeType(), lst, this);
@@ -898,7 +898,7 @@ QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::Li
     mUi.mProgressIndicator->hide();
     mUi.mStatusLbl->setText(i18n("Checking index status..."));
     // Fetch collection ?
-    for (const Akonadi::Collection &col : qAsConst(cols)) {
+    for (const Akonadi::Collection &col : std::as_const(cols)) {
         const qlonglong num = KMKernel::self()->indexedItems()->indexedItems((qlonglong)col.id());
         if (col.statistics().count() != num) {
             results.push_back(col.id());

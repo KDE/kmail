@@ -49,7 +49,7 @@ void SummaryView::fillSyncActionSubEntries()
             menuItems << reply.value();
         }
 
-        for (const QString &acc : qAsConst(menuItems)) {
+        for (const QString &acc : std::as_const(menuItems)) {
             mSyncAction->addAction(acc);
         }
     }

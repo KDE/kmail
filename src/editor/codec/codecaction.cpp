@@ -34,7 +34,7 @@ CodecAction::CodecAction(Mode mode, QObject *parent)
         removeAllActions();
         addAction(oldActions.takeFirst()); // 'Default'
         addAction(i18nc("Encodings menu", "us-ascii"));
-        for (QAction *a : qAsConst(oldActions)) {
+        for (QAction *a : std::as_const(oldActions)) {
             addAction(a);
         }
     } else if (mode == ReaderMode) {

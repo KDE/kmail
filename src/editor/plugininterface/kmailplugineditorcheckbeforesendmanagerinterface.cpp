@@ -51,7 +51,7 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
 
 bool KMailPluginEditorCheckBeforeSendManagerInterface::execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const
 {
-    for (MessageComposer::PluginEditorCheckBeforeSendInterface *interface : qAsConst(mListPluginInterface)) {
+    for (MessageComposer::PluginEditorCheckBeforeSendInterface *interface : std::as_const(mListPluginInterface)) {
         if (!interface->exec(params)) {
             return false;
         }

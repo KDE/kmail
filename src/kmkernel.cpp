@@ -293,7 +293,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     kmail_options(&parser);
     QStringList newargs;
     bool addAttachmentAttribute = false;
-    for (const QString &argument : qAsConst(args)) {
+    for (const QString &argument : std::as_const(args)) {
         if (argument == QLatin1String("--attach")) {
             addAttachmentAttribute = true;
         } else {
@@ -1881,7 +1881,7 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
         } else if (typeIdentifier.contains(POP3_RESOURCE_IDENTIFIER)) {
             OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier);
             if (iface->isValid()) {
-                for (const Akonadi::Collection &collection : qAsConst(collectionList)) {
+                for (const Akonadi::Collection &collection : std::as_const(collectionList)) {
                     const Akonadi::Collection::Id collectionId = collection.id();
                     if (iface->targetCollection() == collectionId) {
                         // Use default inbox

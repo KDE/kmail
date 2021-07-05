@@ -45,7 +45,7 @@ bool PotentialPhishingEmailJob::start()
         deleteLater();
         return false;
     }
-    for (const QString &addr : qAsConst(mEmails)) {
+    for (const QString &addr : std::as_const(mEmails)) {
         if (!mEmailWhiteList.contains(addr.trimmed())) {
             QString tname, temail;
             KEmailAddress::extractEmailAddressAndName(addr, temail, tname); // ignore return value

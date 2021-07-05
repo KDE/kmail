@@ -148,8 +148,8 @@ void ConfigurePluginsListWidget::save()
 
 void ConfigurePluginsListWidget::saveAkonadiAgent()
 {
-    for (PluginItem *item : qAsConst(mAgentPluginsItems)) {
-        for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {
+    for (PluginItem *item : std::as_const(mAgentPluginsItems)) {
+        for (const PimCommon::PluginUtilData &data : std::as_const(mPluginUtilDataList)) {
             if (item->mIdentifier == data.mIdentifier) {
                 changeAgentActiveState(data.mExtraInfo.at(0), data.mExtraInfo.at(1), item->checkState(0) == Qt::Checked);
                 break;
@@ -383,7 +383,7 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &groupName, 
                 MessageViewer::MessageViewerConfigureSettingsPluginManager::self()->pluginFromIdentifier(identifier);
             plugin->showConfigureDialog(this);
         } else if (groupName == agentAkonadiGroupName()) {
-            for (const PimCommon::PluginUtilData &data : qAsConst(mPluginUtilDataList)) {
+            for (const PimCommon::PluginUtilData &data : std::as_const(mPluginUtilDataList)) {
                 if (data.mIdentifier == identifier) {
                     auto instance = Akonadi::AgentManager::self()->instance(identifier);
                     if (instance.isValid()) {

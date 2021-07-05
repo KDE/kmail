@@ -243,7 +243,7 @@ void KMCommand::start()
     }
 
     // we can only retrieve items with a valid id
-    for (const Akonadi::Item &item : qAsConst(mMsgList)) {
+    for (const Akonadi::Item &item : std::as_const(mMsgList)) {
         if (!item.isValid()) {
             Q_EMIT messagesTransfered(Failed);
             return;
@@ -981,7 +981,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     if (!mWin) {
         mWin = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity);
     }
-    for (KMime::Content *attach : qAsConst(fwdMsg.second)) {
+    for (KMime::Content *attach : std::as_const(fwdMsg.second)) {
         mWin->addAttach(attach);
         delete attach;
     }
@@ -1209,7 +1209,7 @@ KMSetTagCommand::KMSetTagCommand(const Akonadi::Tag::List &tags, const Akonadi::
 
 KMCommand::Result KMSetTagCommand::execute()
 {
-    for (const Akonadi::Tag &tag : qAsConst(mTags)) {
+    for (const Akonadi::Tag &tag : std::as_const(mTags)) {
         if (!tag.isValid()) {
             auto createJob = new Akonadi::TagCreateJob(tag, this);
             connect(createJob, &Akonadi::TagCreateJob::result, this, &KMSetTagCommand::slotModifyItemDone);
@@ -1231,7 +1231,7 @@ void KMSetTagCommand::setTags()
 {
     Akonadi::Item::List itemsToModify;
     itemsToModify.reserve(mItem.count());
-    for (const Akonadi::Item &i : qAsConst(mItem)) {
+    for (const Akonadi::Item &i : std::as_const(mItem)) {
         Akonadi::Item item(i);
         if (mMode == CleanExistingAndAddNew) {
             // WorkAround. ClearTags doesn't work.
@@ -1243,7 +1243,7 @@ void KMSetTagCommand::setTags()
         }
 
         if (mMode == KMSetTagCommand::Toggle) {
-            for (const Akonadi::Tag &tag : qAsConst(mCreatedTags)) {
+            for (const Akonadi::Tag &tag : std::as_const(mCreatedTags)) {
                 if (item.hasTag(tag)) {
                     item.clearTag(tag);
                 } else {
@@ -1266,7 +1266,7 @@ void KMSetTagCommand::setTags()
         KConfigGroup tag(KMKernel::self()->config(), "MessageListView");
         const QString oldTagList = tag.readEntry("TagSelected");
         QStringList lst = oldTagList.split(QLatin1Char(','));
-        for (const Akonadi::Tag &createdTag : qAsConst(mCreatedTags)) {
+        for (const Akonadi::Tag &createdTag : std::as_const(mCreatedTags)) {
             const QString url = createdTag.url().url();
             if (!lst.contains(url)) {
                 lst.append(url);
@@ -1304,7 +1304,7 @@ KMCommand::Result KMFilterActionCommand::execute()
                                                                      KPIM::ProgressItem::Unknown);
     progressItem->setTotalItems(msgCountToFilter);
 
-    for (const qlonglong &id : qAsConst(mMsgListId)) {
+    for (const qlonglong &id : std::as_const(mMsgListId)) {
         int diff = msgCountToFilter - ++msgCount;
         if (diff < 10 || !(msgCount % 10) || msgCount <= 10) {
             progressItem->updateProgress();
@@ -1495,7 +1495,7 @@ KMCommand::Result KMMoveCommand::execute()
             });
             Akonadi::Collection parent;
             int undoId = -1;
-            for (const Akonadi::Item &item : qAsConst(retrievedList)) {
+            for (const Akonadi::Item &item : std::as_const(retrievedList)) {
                 if (item.storageCollectionId() <= 0) {
                     continue;
                 }
@@ -1622,7 +1622,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
             });
             Akonadi::Collection parent;
             int undoId = -1;
-            for (const Akonadi::Item &item : qAsConst(*trashIt)) {
+            for (const Akonadi::Item &item : std::as_const(*trashIt)) {
                 if (item.storageCollectionId() <= 0) {
                     continue;
                 }
@@ -1699,10 +1699,10 @@ void KMTrashMsgCommand::slotMoveCanceled()
 void KMTrashMsgCommand::completeMove(KMCommand::Result result)
 {
     if (result == Failed) {
-        for (auto job : qAsConst(mPendingMoves)) {
+        for (auto job : std::as_const(mPendingMoves)) {
             job->kill();
         }
-        for (auto job : qAsConst(mPendingDeletes)) {
+        for (auto job : std::as_const(mPendingDeletes)) {
             job->kill();
         }
     }

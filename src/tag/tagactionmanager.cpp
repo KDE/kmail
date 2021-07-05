@@ -56,7 +56,7 @@ void TagActionManager::clearActions()
 
     // Remove the tag actions from the status menu and the action collection,
     // then delete them.
-    for (KToggleAction *action : qAsConst(mTagActions)) {
+    for (KToggleAction *action : std::as_const(mTagActions)) {
         mMessageActions->messageStatusMenu()->removeAction(action);
 
         // This removes and deletes the action at the same time

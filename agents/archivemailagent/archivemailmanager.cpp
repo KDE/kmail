@@ -46,7 +46,7 @@ void ArchiveMailManager::load()
         auto info = new ArchiveMailInfo(group);
 
         if (ArchiveMailAgentUtil::needToArchive(info)) {
-            for (ArchiveMailInfo *oldInfo : qAsConst(mListArchiveInfo)) {
+            for (ArchiveMailInfo *oldInfo : std::as_const(mListArchiveInfo)) {
                 if (oldInfo->saveCollectionId() == info->saveCollectionId()) {
                     // already in jobscheduler
                     delete info;
@@ -141,7 +141,7 @@ QString ArchiveMailManager::printCurrentListInfo() const
     if (mListArchiveInfo.isEmpty()) {
         infoStr = QStringLiteral("No archive in queue");
     } else {
-        for (ArchiveMailInfo *info : qAsConst(mListArchiveInfo)) {
+        for (ArchiveMailInfo *info : std::as_const(mListArchiveInfo)) {
             if (!infoStr.isEmpty()) {
                 infoStr += QLatin1Char('\n');
             }

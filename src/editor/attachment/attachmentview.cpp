@@ -115,7 +115,7 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
             auto part = model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
             toRemove.append(part);
         }
-        for (const AttachmentPart::Ptr &part : qAsConst(toRemove)) {
+        for (const AttachmentPart::Ptr &part : std::as_const(toRemove)) {
             mModel->removeAttachment(part);
         }
     } else {

@@ -85,7 +85,7 @@ void VacationScriptIndicatorWidget::createIndicator()
     mInfo = new VacationLabel(i18np("Out of office reply active on server", "Out of office reply active on servers", mServerActive.count()));
     connect(mInfo, &VacationLabel::vacationLabelClicked, this, &VacationScriptIndicatorWidget::slotVacationLabelClicked);
     mBoxLayout->addWidget(mInfo);
-    for (const QString &server : qAsConst(mServerActive)) {
+    for (const QString &server : std::as_const(mServerActive)) {
         auto lab = new ServerLabel(server);
         connect(lab, &ServerLabel::clicked, this, &VacationScriptIndicatorWidget::clicked);
         mBoxLayout->addWidget(lab);

@@ -108,7 +108,7 @@ void SendLaterManager::stopTimer()
 
 MessageComposer::SendLaterInfo *SendLaterManager::searchInfo(Akonadi::Item::Id id)
 {
-    for (MessageComposer::SendLaterInfo *info : qAsConst(mListSendLaterInfo)) {
+    for (MessageComposer::SendLaterInfo *info : std::as_const(mListSendLaterInfo)) {
         if (info->itemId() == id) {
             return info;
         }
@@ -229,7 +229,7 @@ QString SendLaterManager::printDebugInfo() const
     if (mListSendLaterInfo.isEmpty()) {
         infoStr = QStringLiteral("No mail");
     } else {
-        for (MessageComposer::SendLaterInfo *info : qAsConst(mListSendLaterInfo)) {
+        for (MessageComposer::SendLaterInfo *info : std::as_const(mListSendLaterInfo)) {
             if (!infoStr.isEmpty()) {
                 infoStr += QLatin1Char('\n');
             }

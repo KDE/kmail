@@ -70,7 +70,7 @@ void TagMonitorManager::onTagAdded(const Akonadi::Tag &akonadiTag)
 
 void TagMonitorManager::onTagRemoved(const Akonadi::Tag &akonadiTag)
 {
-    for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
+    for (const MailCommon::Tag::Ptr &tag : std::as_const(mTags)) {
         if (tag->id() == akonadiTag.id()) {
             mTags.removeAll(tag);
             break;
@@ -81,7 +81,7 @@ void TagMonitorManager::onTagRemoved(const Akonadi::Tag &akonadiTag)
 
 void TagMonitorManager::onTagChanged(const Akonadi::Tag &akonadiTag)
 {
-    for (const MailCommon::Tag::Ptr &tag : qAsConst(mTags)) {
+    for (const MailCommon::Tag::Ptr &tag : std::as_const(mTags)) {
         if (tag->id() == akonadiTag.id()) {
             mTags.removeAll(tag);
             break;

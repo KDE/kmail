@@ -3782,7 +3782,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     }
 
     // Enable / disable all filters.
-    for (QAction *filterAction : qAsConst(mFilterMenuActions)) {
+    for (QAction *filterAction : std::as_const(mFilterMenuActions)) {
         filterAction->setEnabled(count > 0);
     }
 
@@ -3962,10 +3962,10 @@ void KMMainWidget::updateFolderMenu()
     mApplyAllFiltersFolderAction->setEnabled(folderIsValid);
     mApplyFilterFolderActionsMenu->setEnabled(folderIsValid);
     mApplyFilterFolderRecursiveActionsMenu->setEnabled(folderIsValid);
-    for (auto a : qAsConst(mFilterFolderMenuActions)) {
+    for (auto a : std::as_const(mFilterFolderMenuActions)) {
         a->setEnabled(folderIsValid);
     }
-    for (auto a : qAsConst(mFilterFolderMenuRecursiveActions)) {
+    for (auto a : std::as_const(mFilterFolderMenuRecursiveActions)) {
         a->setEnabled(folderIsValid);
     }
     if (mCurrentCollection.resource() == QLatin1String("akonadi_unifiedmailbox_agent")) {
@@ -4070,13 +4070,13 @@ void KMMainWidget::clearFilterActions()
         }
     }
 
-    for (QAction *a : qAsConst(mFilterMenuActions)) {
+    for (QAction *a : std::as_const(mFilterMenuActions)) {
         actionCollection()->removeAction(a);
     }
-    for (QAction *a : qAsConst(mFilterFolderMenuActions)) {
+    for (QAction *a : std::as_const(mFilterFolderMenuActions)) {
         actionCollection()->removeAction(a);
     }
-    for (QAction *a : qAsConst(mFilterFolderMenuRecursiveActions)) {
+    for (QAction *a : std::as_const(mFilterFolderMenuRecursiveActions)) {
         actionCollection()->removeAction(a);
     }
 

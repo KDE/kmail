@@ -19,14 +19,14 @@ KMailPluginEditorConvertTextManagerInterface::~KMailPluginEditorConvertTextManag
 
 void KMailPluginEditorConvertTextManagerInterface::enableDisablePluginActions(bool richText)
 {
-    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : std::as_const(mListPluginInterface)) {
         interface->enableDisablePluginActions(richText);
     }
 }
 
 void KMailPluginEditorConvertTextManagerInterface::reformatText()
 {
-    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : std::as_const(mListPluginInterface)) {
         if (interface->reformatText()) {
             // TODO signal that it was reformating.
             // Stop it.?
@@ -40,7 +40,7 @@ KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageCompose
 {
     MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus status =
         MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted;
-    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : std::as_const(mListPluginInterface)) {
         switch (interface->convertTextToFormat(textPart)) {
         case MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::NotConverted:
             if (status != MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus::Converted) {
@@ -60,14 +60,14 @@ KMailPluginEditorConvertTextManagerInterface::convertTextToFormat(MessageCompose
 
 void KMailPluginEditorConvertTextManagerInterface::setInitialData(const MessageComposer::PluginEditorConverterInitialData &data)
 {
-    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : std::as_const(mListPluginInterface)) {
         interface->setInitialData(data);
     }
 }
 
 void KMailPluginEditorConvertTextManagerInterface::setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data)
 {
-    for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+    for (MessageComposer::PluginEditorConvertTextInterface *interface : std::as_const(mListPluginInterface)) {
         interface->setBeforeConvertingData(data);
     }
 }
@@ -132,7 +132,7 @@ void KMailPluginEditorConvertTextManagerInterface::setRichTextEditor(KPIMTextEdi
 QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEditorConvertTextManagerInterface::actionsType()
 {
     if (mActionHash.isEmpty()) {
-        for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+        for (MessageComposer::PluginEditorConvertTextInterface *interface : std::as_const(mListPluginInterface)) {
             const auto actionTypes = interface->actionTypes();
             for (const MessageComposer::PluginActionType &actionType : actionTypes) {
                 MessageComposer::PluginActionType::Type type = actionType.type();
@@ -189,7 +189,7 @@ QList<QAction *> KMailPluginEditorConvertTextManagerInterface::actionsType(Messa
 QList<QWidget *> KMailPluginEditorConvertTextManagerInterface::statusBarWidgetList()
 {
     if (mStatusBarWidget.isEmpty() && !mListPluginInterface.isEmpty()) {
-        for (MessageComposer::PluginEditorConvertTextInterface *interface : qAsConst(mListPluginInterface)) {
+        for (MessageComposer::PluginEditorConvertTextInterface *interface : std::as_const(mListPluginInterface)) {
             if (interface->plugin()->hasStatusBarSupport()) {
                 mStatusBarWidget.append(interface->statusBarWidget());
             }
