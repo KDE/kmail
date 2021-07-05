@@ -261,7 +261,7 @@ void ConfigurePluginsListWidget::initialize()
                                                         false);
 
     PimCommon::ConfigurePluginsListWidget::fillTopItems(MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->pluginsDataList(),
-                                                        i18n("Misc"),
+                                                        i18n("Confirm Deleting Emails Plugins"),
                                                         MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->configGroupName(),
                                                         MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->configPrefixSettingKey(),
                                                         mPluginCheckBeforeDeletingItems,
