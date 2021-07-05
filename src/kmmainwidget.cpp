@@ -75,6 +75,7 @@
 #include <MessageViewer/Viewer>
 
 #include <MessageViewer/AttachmentStrategy>
+#include <MessageViewer/MessageViewerCheckBeforeDeletingPluginManager>
 
 #include <KCursorSaver>
 
