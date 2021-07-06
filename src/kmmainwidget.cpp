@@ -177,13 +177,16 @@
 #include <MessageViewer/DKIMViewerMenu>
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/RemoteContentMenu>
+
+#include "plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h"
+
 #ifdef WITH_KUSERFEEDBACK
 #include <KUserFeedback/NotificationPopup>
 #include <KUserFeedback/Provider>
-#include <chrono>
+#endif
 
 using namespace std::chrono_literals;
-#endif
+#include <chrono>
 
 using namespace KMime;
 using namespace Akonadi;
@@ -235,6 +238,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     KMailPluginInterface::self()->setActionCollection(mActionCollection);
     KMailPluginInterface::self()->initializePlugins();
     KMailPluginInterface::self()->setMainWidget(this);
+    mPluginCheckBeforeDeletingManagerInterface = new KMailPluginCheckBeforeDeletingManagerInterface(this);
+    mPluginCheckBeforeDeletingManagerInterface->initializePlugins();
 
     theMainWidgetList->append(this);
 

@@ -90,6 +90,7 @@ class FavoriteCollectionWidget;
 class MailFilter;
 }
 class QStatusBar;
+class KMailPluginCheckBeforeDeletingManagerInterface;
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
     Q_OBJECT
@@ -656,5 +657,6 @@ private:
 #ifdef WITH_KUSERFEEDBACK
     KUserFeedback::NotificationPopup *mUserFeedBackNotificationPopup = nullptr;
 #endif
+    KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
 };
 
