@@ -240,6 +240,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     KMailPluginInterface::self()->setMainWidget(this);
     mPluginCheckBeforeDeletingManagerInterface = new KMailPluginCheckBeforeDeletingManagerInterface(this);
     mPluginCheckBeforeDeletingManagerInterface->initializePlugins();
+    mPluginCheckBeforeDeletingManagerInterface->setParentWidget(this);
 
     theMainWidgetList->append(this);
 
