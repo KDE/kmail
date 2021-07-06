@@ -5,8 +5,13 @@
 
 #pragma once
 
+#include <AkonadiCore/Item>
 #include <QObject>
-
+#include <QVector>
+namespace MessageViewer
+{
+class MessageViewerCheckBeforeDeletingInterface;
+}
 class KMailPluginCheckBeforeDeletingManagerInterface : public QObject
 {
     Q_OBJECT
@@ -18,7 +23,10 @@ public:
     Q_REQUIRED_RESULT QWidget *parentWidget() const;
     void setParentWidget(QWidget *newParentWidget);
 
+    Q_REQUIRED_RESULT Akonadi::Item::List confirmBeforeDeleting(const Akonadi::Item::List &list);
+
 private:
+    QVector<MessageViewer::MessageViewerCheckBeforeDeletingInterface *> mListPluginInterface;
     QWidget *mParentWidget = nullptr;
     bool mWasInitialized = false;
 };

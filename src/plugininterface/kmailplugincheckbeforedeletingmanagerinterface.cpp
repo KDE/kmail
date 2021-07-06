@@ -33,6 +33,7 @@ void KMailPluginCheckBeforeDeletingManagerInterface::initializePlugins()
         if (plugin->isEnabled()) {
             auto interface = static_cast<MessageViewer::MessageViewerCheckBeforeDeletingInterface *>(plugin->createInterface(this));
             interface->setParentWidget(mParentWidget);
+            mListPluginInterface.append(interface);
         }
     }
     mWasInitialized = true;
@@ -46,4 +47,13 @@ QWidget *KMailPluginCheckBeforeDeletingManagerInterface::parentWidget() const
 void KMailPluginCheckBeforeDeletingManagerInterface::setParentWidget(QWidget *newParentWidget)
 {
     mParentWidget = newParentWidget;
+}
+
+Akonadi::Item::List KMailPluginCheckBeforeDeletingManagerInterface::confirmBeforeDeleting(const Akonadi::Item::List &list)
+{
+    Akonadi::Item::List currentList = list;
+    for (MessageViewer::MessageViewerCheckBeforeDeletingInterface *interface : std::as_const(mListPluginInterface)) {
+        currentList = interface->exec(currentList);
+    }
+    return currentList;
 }
