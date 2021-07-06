@@ -356,7 +356,7 @@ void KMReaderMainWin::slotForwardAttachedMessage()
         command = new KMForwardAttachedCommand(this, mReaderWin->messageItem());
     }
 
-    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
+    connect(command, &KMForwardAttachedCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
