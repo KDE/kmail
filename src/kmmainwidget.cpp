@@ -180,6 +180,9 @@
 #ifdef WITH_KUSERFEEDBACK
 #include <KUserFeedback/NotificationPopup>
 #include <KUserFeedback/Provider>
+#include <chrono>
+
+using namespace std::chrono_literals;
 #endif
 
 using namespace KMime;
@@ -319,7 +322,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     // must be the last line of the constructor:
     mStartupDone = true;
 
-    mCheckMailTimer.setInterval(3 * 1000);
+    mCheckMailTimer.setInterval(3s);
     mCheckMailTimer.setSingleShot(true);
     connect(&mCheckMailTimer, &QTimer::timeout, this, &KMMainWidget::slotUpdateActionsAfterMailChecking);
 
