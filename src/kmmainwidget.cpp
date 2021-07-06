@@ -1818,7 +1818,10 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
         return;
     }
 
-    const Akonadi::Item::List select = mMessagePane->itemListFromPersistentSet(ref);
+    Akonadi::Item::List select = mMessagePane->itemListFromPersistentSet(ref);
+
+    select = mPluginCheckBeforeDeletingManagerInterface->confirmBeforeDeleting(select);
+
     mMessagePane->markMessageItemsAsAboutToBeRemoved(ref, true);
 
     // FIXME: Why we don't use KMMoveCommand( trashFolder(), selectedMessages ); ?
