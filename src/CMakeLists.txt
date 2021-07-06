@@ -136,6 +136,7 @@ target_sources(kmailprivate PRIVATE
     tag/tagselectdialog.cpp
     tag/tagmonitormanager.cpp
     plugininterface/kmailplugininterface.cpp
+    plugininterface/kmailplugincheckbeforedeletingmanagerinterface.cpp
     editor/plugininterface/kmailplugineditormanagerinterface.cpp
     editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.cpp
     editor/plugininterface/kmailplugineditorinitmanagerinterface.cpp
