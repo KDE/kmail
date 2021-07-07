@@ -23,6 +23,20 @@
             }
         },
         {
+            "name": "dev-clang",
+            "displayName": "dev-clang",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            },
+            "environment": {
+                "CXX": "clang++",
+                "CCACHE_DISABLE": "ON"
+            }
+        },
+        {
             "name": "unity",
             "displayName": "Build with CMake unity support.",
             "generator": "Ninja",
@@ -75,6 +89,10 @@
         {
             "name": "release",
             "configurePreset": "release"
+        },
+        {
+            "name": "dev-clang",
+            "configurePreset": "dev-clang"
         },
         {
             "name": "asan",
