@@ -17,12 +17,13 @@
 #include <AkonadiCore/itemfetchscope.h>
 
 #include <QCheckBox>
+#include <QFormLayout>
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QSpacerItem>
-#include <QVBoxLayout>
 
 #include "kmail_debug.h"
 #include <KEditListWidget>
@@ -58,60 +59,54 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     mCurrentCollection = col;
     mFolder = FolderSettings::forCollection(col, false);
 
-    auto topLayout = new QVBoxLayout(this);
+    auto topLayout = new QFormLayout(this);
 
     mHoldsMailingList = new QCheckBox(i18n("Folder holds a mailing list"), this);
     connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotHoldsML);
     connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotConfigChanged);
-    topLayout->addWidget(mHoldsMailingList);
+    topLayout->addRow(QString(), mHoldsMailingList);
 
-    mGroupWidget = new QWidget(this);
-    auto groupLayout = new QGridLayout(mGroupWidget);
-
-    mDetectButton = new QPushButton(i18n("Detect Automatically"), mGroupWidget);
+    mDetectButton = new QPushButton(i18n("Detect Automatically"), this);
     connect(mDetectButton, &QPushButton::pressed, this, &CollectionMailingListPage::slotDetectMailingList);
-    groupLayout->addWidget(mDetectButton, 2, 1);
+    topLayout->addRow(QString(), mDetectButton);
 
-    groupLayout->addItem(new QSpacerItem(0, 10), 3, 0);
-
-    auto label = new QLabel(i18n("Mailing list description:"), mGroupWidget);
-    groupLayout->addWidget(label, 4, 0);
-    mMLId = new KSqueezedTextLabel(QString(), mGroupWidget);
+    mMLId = new KSqueezedTextLabel(QString(), this);
     mMLId->setTextElideMode(Qt::ElideRight);
-    groupLayout->addWidget(mMLId, 4, 1, 1, 2);
+    topLayout->addRow(i18n("Mailing list description:"), mMLId);
 
     // FIXME: add QWhatsThis
-    label = new QLabel(i18n("Preferred handler:"), mGroupWidget);
-    groupLayout->addWidget(label, 5, 0);
-    mMLHandlerCombo = new QComboBox(mGroupWidget);
+    mMLHandlerCombo = new QComboBox(this);
     mMLHandlerCombo->addItem(i18n("KMail"), MailingList::KMail);
     mMLHandlerCombo->addItem(i18n("Browser"), MailingList::Browser);
-    groupLayout->addWidget(mMLHandlerCombo, 5, 1, 1, 2);
     connect(mMLHandlerCombo, qOverload<int>(&QComboBox::activated), this, &CollectionMailingListPage::slotMLHandling);
-    label->setBuddy(mMLHandlerCombo);
 
-    label = new QLabel(i18n("Address type:"), mGroupWidget);
-    groupLayout->addWidget(label, 6, 0);
-    mAddressCombo = new QComboBox(mGroupWidget);
-    label->setBuddy(mAddressCombo);
-    groupLayout->addWidget(mAddressCombo, 6, 1);
+    topLayout->addRow(i18n("Preferred handler:"), mMLHandlerCombo);
+
+    auto addressWidget = new QWidget(this);
+    addressWidget->setContentsMargins({});
+    auto addressTypeLayout = new QHBoxLayout(addressWidget);
+    addressTypeLayout->setContentsMargins({});
+    mAddressCombo = new QComboBox(this);
+    addressTypeLayout->addWidget(mAddressCombo);
 
     // FIXME: if the mailing list actions have either QAction's or toolbar buttons
     //       associated with them - remove this button since it's really silly
     //       here
-    auto handleButton = new QPushButton(i18n("Invoke Handler"), mGroupWidget);
+    mHandleButton = new QPushButton(i18n("Invoke Handler"), this);
     if (mFolder) {
-        connect(handleButton, &QPushButton::clicked, this, &CollectionMailingListPage::slotInvokeHandler);
+        connect(mHandleButton, &QPushButton::clicked, this, &CollectionMailingListPage::slotInvokeHandler);
     } else {
-        handleButton->setEnabled(false);
+        mHandleButton->setEnabled(false);
     }
+    addressTypeLayout->addWidget(mHandleButton);
+    topLayout->addRow(i18n("Address type:"), addressWidget);
 
-    groupLayout->addWidget(handleButton, 6, 2);
+    topLayout->addRow(new QLabel(i18n("URL for mailing list posting:"), this));
 
-    mEditList = new KEditListWidget(mGroupWidget);
+    mEditList = new KEditListWidget(this);
     mEditList->lineEdit()->setClearButtonEnabled(true);
     connect(mEditList, &KEditListWidget::changed, this, &CollectionMailingListPage::slotConfigChanged);
-    groupLayout->addWidget(mEditList, 7, 0, 1, 4);
+    topLayout->addRow(mEditList);
 
     // Order is important because the activate handler and fillMLFromWidgets
     // depend on it
@@ -119,8 +114,11 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     mAddressCombo->addItems(el);
     connect(mAddressCombo, qOverload<int>(&QComboBox::activated), this, &CollectionMailingListPage::slotAddressChanged);
 
-    topLayout->addWidget(mGroupWidget);
-    mGroupWidget->setEnabled(false);
+    mMLId->setEnabled(false);
+    mMLHandlerCombo->setEnabled(false);
+    mAddressCombo->setEnabled(false);
+    mHandleButton->setEnabled(false);
+    mEditList->setEnabled(false);
 }
 
 void CollectionMailingListPage::load(const Akonadi::Collection &col)
@@ -157,7 +155,13 @@ void CollectionMailingListPage::save(Akonadi::Collection &col)
 //----------------------------------------------------------------------------
 void CollectionMailingListPage::slotHoldsML(bool holdsML)
 {
-    mGroupWidget->setEnabled(holdsML);
+    mMLId->setEnabled(holdsML);
+    mMLHandlerCombo->setEnabled(holdsML);
+    mAddressCombo->setEnabled(holdsML);
+    if (mFolder) {
+        mHandleButton->setEnabled(holdsML);
+    }
+    mEditList->setEnabled(holdsML);
     mDetectButton->setEnabled(mFolder && mFolder->count() != 0);
 }
 

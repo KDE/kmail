@@ -14,6 +14,7 @@
 #include <KIconButton>
 #include <KLocalizedString>
 #include <QCheckBox>
+#include <QFormLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -42,11 +43,19 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     mIsLocalSystemFolder = CommonKernel->isSystemFolderCollection(col) || mFolderCollection->isStructural() || Kernel::folderIsInbox(col);
 
     auto topLayout = new QVBoxLayout(this);
+
+    mCollectionViewWidget = new MailCommon::CollectionViewWidget(this);
+    topLayout->addWidget(mCollectionViewWidget);
+
     // Musn't be able to edit details for non-resource, system folder.
     if (!mIsLocalSystemFolder) {
+        auto innerLayout = qobject_cast<QFormLayout *>(mCollectionViewWidget->layout());
+        Q_ASSERT(innerLayout != nullptr);
+
         // icons
         mIconsCheckBox = new QCheckBox(i18n("Use custom &icons"), this);
         mIconsCheckBox->setChecked(false);
+        innerLayout->insertRow(0, QString(), mIconsCheckBox);
 
         mNormalIconLabel = new QLabel(i18nc("Icon used for folders with no unread messages.", "&Normal:"), this);
         mNormalIconLabel->setEnabled(false);
@@ -75,14 +84,12 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         mUnreadIconButton->setEnabled(false);
 
         auto iconHLayout = new QHBoxLayout();
-        iconHLayout->addWidget(mIconsCheckBox);
-        iconHLayout->addStretch(2);
         iconHLayout->addWidget(mNormalIconLabel);
         iconHLayout->addWidget(mNormalIconButton);
         iconHLayout->addWidget(mUnreadIconLabel);
         iconHLayout->addWidget(mUnreadIconButton);
         iconHLayout->addStretch(1);
-        topLayout->addLayout(iconHLayout);
+        innerLayout->insertRow(1, QString(), iconHLayout);
 
         connect(mIconsCheckBox, &QCheckBox::toggled, mNormalIconLabel, &QLabel::setEnabled);
         connect(mIconsCheckBox, &QCheckBox::toggled, mNormalIconButton, &KIconButton::setEnabled);
@@ -91,9 +98,6 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
 
         connect(mNormalIconButton, &KIconButton::iconChanged, this, &CollectionViewPage::slotChangeIcon);
     }
-
-    mCollectionViewWidget = new MailCommon::CollectionViewWidget(this);
-    topLayout->addWidget(mCollectionViewWidget);
 
     topLayout->addStretch(100);
 }
