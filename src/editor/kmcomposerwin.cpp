@@ -960,8 +960,6 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     }
     rethinkHeaderLine(showHeaders, HDR_FROM, row, mLblFrom, mEdtFrom);
 
-    QWidget *prevFocus = mEdtFrom;
-
     mGrid->addWidget(mComposerBase->recipientsEditor(), row, 0, 1, 2);
     ++row;
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::focusDown, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusTop);
@@ -970,7 +968,7 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusDown, mEdtSubject, qOverload<>(&QWidget::setFocus));
     connect(mEdtSubject, &PimCommon::SpellCheckLineEdit::focusUp, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusBottom);
 
-    prevFocus = mComposerBase->recipientsEditor();
+    mComposerBase->recipientsEditor();
 
     if (!fromSlot) {
         mSubjectAction->setChecked(std::abs(mShowHeaders) & HDR_SUBJECT);
