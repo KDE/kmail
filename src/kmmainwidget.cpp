@@ -1822,6 +1822,7 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
 
     select = mPluginCheckBeforeDeletingManagerInterface->confirmBeforeDeleting(select);
     if (select.isEmpty()) {
+        mMessagePane->deletePersistentSet(ref);
         return;
     }
 
