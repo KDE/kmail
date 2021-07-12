@@ -1821,6 +1821,9 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
     Akonadi::Item::List select = mMessagePane->itemListFromPersistentSet(ref);
 
     select = mPluginCheckBeforeDeletingManagerInterface->confirmBeforeDeleting(select);
+    if (select.isEmpty()) {
+        return;
+    }
 
     mMessagePane->markMessageItemsAsAboutToBeRemoved(ref, true);
 
