@@ -1619,6 +1619,11 @@ void KMMainWidget::slotUseTemplate()
 void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion)
 {
     Akonadi::Item::List selectMsg = mMessagePane->itemListFromPersistentSet(ref);
+    selectMsg = mPluginCheckBeforeDeletingManagerInterface->confirmBeforeDeleting(selectMsg);
+    if (selectMsg.isEmpty()) {
+        mMessagePane->deletePersistentSet(ref);
+        return;
+    }
     // If this is a deletion, ask for confirmation
     if (confirmOnDeletion) {
         const int selectedMessageCount = selectMsg.count();
