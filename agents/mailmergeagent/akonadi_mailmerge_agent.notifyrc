@@ -1,6 +1,7 @@
 [Global]
 IconName=kmail
 Comment=Mail Merge Agent
+Comment[az]=Poştun birləşdirilməsi vasitəsi
 Comment[ca]=Agent per a fusionar el correu
 Comment[ca@valencia]=Agent per a fusionar el correu
 Comment[cs]=Agent pro slučování e-mailů

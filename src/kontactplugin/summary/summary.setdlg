@@ -2,6 +2,7 @@
 Name=Summary
 Name[af]=Opsomming
 Name[ar]=الملخّص
+Name[az]=Xülasə
 Name[bg]=Summary
 Name[br]=Diverrañ
 Name[bs]=Rezime
@@ -74,6 +75,7 @@ Name[zh_TW]=摘要
 Comment=Summary View
 Comment[af]=Opsomming aansig
 Comment[ar]=منظور الملخّص
+Comment[az]=Xülasənin icmalı
 Comment[bg]=Обобщение
 Comment[bs]=Izgled rezimea
 Comment[ca]=Vista de resum

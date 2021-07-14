@@ -13,6 +13,7 @@ X-KDE-Weight=100
 
 Name=Summaries
 Name[ar]=الملخّصات
+Name[az]=Xülasələr
 Name[bg]=Обобщения
 Name[bs]=Kratki sadržaji
 Name[ca]=Resums
@@ -66,6 +67,7 @@ Name[zh_CN]=摘要
 Name[zh_TW]=摘要
 Comment=Summary Selection
 Comment[ar]=اختيار الملخّصات
+Comment[az]=Xülasənin seçilməsi
 Comment[bs]=Odabir kratkih sadržaja
 Comment[ca]=Selecció del resum
 Comment[ca@valencia]=Selecció del resum

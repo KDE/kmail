@@ -2,6 +2,7 @@
 Name=Mail
 Name[af]=Pos
 Name[ar]=البريد
+Name[az]=Poçt
 Name[be]=Пошта
 Name[bg]=Mail
 Name[br]=Lizher
@@ -75,6 +76,7 @@ Name[zh_TW]=郵件
 Comment=Mail Component
 Comment[af]=Pos komponent
 Comment[ar]=مكوّن البريد
+Comment[az]=Poçt tərkib hissələri
 Comment[bg]=Модул за е-поща
 Comment[br]=Perzh postel
 Comment[bs]=Komponenta elektronske pošte

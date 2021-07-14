@@ -2,6 +2,7 @@
 IconName=kmail
 Comment=Send Later Agent
 Comment[ar]=وكيل الإرسال لاحقًا
+Comment[az]=Təxirə salınan göndərilşlər vasitəsi
 Comment[bs]=Agent za slanje kasnije
 Comment[ca]=Agent per a enviar més tard
 Comment[ca@valencia]=Agent per a enviar més tard
@@ -46,6 +47,7 @@ Comment[zh_TW]=稍後傳送代理程式
 [Event/mailsend]
 Name=Mail is sent
 Name[ar]=أُرسل البريد
+Name[az]=Məktub göndərildi
 Name[bg]=Писмото е изпратено
 Name[bs]=Pošta je poslana
 Name[ca]=S'ha enviat el correu
@@ -92,6 +94,7 @@ Action=Popup
 [Event/mailsendfailed]
 Name=Send mail failed
 Name[ar]=اكتمل إرسال البريد
+Name[az]=Məktubun göndərişi baş tutmadı
 Name[bg]=Грешка при изпращане на писмото
 Name[bs]=Slaneje pošte neuspjelo
 Name[ca]=Ha fallat en enviar el correu
