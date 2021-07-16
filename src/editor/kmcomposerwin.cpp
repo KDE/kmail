@@ -1449,7 +1449,7 @@ void KMComposerWin::setupActions()
 
 void KMComposerWin::updateHamburgerMenu()
 {
-    QMenu *menu = new QMenu;
+    QMenu *menu = new QMenu(this);
     menu->addAction(actionCollection()->action(QStringLiteral("new_composer")));
     menu->addSeparator();
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Undo))));
