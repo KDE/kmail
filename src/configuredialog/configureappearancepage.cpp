@@ -55,17 +55,19 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QLineEdit>
 
 #include <KMime/DateFormatter>
-using KMime::DateFormatter;
 
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QFontDatabase>
+#include <QFormLayout>
 #include <QGroupBox>
 #include <QLabel>
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWhatsThis>
+
+using KMime::DateFormatter;
 using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
@@ -566,32 +568,24 @@ static const int numDateDisplayConfig = sizeof dateDisplayConfig / sizeof *dateD
 AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    auto vlay = new QVBoxLayout(this);
+    auto formLayout = new QFormLayout(this);
 
-    // "General Options" group:
-    auto group = new QGroupBox(i18nc("General options for the message list.", "General"), this);
-    auto gvlay = new QVBoxLayout(group);
-
-    mDisplayMessageToolTips = new QCheckBox(MessageList::MessageListSettings::self()->messageToolTipEnabledItem()->label(), group);
-    gvlay->addWidget(mDisplayMessageToolTips);
+    mDisplayMessageToolTips = new QCheckBox(MessageList::MessageListSettings::self()->messageToolTipEnabledItem()->label(), this);
+    formLayout->addRow(QString(), mDisplayMessageToolTips);
 
     connect(mDisplayMessageToolTips, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
 
     // "Aggregation"
     using MessageList::Utils::AggregationComboBox;
-    mAggregationComboBox = new AggregationComboBox(group);
-
-    auto aggregationLabel = new QLabel(i18n("Default aggregation:"), group);
-    aggregationLabel->setBuddy(mAggregationComboBox);
+    mAggregationComboBox = new AggregationComboBox(this);
 
     using MessageList::Utils::AggregationConfigButton;
-    auto aggregationConfigButton = new AggregationConfigButton(group, mAggregationComboBox);
+    auto aggregationConfigButton = new AggregationConfigButton(this, mAggregationComboBox);
 
     auto aggregationLayout = new QHBoxLayout();
-    aggregationLayout->addWidget(aggregationLabel, 1);
     aggregationLayout->addWidget(mAggregationComboBox, 1);
     aggregationLayout->addWidget(aggregationConfigButton, 0);
-    gvlay->addLayout(aggregationLayout);
+    formLayout->addRow(i18n("Default aggregation:"), aggregationLayout);
 
     connect(aggregationConfigButton,
             &MessageList::Utils::AggregationConfigButton::configureDialogCompleted,
@@ -601,31 +595,22 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
 
     // "Theme"
     using MessageList::Utils::ThemeComboBox;
-    mThemeComboBox = new ThemeComboBox(group);
-
-    auto themeLabel = new QLabel(i18n("Default theme:"), group);
-    themeLabel->setBuddy(mThemeComboBox);
+    mThemeComboBox = new ThemeComboBox(this);
 
     using MessageList::Utils::ThemeConfigButton;
-    auto themeConfigButton = new ThemeConfigButton(group, mThemeComboBox);
+    auto themeConfigButton = new ThemeConfigButton(this, mThemeComboBox);
 
     auto themeLayout = new QHBoxLayout();
-    themeLayout->addWidget(themeLabel, 1);
     themeLayout->addWidget(mThemeComboBox, 1);
     themeLayout->addWidget(themeConfigButton, 0);
-    gvlay->addLayout(themeLayout);
+    formLayout->addRow(i18n("Default theme:"), themeLayout);
 
     connect(themeConfigButton, &MessageList::Utils::ThemeConfigButton::configureDialogCompleted, this, &AppearancePageHeadersTab::slotSelectDefaultTheme);
     connect(mThemeComboBox, qOverload<int>(&MessageList::Utils::ThemeComboBox::activated), this, &ConfigModuleTab::slotEmitChanged);
 
-    vlay->addWidget(group);
-
     // "Date Display" group:
-    mDateDisplayBox = new QGroupBox(this);
-    mDateDisplayBox->setTitle(i18n("Date Display"));
     mDateDisplay = new QButtonGroup(this);
     mDateDisplay->setExclusive(true);
-    gvlay = new QVBoxLayout(mDateDisplayBox);
 
     for (int i = 0; i < numDateDisplayConfig; ++i) {
         const char *label = dateDisplayConfig[i].displayName;
@@ -636,7 +621,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             buttonLabel = i18n(label);
         }
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
-            auto hbox = new QWidget(mDateDisplayBox);
+            auto hbox = new QWidget(this);
             auto hboxHBoxLayout = new QHBoxLayout(hbox);
             hboxHBoxLayout->setContentsMargins({});
             auto radio = new QRadioButton(buttonLabel, hbox);
@@ -691,18 +676,19 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
                 "</strong></p></qt>");
             mCustomDateFormatEdit->setWhatsThis(mCustomDateWhatsThis);
             radio->setWhatsThis(mCustomDateWhatsThis);
-            gvlay->addWidget(hbox);
+            formLayout->addRow(QString(), hbox);
         } else {
             auto radio = new QRadioButton(buttonLabel, mDateDisplayBox);
-            gvlay->addWidget(radio);
+            if (i == 0) {
+                formLayout->addRow(i18n("Date Display:"), radio);
+            } else {
+                formLayout->addRow(QString(), radio);
+            }
             mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
         }
     } // end for loop populating mDateDisplay
 
-    vlay->addWidget(mDateDisplayBox);
     connect(mDateDisplay, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
-
-    vlay->addStretch(10); // spacer
 }
 
 void AppearancePageHeadersTab::slotLinkClicked(const QString &link)
