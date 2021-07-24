@@ -1330,6 +1330,7 @@ void KMKernel::slotShowConfigurationDialog()
         mConfigureDialog = new ConfigureDialog(nullptr, false);
         mConfigureDialog->setObjectName(QStringLiteral("configure"));
         connect(mConfigureDialog, &ConfigureDialog::configChanged, this, &KMKernel::slotConfigChanged);
+        connect(mConfigureDialog, &ConfigureDialog::configCommitted, this, &KMKernel::slotConfigChanged);
     }
 
     // Save all current settings.
