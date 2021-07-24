@@ -42,5 +42,3 @@ install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim/kcms/su
 install(FILES kmailplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR}/kontact)
 
 install(FILES kcmkmailsummary.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
-
-install(FILES kmail.setdlg DESTINATION ${KDE_INSTALL_DATADIR}/kontact/ksettingsdialog)
