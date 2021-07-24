@@ -33,7 +33,6 @@
 #include <kmailpartadaptor.h>
 #include <kparts/mainwindow.h>
 #include <kparts/statusbarextension.h>
-#include <ksettings/dispatcher.h>
 
 K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();)
 
@@ -80,7 +79,6 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     statusBar->addStatusBarItem(mainWidget->dkimWidgetInfo(), 4, false);
 
     setXMLFile(QStringLiteral("kmail_part.rc"), true);
-    KSettings::Dispatcher::registerComponent(QStringLiteral("kmail2"), mKMailKernel, "slotConfigChanged");
     connect(mainWidget, &KMMainWidget::captionChangeRequest, this, &KMailPart::setWindowCaption);
 }
 
