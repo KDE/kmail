@@ -21,6 +21,7 @@ class QPushButton;
 template<typename T> class QSharedPointer;
 
 class QComboBox;
+class QPushButton;
 class KJob;
 class KEditListWidget;
 class KSqueezedTextLabel;
@@ -62,7 +63,7 @@ private:
     QComboBox *mAddressCombo = nullptr;
     KEditListWidget *mEditList = nullptr;
     KSqueezedTextLabel *mMLId = nullptr;
-    QWidget *mGroupWidget = nullptr;
+    QPushButton *mHandleButton = nullptr;
     int mLastItem = 0;
     bool changed = false;
 };
