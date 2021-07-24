@@ -35,12 +35,12 @@ using MailTransport::TransportManagementWidget;
 #include <identity/identitypage.h>
 
 #include <QAbstractItemView>
+#include <QFormLayout>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
 #include <QMenu>
 #include <QProcess>
-#include <QVBoxLayout>
 
 #include <memory>
 
@@ -86,61 +86,40 @@ QString AccountsPage::SendingTab::helpAnchor() const
 AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    auto vlay = new QVBoxLayout(this);
+    auto formLayout = new QFormLayout(this);
     // label: zero stretch ### FIXME more
-    vlay->addWidget(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
+    formLayout->addRow(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
 
     auto tmw = new TransportManagementWidget(this);
     tmw->layout()->setContentsMargins({});
-    vlay->addWidget(tmw);
-
-    // "Common options" groupbox:
-    auto group = new QGroupBox(i18n("Common Options"), this);
-    vlay->addWidget(group);
-
-    // a grid layout for the contents of the "common options" group box
-    auto glay = new QGridLayout();
-    group->setLayout(glay);
-    glay->setColumnStretch(2, 10);
+    formLayout->addRow(tmw);
 
     // "confirm before send" check box:
-    mConfirmSendCheck = new QCheckBox(i18n("Confirm &before send"), group);
-    glay->addWidget(mConfirmSendCheck, 0, 0, 1, 2);
+    mConfirmSendCheck = new QCheckBox(i18n("&Confirm action"), this);
+    formLayout->addRow(i18n("Before sending:"), mConfirmSendCheck);
     connect(mConfirmSendCheck, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
 
-    mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling before sending"), group);
-    glay->addWidget(mCheckSpellingBeforeSending, 1, 0, 1, 2);
+    mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling"), this);
+    formLayout->addRow(QString(), mCheckSpellingBeforeSending);
     connect(mCheckSpellingBeforeSending, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "send on check" combo:
-    mSendOnCheckCombo = new QComboBox(group);
+    mSendOnCheckCombo = new QComboBox(this);
     mSendOnCheckCombo->setEditable(false);
     mSendOnCheckCombo->addItems(QStringList() << i18n("Never Automatically") << i18n("On Manual Mail Checks") << i18n("On All Mail Checks"));
-    glay->addWidget(mSendOnCheckCombo, 2, 1);
+    mSendOnCheckCombo->setWhatsThis(i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8().constData()));
+    formLayout->addRow(i18n("Send &messages in outbox folder:"), mSendOnCheckCombo);
     connect(mSendOnCheckCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "default send method" combo:
-    mSendMethodCombo = new QComboBox(group);
+    mSendMethodCombo = new QComboBox(this);
     mSendMethodCombo->setEditable(false);
     mSendMethodCombo->addItems(QStringList() << i18n("Send Now") << i18n("Send Later"));
-    glay->addWidget(mSendMethodCombo, 3, 1);
+    formLayout->addRow(i18n("Defa&ult send method:"), mSendMethodCombo);
     connect(mSendMethodCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
-    // labels:
-    auto l = new QLabel(i18n("Send &messages in outbox folder:"), group);
-    l->setBuddy(mSendOnCheckCombo);
-    glay->addWidget(l, 2, 0);
-
-    QString msg = i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8().constData());
-    l->setWhatsThis(msg);
-    mSendOnCheckCombo->setWhatsThis(msg);
-
-    l = new QLabel(i18n("Defa&ult send method:"), group);
-    l->setBuddy(mSendMethodCombo);
-    glay->addWidget(l, 3, 0);
-
     mUndoSend = new QCheckBox(i18n("Enable Undo Send"), this);
-    glay->addWidget(mUndoSend, 4, 0);
+    formLayout->addRow(QString(), mUndoSend);
     connect(mUndoSend, &QCheckBox::toggled, this, [this](bool state) {
         mUndoSendComboBox->setEnabled(state);
         slotEmitChanged();
@@ -148,7 +127,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 
     mUndoSendComboBox = new UndoSendCombobox(this);
     mUndoSendComboBox->setEnabled(false);
-    glay->addWidget(mUndoSendComboBox, 4, 1);
+    formLayout->addRow(QString(), mUndoSendComboBox);
     connect(mUndoSendComboBox, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 }
 
