@@ -25,7 +25,6 @@
 #include <MessageList/ThemeConfigButton>
 
 #include <MailCommon/CollectionViewWidget>
-#include <QDebug>
 
 using namespace MailCommon;
 
