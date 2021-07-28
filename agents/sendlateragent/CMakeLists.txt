@@ -77,7 +77,6 @@ install(FILES sendlateragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/ako
 install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
 
 #kcoreaddons_add_plugin(sendlateragentconfig
-#    JSON sendlateragentconfig.json
 #    SOURCES ${sendlateragentconfig_SRCS}
 #    INSTALL_NAMESPACE akonadi/config
 #)

@@ -95,7 +95,6 @@ set(followupreminderagentconfig_SRCS
 )
 
 kcoreaddons_add_plugin(followupreminderagentconfig
-    JSON followupreminderagentconfig.json
     SOURCES ${followupreminderagentconfig_SRCS}
     INSTALL_NAMESPACE akonadi/config
 )

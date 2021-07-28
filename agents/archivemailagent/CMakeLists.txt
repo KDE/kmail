@@ -77,7 +77,6 @@ endif()
 
 
 kcoreaddons_add_plugin(archivemailagentconfig
-    JSON archivemailagentconfig.json
     INSTALL_NAMESPACE akonadi/config
 )
 target_sources(archivemailagentconfig PRIVATE

@@ -68,7 +68,6 @@ install(FILES mailmergeagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/ako
 install(FILES akonadi_mailmerge_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
 
 #kcoreaddons_add_plugin(mailmergeagentconfig
-#    JSON mailmergeagentconfig.json
 #    SOURCES ${mailmergeagentconfig_SRCS}
 #    INSTALL_NAMESPACE akonadi/config
 #    )
