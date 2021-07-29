@@ -118,8 +118,9 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     formLayout->addRow(i18n("Defa&ult send method:"), mSendMethodCombo);
     connect(mSendMethodCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 
+    auto hLayout = new QHBoxLayout;
     mUndoSend = new QCheckBox(i18n("Enable Undo Send"), this);
-    formLayout->addRow(QString(), mUndoSend);
+    hLayout->addWidget(mUndoSend);
     connect(mUndoSend, &QCheckBox::toggled, this, [this](bool state) {
         mUndoSendComboBox->setEnabled(state);
         slotEmitChanged();
@@ -127,7 +128,8 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 
     mUndoSendComboBox = new UndoSendCombobox(this);
     mUndoSendComboBox->setEnabled(false);
-    formLayout->addRow(QString(), mUndoSendComboBox);
+    hLayout->addWidget(mUndoSendComboBox);
+    formLayout->addRow(QString(), hLayout);
     connect(mUndoSendComboBox, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 }
 
