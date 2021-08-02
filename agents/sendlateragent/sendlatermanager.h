@@ -68,7 +68,7 @@ private:
     QList<MessageComposer::SendLaterInfo *> mListSendLaterInfo;
     MessageComposer::SendLaterInfo *mCurrentInfo = nullptr;
     SendLaterJob *mCurrentJob = nullptr;
-    QTimer *mTimer = nullptr;
+    QTimer *const mTimer;
     MessageComposer::AkonadiSender *const mSender;
     QQueue<Akonadi::Item::Id> mSendLaterQueue;
 };
