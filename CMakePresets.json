@@ -25,6 +25,18 @@
             "installDir": "$env{KF5}"
         },
         {
+            "name": "pch",
+            "displayName": "Build with PCH support.",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-pch",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+		"COMPILE_WITH_CMAKE_PCH_SUPPORT": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            },
+            "installDir": "$env{KF5}"
+        },
+        {
             "name": "dev-clang",
             "displayName": "dev-clang",
             "generator": "Ninja",
@@ -92,6 +104,10 @@
         {
             "name": "dev",
             "configurePreset": "dev"
+        },
+        {
+            "name": "pch",
+            "configurePreset": "pch"
         },
         {
             "name": "release",
