@@ -290,9 +290,9 @@
     <binary>kmail</binary>
   </provides>
   <releases>
+    <release version="5.18.0" date="2021-08-12"/>
     <release version="5.17.3" date="2021-07-08"/>
     <release version="5.17.2" date="2021-06-10"/>
     <release version="5.17.1" date="2021-05-13"/>
-    <release version="5.17.0" date="2021-04-22"/>
   </releases>
 </component>
