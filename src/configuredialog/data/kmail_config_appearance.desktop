@@ -3,7 +3,7 @@ Icon=preferences-desktop-theme
 Type=Service
 X-KDE-ServiceTypes=KCModule
 
-X-KDE-ModuleType=Library
+
 X-KDE-Library=pim/kcms/kmail/kcm_kmail_appearance
 X-KDE-HasReadOnlyMode=false
 X-KDE-ParentApp=kmail

@@ -3,7 +3,7 @@ Icon=kontact
 Type=Service
 X-KDE-ServiceTypes=KCModule
 
-X-KDE-ModuleType=Library
+
 X-KDE-Library=pim/kcms/summary/kcmkontactsummary
 X-KDE-FactoryName=kontactsummary
 X-KDE-ParentApp=kontact_summaryplugin

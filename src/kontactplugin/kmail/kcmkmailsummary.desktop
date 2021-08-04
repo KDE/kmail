@@ -3,7 +3,7 @@ Icon=kmail
 Type=Service
 X-KDE-ServiceTypes=KCModule
 
-X-KDE-ModuleType=Library
+
 X-KDE-Library=pim/kcms/summary/kcmkmailsummary
 X-KDE-FactoryName=kmailsummary
 X-KDE-ParentApp=kontact_summaryplugin
