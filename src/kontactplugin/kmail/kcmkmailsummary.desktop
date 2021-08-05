@@ -8,7 +8,6 @@ X-KDE-Library=pim/kcms/summary/kcmkmailsummary
 X-KDE-FactoryName=kmailsummary
 
 X-KDE-ParentComponents=kontact_summaryplugin
-X-KDE-CfgDlgHierarchy=KontactSummary
 X-KDE-Weight=200
 
 Name=New Messages
