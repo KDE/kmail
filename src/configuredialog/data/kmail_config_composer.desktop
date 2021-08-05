@@ -7,7 +7,7 @@ X-KDE-ServiceTypes=KCModule
 X-KDE-Library=pim/kcms/kmail/kcm_kmail_composer
 
 
-X-KDE-ParentComponents=kmail,kontact_kmailplugin
+
 X-KDE-Weight=400
 X-DocPath=kmail2/index.html#configure-composer
 

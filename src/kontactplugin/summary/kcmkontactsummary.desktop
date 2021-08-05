@@ -7,7 +7,7 @@ X-KDE-ServiceTypes=KCModule
 X-KDE-Library=pim/kcms/summary/kcmkontactsummary
 X-KDE-FactoryName=kontactsummary
 
-X-KDE-ParentComponents=kontact_summaryplugin
+
 X-KDE-Weight=100
 
 Name=Summaries
