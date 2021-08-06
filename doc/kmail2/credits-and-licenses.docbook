@@ -14,6 +14,10 @@
 &Scarlett.Clark;
 &Scarlett.Clark.mail;
 </author>
+<author>
+&David.Bryant;
+&David.Bryant.mail;
+</author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 <date>2013-04-24</date>
@@ -103,6 +107,9 @@
 
 <sect1 id="documentation">
 <title>Documentation</title>
+
+<para>Update for &kmail; 5.14.2 by
+&David.Bryant; &David.Bryant.mail;.</para>
 
 <para>Update for &kmail; 4.11 by
 &Laurent.Montel; &Laurent.Montel.mail; and 
