@@ -15,8 +15,6 @@
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
 
-#include <kcmutils_version.h>
-
 #include <KPluginLoader>
 #include <KPluginMetaData>
 #include <QPushButton>
@@ -31,11 +29,7 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
 
     const QVector<KPluginMetaData> availablePlugins = KPluginLoader::findPlugins(QStringLiteral("pim/kcms/kmail"));
     for (const KPluginMetaData &metaData : availablePlugins) {
-#if KCMUTILS_VERSION >= QT_VERSION_CHECK(5, 84, 0)
         addModule(metaData);
-#else
-        addModule(metaData.pluginId());
-#endif
     }
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
