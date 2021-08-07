@@ -373,14 +373,10 @@ void SecurityPage::WarningTab::slotConfigureGnupg()
 {
     QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
     KPageWidgetItem *page = nullptr;
-#if KCMUTILS_VERSION >= QT_VERSION_CHECK(5, 84, 0)
     const auto plugin = KPluginMetaData::findPluginById(QStringLiteral("pim/kcms/kleopatra"), QStringLiteral("kleopatra_config_gnupgsystem"));
     if (plugin.isValid()) {
         page = dlg->addModule(plugin);
     }
-#else
-    page = dlg->addModule(QStringLiteral("kleopatra_config_gnupgsystem"));
-#endif
     if (!page) {
         auto info = new QLabel(i18n("The module is missing. Please verify your installation. This module is provided by Kleopatra."), this);
         QFont font = info->font();

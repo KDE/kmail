@@ -87,9 +87,7 @@ KMMainWin::KMMainWin(QWidget *)
     mKMMainWidget->updateQuickSearchLineText();
     mShowMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
     slotToggleMenubar(true);
-#if KXMLGUI_VERSION >= QT_VERSION_CHECK(5, 84, 0)
     connect(guiFactory(), &KXMLGUIFactory::shortcutsSaved, this, &KMMainWin::slotShortcutSaved);
-#endif
 }
 
 KMMainWin::~KMMainWin()
@@ -250,13 +248,7 @@ bool KMMainWin::queryClose()
 
 void KMMainWin::slotConfigureShortcuts()
 {
-#if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 84, 0)
-    if (guiFactory()->configureShortcuts()) {
-        mKMMainWidget->updateQuickSearchLineText();
-    }
-#else
     guiFactory()->showConfigureShortcutsDialog();
-#endif
 }
 
 void KMMainWin::slotShortcutSaved()

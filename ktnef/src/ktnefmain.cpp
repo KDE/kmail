@@ -163,11 +163,7 @@ void KTNEFMain::setupActions()
 
 void KTNEFMain::slotConfigureKeys()
 {
-#if KXMLGUI_VERSION < QT_VERSION_CHECK(5, 84, 0)
-    KShortcutsDialog::configure(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, this);
-#else
     KShortcutsDialog::showDialog(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, this);
-#endif
 }
 
 void KTNEFMain::setupStatusbar()
@@ -551,11 +547,7 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
     }
     KTNEFAttach *attach = mView->getSelection().at(0);
     QString mimename(attach->mimeTag());
-#if KIO_VERSION < QT_VERSION_CHECK(5, 83, 0)
-    const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename, QString());
-#else
     const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename);
-#endif
     if (!offers.isEmpty()) {
         QMenu *menu = topMenu;
         auto actionGroup = new QActionGroup(menu);
