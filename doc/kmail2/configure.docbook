@@ -1493,7 +1493,8 @@ dialog. You may choose any or all of six options.</para>
     </varlistentry>
     <varlistentry>
     <term>
-      <guilabel>Reply or forward using &HTML; if present</guilabel>
+      <guilabel>Reply or forward using the same visual format as the original message
+      (plain text or HTML)</guilabel>
     </term>
     <listitem>
       <para>
@@ -3289,6 +3290,12 @@ modifying it by hand.</para>
       you don't want or need a particular function, you can conserve time and storage
       space by deselecting the associated plugin module.
     </para>
+    
+    <para>
+      On many Linux distributions, most of these plugins are not included in the basic
+      &kmail; package. To get full plugin functionality, be sure to install the
+      package named "kdepim-addons" (or something similar).
+  </para>
     
     <para>
       You can get a rough idea of what a particular plugin does by simply highlighting
