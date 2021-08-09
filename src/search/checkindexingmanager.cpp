@@ -19,6 +19,9 @@
 #include <PimCommonAkonadi/MailUtil>
 #include <QDBusInterface>
 #include <QTimer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
     : QObject(parent)
@@ -26,7 +29,7 @@ CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *i
     , mTimer(new QTimer(this))
 {
     mTimer->setSingleShot(true);
-    mTimer->setInterval(5 * 1000); // 5 secondes
+    mTimer->setInterval(5s); // 5 secondes
     connect(mTimer, &QTimer::timeout, this, &CheckIndexingManager::checkNextCollection);
 }
 

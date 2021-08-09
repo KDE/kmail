@@ -27,7 +27,7 @@ void ComposeNewMessageJob::setCurrentCollection(const Akonadi::Collection &col)
 
 static void copyAddresses(const KMime::Headers::Generics::AddressList *from, KMime::Headers::Generics::AddressList *to)
 {
-    if (from == nullptr) { // no such headers to copy from
+    if (!from) { // no such headers to copy from
         return;
     }
 
