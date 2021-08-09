@@ -55,7 +55,6 @@ IdentityPage::IdentityPage(QWidget *parent)
             &IdentityPage::slotRenameIdentityFromItem);
     connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked, this, &IdentityPage::slotModifyIdentity);
     connect(mIPage.mIdentityList, &IdentityListView::contextMenu, this, &IdentityPage::slotContextMenu);
-    // ### connect dragged(...), ...
 
     connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityPage::slotNewIdentity);
     connect(mIPage.mModifyButton, &QPushButton::clicked, this, &IdentityPage::slotModifyIdentity);
