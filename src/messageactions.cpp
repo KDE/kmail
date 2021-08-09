@@ -696,9 +696,9 @@ void MessageActions::annotateMessage()
         return;
     }
 
-    QPointer<PimCommon::AnnotationEditDialog> dialog = new PimCommon::AnnotationEditDialog(mCurrentItem, mParent);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->exec();
+    PimCommon::AnnotationEditDialog dialog(mCurrentItem, mParent);
+    dialog.setAttribute(Qt::WA_DeleteOnClose);
+    dialog.exec();
 }
 
 void MessageActions::addWebShortcutsMenu(QMenu *menu, const QString &text)

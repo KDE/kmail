@@ -313,10 +313,9 @@ void KTNEFMain::extractAllFiles()
 void KTNEFMain::propertiesFile()
 {
     KTNEFAttach *attach = mView->getSelection().at(0);
-    QPointer<AttachPropertyDialog> dlg = new AttachPropertyDialog(this);
-    dlg->setAttachment(attach);
-    dlg->exec();
-    delete dlg;
+    AttachPropertyDialog dlg(this);
+    dlg.setAttachment(attach);
+    dlg.exec();
 }
 
 void KTNEFMain::optionDefaultDir()
@@ -461,9 +460,8 @@ void KTNEFMain::slotNewToolbarConfig()
 
 void KTNEFMain::slotShowMessageProperties()
 {
-    QPointer<MessagePropertyDialog> dlg = new MessagePropertyDialog(this, mParser->message());
-    dlg->exec();
-    delete dlg;
+    MessagePropertyDialog dlg(this, mParser->message());
+    dlg.exec();
 }
 
 void KTNEFMain::slotShowMessageText()

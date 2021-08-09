@@ -97,9 +97,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
 
 void SecurityPageGeneralTab::slotOpenExternalReferenceExceptions()
 {
-    QPointer<MessageViewer::RemoteContentConfigureDialog> dlg = new MessageViewer::RemoteContentConfigureDialog(this);
-    dlg->exec();
-    delete dlg;
+    MessageViewer::RemoteContentConfigureDialog dlg(this);
+    dlg.exec();
 }
 
 void SecurityPageGeneralTab::slotLinkClicked(const QString &link)

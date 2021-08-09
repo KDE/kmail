@@ -1485,10 +1485,9 @@ void KMMainWidget::slotEmptyFolder()
 void KMMainWidget::slotArchiveFolder()
 {
     if (mCurrentCollection.isValid()) {
-        QPointer<KMail::ArchiveFolderDialog> archiveDialog = new KMail::ArchiveFolderDialog(this);
-        archiveDialog->setFolder(mCurrentCollection);
-        archiveDialog->exec();
-        delete archiveDialog;
+        KMail::ArchiveFolderDialog archiveDialog(this);
+        archiveDialog.setFolder(mCurrentCollection);
+        archiveDialog.exec();
     }
 }
 

@@ -481,8 +481,8 @@ void SearchWindow::doSearch()
 
     const QVector<qint64> unindexedCollections = checkIncompleteIndex(searchCollections, recursive);
     if (!unindexedCollections.isEmpty()) {
-        QScopedPointer<IncompleteIndexDialog> dlg(new IncompleteIndexDialog(unindexedCollections));
-        dlg->exec();
+        IncompleteIndexDialog dlg(unindexedCollections);
+        dlg.exec();
     }
 
     if (!mFolder.isValid()) {
