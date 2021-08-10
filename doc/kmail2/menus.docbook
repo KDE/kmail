@@ -1574,7 +1574,11 @@ url="help:/fundamentals/menus.html#menus-edit">Edit Menu</ulink> section of the
   <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Insert Special Character...</guimenuitem></menuchoice></term>
   <listitem><para>Lets you insert a special character at the cursor position. A large number of Unicode
   characters are made available. This option is only provided if the <guimenuitem>Insert Special
-  Character</guimenuitem> plugin has been activated.</para></listitem>
+  Character</guimenuitem> plugin has been activated.</para>
+  
+  <para>This menu item was moved to the <guimenu>Insert</guimenu> menu in release 5.17. If you have activated
+  the plugin, and this entry does not appear when &kmail; is restarted, check the <guimenu>Insert</guimenu>
+  menu.</para></listitem>
 </varlistentry>
 
 <varlistentry id="composer-edit-change-case">
