@@ -277,7 +277,13 @@ static QUrl makeAbsoluteUrl(const QString &str, const QString &cwd)
 
 bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args, const QString &workingDir)
 {
-    QString to, cc, bcc, subj, body, inReplyTo, replyTo;
+    QString to;
+    QString cc;
+    QString bcc;
+    QString subj;
+    QString body;
+    QString inReplyTo;
+    QString replyTo;
     QStringList customHeaders;
     QUrl messageFile;
     QList<QUrl> attachURLs;

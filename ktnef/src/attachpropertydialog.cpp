@@ -210,7 +210,9 @@ QPixmap AttachPropertyDialog::loadRenderingPixmap(KTNEFPropertySet *pSet, const 
         rendBuffer.open(QIODevice::ReadOnly);
         QDataStream rendStream(&rendBuffer);
         rendStream.setByteOrder(QDataStream::LittleEndian);
-        quint16 type, w, h;
+        quint16 type;
+        quint16 w;
+        quint16 h;
         rendStream >> type >> w >> w; // read type and skip 4 bytes
         rendStream >> w >> h;
         rendBuffer.close();

@@ -889,7 +889,8 @@ int KMComposerWin::calcColumnWidth(int which, long allShowing, int width) const
 void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
 {
     // This sucks even more but again no ids. sorry (sven)
-    int mask, row;
+    int mask;
+    int row;
     long showHeaders;
 
     if ((mShowHeaders < 0) || forceAllHeaders) {
@@ -3724,7 +3725,8 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
         return;
     }
 
-    QString dummy, addrSpec;
+    QString dummy;
+    QString addrSpec;
     if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
         addrSpec = recipient->email();
     }
@@ -3783,7 +3785,8 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
         QIcon overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
         QString tooltip;
 
-        QString dummy, addrSpec;
+        QString dummy;
+        QString addrSpec;
         if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
             addrSpec = recipient->email();
         }

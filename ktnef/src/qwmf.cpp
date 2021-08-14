@@ -153,8 +153,11 @@ bool QWinMetaFile::load(QBuffer &buffer)
     WmfEnhMetaHeader eheader;
     WmfMetaHeader header;
     WmfPlaceableHeader pheader;
-    int filePos, idx, i;
-    WmfCmd *cmd, *last;
+    int filePos;
+    int idx;
+    int i;
+    WmfCmd *cmd;
+    WmfCmd *last;
     DWORD rdSize;
     WORD rdFunc;
 
@@ -318,7 +321,8 @@ bool QWinMetaFile::load(QBuffer &buffer)
 //-----------------------------------------------------------------------------
 bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
 {
-    int idx, i;
+    int idx;
+    int i;
     WmfCmd *cmd;
 
     if (!mValid) {
@@ -357,7 +361,8 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
         (this->*metaFuncTab[idx].method)(cmd->numParm, cmd->parm);
 
         if (QWMF_DEBUG) {
-            QString str, param;
+            QString str;
+            QString param;
             if (metaFuncTab[idx].name == nullptr) {
                 str += QLatin1String("UNKNOWN ");
             }
@@ -479,7 +484,9 @@ void QWinMetaFile::polygon(long, short *parm)
 void QWinMetaFile::polyPolygon(long, short *parm)
 {
     QRegion region;
-    int i, j, startPolygon;
+    int i;
+    int j;
+    int startPolygon;
 
     mPainter.save();
 
@@ -535,7 +542,8 @@ void QWinMetaFile::rectangle(long, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::roundRect(long, short *parm)
 {
-    int xRnd = 0, yRnd = 0;
+    int xRnd = 0;
+    int yRnd = 0;
 
     // convert (xRound, yRound) in percentage
     if ((parm[3] - parm[5]) != 0) {
@@ -551,7 +559,10 @@ void QWinMetaFile::roundRect(long, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::arc(long, short *parm)
 {
-    int xCenter, yCenter, angleStart, aLength;
+    int xCenter;
+    int yCenter;
+    int angleStart;
+    int aLength;
 
     xCenter = parm[7] + ((parm[5] - parm[7]) / 2);
     yCenter = parm[6] + ((parm[4] - parm[6]) / 2);
@@ -564,7 +575,10 @@ void QWinMetaFile::arc(long, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::chord(long, short *parm)
 {
-    int xCenter, yCenter, angleStart, aLength;
+    int xCenter;
+    int yCenter;
+    int angleStart;
+    int aLength;
 
     xCenter = parm[7] + ((parm[5] - parm[7]) / 2);
     yCenter = parm[6] + ((parm[4] - parm[6]) / 2);
@@ -577,7 +591,10 @@ void QWinMetaFile::chord(long, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::pie(long, short *parm)
 {
-    int xCenter, yCenter, angleStart, aLength;
+    int xCenter;
+    int yCenter;
+    int angleStart;
+    int aLength;
 
     xCenter = parm[7] + ((parm[5] - parm[7]) / 2);
     yCenter = parm[6] + ((parm[4] - parm[6]) / 2);
@@ -705,7 +722,10 @@ void QWinMetaFile::textOut(long num, short *parm)
 void QWinMetaFile::extTextOut(long num, short *parm)
 {
     char *ptStr;
-    int x, y, width, height;
+    int x;
+    int y;
+    int width;
+    int height;
     int idxOffset;
 
     if (parm[3] != 0) { // ETO_CLIPPED flag add 4 parameters
@@ -996,7 +1016,8 @@ void QWinMetaFile::end(long, short *)
 unsigned short QWinMetaFile::calcCheckSum(WmfPlaceableHeader *apmfh)
 {
     WORD *lpWord;
-    WORD wResult, i;
+    WORD wResult;
+    WORD i;
 
     // Start with the first word
     wResult = *(lpWord = (WORD *)(apmfh));
@@ -1061,7 +1082,9 @@ unsigned int QWinMetaFile::toDWord(short *parm)
 QColor QWinMetaFile::color(short *parm)
 {
     unsigned int colorRef;
-    int red, green, blue;
+    int red;
+    int green;
+    int blue;
 
     colorRef = toDWord(parm) & 0xffffff;
     red = colorRef & 255;
@@ -1074,7 +1097,8 @@ QColor QWinMetaFile::color(short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::xyToAngle(int xStart, int yStart, int xEnd, int yEnd, int &angleStart, int &angleLength)
 {
-    float aStart, aLength;
+    float aStart;
+    float aLength;
 
     aStart = atan2((double)yStart, (double)xStart);
     aLength = atan2((double)yEnd, (double)xEnd) - aStart;
