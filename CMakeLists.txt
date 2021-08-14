@@ -6,7 +6,7 @@ project(kmail VERSION ${PIM_VERSION})
 include(CheckIncludeFiles)
 
 
-set(KF5_MIN_VERSION "5.84.0")
+set(KF5_MIN_VERSION "5.85.0")
 
 find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -25,6 +25,7 @@ include(ECMGeneratePriFile)
 
 include(KDEInstallDirs)
 include(KDECMakeSettings)
+set(KDE_COMPILERSETTINGS_LEVEL 5.85.0)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(ECMAddAppIcon)
 include(ECMQtDeclareLoggingCategory)
@@ -152,7 +153,7 @@ if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f00)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055500)
+add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055600)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
