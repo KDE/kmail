@@ -30,7 +30,7 @@ ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIE
         EXPORT KMAIL
     )
 
-add_library(kmailprivate ${kmailprivate_LIB_SRCS})
+add_library(kmailprivate)
 if (TARGET KUserFeedbackWidgets)
     target_sources(kmailprivate PRIVATE
         userfeedback/accountinfosource.cpp
