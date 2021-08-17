@@ -3613,7 +3613,7 @@ void KMMainWidget::startUpdateMessageActionsTimer()
     updateMessageActions(true);
 
     menutimer->stop();
-    menutimer->start(500);
+    menutimer->start(500ms);
 }
 
 void KMMainWidget::updateMessageActions(bool fast)
@@ -4395,7 +4395,7 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
             mShowBusySplashTimer = new QTimer(this);
             mShowBusySplashTimer->setSingleShot(true);
             connect(mShowBusySplashTimer, &QTimer::timeout, this, &KMMainWidget::slotShowBusySplash);
-            mShowBusySplashTimer->start(1000);
+            mShowBusySplashTimer->start(1s);
 
             Akonadi::ItemFetchJob *itemFetchJob = mMsgView->viewer()->createFetchJob(item);
             if (mCurrentCollection.isValid()) {
