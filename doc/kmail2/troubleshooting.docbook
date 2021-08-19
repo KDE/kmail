@@ -135,7 +135,7 @@ Found 0 dirty items.</screen> <!-- Can't indent here ... messes up the output.  
   
       <varlistentry id="ak-console-logging">
         <term><guilabel>Logging</guilabel> tab.</term>
-        <listitem><para>This tab lets you view messages emitted by various &akonadi; components..</para></listitem>
+        <listitem><para>This tab lets you view messages emitted by various &akonadi; components.</para></listitem>
       </varlistentry>
   
       <varlistentry id="ak-console-db-browser">
@@ -181,7 +181,7 @@ Found 0 dirty items.</screen> <!-- Can't indent here ... messes up the output.  
       <varlistentry id="ak-console-monitors">
         <term><guilabel>Monitors</guilabel> tab.</term>
         <listitem><para>Here you can see a list of all the monitors running under &akonadi;, and also view
-          their properties. Agents, resources, and even some appliction programs are monitored.</para></listitem>
+          their properties. Agents, resources, and even some application programs are monitored.</para></listitem>
       </varlistentry>
     </variablelist>
     
@@ -480,7 +480,7 @@ Akonadi.error.old  db_misc  file_lost+found  search_db
       whenever &akonadi; stops and restarts. Text file <filename>mysql.conf</filename>  is a configuration file for
       the mysqld daemon that serves as &akonadi;'s backend. The two directories <filename>db_data</filename>  and
       <filename>search_db</filename>  contain the actual mysql database tables. There are also a couple of mysql
-      log files in <filename>db_data</filename>  that mignt be helpful if and when &akonadi; acts up.</para>
+      log files in <filename>db_data</filename>  that might be helpful if and when &akonadi; acts up.</para>
   
   <para>The two directories <filename>file_db_data</filename>  and <filename>file_lost+found</filename>  contain auxiliary
       data associated with asynchronous processing. &akonadi; does not automatically clean out the
