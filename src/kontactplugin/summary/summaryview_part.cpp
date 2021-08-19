@@ -11,7 +11,7 @@
 
 #include "summaryview_part.h"
 #include "dropwidget.h"
-
+#include "kcoreaddons_version.h"
 #include <PimCommon/BroadcastStatus>
 using PimCommon::BroadcastStatus;
 
@@ -408,11 +408,17 @@ void SummaryViewPart::slotConfigure()
     dlg->setObjectName(QStringLiteral("ConfigDialog"));
     dlg->setModal(true);
     connect(dlg.data(), qOverload<>(&KCMultiDialog::configCommitted), this, &SummaryViewPart::updateWidgets);
-
+#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5, 86, 0)
     const auto metaDataList = KPluginLoader::findPlugins(QStringLiteral("pim/kcms/summary/"));
     for (const auto &metaData : metaDataList) {
         dlg->addModule(metaData);
     }
+#else
+    const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim/kcms/summary/"));
+    for (const auto &metaData : metaDataList) {
+        dlg->addModule(metaData);
+    }
+#endif
 
     dlg->exec();
     delete dlg;
