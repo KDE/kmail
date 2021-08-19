@@ -20,13 +20,13 @@
 </author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
-<date>2013-04-24</date>
-<releaseinfo>&kde; 4.11</releaseinfo>
+<date>2021-08-19</date>
+<releaseinfo>5.14.2 (Applications 20.04.2)</releaseinfo>
 </chapterinfo>
 
 <title>Credits and License</title>
 
-<para>&kmail;: Copyright the &kmail; developers, 1997-2013</para>
+<para>&kmail;: Copyright the &kmail; developers, 1997-2021</para>
 
 &underGPL;
 &underFDL;
