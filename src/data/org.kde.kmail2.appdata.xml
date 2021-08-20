@@ -180,6 +180,7 @@
       <li xml:lang="az">Təhlükəsiz - KMail, məxfiliyinizi qorumaq üçün təhlükəsiz uçdan uca şifrələmə dəstəyi və spamın aşkar edilməsi xüsusiyyətinə malikdir.</li>
       <li xml:lang="ca">Segur: el KMail té la configuració predeterminada segura per a protegir la vostra privadesa, una implementació d'encriptatge extrem a extrem i detecció del correu brossa.</li>
       <li xml:lang="ca-valencia">Segur: el KMail té la configuració predeterminada segura per a protegir la vostra privadesa, una implementació d'encriptatge extrem a extrem i detecció del correu brossa.</li>
+      <li xml:lang="cs">Bezpečný - KMail má bezpečná výchozí nastavení pro ochranu vašeho soukromí, skvělou podporu šifrování great end-to-end a detekci spamu.</li>
       <li xml:lang="da">Sikker - KMail har sikre standardindstillinger til at beskytte dit privatliv, glimrende understøttelse af ende-til-ende-kryptering og spam-detektion.</li>
       <li xml:lang="de">Sicherheit - KMail hat sichere Standardeinstellungen zum Schutz Ihrer Privatsphäre, großartige Unterstützung für Ende-zu-Ende-Verschlüsselung und Spam-Erkennung.</li>
       <li xml:lang="el">Ασφαλές - Το KMail έχει προκαθορισμένες ρυθμίσεις ασφαλείας για την προστασία του ιδιωτικού σα απορρήτου, πολύ καλή υποστήριξη κρυπτογράφησης στα άκρα και εντοπισμό ανεπιθύμητων μηνυμάτων.</li>
@@ -261,6 +262,7 @@
       <li xml:lang="az">Standartlara uyğun - Standart poçt protokollarını, e-poçtu göndərir, server tərəfindəki süzgəcləmə və sətır daxili OpenPGP, PGP / MIME və S / MIME əməllərini dəstəkləyir.</li>
       <li xml:lang="ca">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="ca-valencia">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
+      <li xml:lang="cs">Podporující standardy - Podporuje standardní e-mailové protokoly, push email, filtrování na straně serveru a vložené OpenPGP, PGP/MIME a S/MIME.</li>
       <li xml:lang="da">Standardoverholdelse - Understøtter standard mailprotokoller, push-e-mail, filtrering på serversiden og indlejret OpenPGP, PGP/MIME og S/MIME.</li>
       <li xml:lang="de">Standardkonform - Unterstützt Standard-Mail-Protokolle, Push-E-Mail, serverseitige Filterung und Inline OpenPGP, PGP/MIME und S/MIME.</li>
       <li xml:lang="el">Σε συμμόρφωση με τα πρότυπα - Υποστηρίζει πρότυπα πρωτόκολλα αλληλογραφίας, ώθηση αλληλογραφίας, φιλτράρισμα διακομιστή και εμβόλιμα OpenPGP, PGP/MIME και S/MIME.</li>
