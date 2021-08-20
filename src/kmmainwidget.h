@@ -123,12 +123,12 @@ public:
     void writeReaderConfig();
 
     /** Easy access to main components of the window. */
-    KMReaderWin *messageView() const;
+    Q_REQUIRED_RESULT KMReaderWin *messageView() const;
     /** Access to the header list pane. */
     CollectionPane *messageListPane() const;
 
-    Akonadi::Collection currentCollection() const;
-    QSharedPointer<MailCommon::FolderSettings> currentFolder() const;
+    Q_REQUIRED_RESULT Akonadi::Collection currentCollection() const;
+    Q_REQUIRED_RESULT QSharedPointer<MailCommon::FolderSettings> currentFolder() const;
 
     static void cleanup();
     QAction *action(const QString &name);
@@ -285,7 +285,7 @@ private:
       the mainWidget is a KPart or a KMMainWindow.
       When dealing with geometries, use this pointer
     */
-    KSharedConfig::Ptr config();
+    Q_REQUIRED_RESULT KSharedConfig::Ptr config();
 
     void checkAkonadiServerManagerState();
     void updateHtmlMenuEntry();
@@ -296,7 +296,7 @@ private:
     void updateAllToTrashAction(qint64 statistics);
 
     /** Get override character encoding. */
-    QString overrideEncoding() const;
+    Q_REQUIRED_RESULT QString overrideEncoding() const;
 
     void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);
 

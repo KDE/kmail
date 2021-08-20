@@ -77,7 +77,7 @@ public:
     /** Returns the result of the command. Only call this method from the slot
       connected to completed().
     */
-    Result result() const;
+    Q_REQUIRED_RESULT Result result() const;
 
 public Q_SLOTS:
     // Retrieve messages then calls execute
@@ -95,19 +95,19 @@ protected:
     virtual Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items);
 
     /** Allows to configure how much data should be retrieved of the messages. */
-    Akonadi::ItemFetchScope &fetchScope()
+    Q_REQUIRED_RESULT Akonadi::ItemFetchScope &fetchScope()
     {
         return mFetchScope;
     }
 
     // Returns list of messages retrieved
-    const Akonadi::Item::List retrievedMsgs() const;
+    Q_REQUIRED_RESULT const Akonadi::Item::List retrievedMsgs() const;
     // Returns the single message retrieved
-    Akonadi::Item retrievedMessage() const;
+    Q_REQUIRED_RESULT Akonadi::Item retrievedMessage() const;
     // Returns the parent widget
     QWidget *parentWidget() const;
 
-    bool deletesItself() const;
+    Q_REQUIRED_RESULT bool deletesItself() const;
     /** Specify whether the subclass takes care of the deletion of the object.
       By default the base class will delete the object.
       @param deletesItself true if the subclass takes care of deletion, false
@@ -115,7 +115,7 @@ protected:
     */
     void setDeletesItself(bool deletesItself);
 
-    bool emitsCompletedItself() const;
+    Q_REQUIRED_RESULT bool emitsCompletedItself() const;
     /** Specify whether the subclass takes care of emitting the completed()
       signal. By default the base class will Q_EMIT this signal.
       @param emitsCompletedItself true if the subclass emits the completed
@@ -173,7 +173,7 @@ public:
     explicit KMMailtoComposeCommand(const QUrl &url, const Akonadi::Item &msg = Akonadi::Item());
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
     QUrl mUrl;
     Akonadi::Item mMessage;
@@ -190,7 +190,7 @@ public:
     void setReplyAsHtml(bool replyAsHtml);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
     QUrl mUrl;
     QString mSelection;
@@ -205,7 +205,7 @@ public:
     KMMailtoForwardCommand(QWidget *parent, const QUrl &url, const Akonadi::Item &msg);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     QUrl mUrl;
 };
 
@@ -217,7 +217,7 @@ public:
     KMAddBookmarksCommand(const QUrl &url, QWidget *parent);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
     QUrl mUrl;
 };
@@ -233,7 +233,7 @@ private Q_SLOTS:
     void slotUrlSaveResult(KJob *job);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
     QUrl mUrl;
 };
@@ -249,7 +249,7 @@ private Q_SLOTS:
     void slotDeleteItem(KJob *job);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     bool mDeleteFromSource = false;
 };
 
@@ -261,7 +261,7 @@ public:
     explicit KMEditMessageCommand(QWidget *parent, const KMime::Message::Ptr &msg);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     KMime::Message::Ptr mMessage;
 };
 
@@ -273,7 +273,7 @@ public:
     KMUseTemplateCommand(QWidget *parent, const Akonadi::Item &msg);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMSaveMsgCommand : public KMCommand
@@ -284,7 +284,7 @@ public:
     KMSaveMsgCommand(QWidget *parent, const Akonadi::Item::List &msgList);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMOpenMsgCommand : public KMCommand
@@ -295,7 +295,7 @@ public:
     explicit KMOpenMsgCommand(QWidget *parent, const QUrl &url = QUrl(), const QString &encoding = QString(), KMMainWidget *main = nullptr);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
 private Q_SLOTS:
     void slotDataArrived(KIO::Job *job, const QByteArray &data);
@@ -328,7 +328,7 @@ public:
     KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     MessageViewer::Viewer *mViewer = nullptr;
 };
 
@@ -346,7 +346,7 @@ public:
     void setReplyAsHtml(bool replyAsHtml);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
 private:
     QString mSelection;
@@ -373,7 +373,7 @@ public:
                      const QString &selection = QString());
 
 private:
-    KMCommand::Result createComposer(const Akonadi::Item &item);
+    Q_REQUIRED_RESULT KMCommand::Result createComposer(const Akonadi::Item &item);
     Result execute() override;
 
 private:
@@ -406,7 +406,7 @@ public:
     KMRedirectCommand(QWidget *parent, const Akonadi::Item::List &msgList);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 };
 
 struct KMAILTESTS_TESTS_EXPORT KMPrintCommandInfo {
@@ -433,7 +433,7 @@ public:
     KMPrintCommand(QWidget *parent, const KMPrintCommandInfo &commandInfo);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
     KMPrintCommandInfo mPrintCommandInfo;
 };
@@ -450,7 +450,7 @@ protected Q_SLOTS:
     void slotModifyItemDone(KJob *job);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     MessageStatus mStatus;
     bool mInvertMark = false;
 };
@@ -475,7 +475,7 @@ protected Q_SLOTS:
     void slotModifyItemDone(KJob *job);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     void setTags();
 
     Akonadi::Tag::List mTags;
@@ -494,7 +494,7 @@ public:
     KMFilterActionCommand(QWidget *parent, const QVector<qlonglong> &msgListId, const QString &filterId);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     QVector<qlonglong> mMsgListId;
     QString mFilterId;
 };
@@ -522,7 +522,7 @@ public:
     KMMailingListFilterCommand(QWidget *parent, const Akonadi::Item &msg);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMCopyCommand : public KMCommand
@@ -537,7 +537,7 @@ protected Q_SLOTS:
     void slotCopyResult(KJob *job);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
     Akonadi::Collection mDestFolder;
 };
@@ -553,7 +553,7 @@ protected Q_SLOTS:
     void slotAppendResult(KJob *job);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
     Akonadi::Collection mDestFolder;
     QList<KJob *> mPendingJobs;
@@ -568,12 +568,12 @@ public:
     KMMoveCommand(const Akonadi::Collection &destFolder,
                   const Akonadi::Item &msg,
                   MessageList::Core::MessageItemSetReference ref = MessageList::Core::MessageItemSetReference());
-    Akonadi::Collection destFolder() const
+    Q_REQUIRED_RESULT Akonadi::Collection destFolder() const
     {
         return mDestFolder;
     }
 
-    MessageList::Core::MessageItemSetReference refSet() const
+    Q_REQUIRED_RESULT MessageList::Core::MessageItemSetReference refSet() const
     {
         return mRef;
     }
@@ -592,7 +592,7 @@ Q_SIGNALS:
     void moveDone(KMMoveCommand *);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     void completeMove(Result result);
 
     Akonadi::Collection mDestFolder;
@@ -614,7 +614,7 @@ public:
 
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref);
     KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item &msg, MessageList::Core::MessageItemSetReference ref);
-    MessageList::Core::MessageItemSetReference refSet() const
+    Q_REQUIRED_RESULT MessageList::Core::MessageItemSetReference refSet() const
     {
         return mRef;
     }
@@ -631,10 +631,10 @@ Q_SIGNALS:
     void moveDone(KMTrashMsgCommand *);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     void completeMove(Result result);
 
-    static Akonadi::Collection findTrashFolder(const Akonadi::Collection &srcFolder);
+    Q_REQUIRED_RESULT static Akonadi::Collection findTrashFolder(const Akonadi::Collection &srcFolder);
 
     QMap<Akonadi::Collection, Akonadi::Item::List> mTrashFolders;
     KPIM::ProgressItem *mMoveProgress = nullptr;
@@ -652,7 +652,7 @@ public:
     explicit KMResendMessageCommand(QWidget *parent, const Akonadi::Item &msg = Akonadi::Item());
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMShareImageCommand : public KMCommand
@@ -663,7 +663,7 @@ public:
     explicit KMShareImageCommand(const QUrl &url, QWidget *parent);
 
 private:
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
     QUrl mUrl;
 };
 
@@ -673,13 +673,13 @@ class KMAILTESTS_TESTS_EXPORT KMFetchMessageCommand : public KMCommand
 public:
     explicit KMFetchMessageCommand(QWidget *parent, const Akonadi::Item &item, MessageViewer::Viewer *viewer, KMReaderMainWin *win = nullptr);
 
-    Akonadi::Item item() const;
+    Q_REQUIRED_RESULT Akonadi::Item item() const;
 
     KMReaderMainWin *readerMainWin() const;
 
 private:
     Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items) override;
-    Result execute() override;
+    Q_REQUIRED_RESULT Result execute() override;
 
     Akonadi::Item mItem;
     MessageViewer::Viewer *mViewer = nullptr;

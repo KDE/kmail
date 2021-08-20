@@ -142,7 +142,7 @@ public:
 
     QAction *addToExistingContactAction() const;
 
-    Akonadi::Item messageItem() const;
+    Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
 
     QWidget *mainWindow() const;
 
@@ -157,8 +157,8 @@ public:
     void clearContactItem();
 
     Q_REQUIRED_RESULT bool mimePartTreeIsEmpty() const;
-    KActionMenu *shareServiceUrlMenu() const;
-    MessageViewer::DKIMViewerMenu *dkimViewerMenu() const;
+    Q_REQUIRED_RESULT KActionMenu *shareServiceUrlMenu() const;
+    Q_REQUIRED_RESULT MessageViewer::DKIMViewerMenu *dkimViewerMenu() const;
     Q_REQUIRED_RESULT QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
     Q_REQUIRED_RESULT QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
