@@ -34,7 +34,7 @@ private:
     void slotSaveProperty();
     void readConfig();
     void writeConfig();
-    KTNEFMessage *mMessage = nullptr;
-    QTreeWidget *mListView = nullptr;
+    KTNEFMessage *const mMessage;
+    QTreeWidget *const mListView;
 };
 

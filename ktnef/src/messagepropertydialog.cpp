@@ -33,12 +33,12 @@ static const char myMessagePropertyDialogGroupName[] = "MessagePropertyDialog";
 
 MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     : QDialog(parent)
+    , mMessage(msg)
+    , mListView(new QTreeWidget(this))
 {
-    mMessage = msg;
 
     auto mainLayout = new QVBoxLayout(this);
     setWindowTitle(i18nc("@title:window", "Message Properties"));
-    mListView = new QTreeWidget(this);
     mainLayout->addWidget(mListView);
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
