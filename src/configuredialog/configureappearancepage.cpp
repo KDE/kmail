@@ -54,6 +54,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QIcon>
 #include <QLineEdit>
 
+#include <kwidgetsaddons_version.h>
+
 #include <KMime/DateFormatter>
 
 #include <QButtonGroup>
@@ -170,7 +172,14 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
 
     hlay->addWidget(mFontLocationCombo);
     hlay->addStretch(10);
+
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 86, 0)
+    mFontChooser = new KFontChooser(KFontChooser::DisplayFrame, this);
+    mFontChooser->setMinVisibleItems(4);
+#else
     mFontChooser = new KFontChooser(this, KFontChooser::DisplayFrame, QStringList(), 4);
+#endif
+
     mFontChooser->setEnabled(false); // since !mCustomFontCheck->isChecked()
     vlay->addWidget(mFontChooser);
     connect(mFontChooser, &KFontChooser::fontSelected, this, &ConfigModuleTab::slotEmitChanged);
