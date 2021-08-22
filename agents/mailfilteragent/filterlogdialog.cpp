@@ -39,13 +39,13 @@ using namespace MailCommon;
 
 FilterLogDialog::FilterLogDialog(QWidget *parent)
     : QDialog(parent)
+    , mUser1Button(new QPushButton(this))
+    , mUser2Button(new QPushButton(this))
 {
     setWindowTitle(i18nc("@title:window", "Filter Log Viewer"));
     auto mainLayout = new QVBoxLayout(this);
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-    mUser1Button = new QPushButton(this);
     buttonBox->addButton(mUser1Button, QDialogButtonBox::ActionRole);
-    mUser2Button = new QPushButton(this);
     buttonBox->addButton(mUser2Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FilterLogDialog::reject);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("view-filter")));

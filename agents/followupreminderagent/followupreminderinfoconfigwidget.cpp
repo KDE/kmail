@@ -17,8 +17,8 @@ static const char myConfigGroupName[] = "FollowUpReminderInfoDialog";
 
 FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
     : Akonadi::AgentConfigurationBase(config, parent, args)
+    , mWidget(new FollowUpReminderInfoWidget(parent))
 {
-    mWidget = new FollowUpReminderInfoWidget(parent);
     parent->layout()->addWidget(mWidget);
 
     KAboutData aboutData = KAboutData(QStringLiteral("followupreminderagent"),

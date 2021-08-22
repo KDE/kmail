@@ -24,6 +24,6 @@ public:
     void saveDialogSize(const QSize &size) override;
 
 private:
-    FollowUpReminderInfoWidget *mWidget = nullptr;
+    FollowUpReminderInfoWidget *const mWidget;
 };
 AKONADI_AGENTCONFIG_FACTORY(FollowUpReminderInfoAgentConfigFactory, "followupreminderagentconfig.json", FollowUpReminderInfoConfigWidget)

@@ -30,6 +30,7 @@ static constexpr const char DialogGroup[] = "FollowUpReminderNoAnswerDialog";
 
 FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     : QDialog(parent)
+    , mWidget(new FollowUpReminderInfoWidget(this))
 {
     setWindowTitle(i18nc("@title:window", "Follow Up Reminder"));
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
@@ -39,7 +40,6 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
 
     auto lab = new QLabel(i18n("You still wait an answer about this mail:"), this);
     mainLayout->addWidget(lab);
-    mWidget = new FollowUpReminderInfoWidget(this);
     mWidget->setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
     mainLayout->addWidget(mWidget);
 

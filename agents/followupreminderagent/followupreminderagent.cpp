@@ -33,6 +33,7 @@ using namespace std::chrono_literals;
 FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     : Akonadi::AgentBase(id)
     , mManager(new FollowUpReminderManager(this))
+    , mTimer(new QTimer(this))
 {
 #if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("followupreminderagent"));
@@ -59,7 +60,6 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
         mManager->load();
     }
 
-    mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &FollowUpReminderAgent::reload);
     // Reload all each 24hours
     mTimer->start(24h);

@@ -69,8 +69,8 @@ private:
     QCheckBox *mLogPatternResultBox = nullptr;
     QCheckBox *mLogFilterActionBox = nullptr;
     QSpinBox *mLogMemLimitSpin = nullptr;
-    QPushButton *mUser1Button = nullptr;
-    QPushButton *mUser2Button = nullptr;
+    QPushButton *const mUser1Button;
+    QPushButton *const mUser2Button;
 
     bool mIsInitialized = false;
 };

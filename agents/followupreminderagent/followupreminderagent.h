@@ -35,6 +35,6 @@ protected:
 
 private:
     FollowUpReminderManager *const mManager;
-    QTimer *mTimer = nullptr;
+    QTimer *const mTimer;
 };
 

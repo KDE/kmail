@@ -27,6 +27,7 @@ using namespace std::chrono_literals;
 
 ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     : Akonadi::AgentBase(id)
+    , mTimer(new QTimer(this))
     , mArchiveManager(new ArchiveMailManager(this))
 {
 #if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -62,7 +63,6 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
 #endif
     }
 
-    mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &ArchiveMailAgent::reload);
     mTimer->start(24h);
 }

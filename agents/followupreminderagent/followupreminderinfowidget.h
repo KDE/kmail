@@ -65,6 +65,6 @@ private:
         AnswerMessageId,
     };
     QList<qint32> mListRemoveId;
-    QTreeWidget *mTreeWidget = nullptr;
+    QTreeWidget *const mTreeWidget;
     bool mChanged = false;
 };

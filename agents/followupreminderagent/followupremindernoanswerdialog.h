@@ -30,6 +30,6 @@ private:
     void slotSave();
     void readConfig();
     void writeConfig();
-    FollowUpReminderInfoWidget *mWidget = nullptr;
+    FollowUpReminderInfoWidget *const mWidget;
 };
 
