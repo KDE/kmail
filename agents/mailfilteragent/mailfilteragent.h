@@ -70,7 +70,7 @@ public Q_SLOTS:
 private:
     bool isFilterableCollection(const Akonadi::Collection &collection) const;
 
-    FilterManager *const m_filterManager;
+    FilterManager *m_filterManager = nullptr;
 
     FilterLogDialog *m_filterLogDialog = nullptr;
     QTimer *const mProgressTimer;

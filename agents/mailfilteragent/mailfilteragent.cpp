@@ -56,7 +56,6 @@ bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collecti
 
 MailFilterAgent::MailFilterAgent(const QString &id)
     : Akonadi::AgentBase(id)
-    , m_filterManager(new FilterManager(this))
     , mProgressTimer(new QTimer(this))
 {
 #if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -70,6 +69,8 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     CommonKernel->registerKernelIf(mMailFilterKernel); // register KernelIf early, it is used by the Filter classes
     CommonKernel->registerSettingsIf(mMailFilterKernel); // SettingsIf is used in FolderTreeWidget
 
+    // Initialize it after registring CommonKernel otherwise it crashs!
+    m_filterManager = new FilterManager(this);
 
     connect(m_filterManager, &FilterManager::percent, this, &MailFilterAgent::emitProgress);
     connect(m_filterManager, &FilterManager::progressMessage, this, &MailFilterAgent::emitProgressMessage);
