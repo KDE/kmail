@@ -13,6 +13,7 @@ namespace MessageViewer
 {
 class MessageViewerCheckBeforeDeletingInterface;
 }
+class QAction;
 class KActionCollection;
 class KMailPluginCheckBeforeDeletingManagerInterface : public QObject
 {
@@ -29,7 +30,10 @@ public:
 
     void setActionCollection(KActionCollection *ac);
 
+    const QList<QAction *> actions() const;
+
 private:
+    QList<QAction *> mActions;
     QVector<MessageViewer::MessageViewerCheckBeforeDeletingInterface *> mListPluginInterface;
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;

@@ -35,6 +35,7 @@ void KMailPluginCheckBeforeDeletingManagerInterface::initializePlugins()
             auto interface = static_cast<MessageViewer::MessageViewerCheckBeforeDeletingInterface *>(plugin->createInterface(this));
             interface->setParentWidget(mParentWidget);
             interface->createActions(mActionCollection);
+            mActions.append(interface->actions());
             mListPluginInterface.append(interface);
         }
     }
@@ -49,6 +50,11 @@ QWidget *KMailPluginCheckBeforeDeletingManagerInterface::parentWidget() const
 void KMailPluginCheckBeforeDeletingManagerInterface::setActionCollection(KActionCollection *ac)
 {
     mActionCollection = ac;
+}
+
+const QList<QAction *> KMailPluginCheckBeforeDeletingManagerInterface::actions() const
+{
+    return mActions;
 }
 
 void KMailPluginCheckBeforeDeletingManagerInterface::setParentWidget(QWidget *newParentWidget)
