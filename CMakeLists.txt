@@ -60,7 +60,6 @@ set(KDEPIM_LIB_SOVERSION "5")
 set(QT_REQUIRED_VERSION "5.15.2")
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
 
-option(KDEPIM_RUN_AKONADI_TEST "Enable autotest based on Akonadi." TRUE)
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngine WebEngineWidgets)
 set(LIBGRAVATAR_VERSION "5.18.40")
