@@ -13,6 +13,7 @@ namespace MessageViewer
 {
 class MessageViewerCheckBeforeDeletingInterface;
 }
+class KActionCollection;
 class KMailPluginCheckBeforeDeletingManagerInterface : public QObject
 {
     Q_OBJECT
@@ -26,8 +27,11 @@ public:
 
     Q_REQUIRED_RESULT Akonadi::Item::List confirmBeforeDeleting(const Akonadi::Item::List &list);
 
+    void setActionCollection(KActionCollection *ac);
+
 private:
     QVector<MessageViewer::MessageViewerCheckBeforeDeletingInterface *> mListPluginInterface;
     QWidget *mParentWidget = nullptr;
+    KActionCollection *mActionCollection = nullptr;
     bool mWasInitialized = false;
 };
