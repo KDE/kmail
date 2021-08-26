@@ -96,8 +96,6 @@ class KMAIL_EXPORT KMMainWidget : public QWidget
     Q_OBJECT
 
 public:
-    using PtrList = QList<KMMainWidget *>;
-
     KMMainWidget(QWidget *parent,
                  KXMLGUIClient *aGUIClient,
                  KActionCollection *actionCollection,
@@ -141,7 +139,7 @@ public:
       Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
       @return the list of all main widgets, or 0 if it is not yet initialized
     */
-    static const PtrList *mainWidgetList();
+    static const KMMainWidget *mainWidgetList();
 
     QWidget *vacationScriptIndicator() const;
     QWidget *dkimWidgetInfo() const;

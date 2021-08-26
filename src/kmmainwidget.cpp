@@ -197,8 +197,7 @@ using KPIM::ProgressManager;
 using MessageViewer::AttachmentStrategy;
 using PimCommon::BroadcastStatus;
 
-Q_GLOBAL_STATIC(KMMainWidget::PtrList, theMainWidgetList)
-
+static KMMainWidget *myMainWidget = nullptr;
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, const KSharedConfig::Ptr &config)
     : QWidget(parent)
@@ -243,7 +242,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mPluginCheckBeforeDeletingManagerInterface->setActionCollection(mActionCollection);
     mPluginCheckBeforeDeletingManagerInterface->initializePlugins();
 
-    theMainWidgetList->append(this);
+    myMainWidget = this;
 
     readPreConfig();
     createWidgets();
@@ -375,7 +374,7 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
 // perform all cleanup that requires the kernel in destruct()
 KMMainWidget::~KMMainWidget()
 {
-    theMainWidgetList->removeAll(this);
+    myMainWidget = nullptr;
     qDeleteAll(mFilterCommands);
     destruct();
 }
@@ -4232,13 +4231,13 @@ void KMMainWidget::updateFileMenu()
 }
 
 //-----------------------------------------------------------------------------
-const KMMainWidget::PtrList *KMMainWidget::mainWidgetList()
+const KMMainWidget *KMMainWidget::mainWidgetList()
 {
     // better safe than sorry; check whether the global static has already been destroyed
-    if (theMainWidgetList.isDestroyed()) {
+    if (!myMainWidget) {
         return nullptr;
     }
-    return theMainWidgetList;
+    return myMainWidget;
 }
 
 QSharedPointer<FolderSettings> KMMainWidget::currentFolder() const
