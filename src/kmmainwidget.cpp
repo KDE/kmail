@@ -1391,7 +1391,7 @@ void KMMainWidget::newFromTemplate(const Akonadi::Item &msg)
     if (!msg.isValid()) {
         return;
     }
-    KMCommand *command = new KMUseTemplateCommand(this, msg);
+    auto command = new KMUseTemplateCommand(this, msg);
     command->start();
 }
 
@@ -1770,7 +1770,7 @@ void KMMainWidget::copyMessageSelected(const Akonadi::Item::List &selectMsg, con
         return;
     }
     // And stuff them into a KMCopyCommand :)
-    KMCommand *command = new KMCopyCommand(dest, selectMsg);
+    auto command = new KMCopyCommand(dest, selectMsg);
     QObject::connect(command, &KMCommand::completed, this, &KMMainWidget::slotCopyMessagesCompleted);
     command->start();
     showMessageActivities(i18n("Copying messages..."));
@@ -1928,7 +1928,7 @@ void KMMainWidget::toggleMessageSetTag(const Akonadi::Item::List &select, const 
     if (select.isEmpty()) {
         return;
     }
-    KMCommand *command = new KMSetTagCommand(Akonadi::Tag::List() << tag, select, KMSetTagCommand::Toggle);
+    auto command = new KMSetTagCommand(Akonadi::Tag::List() << tag, select, KMSetTagCommand::Toggle);
     command->start();
 }
 
@@ -1943,7 +1943,7 @@ void KMMainWidget::slotSelectMoreMessageTagList()
     dlg->setActionCollection(QList<KActionCollection *>{actionCollection()});
     if (dlg->exec()) {
         const Akonadi::Tag::List lst = dlg->selectedTag();
-        KMCommand *command = new KMSetTagCommand(lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew);
+        auto command = new KMSetTagCommand(lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew);
         command->start();
     }
     delete dlg;
@@ -1973,7 +1973,7 @@ void KMMainWidget::refreshMessageListSelection()
 //        We should probably move everything there....
 void KMMainWidget::setMessageSetStatus(const Akonadi::Item::List &select, Akonadi::MessageStatus status, bool toggle)
 {
-    KMCommand *command = new KMSetStatusCommand(status, select, toggle);
+    auto command = new KMSetStatusCommand(status, select, toggle);
     command->start();
 }
 
@@ -2030,7 +2030,7 @@ void KMMainWidget::slotRedirectMessage()
         return;
     }
 
-    KMCommand *command = new KMRedirectCommand(this, selectedMessages);
+    auto command = new KMRedirectCommand(this, selectedMessages);
     command->start();
 }
 
@@ -2060,7 +2060,7 @@ void KMMainWidget::slotCustomReplyToMsg(const QString &tmpl)
 
     qCDebug(KMAIL_LOG) << "Reply with template:" << tmpl;
 
-    KMCommand *command = new KMReplyCommand(this, msg, MessageComposer::ReplySmart, text, false, tmpl);
+    auto command = new KMReplyCommand(this, msg, MessageComposer::ReplySmart, text, false, tmpl);
     command->start();
 }
 
@@ -2572,12 +2572,12 @@ void KMMainWidget::slotMessageStatusChangeRequest(const Akonadi::Item &item, con
     }
 
     if (clear.toQInt32() != Akonadi::MessageStatus().toQInt32()) {
-        KMCommand *command = new KMSetStatusCommand(clear, Akonadi::Item::List() << item, true);
+        auto command = new KMSetStatusCommand(clear, Akonadi::Item::List() << item, true);
         command->start();
     }
 
     if (set.toQInt32() != Akonadi::MessageStatus().toQInt32()) {
-        KMCommand *command = new KMSetStatusCommand(set, Akonadi::Item::List() << item, false);
+        auto command = new KMSetStatusCommand(set, Akonadi::Item::List() << item, false);
         command->start();
     }
 }
@@ -4701,7 +4701,7 @@ void KMMainWidget::slotRedirectCurrentMessage()
         if (!currentItem.hasPayload<KMime::Message::Ptr>()) {
             return;
         }
-        KMCommand *command = new KMRedirectCommand(this, currentItem);
+        auto command = new KMRedirectCommand(this, currentItem);
         command->start();
     }
 }
