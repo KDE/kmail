@@ -55,6 +55,7 @@
 #include <AkonadiWidgets/CollectionMaintenancePage>
 
 #include "mailcommonsettings_base.h"
+#include <AkonadiWidgets/AgentConfigurationDialog>
 #include <MailCommon/CollectionExpiryPage>
 #include <MailCommon/CollectionGeneralPage>
 #include <MailCommon/ExpireCollectionAttribute>
@@ -4521,7 +4522,9 @@ void KMMainWidget::slotAccountSettings()
         return;
     }
 
-    instance.configure(this);
+    QPointer<AgentConfigurationDialog> dlg = new AgentConfigurationDialog(instance, this);
+    dlg->exec();
+    delete dlg;
 }
 
 void KMMainWidget::slotRestartAccount()
