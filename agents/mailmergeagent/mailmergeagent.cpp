@@ -55,7 +55,7 @@ MailMergeAgent::MailMergeAgent(const QString &id)
 
     if (MailMergeAgentSettings::enabled()) {
 #ifdef DEBUG_MailMergeAgent
-        QTimer::singleShot(1000, this, &MailMergeAgent::slotStartAgent);
+        QTimer::singleShot(1s, this, &MailMergeAgent::slotStartAgent);
 #else
         QTimer::singleShot(4min, this, &MailMergeAgent::slotStartAgent);
 #endif

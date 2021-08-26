@@ -3920,7 +3920,7 @@ void KMMainWidget::updateHtmlMenuEntry()
 void KMMainWidget::updateFolderMenu()
 {
     if (!CommonKernel->outboxCollectionFolder().isValid()) {
-        QTimer::singleShot(1000, this, &KMMainWidget::updateFolderMenu);
+        QTimer::singleShot(1s, this, &KMMainWidget::updateFolderMenu);
         return;
     }
 
@@ -4797,5 +4797,5 @@ void KMMainWidget::setupUnifiedMailboxChecker()
     connect(kmkernel, &KMKernel::incomingAccountsChanged, this, ask);
 
     // Wait for a bit before asking so we at least have the window on screen
-    QTimer::singleShot(500, this, ask);
+    QTimer::singleShot(500ms, this, ask);
 }

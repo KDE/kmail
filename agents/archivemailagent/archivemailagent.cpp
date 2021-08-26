@@ -57,7 +57,7 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
 
     if (enabledAgent()) {
 #ifdef DEBUG_ARCHIVEMAILAGENT
-        QTimer::singleShot(1000, mArchiveManager, &ArchiveMailManager::load);
+        QTimer::singleShot(1s, mArchiveManager, &ArchiveMailManager::load);
 #else
         QTimer::singleShot(5min, mArchiveManager, &ArchiveMailManager::load);
 #endif

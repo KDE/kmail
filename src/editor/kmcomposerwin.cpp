@@ -189,6 +189,9 @@
 
 #include <KDialogJobUiDelegate>
 #include <KIO/CommandLauncherJob>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 using MailTransport::Transport;
 using MailTransport::TransportManager;
@@ -3193,7 +3196,7 @@ void KMComposerWin::showAndActivateComposer()
 void KMComposerWin::slotSpellCheckingStatus(const QString &status)
 {
     mStatusbarLabel->setText(status);
-    QTimer::singleShot(2000, this, &KMComposerWin::slotSpellcheckDoneClearStatus);
+    QTimer::singleShot(2s, this, &KMComposerWin::slotSpellcheckDoneClearStatus);
 }
 
 void KMComposerWin::slotSpellcheckDoneClearStatus()
