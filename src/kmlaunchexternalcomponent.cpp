@@ -6,6 +6,7 @@
 
 #include "kmlaunchexternalcomponent.h"
 #include <AkonadiCore/AgentManager>
+#include <AkonadiWidgets/AgentConfigurationDialog>
 #include <KLocalizedString>
 #include <KMessageBox>
 
@@ -18,6 +19,7 @@
 
 #include <KDialogJobUiDelegate>
 #include <KIO/CommandLauncherJob>
+#include <QPointer>
 
 #include "kmail_debug.h"
 #include <QProcess>
@@ -35,7 +37,9 @@ void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_archivemail_agent"));
     if (agent.isValid()) {
-        agent.configure(mParentWidget);
+        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
+        dlg->exec();
+        delete dlg;
     } else {
         KMessageBox::error(mParentWidget, i18n("Archive Mail Agent was not registered."));
     }
@@ -45,7 +49,9 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_sendlater_agent"));
     if (agent.isValid()) {
-        agent.configure(mParentWidget);
+        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
+        dlg->exec();
+        delete dlg;
     } else {
         KMessageBox::error(mParentWidget, i18n("Send Later Agent was not registered."));
     }
@@ -55,7 +61,9 @@ void KMLaunchExternalComponent::slotConfigureMailMerge()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_mailmerge_agent"));
     if (agent.isValid()) {
-        agent.configure(mParentWidget);
+        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
+        dlg->exec();
+        delete dlg;
     } else {
         KMessageBox::error(mParentWidget, i18n("Mail Merge Agent was not registered."));
     }
@@ -65,7 +73,9 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_followupreminder_agent"));
     if (agent.isValid()) {
-        agent.configure(mParentWidget);
+        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
+        dlg->exec();
+        delete dlg;
     } else {
         KMessageBox::error(mParentWidget, i18n("Followup Reminder Agent was not registered."));
     }

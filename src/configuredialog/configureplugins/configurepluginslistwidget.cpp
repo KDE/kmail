@@ -28,6 +28,7 @@
 
 #include <AkonadiCore/AgentInstance>
 #include <AkonadiCore/AgentManager>
+#include <AkonadiWidgets/AgentConfigurationDialog>
 #include <MessageComposer/PluginEditor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
 #include <MessageComposer/PluginEditorInit>
@@ -38,6 +39,7 @@
 #include <PimCommon/GenericPlugin>
 #include <QDBusInterface>
 #include <QDBusReply>
+#include <QPointer>
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
 
 namespace
@@ -387,7 +389,9 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &groupName, 
                 if (data.mIdentifier == identifier) {
                     auto instance = Akonadi::AgentManager::self()->instance(identifier);
                     if (instance.isValid()) {
-                        instance.configure(this);
+                        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(instance, this);
+                        dlg->exec();
+                        delete dlg;
                     }
                     break;
                 }
