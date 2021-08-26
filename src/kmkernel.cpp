@@ -1553,7 +1553,7 @@ void KMKernel::expireAllFoldersNow() // called by the GUI
 
 bool KMKernel::canQueryClose()
 {
-    if (KMMainWidget::mainWidgetList() && KMMainWidget::mainWidgetList()->count() > 1) {
+    if (KMMainWidget::mainWidgetList()) {
         return true;
     }
     return mUnityServiceManager->canQueryClose();
