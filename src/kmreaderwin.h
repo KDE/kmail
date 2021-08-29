@@ -111,45 +111,45 @@ public:
 
     Q_REQUIRED_RESULT bool isFixedFont() const;
     void setUseFixedFont(bool useFixedFont);
-    MessageViewer::Viewer *viewer() const;
-    KToggleAction *toggleFixFontAction() const;
-    QAction *mailToComposeAction() const;
-    QAction *mailToReplyAction() const;
-    QAction *mailToForwardAction() const;
-    QAction *addAddrBookAction() const;
-    QAction *openAddrBookAction() const;
-    QAction *copyAction() const;
-    QAction *selectAllAction() const;
-    QAction *copyURLAction() const;
-    QAction *copyImageLocation() const;
-    QAction *urlOpenAction() const;
-    QAction *urlSaveAsAction() const;
-    QAction *addBookmarksAction() const;
-    QAction *toggleMimePartTreeAction() const;
-    QAction *speakTextAction() const;
-    QAction *downloadImageToDiskAction() const;
-    QAction *viewSourceAction() const;
-    QAction *findInMessageAction() const;
-    QAction *saveAsAction() const;
-    QAction *saveMessageDisplayFormatAction() const;
-    QAction *resetMessageDisplayFormatAction() const;
-    QAction *editContactAction() const;
-    QAction *developmentToolsAction() const;
-    QAction *shareTextAction() const;
+    Q_REQUIRED_RESULT MessageViewer::Viewer *viewer() const;
+    Q_REQUIRED_RESULT KToggleAction *toggleFixFontAction() const;
+    Q_REQUIRED_RESULT QAction *mailToComposeAction() const;
+    Q_REQUIRED_RESULT QAction *mailToReplyAction() const;
+    Q_REQUIRED_RESULT QAction *mailToForwardAction() const;
+    Q_REQUIRED_RESULT QAction *addAddrBookAction() const;
+    Q_REQUIRED_RESULT QAction *openAddrBookAction() const;
+    Q_REQUIRED_RESULT QAction *copyAction() const;
+    Q_REQUIRED_RESULT QAction *selectAllAction() const;
+    Q_REQUIRED_RESULT QAction *copyURLAction() const;
+    Q_REQUIRED_RESULT QAction *copyImageLocation() const;
+    Q_REQUIRED_RESULT QAction *urlOpenAction() const;
+    Q_REQUIRED_RESULT QAction *urlSaveAsAction() const;
+    Q_REQUIRED_RESULT QAction *addBookmarksAction() const;
+    Q_REQUIRED_RESULT QAction *toggleMimePartTreeAction() const;
+    Q_REQUIRED_RESULT QAction *speakTextAction() const;
+    Q_REQUIRED_RESULT QAction *downloadImageToDiskAction() const;
+    Q_REQUIRED_RESULT QAction *viewSourceAction() const;
+    Q_REQUIRED_RESULT QAction *findInMessageAction() const;
+    Q_REQUIRED_RESULT QAction *saveAsAction() const;
+    Q_REQUIRED_RESULT QAction *saveMessageDisplayFormatAction() const;
+    Q_REQUIRED_RESULT QAction *resetMessageDisplayFormatAction() const;
+    Q_REQUIRED_RESULT QAction *editContactAction() const;
+    Q_REQUIRED_RESULT QAction *developmentToolsAction() const;
+    Q_REQUIRED_RESULT QAction *shareTextAction() const;
 
-    QMenu *viewHtmlOption() const;
-    QAction *shareImage() const;
+    Q_REQUIRED_RESULT QMenu *viewHtmlOption() const;
+    Q_REQUIRED_RESULT QAction *shareImage() const;
 
-    QAction *addToExistingContactAction() const;
+    Q_REQUIRED_RESULT QAction *addToExistingContactAction() const;
 
     Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
 
-    QWidget *mainWindow() const;
+    Q_REQUIRED_RESULT QWidget *mainWindow() const;
 
     /** Enforce message decryption. */
     void setDecryptMessageOverwrite(bool overwrite = true);
 
-    MessageViewer::CSSHelper *cssHelper() const;
+    Q_REQUIRED_RESULT MessageViewer::CSSHelper *cssHelper() const;
 
     Q_REQUIRED_RESULT bool printSelectedText(bool preview);
 
