@@ -14,7 +14,6 @@ public:
     explicit KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent = nullptr);
     ~KMLaunchExternalComponent() override;
 
-public Q_SLOTS:
     void slotConfigureMailMerge();
     void slotConfigureSendLater();
     void slotConfigureAutomaticArchiving();
