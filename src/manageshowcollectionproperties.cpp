@@ -89,7 +89,9 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
             sync->setProperty("pageToShow", pageToShow); // note for dialog later
             sync->setProperty("progressItem", QVariant::fromValue(progressItem));
             connect(sync, &KJob::result, this, &ManageShowCollectionProperties::slotCollectionPropertiesContinued);
-            connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem *)), sync, SLOT(kill()));
+            // clang-format off
+            connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), sync, SLOT(kill()));
+            // clang-format on
             connect(progressItem.data(),
                     &KPIM::ProgressItem::progressItemCanceled,
                     KPIM::ProgressManager::instance(),
@@ -116,7 +118,9 @@ void ManageShowCollectionProperties::slotCollectionPropertiesContinued(KJob *job
         pageToShow = sync->property("pageToShow").toString();
         progressItem = sync->property("progressItem").value<QPointer<KPIM::ProgressItem>>();
         if (progressItem) {
-            disconnect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem *)), sync, SLOT(kill()));
+            // clang-format off
+            disconnect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), sync, SLOT(kill()));
+            // clang-format on
         } else {
             // progressItem does not exist anymore, operation has been canceled
             return;
@@ -139,12 +143,16 @@ void ManageShowCollectionProperties::showCollectionPropertiesContinued(const QSt
     }
 
     auto fetch = new Akonadi::CollectionFetchJob(mMainWidget->currentCollection(), Akonadi::CollectionFetchJob::Base);
-    connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem *)), fetch, SLOT(kill()));
+    // clang-format off
+    connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()));
+    // clang-format on
     fetch->fetchScope().setIncludeStatistics(true);
     fetch->setProperty("pageToShow", pageToShow);
     fetch->setProperty("progressItem", QVariant::fromValue(progressItem));
     connect(fetch, &KJob::result, this, &ManageShowCollectionProperties::slotCollectionPropertiesFinished);
-    connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem *)), fetch, SLOT(kill()));
+    // clang-format off
+    connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()));
+    // clang-format on
 }
 
 void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
