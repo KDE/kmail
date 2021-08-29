@@ -21,7 +21,7 @@ class KMailPart : public KParts::ReadOnlyPart
     Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmailpart")
 
 public:
-    KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &);
+    explicit KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &);
     ~KMailPart() override;
 
     QWidget *parentWidget() const;
