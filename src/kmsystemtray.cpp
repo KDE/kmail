@@ -39,7 +39,6 @@ using namespace KMail;
 KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent)
 {
-    qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
     setToolTipIconByName(QStringLiteral("kmail"));
     setIconByName(QStringLiteral("kmail"));
