@@ -2769,6 +2769,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
                 menu.addMenu(mMsgView->remoteContentMenu());
                 menu.addSeparator();
             }
+            menu.addActions(mPluginCheckBeforeDeletingManagerInterface->actions());
+            menu.addSeparator();
 
             menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedMessage));
             menu.addSeparator();
