@@ -22,8 +22,8 @@ KMailSettings *KMailSettings::self()
 }
 
 KMailSettings::KMailSettings()
+    : mConfigSyncTimer(new QTimer(this))
 {
-    mConfigSyncTimer = new QTimer(this);
     mConfigSyncTimer->setSingleShot(true);
     connect(mConfigSyncTimer, &QTimer::timeout, this, &KMailSettings::slotSyncNow);
 }

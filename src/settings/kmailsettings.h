@@ -33,6 +33,6 @@ private:
     ~KMailSettings() override;
     static KMailSettings *mSelf;
 
-    QTimer *mConfigSyncTimer = nullptr;
+    QTimer *const mConfigSyncTimer;
 };
 
