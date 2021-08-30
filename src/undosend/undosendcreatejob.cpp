@@ -43,7 +43,7 @@ bool UndoSendCreateJob::start()
     mNotification->setText(mSubject);
     mNotification->setActions(QStringList() << i18n("Undo send"));
 
-    connect(mNotification, QOverload<unsigned int>::of(&KNotification::activated), this, &UndoSendCreateJob::slotActivateNotificationAction);
+    connect(mNotification, qOverload<unsigned int>(&KNotification::activated), this, &UndoSendCreateJob::slotActivateNotificationAction);
     connect(mNotification, &KNotification::closed, this, &UndoSendCreateJob::slotNotificationClosed);
     mNotification->sendEvent();
 
