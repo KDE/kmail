@@ -13,6 +13,7 @@
   <developer_name xml:lang="en-GB">The KDE Community</developer_name>
   <developer_name xml:lang="es">La comunidad de KDE</developer_name>
   <developer_name xml:lang="et">KDE kogukond</developer_name>
+  <developer_name xml:lang="eu">KDE komunitatea</developer_name>
   <developer_name xml:lang="fi">KDE-yhteisö</developer_name>
   <developer_name xml:lang="fr">La communauté KDE</developer_name>
   <developer_name xml:lang="gl">A comunidade de KDE</developer_name>
@@ -43,6 +44,7 @@
   <name xml:lang="en-GB">KMail</name>
   <name xml:lang="es">KMail</name>
   <name xml:lang="et">KMail</name>
+  <name xml:lang="eu">KMail</name>
   <name xml:lang="fi">KMail</name>
   <name xml:lang="fr">KMail</name>
   <name xml:lang="gl">KMail</name>
@@ -82,6 +84,7 @@
   <summary xml:lang="en-GB">A feature-rich email application</summary>
   <summary xml:lang="es">Una aplicación de correo rica en características</summary>
   <summary xml:lang="et">Võimalusterohke e-posti rakendus</summary>
+  <summary xml:lang="eu">Ezaugarri asko dituen e-posta aplikazio bat</summary>
   <summary xml:lang="fi">Sähköpostisovellus.</summary>
   <summary xml:lang="fr">Une application de courriel riche en fonctionnalités</summary>
   <summary xml:lang="gl">Unha aplicación de correo electrónico con moitas funcionalidades</summary>
@@ -112,6 +115,7 @@
     <p xml:lang="en-GB">KMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximise your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.</p>
     <p xml:lang="es">KMail es un cliente de correo de última generación que se integra bien con proveedores de correo ampliamente usaos como GMail. Proporciona varias herramientas y funcionalidades para maximizar la productividad y hacer fácil y rápido el trabajo con grandes cuentas de correo. KMail implementa una gran variedad de protocolos de correo - POP3, IMAP, Microsoft Exchange (EWS) y todavía más.</p>
     <p xml:lang="et">KMail on tipptasemel e-posti klient, mis lõimub kenasti selliste levinud e-posti teenuse pakkujatega, nagu näiteks GMail. See pakub rohkelt tööriistu ja omadusi kasutaja elu hõlbustamiseks ning muudab ka mahukate e-posti kontodega tegelemise hõlpsaks ja kiireks. KMail toetab paljusid e-posti protokolle: POP3, IMAP, Microsoft Exchange (EWS) ja paljusid teisi.</p>
+    <p xml:lang="eu">KMail azken belaunaldiko e-posta bezeroa bat da, GMail gisako erabilera zabaleko e-posta hornitzaileekin ongi bateratzen dena. Produktibitatea maximizatzeko tresna eta ezaugarri asko eskaintzen ditu, eta e-posta kontu handiekin lan egitea erraza eta azkarra da. KMail-ek e-posta protokolo ugari onartzen ditu - POP3, IMAP, Microsoft Exchange (EWS) eta gehiago.</p>
     <p xml:lang="fi">KMail on nykyaikainen sähköpostiohjelma, joka integroituu hyvin laajalti käytettyihin sähköpostitarjoajiin kuten GMailiin. Se tarjoaa työkaluja ja piirteitä, joilla maksimoit tuottavuutesi ja hallitset vaivatta suuriakin sähköpostitilejä. KMail tukee useita sähköpostiyhteyskäytäntöjä: POP3:a, IMAPia, Microsoft Exchangea (EWS) jne.</p>
     <p xml:lang="fr">KMail est un client de messagerie tout à fait moderne, s'intégrant parfaitement avec un grand nombre de fournisseurs de service de courriels comme GMail. Il propose de nombreux outils et fonctionnalités pour optimiser votre productivité et rend le travail avec de nombreux comptes de messagerie, facile et rapide. KMail prend en charge un large choix de protocole de courriels comme « POP3 », « IMAP », « EWS » (Microsoft Exchange) et encore plus.</p>
     <p xml:lang="gl">KMail é un cliente de correo electrónico de última xeración que se integra ben con fornecedores de correo electrónico populares como GMail. Fornece moitas ferramentas para maximizar a produtividade e facilita e acelera o traballo con grandes contas de correo electrónico. KMail é compatíbel cunha gran variedade de protocolos de correo electrónico: POP3, IMAP, Microsoft Exchange (EWS) e máis.</p>
@@ -141,6 +145,7 @@
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="et">Omadused:</p>
+    <p xml:lang="eu">Ezaugarriak:</p>
     <p xml:lang="fi">Ominaisuudet:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
@@ -181,6 +186,7 @@
       <li xml:lang="en-GB">Secure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.</li>
       <li xml:lang="es">Seguro - Kmail dispone de preferencias predeterminadas seguras, para proteger su confidencialidad, implementación de cifrado de principio a fin, y detección de correo basura.</li>
       <li xml:lang="et">Turvalisus - KMaili seadistused kaitsevad juba vaikimisi sinu privaatsust ning toetavad suurepäraselt suhtlemise krüptimist ja rämpsposti tuvastamist.</li>
+      <li xml:lang="eu">Segurua - KMail-ek zure pribatutasuna babesteko ezarpen lehenetsi seguruak ditu, muturretik muturrerako zifratze aparta, eta spama antzematea.</li>
       <li xml:lang="fi">Turvallisuus: KMailin oletusasetukset turvaavat yksityisyytesi, salaavat viestin lähettäjältä vastaanottajalle ja tunnistavat roskapostin.</li>
       <li xml:lang="fr">Sécuriser - KMail propose des paramètres par défaut de sécurité pour protéger votre vie privée, une prise en charge du chiffrement de bout en bout et la détection du pourriel.</li>
       <li xml:lang="gl">Seguro — KMail ten unha configuración predeterminada segura para protexer a súa intimidade, unha gran compatibilidade con cifrado de punto a punto, e detección de correo non desexado.</li>
@@ -207,6 +213,7 @@
       <li xml:lang="en-GB">Powerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.</li>
       <li xml:lang="es">Potente - Sus características incluyen el uso sin conexión, múltiples identidades del remitente, uso de varios idiomas, potente filtrado, funcionalidad de búsqueda y etiquetado, gestión de listas de correo y configuración muy flexible.</li>
       <li xml:lang="et">Võimas - paljude omaduste hulka kuuluvad võrguta töötamise toetus, mitme saatja identiteedi võimalus, paljude keelte toetus, võimas filtreerimine, otsimine ja sildistamine, postiloendite haldus ja äärmiselt paindlik seadistamine.</li>
+      <li xml:lang="eu">Ahaltsua - Ezaugarrien artean ditu lerroz kanpo lan egitea, bidaltzaile nortasun anizkoitzak, hizkuntza ugaritarako euskarria, iragazte ahaltsua, bilatzeko eta etiketatzeko funtzionaltasuna, posta-zerrenden kudeaketa eta konfigurazio oso malgua.</li>
       <li xml:lang="fi">Tehokkuus: Ominaisuuksina mm. verkoton tila, useammat lähettäjähenkilöydet, useiden kielten tuki, tehokas suodatus, haku- ja tunnistetoiminnot, postilistojen hallinta ja monipuoliset asetukset.</li>
       <li xml:lang="fr">Puissance - Les fonctionnalités proposées sont la prise en charge du mode non connecté, les identités multiples d'émetteurs, la prise en charge multi-langage, un filtrage puissant, une fonctionnalité de recherche et d'étiquetage, la gestion des listes de diffusion et une configuration très flexible.</li>
       <li xml:lang="gl">Potente — Entre as súas funcionalidades están traballar sen Internet, dispoñer de múltiples identidades de remitente, dispoñibilidade en varios idiomas, potentes funcionalidades de filtro, busca e etiquetado, xestión de listas de correo e gran flexibilidade de configuración.</li>
@@ -233,6 +240,7 @@
       <li xml:lang="en-GB">Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
       <li xml:lang="es">Integrado - Las invitaciones a reuniones pueden añadirse fácilmente como eventos en KOrganizer, el autocompletado de direcciones, avatares y preferencias de cifrado se cargan desde KAddressBook.</li>
       <li xml:lang="et">Lõimimine - kohtumiskutsete hõlpus lisamine sündmustena KOrganizerisse, aadresside automaatne lõpetamine, avatarid ja krüptoeelistused KAddressBookist</li>
+      <li xml:lang="eu">Bateratua - Hitzorduetarako gonbidapenak erraz gehitu daitezke ekitaldi gisa KOrganizer-ren, helbide osatze automatikoa, abatarrak eta zifratze hobespenak KAddressBook-etik zamatzen dira.</li>
       <li xml:lang="fi">Integrointi: tapaamiskutsut voi helposti lisätä tapahtumiksi KOrganizeriin, täydentää osoitteet automaattisesti ja ladata avatarit ja salauskäytänteet KAddressBookista.</li>
       <li xml:lang="fr">Intégration - Les invitations à des réunions peuvent être ajoutées comme des évènement dans KOrganizer. L'auto-complètement des adresses, les avatars et les préférences de chiffrement sont chargés à partir de KAddressBook.</li>
       <li xml:lang="gl">Integrado — As invitacións a reunións poden engadirse facilmente como eventos a KOrganizer, permite completar automaticamente enderezos, e carta as imaxes de usuario e as preferencias criptográficas de KAddressBook.</li>
@@ -260,6 +268,7 @@
       <li xml:lang="en-GB">Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
       <li xml:lang="es">Compatible con estándares - Implementa protocolos estándar de correos, envío de correos, filtrado en el servidor, y OpenPGP, PGP/MIME y S/MIME en línea.</li>
       <li xml:lang="et">Vastavus standarditele - toetatud on standardsed e-posti protokollid, tõukekirjad, serveripoolne filtreerimine ning Inline OpenPGP, PGP/MIME ja S/MIME.</li>
+      <li xml:lang="eu">Estandarrekin bateragarria - Posta protokolo estandarrak onartzen ditu, e-posta bultzatzea, zerbitzari aldeko iragaztea eta lerro barneko OpenPGP, PGP/MIME eta S/MIME.</li>
       <li xml:lang="fi">Standardinmukaisuus: Tukee sähköpostin yhteyskäytäntöstandardeja, push-viestejä, palvelinpuolen suodatusta ja OpenPGP-, PGP/MIME- ja S/MIME-upotusta.</li>
       <li xml:lang="fr">Conformité aux standards - Prend en charge les protocoles standards de messagerie, l'envoi automatique de courriels, le filtrage côté serveur et l'intégration de « OpenPGP », « PGP/MIME » et « S/MIME ».</li>
       <li xml:lang="gl">Cumpre cos estándares — É compatíbel con protocolos de correo estándar, correo electrónico «push», filtro do lado do servidor e OpenPGP, PGP/MIME e S/MIME entre liñas.</li>
