@@ -82,42 +82,42 @@ AppearancePage::AppearancePage(QWidget *parent, const QVariantList &args)
     //
     // "General" tab:
     //
-    auto readerTab = new ReaderTab();
+    auto readerTab = new AppearancePageGeneralTab();
     addTab(readerTab, i18n("General"));
     addConfig(MessageViewer::MessageViewerSettings::self(), readerTab);
 
     //
     // "Fonts" tab:
     //
-    auto fontsTab = new FontsTab();
+    auto fontsTab = new AppearancePageFontsTab();
     addTab(fontsTab, i18n("Fonts"));
 
     //
     // "Colors" tab:
     //
-    auto colorsTab = new ColorsTab();
+    auto colorsTab = new AppearancePageColorsTab();
     addTab(colorsTab, i18n("Colors"));
 
     //
     // "Layout" tab:
     //
-    auto layoutTab = new LayoutTab();
+    auto layoutTab = new AppearancePageLayoutTab();
     addTab(layoutTab, i18n("Layout"));
 
     //
     // "Headers" tab:
     //
-    auto headersTab = new HeadersTab();
+    auto headersTab = new AppearancePageHeadersTab();
     addTab(headersTab, i18n("Message List"));
 
     //
     // "Message Tag" tab:
     //
-    auto messageTagTab = new MessageTagTab();
+    auto messageTagTab = new AppearancePageMessageTagTab();
     addTab(messageTagTab, i18n("Message Tags"));
 }
 
-QString AppearancePage::FontsTab::helpAnchor() const
+QString AppearancePageFontsTab::helpAnchor() const
 {
     return QStringLiteral("configure-appearance-fonts");
 }
@@ -186,10 +186,10 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     connect(mCustomFontCheck, &QAbstractButton::toggled, mFontLocationCombo, &QWidget::setEnabled);
     connect(mCustomFontCheck, &QAbstractButton::toggled, mFontChooser, &QWidget::setEnabled);
     // load the right font settings into mFontChooser:
-    connect(mFontLocationCombo, qOverload<int>(&QComboBox::activated), this, &AppearancePage::FontsTab::slotFontSelectorChanged);
+    connect(mFontLocationCombo, qOverload<int>(&QComboBox::activated), this, &AppearancePageFontsTab::slotFontSelectorChanged);
 }
 
-void AppearancePage::FontsTab::slotFontSelectorChanged(int index)
+void AppearancePageFontsTab::slotFontSelectorChanged(int index)
 {
     qCDebug(KMAIL_LOG) << "slotFontSelectorChanged() called";
     if (index < 0 || index >= mFontLocationCombo->count()) {
@@ -226,7 +226,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged(int index)
     mFontChooser->enableColumn(KFontChooser::FamilyList | KFontChooser::SizeList, fontNames[index].enableFamilyAndSize);
 }
 
-void AppearancePage::FontsTab::doLoadOther()
+void AppearancePageFontsTab::doLoadOther()
 {
     if (KMKernel::self()) {
         KConfigGroup fonts(KMKernel::self()->config(), "Fonts");
@@ -256,7 +256,7 @@ void AppearancePage::FontsTab::doLoadOther()
     }
 }
 
-void AppearancePage::FontsTab::save()
+void AppearancePageFontsTab::save()
 {
     if (KMKernel::self()) {
         KConfigGroup fonts(KMKernel::self()->config(), "Fonts");
@@ -290,12 +290,12 @@ void AppearancePage::FontsTab::save()
     }
 }
 
-void AppearancePage::FontsTab::doResetToDefaultsOther()
+void AppearancePageFontsTab::doResetToDefaultsOther()
 {
     mCustomFontCheck->setChecked(false);
 }
 
-QString AppearancePage::ColorsTab::helpAnchor() const
+QString AppearancePageColorsTab::helpAnchor() const
 {
     return QStringLiteral("configure-appearance-colors");
 }
@@ -365,7 +365,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     connect(mColorList, &ColorListBox::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
-void AppearancePage::ColorsTab::doLoadOther()
+void AppearancePageColorsTab::doLoadOther()
 {
     mCustomColorCheck->setChecked(!MessageCore::MessageCoreSettings::self()->useDefaultColors());
     mUseInlineStyle->setChecked(MessageCore::MessageCoreSettings::self()->useRealHtmlMailColor());
@@ -374,7 +374,7 @@ void AppearancePage::ColorsTab::doLoadOther()
     loadColor(true);
 }
 
-void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
+void AppearancePageColorsTab::loadColor(bool loadFromConfig)
 {
     if (KMKernel::self()) {
         KConfigGroup reader(KMKernel::self()->config(), "Reader");
@@ -414,7 +414,7 @@ void AppearancePage::ColorsTab::loadColor(bool loadFromConfig)
     }
 }
 
-void AppearancePage::ColorsTab::doResetToDefaultsOther()
+void AppearancePageColorsTab::doResetToDefaultsOther()
 {
     mCustomColorCheck->setChecked(false);
     mUseInlineStyle->setChecked(false);
@@ -423,7 +423,7 @@ void AppearancePage::ColorsTab::doResetToDefaultsOther()
     loadColor(false);
 }
 
-void AppearancePage::ColorsTab::save()
+void AppearancePageColorsTab::save()
 {
     if (!KMKernel::self()) {
         return;
@@ -451,7 +451,7 @@ void AppearancePage::ColorsTab::save()
     KMailSettings::self()->setCloseToQuotaThreshold(mCloseToQuotaThreshold->value());
 }
 
-QString AppearancePage::LayoutTab::helpAnchor() const
+QString AppearancePageLayoutTab::helpAnchor() const
 {
     return QStringLiteral("configure-appearance-layout");
 }
@@ -528,7 +528,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     vlay->addStretch(10); // spacer
 }
 
-void AppearancePage::LayoutTab::doLoadOther()
+void AppearancePageLayoutTab::doLoadOther()
 {
     loadWidget(mFolderListGroupBox, mFolderListGroup, KMailSettings::self()->folderListItem());
     loadWidget(mReaderWindowModeGroupBox, mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
@@ -542,7 +542,7 @@ void AppearancePage::LayoutTab::doLoadOther()
     }
 }
 
-void AppearancePage::LayoutTab::save()
+void AppearancePageLayoutTab::save()
 {
     saveButtonGroup(mFolderListGroup, KMailSettings::self()->folderListItem());
     saveButtonGroup(mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
@@ -557,7 +557,7 @@ void AppearancePage::LayoutTab::save()
 // Appearance Message List
 //
 
-QString AppearancePage::HeadersTab::helpAnchor() const
+QString AppearancePageHeadersTab::helpAnchor() const
 {
     return QStringLiteral("configure-appearance-headers");
 }
@@ -704,19 +704,19 @@ void AppearancePageHeadersTab::slotLinkClicked(const QString &link)
     }
 }
 
-void AppearancePage::HeadersTab::slotSelectDefaultAggregation()
+void AppearancePageHeadersTab::slotSelectDefaultAggregation()
 {
     // Select current default aggregation.
     mAggregationComboBox->selectDefault();
 }
 
-void AppearancePage::HeadersTab::slotSelectDefaultTheme()
+void AppearancePageHeadersTab::slotSelectDefaultTheme()
 {
     // Select current default theme.
     mThemeComboBox->selectDefault();
 }
 
-void AppearancePage::HeadersTab::doLoadOther()
+void AppearancePageHeadersTab::doLoadOther()
 {
     // "General Options":
     loadWidget(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
@@ -731,7 +731,7 @@ void AppearancePage::HeadersTab::doLoadOther()
     setDateDisplay(MessageCore::MessageCoreSettings::self()->dateFormat(), MessageCore::MessageCoreSettings::self()->customDateFormat());
 }
 
-void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
+void AppearancePageHeadersTab::doLoadFromGlobalSettings()
 {
     loadWidget(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
     // "Aggregation":
@@ -743,7 +743,7 @@ void AppearancePage::HeadersTab::doLoadFromGlobalSettings()
     setDateDisplay(MessageCore::MessageCoreSettings::self()->dateFormat(), MessageCore::MessageCoreSettings::self()->customDateFormat());
 }
 
-void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
+void AppearancePageHeadersTab::setDateDisplay(int num, const QString &format)
 {
     auto dateDisplay = static_cast<DateFormatter::FormatType>(num);
 
@@ -762,7 +762,7 @@ void AppearancePage::HeadersTab::setDateDisplay(int num, const QString &format)
     mDateDisplay->button(numDateDisplayConfig - 2)->setChecked(true); // default
 }
 
-void AppearancePage::HeadersTab::save()
+void AppearancePageHeadersTab::save()
 {
     saveCheckBox(mDisplayMessageToolTips, MessageList::MessageListSettings::self()->messageToolTipEnabledItem());
 
@@ -784,7 +784,7 @@ void AppearancePage::HeadersTab::save()
 // Message Window
 //
 
-QString AppearancePage::ReaderTab::helpAnchor() const
+QString AppearancePageGeneralTab::helpAnchor() const
 {
     return QStringLiteral("configure-appearance-reader");
 }
@@ -844,11 +844,11 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     topLayout->addStretch(100); // spacer
 }
 
-void AppearancePage::ReaderTab::doResetToDefaultsOther()
+void AppearancePageGeneralTab::doResetToDefaultsOther()
 {
 }
 
-void AppearancePage::ReaderTab::doLoadOther()
+void AppearancePageGeneralTab::doLoadOther()
 {
     loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
     loadWidget(mStartInTrayCheck, KMailSettings::self()->startInTrayItem());
@@ -857,7 +857,7 @@ void AppearancePage::ReaderTab::doLoadOther()
     mViewerSettings->readConfig();
 }
 
-void AppearancePage::ReaderTab::save()
+void AppearancePageGeneralTab::save()
 {
     saveCheckBox(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());
     saveCheckBox(mStartInTrayCheck, KMailSettings::self()->startInTrayItem());
@@ -867,7 +867,7 @@ void AppearancePage::ReaderTab::save()
     mViewerSettings->writeConfig();
 }
 
-QString AppearancePage::MessageTagTab::helpAnchor() const
+QString AppearancePageMessageTagTab::helpAnchor() const
 {
     return QStringLiteral("configure-appearance-messagetag");
 }
@@ -974,7 +974,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     connect(mTagWidget, &TagWidget::changed, this, &AppearancePageMessageTagTab::slotEmitChangeCheck);
 
     // For enabling the add button in case box is non-empty
-    connect(mTagAddLineEdit, &QLineEdit::textChanged, this, &AppearancePage::MessageTagTab::slotAddLineTextChanged);
+    connect(mTagAddLineEdit, &QLineEdit::textChanged, this, &AppearancePageMessageTagTab::slotAddLineTextChanged);
 
     // For on-the-fly updating of tag name in editbox
     connect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged, this, &AppearancePageMessageTagTab::slotNameLineTextChanged);
@@ -1000,12 +1000,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
 
 AppearancePageMessageTagTab::~AppearancePageMessageTagTab() = default;
 
-void AppearancePage::MessageTagTab::slotEmitChangeCheck()
+void AppearancePageMessageTagTab::slotEmitChangeCheck()
 {
     slotEmitChanged();
 }
 
-void AppearancePage::MessageTagTab::slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow)
+void AppearancePageMessageTagTab::slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow)
 {
     Q_UNUSED(sourceEnd)
     Q_UNUSED(sourcestart)
@@ -1014,7 +1014,7 @@ void AppearancePage::MessageTagTab::slotRowsMoved(const QModelIndex &, int sourc
     slotEmitChangeCheck();
 }
 
-void AppearancePage::MessageTagTab::updateButtons()
+void AppearancePageMessageTagTab::updateButtons()
 {
     const int currentIndex = mTagListBox->currentRow();
 
@@ -1026,7 +1026,7 @@ void AppearancePage::MessageTagTab::updateButtons()
     mTagDownButton->setEnabled(aFilterIsSelected && !theLast);
 }
 
-void AppearancePage::MessageTagTab::slotMoveTagUp()
+void AppearancePageMessageTagTab::slotMoveTagUp()
 {
     const int tmp_index = mTagListBox->currentRow();
     if (tmp_index <= 0) {
@@ -1036,7 +1036,7 @@ void AppearancePage::MessageTagTab::slotMoveTagUp()
     updateButtons();
 }
 
-void AppearancePage::MessageTagTab::slotMoveTagDown()
+void AppearancePageMessageTagTab::slotMoveTagDown()
 {
     const int tmp_index = mTagListBox->currentRow();
     if ((tmp_index < 0) || (tmp_index >= int(mTagListBox->count()) - 1)) {
@@ -1046,7 +1046,7 @@ void AppearancePage::MessageTagTab::slotMoveTagDown()
     updateButtons();
 }
 
-void AppearancePage::MessageTagTab::swapTagsInListBox(const int first, const int second)
+void AppearancePageMessageTagTab::swapTagsInListBox(const int first, const int second)
 {
     disconnect(mTagListBox, &QListWidget::currentItemChanged, this, &AppearancePageMessageTagTab::slotSelectionChanged);
     QListWidgetItem *item = mTagListBox->takeItem(first);
@@ -1059,7 +1059,7 @@ void AppearancePage::MessageTagTab::swapTagsInListBox(const int first, const int
     slotEmitChangeCheck();
 }
 
-void AppearancePage::MessageTagTab::slotRecordTagSettings(int aIndex)
+void AppearancePageMessageTagTab::slotRecordTagSettings(int aIndex)
 {
     if ((aIndex < 0) || (aIndex >= int(mTagListBox->count()))) {
         return;
@@ -1073,7 +1073,7 @@ void AppearancePage::MessageTagTab::slotRecordTagSettings(int aIndex)
     mTagWidget->recordTagSettings(tmp_desc);
 }
 
-void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets(int aIndex)
+void AppearancePageMessageTagTab::slotUpdateTagSettingWidgets(int aIndex)
 {
     // Check if selection is valid
     if ((aIndex < 0) || (mTagListBox->currentRow() < 0)) {
@@ -1093,11 +1093,11 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets(int aIndex)
     auto tagItem = static_cast<TagListWidgetItem *>(item);
     MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
 
-    disconnect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged, this, &AppearancePage::MessageTagTab::slotNameLineTextChanged);
+    disconnect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged, this, &AppearancePageMessageTagTab::slotNameLineTextChanged);
 
     mTagWidget->tagNameLineEdit()->setEnabled(!tmp_desc->isImmutable);
     mTagWidget->tagNameLineEdit()->setText(tmp_desc->tagName);
-    connect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged, this, &AppearancePage::MessageTagTab::slotNameLineTextChanged);
+    connect(mTagWidget->tagNameLineEdit(), &QLineEdit::textChanged, this, &AppearancePageMessageTagTab::slotNameLineTextChanged);
 
     mTagWidget->setTagTextColor(tmp_desc->textColor);
 
@@ -1115,7 +1115,7 @@ void AppearancePage::MessageTagTab::slotUpdateTagSettingWidgets(int aIndex)
     mTagWidget->inToolBarCheck()->setChecked(tmp_desc->inToolbar);
 }
 
-void AppearancePage::MessageTagTab::slotSelectionChanged()
+void AppearancePageMessageTagTab::slotSelectionChanged()
 {
     mEmitChanges = false;
     slotRecordTagSettings(mPreviousTag);
@@ -1124,7 +1124,7 @@ void AppearancePage::MessageTagTab::slotSelectionChanged()
     mEmitChanges = true;
 }
 
-void AppearancePage::MessageTagTab::slotRemoveTag()
+void AppearancePageMessageTagTab::slotRemoveTag()
 {
     const int tmp_index = mTagListBox->currentRow();
     if (tmp_index >= 0) {
@@ -1154,14 +1154,14 @@ void AppearancePage::MessageTagTab::slotRemoveTag()
     }
 }
 
-void AppearancePage::MessageTagTab::slotDeleteTagJob(KJob *job)
+void AppearancePageMessageTagTab::slotDeleteTagJob(KJob *job)
 {
     if (job->error()) {
         qCWarning(KMAIL_LOG) << "Failed to delete tag " << job->errorString();
     }
 }
 
-void AppearancePage::MessageTagTab::slotNameLineTextChanged(const QString &aText)
+void AppearancePageMessageTagTab::slotNameLineTextChanged(const QString &aText)
 {
     // If deleted all, leave the first character for the sake of not having an
     // empty tag name
@@ -1188,17 +1188,17 @@ void AppearancePage::MessageTagTab::slotNameLineTextChanged(const QString &aText
     connect(mTagListBox, &QListWidget::currentItemChanged, this, &AppearancePageMessageTagTab::slotSelectionChanged);
 }
 
-void AppearancePage::MessageTagTab::slotIconNameChanged(const QString &iconName)
+void AppearancePageMessageTagTab::slotIconNameChanged(const QString &iconName)
 {
     mTagListBox->currentItem()->setIcon(QIcon::fromTheme(iconName));
 }
 
-void AppearancePage::MessageTagTab::slotAddLineTextChanged(const QString &aText)
+void AppearancePageMessageTagTab::slotAddLineTextChanged(const QString &aText)
 {
     mTagAddButton->setEnabled(!aText.trimmed().isEmpty());
 }
 
-void AppearancePage::MessageTagTab::slotAddNewTag()
+void AppearancePageMessageTagTab::slotAddNewTag()
 {
     const QString newTagName = mTagAddLineEdit->text().trimmed();
     if (newTagName.isEmpty()) {
@@ -1225,7 +1225,7 @@ void AppearancePage::MessageTagTab::slotAddNewTag()
     mTagAddLineEdit->clear();
 }
 
-void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
+void AppearancePageMessageTagTab::doLoadFromGlobalSettings()
 {
     mTagListBox->clear();
 
@@ -1234,7 +1234,7 @@ void AppearancePage::MessageTagTab::doLoadFromGlobalSettings()
     connect(fetchJob, &KJob::result, this, &AppearancePageMessageTagTab::slotTagsFetched);
 }
 
-void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
+void AppearancePageMessageTagTab::slotTagsFetched(KJob *job)
 {
     if (job->error()) {
         qCWarning(KMAIL_LOG) << "Failed to load tags " << job->errorString();
@@ -1276,7 +1276,7 @@ void AppearancePage::MessageTagTab::slotTagsFetched(KJob *job)
     }
 }
 
-void AppearancePage::MessageTagTab::save()
+void AppearancePageMessageTagTab::save()
 {
     const int currentRow = mTagListBox->currentRow();
     if (currentRow < 0) {

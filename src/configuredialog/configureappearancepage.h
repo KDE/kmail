@@ -267,13 +267,5 @@ public:
     explicit AppearancePage(QWidget *parent = nullptr, const QVariantList &args = {});
 
     QString helpAnchor() const override;
-
-    // hrmpf. moc doesn't like nested classes with slots/signals...:
-    using FontsTab = AppearancePageFontsTab;
-    using ColorsTab = AppearancePageColorsTab;
-    using LayoutTab = AppearancePageLayoutTab;
-    using HeadersTab = AppearancePageHeadersTab;
-    using ReaderTab = AppearancePageGeneralTab;
-    using MessageTagTab = AppearancePageMessageTagTab;
 };
 
