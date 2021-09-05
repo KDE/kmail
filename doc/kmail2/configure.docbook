@@ -2076,7 +2076,6 @@ dialog. You may choose any or all of six options.</para>
             <para>
               You can still easily view messages in &HTML; format by
               clicking the plain message/HTML message toggle bar on the left hand side of the preview pane.
-              This bar will not be visible unless the message you are viewing contains &HTML; content.
             </para>
 	  </listitem>
 	</varlistentry>
