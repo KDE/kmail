@@ -136,7 +136,7 @@ and try them out until you find one you like!</para>
   <listitem><para><guilabel>Download New Themes...</guilabel> Allows you to download custom themes created by other &kmail; users.</para></listitem>
 </itemizedlist>
 <para>Click on the bar located on the left hand side of the pane to toggle between plain text and &HTML; (if and only if the message is coded both ways).
-When the bar is visible, the embedded text will inform you which view you are in. The <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
+The text on the bar will inform you which view you are in. The <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
 &kmail;...</guimenuitem><guisubmenu>Security</guisubmenu></menuchoice> dialog allows you to select HTML as the default message
 display option, if you prefer &HTML; to plain text.</para>
 <para>If you would like to change the way your attachments appear in your messages, go to <menuchoice><guimenu>View</guimenu>
