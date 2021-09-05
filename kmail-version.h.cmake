@@ -11,11 +11,5 @@
   This version may be used by programs within this module that
   do not want to maintain a version on their own.
 */
-
-#ifndef KMAIL_VERSION_H
-#define KMAIL_VERSION_H
-
-
+#pragma once
 #define KDEPIM_VERSION "@KDEPIM_VERSION@"
-
-#endif
