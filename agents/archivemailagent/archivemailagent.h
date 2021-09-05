@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <AkonadiAgentBase/agentbase.h>
+#include <agentbase.h>
 
-#include <AkonadiCore/Collection>
+#include <Collection>
 class QTimer;
 
 class ArchiveMailManager;

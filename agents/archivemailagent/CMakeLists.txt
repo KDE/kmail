@@ -34,6 +34,7 @@ pim_target_precompile_headers(archivemailagent PUBLIC ../../kmail_pch.h)
 #endif()
 target_link_libraries(archivemailagent
     KF5::MailCommon
+    KF5::AkonadiAgentBase
     KF5::I18n
     KF5::Notifications
     KF5::KIOWidgets
