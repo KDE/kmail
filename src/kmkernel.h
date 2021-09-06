@@ -382,8 +382,8 @@ public:
     void closeAllKMailWindows();
     void cleanup();
     void quit();
-    bool doSessionManagement();
-    bool firstInstance() const;
+    void doSessionManagement();
+    Q_REQUIRED_RESULT bool firstInstance() const;
     void setFirstInstance(bool value);
     void action(bool mailto,
                 bool check,
@@ -420,15 +420,15 @@ public:
     /** Expire all folders, used for the gui action */
     void expireAllFoldersNow();
 
-    bool firstStart() const;
-    bool shuttingDown() const;
+    Q_REQUIRED_RESULT bool firstStart() const;
+    Q_REQUIRED_RESULT bool shuttingDown() const;
     void setShuttingDown(bool flag);
 
     /** Returns true if we have a system tray applet. This is needed in order
      *  to know whether the application should be allowed to exit in case the
      *  last visible composer or separate message window is closed.
      */
-    bool haveSystemTrayApplet() const;
+    Q_REQUIRED_RESULT bool haveSystemTrayApplet() const;
 
     QTextCodec *networkCodec() const;
 
@@ -436,18 +436,18 @@ public:
     KMainWindow *mainWin();
 
     /** Get first mainwidget */
-    KMMainWidget *getKMMainWidget();
+    KMMainWidget *getKMMainWidget() const;
 
     /**
      * Returns a list of all currently loaded folders. Since folders are loaded async, this
      * is empty at startup.
      */
-    Akonadi::Collection::List allFolders() const;
+    Q_REQUIRED_RESULT Akonadi::Collection::List allFolders() const;
 
     /**
      * Includes all subfolders of @p col, including the @p col itself.
      */
-    Akonadi::Collection::List subfolders(const Akonadi::Collection &col) const;
+    Q_REQUIRED_RESULT Akonadi::Collection::List subfolders(const Akonadi::Collection &col) const;
 
     //
     void selectCollectionFromId(Akonadi::Collection::Id id);
@@ -463,7 +463,7 @@ public:
 
     qreal closeToQuotaThreshold() override;
 
-    Akonadi::Collection::Id lastSelectedFolder() override;
+    Q_REQUIRED_RESULT Akonadi::Collection::Id lastSelectedFolder() override;
     void setLastSelectedFolder(Akonadi::Collection::Id col) override;
 
     QStringList customTemplates() override;
@@ -481,7 +481,7 @@ public:
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
 
-    bool allowToDebug() const;
+    Q_REQUIRED_RESULT bool allowToDebug() const;
 
     Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 
@@ -552,7 +552,7 @@ private Q_SLOTS:
 
 private:
     void viewMessage(const QUrl &url);
-    Akonadi::Collection currentCollection();
+    Akonadi::Collection currentCollection() const;
 
     /*
      * Fills a composer cWin

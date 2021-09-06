@@ -1151,7 +1151,7 @@ void KMKernel::init()
     connect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, &KMKernel::akonadiStateChanged);
 }
 
-bool KMKernel::doSessionManagement()
+void KMKernel::doSessionManagement()
 {
     // Do session management
     if (qApp->isSessionRestored()) {
@@ -1163,9 +1163,7 @@ bool KMKernel::doSessionManagement()
             }
             ++n;
         }
-        return true; // we were restored by SM
     }
-    return false; // no, we were not restored
 }
 
 bool KMKernel::firstInstance() const
@@ -1484,7 +1482,7 @@ bool KMKernel::selectFolder(const QString &folder)
     return false;
 }
 
-KMMainWidget *KMKernel::getKMMainWidget()
+KMMainWidget *KMKernel::getKMMainWidget() const
 {
     // This could definitely use a speadup
     const QWidgetList l = QApplication::topLevelWidgets();
@@ -1561,7 +1559,7 @@ bool KMKernel::canQueryClose()
     return mUnityServiceManager->canQueryClose();
 }
 
-Akonadi::Collection KMKernel::currentCollection()
+Akonadi::Collection KMKernel::currentCollection() const
 {
     KMMainWidget *widget = getKMMainWidget();
     Akonadi::Collection col;
