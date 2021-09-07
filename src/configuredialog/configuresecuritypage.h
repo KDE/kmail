@@ -139,11 +139,5 @@ public:
     explicit SecurityPage(QWidget *parent = nullptr, const QVariantList &args = {});
 
     QString helpAnchor() const override;
-
-    using ReadingTab = SecurityPageGeneralTab;
-    using MDNTab = SecurityPageMDNTab;
-    using ComposerCryptoTab = SecurityPageComposerCryptoTab;
-    using WarningTab = SecurityPageWarningTab;
-    using SMimeTab = SecurityPageSMimeTab;
 };
 

@@ -43,31 +43,31 @@ SecurityPage::SecurityPage(QWidget *parent, const QVariantList &args)
     //
     // "Reading" tab:
     //
-    auto generalTab = new ReadingTab();
+    auto generalTab = new SecurityPageGeneralTab();
     addTab(generalTab, i18n("Reading"));
 
-    addTab(new MDNTab(), i18n("Message Disposition Notifications"));
+    addTab(new SecurityPageMDNTab(), i18n("Message Disposition Notifications"));
 
     //
     // "Composing" tab:
     //
-    auto composerCryptoTab = new ComposerCryptoTab();
+    auto composerCryptoTab = new SecurityPageComposerCryptoTab();
     addTab(composerCryptoTab, i18n("Composing"));
 
     //
     // "Warnings" tab:
     //
-    auto warningTab = new WarningTab();
+    auto warningTab = new SecurityPageWarningTab();
     addTab(warningTab, i18n("Miscellaneous"));
 
     //
     // "S/MIME Validation" tab:
     //
-    auto sMimeTab = new SMimeTab();
+    auto sMimeTab = new SecurityPageSMimeTab();
     addTab(sMimeTab, i18n("S/MIME Validation"));
 }
 
-QString SecurityPage::ReadingTab::helpAnchor() const
+QString SecurityPageGeneralTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-reading");
 }
@@ -110,7 +110,7 @@ void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
     }
 }
 
-void SecurityPage::ReadingTab::doLoadOther()
+void SecurityPageGeneralTab::doLoadOther()
 {
     loadWidget(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
     loadWidget(mSGTab.mExternalReferences, MessageViewer::MessageViewerSettings::self()->htmlLoadExternalItem());
@@ -123,7 +123,7 @@ void SecurityPage::ReadingTab::doLoadOther()
     loadWidget(mSGTab.mCheckMailUrlTracking, MessageViewer::MessageViewerSettings::self()->mailTrackingUrlEnabledItem());
 }
 
-void SecurityPage::ReadingTab::save()
+void SecurityPageGeneralTab::save()
 {
     if (MessageViewer::MessageViewerSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked()) {
         if (KMessageBox::warningContinueCancel(this,
@@ -160,7 +160,7 @@ void SecurityPage::ReadingTab::save()
     }
 }
 
-QString SecurityPage::MDNTab::helpAnchor() const
+QString SecurityPageMDNTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-mdn");
 }
@@ -196,7 +196,7 @@ void SecurityPageMDNTab::slotLinkClicked(const QString &link)
     }
 }
 
-void SecurityPage::MDNTab::doLoadOther()
+void SecurityPageMDNTab::doLoadOther()
 {
     int num = MessageViewer::MessageViewerSettings::self()->defaultPolicy();
     if (num < 0 || num >= mMDNGroup->buttons().count()) {
@@ -211,14 +211,14 @@ void SecurityPage::MDNTab::doLoadOther()
     loadWidget(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::MessageViewerSettings::self()->notSendWhenEncryptedItem());
 }
 
-void SecurityPage::MDNTab::save()
+void SecurityPageMDNTab::save()
 {
     MessageViewer::MessageViewerSettings::self()->setDefaultPolicy(mMDNGroup->checkedId());
     MessageViewer::MessageViewerSettings::self()->setQuoteMessage(mOrigQuoteGroup->checkedId());
     saveCheckBox(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::MessageViewerSettings::self()->notSendWhenEncryptedItem());
 }
 
-QString SecurityPage::ComposerCryptoTab::helpAnchor() const
+QString SecurityPageComposerCryptoTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-composing");
 }
@@ -240,7 +240,7 @@ SecurityPageComposerCryptoTab::~SecurityPageComposerCryptoTab()
     delete mWidget;
 }
 
-void SecurityPage::ComposerCryptoTab::doLoadOther()
+void SecurityPageComposerCryptoTab::doLoadOther()
 {
     // If you change default values, sync messagecomposer.cpp too
 
@@ -253,7 +253,7 @@ void SecurityPage::ComposerCryptoTab::doLoadOther()
     loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }
 
-void SecurityPage::ComposerCryptoTab::save()
+void SecurityPageComposerCryptoTab::save()
 {
     saveCheckBox(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     saveCheckBox(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
@@ -263,7 +263,7 @@ void SecurityPage::ComposerCryptoTab::save()
     saveCheckBox(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }
 
-void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
+void SecurityPageComposerCryptoTab::doLoadFromGlobalSettings()
 {
     loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
@@ -273,7 +273,7 @@ void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }
 
-QString SecurityPage::WarningTab::helpAnchor() const
+QString SecurityPageWarningTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-warnings");
 }
@@ -303,7 +303,7 @@ SecurityPageWarningTab::~SecurityPageWarningTab()
     delete mWidget;
 }
 
-void SecurityPage::WarningTab::doLoadFromGlobalSettings()
+void SecurityPageWarningTab::doLoadFromGlobalSettings()
 {
     loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
@@ -320,7 +320,7 @@ void SecurityPage::WarningTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
 }
 
-void SecurityPage::WarningTab::doLoadOther()
+void SecurityPageWarningTab::doLoadOther()
 {
     loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
@@ -347,7 +347,7 @@ void SecurityPage::WarningTab::doLoadOther()
     mWidget->enableAllWarningsPB->setEnabled(true);
 }
 
-void SecurityPage::WarningTab::save()
+void SecurityPageWarningTab::save()
 {
     saveCheckBox(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     saveCheckBox(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
@@ -362,13 +362,13 @@ void SecurityPage::WarningTab::save()
     saveSpinBox(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
 }
 
-void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
+void SecurityPageWarningTab::slotReenableAllWarningsClicked()
 {
     KMessageBox::enableAllMessages();
     mWidget->enableAllWarningsPB->setEnabled(false);
 }
 
-void SecurityPage::WarningTab::slotConfigureGnupg()
+void SecurityPageWarningTab::slotConfigureGnupg()
 {
     QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
     KPageWidgetItem *page = nullptr;
@@ -388,7 +388,7 @@ void SecurityPage::WarningTab::slotConfigureGnupg()
     delete dlg;
 }
 
-QString SecurityPage::SMimeTab::helpAnchor() const
+QString SecurityPageSMimeTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-smime-validation");
 }
@@ -536,7 +536,7 @@ struct SMIMECryptoConfigEntries {
     QGpgME::CryptoConfig *mConfig = nullptr;
 };
 
-void SecurityPage::SMimeTab::doLoadOther()
+void SecurityPageSMimeTab::doLoadOther()
 {
     if (!mConfig) {
         setEnabled(false);
@@ -610,7 +610,7 @@ void SecurityPage::SMimeTab::doLoadOther()
     slotUpdateHTTPActions();
 }
 
-void SecurityPage::SMimeTab::slotUpdateHTTPActions()
+void SecurityPageSMimeTab::slotUpdateHTTPActions()
 {
     mWidget->ignoreHTTPDPCB->setEnabled(!mWidget->disableHTTPCB->isChecked());
 
@@ -634,7 +634,7 @@ static void saveCheckBoxToKleoEntry(QCheckBox *cb, QGpgME::CryptoConfigEntry *en
     }
 }
 
-void SecurityPage::SMimeTab::save()
+void SecurityPageSMimeTab::save()
 {
     if (!mConfig) {
         return;
