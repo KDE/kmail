@@ -61,61 +61,61 @@ ComposerPage::ComposerPage(QWidget *parent, const QVariantList &args)
     //
     // "General" tab:
     //
-    auto generalTab = new GeneralTab();
+    auto generalTab = new ComposerPageGeneralTab();
     addTab(generalTab, i18nc("General settings for the composer.", "General"));
     addConfig(KMailSettings::self(), generalTab);
 
     //
     // "Templates" tab:
     //
-    auto templatesTab = new TemplatesTab();
+    auto templatesTab = new ComposerPageGeneralTab();
     addTab(templatesTab, i18n("Standard Templates"));
 
     //
     // "Custom Templates" tab:
     //
-    auto customTemplatesTab = new CustomTemplatesTab();
+    auto customTemplatesTab = new ComposerPageCustomTemplatesTab();
     addTab(customTemplatesTab, i18n("Custom Templates"));
 
     //
     // "Subject" tab:
     //
-    auto subjectTab = new SubjectTab();
+    auto subjectTab = new ComposerPageSubjectTab();
     addTab(subjectTab, i18nc("Settings regarding the subject when composing a message.", "Subject"));
     addConfig(KMailSettings::self(), subjectTab);
 
     //
     // "Charset" tab:
     //
-    auto charsetTab = new CharsetTab();
+    auto charsetTab = new ComposerPageCharsetTab();
     addTab(charsetTab, i18n("Charset"));
 
     //
     // "Headers" tab:
     //
-    auto headersTab = new HeadersTab();
+    auto headersTab = new ComposerPageHeadersTab();
     addTab(headersTab, i18n("Headers"));
 
     //
     // "Attachments" tab:
     //
-    auto attachmentsTab = new AttachmentsTab();
+    auto attachmentsTab = new ComposerPageAttachmentsTab();
     addTab(attachmentsTab, i18nc("Config->Composer->Attachments", "Attachments"));
 
     //
     // "autocorrection" tab:
     //
-    auto autoCorrectionTab = new AutoCorrectionTab();
+    auto autoCorrectionTab = new ComposerPageAutoCorrectionTab();
     addTab(autoCorrectionTab, i18n("Autocorrection"));
 
     //
     // "autoresize" tab:
     //
-    auto autoImageResizeTab = new AutoImageResizeTab();
+    auto autoImageResizeTab = new ComposerPageAutoImageResizeTab();
     addTab(autoImageResizeTab, i18n("Auto Resize Image"));
 }
 
-QString ComposerPage::GeneralTab::helpAnchor() const
+QString ComposerPageGeneralTab::helpAnchor() const
 {
     return QStringLiteral("configure-composer-general");
 }
@@ -461,7 +461,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     grid->setRowStretch(2, 1);
 }
 
-void ComposerPage::GeneralTab::doResetToDefaultsOther()
+void ComposerPageGeneralTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
 
@@ -491,7 +491,7 @@ void ComposerPage::GeneralTab::doResetToDefaultsOther()
     mMaximumRecentAddress->setValue(200);
 }
 
-void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
+void ComposerPageGeneralTab::doLoadFromGlobalSettings()
 {
     // various check boxes:
 
@@ -526,7 +526,7 @@ void ComposerPage::GeneralTab::doLoadFromGlobalSettings()
     mMaximumRecentAddress->setValue(RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->maxCount());
 }
 
-void ComposerPage::GeneralTab::save()
+void ComposerPageGeneralTab::save()
 {
     saveCheckBox(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem());
     saveCheckBox(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
@@ -557,7 +557,7 @@ void ComposerPage::GeneralTab::save()
     MessageComposer::MessageComposerSettings::self()->requestSync();
 }
 
-void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
+void ComposerPageGeneralTab::slotConfigureAddressCompletion()
 {
     KLDAP::LdapClientSearch search;
     QPointer<PimCommon::CompletionConfigureDialog> dlg(new PimCommon::CompletionConfigureDialog(this));
@@ -578,7 +578,7 @@ void ComposerPage::GeneralTab::slotConfigureAddressCompletion()
     delete dlg;
 }
 
-QString ComposerPage::TemplatesTab::helpAnchor() const
+QString ComposerPageTemplatesTab::helpAnchor() const
 {
     return QStringLiteral("configure-composer-templates");
 }
@@ -594,22 +594,22 @@ ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
     connect(mWidget, &TemplateParser::TemplatesConfiguration::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
-void ComposerPage::TemplatesTab::doLoadFromGlobalSettings()
+void ComposerPageTemplatesTab::doLoadFromGlobalSettings()
 {
     mWidget->loadFromGlobal();
 }
 
-void ComposerPage::TemplatesTab::save()
+void ComposerPageTemplatesTab::save()
 {
     mWidget->saveToGlobal();
 }
 
-void ComposerPage::TemplatesTab::doResetToDefaultsOther()
+void ComposerPageTemplatesTab::doResetToDefaultsOther()
 {
     mWidget->resetToDefault();
 }
 
-QString ComposerPage::CustomTemplatesTab::helpAnchor() const
+QString ComposerPageCustomTemplatesTab::helpAnchor() const
 {
     return QStringLiteral("configure-composer-custom-templates");
 }
@@ -629,17 +629,17 @@ ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
     }
 }
 
-void ComposerPage::CustomTemplatesTab::doLoadFromGlobalSettings()
+void ComposerPageCustomTemplatesTab::doLoadFromGlobalSettings()
 {
     mWidget->load();
 }
 
-void ComposerPage::CustomTemplatesTab::save()
+void ComposerPageCustomTemplatesTab::save()
 {
     mWidget->save();
 }
 
-QString ComposerPage::SubjectTab::helpAnchor() const
+QString ComposerPageSubjectTab::helpAnchor() const
 {
     return QStringLiteral("configure-composer-subject");
 }
@@ -701,7 +701,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     vlay->addWidget(group);
 }
 
-void ComposerPage::SubjectTab::doLoadFromGlobalSettings()
+void ComposerPageSubjectTab::doLoadFromGlobalSettings()
 {
     loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
     loadWidget(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
@@ -709,7 +709,7 @@ void ComposerPage::SubjectTab::doLoadFromGlobalSettings()
     loadWidget(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
 }
 
-void ComposerPage::SubjectTab::save()
+void ComposerPageSubjectTab::save()
 {
     saveSimpleStringListEditor(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
     saveSimpleStringListEditor(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
@@ -717,7 +717,7 @@ void ComposerPage::SubjectTab::save()
     saveCheckBox(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
 }
 
-void ComposerPage::SubjectTab::doResetToDefaultsOther()
+void ComposerPageSubjectTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
     loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
@@ -727,7 +727,7 @@ void ComposerPage::SubjectTab::doResetToDefaultsOther()
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
 }
 
-QString ComposerPage::CharsetTab::helpAnchor() const
+QString ComposerPageCharsetTab::helpAnchor() const
 {
     return QStringLiteral("configure-composer-charset");
 }
@@ -767,7 +767,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
     setEnabled(kmkernel);
 }
 
-void ComposerPage::CharsetTab::slotVerifyCharset(QString &charset)
+void ComposerPageCharsetTab::slotVerifyCharset(QString &charset)
 {
     if (charset.isEmpty()) {
         return;
@@ -795,7 +795,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset(QString &charset)
     charset.clear();
 }
 
-void ComposerPage::CharsetTab::doLoadOther()
+void ComposerPageCharsetTab::doLoadOther()
 {
     if (!kmkernel) {
         return;
@@ -814,7 +814,7 @@ void ComposerPage::CharsetTab::doLoadOther()
     loadWidget(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
 }
 
-void ComposerPage::CharsetTab::doResetToDefaultsOther()
+void ComposerPageCharsetTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
     mCharsetListEditor->setStringList(MessageComposer::MessageComposerSettings::preferredCharsets());
@@ -825,7 +825,7 @@ void ComposerPage::CharsetTab::doResetToDefaultsOther()
     slotEmitChanged();
 }
 
-void ComposerPage::CharsetTab::save()
+void ComposerPageCharsetTab::save()
 {
     if (!kmkernel) {
         return;
@@ -843,7 +843,7 @@ void ComposerPage::CharsetTab::save()
     saveCheckBox(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
 }
 
-QString ComposerPage::HeadersTab::helpAnchor() const
+QString ComposerPageHeadersTab::helpAnchor() const
 {
     return QStringLiteral("configure-composer-headers");
 }
@@ -926,7 +926,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     connect(mTagValueEdit, &QLineEdit::textChanged, this, &ComposerPageHeadersTab::slotMimeHeaderValueChanged);
 }
 
-void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
+void ComposerPageHeadersTab::slotMimeHeaderSelectionChanged()
 {
     mEmitChanges = false;
     QTreeWidgetItem *item = mHeaderList->currentItem();
@@ -946,7 +946,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
     mEmitChanges = true;
 }
 
-void ComposerPage::HeadersTab::slotMimeHeaderNameChanged(const QString &text)
+void ComposerPageHeadersTab::slotMimeHeaderNameChanged(const QString &text)
 {
     // is called on ::setup(), when clearing the line edits. So be
     // prepared to not find a selection:
@@ -957,7 +957,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderNameChanged(const QString &text)
     slotEmitChanged();
 }
 
-void ComposerPage::HeadersTab::slotMimeHeaderValueChanged(const QString &text)
+void ComposerPageHeadersTab::slotMimeHeaderValueChanged(const QString &text)
 {
     // is called on ::setup(), when clearing the line edits. So be
     // prepared to not find a selection:
@@ -968,14 +968,14 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged(const QString &text)
     slotEmitChanged();
 }
 
-void ComposerPage::HeadersTab::slotNewMimeHeader()
+void ComposerPageHeadersTab::slotNewMimeHeader()
 {
     auto listItem = new QTreeWidgetItem(mHeaderList);
     mHeaderList->setCurrentItem(listItem);
     slotEmitChanged();
 }
 
-void ComposerPage::HeadersTab::slotRemoveMimeHeader()
+void ComposerPageHeadersTab::slotRemoveMimeHeader()
 {
     // calling this w/o selection is a programming error:
     QTreeWidgetItem *item = mHeaderList->currentItem();
@@ -1002,7 +1002,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     slotEmitChanged();
 }
 
-void ComposerPage::HeadersTab::doLoadOther()
+void ComposerPageHeadersTab::doLoadOther()
 {
     mMessageIdSuffixEdit->setText(MessageComposer::MessageComposerSettings::customMsgIDSuffix());
     const bool state =
@@ -1034,7 +1034,7 @@ void ComposerPage::HeadersTab::doLoadOther()
     }
 }
 
-void ComposerPage::HeadersTab::save()
+void ComposerPageHeadersTab::save()
 {
     MessageComposer::MessageComposerSettings::self()->setCustomMsgIDSuffix(mMessageIdSuffixEdit->text());
     MessageComposer::MessageComposerSettings::self()->setUseCustomMessageIdSuffix(mCreateOwnMessageIdCheck->isChecked());
@@ -1069,7 +1069,7 @@ void ComposerPage::HeadersTab::save()
     KMailSettings::self()->setCustomMessageHeadersCount(numValidEntries);
 }
 
-void ComposerPage::HeadersTab::doResetToDefaultsOther()
+void ComposerPageHeadersTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
     const QString messageIdSuffix = MessageComposer::MessageComposerSettings::customMsgIDSuffix();
@@ -1087,7 +1087,7 @@ void ComposerPage::HeadersTab::doResetToDefaultsOther()
     mRemoveHeaderButton->setEnabled(false);
 }
 
-QString ComposerPage::AttachmentsTab::helpAnchor() const
+QString ComposerPageAttachmentsTab::helpAnchor() const
 {
     return QStringLiteral("configure-composer-attachments");
 }
@@ -1149,7 +1149,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     vlay->addLayout(layAttachment);
 }
 
-void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
+void ComposerPageAttachmentsTab::doLoadFromGlobalSettings()
 {
     loadWidget(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
     loadWidget(mMissingAttachmentDetectionCheck, KMailSettings::self()->showForgottenAttachmentWarningItem());
@@ -1158,7 +1158,7 @@ void ComposerPage::AttachmentsTab::doLoadFromGlobalSettings()
     mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageCore::MessageCoreSettings::self()->maximumAttachmentSize() / 1024);
 }
 
-void ComposerPage::AttachmentsTab::save()
+void ComposerPageAttachmentsTab::save()
 {
     saveCheckBox(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
     saveCheckBox(mMissingAttachmentDetectionCheck, KMailSettings::self()->showForgottenAttachmentWarningItem());

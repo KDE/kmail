@@ -237,16 +237,5 @@ public:
     explicit ComposerPage(QWidget *parent = nullptr, const QVariantList &args = {});
 
     QString helpAnchor() const override;
-
-    // hrmpf. moc doesn't like nested classes with slots/signals...:
-    using GeneralTab = ComposerPageGeneralTab;
-    using TemplatesTab = ComposerPageTemplatesTab;
-    using CustomTemplatesTab = ComposerPageCustomTemplatesTab;
-    using SubjectTab = ComposerPageSubjectTab;
-    using CharsetTab = ComposerPageCharsetTab;
-    using HeadersTab = ComposerPageHeadersTab;
-    using AttachmentsTab = ComposerPageAttachmentsTab;
-    using AutoCorrectionTab = ComposerPageAutoCorrectionTab;
-    using AutoImageResizeTab = ComposerPageAutoImageResizeTab;
 };
 
