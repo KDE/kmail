@@ -470,20 +470,20 @@ public:
 
     void checkFolderFromResources(const Akonadi::Collection::List &collectionList);
 
-    const QAbstractItemModel *treeviewModelSelection();
+    Q_REQUIRED_RESULT const QAbstractItemModel *treeviewModelSelection();
 
     void savePaneSelection();
 
     void updatePaneTagComboBox();
 
-    PimCommon::AutoCorrection *composerAutoCorrection();
+    Q_REQUIRED_RESULT PimCommon::AutoCorrection *composerAutoCorrection();
 
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
 
     Q_REQUIRED_RESULT bool allowToDebug() const;
 
-    Akonadi::Search::PIM::IndexedItems *indexedItems() const;
+    Q_REQUIRED_RESULT Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 
     void cleanupTemporaryFiles();
     MailCommon::MailCommonSettings *mailCommonSettings() const;

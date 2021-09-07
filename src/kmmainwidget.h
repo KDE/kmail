@@ -142,7 +142,7 @@ public:
     static const KMMainWidget *mainWidgetList();
 
     QWidget *vacationScriptIndicator() const;
-    QWidget *dkimWidgetInfo() const;
+    Q_REQUIRED_RESULT QWidget *dkimWidgetInfo() const;
     MailCommon::FolderTreeView *folderTreeView() const;
 
     /** Returns the XML GUI client. */
@@ -180,7 +180,7 @@ public:
     Akonadi::StandardMailActionManager *standardMailActionManager() const;
     QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
     QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
-    QWidget *zoomLabelIndicator() const;
+    Q_REQUIRED_RESULT QWidget *zoomLabelIndicator() const;
 
     void clearPluginActions();
 
