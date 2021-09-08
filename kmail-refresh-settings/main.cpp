@@ -6,7 +6,7 @@
 
 #include "refreshsettingsassistant.h"
 
-#include <controlgui.h>
+#include <Akonadi/ControlGui>
 
 #include <KAboutData>
 #include <QApplication>
