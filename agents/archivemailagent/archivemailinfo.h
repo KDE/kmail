@@ -5,7 +5,7 @@
 */
 #pragma once
 
-#include <Collection>
+#include <Akonadi/Collection>
 #include <KConfigGroup>
 #include <MailCommon/BackupJob>
 #include <QDate>

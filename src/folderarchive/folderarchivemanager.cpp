@@ -11,10 +11,10 @@
 
 #include "util.h"
 
-#include <AkonadiCore/AgentManager>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemFetchScope>
+#include <Akonadi/AgentManager>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 
 #include "kmail_debug.h"
 #include <KLocalizedString>

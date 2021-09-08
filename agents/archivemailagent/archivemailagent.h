@@ -8,7 +8,7 @@
 
 #include <agentbase.h>
 
-#include <Collection>
+#include <Akonadi/Collection>
 class QTimer;
 
 class ArchiveMailManager;

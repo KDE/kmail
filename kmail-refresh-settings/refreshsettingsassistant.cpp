@@ -8,7 +8,7 @@
 #include "refreshsettingscleanuppage.h"
 #include "refreshsettingsfirstpage.h"
 #include "refreshsettringsfinishpage.h"
-#include <AkonadiWidgets/controlgui.h>
+#include <Akonadi/ControlGui>
 #include <KAboutData>
 #include <KHelpMenu>
 #include <KLocalizedString>

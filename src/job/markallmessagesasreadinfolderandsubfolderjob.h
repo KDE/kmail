@@ -9,8 +9,8 @@
 
 #include <QObject>
 
+#include <Akonadi/Collection>
 #include <Akonadi/KMime/MarkAsCommand>
-#include <Collection>
 
 class MarkAllMessagesAsReadInFolderAndSubFolderJob : public QObject
 {

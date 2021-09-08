@@ -7,7 +7,7 @@
 #pragma once
 
 #include "kmail_private_export.h"
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 #include <KMime/Message>
 #include <MessageComposer/MessageFactoryNG>
 #include <QObject>

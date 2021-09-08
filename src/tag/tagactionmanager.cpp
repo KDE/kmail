@@ -12,7 +12,7 @@
 #include <MailCommon/AddTagDialog>
 
 #include "kmail_debug.h"
-#include <AkonadiCore/Monitor>
+#include <Akonadi/Monitor>
 #include <KActionCollection>
 #include <KActionMenu>
 #include <KLocalizedString>

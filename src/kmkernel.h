@@ -13,7 +13,7 @@
 
 #include "kmail_export.h"
 #include "settings/kmailsettings.h"
-#include <AkonadiCore/servermanager.h>
+#include <Akonadi/ServerManager>
 #include <Libkdepim/ProgressManager>
 #include <MessageViewer/Viewer>
 

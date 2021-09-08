@@ -7,8 +7,8 @@
 #include "collectionviewpage.h"
 #include <MailCommon/MailKernel>
 
+#include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/KMime/MessageFolderAttribute>
-#include <AkonadiCore/entitydisplayattribute.h>
 
 #include "kmail_debug.h"
 #include <KIconButton>

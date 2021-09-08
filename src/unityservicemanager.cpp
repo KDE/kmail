@@ -21,11 +21,11 @@
 #include <QDBusServiceWatcher>
 #include <QTimer>
 
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionStatistics>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
 #include <Akonadi/KMime/NewMailNotifierAttribute>
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/CollectionStatistics>
-#include <AkonadiCore/EntityMimeTypeFilterModel>
-#include <AkonadiCore/EntityTreeModel>
 #include <chrono>
 
 using namespace std::chrono_literals;

@@ -50,10 +50,10 @@
 #include <tag/tagactionmanager.h>
 #include <tag/tagselectdialog.h>
 
+#include <Akonadi/ItemCopyJob>
+#include <Akonadi/ItemCreateJob>
+#include <Akonadi/ItemMoveJob>
 #include <Akonadi/KMime/MessageFlags>
-#include <AkonadiCore/itemcopyjob.h>
-#include <AkonadiCore/itemcreatejob.h>
-#include <AkonadiCore/itemmovejob.h>
 #include <KPIMTextEdit/TextToSpeech>
 #include <MailCommon/MailUtil>
 #include <MessageViewer/DKIMViewerMenu>

@@ -13,13 +13,13 @@
 
 #include <KMime/Message>
 
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/ItemFetchScope>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/ItemFetchScope>
 #include <QDBusConnection>
 
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/ServerManager>
-#include <AkonadiCore/Session>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ServerManager>
+#include <akonadi/session.h>
 #include <kcoreaddons_version.h>
 #if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>

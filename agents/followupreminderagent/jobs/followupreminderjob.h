@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 
 class FollowUpReminderJob : public QObject
 {

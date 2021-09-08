@@ -73,18 +73,18 @@ using KMail::MailServiceImpl;
 #include <KCrash>
 #include <kio/jobuidelegate.h>
 
-#include <AkonadiCore/AgentManager>
-#include <AkonadiCore/AttributeFactory>
-#include <AkonadiCore/ChangeRecorder>
+#include <Akonadi/AgentManager>
+#include <Akonadi/AttributeFactory>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionStatisticsJob>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
+#include <Akonadi/ServerManager>
 #include <AkonadiCore/Collection>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionStatisticsJob>
-#include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemFetchScope>
-#include <AkonadiCore/ServerManager>
-#include <AkonadiCore/Session>
-#include <AkonadiCore/entitymimetypefiltermodel.h>
+#include <akonadi/session.h>
 #include <kmime/kmime_headers.h>
 #include <kmime/kmime_message.h>
 

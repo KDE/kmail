@@ -13,7 +13,7 @@
 #include <MailCommon/BackupJob>
 #include <MailCommon/MailUtil>
 
-#include <AkonadiCore/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityMimeTypeFilterModel>
 
 #include <KLocalizedString>
 #include <KNotification>

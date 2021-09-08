@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <AkonadiAgentBase/agentbase.h>
+#include <Akonadi/AgentBase>
 #include <QDate>
 class FollowUpReminderManager;
 class FollowUpReminderAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3

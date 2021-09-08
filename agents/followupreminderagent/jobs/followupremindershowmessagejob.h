@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 #include <QObject>
 
 class FollowUpReminderShowMessageJob : public QObject

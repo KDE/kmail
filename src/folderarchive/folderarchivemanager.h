@@ -5,7 +5,7 @@
 */
 #pragma once
 
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 #include <QObject>
 #include <QQueue>
 namespace Akonadi

@@ -16,8 +16,8 @@
 #include <MailTransportAkonadi/SentBehaviourAttribute>
 #include <MailTransportAkonadi/TransportAttribute>
 
-#include <ItemDeleteJob>
-#include <ItemFetchJob>
+#include <Akonadi/ItemDeleteJob>
+#include <Akonadi/ItemFetchJob>
 
 #include "sendlateragent_debug.h"
 #include <KLocalizedString>

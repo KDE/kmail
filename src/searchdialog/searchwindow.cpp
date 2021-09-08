@@ -26,24 +26,24 @@
 #include <PimCommonAkonadi/SelectMultiCollectionDialog>
 
 #include "kmail_debug.h"
-#include <AkonadiCore/CachePolicy>
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionModifyJob>
-#include <AkonadiCore/EntityHiddenAttribute>
-#include <AkonadiCore/EntityMimeTypeFilterModel>
-#include <AkonadiCore/SearchCreateJob>
-#include <AkonadiCore/persistentsearchattribute.h>
+#include <Akonadi/CachePolicy>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionModifyJob>
+#include <Akonadi/EntityHiddenAttribute>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/EntityTreeView>
+#include <Akonadi/PersistentSearchAttribute>
+#include <Akonadi/SearchCreateJob>
+#include <Akonadi/StandardActionManager>
 #include <AkonadiSearch/PIM/indexeditems.h>
-#include <AkonadiWidgets/EntityTreeView>
-#include <AkonadiWidgets/standardactionmanager.h>
 #include <KActionMenu>
 #include <KMessageBox>
 #include <KStandardAction>
 #include <KStandardGuiItem>
 #include <QIcon>
 #include <QSortFilterProxyModel>
-#include <entitytreemodel.h>
 #include <entitytreeview.h>
 #include <kmime/kmime_message.h>
 

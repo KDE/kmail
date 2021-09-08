@@ -6,7 +6,7 @@
 
 #include "followupreminderutil.h"
 #include "followupreminderinfo.h"
-#include <AkonadiCore/ServerManager>
+#include <Akonadi/ServerManager>
 
 #include "followupreminderagentsettings.h"
 #include <QDBusInterface>

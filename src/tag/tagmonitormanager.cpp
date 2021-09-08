@@ -7,10 +7,10 @@
 #include "tagmonitormanager.h"
 #include "kmail_debug.h"
 
-#include <AkonadiCore/Monitor>
-#include <AkonadiCore/TagAttribute>
-#include <AkonadiCore/TagFetchJob>
-#include <AkonadiCore/TagFetchScope>
+#include <Akonadi/Monitor>
+#include <Akonadi/TagAttribute>
+#include <Akonadi/TagFetchJob>
+#include <Akonadi/TagFetchScope>
 
 TagMonitorManager::TagMonitorManager(QObject *parent)
     : QObject(parent)

@@ -51,14 +51,14 @@
 #include <KMime/MDN>
 #include <KMime/Message>
 
-#include <AkonadiCore/ItemCopyJob>
-#include <AkonadiCore/ItemCreateJob>
-#include <AkonadiCore/ItemDeleteJob>
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemModifyJob>
-#include <AkonadiCore/ItemMoveJob>
-#include <AkonadiCore/Tag>
-#include <AkonadiCore/TagCreateJob>
+#include <Akonadi/ItemCopyJob>
+#include <Akonadi/ItemCreateJob>
+#include <Akonadi/ItemDeleteJob>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemModifyJob>
+#include <Akonadi/ItemMoveJob>
+#include <Akonadi/Tag>
+#include <Akonadi/TagCreateJob>
 
 #include <MailCommon/CryptoUtils>
 #include <MailCommon/FilterAction>

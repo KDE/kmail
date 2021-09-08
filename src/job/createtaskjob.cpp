@@ -9,10 +9,10 @@
 #include "attributes/taskattribute.h"
 #include <Akonadi/KMime/MessageStatus>
 
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemFetchScope>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 
-#include <AkonadiCore/ItemModifyJob>
+#include <Akonadi/ItemModifyJob>
 
 #include "kmail_debug.h"
 

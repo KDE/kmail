@@ -7,7 +7,7 @@
 #pragma once
 
 #include <Akonadi/KMime/SpecialMailCollections>
-#include <AkonadiAgentBase/ResourceBase>
+#include <Akonadi/ResourceBase>
 
 #include "unifiedmailboxmanager.h"
 

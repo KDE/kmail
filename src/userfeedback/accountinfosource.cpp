@@ -5,7 +5,7 @@
 */
 
 #include "accountinfosource.h"
-#include <AkonadiCore/AgentInstance>
+#include <Akonadi/AgentInstance>
 #include <KLocalizedString>
 #include <KUserFeedback/Provider>
 #include <MailCommon/MailUtil>

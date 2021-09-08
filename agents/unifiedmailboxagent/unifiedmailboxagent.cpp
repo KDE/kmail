@@ -12,18 +12,18 @@
 #include "unifiedmailboxagent_debug.h"
 #include "unifiedmailboxagentadaptor.h"
 
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/CollectionDeleteJob>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/EntityDisplayAttribute>
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemFetchScope>
-#include <AkonadiCore/LinkJob>
-#include <AkonadiCore/ServerManager>
-#include <AkonadiCore/Session>
-#include <AkonadiCore/SpecialCollectionAttribute>
-#include <AkonadiCore/UnlinkJob>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionDeleteJob>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/EntityDisplayAttribute>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
+#include <Akonadi/LinkJob>
+#include <Akonadi/ServerManager>
+#include <Akonadi/SpecialCollectionAttribute>
+#include <Akonadi/UnlinkJob>
+#include <akonadi/session.h>
 
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>

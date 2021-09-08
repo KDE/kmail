@@ -1,8 +1,8 @@
 #include "dummykernel.h"
 
-#include <AkonadiCore/changerecorder.h>
-#include <AkonadiCore/entitymimetypefiltermodel.h>
-#include <AkonadiCore/entitytreemodel.h>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
 #include <AkonadiCore/session.h>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KSharedConfig>

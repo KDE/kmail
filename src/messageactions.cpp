@@ -22,9 +22,9 @@
 #include <MessageViewer/MessageViewerSettings>
 #include <PimCommonAkonadi/AnnotationDialog>
 
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/ItemFetchJob>
 #include <Akonadi/KMime/MessageParts>
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/itemfetchjob.h>
 #include <AkonadiSearch/Debug/akonadisearchdebugdialog.h>
 #include <KIO/KUriFilterSearchProviderActions>
 #include <QAction>
@@ -33,7 +33,7 @@
 #include <MessageComposer/FollowUpReminderSelectDateDialog>
 
 #include "kmail_debug.h"
-#include <AkonadiCore/ItemFetchJob>
+#include <Akonadi/ItemFetchJob>
 #include <KActionCollection>
 #include <KActionMenu>
 #include <KIO/JobUiDelegate>
@@ -46,8 +46,8 @@
 #include <QIcon>
 #include <QMenu>
 
+#include <Akonadi/EntityAnnotationsAttribute>
 #include <AkonadiCore/collection.h>
-#include <AkonadiCore/entityannotationsattribute.h>
 #include <MailCommon/MailUtil>
 #include <MessageViewer/MessageViewerUtil>
 #include <QVariant>

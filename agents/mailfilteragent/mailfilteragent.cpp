@@ -14,17 +14,17 @@
 
 #include "mailfilteragent_debug.h"
 #include <AgentManager>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 #include <Akonadi/KMime/MessageParts>
 #include <Akonadi/KMime/MessageStatus>
 #include <Akonadi/KMime/Pop3ResourceAttribute>
-#include <AkonadiCore/ServerManager>
-#include <AkonadiCore/changerecorder.h>
-#include <AkonadiCore/collectionfetchjob.h>
-#include <AkonadiCore/collectionfetchscope.h>
-#include <AkonadiCore/itemfetchscope.h>
+#include <Akonadi/ServerManager>
 #include <AkonadiCore/session.h>
 #include <AttributeFactory>
-#include <ItemFetchJob>
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMime/Message>

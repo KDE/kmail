@@ -8,7 +8,7 @@
 #include "kmail_debug.h"
 #include <PimCommon/BroadcastStatus>
 
-#include <AkonadiCore/ItemModifyJob>
+#include <Akonadi/ItemModifyJob>
 
 #include <KContacts/Addressee>
 

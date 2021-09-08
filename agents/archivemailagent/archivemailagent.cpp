@@ -8,15 +8,15 @@
 #include "archivemailagentadaptor.h"
 #include "archivemailagentsettings.h"
 #include "archivemailmanager.h"
-#include <AkonadiCore/ServerManager>
+#include <Akonadi/ServerManager>
 
-#include <CollectionFetchScope>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/Monitor>
+#include <Akonadi/Session>
 #include <KMime/Message>
 #include <MailCommon/MailKernel>
-#include <Monitor>
 #include <QDBusConnection>
 #include <QTimer>
-#include <Session>
 #include <chrono>
 #include <kcoreaddons_version.h>
 using namespace std::chrono_literals;

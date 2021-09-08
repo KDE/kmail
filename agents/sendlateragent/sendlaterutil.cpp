@@ -10,7 +10,7 @@
 
 #include <MessageComposer/SendLaterInfo>
 
-#include <AkonadiCore/ServerManager>
+#include <Akonadi/ServerManager>
 #include <KConfigGroup>
 
 #include <QStringList>

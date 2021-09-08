@@ -5,7 +5,7 @@
 */
 
 #pragma once
-#include <AkonadiWidgets/collectionpropertiespage.h>
+#include <Akonadi/CollectionPropertiesPage>
 namespace MailCommon
 {
 class CollectionTemplatesWidget;

@@ -9,8 +9,8 @@
 
 #include <KLocalizedString>
 
-#include <AkonadiCore/CollectionCreateJob>
-#include <AkonadiCore/CollectionFetchJob>
+#include <Akonadi/CollectionCreateJob>
+#include <Akonadi/CollectionFetchJob>
 
 FolderArchiveAgentCheckCollection::FolderArchiveAgentCheckCollection(FolderArchiveAccountInfo *info, QObject *parent)
     : QObject(parent)

@@ -8,7 +8,7 @@
 
 #include "kmail_export.h"
 #include "mailcommon/tag.h"
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 #include <QMap>
 #include <QVector>
 class KActionCollection;

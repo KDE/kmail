@@ -7,7 +7,7 @@
 #pragma once
 
 #include "archivemailinfo.h"
-#include <Collection>
+#include <Akonadi/Collection>
 #include <MailCommon/BackupJob>
 #include <QDialog>
 class QUrl;

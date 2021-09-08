@@ -12,9 +12,9 @@
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 #include <Akonadi/KMime/MessageParts>
-#include <AkonadiCore/itemfetchjob.h>
-#include <AkonadiCore/itemfetchscope.h>
 
 #include <QCheckBox>
 #include <QFormLayout>

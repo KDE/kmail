@@ -7,12 +7,12 @@
 #include "manageshowcollectionproperties.h"
 #include "kmail_debug.h"
 #include "kmmainwidget.h"
-#include <AkonadiCore/AgentInstance>
-#include <AkonadiCore/AgentManager>
-#include <AkonadiCore/CollectionAttributesSynchronizationJob>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiWidgets/CollectionPropertiesDialog>
+#include <Akonadi/AgentInstance>
+#include <Akonadi/AgentManager>
+#include <Akonadi/CollectionAttributesSynchronizationJob>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/CollectionPropertiesDialog>
 #include <KLocalizedString>
 #include <KMessageBox>
 

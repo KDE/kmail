@@ -50,12 +50,12 @@
 #include "widgets/kactionmenutransport.h"
 #include <kxmlgui_version.h>
 
+#include <Akonadi/ChangeRecorder>
 #include <Akonadi/Contact/ContactGroupExpandJob>
+#include <Akonadi/ItemFetchJob>
 #include <Akonadi/KMime/MessageFlags>
 #include <Akonadi/KMime/MessageStatus>
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/Monitor>
-#include <AkonadiCore/changerecorder.h>
+#include <Akonadi/Monitor>
 
 #include <KContacts/VCardConverter>
 

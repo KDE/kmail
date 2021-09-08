@@ -7,8 +7,8 @@
 #include "removecollectionjob.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include <AkonadiCore/CollectionDeleteJob>
-#include <AkonadiCore/CollectionFetchJob>
+#include <Akonadi/CollectionDeleteJob>
+#include <Akonadi/CollectionFetchJob>
 #include <KGuiItem>
 #include <KLocalizedString>
 #include <KMessageBox>

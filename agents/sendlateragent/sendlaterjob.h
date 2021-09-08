@@ -10,8 +10,8 @@
 
 #include "sendlatermanager.h"
 
+#include <Akonadi/ItemFetchScope>
 #include <Item>
-#include <ItemFetchScope>
 #include <KMime/Message>
 
 namespace MessageComposer

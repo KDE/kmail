@@ -9,7 +9,7 @@
 
 #include "kcmkmailsummary.h"
 
-#include <AkonadiWidgets/ETMViewStateSaver>
+#include <Akonadi/ETMViewStateSaver>
 #include <KMime/KMimeMessage>
 #include <PimCommonAkonadi/CheckedCollectionWidget>
 

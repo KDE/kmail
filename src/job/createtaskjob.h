@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 #include <KJob>
 
 class CreateTaskJob : public KJob

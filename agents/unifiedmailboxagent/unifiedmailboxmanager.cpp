@@ -12,13 +12,13 @@
 
 #include <KLocalizedString>
 
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ItemFetchScope>
 #include <Akonadi/KMime/SpecialMailCollections>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/ItemFetchScope>
-#include <AkonadiCore/LinkJob>
-#include <AkonadiCore/SpecialCollectionAttribute>
-#include <AkonadiCore/UnlinkJob>
+#include <Akonadi/LinkJob>
+#include <Akonadi/SpecialCollectionAttribute>
+#include <Akonadi/UnlinkJob>
 
 #include <QTimer>
 

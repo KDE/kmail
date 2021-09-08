@@ -11,7 +11,7 @@
 
 #include "kmkernel.h"
 #include "kmmainwin.h"
-#include <AkonadiCore/itemmovejob.h>
+#include <Akonadi/ItemMoveJob>
 #include <KJob>
 
 #include "kmail_debug.h"

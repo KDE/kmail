@@ -6,8 +6,8 @@
 
 #include "kactionmenuaccount.h"
 #include "kmail_debug.h"
-#include <AkonadiCore/AgentInstance>
-#include <AkonadiCore/AgentManager>
+#include <Akonadi/AgentInstance>
+#include <Akonadi/AgentManager>
 #include <MailCommon/MailUtil>
 #include <QMenu>
 

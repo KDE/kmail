@@ -14,7 +14,7 @@
 
 #include <KSharedConfig>
 
-#include <AkonadiCore/ChangeRecorder>
+#include <Akonadi/ChangeRecorder>
 
 #include <functional>
 #include <memory>

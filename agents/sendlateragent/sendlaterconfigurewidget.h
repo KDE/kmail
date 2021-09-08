@@ -7,7 +7,7 @@
 #pragma once
 #include "ui_sendlaterconfigurewidget.h"
 
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 
 #include <KConfigGroup>
 #include <QTreeWidgetItem>

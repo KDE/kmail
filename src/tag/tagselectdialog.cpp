@@ -17,9 +17,9 @@
 #include <KLocalizedString>
 #include <QIcon>
 
-#include <AkonadiCore/TagAttribute>
-#include <AkonadiCore/TagFetchJob>
-#include <AkonadiCore/TagFetchScope>
+#include <Akonadi/TagAttribute>
+#include <Akonadi/TagFetchJob>
+#include <Akonadi/TagFetchScope>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QListWidget>

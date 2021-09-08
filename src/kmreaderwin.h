@@ -10,7 +10,7 @@
 
 #include "kmail_export.h"
 
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 #include <KContacts/Addressee>
 #include <MessageViewer/Viewer>
 #include <MimeTreeParser/BodyPart>

@@ -5,8 +5,8 @@
 */
 
 #include "kmailsieveimapinstanceinterface.h"
-#include <AkonadiCore/AgentInstance>
-#include <AkonadiCore/AgentManager>
+#include <Akonadi/AgentInstance>
+#include <Akonadi/AgentManager>
 #include <KSieveUi/SieveImapInstance>
 
 KMailSieveImapInstanceInterface::KMailSieveImapInstanceInterface() = default;

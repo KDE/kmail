@@ -8,8 +8,8 @@
 
 #include "collectionquotapage.h"
 #include "collectionquotawidget.h"
+#include <Akonadi/CollectionQuotaAttribute>
 #include <AkonadiCore/collection.h>
-#include <AkonadiCore/collectionquotaattribute.h>
 
 #include <KLocalizedString>
 #include <QVBoxLayout>

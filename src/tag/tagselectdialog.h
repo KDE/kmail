@@ -8,8 +8,8 @@
 
 #include "MailCommon/Tag"
 #include "kmail_private_export.h"
-#include <AkonadiCore/Item>
-#include <AkonadiCore/Tag>
+#include <Akonadi/Item>
+#include <Akonadi/Tag>
 #include <QDialog>
 #include <QVector>
 

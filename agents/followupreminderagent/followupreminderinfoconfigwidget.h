@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <AkonadiCore/AgentConfigurationBase>
-#include <AkonadiCore/Item>
+#include <Akonadi/AgentConfigurationBase>
+#include <Akonadi/Item>
 #include <QVariantList>
 #include <QWidget>
 class FollowUpReminderInfoWidget;

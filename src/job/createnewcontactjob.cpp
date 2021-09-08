@@ -13,12 +13,12 @@
 #include <KContacts/Addressee>
 #include <KContacts/ContactGroup>
 
+#include <Akonadi/AgentFilterProxyModel>
+#include <Akonadi/AgentInstanceCreateJob>
+#include <Akonadi/AgentTypeDialog>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
 #include <Akonadi/Contact/ContactEditorDialog>
-#include <AkonadiCore/AgentFilterProxyModel>
-#include <AkonadiCore/AgentInstanceCreateJob>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiWidgets/AgentTypeDialog>
 
 #include <KLocalizedString>
 #include <KMessageBox>

@@ -9,7 +9,7 @@
 #include "../../plugininterface/kmailplugininterface.h"
 #include "kmail_debug.h"
 #include "util.h"
-#include <AkonadiCore/ServerManager>
+#include <Akonadi/ServerManager>
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
@@ -26,9 +26,9 @@
 #include <PimCommon/GenericPluginManager>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 
-#include <AkonadiCore/AgentInstance>
-#include <AkonadiCore/AgentManager>
-#include <AkonadiWidgets/AgentConfigurationDialog>
+#include <Akonadi/AgentConfigurationDialog>
+#include <Akonadi/AgentInstance>
+#include <Akonadi/AgentManager>
 #include <MessageComposer/PluginEditor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
 #include <MessageComposer/PluginEditorInit>

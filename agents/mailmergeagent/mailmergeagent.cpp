@@ -12,15 +12,15 @@
 #include "mailmergemanager.h"
 #include <AgentInstance>
 #include <AgentManager>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionFetchScope>
 #include <Akonadi/KMime/SpecialMailCollections>
-#include <AkonadiCore/ServerManager>
+#include <Akonadi/ServerManager>
 #include <AkonadiCore/session.h>
 #include <AttributeFactory>
-#include <CollectionFetchScope>
 #include <KMime/Message>
 #include <QDBusConnection>
-#include <changerecorder.h>
-#include <itemfetchscope.h>
+#include <akonadi/itemfetchscope.h>
 
 #include <KWindowSystem>
 

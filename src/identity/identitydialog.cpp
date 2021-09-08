@@ -85,10 +85,10 @@ using MailTransport::TransportManager;
 #include <gpgme++/key.h>
 #include <iterator>
 
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionModifyJob>
+#include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/KMime/SpecialMailCollections>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/collectionmodifyjob.h>
-#include <AkonadiCore/entitydisplayattribute.h>
 #include <QDialogButtonBox>
 #include <QStandardPaths>
 

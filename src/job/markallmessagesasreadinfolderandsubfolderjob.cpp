@@ -8,8 +8,8 @@
 #include "markallmessagesasreadinfolderandsubfolderjob.h"
 #include "kmail_debug.h"
 
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionFetchScope>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
 
 MarkAllMessagesAsReadInFolderAndSubFolderJob::MarkAllMessagesAsReadInFolderAndSubFolderJob(QObject *parent)
     : QObject(parent)

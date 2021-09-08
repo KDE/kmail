@@ -7,7 +7,7 @@
  */
 
 #pragma once
-#include <AkonadiWidgets/collectionpropertiespage.h>
+#include <Akonadi/CollectionPropertiesPage>
 
 class CollectionQuotaWidget;
 

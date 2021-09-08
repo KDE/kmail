@@ -16,8 +16,8 @@
 #include "kmkernel.h"
 #include "kmreadermainwin.h"
 #include "settings/kmailsettings.h"
-#include <AkonadiCore/ItemFetchScope>
-#include <AkonadiCore/itemfetchjob.h>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 #include <KIdentityManagement/Identity>
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailUtil>

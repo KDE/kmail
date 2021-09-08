@@ -10,7 +10,7 @@
 
 #include <MailCommon/FolderSettings>
 
-#include <AkonadiWidgets/collectionpropertiespage.h>
+#include <Akonadi/CollectionPropertiesPage>
 
 template<typename T> class QSharedPointer;
 

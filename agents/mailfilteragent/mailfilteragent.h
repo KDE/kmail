@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <AkonadiAgentBase/agentbase.h>
+#include <Akonadi/AgentBase>
 
+#include <Akonadi/Collection>
 #include <AkonadiCore/item.h>
-#include <Collection>
 #include <MailCommon/SearchPattern>
 
-#include <AkonadiCore/AgentInstance>
+#include <Akonadi/AgentInstance>
 
 class FilterLogDialog;
 class FilterManager;

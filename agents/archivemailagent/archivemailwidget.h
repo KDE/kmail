@@ -10,7 +10,7 @@
 #include "ui_archivemailwidget.h"
 #include <QTreeWidgetItem>
 
-#include <AkonadiCore/AgentConfigurationBase>
+#include <Akonadi/AgentConfigurationBase>
 
 class ArchiveMailItem : public QTreeWidgetItem
 {

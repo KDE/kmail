@@ -7,10 +7,10 @@
 #include "checkindexingmanager.h"
 #include "checkindexingjob.h"
 #include "kmail_debug.h"
-#include <AkonadiCore/CachePolicy>
-#include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/ServerManager>
-#include <AkonadiCore/entityhiddenattribute.h>
+#include <Akonadi/CachePolicy>
+#include <Akonadi/EntityHiddenAttribute>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/ServerManager>
 #include <AkonadiSearch/PIM/indexeditems.h>
 #include <KConfigGroup>
 #include <KSharedConfig>

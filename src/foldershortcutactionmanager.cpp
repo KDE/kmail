@@ -7,10 +7,10 @@
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailKernel>
 
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/EntityDisplayAttribute>
-#include <AkonadiCore/EntityMimeTypeFilterModel>
-#include <AkonadiCore/EntityTreeModel>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/EntityDisplayAttribute>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
 
 #include <KActionCollection>
 #include <KLocalizedString>

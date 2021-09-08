@@ -8,7 +8,7 @@
 
 #include <QObject>
 
-#include <Collection>
+#include <Akonadi/Collection>
 #include <KSharedConfig>
 
 class ArchiveMailKernel;

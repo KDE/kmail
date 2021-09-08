@@ -14,11 +14,11 @@
 #include <KontactInterface/Core>
 #include <KontactInterface/Plugin>
 
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/collectionstatistics.h>
-#include <AkonadiWidgets/ETMViewStateSaver>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/CollectionStatistics>
+#include <Akonadi/ETMViewStateSaver>
+#include <Akonadi/EntityTreeModel>
 
 #include <KMime/KMimeMessage>
 

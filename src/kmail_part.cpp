@@ -22,9 +22,9 @@
 #include "kmmigrateapplication.h"
 #endif
 #include "tag/tagactionmanager.h"
-#include <AkonadiCore/changerecorder.h>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/EntityDisplayAttribute>
 #include <AkonadiCore/collection.h>
-#include <AkonadiCore/entitydisplayattribute.h>
 #include <KLocalizedString>
 #include <KParts/GUIActivateEvent>
 #include <KPluginFactory>

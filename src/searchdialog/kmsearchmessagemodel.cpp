@@ -9,8 +9,8 @@
 
 #include <MessageCore/StringUtil>
 
-#include <AkonadiCore/itemfetchscope.h>
-#include <AkonadiCore/monitor.h>
+#include <Akonadi/ItemFetchScope>
+#include <Akonadi/Monitor>
 #include <AkonadiCore/session.h>
 
 #include <Akonadi/KMime/MessageParts>

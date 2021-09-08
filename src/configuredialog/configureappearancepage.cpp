@@ -34,13 +34,13 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <MailCommon/MailUtil>
 
-#include <AkonadiCore/Tag>
-#include <AkonadiCore/TagAttribute>
-#include <AkonadiCore/TagCreateJob>
-#include <AkonadiCore/TagDeleteJob>
-#include <AkonadiCore/TagFetchJob>
-#include <AkonadiCore/TagFetchScope>
-#include <AkonadiCore/TagModifyJob>
+#include <Akonadi/Tag>
+#include <Akonadi/TagAttribute>
+#include <Akonadi/TagCreateJob>
+#include <Akonadi/TagDeleteJob>
+#include <Akonadi/TagFetchJob>
+#include <Akonadi/TagFetchScope>
+#include <Akonadi/TagModifyJob>
 
 #include "kmail_debug.h"
 #include <kwidgetsaddons_version.h>

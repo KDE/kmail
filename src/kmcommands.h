@@ -13,9 +13,9 @@
 #include <kio/job.h>
 #include <kmime/kmime_message.h>
 
+#include <Akonadi/ItemFetchScope>
 #include <AkonadiCore/collection.h>
 #include <AkonadiCore/item.h>
-#include <AkonadiCore/itemfetchscope.h>
 #include <QList>
 #include <QPointer>
 #include <QUrl>

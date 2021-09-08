@@ -11,16 +11,16 @@
 #include <KConfigGroup>
 #include <KSharedConfig>
 
-#include <AkonadiCore/CollectionCreateJob>
-#include <AkonadiCore/CollectionDeleteJob>
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/CollectionModifyJob>
-#include <AkonadiCore/ItemCreateJob>
-#include <AkonadiCore/ItemDeleteJob>
-#include <AkonadiCore/ItemModifyJob>
-#include <AkonadiCore/ItemMoveJob>
-#include <AkonadiCore/SpecialCollectionAttribute>
+#include <Akonadi/CollectionCreateJob>
+#include <Akonadi/CollectionDeleteJob>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/CollectionModifyJob>
+#include <Akonadi/ItemCreateJob>
+#include <Akonadi/ItemDeleteJob>
+#include <Akonadi/ItemModifyJob>
+#include <Akonadi/ItemMoveJob>
+#include <Akonadi/SpecialCollectionAttribute>
 #include <AkonadiCore/qtest_akonadi.h>
 
 #include <QTest>

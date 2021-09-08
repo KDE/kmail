@@ -5,8 +5,8 @@
 */
 
 #include "kmlaunchexternalcomponent.h"
-#include <AkonadiCore/AgentManager>
-#include <AkonadiWidgets/AgentConfigurationDialog>
+#include <Akonadi/AgentConfigurationDialog>
+#include <Akonadi/AgentManager>
 #include <KLocalizedString>
 #include <KMessageBox>
 

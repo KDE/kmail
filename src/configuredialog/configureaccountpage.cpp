@@ -20,13 +20,13 @@ using MailTransport::TransportManagementWidget;
 #include <MailCommon/MailUtil>
 
 #include "kmail_debug.h"
-#include <AkonadiCore/agentfilterproxymodel.h>
-#include <AkonadiCore/agentinstancecreatejob.h>
-#include <AkonadiCore/agentinstancemodel.h>
-#include <AkonadiCore/agentmanager.h>
-#include <AkonadiCore/agenttype.h>
-#include <AkonadiWidgets/AgentConfigurationDialog>
-#include <AkonadiWidgets/agenttypedialog.h>
+#include <Akonadi/AgentConfigurationDialog>
+#include <Akonadi/AgentFilterProxyModel>
+#include <Akonadi/AgentInstanceCreateJob>
+#include <Akonadi/AgentInstanceModel>
+#include <Akonadi/AgentManager>
+#include <Akonadi/AgentType>
+#include <Akonadi/AgentTypeDialog>
 #include <KConfigGroup>
 #include <KLDAP/LdapConfigureWidget>
 #include <KLocalizedString>

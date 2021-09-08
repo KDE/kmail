@@ -6,8 +6,8 @@
 
 #include "removeduplicatemailjob.h"
 
+#include <Akonadi/EntityTreeModel>
 #include <AkonadiCore/Collection>
-#include <AkonadiCore/EntityTreeModel>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <Libkdepim/ProgressManager>

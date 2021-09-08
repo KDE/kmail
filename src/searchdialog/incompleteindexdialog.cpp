@@ -14,8 +14,8 @@
 #include <QAbstractItemView>
 #include <QProgressDialog>
 
-#include <AkonadiCore/EntityMimeTypeFilterModel>
-#include <AkonadiCore/EntityTreeModel>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
 
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>

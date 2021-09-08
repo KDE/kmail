@@ -8,8 +8,8 @@
 
 #include "configagentdelegate.h"
 
-#include <AkonadiCore/AgentInstance>
-#include <AkonadiCore/AgentInstanceModel>
+#include <Akonadi/AgentInstance>
+#include <Akonadi/AgentInstanceModel>
 
 #include <KIconLoader>
 #include <KLocalizedString>
