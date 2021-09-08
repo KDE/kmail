@@ -8,7 +8,7 @@
 #include <MailCommon/CollectionTemplatesWidget>
 
 #include "templatesconfiguration_kfg.h"
-#include <AkonadiCore/collection.h>
+#include <Akonadi/Collection>
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailKernel>
 #include <TemplateParser/TemplatesConfiguration>

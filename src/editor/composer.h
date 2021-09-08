@@ -10,7 +10,7 @@
 #include "kmail_export.h"
 #include "secondarywindow.h"
 
-#include <AkonadiCore/collection.h>
+#include <Akonadi/Collection>
 #include <QUrl>
 #include <kmime/kmime_message.h>
 

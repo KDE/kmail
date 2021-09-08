@@ -6,7 +6,7 @@
 
 #include "kmail_export.h"
 
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 
 #include <QHash>
 #include <QModelIndex>

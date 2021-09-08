@@ -5,7 +5,7 @@
 */
 #pragma once
 
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 #include <QDateTime>
 #include <QHash>
 #include <QObject>

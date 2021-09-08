@@ -5,7 +5,7 @@
 */
 
 #include "identityfolderrequester.h"
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 #include <KColorScheme>
 
 using namespace KMail;

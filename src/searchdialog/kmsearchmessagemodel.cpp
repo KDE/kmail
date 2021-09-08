@@ -11,7 +11,7 @@
 
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/Monitor>
-#include <AkonadiCore/session.h>
+#include <Akonadi/Session>
 
 #include <Akonadi/KMime/MessageParts>
 #include <kmime/kmime_message.h>

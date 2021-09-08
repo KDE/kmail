@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <agentbase.h>
+#include <Akonadi/AgentBase>
 
 #include "sendlaterdialog.h"
 #include <MessageComposer/SendLaterInfo>

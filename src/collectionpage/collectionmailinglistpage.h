@@ -12,8 +12,8 @@
 #include <MailCommon/FolderSettings>
 #include <MessageCore/MailingList>
 
+#include <Akonadi/Collection>
 #include <Akonadi/CollectionPropertiesPage>
-#include <AkonadiCore/collection.h>
 
 class QCheckBox;
 class QPushButton;

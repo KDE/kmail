@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 #include <KJob>
 #include <KMime/KMimeMessage>
 

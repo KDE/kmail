@@ -7,8 +7,8 @@
  */
 #pragma once
 
-#include <AkonadiCore/collection.h>
-#include <AkonadiCore/item.h>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 
 #include <MailCommon/SearchPattern>
 #include <memory>

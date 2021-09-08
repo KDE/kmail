@@ -120,8 +120,8 @@
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ItemModifyJob>
 #include <Akonadi/KMime/MessageFlags>
+#include <Akonadi/Session>
 #include <Akonadi/StandardActionManager>
-#include <AkonadiCore/session.h>
 
 #include <KEmailAddress>
 #include <KSieveUi/ManageSieveScriptsDialog>

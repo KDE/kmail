@@ -13,7 +13,7 @@
 #include <MailCommon/FolderRequester>
 #include <MessageViewer/MessageViewerUtil>
 
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 
 #include <KLocalizedString>
 #include <KMessageBox>

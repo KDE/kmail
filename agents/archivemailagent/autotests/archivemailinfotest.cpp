@@ -6,7 +6,7 @@
 
 #include "archivemailinfotest.h"
 #include "../archivemailinfo.h"
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <QStandardPaths>

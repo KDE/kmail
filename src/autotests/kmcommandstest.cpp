@@ -10,8 +10,8 @@
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 
+#include <Akonadi/Collection>
 #include <Akonadi/Item>
-#include <AkonadiCore/Collection>
 
 #include <KMime/Message>
 

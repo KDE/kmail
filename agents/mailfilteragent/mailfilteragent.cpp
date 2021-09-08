@@ -13,7 +13,8 @@
 #include <MailCommon/DBusOperators>
 
 #include "mailfilteragent_debug.h"
-#include <AgentManager>
+#include <Akonadi/AgentManager>
+#include <Akonadi/AttributeFactory>
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
@@ -23,8 +24,7 @@
 #include <Akonadi/KMime/MessageStatus>
 #include <Akonadi/KMime/Pop3ResourceAttribute>
 #include <Akonadi/ServerManager>
-#include <AkonadiCore/session.h>
-#include <AttributeFactory>
+#include <Akonadi/Session>
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMime/Message>

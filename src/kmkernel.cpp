@@ -76,6 +76,7 @@ using KMail::MailServiceImpl;
 #include <Akonadi/AgentManager>
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/ChangeRecorder>
+#include <Akonadi/Collection>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionStatisticsJob>
 #include <Akonadi/EntityMimeTypeFilterModel>
@@ -83,7 +84,6 @@ using KMail::MailServiceImpl;
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ServerManager>
-#include <AkonadiCore/Collection>
 #include <akonadi/session.h>
 #include <kmime/kmime_headers.h>
 #include <kmime/kmime_message.h>

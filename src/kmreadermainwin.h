@@ -9,8 +9,8 @@
 #include <KMime/Message>
 #include <QUrl>
 
-#include <AkonadiCore/collection.h>
-#include <AkonadiCore/item.h>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <MessageViewer/Viewer>
 #include <QModelIndex>
 class KMReaderWin;

@@ -46,8 +46,8 @@
 #include <QIcon>
 #include <QMenu>
 
+#include <Akonadi/Collection>
 #include <Akonadi/EntityAnnotationsAttribute>
-#include <AkonadiCore/collection.h>
 #include <MailCommon/MailUtil>
 #include <MessageViewer/MessageViewerUtil>
 #include <QVariant>

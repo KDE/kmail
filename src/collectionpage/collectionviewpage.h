@@ -6,8 +6,8 @@
 
 #pragma once
 
+#include <Akonadi/Collection>
 #include <Akonadi/CollectionPropertiesPage>
-#include <AkonadiCore/collection.h>
 #include <MailCommon/FolderSettings>
 class QCheckBox;
 class QLabel;

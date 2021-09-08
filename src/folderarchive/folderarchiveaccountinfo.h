@@ -6,7 +6,7 @@
 #pragma once
 
 #include "kmail_private_export.h"
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 #include <KConfigGroup>
 
 class KMAILTESTS_TESTS_EXPORT FolderArchiveAccountInfo

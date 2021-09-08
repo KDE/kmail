@@ -7,8 +7,8 @@
 #pragma once
 
 #include "kmail_private_export.h"
-#include <AkonadiCore/Collection>
-#include <AkonadiCore/item.h>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <MailCommon/FolderSettings>
 
 namespace KMail

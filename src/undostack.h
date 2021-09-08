@@ -10,8 +10,8 @@
 #pragma once
 
 #include "kmail_private_export.h"
-#include <AkonadiCore/collection.h>
-#include <AkonadiCore/item.h>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <QList>
 #include <QObject>
 

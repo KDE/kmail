@@ -23,8 +23,8 @@
 #endif
 #include "tag/tagactionmanager.h"
 #include <Akonadi/ChangeRecorder>
+#include <Akonadi/Collection>
 #include <Akonadi/EntityDisplayAttribute>
-#include <AkonadiCore/collection.h>
 #include <KLocalizedString>
 #include <KParts/GUIActivateEvent>
 #include <KPluginFactory>

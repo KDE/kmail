@@ -21,7 +21,7 @@
 #include <Akonadi/ItemModifyJob>
 #include <Akonadi/ItemMoveJob>
 #include <Akonadi/SpecialCollectionAttribute>
-#include <AkonadiCore/qtest_akonadi.h>
+#include <akonadi/qtest_akonadi.h>
 
 #include <QTest>
 

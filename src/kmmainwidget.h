@@ -17,7 +17,7 @@
 
 #include "messageactions.h"
 #include <Akonadi/KMime/StandardMailActionManager>
-#include <AkonadiCore/tag.h>
+#include <Akonadi/Tag>
 #include <KActionCollection>
 #include <KXMLGUIClient>
 #include <MailCommon/FolderSettings>

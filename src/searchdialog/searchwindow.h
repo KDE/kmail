@@ -12,8 +12,8 @@
 #include "ui_searchwindow.h"
 #include <MailCommon/SearchPattern>
 
-#include <AkonadiCore/collection.h>
-#include <AkonadiCore/item.h>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <KGuiItem>
 #include <KXMLGUIClient>
 #include <QDialog>

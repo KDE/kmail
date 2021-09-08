@@ -3,7 +3,7 @@
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
-#include <AkonadiCore/session.h>
+#include <Akonadi/Session>
 #include <KIdentityManagement/kidentitymanagement/identitymanager.h>
 #include <KSharedConfig>
 #include <MailCommon/FolderCollectionMonitor>

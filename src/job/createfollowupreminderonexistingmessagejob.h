@@ -7,8 +7,8 @@
 #pragma once
 
 #include "kmail_private_export.h"
+#include <Akonadi/Collection>
 #include <Akonadi/Item>
-#include <AkonadiCore/Collection>
 #include <QDate>
 #include <QObject>
 

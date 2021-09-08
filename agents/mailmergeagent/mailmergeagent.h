@@ -5,7 +5,7 @@
 */
 
 #pragma once
-#include <agentbase.h>
+#include <Akonadi/AgentBase>
 
 class MailMergeManager;
 

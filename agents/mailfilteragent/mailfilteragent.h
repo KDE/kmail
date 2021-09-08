@@ -9,7 +9,7 @@
 #include <Akonadi/AgentBase>
 
 #include <Akonadi/Collection>
-#include <AkonadiCore/item.h>
+#include <Akonadi/Item>
 #include <MailCommon/SearchPattern>
 
 #include <Akonadi/AgentInstance>

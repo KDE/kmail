@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 #include <QAbstractItemModel>
 #include <QObject>
 namespace Akonadi
