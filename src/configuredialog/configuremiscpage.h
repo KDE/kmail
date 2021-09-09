@@ -59,9 +59,6 @@ class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
 public:
     explicit MiscPage(QWidget *parent = nullptr, const QVariantList &args = {});
     QString helpAnchor() const override;
-
-    using FolderTab = MiscPageFolderTab;
-    using InviteTab = MiscPageInviteTab;
 };
 
 class MiscPagePrintingTab : public ConfigModuleTab

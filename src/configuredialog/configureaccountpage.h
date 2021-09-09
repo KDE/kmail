@@ -108,10 +108,6 @@ public:
     explicit AccountsPage(QWidget *parent = nullptr, const QVariantList &args = {});
     QString helpAnchor() const override;
 
-    // hrmpf. moc doesn't like nested classes with slots/signals...:
-    using SendingTab = AccountsPageSendingTab;
-    using ReceivingTab = AccountsPageReceivingTab;
-
 Q_SIGNALS:
     void accountListChanged(const QStringList &);
 };

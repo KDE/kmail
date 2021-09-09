@@ -59,14 +59,14 @@ AccountsPage::AccountsPage(QWidget *parent, const QVariantList &args)
     //
     // "Receiving" tab:
     //
-    auto receivingTab = new ReceivingTab();
+    auto receivingTab = new AccountsPageReceivingTab();
     addTab(receivingTab, i18nc("@title:tab Tab page where the user configures accounts to receive mail", "Receiving"));
-    connect(receivingTab, &ReceivingTab::accountListChanged, this, &AccountsPage::accountListChanged);
+    connect(receivingTab, &AccountsPageReceivingTab::accountListChanged, this, &AccountsPage::accountListChanged);
 
     //
     // "Sending" tab:
     //
-    auto sendingTab = new SendingTab();
+    auto sendingTab = new AccountsPageSendingTab();
     addTab(sendingTab, i18nc("@title:tab Tab page where the user configures accounts to send mail", "Sending"));
 
     //
@@ -78,7 +78,7 @@ AccountsPage::AccountsPage(QWidget *parent, const QVariantList &args)
 
 AccountsPageSendingTab::~AccountsPageSendingTab() = default;
 
-QString AccountsPage::SendingTab::helpAnchor() const
+QString AccountsPageSendingTab::helpAnchor() const
 {
     return QStringLiteral("configure-accounts-sending");
 }
@@ -133,7 +133,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     connect(mUndoSendComboBox, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
 }
 
-void AccountsPage::SendingTab::doLoadFromGlobalSettings()
+void AccountsPageSendingTab::doLoadFromGlobalSettings()
 {
     mSendOnCheckCombo->setCurrentIndex(KMailSettings::self()->sendOnCheck());
     loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
@@ -142,7 +142,7 @@ void AccountsPage::SendingTab::doLoadFromGlobalSettings()
     mUndoSendComboBox->setDelay(KMailSettings::self()->undoSendDelay());
 }
 
-void AccountsPage::SendingTab::doLoadOther()
+void AccountsPageSendingTab::doLoadOther()
 {
     mSendMethodCombo->setCurrentIndex(MessageComposer::MessageComposerSettings::self()->sendImmediate() ? 0 : 1);
     loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
@@ -151,7 +151,7 @@ void AccountsPage::SendingTab::doLoadOther()
     mUndoSendComboBox->setDelay(KMailSettings::self()->undoSendDelay());
 }
 
-void AccountsPage::SendingTab::save()
+void AccountsPageSendingTab::save()
 {
     KMailSettings::self()->setSendOnCheck(mSendOnCheckCombo->currentIndex());
     saveCheckBox(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
@@ -161,7 +161,7 @@ void AccountsPage::SendingTab::save()
     KMailSettings::self()->setUndoSendDelay(mUndoSendComboBox->delay());
 }
 
-QString AccountsPage::ReceivingTab::helpAnchor() const
+QString AccountsPageReceivingTab::helpAnchor() const
 {
     return QStringLiteral("configure-accounts-receiving");
 }
@@ -329,7 +329,7 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
     slotEmitChanged();
 }
 
-void AccountsPage::ReceivingTab::slotEditNotifications()
+void AccountsPageReceivingTab::slotEditNotifications()
 {
     const auto instance = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_newmailnotifier_agent"));
     if (instance.isValid()) {
@@ -339,14 +339,14 @@ void AccountsPage::ReceivingTab::slotEditNotifications()
     }
 }
 
-void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
+void AccountsPageReceivingTab::doLoadFromGlobalSettings()
 {
     if (mNewMailNotifierInterface) {
         mAccountsReceiving.mVerboseNotificationCheck->setChecked(mNewMailNotifierInterface->verboseMailNotification());
     }
 }
 
-void AccountsPage::ReceivingTab::save()
+void AccountsPageReceivingTab::save()
 {
     // Save Mail notification settings
     if (mNewMailNotifierInterface) {

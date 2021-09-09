@@ -30,10 +30,10 @@ QString MiscPage::helpAnchor() const
 MiscPage::MiscPage(QWidget *parent, const QVariantList &args)
     : ConfigModuleWithTabs(parent, args)
 {
-    auto folderTab = new FolderTab();
+    auto folderTab = new MiscPageFolderTab();
     addTab(folderTab, i18n("Folders"));
 
-    auto inviteTab = new InviteTab();
+    auto inviteTab = new MiscPageInviteTab();
     addTab(inviteTab, i18n("Invitations"));
 
     auto printingTab = new MiscPagePrintingTab();
@@ -76,7 +76,7 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     connect(mMMTab.mDeleteMessagesWithoutConfirmation, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
 }
 
-void MiscPage::FolderTab::doLoadFromGlobalSettings()
+void MiscPageFolderTab::doLoadFromGlobalSettings()
 {
     loadWidget(mMMTab.mExcludeImportantFromExpiry, KMailSettings::self()->excludeImportantMailFromExpiryItem());
     // default = "Loop in current folder"
@@ -93,13 +93,13 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
     doLoadOther();
 }
 
-void MiscPage::FolderTab::doLoadOther()
+void MiscPageFolderTab::doLoadOther()
 {
     loadWidget(mMMTab.mEmptyTrashCheck, KMailSettings::self()->emptyTrashOnExitItem());
     mOnStartupOpenFolder->setCollection(Akonadi::Collection(KMailSettings::self()->startupFolder()));
 }
 
-void MiscPage::FolderTab::save()
+void MiscPageFolderTab::save()
 {
     saveCheckBox(mMMTab.mEmptyTrashCheck, KMailSettings::self()->emptyTrashOnExitItem());
     saveComboBox(mMMTab.mActionEnterFolder, KMailSettings::self()->actionEnterFolderItem());
@@ -125,17 +125,17 @@ MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)
     connect(mInvitationUi, &MessageViewer::InvitationSettings::changed, this, &MiscPageInviteTab::slotEmitChanged);
 }
 
-void MiscPage::InviteTab::doLoadFromGlobalSettings()
+void MiscPageInviteTab::doLoadFromGlobalSettings()
 {
     mInvitationUi->doLoadFromGlobalSettings();
 }
 
-void MiscPage::InviteTab::save()
+void MiscPageInviteTab::save()
 {
     mInvitationUi->save();
 }
 
-void MiscPage::InviteTab::doResetToDefaultsOther()
+void MiscPageInviteTab::doResetToDefaultsOther()
 {
     mInvitationUi->doResetToDefaultsOther();
 }
