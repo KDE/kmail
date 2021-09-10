@@ -19,7 +19,7 @@
 
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ServerManager>
-#include <akonadi/session.h>
+#include <Akonadi/Session>
 #include <kcoreaddons_version.h>
 #if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>

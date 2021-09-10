@@ -15,12 +15,12 @@
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ItemFetchScope>
 #include <Akonadi/KMime/SpecialMailCollections>
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>
 #include <KMime/Message>
 #include <QDBusConnection>
-#include <akonadi/itemfetchscope.h>
 
 #include <KWindowSystem>
 

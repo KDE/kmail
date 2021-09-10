@@ -6,8 +6,8 @@
 
 #pragma once
 
+#include <Akonadi/Attribute>
 #include <Akonadi/Collection>
-#include <akonadi/attribute.h>
 
 #include <QByteArray>
 

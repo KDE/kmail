@@ -21,9 +21,9 @@
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/LinkJob>
 #include <Akonadi/ServerManager>
+#include <Akonadi/Session>
 #include <Akonadi/SpecialCollectionAttribute>
 #include <Akonadi/UnlinkJob>
-#include <akonadi/session.h>
 
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>

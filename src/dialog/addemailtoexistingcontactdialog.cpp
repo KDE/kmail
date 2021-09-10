@@ -12,7 +12,7 @@
 #include <Akonadi/Contact/EmailAddressSelectionWidget>
 #include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/ItemFetchScope>
-#include <akonadi/session.h>
+#include <Akonadi/Session>
 
 #include <KContacts/Addressee>
 

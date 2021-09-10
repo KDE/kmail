@@ -6,8 +6,8 @@
 
 #pragma once
 
+#include <Akonadi/Attribute>
 #include <Akonadi/Item>
-#include <akonadi/attribute.h>
 
 class TaskAttribute : public Akonadi::Attribute
 {

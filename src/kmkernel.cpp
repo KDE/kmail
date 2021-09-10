@@ -84,7 +84,7 @@ using KMail::MailServiceImpl;
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ServerManager>
-#include <akonadi/session.h>
+#include <Akonadi/Session>
 #include <kmime/kmime_headers.h>
 #include <kmime/kmime_message.h>
 
