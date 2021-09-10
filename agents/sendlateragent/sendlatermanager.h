@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QQueue>
 
-#include <Item>
+#include <Akonadi/Item>
 
 #include <KSharedConfig>
 

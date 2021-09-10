@@ -44,7 +44,6 @@
 #include <KStandardGuiItem>
 #include <QIcon>
 #include <QSortFilterProxyModel>
-#include <entitytreeview.h>
 #include <kmime/kmime_message.h>
 
 #include <QCheckBox>

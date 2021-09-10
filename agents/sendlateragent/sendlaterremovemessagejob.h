@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <Item>
+#include <Akonadi/Item>
 #include <QObject>
 
 class KJob;

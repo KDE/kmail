@@ -94,7 +94,7 @@
   <customwidget>
    <class>Akonadi::ManageAccountWidget</class>
    <extends>QWidget</extends>
-   <header>manageaccountwidget.h</header>
+   <header>Akonadi/ManageAccountWidget</header>
   </customwidget>
  </customwidgets>
  <resources/>
