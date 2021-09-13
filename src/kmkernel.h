@@ -376,7 +376,7 @@ public:
      * Returns a model of all folders in KMail. This is basically the same as entityTreeModel(),
      * but with items filtered out, the model contains only collections.
      */
-    Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
+    Q_REQUIRED_RESULT Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
 
     void recoverDeadLetters();
     void closeAllKMailWindows();
@@ -403,10 +403,10 @@ public:
     // sets online status for akonadi accounts. true for online, false for offline
     void setAccountStatus(bool);
 
-    const QString xmlGuiInstanceName() const;
+    Q_REQUIRED_RESULT const QString xmlGuiInstanceName() const;
     void setXmlGuiInstanceName(const QString &instance);
 
-    KMail::UndoStack *undoStack() const;
+    Q_REQUIRED_RESULT KMail::UndoStack *undoStack() const;
     MessageComposer::MessageSender *msgSender() override;
 
     void openFilterDialog(bool createDummyFilter = true) override;
@@ -430,7 +430,7 @@ public:
      */
     Q_REQUIRED_RESULT bool haveSystemTrayApplet() const;
 
-    QTextCodec *networkCodec() const;
+    Q_REQUIRED_RESULT QTextCodec *networkCodec() const;
 
     /** returns a reference to the first Mainwin or a temporary Mainwin */
     KMainWindow *mainWin();
@@ -457,7 +457,7 @@ public:
     void stopAgentInstance();
 
     // ISettings
-    bool showPopupAfterDnD() override;
+    Q_REQUIRED_RESULT bool showPopupAfterDnD() override;
 
     bool excludeImportantMailFromExpiry() override;
 
@@ -486,7 +486,7 @@ public:
     Q_REQUIRED_RESULT Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 
     void cleanupTemporaryFiles();
-    MailCommon::MailCommonSettings *mailCommonSettings() const;
+    Q_REQUIRED_RESULT MailCommon::MailCommonSettings *mailCommonSettings() const;
 #ifdef WITH_KUSERFEEDBACK
     KUserFeedback::Provider *userFeedbackProvider() const;
 #endif
@@ -552,7 +552,7 @@ private Q_SLOTS:
 
 private:
     void viewMessage(const QUrl &url);
-    Akonadi::Collection currentCollection() const;
+    Q_REQUIRED_RESULT Akonadi::Collection currentCollection() const;
 
     /*
      * Fills a composer cWin
