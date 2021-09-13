@@ -48,7 +48,6 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
-#include <kxmlgui_version.h>
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/Contact/ContactGroupExpandJob>

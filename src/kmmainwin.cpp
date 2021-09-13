@@ -13,7 +13,6 @@
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
 #include <PimCommon/BroadcastStatus>
-#include <kxmlgui_version.h>
 
 #include <KConfigGroup>
 #include <KToolBar>

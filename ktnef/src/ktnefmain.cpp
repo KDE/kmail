@@ -38,8 +38,6 @@
 #include <QStandardPaths>
 #include <QTemporaryFile>
 #include <QUrl>
-#include <kio_version.h>
-#include <kxmlgui_version.h>
 
 #include <KConfigGroup>
 #include <KRecentFilesMenu>
