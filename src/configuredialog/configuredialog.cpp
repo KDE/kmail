@@ -11,12 +11,10 @@
 // my headers:
 #include "configuredialog.h"
 #include "configuredialog_p.h"
-#include "kcoreaddons_version.h"
 
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
 
-#include <KPluginLoader>
 #include <KPluginMetaData>
 #include <QPushButton>
 
@@ -27,17 +25,10 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help | QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel | QDialogButtonBox::Apply
                        | QDialogButtonBox::Reset);
     setModal(modal);
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5, 86, 0)
-    const QVector<KPluginMetaData> availablePlugins = KPluginLoader::findPlugins(QStringLiteral("pim/kcms/kmail"));
-    for (const KPluginMetaData &metaData : availablePlugins) {
-        addModule(metaData);
-    }
-#else
     const QVector<KPluginMetaData> availablePlugins = KPluginMetaData::findPlugins(QStringLiteral("pim/kcms/kmail"));
     for (const KPluginMetaData &metaData : availablePlugins) {
         addModule(metaData);
     }
-#endif
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
     connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);

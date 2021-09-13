@@ -11,7 +11,6 @@
 
 #include "summaryview_part.h"
 #include "dropwidget.h"
-#include "kcoreaddons_version.h"
 #include <PimCommon/BroadcastStatus>
 using PimCommon::BroadcastStatus;
 
@@ -28,7 +27,6 @@ using PimCommon::BroadcastStatus;
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KParts/PartActivateEvent>
-#include <KPluginLoader>
 #include <KPluginMetaData>
 #include <QAction>
 #include <QApplication>
@@ -39,7 +37,6 @@ using PimCommon::BroadcastStatus;
 #include <QScrollArea>
 #include <QTimer>
 #include <QVBoxLayout>
-#include <kcmutils_version.h>
 
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
     : KParts::Part(parent)
@@ -408,17 +405,10 @@ void SummaryViewPart::slotConfigure()
     dlg->setObjectName(QStringLiteral("ConfigDialog"));
     dlg->setModal(true);
     connect(dlg.data(), qOverload<>(&KCMultiDialog::configCommitted), this, &SummaryViewPart::updateWidgets);
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(5, 86, 0)
-    const auto metaDataList = KPluginLoader::findPlugins(QStringLiteral("pim/kcms/summary/"));
-    for (const auto &metaData : metaDataList) {
-        dlg->addModule(metaData);
-    }
-#else
     const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim/kcms/summary/"));
     for (const auto &metaData : metaDataList) {
         dlg->addModule(metaData);
     }
-#endif
 
     dlg->exec();
     delete dlg;
