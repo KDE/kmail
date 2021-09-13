@@ -197,7 +197,7 @@
   <customwidget>
    <class>PimCommon::SimpleStringListEditor</class>
    <extends>QWidget</extends>
-   <header>pimcommon/simplestringlisteditor.h</header>
+   <header>PimCommon/SimpleStringListEditor</header>
   </customwidget>
  </customwidgets>
  <tabstops>
