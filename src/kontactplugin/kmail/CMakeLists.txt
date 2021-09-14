@@ -12,9 +12,8 @@ ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEAD
 set(kontact_kmail_plugins_interface_SRCS)
 qt_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
 
-set(kontact_kmailplugin_PART_SRCS kmail_plugin.cpp summarywidget.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
-
-add_library(kontact_kmailplugin MODULE ${kontact_kmailplugin_PART_SRCS})
+add_library(kontact_kmailplugin MODULE)
+target_sources(kontact_kmailplugin PRIVATE kmail_plugin.cpp summarywidget.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 kcoreaddons_desktop_to_json(kontact_kmailplugin "kmailplugin.desktop" SERVICE_TYPES kcmodule.desktop)
 pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_kmailplugin kmail_xml)
@@ -23,9 +22,8 @@ target_link_libraries(kontact_kmailplugin KF5::Mime KF5::I18n KF5::KontactInterf
 
 ########### next target ###############
 
-set(kcmkmailsummary_PART_SRCS kcmkmailsummary.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
-
-add_library(kcmkmailsummary MODULE ${kcmkmailsummary_PART_SRCS})
+add_library(kcmkmailsummary MODULE)
+target_sources(kcmkmailsummary PRIVATE kcmkmailsummary.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 pim_target_precompile_headers(kcmkmailsummary PUBLIC ../../../kmail_pch.h)
 kcoreaddons_desktop_to_json(kcmkmailsummary "kcmkmailsummary.desktop" SERVICE_TYPES kcmodule.desktop)
 
