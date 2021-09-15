@@ -11,7 +11,7 @@
 
 #include "newidentitydialog.h"
 
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/IdentityManager>
 #include <KLocalizedString>
 #include <KSeparator>
 #include <Libkdepim/LineEditCatchReturnKey>

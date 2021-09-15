@@ -10,7 +10,7 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/Session>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/IdentityManager>
 #include <KSharedConfig>
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/JobScheduler>

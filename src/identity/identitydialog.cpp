@@ -18,7 +18,7 @@
 #include <QGpgME/Job>
 #include <QGpgME/Protocol>
 
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/IdentityManager>
 
 // other KMail headers:
 #include "xfaceconfigurator.h"
@@ -36,8 +36,8 @@
 #include <Sonnet/DictionaryComboBox>
 #include <TemplateParser/TemplatesConfiguration>
 // other kdepim headers:
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/signatureconfigurator.h>
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/SignatureConfigurator>
 
 #include <PimCommon/AutoCorrectionLanguage>
 #include <PimCommon/PimUtil>

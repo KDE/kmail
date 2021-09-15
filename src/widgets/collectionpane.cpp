@@ -9,8 +9,8 @@
 #include <MailCommon/MailKernel>
 
 #include <Akonadi/KMime/MessageFolderAttribute>
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 #include <MailCommon/FolderSettings>
 #include <PimCommonAkonadi/MailUtil>
 

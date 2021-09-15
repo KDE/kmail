@@ -9,8 +9,8 @@
 #include "xfaceconfigurator.h"
 
 #include <Akonadi/Contact/ContactSearchJob>
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 #include <KPIMTextEdit/PlainTextEditor>
 #include <KPIMTextEdit/PlainTextEditorWidget>
 #include <MessageViewer/KXFace>

@@ -18,8 +18,8 @@
 
 #include <MailCommon/MailKernel>
 
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 
 #include "kmail_debug.h"
 #include <KLocalizedString>

@@ -10,8 +10,8 @@
 
 #include "identitylistview.h"
 
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 
 #include "kmkernel.h"
 
