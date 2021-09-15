@@ -116,7 +116,7 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui::SMimeConfiguration *mWidget = nullptr;
+    Ui::SMimeConfiguration *const mWidget;
     QGpgME::CryptoConfig *mConfig = nullptr;
 };
 

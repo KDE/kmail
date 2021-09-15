@@ -396,8 +396,8 @@ QString SecurityPageSMimeTab::helpAnchor() const
 
 SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mWidget(new Ui::SMimeConfiguration)
 {
-    mWidget = new Ui::SMimeConfiguration;
     mWidget->setupUi(this);
 
     // Button-group for exclusive radiobuttons
