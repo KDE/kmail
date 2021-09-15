@@ -25,8 +25,8 @@
 
 #include <MessageComposer/MessageSender>
 
-#include <kmime/kmime_headers.h>
-#include <kmime/kmime_message.h>
+#include <KMime/Headers>
+#include <KMime/KMimeMessage>
 
 // Other includes
 #include <Libkleo/Enum>

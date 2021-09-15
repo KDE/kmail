@@ -21,12 +21,12 @@
 #include <Akonadi/ItemMoveJob>
 #include <Akonadi/KMime/MessageParts>
 #include <KLocalizedString>
+#include <KMime/KMimeMessage>
 #include <KNotification>
 #include <MailCommon/FilterImporterExporter>
 #include <MailCommon/FilterLog>
 #include <MailCommon/MailFilter>
 #include <MailCommon/MailKernel>
-#include <kmime/kmime_message.h>
 
 // other headers
 #include <KSharedConfig>

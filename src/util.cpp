@@ -13,7 +13,7 @@
 
 #include "kmail_debug.h"
 #include <KLocalizedString>
-#include <kmime/kmime_message.h>
+#include <KMime/KMimeMessage>
 
 #include <QAction>
 #include <QStandardPaths>

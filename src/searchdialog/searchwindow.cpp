@@ -40,11 +40,11 @@
 #include <AkonadiSearch/PIM/indexeditems.h>
 #include <KActionMenu>
 #include <KMessageBox>
+#include <KMime/KMimeMessage>
 #include <KStandardAction>
 #include <KStandardGuiItem>
 #include <QIcon>
 #include <QSortFilterProxyModel>
-#include <kmime/kmime_message.h>
 
 #include <QCheckBox>
 #include <QCloseEvent>

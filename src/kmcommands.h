@@ -10,8 +10,8 @@
 #include <MessageViewer/Viewer>
 
 #include <Akonadi/KMime/MessageStatus>
-#include <kio/job.h>
-#include <kmime/kmime_message.h>
+#include <KIO/Job>
+#include <KMime/KMimeMessage>
 
 #include <Akonadi/Collection>
 #include <Akonadi/Item>

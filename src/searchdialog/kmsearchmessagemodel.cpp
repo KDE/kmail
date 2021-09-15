@@ -14,7 +14,7 @@
 #include <Akonadi/Session>
 
 #include <Akonadi/KMime/MessageParts>
-#include <kmime/kmime_message.h>
+#include <KMime/KMimeMessage>
 
 #include "kmail_debug.h"
 #include <KLocalizedString>

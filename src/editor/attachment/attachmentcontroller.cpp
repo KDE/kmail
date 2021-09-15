@@ -18,10 +18,10 @@
 #include "settings/kmailsettings.h"
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
+#include <KContacts/Addressee>
 #include <KIdentityManagement/Identity>
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailUtil>
-#include <kcontacts/addressee.h>
 
 #include <QGpgME/Protocol>
 

@@ -45,8 +45,8 @@
 #include <Akonadi/Contact/ContactSearchJob>
 #include <KActionCollection>
 #include <KEmailAddress>
+#include <KMime/KMimeMessage>
 #include <WebEngineViewer/WebHitTestResult>
-#include <kmime/kmime_message.h>
 #include <tag/tagactionmanager.h>
 #include <tag/tagselectdialog.h>
 

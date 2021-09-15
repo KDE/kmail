@@ -71,7 +71,7 @@ using KMail::MailServiceImpl;
 #include <KConfig>
 #include <KConfigGroup>
 #include <KCrash>
-#include <kio/jobuidelegate.h>
+#include <KIO/JobUiDelegate>
 
 #include <Akonadi/AgentManager>
 #include <Akonadi/AttributeFactory>
@@ -85,8 +85,8 @@ using KMail::MailServiceImpl;
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>
-#include <kmime/kmime_headers.h>
-#include <kmime/kmime_message.h>
+#include <KMime/Headers>
+#include <KMime/KMimeMessage>
 
 #include <Libkleo/FileSystemWatcher>
 #include <Libkleo/GnuPG>

@@ -124,15 +124,15 @@
 #include <Akonadi/StandardActionManager>
 
 #include <KEmailAddress>
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
+#include <KMime/HeaderParsing>
+#include <KMime/KMimeMessage>
+#include <KMime/MDN>
 #include <KSieveUi/ManageSieveScriptsDialog>
 #include <KSieveUi/Util>
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
-#include <kidentitymanagement/identity.h>
-#include <kidentitymanagement/identitymanager.h>
-#include <kmime/kmime_header_parsing.h>
-#include <kmime/kmime_mdn.h>
-#include <kmime/kmime_message.h>
 
 #include <PimCommon/LogActivitiesManager>
 

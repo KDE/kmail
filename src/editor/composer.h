@@ -11,8 +11,8 @@
 #include "secondarywindow.h"
 
 #include <Akonadi/Collection>
+#include <KMime/KMimeMessage>
 #include <QUrl>
-#include <kmime/kmime_message.h>
 
 namespace KMime
 {
