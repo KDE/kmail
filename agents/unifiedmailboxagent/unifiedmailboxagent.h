@@ -35,6 +35,7 @@ public:
 
     void retrieveCollections() override;
     void retrieveItems(const Akonadi::Collection &collection) override;
+    Q_REQUIRED_RESULT bool retrieveItems(const Akonadi::Item::List &items, const QSet<QByteArray> &parts) override;
     Q_REQUIRED_RESULT bool retrieveItem(const Akonadi::Item &item, const QSet<QByteArray> &parts) override;
 
 private:
