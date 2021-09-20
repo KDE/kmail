@@ -2,7 +2,7 @@
 Name=Mail Merge Agent
 Name[az]=Poştun birləşdirilməsi vasitəsi
 Name[ca]=Agent de fusió del correu
-Name[ca@valencia]=Agent per a fusionar el correu
+Name[ca@valencia]=Agent de fusió del correu
 Name[cs]=Agent pro slučování e-mailů
 Name[de]=Agent für Serien- E-Mails
 Name[en_GB]=Mail Merge Agent
@@ -26,7 +26,7 @@ Name[zh_CN]=邮件合并代理
 Comment=Mail Merge Agent
 Comment[az]=Poştun birləşdirilməsi vasitəsi
 Comment[ca]=Agent de fusió del correu
-Comment[ca@valencia]=Agent per a fusionar el correu
+Comment[ca@valencia]=Agent de fusió del correu
 Comment[cs]=Agent pro slučování e-mailů
 Comment[de]=Agent für Serien- E-Mails
 Comment[en_GB]=Mail Merge Agent
