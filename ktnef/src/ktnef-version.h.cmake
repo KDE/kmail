@@ -14,11 +14,5 @@
   Note that we cannot use the kdelibs version because we may
   build against older kdelibs releases.
 */
-
-#ifndef KTNEF_VERSION_H
-#define KTNEF_VERSION_H
-
-
+#pragma once
 #define KTNEF_VERSION "@KDEPIM_VERSION@"
-
-#endif
