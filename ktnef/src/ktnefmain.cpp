@@ -192,7 +192,7 @@ void KTNEFMain::loadFile(const QString &filename)
         KMessageBox::error(this, i18nc("@info", "Unable to open file \"%1\".", filename));
     } else {
         addRecentFile(QUrl::fromLocalFile(filename));
-        QList<KTNEFAttach *> list = mParser->message()->attachmentList();
+        const QList<KTNEFAttach *> list = mParser->message()->attachmentList();
         QString msg;
         msg = i18ncp("@info:status", "%1 attachment found", "%1 attachments found", list.count());
         statusBar()->showMessage(msg);
@@ -261,8 +261,7 @@ QString KTNEFMain::extractTemp(KTNEFAttach *att)
 void KTNEFMain::viewFileAs()
 {
     if (!mView->getSelection().isEmpty()) {
-        QList<QUrl> list;
-        list.append(QUrl::fromLocalFile(extractTemp(mView->getSelection().at(0))));
+        const QList<QUrl> list{QUrl::fromLocalFile(extractTemp(mView->getSelection().at(0)))};
 
         if (!list.isEmpty()) {
             // Creating ApplicationLauncherJob without any args will invoke the open-with dialog
@@ -296,7 +295,7 @@ void KTNEFMain::extractAllFiles()
     if (!dir.isEmpty()) {
         mLastDir = dir;
         dir.append(QLatin1Char('/'));
-        QList<KTNEFAttach *> list = mParser->message()->attachmentList();
+        const QList<KTNEFAttach *> list = mParser->message()->attachmentList();
         QList<KTNEFAttach *>::ConstIterator it;
         QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
         for (it = list.constBegin(); it != end; ++it) {
@@ -372,7 +371,7 @@ void KTNEFMain::extractTo(const QString &dirname)
     if (dir.right(1) != QLatin1Char('/')) {
         dir.append(QLatin1Char('/'));
     }
-    QList<KTNEFAttach *> list = mView->getSelection();
+    const QList<KTNEFAttach *> list = mView->getSelection();
     QList<KTNEFAttach *>::ConstIterator it;
     QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
     for (it = list.constBegin(); it != end; ++it) {
@@ -385,7 +384,7 @@ void KTNEFMain::extractTo(const QString &dirname)
 
 void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
 {
-    QList<KTNEFAttach *> list = mView->getSelection();
+    const QList<KTNEFAttach *> list = mView->getSelection();
     if (list.isEmpty()) {
         return;
     }
@@ -426,6 +425,7 @@ void KTNEFMain::viewDragRequested(const QList<KTnef::KTNEFAttach *> &list)
 {
     QList<QUrl> urlList;
     QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
+    urlList.reserve(list.count());
     for (QList<KTNEFAttach *>::ConstIterator it = list.constBegin(); it != end; ++it) {
         urlList << QUrl::fromLocalFile(extractTemp(*it));
     }
@@ -493,8 +493,8 @@ void KTNEFMain::slotSaveMessageText()
         return;
     }
 
-    QString rtf = mParser->message()->rtfString();
-    QString filename = QFileDialog::getSaveFileName(this, QString(), QString(), QString());
+    const QString rtf = mParser->message()->rtfString();
+    const QString filename = QFileDialog::getSaveFileName(this, QString(), QString(), QString());
     if (!filename.isEmpty()) {
         QFile f(filename);
         if (f.open(QIODevice::WriteOnly)) {
@@ -542,7 +542,7 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
         return;
     }
     KTNEFAttach *attach = mView->getSelection().at(0);
-    QString mimename(attach->mimeTag());
+    const QString mimename(attach->mimeTag());
     const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename);
     if (!offers.isEmpty()) {
         QMenu *menu = topMenu;

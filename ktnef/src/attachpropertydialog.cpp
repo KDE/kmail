@@ -96,8 +96,8 @@ void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
     s.append(i18n(" bytes"));
     mUI.mSize->setText(s);
     QMimeDatabase db;
-    QMimeType mimetype = db.mimeTypeForName(attach->mimeTag());
-    QPixmap pix = loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window));
+    const QMimeType mimetype = db.mimeTypeForName(attach->mimeTag());
+    const QPixmap pix = loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window));
     if (!pix.isNull()) {
         mUI.mIcon->setPixmap(pix);
     } else {
@@ -161,13 +161,13 @@ void AttachPropertyDialog::formatPropertySet(KTNEFPropertySet *pSet, QTreeWidget
 
 bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet, QWidget *parent)
 {
-    QList<QTreeWidgetItem *> list = lv->selectedItems();
+    const QList<QTreeWidgetItem *> list = lv->selectedItems();
     if (list.isEmpty()) {
         KMessageBox::error(parent, i18nc("@info", "Must select an item first."));
         return false;
     }
 
-    QTreeWidgetItem *item = list.first();
+    QTreeWidgetItem *item = list.constFirst();
     if (item->text(2).isEmpty()) {
         KMessageBox::error(parent, i18nc("@info", "The selected item cannot be saved because it has an empty tag."));
     } else {

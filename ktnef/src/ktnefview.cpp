@@ -50,7 +50,7 @@ Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
     }
 
     QMimeDatabase db;
-    QMimeType mimeType = db.mimeTypeForName(mAttach->mimeTag());
+    const QMimeType mimeType = db.mimeTypeForName(mAttach->mimeTag());
     setText(1, mimeType.comment());
 
     QPixmap pix = AttachPropertyDialog::loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window));
