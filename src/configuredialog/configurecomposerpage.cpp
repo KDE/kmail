@@ -68,7 +68,7 @@ ComposerPage::ComposerPage(QWidget *parent, const QVariantList &args)
     //
     // "Templates" tab:
     //
-    auto templatesTab = new ComposerPageGeneralTab();
+    auto templatesTab = new ComposerPageTemplatesTab();
     addTab(templatesTab, i18n("Standard Templates"));
 
     //
