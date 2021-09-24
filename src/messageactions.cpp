@@ -62,7 +62,12 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     , mReplyAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply..."), this))
     , mReplyAllAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All..."), this))
     , mReplyAuthorAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply to A&uthor..."), this))
+    , mReplyListAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-list")), i18n("Reply to Mailing-&List..."), this))
+    , mNoQuoteReplyAction(new QAction(i18n("Reply Without &Quote..."), this))
+    , mStatusMenu(new KActionMenu(i18n("Mar&k Message"), this))
+    , mListFilterAction(new QAction(i18n("Filter on Mailing-&List..."), this))
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))
+
 {
     ac->addAction(QStringLiteral("message_reply_menu"), mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
@@ -82,23 +87,19 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     connect(mReplyAllAction, &QAction::triggered, this, &MessageActions::slotReplyAllToMsg);
     mReplyActionMenu->addAction(mReplyAllAction);
 
-    mReplyListAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-list")), i18n("Reply to Mailing-&List..."), this);
     ac->addAction(QStringLiteral("reply_list"), mReplyListAction);
 
     ac->setDefaultShortcut(mReplyListAction, Qt::Key_L);
     connect(mReplyListAction, &QAction::triggered, this, &MessageActions::slotReplyListToMsg);
     mReplyActionMenu->addAction(mReplyListAction);
 
-    mNoQuoteReplyAction = new QAction(i18n("Reply Without &Quote..."), this);
     ac->addAction(QStringLiteral("noquotereply"), mNoQuoteReplyAction);
     ac->setDefaultShortcut(mNoQuoteReplyAction, Qt::SHIFT | Qt::Key_R);
     connect(mNoQuoteReplyAction, &QAction::triggered, this, &MessageActions::slotNoQuoteReplyToMsg);
 
-    mListFilterAction = new QAction(i18n("Filter on Mailing-&List..."), this);
     ac->addAction(QStringLiteral("mlist_filter"), mListFilterAction);
     connect(mListFilterAction, &QAction::triggered, this, &MessageActions::slotMailingListFilter);
 
-    mStatusMenu = new KActionMenu(i18n("Mar&k Message"), this);
     ac->addAction(QStringLiteral("set_status"), mStatusMenu);
 
     mAnnotateAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-notes")), i18n("Add Note..."), this);

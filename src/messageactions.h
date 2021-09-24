@@ -152,13 +152,13 @@ private:
     QAction *const mReplyAction;
     QAction *const mReplyAllAction;
     QAction *const mReplyAuthorAction;
-    QAction *mReplyListAction = nullptr;
-    QAction *mNoQuoteReplyAction = nullptr;
+    QAction *const mReplyListAction;
+    QAction *const mNoQuoteReplyAction;
     QAction *mForwardInlineAction = nullptr;
     QAction *mForwardAttachedAction = nullptr;
     QAction *mRedirectAction = nullptr;
     QAction *mNewToRecipientsAction = nullptr;
-    KActionMenu *mStatusMenu = nullptr;
+    KActionMenu *const mStatusMenu;
     KActionMenu *mForwardActionMenu = nullptr;
     KActionMenu *mMailingListActionMenu = nullptr;
     QAction *mAnnotateAction = nullptr;
@@ -166,7 +166,7 @@ private:
     QAction *mPrintAction = nullptr;
     QAction *mPrintPreviewAction = nullptr;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu = nullptr;
-    QAction *mListFilterAction = nullptr;
+    QAction *const mListFilterAction;
     QAction *mAddFollowupReminderAction = nullptr;
     QAction *mDebugAkonadiSearchAction = nullptr;
     QAction *mSendAgainAction = nullptr;
