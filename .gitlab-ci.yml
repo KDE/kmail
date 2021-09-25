@@ -31,4 +31,4 @@ build_clazy_clang_tidy:
     - cd build && run-clang-tidy
   variables:
     PLATFORM: SUSEQt5.15
-    BRANCH_GROUP: kf5-qt5
+    BRANCH_GROUP: stable-kf5-qt5
