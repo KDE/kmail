@@ -109,14 +109,14 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     mSendOnCheckCombo->addItems(QStringList() << i18n("Never Automatically") << i18n("On Manual Mail Checks") << i18n("On All Mail Checks"));
     mSendOnCheckCombo->setWhatsThis(i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8().constData()));
     formLayout->addRow(i18n("Send &messages in outbox folder:"), mSendOnCheckCombo);
-    connect(mSendOnCheckCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mSendOnCheckCombo, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "default send method" combo:
     mSendMethodCombo = new QComboBox(this);
     mSendMethodCombo->setEditable(false);
     mSendMethodCombo->addItems(QStringList() << i18n("Send Now") << i18n("Send Later"));
     formLayout->addRow(i18n("Defa&ult send method:"), mSendMethodCombo);
-    connect(mSendMethodCombo, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mSendMethodCombo, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 
     auto hLayout = new QHBoxLayout;
     mUndoSend = new QCheckBox(i18n("Enable Undo Send"), this);
@@ -130,7 +130,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     mUndoSendComboBox->setEnabled(false);
     hLayout->addWidget(mUndoSendComboBox);
     formLayout->addRow(QString(), hLayout);
-    connect(mUndoSendComboBox, qOverload<int>(&QComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    connect(mUndoSendComboBox, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 }
 
 void AccountsPageSendingTab::doLoadFromGlobalSettings()

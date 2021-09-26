@@ -284,7 +284,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(i18n("Default forwarding type:"), this);
     label->setBuddy(mForwardTypeCombo);
 
-    connect(mForwardTypeCombo, qOverload<int>(&QComboBox::activated), this, &ComposerPageGeneralTab::slotEmitChanged);
+    connect(mForwardTypeCombo, &QComboBox::activated, this, &ComposerPageGeneralTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mForwardTypeCombo, row, 1);

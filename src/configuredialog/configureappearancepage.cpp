@@ -181,7 +181,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     connect(mCustomFontCheck, &QAbstractButton::toggled, mFontLocationCombo, &QWidget::setEnabled);
     connect(mCustomFontCheck, &QAbstractButton::toggled, mFontChooser, &QWidget::setEnabled);
     // load the right font settings into mFontChooser:
-    connect(mFontLocationCombo, qOverload<int>(&QComboBox::activated), this, &AppearancePageFontsTab::slotFontSelectorChanged);
+    connect(mFontLocationCombo, &QComboBox::activated, this, &AppearancePageFontsTab::slotFontSelectorChanged);
 }
 
 void AppearancePageFontsTab::slotFontSelectorChanged(int index)

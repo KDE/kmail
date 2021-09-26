@@ -78,7 +78,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     mMLHandlerCombo = new QComboBox(this);
     mMLHandlerCombo->addItem(i18n("KMail"), MailingList::KMail);
     mMLHandlerCombo->addItem(i18n("Browser"), MailingList::Browser);
-    connect(mMLHandlerCombo, qOverload<int>(&QComboBox::activated), this, &CollectionMailingListPage::slotMLHandling);
+    connect(mMLHandlerCombo, &QComboBox::activated, this, &CollectionMailingListPage::slotMLHandling);
 
     topLayout->addRow(i18n("Preferred handler:"), mMLHandlerCombo);
 
@@ -112,7 +112,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     // depend on it
     const QStringList el{i18n("Post to List"), i18n("Subscribe to List"), i18n("Unsubscribe From List"), i18n("List Archives"), i18n("List Help")};
     mAddressCombo->addItems(el);
-    connect(mAddressCombo, qOverload<int>(&QComboBox::activated), this, &CollectionMailingListPage::slotAddressChanged);
+    connect(mAddressCombo, &QComboBox::activated, this, &CollectionMailingListPage::slotAddressChanged);
 
     mMLId->setEnabled(false);
     mMLHandlerCombo->setEnabled(false);
