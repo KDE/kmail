@@ -103,7 +103,7 @@
 <title>Credits -- The Early Days</title>
 
 <para>These are the people who helped build the program when it was still quite young. Think
-    of them as the friendly next door neighbors who taught &kmail; importamt lessons about
+    of them as the friendly next door neighbors who taught &kmail; important lessons about
     life, and cared for the child when he wandered away from his parents' house.</para>
 
 <itemizedlist>
@@ -131,7 +131,7 @@
 <listitem><para>Kurt Hindenburg (kurt hindenburg at gmail com): Delete an entire thread</para></listitem>
 <listitem><para>Heiko Hund (heiko at ist eigentlich net): POP filters</para></listitem>
 <listitem><para>Torsten Kasch (tk at genetik uni-bielefeld de): Patch Solaris crash</para></listitem>
-<listitem><para>Jason 'vanRijn' Kasper (vr at movingparts net): Choice of fonts for new/unread/importamt messages</para></listitem>
+<listitem><para>Jason 'vanRijn' Kasper (vr at movingparts net): Choice of fonts for new/unread/important messages</para></listitem>
 <listitem><para>Martijn Klingens (klingens at kde org): Fix Quick Search keyboard navigation</para></listitem>
 <listitem><para>Christoph Klünter (chris at inferno nadir org): Fix drag and drop from address book to composer</para></listitem>
 <listitem><para>Martin Koller (kollix at aon at): Substantial contributor</para></listitem>

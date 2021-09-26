@@ -58,7 +58,7 @@ static const about_data authors[] = {
     {"Christer Kaivo-oja", nullptr, "whizkid@telia.com", nullptr}, // No commits. One patch, Mar 7,2001.
     {"Lars Knoll", I18N_NOOP("Original encryption support PGP 2 and PGP 5 support"), "knoll@kde.org", nullptr}, // Last commit Sep 17, 2002. 22 commits.
     {"J. Nick Koston", I18N_NOOP("GnuPG support"), "bdraco@darkorb.net", nullptr}, // No commits. One or two patches in 1999 (GnuPG).
-    {"Stephan Kulow", I18N_NOOP("Major conntributor"), "coolo@kde.org", nullptr}, // Last commit Aug 20, 2008. 354 commits.
+    {"Stephan Kulow", I18N_NOOP("Major contributor"), "coolo@kde.org", nullptr}, // Last commit Aug 20, 2008. 354 commits.
     {"Guillaume Laurent", nullptr, "glaurent@telegraph-road.org", nullptr}, // Last Apr 19, 2001. 2 commits, five patches.
     {"Sam Magnuson", nullptr, "sam@trolltech.com", nullptr}, // One commit, Mar 10, 2003. Two patches.
     {"Matt Newell", nullptr, "newellm@proaxis.com", nullptr}, // No commits. Three patches, the latest one dated Feb 23, 2001
@@ -100,7 +100,7 @@ static const about_data credits[] = {
     {"David Bryant", I18N_NOOP("Documentation, still active"), "davidbryant@gvtc.com", "https://davidcbryant.net"}, // Last commit August 29, 2021. 35 commits.
     {"Albert Astals Cid", I18N_NOOP("Substantial contributor, still active"), "aacid@kde.org", nullptr}, // fix for bug:95441 (folder tree context menu doesn't show shortcuts assigned to the actions) 172 commits
     {"Frederick Emmott", I18N_NOOP("Anti-virus support"), "fred87@users.sf.net", nullptr},
-    {"Christophe Giboudeaux", I18N_NOOP("Major contributor, still actiive"), "christophe@krop.fr", nullptr}, // 1,021 commits, latest in July, 2021
+    {"Christophe Giboudeaux", I18N_NOOP("Major contributor, still active"), "christophe@krop.fr", nullptr}, // 1,021 commits, latest in July, 2021
     {"Sandro Giessl", I18N_NOOP("Fixed widget styles"), "sgiessl@gmail.com", nullptr}, // frame width fixes for widget styles
     {"Olivier Goffart", I18N_NOOP("Bug fixes"), "ogoffart@kde.org", nullptr}, // Bug fixes, for the most part
     {"Severin Greimel", I18N_NOOP("Several patches"), "greimel-kde@fs-pw.uni-muenchen.de", nullptr}, // several patches
@@ -109,7 +109,7 @@ static const about_data credits[] = {
     {"Kurt Hindenburg", I18N_NOOP("Delete an entire thread"), "kurt.hindenburg@gmail.com", nullptr}, // implemented wish 89003 (delete whole thread)
     {"Heiko Hund", I18N_NOOP("POP filters"), "heiko@ist.eigentlich.net", nullptr},
     {"Torsten Kasch", I18N_NOOP("Patch Solaris crash"), "tk@genetik.uni-bielefeld.de", nullptr}, // crash fix for Solaris (cf. bug:68801)
-    {"Jason 'vanRijn' Kasper", I18N_NOOP("Choice of fonts for new/unread/importamt messages"), "vr@movingparts.net", nullptr}, // implemented wish 79938 (configurable font for new/unread/important messages)
+    {"Jason 'vanRijn' Kasper", I18N_NOOP("Choice of fonts for new/unread/important messages"), "vr@movingparts.net", nullptr}, // implemented wish 79938 (configurable font for new/unread/important messages)
     {"Martijn Klingens", I18N_NOOP("Fix Quick Search keyboard navigation"), "klingens@kde.org", nullptr}, // fix keyboard navigation in the Status combo of the quick search
     {"Christoph Klünter", I18N_NOOP("Fix drag and drop from address book to composer"), "chris@inferno.nadir.org", nullptr}, // fix for bug:88216 (drag&drop from KAddressBook to the To: field)
     {"Martin Koller", I18N_NOOP("Substantial contributor"), "kollix@aon.at", nullptr}, // optional columns in the message list
