@@ -232,7 +232,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mWrapColumnSpin->setWhatsThis(helpText);
 
     connect(mWordWrapCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    connect(mWrapColumnSpin, qOverload<int>(&QSpinBox::valueChanged), this, &ComposerPageGeneralTab::slotEmitChanged);
+    connect(mWrapColumnSpin, &QSpinBox::valueChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
     // only enable the spinbox if the checkbox is checked
     connect(mWordWrapCheck, &QAbstractButton::toggled, mWrapColumnSpin, &QWidget::setEnabled);
 
@@ -342,7 +342,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setToolTip(i18n("Set the maximum number of recipients for the warning"));
 
     connect(mRecipientCheck, &QCheckBox::stateChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
-    connect(mRecipientSpin, qOverload<int>(&QSpinBox::valueChanged), this, &ComposerPageGeneralTab::slotEmitChanged);
+    connect(mRecipientSpin, &QSpinBox::valueChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
     // only enable the spinbox if the checkbox is checked
     connect(mRecipientCheck, &QCheckBox::toggled, mRecipientSpin, &QSpinBox::setEnabled);
 
@@ -371,7 +371,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this);
     label->setBuddy(mMaximumRecipients);
 
-    connect(mMaximumRecipients, qOverload<int>(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mMaximumRecipients, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0, 1, 2);
     groupGridLayout->addWidget(mMaximumRecipients, row, 2);
@@ -410,7 +410,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecentAddress->setToolTip(helpText);
     mMaximumRecentAddress->setWhatsThis(helpText);
 
-    connect(mMaximumRecentAddress, qOverload<int>(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mMaximumRecentAddress, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
     connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled, mMaximumRecentAddress, &QWidget::setEnabled);
     connect(mShowRecentAddressesInComposer, &QAbstractButton::toggled, label, &QWidget::setEnabled);
 
@@ -448,7 +448,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(KMailSettings::self()->autosaveIntervalItem()->label(), this);
     label->setBuddy(mAutoSave);
 
-    connect(mAutoSave, qOverload<int>(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAutoSave, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
 
     groupGridLayout->addWidget(label, row, 0);
     groupGridLayout->addWidget(mAutoSave, row, 1);
@@ -1143,7 +1143,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     mMaximumAttachmentSize->setRange(-1, 99999);
     mMaximumAttachmentSize->setSingleStep(100);
     mMaximumAttachmentSize->setSuffix(i18nc("spinbox suffix: unit for kilobyte", " kB"));
-    connect(mMaximumAttachmentSize, qOverload<int>(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mMaximumAttachmentSize, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
     mMaximumAttachmentSize->setSpecialValueText(i18n("No limit"));
     layAttachment->addWidget(mMaximumAttachmentSize);
     vlay->addLayout(layAttachment);

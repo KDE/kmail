@@ -28,7 +28,7 @@ SummaryView::SummaryView(KontactInterface::Core *core, const QVariantList &)
 {
     mSyncAction = new KSelectAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Sync All"), this);
     actionCollection()->addAction(QStringLiteral("kontact_summary_sync"), mSyncAction);
-    connect(mSyncAction, qOverload<QAction *>(&KSelectAction::triggered), this, &SummaryView::syncAccount);
+    connect(mSyncAction, &KSelectAction::triggered, this, &SummaryView::syncAccount);
     connect(mSyncAction->menu(), &QMenu::aboutToShow, this, &SummaryView::fillSyncActionSubEntries);
 
     insertSyncAction(mSyncAction);

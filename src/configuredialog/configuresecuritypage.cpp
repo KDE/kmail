@@ -172,7 +172,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
 
     // "ignore", "ask", "deny", "always send" radiobuttons
     mMDNGroup = new QButtonGroup(this);
-    connect(mMDNGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
+    connect(mMDNGroup, &QButtonGroup::buttonClicked, this, &SecurityPageMDNTab::slotEmitChanged);
     mMDNGroup->addButton(mUi.radioIgnore, 0);
     mMDNGroup->addButton(mUi.radioAsk, 1);
     mMDNGroup->addButton(mUi.radioDeny, 2);
@@ -180,7 +180,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
 
     // "Original Message quote" radiobuttons
     mOrigQuoteGroup = new QButtonGroup(this);
-    connect(mOrigQuoteGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
+    connect(mOrigQuoteGroup, &QButtonGroup::buttonClicked, this, &SecurityPageMDNTab::slotEmitChanged);
     mOrigQuoteGroup->addButton(mUi.radioNothing, 0);
     mOrigQuoteGroup->addButton(mUi.radioFull, 1);
     mOrigQuoteGroup->addButton(mUi.radioHeaders, 2);
@@ -287,12 +287,12 @@ SecurityPageWarningTab::SecurityPageWarningTab(QWidget *parent)
     connect(mWidget->warnGroupBox, &QGroupBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->warnUnencryptedCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignKeyExpiresSB, qOverload<int>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrKeyExpiresSB, qOverload<int>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrChainCertExpiresSB, qOverload<int>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignChainCertExpiresSB, qOverload<int>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignRootCertExpiresSB, qOverload<int>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrRootCertExpiresSB, qOverload<int>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnSignKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrChainCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnSignChainCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnSignRootCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrRootCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
 
     connect(mWidget->gnupgButton, &QPushButton::clicked, this, &SecurityPageWarningTab::slotConfigureGnupg);
     connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageWarningTab::slotReenableAllWarningsClicked);

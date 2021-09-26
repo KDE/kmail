@@ -347,7 +347,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     mCloseToQuotaThreshold = new QSpinBox(this);
     mCloseToQuotaThreshold->setRange(0, 100);
     mCloseToQuotaThreshold->setSingleStep(1);
-    connect(mCloseToQuotaThreshold, qOverload<int>(&QSpinBox::valueChanged), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mCloseToQuotaThreshold, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
     mCloseToQuotaThreshold->setSuffix(i18n("%"));
 
     hbox->addWidget(mCloseToQuotaThreshold);
@@ -462,7 +462,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
                         Qt::Vertical,
                         KMailSettings::self()->folderListItem());
     vlay->addWidget(mFolderListGroupBox);
-    connect(mFolderListGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFolderListGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
     auto folderCBHLayout = new QHBoxLayout;
     mFolderQuickSearchCB = new QCheckBox(i18n("Show folder quick search field"), this);
@@ -475,7 +475,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFavoriteFoldersViewGroupBox->setTitle(i18n("Show Favorite Folders View"));
     mFavoriteFoldersViewGroupBox->setLayout(new QVBoxLayout());
     mFavoriteFoldersViewGroup = new QButtonGroup(this);
-    connect(mFavoriteFoldersViewGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFavoriteFoldersViewGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
     auto favoriteFoldersViewHiddenRadio = new QRadioButton(i18n("Never"), mFavoriteFoldersViewGroupBox);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewHiddenRadio,
@@ -499,7 +499,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFolderToolTipsGroupBox->setTitle(i18n("Folder Tooltips"));
     mFolderToolTipsGroupBox->setLayout(new QVBoxLayout());
     mFolderToolTipsGroup = new QButtonGroup(this);
-    connect(mFolderToolTipsGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mFolderToolTipsGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
     auto folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), mFolderToolTipsGroupBox);
     mFolderToolTipsGroup->addButton(folderToolTipsAlwaysRadio, static_cast<int>(FolderTreeWidget::DisplayAlways));
@@ -518,7 +518,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
                         KMailSettings::self()->readerWindowModeItem());
     vlay->addWidget(mReaderWindowModeGroupBox);
 
-    connect(mReaderWindowModeGroup, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mReaderWindowModeGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
     vlay->addStretch(10); // spacer
 }
@@ -592,7 +592,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             &MessageList::Utils::AggregationConfigButton::configureDialogCompleted,
             this,
             &AppearancePageHeadersTab::slotSelectDefaultAggregation);
-    connect(mAggregationComboBox, qOverload<int>(&MessageList::Utils::AggregationComboBox::activated), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAggregationComboBox, &MessageList::Utils::AggregationComboBox::activated, this, &ConfigModuleTab::slotEmitChanged);
 
     // "Theme"
     using MessageList::Utils::ThemeComboBox;
@@ -607,7 +607,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     formLayout->addRow(i18n("Default theme:"), themeLayout);
 
     connect(themeConfigButton, &MessageList::Utils::ThemeConfigButton::configureDialogCompleted, this, &AppearancePageHeadersTab::slotSelectDefaultTheme);
-    connect(mThemeComboBox, qOverload<int>(&MessageList::Utils::ThemeComboBox::activated), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mThemeComboBox, &MessageList::Utils::ThemeComboBox::activated, this, &ConfigModuleTab::slotEmitChanged);
 
     // "Date Display" group:
     mDateDisplay = new QButtonGroup(this);
@@ -689,7 +689,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
         }
     } // end for loop populating mDateDisplay
 
-    connect(mDateDisplay, qOverload<QAbstractButton *>(&QButtonGroup::buttonClicked), this, &ConfigModuleTab::slotEmitChanged);
+    connect(mDateDisplay, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 }
 
 void AppearancePageHeadersTab::slotLinkClicked(const QString &link)

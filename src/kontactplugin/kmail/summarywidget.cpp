@@ -145,7 +145,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
                          stats.count(),
                          stats.unreadCount()));
 
-                connect(urlLabel, qOverload<>(&KUrlLabel::leftClickedUrl), this, [this, urlLabel]() {
+                connect(urlLabel, &KUrlLabel::leftClickedUrl, this, [this, urlLabel]() {
                     selectFolder(urlLabel->url());
                 });
 
