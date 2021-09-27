@@ -1651,6 +1651,24 @@ uint KMComposerWin::currentIdentity() const
     return mComposerBase->identityCombo()->currentIdentity();
 }
 
+void KMComposerWin::addXFace(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg)
+{
+    if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
+        msg->removeHeader("X-Face");
+    } else {
+        QString xface = ident.xface();
+        if (!xface.isEmpty()) {
+            int numNL = (xface.length() - 1) / 70;
+            for (int i = numNL; i > 0; --i) {
+                xface.insert(i * 70, QStringLiteral("\n\t"));
+            }
+            auto header = new KMime::Headers::Generic("X-Face");
+            header->fromUnicodeString(xface, "utf-8");
+            msg->setHeader(header);
+        }
+    }
+}
+
 void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
                                bool lastSignState,
                                bool lastEncryptState,
@@ -1766,20 +1784,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
 
     const auto &ident = identity();
 
-    if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
-        mMsg->removeHeader("X-Face");
-    } else {
-        QString xface = ident.xface();
-        if (!xface.isEmpty()) {
-            int numNL = (xface.length() - 1) / 70;
-            for (int i = numNL; i > 0; --i) {
-                xface.insert(i * 70, QStringLiteral("\n\t"));
-            }
-            auto header = new KMime::Headers::Generic("X-Face");
-            header->fromUnicodeString(xface, "utf-8");
-            mMsg->setHeader(header);
-        }
-    }
+    addXFace(ident, mMsg);
 
     // if these headers are present, the state of the message should be overruled
     if (auto hdr = mMsg->headerByType("X-KMail-SignatureActionEnabled")) {
@@ -3234,20 +3239,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
         organization->fromUnicodeString(ident.organization(), "utf-8");
         mMsg->setHeader(organization);
     }
-    if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
-        mMsg->removeHeader("X-Face");
-    } else {
-        QString xface = ident.xface();
-        if (!xface.isEmpty()) {
-            int numNL = (xface.length() - 1) / 70;
-            for (int i = numNL; i > 0; --i) {
-                xface.insert(i * 70, QStringLiteral("\n\t"));
-            }
-            auto header = new KMime::Headers::Generic("X-Face");
-            header->fromUnicodeString(xface, "utf-8");
-            mMsg->setHeader(header);
-        }
-    }
+    addXFace(ident, mMsg);
 
     if (initialChange) {
         if (auto hrd = mMsg->headerByType("X-KMail-Transport")) {

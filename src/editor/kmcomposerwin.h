@@ -582,6 +582,7 @@ private:
     Q_REQUIRED_RESULT bool sendLaterRegistered() const;
     void slotRecipientEditorLineFocused();
     void updateHamburgerMenu();
+    void addXFace(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg);
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
