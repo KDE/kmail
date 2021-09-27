@@ -306,7 +306,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     auto transport = new MailTransport::TransportComboBox(mHeadersArea);
     transport->setToolTip(i18n("Select the outgoing account to use for sending this message"));
     mComposerBase->setTransportCombo(transport);
-    connect(transport, qOverload<int>(&MailTransport::TransportComboBox::activated), this, &KMComposerWin::slotTransportChanged);
+    connect(transport, &MailTransport::TransportComboBox::activated, this, &KMComposerWin::slotTransportChanged);
     connect(transport, &MailTransport::TransportComboBox::transportRemoved, this, &KMComposerWin::slotTransportRemoved);
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
     mEdtFrom->installEventFilter(this);
