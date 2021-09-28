@@ -82,7 +82,7 @@
      <item>
       <widget class="QPushButton" name="selectContactsButton">
        <property name="text">
-        <string>Select from Contacts...</string>
+        <string>Set from Address Book</string>
        </property>
       </widget>
      </item>
