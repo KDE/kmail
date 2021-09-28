@@ -1650,7 +1650,7 @@ uint KMComposerWin::currentIdentity() const
     return mComposerBase->identityCombo()->currentIdentity();
 }
 
-void KMComposerWin::addXFace(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg)
+void KMComposerWin::addFaceHeaders(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg)
 {
     if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
         msg->removeHeader("X-Face");
@@ -1663,6 +1663,30 @@ void KMComposerWin::addXFace(const KIdentityManagement::Identity &ident, const K
             }
             auto header = new KMime::Headers::Generic("X-Face");
             header->fromUnicodeString(xface, "utf-8");
+            msg->setHeader(header);
+        }
+    }
+
+    if (!ident.isFaceEnabled() || ident.face().isEmpty()) {
+        msg->removeHeader("Face");
+    } else {
+        QString face = ident.face();
+        if (!face.isEmpty()) {
+            // The first line of data is 72 lines long to account for the
+            // header name, the following lines are 76 lines long, like in
+            // https://quimby.gnus.org/circus/face/
+            if (face.length() > 72) {
+                int numNL = (face.length() - 73) / 76;
+
+                for (int i = numNL; i > 0; --i) {
+                    face.insert(72 + i * 76, QStringLiteral("\n\t"));
+                }
+
+                face.insert(72, QStringLiteral("\n\t"));
+            }
+
+            auto header = new KMime::Headers::Generic("Face");
+            header->fromUnicodeString(face, "utf-8");
             msg->setHeader(header);
         }
     }
@@ -1783,7 +1807,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
 
     const auto &ident = identity();
 
-    addXFace(ident, mMsg);
+    addFaceHeaders(ident, mMsg);
 
     // if these headers are present, the state of the message should be overruled
     if (auto hdr = mMsg->headerByType("X-KMail-SignatureActionEnabled")) {
@@ -3238,7 +3262,8 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
         organization->fromUnicodeString(ident.organization(), "utf-8");
         mMsg->setHeader(organization);
     }
-    addXFace(ident, mMsg);
+
+    addFaceHeaders(ident, mMsg);
 
     if (initialChange) {
         if (auto hrd = mMsg->headerByType("X-KMail-Transport")) {

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>XFaceConfigurator</class>
+ <widget class="QWidget" name="XFaceConfigurator">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>932</width>
+    <height>665</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="modeInfo">
+     <property name="text">
+      <string>An informative text about the current mode!</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="KMail::EncodedImagePicker" name="xFaceConfig" native="true"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Send picture with every message</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="enableComboBox">
+     <item>
+      <property name="text">
+       <string>Don't send</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Send color (Face)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Send monochrome (X-Face)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Send both</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="KMail::EncodedImagePicker" name="faceConfig" native="true"/>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>KMail can send a small (48x48 pixels) low-quality picture with every message. For example, this could be a picture of you or a glyph. It is shown in the recipient's mail client (if supported).</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KMail::EncodedImagePicker</class>
+   <extends>QWidget</extends>
+   <header>identity/encodedimagepicker.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>enableComboBox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

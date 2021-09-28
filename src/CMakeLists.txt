@@ -75,6 +75,7 @@ target_sources(kmailprivate PRIVATE
     identity/identitylistview.cpp
     identity/identitydialog.cpp
     identity/xfaceconfigurator.cpp
+    identity/encodedimagepicker.cpp
     identity/identitypage.cpp
     identity/newidentitydialog.cpp
     identity/identityeditvcarddialog.cpp
@@ -221,6 +222,8 @@ ki18n_wrap_ui(kmailprivate
     ui/accountspagereceivingtab.ui
     ui/searchwindow.ui
     ui/incompleteindexdialog.ui
+    ui/xfaceconfigurator.ui
+    ui/encodedimagepicker.ui
     )
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put

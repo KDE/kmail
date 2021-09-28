@@ -11,23 +11,28 @@
 
 #pragma once
 
+#include <QProcess>
 #include <QWidget>
 
-class KJob;
-class QUrl;
-
-class QCheckBox;
-class QLabel;
-namespace KPIMTextEdit
+namespace Ui
 {
-class PlainTextEditorWidget;
+class XFaceConfigurator;
 }
+
 namespace KMail
 {
 class XFaceConfigurator : public QWidget
 {
     Q_OBJECT
 public:
+    enum Mode {
+        DontSend,
+        SendFace,
+        SendXFace,
+        SendBoth,
+    };
+    Q_ENUM(Mode)
+
     explicit XFaceConfigurator(QWidget *parent = nullptr);
     ~XFaceConfigurator() override;
 
@@ -37,17 +42,30 @@ public:
     Q_REQUIRED_RESULT QString xface() const;
     void setXFace(const QString &text);
 
+    Q_REQUIRED_RESULT bool isFaceEnabled() const;
+    void setFaceEnabled(bool enable);
+
+    Q_REQUIRED_RESULT QString face() const;
+    void setFace(const QString &text);
+
 private:
-    void setXfaceFromFile(const QUrl &url);
+    void crunch(const QImage &image);
+    Q_REQUIRED_RESULT bool pngquant(const QImage &image);
 
-    void slotSelectFile();
-    void slotSelectFromAddressbook();
-    void slotDelayedSelectFromAddressbook(KJob *);
-    void slotUpdateXFace();
+private Q_SLOTS:
+    void modeChanged(int);
 
-    QCheckBox *const mEnableCheck;
-    KPIMTextEdit::PlainTextEditorWidget *mTextEdit = nullptr;
-    QLabel *const mXFaceLabel;
+    void compressFace(const QImage &);
+    void compressFaceDone(const QByteArray &, bool fromPngquant);
+    void compressXFace(const QImage &);
+    void updateFace();
+    void updateXFace();
+
+    void pngquantFinished(int, QProcess::ExitStatus);
+
+private:
+    QScopedPointer<Ui::XFaceConfigurator> mUi;
+    QProcess *const mPngquantProc;
 };
 } // namespace KMail
 

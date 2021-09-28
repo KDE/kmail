@@ -952,6 +952,8 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mSignatureConfigurator->setSignature(ident.signature());
     mXFaceConfigurator->setXFace(ident.xface());
     mXFaceConfigurator->setXFaceEnabled(ident.isXFaceEnabled());
+    mXFaceConfigurator->setFace(ident.face());
+    mXFaceConfigurator->setFaceEnabled(ident.isFaceEnabled());
 }
 
 void IdentityDialog::unregisterSpecialCollection(qint64 colId)
@@ -1064,6 +1066,8 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setSignature(mSignatureConfigurator->signature());
     ident.setXFace(mXFaceConfigurator->xface());
     ident.setXFaceEnabled(mXFaceConfigurator->isXFaceEnabled());
+    ident.setFace(mXFaceConfigurator->face());
+    ident.setFaceEnabled(mXFaceConfigurator->isFaceEnabled());
 }
 
 void IdentityDialog::slotEditVcard()
