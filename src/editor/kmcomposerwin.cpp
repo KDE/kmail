@@ -1985,7 +1985,7 @@ bool KMComposerWin::queryClose()
 
 MessageComposer::ComposerViewBase::MissingAttachment KMComposerWin::userForgotAttachment()
 {
-    bool checkForForgottenAttachments = mCheckForForgottenAttachments && KMailSettings::self()->showForgottenAttachmentWarning();
+    const bool checkForForgottenAttachments = mCheckForForgottenAttachments && KMailSettings::self()->showForgottenAttachmentWarning();
 
     if (!checkForForgottenAttachments) {
         return MessageComposer::ComposerViewBase::NoMissingAttachmentFound;
@@ -2249,7 +2249,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
 
                 QMenu menu(this);
                 const QAction *addAsInlineImageAction = menu.addAction(i18n("Add as &Inline Image"));
-                /*const QAction *addAsAttachmentAction = */ menu.addAction(i18n("Add as &Attachment"));
+                menu.addAction(i18n("Add as &Attachment"));
                 const QAction *selectedAction = menu.exec(QCursor::pos());
                 if (selectedAction == addAsInlineImageAction) {
                     // Let the textedit from kdepimlibs handle inline images
@@ -2479,7 +2479,7 @@ void KMComposerWin::slotEncryptToggled(bool on)
 
 void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
 {
-    bool wasModified = isModified();
+    const bool wasModified = isModified();
     if (setByUser) {
         setModified(true);
     }
@@ -2550,7 +2550,7 @@ void KMComposerWin::slotSignToggled(bool on)
 
 void KMComposerWin::setSigning(bool sign, bool setByUser)
 {
-    bool wasModified = isModified();
+    const bool wasModified = isModified();
     if (setByUser) {
         setModified(true);
     }
@@ -2741,12 +2741,12 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
                 return;
             } else {
-                int rc = KMessageBox::questionYesNo(this,
-                                                    i18n("To: field is empty. "
-                                                         "Send message anyway?"),
-                                                    i18n("No To: specified"),
-                                                    KStandardGuiItem::yes(),
-                                                    KStandardGuiItem::no());
+                const int rc = KMessageBox::questionYesNo(this,
+                                                          i18n("To: field is empty. "
+                                                               "Send message anyway?"),
+                                                          i18n("No To: specified"),
+                                                          KStandardGuiItem::yes(),
+                                                          KStandardGuiItem::no());
                 if (rc == KMessageBox::No) {
                     return;
                 }
@@ -2755,12 +2755,12 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
         if (subject().isEmpty()) {
             mEdtSubject->setFocus();
-            int rc = KMessageBox::questionYesNo(this,
-                                                i18n("You did not specify a subject. "
-                                                     "Send message anyway?"),
-                                                i18n("No Subject Specified"),
-                                                KGuiItem(i18n("S&end as Is")),
-                                                KGuiItem(i18n("&Specify the Subject")));
+            const int rc = KMessageBox::questionYesNo(this,
+                                                      i18n("You did not specify a subject. "
+                                                           "Send message anyway?"),
+                                                      i18n("No Subject Specified"),
+                                                      KGuiItem(i18n("S&end as Is")),
+                                                      KGuiItem(i18n("&Specify the Subject")));
             if (rc == KMessageBox::No) {
                 return;
             }
@@ -2857,8 +2857,8 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
     if (mForceDisableHtml) {
         disableHtml(MessageComposer::ComposerViewBase::NoConfirmationNeeded);
     }
-    bool sign = mSignAction->isChecked();
-    bool encrypt = mEncryptAction->isChecked();
+    const bool sign = mSignAction->isChecked();
+    const bool encrypt = mEncryptAction->isChecked();
 
     mComposerBase->setCryptoOptions(
         sign,
@@ -3218,7 +3218,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
     if (ident.isNull()) {
         return;
     }
-    bool wasModified(isModified());
+    const bool wasModified(isModified());
     Q_EMIT identityChanged(identity());
     if (!ident.fullEmailAddr().isNull()) {
         mEdtFrom->setText(ident.fullEmailAddr());
