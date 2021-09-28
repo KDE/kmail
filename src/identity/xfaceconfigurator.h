@@ -1,4 +1,4 @@
-/*  -*- c++ -*-
+/*
     xfaceconfigurator.cpp
 
     KMail, the KDE mail client.
@@ -64,7 +64,7 @@ private Q_SLOTS:
     void pngquantFinished(int, QProcess::ExitStatus);
 
 private:
-    QScopedPointer<Ui::XFaceConfigurator> mUi;
+    std::unique_ptr<Ui::XFaceConfigurator> mUi;
     QProcess *const mPngquantProc;
 };
 } // namespace KMail

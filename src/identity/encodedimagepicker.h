@@ -11,7 +11,7 @@
 #pragma once
 
 #include <QGroupBox>
-
+#include <memory>
 class KJob;
 
 namespace Ui
@@ -47,6 +47,6 @@ private:
     void selectFromAddressBookDone(KJob *);
 
 private:
-    QScopedPointer<Ui::EncodedImagePicker> mUi;
+    std::unique_ptr<Ui::EncodedImagePicker> mUi;
 };
 } // namespace KMail
