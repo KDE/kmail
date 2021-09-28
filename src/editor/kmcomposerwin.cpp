@@ -181,6 +181,7 @@
 #include <QSplitter>
 #include <QStandardPaths>
 #include <QStatusBar>
+#include <QUrlQuery>
 
 // GPGME
 #include <gpgme++/key.h>
@@ -742,8 +743,7 @@ void KMComposerWin::readConfig(bool reload)
         if (!KMailSettings::self()->snippetSplitterPosition().isEmpty()) {
             mSnippetSplitter->setSizes(KMailSettings::self()->snippetSplitterPosition());
         } else {
-            QList<int> defaults;
-            defaults << (int)(width() * 0.8) << (int)(width() * 0.2);
+            const QList<int> defaults{(int)(width() * 0.8), (int)(width() * 0.2)};
             mSnippetSplitter->setSizes(defaults);
         }
     }
@@ -1522,8 +1522,7 @@ void KMComposerWin::initializePluginActions()
         const QString actionlistname =
             QLatin1String("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
         for (KToggleAction *act : customToolsWidgetActionList) {
-            QList<QAction *> lst;
-            lst << act;
+            QList<QAction *> lst{act};
             if (hashActions.contains(actionlistname)) {
                 lst = hashActions.value(actionlistname) + lst;
                 hashActions.remove(actionlistname);
@@ -1689,7 +1688,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         mLastEncryptActionState = true;
     }
 
-    auto im = KMKernel::self()->identityManager();
+    const auto im = KMKernel::self()->identityManager();
 
     if (auto hrd = newMsg->headerByType("X-KMail-Identity")) {
         const QString identityStr = hrd->asUnicodeString();

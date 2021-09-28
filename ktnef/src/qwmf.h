@@ -203,7 +203,9 @@ protected:
 
 protected:
     QPainter mPainter;
-    bool mIsPlaceable, mIsEnhanced, mValid;
+    bool mIsPlaceable = false;
+    bool mIsEnhanced = false;
+    bool mValid = false;
 
     // coordinate system
     bool mAbsoluteCoord;
@@ -214,9 +216,9 @@ protected:
     // information shared between Metafile Functions
     QColor mTextColor;
     int mTextAlign, mRotation;
-    bool mWinding;
+    bool mWinding = false;
 
-    WmfCmd *mFirstCmd;
+    WmfCmd *mFirstCmd = nullptr;
     WinObjHandle **mObjHandleTab;
     QPolygon mPoints;
     int mDpi;

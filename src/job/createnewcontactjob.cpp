@@ -70,10 +70,10 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
             const Akonadi::AgentType agentType = dlg->agentType();
             delete dlg;
             if (agentType.isValid()) {
-                auto job = new Akonadi::AgentInstanceCreateJob(agentType, this);
-                connect(job, &Akonadi::AgentInstanceCreateJob::result, this, &CreateNewContactJob::slotResourceCreationDone);
-                job->configure(mParentWidget);
-                job->start();
+                auto createAgentJob = new Akonadi::AgentInstanceCreateJob(agentType, this);
+                connect(createAgentJob, &Akonadi::AgentInstanceCreateJob::result, this, &CreateNewContactJob::slotResourceCreationDone);
+                createAgentJob->configure(mParentWidget);
+                createAgentJob->start();
                 return;
             } else { // if agent is not valid => return error and finish job
                 setError(UserDefinedError);

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <QWidget>
+#include <memory>
 namespace Ui
 {
 class MailMergeConfigureWidget;
@@ -20,5 +21,5 @@ public:
     ~MailMergeConfigureWidget() override;
 
 private:
-    Ui::MailMergeConfigureWidget *mWidget = nullptr;
+    std::unique_ptr<Ui::MailMergeConfigureWidget> mWidget;
 };

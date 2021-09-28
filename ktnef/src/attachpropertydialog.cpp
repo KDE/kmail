@@ -220,8 +220,8 @@ QPixmap AttachPropertyDialog::loadRenderingPixmap(KTNEFPropertySet *pSet, const 
         if (type == 1 && w > 0 && h > 0) {
             // Load WMF data
             QWinMetaFile wmfLoader;
-            QByteArray qb = wmf.toByteArray();
-            QBuffer wmfBuffer(&qb);
+            QByteArray qb2 = wmf.toByteArray();
+            QBuffer wmfBuffer(&qb2);
             wmfBuffer.open(QIODevice::ReadOnly);
             if (wmfLoader.load(wmfBuffer)) {
                 pix.scaled(w, h, Qt::KeepAspectRatio);

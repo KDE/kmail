@@ -10,8 +10,8 @@
 
 MailMergeConfigureWidget::MailMergeConfigureWidget(QWidget *parent)
     : QWidget(parent)
+    , mWidget(new Ui::MailMergeConfigureWidget)
 {
-    mWidget = new Ui::MailMergeConfigureWidget;
     mWidget->setupUi(this);
 }
 

@@ -164,9 +164,7 @@ bool QWinMetaFile::load(QBuffer &buffer)
     mTextAlign = 0;
     mRotation = 0;
     mTextColor = Qt::black;
-    if (mFirstCmd) {
-        delete mFirstCmd;
-    }
+    delete mFirstCmd;
     mFirstCmd = nullptr;
 
     st.setDevice(&buffer);
