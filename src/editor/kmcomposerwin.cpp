@@ -792,7 +792,9 @@ MessageComposer::Composer *KMComposerWin::createSimpleComposer()
     mComposerBase->setFrom(from());
     mComposerBase->setSubject(subject());
     mComposerBase->setCharsets(charsets);
-    return mComposerBase->createSimpleComposer();
+    MessageComposer::Composer *composer = new MessageComposer::Composer();
+    mComposerBase->fillComposer(composer);
+    return composer;
 }
 
 bool KMComposerWin::canSignEncryptAttachments() const
@@ -2665,7 +2667,8 @@ void KMComposerWin::slotPrintPreview()
 
 void KMComposerWin::printComposer(bool preview)
 {
-    MessageComposer::Composer *composer = createSimpleComposer();
+    MessageComposer::Composer *composer = new MessageComposer::Composer();
+    mComposerBase->fillComposer(composer);
     mMiscComposers.append(composer);
     composer->setProperty("preview", preview);
     connect(composer, &MessageComposer::Composer::result, this, &KMComposerWin::slotPrintComposeResult);
