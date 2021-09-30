@@ -39,7 +39,7 @@ using namespace MailCommon;
 class FilterManager::Private
 {
 public:
-    Private(FilterManager *qq)
+    explicit Private(FilterManager *qq)
         : q(qq)
     {
     }
