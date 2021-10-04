@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Send picture with every message</string>
+      <string>Send picture with every message:</string>
      </property>
     </widget>
    </item>
