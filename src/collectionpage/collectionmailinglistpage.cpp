@@ -18,12 +18,10 @@
 
 #include <QCheckBox>
 #include <QFormLayout>
-#include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QSpacerItem>
 
 #include "kmail_debug.h"
 #include <KEditListWidget>

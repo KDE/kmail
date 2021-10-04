@@ -33,8 +33,6 @@ using MailTransport::TransportManagementWidget;
 
 #include <QAbstractItemView>
 #include <QFormLayout>
-#include <QGridLayout>
-#include <QGroupBox>
 #include <QLabel>
 #include <QMenu>
 #include <QProcess>

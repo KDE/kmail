@@ -6,7 +6,6 @@
 
 #include "mailmergeconfigurewidget.h"
 #include "ui_mailmergeconfigurewidget.h"
-#include <QVBoxLayout>
 
 MailMergeConfigureWidget::MailMergeConfigureWidget(QWidget *parent)
     : QWidget(parent)

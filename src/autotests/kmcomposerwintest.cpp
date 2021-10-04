@@ -17,7 +17,6 @@
 #include <QEventLoop>
 #include <QLabel>
 #include <QStandardPaths>
-#include <QTemporaryDir>
 #include <QTest>
 #include <QTimer>
 #include <chrono>

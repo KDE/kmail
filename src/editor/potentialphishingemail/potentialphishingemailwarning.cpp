@@ -9,7 +9,6 @@
 #include "potentialphishingdetaildialog.h"
 #include <KLocalizedString>
 #include <QAction>
-#include <QPointer>
 
 PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     : KMessageWidget(parent)
