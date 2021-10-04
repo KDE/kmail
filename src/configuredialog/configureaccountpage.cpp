@@ -21,9 +21,6 @@ using MailTransport::TransportManagementWidget;
 
 #include "kmail_debug.h"
 #include <Akonadi/AgentConfigurationDialog>
-#include <Akonadi/AgentFilterProxyModel>
-#include <Akonadi/AgentInstanceCreateJob>
-#include <Akonadi/AgentInstanceModel>
 #include <Akonadi/AgentManager>
 #include <Akonadi/AgentType>
 #include <Akonadi/AgentTypeDialog>
