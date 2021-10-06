@@ -101,8 +101,7 @@ QStringList ArchiveMailKernel::customTemplates()
 
 bool ArchiveMailKernel::excludeImportantMailFromExpiry()
 {
-    Q_ASSERT(false);
-    return true;
+    return false;
 }
 
 Akonadi::Collection::Id ArchiveMailKernel::lastSelectedFolder()
