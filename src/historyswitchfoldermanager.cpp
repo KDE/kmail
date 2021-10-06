@@ -6,8 +6,11 @@
 
 #include "historyswitchfoldermanager.h"
 
+#include <QUndoStack>
+
 HistorySwitchFolderManager::HistorySwitchFolderManager(QObject *parent)
     : QObject{parent}
+    , mUndoStack(new QUndoStack(this))
 {
 }
 
