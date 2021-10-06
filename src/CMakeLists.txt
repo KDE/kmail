@@ -170,6 +170,7 @@ target_sources(kmailprivate PRIVATE
     manageshowcollectionproperties.cpp
     kmmigrateapplication.cpp
     kmail.qrc
+    historyswitchfoldermanager.cpp
     )
 
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
