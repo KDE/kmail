@@ -7,6 +7,7 @@
 #include "sendlaterjob.h"
 
 #include <MessageComposer/AkonadiSender>
+#include <MessageComposer/DraftStatus>
 #include <MessageComposer/SendLaterInfo>
 #include <MessageComposer/Util>
 #include <MessageCore/StringUtil>
@@ -112,7 +113,7 @@ void SendLaterJob::slotJobFinished(KJob *job)
 void SendLaterJob::updateAndCleanMessageBeforeSending(const KMime::Message::Ptr &msg)
 {
     msg->date()->setDateTime(QDateTime::currentDateTime());
-    MessageComposer::Util::removeNotNecessaryHeaders(msg);
+    MessageComposer::removeDraftCryptoHeaders(msg);
     msg->assemble();
 }
 

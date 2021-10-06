@@ -96,6 +96,7 @@
 #include <MessageComposer/ComposerLineEdit>
 #include <MessageComposer/ComposerViewInterface>
 #include <MessageComposer/ConvertSnippetVariablesJob>
+#include <MessageComposer/DraftStatus>
 #include <MessageComposer/FollowUpReminderSelectDateDialog>
 #include <MessageComposer/FollowupReminder>
 #include <MessageComposer/FollowupReminderCreateJob>
@@ -792,7 +793,9 @@ MessageComposer::Composer *KMComposerWin::createSimpleComposer()
     mComposerBase->setFrom(from());
     mComposerBase->setSubject(subject());
     mComposerBase->setCharsets(charsets);
-    return mComposerBase->createSimpleComposer();
+    MessageComposer::Composer *composer = new MessageComposer::Composer();
+    mComposerBase->fillComposer(composer);
+    return composer;
 }
 
 bool KMComposerWin::canSignEncryptAttachments() const
@@ -1810,14 +1813,17 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     addFaceHeaders(ident, mMsg);
 
     // if these headers are present, the state of the message should be overruled
-    if (auto hdr = mMsg->headerByType("X-KMail-SignatureActionEnabled")) {
-        mLastSignActionState = (hdr->as7BitString(false).contains("true"));
+    MessageComposer::DraftSignatureState signState(mMsg);
+    if (signState.isDefined()) {
+        mLastSignActionState = signState.signState();
     }
-    if (auto hdr = mMsg->headerByType("X-KMail-EncryptActionEnabled")) {
-        mLastEncryptActionState = (hdr->as7BitString(false).contains("true"));
+    MessageComposer::DraftEncryptionState encState(mMsg);
+    if (encState.isDefined()) {
+        mLastEncryptActionState = encState.encryptionState();
     }
-    if (auto hdr = mMsg->headerByType("X-KMail-CryptoMessageFormat")) {
-        mCryptoModuleAction->setCurrentItem(format2cb(static_cast<Kleo::CryptoMessageFormat>(hdr->asUnicodeString().toInt())));
+    MessageComposer::DraftCryptoMessageFormatState formatState(mMsg);
+    if (formatState.isDefined()) {
+        mCryptoModuleAction->setCurrentItem(format2cb(formatState.cryptoMessageFormatState()));
     }
 
     mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
@@ -2665,7 +2671,8 @@ void KMComposerWin::slotPrintPreview()
 
 void KMComposerWin::printComposer(bool preview)
 {
-    MessageComposer::Composer *composer = createSimpleComposer();
+    MessageComposer::Composer *composer = new MessageComposer::Composer();
+    mComposerBase->fillComposer(composer);
     mMiscComposers.append(composer);
     composer->setProperty("preview", preview);
     connect(composer, &MessageComposer::Composer::result, this, &KMComposerWin::slotPrintComposeResult);
