@@ -3470,7 +3470,7 @@ modifying it by hand.</para>
     <variablelist>
         
       <varlistentry>
-        <term><guilabel>Open external composer</guilabel></term>
+        <term><guilabel>Open External Composer</guilabel></term>
         <listitem>
           <para>
             Select this option to force the composer to open an external text editor
