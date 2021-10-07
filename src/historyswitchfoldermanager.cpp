@@ -17,3 +17,13 @@ HistorySwitchFolderManager::HistorySwitchFolderManager(QObject *parent)
 HistorySwitchFolderManager::~HistorySwitchFolderManager()
 {
 }
+
+void HistorySwitchFolderManager::addHistory()
+{
+    // TODO mUndoStack->push(new QUndoCommand(this));
+}
+
+void HistorySwitchFolderManager::clear()
+{
+    mUndoStack->clear();
+}

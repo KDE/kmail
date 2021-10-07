@@ -14,6 +14,9 @@ public:
     explicit HistorySwitchFolderManager(QObject *parent = nullptr);
     ~HistorySwitchFolderManager() override;
     // Add static method
+    void clear();
+    void addHistory();
+
 private:
     QUndoStack *const mUndoStack;
 };
