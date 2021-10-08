@@ -10,18 +10,6 @@
 #include <QUndoStack>
 class QUndoStack;
 
-class HistorySwitchFolderCommand : public QUndoCommand
-{
-public:
-    explicit HistorySwitchFolderCommand(const Akonadi::Collection &currentCol, const Akonadi::Collection &col);
-
-    void undo() override;
-    void redo() override;
-
-private:
-    const Akonadi::Collection mCurrentCollection;
-    const Akonadi::Collection mNewCollection;
-};
 
 class HistorySwitchFolderManager : public QObject
 {
@@ -33,9 +21,28 @@ public:
     void clear();
     void addHistory(const Akonadi::Collection &currentCol, const Akonadi::Collection &col);
 
+    void changeCollection(const Akonadi::Collection &currentCol);
+
+    void undo();
+    void redo();
+
 Q_SIGNALS:
     void switchToFolder(const Akonadi::Collection &col);
 
 private:
     QUndoStack *const mUndoStack;
+};
+
+class HistorySwitchFolderCommand : public QUndoCommand
+{
+public:
+    explicit HistorySwitchFolderCommand(HistorySwitchFolderManager *manager, const Akonadi::Collection &currentCol, const Akonadi::Collection &col);
+
+    void undo() override;
+    void redo() override;
+
+private:
+    const Akonadi::Collection mCurrentCollection;
+    const Akonadi::Collection mNewCollection;
+    HistorySwitchFolderManager *const mManager;
 };
