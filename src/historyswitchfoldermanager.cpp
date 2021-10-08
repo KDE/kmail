@@ -27,3 +27,8 @@ void HistorySwitchFolderManager::clear()
 {
     mUndoStack->clear();
 }
+
+void HistorySwitchFolderManager::addCollection(const Akonadi::Collection &col)
+{
+    // TODO
+}
