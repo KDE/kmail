@@ -5,12 +5,24 @@
 */
 #pragma once
 
+#include <Akonadi/Collection>
 #include <QObject>
+#include <QUndoStack>
 class QUndoStack;
-namespace Akonadi
+
+class HistorySwitchFolderCommand : public QUndoCommand
 {
-class Collection;
-}
+public:
+    explicit HistorySwitchFolderCommand(const Akonadi::Collection &currentCol, const Akonadi::Collection &col);
+
+    void undo() override;
+    void redo() override;
+
+private:
+    const Akonadi::Collection mCurrentCollection;
+    const Akonadi::Collection mNewCollection;
+};
+
 class HistorySwitchFolderManager : public QObject
 {
     Q_OBJECT
@@ -19,9 +31,8 @@ public:
     ~HistorySwitchFolderManager() override;
     // Add static method
     void clear();
-    void addHistory();
+    void addHistory(const Akonadi::Collection &currentCol, const Akonadi::Collection &col);
 
-    void addCollection(const Akonadi::Collection &col);
 Q_SIGNALS:
     void switchToFolder(const Akonadi::Collection &col);
 

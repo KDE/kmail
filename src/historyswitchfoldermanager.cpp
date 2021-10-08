@@ -18,9 +18,9 @@ HistorySwitchFolderManager::~HistorySwitchFolderManager()
 {
 }
 
-void HistorySwitchFolderManager::addHistory()
+void HistorySwitchFolderManager::addHistory(const Akonadi::Collection &currentCol, const Akonadi::Collection &col)
 {
-    // TODO mUndoStack->push(new QUndoCommand(this));
+    mUndoStack->push(new HistorySwitchFolderCommand(currentCol, col));
 }
 
 void HistorySwitchFolderManager::clear()
@@ -28,7 +28,16 @@ void HistorySwitchFolderManager::clear()
     mUndoStack->clear();
 }
 
-void HistorySwitchFolderManager::addCollection(const Akonadi::Collection &col)
+HistorySwitchFolderCommand::HistorySwitchFolderCommand(const Akonadi::Collection &currentCol, const Akonadi::Collection &col)
+    : mCurrentCollection(currentCol)
+    , mNewCollection(col)
 {
-    // TODO
+}
+
+void HistorySwitchFolderCommand::undo()
+{
+}
+
+void HistorySwitchFolderCommand::redo()
+{
 }
