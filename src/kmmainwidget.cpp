@@ -136,6 +136,7 @@
 
 #include <PimCommon/LogActivitiesManager>
 
+#include "historyswitchfoldermanager.h"
 #include "kmail_debug.h"
 // KF5 includes
 #include <KAcceleratorManager>
@@ -204,6 +205,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     : QWidget(parent)
     , mLaunchExternalComponent(new KMLaunchExternalComponent(this, this))
     , mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
+    , mHistorySwitchFolderManager(new HistorySwitchFolderManager(this))
 {
     // must be the first line of the constructor:
     mStartupDone = false;
