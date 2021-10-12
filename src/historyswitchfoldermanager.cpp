@@ -12,6 +12,8 @@ HistorySwitchFolderManager::HistorySwitchFolderManager(QObject *parent)
     : QObject{parent}
     , mUndoStack(new QUndoStack(this))
 {
+    // Not necessary to store to many info
+    mUndoStack->setUndoLimit(10);
 }
 
 HistorySwitchFolderManager::~HistorySwitchFolderManager()
