@@ -260,11 +260,6 @@ private:
     void updateMessageMenu();
 
     void slotRemoveDuplicates();
-    /**
-      Select the given folder
-      If the folder is 0 the intro is shown
-    */
-    void folderSelected(const Akonadi::Collection &col);
 
     /**
       Start a timer to update message actions

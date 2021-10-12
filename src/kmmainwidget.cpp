@@ -480,17 +480,8 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
     if (mCurrentCollection == collection) {
         return;
     }
-    folderSelected(collection);
-    if (collection.cachePolicy().syncOnDemand()) {
-        AgentManager::self()->synchronizeCollection(collection, false);
-    }
-    mMsgActions->setCurrentMessage(Akonadi::Item());
-    Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(collection));
-}
-
-// Called by slotFolderChanged (no particular reason for this method to be split out)
-void KMMainWidget::folderSelected(const Akonadi::Collection &col)
-{
+    // Store previous collection
+    mHistorySwitchFolderManager->addHistory(mCurrentCollection, collection);
     if (mGoToFirstUnreadMessageInSelectedFolder) {
         // the default action has been overridden from outside
         mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;
@@ -521,7 +512,7 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
     if (mMsgView) {
         mMsgView->clear(true);
     }
-    const bool newFolder = mCurrentCollection != col;
+    const bool newFolder = mCurrentCollection != collection;
 
     // Delete any pending timer, if needed it will be recreated below
     delete mShowBusySplashTimer;
@@ -531,8 +522,8 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
         writeFolderConfig();
     }
 
-    mCurrentFolderSettings = FolderSettings::forCollection(col);
-    mCurrentCollection = col;
+    mCurrentFolderSettings = FolderSettings::forCollection(collection);
+    mCurrentCollection = collection;
 
     readFolderConfig();
     if (mMsgView) {
@@ -551,6 +542,11 @@ void KMMainWidget::folderSelected(const Akonadi::Collection &col)
     //  settings. At this point the selection model hasn't been updated yet to the user's new choice, so it would load
     //  the old folder settings instead.
     QTimer::singleShot(0, this, &KMMainWidget::slotShowSelectedFolderInPane);
+    if (collection.cachePolicy().syncOnDemand()) {
+        AgentManager::self()->synchronizeCollection(collection, false);
+    }
+    mMsgActions->setCurrentMessage(Akonadi::Item());
+    Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(collection));
 }
 
 void KMMainWidget::slotShowSelectedFolderInPane()
