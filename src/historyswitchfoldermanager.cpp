@@ -37,11 +37,13 @@ void HistorySwitchFolderManager::changeCollection(const Akonadi::Collection &cur
 
 void HistorySwitchFolderManager::undo()
 {
+    qDebug() << " void HistorySwitchFolderManager::undo()";
     mUndoStack->undo();
 }
 
 void HistorySwitchFolderManager::redo()
 {
+    qDebug() << " void HistorySwitchFolderManager::redo()";
     mUndoStack->redo();
 }
 
