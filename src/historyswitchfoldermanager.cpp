@@ -22,7 +22,9 @@ HistorySwitchFolderManager::~HistorySwitchFolderManager()
 
 void HistorySwitchFolderManager::addHistory(const Akonadi::Collection &currentCol, const Akonadi::Collection &col)
 {
-    mUndoStack->push(new HistorySwitchFolderCommand(this, currentCol, col));
+    if (currentCol.isValid() && col.isValid()) {
+        mUndoStack->push(new HistorySwitchFolderCommand(this, currentCol, col));
+    }
 }
 
 void HistorySwitchFolderManager::clear()
@@ -32,6 +34,7 @@ void HistorySwitchFolderManager::clear()
 
 void HistorySwitchFolderManager::changeCollection(const Akonadi::Collection &currentCol)
 {
+    qDebug() << "HistorySwitchFolderManager::changeCollection  " << currentCol;
     Q_EMIT switchToFolder(currentCol);
 }
 
