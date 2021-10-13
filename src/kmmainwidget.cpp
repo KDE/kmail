@@ -335,7 +335,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     connect(&mCheckMailTimer, &QTimer::timeout, this, &KMMainWidget::slotUpdateActionsAfterMailChecking);
 
     setupUnifiedMailboxChecker();
-    connect(mHistorySwitchFolderManager, &HistorySwitchFolderManager::switchToFolder, this, &KMMainWidget::slotSelectCollectionFolder);
+    connect(mHistorySwitchFolderManager, &HistorySwitchFolderManager::switchToFolder, this, &KMMainWidget::slotHistorySwitchFolder);
 }
 
 QWidget *KMMainWidget::dkimWidgetInfo() const
@@ -480,8 +480,15 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
     if (mCurrentCollection == collection) {
         return;
     }
+    mHistorySwitchFolderManager->addHistory(mCurrentCollection, collection);
+}
+
+void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection)
+{
+    if (mFolderTreeWidget) {
+        mFolderTreeWidget->selectCollectionFolder(collection);
+    }
     // Store previous collection
-    // FIXME mHistorySwitchFolderManager->addHistory(mCurrentCollection, collection);
     if (mGoToFirstUnreadMessageInSelectedFolder) {
         // the default action has been overridden from outside
         mPreSelectionMode = MessageList::Core::PreSelectFirstUnreadCentered;

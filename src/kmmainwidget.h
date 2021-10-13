@@ -529,6 +529,7 @@ private:
     void slotRestartAccount();
     void slotAccountSettings();
     void updateDisplayFormatMessage();
+    void slotHistorySwitchFolder(const Akonadi::Collection &collection);
 
     // Message actions
     QAction *mDeleteAction = nullptr;
