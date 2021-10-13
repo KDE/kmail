@@ -161,7 +161,6 @@
 #include <QList>
 #include <QMenu>
 #include <QProcess>
-#include <QShortcut>
 #include <QSplitter>
 #include <QStatusBar>
 #include <QVBoxLayout>
@@ -3515,14 +3514,14 @@ void KMMainWidget::setupActions()
     connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
     {
         auto act = new QAction(i18n("Previous Selected Folder"), this); // TODO fix me i18n
-        actionCollection()->setDefaultShortcut(act, QKeySequence(Qt::ALT | Qt::Key_Tab));
+        actionCollection()->setDefaultShortcut(act, QKeySequence(Qt::CTRL | Qt::Key_Tab));
         actionCollection()->addAction(QStringLiteral("previous_folder"), act);
 
         connect(act, &QAction::triggered, mHistorySwitchFolderManager, &HistorySwitchFolderManager::undo);
 
         act = new QAction(i18n("Next Selected Folder"), this); // TODO fix me i18n
         actionCollection()->addAction(QStringLiteral("next_folder"), act);
-        actionCollection()->setDefaultShortcut(act, QKeySequence(Qt::ALT | Qt::Key_Tab | Qt::CTRL));
+        actionCollection()->setDefaultShortcut(act, QKeySequence(Qt::SHIFT | Qt::Key_Tab | Qt::CTRL));
         connect(act, &QAction::triggered, mHistorySwitchFolderManager, &HistorySwitchFolderManager::redo);
     }
 }
