@@ -516,7 +516,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     KConfigGroup grp(KMKernel::self()->config()->group("Composer"));
     setAutoSaveSettings(grp, true);
-    connect(mComposerBase, &MessageComposer::ComposerViewBase::tooManyRecipient, mTooMyRecipientWarning, &TooManyRecipientsWarning::animatedShow);
+    connect(mComposerBase, &MessageComposer::ComposerViewBase::tooManyRecipient, this, &KMComposerWin::slotTooManyRecipients);
 }
 
 KMComposerWin::~KMComposerWin()
