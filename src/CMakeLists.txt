@@ -99,6 +99,7 @@ target_sources(kmailprivate PRIVATE
     editor/warningwidgets/attachmentmissingwarning.cpp
     editor/warningwidgets/incorrectidentityfolderwarning.cpp
     editor/warningwidgets/attachmentaddedfromexternalwarning.cpp
+    editor/warningwidgets/toomanyrecipientswarning.cpp
     editor/potentialphishingemail/potentialphishingemailwarning.cpp
     editor/potentialphishingemail/potentialphishingemailjob.cpp
     editor/potentialphishingemail/potentialphishingdetaildialog.cpp
