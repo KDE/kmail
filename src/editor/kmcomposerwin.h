@@ -60,6 +60,7 @@ class KMailPluginEditorConvertTextManagerInterface;
 class KMailPluginGrammarEditorManagerInterface;
 class AttachmentAddedFromExternalWarning;
 class KHamburgerMenu;
+class TooManyRecipientsWarning;
 namespace MailTransport
 {
 class Transport;
@@ -583,6 +584,7 @@ private:
     void slotRecipientEditorLineFocused();
     void updateHamburgerMenu();
     void addFaceHeaders(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg);
+    void slotTooManyRecipients(bool b);
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
@@ -676,6 +678,7 @@ private:
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
     AttachmentMissingWarning *mAttachmentMissing = nullptr;
     ExternalEditorWarning *mExternalEditorWarning = nullptr;
+    TooManyRecipientsWarning *mTooMyRecipientWarning = nullptr;
     QTimer *mVerifyMissingAttachment = nullptr;
     MailCommon::FolderRequester *mFccFolder = nullptr;
     bool mPreventFccOverwrite = false;

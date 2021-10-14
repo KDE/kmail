@@ -25,6 +25,7 @@
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "editor/warningwidgets/attachmentaddedfromexternalwarning.h"
 #include "editor/warningwidgets/incorrectidentityfolderwarning.h"
+#include "editor/warningwidgets/toomanyrecipientswarning.h"
 #include "job/addressvalidationjob.h"
 #include "job/createnewcontactjob.h"
 #include "job/dndfromarkjob.h"
@@ -237,6 +238,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mFolder(Akonadi::Collection(-1))
     , mId(id)
     , mContext(context)
+    , mTooMyRecipientWarning(new TooManyRecipientsWarning(this))
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
 
@@ -376,6 +378,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     mAttachmentFromExternalMissing = new AttachmentAddedFromExternalWarning(this);
     vbox->addWidget(mAttachmentFromExternalMissing);
+    mTooMyRecipientWarning = new TooManyRecipientsWarning(this);
+    vbox->addWidget(mTooMyRecipientWarning);
 
     vbox->addWidget(mCryptoStateIndicatorWidget);
     vbox->addWidget(mRichTextEditorwidget);
@@ -512,6 +516,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     KConfigGroup grp(KMKernel::self()->config()->group("Composer"));
     setAutoSaveSettings(grp, true);
+    connect(mComposerBase, &MessageComposer::ComposerViewBase::tooManyRecipient, mTooMyRecipientWarning, &TooManyRecipientsWarning::animatedShow);
 }
 
 KMComposerWin::~KMComposerWin()
@@ -526,6 +531,15 @@ KMComposerWin::~KMComposerWin()
     }
 
     delete mComposerBase;
+}
+
+void KMComposerWin::slotTooManyRecipients(bool b)
+{
+    if (b) {
+        mTooMyRecipientWarning->animatedShow();
+    } else {
+        mTooMyRecipientWarning->animatedHide();
+    }
 }
 
 void KMComposerWin::slotRecipientEditorLineFocused()
