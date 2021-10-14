@@ -4430,6 +4430,7 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 
 void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
 {
+    qDebug() << " list count  " << list.count();
     Q_ASSERT(list.size() == 1);
     delete mShowBusySplashTimer;
     mShowBusySplashTimer = nullptr;
