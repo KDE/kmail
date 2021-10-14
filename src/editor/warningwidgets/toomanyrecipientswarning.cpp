@@ -14,7 +14,9 @@ TooManyRecipientsWarning::TooManyRecipientsWarning(QWidget *parent)
     setCloseButtonVisible(true);
     setMessageType(Warning);
     setWordWrap(true);
-    setText(i18nc("@info:status", "Truncating recipients list to %1.", MessageComposer::MessageComposerSettings::self()->maximumRecipients()));
+    setText(i18nc("@info:status",
+                  "We have reached maximum recipients. Truncating recipients list to %1.",
+                  MessageComposer::MessageComposerSettings::self()->maximumRecipients()));
 }
 
 TooManyRecipientsWarning::~TooManyRecipientsWarning()
