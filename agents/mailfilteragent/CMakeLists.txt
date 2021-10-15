@@ -1,5 +1,4 @@
 
-add_subdirectory( kconf_update )
 
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_mailfilter_agent\")
 add_executable(akonadi_mailfilter_agent)
