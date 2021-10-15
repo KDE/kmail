@@ -15,7 +15,6 @@ endif()
 
 add_subdirectory(pics)
 add_subdirectory(icons)
-add_subdirectory(kconf_update)
 add_subdirectory(kontactplugin)
 
 ########### kmailprivate ###############
