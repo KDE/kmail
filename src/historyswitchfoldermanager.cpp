@@ -42,7 +42,7 @@ void HistorySwitchFolderManager::changeCollection(const Akonadi::Collection &cur
 
 void HistorySwitchFolderManager::undo()
 {
-    qDebug() << " void HistorySwitchFolderManager::undo()";
+    qDebug() << " void HistorySwitchFolderManager::undo()" << mUndoStack->canUndo();
     if (mUndoStack->canUndo()) {
         mUndoStack->undo();
     }
@@ -50,7 +50,7 @@ void HistorySwitchFolderManager::undo()
 
 void HistorySwitchFolderManager::redo()
 {
-    qDebug() << " void HistorySwitchFolderManager::redo()";
+    qDebug() << " void HistorySwitchFolderManager::redo()" << mUndoStack->canRedo();
     if (mUndoStack->canRedo()) {
         mUndoStack->redo();
     }
