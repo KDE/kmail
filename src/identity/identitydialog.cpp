@@ -74,6 +74,7 @@ using MailTransport::TransportManager;
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QFormLayout>
 #include <QGridLayout>
 #include <QHostInfo>
 #include <QLabel>
@@ -264,6 +265,9 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     auto tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18nc("@title:tab General identity settings.", "General"));
+
+    auto formLayout = new QFormLayout(tab);
+
     auto glay = new QGridLayout(tab);
     glay->setRowStretch(3, 1);
     glay->setColumnStretch(1, 1);
@@ -272,10 +276,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mNameEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mNameEdit, this);
-    glay->addWidget(mNameEdit, row, 1);
     auto label = new QLabel(i18n("&Your name:"), tab);
+    formLayout->addRow(label, mNameEdit);
     label->setBuddy(mNameEdit);
-    glay->addWidget(label, row, 0);
+
     QString msg = i18n(
         "<qt><h3>Your name</h3>"
         "<p>This field should contain your name as you would like "
@@ -289,10 +293,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mOrganizationEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mOrganizationEdit, this);
-    glay->addWidget(mOrganizationEdit, row, 1);
     label = new QLabel(i18n("Organi&zation:"), tab);
+    formLayout->addRow(label, mOrganizationEdit);
     label->setBuddy(mOrganizationEdit);
-    glay->addWidget(label, row, 0);
+
     msg = i18n(
         "<qt><h3>Organization</h3>"
         "<p>This field should have the name of your organization "
@@ -307,10 +311,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     ++row;
     mEmailEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mEmailEdit, this);
-    glay->addWidget(mEmailEdit, row, 1);
     label = new QLabel(i18n("&Email address:"), tab);
+    formLayout->addRow(label, mEmailEdit);
     label->setBuddy(mEmailEdit);
-    glay->addWidget(label, row, 0);
+
     msg = i18n(
         "<qt><h3>Email address</h3>"
         "<p>This field should have your full email address.</p>"
@@ -332,10 +336,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     auto emailValidator1 = new PimCommon::EmailValidator(this);
     mAliasEdit->lineEdit()->setValidator(emailValidator1);
 
-    glay->addWidget(mAliasEdit, row, 1);
     label = new QLabel(i18n("Email a&liases:"), tab);
+    formLayout->addRow(label, mAliasEdit);
     label->setBuddy(mAliasEdit);
-    glay->addWidget(label, row, 0, Qt::AlignTop);
+
     msg = i18n(
         "<qt><h3>Email aliases</h3>"
         "<p>This field contains alias addresses that should also "
@@ -356,11 +360,9 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     row = -1;
     mCryptographyTab = tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18n("Cryptography"));
-    glay = new QGridLayout(tab);
-    glay->setColumnStretch(1, 1);
+    formLayout = new QFormLayout(tab);
 
     // "OpenPGP Signature Key" requester and label:
-    ++row;
     mPGPSigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::OpenPGP, tab);
     msg = i18n(
         "<qt><p>The OpenPGP key you choose here will be used "
@@ -374,11 +376,9 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mPGPSigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
 
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mPGPSigningKeyRequester, row, 1);
+    formLayout->addRow(label, mPGPSigningKeyRequester);
 
     // "OpenPGP Encryption Key" requester and label:
-    ++row;
     mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, tab);
     msg = i18n(
         "<qt><p>The OpenPGP key you choose here will be used "
@@ -393,11 +393,9 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mPGPEncryptionKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
 
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mPGPEncryptionKeyRequester, row, 1);
+    formLayout->addRow(label, mPGPEncryptionKeyRequester);
 
     // "S/MIME Signature Key" requester and label:
-    ++row;
     mSMIMESigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::CMS, tab);
     msg = i18n(
         "<qt><p>The S/MIME (X.509) certificate you choose here will be used "
@@ -409,8 +407,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setBuddy(mSMIMESigningKeyRequester);
     mSMIMESigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mSMIMESigningKeyRequester, row, 1);
+    formLayout->addRow(label, mSMIMESigningKeyRequester);
 
     const QGpgME::Protocol *smimeProtocol = QGpgME::smime();
 
@@ -418,7 +415,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mSMIMESigningKeyRequester->setEnabled(smimeProtocol);
 
     // "S/MIME Encryption Key" requester and label:
-    ++row;
     mSMIMEEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::CMS, tab);
     msg = i18n(
         "<qt><p>The S/MIME certificate you choose here will be used "
@@ -432,14 +428,12 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mSMIMEEncryptionKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
 
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mSMIMEEncryptionKeyRequester, row, 1);
+    formLayout->addRow(label, mSMIMEEncryptionKeyRequester);
 
     label->setEnabled(smimeProtocol);
     mSMIMEEncryptionKeyRequester->setEnabled(smimeProtocol);
 
     // "Preferred Crypto Message Format" combobox and label:
-    ++row;
     mPreferredCryptoMessageFormat = new QComboBox(tab);
     QStringList l;
     l << Kleo::cryptoMessageFormatToLabel(Kleo::AutoFormat) << Kleo::cryptoMessageFormatToLabel(Kleo::InlineOpenPGPFormat)
@@ -449,19 +443,13 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label = new QLabel(i18nc("preferred format of encrypted messages", "Preferred format:"), tab);
     label->setBuddy(mPreferredCryptoMessageFormat);
 
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mPreferredCryptoMessageFormat, row, 1);
+    formLayout->addRow(label, mPreferredCryptoMessageFormat);
 
-    ++row;
     mAutoSign = new QCheckBox(i18n("Automatically sign messages"));
-    glay->addWidget(mAutoSign, row, 0, 1, -1);
+    formLayout->addWidget(mAutoSign);
 
-    ++row;
     mAutoEncrypt = new QCheckBox(i18n("Automatically encrypt messages when possible"));
-    glay->addWidget(mAutoEncrypt, row, 0, 1, -1);
-
-    ++row;
-    glay->setRowStretch(row, 1);
+    formLayout->addWidget(mAutoEncrypt);
 
     //
     // Tab Widget: Advanced
