@@ -5,7 +5,7 @@
 */
 
 #include "historyswitchfoldermanager.h"
-
+#include "kmail_debug.h"
 #include <QUndoStack>
 
 HistorySwitchFolderManager::HistorySwitchFolderManager(QObject *parent)
@@ -35,14 +35,14 @@ void HistorySwitchFolderManager::clear()
 void HistorySwitchFolderManager::changeCollection(const Akonadi::Collection &currentCol)
 {
     if (currentCol.isValid()) {
-        qDebug() << "HistorySwitchFolderManager::changeCollection  " << currentCol;
+        qCDebug(KMAIL_LOG) << "HistorySwitchFolderManager::changeCollection  " << currentCol;
         Q_EMIT switchToFolder(currentCol);
     }
 }
 
 void HistorySwitchFolderManager::undo()
 {
-    qDebug() << " void HistorySwitchFolderManager::undo()" << mUndoStack->canUndo();
+    qCDebug(KMAIL_LOG) << " void HistorySwitchFolderManager::undo()" << mUndoStack->canUndo();
     if (mUndoStack->canUndo()) {
         mUndoStack->undo();
     }
@@ -50,7 +50,7 @@ void HistorySwitchFolderManager::undo()
 
 void HistorySwitchFolderManager::redo()
 {
-    qDebug() << " void HistorySwitchFolderManager::redo()" << mUndoStack->canRedo();
+    qCDebug(KMAIL_LOG) << " void HistorySwitchFolderManager::redo()" << mUndoStack->canRedo();
     if (mUndoStack->canRedo()) {
         mUndoStack->redo();
     }
