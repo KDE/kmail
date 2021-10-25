@@ -125,7 +125,7 @@ class GpgSettingsDialog : public KCMultiDialog
     Q_OBJECT
 public:
     explicit GpgSettingsDialog(QWidget *parent = nullptr);
-    ~GpgSettingsDialog();
+    ~GpgSettingsDialog() override;
 
 private:
     void readConfig();

@@ -14,7 +14,7 @@ class UnitComboBox : public QComboBox
     Q_OBJECT
 public:
     explicit UnitComboBox(QWidget *parent = nullptr);
-    ~UnitComboBox();
+    ~UnitComboBox() override;
     ArchiveMailInfo::ArchiveUnit unit() const;
     void setUnit(ArchiveMailInfo::ArchiveUnit unit);
 };

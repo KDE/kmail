@@ -73,7 +73,7 @@ class FillComposerJob : public QObject
     Q_OBJECT
 public:
     explicit FillComposerJob(QObject *parent = nullptr);
-    ~FillComposerJob();
+    ~FillComposerJob() override;
     void start();
     void setSettings(const FillComposerJobSettings &settings);
 

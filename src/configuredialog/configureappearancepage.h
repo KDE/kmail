@@ -170,7 +170,7 @@ public:
     explicit TagListWidgetItem(QListWidget *parent = nullptr);
     explicit TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent = nullptr);
 
-    ~TagListWidgetItem();
+    ~TagListWidgetItem() override;
     void setKMailTag(const MailCommon::Tag::Ptr &tag);
     MailCommon::Tag::Ptr kmailTag() const;
 

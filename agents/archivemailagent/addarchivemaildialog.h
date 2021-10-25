@@ -28,7 +28,7 @@ class AddArchiveMailDialog : public QDialog
     Q_OBJECT
 public:
     explicit AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *parent = nullptr);
-    ~AddArchiveMailDialog();
+    ~AddArchiveMailDialog() override;
 
     void setArchiveType(MailCommon::BackupJob::ArchiveType type);
     MailCommon::BackupJob::ArchiveType archiveType() const;

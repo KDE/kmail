@@ -13,7 +13,7 @@ class ArchiveMailWidgetTest : public QObject
     Q_OBJECT
 public:
     explicit ArchiveMailWidgetTest(QObject *parent = nullptr);
-    ~ArchiveMailWidgetTest();
+    ~ArchiveMailWidgetTest() override;
 
 private Q_SLOTS:
     void shouldHaveDefaultValue();

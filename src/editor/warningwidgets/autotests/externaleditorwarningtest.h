@@ -13,7 +13,7 @@ class ExternalEditorWarningTest : public QObject
     Q_OBJECT
 public:
     explicit ExternalEditorWarningTest(QObject *parent = nullptr);
-    ~ExternalEditorWarningTest() = default;
+    ~ExternalEditorWarningTest() override = default;
 private Q_SLOTS:
     void shouldHaveDefaultValue();
 };

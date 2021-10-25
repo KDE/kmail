@@ -13,7 +13,7 @@ class UnitComboBoxTest : public QObject
     Q_OBJECT
 public:
     explicit UnitComboBoxTest(QObject *parent = nullptr);
-    ~UnitComboBoxTest();
+    ~UnitComboBoxTest() override;
 private Q_SLOTS:
     void shouldHaveDefaultValue();
     void changeCurrentItem();

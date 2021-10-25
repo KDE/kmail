@@ -29,7 +29,7 @@ class Attachment : public QTreeWidgetItem
 {
 public:
     Attachment(QTreeWidget *parent, KTNEFAttach *attach);
-    ~Attachment();
+    ~Attachment() override;
 
     KTNEFAttach *getAttachment() const
     {
