@@ -66,7 +66,6 @@
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/CollectionAclPage>
 
-// Other PIM includes
 #include "kmail-version.h"
 
 #include "messageviewer/config-messageviewer.h"
@@ -92,7 +91,6 @@
 #include "kmlaunchexternalcomponent.h"
 #include <KSieveUi/VacationManager>
 
-// LIBKDEPIM includes
 #include <Libkdepim/ProgressManager>
 #include <PimCommon/BroadcastStatus>
 
@@ -138,7 +136,7 @@
 
 #include "historyswitchfoldermanager.h"
 #include "kmail_debug.h"
-// KF5 includes
+
 #include <KAcceleratorManager>
 #include <KActionMenu>
 #include <KCharsets>
@@ -154,7 +152,6 @@
 #include <KToggleAction>
 #include <KXMLGUIFactory>
 
-// Qt includes
 #include <QAction>
 #include <QByteArray>
 #include <QHeaderView>
@@ -165,7 +162,7 @@
 #include <QStatusBar>
 #include <QVBoxLayout>
 #include <WebEngineViewer/WebHitTestResult>
-// System includes
+
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusReply>
