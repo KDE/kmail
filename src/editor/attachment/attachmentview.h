@@ -35,15 +35,7 @@ public:
     ~AttachmentView() override;
 
     QWidget *widget() const;
-
-public Q_SLOTS:
-    /// model sets these
-    void setEncryptEnabled(bool enabled);
-    void setSignEnabled(bool enabled);
     void hideIfEmpty();
-    void selectNewAttachment();
-
-    void updateAttachmentLabel();
 
 protected:
     /** reimpl to avoid default drag cursor */
@@ -57,6 +49,12 @@ private:
     void slotShowHideAttchementList(bool);
     void saveHeaderState();
     void restoreHeaderState();
+    /// model sets these
+    void setEncryptEnabled(bool enabled);
+    void setSignEnabled(bool enabled);
+    void selectNewAttachment();
+
+    void updateAttachmentLabel();
 
 Q_SIGNALS:
     void contextMenuRequested();
