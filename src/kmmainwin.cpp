@@ -217,7 +217,7 @@ bool KMMainWin::restoreDockedState(int n)
     // Override this if the main window was hidden in the system tray
     // when the session was saved.
     KConfigGroup config(KConfigGui::sessionConfig(), QString::number(n));
-    bool show = !config.readEntry("docked", false);
+    const bool show = !config.readEntry("docked", false);
 
     return KMainWindow::restore(n, show);
 }

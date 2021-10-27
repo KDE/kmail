@@ -441,7 +441,7 @@ void KMReaderMainWin::initializeAkonadiStandardAction()
                               Akonadi::StandardMailActionManager::MarkMailAsImportant,
                               Akonadi::StandardMailActionManager::MarkMailAsActionItem};
 
-    for (Akonadi::StandardMailActionManager::Type mailAction : mailActions) {
+    for (const Akonadi::StandardMailActionManager::Type mailAction : mailActions) {
         QAction *act = mAkonadiStandardActionManager->createAction(mailAction);
         mAkonadiStandardActionManager->interceptAction(mailAction);
         connect(act, &QAction::triggered, this, &KMReaderMainWin::slotMarkMailAs);
