@@ -37,10 +37,9 @@ target_link_libraries(mailmergeagent
     KF5::AkonadiCore
     KF5::AkonadiMime
     KF5::MailTransportAkonadi
-    KF5::Mime
+    #KF5::Mime
     KF5::MessageComposer
     KF5::MessageCore
-    KF5::PimCommon
     KF5::DBusAddons
     KF5::WindowSystem
     KF5::XmlGui
