@@ -268,10 +268,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     auto formLayout = new QFormLayout(tab);
 
-    auto glay = new QGridLayout(tab);
-    glay->setRowStretch(3, 1);
-    glay->setColumnStretch(1, 1);
-
     // "Name" line edit and label:
     ++row;
     mNameEdit = new QLineEdit(tab);
@@ -454,26 +450,21 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     // Tab Widget: Advanced
     //
-    row = -1;
     tab = new QWidget(mTabWidget);
     auto advancedMainLayout = new QVBoxLayout(tab);
     mIdentityInvalidFolder = new IdentityInvalidFolder(tab);
     advancedMainLayout->addWidget(mIdentityInvalidFolder);
     mTabWidget->addTab(tab, i18nc("@title:tab Advanced identity settings.", "Advanced"));
-    glay = new QGridLayout;
-    advancedMainLayout->addLayout(glay);
-    // the last (empty) row takes all the remaining space
-    glay->setColumnStretch(1, 1);
+    formLayout = new QFormLayout;
+    advancedMainLayout->addLayout(formLayout);
 
     // "Reply-To Address" line edit and label:
-    ++row;
     mReplyToEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mReplyToEdit->setClearButtonEnabled(true);
     mReplyToEdit->setObjectName(QStringLiteral("mReplyToEdit"));
-    glay->addWidget(mReplyToEdit, row, 1);
     label = new QLabel(i18n("&Reply-To address:"), tab);
     label->setBuddy(mReplyToEdit);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mReplyToEdit);
     msg = i18n(
         "<qt><h3>Reply-To addresses</h3>"
         "<p>This sets the <tt>Reply-to:</tt> header to contain a "
@@ -489,14 +480,13 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mReplyToEdit->setWhatsThis(msg);
 
     // "CC addresses" line edit and label:
-    ++row;
     mCcEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mCcEdit->setClearButtonEnabled(true);
     mCcEdit->setObjectName(QStringLiteral("mCcEdit"));
-    glay->addWidget(mCcEdit, row, 1);
     label = new QLabel(i18n("&CC addresses:"), tab);
     label->setBuddy(mCcEdit);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mCcEdit);
+
     msg = i18n(
         "<qt><h3>CC (Carbon Copy) addresses</h3>"
         "<p>The addresses that you enter here will be added to each "
@@ -510,14 +500,12 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mCcEdit->setWhatsThis(msg);
 
     // "BCC addresses" line edit and label:
-    ++row;
     mBccEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mBccEdit->setClearButtonEnabled(true);
     mBccEdit->setObjectName(QStringLiteral("mBccEdit"));
-    glay->addWidget(mBccEdit, row, 1);
     label = new QLabel(i18n("&BCC addresses:"), tab);
     label->setBuddy(mBccEdit);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mBccEdit);
     msg = i18n(
         "<qt><h3>BCC (Blind Carbon Copy) addresses</h3>"
         "<p>The addresses that you enter here will be added to each "
@@ -532,68 +520,54 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mBccEdit->setWhatsThis(msg);
 
     // "Dictionary" combo box and label:
-    ++row;
     mDictionaryCombo = new Sonnet::DictionaryComboBox(tab);
-    glay->addWidget(mDictionaryCombo, row, 1);
     label = new QLabel(i18n("D&ictionary:"), tab);
     label->setBuddy(mDictionaryCombo);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mDictionaryCombo);
 
     // "Sent-mail Folder" combo box and label:
-    ++row;
     mFccFolderRequester = new IdentityFolderRequester(tab);
     mFccFolderRequester->setSelectFolderTitleDialog(i18n("Select Send-mail Folder"));
     mFccFolderRequester->setShowOutbox(false);
-    glay->addWidget(mFccFolderRequester, row, 1);
     mSentMailFolderCheck = new QCheckBox(i18n("Sent-mail &folder:"), tab);
-    glay->addWidget(mSentMailFolderCheck, row, 0);
     connect(mSentMailFolderCheck, &QCheckBox::toggled, mFccFolderRequester, &MailCommon::FolderRequester::setEnabled);
+    formLayout->addRow(mSentMailFolderCheck, mFccFolderRequester);
 
     // "Drafts Folder" combo box and label:
-    ++row;
     mDraftsFolderRequester = new IdentityFolderRequester(tab);
     mDraftsFolderRequester->setSelectFolderTitleDialog(i18n("Select Draft Folder"));
     mDraftsFolderRequester->setShowOutbox(false);
-    glay->addWidget(mDraftsFolderRequester, row, 1);
     label = new QLabel(i18n("&Drafts folder:"), tab);
     label->setBuddy(mDraftsFolderRequester);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mDraftsFolderRequester);
 
     // "Templates Folder" combo box and label:
-    ++row;
     mTemplatesFolderRequester = new IdentityFolderRequester(tab);
     mTemplatesFolderRequester->setSelectFolderTitleDialog(i18n("Select Templates Folder"));
     mTemplatesFolderRequester->setShowOutbox(false);
-    glay->addWidget(mTemplatesFolderRequester, row, 1);
     label = new QLabel(i18n("&Templates folder:"), tab);
     label->setBuddy(mTemplatesFolderRequester);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mTemplatesFolderRequester);
 
     // "Special transport" combobox and label:
-    ++row;
     mTransportCheck = new QCheckBox(i18n("Outgoing Account:"), tab);
-    glay->addWidget(mTransportCheck, row, 0);
     mTransportCombo = new TransportComboBox(tab);
     mTransportCombo->setEnabled(false); // since !mTransportCheck->isChecked()
-    glay->addWidget(mTransportCombo, row, 1);
+    formLayout->addRow(mTransportCheck, mTransportCombo);
+
     connect(mTransportCheck, &QCheckBox::toggled, mTransportCombo, &MailTransport::TransportComboBox::setEnabled);
 
-    ++row;
     mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
-    glay->addWidget(mAttachMyVCard, row, 0);
     mEditVCard = new QPushButton(i18n("Create..."), tab);
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
-    glay->addWidget(mEditVCard, row, 1);
+    formLayout->addRow(mAttachMyVCard, mEditVCard);
 
-    ++row;
     mAutoCorrectionLanguage = new PimCommon::AutoCorrectionLanguage(tab);
-    glay->addWidget(mAutoCorrectionLanguage, row, 1);
     label = new QLabel(i18n("Autocorrection language:"), tab);
     label->setBuddy(mAutoCorrectionLanguage);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mAutoCorrectionLanguage);
 
     // "default domain" input field:
-    ++row;
     auto hbox = new QHBoxLayout;
     mDefaultDomainEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mDefaultDomainEdit, this);
@@ -604,10 +578,9 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     restoreDefaultDomainName->setToolTip(i18n("Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
     connect(restoreDefaultDomainName, &QToolButton::clicked, this, &IdentityDialog::slotRefreshDefaultDomainName);
-    glay->addLayout(hbox, row, 1);
     label = new QLabel(i18n("Defaul&t domain:"), tab);
     label->setBuddy(mDefaultDomainEdit);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mDefaultDomainEdit);
 
     // and now: add QWhatsThis:
     msg = i18n(
@@ -616,9 +589,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "</p></qt>");
     label->setWhatsThis(msg);
     mDefaultDomainEdit->setWhatsThis(msg);
-
-    ++row;
-    glay->setRowStretch(row, 1);
 
     // the last row is a spacer
 
