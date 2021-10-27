@@ -154,25 +154,25 @@ private:
     QAction *const mReplyAuthorAction;
     QAction *const mReplyListAction;
     QAction *const mNoQuoteReplyAction;
-    QAction *mForwardInlineAction = nullptr;
-    QAction *mForwardAttachedAction = nullptr;
-    QAction *mRedirectAction = nullptr;
-    QAction *mNewToRecipientsAction = nullptr;
+    QAction *const mForwardInlineAction;
+    QAction *const mForwardAttachedAction;
+    QAction *const mRedirectAction;
+    QAction *const mNewToRecipientsAction;
     KActionMenu *const mStatusMenu;
-    KActionMenu *mForwardActionMenu = nullptr;
-    KActionMenu *mMailingListActionMenu = nullptr;
-    QAction *mAnnotateAction = nullptr;
-    QAction *mEditAsNewAction = nullptr;
+    KActionMenu *const mForwardActionMenu;
+    KActionMenu *const mMailingListActionMenu;
+    QAction *const mAnnotateAction;
+    QAction *const mEditAsNewAction;
     QAction *mPrintAction = nullptr;
     QAction *mPrintPreviewAction = nullptr;
     TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu = nullptr;
     QAction *const mListFilterAction;
-    QAction *mAddFollowupReminderAction = nullptr;
-    QAction *mDebugAkonadiSearchAction = nullptr;
-    QAction *mSendAgainAction = nullptr;
-    QAction *mNewMessageFromTemplateAction = nullptr;
+    QAction *const mAddFollowupReminderAction;
+    QAction *const mDebugAkonadiSearchAction;
+    QAction *const mSendAgainAction;
+    QAction *const mNewMessageFromTemplateAction;
     KIO::KUriFilterSearchProviderActions *const mWebShortcutMenuManager;
-    QAction *mExportToPdfAction = nullptr;
+    QAction *const mExportToPdfAction;
 };
 }
 
