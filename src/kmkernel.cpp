@@ -1191,8 +1191,10 @@ void KMKernel::closeAllKMailWindows()
 void KMKernel::cleanup()
 {
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceStatusChanged(Akonadi::AgentInstance)));
-    disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance, QString)));
-    disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceWarning(Akonadi::AgentInstance, QString)));
+    // clang-format off
+    disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)));
+    disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceWarning(Akonadi::AgentInstance,QString)));
+    // clang-format on
     disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)));
     // clang-format off
     disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)));

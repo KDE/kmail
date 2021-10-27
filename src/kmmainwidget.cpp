@@ -398,11 +398,13 @@ void KMMainWidget::destruct()
     delete mSelectFromAllFoldersDialog;
     delete mSievePasswordProvider;
 
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item, Akonadi::Collection)), this, nullptr);
+    // clang-format off
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemAdded(Akonadi::Item,Akonadi::Collection)), this, nullptr);
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item,Akonadi::Collection,Akonadi::Collection)), this, nullptr);
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection,QSet<QByteArray>)), this, nullptr);
+    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, nullptr);
+    // clang-format on
     disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), this, nullptr);
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemMoved(Akonadi::Item, Akonadi::Collection, Akonadi::Collection)), this, nullptr);
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionChanged(Akonadi::Collection, QSet<QByteArray>)), this, nullptr);
-    disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id, Akonadi::CollectionStatistics)), this, nullptr);
 
     mDestructed = true;
 }
