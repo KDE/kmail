@@ -83,10 +83,8 @@ void KTNEFView::setAttachments(const QList<KTNEFAttach *> &list)
 {
     clear();
     if (!list.isEmpty()) {
-        QList<KTNEFAttach *>::ConstIterator it;
-        QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
-        for (it = list.constBegin(); it != end; ++it) {
-            new Attachment(this, (*it));
+        for (const auto &s : list) {
+            new Attachment(this, s);
         }
     }
 }

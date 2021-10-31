@@ -91,12 +91,10 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
         storage.save();
         openComposer(QUrl::fromLocalFile(tmp.fileName()));
     } else if (KContacts::VCardDrag::fromMimeData(md, list)) {
-        KContacts::Addressee::List::ConstIterator it;
         QStringList to;
         to.reserve(list.count());
-        KContacts::Addressee::List::ConstIterator end(list.constEnd());
-        for (it = list.constBegin(); it != end; ++it) {
-            to.append((*it).fullEmail());
+        for (const auto &s : std::as_const(list)) {
+            to.append(s.fullEmail());
         }
         openComposer(to.join(QLatin1String(", ")));
     }

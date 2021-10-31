@@ -67,9 +67,8 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     mTextEdit->setReadOnly(true);
     mTextEdit->editor()->setWordWrapMode(QTextOption::NoWrap);
     const QStringList logEntries = FilterLog::instance()->logEntries();
-    QStringList::ConstIterator end(logEntries.constEnd());
-    for (QStringList::ConstIterator it = logEntries.constBegin(); it != end; ++it) {
-        mTextEdit->editor()->appendHtml(*it);
+    for (const QString &str : logEntries) {
+        mTextEdit->editor()->appendHtml(str);
     }
 
     auto purposeMenu = new MailfilterPurposeMenuWidget(this, this);

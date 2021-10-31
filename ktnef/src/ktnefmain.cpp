@@ -424,10 +424,9 @@ void KTNEFMain::viewDoubleClicked(QTreeWidgetItem *item)
 void KTNEFMain::viewDragRequested(const QList<KTnef::KTNEFAttach *> &list)
 {
     QList<QUrl> urlList;
-    QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
     urlList.reserve(list.count());
-    for (QList<KTNEFAttach *>::ConstIterator it = list.constBegin(); it != end; ++it) {
-        urlList << QUrl::fromLocalFile(extractTemp(*it));
+    for (const auto &att : list) {
+        urlList << QUrl::fromLocalFile(extractTemp(att));
     }
 
     if (!list.isEmpty()) {
@@ -554,11 +553,8 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
             menu->menuAction()->setObjectName(QStringLiteral("openWith_submenu")); // for the unittest
             topMenu->addMenu(menu);
         }
-
-        KService::List::ConstIterator it = offers.constBegin();
-        KService::List::ConstIterator end = offers.constEnd();
-        for (; it != end; ++it) {
-            QAction *act = createAppAction(*it,
+        for (const auto &s : offers) {
+            QAction *act = createAppAction(s,
                                            // no submenu -> prefix single offer
                                            menu == topMenu,
                                            actionGroup,
