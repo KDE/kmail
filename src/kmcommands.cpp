@@ -110,7 +110,6 @@
 #include <KRecentDirs>
 
 // KIO headers
-#include <KIO/Job>
 #include <KIO/JobUiDelegate>
 #include <KIO/StatJob>
 

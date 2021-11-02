@@ -83,7 +83,6 @@ using KMail::MailServiceImpl;
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
-#include <Akonadi/ServerManager>
 #include <Akonadi/Session>
 #include <KMime/Headers>
 #include <KMime/KMimeMessage>

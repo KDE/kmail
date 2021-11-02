@@ -9,7 +9,6 @@
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include "util.h"
-#include <Akonadi/Tag>
 
 #include <MailCommon/AddTagDialog>
 

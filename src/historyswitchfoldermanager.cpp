@@ -6,7 +6,6 @@
 
 #include "historyswitchfoldermanager.h"
 #include "kmail_debug.h"
-#include <QUndoStack>
 
 HistorySwitchFolderManager::HistorySwitchFolderManager(QObject *parent)
     : QObject{parent}
