@@ -23,6 +23,12 @@ target_sources(akonadi_unifiedmailbox_agent PRIVATE
     unifiedmailboxeditor.cpp
     settingsdialog.cpp
     mailkernel.cpp
+    unifiedmailbox.h
+    unifiedmailboxagent.h
+    unifiedmailboxmanager.h
+    unifiedmailboxeditor.h
+    settingsdialog.h
+    mailkernel.h
     ${unifiedmailbox_agent_SRCS}
 )
 

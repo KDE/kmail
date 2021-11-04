@@ -31,7 +31,17 @@ target_sources(followupreminderagent PRIVATE
     jobs/followupreminderjob.cpp
     jobs/followupreminderfinishtaskjob.cpp
     jobs/followupremindershowmessagejob.cpp
-     ${followupreminderagent_SRCS}
+
+    followupremindermanager.h
+    followupremindernoanswerdialog.h
+    followupreminderinfowidget.h
+    followupreminderinfo.h
+    followupreminderutil.h
+    jobs/followupreminderjob.h
+    jobs/followupreminderfinishtaskjob.h
+    jobs/followupremindershowmessagejob.h
+
+    ${followupreminderagent_SRCS}
     )
 
 pim_target_precompile_headers(followupreminderagent PUBLIC ../../kmail_pch.h)
@@ -92,6 +102,7 @@ install(FILES akonadi_followupreminder_agent.notifyrc DESTINATION ${KDE_INSTALL_
 
 set(followupreminderagentconfig_SRCS
     followupreminderinfoconfigwidget.cpp
+    followupreminderinfoconfigwidget.h
 )
 
 kcoreaddons_add_plugin(followupreminderagentconfig

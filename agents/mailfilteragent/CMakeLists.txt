@@ -10,6 +10,11 @@ target_sources(akonadi_mailfilter_agent PRIVATE
     filtermanager.cpp
     mailfilteragent.cpp
     mailfilterpurposemenuwidget.cpp
+    dummykernel.h
+    filterlogdialog.h
+    filtermanager.h
+    mailfilteragent.h
+    mailfilterpurposemenuwidget.h
     ${akonadi_mailfilter_agent_SRCS}
     )
 

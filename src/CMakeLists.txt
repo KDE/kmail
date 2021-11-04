@@ -35,6 +35,9 @@ if (TARGET KUserFeedbackWidgets)
         userfeedback/accountinfosource.cpp
         userfeedback/plugininfosource.cpp
         userfeedback/kmailuserfeedbackprovider.cpp
+        userfeedback/accountinfosource.h
+        userfeedback/plugininfosource.h
+        userfeedback/kmailuserfeedbackprovider.h
         )
 endif()
 
@@ -171,6 +174,138 @@ target_sources(kmailprivate PRIVATE
     kmmigrateapplication.cpp
     kmail.qrc
     historyswitchfoldermanager.cpp
+
+    attributes/taskattribute.h
+    folderarchive/folderarchiveaccountinfo.h
+    folderarchive/folderarchiveutil.h
+    folderarchive/folderarchivecache.h
+    folderarchive/folderarchiveagentcheckcollection.h
+    folderarchive/folderarchivemanager.h
+    folderarchive/folderarchiveagentjob.h
+    collectionpage/collectiontemplatespage.h
+    collectionpage/collectionviewpage.h
+    collectionpage/collectionquotapage.h
+    collectionpage/collectionquotawidget.h
+    collectionpage/collectionmailinglistpage.h
+    collectionpage/collectionshortcutpage.h
+    configuredialog/configagentdelegate.h
+    configuredialog/configuredialoglistview.h
+    configuredialog/configuredialog.h
+    configuredialog/configuredialog_p.h
+    configuredialog/configuremiscpage.h
+    configuredialog/configuresecuritypage.h
+    configuredialog/configurecomposerpage.h
+    configuredialog/configureappearancepage.h
+    configuredialog/configureaccountpage.h
+    configuredialog/configurepluginpage.h
+    configuredialog/colorlistbox.h
+    configuredialog/configureplugins/configurepluginslistwidget.h
+    searchdialog/kmsearchmessagemodel.h
+    searchdialog/searchpatternwarning.h
+    searchdialog/kmailsearchpatternedit.h
+    searchdialog/searchwindow.h
+    searchdialog/searchdescriptionattribute.h
+    searchdialog/incompleteindexdialog.h
+    identity/identitylistview.h
+    identity/identitydialog.h
+    identity/xfaceconfigurator.h
+    identity/encodedimagepicker.h
+    identity/identitypage.h
+    identity/newidentitydialog.h
+    identity/identityeditvcarddialog.h
+    identity/identityaddvcarddialog.h
+    identity/identityinvalidfolder.h
+    identity/identityfolderrequester.h
+    editor/kmcomposereditorng.h
+    editor/composer.h
+    editor/codec/codecaction.h
+    editor/codec/codecmanager.h
+    editor/kmcomposerwin.h
+    editor/attachment/attachmentcontroller.h
+    editor/attachment/attachmentview.h
+    editor/widgets/cryptostateindicatorwidget.h
+    editor/validatesendmailshortcut.h
+    editor/kmcomposerglobalaction.h
+    editor/kmcomposerupdatetemplatejob.h
+    editor/kmcomposercreatenewcomposerjob.h
+    editor/pimmessagebox.h
+    editor/warningwidgets/externaleditorwarning.h
+    editor/warningwidgets/attachmentmissingwarning.h
+    editor/warningwidgets/incorrectidentityfolderwarning.h
+    editor/warningwidgets/attachmentaddedfromexternalwarning.h
+    editor/warningwidgets/toomanyrecipientswarning.h
+    editor/potentialphishingemail/potentialphishingemailwarning.h
+    editor/potentialphishingemail/potentialphishingemailjob.h
+    editor/potentialphishingemail/potentialphishingdetaildialog.h
+    editor/potentialphishingemail/potentialphishingdetailwidget.h
+    dialog/archivefolderdialog.h
+    dialog/addemailtoexistingcontactdialog.h
+    dialog/kmknotify.h
+    dialog/spellcheckerconfigdialog.h
+    job/addressvalidationjob.h
+    job/createnewcontactjob.h
+    job/addemailtoexistingcontactjob.h
+    job/createtaskjob.h
+    job/savedraftjob.h
+    job/removeduplicatemailjob.h
+    job/createfollowupreminderonexistingmessagejob.h
+    job/removecollectionjob.h
+    job/saveasfilejob.h
+    job/markallmessagesasreadinfolderandsubfolderjob.h
+    job/removeduplicatemessageinfolderandsubfolderjob.h
+    job/handleclickedurljob.h
+    job/composenewmessagejob.h
+    job/opencomposerjob.h
+    job/newmessagejob.h
+    job/opencomposerhiddenjob.h
+    job/fillcomposerjob.h
+    job/createreplymessagejob.h
+    job/createforwardmessagejob.h
+    job/dndfromarkjob.h
+    widgets/collectionpane.h
+    widgets/vacationscriptindicatorwidget.h
+    widgets/displaymessageformatactionmenu.h
+    widgets/kactionmenutransport.h
+    widgets/kactionmenuaccount.h
+    widgets/zoomlabelwidget.h
+    tag/tagactionmanager.h
+    tag/tagselectdialog.h
+    tag/tagmonitormanager.h
+    plugininterface/kmailplugininterface.h
+    plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h
+    editor/plugininterface/kmailplugineditormanagerinterface.h
+    editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h
+    editor/plugininterface/kmailplugineditorinitmanagerinterface.h
+    editor/plugininterface/kmailplugineditorconverttextmanagerinterface.h
+    editor/plugininterface/kmailplugingrammareditormanagerinterface.h
+    search/checkindexingmanager.h
+    search/checkindexingjob.h
+    sieveimapinterface/kmailsieveimapinstanceinterface.h
+    sieveimapinterface/kmsieveimappasswordprovider.h
+    undosend/undosendcombobox.h
+    undosend/undosendmanager.h
+    undosend/undosendcreatejob.h
+    kmmainwin.h
+    settings/kmailsettings.h
+    kmreaderwin.h
+    kmsystemtray.h
+    unityservicemanager.h
+    undostack.h
+    kmkernel.h
+    kmcommands.h
+    kmreadermainwin.h
+    kmmainwidget.h
+    aboutdata.h
+    mailserviceimpl.h
+    secondarywindow.h
+    util.h
+    messageactions.h
+    foldershortcutactionmanager.h
+    kmlaunchexternalcomponent.h
+    manageshowcollectionproperties.h
+    kmmigrateapplication.h
+    historyswitchfoldermanager.h
+
     )
 
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS

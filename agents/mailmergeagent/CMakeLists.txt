@@ -25,6 +25,11 @@ target_sources(mailmergeagent PRIVATE
     mailmergeconfiguredialog.cpp
     mailmergeconfigurewidget.cpp
     mailmergeutil.cpp
+    mailmergeagent.h
+    mailmergemanager.h
+    mailmergeconfiguredialog.h
+    mailmergeconfigurewidget.h
+    mailmergeutil.h
     ${mailmergeagent_SRCS}
     )
 

@@ -4,12 +4,17 @@ add_subdirectory(pics)
 add_executable(ktnef)
 
 target_sources(ktnef PRIVATE
+    main.cpp
     attachpropertydialog.cpp
     ktnefmain.cpp
     ktnefview.cpp
-    main.cpp
     messagepropertydialog.cpp
     qwmf.cpp
+    attachpropertydialog.h
+    ktnefmain.h
+    ktnefview.h
+    messagepropertydialog.h
+    qwmf.h
     ktnef.qrc
     )
 

@@ -5,6 +5,10 @@ target_sources(kmail-refresh-settings PRIVATE
     refreshsettringsfinishpage.cpp
     refreshsettingscleanuppage.cpp
     refreshsettingsfirstpage.cpp
+    refreshsettingsassistant.h
+    refreshsettringsfinishpage.h
+    refreshsettingscleanuppage.h
+    refreshsettingsfirstpage.h
     )
 
 ecm_qt_declare_logging_category(kmail-refresh-settings HEADER kmail-refresh-settings_debug.h IDENTIFIER KMAIL_REFRESH_SETTINGS_LOG CATEGORY_NAME org.kde.pim.kmail_refresh_settings
