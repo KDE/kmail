@@ -2789,8 +2789,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                           i18n("To: field is empty. "
                                                                "Send message anyway?"),
                                                           i18n("No To: specified"),
-                                                          KStandardGuiItem::yes(),
-                                                          KStandardGuiItem::no());
+                                                          KGuiItem(i18n("S&end as Is")),
+                                                          KGuiItem(i18n("&Specify the To field")));
                 if (rc == KMessageBox::No) {
                     return;
                 }

@@ -1124,7 +1124,11 @@ void AppearancePageMessageTagTab::slotRemoveTag()
     const int tmp_index = mTagListBox->currentRow();
     if (tmp_index >= 0) {
         if (KMessageBox::Yes
-            == KMessageBox::questionYesNo(this, i18n("Do you want to remove tag \'%1\'?", mTagListBox->item(mTagListBox->currentRow())->text()))) {
+            == KMessageBox::questionYesNo(this,
+                                          i18n("Do you want to remove tag \'%1\'?", mTagListBox->item(mTagListBox->currentRow())->text()),
+                                          i18nc("@title:window", "Remove Tag"),
+                                          KStandardGuiItem::remove(),
+                                          KStandardGuiItem::cancel())) {
             QListWidgetItem *item = mTagListBox->takeItem(mTagListBox->currentRow());
             auto tagItem = static_cast<TagListWidgetItem *>(item);
             MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
