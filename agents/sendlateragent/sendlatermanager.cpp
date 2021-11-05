@@ -186,11 +186,17 @@ void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType
             break;
         case TooManyItemFound:
         case CanNotFetchItem:
-        case CanNotCreateTransport:
-            if (KMessageBox::No == KMessageBox::questionYesNo(nullptr, i18n("An error was found. Do you want to resend it?"), i18n("Error found"))) {
+        case CanNotCreateTransport: {
+            const int answer = KMessageBox::questionYesNo(nullptr,
+                                                          i18n("An error was found. Do you want to resend it?"),
+                                                          i18n("Error found"),
+                                                          KGuiItem(i18nc("@action:button", "Resend"), QStringLiteral("mail-send")),
+                                                          KStandardGuiItem::cancel());
+            if (answer == KMessageBox::No) {
                 removeLaterInfo(info);
             }
             break;
+        }
         }
     }
     recreateSendList();

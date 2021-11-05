@@ -197,20 +197,21 @@ void SendLaterWidget::slotDeleteItem()
         return;
     }
     const int numberOfItems(listItems.count());
-    if (KMessageBox::warningYesNo(this,
-                                  i18np("Do you want to delete the selected item?", "Do you want to delete the selected items?", numberOfItems),
-                                  i18nc("@title:window", "Delete Items"))
-        == KMessageBox::No) {
+    int answer = KMessageBox::warningYesNo(this,
+                                           i18np("Do you want to delete the selected item?", "Do you want to delete the selected items?", numberOfItems),
+                                           i18nc("@title:window", "Delete Items"),
+                                           KStandardGuiItem::del(),
+                                           KStandardGuiItem::cancel());
+    if (answer == KMessageBox::No) {
         return;
     }
 
-    bool deleteMessage = false;
-    if (KMessageBox::warningYesNo(this,
-                                  i18np("Do you want to delete the message as well?", "Do you want to delete the messages as well?", numberOfItems),
-                                  i18nc("@title:window", "Delete Messages"))
-        == KMessageBox::Yes) {
-        deleteMessage = true;
-    }
+    answer = KMessageBox::warningYesNo(this,
+                                       i18np("Do you want to delete the message as well?", "Do you want to delete the messages as well?", numberOfItems),
+                                       i18nc("@title:window", "Delete Messages"),
+                                       KStandardGuiItem::del(),
+                                       KGuiItem(i18nc("@action:button", "Do Not Delete"), QStringLiteral("dialog-cancel")));
+    const bool deleteMessage = (answer == KMessageBox::Yes);
 
     for (QTreeWidgetItem *item : listItems) {
         if (deleteMessage) {

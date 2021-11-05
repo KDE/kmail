@@ -112,8 +112,12 @@ void OpenComposerJob::slotOpenComposer()
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
         if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
-            if (KMessageBox::questionYesNo(nullptr, i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()), i18n("Attach Folder"))
-                == KMessageBox::No) {
+            const int answer = KMessageBox::questionYesNo(nullptr,
+                                                          i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()),
+                                                          i18n("Attach Folder"),
+                                                          KGuiItem(i18nc("@action:button", "Attach"), QStringLiteral("dialog-ok")),
+                                                          KGuiItem(i18nc("@action:button", "Do Not Attach"), QStringLiteral("dialog-cancel")));
+            if (answer == KMessageBox::No) {
                 continue;
             }
         }

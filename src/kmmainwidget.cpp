@@ -308,8 +308,13 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     if (kmkernel->firstStart()) {
         const QStringList listOfMailerFound = MailCommon::Util::foundMailer();
         if (!listOfMailerFound.isEmpty()) {
-            if (KMessageBox::questionYesNoList(this, i18n("Another mailer was found on system. Do you want to import data from it?"), listOfMailerFound)
-                == KMessageBox::Yes) {
+            const int answer = KMessageBox::questionYesNoList(this,
+                                                              i18n("Another mailer was found on system. Do you want to import data from it?"),
+                                                              listOfMailerFound,
+                                                              QString(),
+                                                              KGuiItem(i18nc("@action:button", "Import"), QStringLiteral("document-import")),
+                                                              KGuiItem(i18nc("@action:button", "Do Not Import"), QStringLiteral("dialog-cancel")));
+            if (answer == KMessageBox::Yes) {
                 const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
                 if (!QProcess::startDetached(path, QStringList())) {
                     KMessageBox::error(this,

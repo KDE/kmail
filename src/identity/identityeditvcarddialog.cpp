@@ -55,7 +55,12 @@ void IdentityEditVcardDialog::slotDeleteCurrentVCard()
     if (mVcardFileName.isEmpty()) {
         return;
     }
-    if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure you want to delete this vCard?"), i18n("Delete vCard"))) {
+    const int answer = KMessageBox::questionYesNo(this,
+                                                  i18n("Are you sure you want to delete this vCard?"),
+                                                  i18n("Delete vCard"),
+                                                  KStandardGuiItem::del(),
+                                                  KStandardGuiItem::cancel());
+    if (answer == KMessageBox::Yes) {
         if (mVcardFileName.startsWith(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation))) {
             deleteCurrentVcard(true);
         } else {
@@ -117,7 +122,12 @@ QString IdentityEditVcardDialog::saveVcard() const
 
 void IdentityEditVcardDialog::reject()
 {
-    if (KMessageBox::questionYesNo(this, i18nc("@info", "Do you really want to cancel?"), i18nc("@title:window", "Confirmation")) == KMessageBox::Yes) {
+    const int answer = KMessageBox::questionYesNo(this,
+                                                  i18nc("@info", "Do you really want to cancel?"),
+                                                  i18nc("@title:window", "Confirmation"),
+                                                  KGuiItem(i18nc("@action:button", "Cancel Editing"), QStringLiteral("dialog-ok")),
+                                                  KGuiItem(i18nc("@action:button", "Do Not Cancel"), QStringLiteral("dialog-cancel")));
+    if (answer == KMessageBox::Yes) {
         QDialog::reject(); // Discard current changes
     }
 }

@@ -219,8 +219,11 @@ bool ArchiveMailWidget::save() const
 void ArchiveMailWidget::slotDeleteItem()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
-    if (KMessageBox::warningYesNo(parentWidget(), i18n("Do you want to delete the selected items?"), i18nc("@title:window", "Delete Items"))
-        == KMessageBox::No) {
+    const int answer = KMessageBox::warningYesNo(parentWidget(),
+                                                 i18n("Do you want to delete the selected items?"), i18nc("@title:window", "Delete Items"),
+                                                 KStandardGuiItem::del(),
+                                                 KStandardGuiItem::cancel());
+    if (answer == KMessageBox::No) {
         return;
     }
 

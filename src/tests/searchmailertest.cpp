@@ -15,7 +15,10 @@ int main(int argc, char **argv)
     if (!listOfMailerFound.isEmpty()) {
         if (KMessageBox::questionYesNoList(nullptr,
                                            QStringLiteral("Another mailer was found on system. Do you want to import data from it?"),
-                                           listOfMailerFound)
+                                           listOfMailerFound,
+                                           QString(),
+                                           KGuiItem(QStringLiteral("Import"), QStringLiteral("document-import")),
+                                           KGuiItem(QStringLiteral("Do Not Import"), QStringLiteral("dialog-cancel")))
             == KMessageBox::Yes) {
             qDebug() << " launch importwizard";
         } else {
