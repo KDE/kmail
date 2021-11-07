@@ -188,7 +188,7 @@ void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &po
             if (result == showMessage) {
                 openShowMessage(mailItem->info()->answerMessageItemId());
             } else if (result == deleteItem) {
-                removeItem(listItems);
+                deleteItems(listItems);
             }
         }
     }
@@ -200,7 +200,7 @@ void FollowUpReminderInfoWidget::openShowMessage(Akonadi::Item::Id id)
     job->start();
 }
 
-void FollowUpReminderInfoWidget::removeItem(const QList<QTreeWidgetItem *> &mailItemLst)
+void FollowUpReminderInfoWidget::deleteItems(const QList<QTreeWidgetItem *> &mailItemLst)
 {
     if (mailItemLst.isEmpty()) {
         qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "Not item selected";
@@ -208,8 +208,8 @@ void FollowUpReminderInfoWidget::removeItem(const QList<QTreeWidgetItem *> &mail
         if (KMessageBox::Yes
             == KMessageBox::warningYesNo(
                 this,
-                i18np("Do you want to remove this selected item?", "Do you want to remove these %1 selected items?", mailItemLst.count()),
-                i18n("Delete"))) {
+                i18np("Do you want to delete this selected item?", "Do you want to delete these %1 selected items?", mailItemLst.count()),
+                i18nc("@title:window", "Delete Items"))) {
             for (QTreeWidgetItem *item : mailItemLst) {
                 auto mailItem = static_cast<FollowUpReminderInfoItem *>(item);
                 mListRemoveId << mailItem->info()->uniqueIdentifier();

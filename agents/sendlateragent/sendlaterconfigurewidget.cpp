@@ -70,7 +70,7 @@ SendLaterWidget::SendLaterWidget(QWidget *parent)
 
     connect(mWidget->treeWidget, &QTreeWidget::customContextMenuRequested, this, &SendLaterWidget::slotCustomContextMenuRequested);
 
-    connect(mWidget->removeItem, &QPushButton::clicked, this, &SendLaterWidget::slotRemoveItem);
+    connect(mWidget->deleteItem, &QPushButton::clicked, this, &SendLaterWidget::slotDeleteItem);
     connect(mWidget->modifyItem, &QPushButton::clicked, this, &SendLaterWidget::slotModifyItem);
     connect(mWidget->treeWidget, &QTreeWidget::itemSelectionChanged, this, &SendLaterWidget::updateButtons);
     connect(mWidget->treeWidget, &QTreeWidget::itemDoubleClicked, this, &SendLaterWidget::slotModifyItem);
@@ -92,7 +92,7 @@ void SendLaterWidget::slotCustomContextMenuRequested(const QPoint &)
             menu.addAction(i18n("Send now"), this, &SendLaterWidget::slotSendNow);
         }
         menu.addSeparator();
-        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &SendLaterWidget::slotRemoveItem);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &SendLaterWidget::slotDeleteItem);
         menu.exec(QCursor::pos());
     }
 }
@@ -120,13 +120,13 @@ void SendLaterWidget::updateButtons()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
     if (listItems.isEmpty()) {
-        mWidget->removeItem->setEnabled(false);
+        mWidget->deleteItem->setEnabled(false);
         mWidget->modifyItem->setEnabled(false);
     } else if (listItems.count() == 1) {
-        mWidget->removeItem->setEnabled(true);
+        mWidget->deleteItem->setEnabled(true);
         mWidget->modifyItem->setEnabled(true);
     } else {
-        mWidget->removeItem->setEnabled(true);
+        mWidget->deleteItem->setEnabled(true);
         mWidget->modifyItem->setEnabled(false);
     }
 }
@@ -189,7 +189,7 @@ void SendLaterWidget::save()
     config->reparseConfiguration();
 }
 
-void SendLaterWidget::slotRemoveItem()
+void SendLaterWidget::slotDeleteItem()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
 
@@ -199,18 +199,21 @@ void SendLaterWidget::slotRemoveItem()
     const int numberOfItems(listItems.count());
     if (KMessageBox::warningYesNo(this,
                                   i18np("Do you want to delete the selected item?", "Do you want to delete the selected items?", numberOfItems),
-                                  i18n("Remove items"))
+                                  i18nc("@title:window", "Delete Items"))
         == KMessageBox::No) {
         return;
     }
 
-    bool removeMessage = false;
-    if (KMessageBox::warningYesNo(this, i18n("Do you want to remove the messages as well?"), i18n("Remove messages")) == KMessageBox::Yes) {
-        removeMessage = true;
+    bool deleteMessage = false;
+    if (KMessageBox::warningYesNo(this,
+                                  i18np("Do you want to delete the message as well?", "Do you want to delete the messages as well?", numberOfItems),
+                                  i18nc("@title:window", "Delete Messages"))
+        == KMessageBox::Yes) {
+        deleteMessage = true;
     }
 
     for (QTreeWidgetItem *item : listItems) {
-        if (removeMessage) {
+        if (deleteMessage) {
             auto mailItem = static_cast<SendLaterItem *>(item);
             if (mailItem->info()) {
                 Akonadi::Item::Id id = mailItem->info()->itemId();

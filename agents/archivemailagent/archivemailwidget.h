@@ -52,7 +52,7 @@ private:
     bool verifyExistingArchive(ArchiveMailInfo *info) const;
     void updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *info);
 
-    void slotRemoveItem();
+    void slotDeleteItem();
     void slotModifyItem();
     void slotAddItem();
     void updateButtons();

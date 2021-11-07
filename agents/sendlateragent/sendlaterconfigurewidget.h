@@ -55,7 +55,7 @@ Q_SIGNALS:
     void sendNow(Akonadi::Item::Id);
 
 private:
-    void slotRemoveItem();
+    void slotDeleteItem();
     void slotModifyItem();
     void updateButtons();
     void slotCustomContextMenuRequested(const QPoint &);

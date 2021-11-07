@@ -49,7 +49,7 @@ public:
 private:
     void slotCustomContextMenuRequested(const QPoint &pos);
     void createOrUpdateItem(FollowUpReminder::FollowUpReminderInfo *info, FollowUpReminderInfoItem *item = nullptr);
-    void removeItem(const QList<QTreeWidgetItem *> &mailItem);
+    void deleteItems(const QList<QTreeWidgetItem *> &mailItemLst);
     void openShowMessage(Akonadi::Item::Id id);
     enum ItemData {
         AnswerItemId = Qt::UserRole + 1,

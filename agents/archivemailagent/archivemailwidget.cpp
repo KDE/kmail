@@ -77,7 +77,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
 
     connect(mWidget.treeWidget, &QWidget::customContextMenuRequested, this, &ArchiveMailWidget::slotCustomContextMenuRequested);
 
-    connect(mWidget.removeItem, &QAbstractButton::clicked, this, &ArchiveMailWidget::slotRemoveItem);
+    connect(mWidget.deleteItem, &QAbstractButton::clicked, this, &ArchiveMailWidget::slotDeleteItem);
     connect(mWidget.modifyItem, &QAbstractButton::clicked, this, &ArchiveMailWidget::slotModifyItem);
     connect(mWidget.addItem, &QAbstractButton::clicked, this, &ArchiveMailWidget::slotAddItem);
     connect(mWidget.treeWidget, &QTreeWidget::itemChanged, this, &ArchiveMailWidget::slotItemChanged);
@@ -110,7 +110,7 @@ void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
             menu.addAction(i18n("Open Containing Folder..."), this, &ArchiveMailWidget::slotOpenFolder);
         }
         menu.addSeparator();
-        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &ArchiveMailWidget::slotRemoveItem);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &ArchiveMailWidget::slotDeleteItem);
     }
     menu.exec(QCursor::pos());
 }
@@ -119,13 +119,13 @@ void ArchiveMailWidget::updateButtons()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
     if (listItems.isEmpty()) {
-        mWidget.removeItem->setEnabled(false);
+        mWidget.deleteItem->setEnabled(false);
         mWidget.modifyItem->setEnabled(false);
     } else if (listItems.count() == 1) {
-        mWidget.removeItem->setEnabled(true);
+        mWidget.deleteItem->setEnabled(true);
         mWidget.modifyItem->setEnabled(true);
     } else {
-        mWidget.removeItem->setEnabled(true);
+        mWidget.deleteItem->setEnabled(true);
         mWidget.modifyItem->setEnabled(false);
     }
 }
@@ -216,10 +216,11 @@ bool ArchiveMailWidget::save() const
     return true;
 }
 
-void ArchiveMailWidget::slotRemoveItem()
+void ArchiveMailWidget::slotDeleteItem()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
-    if (KMessageBox::warningYesNo(parentWidget(), i18n("Do you want to delete the selected items?"), i18n("Remove items")) == KMessageBox::No) {
+    if (KMessageBox::warningYesNo(parentWidget(), i18n("Do you want to delete the selected items?"), i18nc("@title:window", "Delete Items"))
+        == KMessageBox::No) {
         return;
     }
 
