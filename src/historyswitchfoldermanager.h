@@ -19,7 +19,7 @@ public:
     ~HistorySwitchFolderManager() override;
     // Add static method
     void clear();
-    void addHistory(const Akonadi::Collection &currentCol, const Akonadi::Collection &col);
+    void addHistory(const Akonadi::Collection &currentCol, const Akonadi::Collection &col, const QString &fullPath = {});
 
     void changeCollection(const Akonadi::Collection &currentCol);
 
@@ -36,7 +36,10 @@ private:
 class HistorySwitchFolderCommand : public QUndoCommand
 {
 public:
-    explicit HistorySwitchFolderCommand(HistorySwitchFolderManager *manager, const Akonadi::Collection &currentCol, const Akonadi::Collection &col);
+    explicit HistorySwitchFolderCommand(HistorySwitchFolderManager *manager,
+                                        const Akonadi::Collection &currentCol,
+                                        const Akonadi::Collection &col,
+                                        const QString &realPath);
 
     void undo() override;
     void redo() override;
@@ -44,5 +47,6 @@ public:
 private:
     const Akonadi::Collection mCurrentCollection;
     const Akonadi::Collection mNewCollection;
+    QString mFullPath;
     HistorySwitchFolderManager *const mManager;
 };
