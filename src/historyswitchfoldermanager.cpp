@@ -61,6 +61,7 @@ HistorySwitchFolderCommand::HistorySwitchFolderCommand(HistorySwitchFolderManage
                                                        const QString &realPath)
     : mCurrentCollection(currentCol)
     , mNewCollection(col)
+    , mFullPath(realPath)
     , mManager(manager)
 {
 }

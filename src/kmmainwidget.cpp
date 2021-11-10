@@ -484,7 +484,7 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
     if (mCurrentCollection == collection) {
         return;
     }
-    mHistorySwitchFolderManager->addHistory(mCurrentCollection, collection);
+    mHistorySwitchFolderManager->addHistory(mCurrentCollection, collection, MailCommon::Util::fullCollectionPath(collection));
 }
 
 void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection)
