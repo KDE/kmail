@@ -13,6 +13,11 @@ class CollectionSwitcherModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
+    enum CollectionInfoRole {
+        CollectionFullPath = Qt::UserRole + 1,
+        CollectionAkonadId,
+    };
+
     struct CollectionInfo {
         const Akonadi::Collection mNewCollection;
         QString mFullPath;

@@ -29,14 +29,13 @@ QVariant CollectionSwitcherModel::data(const QModelIndex &index, int role) const
     if (index.row() < 0 || index.row() >= mCollectionsInfo.count()) {
         return {};
     }
-    const CollectionInfo cat = mCollectionsInfo.at(index.row());
-#if 0 // TODO implement it.
+    const CollectionInfo collectionInfo = mCollectionsInfo.at(index.row());
     switch (role) {
-    case Name:
-        return cat.name();
-    case Category:
-        return cat.category();
+    case Qt::DisplayRole:
+    case CollectionFullPath:
+        return collectionInfo.mFullPath;
+    case CollectionAkonadId:
+        return collectionInfo.mNewCollection.id();
     }
-#endif
     return {};
 }
