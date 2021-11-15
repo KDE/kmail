@@ -305,7 +305,8 @@ target_sources(kmailprivate PRIVATE
     manageshowcollectionproperties.h
     kmmigrateapplication.h
     historyswitchfolder/historyswitchfoldermanager.h
-
+    historyswitchfolder/collectionswitchertreeview.cpp
+    historyswitchfolder/collectionswitchertreeview.h
     )
 
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
@@ -521,6 +522,7 @@ if(BUILD_TESTING)
     add_subdirectory(sieveimapinterface/tests/)
     add_subdirectory(undosend/autotests/)
     add_subdirectory(job/autotests/)
+    add_subdirectory(historyswitchfolder/autotests/)
 endif()
 ########### install files ###############
 install(TARGETS kmailprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
