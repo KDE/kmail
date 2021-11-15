@@ -92,6 +92,7 @@ class MailFilter;
 class QStatusBar;
 class KMailPluginCheckBeforeDeletingManagerInterface;
 class HistorySwitchFolderManager;
+class CollectionSwitcherTreeViewManager;
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
     Q_OBJECT
@@ -530,6 +531,8 @@ private:
     void slotAccountSettings();
     void updateDisplayFormatMessage();
     void slotHistorySwitchFolder(const Akonadi::Collection &collection);
+    void redoSwitchFolder();
+    void undoSwitchFolder();
 
     // Message actions
     QAction *mDeleteAction = nullptr;
@@ -654,5 +657,6 @@ private:
 #endif
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
     HistorySwitchFolderManager *const mHistorySwitchFolderManager;
+    CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
 };
 

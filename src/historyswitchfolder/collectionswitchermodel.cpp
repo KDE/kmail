@@ -39,3 +39,16 @@ QVariant CollectionSwitcherModel::data(const QModelIndex &index, int role) const
     }
     return {};
 }
+
+void CollectionSwitcherModel::addHistory(const Akonadi::Collection &currentCol, const QString &fullPath)
+{
+    mCollectionsInfo.append({currentCol, fullPath});
+}
+
+const Akonadi::Collection CollectionSwitcherModel::collection(int index)
+{
+    if (index < 0 || index >= mCollectionsInfo.count()) {
+        return {};
+    }
+    return mCollectionsInfo.at(index).mNewCollection;
+}

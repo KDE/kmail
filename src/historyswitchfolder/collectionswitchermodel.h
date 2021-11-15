@@ -19,6 +19,13 @@ public:
     };
 
     struct CollectionInfo {
+        CollectionInfo(){};
+        CollectionInfo(const Akonadi::Collection &col, const QString &path)
+            : mNewCollection(col)
+            , mFullPath(path)
+        {
+        }
+
         const Akonadi::Collection mNewCollection;
         QString mFullPath;
     };
@@ -28,6 +35,10 @@ public:
 
     Q_REQUIRED_RESULT int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     Q_REQUIRED_RESULT QVariant data(const QModelIndex &index, int role) const override;
+
+    void addHistory(const Akonadi::Collection &currentCol, const QString &fullPath = {});
+
+    Q_REQUIRED_RESULT const Akonadi::Collection collection(int index);
 
 private:
     QVector<CollectionInfo> mCollectionsInfo;
