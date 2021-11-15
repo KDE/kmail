@@ -10,7 +10,6 @@
 #include <QUndoStack>
 class QUndoStack;
 
-
 class HistorySwitchFolderManager : public QObject
 {
     Q_OBJECT

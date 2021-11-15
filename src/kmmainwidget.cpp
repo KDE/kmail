@@ -134,7 +134,7 @@
 
 #include <PimCommon/LogActivitiesManager>
 
-#include "historyswitchfoldermanager.h"
+#include "historyswitchfolder/historyswitchfoldermanager.h"
 #include "kmail_debug.h"
 
 #include <KAcceleratorManager>

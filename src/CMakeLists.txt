@@ -173,7 +173,7 @@ target_sources(kmailprivate PRIVATE
     manageshowcollectionproperties.cpp
     kmmigrateapplication.cpp
     kmail.qrc
-    historyswitchfoldermanager.cpp
+    historyswitchfolder/historyswitchfoldermanager.cpp
 
     attributes/taskattribute.h
     folderarchive/folderarchiveaccountinfo.h
@@ -304,7 +304,7 @@ target_sources(kmailprivate PRIVATE
     kmlaunchexternalcomponent.h
     manageshowcollectionproperties.h
     kmmigrateapplication.h
-    historyswitchfoldermanager.h
+    historyswitchfolder/historyswitchfoldermanager.h
 
     )
 
