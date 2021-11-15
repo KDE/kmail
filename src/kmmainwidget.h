@@ -91,7 +91,6 @@ class MailFilter;
 }
 class QStatusBar;
 class KMailPluginCheckBeforeDeletingManagerInterface;
-class HistorySwitchFolderManager;
 class CollectionSwitcherTreeViewManager;
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
@@ -656,7 +655,6 @@ private:
     KUserFeedback::NotificationPopup *mUserFeedBackNotificationPopup = nullptr;
 #endif
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
-    HistorySwitchFolderManager *const mHistorySwitchFolderManager;
     CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
 };
 
