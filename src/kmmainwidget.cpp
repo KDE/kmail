@@ -176,6 +176,7 @@
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/RemoteContentMenu>
 
+#include "historyswitchfolder/collectionswitchertreeviewmanager.h"
 #include "plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h"
 
 #ifdef WITH_KUSERFEEDBACK
@@ -202,6 +203,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     , mLaunchExternalComponent(new KMLaunchExternalComponent(this, this))
     , mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
     , mHistorySwitchFolderManager(new HistorySwitchFolderManager(this))
+    , mCollectionSwitcherTreeViewManager(new CollectionSwitcherTreeViewManager(this))
 {
     // must be the first line of the constructor:
     mStartupDone = false;
@@ -338,6 +340,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
 
     setupUnifiedMailboxChecker();
     connect(mHistorySwitchFolderManager, &HistorySwitchFolderManager::switchToFolder, this, &KMMainWidget::slotHistorySwitchFolder);
+    mCollectionSwitcherTreeViewManager->setParentWidget(this);
 }
 
 QWidget *KMMainWidget::dkimWidgetInfo() const
@@ -485,6 +488,7 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
         return;
     }
     mHistorySwitchFolderManager->addHistory(mCurrentCollection, collection, MailCommon::Util::fullCollectionPath(collection));
+    mCollectionSwitcherTreeViewManager->addHistory(collection, MailCommon::Util::fullCollectionPath(collection));
 }
 
 void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection)
@@ -3525,17 +3529,34 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("resource_restart"), mRestartAccountSettings);
     connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
     {
+        QList<QAction *> listActions;
         auto act = new QAction(i18n("Previous Selected Folder"), this); // TODO fix me i18n
         actionCollection()->setDefaultShortcut(act, QKeySequence(Qt::CTRL | Qt::Key_Tab));
         actionCollection()->addAction(QStringLiteral("previous_folder"), act);
+        listActions.append(act);
 
-        connect(act, &QAction::triggered, mHistorySwitchFolderManager, &HistorySwitchFolderManager::undo);
+        connect(act, &QAction::triggered, this, &KMMainWidget::undoSwitchFolder);
 
         act = new QAction(i18n("Next Selected Folder"), this); // TODO fix me i18n
         actionCollection()->addAction(QStringLiteral("next_folder"), act);
         actionCollection()->setDefaultShortcut(act, QKeySequence(Qt::SHIFT | Qt::Key_Tab | Qt::CTRL));
-        connect(act, &QAction::triggered, mHistorySwitchFolderManager, &HistorySwitchFolderManager::redo);
+        connect(act, &QAction::triggered, this, &KMMainWidget::redoSwitchFolder);
+        listActions.append(act);
+
+        mCollectionSwitcherTreeViewManager->addActions(listActions);
     }
+}
+
+void KMMainWidget::redoSwitchFolder()
+{
+    mHistorySwitchFolderManager->redo();
+    mCollectionSwitcherTreeViewManager->selectBackward();
+}
+
+void KMMainWidget::undoSwitchFolder()
+{
+    mHistorySwitchFolderManager->undo();
+    mCollectionSwitcherTreeViewManager->selectForward();
 }
 
 void KMMainWidget::slotAddFavoriteFolder()
