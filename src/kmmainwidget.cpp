@@ -134,7 +134,6 @@
 
 #include <PimCommon/LogActivitiesManager>
 
-#include "historyswitchfolder/historyswitchfoldermanager.h"
 #include "kmail_debug.h"
 
 #include <KAcceleratorManager>
@@ -202,7 +201,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     : QWidget(parent)
     , mLaunchExternalComponent(new KMLaunchExternalComponent(this, this))
     , mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
-    , mHistorySwitchFolderManager(new HistorySwitchFolderManager(this))
     , mCollectionSwitcherTreeViewManager(new CollectionSwitcherTreeViewManager(this))
 {
     // must be the first line of the constructor:
@@ -339,8 +337,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     connect(&mCheckMailTimer, &QTimer::timeout, this, &KMMainWidget::slotUpdateActionsAfterMailChecking);
 
     setupUnifiedMailboxChecker();
-    connect(mHistorySwitchFolderManager, &HistorySwitchFolderManager::switchToFolder, this, &KMMainWidget::slotHistorySwitchFolder);
     mCollectionSwitcherTreeViewManager->setParentWidget(this);
+    connect(mCollectionSwitcherTreeViewManager, &CollectionSwitcherTreeViewManager::switchToFolder, this, &KMMainWidget::slotHistorySwitchFolder);
 }
 
 QWidget *KMMainWidget::dkimWidgetInfo() const
@@ -487,8 +485,8 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
     if (mCurrentCollection == collection) {
         return;
     }
-    mHistorySwitchFolderManager->addHistory(mCurrentCollection, collection, MailCommon::Util::fullCollectionPath(collection));
     mCollectionSwitcherTreeViewManager->addHistory(collection, MailCommon::Util::fullCollectionPath(collection));
+    slotHistorySwitchFolder(collection);
 }
 
 void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection)
@@ -3549,13 +3547,11 @@ void KMMainWidget::setupActions()
 
 void KMMainWidget::redoSwitchFolder()
 {
-    mHistorySwitchFolderManager->redo();
     mCollectionSwitcherTreeViewManager->selectBackward();
 }
 
 void KMMainWidget::undoSwitchFolder()
 {
-    mHistorySwitchFolderManager->undo();
     mCollectionSwitcherTreeViewManager->selectForward();
 }
 
