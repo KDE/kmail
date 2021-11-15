@@ -307,6 +307,8 @@ target_sources(kmailprivate PRIVATE
     historyswitchfolder/historyswitchfoldermanager.h
     historyswitchfolder/collectionswitchertreeview.cpp
     historyswitchfolder/collectionswitchertreeview.h
+    historyswitchfolder/collectionswitchertreeviewmanager.h
+    historyswitchfolder/collectionswitchertreeviewmanager.cpp
     )
 
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
