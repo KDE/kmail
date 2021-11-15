@@ -14,4 +14,10 @@ class CollectionSwitcherTreeViewManager : public QObject
 public:
     explicit CollectionSwitcherTreeViewManager(QObject *parent = nullptr);
     ~CollectionSwitcherTreeViewManager() override;
+
+    Q_REQUIRED_RESULT QWidget *parentWidget() const;
+    void setParentWidget(QWidget *newParentWidget);
+
+private:
+    QWidget *mParentWidget = nullptr;
 };

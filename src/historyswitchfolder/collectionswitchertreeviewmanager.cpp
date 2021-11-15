@@ -15,3 +15,13 @@ CollectionSwitcherTreeViewManager::CollectionSwitcherTreeViewManager(QObject *pa
 CollectionSwitcherTreeViewManager::~CollectionSwitcherTreeViewManager()
 {
 }
+
+QWidget *CollectionSwitcherTreeViewManager::parentWidget() const
+{
+    return mParentWidget;
+}
+
+void CollectionSwitcherTreeViewManager::setParentWidget(QWidget *newParentWidget)
+{
+    mParentWidget = newParentWidget;
+}
