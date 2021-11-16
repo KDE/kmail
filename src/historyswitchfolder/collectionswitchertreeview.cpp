@@ -60,5 +60,6 @@ void CollectionSwitcherTreeView::keyPressEvent(QKeyEvent *event)
 void CollectionSwitcherTreeView::showEvent(QShowEvent *event)
 {
     resizeColumnsToContents();
+    reset();
     QTreeView::showEvent(event);
 }
