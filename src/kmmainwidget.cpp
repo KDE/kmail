@@ -491,6 +491,9 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
 
 void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection)
 {
+    if (mCurrentCollection == collection) {
+        return;
+    }
     if (mFolderTreeWidget) {
         mFolderTreeWidget->selectCollectionFolder(collection, false); // Don't expand treewidget
     }
