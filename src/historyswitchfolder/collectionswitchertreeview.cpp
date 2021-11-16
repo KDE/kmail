@@ -28,13 +28,12 @@ CollectionSwitcherTreeView::~CollectionSwitcherTreeView()
 
 int CollectionSwitcherTreeView::sizeHintWidth() const
 {
-    return sizeHintForColumn(0) + sizeHintForColumn(1);
+    return sizeHintForColumn(0);
 }
 
 void CollectionSwitcherTreeView::resizeColumnsToContents()
 {
     resizeColumnToContents(0);
-    resizeColumnToContents(1);
 }
 
 void CollectionSwitcherTreeView::keyReleaseEvent(QKeyEvent *event)
