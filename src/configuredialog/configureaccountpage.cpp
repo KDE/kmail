@@ -226,9 +226,8 @@ void AccountsPageReceivingTab::slotAddMailAccount()
 void AccountsPageReceivingTab::slotCustomizeAccountOrder()
 {
     if (KMKernel::self()) {
-        QPointer<MailCommon::AccountConfigOrderDialog> dlg = new MailCommon::AccountConfigOrderDialog(KMKernel::self()->mailCommonSettings(), this);
-        dlg->exec();
-        delete dlg;
+        MailCommon::AccountConfigOrderDialog dlg(KMKernel::self()->mailCommonSettings(), this);
+        dlg.exec();
     }
 }
 
@@ -370,11 +369,11 @@ void AccountsPageReceivingTab::save()
 
 LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mLdapConfigureWidget(new KLDAP::LdapConfigureWidget(this))
 {
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
-    mLdapConfigureWidget = new KLDAP::LdapConfigureWidget(this);
     layout->addWidget(mLdapConfigureWidget);
 
     connect(mLdapConfigureWidget, &KLDAP::LdapConfigureWidget::changed, this, qOverload<bool>(&LdapCompetionTab::changed));

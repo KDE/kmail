@@ -55,7 +55,7 @@ private:
     void doLoadOther() override;
 
 private:
-    KLDAP::LdapConfigureWidget *mLdapConfigureWidget = nullptr;
+    KLDAP::LdapConfigureWidget *const mLdapConfigureWidget;
 };
 
 class AccountsPageReceivingTab : public ConfigModuleTab
