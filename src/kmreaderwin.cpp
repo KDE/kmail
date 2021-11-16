@@ -67,6 +67,13 @@ using namespace MessageViewer;
 
 #include <MailCommon/MailUtil>
 
+#include "ki18n_version.h"
+#if KI18N_VERSION >= QT_VERSION_CHECK(5, 89, 0)
+#include <klazylocalizedstring.h>
+#undef I18N_NOOP
+#define I18N_NOOP kli18n
+#endif
+
 using namespace KMail;
 using namespace MailCommon;
 
@@ -243,7 +250,11 @@ void KMReaderWin::hasMultiMessages(bool multi)
 }
 
 // enter items for the "Important changes" list here:
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
 static const char *const kmailChanges[] = {
+#else
+static const KLazyLocalizedString kmailChanges[] = {
+#endif
     I18N_NOOP("KMail is now based on the Akonadi Personal Information Management framework, which brings many "
               "changes all around.")};
 static const int numKMailChanges = sizeof kmailChanges / sizeof *kmailChanges;
@@ -252,7 +263,12 @@ static const int numKMailChanges = sizeof kmailChanges / sizeof *kmailChanges;
 // the welcome page can be left untouched (probably much easier for
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
 static const char *const kmailNewFeatures[] = {
+#else
+static const KLazyLocalizedString kmailNewFeatures[] = {
+#endif
+
     I18N_NOOP("Push email (IMAP IDLE)"),
     I18N_NOOP("Improved searches"),
     I18N_NOOP("Support for adding notes (annotations) to mails"),
@@ -273,10 +289,18 @@ QString KMReaderWin::newFeaturesMD5()
 {
     QByteArray str;
     for (int i = 0; i < numKMailChanges; ++i) {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         str += kmailChanges[i];
+#else
+        str += KLocalizedString(kmailChanges[i]).untranslatedText();
+#endif
     }
     for (int i = 0; i < numKMailNewFeatures; ++i) {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         str += kmailNewFeatures[i];
+#else
+        str += KLocalizedString(kmailNewFeatures[i]).untranslatedText();
+#endif
     }
     QCryptographicHash md5(QCryptographicHash::Md5);
     md5.addData(str);
@@ -332,14 +356,22 @@ void KMReaderWin::displayAboutPage()
     QVariantList features;
     features.reserve(numKMailNewFeatures);
     for (int i = 0; i < numKMailNewFeatures; ++i) {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         features.push_back(i18n(kmailNewFeatures[i]));
+#else
+        features.push_back(KLocalizedString(kmailNewFeatures[i]).toString());
+#endif
     }
     data[QStringLiteral("newFeatures")] = features;
 
     QVariantList changes;
     changes.reserve(numKMailChanges);
     for (int i = 0; i < numKMailChanges; ++i) {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         features.push_back(i18n(kmailChanges[i]));
+#else
+        features.push_back(KLocalizedString(kmailChanges[i]).toString());
+#endif
     }
     data[QStringLiteral("importantChanges")] = changes;
 

@@ -56,6 +56,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <KMime/DateFormatter>
 
+#include "ki18n_version.h"
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QFontDatabase>
@@ -66,6 +67,11 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWhatsThis>
+#if KI18N_VERSION >= QT_VERSION_CHECK(5, 89, 0)
+#include <klazylocalizedstring.h>
+#undef I18N_NOOP
+#define I18N_NOOP kli18n
+#endif
 
 using KMime::DateFormatter;
 using namespace MailCommon;
@@ -123,7 +129,11 @@ QString AppearancePageFontsTab::helpAnchor() const
 
 static const struct {
     const char *configName;
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
     const char *displayName;
+#else
+    const KLazyLocalizedString displayName;
+#endif
     bool enableFamilyAndSize;
     bool onlyFixed;
 } fontNames[] = {
@@ -159,7 +169,11 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     QStringList fontDescriptions;
     fontDescriptions.reserve(numFontNames);
     for (int i = 0; i < numFontNames; ++i) {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         fontDescriptions << i18n(fontNames[i].displayName);
+#else
+        fontDescriptions << KLocalizedString(fontNames[i].displayName).toString();
+#endif
     }
     mFontLocationCombo->addItems(fontDescriptions);
 
@@ -297,7 +311,11 @@ QString AppearancePageColorsTab::helpAnchor() const
 
 static const struct {
     const char *configName;
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
     const char *displayName;
+#else
+    const KLazyLocalizedString displayName;
+#endif
 } colorNames[] = { // adjust doLoadOther if you change this:
     {"QuotedText1", I18N_NOOP("Quoted Text - First Level")},
     {"QuotedText2", I18N_NOOP("Quoted Text - Second Level")},
@@ -329,7 +347,11 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     mColorList = new ColorListBox(this);
     mColorList->setEnabled(false); // since !mCustomColorCheck->isChecked()
     for (int i = 0; i < numColorNames; ++i) {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         mColorList->addColor(i18n(colorNames[i].displayName));
+#else
+        mColorList->addColor(KLocalizedString(colorNames[i].displayName).toString());
+#endif
     }
     vlay->addWidget(mColorList, 1);
 
@@ -558,7 +580,11 @@ QString AppearancePageHeadersTab::helpAnchor() const
 }
 
 static const struct {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
     const char *displayName;
+#else
+    const KLazyLocalizedString displayName;
+#endif
     DateFormatter::FormatType dateDisplay;
 } dateDisplayConfig[] = {{I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime},
                          {I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized},
@@ -614,7 +640,12 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     mDateDisplay->setExclusive(true);
 
     for (int i = 0; i < numDateDisplayConfig; ++i) {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         const char *label = dateDisplayConfig[i].displayName;
+#else
+        const char *label = KLocalizedString(dateDisplayConfig[i].displayName).toString().toLatin1().constData();
+#endif
+
         QString buttonLabel;
         if (QString::fromLatin1(label).contains(QLatin1String("%1"))) {
             buttonLabel = i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
