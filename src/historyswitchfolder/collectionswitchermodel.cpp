@@ -42,6 +42,9 @@ QVariant CollectionSwitcherModel::data(const QModelIndex &index, int role) const
 
 void CollectionSwitcherModel::addHistory(const Akonadi::Collection &currentCol, const QString &fullPath)
 {
+    if (mCollectionsInfo.count() > 10) {
+        mCollectionsInfo.takeFirst();
+    }
     mCollectionsInfo.append({currentCol, fullPath});
     Q_EMIT dataChanged(createIndex(0, 0), createIndex(mCollectionsInfo.size() - 1, 1), {});
 }
