@@ -65,7 +65,7 @@ option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branc
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngine WebEngineWidgets)
 set(LIBGRAVATAR_VERSION "5.19.40")
-set(MAILCOMMON_LIB_VERSION "5.19.40")
+set(MAILCOMMON_LIB_VERSION "5.19.41")
 set(MESSAGELIB_LIB_VERSION "5.19.40")
 set(LIBKLEO_LIB_VERSION "5.19.40")
 set(PIMCOMMON_LIB_VERSION "5.19.40")
@@ -153,7 +153,7 @@ if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055800)
+add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055900)
 
 find_package(KUserFeedback 1.0.0 CONFIG)
 set_package_properties(KUserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional). It can be disable in apps.")
