@@ -21,11 +21,11 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QGpgME/CryptoConfig>
 #include <QGpgME/Protocol>
 
-#include "kcmutils_version.h"
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginMetaData>
+#include <kcmutils_version.h>
 
 #include <QButtonGroup>
 #include <QDBusConnection>

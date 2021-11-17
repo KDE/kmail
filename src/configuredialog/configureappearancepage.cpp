@@ -56,7 +56,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <KMime/DateFormatter>
 
-#include "ki18n_version.h"
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QFontDatabase>
@@ -67,8 +66,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWhatsThis>
+#include <ki18n_version.h>
 #if KI18N_VERSION >= QT_VERSION_CHECK(5, 89, 0)
-#include <klazylocalizedstring.h>
+#include <KLazyLocalizedString>
 #undef I18N_NOOP
 #define I18N_NOOP kli18n
 #endif
