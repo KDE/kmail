@@ -117,9 +117,12 @@ void FollowUpReminderInfoWidget::createOrUpdateItem(FollowUpReminder::FollowUpRe
     }
     item->setInfo(info);
     item->setText(To, info->to());
+    item->setToolTip(To, info->to());
     item->setText(Subject, info->subject());
+    item->setToolTip(Subject, info->subject());
     const QString date = QLocale().toString(info->followUpReminderDate());
     item->setText(DeadLine, date);
+    item->setToolTip(DeadLine, date);
     const bool answerWasReceived = info->answerWasReceived();
     item->setText(AnswerWasReceived, answerWasReceived ? i18n("Received") : i18n("On hold"));
     item->setData(0, AnswerItemFound, answerWasReceived);
