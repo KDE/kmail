@@ -8,3 +8,4 @@ endmacro ()
 
 
 add_kmail_historyswitchfolder_unittest(collectionswitchertreeviewtest.cpp)
+add_kmail_historyswitchfolder_unittest(collectionswitchertreeviewmanagertest.cpp)
