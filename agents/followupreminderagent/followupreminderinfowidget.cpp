@@ -177,6 +177,7 @@ void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &po
     if (nbElementSelected > 0) {
         QMenu menu(this);
         QAction *showMessage = nullptr;
+        QAction *showOriginalMessage = nullptr;
         FollowUpReminderInfoItem *mailItem = nullptr;
         if ((nbElementSelected == 1)) {
             mailItem = static_cast<FollowUpReminderInfoItem *>(listItems.at(0));
@@ -184,6 +185,8 @@ void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &po
                 showMessage = menu.addAction(i18n("Show Message"));
                 menu.addSeparator();
             }
+            showOriginalMessage = menu.addAction(i18n("Show Original Message"));
+            menu.addSeparator();
         }
         QAction *deleteItem = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"));
         QAction *result = menu.exec(QCursor::pos());
@@ -192,6 +195,8 @@ void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &po
                 openShowMessage(mailItem->info()->answerMessageItemId());
             } else if (result == deleteItem) {
                 deleteItems(listItems);
+            } else if (result == showOriginalMessage) {
+                openShowMessage(mailItem->info()->originalMessageItemId());
             }
         }
     }

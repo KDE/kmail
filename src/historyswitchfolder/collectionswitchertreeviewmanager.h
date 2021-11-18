@@ -6,13 +6,15 @@ SPDX-License-Identifier: GPL-2.0-only
 */
 #pragma once
 
+#include "kmail_private_export.h"
 #include <Akonadi/Collection>
 #include <QList>
 #include <QObject>
 class CollectionSwitcherTreeView;
 class CollectionSwitcherModel;
 class QAction;
-class CollectionSwitcherTreeViewManager : public QObject
+
+class KMAILTESTS_TESTS_EXPORT CollectionSwitcherTreeViewManager : public QObject
 {
     Q_OBJECT
 public:
@@ -28,7 +30,7 @@ public:
     void selectBackward();
     void updateViewGeometry();
 
-    void addHistory(const Akonadi::Collection &currentCol, const QString &fullPath = {});
+    void addHistory(const Akonadi::Collection &currentCol, const QString &fullPath);
 
 Q_SIGNALS:
     void switchToFolder(const Akonadi::Collection &col);
