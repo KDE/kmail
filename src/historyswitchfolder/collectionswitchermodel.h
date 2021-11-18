@@ -27,7 +27,7 @@ public:
         }
 
         const Akonadi::Collection mNewCollection;
-        QString mFullPath;
+        const QString mFullPath;
     };
 
     explicit CollectionSwitcherModel(QObject *parent = nullptr);
