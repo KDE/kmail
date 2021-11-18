@@ -86,6 +86,11 @@ void CollectionSwitcherTreeViewManager::selectCollection(const int from, const i
     mCollectionSwitcherTreeView->selectionModel()->setCurrentIndex(index, QItemSelectionModel::SelectCurrent | QItemSelectionModel::Rows);
 }
 
+CollectionSwitcherTreeView *CollectionSwitcherTreeViewManager::collectionSwitcherTreeView() const
+{
+    return mCollectionSwitcherTreeView;
+}
+
 void CollectionSwitcherTreeViewManager::selectForward()
 {
     selectCollection(0, mCollectionSwitcherModel->rowCount() - 1);
