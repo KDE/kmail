@@ -32,6 +32,8 @@ public:
 
     void addHistory(const Akonadi::Collection &currentCol, const QString &fullPath);
 
+    Q_REQUIRED_RESULT CollectionSwitcherTreeView *collectionSwitcherTreeView() const;
+
 Q_SIGNALS:
     void switchToFolder(const Akonadi::Collection &col);
 
