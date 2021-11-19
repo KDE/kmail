@@ -36,7 +36,7 @@ public:
     {
     }
 
-    QVariant data(const QModelIndex &index, int role) const override
+    Q_REQUIRED_RESULT QVariant data(const QModelIndex &index, int role) const override
     {
         if (role == Qt::CheckStateRole) {
             // Make top-level collections uncheckable
@@ -49,7 +49,7 @@ public:
         return QSortFilterProxyModel::data(index, role);
     }
 
-    Qt::ItemFlags flags(const QModelIndex &index) const override
+    Q_REQUIRED_RESULT Qt::ItemFlags flags(const QModelIndex &index) const override
     {
         // Make top-level collections uncheckable
         const auto col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
@@ -60,7 +60,7 @@ public:
         }
     }
 
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override
+    Q_REQUIRED_RESULT bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override
     {
         // Hide ourselves
         const auto sourceIndex = sourceModel()->index(source_row, 0, source_parent);
