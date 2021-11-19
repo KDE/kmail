@@ -185,7 +185,7 @@ void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &po
                 showMessage = menu.addAction(i18n("Show Message"));
                 menu.addSeparator();
             }
-            showOriginalMessage = menu.addAction(i18n("Show Original Message"));
+            showOriginalMessage = menu.addAction(QIcon::fromTheme(QStringLiteral("mail-message")), i18n("Show Original Message"));
             menu.addSeparator();
         }
         QAction *deleteItem = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"));
