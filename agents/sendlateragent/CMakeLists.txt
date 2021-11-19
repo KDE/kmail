@@ -15,18 +15,20 @@ ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debu
     )
 
 
-set(sendlateragentconfig_SRCS
+set(libsendlateragent_SRCS
     sendlaterconfiguredialog.cpp
     sendlaterconfigurewidget.cpp
-    )
-
-set(libsendlateragent_SRCS
-    ${sendlateragentconfig_SRCS}
-    ${sendlater_common_SRCS}
     sendlatermanager.cpp
     sendlaterjob.cpp
     sendlaterremovemessagejob.cpp
     sendlaterutil.cpp
+    sendlaterconfiguredialog.h
+    sendlaterconfigurewidget.h
+    sendlatermanager.h
+    sendlaterjob.h
+    sendlaterremovemessagejob.h
+    sendlaterutil.h
+    ${sendlater_common_SRCS}
     )
 
 set(sendlateragent_SRCS

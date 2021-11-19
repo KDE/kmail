@@ -643,7 +643,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
 #if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         const char *label = dateDisplayConfig[i].displayName;
 #else
-        const char *label = KLocalizedString(dateDisplayConfig[i].displayName).toString().toLatin1().constData();
+        const char *label = KLocalizedString(dateDisplayConfig[i].displayName).untranslatedText().constData();
 #endif
 
         QString buttonLabel;

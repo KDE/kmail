@@ -9,6 +9,11 @@ target_sources(archivemailagent PRIVATE
     archivemailinfo.cpp
     job/archivejob.cpp
     archivemailagentutil.cpp
+    archivemailkernel.h
+    archivemailmanager.h
+    archivemailinfo.h
+    job/archivejob.h
+    archivemailagentutil.h
     )
 
 kconfig_add_kcfg_files(archivemailagent
@@ -42,7 +47,7 @@ target_link_libraries(archivemailagent
 
 ########################### Agent executable ################################
 
-add_executable(akonadi_archivemail_agent archivemailagent.cpp)
+add_executable(akonadi_archivemail_agent archivemailagent.cpp archivemailagent.h)
 
 target_link_libraries(akonadi_archivemail_agent
     archivemailagent
