@@ -20,7 +20,7 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
 {
     setToolTip(serverName);
     setPixmap(QIcon::fromTheme(QStringLiteral("network-server")).pixmap(16, 16));
-    setStyleSheet(QStringLiteral("background-color: %1;").arg(QColor(Qt::yellow).name()));
+    setStyleSheet(QStringLiteral("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
     setContentsMargins(2, 0, 4, 0);
 }
 
