@@ -160,11 +160,17 @@ void ArchiveMailWidget::createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailIte
     if (!item) {
         item = new ArchiveMailItem(mWidget.treeWidget);
     }
-    item->setText(ArchiveMailWidget::Name, i18n("Folder: %1", MailCommon::Util::fullCollectionPath(Akonadi::Collection(info->saveCollectionId()))));
+    const QString folderName = i18n("Folder: %1", MailCommon::Util::fullCollectionPath(Akonadi::Collection(info->saveCollectionId())));
+    item->setText(ArchiveMailWidget::Name, folderName);
+    item->setToolTip(ArchiveMailWidget::Name, folderName);
     item->setCheckState(ArchiveMailWidget::Name, info->isEnabled() ? Qt::Checked : Qt::Unchecked);
-    item->setText(ArchiveMailWidget::StorageDirectory, info->url().toLocalFile());
+    const QString path{info->url().toLocalFile()};
+    item->setText(ArchiveMailWidget::StorageDirectory, path);
+    item->setToolTip(ArchiveMailWidget::StorageDirectory, path);
     if (info->lastDateSaved().isValid()) {
-        item->setText(ArchiveMailWidget::LastArchiveDate, QLocale().toString(info->lastDateSaved(), QLocale::ShortFormat));
+        const QString date{QLocale().toString(info->lastDateSaved(), QLocale::ShortFormat)};
+        item->setText(ArchiveMailWidget::LastArchiveDate, date);
+        item->setToolTip(ArchiveMailWidget::LastArchiveDate, date);
         updateDiffDate(item, info);
     } else {
         item->setBackground(ArchiveMailWidget::NextArchive, Qt::green);
@@ -176,7 +182,8 @@ void ArchiveMailWidget::updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *i
 {
     const QDate diffDate = ArchiveMailAgentUtil::diffDate(info);
     const qint64 diff = QDate::currentDate().daysTo(diffDate);
-    item->setText(ArchiveMailWidget::NextArchive, i18np("Tomorrow", "%1 days", diff));
+    const QString dateStr{i18np("Tomorrow", "%1 days", diff)};
+    item->setText(ArchiveMailWidget::NextArchive, dateStr);
     if (diff < 0) {
         if (info->isEnabled()) {
             item->setBackground(ArchiveMailWidget::NextArchive, Qt::red);
