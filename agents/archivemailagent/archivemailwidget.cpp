@@ -107,6 +107,7 @@ void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add..."), this, &ArchiveMailWidget::slotAddItem);
     if (!listItems.isEmpty()) {
         if (listItems.count() == 1) {
+            menu.addSeparator();
             menu.addAction(i18n("Open Containing Folder..."), this, &ArchiveMailWidget::slotOpenFolder);
         }
         menu.addSeparator();
