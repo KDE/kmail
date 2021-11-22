@@ -108,6 +108,8 @@ void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
     if (!listItems.isEmpty()) {
         if (listItems.count() == 1) {
             menu.addSeparator();
+            menu.addAction(mWidget.modifyItem->text(), this, &ArchiveMailWidget::slotModifyItem);
+            menu.addSeparator();
             menu.addAction(i18n("Open Containing Folder..."), this, &ArchiveMailWidget::slotOpenFolder);
         }
         menu.addSeparator();
