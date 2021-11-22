@@ -89,6 +89,8 @@ void SendLaterWidget::slotCustomContextMenuRequested(const QPoint &)
     if (!listItems.isEmpty()) {
         QMenu menu(this);
         if (listItems.count() == 1) {
+            menu.addAction(mWidget->modifyItem->text(), this, &SendLaterWidget::slotModifyItem);
+            menu.addSeparator();
             menu.addAction(i18n("Send now"), this, &SendLaterWidget::slotSendNow);
         }
         menu.addSeparator();
@@ -157,9 +159,14 @@ void SendLaterWidget::createOrUpdateItem(MessageComposer::SendLaterInfo *info, S
 #ifdef DEBUG_MESSAGE_ID
     item->setText(MessageId, QString::number(info->itemId()));
 #endif
-    item->setText(SendAround, info->dateTime().toString());
-    item->setText(Subject, info->subject());
+    const QString date{info->dateTime().toString()};
+    item->setText(SendAround, date);
+    item->setToolTip(SendAround, date);
+    const QString subject{info->subject()};
+    item->setText(Subject, subject);
+    item->setToolTip(Subject, subject);
     item->setText(To, info->to());
+    item->setToolTip(To, info->to());
     item->setInfo(info);
     mWidget->treeWidget->setShowDefaultText(false);
 }
