@@ -74,10 +74,12 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, mOnStartupOpenFolder, &MailCommon::FolderRequester::setEnabled);
     connect(mMMTab.mDeleteMessagesWithoutConfirmation, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mEnableFolderDragAndDrop, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
 }
 
 void MiscPageFolderTab::doLoadFromGlobalSettings()
 {
+    loadWidget(mMMTab.mEnableFolderDragAndDrop, KMailSettings::self()->enableFolderDnDItem());
     loadWidget(mMMTab.mExcludeImportantFromExpiry, KMailSettings::self()->excludeImportantMailFromExpiryItem());
     // default = "Loop in current folder"
     loadWidget(mMMTab.mLoopOnGotoUnread, KMailSettings::self()->loopOnGotoUnreadItem());
@@ -113,6 +115,7 @@ void MiscPageFolderTab::save()
     saveCheckBox(mMMTab.mShowPopupAfterDnD, KMailSettings::self()->showPopupAfterDnDItem());
     saveCheckBox(mMMTab.mStartUpFolderCheck, KMailSettings::self()->startSpecificFolderAtStartupItem());
     saveCheckBox(mMMTab.mDeleteMessagesWithoutConfirmation, KMailSettings::self()->deleteMessageWithoutConfirmationItem());
+    saveCheckBox(mMMTab.mEnableFolderDragAndDrop, KMailSettings::self()->enableFolderDnDItem());
 }
 
 MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)

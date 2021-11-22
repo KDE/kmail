@@ -40,6 +40,11 @@
         </choices>
         <default>DontLoop</default>
       </entry>
+      <entry name="EnableFolderDnD"  type="Bool">
+        <label></label>
+        <whatsthis></whatsthis>
+        <default>true</default>
+      </entry>
       <entry name="ShowPopupAfterDnD"  type="Bool">
         <label></label>
         <whatsthis></whatsthis>

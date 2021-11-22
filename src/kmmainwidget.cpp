@@ -827,6 +827,7 @@ void KMMainWidget::refreshFavoriteFoldersViewProperties()
             Q_ASSERT(false); // we should never get here in hidden mode
         }
         mFavoriteCollectionsView->setDropActionMenuEnabled(kmkernel->showPopupAfterDnD());
+        mFolderTreeWidget->folderTreeView()->setEnableDragDrop(KMailSettings::self()->enableFolderDnD());
         mFavoriteCollectionsView->setWordWrap(true);
         mFavoriteCollectionsView->updateMode();
     }
@@ -1013,6 +1014,7 @@ void KMMainWidget::createWidgets()
     opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
     opt |= FolderTreeWidget::DontKeyFilter;
     mFolderTreeWidget = new FolderTreeWidget(this, mGUIClient, opt);
+    mFolderTreeWidget->folderTreeView()->setEnableDragDrop(KMailSettings::self()->enableFolderDnD());
 
     connect(mFolderTreeWidget->folderTreeView(),
             qOverload<const Akonadi::Collection &>(&EntityTreeView::currentChanged),
