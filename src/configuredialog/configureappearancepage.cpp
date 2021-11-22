@@ -648,7 +648,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
 
         QString buttonLabel;
         if (QString::fromLatin1(label).contains(QLatin1String("%1"))) {
+#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
             buttonLabel = i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
+#else
+            buttonLabel = KLocalizedString(dateDisplayConfig[i].displayName)
+                              .subs(DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay))
+                              .toString(); // i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
+#endif
         } else {
             buttonLabel = i18n(label);
         }
