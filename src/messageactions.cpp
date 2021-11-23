@@ -658,7 +658,7 @@ void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
         protocol = i18n("web");
     }
     // item is a mailing list url description passed from the updateActions method above.
-    auto *act =
+    auto act =
         new QAction(i18nc("%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or email though could be irc/ftp or other url variant",
                           "%1 (%2)",
                           item,

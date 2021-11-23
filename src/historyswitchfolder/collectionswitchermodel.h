@@ -19,7 +19,7 @@ public:
     };
 
     struct CollectionInfo {
-        CollectionInfo(){};
+        CollectionInfo() = default;
         CollectionInfo(const Akonadi::Collection &col, const QString &path)
             : mNewCollection(col)
             , mFullPath(path)

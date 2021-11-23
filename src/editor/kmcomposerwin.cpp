@@ -807,7 +807,7 @@ MessageComposer::Composer *KMComposerWin::createSimpleComposer()
     mComposerBase->setFrom(from());
     mComposerBase->setSubject(subject());
     mComposerBase->setCharsets(charsets);
-    MessageComposer::Composer *composer = new MessageComposer::Composer();
+    auto composer = new MessageComposer::Composer();
     mComposerBase->fillComposer(composer);
     return composer;
 }
@@ -826,7 +826,7 @@ void KMComposerWin::slotUpdateView()
 
     // This sucks awfully, but no, I cannot get an activated(int id) from
     // actionContainer()
-    auto *act = ::qobject_cast<KToggleAction *>(sender());
+    auto act = ::qobject_cast<KToggleAction *>(sender());
     if (!act) {
         return;
     }
@@ -1469,7 +1469,7 @@ void KMComposerWin::setupActions()
 
 void KMComposerWin::updateHamburgerMenu()
 {
-    QMenu *menu = new QMenu(this);
+    auto menu = new QMenu(this);
     menu->addAction(actionCollection()->action(QStringLiteral("new_composer")));
     menu->addSeparator();
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Undo))));
@@ -2685,7 +2685,7 @@ void KMComposerWin::slotPrintPreview()
 
 void KMComposerWin::printComposer(bool preview)
 {
-    MessageComposer::Composer *composer = new MessageComposer::Composer();
+    auto composer = new MessageComposer::Composer();
     mComposerBase->fillComposer(composer);
     mMiscComposers.append(composer);
     composer->setProperty("preview", preview);

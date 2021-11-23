@@ -12,9 +12,7 @@ CollectionSwitcherModel::CollectionSwitcherModel(QObject *parent)
 {
 }
 
-CollectionSwitcherModel::~CollectionSwitcherModel()
-{
-}
+CollectionSwitcherModel::~CollectionSwitcherModel() = default;
 
 int CollectionSwitcherModel::rowCount(const QModelIndex &parent) const
 {

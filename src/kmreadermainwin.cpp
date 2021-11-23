@@ -362,7 +362,7 @@ void KMReaderMainWin::slotForwardAttachedMessage()
 
 void KMReaderMainWin::slotNewMessageToRecipients()
 {
-    auto *job = new ComposeNewMessageJob;
+    auto job = new ComposeNewMessageJob;
 
     const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection();
     if (parentCol.isValid()) {
@@ -537,8 +537,8 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
     KMMainWidget *mainwin = kmkernel->getKMMainWidget();
     if (mainwin) {
         Akonadi::StandardActionManager *manager = mainwin->standardMailActionManager()->standardActionManager();
-        const auto *mainWinAction = manager->action(Akonadi::StandardActionManager::CopyItemToMenu);
-        auto *action = new KActionMenu(menu);
+        const auto mainWinAction = manager->action(Akonadi::StandardActionManager::CopyItemToMenu);
+        auto action = new KActionMenu(menu);
         action->setIcon(mainWinAction->icon());
         action->setText(mainWinAction->text());
         manager->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::CopyItemToMenu);
@@ -553,8 +553,8 @@ QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
     KMMainWidget *mainwin = kmkernel->getKMMainWidget();
     if (mainwin) {
         Akonadi::StandardActionManager *manager = mainwin->standardMailActionManager()->standardActionManager();
-        const auto *mainWinAction = manager->action(Akonadi::StandardActionManager::MoveItemToMenu);
-        auto *action = new KActionMenu(menu);
+        const auto mainWinAction = manager->action(Akonadi::StandardActionManager::MoveItemToMenu);
+        auto action = new KActionMenu(menu);
         action->setIcon(mainWinAction->icon());
         action->setText(mainWinAction->text());
         manager->createActionFolderMenu(action->menu(), Akonadi::StandardActionManager::MoveItemToMenu);

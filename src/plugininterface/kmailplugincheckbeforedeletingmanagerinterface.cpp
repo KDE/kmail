@@ -15,9 +15,7 @@ KMailPluginCheckBeforeDeletingManagerInterface::KMailPluginCheckBeforeDeletingMa
 {
 }
 
-KMailPluginCheckBeforeDeletingManagerInterface::~KMailPluginCheckBeforeDeletingManagerInterface()
-{
-}
+KMailPluginCheckBeforeDeletingManagerInterface::~KMailPluginCheckBeforeDeletingManagerInterface() = default;
 
 void KMailPluginCheckBeforeDeletingManagerInterface::initializePlugins()
 {

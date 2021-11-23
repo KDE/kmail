@@ -22,9 +22,7 @@ CollectionSwitcherTreeView::CollectionSwitcherTreeView(QWidget *parent)
     setRootIsDecorated(false);
 }
 
-CollectionSwitcherTreeView::~CollectionSwitcherTreeView()
-{
-}
+CollectionSwitcherTreeView::~CollectionSwitcherTreeView() = default;
 
 int CollectionSwitcherTreeView::sizeHintWidth() const
 {

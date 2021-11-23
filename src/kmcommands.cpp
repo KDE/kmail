@@ -187,7 +187,7 @@ const Akonadi::Item::List KMCommand::retrievedMsgs() const
 Akonadi::Item KMCommand::retrievedMessage() const
 {
     if (mRetrievedMsgs.isEmpty()) {
-        return Akonadi::Item();
+        return {};
     }
     return *(mRetrievedMsgs.begin());
 }
@@ -1042,7 +1042,7 @@ KMCommand::Result KMRedirectCommand::execute()
         factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
 
         if (transportId == -1) {
-            const auto *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+            const auto transportAttribute = item.attribute<MailTransport::TransportAttribute>();
             if (transportAttribute) {
                 transportId = transportAttribute->transportId();
                 const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById(transportId);
@@ -1052,7 +1052,7 @@ KMCommand::Result KMRedirectCommand::execute()
             }
         }
 
-        const auto *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
+        const auto sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
         QString fcc;
         if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
             fcc = QString::number(sentAttribute->moveToCollection().id());
@@ -1600,7 +1600,7 @@ Akonadi::Collection KMTrashMsgCommand::findTrashFolder(const Akonadi::Collection
     if (folder != col) {
         return col;
     }
-    return Akonadi::Collection();
+    return {};
 }
 
 KMCommand::Result KMTrashMsgCommand::execute()

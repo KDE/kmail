@@ -19,6 +19,4 @@ TooManyRecipientsWarning::TooManyRecipientsWarning(QWidget *parent)
                   MessageComposer::MessageComposerSettings::self()->maximumRecipients()));
 }
 
-TooManyRecipientsWarning::~TooManyRecipientsWarning()
-{
-}
+TooManyRecipientsWarning::~TooManyRecipientsWarning() = default;

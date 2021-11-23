@@ -152,7 +152,7 @@ void KMComposerWinTest::testSignature()
     composer->show();
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
-    auto *signature = composer->findChild<QLabel *>(QStringLiteral("signatureindicator"));
+    auto signature = composer->findChild<QLabel *>(QStringLiteral("signatureindicator"));
     QVERIFY(signature);
     QCOMPARE(signature->isVisible(), sign);
     composer->close();
@@ -186,7 +186,7 @@ void KMComposerWinTest::testEncryption()
     composer->show();
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
-    auto *encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(encryption);
     QCOMPARE(encryption->isVisible(), encrypt);
     composer->close();

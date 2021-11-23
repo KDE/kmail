@@ -121,7 +121,7 @@ IdentityListView::IdentityListView(QWidget *parent)
 void IdentityListView::editItem(QTreeWidgetItem *item, int column)
 {
     if (column == 0 && item) {
-        auto *lvItem = dynamic_cast<IdentityListViewItem *>(item);
+        auto lvItem = dynamic_cast<IdentityListViewItem *>(item);
         if (lvItem) {
             KIdentityManagement::Identity &ident = lvItem->identity();
             if (ident.isDefault()) {
@@ -154,7 +154,7 @@ void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
 {
     QTreeWidgetItem *item = itemAt(pos);
     if (item) {
-        auto *lvItem = dynamic_cast<IdentityListViewItem *>(item);
+        auto lvItem = dynamic_cast<IdentityListViewItem *>(item);
         if (lvItem) {
             Q_EMIT contextMenu(lvItem, viewport()->mapToGlobal(pos));
         }
@@ -166,7 +166,7 @@ void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
 #ifndef QT_NO_DRAGANDDROP
 void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
 {
-    auto *item = dynamic_cast<IdentityListViewItem *>(currentItem());
+    auto item = dynamic_cast<IdentityListViewItem *>(currentItem());
     if (!item) {
         return;
     }

@@ -320,7 +320,7 @@ void SearchWindow::activateFolder(const Akonadi::Collection &collection)
         if (collection.hasAttribute<Akonadi::SearchDescriptionAttribute>()) {
             currentFolderIsSearchFolder = true; // FIXME is there a better way to tell?
 
-            const auto *searchDescription = collection.attribute<Akonadi::SearchDescriptionAttribute>();
+            const auto searchDescription = collection.attribute<Akonadi::SearchDescriptionAttribute>();
             mSearchPattern.deserialize(searchDescription->description());
 
             const QList<Akonadi::Collection::Id> lst = searchDescription->listCollection();
@@ -541,7 +541,7 @@ void SearchWindow::searchDone(KJob *job)
         // the server, for easy retrieval when editing it again
         const QByteArray search = mSearchPattern.serialize();
         Q_ASSERT(!search.isEmpty());
-        auto *searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>(Akonadi::Collection::AddIfMissing);
+        auto searchDescription = mFolder.attribute<Akonadi::SearchDescriptionAttribute>(Akonadi::Collection::AddIfMissing);
         searchDescription->setDescription(search);
         if (mUi.mChkMultiFolders->isChecked()) {
             searchDescription->setBaseCollection(Akonadi::Collection());

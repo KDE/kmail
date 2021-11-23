@@ -52,7 +52,7 @@ void RemoveDuplicateMailJob::start()
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
 {
-    auto *item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
+    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
     if (item) {
         item->setComplete();
         item->setStatus(i18n("Done"));
@@ -66,7 +66,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item)
 {
-    auto *job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
+    auto job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
     if (job) {
         job->kill(KJob::Quietly);
     }
@@ -78,7 +78,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *it
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesUpdate(KJob *job, const QString &description)
 {
-    auto *item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
+    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
     if (item) {
         item->setStatus(description);
     }

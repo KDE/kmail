@@ -192,7 +192,6 @@ using namespace MailCommon;
 using KMail::SearchWindow;
 using KMime::Types::AddrSpecList;
 using KPIM::ProgressManager;
-using MessageViewer::AttachmentStrategy;
 using PimCommon::BroadcastStatus;
 
 static KMMainWidget *myMainWidget = nullptr;
@@ -2057,7 +2056,7 @@ void KMMainWidget::slotNewMessageToRecipients()
         return;
     }
 
-    auto *job = new ComposeNewMessageJob;
+    auto job = new ComposeNewMessageJob;
     job->setFolderSettings(mCurrentFolderSettings);
     job->setCurrentCollection(mCurrentCollection);
     job->setRecipientsFromMessage(selectedMessages.constFirst());
@@ -3791,7 +3790,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/ mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
     mMsgActions->newToRecipientsAction()->setEnabled(single_actions);
 
-    if (auto *menuCustom = mMsgActions->customTemplatesMenu()) {
+    if (auto menuCustom = mMsgActions->customTemplatesMenu()) {
         menuCustom->forwardActionMenu()->setEnabled(mass_actions);
         menuCustom->replyActionMenu()->setEnabled(single_actions);
         menuCustom->replyAllActionMenu()->setEnabled(single_actions);

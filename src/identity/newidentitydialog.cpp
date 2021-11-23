@@ -27,7 +27,7 @@
 
 #include <QDialogButtonBox>
 #include <QPushButton>
-#include <assert.h>
+#include <cassert>
 
 using namespace KMail;
 

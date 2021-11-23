@@ -12,9 +12,7 @@ KMSieveImapPasswordProvider::KMSieveImapPasswordProvider(QObject *parent)
 {
 }
 
-KMSieveImapPasswordProvider::~KMSieveImapPasswordProvider()
-{
-}
+KMSieveImapPasswordProvider::~KMSieveImapPasswordProvider() = default;
 
 void KMSieveImapPasswordProvider::passwords(const QString &identifier)
 {

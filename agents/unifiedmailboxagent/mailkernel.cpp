@@ -101,7 +101,7 @@ qreal MailKernel::closeToQuotaThreshold()
 QStringList MailKernel::customTemplates()
 {
     Q_ASSERT(false);
-    return QStringList();
+    return {};
 }
 
 bool MailKernel::excludeImportantMailFromExpiry()

@@ -968,7 +968,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     }
     if (collection.isValid()) {
         ident.setFcc(QString::number(collection.id()));
-        auto *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("mail-folder-sent"));
         // It will also start a CollectionModifyJob
         Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::SentMail, collection);
@@ -982,7 +982,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     }
     if (collection.isValid()) {
         ident.setDrafts(QString::number(collection.id()));
-        auto *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-properties"));
         // It will also start a CollectionModifyJob
         Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Drafts, collection);
@@ -996,7 +996,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     }
     if (collection.isValid()) {
         ident.setTemplates(QString::number(collection.id()));
-        auto *attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-new"));
         // It will also start a CollectionModifyJob
         Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Templates, collection);

@@ -98,7 +98,7 @@ KMMainWin::~KMMainWin()
 
 void KMMainWin::updateHamburgerMenu()
 {
-    QMenu *menu = new QMenu(this);
+    auto menu = new QMenu(this);
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Open))));
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::SaveAs))));
     menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Print))));

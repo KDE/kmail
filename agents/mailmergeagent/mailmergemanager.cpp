@@ -11,9 +11,7 @@ MailMergeManager::MailMergeManager(QObject *parent)
 {
 }
 
-MailMergeManager::~MailMergeManager()
-{
-}
+MailMergeManager::~MailMergeManager() = default;
 
 QString MailMergeManager::printDebugInfo() const
 {

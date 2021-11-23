@@ -1244,7 +1244,7 @@ void KMKernel::dumpDeadLetters()
     // make all composer windows autosave their contents
     const auto lst = KMainWindow::memberList();
     for (KMainWindow *window : lst) {
-        if (auto *win = ::qobject_cast<KMail::Composer *>(window)) {
+        if (auto win = ::qobject_cast<KMail::Composer *>(window)) {
             win->autoSaveMessage(true);
 
             while (win->isComposing()) {

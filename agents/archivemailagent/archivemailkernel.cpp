@@ -96,7 +96,7 @@ qreal ArchiveMailKernel::closeToQuotaThreshold()
 QStringList ArchiveMailKernel::customTemplates()
 {
     Q_ASSERT(false);
-    return QStringList();
+    return {};
 }
 
 bool ArchiveMailKernel::excludeImportantMailFromExpiry()

@@ -92,7 +92,7 @@ void KMCommandsTest::resetIdentities()
 void KMCommandsTest::verifyEncryption(bool encrypt)
 {
     const KMainWindow *w = mKernel->mainWin();
-    auto *encryption = w->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto encryption = w->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(encryption);
     QCOMPARE(encryption->isVisible(), encrypt);
 }
@@ -100,7 +100,7 @@ void KMCommandsTest::verifyEncryption(bool encrypt)
 void KMCommandsTest::verifySignature(bool sign)
 {
     const KMainWindow *w = mKernel->mainWin();
-    auto *signature = w->findChild<QLabel *>(QStringLiteral("signatureindicator"));
+    auto signature = w->findChild<QLabel *>(QStringLiteral("signatureindicator"));
     QVERIFY(signature);
     QCOMPARE(signature->isVisible(), sign);
 }
@@ -113,7 +113,7 @@ void KMCommandsTest::testMailtoReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
+        auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -123,7 +123,7 @@ void KMCommandsTest::testMailtoReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
+        auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
@@ -133,7 +133,7 @@ void KMCommandsTest::testMailtoReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
+        auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -148,7 +148,7 @@ void KMCommandsTest::testReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -158,7 +158,7 @@ void KMCommandsTest::testReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
@@ -168,7 +168,7 @@ void KMCommandsTest::testReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -187,7 +187,7 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
@@ -197,7 +197,7 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
@@ -207,7 +207,7 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        auto *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();

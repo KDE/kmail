@@ -14,6 +14,4 @@ MailMergeConfigureWidget::MailMergeConfigureWidget(QWidget *parent)
     mWidget->setupUi(this);
 }
 
-MailMergeConfigureWidget::~MailMergeConfigureWidget()
-{
-}
+MailMergeConfigureWidget::~MailMergeConfigureWidget() = default;
