@@ -85,7 +85,8 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     auto removeButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18n("Remove"));
     removeButton->setEnabled(false);
     v->addWidget(removeButton);
-    connect(removeButton, &QPushButton::clicked, this, [this, view]() {
+
+    const auto removeMailBox = [this, view]() {
         const auto indexes = view->selectionModel()->selectedIndexes();
         if (!indexes.isEmpty()) {
             auto item = mBoxModel->itemFromIndex(indexes[0]);
@@ -101,7 +102,8 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
                 mBoxManager.saveBoxes();
             }
         }
-    });
+    };
+    connect(removeButton, &QPushButton::clicked, this, removeMailBox);
     v->addStretch(1);
 
     connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, [view, editButton, removeButton]() {
