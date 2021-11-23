@@ -20,6 +20,7 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <QMenu>
 
 #include <memory>
 
@@ -49,7 +50,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     h->addLayout(v);
     auto addButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-add-symbolic")), i18n("Add"));
     v->addWidget(addButton);
-    connect(addButton, &QPushButton::clicked, this, [this]() {
+    const auto addMailBox = [this]() {
         auto mailbox = std::make_unique<UnifiedMailbox>();
         auto editor = new UnifiedMailboxEditor(mailbox.get(), mConfig, this);
         if (editor->exec()) {
@@ -59,7 +60,9 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
             mBoxManager.saveBoxes();
         }
         delete editor;
-    });
+    };
+    connect(addButton, &QPushButton::clicked, this, addMailBox);
+
     auto editButton = new QPushButton(QIcon::fromTheme(QStringLiteral("entry-edit")), i18n("Modify"));
     editButton->setEnabled(false);
     v->addWidget(editButton);
@@ -115,6 +118,30 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     auto box = new QDialogButtonBox(QDialogButtonBox::Close, this);
     connect(box, &QDialogButtonBox::rejected, this, &SettingsDialog::reject);
     l->addWidget(box);
+    view->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(view, &QListView::customContextMenuRequested, this, [=](const QPoint &pos) {
+        Q_UNUSED(pos);
+        const auto mboxSelected = view->selectionModel()->selectedIndexes();
+        QMenu menu(this);
+        QAction *addAction = menu.addAction(QIcon::fromTheme(QStringLiteral("list-add-symbolic")), i18n("Add"));
+        QAction *removeAction = nullptr;
+        QAction *editAction = nullptr;
+        if (!mboxSelected.isEmpty()) {
+            editAction = menu.addAction(QIcon::fromTheme(QStringLiteral("entry-edit")), i18n("Modify"));
+            menu.addSeparator();
+            removeAction = menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18n("Remove"));
+        }
+        QAction *result = menu.exec(QCursor::pos());
+        if (result) {
+            if (result == addAction) {
+                addMailBox();
+            } else if (result == removeAction) {
+                removeMailBox();
+            } else if (result == editAction) {
+                modifyMailBox();
+            }
+        }
+    });
 
     loadBoxes();
     readConfig();
