@@ -238,6 +238,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mFolder(Akonadi::Collection(-1))
     , mId(id)
     , mContext(context)
+    , mAttachmentMissing(new AttachmentMissingWarning(this))
+    , mExternalEditorWarning(new ExternalEditorWarning(this))
     , mTooMyRecipientWarning(new TooManyRecipientsWarning(this))
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
@@ -359,7 +361,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
     vbox->addWidget(mPotentialPhishingEmailWarning);
 
-    mAttachmentMissing = new AttachmentMissingWarning(this);
     connect(mAttachmentMissing, &AttachmentMissingWarning::attachMissingFile, this, &KMComposerWin::slotAttachMissingFile);
     connect(mAttachmentMissing, &AttachmentMissingWarning::explicitClosedMissingAttachment, this, &KMComposerWin::slotExplicitClosedMissingAttachment);
     vbox->addWidget(mAttachmentMissing);
@@ -437,7 +438,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     }
     connect(attachmentController, &KMail::AttachmentController::fileAttached, mAttachmentMissing, &AttachmentMissingWarning::slotFileAttached);
 
-    mExternalEditorWarning = new ExternalEditorWarning(this);
     v->addWidget(mExternalEditorWarning);
 
     mPluginEditorManagerInterface->setParentWidget(this);

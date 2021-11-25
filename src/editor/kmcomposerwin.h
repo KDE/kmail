@@ -676,8 +676,8 @@ private:
 
     MailCommon::SnippetTreeView *mSnippetWidget = nullptr;
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
-    AttachmentMissingWarning *mAttachmentMissing = nullptr;
-    ExternalEditorWarning *mExternalEditorWarning = nullptr;
+    AttachmentMissingWarning *const mAttachmentMissing;
+    ExternalEditorWarning *const mExternalEditorWarning;
     TooManyRecipientsWarning *const mTooMyRecipientWarning;
     QTimer *mVerifyMissingAttachment = nullptr;
     MailCommon::FolderRequester *mFccFolder = nullptr;
