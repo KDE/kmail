@@ -678,7 +678,7 @@ private:
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
     AttachmentMissingWarning *mAttachmentMissing = nullptr;
     ExternalEditorWarning *mExternalEditorWarning = nullptr;
-    TooManyRecipientsWarning *mTooMyRecipientWarning = nullptr;
+    TooManyRecipientsWarning *const mTooMyRecipientWarning;
     QTimer *mVerifyMissingAttachment = nullptr;
     MailCommon::FolderRequester *mFccFolder = nullptr;
     bool mPreventFccOverwrite = false;
@@ -691,7 +691,7 @@ private:
     MessageComposer::StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode = nullptr;
     MessageComposer::StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode = nullptr;
     PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning = nullptr;
-    IncorrectIdentityFolderWarning *mIncorrectIdentityFolderWarning = nullptr;
+    IncorrectIdentityFolderWarning *const mIncorrectIdentityFolderWarning;
     KMComposerGlobalAction *mGlobalAction = nullptr;
     KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget = nullptr;
 

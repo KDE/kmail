@@ -239,6 +239,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mId(id)
     , mContext(context)
     , mTooMyRecipientWarning(new TooManyRecipientsWarning(this))
+    , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
 
@@ -373,12 +374,11 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(composerEditorNg, &KMComposerEditorNg::selectionChanged, this, &KMComposerWin::slotSelectionChanged);
     // connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor(composerEditorNg);
-    mIncorrectIdentityFolderWarning = new IncorrectIdentityFolderWarning(this);
+
     vbox->addWidget(mIncorrectIdentityFolderWarning);
 
     mAttachmentFromExternalMissing = new AttachmentAddedFromExternalWarning(this);
     vbox->addWidget(mAttachmentFromExternalMissing);
-    mTooMyRecipientWarning = new TooManyRecipientsWarning(this);
     vbox->addWidget(mTooMyRecipientWarning);
 
     vbox->addWidget(mCryptoStateIndicatorWidget);
