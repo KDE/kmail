@@ -219,7 +219,7 @@ AboutData::AboutData()
         addAuthor(i18n(authors[i].name), authors[i].desc ? i18n(authors[i].desc) : QString(), QLatin1String(authors[i].email), QLatin1String(authors[i].web));
 #else
         addAuthor(i18n(authors[i].name),
-                  authors[i].desc.untranslatedText() ? KLocalizedString(authors[i].desc).toString() : QString(),
+                  authors[i].desc.untranslatedText() ? authors[i].desc.toString() : QString(),
                   QLatin1String(authors[i].email),
                   QLatin1String(authors[i].web));
 #endif
@@ -231,7 +231,7 @@ AboutData::AboutData()
         addCredit(i18n(credits[i].name), credits[i].desc ? i18n(credits[i].desc) : QString(), QLatin1String(credits[i].email), QLatin1String(credits[i].web));
 #else
         addAuthor(i18n(credits[i].name),
-                  credits[i].desc.untranslatedText() ? KLocalizedString(credits[i].desc).toString() : QString(),
+                  credits[i].desc.untranslatedText() ? credits[i].desc.toString() : QString(),
                   QLatin1String(credits[i].email),
                   QLatin1String(credits[i].web));
 #endif

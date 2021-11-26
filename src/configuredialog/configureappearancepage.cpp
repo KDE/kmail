@@ -172,7 +172,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
 #if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         fontDescriptions << i18n(fontNames[i].displayName);
 #else
-        fontDescriptions << KLocalizedString(fontNames[i].displayName).toString();
+        fontDescriptions << fontNames[i].displayName.toString();
 #endif
     }
     mFontLocationCombo->addItems(fontDescriptions);
@@ -350,7 +350,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
 #if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         mColorList->addColor(i18n(colorNames[i].displayName));
 #else
-        mColorList->addColor(KLocalizedString(colorNames[i].displayName).toString());
+        mColorList->addColor(colorNames[i].displayName.toString());
 #endif
     }
     vlay->addWidget(mColorList, 1);

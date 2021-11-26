@@ -292,14 +292,14 @@ QString KMReaderWin::newFeaturesMD5()
 #if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         str += kmailChanges[i];
 #else
-        str += KLocalizedString(kmailChanges[i]).untranslatedText();
+        str += kmailChanges[i].untranslatedText();
 #endif
     }
     for (int i = 0; i < numKMailNewFeatures; ++i) {
 #if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         str += kmailNewFeatures[i];
 #else
-        str += KLocalizedString(kmailNewFeatures[i]).untranslatedText();
+        str += kmailNewFeatures[i].untranslatedText();
 #endif
     }
     QCryptographicHash md5(QCryptographicHash::Md5);
@@ -359,7 +359,7 @@ void KMReaderWin::displayAboutPage()
 #if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         features.push_back(i18n(kmailNewFeatures[i]));
 #else
-        features.push_back(KLocalizedString(kmailNewFeatures[i]).toString());
+        features.push_back(kmailNewFeatures[i].toString());
 #endif
     }
     data[QStringLiteral("newFeatures")] = features;
@@ -370,7 +370,7 @@ void KMReaderWin::displayAboutPage()
 #if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
         features.push_back(i18n(kmailChanges[i]));
 #else
-        features.push_back(KLocalizedString(kmailChanges[i]).toString());
+        features.push_back(kmailChanges[i].toString());
 #endif
     }
     data[QStringLiteral("importantChanges")] = changes;
