@@ -241,6 +241,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mAttachmentMissing(new AttachmentMissingWarning(this))
     , mExternalEditorWarning(new ExternalEditorWarning(this))
     , mTooMyRecipientWarning(new TooManyRecipientsWarning(this))
+    , mCryptoStateIndicatorWidget(new CryptoStateIndicatorWidget(this))
+    , mPotentialPhishingEmailWarning(new PotentialPhishingEmailWarning(this))
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
@@ -351,13 +353,11 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mSplitter->addWidget(mSnippetSplitter);
 
     auto editorAndCryptoStateIndicators = new QWidget(mSplitter);
-    mCryptoStateIndicatorWidget = new CryptoStateIndicatorWidget(this);
     mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     auto vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setContentsMargins({});
 
-    mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
     vbox->addWidget(mPotentialPhishingEmailWarning);
 

@@ -684,13 +684,13 @@ private:
     bool mPreventFccOverwrite = false;
     bool mCheckForForgottenAttachments = true;
     bool mWasModified = false;
-    CryptoStateIndicatorWidget *mCryptoStateIndicatorWidget = nullptr;
+    CryptoStateIndicatorWidget *const mCryptoStateIndicatorWidget;
     bool mSendNowByShortcutUsed = false;
     KSplitterCollapserButton *mSnippetSplitterCollapser = nullptr;
     KToggleAction *mFollowUpToggleAction = nullptr;
     MessageComposer::StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode = nullptr;
     MessageComposer::StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode = nullptr;
-    PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning = nullptr;
+    PotentialPhishingEmailWarning *const mPotentialPhishingEmailWarning;
     IncorrectIdentityFolderWarning *const mIncorrectIdentityFolderWarning;
     KMComposerGlobalAction *mGlobalAction = nullptr;
     KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget = nullptr;
