@@ -432,7 +432,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     if (KMailSettings::self()->showForgottenAttachmentWarning()) {
         mVerifyMissingAttachment = new QTimer(this);
         mVerifyMissingAttachment->setSingleShot(true);
-        mVerifyMissingAttachment->setInterval(1000 * 5);
+        mVerifyMissingAttachment->setInterval(5s);
         connect(mVerifyMissingAttachment, &QTimer::timeout, this, &KMComposerWin::slotVerifyMissingAttachmentTimeout);
     }
     connect(attachmentController, &KMail::AttachmentController::fileAttached, mAttachmentMissing, &AttachmentMissingWarning::slotFileAttached);

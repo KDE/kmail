@@ -114,7 +114,9 @@ using KMail::MailServiceImpl;
 #include "userfeedback/kmailuserfeedbackprovider.h"
 #include <KUserFeedback/Provider>
 #endif
+#include <chrono>
 
+using namespace std::chrono_literals;
 //#define DEBUG_SCHEDULER 1
 using namespace MailCommon;
 
@@ -1135,9 +1137,9 @@ void KMKernel::init()
     mBackgroundTasksTimer->setSingleShot(true);
     connect(mBackgroundTasksTimer, &QTimer::timeout, this, &KMKernel::slotRunBackgroundTasks);
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-    mBackgroundTasksTimer->start(10000); // 10s, singleshot
+    mBackgroundTasksTimer->start(10s); // 10s, singleshot
 #else
-    mBackgroundTasksTimer->start(5 * 60000); // 5 minutes, singleshot
+    mBackgroundTasksTimer->start(5min); // 5 minutes, singleshot
 #endif
 
     KCrash::setEmergencySaveFunction(kmCrashHandler);
