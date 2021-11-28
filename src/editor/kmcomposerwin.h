@@ -701,7 +701,7 @@ private:
     KMailPluginEditorConvertTextManagerInterface *mPluginEditorConvertTextManagerInterface = nullptr;
     KMailPluginGrammarEditorManagerInterface *const mPluginEditorGrammarManagerInterface;
 
-    AttachmentAddedFromExternalWarning *mAttachmentFromExternalMissing = nullptr;
+    AttachmentAddedFromExternalWarning *const mAttachmentFromExternalMissing;
     KHamburgerMenu *mHamburgerMenu = nullptr;
 
     ModeType mModeType = ModeType::ComposerType;

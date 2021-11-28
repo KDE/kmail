@@ -246,7 +246,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
-
+    , mAttachmentFromExternalMissing(new AttachmentAddedFromExternalWarning(this))
 {
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
@@ -378,7 +378,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     vbox->addWidget(mIncorrectIdentityFolderWarning);
 
-    mAttachmentFromExternalMissing = new AttachmentAddedFromExternalWarning(this);
     vbox->addWidget(mAttachmentFromExternalMissing);
     vbox->addWidget(mTooMyRecipientWarning);
 
