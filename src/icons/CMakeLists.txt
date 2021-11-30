@@ -1,4 +1,5 @@
-
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 ########### install files ###############
 
 file(GLOB kmail_icons "*-apps-kmail.*")

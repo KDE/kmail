@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 
 include(TestBigEndian)
 test_big_endian(CMAKE_WORDS_BIGENDIAN)

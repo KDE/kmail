@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 ########### next target ###############
 
 set(kontact_kmail_plugins_interface_common_SRCS)

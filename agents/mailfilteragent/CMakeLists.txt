@@ -1,4 +1,5 @@
-
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_mailfilter_agent\")
 add_executable(akonadi_mailfilter_agent)

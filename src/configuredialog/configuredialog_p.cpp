@@ -1,3 +1,8 @@
+/*
+ *   kmail: KDE mail client
+ *   SPDX-FileCopyrightText: 2016 Laurent Montel <montel@kde.org>
+ *   SPDX-License-Identifier: GPL-2.0-or-later
+ */
 // configuredialog_p.cpp: classes internal to ConfigureDialog
 // see configuredialog.cpp for details.
 

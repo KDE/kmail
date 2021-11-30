@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2019 Laurent Montel <montel@kde.org>
+# SPDX-License-Identifier: BSD-3-Clause
 add_executable(kmail-refresh-settings)
 target_sources(kmail-refresh-settings PRIVATE
     main.cpp

@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: Laurent Montel <montel@kde.org>
+# SPDX-License-Identifier: BSD-3-Clause
 # Convenience macro to add unit tests.
 macro(add_sendlater_agent_test _source )
     get_filename_component(_name ${_source} NAME_WE)

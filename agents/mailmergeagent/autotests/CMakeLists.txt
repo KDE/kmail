@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: Laurent Montel <montel@kde.org>
+# SPDX-License-Identifier: BSD-3-Clause
 # Convenience macro to add unit tests.
 macro( mailmerge_agent _source )
     set( _test ${_source})
