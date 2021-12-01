@@ -10,9 +10,9 @@
 #include "kcmkontactsummary.h"
 #include <KAboutData>
 #include <KConfig>
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KPluginFactory>
-#include <KPluginInfo>
 #include <KPluginMetaData>
 #include <KontactInterface/Plugin>
 #include <QIcon>
@@ -23,17 +23,17 @@
 class PluginItem : public QTreeWidgetItem
 {
 public:
-    PluginItem(const KPluginInfo &info, QTreeWidget *parent)
+    PluginItem(const KPluginMetaData &info, QTreeWidget *parent)
         : QTreeWidgetItem(parent)
         , mInfo(info)
     {
-        setIcon(0, QIcon::fromTheme(mInfo.icon()));
+        setIcon(0, QIcon::fromTheme(mInfo.iconName()));
         setText(0, mInfo.name());
-        setToolTip(0, mInfo.comment());
+        setToolTip(0, mInfo.description());
         setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     }
 
-    Q_REQUIRED_RESULT KPluginInfo pluginInfo() const
+    Q_REQUIRED_RESULT KPluginMetaData pluginInfo() const
     {
         return mInfo;
     }
@@ -43,7 +43,7 @@ public:
         if (column == 0) {
             return mInfo.name();
         } else if (column == 1) {
-            return mInfo.comment();
+            return mInfo.description();
         } else {
             return {};
         }
@@ -51,7 +51,7 @@ public:
 
 private:
     Q_DISABLE_COPY(PluginItem)
-    const KPluginInfo mInfo;
+    const KPluginMetaData mInfo;
 };
 
 PluginView::PluginView(QWidget *parent)
@@ -115,13 +115,12 @@ void KCMKontactSummary::load()
 
     mPluginView->clear();
 
-    KPluginInfo::List pluginList = KPluginInfo::fromMetaData(pluginMetaDatas);
-    for (auto plugin : std::as_const(pluginList)) {
-        QVariant var = plugin.property(QStringLiteral("X-KDE-KontactPluginHasSummary"));
+    for (auto plugin : std::as_const(pluginMetaDatas)) {
+        QVariant var = plugin.value(QStringLiteral("X-KDE-KontactPluginHasSummary"));
         if (var.isValid() && var.toBool() == true) {
             auto item = new PluginItem(plugin, mPluginView);
 
-            if (activeSummaries.contains(plugin.pluginName())) {
+            if (activeSummaries.contains(plugin.pluginId())) {
                 item->setCheckState(0, Qt::Checked);
             } else {
                 item->setCheckState(0, Qt::Unchecked);
@@ -138,7 +137,7 @@ void KCMKontactSummary::save()
     while (*it) {
         auto item = static_cast<PluginItem *>(*it);
         if (item->checkState(0) == Qt::Checked) {
-            activeSummaries.append(item->pluginInfo().pluginName());
+            activeSummaries.append(item->pluginInfo().pluginId());
         }
         ++it;
     }
