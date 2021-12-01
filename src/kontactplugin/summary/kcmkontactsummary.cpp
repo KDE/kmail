@@ -116,21 +116,19 @@ void KCMKontactSummary::load()
     mPluginView->clear();
 
     KPluginInfo::List pluginList = KPluginInfo::fromMetaData(pluginMetaDatas);
-    KPluginInfo::List::Iterator it;
-    KPluginInfo::List::Iterator end(pluginList.end());
-    for (it = pluginList.begin(); it != end; ++it) {
-        it->setConfig(KConfigGroup(&config, "Plugins"));
-        it->load();
+    for (auto plugin : std::as_const(pluginList)) {
+        plugin.setConfig(KConfigGroup(&config, "Plugins"));
+        plugin.load();
 
-        if (!it->isPluginEnabled()) {
+        if (!plugin.isPluginEnabled()) {
             continue;
         }
 
-        QVariant var = it->property(QStringLiteral("X-KDE-KontactPluginHasSummary"));
+        QVariant var = plugin.property(QStringLiteral("X-KDE-KontactPluginHasSummary"));
         if (var.isValid() && var.toBool() == true) {
-            auto item = new PluginItem(*it, mPluginView);
+            auto item = new PluginItem(plugin, mPluginView);
 
-            if (activeSummaries.contains(it->pluginName())) {
+            if (activeSummaries.contains(plugin.pluginName())) {
                 item->setCheckState(0, Qt::Checked);
             } else {
                 item->setCheckState(0, Qt::Unchecked);
