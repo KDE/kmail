@@ -30,6 +30,7 @@ using PimCommon::BroadcastStatus;
 #include <KPluginMetaData>
 #include <QAction>
 #include <QApplication>
+#include <QFileInfo>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
@@ -123,7 +124,6 @@ void SummaryViewPart::updateWidgets()
         activeSummaries << QStringLiteral("kontact_kmailplugin");
         activeSummaries << QStringLiteral("kontact_knotesplugin");
     }
-
     // Collect all summary widgets with a summaryHeight > 0
     QStringList loadedSummaries;
 
@@ -132,10 +132,11 @@ void SummaryViewPart::updateWidgets()
     QList<KontactInterface::Plugin *>::ConstIterator it = plugins.constBegin();
     for (; it != end; ++it) {
         KontactInterface::Plugin *plugin = *it;
-        if (!activeSummaries.contains(plugin->identifier())) {
+        QString pluginIdentifier{QFileInfo(plugin->identifier()).fileName()};
+        pluginIdentifier.remove(QStringLiteral(".so"));
+        if (!activeSummaries.contains(pluginIdentifier)) {
             continue;
         }
-
         KontactInterface::Summary *summary = plugin->createSummaryWidget(mFrame);
         if (summary) {
             if (summary->summaryHeight() > 0) {
