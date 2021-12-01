@@ -3891,10 +3891,7 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
                         && folderWithContent);
     }
 
-    if (QAction *act = mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)) {
-        act->setEnabled(folderWithContent && (mCurrentFolderSettings->count() > 0) && mCurrentFolderSettings->canDeleteMessages());
-        act->setText((mCurrentFolderSettings && CommonKernel->folderIsTrash(mCurrentCollection)) ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash"));
-    }
+    updateMoveAllToTrash();
 
     QList<QAction *> addToFavorite;
     QAction *actionAddToFavoriteCollections = akonadiStandardAction(Akonadi::StandardActionManager::AddToFavoriteCollections);
@@ -3993,6 +3990,8 @@ void KMMainWidget::updateFolderMenu()
 
     const bool isInTrashFolder = (mCurrentFolderSettings && CommonKernel->folderIsTrash(mCurrentCollection));
     QAction *moveToTrash = akonadiStandardAction(Akonadi::StandardMailActionManager::MoveToTrash);
+    updateMoveAllToTrash();
+
     KMail::Util::setActionTrashOrDelete(moveToTrash, isInTrashFolder);
 
     mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete-shred")) : QIcon::fromTheme(QStringLiteral("edit-delete")));
@@ -4038,6 +4037,15 @@ void KMMainWidget::updateFolderMenu()
         mAccountSettings->setText(i18n("Configure Unified Mailbox"));
     } else {
         mAccountSettings->setText(i18n("Account &Settings"));
+    }
+}
+
+void KMMainWidget::updateMoveAllToTrash()
+{
+    if (QAction *act = mAkonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MoveAllToTrash)) {
+        const bool folderWithContent = mCurrentFolderSettings && !mCurrentFolderSettings->isStructural();
+        act->setEnabled(folderWithContent && (mCurrentFolderSettings->count() > 0) && mCurrentFolderSettings->canDeleteMessages());
+        act->setText((mCurrentFolderSettings && CommonKernel->folderIsTrash(mCurrentCollection)) ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash"));
     }
 }
 
