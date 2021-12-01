@@ -132,24 +132,23 @@ void SummaryViewPart::updateWidgets()
     QList<KontactInterface::Plugin *>::ConstIterator it = plugins.constBegin();
     for (; it != end; ++it) {
         KontactInterface::Plugin *plugin = *it;
-        QString pluginIdentifier{QFileInfo(plugin->identifier()).fileName()};
-        pluginIdentifier.remove(QStringLiteral(".so"));
+        const QString pluginIdentifier{plugin->identifier()};
         if (!activeSummaries.contains(pluginIdentifier)) {
             continue;
         }
         KontactInterface::Summary *summary = plugin->createSummaryWidget(mFrame);
         if (summary) {
             if (summary->summaryHeight() > 0) {
-                mSummaries.insert(plugin->identifier(), summary);
+                mSummaries.insert(pluginIdentifier, summary);
 
                 connect(summary, &KontactInterface::Summary::message, BroadcastStatus::instance(), &PimCommon::BroadcastStatus::setStatusMsg);
                 connect(summary, &KontactInterface::Summary::summaryWidgetDropped, this, &SummaryViewPart::summaryWidgetMoved);
 
-                if (!mLeftColumnSummaries.contains(plugin->identifier()) && !mRightColumnSummaries.contains(plugin->identifier())) {
-                    mLeftColumnSummaries.append(plugin->identifier());
+                if (!mLeftColumnSummaries.contains(pluginIdentifier) && !mRightColumnSummaries.contains(pluginIdentifier)) {
+                    mLeftColumnSummaries.append(pluginIdentifier);
                 }
 
-                loadedSummaries.append(plugin->identifier());
+                loadedSummaries.append(pluginIdentifier);
             } else {
                 summary->hide();
             }
