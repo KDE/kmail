@@ -532,6 +532,7 @@ private:
     void slotHistorySwitchFolder(const Akonadi::Collection &collection);
     void redoSwitchFolder();
     void undoSwitchFolder();
+    void updateMoveAllToTrash();
 
     // Message actions
     QAction *mDeleteAction = nullptr;
