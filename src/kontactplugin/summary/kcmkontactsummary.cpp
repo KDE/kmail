@@ -117,13 +117,6 @@ void KCMKontactSummary::load()
 
     KPluginInfo::List pluginList = KPluginInfo::fromMetaData(pluginMetaDatas);
     for (auto plugin : std::as_const(pluginList)) {
-        plugin.setConfig(KConfigGroup(&config, "Plugins"));
-        plugin.load();
-
-        if (!plugin.isPluginEnabled()) {
-            continue;
-        }
-
         QVariant var = plugin.property(QStringLiteral("X-KDE-KontactPluginHasSummary"));
         if (var.isValid() && var.toBool() == true) {
             auto item = new PluginItem(plugin, mPluginView);
