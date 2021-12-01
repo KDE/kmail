@@ -20,7 +20,7 @@ add_library(kcmkontactsummary MODULE kcmkontactsummary.cpp)
 kcoreaddons_desktop_to_json(kcmkontactsummary "kcmkontactsummary.desktop" SERVICE_TYPES kcmodule.desktop)
 pim_target_precompile_headers(kcmkontactsummary PUBLIC ../../../kmail_pch.h)
 
-target_link_libraries(kcmkontactsummary KF5::I18n KF5::KCMUtils Qt::Widgets KF5::KCMUtils KF5::I18n KF5::KontactInterface)
+target_link_libraries(kcmkontactsummary KF5::I18n Qt::Widgets KF5::I18n KF5::KontactInterface)
 
 ########### install files ###############
 
