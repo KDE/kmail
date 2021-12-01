@@ -112,9 +112,6 @@ void KCMKontactSummary::load()
         activeSummaries << QStringLiteral("kontact_todoplugin");
         activeSummaries << QStringLiteral("kontact_knotesplugin");
         activeSummaries << QStringLiteral("kontact_kmailplugin");
-        activeSummaries << QStringLiteral("kontact_weatherplugin");
-        activeSummaries << QStringLiteral("kontact_newstickerplugin");
-        activeSummaries << QStringLiteral("kontact_plannerplugin");
     }
 
     mPluginView->clear();
