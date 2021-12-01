@@ -69,7 +69,6 @@ K_PLUGIN_CLASS_WITH_JSON(KCMKontactSummary, "kcmkontactsummary.json")
 KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)
 {
-    setButtons(NoAdditionalButton);
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
