@@ -585,8 +585,8 @@ private:
     bool mHtmlGlobalSetting = false;
     bool mHtmlLoadExtGlobalSetting = false;
     bool mFolderHtmlLoadExtPreference = false;
-    bool mReaderWindowActive = false;
-    bool mReaderWindowBelow = false;
+    bool mReaderWindowActive = true;
+    bool mReaderWindowBelow = true;
     bool mEnableFavoriteFolderView = false;
     bool mEnableFolderQuickSearch = false;
 
@@ -604,7 +604,7 @@ private:
 
     KSieveUi::VacationManager *mVacationManager = nullptr;
     KActionCollection *mActionCollection = nullptr;
-    QAction *mToolbarActionSeparator = nullptr;
+    QAction *const mToolbarActionSeparator;
     QVBoxLayout *mTopLayout = nullptr;
     bool mDestructed = false;
     QList<QAction *> mFilterMenuActions;
@@ -632,7 +632,7 @@ private:
 
     QTimer mCheckMailTimer;
 
-    KSieveUi::SieveImapPasswordProvider *mSievePasswordProvider = nullptr;
+    KSieveUi::SieveImapPasswordProvider *const mSievePasswordProvider;
     QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
     QAction *mServerSideSubscription = nullptr;

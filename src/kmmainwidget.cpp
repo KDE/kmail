@@ -198,26 +198,19 @@ static KMMainWidget *myMainWidget = nullptr;
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCollection *actionCollection, const KSharedConfig::Ptr &config)
     : QWidget(parent)
+    , mToolbarActionSeparator(new QAction(this))
+    , mSievePasswordProvider(new KMSieveImapPasswordProvider(this))
     , mLaunchExternalComponent(new KMLaunchExternalComponent(this, this))
     , mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
     , mCollectionSwitcherTreeViewManager(new CollectionSwitcherTreeViewManager(this))
 {
     // must be the first line of the constructor:
-    mStartupDone = false;
-    mWasEverShown = false;
-    mReaderWindowActive = true;
-    mReaderWindowBelow = true;
-    mFolderHtmlLoadExtPreference = false;
-    mDestructed = false;
     mActionCollection = actionCollection;
     mTopLayout = new QVBoxLayout(this);
     mTopLayout->setContentsMargins({});
     mConfig = config;
     mGUIClient = aGUIClient;
-    mFolderTreeWidget = nullptr;
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
-    mFavoritesModel = nullptr;
-    mSievePasswordProvider = new KMSieveImapPasswordProvider(this);
     mVacationManager = new KSieveUi::VacationManager(mSievePasswordProvider, this);
     connect(mVacationManager,
             &KSieveUi::VacationManager::updateVacationScriptStatus,
@@ -229,7 +222,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     userFeedBackNotificationPopup->setFeedbackProvider(kmkernel->userFeedbackProvider());
 #endif
 
-    mToolbarActionSeparator = new QAction(this);
     mToolbarActionSeparator->setSeparator(true);
 
     KMailPluginInterface::self()->setActionCollection(mActionCollection);
