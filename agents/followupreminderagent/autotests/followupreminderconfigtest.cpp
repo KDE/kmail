@@ -158,11 +158,13 @@ void FollowUpReminderConfigTest::shouldRemoveItems()
     info.setUniqueIdentifier(uniq);
     FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(mConfig, &info, false);
     itemList = mConfig->groupList().filter(mFollowupRegExpFilter);
+    QCOMPARE(itemList.count(), 2);
 
     uniq = 44;
     info.setUniqueIdentifier(uniq);
     FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(mConfig, &info, false);
     itemList = mConfig->groupList().filter(mFollowupRegExpFilter);
+    QCOMPARE(itemList.count(), 3);
 
     // Add item without uniqIdentifier
     FollowUpReminder::FollowUpReminderInfo infoNotHaveUniq;
@@ -207,8 +209,10 @@ void FollowUpReminderConfigTest::shouldNotRemoveItemWhenItemDoesntExist()
     info.setTo(QStringLiteral("kmail.org"));
     uniq = 43;
     info.setUniqueIdentifier(uniq);
+    QCOMPARE(itemList.count(), 1);
     FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(mConfig, &info, false);
     itemList = mConfig->groupList().filter(mFollowupRegExpFilter);
+    QCOMPARE(itemList.count(), 2);
 
     uniq = 44;
     info.setUniqueIdentifier(uniq);
