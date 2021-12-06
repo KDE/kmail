@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 add_executable(sievedebugdialog sievedebugdialog.cpp)
 
 target_link_libraries(sievedebugdialog

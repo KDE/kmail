@@ -1,4 +1,5 @@
-
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 # Convenience macro to add unit tests.
 macro( folderarchive_kmail _source )
   set( _test ${_source} )
