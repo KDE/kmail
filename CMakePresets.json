@@ -13,6 +13,18 @@
             "installDir": "$env{KF5}"
         },
         {
+            "name": "dev-qt6",
+            "displayName": "Build against qt6",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-qt6",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_WITH_QT6": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            },
+            "installDir": "$env{KF6}"
+        },
+        {
             "name": "dev-disable-deprecated",
             "displayName": "Build as without deprecated methods",
             "generator": "Ninja",
@@ -116,6 +128,10 @@
         {
             "name": "dev",
             "configurePreset": "dev"
+        },
+        {
+            "name": "dev-qt6",
+            "configurePreset": "dev-qt6"
         },
         {
             "name": "dev-disable-deprecated",
