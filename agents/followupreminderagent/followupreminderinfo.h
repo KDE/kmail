@@ -17,8 +17,8 @@ class FollowUpReminderInfo
 {
 public:
     FollowUpReminderInfo();
-    FollowUpReminderInfo(const KConfigGroup &config);
-    FollowUpReminderInfo(const FollowUpReminderInfo &info);
+    explicit FollowUpReminderInfo(const KConfigGroup &config);
+    explicit FollowUpReminderInfo(const FollowUpReminderInfo &info);
 
     // Can be invalid.
     Q_REQUIRED_RESULT Akonadi::Item::Id originalMessageItemId() const;

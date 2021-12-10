@@ -13,7 +13,7 @@ class TaskAttribute : public Akonadi::Attribute
 {
 public:
     TaskAttribute();
-    TaskAttribute(Akonadi::Item::Id id);
+    explicit TaskAttribute(Akonadi::Item::Id id);
     ~TaskAttribute() override;
 
     Q_REQUIRED_RESULT QByteArray type() const override;

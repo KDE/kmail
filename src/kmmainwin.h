@@ -33,7 +33,7 @@ public:
     /// Same as KMMainWin::restore(), except that it also restores the docked state,
     /// which we have saved in saveProperties().
     /// TODO: KDE5: Move to kdelibs, see http://reviewboard.kde.org/r/504
-    Q_REQUIRED_RESULT bool restoreDockedState(int number);
+    bool restoreDockedState(int number);
 
     void showAndActivateWindow();
 public Q_SLOTS:
