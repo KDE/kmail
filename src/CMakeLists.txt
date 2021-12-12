@@ -452,15 +452,6 @@ target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
 pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
 target_link_libraries(kcm_kmail_static  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
 
-
-kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_accounts.desktop" SERVICE_TYPES kcmodule.desktop)
-kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_appearance.desktop" SERVICE_TYPES kcmodule.desktop)
-kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_composer.desktop" SERVICE_TYPES kcmodule.desktop)
-kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_misc.desktop" SERVICE_TYPES kcmodule.desktop)
-kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_plugins.desktop" SERVICE_TYPES kcmodule.desktop)
-kcoreaddons_desktop_to_json(kcm_kmail_static "configuredialog/data/kmail_config_security.desktop" SERVICE_TYPES kcmodule.desktop)
-
-
 kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
 target_link_libraries(kcm_kmail_accounts kcm_kmail_static)
 
