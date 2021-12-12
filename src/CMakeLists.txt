@@ -524,17 +524,6 @@ install(TARGETS kmailprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELIN
 
 install(TARGETS kmail ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
-install(FILES
-    configuredialog/data/kmail_config_misc.desktop
-    configuredialog/data/kmail_config_appearance.desktop
-    configuredialog/data/kmail_config_accounts.desktop
-    configuredialog/data/kmail_config_composer.desktop
-    configuredialog/data/kmail_config_security.desktop
-    configuredialog/data/kmail_config_plugins.desktop
-    DESTINATION ${KDE_INSTALL_KSERVICES5DIR}
-    )
-
-
 install(PROGRAMS data/org.kde.kmail2.desktop data/kmail_view.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg

@@ -36,7 +36,3 @@ target_link_libraries(kcmkmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt::DBus 
 install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact5)
 
 install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim/kcms/summary/)
-
-install(FILES kmailplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR}/kontact)
-
-install(FILES kcmkmailsummary.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})

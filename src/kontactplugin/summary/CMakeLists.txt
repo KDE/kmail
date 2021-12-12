@@ -24,6 +24,4 @@ target_link_libraries(kcmkontactsummary KF5::I18n Qt::Widgets KF5::I18n KF5::Kon
 install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact5)
 install(TARGETS kcmkontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim/kcms/summary)
 
-install(FILES summaryplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR}/kontact)
-install(FILES kcmkontactsummary.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 install(FILES kontactsummary_part.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/kontactsummary)
