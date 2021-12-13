@@ -66,12 +66,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWhatsThis>
-#include <ki18n_version.h>
-#if KI18N_VERSION >= QT_VERSION_CHECK(5, 89, 0)
 #include <KLazyLocalizedString>
-#undef I18N_NOOP
-#define I18N_NOOP kli18n
-#endif
 
 using KMime::DateFormatter;
 using namespace MailCommon;
@@ -129,22 +124,18 @@ QString AppearancePageFontsTab::helpAnchor() const
 
 static const struct {
     const char *configName;
-#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
-    const char *displayName;
-#else
     const KLazyLocalizedString displayName;
-#endif
     bool enableFamilyAndSize;
     bool onlyFixed;
 } fontNames[] = {
-    {"body-font", I18N_NOOP("Message Body"), true, false},
-    {"MessageListFont", I18N_NOOP("Message List"), true, false},
-    {"UnreadMessageFont", I18N_NOOP("Message List - Unread Messages"), false, false},
-    {"ImportantMessageFont", I18N_NOOP("Message List - Important Messages"), false, false},
-    {"TodoMessageFont", I18N_NOOP("Message List - Action Item Messages"), false, false},
-    {"fixed-font", I18N_NOOP("Fixed Width Font"), true, true},
-    {"composer-font", I18N_NOOP("Composer"), true, false},
-    {"print-font", I18N_NOOP("Printing Output"), true, false},
+    {"body-font", kli18n("Message Body"), true, false},
+    {"MessageListFont", kli18n("Message List"), true, false},
+    {"UnreadMessageFont", kli18n("Message List - Unread Messages"), false, false},
+    {"ImportantMessageFont", kli18n("Message List - Important Messages"), false, false},
+    {"TodoMessageFont", kli18n("Message List - Action Item Messages"), false, false},
+    {"fixed-font", kli18n("Fixed Width Font"), true, true},
+    {"composer-font", kli18n("Composer"), true, false},
+    {"print-font", kli18n("Printing Output"), true, false},
 };
 static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
@@ -169,11 +160,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     QStringList fontDescriptions;
     fontDescriptions.reserve(numFontNames);
     for (int i = 0; i < numFontNames; ++i) {
-#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
-        fontDescriptions << i18n(fontNames[i].displayName);
-#else
         fontDescriptions << fontNames[i].displayName.toString();
-#endif
     }
     mFontLocationCombo->addItems(fontDescriptions);
 
@@ -311,23 +298,19 @@ QString AppearancePageColorsTab::helpAnchor() const
 
 static const struct {
     const char *configName;
-#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
-    const char *displayName;
-#else
     const KLazyLocalizedString displayName;
-#endif
 } colorNames[] = { // adjust doLoadOther if you change this:
-    {"QuotedText1", I18N_NOOP("Quoted Text - First Level")},
-    {"QuotedText2", I18N_NOOP("Quoted Text - Second Level")},
-    {"QuotedText3", I18N_NOOP("Quoted Text - Third Level")},
-    {"LinkColor", I18N_NOOP("Link")},
-    {"UnreadMessageColor", I18N_NOOP("Unread Message")},
-    {"ImportantMessageColor", I18N_NOOP("Important Message")},
-    {"TodoMessageColor", I18N_NOOP("Action Item Message")},
-    {"ColorbarBackgroundPlain", I18N_NOOP("HTML Status Bar Background - No HTML Message")},
-    {"ColorbarForegroundPlain", I18N_NOOP("HTML Status Bar Foreground - No HTML Message")},
-    {"ColorbarBackgroundHTML", I18N_NOOP("HTML Status Bar Background - HTML Message")},
-    {"ColorbarForegroundHTML", I18N_NOOP("HTML Status Bar Foreground - HTML Message")}};
+    {"QuotedText1", kli18n("Quoted Text - First Level")},
+    {"QuotedText2", kli18n("Quoted Text - Second Level")},
+    {"QuotedText3", kli18n("Quoted Text - Third Level")},
+    {"LinkColor", kli18n("Link")},
+    {"UnreadMessageColor", kli18n("Unread Message")},
+    {"ImportantMessageColor", kli18n("Important Message")},
+    {"TodoMessageColor", kli18n("Action Item Message")},
+    {"ColorbarBackgroundPlain", kli18n("HTML Status Bar Background - No HTML Message")},
+    {"ColorbarForegroundPlain", kli18n("HTML Status Bar Foreground - No HTML Message")},
+    {"ColorbarBackgroundHTML", kli18n("HTML Status Bar Background - HTML Message")},
+    {"ColorbarForegroundHTML", kli18n("HTML Status Bar Foreground - HTML Message")}};
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
 AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
@@ -347,11 +330,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     mColorList = new ColorListBox(this);
     mColorList->setEnabled(false); // since !mCustomColorCheck->isChecked()
     for (int i = 0; i < numColorNames; ++i) {
-#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
-        mColorList->addColor(i18n(colorNames[i].displayName));
-#else
         mColorList->addColor(colorNames[i].displayName.toString());
-#endif
     }
     vlay->addWidget(mColorList, 1);
 
@@ -580,16 +559,12 @@ QString AppearancePageHeadersTab::helpAnchor() const
 }
 
 static const struct {
-#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
-    const char *displayName;
-#else
     const KLazyLocalizedString displayName;
-#endif
     DateFormatter::FormatType dateDisplay;
-} dateDisplayConfig[] = {{I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime},
-                         {I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized},
-                         {I18N_NOOP("Smart for&mat (%1)"), KMime::DateFormatter::Fancy},
-                         {I18N_NOOP("C&ustom format:"), KMime::DateFormatter::Custom}};
+} dateDisplayConfig[] = {{kli18n("Sta&ndard format (%1)"), KMime::DateFormatter::CTime},
+                         {kli18n("Locali&zed format (%1)"), KMime::DateFormatter::Localized},
+                         {kli18n("Smart for&mat (%1)"), KMime::DateFormatter::Fancy},
+                         {kli18n("C&ustom format:"), KMime::DateFormatter::Custom}};
 static const int numDateDisplayConfig = sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
 
 AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
@@ -640,21 +615,13 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     mDateDisplay->setExclusive(true);
 
     for (int i = 0; i < numDateDisplayConfig; ++i) {
-#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
-        const char *label = dateDisplayConfig[i].displayName;
-#else
         const char *label = KLocalizedString(dateDisplayConfig[i].displayName).untranslatedText().constData();
-#endif
 
         QString buttonLabel;
         if (QString::fromLatin1(label).contains(QLatin1String("%1"))) {
-#if KI18N_VERSION < QT_VERSION_CHECK(5, 89, 0)
-            buttonLabel = i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
-#else
             buttonLabel = KLocalizedString(dateDisplayConfig[i].displayName)
                               .subs(DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay))
                               .toString(); // i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
-#endif
         } else {
             buttonLabel = i18n(label);
         }
