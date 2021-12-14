@@ -1,6 +1,11 @@
 {
     "KPlugin": {
         "Description": "Mail Summary Setup",
+        "Description[ca]": "Configuració del resum per al correu",
+        "Description[nl]": "E-mail Overzichts-instellingen",
+        "Description[sv]": "Inställning av postöversikt",
+        "Description[uk]": "Налаштування підсумку пошти",
+        "Description[x-test]": "xxMail Summary Setupxx",
         "Icon": "kmail",
         "Name": "New Messages",
         "Name[ar]": "رسائل جديدة",

@@ -1,6 +1,11 @@
 {
     "KPlugin": {
         "Description": "Setup for Sending and Receiving Messages",
+        "Description[ca]": "Configuració per a enviar i rebre missatges",
+        "Description[nl]": "Instellingen voor het verzenden en ontvangen van berichten",
+        "Description[sv]": "Inställningar för att skicka och ta emot brev",
+        "Description[uk]": "Налаштування для надсилання і отримання повідомлень",
+        "Description[x-test]": "xxSetup for Sending and Receiving Messagesxx",
         "Icon": "network-workgroup",
         "Name": "Accounts",
         "Name[af]": "Rekeninge",

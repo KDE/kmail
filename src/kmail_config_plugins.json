@@ -1,6 +1,11 @@
 {
     "KPlugin": {
         "Description": "Settings Plugins",
+        "Description[ca]": "Configuració dels connectors",
+        "Description[nl]": "Plug-ins voor instellingen",
+        "Description[sv]": "Inställningsinsticksprogram",
+        "Description[uk]": "Додатки параметрів",
+        "Description[x-test]": "xxSettings Pluginsxx",
         "Icon": "preferences-plugin",
         "Name": "Plugins",
         "Name[af]": "Inprop modules",

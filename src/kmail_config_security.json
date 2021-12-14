@@ -1,6 +1,11 @@
 {
     "KPlugin": {
         "Description": "Security & Privacy Settings",
+        "Description[ca]": "Configuració de la seguretat i privadesa",
+        "Description[nl]": "Beveiligings- en privacy-instellingen",
+        "Description[sv]": "Inställningar för säkerhet och integritet",
+        "Description[uk]": "Параметри безпеки і конфіденційності",
+        "Description[x-test]": "xxSecurity & Privacy Settingsxx",
         "Icon": "security-high",
         "Name": "Security",
         "Name[af]": "Sekuriteit",

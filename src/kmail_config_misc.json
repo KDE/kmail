@@ -1,6 +1,11 @@
 {
     "KPlugin": {
         "Description": "Settings that don't fit elsewhere",
+        "Description[ca]": "Opcions que no van bé enlloc",
+        "Description[nl]": "Instellingen die nergens echt passen",
+        "Description[sv]": "Inställningar som inte passar någon annanstans",
+        "Description[uk]": "Інші параметри",
+        "Description[x-test]": "xxSettings that don't fit elsewherexx",
         "Icon": "preferences-other",
         "Name": "Misc",
         "Name[af]": "Allerlei",

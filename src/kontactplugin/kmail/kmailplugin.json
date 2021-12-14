@@ -1,6 +1,11 @@
 {
     "KPlugin": {
         "Description": "Kontact KMail Plugin",
+        "Description[ca]": "Connector del KMail per al Kontact",
+        "Description[nl]": "Kontact KMail-plug-in",
+        "Description[sv]": "Kontact-insticksprogram för Kmail",
+        "Description[uk]": "Додаток електронної пошти Kontact",
+        "Description[x-test]": "xxKontact KMail Pluginxx",
         "EnabledByDefault": true,
         "Icon": "view-pim-mail",
         "Id": "kontact_kmailplugin",

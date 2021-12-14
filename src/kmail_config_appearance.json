@@ -1,6 +1,11 @@
 {
     "KPlugin": {
         "Description": "Customize Visual Appearance",
+        "Description[ca]": "Personalitza l'aparença visual",
+        "Description[nl]": "Pas het uiterlijk aan",
+        "Description[sv]": "Anpassa visuellt uppträdande",
+        "Description[uk]": "Налаштування зовнішнього вигляду",
+        "Description[x-test]": "xxCustomize Visual Appearancexx",
         "Icon": "preferences-desktop-theme",
         "Name": "Appearance",
         "Name[af]": "Appearance",
