@@ -1,8 +1,12 @@
 {
     "KPlugin": {
         "Description": "Setup for Sending and Receiving Messages",
+        "Description[ca@valencia]": "Configuració per a enviar i rebre missatges",
         "Description[ca]": "Configuració per a enviar i rebre missatges",
+        "Description[fr]": "Configuration de l'envoi et de la réception de messages",
+        "Description[it]": "Impostazioni per spedire e ricevere messaggi",
         "Description[nl]": "Instellingen voor het verzenden en ontvangen van berichten",
+        "Description[sl]": "Nastavitve za pošiljanje in prejemanje sporočil",
         "Description[sv]": "Inställningar för att skicka och ta emot brev",
         "Description[uk]": "Налаштування для надсилання і отримання повідомлень",
         "Description[x-test]": "xxSetup for Sending and Receiving Messagesxx",

@@ -1,8 +1,12 @@
 {
     "KPlugin": {
         "Description": "Summary Selection",
+        "Description[ca@valencia]": "Selecció del resum",
         "Description[ca]": "Selecció del resum",
+        "Description[fr]": "Sélection des résumés",
+        "Description[it]": "Selezione sommario",
         "Description[nl]": "Overzichtselectie",
+        "Description[sl]": "Izbira povzetkov",
         "Description[sv]": "Översiktsval",
         "Description[uk]": "Вибір резюме",
         "Description[x-test]": "xxSummary Selectionxx",

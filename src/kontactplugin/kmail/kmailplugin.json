@@ -1,8 +1,12 @@
 {
     "KPlugin": {
         "Description": "Kontact KMail Plugin",
+        "Description[ca@valencia]": "Connector del KMail per al Kontact",
         "Description[ca]": "Connector del KMail per al Kontact",
+        "Description[fr]": "Module externe « KMail » pour Kontact",
+        "Description[it]": "Estensione per Kontact di KMail",
         "Description[nl]": "Kontact KMail-plug-in",
+        "Description[sl]": "Vstavek Kontact za KMail",
         "Description[sv]": "Kontact-insticksprogram för Kmail",
         "Description[uk]": "Додаток електронної пошти Kontact",
         "Description[x-test]": "xxKontact KMail Pluginxx",
