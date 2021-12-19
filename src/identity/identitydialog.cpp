@@ -354,12 +354,12 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // Tab Widget: Cryptography
     //
     row = -1;
-    mCryptographyTab = tab = new QWidget(mTabWidget);
-    mTabWidget->addTab(tab, i18n("Cryptography"));
-    formLayout = new QFormLayout(tab);
+    mCryptographyTab = new QWidget(mTabWidget);
+    mTabWidget->addTab(mCryptographyTab, i18n("Cryptography"));
+    formLayout = new QFormLayout(mCryptographyTab);
 
     // "OpenPGP Signature Key" requester and label:
-    mPGPSigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::OpenPGP, tab);
+    mPGPSigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::OpenPGP, mCryptographyTab);
     msg = i18n(
         "<qt><p>The OpenPGP key you choose here will be used "
         "to digitally sign messages. You can also use GnuPG keys.</p>"
@@ -367,7 +367,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "to digitally sign emails using OpenPGP; "
         "normal mail functions will not be affected.</p>"
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP signing key:"), tab);
+    label = new QLabel(i18n("OpenPGP signing key:"), mCryptographyTab);
     label->setBuddy(mPGPSigningKeyRequester);
     mPGPSigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
@@ -375,7 +375,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     formLayout->addRow(label, mPGPSigningKeyRequester);
 
     // "OpenPGP Encryption Key" requester and label:
-    mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, tab);
+    mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, mCryptographyTab);
     msg = i18n(
         "<qt><p>The OpenPGP key you choose here will be used "
         "to encrypt messages to yourself and for the \"Attach My Public Key\" "
@@ -384,7 +384,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "to encrypt copies of outgoing messages to you using OpenPGP; "
         "normal mail functions will not be affected.</p>"
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP encryption key:"), tab);
+    label = new QLabel(i18n("OpenPGP encryption key:"), mCryptographyTab);
     label->setBuddy(mPGPEncryptionKeyRequester);
     mPGPEncryptionKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
@@ -392,14 +392,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     formLayout->addRow(label, mPGPEncryptionKeyRequester);
 
     // "S/MIME Signature Key" requester and label:
-    mSMIMESigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::CMS, tab);
+    mSMIMESigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::CMS, mCryptographyTab);
     msg = i18n(
         "<qt><p>The S/MIME (X.509) certificate you choose here will be used "
         "to digitally sign messages.</p>"
         "<p>You can leave this blank, but KMail will not be able "
         "to digitally sign emails using S/MIME; "
         "normal mail functions will not be affected.</p></qt>");
-    label = new QLabel(i18n("S/MIME signing certificate:"), tab);
+    label = new QLabel(i18n("S/MIME signing certificate:"), mCryptographyTab);
     label->setBuddy(mSMIMESigningKeyRequester);
     mSMIMESigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
@@ -411,7 +411,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mSMIMESigningKeyRequester->setEnabled(smimeProtocol);
 
     // "S/MIME Encryption Key" requester and label:
-    mSMIMEEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::CMS, tab);
+    mSMIMEEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::CMS, mCryptographyTab);
     msg = i18n(
         "<qt><p>The S/MIME certificate you choose here will be used "
         "to encrypt messages to yourself and for the \"Attach My Certificate\" "
@@ -419,7 +419,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "<p>You can leave this blank, but KMail will not be able "
         "to encrypt copies of outgoing messages to you using S/MIME; "
         "normal mail functions will not be affected.</p></qt>");
-    label = new QLabel(i18n("S/MIME encryption certificate:"), tab);
+    label = new QLabel(i18n("S/MIME encryption certificate:"), mCryptographyTab);
     label->setBuddy(mSMIMEEncryptionKeyRequester);
     mSMIMEEncryptionKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
@@ -430,13 +430,13 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mSMIMEEncryptionKeyRequester->setEnabled(smimeProtocol);
 
     // "Preferred Crypto Message Format" combobox and label:
-    mPreferredCryptoMessageFormat = new QComboBox(tab);
+    mPreferredCryptoMessageFormat = new QComboBox(mCryptographyTab);
     QStringList l;
     l << Kleo::cryptoMessageFormatToLabel(Kleo::AutoFormat) << Kleo::cryptoMessageFormatToLabel(Kleo::InlineOpenPGPFormat)
       << Kleo::cryptoMessageFormatToLabel(Kleo::OpenPGPMIMEFormat) << Kleo::cryptoMessageFormatToLabel(Kleo::SMIMEFormat)
       << Kleo::cryptoMessageFormatToLabel(Kleo::SMIMEOpaqueFormat);
     mPreferredCryptoMessageFormat->addItems(l);
-    label = new QLabel(i18nc("preferred format of encrypted messages", "Preferred format:"), tab);
+    label = new QLabel(i18nc("preferred format of encrypted messages", "Preferred format:"), mCryptographyTab);
     label->setBuddy(mPreferredCryptoMessageFormat);
 
     formLayout->addRow(label, mPreferredCryptoMessageFormat);
