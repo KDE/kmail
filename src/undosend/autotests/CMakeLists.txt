@@ -8,5 +8,5 @@ macro(add_kmail_undosend_unittest _source)
     )
 endmacro ()
 
-add_kmail_undosend_unittest(undosendcomboboxtest.cpp)
-add_kmail_undosend_unittest(undosendcreatejobtest.cpp)
+add_kmail_undosend_unittest(undosendcomboboxtest.cpp undosendcomboboxtest.h)
+add_kmail_undosend_unittest(undosendcreatejobtest.cpp undosendcreatejobtest.h)

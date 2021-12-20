@@ -9,5 +9,5 @@ macro(add_kmail_historyswitchfolder_unittest _source)
 endmacro ()
 
 
-add_kmail_historyswitchfolder_unittest(collectionswitchertreeviewtest.cpp)
-add_kmail_historyswitchfolder_unittest(collectionswitchertreeviewmanagertest.cpp)
+add_kmail_historyswitchfolder_unittest(collectionswitchertreeviewtest.cpp collectionswitchertreeviewtest.h)
+add_kmail_historyswitchfolder_unittest(collectionswitchertreeviewmanagertest.cpp collectionswitchertreeviewmanagertest.h)

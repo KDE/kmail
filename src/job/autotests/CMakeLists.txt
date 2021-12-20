@@ -8,6 +8,6 @@ macro(add_kmail_job_unittest _source)
     )
 endmacro ()
 
-add_kmail_job_unittest(createreplymessagejobtest.cpp)
-add_kmail_job_unittest(createforwardmessagejobtest.cpp)
+add_kmail_job_unittest(createreplymessagejobtest.cpp createreplymessagejobtest.h)
+add_kmail_job_unittest(createforwardmessagejobtest.cpp createforwardmessagejobtest.h)
 

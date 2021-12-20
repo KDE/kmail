@@ -11,4 +11,4 @@ macro( folderarchive_kmail _source )
   target_link_libraries( ${_name} Qt::Test Qt::Core  KF5::AkonadiCore KF5::ConfigCore kmailprivate)
 endmacro()
 
-folderarchive_kmail(folderarchiveaccountinfotest.cpp)
+folderarchive_kmail(folderarchiveaccountinfotest.cpp folderarchiveaccountinfotest.h)

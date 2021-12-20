@@ -10,7 +10,7 @@ add_dependencies(dbustest kmail_xml)
 target_link_libraries(dbustest KF5::KIOCore KF5::I18n Qt::DBus)
 
 #####
-add_executable(searchdbustest  searchdbustest.cpp)
+add_executable(searchdbustest  searchdbustest.cpp searchdbustest.h)
 target_link_libraries(searchdbustest Qt::DBus Qt::Widgets KF5::PimCommonAkonadi)
 
 #####
