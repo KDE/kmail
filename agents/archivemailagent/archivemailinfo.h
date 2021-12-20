@@ -67,7 +67,7 @@ public:
     Q_REQUIRED_RESULT bool operator==(const ArchiveMailInfo &other) const;
 
 private:
-    QString dirArchive(bool &dirExit) const;
+    Q_REQUIRED_RESULT QString dirArchive(bool &dirExit) const;
     QDate mLastDateSaved;
     int mArchiveAge = 1;
     MailCommon::BackupJob::ArchiveType mArchiveType = MailCommon::BackupJob::Zip;
