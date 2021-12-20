@@ -33,6 +33,7 @@ set(libsendlateragent_SRCS
 
 set(sendlateragent_SRCS
     sendlateragent.cpp
+    sendlateragent.h
     )
 
 qt_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.xml sendlateragent.h SendLaterAgent)
