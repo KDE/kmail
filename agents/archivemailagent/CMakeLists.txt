@@ -90,6 +90,10 @@ target_sources(archivemailagentconfig PRIVATE
     archivemailwidget.cpp
     widgets/formatcombobox.cpp
     widgets/unitcombobox.cpp
+    addarchivemaildialog.h
+    archivemailwidget.h
+    widgets/formatcombobox.h
+    widgets/unitcombobox.h
 )
 target_link_libraries(archivemailagentconfig
     archivemailagent
