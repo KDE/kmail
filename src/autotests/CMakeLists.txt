@@ -9,29 +9,29 @@ include_directories(
     )
 
 ########### dbus test ###############
-add_executable( displaymessageformatactionmenutest displaymessageformatactionmenutest.cpp )
+add_executable( displaymessageformatactionmenutest displaymessageformatactionmenutest.cpp displaymessageformatactionmenutest.h)
 add_test(NAME displaymessageformatactionmenutest COMMAND displaymessageformatactionmenutest )
 ecm_mark_as_test(kmail-displaymessageformatactionmenutest)
 target_link_libraries( displaymessageformatactionmenutest Qt::Test  KF5::MessageViewer KF5::I18n kmailprivate)
 
 #####
-add_executable( identityaddvcarddialogtest  identityaddvcarddialogtest.cpp)
+add_executable( identityaddvcarddialogtest  identityaddvcarddialogtest.cpp identityaddvcarddialogtest.h)
 ecm_mark_as_test(kmail-identityaddvcarddialogtest)
 target_link_libraries( identityaddvcarddialogtest Qt::Test Qt::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n kmailprivate)
 
 #####
-add_executable( createfollowupreminderonexistingmessagejobtest createfollowupreminderonexistingmessagejobtest.cpp)
+add_executable( createfollowupreminderonexistingmessagejobtest createfollowupreminderonexistingmessagejobtest.cpp createfollowupreminderonexistingmessagejobtest.h)
 ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
 target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime KF5::MessageComposer kmailprivate)
 #####
 
-add_executable( cryptostateindicatorwidgettest cryptostateindicatorwidgettest.cpp)
+add_executable( cryptostateindicatorwidgettest cryptostateindicatorwidgettest.cpp cryptostateindicatorwidgettest.h)
 add_test(NAME cryptostateindicatorwidgettest COMMAND cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
 target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KF5::MessageCore Qt::Widgets KF5::ConfigWidgets KF5::I18n kmailprivate)
 #####
 
-add_executable( kactionmenutransporttest kactionmenutransporttest.cpp)
+add_executable( kactionmenutransporttest kactionmenutransporttest.cpp kactionmenutransporttest.h)
 add_test(NAME kactionmenutransporttest COMMAND kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt::Test  KF5::MailTransportAkonadi KF5::WidgetsAddons KF5::I18n KF5::ConfigGui kmailprivate)

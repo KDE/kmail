@@ -15,7 +15,7 @@ set(kontact_kmail_plugins_interface_SRCS)
 qt_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
 
 add_library(kontact_kmailplugin MODULE)
-target_sources(kontact_kmailplugin PRIVATE kmail_plugin.cpp summarywidget.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
+target_sources(kontact_kmailplugin PRIVATE kmail_plugin.cpp summarywidget.cpp kmail_plugin.h summarywidget.h ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_kmailplugin kmail_xml)
 
@@ -24,7 +24,7 @@ target_link_libraries(kontact_kmailplugin KF5::Mime KF5::I18n KF5::KontactInterf
 ########### next target ###############
 
 add_library(kcmkmailsummary MODULE)
-target_sources(kcmkmailsummary PRIVATE kcmkmailsummary.cpp ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
+target_sources(kcmkmailsummary PRIVATE kcmkmailsummary.cpp kcmkmailsummary.h ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 pim_target_precompile_headers(kcmkmailsummary PUBLIC ../../../kmail_pch.h)
 
 add_dependencies(kcmkmailsummary kmail_xml)
