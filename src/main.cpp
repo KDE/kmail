@@ -113,7 +113,9 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args, const QS
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+#endif
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     // Necessary for "cid" support in kmail.
     QWebEngineUrlScheme cidScheme("cid");
