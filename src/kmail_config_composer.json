@@ -1,12 +1,14 @@
 {
     "KPlugin": {
         "Description": "Message Composer Settings",
+        "Description[az]": "Məktub redaktoru ayarları",
         "Description[ca@valencia]": "Configuració de l'editor de missatges",
         "Description[ca]": "Configuració de l'editor de missatges",
         "Description[es]": "Preferencias del editor de mensajes",
         "Description[fr]": "Configuration de l'éditeur de messages",
         "Description[it]": "Impostazioni compositore messaggi",
         "Description[nl]": "Berichtenopsteller-instellingen",
+        "Description[pt_BR]": "Configurações do compositor de mensagens",
         "Description[sl]": "Nastavitve sestavljalnika sporočil",
         "Description[sv]": "Inställningar av brevfönster",
         "Description[uk]": "Параметри засобу створення повідомлень",

@@ -1,12 +1,14 @@
 {
     "KPlugin": {
         "Description": "Mail Summary Setup",
+        "Description[az]": "Poçt yekununun təyin edilməsi",
         "Description[ca@valencia]": "Configuració del resum per al correu",
         "Description[ca]": "Configuració del resum del correu",
         "Description[es]": "Configuración del resumen de correo",
         "Description[fr]": "Configuration du résumé de courriel",
         "Description[it]": "Impostazioni sommario posta",
         "Description[nl]": "E-mail Overzichts-instellingen",
+        "Description[pt_BR]": "Configuração do resumo de mensagens",
         "Description[sl]": "Nastavitve povzetka pošte",
         "Description[sv]": "Inställning av postöversikt",
         "Description[uk]": "Налаштування підсумку пошти",

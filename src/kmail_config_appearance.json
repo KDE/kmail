@@ -1,12 +1,14 @@
 {
     "KPlugin": {
         "Description": "Customize Visual Appearance",
+        "Description[az]": "Xarici görünüşünü dəyişdirin",
         "Description[ca@valencia]": "Personalitza l'aparença visual",
         "Description[ca]": "Personalitza l'aparença visual",
         "Description[es]": "Personalizar el aspecto visual",
         "Description[fr]": "Personnaliser l'aspect visuel",
         "Description[it]": "Personalizza l'aspetto",
         "Description[nl]": "Pas het uiterlijk aan",
+        "Description[pt_BR]": "Personaliza a aparência visual",
         "Description[sl]": "Prilagodi videz",
         "Description[sv]": "Anpassa visuellt uppträdande",
         "Description[uk]": "Налаштування зовнішнього вигляду",

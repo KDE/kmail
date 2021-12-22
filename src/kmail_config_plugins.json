@@ -1,12 +1,14 @@
 {
     "KPlugin": {
         "Description": "Settings Plugins",
+        "Description[az]": "Ayarlar plaqinləri",
         "Description[ca@valencia]": "Configuració dels connectors",
         "Description[ca]": "Configuració dels connectors",
         "Description[es]": "Preferencias de complementos",
         "Description[fr]": "Modules externes de configuration",
         "Description[it]": "Estensioni per le impostazioni",
         "Description[nl]": "Plug-ins voor instellingen",
+        "Description[pt_BR]": "Plugin de configuração",
         "Description[sl]": "Nastavitve vstavkov",
         "Description[sv]": "Inställningsinsticksprogram",
         "Description[uk]": "Додатки параметрів",
