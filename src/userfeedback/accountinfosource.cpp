@@ -27,6 +27,14 @@ QString AccountInfoSource::description() const
     return i18n("Number and type of accounts configured in KMail (receiver and sender).");
 }
 
+void AccountInfoSource::updateAccountInfo(const QString &resourceName, int numberOfResource, QVariantList &l)
+{
+    QVariantMap m;
+    m.insert(QStringLiteral("name"), resourceName);
+    m.insert(QStringLiteral("number"), numberOfResource);
+    l.push_back(m);
+}
+
 QVariant AccountInfoSource::data()
 {
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
@@ -55,40 +63,22 @@ QVariant AccountInfoSource::data()
     }
     QVariantList l;
     if (numberOfImap > 0) {
-        QVariantMap m;
-        m.insert(QStringLiteral("name"), QStringLiteral("imap"));
-        m.insert(QStringLiteral("number"), numberOfImap);
-        l.push_back(m);
+        updateAccountInfo(QStringLiteral("imap"), numberOfImap, l);
     }
     if (numberOfPop3 > 0) {
-        QVariantMap m;
-        m.insert(QStringLiteral("name"), QStringLiteral("pop3"));
-        m.insert(QStringLiteral("number"), numberOfPop3);
-        l.push_back(m);
+        updateAccountInfo(QStringLiteral("pop3"), numberOfPop3, l);
     }
     if (numberOfKolab > 0) {
-        QVariantMap m;
-        m.insert(QStringLiteral("name"), QStringLiteral("kolab"));
-        m.insert(QStringLiteral("number"), numberOfKolab);
-        l.push_back(m);
+        updateAccountInfo(QStringLiteral("kolab"), numberOfKolab, l);
     }
     if (numberOfEws > 0) {
-        QVariantMap m;
-        m.insert(QStringLiteral("name"), QStringLiteral("ews"));
-        m.insert(QStringLiteral("number"), numberOfEws);
-        l.push_back(m);
+        updateAccountInfo(QStringLiteral("ews"), numberOfEws, l);
     }
     if (numberOfMaildir > 0) {
-        QVariantMap m;
-        m.insert(QStringLiteral("name"), QStringLiteral("maildir"));
-        m.insert(QStringLiteral("number"), numberOfMaildir);
-        l.push_back(m);
+        updateAccountInfo(QStringLiteral("maildir"), numberOfMaildir, l);
     }
     if (numberOfMbox > 0) {
-        QVariantMap m;
-        m.insert(QStringLiteral("name"), QStringLiteral("mbox"));
-        m.insert(QStringLiteral("number"), numberOfMbox);
-        l.push_back(m);
+        updateAccountInfo(QStringLiteral("mbox"), numberOfMbox, l);
     }
 
     // Mail Transport
