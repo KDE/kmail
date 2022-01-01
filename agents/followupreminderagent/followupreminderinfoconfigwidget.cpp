@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2018-2021 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2018-2022 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -26,7 +26,8 @@ FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KShared
                                       QStringLiteral(KDEPIM_VERSION),
                                       i18n("Follow Up Reminder"),
                                       KAboutLicense::GPL_V2,
-                                      i18n("Copyright (C) 2014-2021 Laurent Montel"));
+                                      i18n("Copyright (C) 2014-%1 Laurent Montel"),
+                                      QStringLiteral("2022"));
 
     aboutData.addAuthor(i18n("Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
 
