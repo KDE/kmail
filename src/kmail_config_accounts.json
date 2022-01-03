@@ -1,6 +1,7 @@
 {
     "KPlugin": {
         "Description": "Setup for Sending and Receiving Messages",
+        "Description[ar]": "إعداد إرسال الرّسائل واستلامها",
         "Description[az]": "Məktubların göndərilməsi və alınmasını ayarlayın",
         "Description[ca@valencia]": "Configuració per a enviar i rebre missatges",
         "Description[ca]": "Configuració per a enviar i rebre missatges",

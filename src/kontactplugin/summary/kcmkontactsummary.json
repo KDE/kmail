@@ -1,6 +1,7 @@
 {
     "KPlugin": {
         "Description": "Summary Selection",
+        "Description[ar]": "اختيار الملخّصات",
         "Description[az]": "Yekunun seçiilməsi",
         "Description[ca@valencia]": "Selecció del resum",
         "Description[ca]": "Selecció del resum",

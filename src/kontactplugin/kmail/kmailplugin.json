@@ -1,6 +1,7 @@
 {
     "KPlugin": {
         "Description": "Kontact KMail Plugin",
+        "Description[ar]": "ملحقة «بريدك» لِ‍«متراسلك»",
         "Description[az]": "Kontact KMail plaqini",
         "Description[ca@valencia]": "Connector del KMail del Kontact",
         "Description[ca]": "Connector del KMail del Kontact",

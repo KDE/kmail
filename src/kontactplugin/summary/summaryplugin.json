@@ -1,6 +1,7 @@
 {
     "KPlugin": {
         "Description": "Kontact SummaryView Plugin",
+        "Description[ar]": "ملحقة «منظور الملخّصات» لِ‍«متراسلك»",
         "Description[az]": "Kontact yekununa baxış plaqini",
         "Description[ca@valencia]": "Connector de la vista de resum del Kontact",
         "Description[ca]": "Connector de la vista de resum del Kontact",

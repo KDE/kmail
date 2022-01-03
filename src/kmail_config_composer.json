@@ -1,6 +1,7 @@
 {
     "KPlugin": {
         "Description": "Message Composer Settings",
+        "Description[ar]": "إعدادات مؤلّف الرّسائل",
         "Description[az]": "Məktub redaktoru ayarları",
         "Description[ca@valencia]": "Configuració de l'editor de missatges",
         "Description[ca]": "Configuració de l'editor de missatges",

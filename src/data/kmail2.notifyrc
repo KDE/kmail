@@ -364,6 +364,7 @@ Action=Popup
 
 [Event/sent-mail-error]
 Name=Impossible to send email
+Name[ar]=تعذر إرسال البريد الإلكتروني
 Name[az]=E-poçt göndərmək mümkün deyil
 Name[ca]=És impossible enviar el correu
 Name[ca@valencia]=És impossible enviar el correu
@@ -394,6 +395,7 @@ Name[uk]=Не вдалося надіслати повідомлення
 Name[x-test]=xxImpossible to send emailxx
 Name[zh_CN]=无法发送电子邮件
 Comment=Problem during send mail
+Comment[ar]=مشكلة أثناء إرسال البريد الإلكتروني
 Comment[az]=Poçtun göndərilməsində problem var
 Comment[ca]=Problema durant l'enviament del correu
 Comment[ca@valencia]=Problema durant l'enviament del correu
@@ -516,6 +518,7 @@ Action=Popup
 
 [Event/undosend]
 Name=Email added to the send later queue
+Name[ar]=البريد أضيف إلى قائمة الإرسال لاحقا
 Name[az]=Məktub təxirə salınan göndəriş növbəsinə əlavə edildi
 Name[ca]=Correu afegit a la cua per a enviar més tard
 Name[ca@valencia]=Correu afegit a la cua per a enviar més tard
@@ -545,6 +548,7 @@ Name[uk]=Повідомлення додано до черги відкладе�
 Name[x-test]=xxEmail added to the send later queuexx
 Name[zh_CN]=邮件已添加到稍后发送队列
 Comment=A delayed email delivery is configured and can be canceled
+Comment[ar]=ضبط تسليم البريد الإلكتروني المتأخر ويمكن إلغاؤه
 Comment[az]=Məktubun çatdırılması müddəti tənzimləndi və ləğv edilə bilər
 Comment[ca]=S'ha configurat un lliurament de correu retardat i es pot cancel·lar
 Comment[ca@valencia]=S'ha configurat un lliurament de correu retardat i es pot cancel·lar

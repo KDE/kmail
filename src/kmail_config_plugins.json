@@ -1,6 +1,7 @@
 {
     "KPlugin": {
         "Description": "Settings Plugins",
+        "Description[ar]": "إعدادات الملحقات",
         "Description[az]": "Ayarlar plaqinləri",
         "Description[ca@valencia]": "Configuració dels connectors",
         "Description[ca]": "Configuració dels connectors",

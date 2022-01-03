@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Mail Merge Agent
+Name[ar]=عميل دمج البريد
 Name[az]=Poştun birləşdirilməsi vasitəsi
 Name[ca]=Agent de fusió del correu
 Name[ca@valencia]=Agent de fusió del correu
@@ -24,6 +25,7 @@ Name[uk]=Агент об'єднання пошти
 Name[x-test]=xxMail Merge Agentxx
 Name[zh_CN]=邮件合并代理
 Comment=Mail Merge Agent
+Comment[ar]=عميل دمج البريد
 Comment[az]=Poştun birləşdirilməsi vasitəsi
 Comment[ca]=Agent de fusió del correu
 Comment[ca@valencia]=Agent de fusió del correu
