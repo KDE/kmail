@@ -4,6 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <developer_name>The KDE Community</developer_name>
+  <developer_name xml:lang="ar">مجتمع كدي</developer_name>
   <developer_name xml:lang="az">KDE Cəmiyyəti</developer_name>
   <developer_name xml:lang="ca">La comunitat KDE</developer_name>
   <developer_name xml:lang="ca-valencia">La comunitat KDE</developer_name>
@@ -77,6 +78,7 @@
   <name xml:lang="zh-CN">KMail</name>
   <name xml:lang="zh-TW">KMail</name>
   <summary>A feature-rich email application</summary>
+  <summary xml:lang="ar">تطبيق البريد الإلكترونيّ غني بالمزايا</summary>
   <summary xml:lang="az">Zəngin imkanları olan e-poçt tətbiqi</summary>
   <summary xml:lang="ca">Una aplicació de correu electrònic rica en característiques</summary>
   <summary xml:lang="ca-valencia">Una aplicació de correu electrònic rica en característiques</summary>
@@ -110,6 +112,7 @@
     <p>
       KMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximize your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.
     </p>
+    <p xml:lang="ar">بريدك هو عميل بريد إلكتروني متطور يتكامل جيدًا مع مزودي البريد الإلكتروني المستخدَم على نطاق واسع مثل غ.ميل من غوغل. يوفر العديد من الأدوات والميزات لزيادة إنتاجيتك إلى أقصى حد ويجعل العمل مع حسابات البريد الإلكتروني الكبيرة أمرًا سهلاً وسريعًا. يدعم بريدك مجموعة كبيرة ومتنوعة من بروتوكولات البريد الإلكتروني - POP3 و IMAP و Microsoft Exchange (EWS) والكثير غيرها.</p>
     <p xml:lang="az">KMail, GMail kimi geniş istifadə olunan e-poçt təminatçıları ilə yaxşı inteqrasiya olunan ən müasir elektron poçt müştərisidir. Səmərəliliyi artırmaq üçün bir çox vasitə və imkanlar təmin edir və böyük e-poçt hesabları ilə işi asan və sürətli edir. KMail, POP3, IMAP, Microsoft Exchange (EWS) və daha çox e-poçt protokolunu dəstəkləyir.</p>
     <p xml:lang="ca">El KMail és un client de correu electrònic d'última generació que s'integra bé amb els proveïdors de correu electrònic àmpliament emprats com el GMail. Proporciona moltes eines i característiques per a maximitzar la productivitat i fer que el treball amb els comptes de correu electrònic sigui fàcil i ràpid. El KMail admet una gran varietat de protocols de correu electrònic: POP3, IMAP, Microsoft Exchange (EWS) i molts més.</p>
     <p xml:lang="ca-valencia">El KMail és un client de correu electrònic d'última generació que s'integra bé amb els proveïdors de correu electrònic àmpliament emprats com el GMail. Proporciona moltes eines i característiques per a maximitzar la productivitat i fer que el treball amb els comptes de correu electrònic siga fàcil i ràpid. El KMail admet una gran varietat de protocols de correu electrònic: POP3, IMAP, Microsoft Exchange (EWS) i molts més.</p>
@@ -182,6 +185,7 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Secure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.</li>
+      <li xml:lang="ar">آمن - يحتوي برنامج بريدك على إعدادات مبدئية آمنة لحماية خصوصيتك، ودعم تشفير كامل من الطرف للطرف الآخر، واكتشاف البريد المزعج.</li>
       <li xml:lang="az">Təhlükəsiz - KMail, məxfiliyinizi qorumaq üçün təhlükəsiz uçdan uca şifrələmə dəstəyi və spamın aşkar edilməsi xüsusiyyətinə malikdir.</li>
       <li xml:lang="ca">Segur: el KMail té la configuració predeterminada segura per a protegir la vostra privadesa, una implementació d'encriptatge extrem a extrem i detecció del correu brossa.</li>
       <li xml:lang="ca-valencia">Segur: el KMail té la configuració predeterminada segura per a protegir la vostra privadesa, una implementació d'encriptatge extrem a extrem i detecció del correu brossa.</li>
@@ -211,6 +215,7 @@
       <li xml:lang="x-test">xxSecure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.xx</li>
       <li xml:lang="zh-CN">安全可靠 - KMail 具有安全的默认设置、良好的端到端加密支持、可靠的垃圾邮件检测功能，为您的隐私保驾护航。</li>
       <li>Powerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.</li>
+      <li xml:lang="ar">قوي - تشمل الميزات الدعم في وضع عدم الاتصال، وهويات متعددة للمرسلين، ودعم الكثير من اللغات، ومرشحات قوية، ووظيفة البحث وإضافة الوسوم، وإدارة القوائم البريدية، وضبط المرن للغاية.</li>
       <li xml:lang="az">Güclü - Xüsusiyyətlər, oflayn dəstək, göndərənin birdən çox olması, çox dilli dəstək, güclü süzgəc, axtarış və yarlıq təyin etmə funksiyaları, paylaşım siyahısının idarə edilməsi və çox çevik tənzimləələri əhatə edir.</li>
       <li xml:lang="ca">Potent: les característiques inclouen compatibilitat amb fora de línia, múltiples identitats dels remitents, suport multilingüe, filtratge potent, funcionalitat de cerca i etiquetatge, gestió de les llistes de correu i una configuració molt flexible.</li>
       <li xml:lang="ca-valencia">Potent: les característiques inclouen compatibilitat amb fora de línia, múltiples identitats dels remitents, suport multilingüe, filtratge potent, funcionalitat de cerca i etiquetatge, gestió de les llistes de correu i una configuració molt flexible.</li>
@@ -239,6 +244,7 @@
       <li xml:lang="x-test">xxPowerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.xx</li>
       <li xml:lang="zh-CN">功能强大 - 包括离线支持、多个发件人身份、多语言支持、强大的筛选、搜索和标记功能、邮件列表管理和灵活的配置。</li>
       <li>Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
+      <li xml:lang="ar">متكامل - يمكن إضافة دعوات الاجتماعات بسهولة حيث تحمل الأحداث في "منظمك "والإكمال التلقائي للعناوين والصور الرمزية وتفضيلات التشفير من "دفتر عناوينك".</li>
       <li xml:lang="az">İnteqrasiya olunmuş - Toplantı dəvətlərini KOrganizer tədbirləri kimi, ünvanların avtomatik doldurulmasını, avatarlar və kripto ayarlarını KAdressBook-dan yükləyərək asanlıqla əlavə etmək olar.</li>
       <li xml:lang="ca">Integrat: les invitacions a reunions es poden afegir amb facilitat com a esdeveniments al KOrganizer, la compleció automàtica de l'adreça, els avatars i les preferències de la criptografia es carreguen des de la llibreta d'adreces.</li>
       <li xml:lang="ca-valencia">Integrat: les invitacions a reunions es poden afegir amb facilitat com a esdeveniments al KOrganizer, la compleció automàtica de l'adreça, els avatars i les preferències de la criptografia es carreguen des de la llibreta d'adreces.</li>
@@ -267,6 +273,7 @@
       <li xml:lang="x-test">xxIntegrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.xx</li>
       <li xml:lang="zh-CN">全面整合 - 会议邀请可轻松添加为 KOrganizer 事件，从 KAddressBook 加载地址自动完成数据、头像和加密首选项。</li>
       <li>Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
+      <li xml:lang="ar">متوافق مع المعايير - يدعم بروتوكولات البريد القياسية ، ودفع البريد الإلكتروني ، والتصفية من جانب الخادم و OpenPGP و PGP / MIME و S / MIME المضمنة.</li>
       <li xml:lang="az">Standartlara uyğun - Standart poçt protokollarını, e-poçtu göndərir, server tərəfindəki süzgəcləmə və sətır daxili OpenPGP, PGP / MIME və S / MIME əməllərini dəstəkləyir.</li>
       <li xml:lang="ca">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="ca-valencia">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
