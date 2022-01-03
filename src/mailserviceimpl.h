@@ -20,7 +20,7 @@ class MailServiceImpl : public QObject
 {
     Q_OBJECT
 public:
-    MailServiceImpl();
+    explicit MailServiceImpl(QObject *parent = nullptr);
     Q_REQUIRED_RESULT bool sendMessage(const QString &from,
                                        const QString &to,
                                        const QString &cc,

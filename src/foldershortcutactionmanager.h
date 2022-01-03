@@ -23,7 +23,7 @@ class FolderShortcutCommand : public QObject
     Q_OBJECT
 
 public:
-    FolderShortcutCommand(QWidget *mainwidget, const Akonadi::Collection &col);
+    explicit FolderShortcutCommand(QWidget *mainwidget, const Akonadi::Collection &col);
     ~FolderShortcutCommand() override;
 
 public Q_SLOTS:
