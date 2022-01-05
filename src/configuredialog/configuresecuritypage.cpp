@@ -714,6 +714,11 @@ QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &
     return entry;
 }
 
+namespace
+{
+static const char myGpgSettingsDialogGroupName[] = "GpgSettingsDialog";
+}
+
 GpgSettingsDialog::GpgSettingsDialog(QWidget *parent)
     : KCMultiDialog(parent)
 {
@@ -727,7 +732,7 @@ GpgSettingsDialog::~GpgSettingsDialog()
 
 void GpgSettingsDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "GpgSettingsDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
     const QSize size = group.readEntry("Size", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
@@ -736,7 +741,7 @@ void GpgSettingsDialog::readConfig()
 
 void GpgSettingsDialog::saveConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "GpgSettingsDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
     group.writeEntry("Size", size());
     group.sync();
 }

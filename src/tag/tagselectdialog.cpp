@@ -26,6 +26,10 @@
 #include <QVBoxLayout>
 
 using namespace KMail;
+namespace
+{
+static const char myTagSelectDialogGroupName[] = "TagSelectDialog";
+}
 
 TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem)
     : QDialog(parent)
@@ -77,7 +81,7 @@ TagSelectDialog::~TagSelectDialog()
 
 void TagSelectDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "TagSelectDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myTagSelectDialogGroupName);
     const QSize size = group.readEntry("Size", QSize(500, 300));
     if (size.isValid()) {
         resize(size);
@@ -86,7 +90,7 @@ void TagSelectDialog::readConfig()
 
 void TagSelectDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "TagSelectDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myTagSelectDialogGroupName);
     group.writeEntry("Size", size());
 }
 

@@ -97,6 +97,11 @@ private:
     QHash<qint64, bool> mFilterCollections;
 };
 
+namespace
+{
+static const char myIncompleteIndexDialogGroupName[] = "IncompleteIndexDialog";
+}
+
 IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent)
     : QDialog(parent)
     , mUi(new Ui::IncompleteIndexDialog)
@@ -140,7 +145,7 @@ IncompleteIndexDialog::~IncompleteIndexDialog()
 
 void IncompleteIndexDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "IncompleteIndexDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myIncompleteIndexDialogGroupName);
     const QSize size = group.readEntry("Size", QSize(500, 400));
     if (size.isValid()) {
         resize(size);
@@ -149,7 +154,7 @@ void IncompleteIndexDialog::readConfig()
 
 void IncompleteIndexDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), "IncompleteIndexDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myIncompleteIndexDialogGroupName);
     group.writeEntry("Size", size());
     group.sync();
 }
