@@ -31,6 +31,7 @@
 #include <Kdelibs4ConfigMigrator>
 #endif
 #include <QPointer>
+#include <QTimer>
 #include <chrono>
 
 using namespace std::chrono_literals;
