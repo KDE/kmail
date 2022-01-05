@@ -41,7 +41,7 @@ public:
     ~KMailPlugin() override;
 
     Q_REQUIRED_RESULT bool isRunningStandalone() const override;
-    KontactInterface::Summary *createSummaryWidget(QWidget *parent) override;
+    Q_REQUIRED_RESULT KontactInterface::Summary *createSummaryWidget(QWidget *parent) override;
     Q_REQUIRED_RESULT int weight() const override;
 
     Q_REQUIRED_RESULT QStringList invisibleToolbarActions() const override;
@@ -53,7 +53,7 @@ protected:
     KParts::Part *createPart() override;
     void openComposer(const QUrl &attach = QUrl());
     void openComposer(const QString &to);
-    bool canDecodeMimeData(const QMimeData *) const override;
+    Q_REQUIRED_RESULT bool canDecodeMimeData(const QMimeData *) const override;
     void processDropEvent(QDropEvent *) override;
 
 protected Q_SLOTS:
