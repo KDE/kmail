@@ -114,7 +114,7 @@ void KMReaderMainWin::initKMReaderMainWin()
 
 KMReaderMainWin::~KMReaderMainWin()
 {
-    KConfigGroup grp(KMKernel::self()->config()->group("Separate Reader Window"));
+    KConfigGroup grp(KSharedConfig::openConfig(QStringLiteral("kmail2rc"))->group("Separate Reader Window"));
     saveMainWindowSettings(grp);
 }
 
