@@ -200,7 +200,7 @@ Categories=Qt;KDE;Office;Network;Email;
 MimeType=x-scheme-handler/mailto;
 InitialPreference=10
 Actions=Composer;CheckMail;
-X-GNOME-SingleWindow=true
+SingleMainWindow=true
 
 [Desktop Action Composer]
 Name=New Message...

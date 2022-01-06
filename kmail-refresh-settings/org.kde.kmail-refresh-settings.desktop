@@ -94,6 +94,7 @@ Comment[uk]=Оновлення параметрів KMail
 Comment[x-test]=xxRefresh KMail settingsxx
 Comment[zh_CN]=刷新 KMail 设置
 Terminal=false
+SingleMainWindow=true
 StartupNotify=true
 X-DBUS-StartupType=Unique
 X-DBUS-ServiceName=org.kde.kmail-refresh-settings
