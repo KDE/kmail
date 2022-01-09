@@ -6,7 +6,7 @@ macro(add_sendlater_agent_test _source )
     ecm_add_test(${_source}
         TEST_NAME ${_name}
         NAME_PREFIX "sendlateragent-"
-        LINK_LIBRARIES sendlateragent Qt::Test
+        LINK_LIBRARIES sendlateragent Qt${QT_MAJOR_VERSION}::Test
         )
 endmacro()
 

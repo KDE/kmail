@@ -65,7 +65,7 @@ set(QT_REQUIRED_VERSION "5.15.2")
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
 
 
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngine WebEngineWidgets)
+find_package(Qt${QT_MAJOR_VERSION} ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngine WebEngineWidgets)
 set(LIBGRAVATAR_VERSION "5.19.40")
 set(MAILCOMMON_LIB_VERSION "5.19.42")
 set(MESSAGELIB_LIB_VERSION "5.19.40")
@@ -140,8 +140,8 @@ find_package(KF5TemplateParser ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
 find_package(MailTransportDBusService CONFIG REQUIRED)
 
-find_package(Qt5Keychain CONFIG)
-set_package_properties(Qt5Keychain PROPERTIES
+find_package(Qt${QT_MAJOR_VERSION}Keychain CONFIG)
+set_package_properties(Qt${QT_MAJOR_VERSION}Keychain PROPERTIES
                                    DESCRIPTION "Provides support for secure credentials storage"
                                    URL "https://github.com/frankosterfeld/qtkeychain"
 				   TYPE REQUIRED)

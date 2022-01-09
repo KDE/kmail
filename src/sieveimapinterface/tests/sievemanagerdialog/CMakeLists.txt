@@ -7,5 +7,10 @@ target_link_libraries(sievemanagerdialog
   KF5::KSieveUi
   KF5::AkonadiCore
   kmailprivate
-  qt5keychain
 )
+
+if (QT_MAJOR_VERSION STREQUAL "6")
+    target_link_libraries(sievemanagerdialog qt6keychain)
+else()
+    target_link_libraries(sievemanagerdialog qt5keychain)
+endif()
