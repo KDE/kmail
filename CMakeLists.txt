@@ -172,7 +172,7 @@ option(USE_PRECOMPILED_HEADERS "Use precompiled headers" OFF) # Set to OFF when 
 set(COMPILE_WITH_CMAKE_PCH_SUPPORT OFF)
 macro(pim_target_precompile_headers)
     if (USE_PRECOMPILED_HEADERS)
-	    set(COMPILE_WITH_CMAKE_PCH_SUPPORT ON)
+        set(COMPILE_WITH_CMAKE_PCH_SUPPORT ON)
 
         if (COMPILE_WITH_CMAKE_PCH_SUPPORT)
             target_precompile_headers(${ARGV})
