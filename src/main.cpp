@@ -10,8 +10,7 @@
 
 #include "kmail_options.h"
 #include "kmkernel.h" //control center
-#include <kcoreaddons_version.h>
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include "kmmigrateapplication.h"
 #endif
 
@@ -115,8 +114,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-#endif
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+#endif
     // Necessary for "cid" support in kmail.
     QWebEngineUrlScheme cidScheme("cid");
     cidScheme.setFlags(QWebEngineUrlScheme::SecureScheme | QWebEngineUrlScheme::ContentSecurityPolicyIgnored);
@@ -151,7 +150,7 @@ int main(int argc, char *argv[])
         qCDebug(KMAIL_LOG) << "Another instance of KMail already running";
         return 0;
     }
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     KMMigrateApplication migrate;
     migrate.migrate();
 #endif

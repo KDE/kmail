@@ -39,8 +39,7 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
-#include <kcoreaddons_version.h>
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
 #endif
 bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collection) const
@@ -58,7 +57,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     : Akonadi::AgentBase(id)
     , mProgressTimer(new QTimer(this))
 {
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("mailfilteragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_mailfilter_agentrc") << QStringLiteral("akonadi_mailfilter_agent.notifyrc"));
     migrate.migrate();

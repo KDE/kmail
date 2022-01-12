@@ -25,7 +25,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginMetaData>
-#include <kcmutils_version.h>
 
 #include <QButtonGroup>
 #include <QDBusConnection>

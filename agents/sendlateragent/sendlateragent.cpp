@@ -26,8 +26,7 @@
 #include <QDBusConnection>
 
 #include <KWindowSystem>
-#include <kcoreaddons_version.h>
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
 #endif
 #include <QPointer>
@@ -42,7 +41,7 @@ SendLaterAgent::SendLaterAgent(const QString &id)
     : Akonadi::AgentBase(id)
     , mManager(new SendLaterManager(this))
 {
-#if KCOREADDONS_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("sendlateragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_sendlater_agentrc") << QStringLiteral("akonadi_sendlater_agent.notifyrc"));
     migrate.migrate();
