@@ -137,7 +137,7 @@ KMKernel::KMKernel(QObject *parent)
 #ifdef WITH_KUSERFEEDBACK
     mUserFeedbackProvider = new KMailUserFeedbackProvider(this);
 #endif
-    mSystemNetworkStatus = PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline();
+    mSystemNetworkStatus = PimCommon::NetworkManager::self()->isOnline();
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
     QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.kmail"));
@@ -885,8 +885,7 @@ void KMKernel::resumeNetworkJobs()
 
 bool KMKernel::isOffline()
 {
-    if ((KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline)
-        || !PimCommon::NetworkManager::self()->networkConfigureManager()->isOnline()) {
+    if ((KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) || !PimCommon::NetworkManager::self()->isOnline()) {
         return true;
     } else {
         return false;
