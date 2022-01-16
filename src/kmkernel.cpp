@@ -93,7 +93,6 @@ using KMail::MailServiceImpl;
 
 #include <QDir>
 #include <QFileInfo>
-#include <QNetworkConfigurationManager>
 #include <QWidget>
 #include <QtDBus>
 
@@ -219,10 +218,7 @@ KMKernel::KMKernel(QObject *parent)
 
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &KMKernel::slotInstanceAdded);
 
-    connect(PimCommon::NetworkManager::self()->networkConfigureManager(),
-            &QNetworkConfigurationManager::onlineStateChanged,
-            this,
-            &KMKernel::slotSystemNetworkStatusChanged);
+    connect(PimCommon::NetworkManager::self(), &PimCommon::NetworkManager::networkStatusChanged, this, &KMKernel::slotSystemNetworkStatusChanged);
 
     connect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCompleted, this, &KMKernel::slotProgressItemCompletedOrCanceled);
     connect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCanceled, this, &KMKernel::slotProgressItemCompletedOrCanceled);
