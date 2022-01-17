@@ -66,7 +66,7 @@ public: // mailserviceimpl
     addAttachment(const QString &name, KMime::Headers::contentEncoding cte, const QString &charset, const QByteArray &data, const QByteArray &mimeType) = 0;
 
 public: // kmcommand
-    virtual Q_REQUIRED_RESULT QString dbusObjectPath() const = 0;
+    Q_REQUIRED_RESULT virtual QString dbusObjectPath() const = 0;
 
 public: // kmkernel, kmcommands, callback
     /**

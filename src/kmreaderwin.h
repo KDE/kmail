@@ -94,7 +94,7 @@ public:
     Q_REQUIRED_RESULT bool htmlLoadExternal();
 
     /** Returns the MD5 hash for the list of new features */
-    static Q_REQUIRED_RESULT QString newFeaturesMD5();
+    Q_REQUIRED_RESULT static QString newFeaturesMD5();
 
     /** Display a generic HTML splash page instead of a message */
     void displaySplashPage(const QString &templateName, const QVariantHash &data);
