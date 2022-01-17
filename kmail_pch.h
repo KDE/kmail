@@ -86,7 +86,6 @@
 #include <QMimeType>
 #include <QModelIndex>
 #include <QMouseEvent>
-#include <QNetworkConfigurationManager>
 #include <QObject>
 #include <QPainter>
 #include <QPainterPath>
