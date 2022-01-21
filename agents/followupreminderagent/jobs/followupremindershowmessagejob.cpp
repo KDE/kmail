@@ -21,7 +21,7 @@ FollowUpReminderShowMessageJob::~FollowUpReminderShowMessageJob() = default;
 void FollowUpReminderShowMessageJob::start()
 {
     if (mId < 0) {
-        qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " value < 0";
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << " value < 0";
         deleteLater();
         return;
     }

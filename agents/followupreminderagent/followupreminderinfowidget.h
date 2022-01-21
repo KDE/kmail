@@ -46,7 +46,11 @@ public:
 
     Q_REQUIRED_RESULT QList<qint32> listRemoveId() const;
 
+protected:
+    bool eventFilter(QObject *object, QEvent *event) override;
+
 private:
+    void slotItemDoubleClicked(QTreeWidgetItem *item);
     void slotCustomContextMenuRequested(const QPoint &pos);
     void createOrUpdateItem(FollowUpReminder::FollowUpReminderInfo *info, FollowUpReminderInfoItem *item = nullptr);
     void deleteItems(const QList<QTreeWidgetItem *> &mailItemLst);

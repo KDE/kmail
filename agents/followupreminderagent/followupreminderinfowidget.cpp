@@ -15,6 +15,7 @@
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
+#include <QKeyEvent>
 #include <QLocale>
 #include <QMenu>
 #include <QTreeWidget>
@@ -68,13 +69,30 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     mTreeWidget->setRootIsDecorated(false);
     mTreeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
     mTreeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    mTreeWidget->installEventFilter(this);
 
     connect(mTreeWidget, &QTreeWidget::customContextMenuRequested, this, &FollowUpReminderInfoWidget::slotCustomContextMenuRequested);
+    connect(mTreeWidget, &QTreeWidget::itemDoubleClicked, this, &FollowUpReminderInfoWidget::slotItemDoubleClicked);
 
     hbox->addWidget(mTreeWidget);
 }
 
 FollowUpReminderInfoWidget::~FollowUpReminderInfoWidget() = default;
+
+bool FollowUpReminderInfoWidget::eventFilter(QObject *object, QEvent *event)
+{
+    if (object == mTreeWidget) {
+        if (event->type() == QEvent::KeyPress) {
+            auto *keyEvent = static_cast<QKeyEvent *>(event);
+            if (keyEvent->key() == Qt::Key_Delete) {
+                const auto listItems = mTreeWidget->selectedItems();
+                deleteItems(listItems);
+            }
+        }
+    }
+
+    return false;
+}
 
 void FollowUpReminderInfoWidget::setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &infoList)
 {
@@ -167,6 +185,20 @@ bool FollowUpReminderInfoWidget::save() const
     general.writeEntry("Number", i);
     config->sync();
     return true;
+}
+
+void FollowUpReminderInfoWidget::slotItemDoubleClicked(QTreeWidgetItem *item)
+{
+    if (!item)
+        return;
+
+    const auto mailItem = static_cast<FollowUpReminderInfoItem *>(item);
+    const auto answerMessageItemId = mailItem->info()->answerMessageItemId();
+    if (answerMessageItemId >= 0) {
+        openShowMessage(answerMessageItemId);
+    } else {
+        openShowMessage(mailItem->info()->originalMessageItemId());
+    }
 }
 
 void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &pos)
