@@ -7,7 +7,11 @@
 #pragma once
 #include "kmail_private_export.h"
 #include <KSieveUi/SieveImapPasswordProvider>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <qt5keychain/keychain.h>
+#else
+#include <qt6keychain/keychain.h>
+#endif
 class KMAILTESTS_TESTS_EXPORT KMSieveImapPasswordProvider : public KSieveUi::SieveImapPasswordProvider
 {
     Q_OBJECT
