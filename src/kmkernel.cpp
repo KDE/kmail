@@ -98,7 +98,6 @@ using KMail::MailServiceImpl;
 
 #include <MailCommon/ResourceReadConfigFile>
 
-#include "imapresourcesettings.h"
 #include "kmailinterface.h"
 #include "util.h"
 #include <KLocalizedString>
@@ -106,6 +105,7 @@ using KMail::MailServiceImpl;
 #include <MailCommon/MailKernel>
 #include <QStandardPaths>
 #include <kmailadaptor.h>
+#include <pimcommon/imapresourcesettings.h>
 
 #include "kmail_options.h"
 #include "searchdialog/searchdescriptionattribute.h"
