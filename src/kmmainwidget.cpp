@@ -54,7 +54,6 @@
 #include "tag/tagselectdialog.h"
 #include <Akonadi/CollectionMaintenancePage>
 
-#include "mailcommonsettings_base.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <MailCommon/CollectionExpiryPage>
 #include <MailCommon/CollectionGeneralPage>
@@ -65,6 +64,7 @@
 #include <MailCommon/MailFilter>
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/CollectionAclPage>
+#include <mailcommon/mailcommonsettings_base.h>
 
 #include "kmail-version.h"
 

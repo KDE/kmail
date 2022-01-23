@@ -22,7 +22,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include "kmmainwidget.h"
 
-#include "mailcommonsettings_base.h"
+#include <mailcommon/mailcommonsettings_base.h>
 
 #include <MessageViewer/ConfigureWidget>
 #include <MessageViewer/MessageViewerSettings>

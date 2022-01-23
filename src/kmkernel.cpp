@@ -22,9 +22,7 @@ using PimCommon::RecentAddresses;
 #include "configuredialog/configuredialog.h"
 #include "folderarchive/folderarchivemanager.h"
 #include "kmcommands.h"
-#include "mailcommonsettings_base.h"
 #include "mailfilteragentinterface.h"
-#include "pop3settings.h"
 #include "sieveimapinterface/kmailsieveimapinstanceinterface.h"
 #include "unityservicemanager.h"
 #include <MailCommon/FolderTreeView>
@@ -32,6 +30,8 @@ using PimCommon::RecentAddresses;
 #include <MailCommon/MailUtil>
 #include <MessageCore/StringUtil>
 #include <PimCommon/PimUtil>
+#include <mailcommon/mailcommonsettings_base.h>
+#include <mailcommon/pop3settings.h>
 // kdepim includes
 #include "kmail-version.h"
 
