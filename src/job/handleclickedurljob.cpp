@@ -9,10 +9,10 @@
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include <KMime/Message>
+#include <MessageComposer/Composer>
 #include <MessageComposer/MessageHelper>
 #include <MessageCore/StringUtil>
 #include <TemplateParser/TemplateParserJob>
-#include <messagecomposer/composer.h>
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
     : QObject(parent)

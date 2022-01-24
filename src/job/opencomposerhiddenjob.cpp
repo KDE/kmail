@@ -7,7 +7,7 @@
 #include "opencomposerhiddenjob.h"
 #include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
-#include <messagecomposer/composer.h>
+#include <MessageComposer/Composer>
 
 #include <MessageComposer/MessageHelper>
 

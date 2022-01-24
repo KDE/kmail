@@ -6,7 +6,7 @@
 
 #include "kmcomposerwintest.h"
 #include "kmkernel.h"
-#include <messagecomposer/composer.h>
+#include <MessageComposer/Composer>
 
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityCombo>

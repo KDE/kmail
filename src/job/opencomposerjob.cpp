@@ -11,12 +11,12 @@
 #include <KIdentityManagement/IdentityManager>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <MessageComposer/Composer>
 #include <MessageComposer/MessageHelper>
 #include <MessageCore/StringUtil>
 #include <QFile>
 #include <QMimeDatabase>
 #include <TemplateParser/TemplateParserJob>
-#include <messagecomposer/composer.h>
 
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent)

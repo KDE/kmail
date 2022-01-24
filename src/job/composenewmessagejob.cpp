@@ -7,7 +7,7 @@
 #include "composenewmessagejob.h"
 #include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
-#include <messagecomposer/composer.h>
+#include <MessageComposer/Composer>
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
