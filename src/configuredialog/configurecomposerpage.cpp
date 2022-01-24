@@ -10,10 +10,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
 
 #include "configuredialog/configuredialoglistview.h"
-#include "globalsettings_templateparser.h"
 #include "kmmainwidget.h"
 #include "settings/kmailsettings.h"
-#include "templatesconfiguration_kfg.h"
 #include <MessageComposer/ImageScalingWidget>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageCore/MessageCoreSettings>
@@ -21,6 +19,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <PimCommon/SimpleStringListEditor>
 #include <TemplateParser/CustomTemplates>
 #include <TemplateParser/TemplatesConfiguration>
+#include <templateparser/globalsettings_templateparser.h>
+#include <templateparser/templatesconfiguration_kfg.h>
 
 #include <KLDAP/LdapClientSearch>
 #include <PimCommonAkonadi/CompletionOrderEditor>

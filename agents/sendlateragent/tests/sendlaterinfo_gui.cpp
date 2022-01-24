@@ -8,7 +8,6 @@
 #include <QCommandLineParser>
 #include <QStandardPaths>
 
-#include "sendlaterdialog.h"
 #include <MessageComposer/SendLaterDialog>
 
 int main(int argc, char **argv)

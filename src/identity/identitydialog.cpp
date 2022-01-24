@@ -30,11 +30,11 @@
 #include <MailCommon/MailKernel>
 
 #include "job/addressvalidationjob.h"
-#include "templatesconfiguration_kfg.h"
 #include <MessageComposer/Kleo_Util>
 #include <MessageCore/StringUtil>
 #include <Sonnet/DictionaryComboBox>
 #include <TemplateParser/TemplatesConfiguration>
+#include <templateparser/templatesconfiguration_kfg.h>
 // other kdepim headers:
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/SignatureConfigurator>

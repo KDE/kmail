@@ -41,7 +41,6 @@
 #include "kmmainwin.h"
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "settings/kmailsettings.h"
-#include "templatesconfiguration_kfg.h"
 #include "undosend/undosendmanager.h"
 #include "util.h"
 #include "validatesendmailshortcut.h"
@@ -49,6 +48,7 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
+#include <templateparser/templatesconfiguration_kfg.h>
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/Contact/ContactGroupExpandJob>

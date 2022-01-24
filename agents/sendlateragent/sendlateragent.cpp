@@ -9,7 +9,6 @@
 #include "sendlateragentadaptor.h"
 #include "sendlateragentsettings.h"
 #include "sendlaterconfiguredialog.h"
-#include "sendlaterinfo.h"
 #include "sendlatermanager.h"
 #include "sendlaterremovemessagejob.h"
 #include "sendlaterutil.h"
@@ -23,6 +22,7 @@
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>
 #include <KMime/Message>
+#include <MessageComposer/SendLaterInfo>
 #include <QDBusConnection>
 
 #include <KWindowSystem>

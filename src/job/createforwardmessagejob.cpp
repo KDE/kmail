@@ -6,11 +6,11 @@
 
 #include "createforwardmessagejob.h"
 #include "../util.h"
-#include "composer.h"
 #include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
+#include <messagecomposer/composer.h>
 
 CreateForwardMessageJob::CreateForwardMessageJob(QObject *parent)
     : QObject(parent)

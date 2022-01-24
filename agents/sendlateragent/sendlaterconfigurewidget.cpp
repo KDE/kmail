@@ -5,7 +5,6 @@
 */
 
 #include "sendlaterconfigurewidget.h"
-#include "sendlaterdialog.h"
 #include "sendlaterutil.h"
 
 #include <MessageComposer/SendLaterDialog>

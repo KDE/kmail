@@ -4,4 +4,4 @@
 
   SPDX-License-Identifier: GPL-2.0-or-later
 */
-#include "composer.h"
+#include <messagecomposer/composer.h>

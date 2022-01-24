@@ -14,7 +14,6 @@
 #include <QDateTime>
 #include <QStandardPaths>
 #include <QTest>
-#include <sendlaterinfo.h>
 
 SendLaterUtilTest::SendLaterUtilTest(QObject *parent)
     : QObject(parent)

@@ -5,7 +5,6 @@
 */
 
 #include "opencomposerjob.h"
-#include "composer.h"
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include <KIdentityManagement/Identity>
@@ -17,6 +16,7 @@
 #include <QFile>
 #include <QMimeDatabase>
 #include <TemplateParser/TemplateParserJob>
+#include <messagecomposer/composer.h>
 
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent)

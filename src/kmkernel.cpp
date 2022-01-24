@@ -46,7 +46,6 @@ using PimCommon::RecentAddresses;
 using KMail::MailServiceImpl;
 #include <MailCommon/JobScheduler>
 
-#include "messagelistsettings.h"
 #include <MessageComposer/AkonadiSender>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageComposer/MessageHelper>
@@ -57,9 +56,10 @@ using KMail::MailServiceImpl;
 #include <PimCommon/NetworkManager>
 #include <PimCommon/PimCommonSettings>
 #include <gravatar/gravatarsettings.h>
+#include <messagelist/messagelistsettings.h>
 
-#include "globalsettings_templateparser.h"
 #include <TemplateParser/TemplatesUtil>
+#include <templateparser/globalsettings_templateparser.h>
 
 #include "editor/codec/codecmanager.h"
 #include <MailCommon/FolderSettings>

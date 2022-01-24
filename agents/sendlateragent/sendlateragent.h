@@ -8,9 +8,7 @@
 
 #include <Akonadi/AgentBase>
 
-#include "sendlaterdialog.h"
 #include <MessageComposer/SendLaterInfo>
-#include <sendlaterinfo.h>
 
 class SendLaterManager;
 

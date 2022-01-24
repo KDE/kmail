@@ -9,13 +9,13 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configuredialog/colorlistbox.h"
 #include "kmkernel.h"
-#include "messagelistsettings.h"
 #include <Libkdepim/LineEditCatchReturnKey>
 #include <MailCommon/TagWidget>
 #include <MessageList/AggregationComboBox>
 #include <MessageList/AggregationConfigButton>
 #include <MessageList/ThemeComboBox>
 #include <MessageList/ThemeConfigButton>
+#include <messagelist/messagelistsettings.h>
 
 #include "util.h"
 #include <MailCommon/FolderTreeWidget>

@@ -5,7 +5,6 @@
 */
 
 #include "handleclickedurljob.h"
-#include "composer.h"
 #include "editor/kmcomposerwin.h"
 #include "kmail_debug.h"
 #include "kmkernel.h"
@@ -13,6 +12,7 @@
 #include <MessageComposer/MessageHelper>
 #include <MessageCore/StringUtil>
 #include <TemplateParser/TemplateParserJob>
+#include <messagecomposer/composer.h>
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
     : QObject(parent)
