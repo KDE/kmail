@@ -43,7 +43,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <Akonadi/TagModifyJob>
 
 #include "kmail_debug.h"
-#include <KColorScheme>
 #include <KFontChooser>
 #include <KIconButton>
 #include <KKeySequenceWidget>
