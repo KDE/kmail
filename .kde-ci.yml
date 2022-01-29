@@ -42,7 +42,7 @@ Dependencies:
     'frameworks/knotifyconfig': '@latest'
     'frameworks/kparts': '@latest'
     'frameworks/kservice': '@latest'
-    'frameworks/ksonnet': '@latest'
+    'frameworks/sonnet': '@latest'
     'frameworks/ktextwidgets': '@latest'
     'frameworks/kwidgetsaddons': '@latest'
     'frameworks/kwindowsystem': '@latest'
