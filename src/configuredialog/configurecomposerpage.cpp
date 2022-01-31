@@ -124,7 +124,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     // Main layout
-    auto grid = new QGridLayout(this);
+    auto layout = new QVBoxLayout(this);
 
     // "Signature" group
     auto groupBox = new QGroupBox(i18nc("@title:group", "Signature"));
@@ -180,7 +180,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupVBoxLayout->addStretch(1);
 
     groupBox->setLayout(groupVBoxLayout);
-    grid->addWidget(groupBox, 0, 0);
+    layout->addWidget(groupBox);
 
     // "Format" group
     groupBox = new QGroupBox(i18nc("@title:group", "Format"));
@@ -292,7 +292,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->setRowStretch(row, 1);
 
     groupBox->setLayout(groupGridLayout);
-    grid->addWidget(groupBox, 1, 0);
+    layout->addWidget(groupBox);
 
     // "Recipients" group
     groupBox = new QGroupBox(i18nc("@title:group", "Recipients"));
@@ -425,7 +425,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->setRowStretch(row, 1);
 
     groupBox->setLayout(groupGridLayout);
-    grid->addWidget(groupBox, 0, 1);
+    layout->addWidget(groupBox);
 
     groupBox = new QGroupBox(i18nc("@title:group", "Autosave"));
     groupGridLayout = new QGridLayout();
@@ -456,9 +456,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->setRowStretch(row, 1);
     groupBox->setLayout(groupGridLayout);
 
-    grid->addWidget(groupBox, 1, 1);
-
-    grid->setRowStretch(2, 1);
+    layout->addWidget(groupBox);
 }
 
 void ComposerPageGeneralTab::doResetToDefaultsOther()
