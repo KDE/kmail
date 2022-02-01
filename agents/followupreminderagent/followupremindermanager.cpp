@@ -183,7 +183,7 @@ QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInf
     infoStr += QStringLiteral("MessageId :%1\n").arg(info->messageId());
     infoStr += QStringLiteral("Subject :%1\n").arg(info->subject());
     infoStr += QStringLiteral("To :%1\n").arg(info->to());
-    infoStr += QStringLiteral("Dead Line :%1\n").arg(info->followUpReminderDate().toString());
+    infoStr += QStringLiteral("Deadline :%1\n").arg(info->followUpReminderDate().toString());
     infoStr += QStringLiteral("Answer received :%1\n").arg(info->answerWasReceived() ? QStringLiteral("true") : QStringLiteral("false"));
     infoStr += QStringLiteral("****************************************\n");
     return infoStr;
