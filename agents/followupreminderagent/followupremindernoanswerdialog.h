@@ -22,8 +22,15 @@ public:
     void setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &info);
 
     void wakeUp();
+
+public Q_SLOTS:
+    void reject() override;
+
 Q_SIGNALS:
     void needToReparseConfiguration();
+
+protected:
+    void closeEvent(QCloseEvent *) override;
 
 private:
     void slotDBusNotificationsPropertiesChanged(const QString &interface, const QVariantMap &changedProperties, const QStringList &invalidatedProperties);
