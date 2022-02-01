@@ -298,7 +298,12 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // "Recipients" group
     groupBox = new QGroupBox(i18nc("@title:group", "Recipients"));
-    auto groupGridLayout = new QGridLayout();
+    auto groupHBoxLayout = new QHBoxLayout(groupBox);
+    auto groupBoxWrapper = new QWidget;
+    auto groupGridLayout = new QGridLayout(groupBoxWrapper);
+    groupHBoxLayout->addWidget(groupBoxWrapper);
+    groupHBoxLayout->addStretch();
+
     int row = 0;
 
     // "Automatically request MDNs" checkbox
