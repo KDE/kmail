@@ -434,9 +434,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupBox->setLayout(groupGridLayout);
     layout->addWidget(groupBox);
 
+    // "Autosave" group
     groupBox = new QGroupBox(i18nc("@title:group", "Autosave"));
-    groupGridLayout = new QGridLayout();
-    row = 0;
+    groupHBoxLayout = new QHBoxLayout(groupBox);
 
     // "Autosave interval" spinbox
     mAutoSave = new KPluralHandlingSpinBox(this);
@@ -457,11 +457,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     connect(mAutoSave, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
 
-    groupGridLayout->addWidget(label, row, 0);
-    groupGridLayout->addWidget(mAutoSave, row, 1);
-    row++;
-    groupGridLayout->setRowStretch(row, 1);
-    groupBox->setLayout(groupGridLayout);
+    groupHBoxLayout->addWidget(label);
+    groupHBoxLayout->addWidget(mAutoSave);
+    groupHBoxLayout->addStretch();
 
     layout->addWidget(groupBox);
 
