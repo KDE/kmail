@@ -331,13 +331,13 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
 #if KDEPIM_ENTERPRISE_BUILD
     // "Warn if too many recipients" checkbox/spinbox
-    mRecipientCheck = new QCheckBox(KMailSettings::self()->tooManyRecipientsItem()->label(), this);
+    auto mRecipientCheck = new QCheckBox(KMailSettings::self()->tooManyRecipientsItem()->label(), this);
     mRecipientCheck->setObjectName(QStringLiteral("kcfg_TooManyRecipients"));
     helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8().constData());
     mRecipientCheck->setWhatsThis(helpText);
     mRecipientCheck->setToolTip(i18n("Warn if too many recipients are specified"));
 
-    mRecipientSpin = new QSpinBox(this);
+    auto mRecipientSpin = new QSpinBox(this);
     mRecipientSpin->setMaximum(100 /*max*/);
     mRecipientSpin->setMinimum(1 /*min*/);
     mRecipientSpin->setSingleStep(1 /*step*/);
