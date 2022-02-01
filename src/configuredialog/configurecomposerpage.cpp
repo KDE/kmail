@@ -187,8 +187,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // "Format" group
     groupBox = new QGroupBox(i18nc("@title:group", "Format"));
-    auto groupGridLayout = new QGridLayout();
-    int row = 0;
+    groupVBoxLayout = new QVBoxLayout;
 
     // "Only quote selected text when replying" checkbox
     mQuoteSelectionOnlyCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(), this);
@@ -200,8 +199,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mQuoteSelectionOnlyCheck->setWhatsThis(helpText);
 
     connect(mQuoteSelectionOnlyCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    groupGridLayout->addWidget(mQuoteSelectionOnlyCheck, row, 0, 1, -1);
-    ++row;
+    groupVBoxLayout->addWidget(mQuoteSelectionOnlyCheck);
 
     // "Use smart quoting" checkbox
     mSmartQuoteCheck = new QCheckBox(TemplateParser::TemplateParserSettings::self()->smartQuoteItem()->label(), this);
@@ -213,8 +211,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mSmartQuoteCheck->setWhatsThis(helpText);
 
     connect(mSmartQuoteCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    groupGridLayout->addWidget(mSmartQuoteCheck, row, 0, 1, -1);
-    ++row;
+    groupVBoxLayout->addWidget(mSmartQuoteCheck);
 
     // "Word wrap at column" checkbox/spinbox
     mWordWrapCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->wordWrapItem()->label(), this);
@@ -239,12 +236,13 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // only enable the spinbox if the checkbox is checked
     connect(mWordWrapCheck, &QAbstractButton::toggled, mWrapColumnSpin, &QWidget::setEnabled);
 
-    groupGridLayout->addWidget(mWordWrapCheck, row, 0);
-    groupGridLayout->addWidget(mWrapColumnSpin, row, 1);
-    ++row;
-
-    // Spacing
-    ++row;
+    auto wordWrapWrapper = new QWidget;
+    auto wordWrapWrapperLayout = new QHBoxLayout(wordWrapWrapper);
+    wordWrapWrapperLayout->setContentsMargins(0, 0, 0, 0);
+    wordWrapWrapperLayout->addWidget(mWordWrapCheck);
+    wordWrapWrapperLayout->addWidget(mWrapColumnSpin);
+    wordWrapWrapperLayout->addStretch();
+    groupVBoxLayout->addWidget(wordWrapWrapper);
 
     // "Reply/Forward using HTML if present" checkbox
     mReplyUsingVisualFormat = new QCheckBox(TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem()->label(), this);
@@ -256,8 +254,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mReplyUsingVisualFormat->setWhatsThis(helpText);
 
     connect(mReplyUsingVisualFormat, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    groupGridLayout->addWidget(mReplyUsingVisualFormat, row, 0, 1, -1);
-    ++row;
+    groupVBoxLayout->addWidget(mReplyUsingVisualFormat);
 
     // "Improve plain text of HTML" checkbox
     mImprovePlainTextOfHtmlMessage = new QCheckBox(MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessageItem()->label(), this);
@@ -271,13 +268,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mImprovePlainTextOfHtmlMessage->setWhatsThis(helpText);
 
     connect(mImprovePlainTextOfHtmlMessage, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    groupGridLayout->addWidget(mImprovePlainTextOfHtmlMessage, row, 0, 1, -1);
-    ++row;
+    groupVBoxLayout->addWidget(mImprovePlainTextOfHtmlMessage);
     QLabel *label = nullptr;
 #if KDEPIM_ENTERPRISE_BUILD
-    ++row;
     // "Default forwarding type" combobox
-    mForwardTypeCombo = new QComboBox(this);
+    auto mForwardTypeCombo = new QComboBox(this);
     mForwardTypeCombo->addItems(QStringList() << i18nc("@item:inlistbox Inline mail forwarding", "Inline") << i18n("As Attachment"));
 
     helpText = i18n("Set the default forwarded message format");
@@ -289,18 +284,22 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     connect(mForwardTypeCombo, &QComboBox::activated, this, &ComposerPageGeneralTab::slotEmitChanged);
 
-    groupGridLayout->addWidget(label, row, 0);
-    groupGridLayout->addWidget(mForwardTypeCombo, row, 1);
+    auto forwardTypeWrapper = new QWidget;
+    auto forwardTypeWrapperLayout = new QHBoxLayout(forwardTypeWrapper);
+    forwardTypeWrapperLayout->setContentsMargins(0, 0, 0, 0);
+    forwardTypeWrapperLayout->addWidget(label);
+    forwardTypeWrapperLayout->addWidget(mForwardTypeCombo);
+    forwardTypeWrapperLayout->addStretch();
+    groupVBoxLayout->addWidget(forwardTypeWrapper);
 #endif
-    groupGridLayout->setRowStretch(row, 1);
 
-    groupBox->setLayout(groupGridLayout);
+    groupBox->setLayout(groupVBoxLayout);
     layout->addWidget(groupBox);
 
     // "Recipients" group
     groupBox = new QGroupBox(i18nc("@title:group", "Recipients"));
-    groupGridLayout = new QGridLayout();
-    row = 0;
+    auto groupGridLayout = new QGridLayout();
+    int row = 0;
 
     // "Automatically request MDNs" checkbox
     mAutoRequestMDNCheck = new QCheckBox(KMailSettings::self()->requestMDNItem()->label(), this);
