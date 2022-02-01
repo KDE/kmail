@@ -43,6 +43,7 @@ using PimCommon::RecentAddresses;
 #include <QLabel>
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
+#include <QScrollArea>
 #include <QTextCodec>
 #include <QVBoxLayout>
 
@@ -124,7 +125,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     // Main layout
-    auto layout = new QVBoxLayout(this);
+    auto mainLayout = new QVBoxLayout(this);
+    auto wrapper = new QWidget;
+    auto layout = new QVBoxLayout(wrapper);
 
     // "Signature" group
     auto groupBox = new QGroupBox(i18nc("@title:group", "Signature"));
@@ -457,6 +460,12 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupBox->setLayout(groupGridLayout);
 
     layout->addWidget(groupBox);
+
+    // Prevent all other tabs to inherit the height of this one
+    auto scrollArea = new QScrollArea;
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(wrapper);
+    mainLayout->addWidget(scrollArea);
 }
 
 void ComposerPageGeneralTab::doResetToDefaultsOther()
