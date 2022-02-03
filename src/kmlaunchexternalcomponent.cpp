@@ -18,6 +18,7 @@
 #include <MailCommon/FilterManager>
 
 #include <KDialogJobUiDelegate>
+#include <KIO/ApplicationLauncherJob>
 #include <KIO/CommandLauncherJob>
 #include <QPointer>
 
@@ -83,8 +84,12 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 
 void KMLaunchExternalComponent::slotStartCertManager()
 {
-    const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
-    if (exec.isEmpty() || !QProcess::startDetached(exec, QStringList())) {
+    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.kleopatra"));
+    if (service) {
+        auto job = new KIO::ApplicationLauncherJob(service);
+        job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
+        job->start();
+    } else {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start certificate manager; "
                                 "please make sure you have Kleopatra properly installed."),
@@ -94,8 +99,12 @@ void KMLaunchExternalComponent::slotStartCertManager()
 
 void KMLaunchExternalComponent::slotImportWizard()
 {
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-    if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
+    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.akonadiimportwizard"));
+    if (service) {
+        auto job = new KIO::ApplicationLauncherJob(service);
+        job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
+        job->start();
+    } else {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the import wizard. "
                                 "Please make sure you have ImportWizard properly installed."),
@@ -105,8 +114,12 @@ void KMLaunchExternalComponent::slotImportWizard()
 
 void KMLaunchExternalComponent::slotExportData()
 {
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("pimdataexporter"));
-    if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
+    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.pimdataexporter"));
+    if (service) {
+        auto job = new KIO::ApplicationLauncherJob(service);
+        job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
+        job->start();
+    } else {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"PIM Data Exporter\" program. "
                                 "Please check your installation."),
