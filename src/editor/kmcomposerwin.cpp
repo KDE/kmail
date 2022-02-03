@@ -3717,9 +3717,15 @@ void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineN
     const auto data = line->data().dynamicCast<MessageComposer::Recipient>();
 
     if (!data->key().isNull()) {
-        QProcess::startDetached(
-            QStringLiteral("kleopatra"),
-            {QStringLiteral("--query"), QString::fromLatin1(data->key().primaryFingerprint()), QStringLiteral("--parent-windowid"), QString::number(winId())});
+        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
+        if (exec.isEmpty()
+            || !QProcess::startDetached(exec,
+                                        {QStringLiteral("--query"),
+                                         QString::fromLatin1(data->key().primaryFingerprint()),
+                                         QStringLiteral("--parent-windowid"),
+                                         QString::number(winId())})) {
+            qCWarning(KMAIL_LOG) << "Unable to execute kleopatra";
+        }
     }
 }
 
