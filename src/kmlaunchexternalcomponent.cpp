@@ -83,7 +83,8 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 
 void KMLaunchExternalComponent::slotStartCertManager()
 {
-    if (!QProcess::startDetached(QStringLiteral("kleopatra"), QStringList())) {
+    const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
+    if (exec.isEmpty() || !QProcess::startDetached(exec, QStringList())) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start certificate manager; "
                                 "please make sure you have Kleopatra properly installed."),
@@ -94,7 +95,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
 void KMLaunchExternalComponent::slotImportWizard()
 {
     const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-    if (!QProcess::startDetached(path, QStringList())) {
+    if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the import wizard. "
                                 "Please make sure you have ImportWizard properly installed."),
@@ -105,7 +106,7 @@ void KMLaunchExternalComponent::slotImportWizard()
 void KMLaunchExternalComponent::slotExportData()
 {
     const QString path = QStandardPaths::findExecutable(QStringLiteral("pimdataexporter"));
-    if (!QProcess::startDetached(path, QStringList())) {
+    if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"PIM Data Exporter\" program. "
                                 "Please check your installation."),
@@ -125,7 +126,7 @@ void KMLaunchExternalComponent::slotImport()
 {
     const QStringList lst = {QStringLiteral("--mode"), QStringLiteral("manual")};
     const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-    if (!QProcess::startDetached(path, lst)) {
+    if (path.isEmpty() || !QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the ImportWizard. "
                                 "Please make sure you have ImportWizard properly installed."),
@@ -138,7 +139,7 @@ void KMLaunchExternalComponent::slotAccountWizard()
     const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822")};
 
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
-    if (!QProcess::startDetached(path, lst)) {
+    if (path.isEmpty() || !QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the account wizard. "
                                 "Please make sure you have AccountWizard properly installed."),

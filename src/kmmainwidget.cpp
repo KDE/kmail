@@ -316,7 +316,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
                                                               KGuiItem(i18nc("@action:button", "Do Not Import"), QStringLiteral("dialog-cancel")));
             if (answer == KMessageBox::Yes) {
                 const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-                if (!QProcess::startDetached(path, QStringList())) {
+                if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
                     KMessageBox::error(this,
                                        i18n("Could not start the import wizard. "
                                             "Please check your installation."),
