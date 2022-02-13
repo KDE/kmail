@@ -411,7 +411,7 @@ target_link_libraries(kmailprivate
     KF5::PimCommon
     KF5::MailCommon
     KF5::TemplateParser
-    KF5::IdentityManagement
+    KF5::IdentityManagementWidgets
     KF5::WindowSystem
     KF5::Notifications
     KF5::GuiAddons

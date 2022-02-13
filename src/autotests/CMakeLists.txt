@@ -38,7 +38,7 @@ target_link_libraries( kactionmenutransporttest Qt${QT_MAJOR_VERSION}::Test  KF5
 
 
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp ""
-    "Qt${QT_MAJOR_VERSION}::Test;KF5::IdentityManagement;KF5::MessageCore;KF5::TemplateParser;KF5::XmlGui;Qt${QT_MAJOR_VERSION}::Widgets;KF5::ConfigWidgets;KF5::I18n;kmailprivate")
+    "Qt${QT_MAJOR_VERSION}::Test;KF5::IdentityManagementWidgets;KF5::MessageCore;KF5::TemplateParser;KF5::XmlGui;Qt${QT_MAJOR_VERSION}::Widgets;KF5::ConfigWidgets;KF5::I18n;kmailprivate")
 
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "" "kmailprivate;KF5::MailCommon;KF5::Libkdepim;KF5::ItemViews;KF5::TemplateParser;KF5::XmlGui;KF5::Completion;KF5::I18n")
 
