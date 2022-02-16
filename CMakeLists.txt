@@ -155,7 +155,10 @@ configure_file(kmail-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h
 if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
-ecm_set_disabled_deprecation_versions(QT 5.15.2 KF 5.88.0)
+ecm_set_disabled_deprecation_versions(QT 5.15.2
+    KF 5.91.0
+    KCOREADDONS 5.88.0 #KPluginFactory::registerPlugin
+)
 
 find_package(KUserFeedback 1.2.0 CONFIG)
 set_package_properties(KUserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional). It can be disable in apps.")
