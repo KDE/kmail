@@ -11,7 +11,7 @@
 namespace Ui
 {
 class MailMergeConfigureWidget;
-};
+}
 
 class MailMergeConfigureWidget : public QWidget
 {

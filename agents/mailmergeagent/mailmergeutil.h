@@ -12,4 +12,4 @@ namespace MailMergeUtil
 Q_REQUIRED_RESULT QString mailMergePattern();
 Q_REQUIRED_RESULT bool mailMergeAgentEnabled();
 void forceReparseConfiguration();
-};
+}
