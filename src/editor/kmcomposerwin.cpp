@@ -2788,8 +2788,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                           i18n("To: field is empty. "
                                                                "Send message anyway?"),
                                                           i18n("No To: specified"),
-                                                          KGuiItem(i18n("S&end as Is")),
-                                                          KGuiItem(i18n("&Specify the To field")));
+                                                          KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
+                                                          KGuiItem(i18n("&Specify the To field"), QLatin1String("edit-rename")));
                 if (rc == KMessageBox::No) {
                     return;
                 }
@@ -2802,8 +2802,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                       i18n("You did not specify a subject. "
                                                            "Send message anyway?"),
                                                       i18n("No Subject Specified"),
-                                                      KGuiItem(i18n("S&end as Is")),
-                                                      KGuiItem(i18n("&Specify the Subject")));
+                                                      KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
+                                                      KGuiItem(i18n("&Specify the Subject"), QLatin1String("edit-rename")));
             if (rc == KMessageBox::No) {
                 return;
             }
@@ -3042,8 +3042,8 @@ void KMComposerWin::confirmBeforeSend()
     const int rc = KMessageBox::warningYesNoCancel(mMainWidget,
                                                    i18n("About to send email..."),
                                                    i18n("Send Confirmation"),
-                                                   KGuiItem(i18n("&Send Now")),
-                                                   KGuiItem(i18n("Send &Later")));
+                                                   KGuiItem(i18n("&Send Now"), QLatin1String("mail-send")),
+                                                   KGuiItem(i18n("Send &Later"), QLatin1String("mail-queue")));
 
     if (rc == KMessageBox::Yes) {
         doSend(MessageComposer::MessageSender::SendImmediate);
