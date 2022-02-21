@@ -9,7 +9,7 @@
 #include <MessageList/View>
 #include <MessageViewer/Viewer>
 
-#include <Akonadi/KMime/MessageStatus>
+#include <Akonadi/MessageStatus>
 #include <KIO/Job>
 #include <KMime/KMimeMessage>
 

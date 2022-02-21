@@ -8,10 +8,10 @@
 
 #include <Akonadi/Collection>
 #include <Akonadi/EntityTreeModel>
+#include <Akonadi/RemoveDuplicatesJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <Libkdepim/ProgressManager>
-#include <akonadi/kmime/removeduplicatesjob.h>
 
 #include <QItemSelectionModel>
 Q_DECLARE_METATYPE(KPIM::ProgressItem *)

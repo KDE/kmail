@@ -16,9 +16,9 @@
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ItemFetchScope>
-#include <Akonadi/KMime/SpecialMailCollections>
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>
+#include <Akonadi/SpecialMailCollections>
 #include <KMime/Message>
 #include <QDBusConnection>
 

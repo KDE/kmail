@@ -25,7 +25,7 @@
 #include <Akonadi/CollectionStatistics>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
-#include <Akonadi/KMime/NewMailNotifierAttribute>
+#include <Akonadi/NewMailNotifierAttribute>
 #include <chrono>
 
 using namespace std::chrono_literals;

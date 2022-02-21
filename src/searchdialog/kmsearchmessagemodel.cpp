@@ -13,7 +13,7 @@
 #include <Akonadi/Monitor>
 #include <Akonadi/Session>
 
-#include <Akonadi/KMime/MessageParts>
+#include <Akonadi/MessageParts>
 #include <KMime/KMimeMessage>
 
 #include "kmail_debug.h"

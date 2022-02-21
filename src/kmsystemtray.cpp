@@ -9,7 +9,7 @@
 #include "kmmainwidget.h"
 #include "settings/kmailsettings.h"
 #include "unityservicemanager.h"
-#include <Akonadi/KMime/NewMailNotifierAttribute>
+#include <Akonadi/NewMailNotifierAttribute>
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>

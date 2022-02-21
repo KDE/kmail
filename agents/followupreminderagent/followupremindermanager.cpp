@@ -12,7 +12,7 @@
 #include "jobs/followupreminderfinishtaskjob.h"
 #include "jobs/followupreminderjob.h"
 
-#include <Akonadi/KMime/SpecialMailCollections>
+#include <Akonadi/SpecialMailCollections>
 
 #include <KConfig>
 #include <KConfigGroup>

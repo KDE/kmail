@@ -20,9 +20,9 @@
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
-#include <Akonadi/KMime/MessageParts>
-#include <Akonadi/KMime/MessageStatus>
-#include <Akonadi/KMime/Pop3ResourceAttribute>
+#include <Akonadi/MessageParts>
+#include <Akonadi/MessageStatus>
+#include <Akonadi/Pop3ResourceAttribute>
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>
 #include <KConfigGroup>

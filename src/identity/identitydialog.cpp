@@ -89,7 +89,7 @@ using MailTransport::TransportManager;
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/EntityDisplayAttribute>
-#include <Akonadi/KMime/SpecialMailCollections>
+#include <Akonadi/SpecialMailCollections>
 #include <QDialogButtonBox>
 #include <QStandardPaths>
 

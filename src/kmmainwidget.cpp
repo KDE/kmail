@@ -117,7 +117,7 @@
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ItemModifyJob>
-#include <Akonadi/KMime/MessageFlags>
+#include <Akonadi/MessageFlags>
 #include <Akonadi/Session>
 #include <Akonadi/StandardActionManager>
 

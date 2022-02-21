@@ -19,7 +19,7 @@
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ItemModifyJob>
 #include <Akonadi/ItemMoveJob>
-#include <Akonadi/KMime/MessageParts>
+#include <Akonadi/MessageParts>
 #include <KLocalizedString>
 #include <KMime/KMimeMessage>
 #include <KNotification>

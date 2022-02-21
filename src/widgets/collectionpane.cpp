@@ -8,7 +8,7 @@
 #include "kmkernel.h"
 #include <MailCommon/MailKernel>
 
-#include <Akonadi/KMime/MessageFolderAttribute>
+#include <Akonadi/MessageFolderAttribute>
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 #include <MailCommon/FolderSettings>

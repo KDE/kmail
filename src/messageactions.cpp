@@ -24,7 +24,7 @@
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/ItemFetchJob>
-#include <Akonadi/KMime/MessageParts>
+#include <Akonadi/MessageParts>
 #include <AkonadiSearch/Debug/akonadisearchdebugdialog.h>
 #include <KIO/KUriFilterSearchProviderActions>
 #include <QAction>

@@ -8,7 +8,7 @@
 
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
-#include <Akonadi/KMime/MessageParts>
+#include <Akonadi/MessageParts>
 
 #include <KMime/Message>
 

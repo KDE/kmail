@@ -53,8 +53,8 @@
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/Contact/ContactGroupExpandJob>
 #include <Akonadi/ItemFetchJob>
-#include <Akonadi/KMime/MessageFlags>
-#include <Akonadi/KMime/MessageStatus>
+#include <Akonadi/MessageFlags>
+#include <Akonadi/MessageStatus>
 #include <Akonadi/Monitor>
 
 #include <KContacts/VCardConverter>

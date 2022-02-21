@@ -9,7 +9,7 @@
 #include "kmail_debug.h"
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
-#include <Akonadi/KMime/RemoveDuplicatesJob>
+#include <Akonadi/RemoveDuplicatesJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <Libkdepim/ProgressManager>

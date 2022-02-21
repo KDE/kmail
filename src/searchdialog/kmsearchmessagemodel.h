@@ -5,7 +5,7 @@
  */
 #pragma once
 
-#include <Akonadi/KMime/MessageModel>
+#include <Akonadi/MessageModel>
 #include <QHash>
 
 class KMSearchMessageModel : public Akonadi::MessageModel

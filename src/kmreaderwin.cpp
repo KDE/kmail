@@ -33,10 +33,10 @@
 #include <QVBoxLayout>
 using MessageViewer::CSSHelper;
 #include "util.h"
+#include <Akonadi/MessageFlags>
 #include <KMime/MDN>
 #include <MessageCore/StringUtil>
 #include <QCryptographicHash>
-#include <akonadi/kmime/messageflags.h>
 
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>

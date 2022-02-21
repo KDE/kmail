@@ -7,7 +7,7 @@
 
 #include "createtaskjob.h"
 #include "attributes/taskattribute.h"
-#include <Akonadi/KMime/MessageStatus>
+#include <Akonadi/MessageStatus>
 
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>

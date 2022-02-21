@@ -16,7 +16,7 @@
 #include <MailCommon/FolderTreeWidget>
 
 #include "messageactions.h"
-#include <Akonadi/KMime/StandardMailActionManager>
+#include <Akonadi/StandardMailActionManager>
 #include <Akonadi/Tag>
 #include <KActionCollection>
 #include <KXMLGUIClient>

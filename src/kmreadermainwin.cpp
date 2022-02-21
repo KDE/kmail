@@ -53,7 +53,7 @@
 #include <Akonadi/ItemCopyJob>
 #include <Akonadi/ItemCreateJob>
 #include <Akonadi/ItemMoveJob>
-#include <Akonadi/KMime/MessageFlags>
+#include <Akonadi/MessageFlags>
 #include <KPIMTextEdit/TextToSpeech>
 #include <MailCommon/MailUtil>
 #include <MessageViewer/DKIMViewerMenu>

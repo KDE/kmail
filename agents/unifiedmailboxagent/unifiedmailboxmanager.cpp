@@ -15,9 +15,9 @@
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ItemFetchScope>
-#include <Akonadi/KMime/SpecialMailCollections>
 #include <Akonadi/LinkJob>
 #include <Akonadi/SpecialCollectionAttribute>
+#include <Akonadi/SpecialMailCollections>
 #include <Akonadi/UnlinkJob>
 
 #include <QTimer>
