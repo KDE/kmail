@@ -42,7 +42,7 @@
 #include <QStatusBar>
 #include <TemplateParser/CustomTemplatesMenu>
 
-#include <Akonadi/Contact/ContactSearchJob>
+#include <Akonadi/ContactSearchJob>
 #include <KActionCollection>
 #include <KEmailAddress>
 #include <KMime/KMimeMessage>

@@ -19,9 +19,9 @@
 
 #include "kmail-version.h"
 #include "kmcommands.h"
-#include <Akonadi/Contact/AddEmailAddressJob>
-#include <Akonadi/Contact/AddEmailDisplayJob>
-#include <Akonadi/Contact/OpenEmailAddressJob>
+#include <Akonadi/AddEmailAddressJob>
+#include <Akonadi/AddEmailDisplayJob>
+#include <Akonadi/OpenEmailAddressJob>
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
 #include <MailCommon/SendMdnHandler>
@@ -49,7 +49,7 @@ using namespace MessageViewer;
 
 #include <KIO/JobUiDelegate>
 
-#include <Akonadi/Contact/ContactEditorDialog>
+#include <Akonadi/ContactEditorDialog>
 
 #include "kmail_debug.h"
 #include <KActionCollection>

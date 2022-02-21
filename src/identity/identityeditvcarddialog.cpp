@@ -7,7 +7,7 @@
 #include "identityeditvcarddialog.h"
 
 #include "kmail_debug.h"
-#include <Akonadi/Contact/ContactEditor>
+#include <Akonadi/ContactEditor>
 #include <KContacts/VCardConverter>
 #include <KLocalizedString>
 #include <KMessageBox>

@@ -51,7 +51,7 @@
 #include <templateparser/templatesconfiguration_kfg.h>
 
 #include <Akonadi/ChangeRecorder>
-#include <Akonadi/Contact/ContactGroupExpandJob>
+#include <Akonadi/ContactGroupExpandJob>
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/MessageFlags>
 #include <Akonadi/MessageStatus>

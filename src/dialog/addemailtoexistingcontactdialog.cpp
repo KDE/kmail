@@ -8,8 +8,8 @@
 #include "kmkernel.h"
 
 #include <Akonadi/ChangeRecorder>
-#include <Akonadi/Contact/ContactsTreeModel>
-#include <Akonadi/Contact/EmailAddressSelectionWidget>
+#include <Akonadi/ContactsTreeModel>
+#include <Akonadi/EmailAddressSelectionWidget>
 #include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/Session>

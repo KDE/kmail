@@ -11,7 +11,7 @@
 #include "encodedimagepicker.h"
 #include "ui_encodedimagepicker.h"
 
-#include <Akonadi/Contact/ContactSearchJob>
+#include <Akonadi/ContactSearchJob>
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 #include <KPIMTextEdit/PlainTextEditor>

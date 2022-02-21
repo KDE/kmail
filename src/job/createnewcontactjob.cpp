@@ -18,7 +18,7 @@
 #include <Akonadi/AgentTypeDialog>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
-#include <Akonadi/Contact/ContactEditorDialog>
+#include <Akonadi/ContactEditorDialog>
 
 #include <KLocalizedString>
 #include <KMessageBox>
