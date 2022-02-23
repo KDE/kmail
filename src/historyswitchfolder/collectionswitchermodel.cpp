@@ -50,7 +50,7 @@ void CollectionSwitcherModel::addHistory(const Akonadi::Collection &currentCol, 
         mCollectionsInfo.takeFirst();
     }
     mCollectionsInfo.removeAll(info);
-    mCollectionsInfo.append(info);
+    mCollectionsInfo.prepend(info);
     Q_EMIT dataChanged(createIndex(0, 0), createIndex(mCollectionsInfo.size() - 1, 1), {});
 }
 
