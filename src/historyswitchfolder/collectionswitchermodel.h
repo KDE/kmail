@@ -26,8 +26,10 @@ public:
         {
         }
 
-        const Akonadi::Collection mNewCollection;
-        const QString mFullPath;
+        Q_REQUIRED_RESULT bool operator==(const CollectionInfo &other) const;
+
+        Akonadi::Collection mNewCollection;
+        QString mFullPath;
     };
 
     explicit CollectionSwitcherModel(QObject *parent = nullptr);

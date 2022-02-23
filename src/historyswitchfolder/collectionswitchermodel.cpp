@@ -42,10 +42,17 @@ QVariant CollectionSwitcherModel::data(const QModelIndex &index, int role) const
 
 void CollectionSwitcherModel::addHistory(const Akonadi::Collection &currentCol, const QString &fullPath)
 {
+    const CollectionInfo info{currentCol, fullPath};
+    if (!mCollectionsInfo.isEmpty()) {
+        if (mCollectionsInfo.at(mCollectionsInfo.count() - 1) == info) {
+            return;
+        }
+    }
     if (mCollectionsInfo.count() > 10) {
         mCollectionsInfo.takeFirst();
     }
-    mCollectionsInfo.append({currentCol, fullPath});
+    mCollectionsInfo.removeAll(info);
+    mCollectionsInfo.append(info);
     Q_EMIT dataChanged(createIndex(0, 0), createIndex(mCollectionsInfo.size() - 1, 1), {});
 }
 
@@ -55,4 +62,9 @@ const Akonadi::Collection CollectionSwitcherModel::collection(int index)
         return {};
     }
     return mCollectionsInfo.at(index).mNewCollection;
+}
+
+bool CollectionSwitcherModel::CollectionInfo::operator==(const CollectionInfo &other) const
+{
+    return other.mNewCollection == mNewCollection && other.mFullPath == mFullPath;
 }
