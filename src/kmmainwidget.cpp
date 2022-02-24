@@ -37,7 +37,7 @@
 #include "widgets/kactionmenuaccount.h"
 #include "widgets/kactionmenutransport.h"
 #include <kpimtextedit/kpimtextedit-texttospeech.h>
-#ifdef KPIMTEXTEDIT_TEXT_TO_SPEECH
+#if KPIMTEXTEDIT_TEXT_TO_SPEECH
 #include <KPIMTextEdit/TextToSpeech>
 #endif
 #include <KSieveUi/SieveDebugDialog>
@@ -2710,7 +2710,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         mMsgActions->addWebShortcutsMenu(&menu, selectedText);
         menu.addSeparator();
         menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-#ifdef KPIMTEXTEDIT_TEXT_TO_SPEECH
+#if KPIMTEXTEDIT_TEXT_TO_SPEECH
         if (KPIMTextEdit::TextToSpeech::self()->isReady()) {
             menu.addSeparator();
             menu.addAction(mMsgView->speakTextAction());
