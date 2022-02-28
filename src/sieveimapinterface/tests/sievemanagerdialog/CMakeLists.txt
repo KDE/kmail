@@ -9,8 +9,4 @@ target_link_libraries(sievemanagerdialog
   kmailprivate
 )
 
-if (QT_MAJOR_VERSION STREQUAL "6")
-    target_link_libraries(sievemanagerdialog qt6keychain)
-else()
-    target_link_libraries(sievemanagerdialog qt5keychain)
-endif()
+target_link_libraries(sievemanagerdialog qt${QT_MAJOR_VERSION}keychain)

@@ -438,11 +438,7 @@ target_link_libraries(kmailprivate
     KF5::GuiAddons
     ${kmail_userfeedback_LIB}
     )
-if (QT_MAJOR_VERSION STREQUAL "6")
-    target_link_libraries(kmailprivate PRIVATE qt6keychain)
-else()
-    target_link_libraries(kmailprivate PRIVATE qt5keychain)
-endif()
+target_link_libraries(kmailprivate PRIVATE qt${QT_MAJOR_VERSION}keychain)
 
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
@@ -477,7 +473,7 @@ kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_secu
 target_link_libraries(kcm_kmail_security kcm_kmail_static)
 ########### kmailpart ###############
 
-set(kmailpart_PART_SRCS kmail_part.cpp ${kmail_common_SRCS})
+set(kmailpart_PART_SRCS kmail_part.cpp kmail_part.h ${kmail_common_SRCS})
 qt_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
 qt_add_dbus_adaptor(kmailpart_PART_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
