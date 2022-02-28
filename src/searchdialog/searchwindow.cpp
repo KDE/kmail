@@ -37,12 +37,12 @@
 #include <Akonadi/PersistentSearchAttribute>
 #include <Akonadi/SearchCreateJob>
 #include <Akonadi/StandardActionManager>
-#include <AkonadiSearch/PIM/indexeditems.h>
 #include <KActionMenu>
 #include <KMessageBox>
 #include <KMime/KMimeMessage>
 #include <KStandardAction>
 #include <KStandardGuiItem>
+#include <PIM/indexeditems.h>
 #include <QIcon>
 #include <QSortFilterProxyModel>
 

@@ -6,7 +6,7 @@
 
 #include "checkindexingjob.h"
 #include "kmail_debug.h"
-#include <AkonadiSearch/PIM/indexeditems.h>
+#include <PIM/indexeditems.h>
 
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>

@@ -6,7 +6,7 @@
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"
 #include "job/opencomposerjob.h"
-#include <AkonadiSearch/PIM/indexeditems.h>
+#include <PIM/indexeditems.h>
 #include <PimCommon/BroadcastStatus>
 #include <PimCommonAkonadi/ProgressManagerAkonadi>
 using PimCommon::BroadcastStatus;

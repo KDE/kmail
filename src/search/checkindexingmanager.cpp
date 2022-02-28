@@ -11,10 +11,10 @@
 #include <Akonadi/EntityHiddenAttribute>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/ServerManager>
-#include <AkonadiSearch/PIM/indexeditems.h>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <MailCommon/MailUtil>
+#include <PIM/indexeditems.h>
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>
 #include <QDBusInterface>
