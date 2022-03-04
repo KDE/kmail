@@ -6,6 +6,8 @@
 
 #include "subjectlineeditwithautocorrection.h"
 #include <KLocalizedString>
+#include <QDropEvent>
+#include <QMimeData>
 
 SubjectLineEditWithAutoCorrection::SubjectLineEditWithAutoCorrection(QWidget *parent, const QString &configFile)
     : PimCommon::LineEditWithAutoCorrection(parent, configFile)
@@ -16,4 +18,15 @@ SubjectLineEditWithAutoCorrection::SubjectLineEditWithAutoCorrection(QWidget *pa
 
 SubjectLineEditWithAutoCorrection::~SubjectLineEditWithAutoCorrection()
 {
+}
+
+void SubjectLineEditWithAutoCorrection::dropEvent(QDropEvent *event)
+{
+    const QMimeData *mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+        Q_EMIT handleMimeData(mimeData);
+        event->accept();
+        return;
+    }
+    PimCommon::LineEditWithAutoCorrection::dropEvent(event);
 }

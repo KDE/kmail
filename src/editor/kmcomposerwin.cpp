@@ -335,6 +335,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mEdtSubject = new SubjectLineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
     mEdtSubject->installEventFilter(this);
     mEdtSubject->setAutocorrection(KMKernel::self()->composerAutoCorrection());
+    connect(mEdtSubject, &SubjectLineEditWithAutoCorrection::handleMimeData, this, [this](const QMimeData *mimeData) {
+        insertFromMimeData(mimeData, false);
+    });
     mLblIdentity = new QLabel(i18n("&Identity:"), mHeadersArea);
     mDictionaryLabel = new QLabel(i18n("&Dictionary:"), mHeadersArea);
     mLblFcc = new QLabel(i18n("&Sent-Mail folder:"), mHeadersArea);

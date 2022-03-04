@@ -14,4 +14,10 @@ class KMAILTESTS_TESTS_EXPORT SubjectLineEditWithAutoCorrection : public PimComm
 public:
     explicit SubjectLineEditWithAutoCorrection(QWidget *parent, const QString &configFile);
     ~SubjectLineEditWithAutoCorrection() override;
+
+protected:
+    void dropEvent(QDropEvent *event) override;
+
+Q_SIGNALS:
+    void handleMimeData(const QMimeData *mimeData);
 };
