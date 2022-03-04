@@ -87,6 +87,8 @@ target_sources(kmailprivate PRIVATE
     identity/identityinvalidfolder.cpp
     identity/identityfolderrequester.cpp
     editor/kmcomposereditorng.cpp
+    editor/subjectlineeditwithautocorrection.cpp
+    editor/subjectlineeditwithautocorrection.h
     editor/composer.cpp
     editor/codec/codecaction.cpp
     editor/codec/codecmanager.cpp

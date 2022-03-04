@@ -61,6 +61,7 @@ class KMailPluginGrammarEditorManagerInterface;
 class AttachmentAddedFromExternalWarning;
 class KHamburgerMenu;
 class TooManyRecipientsWarning;
+class SubjectLineEditWithAutoCorrection;
 namespace MailTransport
 {
 class Transport;
@@ -591,7 +592,7 @@ private:
 
     QWidget *mMainWidget = nullptr;
     MessageComposer::ComposerLineEdit *mEdtFrom = nullptr;
-    PimCommon::LineEditWithAutoCorrection *mEdtSubject = nullptr;
+    SubjectLineEditWithAutoCorrection *mEdtSubject = nullptr;
     QLabel *mLblIdentity = nullptr;
     QLabel *mLblTransport = nullptr;
     QLabel *mLblFcc = nullptr;

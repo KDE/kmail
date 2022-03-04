@@ -10,6 +10,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "kmcomposerwin.h"
+#include "subjectlineeditwithautocorrection.h"
 // KMail includes
 #include "attachment/attachmentcontroller.h"
 #include "attachment/attachmentview.h"
@@ -331,10 +332,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::focusInRecipientLineEdit, this, &KMComposerWin::slotRecipientEditorLineFocused);
     mComposerBase->setRecipientsEditor(recipientsEditor);
 
-    mEdtSubject = new PimCommon::LineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
+    mEdtSubject = new SubjectLineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
     mEdtSubject->installEventFilter(this);
-    mEdtSubject->setActivateLanguageMenu(false);
-    mEdtSubject->setToolTip(i18n("Set a subject for this message"));
     mEdtSubject->setAutocorrection(KMKernel::self()->composerAutoCorrection());
     mLblIdentity = new QLabel(i18n("&Identity:"), mHeadersArea);
     mDictionaryLabel = new QLabel(i18n("&Dictionary:"), mHeadersArea);
