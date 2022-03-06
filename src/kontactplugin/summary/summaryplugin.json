@@ -21,6 +21,7 @@
         "Description[sv]": "Kontact-insticksprogram för översikt",
         "Description[uk]": "Додаток Kontact для перегляду резюме",
         "Description[x-test]": "xxKontact SummaryView Pluginxx",
+        "Description[zh_CN]": "Kontact 摘要视图插件",
         "EnabledByDefault": true,
         "Icon": "view-calendar-agenda",
         "Id": "kontact_summaryplugin",

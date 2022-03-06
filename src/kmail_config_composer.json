@@ -21,6 +21,7 @@
         "Description[sv]": "Inställningar av brevfönster",
         "Description[uk]": "Параметри засобу створення повідомлень",
         "Description[x-test]": "xxMessage Composer Settingsxx",
+        "Description[zh_CN]": "信件撰写器设置",
         "Icon": "accessories-text-editor",
         "Name": "Composer",
         "Name[af]": "Composer",

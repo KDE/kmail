@@ -21,6 +21,7 @@
         "Description[sv]": "Inställningsinsticksprogram",
         "Description[uk]": "Додатки параметрів",
         "Description[x-test]": "xxSettings Pluginsxx",
+        "Description[zh_CN]": "设置插件",
         "Icon": "preferences-plugin",
         "Name": "Plugins",
         "Name[af]": "Inprop modules",

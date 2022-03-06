@@ -21,6 +21,7 @@
         "Description[sv]": "Inställningar för säkerhet och integritet",
         "Description[uk]": "Параметри безпеки і конфіденційності",
         "Description[x-test]": "xxSecurity & Privacy Settingsxx",
+        "Description[zh_CN]": "安全和隐私设置",
         "Icon": "security-high",
         "Name": "Security",
         "Name[af]": "Sekuriteit",

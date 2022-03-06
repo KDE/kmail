@@ -21,6 +21,7 @@
         "Description[sv]": "Inställningar för att skicka och ta emot brev",
         "Description[uk]": "Налаштування для надсилання і отримання повідомлень",
         "Description[x-test]": "xxSetup for Sending and Receiving Messagesxx",
+        "Description[zh_CN]": "收发邮件设置",
         "Icon": "network-workgroup",
         "Name": "Accounts",
         "Name[af]": "Rekeninge",

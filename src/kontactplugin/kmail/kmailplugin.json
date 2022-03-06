@@ -21,6 +21,7 @@
         "Description[sv]": "Kontact-insticksprogram för Kmail",
         "Description[uk]": "Додаток електронної пошти Kontact",
         "Description[x-test]": "xxKontact KMail Pluginxx",
+        "Description[zh_CN]": "Kontact KMail 插件",
         "EnabledByDefault": true,
         "Icon": "view-pim-mail",
         "Id": "kontact_kmailplugin",
