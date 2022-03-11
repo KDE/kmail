@@ -13,6 +13,18 @@
             "installDir": "$env{KF5}"
         },
         {
+            "name": "coverage",
+            "displayName": "Build as debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "BUILD_COVERAGE": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            },
+            "installDir": "$env{KF5}"
+        },
+        {
             "name": "dev-qt6",
             "displayName": "Build against qt6",
             "generator": "Ninja",
@@ -144,6 +156,10 @@
         {
             "name": "release",
             "configurePreset": "release"
+        },
+        {
+            "name": "coverage",
+            "configurePreset": "coverage"
         },
         {
             "name": "dev-clang",
