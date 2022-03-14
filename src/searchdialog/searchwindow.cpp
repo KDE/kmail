@@ -16,6 +16,7 @@
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "kmsearchmessagemodel.h"
+#include "messagecore/stringutil.h"
 #include "searchdescriptionattribute.h"
 #include "searchpatternwarning.h"
 #include <MailCommon/FolderRequester>
@@ -484,9 +485,15 @@ void SearchWindow::doSearch()
         dlg.exec();
     }
 
+    auto config = KConfig(QStringLiteral("akonadi_indexing_agent"));
+    KConfigGroup cfg = config.group("General");
+    const bool respectDiacriticAndAccents = cfg.readEntry("respectDiacriticAndAccents", true);
+
     if (!mFolder.isValid()) {
-        qCDebug(KMAIL_LOG) << " create new folder " << mUi.mSearchFolderEdt->text();
-        auto searchJob = new Akonadi::SearchCreateJob(mUi.mSearchFolderEdt->text(), mQuery, this);
+        const QString searchString =
+            respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : MessageCore::StringUtil::normalize(mUi.mSearchFolderEdt->text());
+        qCDebug(KMAIL_LOG) << " create new folder " << searchString;
+        auto searchJob = new Akonadi::SearchCreateJob(searchString, mQuery, this);
         searchJob->setSearchMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
         searchJob->setSearchCollections(searchCollections);
         searchJob->setRecursive(recursive);
