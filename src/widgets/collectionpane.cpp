@@ -46,7 +46,7 @@ bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) cons
         return c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder();
     }
     QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(c, false);
-    if (fd) {
+    if (!fd.isNull()) {
         const QString folderId(QString::number(c.id()));
         // default setting
         const KIdentityManagement::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());

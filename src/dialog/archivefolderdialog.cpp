@@ -132,7 +132,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 bool canRemoveFolder(const Akonadi::Collection &col)
 {
     const QSharedPointer<FolderSettings> folder = FolderSettings::forCollection(col, false);
-    return folder && col.isValid() && !col.isVirtual() && (col.rights() & Akonadi::Collection::CanDeleteCollection) && !folder->isStructural()
+    return !folder.isNull() && col.isValid() && !col.isVirtual() && (col.rights() & Akonadi::Collection::CanDeleteCollection) && !folder->isStructural()
         && !folder->isSystemFolder();
 }
 

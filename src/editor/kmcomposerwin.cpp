@@ -2443,7 +2443,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
                 const QString resourceName = parentCollection.resource();
                 if (!resourceName.isEmpty()) {
                     QSharedPointer<MailCommon::FolderSettings> fd(MailCommon::FolderSettings::forCollection(parentCollection, false));
-                    if (fd) {
+                    if (!fd.isNull()) {
                         identity = fd->identity();
                     }
                 }

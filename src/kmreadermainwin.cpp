@@ -329,7 +329,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection();
     if (parentCol.isValid()) {
         QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
-        if (fd) {
+        if (!fd.isNull()) {
             command = new KMForwardCommand(this, mReaderWin->messageItem(), fd->identity(), QString(), mReaderWin->copyText());
         } else {
             command = new KMForwardCommand(this, mReaderWin->messageItem(), 0, QString(), mReaderWin->copyText());
@@ -350,7 +350,7 @@ void KMReaderMainWin::slotForwardAttachedMessage()
     const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection();
     if (parentCol.isValid()) {
         QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
-        if (fd) {
+        if (!fd.isNull()) {
             command = new KMForwardAttachedCommand(this, mReaderWin->messageItem(), fd->identity());
         } else {
             command = new KMForwardAttachedCommand(this, mReaderWin->messageItem());
@@ -372,7 +372,7 @@ void KMReaderMainWin::slotNewMessageToRecipients()
         job->setCurrentCollection(parentCol);
 
         QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
-        if (fd) {
+        if (!fd.isNull()) {
             job->setFolderSettings(fd);
         }
     }
