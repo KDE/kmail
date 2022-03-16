@@ -56,6 +56,9 @@
 #include <QMenu>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 using namespace KPIM;
 using namespace MailCommon;
@@ -637,7 +640,7 @@ void SearchWindow::scheduleRename(const QString &text)
 {
     if (!text.isEmpty()) {
         mRenameTimer.setSingleShot(true);
-        mRenameTimer.start(250);
+        mRenameTimer.start(250ms);
         mUi.mSearchFolderOpenBtn->setEnabled(false);
     } else {
         mRenameTimer.stop();
