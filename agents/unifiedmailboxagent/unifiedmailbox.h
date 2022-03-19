@@ -63,4 +63,3 @@ private:
 };
 
 Q_DECLARE_METATYPE(UnifiedMailbox *)
-

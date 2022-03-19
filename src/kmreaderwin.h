@@ -241,4 +241,3 @@ private:
 
     MessageViewer::Viewer *mViewer = nullptr;
 };
-

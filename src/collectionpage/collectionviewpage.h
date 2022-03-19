@@ -13,7 +13,8 @@ class QCheckBox;
 class QLabel;
 class KIconButton;
 class CollectionViewWidget;
-template<typename T> class QSharedPointer;
+template<typename T>
+class QSharedPointer;
 
 namespace MailCommon
 {
@@ -44,4 +45,3 @@ private:
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage)
-

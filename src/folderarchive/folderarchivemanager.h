@@ -52,4 +52,3 @@ private:
     QList<FolderArchiveAccountInfo *> mListAccountInfo;
     FolderArchiveCache *const mFolderArchiveCache;
 };
-

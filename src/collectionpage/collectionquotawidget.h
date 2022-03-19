@@ -26,4 +26,3 @@ private:
     QProgressBar *const mProgressBar;
     QLabel *const mUsage;
 };
-

@@ -68,4 +68,3 @@ private:
     QProcess *const mPngquantProc;
 };
 } // namespace KMail
-

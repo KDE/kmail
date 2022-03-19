@@ -14,6 +14,7 @@ class MailMergeConfigureDialog : public QDialog
 public:
     explicit MailMergeConfigureDialog(QWidget *parent = nullptr);
     ~MailMergeConfigureDialog() override;
+
 private:
     void slotSave();
     void writeConfig();

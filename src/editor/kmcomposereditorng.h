@@ -38,4 +38,3 @@ protected:
 private:
     KMComposerWin *const mComposerWin;
 };
-

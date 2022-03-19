@@ -69,4 +69,3 @@ private:
 }
 
 QDebug operator<<(QDebug debug, const FollowUpReminder::FollowUpReminderInfo &info);
-

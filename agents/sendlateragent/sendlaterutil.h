@@ -30,4 +30,3 @@ void forceReparseConfiguration();
 
 Q_REQUIRED_RESULT QString sendLaterPattern();
 }
-

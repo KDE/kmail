@@ -21,4 +21,3 @@ public:
 private:
     void updateAccountInfo(const QString &resourceName, int numberOfResource, QVariantList &l);
 };
-

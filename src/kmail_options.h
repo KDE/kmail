@@ -40,4 +40,3 @@ static void kmail_options(QCommandLineParser *parser)
                                   i18n("Send message to 'address' or attach the file the 'URL' points to"),
                                   QStringLiteral("address|URL"));
 }
-

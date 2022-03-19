@@ -37,4 +37,3 @@ private:
     FollowUpReminderManager *const mManager;
     QTimer *const mTimer;
 };
-

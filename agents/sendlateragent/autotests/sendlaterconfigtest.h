@@ -29,4 +29,3 @@ private:
     KSharedConfig::Ptr mConfig;
     QRegularExpression mSendlaterRegExpFilter;
 };
-

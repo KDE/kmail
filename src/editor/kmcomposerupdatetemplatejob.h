@@ -49,4 +49,3 @@ private:
     KIdentityManagement::Identity mIdent;
     bool mWasModified = false;
 };
-

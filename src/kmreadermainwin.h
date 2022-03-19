@@ -131,4 +131,3 @@ private:
     KToggleAction *mHideMenuBarAction = nullptr;
     Akonadi::StandardMailActionManager *mAkonadiStandardActionManager = nullptr;
 };
-

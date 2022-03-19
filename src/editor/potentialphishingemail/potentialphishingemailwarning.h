@@ -25,4 +25,3 @@ private:
     void slotShowDetails(const QString &link);
     QStringList mPotentialPhishingEmails;
 };
-

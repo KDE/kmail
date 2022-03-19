@@ -38,4 +38,3 @@ private:
 
     QStyleOptionButton buttonOption(const QStyleOptionViewItem &option) const;
 };
-

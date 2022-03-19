@@ -40,4 +40,3 @@ private:
     MessageComposer::SendLaterInfo *const mInfo;
     Akonadi::Item mItem;
 };
-

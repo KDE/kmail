@@ -48,4 +48,3 @@ private:
     QVector<ArchiveMailInfo *> mListArchiveInfo;
     ArchiveMailKernel *mArchiveMailKernel = nullptr;
 };
-

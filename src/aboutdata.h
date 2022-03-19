@@ -21,4 +21,3 @@ public:
     ~AboutData();
 };
 } // namespace KMail
-

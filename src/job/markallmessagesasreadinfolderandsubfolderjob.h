@@ -30,4 +30,3 @@ private:
     void slotMarkAsResult(Akonadi::MarkAsCommand::Result result);
     Akonadi::Collection mTopLevelCollection;
 };
-

@@ -64,4 +64,3 @@ private:
     UndoInfo *mCachedInfo = nullptr;
 };
 }
-

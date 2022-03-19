@@ -29,4 +29,3 @@ private:
     void waitForMainWindowToClose();
     KMKernel *mKernel = nullptr;
 };
-

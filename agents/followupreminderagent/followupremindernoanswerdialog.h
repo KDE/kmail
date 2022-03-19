@@ -39,4 +39,3 @@ private:
     void writeConfig();
     FollowUpReminderInfoWidget *const mWidget;
 };
-

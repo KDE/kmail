@@ -10,7 +10,8 @@ namespace MailCommon
 {
 class CollectionTemplatesWidget;
 }
-template<typename T> class QSharedPointer;
+template<typename T>
+class QSharedPointer;
 
 class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
 {
@@ -29,4 +30,3 @@ private:
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionTemplatesPageFactory, CollectionTemplatesPage)
-

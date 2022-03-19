@@ -40,4 +40,3 @@ private:
     QList<KActionCollection *> mActionCollectionList;
     QListWidget *const mListTag;
 };
-

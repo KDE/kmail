@@ -65,4 +65,3 @@ private:
 };
 
 AKONADI_AGENTCONFIG_FACTORY(ArchiveMailAgentConfigFactory, "archivemailagentconfig.json", ArchiveMailWidget)
-

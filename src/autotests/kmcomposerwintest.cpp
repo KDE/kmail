@@ -130,7 +130,7 @@ void KMComposerWinTest::resetIdentities()
 
 void KMComposerWinTest::testSignature_data()
 {
-    const auto im =  mKernel->identityManager();
+    const auto im = mKernel->identityManager();
 
     QTest::addColumn<uint>("uoid");
     QTest::addColumn<bool>("sign");
@@ -160,7 +160,7 @@ void KMComposerWinTest::testSignature()
 
 void KMComposerWinTest::testEncryption_data()
 {
-    const auto im =  mKernel->identityManager();
+    const auto im = mKernel->identityManager();
 
     QTest::addColumn<uint>("uoid");
     QTest::addColumn<bool>("encrypt");
@@ -197,7 +197,7 @@ void KMComposerWinTest::testChangeIdentity()
     QFile file1(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
     QVERIFY(file1.copy(autocryptDir.filePath(QStringLiteral("friends%40kde.org.json"))));
 
-    const auto im =  mKernel->identityManager();
+    const auto im = mKernel->identityManager();
 
     auto ident = im->defaultIdentity();
     const auto msg(createItem(ident));
@@ -240,5 +240,4 @@ void KMComposerWinTest::testChangeIdentity()
         QCOMPARE(encryption->isVisible(), false);
         QCOMPARE(signature->isVisible(), false);
     }
-
 }

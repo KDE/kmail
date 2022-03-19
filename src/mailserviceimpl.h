@@ -41,4 +41,3 @@ private:
     Q_DISABLE_COPY(MailServiceImpl)
 };
 }
-

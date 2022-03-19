@@ -43,4 +43,3 @@ private:
     void adjustColumnWidth();
     QList<KTNEFAttach *> mAttachments;
 };
-

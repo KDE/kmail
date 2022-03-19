@@ -29,4 +29,3 @@ private:
     void slotConfigureChanged();
     PimCommon::ConfigurePluginsWidget *const mConfigurePlugins;
 };
-

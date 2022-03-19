@@ -28,4 +28,3 @@ private:
     KMime::Message::Ptr mMsg = nullptr;
     uint mCurrentIdentity = 0;
 };
-

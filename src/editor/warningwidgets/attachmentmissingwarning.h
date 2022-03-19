@@ -25,4 +25,3 @@ private:
     void explicitlyClosed();
     void slotAttachFile();
 };
-

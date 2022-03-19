@@ -34,4 +34,3 @@ private:
 
     mutable QHash<Akonadi::Collection::Id, QString> m_collectionFullPathCache;
 };
-

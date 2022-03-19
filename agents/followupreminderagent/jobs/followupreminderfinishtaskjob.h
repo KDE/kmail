@@ -29,4 +29,3 @@ private:
     void closeTodo();
     const Akonadi::Item::Id mTodoId;
 };
-

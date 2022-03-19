@@ -83,4 +83,3 @@ private:
     FillComposerJobSettings mSettings;
     KMime::Message::Ptr mMsg = nullptr;
 };
-

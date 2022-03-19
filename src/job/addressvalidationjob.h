@@ -33,4 +33,3 @@ private:
     bool mIsValid = false;
     QWidget *const mParentWidget;
 };
-

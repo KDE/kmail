@@ -23,4 +23,3 @@ public:
 private:
     KMMainWidget *mMainWindow = nullptr;
 };
-

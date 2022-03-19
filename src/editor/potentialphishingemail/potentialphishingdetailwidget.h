@@ -24,4 +24,3 @@ public:
 private:
     QListWidget *const mListWidget;
 };
-

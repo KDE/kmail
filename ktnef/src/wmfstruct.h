@@ -89,4 +89,3 @@ struct WmfEnhMetaRecord {
     DWORD nSize; // Record size in bytes
     DWORD dParm[1]; // DWORD array of parameters
 };
-

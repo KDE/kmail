@@ -25,4 +25,3 @@ private:
     KMime::Message::Ptr mMsg = nullptr;
     const Akonadi::Collection mCollection;
 };
-

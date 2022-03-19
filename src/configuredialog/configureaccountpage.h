@@ -111,4 +111,3 @@ public:
 Q_SIGNALS:
     void accountListChanged(const QStringList &);
 };
-

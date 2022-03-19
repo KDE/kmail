@@ -658,4 +658,3 @@ private:
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
     CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
 };
-

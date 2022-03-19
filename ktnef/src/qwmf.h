@@ -224,4 +224,3 @@ protected:
     int mDpi;
     QPoint mLastPos;
 };
-

@@ -32,4 +32,3 @@ private:
     uint mIdentity = 0;
     KMime::Message::Ptr mMsg = nullptr;
 };
-

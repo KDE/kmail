@@ -43,4 +43,3 @@ private:
     KMMainWidget *const mMainWidget;
     const QStringList mPages;
 };
-

@@ -11,8 +11,8 @@
 
 #include "kmail-version.h"
 
-#include <KLocalizedString>
 #include <KLazyLocalizedString>
+#include <KLocalizedString>
 
 namespace KMail
 {

@@ -23,4 +23,3 @@ private:
     QString mEmail;
     Akonadi::Item mItem;
 };
-

@@ -25,7 +25,6 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
     auto topLayout = new QVBoxLayout(this);
     setModal(true);
 
-
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);

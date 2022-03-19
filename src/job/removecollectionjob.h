@@ -34,4 +34,3 @@ private:
     KMMainWidget *mMainWidget = nullptr;
     Akonadi::Collection mCurrentCollection;
 };
-

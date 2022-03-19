@@ -19,4 +19,3 @@ private:
     void readConfig();
     void writeConfig();
 };
-

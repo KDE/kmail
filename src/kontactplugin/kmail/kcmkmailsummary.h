@@ -45,4 +45,3 @@ private:
     QCheckBox *mFullPath = nullptr;
     KViewStateMaintainer<Akonadi::ETMViewStateSaver> *mModelState = nullptr;
 };
-

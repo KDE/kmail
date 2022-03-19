@@ -31,4 +31,3 @@ public:
     ~CollectionStorageModel() override;
     Q_REQUIRED_RESULT bool isOutBoundFolder(const Akonadi::Collection &c) const override;
 };
-

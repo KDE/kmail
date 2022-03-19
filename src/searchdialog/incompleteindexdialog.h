@@ -40,4 +40,3 @@ private:
     QDBusInterface *mIndexer = nullptr;
     QList<qlonglong> mIndexingQueue;
 };
-

@@ -44,4 +44,3 @@ public:
 private:
     const CodecAction::Mode mMode;
 };
-

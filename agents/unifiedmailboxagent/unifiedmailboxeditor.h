@@ -26,4 +26,3 @@ private:
     UnifiedMailbox *const mMailbox;
     KSharedConfigPtr mConfig;
 };
-

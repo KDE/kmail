@@ -116,4 +116,3 @@ private:
     qint64 mNewTagId = -1;
 };
 }
-

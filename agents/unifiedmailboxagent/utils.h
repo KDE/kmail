@@ -9,7 +9,8 @@
 #include <QHash>
 #include <functional>
 
-template<typename T> inline QList<T> setToList(QSet<T> &&set)
+template<typename T>
+inline QList<T> setToList(QSet<T> &&set)
 {
     QList<T> rv;
     rv.reserve(set.size());
@@ -17,7 +18,8 @@ template<typename T> inline QList<T> setToList(QSet<T> &&set)
     return rv;
 }
 
-template<typename T> inline QList<T> setToList(const QSet<T> &set)
+template<typename T>
+inline QList<T> setToList(const QSet<T> &set)
 {
     QList<T> rv;
     rv.reserve(set.size());
@@ -25,7 +27,8 @@ template<typename T> inline QList<T> setToList(const QSet<T> &set)
     return rv;
 }
 
-template<typename T> inline QSet<T> listToSet(QList<T> &&list)
+template<typename T>
+inline QSet<T> listToSet(QList<T> &&list)
 {
     QSet<T> rv;
     rv.reserve(list.size());
@@ -34,4 +37,3 @@ template<typename T> inline QSet<T> listToSet(QList<T> &&list)
     }
     return rv;
 }
-

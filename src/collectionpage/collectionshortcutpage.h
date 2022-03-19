@@ -12,7 +12,8 @@
 
 #include <Akonadi/CollectionPropertiesPage>
 
-template<typename T> class QSharedPointer;
+template<typename T>
+class QSharedPointer;
 
 class KKeySequenceWidget;
 
@@ -36,4 +37,3 @@ private:
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionShortcutPageFactory, CollectionShortcutPage)
-

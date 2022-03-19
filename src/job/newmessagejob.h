@@ -59,4 +59,3 @@ private:
     QUrl mAttachURL;
     KMime::Message::Ptr mMsg = nullptr;
 };
-

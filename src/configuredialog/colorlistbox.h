@@ -42,4 +42,3 @@ private:
     void newColor(const QModelIndex &index);
     QTreeWidgetItem *mCurrentOnDragEnter = nullptr;
 };
-

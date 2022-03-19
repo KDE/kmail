@@ -65,4 +65,3 @@ private:
     VacationLabel *mInfo = nullptr;
 };
 }
-

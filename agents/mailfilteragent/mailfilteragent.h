@@ -80,4 +80,3 @@ private:
 
     void filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection);
 };
-

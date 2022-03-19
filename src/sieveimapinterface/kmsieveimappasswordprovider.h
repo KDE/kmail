@@ -28,4 +28,3 @@ private:
     QString mSievePassword;
     QString mSieveCustomPassword;
 };
-

@@ -24,4 +24,3 @@ private:
     void setError(const QStringList &lstError);
 };
 }
-

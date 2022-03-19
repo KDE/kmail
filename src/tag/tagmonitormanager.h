@@ -44,4 +44,3 @@ private:
 
     Akonadi::Monitor *const mMonitor;
 };
-

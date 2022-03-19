@@ -43,4 +43,3 @@ private:
     QVector<PluginItem *> mPluginCheckBeforeDeletingItems;
     QVector<PimCommon::PluginUtilData> mPluginUtilDataList;
 };
-

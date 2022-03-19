@@ -29,4 +29,3 @@ private:
     bool mIsSign = false;
     bool mIsEncrypted = false;
 };
-

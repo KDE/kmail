@@ -140,4 +140,3 @@ public:
 
     QString helpAnchor() const override;
 };
-

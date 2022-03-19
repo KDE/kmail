@@ -40,4 +40,3 @@ private:
     Akonadi::Collection mCollection;
     Akonadi::Search::PIM::IndexedItems *const mIndexedItems;
 };
-

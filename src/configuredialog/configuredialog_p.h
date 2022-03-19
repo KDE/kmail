@@ -84,4 +84,3 @@ private:
     QTabWidget *const mTabWidget;
     bool mWasInitialized = false;
 };
-

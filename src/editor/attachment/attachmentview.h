@@ -68,4 +68,3 @@ private:
     KConfigGroup grp;
 };
 } // namespace KMail
-

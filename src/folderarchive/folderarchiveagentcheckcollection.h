@@ -30,4 +30,3 @@ private:
     const QDate mCurrentDate;
     FolderArchiveAccountInfo *const mInfo;
 };
-

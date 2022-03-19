@@ -55,6 +55,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 
 #include <KMime/DateFormatter>
 
+#include <KLazyLocalizedString>
 #include <QButtonGroup>
 #include <QCheckBox>
 #include <QFontDatabase>
@@ -65,7 +66,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QSpinBox>
 #include <QVBoxLayout>
 #include <QWhatsThis>
-#include <KLazyLocalizedString>
 
 using KMime::DateFormatter;
 using namespace MailCommon;

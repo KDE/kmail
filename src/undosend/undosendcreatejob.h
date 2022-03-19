@@ -39,4 +39,3 @@ private:
     qint64 mAkonadiIndex = -1;
     int mDelay = -1;
 };
-

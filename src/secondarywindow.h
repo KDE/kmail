@@ -44,4 +44,3 @@ protected:
     void closeEvent(QCloseEvent *) override;
 };
 } // namespace KMail
-

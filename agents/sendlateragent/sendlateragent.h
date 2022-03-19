@@ -45,4 +45,3 @@ private:
     bool mAgentInitialized = false;
     SendLaterManager *const mManager;
 };
-

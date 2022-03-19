@@ -18,4 +18,3 @@ public:
 
     void setAttachmentNames(const QStringList &lst);
 };
-

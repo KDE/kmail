@@ -12,8 +12,8 @@
 #include "identitypage.h"
 
 #include "identitydialog.h"
-#include "newidentitydialog.h"
 #include "kmkernel.h"
+#include "newidentitydialog.h"
 #include "settings/kmailsettings.h"
 
 #include <MailCommon/MailKernel>

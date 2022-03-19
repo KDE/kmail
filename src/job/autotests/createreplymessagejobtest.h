@@ -17,4 +17,3 @@ public:
 private Q_SLOTS:
     void shouldHaveDefaultValue();
 };
-

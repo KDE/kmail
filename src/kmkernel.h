@@ -624,4 +624,3 @@ private:
 
     bool mDebug = false;
 };
-

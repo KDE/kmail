@@ -22,4 +22,3 @@ public:
 private:
     KMComposerWin *mComposerWin = nullptr;
 };
-

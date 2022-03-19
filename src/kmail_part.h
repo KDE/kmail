@@ -39,4 +39,3 @@ private:
     KMMainWidget *mainWidget = nullptr;
     QWidget *const mParentWidget;
 };
-

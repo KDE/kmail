@@ -40,4 +40,3 @@ private:
     QString mVcardFileName;
     Akonadi::AkonadiContactEditor *const mContactEditor;
 };
-

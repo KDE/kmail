@@ -44,4 +44,3 @@ private:
     KActionCollection *mActionCollection = nullptr;
     bool mWasInitialized = false;
 };
-

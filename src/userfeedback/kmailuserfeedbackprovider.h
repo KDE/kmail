@@ -16,4 +16,3 @@ public:
     explicit KMailUserFeedbackProvider(QObject *parent = nullptr);
     ~KMailUserFeedbackProvider() override;
 };
-

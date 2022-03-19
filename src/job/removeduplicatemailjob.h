@@ -31,4 +31,3 @@ private:
     QWidget *const mParent;
     QItemSelectionModel *const mSelectionModel;
 };
-

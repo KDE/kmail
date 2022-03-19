@@ -707,4 +707,3 @@ private:
 
     ModeType mModeType = ModeType::ComposerType;
 };
-

@@ -34,4 +34,3 @@ private:
 
     QVector<QByteArray> mPreferredCharsets;
 };
-

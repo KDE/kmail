@@ -38,4 +38,3 @@ private:
     void slotCreateForwardDone(const KMime::Message::Ptr &msg);
     CreateForwardMessageJobSettings mSettings;
 };
-

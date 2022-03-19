@@ -51,4 +51,3 @@ private:
     bool mEnabled = false;
     bool mKeepExistingStructure = false;
 };
-

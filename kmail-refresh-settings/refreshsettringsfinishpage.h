@@ -22,4 +22,3 @@ private:
     void slotCleanDoneInfo(const QString &info);
     QPlainTextEdit *const mTextEdit;
 };
-

@@ -33,4 +33,3 @@ private:
     KSharedConfig::Ptr mConfig;
     QRegularExpression mFollowupRegExpFilter;
 };
-

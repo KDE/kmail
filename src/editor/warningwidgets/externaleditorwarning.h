@@ -15,4 +15,3 @@ public:
     explicit ExternalEditorWarning(QWidget *parent = nullptr);
     ~ExternalEditorWarning() override;
 };
-

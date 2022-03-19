@@ -62,4 +62,3 @@ private: // data members
     KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
 };
 }
-

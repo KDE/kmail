@@ -259,7 +259,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mPluginEditorInitManagerInterface = new KMailPluginEditorInitManagerInterface(this);
     mPluginEditorConvertTextManagerInterface = new KMailPluginEditorConvertTextManagerInterface(this);
 
-
     connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposerWin::disableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposerWin::enableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::failed, this, &KMComposerWin::slotSendFailed);
@@ -3845,11 +3844,13 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
                 autocryptKey = key;
                 if (rec->prefer_encrypt()) {
                     overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
-                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified. "
-                                   "The recipient prefers encrypted replies.");
+                    tooltip = i18n(
+                        "Autocrypt key is used for this recipient. This key is not verified. "
+                        "The recipient prefers encrypted replies.");
                 } else {
-                    tooltip = i18n("Autocrypt key is used for this recipient. This key is not verified. "
-                                   "The recipient does not prefer encrypted replies.");
+                    tooltip = i18n(
+                        "Autocrypt key is used for this recipient. This key is not verified. "
+                        "The recipient does not prefer encrypted replies.");
                 }
             } else {
                 const auto gossipKey = rec->gossipKey();
@@ -3872,7 +3873,7 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
             line->setIcon(QIcon());
             line->setProperty("keyStatus", InProgress);
         }
-    } else if(key.isNull()) {
+    } else if (key.isNull()) {
         recipient->setEncryptionAction(Kleo::Impossible); // no key
         line->setIcon(QIcon());
         line->setProperty("keyStatus", InProgress);

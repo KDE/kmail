@@ -55,4 +55,3 @@ private:
     KActionCollection *mActionCollection = nullptr;
     QList<QWidget *> mStatusBarWidget;
 };
-

@@ -24,4 +24,3 @@ private Q_SLOTS:
     void shouldCreateCorrectListOfEmails_data();
     void shouldCreateCorrectListOfEmails();
 };
-

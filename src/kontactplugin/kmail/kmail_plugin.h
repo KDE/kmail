@@ -64,4 +64,3 @@ private:
     OrgKdeKmailKmailInterface *m_instance = nullptr;
     KontactInterface::UniqueAppWatcher *mUniqueAppWatcher = nullptr;
 };
-

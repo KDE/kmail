@@ -19,4 +19,3 @@ public:
     MailCommon::BackupJob::ArchiveType format() const;
     void setFormat(MailCommon::BackupJob::ArchiveType type);
 };
-

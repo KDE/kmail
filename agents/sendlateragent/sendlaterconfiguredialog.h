@@ -30,4 +30,3 @@ private:
     void writeConfig();
     SendLaterWidget *const mWidget;
 };
-

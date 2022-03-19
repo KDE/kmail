@@ -151,4 +151,3 @@ private:
     std::unique_ptr<Private> const d;
     //@endcond
 };
-

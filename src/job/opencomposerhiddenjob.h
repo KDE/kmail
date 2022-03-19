@@ -45,4 +45,3 @@ private:
     OpenComposerHiddenJobSettings mSettings;
     KMime::Message::Ptr mMsg = nullptr;
 };
-

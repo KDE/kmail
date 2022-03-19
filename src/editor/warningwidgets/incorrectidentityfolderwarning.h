@@ -31,4 +31,3 @@ private:
     bool mIdentityIsInvalid = false;
     bool mDictionaryIsInvalid = false;
 };
-

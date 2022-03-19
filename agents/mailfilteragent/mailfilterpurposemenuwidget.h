@@ -24,4 +24,3 @@ public:
 private:
     KPIMTextEdit::PlainTextEditor *mEditor = nullptr;
 };
-

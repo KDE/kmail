@@ -63,4 +63,3 @@ private:
     KHamburgerMenu *mHamburgerMenu = nullptr;
     bool mReallyClose = false;
 };
-

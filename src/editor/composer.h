@@ -146,4 +146,3 @@ KMAIL_EXPORT Composer *makeComposer(const KMime::Message::Ptr &msg = KMime::Mess
                                     const QString &textSelection = QString(),
                                     const QString &customTemplate = QString());
 }
-

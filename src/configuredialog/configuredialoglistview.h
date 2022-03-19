@@ -25,4 +25,3 @@ private:
     void slotContextMenu(const QPoint &pos);
     void resizeColums();
 };
-

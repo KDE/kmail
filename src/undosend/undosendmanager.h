@@ -18,4 +18,3 @@ public:
 
     void addItem(qint64 index, const QString &subject, int delay);
 };
-

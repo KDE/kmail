@@ -47,4 +47,3 @@ private:
     int mIndex = 0;
     bool mIsReady = true;
 };
-

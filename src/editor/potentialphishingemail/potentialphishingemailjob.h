@@ -35,4 +35,3 @@ private:
     QStringList mPotentialPhisingEmails;
     QStringList mEmailWhiteList;
 };
-

@@ -29,4 +29,3 @@ private:
     KPageWidgetItem *mFinishPageItem = nullptr;
     RefreshSettringsFinishPage *mFinishPage = nullptr;
 };
-

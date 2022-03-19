@@ -22,4 +22,3 @@ static constexpr auto SpecialCollectionDrafts = "drafts";
 
 static const auto AgentIdentifier = QStringLiteral("akonadi_unifiedmailbox_agent");
 }
-

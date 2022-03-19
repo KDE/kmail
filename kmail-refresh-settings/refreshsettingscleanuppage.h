@@ -29,4 +29,3 @@ private:
     void removeTipOfDay(const QString &configName);
     void initCleanupDialogSettings(const QString &configName);
 };
-

@@ -47,4 +47,3 @@ private:
     AttachmentView *const mView;
 };
 } // namespace KMail
-

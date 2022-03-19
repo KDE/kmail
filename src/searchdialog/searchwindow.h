@@ -185,4 +185,3 @@ private:
     Akonadi::StandardMailActionManager *mAkonadiStandardAction = nullptr;
 };
 }
-

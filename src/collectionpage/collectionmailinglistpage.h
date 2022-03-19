@@ -18,7 +18,8 @@
 class QCheckBox;
 class QPushButton;
 
-template<typename T> class QSharedPointer;
+template<typename T>
+class QSharedPointer;
 
 class QComboBox;
 class QPushButton;
@@ -69,4 +70,3 @@ private:
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMailingListPageFactory, CollectionMailingListPage)
-

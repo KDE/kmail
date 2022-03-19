@@ -27,4 +27,3 @@ private:
     void fetchItems();
     const Akonadi::Item::List mListItem;
 };
-

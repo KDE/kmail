@@ -29,9 +29,9 @@ private Q_SLOTS:
     void testSignature();
 
     void testChangeIdentity();
+
 private:
     void resetIdentities();
     KMKernel *mKernel = nullptr;
     QDir autocryptDir;
 };
-

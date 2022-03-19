@@ -44,4 +44,3 @@ private:
     QTimer *const mTimer;
     ArchiveMailManager *const mArchiveManager;
 };
-

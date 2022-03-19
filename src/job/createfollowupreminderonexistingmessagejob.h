@@ -42,4 +42,3 @@ private:
     Akonadi::Item mMessageItem;
     QDate mDate;
 };
-

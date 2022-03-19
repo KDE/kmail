@@ -22,4 +22,3 @@ private:
     Q_DISABLE_COPY(FollowUpReminderShowMessageJob)
     const Akonadi::Item::Id mId;
 };
-

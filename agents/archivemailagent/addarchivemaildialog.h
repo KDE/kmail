@@ -63,4 +63,3 @@ private:
     ArchiveMailInfo *mInfo = nullptr;
     QPushButton *mOkButton = nullptr;
 };
-

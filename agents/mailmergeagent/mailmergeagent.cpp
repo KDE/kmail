@@ -38,11 +38,9 @@ MailMergeAgent::MailMergeAgent(const QString &id)
 {
     connect(mManager, &MailMergeManager::needUpdateConfigDialogBox, this, &MailMergeAgent::needUpdateConfigDialogBox);
     new MailMergeAgentAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(
-                QStringLiteral("/MailMergeAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailMergeAgent"), this, QDBusConnection::ExportAdaptors);
 
-    const QString service = Akonadi::ServerManager::self()->agentServiceName(
-                Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mergemail_agent"));
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mergemail_agent"));
 
     QDBusConnection::sessionBus().registerService(service);
 

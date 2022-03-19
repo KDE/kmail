@@ -55,4 +55,3 @@ private:
     ArchiveMailInfo *const mInfo;
     ArchiveMailManager *const mManager;
 };
-

@@ -36,7 +36,6 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     , mMessage(msg)
     , mListView(new QTreeWidget(this))
 {
-
     auto mainLayout = new QVBoxLayout(this);
     setWindowTitle(i18nc("@title:window", "Message Properties"));
     mainLayout->addWidget(mListView);

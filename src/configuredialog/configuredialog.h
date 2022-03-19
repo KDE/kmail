@@ -39,4 +39,3 @@ protected Q_SLOTS:
      */
     void slotOk();
 };
-

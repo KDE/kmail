@@ -36,4 +36,3 @@ private:
     QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
     QWidget *mParentWidget = nullptr;
 };
-

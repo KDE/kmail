@@ -54,4 +54,3 @@ private:
     Akonadi::EntityMimeTypeFilterModel *mCollectionModel = nullptr;
     MailCommon::JobScheduler *mJobScheduler = nullptr;
 };
-

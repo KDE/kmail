@@ -75,4 +75,3 @@ private:
     QWidget *mParent = nullptr;
 };
 }
-

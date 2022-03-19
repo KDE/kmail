@@ -15,4 +15,3 @@ public:
     explicit RefreshSettingsFirstPage(QWidget *parent = nullptr);
     ~RefreshSettingsFirstPage() override;
 };
-

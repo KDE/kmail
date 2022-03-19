@@ -21,11 +21,11 @@
 #include <KIdentityManagement/IdentityManager>
 
 // other KMail headers:
+#include "kmkernel.h"
+#include "settings/kmailsettings.h"
 #include "xfaceconfigurator.h"
 #include <KEditListWidget>
 #include <MailCommon/FolderRequester>
-#include "kmkernel.h"
-#include "settings/kmailsettings.h"
 
 #include <MailCommon/MailKernel>
 

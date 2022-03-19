@@ -35,4 +35,3 @@ private:
     Akonadi::Collection mTopLevelCollection;
     QWidget *const mParentWidget;
 };
-

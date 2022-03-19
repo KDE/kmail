@@ -43,4 +43,3 @@ private:
     MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
     CreateReplyMessageJobSettings mSettings;
 };
-

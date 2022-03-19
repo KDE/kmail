@@ -63,4 +63,3 @@ private:
     KCheckableProxyModel *mModelProxy = nullptr;
     QItemSelectionModel *mSelectionModel = nullptr;
 };
-

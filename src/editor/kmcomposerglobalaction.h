@@ -29,4 +29,3 @@ private:
     Q_DISABLE_COPY(KMComposerGlobalAction)
     KMComposerWin *const mComposerWin;
 };
-

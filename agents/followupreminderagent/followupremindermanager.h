@@ -43,4 +43,3 @@ private:
     QPointer<FollowUpReminderNoAnswerDialog> mNoAnswerDialog;
     bool mInitialize = false;
 };
-

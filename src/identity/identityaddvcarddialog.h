@@ -34,4 +34,3 @@ private:
     QComboBox *const mComboBox;
     KUrlRequester *const mVCardPath;
 };
-

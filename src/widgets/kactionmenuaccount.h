@@ -42,4 +42,3 @@ private:
     QStringList mOrderIdentifier;
     bool mInitialized = false;
 };
-

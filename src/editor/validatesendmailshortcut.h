@@ -20,4 +20,3 @@ private:
     QWidget *const mParent;
     KActionCollection *const mActionCollection;
 };
-

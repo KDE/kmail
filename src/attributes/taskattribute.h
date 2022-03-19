@@ -30,4 +30,3 @@ public:
 private:
     Akonadi::Item::Id mId = {-1};
 };
-

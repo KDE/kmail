@@ -72,4 +72,3 @@ private:
     MessageComposer::AkonadiSender *const mSender;
     QQueue<Akonadi::Item::Id> mSendLaterQueue;
 };
-

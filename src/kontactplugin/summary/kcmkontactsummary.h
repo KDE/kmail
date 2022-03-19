@@ -34,4 +34,3 @@ public:
 private:
     PluginView *mPluginView = nullptr;
 };
-

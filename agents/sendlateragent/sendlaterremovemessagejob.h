@@ -27,4 +27,3 @@ private:
     const QVector<Akonadi::Item::Id> mListItems;
     int mIndex = 0;
 };
-

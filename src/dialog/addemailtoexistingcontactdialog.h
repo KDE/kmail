@@ -31,4 +31,3 @@ private:
     Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget = nullptr;
     QPushButton *mOkButton = nullptr;
 };
-

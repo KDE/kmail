@@ -18,4 +18,3 @@ public:
     ArchiveMailInfo::ArchiveUnit unit() const;
     void setUnit(ArchiveMailInfo::ArchiveUnit unit);
 };
-

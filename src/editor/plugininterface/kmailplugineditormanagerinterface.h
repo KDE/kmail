@@ -63,4 +63,3 @@ private:
     QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> mActionHash;
     QList<QWidget *> mStatusBarWidget;
 };
-

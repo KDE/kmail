@@ -36,4 +36,3 @@ private:
     FolderArchiveManager *const mManager;
     FolderArchiveAccountInfo *const mInfo;
 };
-

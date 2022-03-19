@@ -33,4 +33,3 @@ private:
     QWidget *mParentWidget = nullptr;
     bool mWasInitialized = false;
 };
-

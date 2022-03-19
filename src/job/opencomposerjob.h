@@ -71,4 +71,3 @@ private:
     KMail::Composer::TemplateContext mContext = KMail::Composer::New;
     uint mIdentityId = 0;
 };
-

@@ -15,4 +15,3 @@ Q_REQUIRED_RESULT bool resourceSupportArchiving(const QString &resource);
 Q_REQUIRED_RESULT QString configFileName();
 }
 }
-

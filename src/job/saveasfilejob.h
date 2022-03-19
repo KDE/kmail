@@ -28,4 +28,3 @@ private:
     QTextDocument *mTextDocument = nullptr;
     QWidget *mParentWidget = nullptr;
 };
-

@@ -76,4 +76,3 @@ private:
     QLabel *mDateLabel = nullptr;
     QAction *mConfigAction = nullptr;
 };
-

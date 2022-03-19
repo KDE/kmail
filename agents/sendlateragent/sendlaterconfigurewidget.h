@@ -66,4 +66,3 @@ private:
     bool mChanged = false;
     Ui::SendLaterConfigureWidget *mWidget = nullptr;
 };
-

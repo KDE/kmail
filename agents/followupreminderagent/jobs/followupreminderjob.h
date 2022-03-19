@@ -29,4 +29,3 @@ private:
     void slotItemFetchJobDone(KJob *job);
     Akonadi::Item mItem;
 };
-

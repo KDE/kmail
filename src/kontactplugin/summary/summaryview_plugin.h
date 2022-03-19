@@ -39,4 +39,3 @@ private:
     KSelectAction *mSyncAction = nullptr;
     QAction *mAllSync = nullptr;
 };
-

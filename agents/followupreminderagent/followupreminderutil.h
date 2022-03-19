@@ -32,4 +32,3 @@ Q_REQUIRED_RESULT bool removeFollowupReminderInfo(KSharedConfig::Ptr config, con
 Q_REQUIRED_RESULT QString followUpReminderPattern();
 }
 }
-

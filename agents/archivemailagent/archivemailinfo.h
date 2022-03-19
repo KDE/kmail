@@ -78,4 +78,3 @@ private:
     bool mSaveSubCollection = false;
     bool mIsEnabled = true;
 };
-

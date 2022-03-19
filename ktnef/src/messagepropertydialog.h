@@ -37,4 +37,3 @@ private:
     KTNEFMessage *const mMessage;
     QTreeWidget *const mListView;
 };
-

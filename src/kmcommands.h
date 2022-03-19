@@ -35,7 +35,8 @@ class QProgressDialog;
 class KMMainWidget;
 class KMReaderMainWin;
 
-template<typename T> class QSharedPointer;
+template<typename T>
+class QSharedPointer;
 
 namespace MessageViewer
 {
@@ -685,4 +686,3 @@ private:
     MessageViewer::Viewer *mViewer = nullptr;
     KMReaderMainWin *mReaderMainWin = nullptr;
 };
-

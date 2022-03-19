@@ -94,4 +94,3 @@ private:
     KUserFeedback::FeedbackConfigWidget *mUserFeedbackWidget = nullptr;
 };
 #endif
-

@@ -34,4 +34,3 @@ private:
     MailKernel *const mKernel;
     const KSharedConfigPtr mConfig;
 };
-

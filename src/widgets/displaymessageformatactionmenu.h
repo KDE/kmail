@@ -28,4 +28,3 @@ private:
     void updateMenu();
     MessageViewer::Viewer::DisplayFormatMessage mDisplayMessageFormat = MessageViewer::Viewer::UseGlobalSetting;
 };
-

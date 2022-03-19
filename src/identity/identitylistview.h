@@ -75,4 +75,3 @@ private:
     KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
 };
 } // namespace KMail
-

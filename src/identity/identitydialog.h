@@ -135,4 +135,3 @@ private:
     IdentityInvalidFolder *mIdentityInvalidFolder = nullptr;
 };
 } // namespace KMail
-
