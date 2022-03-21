@@ -135,8 +135,6 @@
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
 
-#include <PimCommon/LogActivitiesManager>
-
 #include "kmail_debug.h"
 
 #include <KAcceleratorManager>
@@ -4775,7 +4773,6 @@ void KMMainWidget::slotReplyMessageTo(const KMime::Message::Ptr &message, bool r
 void KMMainWidget::showMessageActivities(const QString &str)
 {
     BroadcastStatus::instance()->setStatusMsg(str);
-    PimCommon::LogActivitiesManager::self()->appendLog(str);
 }
 
 void KMMainWidget::slotCopyDecryptedTo(QAction *action)
