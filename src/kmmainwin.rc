@@ -2,7 +2,7 @@
      the same menu entries at the same place in KMail and Kontact  -->
 
 <!DOCTYPE gui>
-<gui version="550" name="kmmainwin" translationDomain="kmail">
+<gui version="551" name="kmmainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -91,7 +91,7 @@
    <Separator/>
    <Action name="zoom_menu"/>
    <Separator/>
-   <Action name="view-full-screen"/>
+   <Action name="fullscreen"/>
   </Menu>
   <Menu noMerge="1" name="go">
    <text>&amp;Go</text>
