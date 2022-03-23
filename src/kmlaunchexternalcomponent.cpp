@@ -38,9 +38,8 @@ void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_archivemail_agent"));
     if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
+        Akonadi::AgentConfigurationDialog dlg(agent, mParentWidget);
+        dlg.exec();
     } else {
         KMessageBox::error(mParentWidget, i18n("Archive Mail Agent was not registered."));
     }
