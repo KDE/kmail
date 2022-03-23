@@ -15,6 +15,7 @@ class KMMainWidget;
 class KToggleAction;
 class QLabel;
 class KHamburgerMenu;
+class KToggleFullScreenAction;
 namespace KPIM
 {
 class ProgressStatusBarWidget;
@@ -56,10 +57,12 @@ private:
     void slotToggleMenubar(bool dontShowWarning);
     void updateHamburgerMenu();
     void slotShortcutSaved();
+    void slotFullScreen(bool t);
     KPIM::ProgressStatusBarWidget *mProgressBar = nullptr;
     KMMainWidget *mKMMainWidget = nullptr;
     KToggleAction *mShowMenuBarAction = nullptr;
     QLabel *mMessageLabel = nullptr;
     KHamburgerMenu *mHamburgerMenu = nullptr;
+    KToggleFullScreenAction *mShowFullScreenAction = nullptr;
     bool mReallyClose = false;
 };

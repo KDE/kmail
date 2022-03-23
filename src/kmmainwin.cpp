@@ -87,6 +87,10 @@ KMMainWin::KMMainWin(QWidget *)
     mShowMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
     slotToggleMenubar(true);
     connect(guiFactory(), &KXMLGUIFactory::shortcutsSaved, this, &KMMainWin::slotShortcutSaved);
+
+    mShowFullScreenAction = KStandardAction::fullScreen(nullptr, nullptr, this, actionCollection());
+    actionCollection()->setDefaultShortcut(mShowFullScreenAction, Qt::Key_F11);
+    connect(mShowFullScreenAction, &QAction::toggled, this, &KMMainWin::slotFullScreen);
 }
 
 KMMainWin::~KMMainWin()
@@ -94,6 +98,26 @@ KMMainWin::~KMMainWin()
     // Avoids a crash if there are any Akonadi jobs running, which may
     // attempt to display a status message when they are killed.
     disconnect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg, this, nullptr);
+}
+
+void KMMainWin::slotFullScreen(bool t)
+{
+    KToggleFullScreenAction::setFullScreen(this, t);
+    QMenuBar *mb = menuBar();
+    if (t) {
+        QToolButton *b = new QToolButton(mb);
+        b->setDefaultAction(mShowFullScreenAction);
+        b->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Ignored));
+        b->setFont(QFontDatabase::systemFont(QFontDatabase::SmallestReadableFont));
+        mb->setCornerWidget(b, Qt::TopRightCorner);
+        b->setVisible(true);
+        b->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    } else {
+        QWidget *w = mb->cornerWidget(Qt::TopRightCorner);
+        if (w) {
+            w->deleteLater();
+        }
+    }
 }
 
 void KMMainWin::updateHamburgerMenu()
