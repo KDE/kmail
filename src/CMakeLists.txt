@@ -486,6 +486,7 @@ pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
 
 target_link_libraries(kmailpart
     kmailprivate
+    KF5::AkonadiCore
     KF5::I18n
     KF5::PimCommon
     KF5::KCMUtils
@@ -503,6 +504,7 @@ add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
     KF5::KontactInterface
     kmailprivate
+    KF5::AkonadiCore
     KF5::PimCommon
     KF5::I18n
     KF5::TemplateParser
