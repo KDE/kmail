@@ -385,11 +385,6 @@ kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     editor/custommimeheader/custommimeheader.kcfgc
     )
 
-set(kmail_userfeedback_LIB)
-if (TARGET KUserFeedbackWidgets)
-    set(kmail_userfeedback_LIB KUserFeedbackWidgets)
-endif()
-
 target_sources(kmailprivate PRIVATE ${kmailprivate_LIB_SRCS})
 
 
@@ -513,8 +508,10 @@ target_link_libraries(kmail
     KF5::Libkdepim
     KF5::Crash
     KF5::WebEngineViewer
-    ${kmail_userfeedback_LIB}
     )
+if (TARGET KUserFeedbackWidgets)
+    target_link_libraries(kmail KUserFeedbackWidgets)
+endif()
 
 if(BUILD_TESTING)
     add_subdirectory(autotests)
