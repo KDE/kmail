@@ -439,9 +439,11 @@ target_link_libraries(kmailprivate
     KF5::SyntaxHighlighting
     KF5::GuiAddons
     qt${QT_MAJOR_VERSION}keychain
-    ${kmail_userfeedback_LIB}
     )
-
+if (TARGET KUserFeedbackWidgets)
+    target_link_libraries(kmailprivate PRIVATE KUserFeedbackWidgets)
+    target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KUserFeedbackWidgets,INTERFACE_INCLUDE_DIRECTORIES>)
+endif()
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MailCommon,INTERFACE_INCLUDE_DIRECTORIES>)
