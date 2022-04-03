@@ -428,8 +428,9 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
     mMainWidget->setFocusPolicy(Qt::StrongFocus);
     setWidget(sa);
 
-    // KF5: port it
-    // connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayPaletteChanged, this, &SummaryViewPart::slotAdjustPalette);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    connect(qApp, &QApplication::paletteChanged, this, &SummaryViewPart::slotAdjustPalette);
+#endif
     slotAdjustPalette();
 
     mMainLayout = new QVBoxLayout(mMainWidget);
@@ -505,4 +506,14 @@ QString SummaryViewPart::widgetName(QWidget *widget) const
     }
 
     return {};
+}
+
+bool SummaryViewPart::event(QEvent *e)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    if (e->type() == QEvent::ApplicationPaletteChange) {
+        slotAdjustPalette();
+    }
+#endif
+    return KParts::Part::event(e);
 }
