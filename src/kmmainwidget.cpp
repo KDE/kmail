@@ -163,6 +163,7 @@
 #include <QVBoxLayout>
 #include <WebEngineViewer/WebHitTestResult>
 
+#include <KColorSchemeManager>
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusReply>
@@ -3542,6 +3543,8 @@ void KMMainWidget::setupActions()
 
         mCollectionSwitcherTreeViewManager->addActions(listActions);
     }
+    auto manager = new KColorSchemeManager(this);
+    actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(this));
 }
 
 void KMMainWidget::redoSwitchFolder()
