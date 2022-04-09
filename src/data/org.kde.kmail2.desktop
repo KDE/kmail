@@ -201,6 +201,7 @@ MimeType=x-scheme-handler/mailto;
 InitialPreference=10
 Actions=Composer;CheckMail;
 SingleMainWindow=true
+Version=1.5
 
 [Desktop Action Composer]
 Name=New Message...
