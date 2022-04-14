@@ -107,7 +107,7 @@
             "KPluginInfo"
         ],
         "Version": "0.1",
-        "Website": "https://kontact.kde.org/components/kmail.html"
+        "Website": "https://kontact.kde.org/components/kmail/"
     },
     "X-KDE-ConfigModuleNamespace": "pim/kcms/kmail/",
     "X-KDE-KontactPartExecutableName": "kmail",
