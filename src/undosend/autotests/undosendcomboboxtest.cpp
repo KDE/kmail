@@ -17,5 +17,5 @@ UndoSendComboboxTest::UndoSendComboboxTest(QObject *parent)
 void UndoSendComboboxTest::shouldHaveDefaultValues()
 {
     UndoSendCombobox w;
-    QCOMPARE(w.count(), 5);
+    QCOMPARE(w.count(), 6);
 }

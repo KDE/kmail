@@ -21,6 +21,7 @@ void UndoSendCombobox::initialize()
         const int numberOfSeconds = i * 10;
         addItem(i18n("%1 seconds", numberOfSeconds), numberOfSeconds);
     }
+    addItem(i18n("5 minutes"), 5 * 60);
 }
 
 int UndoSendCombobox::delay() const
