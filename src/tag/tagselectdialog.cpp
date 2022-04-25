@@ -62,7 +62,7 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     auto listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
     listWidgetSearchLine->setObjectName(QStringLiteral("searchline"));
 
-    listWidgetSearchLine->setPlaceholderText(i18n("Search tag"));
+    listWidgetSearchLine->setPlaceholderText(i18n("Search tag..."));
     listWidgetSearchLine->setClearButtonEnabled(true);
 
     vbox->addWidget(listWidgetSearchLine);
