@@ -222,7 +222,7 @@ void IdentityPage::slotRemoveIdentity()
                                            KGuiItem(i18n("&Remove"), QStringLiteral("edit-delete")))
         == KMessageBox::Continue) {
         for (QTreeWidgetItem *selecteditem : selectedItems) {
-            auto identityItem = dynamic_cast<IdentityListViewItem *>(item);
+            auto identityItem = dynamic_cast<IdentityListViewItem *>(selecteditem);
             identityName = identityItem->identity().identityName();
             if (mIdentityManager->removeIdentity(identityName)) {
                 delete selecteditem;
