@@ -136,9 +136,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // "Automatically insert signature" checkbox
     mAutoAppSignFileCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(), this);
 
-    QString helpText = i18n(
-        "Automatically insert the configured signature\n"
-        "when starting to compose a message");
+    QString helpText = i18n("Automatically insert the configured signature when starting to compose a message");
     mAutoAppSignFileCheck->setToolTip(helpText);
     mAutoAppSignFileCheck->setWhatsThis(helpText);
 
@@ -161,9 +159,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mDashDashCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this);
     mDashDashCheck->setEnabled(false);
 
-    helpText = i18n(
-        "Insert the RFC-compliant signature separator\n"
-        "(two dashes and a space on a line) before the signature");
+    helpText = i18n("Insert the RFC-compliant signature separator (two dashes and a space on a line) before the signature");
     mDashDashCheck->setToolTip(helpText);
     mDashDashCheck->setWhatsThis(helpText);
 
@@ -191,10 +187,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // "Only quote selected text when replying" checkbox
     mQuoteSelectionOnlyCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem()->label(), this);
-    helpText = i18n(
-        "When replying, only quote the selected text\n"
-        "(instead of the complete message), if\n"
-        "there is text selected in the message window.");
+    helpText = i18n("When replying, only quote the selected text (instead of the complete message), if there is text selected in the message window.");
     mQuoteSelectionOnlyCheck->setToolTip(helpText);
     mQuoteSelectionOnlyCheck->setWhatsThis(helpText);
 
@@ -204,8 +197,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // "Use smart quoting" checkbox
     mSmartQuoteCheck = new QCheckBox(TemplateParser::TemplateParserSettings::self()->smartQuoteItem()->label(), this);
     helpText = i18n(
-        "When replying, add quote signs in front of all lines of the quoted text,\n"
-        "even when the line was created by adding an additional line break while\n"
+        "When replying, add quote signs in front of all lines of the quoted text, even when the line was created by adding an additional line break while "
         "word-wrapping the text.");
     mSmartQuoteCheck->setToolTip(helpText);
     mSmartQuoteCheck->setWhatsThis(helpText);
@@ -247,9 +239,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // "Reply/Forward using HTML if present" checkbox
     mReplyUsingVisualFormat = new QCheckBox(TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem()->label(), this);
     helpText = i18n(
-        "When replying or forwarding, quote the message\n"
-        "in the original format it was received.\n"
-        "If unchecked, the reply will be as plain text by default.");
+        "When replying or forwarding, quote the message in the original format it was received. If unchecked, the reply will be as plain text by default.");
     mReplyUsingVisualFormat->setToolTip(helpText);
     mReplyUsingVisualFormat->setWhatsThis(helpText);
 
@@ -261,8 +251,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // For what is supported see http://www.grantlee.org/apidox/classGrantlee_1_1PlainTextMarkupBuilder.html
     helpText = i18n(
-        "Format the plain text part of a message from the HTML markup.\n"
-        "Bold, italic and underlined text, lists, and external references\n"
+        "Format the plain text part of a message from the HTML markup."
+        "Bold, italic and underlined text, lists, and external references"
         "are supported.");
     mImprovePlainTextOfHtmlMessage->setToolTip(helpText);
     mImprovePlainTextOfHtmlMessage->setWhatsThis(helpText);
@@ -310,8 +300,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoRequestMDNCheck = new QCheckBox(KMailSettings::self()->requestMDNItem()->label(), this);
 
     helpText = i18n(
-        "By default, request an MDN when starting to compose a message.\n"
-        "You can select this on a per-message basis using \"Options - Request Disposition Notification\"");
+        "By default, request an MDN when starting to compose a message. You can select this on a per-message basis using \"Options - Request Disposition "
+        "Notification\"");
     mAutoRequestMDNCheck->setToolTip(helpText);
     mAutoRequestMDNCheck->setWhatsThis(helpText);
 
@@ -366,12 +356,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecipients->setValue(1);
 
     helpText = i18n(
-        "Only allow this many recipients to be specified for the message.\n"
-        "This applies to doing a \"Reply to All\", entering recipients manually\n"
-        "or using the \"Select...\" picker.  Setting this limit helps you to\n"
-        "avoid accidentally sending a message to too many people.  Note,\n"
-        "however, that it does not take account of distribution lists or\n"
-        "mailing lists.");
+        "Only allow this many recipients to be specified for the message. This applies to doing a \"Reply to All\", entering recipients manually"
+        " or using the \"Select...\" picker.  Setting this limit helps you to avoid accidentally sending a message to too many people.  Note,"
+        " however, that it does not take account of distribution lists or mailing lists.");
     mMaximumRecipients->setToolTip(helpText);
     mMaximumRecipients->setWhatsThis(helpText);
 
@@ -390,9 +377,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // "Use recent addresses for autocompletion" checkbox
     mShowRecentAddressesInComposer = new QCheckBox(MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposerItem()->label(), this);
 
-    helpText = i18n(
-        "Remember recent addresses entered,\n"
-        "and offer them for recipient completion");
+    helpText = i18n("Remember recent addresses entered, and offer them for recipient completion");
     mShowRecentAddressesInComposer->setToolTip(helpText);
     mShowRecentAddressesInComposer->setWhatsThis(helpText);
 
@@ -411,9 +396,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label->setBuddy(mMaximumRecentAddress);
     label->setEnabled(false);
 
-    helpText = i18n(
-        "The maximum number of recently entered addresses that will\n"
-        "be remembered for completion");
+    helpText = i18n("The maximum number of recently entered addresses that will be remembered for completion");
     mMaximumRecentAddress->setToolTip(helpText);
     mMaximumRecentAddress->setWhatsThis(helpText);
 
@@ -662,9 +645,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     QLayout *layout = new QVBoxLayout(group);
 
     // row 0: help text:
-    auto label = new QLabel(i18n("Recognize any sequence of the following prefixes\n"
-                                 "(entries are case-insensitive regular expressions):"),
-                            group);
+    auto label = new QLabel(i18n("Recognize any sequence of the following prefixes (entries are case-insensitive regular expressions):"), group);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignLeft);
 
@@ -690,9 +671,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     layout = new QVBoxLayout(group);
 
     // row 0: help text:
-    label = new QLabel(i18n("Recognize any sequence of the following prefixes\n"
-                            "(entries are case-insensitive regular expressions):"),
-                       group);
+    label = new QLabel(i18n("Recognize any sequence of the following prefixes (entries are case-insensitive regular expressions):"), group);
     label->setAlignment(Qt::AlignLeft);
     label->setWordWrap(true);
 
