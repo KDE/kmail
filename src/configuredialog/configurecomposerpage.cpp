@@ -250,10 +250,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mImprovePlainTextOfHtmlMessage = new QCheckBox(MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessageItem()->label(), this);
 
     // For what is supported see http://www.grantlee.org/apidox/classGrantlee_1_1PlainTextMarkupBuilder.html
-    helpText = i18n(
-        "Format the plain text part of a message from the HTML markup."
-        "Bold, italic and underlined text, lists, and external references"
-        "are supported.");
+    helpText =
+        i18n("Format the plain text part of a message from the HTML markup. Bold, italic and underlined text, lists, and external references are supported.");
     mImprovePlainTextOfHtmlMessage->setToolTip(helpText);
     mImprovePlainTextOfHtmlMessage->setWhatsThis(helpText);
 
