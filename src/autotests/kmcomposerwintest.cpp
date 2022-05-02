@@ -51,6 +51,7 @@ KMComposerWinTest::KMComposerWinTest(QObject *parent)
     : QObject(parent)
     , mKernel(new KMKernel(parent))
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 KMComposerWinTest::~KMComposerWinTest()
