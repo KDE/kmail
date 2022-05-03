@@ -35,6 +35,7 @@
 #include <QAction>
 #include <QIcon>
 #include <QMenu>
+#include <QPointer>
 #include <QStandardPaths>
 #include <QTemporaryFile>
 #include <QUrl>
