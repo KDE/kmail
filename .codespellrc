@@ -1,4 +1,4 @@
 [codespell]
-skip = ./build*,.git,*.notifyrc,*.desktop,*.json
+skip = ./build*,.git,*.notifyrc,*.desktop,*.json,*.xml
 interactive = 3
 ignore-words-list = accessort
