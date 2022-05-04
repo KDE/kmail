@@ -105,7 +105,7 @@ void KMMainWin::slotFullScreen(bool t)
     KToggleFullScreenAction::setFullScreen(this, t);
     QMenuBar *mb = menuBar();
     if (t) {
-        QToolButton *b = new QToolButton(mb);
+        auto b = new QToolButton(mb);
         b->setDefaultAction(mShowFullScreenAction);
         b->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Ignored));
         b->setFont(QFontDatabase::systemFont(QFontDatabase::SmallestReadableFont));

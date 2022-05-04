@@ -640,7 +640,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
 
     auto group = new QGroupBox(i18n("Repl&y Subject Prefixes"), this);
-    QLayout *layout = new QVBoxLayout(group);
+    auto layout = new QVBoxLayout(group);
 
     // row 0: help text:
     auto label = new QLabel(i18n("Recognize any sequence of the following prefixes (entries are case-insensitive regular expressions):"), group);
