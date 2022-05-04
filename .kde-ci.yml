@@ -48,3 +48,5 @@ Dependencies:
     'frameworks/kwindowsystem': '@latest'
     'frameworks/kxmlgui': '@latest'
     'frameworks/kiconthemes': '@latest'
+Options:
+  require-passing-tests-on: [ 'Linux', 'FreeBSD']
