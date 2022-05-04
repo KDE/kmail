@@ -13,7 +13,7 @@ SPDX-License-Identifier: GPL-2.0-only
 
 CollectionSwitcherTreeViewManager::CollectionSwitcherTreeViewManager(QObject *parent)
     : QObject{parent}
-    , mCollectionSwitcherTreeView(new CollectionSwitcherTreeView(nullptr)) // TODO use parent ???
+    , mCollectionSwitcherTreeView(new CollectionSwitcherTreeView(nullptr))
     , mCollectionSwitcherModel(new CollectionSwitcherModel(this))
 {
     mCollectionSwitcherTreeView->setModel(mCollectionSwitcherModel);
