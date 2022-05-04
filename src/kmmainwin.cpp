@@ -38,6 +38,9 @@ using namespace std::chrono_literals;
 
 KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow(nullptr)
+    , mProgressBar(new KPIM::ProgressStatusBarWidget(statusBar(), this))
+    , mMessageLabel(new QLabel(i18n("Starting...")))
+
 {
     setObjectName(QStringLiteral("kmail-mainwindow#"));
     // Set this to be the group leader for all subdialogs - this means
@@ -216,8 +219,6 @@ void KMMainWin::slotUpdateGui()
 void KMMainWin::setupStatusBar()
 {
     /* Create a progress dialog and hide it. */
-    mProgressBar = new KPIM::ProgressStatusBarWidget(statusBar(), this);
-    mMessageLabel = new QLabel(i18n("Starting..."));
     mMessageLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     statusBar()->addWidget(mMessageLabel);
 
