@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "kmail_export.h"
 #include <PimCommon/MigrateApplicationFiles>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#include "kmail_export.h"
 class KMAIL_EXPORT KMMigrateApplication
 {
 public:
