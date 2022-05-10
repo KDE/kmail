@@ -16,9 +16,7 @@ SubjectLineEditWithAutoCorrection::SubjectLineEditWithAutoCorrection(QWidget *pa
     setToolTip(i18n("Set a subject for this message"));
 }
 
-SubjectLineEditWithAutoCorrection::~SubjectLineEditWithAutoCorrection()
-{
-}
+SubjectLineEditWithAutoCorrection::~SubjectLineEditWithAutoCorrection() = default;
 
 void SubjectLineEditWithAutoCorrection::dropEvent(QDropEvent *event)
 {
