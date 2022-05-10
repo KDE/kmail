@@ -100,7 +100,7 @@ QList<KTNEFAttach *> KTNEFView::getSelection()
 {
     mAttachments.clear();
 
-    QList<QTreeWidgetItem *> list = selectedItems();
+    const QList<QTreeWidgetItem *> list = selectedItems();
     if (list.isEmpty() || !list.first()) {
         return mAttachments;
     }
