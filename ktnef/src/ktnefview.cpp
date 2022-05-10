@@ -82,10 +82,8 @@ KTNEFView::~KTNEFView() = default;
 void KTNEFView::setAttachments(const QList<KTNEFAttach *> &list)
 {
     clear();
-    if (!list.isEmpty()) {
-        for (const auto &s : list) {
-            new Attachment(this, s);
-        }
+    for (const auto &s : list) {
+        new Attachment(this, s);
     }
 }
 
