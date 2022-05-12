@@ -20,6 +20,8 @@
 #include "aboutdata.h"
 
 #include <KCrash>
+#include <KStartupInfo>
+#include <KWindowSystem>
 #include <QApplication>
 #include <QDir>
 #include <QSessionManager>
@@ -67,6 +69,12 @@ void KMailApplication::setEventLoopReached()
 
 int KMailApplication::newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory)
 {
+    if (KWindowSystem::isPlatformX11()) {
+        KStartupInfo::setNewStartupId(kmkernel->mainWin()->windowHandle(), startupId);
+    } else if (KWindowSystem::isPlatformWayland()) {
+        KWindowSystem::setCurrentXdgActivationToken(QString::fromUtf8(startupId));
+    }
+
     if (!kmkernel->firstInstance() && !arguments.isEmpty()) {
         // if we're going to create a new window (viewer or composer),
         // don't bring the mainwindow onto the current desktop
@@ -99,6 +107,9 @@ int KMailApplication::activate(const QStringList &args, const QString &workingDi
         kmkernel->handleCommandLine(true, args, workingDir);
     }
     kmkernel->setFirstInstance(false);
+
+    KWindowSystem::activateWindow(kmkernel->mainWin()->windowHandle());
+
     return 0;
 }
 
