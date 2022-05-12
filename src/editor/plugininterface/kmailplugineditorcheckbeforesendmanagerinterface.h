@@ -29,7 +29,7 @@ public:
     // TODO add body ? or editor
 
     void initializePlugins();
-    bool execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const;
+    Q_REQUIRED_RESULT bool execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const;
 
 private:
     Q_DISABLE_COPY(KMailPluginEditorCheckBeforeSendManagerInterface)

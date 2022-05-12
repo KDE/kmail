@@ -21,15 +21,15 @@ class KMailPluginEditorConvertTextManagerInterface : public QObject
 public:
     explicit KMailPluginEditorConvertTextManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorConvertTextManagerInterface() override;
-    QWidget *parentWidget() const;
+    Q_REQUIRED_RESULT QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
-    KActionCollection *actionCollection() const;
+    Q_REQUIRED_RESULT KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
     void initializePlugins();
 
-    KPIMTextEdit::RichTextComposer *richTextEditor() const;
+    Q_REQUIRED_RESULT KPIMTextEdit::RichTextComposer *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);
 
     Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> actionsType();

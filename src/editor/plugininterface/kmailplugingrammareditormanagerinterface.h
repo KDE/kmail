@@ -23,17 +23,17 @@ public:
     explicit KMailPluginGrammarEditorManagerInterface(QObject *parent = nullptr);
     ~KMailPluginGrammarEditorManagerInterface() override = default;
 
-    KPIMTextEdit::RichTextComposer *richTextEditor() const;
+    Q_REQUIRED_RESULT KPIMTextEdit::RichTextComposer *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);
 
-    QWidget *parentWidget() const;
+    Q_REQUIRED_RESULT QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
     void initializePlugins();
-    KActionCollection *actionCollection() const;
+    Q_REQUIRED_RESULT KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
-    PimCommon::CustomToolsWidgetNg *customToolsWidget() const;
+    Q_REQUIRED_RESULT PimCommon::CustomToolsWidgetNg *customToolsWidget() const;
     void setCustomToolsWidget(PimCommon::CustomToolsWidgetNg *customToolsWidget);
 
 private:

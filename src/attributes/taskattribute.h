@@ -25,7 +25,7 @@ public:
     void deserialize(const QByteArray &data) override;
 
     void setTaskId(Akonadi::Item::Id id);
-    Akonadi::Item::Id taskId() const;
+    Q_REQUIRED_RESULT Akonadi::Item::Id taskId() const;
 
 private:
     Akonadi::Item::Id mId = {-1};

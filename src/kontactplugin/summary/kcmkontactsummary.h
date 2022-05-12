@@ -32,5 +32,5 @@ public:
     void save() override;
 
 private:
-    PluginView *mPluginView = nullptr;
+    PluginView *const mPluginView;
 };

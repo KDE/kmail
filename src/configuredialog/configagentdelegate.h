@@ -36,5 +36,5 @@ private:
     void drawFocus(QPainter *, const QStyleOptionViewItem &, const QRect &) const;
     QTextDocument *document(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
-    QStyleOptionButton buttonOption(const QStyleOptionViewItem &option) const;
+    Q_REQUIRED_RESULT QStyleOptionButton buttonOption(const QStyleOptionViewItem &option) const;
 };

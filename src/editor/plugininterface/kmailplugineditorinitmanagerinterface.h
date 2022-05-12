@@ -19,10 +19,10 @@ public:
     explicit KMailPluginEditorInitManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorInitManagerInterface() override = default;
 
-    KPIMTextEdit::RichTextComposer *richTextEditor() const;
+    Q_REQUIRED_RESULT KPIMTextEdit::RichTextComposer *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);
 
-    QWidget *parentWidget() const;
+    Q_REQUIRED_RESULT QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
     void initializePlugins();

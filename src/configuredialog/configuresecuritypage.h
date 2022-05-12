@@ -44,7 +44,7 @@ class SecurityPageMDNTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit SecurityPageMDNTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
 
@@ -65,7 +65,7 @@ public:
     explicit SecurityPageComposerCryptoTab(QWidget *parent = nullptr);
     ~SecurityPageComposerCryptoTab() override;
 
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
 
@@ -84,7 +84,7 @@ public:
     explicit SecurityPageWarningTab(QWidget *parent = nullptr);
     ~SecurityPageWarningTab() override;
 
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
 
@@ -105,7 +105,7 @@ public:
     explicit SecurityPageSMimeTab(QWidget *parent = nullptr);
     ~SecurityPageSMimeTab() override;
 
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
     void save() override;
 
@@ -138,5 +138,5 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 public:
     explicit SecurityPage(QWidget *parent = nullptr, const QVariantList &args = {});
 
-    QString helpAnchor() const override;
+    Q_REQUIRED_RESULT QString helpAnchor() const override;
 };

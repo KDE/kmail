@@ -68,6 +68,7 @@ K_PLUGIN_CLASS_WITH_JSON(KCMKontactSummary, "kcmkontactsummary.json")
 
 KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)
+    , mPluginView(new PluginView(this))
 {
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
@@ -75,7 +76,6 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
     auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
     layout->addWidget(label);
 
-    mPluginView = new PluginView(this);
     layout->addWidget(mPluginView);
 
     layout->setStretchFactor(mPluginView, 1);

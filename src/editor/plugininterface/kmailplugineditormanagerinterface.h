@@ -26,15 +26,15 @@ public:
     explicit KMailPluginEditorManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorManagerInterface() override;
 
-    KPIMTextEdit::RichTextEditor *richTextEditor() const;
+    Q_REQUIRED_RESULT KPIMTextEdit::RichTextEditor *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor);
 
-    QWidget *parentWidget() const;
+    Q_REQUIRED_RESULT QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
     void initializePlugins();
 
-    KActionCollection *actionCollection() const;
+    Q_REQUIRED_RESULT KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
     Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> actionsType();
