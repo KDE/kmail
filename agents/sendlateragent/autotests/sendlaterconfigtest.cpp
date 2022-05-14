@@ -9,11 +9,13 @@
 
 #include <MessageComposer/SendLaterInfo>
 
+#include <QStandardPaths>
 #include <QTest>
 
 SendLaterConfigTest::SendLaterConfigTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 SendLaterConfigTest::~SendLaterConfigTest() = default;

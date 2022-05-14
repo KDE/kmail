@@ -8,11 +8,13 @@
 #include "../followupreminderinfo.h"
 #include "../followupreminderutil.h"
 
+#include <QStandardPaths>
 #include <QTest>
 
 FollowUpReminderConfigTest::FollowUpReminderConfigTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 FollowUpReminderConfigTest::~FollowUpReminderConfigTest() = default;
