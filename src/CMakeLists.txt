@@ -537,7 +537,7 @@ install(FILES
     )
 install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
-install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
+install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
 install(TARGETS
     kmailpart
     DESTINATION ${KDE_INSTALL_PLUGINDIR}
