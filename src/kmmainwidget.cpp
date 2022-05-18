@@ -358,7 +358,7 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
 
     if (id == -1) {
         if (KMailSettings::self()->startSpecificFolderAtStartup()) {
-            Akonadi::Collection::Id startupFolder = KMailSettings::self()->startupFolder();
+            const Akonadi::Collection::Id startupFolder = KMailSettings::self()->startupFolder();
             if (startupFolder > 0) {
                 saver->restoreCurrentItem(QStringLiteral("c%1").arg(startupFolder));
             }
