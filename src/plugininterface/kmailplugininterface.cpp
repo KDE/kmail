@@ -35,7 +35,7 @@ void KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGeneri
         return;
     }
     auto interface = static_cast<PimCommon::GenericPluginInterface *>(abstractInterface);
-    PimCommon::GenericPluginInterface::RequireTypes requiresFeatures = interface->requiresFeatures();
+    const PimCommon::GenericPluginInterface::RequireTypes requiresFeatures = interface->requiresFeatures();
     if (requiresFeatures & PimCommon::GenericPluginInterface::CurrentItems) {
         interface->setItems(mMainWindow->currentSelection());
     }
