@@ -318,6 +318,7 @@
       <li xml:lang="zh-CN">符合标准 - 支持各种标准电子邮件协议的推送电子邮件、服务器端筛选和行内 OpenPGP、PGP/MIME 和 S/MIME。</li>
     </ul>
   </description>
+  <content_rating type="oars-1.1"/>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kmail2</url>
   <url type="help">https://docs.kde.org/?application=kmail2</url>
   <url type="homepage">https://kontact.kde.org/components/kmail/</url>
