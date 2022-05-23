@@ -8,7 +8,7 @@
 
 #include "collectionquotawidget.h"
 
-#include <KFormat>
+#include <KIO/Global>
 #include <KLocalizedString>
 #include <QGridLayout>
 #include <QLabel>
@@ -39,5 +39,5 @@ void CollectionQuotaWidget::setQuotaInfo(qint64 current, qint64 maxValue)
 {
     const int perc = qBound(0, qRound(100.0 * current / qMax(1LL, maxValue)), 100);
     mProgressBar->setValue(perc);
-    mUsage->setText(i18n("%1 of %2 used", KFormat().formatByteSize(qMax(0LL, current)), KFormat().formatByteSize(qMax(0LL, maxValue))));
+    mUsage->setText(i18n("%1 of %2 used", KIO::convertSize(qMax(0LL, current)), KIO::convertSize(qMax(0LL, maxValue))));
 }

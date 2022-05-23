@@ -30,7 +30,7 @@
 #include <KLocalizedString>
 #include <QIcon>
 
-#include <KFormat>
+#include <KIO/Global>
 #include <MessageCore/AttachmentPart>
 using MessageCore::AttachmentPart;
 
@@ -164,7 +164,7 @@ void AttachmentView::updateAttachmentLabel()
     for (const MessageCore::AttachmentPart::Ptr &part : list) {
         size += part->size();
     }
-    mInfoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)", model()->rowCount(), KFormat().formatByteSize(qMax(0LL, size))));
+    mInfoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)", model()->rowCount(), KIO::convertSize(qMax(0LL, size))));
 }
 
 void AttachmentView::selectNewAttachment()
