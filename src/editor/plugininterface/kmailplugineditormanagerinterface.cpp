@@ -12,6 +12,7 @@
 
 #include <QAction>
 #include <QVector>
+#include <QWidget>
 
 KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
     : QObject(parent)

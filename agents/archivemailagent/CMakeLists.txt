@@ -3,6 +3,7 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_archivemail_agent\")
 
 add_library(archivemailagent STATIC)
+set_property(TARGET archivemailagent PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_sources(archivemailagent PRIVATE
     archivemailkernel.cpp
     archivemailmanager.cpp

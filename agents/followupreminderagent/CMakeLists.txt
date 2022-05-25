@@ -3,7 +3,7 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_followupreminder_agent\")
 
 add_library(followupreminderagent STATIC)
-
+set_property(TARGET followupreminderagent PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 
 

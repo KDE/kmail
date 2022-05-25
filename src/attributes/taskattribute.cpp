@@ -8,6 +8,7 @@
 
 #include <QByteArray>
 #include <QDataStream>
+#include <QIODevice>
 
 TaskAttribute::TaskAttribute()
     : Akonadi::Attribute()

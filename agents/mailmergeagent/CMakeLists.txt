@@ -7,6 +7,7 @@ if(BUILD_TESTING)
     add_subdirectory(autotests)
 endif()
 add_library(mailmergeagent STATIC)
+set_property(TARGET mailmergeagent PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 
 ecm_qt_declare_logging_category(mailmergeagent HEADER mailmergeagent_debug.h IDENTIFIER MAILMERGEAGENT_LOG CATEGORY_NAME org.kde.pim.mailmergeagent

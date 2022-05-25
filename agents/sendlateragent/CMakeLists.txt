@@ -42,6 +42,8 @@ qt_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.x
 ki18n_wrap_ui(libsendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
 kconfig_add_kcfg_files(libsendlateragent_SRCS sendlateragentsettings.kcfgc)
 add_library(sendlateragent STATIC ${libsendlateragent_SRCS})
+set_property(TARGET sendlateragent PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 pim_target_precompile_headers(sendlateragent PUBLIC ../../kmail_pch.h)
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(sendlateragent PROPERTIES UNITY_BUILD ON)
