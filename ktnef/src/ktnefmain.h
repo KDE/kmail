@@ -14,7 +14,9 @@
 #pragma once
 
 #include <KService>
+#include <KTNEF/KTNEFAttach>
 #include <KXmlGuiWindow>
+
 class QActionGroup;
 class QAction;
 class QContextMenuEvent;
@@ -25,7 +27,6 @@ class QUrl;
 namespace KTnef
 {
 class KTNEFParser;
-class KTNEFAttach;
 }
 using namespace KTnef;
 

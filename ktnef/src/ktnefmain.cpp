@@ -16,7 +16,6 @@
 #include "ktnefview.h"
 #include "messagepropertydialog.h"
 
-#include <KTNEF/KTNEFAttach>
 #include <KTNEF/KTNEFMessage>
 #include <KTNEF/KTNEFParser>
 #include <KTNEF/KTNEFProperty>
@@ -44,6 +43,7 @@
 #include <KRecentFilesMenu>
 
 #include <KSharedConfig>
+#include <QActionGroup>
 #include <QContextMenuEvent>
 #include <QDir>
 #include <QDrag>

@@ -14,7 +14,7 @@
 #include <KDBusService>
 #include <KLocalizedString>
 
-#include <KCrash/KCrash>
+#include <KCrash>
 #include <QCommandLineParser>
 #include <QIcon>
 

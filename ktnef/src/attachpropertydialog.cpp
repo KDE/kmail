@@ -172,7 +172,11 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
         KMessageBox::error(parent, i18nc("@info", "The selected item cannot be saved because it has an empty tag."));
     } else {
         QString tag = item->text(2);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         const int key = tag.midRef(5).toInt();
+#else
+        const int key = QStringView(tag).mid(5).toInt();
+#endif
         QVariant prop = (tag.startsWith(QLatin1String("attr_")) ? pSet->attribute(key) : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {
