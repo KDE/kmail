@@ -94,9 +94,10 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
 
 void KCMKontactSummary::load()
 {
-    const QVector<KPluginMetaData> pluginMetaDatas = KPluginMetaData::findPlugins(QStringLiteral("kontact5"), [](const KPluginMetaData &data) {
-        return data.rawData().value(QStringLiteral("X-KDE-KontactPluginVersion")).toInt() == KONTACT_PLUGIN_VERSION;
-    });
+    const QVector<KPluginMetaData> pluginMetaDatas =
+        KPluginMetaData::findPlugins(QStringLiteral("kontact" QT_STRINGIFY(QT_VERSION_MAJOR)), [](const KPluginMetaData &data) {
+            return data.rawData().value(QStringLiteral("X-KDE-KontactPluginVersion")).toInt() == KONTACT_PLUGIN_VERSION;
+        });
 
     QStringList activeSummaries;
 
