@@ -12,7 +12,7 @@ KMailPluginInterface::KMailPluginInterface(QObject *parent)
     : PimCommon::PluginInterface(parent)
 {
     setPluginName(QStringLiteral("kmail"));
-    setPluginDirectory(QStringLiteral("kmail/mainview"));
+    setPluginDirectory(QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kmail/mainview"));
 }
 
 KMailPluginInterface::~KMailPluginInterface() = default;
