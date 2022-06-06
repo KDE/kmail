@@ -18,7 +18,7 @@ class SummaryView : public KontactInterface::Plugin
     Q_OBJECT
 
 public:
-    SummaryView(KontactInterface::Core *core, const QVariantList &);
+    SummaryView(KontactInterface::Core *core, const KPluginMetaData &data, const QVariantList &);
     ~SummaryView() override;
 
     int weight() const override

@@ -52,7 +52,7 @@ set(CALENDARUTILS_LIB_VERSION "5.20.40")
 set(IDENTITYMANAGEMENT_LIB_VERSION "5.20.40")
 set(KLDAP_LIB_VERSION "5.20.40")
 set(KMAILTRANSPORT_LIB_VERSION "5.20.40")
-set(KONTACTINTERFACE_LIB_VERSION "5.20.40")
+set(KONTACTINTERFACE_LIB_VERSION "5.20.41")
 set(KMIME_LIB_VERSION "5.20.40")
 set(KPIMTEXTEDIT_LIB_VERSION "5.20.40")
 set(AKONADI_VERSION "5.20.42")
@@ -157,8 +157,8 @@ if(BUILD_TESTING)
 endif()
 ecm_set_disabled_deprecation_versions(QT 5.15.2
     KF 5.95.0
-    KCOREADDONS 5.88.0 #KPluginFactory::registerPlugin
-)
+    KCOREADDONS 5.88.0 #KPluginFactory::registerPlugin (remove it when we will depend against kf5.95)
+    )
 
 find_package(KUserFeedback 1.2.0 CONFIG)
 set_package_properties(KUserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional).")
