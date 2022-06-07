@@ -74,5 +74,5 @@ install(FILES akonadi_mailmerge_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY
 
 #kcoreaddons_add_plugin(mailmergeagentconfig
 #    SOURCES ${mailmergeagentconfig_SRCS}
-#    INSTALL_NAMESPACE akonadi/config
+#    INSTALL_NAMESPACE pim${QT_MAJOR_VERSION}/akonadi/config
 #    )
