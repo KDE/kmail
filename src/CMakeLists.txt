@@ -456,22 +456,22 @@ target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
 pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
 target_link_libraries(kcm_kmail_static  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
 
-kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
+kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
 target_link_libraries(kcm_kmail_accounts kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_appearance SOURCES configuredialog/kcm_kmail_appearance.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
+kcoreaddons_add_plugin(kcm_kmail_appearance SOURCES configuredialog/kcm_kmail_appearance.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
 target_link_libraries(kcm_kmail_appearance kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_composer SOURCES configuredialog/kcm_kmail_composer.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
+kcoreaddons_add_plugin(kcm_kmail_composer SOURCES configuredialog/kcm_kmail_composer.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
 target_link_libraries(kcm_kmail_composer kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_misc SOURCES configuredialog/kcm_kmail_misc.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
+kcoreaddons_add_plugin(kcm_kmail_misc SOURCES configuredialog/kcm_kmail_misc.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
 target_link_libraries(kcm_kmail_misc kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_plugins SOURCES configuredialog/kcm_kmail_plugins.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
+kcoreaddons_add_plugin(kcm_kmail_plugins SOURCES configuredialog/kcm_kmail_plugins.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
 target_link_libraries(kcm_kmail_plugins kcm_kmail_static)
 
-kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_security.cpp INSTALL_NAMESPACE "pim/kcms/kmail")
+kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_security.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
 target_link_libraries(kcm_kmail_security kcm_kmail_static)
 ########### kmailpart ###############
 

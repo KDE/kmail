@@ -405,7 +405,7 @@ void SummaryViewPart::slotConfigure()
     dlg->setObjectName(QStringLiteral("ConfigDialog"));
     dlg->setModal(true);
     connect(dlg.data(), &KCMultiDialog::configCommitted, this, &SummaryViewPart::updateWidgets);
-    const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim/kcms/summary/"));
+    const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kcms/summary/"));
     for (const auto &metaData : metaDataList) {
         dlg->addModule(metaData);
     }

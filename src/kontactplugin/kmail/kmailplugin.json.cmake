@@ -110,7 +110,7 @@
         "Version": "0.1",
         "Website": "https://kontact.kde.org/components/kmail/"
     },
-    "X-KDE-ConfigModuleNamespace": "pim/kcms/kmail/",
+    "X-KDE-ConfigModuleNamespace": "pim@QT_MAJOR_VERSION@/kcms/kmail/",
     "X-KDE-KontactPartExecutableName": "kmail",
     "X-KDE-KontactPartLibraryName": "kmailpart",
     "X-KDE-KontactPartLoadOnStart": true,

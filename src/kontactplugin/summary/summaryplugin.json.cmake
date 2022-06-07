@@ -109,7 +109,7 @@
         ],
         "Version": "0.1"
     },
-    "X-KDE-ConfigModuleNamespace": "pim/kcms/summary/",
+    "X-KDE-ConfigModuleNamespace": "pim@QT_MAJOR_VERSION@/kcms/summary/",
     "X-KDE-KontactPluginVersion": 10,
     "X-KDE-Weight": "100"
 }

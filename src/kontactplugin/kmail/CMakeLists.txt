@@ -13,7 +13,7 @@ ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEAD
 
 set(kontact_kmail_plugins_interface_SRCS)
 qt_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
-
+configure_file(kmailplugin.json.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmailplugin.json )
 add_library(kontact_kmailplugin MODULE)
 target_sources(kontact_kmailplugin PRIVATE kmail_plugin.cpp summarywidget.cpp kmail_plugin.h summarywidget.h ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
 pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
@@ -35,4 +35,4 @@ target_link_libraries(kcmkmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt${QT_MA
 
 install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact${QT_MAJOR_VERSION})
 
-install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim/kcms/summary/)
+install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kcms/summary/)

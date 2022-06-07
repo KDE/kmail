@@ -6,6 +6,7 @@ set(kontact_summaryplugin_PART_SRCS summaryview_plugin.cpp summaryview_part.cpp 
     summaryview_plugin.h summaryview_part.h dropwidget.h)
 
 qt_add_dbus_interfaces(kontact_summaryplugin_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
+configure_file(summaryplugin.json.cmake ${CMAKE_CURRENT_BINARY_DIR}/summaryplugin.json)
 
 add_library(kontact_summaryplugin MODULE ${kontact_summaryplugin_PART_SRCS})
 pim_target_precompile_headers(kontact_summaryplugin PUBLIC ../../../kmail_pch.h)
@@ -23,6 +24,6 @@ target_link_libraries(kcmkontactsummary KF5::I18n Qt${QT_MAJOR_VERSION}::Widgets
 ########### install files ###############
 
 install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact${QT_MAJOR_VERSION})
-install(TARGETS kcmkontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim/kcms/summary)
+install(TARGETS kcmkontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kcms/summary)
 
 install(FILES kontactsummary_part.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/kontactsummary)
