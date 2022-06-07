@@ -1970,6 +1970,7 @@ void KMMainWidget::slotUpdateMessageTagList(const Akonadi::Tag &tag)
 
 void KMMainWidget::refreshMessageListSelection()
 {
+    setCurrentCollection(mMessagePane->currentFolder());
     mAkonadiStandardActionManager->setItemSelectionModel(mMessagePane->currentItemSelectionModel());
     slotMessageSelected(mMessagePane->currentItem());
     Q_EMIT captionChangeRequest(MailCommon::Util::fullCollectionPath(mMessagePane->currentFolder()));
