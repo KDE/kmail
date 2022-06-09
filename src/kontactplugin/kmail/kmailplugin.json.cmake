@@ -115,6 +115,6 @@
     "X-KDE-KontactPartLibraryName": "kmailpart",
     "X-KDE-KontactPartLoadOnStart": true,
     "X-KDE-KontactPluginHasSummary": true,
-    "X-KDE-KontactPluginVersion": 10,
+    "X-KDE-KontactPluginVersion": 11,
     "X-KDE-Weight": 200
 }
