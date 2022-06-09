@@ -23,7 +23,7 @@ target_link_libraries(kcmkontactsummary KF5::I18n Qt${QT_MAJOR_VERSION}::Widgets
 
 ########### install files ###############
 
-install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact${QT_MAJOR_VERSION})
+install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kontact)
 install(TARGETS kcmkontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kcms/summary)
 
 install(FILES kontactsummary_part.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/kontactsummary)

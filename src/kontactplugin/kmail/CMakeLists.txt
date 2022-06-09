@@ -33,6 +33,6 @@ target_link_libraries(kcmkmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt${QT_MA
 
 ########### install files ###############
 
-install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/kontact${QT_MAJOR_VERSION})
+install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kontact)
 
 install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kcms/summary/)
