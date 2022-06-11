@@ -1060,7 +1060,7 @@ unsigned int QWinMetaFile::toDWord(short *parm)
 {
     unsigned int l;
 
-#if !defined(WORDS_BIGENDIAN)
+#if !WORDS_BIGENDIAN
     l = *(unsigned int *)(parm);
 #else
     char *bytes;
