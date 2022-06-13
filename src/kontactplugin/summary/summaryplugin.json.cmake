@@ -3,7 +3,7 @@
         "Description": "Kontact SummaryView Plugin",
         "Description[ar]": "ملحقة «منظور الملخّصات» لِ‍«متراسلك»",
         "Description[az]": "Kontact yekununa baxış plaqini",
-        "Description[ca@valencia]": "Conector de la vista de resum de Kontact",
+        "Description[ca@valencia]": "Connector de la vista de resum de Kontact",
         "Description[ca]": "Connector de la vista de resum del Kontact",
         "Description[cs]": "Modul souhrnu pro aplikaci Kontact",
         "Description[de]": "Übersichts-Modul für Kontact",
