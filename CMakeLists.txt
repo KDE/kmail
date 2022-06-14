@@ -8,7 +8,7 @@ project(kmail VERSION ${PIM_VERSION})
 include(CheckIncludeFiles)
 
 
-set(KF5_MIN_VERSION "5.94.0")
+set(KF5_MIN_VERSION "5.95.0")
 
 find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -157,7 +157,6 @@ if(BUILD_TESTING)
 endif()
 ecm_set_disabled_deprecation_versions(QT 5.15.2
     KF 5.95.0
-    KCOREADDONS 5.88.0 #KPluginFactory::registerPlugin (remove it when we will depend against kf5.95)
     )
 
 find_package(KUserFeedback 1.2.0 CONFIG)
