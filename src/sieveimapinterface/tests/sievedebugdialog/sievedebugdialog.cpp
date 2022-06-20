@@ -22,8 +22,7 @@ int main(int argc, char **argv)
 
     KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     KMSieveImapPasswordProvider provider(nullptr);
-    auto dlg = new KSieveUi::SieveDebugDialog(&provider);
-    dlg->exec();
-    delete dlg;
+    auto dlg = KSieveUi::SieveDebugDialog(&provider);
+    dlg.exec();
     return 0;
 }
