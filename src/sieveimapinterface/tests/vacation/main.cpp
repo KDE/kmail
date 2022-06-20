@@ -8,8 +8,8 @@
 #include <QCommandLineParser>
 #include <QStandardPaths>
 
-#include "../../../sieveimapinterface/kmailsieveimapinstanceinterface.h"
-#include "../../../sieveimapinterface/kmsieveimappasswordprovider.h"
+#include "sieveimapinterface/kmailsieveimapinstanceinterface.h"
+#include "sieveimapinterface/kmsieveimappasswordprovider.h"
 #include <KSieveUi/MultiImapVacationDialog>
 #include <KSieveUi/MultiImapVacationManager>
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
