@@ -83,7 +83,7 @@ bool FollowUpReminderInfoWidget::eventFilter(QObject *object, QEvent *event)
 {
     if (object == mTreeWidget) {
         if (event->type() == QEvent::KeyPress) {
-            auto *keyEvent = static_cast<QKeyEvent *>(event);
+            auto keyEvent = static_cast<QKeyEvent *>(event);
             if (keyEvent->key() == Qt::Key_Delete) {
                 const auto listItems = mTreeWidget->selectedItems();
                 deleteItems(listItems);
