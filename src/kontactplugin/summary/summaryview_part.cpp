@@ -128,7 +128,7 @@ void SummaryViewPart::updateWidgets()
     QStringList loadedSummaries;
 
     QList<KontactInterface::Plugin *> plugins = mCore->pluginList();
-    QList<KontactInterface::Plugin *>::ConstIterator end = plugins.constEnd();
+    const QList<KontactInterface::Plugin *>::ConstIterator end = plugins.constEnd();
     QList<KontactInterface::Plugin *>::ConstIterator it = plugins.constBegin();
     for (; it != end; ++it) {
         KontactInterface::Plugin *plugin = *it;
@@ -394,8 +394,7 @@ void SummaryViewPart::slotAdjustPalette()
 
 void SummaryViewPart::setDate(QDate newDate)
 {
-    QString date(QStringLiteral("<b>%1</b>"));
-    date = date.arg(QLocale().toString(newDate));
+    const QString date = QStringLiteral("<b>%1</b>").arg(QLocale().toString(newDate));
     mDateLabel->setText(date);
 }
 
@@ -498,7 +497,7 @@ void SummaryViewPart::saveLayout()
 QString SummaryViewPart::widgetName(QWidget *widget) const
 {
     QMap<QString, KontactInterface::Summary *>::ConstIterator it;
-    QMap<QString, KontactInterface::Summary *>::ConstIterator end(mSummaries.constEnd());
+    const QMap<QString, KontactInterface::Summary *>::ConstIterator end(mSummaries.constEnd());
     for (it = mSummaries.constBegin(); it != end; ++it) {
         if (it.value() == widget) {
             return it.key();
