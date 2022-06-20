@@ -18,11 +18,11 @@ ExternalEditorWarningTest::ExternalEditorWarningTest(QObject *parent)
 
 void ExternalEditorWarningTest::shouldHaveDefaultValue()
 {
-    auto wid = new QWidget;
-    auto layout = new QHBoxLayout(wid);
+    QWidget wid;
+    auto layout = new QHBoxLayout(&wid);
     ExternalEditorWarning w;
     layout->addWidget(&w);
-    wid->show();
+    wid.show();
     QVERIFY(!w.isVisible());
     // QVERIFY(w.isCloseButtonVisible());
     QCOMPARE(w.messageType(), KMessageWidget::Information);
