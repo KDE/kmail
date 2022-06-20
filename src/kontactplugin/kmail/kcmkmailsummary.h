@@ -42,6 +42,6 @@ private:
     void storeFolders();
 
     PimCommon::CheckedCollectionWidget *mCheckedCollectionWidget = nullptr;
-    QCheckBox *mFullPath = nullptr;
+    QCheckBox *const mFullPath;
     KViewStateMaintainer<Akonadi::ETMViewStateSaver> *mModelState = nullptr;
 };
