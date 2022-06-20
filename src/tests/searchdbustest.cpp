@@ -39,9 +39,8 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    auto w = new searchdbustest;
-    w->show();
+    searchdbustest w;
+    w.show();
     app.exec();
-    delete w;
     return 0;
 }
