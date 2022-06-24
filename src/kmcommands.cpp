@@ -60,6 +60,7 @@
 #include <Akonadi/Tag>
 #include <Akonadi/TagCreateJob>
 
+#include <Akonadi/MDNStateAttribute>
 #include <MailCommon/CryptoUtils>
 #include <MailCommon/FilterAction>
 #include <MailCommon/FilterManager>
@@ -68,7 +69,6 @@
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 #include <MailCommon/RedirectDialog>
-#include <MessageComposer/MDNStateAttribute>
 
 #include <MessageCore/MailingList>
 #include <MessageCore/MessageCoreSettings>
@@ -306,7 +306,7 @@ void KMCommand::transferSelectedMsgs()
         complete = false;
         ++KMCommand::mCountJobs;
         Akonadi::ItemFetchJob *fetch = createFetchJob(mMsgList);
-        mFetchScope.fetchAttribute<MessageComposer::MDNStateAttribute>();
+        mFetchScope.fetchAttribute<Akonadi::MDNStateAttribute>();
         fetch->setFetchScope(mFetchScope);
         connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
         connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
