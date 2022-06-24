@@ -533,6 +533,7 @@ private:
     void redoSwitchFolder();
     void undoSwitchFolder();
     void updateMoveAllToTrash();
+    void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
 
     // Message actions
     QAction *mDeleteAction = nullptr;

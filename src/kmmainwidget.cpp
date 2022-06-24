@@ -45,6 +45,8 @@
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 #include <MailCommon/SearchRuleStatus>
+#include <MessageComposer/MDNWarningWidgetJob>
+#include <MessageViewer/MDNWarningWidget>
 
 #include "collectionpage/collectionmailinglistpage.h"
 #include "collectionpage/collectionquotapage.h"
@@ -120,6 +122,7 @@
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ItemModifyJob>
+#include <Akonadi/MDNStateAttribute>
 #include <Akonadi/MessageFlags>
 #include <Akonadi/Session>
 #include <Akonadi/StandardActionManager>
@@ -4460,6 +4463,19 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
     }
 }
 
+void KMMainWidget::slotShowMdnInfo(const QPair<QString, bool> &mdnInfo)
+{
+    qDebug() << "mdnInfo  " << mdnInfo;
+    if (mMsgView) {
+        if (!mdnInfo.first.isEmpty()) {
+            mMsgView->viewer()->mdnWarning()->setCanDeny(mdnInfo.second);
+            mMsgView->viewer()->mdnWarning()->setInformation(mdnInfo.first);
+        } else {
+            mMsgView->viewer()->mdnWarning()->animatedHide();
+        }
+    }
+}
+
 void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
 {
     qCDebug(KMAIL_LOG) << " list count  " << list.count();
@@ -4486,6 +4502,24 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
                 modifyJob->setIgnorePayload(true);
             }
             return;
+        }
+        if (item.hasAttribute<Akonadi::MDNStateAttribute>()
+            && item.attribute<Akonadi::MDNStateAttribute>()->mdnState() == Akonadi::MDNStateAttribute::MDNStateUnknown) {
+            auto job = new MessageComposer::MDNWarningWidgetJob(this);
+            job->setItem(item);
+            connect(job, &MessageComposer::MDNWarningWidgetJob::showMdnInfo, this, &KMMainWidget::slotShowMdnInfo);
+            if (!job->start()) {
+                qCWarning(KMAIL_LOG) << "Impossible to start MDNWarningWidgetJob";
+            }
+        } else if (!item.hasAttribute<Akonadi::MDNStateAttribute>()) {
+            auto job = new MessageComposer::MDNWarningWidgetJob(this);
+            job->setItem(item);
+            connect(job, &MessageComposer::MDNWarningWidgetJob::showMdnInfo, this, &KMMainWidget::slotShowMdnInfo);
+            if (!job->start()) {
+                qCWarning(KMAIL_LOG) << "Impossible to start MDNWarningWidgetJob";
+            }
+        } else {
+            mMsgView->viewer()->mdnWarning()->animatedHide();
         }
     }
 
