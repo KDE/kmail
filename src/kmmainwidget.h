@@ -14,6 +14,7 @@
 #include "kmreaderwin.h" //for inline actions
 
 #include <MailCommon/FolderTreeWidget>
+#include <MessageViewer/MDNWarningWidget>
 
 #include "messageactions.h"
 #include <Akonadi/StandardMailActionManager>
@@ -514,6 +515,7 @@ private Q_SLOTS:
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
 
 private:
+    void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type);
     void slotSetFocusToViewer();
     void deleteSelectedMessages(bool confirmDelete); // completely delete message
     bool showSearchDialog();

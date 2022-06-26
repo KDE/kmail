@@ -46,7 +46,6 @@
 #include <MailCommon/MailUtil>
 #include <MailCommon/SearchRuleStatus>
 #include <MessageComposer/MDNWarningWidgetJob>
-#include <MessageViewer/MDNWarningWidget>
 
 #include "collectionpage/collectionmailinglistpage.h"
 #include "collectionpage/collectionquotapage.h"
@@ -1055,6 +1054,7 @@ void KMMainWidget::createWidgets()
         connect(mMsgView->viewer(), &MessageViewer::Viewer::replyMessageTo, this, &KMMainWidget::slotReplyMessageTo);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::showStatusBarMessage, this, &KMMainWidget::setShowStatusBarMessage);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::zoomChanged, this, &KMMainWidget::setZoomChanged);
+        connect(mMsgView->viewer()->mdnWarning(), &MessageViewer::MDNWarningWidget::sendResponse, this, &KMMainWidget::slotSendMdnResponse);
         if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(true);
         }
@@ -1182,6 +1182,11 @@ void KMMainWidget::createWidgets()
             &KMMainWidget::slotCollectionChanged);
 
     connect(kmkernel->folderCollectionMonitor(), &Monitor::collectionStatisticsChanged, this, &KMMainWidget::slotCollectionStatisticsChanged);
+}
+
+void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type)
+{
+    // TODO
 }
 
 void KMMainWidget::updateMoveAction(const Akonadi::CollectionStatistics &statistic)
