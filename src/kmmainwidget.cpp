@@ -1186,6 +1186,15 @@ void KMMainWidget::createWidgets()
 
 void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type)
 {
+    switch (type) {
+    case MessageViewer::MDNWarningWidget::ResponseType::Ignore:
+        break;
+    case MessageViewer::MDNWarningWidget::ResponseType::Send:
+        break;
+    case MessageViewer::MDNWarningWidget::ResponseType::SendDeny:
+        break;
+    }
+
     // TODO
 }
 
