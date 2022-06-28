@@ -536,6 +536,7 @@ private:
     void undoSwitchFolder();
     void updateMoveAllToTrash();
     void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
+    void sendMdnInfo(const Akonadi::Item &item);
 
     // Message actions
     QAction *mDeleteAction = nullptr;

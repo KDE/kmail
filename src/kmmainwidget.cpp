@@ -4479,7 +4479,6 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
 
 void KMMainWidget::slotShowMdnInfo(const QPair<QString, bool> &mdnInfo)
 {
-    qDebug() << "mdnInfo  " << mdnInfo;
     if (mMsgView) {
         if (!mdnInfo.first.isEmpty()) {
             mMsgView->viewer()->mdnWarning()->setCanDeny(mdnInfo.second);
@@ -4519,19 +4518,9 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
         }
         if (item.hasAttribute<Akonadi::MDNStateAttribute>()
             && item.attribute<Akonadi::MDNStateAttribute>()->mdnState() == Akonadi::MDNStateAttribute::MDNStateUnknown) {
-            auto job = new MessageComposer::MDNWarningWidgetJob(this);
-            job->setItem(item);
-            connect(job, &MessageComposer::MDNWarningWidgetJob::showMdnInfo, this, &KMMainWidget::slotShowMdnInfo);
-            if (!job->start()) {
-                qCWarning(KMAIL_LOG) << "Impossible to start MDNWarningWidgetJob";
-            }
+            sendMdnInfo(item);
         } else if (!item.hasAttribute<Akonadi::MDNStateAttribute>()) {
-            auto job = new MessageComposer::MDNWarningWidgetJob(this);
-            job->setItem(item);
-            connect(job, &MessageComposer::MDNWarningWidgetJob::showMdnInfo, this, &KMMainWidget::slotShowMdnInfo);
-            if (!job->start()) {
-                qCWarning(KMAIL_LOG) << "Impossible to start MDNWarningWidgetJob";
-            }
+            sendMdnInfo(item);
         } else {
             mMsgView->viewer()->mdnWarning()->animatedHide();
         }
@@ -4546,6 +4535,16 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     assignLoadExternalReference();
     mMsgView->setDecryptMessageOverwrite(false);
     mMsgActions->setCurrentMessage(copyItem);
+}
+
+void KMMainWidget::sendMdnInfo(const Akonadi::Item &item)
+{
+    auto job = new MessageComposer::MDNWarningWidgetJob(this);
+    job->setItem(item);
+    connect(job, &MessageComposer::MDNWarningWidgetJob::showMdnInfo, this, &KMMainWidget::slotShowMdnInfo);
+    if (!job->start()) {
+        qCWarning(KMAIL_LOG) << "Impossible to start MDNWarningWidgetJob";
+    }
 }
 
 void KMMainWidget::itemsFetchDone(KJob *job)
