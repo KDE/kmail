@@ -115,17 +115,11 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     layout->addWidget(mLogPatternResultBox);
     mLogPatternResultBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternResult));
     connect(mLogPatternResultBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
-    // TODO
-    // QWhatsThis::add( mLogPatternResultBox,
-    //    i18n( "" ) );
 
     mLogFilterActionBox = new QCheckBox(i18n("Log filter actions"));
     layout->addWidget(mLogFilterActionBox);
     mLogFilterActionBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::AppliedAction));
     connect(mLogFilterActionBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
-    // TODO
-    // QWhatsThis::add( mLogFilterActionBox,
-    //    i18n( "" ) );
 
     auto hbox = new QWidget(page);
     auto hboxHBoxLayout = new QHBoxLayout;

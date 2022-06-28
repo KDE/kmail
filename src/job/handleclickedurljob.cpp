@@ -57,7 +57,6 @@ void HandleClickedUrlJob::start()
             const QString attach = element.second;
             if (!attach.isEmpty()) {
                 qCDebug(KMAIL_LOG) << "Attachment not supported yet";
-                // TODO
             }
         }
     }

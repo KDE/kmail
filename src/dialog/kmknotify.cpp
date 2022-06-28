@@ -88,8 +88,6 @@ void KMKnotify::initCombobox()
                                                 << QStringLiteral("akonadi_sendlater_agent.notifyrc")
                                                 << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc")
                                                 << QStringLiteral("akonadi_followupreminder_agent.notifyrc") << QStringLiteral("messageviewer.notifyrc");
-    // TODO add other notifyrc here if necessary
-
     for (const QString &notify : lstNotify) {
         const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("knotifications5/") + notify);
 

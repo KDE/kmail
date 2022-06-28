@@ -59,7 +59,6 @@ QVariant AccountInfoSource::data()
         } else if (identifier.startsWith(QLatin1String("akonadi_mbox_resource"))) {
             numberOfMbox++;
         }
-        // TODO add more
     }
     QVariantList l;
     if (numberOfImap > 0) {

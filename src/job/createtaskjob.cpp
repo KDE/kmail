@@ -114,7 +114,6 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
 
 void CreateTaskJob::slotModifyItemDone(KJob *job)
 {
-    // TODO
     if (job && job->error()) {
         qCDebug(KMAIL_LOG) << " error " << job->errorString();
     }

@@ -77,7 +77,6 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
     QVector<MailFilter *> listMailFilters;
     if (q->sender()->property("listFilters").isValid()) {
         const QStringList listFilters = q->sender()->property("listFilters").toStringList();
-        // TODO improve it
         for (const QString &filterId : listFilters) {
             for (MailCommon::MailFilter *filter : std::as_const(mFilters)) {
                 if (filter->identifier() == filterId) {
