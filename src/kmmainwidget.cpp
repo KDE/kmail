@@ -42,6 +42,7 @@
 #endif
 #include <KSieveUi/SieveDebugDialog>
 #include <MailCommon/FolderTreeView>
+#include <MailCommon/MDNWarningJob>
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 #include <MailCommon/SearchRuleStatus>
@@ -1195,6 +1196,11 @@ void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::Response
         break;
     }
 
+#if 0
+    auto job = new MailCommon::MDNWarningJob(this);
+    job->setItem(mMessagePane->currentItem());
+    job->start();
+#endif
     // TODO
 }
 
