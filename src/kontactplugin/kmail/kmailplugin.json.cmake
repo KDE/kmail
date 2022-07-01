@@ -3,6 +3,7 @@
         "Description": "Kontact KMail Plugin",
         "Description[ar]": "ملحقة «بريدك» لِ‍«متراسلك»",
         "Description[az]": "Kontact KMail plaqini",
+        "Description[bg]": "Приставка за контакти на KMail",
         "Description[ca@valencia]": "Connector de KMail de Kontact",
         "Description[ca]": "Connector del KMail del Kontact",
         "Description[cs]": "Modul KMailu pro aplikaci Kontact",
