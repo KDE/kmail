@@ -2,6 +2,7 @@
 Name=Unified Mailbox Agent
 Name[ar]=وكيل البريد الموحد
 Name[az]=Birləşdirilçmiş Poçt qutuları vasitəsi
+Name[bg]=Агент за Унифицирани пощенски кутии
 Name[ca]=Agent de la bústia unificada
 Name[ca@valencia]=Agent de la bústia unificada
 Name[cs]=Agent sjednocené schránky
@@ -35,6 +36,7 @@ Name[zh_TW]=整合信箱代理程式
 Comment=Unified Mailbox Agent
 Comment[ar]=وكيل البريد الموحد
 Comment[az]=Birləşdirilçmiş Poçt qutuları vasitəsi
+Comment[bg]=Агент за Унифицирани пощенски кутии
 Comment[ca]=Agent de la bústia unificada
 Comment[ca@valencia]=Agent de la bústia unificada
 Comment[cs]=Agent sjednocené schránky

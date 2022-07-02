@@ -2,6 +2,7 @@
 Name=Send Later Agent
 Name[ar]=وكيل الإرسال لاحقًا
 Name[az]=Təxirə salınan göndərilşlər vasitəsi
+Name[bg]=Агент за отложено изпращане
 Name[bs]=Agent za kasnije slanje
 Name[ca]=Agent d'enviament més tard
 Name[ca@valencia]=Agent d'enviament més tard
@@ -46,6 +47,7 @@ Name[zh_TW]=稍後傳送代理程式
 Comment=Send Later Agent
 Comment[ar]=وكيل الإرسال لاحقًا
 Comment[az]=Təxirə salınan göndərilşlər vasitəsi
+Comment[bg]=Агент за отложено изпращане
 Comment[bs]=Agent za slanje kasnije
 Comment[ca]=Agent d'enviament més tard
 Comment[ca@valencia]=Agent d'enviament més tard

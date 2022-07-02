@@ -2,6 +2,7 @@
 Name=Mail Merge Agent
 Name[ar]=عميل دمج البريد
 Name[az]=Poştun birləşdirilməsi vasitəsi
+Name[bg]=Агент за обединяване на поща
 Name[ca]=Agent de fusió del correu
 Name[ca@valencia]=Agent de fusió del correu
 Name[cs]=Agent pro slučování e-mailů
@@ -29,6 +30,7 @@ Name[zh_CN]=邮件合并代理
 Comment=Mail Merge Agent
 Comment[ar]=عميل دمج البريد
 Comment[az]=Poştun birləşdirilməsi vasitəsi
+Comment[bg]=Агент за обединяване на поща
 Comment[ca]=Agent de fusió del correu
 Comment[ca@valencia]=Agent de fusió del correu
 Comment[cs]=Agent pro slučování e-mailů

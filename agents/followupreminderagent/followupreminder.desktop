@@ -2,6 +2,7 @@
 Name=Followup Reminder Agent
 Name[ar]=عميل متابعة التّذكيرات
 Name[az]=İzləmənin xatırladılması vasitəsi
+Name[bg]=Агент за напомняне за проследяване
 Name[bs]=Prateći agent koji Vas podsjeća
 Name[ca]=Agent de recordatoris de seguiment
 Name[ca@valencia]=Agent de recordatoris de seguiment
@@ -43,6 +44,7 @@ Name[zh_TW]=回覆提醒代理程式
 Comment=Followup Reminder Agent allows to remind you when an email was not answered.
 Comment[ar]=يذكّرك «عميل متابعة التّذكيرات» بالبريد الذي لم تُجب عليه.
 Comment[az]=İzləmənin xatırladılaması vasitəsi e-poçt-a cavab verilmədiyini xatırladır.
+Comment[bg]=Агентът за напомняне за проследяване ви напомня, когато не е отговорено на имейл.
 Comment[bs]=Prateći agent koji Vas podsjeća omogućava vam informaciju kada neki email nije odgovoren.
 Comment[ca]=L'agent de recordatoris de seguiment permet recordar quan un correu electrònic no ha estat respost.
 Comment[ca@valencia]=L'agent de recordatoris de seguiment permet recordar quan un correu electrònic no ha estat respost.
