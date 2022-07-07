@@ -105,6 +105,7 @@
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/CachePolicy>
 #include <Akonadi/ChangeRecorder>
+#include <Akonadi/ClearCacheJob>
 #include <Akonadi/CollectionAttributesSynchronizationJob>
 #include <Akonadi/CollectionDialog>
 #include <Akonadi/CollectionFetchJob>
@@ -3010,6 +3011,10 @@ void KMMainWidget::setupActions()
             &ManageShowCollectionProperties::slotFolderMailingListProperties);
     // mFolderMailingListPropertiesAction->setIcon(QIcon::fromTheme("document-properties-mailing-list"));
 
+    mClearFolderCacheAction = new QAction(i18n("&Clear Akonadi Cache..."), this);
+    actionCollection()->addAction(QStringLiteral("folder_clear_akonadi_cache"), mClearFolderCacheAction);
+    connect(mClearFolderCacheAction, &QAction::triggered, this, &KMMainWidget::slotClearFolder);
+
     mShowFolderShortcutDialogAction = new QAction(QIcon::fromTheme(QStringLiteral("configure-shortcuts")), i18n("&Assign Shortcut..."), this);
     actionCollection()->addAction(QStringLiteral("folder_shortcut_command"), mShowFolderShortcutDialogAction);
     connect(mShowFolderShortcutDialogAction,
@@ -4902,4 +4907,22 @@ void KMMainWidget::setupUnifiedMailboxChecker()
 
     // Wait for a bit before asking so we at least have the window on screen
     QTimer::singleShot(500ms, this, ask);
+}
+
+void KMMainWidget::slotClearFolder()
+{
+    auto job = new Akonadi::ClearCacheJob(this);
+    job->setCollection(mCurrentCollection);
+    job->setParentWidget(this);
+    connect(job, &ClearCacheJob::clearCacheDone, this, &KMMainWidget::slotClearCacheDone);
+    job->start();
+}
+
+void KMMainWidget::slotClearCacheDone()
+{
+    const QString akonadictlPath = QStandardPaths::findExecutable(QStringLiteral("akonadictl"));
+    if (!akonadictlPath.isEmpty()) {
+    } else {
+    }
+    // TODO
 }

@@ -537,6 +537,8 @@ private:
     void updateMoveAllToTrash();
     void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
     void sendMdnInfo(const Akonadi::Item &item);
+    void slotClearFolder();
+    void slotClearCacheDone();
 
     // Message actions
     QAction *mDeleteAction = nullptr;
@@ -661,4 +663,5 @@ private:
 #endif
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
     CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
+    QAction *mClearFolderCacheAction = nullptr;
 };
