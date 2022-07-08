@@ -4921,7 +4921,8 @@ void KMMainWidget::slotClearFolder()
 void KMMainWidget::slotClearCacheDone()
 {
     const QString akonadictlPath = QStandardPaths::findExecutable(QStringLiteral("akonadictl"));
-    if (!akonadictlPath.isEmpty()) {
+    if (akonadictlPath.isEmpty()) {
+        qCWarning(KMAIL_LOG) << "Impossible to find akonadictl apps";
     } else {
     }
     // TODO
