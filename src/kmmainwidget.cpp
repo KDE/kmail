@@ -4924,6 +4924,14 @@ void KMMainWidget::slotClearCacheDone()
     if (akonadictlPath.isEmpty()) {
         qCWarning(KMAIL_LOG) << "Impossible to find akonadictl apps";
     } else {
+        if (KMessageBox::questionYesNo(this, i18n("Do you want to restart Akonadi?"), i18n("Restart Akonadi")) == KMessageBox::Yes) {
+            auto process = new QProcess(this);
+            process->setProgram(QStandardPaths::findExecutable(QStringLiteral("akonadictl")));
+            process->setArguments(QStringList() << QStringLiteral("restart"));
+            connect(process, &QProcess::finished, this, [this, process]() {
+                KMessageBox::information(this, i18n("Akonadi restarted."));
+                process->deleteLater();
+            });
+        }
     }
-    // TODO
 }
