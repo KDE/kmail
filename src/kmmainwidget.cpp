@@ -3599,6 +3599,7 @@ void KMMainWidget::slotAddFavoriteFolder()
             mFavoritesModel->addCollection(collection);
         }
     }
+    delete dialog;
 }
 
 //-----------------------------------------------------------------------------
