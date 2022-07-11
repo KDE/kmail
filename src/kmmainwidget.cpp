@@ -4933,6 +4933,7 @@ void KMMainWidget::slotClearCacheDone()
                 KMessageBox::information(this, i18n("Akonadi restarted."));
                 process->deleteLater();
             });
+            process->start();
         }
     }
 }
