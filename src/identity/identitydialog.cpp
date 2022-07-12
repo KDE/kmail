@@ -75,7 +75,6 @@ using MailTransport::TransportManager;
 #include <QFile>
 #include <QFileInfo>
 #include <QFormLayout>
-#include <QGridLayout>
 #include <QHostInfo>
 #include <QLabel>
 #include <QToolButton>

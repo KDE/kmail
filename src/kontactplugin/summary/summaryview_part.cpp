@@ -30,7 +30,6 @@ using PimCommon::BroadcastStatus;
 #include <KPluginMetaData>
 #include <QAction>
 #include <QApplication>
-#include <QFileInfo>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
