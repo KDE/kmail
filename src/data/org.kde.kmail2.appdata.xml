@@ -76,6 +76,7 @@
   <name xml:lang="sr-ijekavian">К‑пошта</name>
   <name xml:lang="sr-ijekavianlatin">K‑pošta</name>
   <name xml:lang="sv">Kmail</name>
+  <name xml:lang="ta">கேமெயில்</name>
   <name xml:lang="tr">KMail</name>
   <name xml:lang="uk">KMail</name>
   <name xml:lang="x-test">xxKMailxx</name>
@@ -110,6 +111,7 @@
   <summary xml:lang="sk">E-mailová aplikácia bohatá na funkcie</summary>
   <summary xml:lang="sl">Program z veliko funkcijami za elektronsko pošto</summary>
   <summary xml:lang="sv">Ett funktionsrikt e-postprogram</summary>
+  <summary xml:lang="ta">பல அம்சங்களைக் கொண்ட மின்னஞ்சல் செயலி</summary>
   <summary xml:lang="tr">Çok özellikli bir e-posta uygulaması</summary>
   <summary xml:lang="uk">Багата на можливості програма для роботи з електронною пошти</summary>
   <summary xml:lang="x-test">xxA feature-rich email applicationxx</summary>
@@ -189,6 +191,7 @@
     <p xml:lang="sr-ijekavian">Могућности:</p>
     <p xml:lang="sr-ijekavianlatin">Mogućnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="ta">அம்சங்கள்:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
