@@ -22,6 +22,7 @@
         "Description[ru]": "Почта",
         "Description[sl]": "Vstavek Kontact za KMail",
         "Description[sv]": "Kontact-insticksprogram för Kmail",
+        "Description[ta]": "காண்டாக்டுக்கான கேமெயில் செருகுநிரல்",
         "Description[tr]": "Kontact KMail Eklentisi",
         "Description[uk]": "Додаток електронної пошти Kontact",
         "Description[x-test]": "xxKontact KMail Pluginxx",

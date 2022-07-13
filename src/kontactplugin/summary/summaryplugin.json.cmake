@@ -22,6 +22,7 @@
         "Description[ru]": "Просмотр дайджеста",
         "Description[sl]": "Vstavek pogleda povzetkov za Kontact",
         "Description[sv]": "Kontact-insticksprogram för översikt",
+        "Description[ta]": "காண்டாக்டுக்கான சுருக்கக்காட்சி செருகுநிரல்",
         "Description[tr]": "Kontact Özet Gösterim Eklentisi",
         "Description[uk]": "Додаток Kontact для перегляду резюме",
         "Description[x-test]": "xxKontact SummaryView Pluginxx",
