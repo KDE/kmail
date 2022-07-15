@@ -9,7 +9,7 @@ ecm_qt_declare_logging_category(autotest_categories_followupreminderagent_SRCS H
 macro( followupreminder_agent _source )
     set( _test ${_source} ${followupreminderagent_test_SRCS} ${autotest_categories_followupreminderagent_SRCS})
     get_filename_component( _name ${_source} NAME_WE )
-    ecm_add_test(${_test}
+    ecm_add_test(${_test} ${_name}.h
         TEST_NAME ${_name}
         NAME_PREFIX "followupreminder-"
         LINK_LIBRARIES followupreminderagent Qt${QT_MAJOR_VERSION}::Test KF5::AkonadiCore Qt${QT_MAJOR_VERSION}::Widgets KF5::I18n KF5::XmlGui KF5::Service
