@@ -100,14 +100,14 @@ void UndoStack::undo()
         delete info;
     } else {
         // Sorry.. stack is empty..
-        KMessageBox::sorry(kmkernel->mainWin(), i18n("There is nothing to undo."));
+        KMessageBox::error(kmkernel->mainWin(), i18n("There is nothing to undo."));
     }
 }
 
 void UndoStack::slotMoveResult(KJob *job)
 {
     if (job->error()) {
-        KMessageBox::sorry(kmkernel->mainWin(), i18n("Cannot move message. %1", job->errorString()));
+        KMessageBox::error(kmkernel->mainWin(), i18n("Cannot move message. %1", job->errorString()));
     }
 }
 

@@ -721,7 +721,7 @@ void KMOpenMsgCommand::slotDataArrived(KIO::Job *, const QByteArray &data)
 
 void KMOpenMsgCommand::doesNotContainMessage()
 {
-    KMessageBox::sorry(parentWidget(), i18n("The file does not contain a message."));
+    KMessageBox::error(parentWidget(), i18n("The file does not contain a message."));
     setResult(Failed);
     Q_EMIT completed(this);
     // Emulate closing of a secondary window so that KMail exits in case it

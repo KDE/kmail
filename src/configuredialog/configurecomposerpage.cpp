@@ -780,7 +780,7 @@ void ComposerPageCharsetTab::slotVerifyCharset(QString &charset)
         return;
     }
 
-    KMessageBox::sorry(this, i18n("This charset is not supported."));
+    KMessageBox::error(this, i18n("This charset is not supported."));
     charset.clear();
 }
 

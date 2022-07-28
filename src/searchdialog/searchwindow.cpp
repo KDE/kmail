@@ -529,7 +529,7 @@ void SearchWindow::searchDone(KJob *job)
     mUi.mProgressIndicator->hide();
     if (job->error()) {
         qCDebug(KMAIL_LOG) << job->errorString();
-        KMessageBox::sorry(this, i18n("Cannot get search result. %1", job->errorString()));
+        KMessageBox::error(this, i18n("Cannot get search result. %1", job->errorString()));
         enableGUI();
         mUi.mSearchFolderEdt->setEnabled(true);
         mUi.mStatusLbl->setText(i18n("Search failed."));

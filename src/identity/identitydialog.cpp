@@ -687,7 +687,7 @@ void IdentityDialog::slotAccepted()
         }
         if (!KEmailAddress::isValidSimpleAddress(alias)) {
             const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
-            KMessageBox::sorry(this, errorMsg, i18n("Invalid Email Alias \"%1\"", alias));
+            KMessageBox::error(this, errorMsg, i18n("Invalid Email Alias \"%1\"", alias));
             return;
         }
     }
@@ -696,7 +696,7 @@ void IdentityDialog::slotAccepted()
     const QString email = mEmailEdit->text().trimmed();
     if (!KEmailAddress::isValidSimpleAddress(email)) {
         const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
-        KMessageBox::sorry(this, errorMsg, i18n("Invalid Email Address"));
+        KMessageBox::error(this, errorMsg, i18n("Invalid Email Address"));
         return;
     }
 

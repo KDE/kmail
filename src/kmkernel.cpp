@@ -1067,7 +1067,7 @@ void KMKernel::recoverDeadLetters()
             autoSaveWin->show();
             autoSaveFile.close();
         } else {
-            KMessageBox::sorry(nullptr,
+            KMessageBox::error(nullptr,
                                i18n("Failed to open autosave file at %1.\nReason: %2", file.absoluteFilePath(), autoSaveFile.errorString()),
                                i18n("Opening Autosave File Failed"));
         }

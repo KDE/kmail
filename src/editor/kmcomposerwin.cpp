@@ -2070,7 +2070,7 @@ void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::Composer
 {
     setEnabled(true);
     if (!msg.isEmpty()) {
-        KMessageBox::sorry(mMainWidget,
+        KMessageBox::error(mMainWidget,
                            msg,
                            (type == MessageComposer::ComposerViewBase::AutoSave) ? i18n("Autosave Message Failed") : i18n("Sending Message Failed"));
     }
@@ -2313,7 +2313,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         }
         attName = attName.trimmed();
         if (attName.isEmpty()) {
-            KMessageBox::sorry(this, i18n("Attachment name can't be empty"), i18n("Invalid Attachment Name"));
+            KMessageBox::error(this, i18n("Attachment name can't be empty"), i18n("Invalid Attachment Name"));
 
             return true;
         }
@@ -2533,7 +2533,7 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
     // an encryption key for the current identity
     else if (encrypt && encryptToSelf() && !mLastIdentityHasEncryptionKey) {
         if (setByUser) {
-            KMessageBox::sorry(this,
+            KMessageBox::error(this,
                                i18n("<qt><p>You have requested that messages be "
                                     "encrypted to yourself, but the currently selected "
                                     "identity does not define an (OpenPGP or S/MIME) "
@@ -2604,7 +2604,7 @@ void KMComposerWin::setSigning(bool sign, bool setByUser)
     // check if the user defined a signing key for the current identity
     if (sign && !mLastIdentityHasSigningKey) {
         if (setByUser) {
-            KMessageBox::sorry(this,
+            KMessageBox::error(this,
                                i18n("<qt><p>In order to be able to sign "
                                     "this message you first have to "
                                     "define the (OpenPGP or S/MIME) signing key "
@@ -2770,7 +2770,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                 rethinkFields(false);
             }
             mEdtFrom->setFocus();
-            KMessageBox::sorry(this,
+            KMessageBox::error(this,
                                i18n("You must enter your email address in the "
                                     "From: field. You should also set your email "
                                     "address for all identities, so that you do "
