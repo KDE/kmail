@@ -105,10 +105,6 @@
         "Name[x-test]": "xxMailxx",
         "Name[zh_CN]": "邮寄",
         "Name[zh_TW]": "郵件",
-        "ServiceTypes": [
-            "Kontact/Plugin",
-            "KPluginInfo"
-        ],
         "Version": "0.1",
         "Website": "https://kontact.kde.org/components/kmail/"
     },

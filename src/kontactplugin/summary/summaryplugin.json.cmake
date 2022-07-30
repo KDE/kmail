@@ -105,10 +105,6 @@
         "Name[x-test]": "xxSummaryxx",
         "Name[zh_CN]": "总计",
         "Name[zh_TW]": "摘要",
-        "ServiceTypes": [
-            "Kontact/Plugin",
-            "KPluginInfo"
-        ],
         "Version": "0.1"
     },
     "X-KDE-ConfigModuleNamespace": "pim@QT_MAJOR_VERSION@/kcms/summary/",
