@@ -530,7 +530,7 @@ void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection
     // Delete any pending timer, if needed it will be recreated below
     delete mShowBusySplashTimer;
     mShowBusySplashTimer = nullptr;
-    if (newFolder) {
+    if (newFolder && mCurrentCollection.isValid()) {
         // We're changing folder: write configuration for the old one
         writeFolderConfig();
     }
