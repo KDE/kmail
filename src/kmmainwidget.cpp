@@ -1197,12 +1197,11 @@ void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::Response
         break;
     }
 
-#if 0
-    auto job = new MailCommon::MDNWarningJob(this);
+    auto job = new MailCommon::MDNWarningJob(KMKernel::self(), this);
     job->setItem(mMessagePane->currentItem());
+    // TODO job->setResponse(...);
     job->start();
-#endif
-    // TODO
+    // connect(job, &MDNWarningJob::)
 }
 
 void KMMainWidget::updateMoveAction(const Akonadi::CollectionStatistics &statistic)
