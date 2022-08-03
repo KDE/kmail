@@ -1188,18 +1188,22 @@ void KMMainWidget::createWidgets()
 
 void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type)
 {
+    MailCommon::MDNWarningJob::ResponseMDN response = MailCommon::MDNWarningJob::ResponseMDN::Unknown;
     switch (type) {
     case MessageViewer::MDNWarningWidget::ResponseType::Ignore:
+        response = MailCommon::MDNWarningJob::ResponseMDN::MDNIgnore;
         break;
     case MessageViewer::MDNWarningWidget::ResponseType::Send:
+        response = MailCommon::MDNWarningJob::ResponseMDN::Send;
         break;
     case MessageViewer::MDNWarningWidget::ResponseType::SendDeny:
+        response = MailCommon::MDNWarningJob::ResponseMDN::Denied;
         break;
     }
 
     auto job = new MailCommon::MDNWarningJob(KMKernel::self(), this);
     job->setItem(mMessagePane->currentItem());
-    // TODO job->setResponse(...);
+    job->setResponse(response);
     job->start();
     connect(job, &MDNWarningJob::finished, this, [this]() {
         // TODO hide widget ?
