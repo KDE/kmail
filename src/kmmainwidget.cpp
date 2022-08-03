@@ -1201,7 +1201,9 @@ void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::Response
     job->setItem(mMessagePane->currentItem());
     // TODO job->setResponse(...);
     job->start();
-    // connect(job, &MDNWarningJob::)
+    connect(job, &MDNWarningJob::finished, this, [this]() {
+        // TODO hide widget ?
+    });
 }
 
 void KMMainWidget::updateMoveAction(const Akonadi::CollectionStatistics &statistic)
