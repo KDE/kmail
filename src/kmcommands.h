@@ -35,9 +35,6 @@ class QProgressDialog;
 class KMMainWidget;
 class KMReaderMainWin;
 
-template<typename T>
-class QSharedPointer;
-
 namespace MessageViewer
 {
 class HeaderStyle;

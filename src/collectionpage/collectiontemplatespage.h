@@ -10,9 +10,6 @@ namespace MailCommon
 {
 class CollectionTemplatesWidget;
 }
-template<typename T>
-class QSharedPointer;
-
 class CollectionTemplatesPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
