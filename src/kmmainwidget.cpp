@@ -1206,7 +1206,7 @@ void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::Response
     job->setResponse(response);
     job->start();
     connect(job, &MDNWarningJob::finished, this, [this]() {
-        // TODO hide widget ?
+        mMsgView->viewer()->mdnWarning()->animatedHide();
     });
 }
 
