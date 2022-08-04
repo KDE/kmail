@@ -1682,7 +1682,7 @@ void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReferenc
     mMessagePane->markMessageItemsAsAboutToBeRemoved(ref, true);
     // And stuff them into a KMMoveCommand :)
     auto command = new KMMoveCommand(dest, selectMsg, ref);
-    QObject::connect(command, &KMMoveCommand::moveDone, this, &KMMainWidget::slotMoveMessagesCompleted);
+    connect(command, &KMMoveCommand::moveDone, this, &KMMainWidget::slotMoveMessagesCompleted);
     command->start();
 
     if (dest.isValid()) {
@@ -1809,7 +1809,7 @@ void KMMainWidget::copyMessageSelected(const Akonadi::Item::List &selectMsg, con
     }
     // And stuff them into a KMCopyCommand :)
     auto command = new KMCopyCommand(dest, selectMsg);
-    QObject::connect(command, &KMCommand::completed, this, &KMMainWidget::slotCopyMessagesCompleted);
+    connect(command, &KMCommand::completed, this, &KMMainWidget::slotCopyMessagesCompleted);
     command->start();
     showMessageActivities(i18n("Copying messages..."));
 }
@@ -1875,7 +1875,7 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
     // And stuff them into a KMTrashMsgCommand :)
     auto command = new KMTrashMsgCommand(mCurrentCollection, select, ref);
 
-    QObject::connect(command, &KMTrashMsgCommand::moveDone, this, &KMMainWidget::slotTrashMessagesCompleted);
+    connect(command, &KMTrashMsgCommand::moveDone, this, &KMMainWidget::slotTrashMessagesCompleted);
     command->start();
     switch (command->operation()) {
     case KMTrashMsgCommand::MoveToTrash:
