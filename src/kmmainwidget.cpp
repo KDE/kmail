@@ -1204,6 +1204,7 @@ void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::Response
     auto job = new MailCommon::MDNWarningJob(KMKernel::self(), this);
     job->setItem(mMessagePane->currentItem());
     job->setResponse(response);
+    // FIXME job->setSendingMode();
     job->start();
     connect(job, &MDNWarningJob::finished, this, [this]() {
         mMsgView->viewer()->mdnWarning()->animatedHide();
