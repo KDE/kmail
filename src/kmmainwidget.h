@@ -515,7 +515,7 @@ private Q_SLOTS:
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
 
 private:
-    void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type);
+    void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode);
     void slotSetFocusToViewer();
     void deleteSelectedMessages(bool confirmDelete); // completely delete message
     bool showSearchDialog();

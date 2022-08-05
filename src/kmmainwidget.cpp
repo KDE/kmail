@@ -1186,7 +1186,7 @@ void KMMainWidget::createWidgets()
     connect(kmkernel->folderCollectionMonitor(), &Monitor::collectionStatisticsChanged, this, &KMMainWidget::slotCollectionStatisticsChanged);
 }
 
-void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type)
+void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode)
 {
     MailCommon::MDNWarningJob::ResponseMDN response = MailCommon::MDNWarningJob::ResponseMDN::Unknown;
     switch (type) {
@@ -1204,7 +1204,7 @@ void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::Response
     auto job = new MailCommon::MDNWarningJob(KMKernel::self(), this);
     job->setItem(mMessagePane->currentItem());
     job->setResponse(response);
-    // FIXME job->setSendingMode();
+    job->setSendingMode(sendingMode);
     job->start();
     connect(job, &MDNWarningJob::finished, this, [this]() {
         mMsgView->viewer()->mdnWarning()->animatedHide();
