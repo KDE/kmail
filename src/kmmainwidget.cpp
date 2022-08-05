@@ -1202,7 +1202,7 @@ void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::Response
     }
 
     auto job = new MailCommon::MDNWarningJob(KMKernel::self(), this);
-    job->setItem(mMessagePane->currentItem());
+    job->setItem(mMsgView->messageItem());
     job->setResponse(response);
     job->setSendingMode(sendingMode);
     job->start();
