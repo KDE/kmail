@@ -24,7 +24,6 @@
 #include <Akonadi/OpenEmailAddressJob>
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
-// #include <MailCommon/SendMdnHandler>
 #include <MessageViewer/CSSHelper>
 #include <MessageViewer/HeaderStrategy>
 #include <MessageViewer/MarkMessageReadHandler>
@@ -99,7 +98,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     connect(mViewer, &MessageViewer::Viewer::showPreviousMessage, this, &KMReaderWin::showPreviousMessage);
 
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
-    // mViewer->addMessageLoadedHandler(new MailCommon::SendMdnHandler(kmkernel, this));
 
     vlay->addWidget(mViewer);
     readConfig();
