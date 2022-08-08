@@ -4533,10 +4533,9 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
             }
             return;
         }
-        if (item.hasAttribute<Akonadi::MDNStateAttribute>()
-            && item.attribute<Akonadi::MDNStateAttribute>()->mdnState() == Akonadi::MDNStateAttribute::MDNStateUnknown) {
-            sendMdnInfo(item);
-        } else if (!item.hasAttribute<Akonadi::MDNStateAttribute>()) {
+        if (!item.hasAttribute<Akonadi::MDNStateAttribute>()
+            || (item.hasAttribute<Akonadi::MDNStateAttribute>()
+                && item.attribute<Akonadi::MDNStateAttribute>()->mdnState() == Akonadi::MDNStateAttribute::MDNStateUnknown)) {
             sendMdnInfo(item);
         } else {
             mMsgView->viewer()->mdnWarning()->animatedHide();
