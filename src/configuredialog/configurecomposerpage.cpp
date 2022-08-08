@@ -213,10 +213,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mWordWrapCheck->setWhatsThis(helpText);
 
     mWrapColumnSpin = new QSpinBox(this);
-    mWrapColumnSpin->setMaximum(200 /*max*/);
-    mWrapColumnSpin->setMinimum(30 /*min*/);
-    mWrapColumnSpin->setSingleStep(1 /*step*/);
-    mWrapColumnSpin->setValue(78 /*init*/);
+    mWrapColumnSpin->setMaximum(200);
+    mWrapColumnSpin->setMinimum(30);
+    mWrapColumnSpin->setSingleStep(1);
+    mWrapColumnSpin->setValue(78);
     mWrapColumnSpin->setEnabled(false); // since !mWordWrapCheck->isChecked()
 
     helpText = i18n("Set the text width for automatic word wrapping");
