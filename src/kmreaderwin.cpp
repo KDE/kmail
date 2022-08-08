@@ -42,6 +42,7 @@ using namespace MessageViewer;
 
 #include <MessageComposer/Composer>
 #include <MessageComposer/InfoPart>
+#include <MessageComposer/MDNWarningWidgetJob>
 #include <MessageComposer/MessageSender>
 #include <MessageComposer/TextPart>
 #include <MessageViewer/AttachmentStrategy>
@@ -64,6 +65,7 @@ using namespace MessageViewer;
 #undef Never
 #undef Always
 
+#include <MailCommon/MDNWarningJob>
 #include <MailCommon/MailUtil>
 
 #include <KLazyLocalizedString>
@@ -96,6 +98,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     connect(mViewer, qOverload<const Akonadi::Item &>(&Viewer::deleteMessage), this, &KMReaderWin::slotDeleteMessage);
     connect(mViewer, &MessageViewer::Viewer::showNextMessage, this, &KMReaderWin::showNextMessage);
     connect(mViewer, &MessageViewer::Viewer::showPreviousMessage, this, &KMReaderWin::showPreviousMessage);
+    connect(mViewer->mdnWarning(), &MessageViewer::MDNWarningWidget::sendResponse, this, &KMReaderWin::slotSendMdnResponse);
 
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
 
@@ -674,6 +677,13 @@ void KMReaderWin::setMessage(const Akonadi::Item &item, MimeTreeParser::UpdateMo
     qCDebug(KMAIL_LOG) << Q_FUNC_INFO << parentWidget();
     mViewer->setFolderIdentity(MailCommon::Util::folderIdentity(item));
     mViewer->setMessageItem(item, updateMode);
+    if (!item.hasAttribute<Akonadi::MDNStateAttribute>()
+        || (item.hasAttribute<Akonadi::MDNStateAttribute>()
+            && item.attribute<Akonadi::MDNStateAttribute>()->mdnState() == Akonadi::MDNStateAttribute::MDNStateUnknown)) {
+        sendMdnInfo(item);
+    } else {
+        mViewer->mdnWarning()->animatedHide();
+    }
 }
 
 void KMReaderWin::setMessage(const KMime::Message::Ptr &message)
@@ -926,4 +936,49 @@ void KMReaderWin::slotPrintingFinished()
     if (mViewer->printingMode()) {
         deleteLater();
     }
+}
+
+void KMReaderWin::sendMdnInfo(const Akonadi::Item &item)
+{
+    auto job = new MessageComposer::MDNWarningWidgetJob(this);
+    job->setItem(item);
+    connect(job, &MessageComposer::MDNWarningWidgetJob::showMdnInfo, this, &KMReaderWin::slotShowMdnInfo);
+    if (!job->start()) {
+        qCWarning(KMAIL_LOG) << "Impossible to start MDNWarningWidgetJob";
+    }
+}
+
+void KMReaderWin::slotShowMdnInfo(const QPair<QString, bool> &mdnInfo)
+{
+    if (!mdnInfo.first.isEmpty()) {
+        mViewer->mdnWarning()->setCanDeny(mdnInfo.second);
+        mViewer->mdnWarning()->setInformation(mdnInfo.first);
+    } else {
+        mViewer->mdnWarning()->animatedHide();
+    }
+}
+
+void KMReaderWin::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode)
+{
+    MailCommon::MDNWarningJob::ResponseMDN response = MailCommon::MDNWarningJob::ResponseMDN::Unknown;
+    switch (type) {
+    case MessageViewer::MDNWarningWidget::ResponseType::Ignore:
+        response = MailCommon::MDNWarningJob::ResponseMDN::MDNIgnore;
+        break;
+    case MessageViewer::MDNWarningWidget::ResponseType::Send:
+        response = MailCommon::MDNWarningJob::ResponseMDN::Send;
+        break;
+    case MessageViewer::MDNWarningWidget::ResponseType::SendDeny:
+        response = MailCommon::MDNWarningJob::ResponseMDN::Denied;
+        break;
+    }
+
+    auto job = new MailCommon::MDNWarningJob(KMKernel::self(), this);
+    job->setItem(mViewer->messageItem());
+    job->setResponse(response);
+    job->setSendingMode(sendingMode);
+    job->start();
+    connect(job, &MDNWarningJob::finished, this, [this]() {
+        mViewer->mdnWarning()->animatedHide();
+    });
 }
