@@ -42,11 +42,9 @@
 #endif
 #include <KSieveUi/SieveDebugDialog>
 #include <MailCommon/FolderTreeView>
-#include <MailCommon/MDNWarningJob>
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 #include <MailCommon/SearchRuleStatus>
-#include <MessageComposer/MDNWarningWidgetJob>
 
 #include "collectionpage/collectionmailinglistpage.h"
 #include "collectionpage/collectionquotapage.h"
@@ -123,7 +121,6 @@
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ItemModifyJob>
-#include <Akonadi/MDNStateAttribute>
 #include <Akonadi/MessageFlags>
 #include <Akonadi/Session>
 #include <Akonadi/StandardActionManager>
@@ -1056,7 +1053,6 @@ void KMMainWidget::createWidgets()
         connect(mMsgView->viewer(), &MessageViewer::Viewer::replyMessageTo, this, &KMMainWidget::slotReplyMessageTo);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::showStatusBarMessage, this, &KMMainWidget::setShowStatusBarMessage);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::zoomChanged, this, &KMMainWidget::setZoomChanged);
-        connect(mMsgView->viewer()->mdnWarning(), &MessageViewer::MDNWarningWidget::sendResponse, this, &KMMainWidget::slotSendMdnResponse);
         if (mShowIntroductionAction) {
             mShowIntroductionAction->setEnabled(true);
         }
@@ -1184,31 +1180,6 @@ void KMMainWidget::createWidgets()
             &KMMainWidget::slotCollectionChanged);
 
     connect(kmkernel->folderCollectionMonitor(), &Monitor::collectionStatisticsChanged, this, &KMMainWidget::slotCollectionStatisticsChanged);
-}
-
-void KMMainWidget::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode)
-{
-    MailCommon::MDNWarningJob::ResponseMDN response = MailCommon::MDNWarningJob::ResponseMDN::Unknown;
-    switch (type) {
-    case MessageViewer::MDNWarningWidget::ResponseType::Ignore:
-        response = MailCommon::MDNWarningJob::ResponseMDN::MDNIgnore;
-        break;
-    case MessageViewer::MDNWarningWidget::ResponseType::Send:
-        response = MailCommon::MDNWarningJob::ResponseMDN::Send;
-        break;
-    case MessageViewer::MDNWarningWidget::ResponseType::SendDeny:
-        response = MailCommon::MDNWarningJob::ResponseMDN::Denied;
-        break;
-    }
-
-    auto job = new MailCommon::MDNWarningJob(KMKernel::self(), this);
-    job->setItem(mMsgView->messageItem());
-    job->setResponse(response);
-    job->setSendingMode(sendingMode);
-    job->start();
-    connect(job, &MDNWarningJob::finished, this, [this]() {
-        mMsgView->viewer()->mdnWarning()->animatedHide();
-    });
 }
 
 void KMMainWidget::updateMoveAction(const Akonadi::CollectionStatistics &statistic)
@@ -4494,18 +4465,6 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
     }
 }
 
-void KMMainWidget::slotShowMdnInfo(const QPair<QString, bool> &mdnInfo)
-{
-    if (mMsgView) {
-        if (!mdnInfo.first.isEmpty()) {
-            mMsgView->viewer()->mdnWarning()->setCanDeny(mdnInfo.second);
-            mMsgView->viewer()->mdnWarning()->setInformation(mdnInfo.first);
-        } else {
-            mMsgView->viewer()->mdnWarning()->animatedHide();
-        }
-    }
-}
-
 void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
 {
     qCDebug(KMAIL_LOG) << " list count  " << list.count();
@@ -4533,13 +4492,6 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
             }
             return;
         }
-        if (!item.hasAttribute<Akonadi::MDNStateAttribute>()
-            || (item.hasAttribute<Akonadi::MDNStateAttribute>()
-                && item.attribute<Akonadi::MDNStateAttribute>()->mdnState() == Akonadi::MDNStateAttribute::MDNStateUnknown)) {
-            sendMdnInfo(item);
-        } else {
-            mMsgView->viewer()->mdnWarning()->animatedHide();
-        }
     }
 
     Akonadi::Item copyItem(item);
@@ -4551,16 +4503,6 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
     assignLoadExternalReference();
     mMsgView->setDecryptMessageOverwrite(false);
     mMsgActions->setCurrentMessage(copyItem);
-}
-
-void KMMainWidget::sendMdnInfo(const Akonadi::Item &item)
-{
-    auto job = new MessageComposer::MDNWarningWidgetJob(this);
-    job->setItem(item);
-    connect(job, &MessageComposer::MDNWarningWidgetJob::showMdnInfo, this, &KMMainWidget::slotShowMdnInfo);
-    if (!job->start()) {
-        qCWarning(KMAIL_LOG) << "Impossible to start MDNWarningWidgetJob";
-    }
 }
 
 void KMMainWidget::itemsFetchDone(KJob *job)

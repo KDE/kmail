@@ -12,6 +12,7 @@
 
 #include <Akonadi/Item>
 #include <KContacts/Addressee>
+#include <MessageViewer/MDNWarningWidget>
 #include <MessageViewer/Viewer>
 #include <MimeTreeParser/BodyPart>
 #include <QUrl>
@@ -216,6 +217,9 @@ private:
     void createActions();
     void updateHtmlActions();
     void slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent);
+    void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode);
+    void sendMdnInfo(const Akonadi::Item &item);
+    void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
 
 private:
     KContacts::Addressee mSearchedAddress;
