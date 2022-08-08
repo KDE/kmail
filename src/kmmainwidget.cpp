@@ -130,7 +130,6 @@
 #include <KIdentityManagement/IdentityManager>
 #include <KMime/HeaderParsing>
 #include <KMime/KMimeMessage>
-#include <KMime/MDN>
 #include <KSieveUi/ManageSieveScriptsDialog>
 #include <KSieveUi/Util>
 #include <MailTransport/Transport>
