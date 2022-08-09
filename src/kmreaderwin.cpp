@@ -50,6 +50,7 @@ using namespace MessageViewer;
 
 #include <KIO/JobUiDelegate>
 
+#include <Akonadi/ChangeRecorder>
 #include <Akonadi/ContactEditorDialog>
 
 #include "kmail_debug.h"
@@ -100,6 +101,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     connect(mViewer, &MessageViewer::Viewer::showNextMessage, this, &KMReaderWin::showNextMessage);
     connect(mViewer, &MessageViewer::Viewer::showPreviousMessage, this, &KMReaderWin::showPreviousMessage);
     connect(mViewer->mdnWarning(), &MessageViewer::MDNWarningWidget::sendResponse, this, &KMReaderWin::slotSendMdnResponse);
+    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::itemChanged, this, &KMReaderWin::slotItemModified);
 
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
     // mViewer->addMessageLoadedHandler(new MailCommon::SendMdnHandler(kmkernel, this));
@@ -983,4 +985,13 @@ void KMReaderWin::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseT
     connect(job, &MDNWarningJob::finished, this, [this]() {
         mViewer->mdnWarning()->animatedHide();
     });
+}
+
+void KMReaderWin::slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers)
+{
+    if (mViewer->messageItem().id() == item.id()) {
+        if (partIdentifiers.contains("MDNStateAttribute")) {
+            mViewer->mdnWarning()->animatedHide();
+        }
+    }
 }

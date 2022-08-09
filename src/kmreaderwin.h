@@ -220,6 +220,7 @@ private:
     void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode);
     void sendMdnInfo(const Akonadi::Item &item);
     void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
+    void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
 
 private:
     KContacts::Addressee mSearchedAddress;
