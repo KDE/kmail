@@ -2561,18 +2561,20 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
     auto fetchCmd = qobject_cast<KMFetchMessageCommand *>(command);
     const Item msg = fetchCmd->item();
     KMReaderMainWin *win = fetchCmd->readerMainWin();
-
     if (!win) {
         win = new KMReaderMainWin(mFolderDisplayFormatPreference, mFolderHtmlLoadExtPreference);
     }
-    if (mMsgView && mMsgView->viewer()) {
-        win->viewer()->setWebViewZoomFactor(mMsgView->viewer()->webViewZoomFactor());
-        win->viewer()->setHtmlLoadExtOverride(mMsgView->viewer()->htmlLoadExtOverride());
-        win->viewer()->setDisplayFormatMessageOverwrite(mMsgView->viewer()->displayFormatMessageOverwrite());
-    }
+    win->showMessage(overrideEncoding(), msg, CommonKernel->collectionFromId(msg.parentCollection().id()));
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : MessageViewer::MessageViewerSettings::self()->useFixedFont();
     win->setUseFixedFont(useFixedFont);
-    win->showMessage(overrideEncoding(), msg, CommonKernel->collectionFromId(msg.parentCollection().id()));
+    if (mMsgView) {
+        auto viewer = mMsgView->viewer();
+        if (viewer) {
+            win->viewer()->setWebViewZoomFactor(viewer->webViewZoomFactor());
+            win->viewer()->setHtmlLoadExtOverride(viewer->htmlLoadExtOverride());
+            win->viewer()->setDisplayFormatMessageOverwrite(viewer->displayFormatMessageOverwrite());
+        }
+    }
     win->show();
 }
 
