@@ -7,6 +7,6 @@ macro( mailmerge_agent _source )
     ecm_add_test(${_test} ${_name}.h
         TEST_NAME ${_name}
         NAME_PREFIX "mailmerge-"
-        LINK_LIBRARIES mailmergeagent Qt${QT_MAJOR_VERSION}::Test KF5::AkonadiCore Qt${QT_MAJOR_VERSION}::Widgets KF5::I18n KF5::XmlGui KF5::Service
+        LINK_LIBRARIES mailmergeagent Qt::Test KF5::AkonadiCore Qt::Widgets KF5::I18n KF5::XmlGui KF5::Service
         )
 endmacro()

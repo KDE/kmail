@@ -75,7 +75,7 @@ target_link_libraries(akonadi_followupreminder_agent
     KF5::Mime
     KF5::CalendarCore
     KF5::DBusAddons
-    Qt${QT_MAJOR_VERSION}::Widgets
+    Qt::Widgets
     KF5::Notifications
     KF5::I18n
     KF5::XmlGui

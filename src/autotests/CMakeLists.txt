@@ -12,35 +12,35 @@ include_directories(
 add_executable( displaymessageformatactionmenutest displaymessageformatactionmenutest.cpp displaymessageformatactionmenutest.h)
 add_test(NAME displaymessageformatactionmenutest COMMAND displaymessageformatactionmenutest )
 ecm_mark_as_test(kmail-displaymessageformatactionmenutest)
-target_link_libraries( displaymessageformatactionmenutest Qt${QT_MAJOR_VERSION}::Test  KF5::MessageViewer KF5::I18n kmailprivate)
+target_link_libraries( displaymessageformatactionmenutest Qt::Test  KF5::MessageViewer KF5::I18n kmailprivate)
 
 #####
 add_executable( identityaddvcarddialogtest  identityaddvcarddialogtest.cpp identityaddvcarddialogtest.h)
 ecm_mark_as_test(kmail-identityaddvcarddialogtest)
-target_link_libraries( identityaddvcarddialogtest Qt${QT_MAJOR_VERSION}::Test Qt${QT_MAJOR_VERSION}::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n kmailprivate)
+target_link_libraries( identityaddvcarddialogtest Qt::Test Qt::Widgets KF5::Completion KF5::KIOWidgets KF5::I18n kmailprivate)
 
 #####
 add_executable( createfollowupreminderonexistingmessagejobtest createfollowupreminderonexistingmessagejobtest.cpp createfollowupreminderonexistingmessagejobtest.h)
 ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
-target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt${QT_MAJOR_VERSION}::Test Qt${QT_MAJOR_VERSION}::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime KF5::MessageComposer kmailprivate)
+target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt::Widgets KF5::AkonadiCore KF5::CalendarCore KF5::Mime KF5::MessageComposer kmailprivate)
 #####
 
 add_executable( cryptostateindicatorwidgettest cryptostateindicatorwidgettest.cpp cryptostateindicatorwidgettest.h)
 add_test(NAME cryptostateindicatorwidgettest COMMAND cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
-target_link_libraries( cryptostateindicatorwidgettest Qt${QT_MAJOR_VERSION}::Test  KF5::MessageCore Qt${QT_MAJOR_VERSION}::Widgets KF5::ConfigWidgets KF5::I18n kmailprivate)
+target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KF5::MessageCore Qt::Widgets KF5::ConfigWidgets KF5::I18n kmailprivate)
 #####
 
 add_executable( kactionmenutransporttest kactionmenutransporttest.cpp kactionmenutransporttest.h)
 add_test(NAME kactionmenutransporttest COMMAND kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
-target_link_libraries( kactionmenutransporttest Qt${QT_MAJOR_VERSION}::Test  KF5::MailTransportAkonadi KF5::WidgetsAddons KF5::I18n KF5::ConfigGui kmailprivate)
+target_link_libraries( kactionmenutransporttest Qt::Test  KF5::MailTransportAkonadi KF5::WidgetsAddons KF5::I18n KF5::ConfigGui kmailprivate)
 
 
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp ""
-    "Qt${QT_MAJOR_VERSION}::Test;KF5::IdentityManagementWidgets;KF5::MessageCore;KF5::TemplateParser;KF5::XmlGui;Qt${QT_MAJOR_VERSION}::Widgets;KF5::ConfigWidgets;KF5::I18n;kmailprivate")
+    "Qt::Test;KF5::IdentityManagementWidgets;KF5::MessageCore;KF5::TemplateParser;KF5::XmlGui;Qt::Widgets;KF5::ConfigWidgets;KF5::I18n;kmailprivate")
 
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "" "kmailprivate;KF5::MailCommon;KF5::Libkdepim;KF5::ItemViews;KF5::TemplateParser;KF5::XmlGui;KF5::Completion;KF5::I18n")
 
 add_akonadi_isolated_test_advanced(kmcommandstest.cpp ""
-    "Qt${QT_MAJOR_VERSION}::Test;Qt${QT_MAJOR_VERSION}::Widgets;KF5::AkonadiCore;KF5::Bookmarks;KF5::ConfigWidgets;KF5::Contacts;KF5::I18n;KF5::IdentityManagement;KF5::KIOCore;KF5::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KF5::MailCommon;KF5::MailTransportAkonadi;KF5::Libkdepim;KF5::TemplateParser;kmailprivate")
+    "Qt::Test;Qt::Widgets;KF5::AkonadiCore;KF5::Bookmarks;KF5::ConfigWidgets;KF5::Contacts;KF5::I18n;KF5::IdentityManagement;KF5::KIOCore;KF5::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KF5::MailCommon;KF5::MailTransportAkonadi;KF5::Libkdepim;KF5::TemplateParser;kmailprivate")

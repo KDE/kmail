@@ -29,7 +29,7 @@ pim_target_precompile_headers(kcmkmailsummary PUBLIC ../../../kmail_pch.h)
 
 add_dependencies(kcmkmailsummary kmail_xml)
 
-target_link_libraries(kcmkmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt${QT_MAJOR_VERSION}::DBus KF5::ConfigWidgets KF5::I18n)
+target_link_libraries(kcmkmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt::DBus KF5::ConfigWidgets KF5::I18n)
 
 ########### install files ###############
 

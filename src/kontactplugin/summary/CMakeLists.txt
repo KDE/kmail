@@ -19,7 +19,7 @@ target_link_libraries(kontact_summaryplugin KF5::KCMUtils KF5::I18n KF5::Identit
 add_library(kcmkontactsummary MODULE kcmkontactsummary.cpp kcmkontactsummary.h)
 pim_target_precompile_headers(kcmkontactsummary PUBLIC ../../../kmail_pch.h)
 
-target_link_libraries(kcmkontactsummary KF5::I18n Qt${QT_MAJOR_VERSION}::Widgets KF5::I18n KF5::KontactInterface)
+target_link_libraries(kcmkontactsummary KF5::I18n Qt::Widgets KF5::I18n KF5::KontactInterface)
 
 ########### install files ###############
 
