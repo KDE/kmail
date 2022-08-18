@@ -28,11 +28,11 @@ void KMailPluginInterface::setMainWidget(KMMainWidget *mainwindow)
     mMainWindow = mainwindow;
 }
 
-void KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGenericPluginInterface *abstractInterface)
+bool KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGenericPluginInterface *abstractInterface)
 {
     if (!mMainWindow) {
         qCCritical(KMAIL_LOG) << "mainwindows not defined";
-        return;
+        return false;
     }
     auto interface = static_cast<PimCommon::GenericPluginInterface *>(abstractInterface);
     const PimCommon::GenericPluginInterface::RequireTypes requiresFeatures = interface->requiresFeatures();
@@ -52,4 +52,5 @@ void KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGeneri
     if (requiresFeatures & PimCommon::GenericPluginInterface::Collections) {
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Collection not implemented";
     }
+    return true;
 }
