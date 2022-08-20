@@ -9,7 +9,12 @@
 #include "archivemailagentutil.h"
 #include "archivemailkernel.h"
 
+#include <kio_version.h>
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+#include <KIO/JobUiDelegateFactory>
+#else
 #include <KIO/JobUiDelegate>
+#endif
 #include <KIO/OpenUrlJob>
 
 #include "kmail-version.h"
@@ -309,7 +314,11 @@ void ArchiveMailWidget::slotOpenFolder()
         if (archiveItemInfo) {
             const QUrl url = archiveItemInfo->url();
             auto job = new KIO::OpenUrlJob(url);
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+            job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, parentWidget()));
+#else
             job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, parentWidget()));
+#endif
             job->setRunExecutables(false);
             job->start();
         }
