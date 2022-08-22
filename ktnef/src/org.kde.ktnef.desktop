@@ -163,7 +163,6 @@ Comment[wa]=On håyneu/saetcheu foû po les fitchîs TNEF
 Comment[x-test]=xxA viewer/extractor for TNEF filesxx
 Comment[zh_CN]=TNEF 文件的查看/提取器
 Comment[zh_TW]=TNEF 檔案檢視器
-Terminal=false
 MimeType=application/ms-tnef;
 Categories=Qt;KDE;X-KDE-Utilities-PIM;Office;Network;Email;
 X-DBUS-ServiceName=org.kde.ktnef

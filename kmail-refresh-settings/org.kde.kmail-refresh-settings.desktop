@@ -102,7 +102,6 @@ Comment[tr]=KMail ayarlarını yenile
 Comment[uk]=Оновлення параметрів KMail
 Comment[x-test]=xxRefresh KMail settingsxx
 Comment[zh_CN]=刷新 KMail 设置
-Terminal=false
 SingleMainWindow=true
 Version=1.5
 StartupNotify=true
