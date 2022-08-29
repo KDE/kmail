@@ -109,10 +109,8 @@ public:
 
     void save() override;
 
-private Q_SLOTS:
-    void slotUpdateHTTPActions();
-
 private:
+    void slotUpdateHTTPActions();
     void doLoadOther() override;
 
 private:

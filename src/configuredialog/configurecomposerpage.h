@@ -152,14 +152,12 @@ public:
 
     void save() override;
 
-private Q_SLOTS:
+private:
     void slotMimeHeaderSelectionChanged();
     void slotMimeHeaderNameChanged(const QString &);
     void slotMimeHeaderValueChanged(const QString &);
     void slotNewMimeHeader();
     void slotRemoveMimeHeader();
-
-private:
     void doLoadOther() override;
     void doResetToDefaultsOther() override;
 

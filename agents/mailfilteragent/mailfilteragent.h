@@ -51,7 +51,7 @@ public:
 protected:
     void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) override;
 
-private Q_SLOTS:
+private:
     void initializeCollections();
     void initialCollectionFetchingDone(KJob *);
     void mailCollectionAdded(const Akonadi::Collection &collection, const Akonadi::Collection &parent);

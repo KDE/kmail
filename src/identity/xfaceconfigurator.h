@@ -52,7 +52,7 @@ private:
     void crunch(const QImage &image);
     Q_REQUIRED_RESULT bool pngquant(const QImage &image);
 
-private Q_SLOTS:
+private:
     void modeChanged(int);
 
     void compressFace(const QImage &);
@@ -63,7 +63,6 @@ private Q_SLOTS:
 
     void pngquantFinished(int, QProcess::ExitStatus);
 
-private:
     std::unique_ptr<Ui::XFaceConfigurator> mUi;
     QProcess *const mPngquantProc;
 };
