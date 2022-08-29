@@ -65,7 +65,7 @@ target_link_libraries(followupreminderagent
 
 
 ########################### Agent executable ################################
-add_executable(akonadi_followupreminder_agent followupreminderagent.cpp)
+add_executable(akonadi_followupreminder_agent followupreminderagent.cpp followupreminderagent.h)
 
 target_link_libraries(akonadi_followupreminder_agent
     followupreminderagent
