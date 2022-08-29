@@ -88,7 +88,10 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
         tmp.setAutoRemove(false);
         tmp.open();
         FileStorage storage(cal, tmp.fileName());
-        storage.save();
+        if (!storage.save()) {
+            qCWarning(KMAILPLUGIN_LOG) << " Impossible to save data in filestorage";
+            return;
+        }
         openComposer(QUrl::fromLocalFile(tmp.fileName()));
     } else if (KContacts::VCardDrag::fromMimeData(md, list)) {
         QStringList to;
