@@ -23,6 +23,7 @@
   <developer_name xml:lang="ia">Le communitate de KDE</developer_name>
   <developer_name xml:lang="id">Komunitas KDE</developer_name>
   <developer_name xml:lang="it">La comunità KDE</developer_name>
+  <developer_name xml:lang="ka">KDE-ის საზოგადოება</developer_name>
   <developer_name xml:lang="ko">KDE 커뮤니티</developer_name>
   <developer_name xml:lang="nl">De KDE gemeenschap</developer_name>
   <developer_name xml:lang="pl">Społeczność KDE</developer_name>
@@ -59,6 +60,7 @@
   <name xml:lang="ia">KMail</name>
   <name xml:lang="id">KMail</name>
   <name xml:lang="it">KMail</name>
+  <name xml:lang="ka">KMail</name>
   <name xml:lang="ko">KMail</name>
   <name xml:lang="lt">KMail</name>
   <name xml:lang="nb">KMail</name>
@@ -102,6 +104,7 @@
   <summary xml:lang="ia">Un application de e.posta ric de characteristicas</summary>
   <summary xml:lang="id">Sebuah aplikasi email yang kaya fitur</summary>
   <summary xml:lang="it">Un programma di posta elettronica ricco di funzioni</summary>
+  <summary xml:lang="ka">ელფოსტის აპლიკაცია ბევრი ფუნქციით</summary>
   <summary xml:lang="ko">다기능 이메일 프로그램</summary>
   <summary xml:lang="nl">Een e-mailtoepassing met veel mogelijkheden</summary>
   <summary xml:lang="pl">Zaawansowana aplikacja pocztowa</summary>
@@ -174,6 +177,7 @@
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
     <p xml:lang="lt">Ypatybės:</p>
     <p xml:lang="nb">Egenskaper:</p>
