@@ -63,7 +63,7 @@
         "Name[is]": "Yfirlit",
         "Name[it]": "Sommario",
         "Name[ja]": "要約",
-        "Name[ka]": "დაიჯესტი",
+        "Name[ka]": "შეჯამება",
         "Name[kk]": "Мазмұндама",
         "Name[km]": "សង្ខេប",
         "Name[ko]": "요약",
