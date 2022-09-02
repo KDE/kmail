@@ -47,12 +47,12 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
         auto info = new FollowUpReminderInfo(group);
         if (info->isValid()) {
             if (!info->answerWasReceived()) {
-                mFollowUpReminderInfoList.append(info);
-                if (!mInitialize) {
+                if (mInitialize) {
+                    delete info;
+                } else {
+                    mFollowUpReminderInfoList.append(info);
                     auto noAnswerInfo = new FollowUpReminderInfo(*info);
                     noAnswerList.append(noAnswerInfo);
-                } else {
-                    delete info;
                 }
             } else {
                 delete info;
