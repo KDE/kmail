@@ -492,17 +492,7 @@ void SearchWindow::doSearch()
     KConfigGroup cfg = config.group("General");
     const bool respectDiacriticAndAccents = cfg.readEntry("respectDiacriticAndAccents", true);
 
-    if (!mFolder.isValid()) {
-        const QString searchString =
-            respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : MessageCore::StringUtil::normalize(mUi.mSearchFolderEdt->text());
-        qCDebug(KMAIL_LOG) << " create new folder " << searchString;
-        auto searchJob = new Akonadi::SearchCreateJob(searchString, mQuery, this);
-        searchJob->setSearchMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
-        searchJob->setSearchCollections(searchCollections);
-        searchJob->setRecursive(recursive);
-        searchJob->setRemoteSearchEnabled(false);
-        mSearchJob = searchJob;
-    } else {
+    if (mFolder.isValid()) {
         qCDebug(KMAIL_LOG) << " use existing folder " << mFolder.id();
         auto attribute = new Akonadi::PersistentSearchAttribute();
         mFolder.setContentMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
@@ -512,6 +502,18 @@ void SearchWindow::doSearch()
         attribute->setRemoteSearchEnabled(false);
         mFolder.addAttribute(attribute);
         mSearchJob = new Akonadi::CollectionModifyJob(mFolder, this);
+        qDebug() << " CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC";
+    } else {
+        const QString searchString =
+            respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : MessageCore::StringUtil::normalize(mUi.mSearchFolderEdt->text());
+        qCDebug(KMAIL_LOG) << " create new folder " << searchString;
+        auto searchJob = new Akonadi::SearchCreateJob(searchString, mQuery, this);
+        searchJob->setSearchMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
+        searchJob->setSearchCollections(searchCollections);
+        searchJob->setRecursive(recursive);
+        searchJob->setRemoteSearchEnabled(false);
+        mSearchJob = searchJob;
+        qDebug() << " SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSss";
     }
 
     connect(mSearchJob, &Akonadi::CollectionModifyJob::result, this, &SearchWindow::searchDone);
@@ -522,6 +524,7 @@ void SearchWindow::doSearch()
 
 void SearchWindow::searchDone(KJob *job)
 {
+    qDebug() << " void SearchWindow::searchDone(KJob *job)";
     Q_ASSERT(job == mSearchJob);
     mSearchJob = nullptr;
     QMetaObject::invokeMethod(this, &SearchWindow::enableGUI, Qt::QueuedConnection);

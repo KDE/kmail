@@ -36,7 +36,6 @@ int main(int argc, char **argv)
                          i18n("(c) 2019-2022 Laurent Montel <montel@kde.org>"));
     aboutData.addAuthor(i18n("Laurent Montel"), i18n("Author"), QStringLiteral("montel@kde.org"));
 
-    app.setOrganizationDomain(QStringLiteral("kde.org"));
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kontact")));
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
