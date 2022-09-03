@@ -346,10 +346,6 @@ qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     )
 
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
-    ../agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
-    )
-
-qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/mailfilteragent/org.freedesktop.Akonadi.MailFilterAgent.xml
     )
 
