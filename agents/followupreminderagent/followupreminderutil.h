@@ -23,7 +23,7 @@ void reload();
 
 void forceReparseConfiguration();
 
-KSharedConfig::Ptr defaultConfig();
+Q_REQUIRED_RESULT KSharedConfig::Ptr defaultConfig();
 
 void writeFollowupReminderInfo(KSharedConfig::Ptr config, FollowUpReminder::FollowUpReminderInfo *info, bool forceReload);
 

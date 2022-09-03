@@ -43,7 +43,7 @@ public:
     Q_REQUIRED_RESULT QString subject() const;
     void setSubject(const QString &subject);
 
-    bool operator==(const FollowUpReminderInfo &other) const;
+    Q_REQUIRED_RESULT bool operator==(const FollowUpReminderInfo &other) const;
 
     Q_REQUIRED_RESULT bool answerWasReceived() const;
     void setAnswerWasReceived(bool answerWasReceived);
