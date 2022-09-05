@@ -41,7 +41,7 @@ public:
 
     void setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &infoList);
 
-    bool save() const;
+    Q_REQUIRED_RESULT bool save() const;
     void load();
 
     Q_REQUIRED_RESULT QList<qint32> listRemoveId() const;
