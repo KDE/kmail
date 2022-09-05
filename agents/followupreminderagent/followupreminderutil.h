@@ -25,9 +25,9 @@ void forceReparseConfiguration();
 
 Q_REQUIRED_RESULT KSharedConfig::Ptr defaultConfig();
 
-void writeFollowupReminderInfo(KSharedConfig::Ptr config, FollowUpReminder::FollowUpReminderInfo *info, bool forceReload);
+void writeFollowupReminderInfo(const KSharedConfig::Ptr &config, FollowUpReminder::FollowUpReminderInfo *info, bool forceReload);
 
-Q_REQUIRED_RESULT bool removeFollowupReminderInfo(KSharedConfig::Ptr config, const QList<qint32> &listRemove, bool forceReload = false);
+Q_REQUIRED_RESULT bool removeFollowupReminderInfo(const KSharedConfig::Ptr &config, const QList<qint32> &listRemove, bool forceReload = false);
 
 Q_REQUIRED_RESULT QString followUpReminderPattern();
 }

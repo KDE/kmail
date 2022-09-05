@@ -54,7 +54,7 @@ KSharedConfig::Ptr FollowUpReminder::FollowUpReminderUtil::defaultConfig()
     return KSharedConfig::openConfig(QStringLiteral("akonadi_followupreminder_agentrc"), KConfig::SimpleConfig);
 }
 
-void FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(KSharedConfig::Ptr config,
+void FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(const KSharedConfig::Ptr &config,
                                                                        FollowUpReminder::FollowUpReminderInfo *info,
                                                                        bool forceReload)
 {
@@ -90,7 +90,7 @@ void FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(KSharedCo
     }
 }
 
-bool FollowUpReminder::FollowUpReminderUtil::removeFollowupReminderInfo(KSharedConfig::Ptr config, const QList<qint32> &listRemove, bool forceReload)
+bool FollowUpReminder::FollowUpReminderUtil::removeFollowupReminderInfo(const KSharedConfig::Ptr &config, const QList<qint32> &listRemove, bool forceReload)
 {
     if (listRemove.isEmpty()) {
         return false;
