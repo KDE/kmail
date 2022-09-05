@@ -162,6 +162,7 @@ QString FollowUpReminderManager::printDebugInfo() const
 {
     QString infoStr;
     if (mFollowUpReminderInfoList.isEmpty()) {
+        // Don't translate it. => debug info.
         infoStr = QStringLiteral("No mail");
     } else {
         for (FollowUpReminder::FollowUpReminderInfo *info : std::as_const(mFollowUpReminderInfoList)) {
