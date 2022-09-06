@@ -31,7 +31,7 @@ public:
     void save(KConfigGroup &group) const;
     void load(const KConfigGroup &group);
 
-    bool isSpecial() const;
+    Q_REQUIRED_RESULT bool isSpecial() const;
 
     Q_REQUIRED_RESULT qint64 collectionId() const;
     void setCollectionId(qint64 id);
