@@ -10,6 +10,7 @@
         "Description[de]": "KMail-Modul für Kontact",
         "Description[en_GB]": "Kontact KMail Plugin",
         "Description[es]": "Complemento de KMail para Kontact",
+        "Description[eu]": "Kontact-erako KMail-en plugina",
         "Description[fi]": "Kontactin KMail-liitännäinen",
         "Description[fr]": "Module externe « KMail » pour Kontact",
         "Description[ia]": "Plug-in pro Kontact KMail",
