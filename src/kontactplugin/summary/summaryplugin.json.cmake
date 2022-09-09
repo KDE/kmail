@@ -10,6 +10,7 @@
         "Description[de]": "Übersichts-Modul für Kontact",
         "Description[en_GB]": "Kontact SummaryView Plugin",
         "Description[es]": "Complemento de vista de resumen para Kontact",
+        "Description[eu]": "Kontact-eko laburpen ikuspegirako plugina",
         "Description[fi]": "Kontactin yhteenvetonäkymäliitännäinen",
         "Description[fr]": "Module externe « Affichage de résumés » pour Kontact",
         "Description[ia]": "Plug-in pro Kontact SummaryView",
