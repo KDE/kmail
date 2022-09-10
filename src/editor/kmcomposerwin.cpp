@@ -90,6 +90,7 @@
 // KDEPIM includes
 #include <Libkleo/ProgressDialog>
 #include <Libkleo/KeySelectionDialog>
+#include <Libkleo/Enum>
 #include <QGpgME/Protocol>
 #include <QGpgME/ExportJob>
 #include <QGpgME/KeyForMailboxJob>
@@ -164,7 +165,6 @@
 #include <KCharsets>
 #include <KConfigGroup>
 #include <KXMLGUIFactory>
-#include <KIconUtils>
 
 // Qt includes
 #include <QMenu>
@@ -3338,6 +3338,8 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
         recipient->setEncryptionAction(Kleo::Impossible);
         return;
     }
+    auto context = QGpgME::Job::context(job);
+    context->setKeyListMode(context->keyListMode() | GpgME::KeyListMode::WithTofu);
 
     QString dummy, addrSpec;
     if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
@@ -3401,37 +3403,35 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
         recipient->setEncryptionAction(Kleo::DoIt);
         recipient->setKey(key);
 
-        QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
-        QIcon overlay;
+        QIcon icon;
         QString tooltip;
-        switch (userID.validity()) {
-        case GpgME::UserID::Ultimate:
-        case GpgME::UserID::Full:
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-favorite"));
-            tooltip = i18n("High security encryption will be used for this recipient (the encryption key is fully trusted). "
+
+        const auto trustLevel = Kleo::trustLevel(userID);
+        switch (trustLevel) {
+        case Kleo::Level0:
+            // no encryption on this level
+            return;
+        case Kleo::Level1:
+            tooltip = i18n("The encryption key is only marginally trusted and hasn't been used enough time to guarantee it belongs to the stated person. "
                            "Click the icon for details.");
             break;
-        case GpgME::UserID::Marginal:
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
-            tooltip = i18n("Medium security encryption will be used for this recipient (the encryption key is marginally trusted). "
+        case Kleo::Level2:
+            tooltip = i18n("The encryption key is only marginally trusted, but has been used enough times to be very likely controlled by the stated person. "
                            "Click the icon for details.");
             break;
-        case GpgME::UserID::Never:
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-error"));
-            tooltip = i18n("Low security encryption will be used for this recipient (the encryption key is untrusted). "
-                           "Click the icon for details.");
+        case Kleo::Level3:
+            tooltip = i18n("The encryption key is fully trusted. Click the icon for details.");
             break;
-        case GpgME::UserID::Undefined:
-        case GpgME::UserID::Unknown:
+        case Kleo::Level4:
+            tooltip = i18n("The encryption key is ultimately trusted or is signed by another ultimately trusted key. Click the icon for details.");
+            break;
         default:
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
-            tooltip = i18n("The email to this recipient will be encrypted, but the security of the encryption is unknown "
-                           "(the encryption key could not be verified). Click the icon for details.");
-            break;
+            Q_UNREACHABLE();
         }
 
         line->setProperty("keyStatus", KeyOk);
-        line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
+        // Magically, the icon name maps precisely to each trust level
+        line->setIcon(QIcon::fromTheme(QStringLiteral("gpg-key-trust-level-%1").arg(trustLevel)), tooltip);
 
         slotRecipientEditorFocusChanged();
     }
