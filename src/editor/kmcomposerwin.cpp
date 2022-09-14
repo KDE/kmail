@@ -190,6 +190,7 @@
 // GPGME
 #include <gpgme++/key.h>
 #include <gpgme++/keylistresult.h>
+#include <gpgme++/tofuinfo.h>
 
 #include <KDialogJobUiDelegate>
 #include <KIO/CommandLauncherJob>
@@ -3889,21 +3890,41 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
         const auto trustLevel = Kleo::trustLevel(userID);
         switch (trustLevel) {
         case Kleo::Level0:
-            // no encryption on this level
-            return;
+            if (uid.tofuInfo().isNull()) {
+                // This means the uid is either marked as bad. Or the key's validity is Unknown or Undefined.
+                // TODO: fallback to autocrypt
+                return;
+            } else {
+                switch (uid.tofuInfo().validity()) {
+                case GpgME::TofuInfo::NoHistory:
+                    tooltip = i18n("The encryption key is not trusted. It hasn't used anywhere to guarantee it belongs to the stated person. By using the key will be trusted more. Or you can sign the key, if you communicated the fingerprint by another channel."
+                                "Click the icon for details.");
+                    break;
+                case GpgME::TofuInfo::Conflict:
+                case GpgME::TofuInfo::ValidityUnknown:
+                    // TODO: tooltip to help the user to fix this.
+                    // TODO: fallback to autocrypt
+                    return;
+                default:
+                    Q_UNREACHABLE();
+                }
+            }
+            break;
         case Kleo::Level1:
-            tooltip = i18n("The encryption key is only marginally trusted and hasn't been used enough time to guarantee it belongs to the stated person. "
+            tooltip = i18n("The encryption key is only marginally trusted and hasn't been used enough time to guarantee it belongs to the stated person. By using the key will be trusted more. Or you can sign the key, if you communicated the fingerprint by another channel."
                            "Click the icon for details.");
             break;
         case Kleo::Level2:
-            tooltip = i18n("The encryption key is only marginally trusted, but has been used enough times to be very likely controlled by the stated person. "
+            tooltip = i18n("The encryption key is only marginally trusted, but has been used enough times to be very likely controlled by the stated person. By using the key will be trusted more. Or you can sign the key, if you communicated the fingerprint by another channel."
                            "Click the icon for details.");
             break;
         case Kleo::Level3:
-            tooltip = i18n("The encryption key is fully trusted. Click the icon for details.");
+            tooltip = i18n("The encryption key is fully trusted. You can raise the security level, by signing the key."
+                            "Click the icon for details.");
             break;
         case Kleo::Level4:
-            tooltip = i18n("The encryption key is ultimately trusted or is signed by another ultimately trusted key. Click the icon for details.");
+            tooltip = i18n("The encryption key is ultimately trusted or is signed by another ultimately trusted key."
+                            "Click the icon for details.");
             break;
         default:
             Q_UNREACHABLE();
