@@ -12,18 +12,35 @@
 #include <KIdentityManagement/IdentityCombo>
 #include <KIdentityManagement/IdentityManager>
 
+#include <Libkleo/KeyCache>
+
 #include <KMime/Message>
 
 #include <QEventLoop>
 #include <QLabel>
+#include <QProcess>
+#include <QSignalSpy>
 #include <QStandardPaths>
 #include <QTest>
 #include <QTimer>
+
 #include <chrono>
 
 using namespace std::chrono_literals;
 
 QTEST_MAIN(KMComposerWinTest)
+
+void killAgent()
+{
+    QProcess proc;
+    proc.setProgram(QStringLiteral("gpg-connect-agent"));
+    proc.start();
+    proc.waitForStarted();
+    proc.write("KILLAGENT\n");
+    proc.write("BYE\n");
+    proc.closeWriteChannel();
+    proc.waitForFinished();
+}
 
 KMime::Message::Ptr createItem(const KIdentityManagement::Identity &ident)
 {
@@ -49,9 +66,17 @@ KMime::Message::Ptr createItem(const KIdentityManagement::Identity &ident)
 
 KMComposerWinTest::KMComposerWinTest(QObject *parent)
     : QObject(parent)
-    , mKernel(new KMKernel(parent))
 {
     QStandardPaths::setTestModeEnabled(true);
+    qputenv("KDEHOME", QFile::encodeName(QDir::homePath() + QLatin1String("/.qttest")).constData());
+
+    const QDir genericDataLocation(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
+    auto gnupgDir = QDir(genericDataLocation.filePath(QStringLiteral("gnupg")));
+    qputenv("GNUPGHOME", gnupgDir.absolutePath().toUtf8());
+    gnupgDir.mkpath(QStringLiteral("."));
+
+    // We need to initalize KMKernel after modifing the envionment variables, otherwise we would read the wrong configs.
+    mKernel = new KMKernel(parent);
 }
 
 KMComposerWinTest::~KMComposerWinTest()
@@ -63,36 +88,38 @@ void KMComposerWinTest::init()
 {
     autocryptDir.removeRecursively();
     autocryptDir.mkpath(QStringLiteral("."));
+
 }
 
 void KMComposerWinTest::cleanup()
 {
     autocryptDir.removeRecursively();
+
     QEventLoop loop;
     auto w = mKernel->mainWin();
     loop.connect(w, &QMainWindow::destroyed, &loop, &QEventLoop::quit);
     w->close();
     loop.exec();
-
-    resetIdentities();
 }
 
 void KMComposerWinTest::initTestCase()
 {
-    qputenv("LC_ALL", "C");
-    qputenv("KDEHOME", QFile::encodeName(QDir::homePath() + QLatin1String("/.qttest")).constData());
-
     const QDir genericDataLocation(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
     autocryptDir = QDir(genericDataLocation.filePath(QStringLiteral("autocrypt")));
 
-    const KIdentityManagement::Identity &def = mKernel->identityManager()->defaultIdentity();
-    KIdentityManagement::Identity &i1 = mKernel->identityManager()->modifyIdentityForUoid(def.uoid());
-    i1.setIdentityName(QStringLiteral("default"));
-    mKernel->identityManager()->newFromScratch(QStringLiteral("test2"));
-    mKernel->identityManager()->newFromScratch(QStringLiteral("test3"));
-    mKernel->identityManager()->newFromScratch(QStringLiteral("autocrypt"));
-    mKernel->identityManager()->commit();
     resetIdentities();
+    // Keep a KeyCache reference. Make sure that the cache stays hot between the tests.
+    mKernel->init();
+}
+
+void KMComposerWinTest::cleanupTestCase()
+{
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("testautocrypt")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("test3")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("test2")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("default")));
+    mKernel->identityManager()->commit();
+    killAgent();
 }
 
 void KMComposerWinTest::resetIdentities()
@@ -186,11 +213,20 @@ void KMComposerWinTest::testEncryption()
     auto composer = KMail::makeComposer(msg);
     composer->show();
     QVERIFY(QTest::qWaitForWindowExposed(composer));
+
+    // We need to wait till KeyCache is populated, otherwise we will get wrong results
+    const auto instance = Kleo::KeyCache::instance();
+    if (!instance->initialized()) {
+        QEventLoop loop;
+        connect(instance.get(), &Kleo::KeyCache::keyListingDone, this, [&loop](){
+            loop.quit();
+        });
+        loop.exec();
+    }
     QCoreApplication::processEvents(QEventLoop::AllEvents);
     auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(encryption);
     QCOMPARE(encryption->isVisible(), encrypt);
-    composer->close();
 }
 
 void KMComposerWinTest::testChangeIdentity()

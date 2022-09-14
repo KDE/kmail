@@ -20,7 +20,9 @@ public:
 private Q_SLOTS:
     void init();
     void cleanup();
+
     void initTestCase();
+    void cleanupTestCase();
 
     void testEncryption_data();
     void testEncryption();
