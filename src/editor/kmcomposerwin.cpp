@@ -3924,8 +3924,8 @@ void KMComposerWin::slotKeyForMailBoxResult(MessageComposer::RecipientLineNG *li
             const auto key = rec->gpgKey();
             if (!key.isNull() && !key.isRevoked() && !key.isExpired() && !key.isDisabled() && key.canEncrypt()) {
                 autocryptKey = key;
+                overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
                 if (rec->prefer_encrypt()) {
-                    overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
                     tooltip = i18n(
                         "Autocrypt key is used for this recipient. This key is not verified. "
                         "The recipient prefers encrypted replies.");
