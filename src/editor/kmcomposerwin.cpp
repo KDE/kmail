@@ -80,8 +80,6 @@
 #include <KCursorSaver>
 
 #include <Libkleo/Enum>
-#include <Libkleo/KeySelectionDialog>
-#include <Libkleo/ProgressDialog>
 
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/FolderRequester>
@@ -147,7 +145,6 @@
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
 
-#include <QGpgME/ExportJob>
 #include <QGpgME/KeyForMailboxJob>
 #include <QGpgME/Protocol>
 
