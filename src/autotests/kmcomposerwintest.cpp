@@ -46,7 +46,7 @@ KMime::Message::Ptr createItem(const KIdentityManagement::Identity &ident)
 {
     QByteArray data
         = "From: Konqui <konqui@kde.org>\n"
-          "To: Friends <friends@kde.org>\n"
+          "To: Friends <friends@kde.example>\n"
           "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
           "Subject: Sample message\n"
           "MIME-Version: 1.0\n"
@@ -125,29 +125,25 @@ void KMComposerWinTest::cleanupTestCase()
 void KMComposerWinTest::resetIdentities()
 {
     KIdentityManagement::Identity &i1 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("default"));
-    i1.setFullName(QStringLiteral("default"));
-    i1.setPrimaryEmailAddress(QStringLiteral("firstname.lastname@example.com"));
+    i1.setPrimaryEmailAddress(QStringLiteral("firstname.lastname@test.example"));
     i1.setPGPSigningKey("0x123456789");
     i1.setPGPEncryptionKey("0x123456789");
     i1.setPgpAutoSign(true);
     i1.setPgpAutoEncrypt(false);
     KIdentityManagement::Identity &i2 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test2"));
-    i2.setFullName(QStringLiteral("second"));
-    i2.setPrimaryEmailAddress(QStringLiteral("secundus@example.com"));
+    i2.setPrimaryEmailAddress(QStringLiteral("secundus@test.example"));
     i2.setPGPSigningKey("0x234567890");
     i2.setPGPEncryptionKey("0x234567890");
     i2.setPgpAutoSign(false);
     i2.setPgpAutoEncrypt(false);
     KIdentityManagement::Identity &i3 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test3"));
-    i3.setFullName(QStringLiteral("third"));
-    i3.setPrimaryEmailAddress(QStringLiteral("drei@example.com"));
+    i3.setPrimaryEmailAddress(QStringLiteral("drei@test.example"));
     i3.setPGPSigningKey("0x345678901");
     i3.setPGPEncryptionKey("0x345678901");
     i3.setPgpAutoSign(true);
     i3.setPgpAutoEncrypt(true);
-    KIdentityManagement::Identity &i4 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("autocrypt"));
-    i4.setFullName(QStringLiteral("autocrypt"));
-    i4.setPrimaryEmailAddress(QStringLiteral("autocrypt@example.com"));
+    KIdentityManagement::Identity &i4 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("testautocrypt"));
+    i4.setPrimaryEmailAddress(QStringLiteral("autocrypt@test.example"));
     i4.setPGPSigningKey("0x456789012");
     i4.setPGPEncryptionKey("0x456789012");
     i4.setPgpAutoSign(true);
@@ -163,9 +159,9 @@ void KMComposerWinTest::testSignature_data()
     QTest::addColumn<uint>("uoid");
     QTest::addColumn<bool>("sign");
 
-    QTest::newRow("default") << im->defaultIdentity().uoid() << true;
-    QTest::newRow("secondus@example.com") << im->identityForAddress(QStringLiteral("secundus@example.com")).uoid() << false;
-    QTest::newRow("drei@example.com") << im->identityForAddress(QStringLiteral("drei@example.com")).uoid() << true;
+    QTest::newRow("default") << im->identityForAddress(QStringLiteral("firstname.lastname@test.example")).uoid() << true;
+    QTest::newRow("secondus@test.example") << im->identityForAddress(QStringLiteral("secundus@test.example")).uoid() << false;
+    QTest::newRow("drei@test.example") << im->identityForAddress(QStringLiteral("drei@test.example")).uoid() << true;
 }
 
 void KMComposerWinTest::testSignature()
@@ -193,10 +189,10 @@ void KMComposerWinTest::testEncryption_data()
     QTest::addColumn<uint>("uoid");
     QTest::addColumn<bool>("encrypt");
 
-    QTest::newRow("default") << im->defaultIdentity().uoid() << false;
-    QTest::newRow("secondus@example.com") << im->identityForAddress(QStringLiteral("secundus@example.com")).uoid() << false;
-    QTest::newRow("drei@example.com") << im->identityForAddress(QStringLiteral("drei@example.com")).uoid() << false;
-    QTest::newRow("autocrypt@example.com") << im->identityForAddress(QStringLiteral("autocrypt@example.com")).uoid() << true;
+    QTest::newRow("default") << im->identityForAddress(QStringLiteral("firstname.lastname@test.example")).uoid() << false;
+    QTest::newRow("secondus@test.example") << im->identityForAddress(QStringLiteral("secundus@test.example")).uoid() << false;
+    QTest::newRow("drei@test.example") << im->identityForAddress(QStringLiteral("drei@test.example")).uoid() << false;
+    QTest::newRow("autocrypt@test.example") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << true;
 }
 
 void KMComposerWinTest::testEncryption()
@@ -205,7 +201,7 @@ void KMComposerWinTest::testEncryption()
     QFETCH(bool, encrypt);
 
     QFile file1(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
-    QVERIFY(file1.copy(autocryptDir.filePath(QStringLiteral("friends%40kde.org.json"))));
+    QVERIFY(file1.copy(autocryptDir.filePath(QStringLiteral("friends%40kde.example.json"))));
 
     const auto ident = mKernel->identityManager()->identityForUoid(uoid);
     const auto msg(createItem(ident));
@@ -236,7 +232,7 @@ void KMComposerWinTest::testChangeIdentity()
 
     const auto im = mKernel->identityManager();
 
-    auto ident = im->defaultIdentity();
+    auto ident = im->identityForAddress(QStringLiteral("firstname.lastname@test.example"));
     const auto msg(createItem(ident));
 
     auto composer = KMail::makeComposer(msg);
@@ -251,7 +247,7 @@ void KMComposerWinTest::testChangeIdentity()
     QCOMPARE(signature->isVisible(), true);
 
     {
-        ident = im->identityForAddress(QStringLiteral("autocrypt@example.com"));
+        ident = im->identityForAddress(QStringLiteral("autocrypt@test.example"));
         auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
         QVERIFY(identCombo);
         identCombo->setCurrentIdentity(ident);
@@ -265,7 +261,7 @@ void KMComposerWinTest::testChangeIdentity()
     }
 
     {
-        ident = im->identityForAddress(QStringLiteral("secundus@example.com"));
+        ident = im->identityForAddress(QStringLiteral("secundus@test.example"));
         auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
         QVERIFY(identCombo);
         identCombo->setCurrentIdentity(ident);
