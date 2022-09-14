@@ -72,6 +72,11 @@ namespace KIdentityManagement
 class Identity;
 }
 
+namespace Kleo
+{
+class KeyCache;
+}
+
 namespace KPIMTextEdit
 {
 class RichTextEditorWidget;
@@ -422,7 +427,7 @@ private Q_SLOTS:
     void slotRecipientAdded(MessageComposer::RecipientLineNG *line);
     void slotRecipientLineIconClicked(MessageComposer::RecipientLineNG *line);
     void slotRecipientFocusLost(MessageComposer::RecipientLineNG *line);
-    void slotKeyForMailBoxResult(const GpgME::KeyListResult &result, const GpgME::Key &key, const GpgME::UserID &userID);
+    void slotKeyForMailBoxResult(MessageComposer::RecipientLineNG *line);
 
     void slotDelayedCheckSendNow();
     void slotUpdateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
@@ -704,6 +709,8 @@ private:
 
     AttachmentAddedFromExternalWarning *const mAttachmentFromExternalMissing;
     KHamburgerMenu *mHamburgerMenu = nullptr;
+
+    std::shared_ptr<Kleo::KeyCache> mKeyCache;
 
     ModeType mModeType = ModeType::ComposerType;
 };

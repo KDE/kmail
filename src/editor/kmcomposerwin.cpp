@@ -79,6 +79,7 @@
 
 #include <KCursorSaver>
 
+#include <Libkleo/KeyCache>
 #include <Libkleo/Enum>
 
 #include <MailCommon/FolderCollectionMonitor>
@@ -248,6 +249,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
     , mAttachmentFromExternalMissing(new AttachmentAddedFromExternalWarning(this))
 {
+
+    mKeyCache = Kleo::KeyCache::mutableInstance();
+
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
     mComposerBase->setIdentityManager(kmkernel->identityManager());
@@ -3690,7 +3694,7 @@ void KMComposerWin::slotRecipientEditorFocusChanged()
 
         // There's still a lookup job running, so wait, slotKeyForMailBoxResult()
         // will call us if the job returns empty key
-        if (line->property("keyLookupJob").isValid()) {
+        if (line->property("keyLookupJob").toBool()) {
             return;
         }
 
@@ -3745,42 +3749,21 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
         return;
     }
 
-    const auto protocol = QGpgME::openpgp();
-    // If we don't have gnupg we can't look for keys
-    if (!protocol) {
+
+    if (!mKeyCache->initialized()) {
+        if (line->property("keyLookupJob").toBool()) {
+            return;
+        }
+
+        line->setProperty("keyLookupJob", true);
+        // We need to start key listing on our own othweise KMail will crash and we want to wait till the cache is populated.
+        connect(mKeyCache.get(), &Kleo::KeyCache::keyListingDone, this, [this, line](){
+            slotRecipientAdded(line);
+        });
         return;
     }
 
-    auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
-    // check if is an already running key lookup job and if so, cancel it
-    // this is to prevent a slower job overwriting results of the job that we
-    // are about to start now.
-    const auto runningJob = line->property("keyLookupJob").value<QPointer<QGpgME::KeyForMailboxJob>>();
-    if (runningJob) {
-        disconnect(runningJob.data(), &QGpgME::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
-        runningJob->slotCancel();
-        line->setProperty("keyLookupJob", QVariant());
-    }
-
-    QGpgME::KeyForMailboxJob *job = protocol->keyForMailboxJob();
-    if (!job) {
-        line->setProperty("keyStatus", NoKey);
-        recipient->setEncryptionAction(Kleo::Impossible);
-        return;
-    }
-    auto context = QGpgME::Job::context(job);
-    context->setKeyListMode(context->keyListMode() | GpgME::KeyListMode::WithTofu);
-
-    QString dummy;
-    QString addrSpec;
-    if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
-        addrSpec = recipient->email();
-    }
-    line->setProperty("keyLookupJob", QVariant::fromValue(QPointer<QGpgME::KeyForMailboxJob>(job)));
-    job->setProperty("recipient", QVariant::fromValue(recipient));
-    job->setProperty("line", QVariant::fromValue(QPointer<MessageComposer::RecipientLineNG>(line)));
-    connect(job, &QGpgME::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
-    job->start(addrSpec, true);
+    slotKeyForMailBoxResult(line);
 }
 
 void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *line)
@@ -3808,24 +3791,41 @@ void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *lin
     }
 }
 
-void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const GpgME::Key &key, const GpgME::UserID &userID)
-{
-    QObject *job = sender();
-    Q_ASSERT(job);
+namespace {
 
+auto findSendersUid(const std::string &addrSpec, const std::vector<GpgME::UserID> &userIds)
+{
+    return std::find_if(userIds.cbegin(), userIds.cend(),
+            [&addrSpec](const auto &uid) {
+                return uid.addrSpec() == addrSpec
+                        || (uid.addrSpec().empty() && std::string(uid.email()) == addrSpec)
+                        || (uid.addrSpec().empty() && (!uid.email() || !*uid.email()) && uid.name() == addrSpec);
+            });
+}
+
+}
+
+void KMComposerWin::slotKeyForMailBoxResult(MessageComposer::RecipientLineNG *line)
+{
     // Check if the encryption was explicitly disabled while the job was running
     if (!mEncryptAction->isChecked() && mEncryptAction->property("setByUser").toBool()) {
         return;
     }
 
-    auto recipient = job->property("recipient").value<MessageComposer::Recipient::Ptr>();
-    auto line = job->property("line").value<QPointer<MessageComposer::RecipientLineNG>>();
+    auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
 
     if (!recipient || !line) {
         return;
     }
 
-    line->setProperty("keyLookupJob", QVariant());
+    QString dummy;
+    QString addrSpec;
+    if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
+        addrSpec = recipient->email();
+    }
+
+    auto key = mKeyCache->findBestByMailBox(addrSpec.toUtf8().constData(), GpgME::Protocol::UnknownProtocol, Kleo::KeyCache::KeyUsage::Encrypt);
+    line->setProperty("keyLookupJob", false);
     if (key.isNull() && identity().autocryptEnabled()) {
         const QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
         QIcon overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
@@ -3884,7 +3884,13 @@ void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const 
 
         QString tooltip;
 
-        const auto trustLevel = Kleo::trustLevel(userID);
+        const auto uids = key.userIDs();
+        const auto _uid = findSendersUid(addrSpec.toStdString(), uids);
+        GpgME::UserID uid = *_uid;
+        if (_uid == uids.cend()) {
+            uid = key.userID(0);
+        }
+        const auto trustLevel = Kleo::trustLevel(uid);
         switch (trustLevel) {
         case Kleo::Level0:
             if (uid.tofuInfo().isNull()) {
