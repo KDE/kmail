@@ -26,6 +26,7 @@
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "editor/warningwidgets/attachmentaddedfromexternalwarning.h"
 #include "editor/warningwidgets/incorrectidentityfolderwarning.h"
+#include "editor/warningwidgets/nearexpirywarning.h"
 #include "editor/warningwidgets/toomanyrecipientswarning.h"
 #include "job/addressvalidationjob.h"
 #include "job/createnewcontactjob.h"
@@ -106,6 +107,7 @@
 #include <MessageComposer/InfoPart>
 #include <MessageComposer/InsertTextFileJob>
 #include <MessageComposer/Kleo_Util>
+#include <MessageComposer/NearExpiryChecker>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageComposer/MessageHelper>
 #include <MessageComposer/PluginActionType>
@@ -242,6 +244,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mAttachmentMissing(new AttachmentMissingWarning(this))
     , mExternalEditorWarning(new ExternalEditorWarning(this))
     , mTooMyRecipientWarning(new TooManyRecipientsWarning(this))
+    , mNearExpiryWarning(new NearExpiryWarning(this))
     , mCryptoStateIndicatorWidget(new CryptoStateIndicatorWidget(this))
     , mPotentialPhishingEmailWarning(new PotentialPhishingEmailWarning(this))
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
@@ -269,6 +272,28 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mComposerBase, &MessageComposer::ComposerViewBase::modified, this, &KMComposerWin::setModified);
 
     (void)new MailcomposerAdaptor(this);
+
+    connect(mComposerBase->nearExpiryChecker().data(), &MessageComposer::NearExpiryChecker::expiryMessage, this,
+            [&](const GpgME::Key &key, QString msg,  MessageComposer::NearExpiryChecker::ExpiryInformation info, bool isNewMessage) {
+                Q_UNUSED(isNewMessage);
+                if (info == MessageComposer::NearExpiryChecker::OwnKeyExpired || info == MessageComposer::NearExpiryChecker::OwnKeyNearExpiry) {
+                    const auto plainMsg = msg.replace(QStringLiteral("<p>"),QStringLiteral(" "))
+                                             .replace(QStringLiteral("</p>"),QStringLiteral(" "))
+                                             .replace(QStringLiteral("<p align=center>"),QStringLiteral(" "));
+                    mNearExpiryWarning->addInfo(plainMsg);
+                    mNearExpiryWarning->setWarning(info == MessageComposer::NearExpiryChecker::OwnKeyExpired);
+                    mNearExpiryWarning->animatedShow();
+                }
+                const QList<KPIM::MultiplyingLine *> lstLines = mComposerBase->recipientsEditor()->lines();
+                for (KPIM::MultiplyingLine *line : lstLines) {
+                    auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
+                    if (recipient->key().primaryFingerprint() == key.primaryFingerprint()) {
+                        qobject_cast<MessageComposer::RecipientLineNG *>(line)->setIcon(QIcon::fromTheme(QStringLiteral("emblem-warning")), msg);
+                        return;
+                    }
+                }
+            });
+
     mdbusObjectPath = QLatin1String("/Composer_") + QString::number(++s_composerNumber);
     QDBusConnection::sessionBus().registerObject(mdbusObjectPath, this);
 
@@ -384,6 +409,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     vbox->addWidget(mAttachmentFromExternalMissing);
     vbox->addWidget(mTooMyRecipientWarning);
+    vbox->addWidget(mNearExpiryWarning);
 
     vbox->addWidget(mCryptoStateIndicatorWidget);
     vbox->addWidget(mRichTextEditorwidget);
@@ -3368,12 +3394,67 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
     }
 }
 
+void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagement::Identity& ident)
+{
+    mNearExpiryWarning->clearInfo();
+    mNearExpiryWarning->hide();
+
+    if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
+        if (!ident.pgpEncryptionKey().isEmpty()) {
+            auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData());
+            if (key.isNull()) {
+                mNearExpiryWarning->addInfo(QStringLiteral("Your GPG key cannot been found in your keyring: ") + QString::fromUtf8(ident.pgpEncryptionKey()));
+                mNearExpiryWarning->setWarning(true);
+                mNearExpiryWarning->show();
+            } else {
+                mComposerBase->nearExpiryChecker()->checkOwnKey(key);
+            }
+        }
+        if (!ident.pgpSigningKey().isEmpty()) {
+            if (ident.pgpSigningKey() != ident.pgpEncryptionKey()) {
+                auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData());
+                mComposerBase->nearExpiryChecker()->checkOwnKey(key);
+            }
+        }
+    }
+
+    if (cryptoMessageFormat() & Kleo::AnySMIME) {
+        if (!ident.smimeEncryptionKey().isEmpty()) {
+            auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData());
+            if (key.isNull()) {
+                mNearExpiryWarning->addInfo(QStringLiteral("Your SMIME key cannot been found in your keyring: ") + QString::fromUtf8(ident.pgpEncryptionKey()));
+                mNearExpiryWarning->setWarning(true);
+                mNearExpiryWarning->show();
+            } else {
+                mComposerBase->nearExpiryChecker()->checkOwnKey(key);
+            }
+        }
+        if (!ident.smimeSigningKey().isEmpty()) {
+            if (ident.smimeSigningKey() != ident.smimeEncryptionKey()) {
+                auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData());
+                mComposerBase->nearExpiryChecker()->checkOwnKey(key);
+            }
+        }
+    }
+}
+
 void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified)
 {
     // disable certain actions if there is no PGP user identity set
     // for this profile
     bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
     bool bNewIdentityHasEncryptionKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+
+    if (!mKeyCache->initialized()) {
+        // We need to start key listing on our own othweise KMail will crash and we want to wait till the cache is populated.
+        mKeyCache->startKeyListing();
+        connect(mKeyCache.get(), &Kleo::KeyCache::keyListingDone, this, [this, &ident](){
+            checkOwnKeyExpiry(ident);
+        });
+    } else {
+        checkOwnKeyExpiry(ident);
+    }
+
     // save the state of the sign and encrypt button
     if (!bNewIdentityHasEncryptionKey && mLastIdentityHasEncryptionKey) {
         mLastEncryptActionState = mEncryptAction->isChecked();
@@ -3867,6 +3948,7 @@ void KMComposerWin::slotKeyForMailBoxResult(MessageComposer::RecipientLineNG *li
             recipient->setKey(autocryptKey);
             line->setProperty("keyStatus", KeyOk);
             line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
+            mComposerBase->nearExpiryChecker()->checkKey(autocryptKey);
 
             slotRecipientEditorFocusChanged();
         } else {
@@ -3936,6 +4018,7 @@ void KMComposerWin::slotKeyForMailBoxResult(MessageComposer::RecipientLineNG *li
         line->setProperty("keyStatus", KeyOk);
         // Magically, the icon name maps precisely to each trust level
         line->setIcon(QIcon::fromTheme(QStringLiteral("gpg-key-trust-level-%1").arg(trustLevel)), tooltip);
+        mComposerBase->nearExpiryChecker()->checkKey(key);
 
         slotRecipientEditorFocusChanged();
     }

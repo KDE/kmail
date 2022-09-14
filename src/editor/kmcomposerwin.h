@@ -59,6 +59,7 @@ class IncorrectIdentityFolderWarning;
 class KMailPluginEditorConvertTextManagerInterface;
 class KMailPluginGrammarEditorManagerInterface;
 class AttachmentAddedFromExternalWarning;
+class NearExpiryWarning;
 class KHamburgerMenu;
 class TooManyRecipientsWarning;
 class SubjectLineEditWithAutoCorrection;
@@ -577,6 +578,7 @@ private:
     void slotTransportRemoved(int id, const QString &name);
 
     void updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified);
+    void checkOwnKeyExpiry(const KIdentityManagement::Identity &ident);
 
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
@@ -685,6 +687,7 @@ private:
     AttachmentMissingWarning *const mAttachmentMissing;
     ExternalEditorWarning *const mExternalEditorWarning;
     TooManyRecipientsWarning *const mTooMyRecipientWarning;
+    NearExpiryWarning *const mNearExpiryWarning;
     QTimer *mVerifyMissingAttachment = nullptr;
     MailCommon::FolderRequester *mFccFolder = nullptr;
     bool mPreventFccOverwrite = false;

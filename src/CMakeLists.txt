@@ -106,6 +106,7 @@ target_sources(kmailprivate PRIVATE
     editor/warningwidgets/incorrectidentityfolderwarning.cpp
     editor/warningwidgets/attachmentaddedfromexternalwarning.cpp
     editor/warningwidgets/toomanyrecipientswarning.cpp
+    editor/warningwidgets/nearexpirywarning.cpp
     editor/potentialphishingemail/potentialphishingemailwarning.cpp
     editor/potentialphishingemail/potentialphishingemailjob.cpp
     editor/potentialphishingemail/potentialphishingdetaildialog.cpp
@@ -237,6 +238,7 @@ target_sources(kmailprivate PRIVATE
     editor/warningwidgets/incorrectidentityfolderwarning.h
     editor/warningwidgets/attachmentaddedfromexternalwarning.h
     editor/warningwidgets/toomanyrecipientswarning.h
+    editor/warningwidgets/nearexpirywarning.h
     editor/potentialphishingemail/potentialphishingemailwarning.h
     editor/potentialphishingemail/potentialphishingemailjob.h
     editor/potentialphishingemail/potentialphishingdetaildialog.h
