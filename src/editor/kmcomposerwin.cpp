@@ -3443,7 +3443,7 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
     // disable certain actions if there is no PGP user identity set
     // for this profile
     bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
-    bool bNewIdentityHasEncryptionKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+    bool bNewIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
     if (!mKeyCache->initialized()) {
         // We need to start key listing on our own othweise KMail will crash and we want to wait till the cache is populated.
