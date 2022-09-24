@@ -125,11 +125,6 @@ void KMailPart::exit()
     delete this;
 }
 
-QWidget *KMailPart::parentWidget() const
-{
-    return mParentWidget;
-}
-
 void KMailPart::save()
 {
     /*TODO*/

@@ -25,12 +25,7 @@
 #include <KEditToolBar>
 #include <KFileItemActions>
 #include <KIO/ApplicationLauncherJob>
-#include <kio_version.h>
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
 #include <KIO/JobUiDelegateFactory>
-#else
-#include <KIO/JobUiDelegate>
-#endif
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -242,11 +237,7 @@ void KTNEFMain::viewFile()
             qCDebug(KTNEFAPPS_LOG) << "Mime type from attachment object: " << mimename;
         }
         auto job = new KIO::OpenUrlJob(url, mimename);
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#else
-        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#endif
         job->setDeleteTemporaryFile(true);
         job->start();
     } else {
@@ -277,11 +268,7 @@ void KTNEFMain::viewFileAs()
             // Creating ApplicationLauncherJob without any args will invoke the open-with dialog
             auto job = new KIO::ApplicationLauncherJob();
             job->setUrls(list);
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
             job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#else
-            job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#endif
             job->start();
         }
     } else {
@@ -491,11 +478,7 @@ void KTNEFMain::slotShowMessageText()
         tmpFile->write(rtf.toLocal8Bit());
         tmpFile->close();
         auto job = new KIO::OpenUrlJob(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"));
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#else
-        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#endif
         job->setDeleteTemporaryFile(true);
         job->start();
         delete tmpFile;
@@ -531,11 +514,7 @@ void KTNEFMain::openWith(const KService::Ptr &offer)
         const QList<QUrl> lst{url};
         auto job = new KIO::ApplicationLauncherJob(offer);
         job->setUrls(lst);
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#else
-        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
-#endif
         job->start();
     }
 }

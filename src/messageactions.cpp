@@ -36,12 +36,7 @@
 #include <Akonadi/ItemFetchJob>
 #include <KActionCollection>
 #include <KActionMenu>
-#include <kio_version.h>
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
 #include <KIO/JobUiDelegateFactory>
-#else
-#include <KIO/JobUiDelegate>
-#endif
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KStringHandler>
@@ -575,11 +570,7 @@ void MessageActions::slotRunUrl(QAction *urlAction)
     const QVariant q = urlAction->data();
     if (q.type() == QVariant::Url) {
         auto job = new KIO::OpenUrlJob(q.toUrl());
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParent));
-#else
-        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParent));
-#endif
         job->start();
     }
 }
