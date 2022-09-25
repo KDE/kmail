@@ -6,9 +6,8 @@
 
 #pragma once
 
+#include <KSharedConfig>
 #include <QDialog>
-
-#include "unifiedmailboxmanager.h"
 
 class UnifiedMailbox;
 class UnifiedMailboxEditor : public QDialog

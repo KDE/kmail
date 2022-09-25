@@ -10,7 +10,6 @@
 #include <KPIMTextEdit/PlainTextEditorWidget>
 #include <MailCommon/FilterLog>
 
-#include "mailfilteragent_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KStandardAction>

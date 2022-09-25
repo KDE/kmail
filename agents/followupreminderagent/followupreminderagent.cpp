@@ -9,7 +9,6 @@
 #include "followupreminderagentsettings.h"
 #include "followupreminderinfo.h"
 #include "followupremindermanager.h"
-#include "followupreminderutil.h"
 
 #include <KMime/Message>
 

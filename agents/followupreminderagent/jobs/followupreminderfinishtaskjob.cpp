@@ -6,7 +6,6 @@
 
 #include "followupreminderfinishtaskjob.h"
 #include "followupreminderagent_debug.h"
-#include "followupreminderinfo.h"
 
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemModifyJob>

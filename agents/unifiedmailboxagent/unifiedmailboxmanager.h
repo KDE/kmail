@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include "utils.h"
-
 #include <QObject>
 #include <QSet>
 #include <QSettings>

@@ -5,8 +5,8 @@
 */
 
 #include "unifiedmailboxeditor.h"
-#include "mailkernel.h"
 #include "unifiedmailbox.h"
+#include "unifiedmailboxmanager.h"
 
 #include <QDialogButtonBox>
 #include <QFormLayout>
