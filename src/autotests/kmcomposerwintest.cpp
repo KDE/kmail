@@ -8,6 +8,11 @@
 #include "kmkernel.h"
 #include <MessageComposer/Composer>
 
+#include <gpgme.h>
+#include <gpgme++/key.h>
+
+#include <KEmailAddress>
+
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityCombo>
 #include <KIdentityManagement/IdentityManager>
@@ -30,6 +35,63 @@ using namespace std::chrono_literals;
 
 QTEST_MAIN(KMComposerWinTest)
 
+auto mapValidity(GpgME::UserID::Validity validity)
+{
+    switch (validity) {
+    default:
+    case GpgME::UserID::Unknown:
+        return GPGME_VALIDITY_UNKNOWN;
+    case GpgME::UserID::Undefined:
+        return GPGME_VALIDITY_UNDEFINED;
+    case GpgME::UserID::Never:
+        return GPGME_VALIDITY_NEVER;
+    case GpgME::UserID::Marginal:
+        return GPGME_VALIDITY_MARGINAL;
+    case GpgME::UserID::Full:
+        return GPGME_VALIDITY_FULL;
+    case GpgME::UserID::Ultimate:
+        return GPGME_VALIDITY_ULTIMATE;
+    }
+}
+
+GpgME::Key createTestKey(QByteArray uid, QByteArray fingerprint,
+                         GpgME::Protocol protocol = GpgME::UnknownProtocol,
+                         Kleo::KeyCache::KeyUsage usage = Kleo::KeyCache::KeyUsage::AnyUsage,
+                         GpgME::UserID::Validity validity = GpgME::UserID::Full)
+{
+    static int count = 0;
+    count++;
+
+    gpgme_key_t key;
+    gpgme_key_from_uid(&key, uid.constData());
+    Q_ASSERT(key);
+    Q_ASSERT(key->uids);
+    if (protocol != GpgME::UnknownProtocol) {
+        key->protocol = protocol == GpgME::OpenPGP ? GPGME_PROTOCOL_OpenPGP : GPGME_PROTOCOL_CMS;
+    }
+    key->fpr = strdup(fingerprint.rightJustified(40, '0').constData());
+    key->revoked = 0;
+    key->expired = 0;
+    key->disabled = 0;
+    key->can_encrypt = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Encrypt);
+    key->can_sign = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Sign);
+    key->secret = 1;
+    key->uids->validity = mapValidity(validity);
+    gpgme_subkey_t subkey;
+    subkey = (gpgme_subkey_t) calloc (1, sizeof *subkey);
+    key->subkeys = subkey;
+    key->_last_subkey = subkey;
+    subkey->timestamp = 123456789;
+    subkey->revoked = 0;
+    subkey->expired = 0;
+    subkey->disabled = 0;
+    subkey->keyid = strdup(fingerprint.constData());
+    subkey->can_encrypt = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Encrypt);
+    subkey->can_sign = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Sign);
+
+    return GpgME::Key(key, false);
+}
+
 void killAgent()
 {
     QProcess proc;
@@ -42,11 +104,11 @@ void killAgent()
     proc.waitForFinished();
 }
 
-KMime::Message::Ptr createItem(const KIdentityManagement::Identity &ident)
+KMime::Message::Ptr createItem(const KIdentityManagement::Identity &ident, QByteArray recipient="Friends <friends@kde.example>")
 {
     QByteArray data
-        = "From: Konqui <konqui@kde.org>\n"
-          "To: Friends <friends@kde.example>\n"
+        = "From: Konqui <konqui@kde.example>\n"
+          "To: " + recipient +"\n"
           "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
           "Subject: Sample message\n"
           "MIME-Version: 1.0\n"
@@ -86,9 +148,7 @@ KMComposerWinTest::~KMComposerWinTest()
 
 void KMComposerWinTest::init()
 {
-    autocryptDir.removeRecursively();
     autocryptDir.mkpath(QStringLiteral("."));
-
 }
 
 void KMComposerWinTest::cleanup()
@@ -108,8 +168,14 @@ void KMComposerWinTest::initTestCase()
     autocryptDir = QDir(genericDataLocation.filePath(QStringLiteral("autocrypt")));
 
     resetIdentities();
+
     // Keep a KeyCache reference. Make sure that the cache stays hot between the tests.
     mKernel->init();
+
+    Kleo::KeyCache::mutableInstance()->setKeys({
+        createTestKey("test <drei@test.example>",   "345678901", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
+        createTestKey("friends@kde.example", "1", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
+    });
 }
 
 void KMComposerWinTest::cleanupTestCase()
@@ -144,8 +210,8 @@ void KMComposerWinTest::resetIdentities()
     i3.setPgpAutoEncrypt(true);
     KIdentityManagement::Identity &i4 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("testautocrypt"));
     i4.setPrimaryEmailAddress(QStringLiteral("autocrypt@test.example"));
-    i4.setPGPSigningKey("0x456789012");
-    i4.setPGPEncryptionKey("0x456789012");
+    i4.setPGPSigningKey("345678901");
+    i4.setPGPEncryptionKey("345678901");
     i4.setPgpAutoSign(true);
     i4.setPgpAutoEncrypt(true);
     i4.setAutocryptEnabled(true);
@@ -185,26 +251,35 @@ void KMComposerWinTest::testSignature()
 void KMComposerWinTest::testEncryption_data()
 {
     const auto im = mKernel->identityManager();
+    const QString recipient(QStringLiteral("Friends <friends@kde.example>"));
 
     QTest::addColumn<uint>("uoid");
+    QTest::addColumn<QString>("recipient");
     QTest::addColumn<bool>("encrypt");
 
-    QTest::newRow("default") << im->identityForAddress(QStringLiteral("firstname.lastname@test.example")).uoid() << false;
-    QTest::newRow("secondus@test.example") << im->identityForAddress(QStringLiteral("secundus@test.example")).uoid() << false;
-    QTest::newRow("drei@test.example") << im->identityForAddress(QStringLiteral("drei@test.example")).uoid() << false;
-    QTest::newRow("autocrypt@test.example") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << true;
+    QTest::newRow("default") << im->identityForAddress(QStringLiteral("firstname.lastname@test.example")).uoid() << recipient << false;
+    QTest::newRow("secondus@test.example") << im->identityForAddress(QStringLiteral("secundus@test.example")).uoid() << recipient << false;
+    QTest::newRow("drei@test.example") << im->identityForAddress(QStringLiteral("drei@test.example")).uoid() << recipient << true;
+    QTest::newRow("autocrypt@test.example") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << "Autocrypt <friends@autocrypt.example>" << true;
 }
 
 void KMComposerWinTest::testEncryption()
 {
     QFETCH(uint, uoid);
+    QFETCH(QString, recipient);
     QFETCH(bool, encrypt);
 
+    QString dummy;
+    QString addrSpec;
+    if (KEmailAddress::splitAddress(recipient, dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
+        addrSpec = recipient;
+    }
+
     QFile file1(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
-    QVERIFY(file1.copy(autocryptDir.filePath(QStringLiteral("friends%40kde.example.json"))));
+    QVERIFY(file1.copy(autocryptDir.filePath(addrSpec.replace(QStringLiteral("@"),QStringLiteral("%40")) + QStringLiteral(".json"))));
 
     const auto ident = mKernel->identityManager()->identityForUoid(uoid);
-    const auto msg(createItem(ident));
+    const auto msg(createItem(ident, recipient.toUtf8()));
 
     auto composer = KMail::makeComposer(msg);
     composer->show();
@@ -228,7 +303,7 @@ void KMComposerWinTest::testEncryption()
 void KMComposerWinTest::testChangeIdentity()
 {
     QFile file1(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
-    QVERIFY(file1.copy(autocryptDir.filePath(QStringLiteral("friends%40kde.org.json"))));
+    QVERIFY(file1.copy(autocryptDir.filePath(QStringLiteral("friends%40kde.example.json"))));
 
     const auto im = mKernel->identityManager();
 
