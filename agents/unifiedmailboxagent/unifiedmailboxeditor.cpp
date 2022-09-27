@@ -20,8 +20,10 @@
 #include <KIconDialog>
 #include <KLocalizedString>
 
+#include <KWindowConfig>
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/FolderTreeWidget>
+#include <QWindow>
 
 namespace
 {
@@ -164,17 +166,17 @@ UnifiedMailboxEditor::~UnifiedMailboxEditor()
 
 void UnifiedMailboxEditor::readConfig()
 {
-    auto editorGrp = mConfig->group(EditorGroup);
-    const QSize size = editorGrp.readEntry("Size", QSize(600, 700));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 700));
+    KConfigGroup group(KSharedConfig::openStateConfig(), EditorGroup);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void UnifiedMailboxEditor::writeConfig()
 {
     auto editorGrp = mConfig->group(EditorGroup);
-    editorGrp.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), editorGrp);
     editorGrp.sync();
 }
 

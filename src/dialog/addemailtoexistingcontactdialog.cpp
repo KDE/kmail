@@ -19,10 +19,12 @@
 #include <KLocalizedString>
 
 #include <KConfigGroup>
+#include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <QWindow>
 namespace
 {
 static const char myAddEmailToExistingContactDialogGroupName[] = "AddEmailToExistingContactDialog";
@@ -89,17 +91,17 @@ void AddEmailToExistingContactDialog::slotSelectionChanged()
 
 void AddEmailToExistingContactDialog::readConfig()
 {
-    KConfigGroup group(KMKernel::self()->config(), myAddEmailToExistingContactDialogGroupName);
-    const QSize size = group.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
+    KConfigGroup group(KSharedConfig::openStateConfig(), myAddEmailToExistingContactDialogGroupName);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void AddEmailToExistingContactDialog::writeConfig()
 {
     KConfigGroup group(KMKernel::self()->config(), myAddEmailToExistingContactDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }
 

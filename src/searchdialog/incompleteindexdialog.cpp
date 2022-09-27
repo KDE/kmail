@@ -22,11 +22,13 @@
 
 #include <KConfigGroup>
 #include <KSharedConfig>
+#include <KWindowConfig>
 #include <QDBusInterface>
 #include <QDBusMetaType>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QTimer>
+#include <QWindow>
 #include <chrono>
 
 using namespace std::chrono_literals;
@@ -145,17 +147,17 @@ IncompleteIndexDialog::~IncompleteIndexDialog()
 
 void IncompleteIndexDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(500, 400));
     KConfigGroup group(KSharedConfig::openStateConfig(), myIncompleteIndexDialogGroupName);
-    const QSize size = group.readEntry("Size", QSize(500, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void IncompleteIndexDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myIncompleteIndexDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }
 

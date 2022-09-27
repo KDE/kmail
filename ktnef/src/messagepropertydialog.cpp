@@ -22,10 +22,12 @@
 #include <KConfigGroup>
 #include <KGuiItem>
 #include <KSharedConfig>
+#include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QPushButton>
 #include <QTreeWidget>
+#include <QWindow>
 namespace
 {
 static const char myMessagePropertyDialogGroupName[] = "MessagePropertyDialog";
@@ -74,11 +76,11 @@ void MessagePropertyDialog::slotSaveProperty()
 
 void MessagePropertyDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
     KConfigGroup group(KSharedConfig::openStateConfig(), myMessagePropertyDialogGroupName);
-    const QSize size = group.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
     const QByteArray headerState = group.readEntry("HeaderState", QByteArray());
     if (!headerState.isEmpty()) {
         mListView->header()->restoreState(headerState);
@@ -88,7 +90,7 @@ void MessagePropertyDialog::readConfig()
 void MessagePropertyDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myMessagePropertyDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.writeEntry("HeaderState", mListView->header()->saveState());
     group.sync();
 }

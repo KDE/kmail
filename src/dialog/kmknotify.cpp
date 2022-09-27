@@ -12,11 +12,13 @@
 #include <KLocalizedString>
 #include <KNotifyConfigWidget>
 #include <KSeparator>
+#include <KWindowConfig>
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QVBoxLayout>
+#include <QWindow>
 
 using namespace KMail;
 
@@ -121,16 +123,16 @@ void KMKnotify::slotOk()
 
 void KMKnotify::readConfig()
 {
-    KConfigGroup notifyDialog(KMKernel::self()->config(), "KMKnotifyDialog");
-    const QSize size = notifyDialog.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
+    KConfigGroup group(KSharedConfig::openStateConfig(), "KMKnotifyDialog");
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void KMKnotify::writeConfig()
 {
     KConfigGroup notifyDialog(KMKernel::self()->config(), "KMKnotifyDialog");
-    notifyDialog.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
 }

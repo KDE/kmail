@@ -20,7 +20,9 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KWindowConfig>
 #include <QMenu>
+#include <QWindow>
 
 #include <memory>
 
@@ -154,17 +156,17 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::readConfig()
 {
-    auto dlgGroup = mConfig->group(DialogGroup);
-    const QSize size = dlgGroup.readEntry("Size", QSize(500, 500));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(500, 500));
+    KConfigGroup group(KSharedConfig::openStateConfig(), DialogGroup);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void SettingsDialog::writeConfig()
 {
     auto dlgGroup = mConfig->group(DialogGroup);
-    dlgGroup.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), dlgGroup);
     dlgGroup.sync();
 }
 

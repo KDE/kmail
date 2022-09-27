@@ -13,10 +13,12 @@
 #include <KHelpMenu>
 #include <KLocalizedString>
 #include <KSharedConfig>
+#include <KWindowConfig>
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QIcon>
 #include <QMenu>
+#include <QWindow>
 namespace
 {
 static const char myConfigureSendLaterConfigureDialogGroupName[] = "SendLaterConfigureDialog";
@@ -85,17 +87,18 @@ void SendLaterConfigureDialog::slotNeedToReloadConfig()
 
 void SendLaterConfigureDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(800, 600));
     KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureSendLaterConfigureDialogGroupName);
-    const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
-    if (sizeDialog.isValid()) {
-        resize(sizeDialog);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
+
     mWidget->restoreTreeWidgetHeader(group.readEntry("HeaderState", QByteArray()));
 }
 
 void SendLaterConfigureDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureSendLaterConfigureDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     mWidget->saveTreeWidgetHeader(group);
 }

@@ -13,6 +13,8 @@
 #include <Sonnet/DictionaryComboBox>
 
 #include <KConfigGroup>
+#include <KWindowConfig>
+#include <QWindow>
 
 SpellCheckerConfigDialog::SpellCheckerConfigDialog(QWidget *parent)
     : Sonnet::ConfigDialog(parent)
@@ -47,16 +49,16 @@ SpellCheckerConfigDialog::~SpellCheckerConfigDialog()
 
 void SpellCheckerConfigDialog::readConfig()
 {
-    KConfigGroup notifyDialog(KMKernel::self()->config(), "KMKnotifyDialog");
-    const QSize size = notifyDialog.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
+    KConfigGroup group(KSharedConfig::openStateConfig(), "SpellCheckerConfigDialog");
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void SpellCheckerConfigDialog::writeConfig()
 {
-    KConfigGroup notifyDialog(KMKernel::self()->config(), "KMKnotifyDialog");
-    notifyDialog.writeEntry("Size", size());
+    KConfigGroup notifyDialog(KMKernel::self()->config(), "SpellCheckerConfigDialog");
+    KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
 }

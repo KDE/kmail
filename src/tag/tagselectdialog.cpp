@@ -7,7 +7,6 @@
 #include "tagselectdialog.h"
 
 #include "kmail_debug.h"
-#include "kmkernel.h"
 #include "util.h"
 
 #include <MailCommon/AddTagDialog>
@@ -20,10 +19,13 @@
 #include <Akonadi/TagFetchJob>
 #include <Akonadi/TagFetchScope>
 #include <KConfigGroup>
+#include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QListWidget>
+#include <QPointer>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QWindow>
 
 using namespace KMail;
 namespace
@@ -81,17 +83,17 @@ TagSelectDialog::~TagSelectDialog()
 
 void TagSelectDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(500, 300));
     KConfigGroup group(KSharedConfig::openStateConfig(), myTagSelectDialogGroupName);
-    const QSize size = group.readEntry("Size", QSize(500, 300));
-    if (size.isValid()) {
-        resize(size);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void TagSelectDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myTagSelectDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
 }
 
 void TagSelectDialog::slotAddNewTag()

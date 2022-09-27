@@ -13,10 +13,12 @@
 #include <KSharedConfig>
 
 #include <KConfigGroup>
+#include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QWindow>
 
 #include "dbusproperties.h" // DBUS-generated
 #include "notifications_interface.h" // DBUS-generated
@@ -107,18 +109,18 @@ void FollowUpReminderNoAnswerDialog::setInfo(const QList<FollowUpReminder::Follo
 
 void FollowUpReminderNoAnswerDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(800, 600));
     KConfigGroup group(KSharedConfig::openStateConfig(), DialogGroup);
-    const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
-    if (sizeDialog.isValid()) {
-        resize(sizeDialog);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
     mWidget->restoreTreeWidgetHeader(group.readEntry("HeaderState", QByteArray()));
 }
 
 void FollowUpReminderNoAnswerDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), DialogGroup);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     mWidget->saveTreeWidgetHeader(group);
 }
 

@@ -25,6 +25,7 @@
 
 #include <KConfigGroup>
 #include <KSharedConfig>
+#include <KWindowConfig>
 #include <QBuffer>
 #include <QDataStream>
 #include <QDialogButtonBox>
@@ -34,6 +35,7 @@
 #include <QPushButton>
 #include <QTreeWidget>
 #include <QVBoxLayout>
+#include <QWindow>
 
 namespace
 {
@@ -71,17 +73,17 @@ AttachPropertyDialog::~AttachPropertyDialog()
 
 void AttachPropertyDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 700));
     KConfigGroup group(KSharedConfig::openStateConfig(), myAttachPropertyDialogGroupName);
-    const QSize size = group.readEntry("Size", QSize(500, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void AttachPropertyDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myAttachPropertyDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }
 
