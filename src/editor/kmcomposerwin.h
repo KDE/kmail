@@ -428,7 +428,6 @@ private Q_SLOTS:
     void slotRecipientAdded(MessageComposer::RecipientLineNG *line);
     void slotRecipientLineIconClicked(MessageComposer::RecipientLineNG *line);
     void slotRecipientFocusLost(MessageComposer::RecipientLineNG *line);
-    void slotKeyForMailBoxResult(MessageComposer::RecipientLineNG *line);
 
     void slotDelayedCheckSendNow();
     void slotUpdateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
@@ -593,6 +592,9 @@ private:
     void updateHamburgerMenu();
     void addFaceHeaders(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg);
     void slotTooManyRecipients(bool b);
+
+    void runKeyResolver();
+    void annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey);
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
