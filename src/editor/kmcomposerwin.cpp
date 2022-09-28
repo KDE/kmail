@@ -1018,8 +1018,6 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusDown, mEdtSubject, qOverload<>(&QWidget::setFocus));
     connect(mEdtSubject, &PimCommon::SpellCheckLineEdit::focusUp, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusBottom);
 
-    mComposerBase->recipientsEditor();
-
     if (!fromSlot) {
         mSubjectAction->setChecked(std::abs(mShowHeaders) & HDR_SUBJECT);
     }
