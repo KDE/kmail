@@ -1804,7 +1804,6 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         slotIdentityChanged(val);
     });
 
-    mComposerBase->setMessage(newMsg, allowDecryption);
     mMsg = newMsg;
 
     // manually load the identity's value into the fields; either the one from the
@@ -1881,6 +1880,10 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         setSigning((canOpenPGPSign || canSMIMESign) && mLastSignActionState);
     }
     updateSignatureAndEncryptionStateIndicators();
+
+    // We need to set encryption/signing first before adding content.
+    // This is important if we are in auto detect the encrypt mode.
+    mComposerBase->setMessage(mMsg, allowDecryption);
 
     QString kmailFcc;
     if (auto hdr = mMsg->headerByType("X-KMail-Fcc")) {
