@@ -161,6 +161,9 @@ private:
     QWidget *const mParent;
     Akonadi::Item::List mMsgList;
     Akonadi::ItemFetchScope mFetchScope;
+
+    // grant super power to test cases
+    friend class KMCommandsTest;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMMailtoComposeCommand : public KMCommand

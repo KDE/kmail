@@ -20,6 +20,7 @@ private Q_SLOTS:
     void testMailtoReply();
     void testReply();
     void testReplyWithoutDefaultGPGSign();
+    void testSendAgain();
     void initTestCase();
 
 private:

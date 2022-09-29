@@ -214,6 +214,20 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
     }
 }
 
+void KMCommandsTest::testSendAgain()
+{
+    resetIdentities();
+    {
+        const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
+        Akonadi::Item item(createItem(ident));
+
+        auto cmd(new KMResendMessageCommand(nullptr, item));
+        cmd->start();
+        QVERIFY(!cmd->retrievedMsgs().isEmpty());
+        waitForMainWindowToClose();
+    }
+}
+
 void KMCommandsTest::waitForMainWindowToClose()
 {
     KMainWindow *w = mKernel->mainWin();
