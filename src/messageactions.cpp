@@ -358,7 +358,7 @@ void MessageActions::updateActions()
     mReplyAllAction->setEnabled(hasPayload);
     mReplyListAction->setEnabled(hasPayload);
     mNoQuoteReplyAction->setEnabled(hasPayload);
-    mSendAgainAction->setEnabled(itemValid);
+    mSendAgainAction->setEnabled(hasPayload);
 
     mAnnotateAction->setEnabled(uniqItem);
     mAddFollowupReminderAction->setEnabled(uniqItem);
@@ -733,9 +733,7 @@ void MessageActions::slotDebugAkonadiSearch()
 
 void MessageActions::slotResendMessage()
 {
-    if (!mCurrentItem.isValid()) {
-        return;
-    }
+    // mCurrentItem.isValid() may be false here if message was imported via 'File' -> 'Open...'
     KMCommand *command = new KMResendMessageCommand(mParent, mCurrentItem);
     command->start();
 }
