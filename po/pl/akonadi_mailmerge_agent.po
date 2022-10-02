@@ -1,0 +1,62 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-01-02 00:48+0000\n"
+"PO-Revision-Date: 2022-01-15 10:50+0100\n"
+"Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 22.03.70\n"
+
+#: mailmergeconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Ustawienia"
+
+#: mailmergeconfiguredialog.cpp:48
+#, kde-format
+msgid "Mail Merge Agent"
+msgstr "Usługa scalania poczty"
+
+#: mailmergeconfiguredialog.cpp:50
+#, kde-format
+msgid "Merge email addresses agent."
+msgstr "Usługa scalania adresów pocztowych."
+
+#: mailmergeconfiguredialog.cpp:52
+#, kde-format
+msgid "Copyright (C) 2021-%1 Laurent Montel"
+msgstr "Copyright (C) 2021-%1 Laurent Montel"
+
+#: mailmergeconfiguredialog.cpp:54
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: mailmergeconfiguredialog.cpp:54
+#, kde-format
+msgid "Maintainer"
+msgstr "Opiekun"
+
+#: mailmergeconfiguredialog.cpp:57
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Łukasz Wojniłowicz"
+
+#: mailmergeconfiguredialog.cpp:57
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "lukasz.wojnilowicz@gmail.com"

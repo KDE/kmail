@@ -1,0 +1,105 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeorg\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-01-02 00:48+0000\n"
+"PO-Revision-Date: 2022-09-20 01:55\n"
+"Last-Translator: \n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: kdeorg\n"
+"X-Crowdin-Project-ID: 269464\n"
+"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-File: /kf5-trunk/messages/kmail/kmail-refresh-settings.pot\n"
+"X-Crowdin-File-ID: 10654\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE 中国, Guo Yunhe, KAAAsS, Tyson Tan"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"kde-china@kde.org, i@guoyunhe.me, kaaass@kde.org, tysontan@tysontan.com"
+
+#: main.cpp:32 main.cpp:34
+#, kde-format
+msgid "KMail Assistant for refreshing settings"
+msgstr "用于刷新设置的 KMail 辅助程序"
+
+#: main.cpp:36
+#, kde-format
+msgid "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+msgstr "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+
+#: main.cpp:37
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: main.cpp:37
+#, kde-format
+msgid "Author"
+msgstr "开发人员"
+
+#: refreshsettingsassistant.cpp:22
+#, kde-format
+msgctxt "@title:window"
+msgid "KMail Refresh Settings"
+msgstr "KMail 刷新设置"
+
+#: refreshsettingsassistant.cpp:39
+#, kde-format
+msgid "Warning"
+msgstr "警告"
+
+#: refreshsettingsassistant.cpp:43
+#, kde-format
+msgid "Clean up Settings"
+msgstr "清理设置"
+
+#: refreshsettingsassistant.cpp:47
+#, kde-format
+msgid "Finish"
+msgstr "完成"
+
+#: refreshsettingscleanuppage.cpp:20
+#, kde-format
+msgid "Clean"
+msgstr "清理"
+
+#: refreshsettingscleanuppage.cpp:50
+#, kde-format
+msgid "Remove obsolete \"TipOfDay\" settings: Done"
+msgstr "移除已废弃的“每日提示”设置：完成"
+
+#: refreshsettingscleanuppage.cpp:62
+#, kde-format
+msgid "Delete Dialog settings in file `%1`: Done"
+msgstr "删除文件“%1”中的对话框设置：完成"
+
+#: refreshsettingscleanuppage.cpp:74
+#, kde-format
+msgid "Delete Filters settings in file `%1`: Done"
+msgstr "删除文件“%1”中的过滤器设置：完成"
+
+#: refreshsettingscleanuppage.cpp:90
+#, kde-format
+msgid "Clean Folder Settings in setting file `%1`: Done"
+msgstr "清理设置文件“%1”中的文件夹设置：完成"
+
+#: refreshsettingscleanuppage.cpp:146
+#, kde-format
+msgid "Clean Dialog Size in setting file `%1`: Done"
+msgstr "清理设置文件“%1”中的对话框设置：完成"
+
+#: refreshsettingsfirstpage.cpp:18
+#, kde-format
+msgid "Please close KMail/Kontact before using it."
+msgstr "请在使用前关闭 KMail/Kontact。"

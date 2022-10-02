@@ -1,0 +1,603 @@
+<chapter id="credits-and-licenses">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+&Tom.Albers;&Rinse.Devries;&Natalie.Koning; 
+</authorgroup>
+<date
+>2021-09-10</date>
+<releaseinfo
+>5.14.2 (Applications 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Dankbetuigingen en licentie</title>
+
+<para
+>&kmail;: Copyright de ontwikkelaars van &kmail;, 1997-2021</para
+>&underGPL; &underFDL; <sect1 id="team">
+<title
+>Programma-ontwikkelteam</title>
+<!-- please keep in sync with the authors list in the "Help ==
+> About KMail" widget. -->
+<!-- Refer to program module aboutdata.cpp and git log history when revising this section. -->
+
+<para
+>Dit zijn de mensen die de meeste eer verdienen voor de initiële creatie van &kmail; en het verder brengen van zijn ontstaan in 1997 via zijn vroege jeugd <emphasis
+>ca.</emphasis
+> 2005. Ze kunnen beschouwd worden als de ouders van &kmail;. Een handful ervan dragen ook nu nog steeds bij in de vorm van code en het repareren bugs.</para>
+
+<itemizedlist>
+<listitem
+><para
+>Laurent Montel (montel at kde org): onderhouder</para
+></listitem>
+<listitem
+><para
+>Ingo Kl&ouml;cker (kloecker at kde org): voormalig onderhouder, nog steeds actief</para
+></listitem>
+<listitem
+><para
+>Thomas McGuire (mcguire at kde org): voormalig onderhouder</para
+></listitem>
+<listitem
+><para
+>Don Sanders (sanders at kde org): voormalige mede-onderhouder</para
+></listitem>
+<listitem
+><para
+>Stefan Taferner (taferner at kde org): oorspronkelijke auteur</para
+></listitem>
+<listitem
+><para
+>Michael Häckel (haeckel at kde org): voormalig onderhouder</para
+></listitem>
+<listitem
+><para
+>Till Adam (till at adam-lilienthal de): voormalig kernontwikkelaar</para
+></listitem>
+<listitem
+><para
+>Volker Krause (vkrause at adam-lilienthal de): kernontwikkelaar</para
+></listitem>
+<listitem
+><para
+>Carsten Burghardt (burghardt at kde org): voormalig kernontwikkelaar</para
+></listitem>
+<listitem
+><para
+>Marc Mutz (mutz at kde org): voormalig kernontwikkelaar</para
+></listitem>
+<listitem
+><para
+>Daniel Naber (daniel naber at t-online de): documentatie</para
+></listitem>
+<listitem
+><para
+>Zack Rusin (zack at kde org): voormalig kernontwikkelaar</para
+></listitem>
+<listitem
+><para
+>Toyohiro Asukai (toyohiro at ksmplus com): ondersteuning voor Japans</para
+></listitem>
+<listitem
+><para
+>Waldo Bastian (bastian at kde org): talloze technische correcties</para
+></listitem>
+<listitem
+><para
+>Ryan Breen (ryan at ryanbreen com): systeemvakmeldingen</para
+></listitem>
+<listitem
+><para
+>Steven Brown (swbrown at ucsd edu): patch voor PGP</para
+></listitem>
+<listitem
+><para
+>Matthias Kalle Dalheimer (kalle at kde org): ondersteuning voor versleuteling</para
+></listitem>
+<listitem
+><para
+>Matt Douhan (matt at fruitsalad org): Verbeterde interne programma documentatie</para
+></listitem>
+<listitem
+><para
+>Cristi Dumitrescu (cristid at chip ro)</para
+></listitem>
+<listitem
+><para
+>David Faure (faure at kde org): hoofdmedewerker, nog steeds actief</para
+></listitem>
+<listitem
+><para
+>Philippe Fremy (pfremy at chez com)</para
+></listitem>
+<listitem
+><para
+>Kurt Granroth (granroth at kde org): voegde ondersteuning voor maildir toe</para
+></listitem>
+<listitem
+><para
+>Andreas Gungl (a gungl at gmx de): PGP6-ondersteuning en verdere verbetering van de ondersteuning voor versleuteling</para
+></listitem>
+<listitem
+><para
+>Steffen Hansen (hansen at kde org)</para
+></listitem>
+<listitem
+><para
+>Igor Janssen (rm at linux ru net)</para
+></listitem>
+<listitem
+><para
+>Matt Johnston (matt at caifex org)</para
+></listitem>
+<listitem
+><para
+>Christer Kaivo-oja (whizkid at telia com)</para
+></listitem>
+<listitem
+><para
+>Lars Knoll (knoll at kde org): oorspronkelijke ondersteuning voor versleuteling en ondersteuning voor PGP2 en PGP5</para
+></listitem>
+<listitem
+><para
+>J. Nick Koston (bdraco at darkorb net): ondersteuning voor GnuPG</para
+></listitem>
+<listitem
+><para
+>Stephan Kulow (coolo at kde org): hoofdmedewerker</para
+></listitem>
+<listitem
+><para
+>Guillaume Laurent (glaurent at telegraph-road org)</para
+></listitem>
+<listitem
+><para
+>Sam Magnuson (sam at trolltech com)</para
+></listitem>
+<listitem
+><para
+>Matt Newell (newellm at proaxis com)</para
+></listitem>
+<listitem
+><para
+>Denis Perchine (dyp at perchine com)</para
+></listitem>
+<listitem
+><para
+>Samuel Penn (sam at bifrost demon co uk)</para
+></listitem>
+<listitem
+><para
+>Carsten Pfeiffer (pfeiffer at kde org): verschillende en diverse reparaties van bugs</para
+></listitem>
+<listitem
+><para
+>Sven Radej (radej at kde org): verbeterde en asynchrone processen</para
+></listitem>
+<listitem
+><para
+>Mark Roberts (mark at taurine demon co uk)</para
+></listitem>
+<listitem
+><para
+>Wolfgang Rohdewald (wrohdewald at dplanet ch)</para
+></listitem>
+<listitem
+><para
+>Espen Sand (espen at kde org): verbeterde configuratiedialogen</para
+></listitem>
+<listitem
+><para
+>Aaron J. Seigo (aseigo at olympusproject org): technische reparaties; integratie van notities/agenda</para
+></listitem>
+<listitem
+><para
+>George Staikos (staikos at kde org): verbeterde efficiëntie en consistentie van code</para
+></listitem>
+<listitem
+><para
+>Szymon Stefanek (pragma at kvirc net): Nieuwe berichtenlijst en nieuwe mappenstructuur</para
+></listitem>
+<listitem
+><para
+>Jason Stephenson (panda at mis net)</para
+></listitem>
+<listitem
+><para
+>Jacek Stolarczyk (jacek at mer chemia polsl gliwice pl)</para
+></listitem>
+<listitem
+><para
+>Roberto S. Teixeira (maragato at kde org)</para
+></listitem>
+<listitem
+><para
+>Bo Thorsen (bo at sonofthor dk): vele waardevolle bijdragen</para
+></listitem>
+<listitem
+><para
+>Ronen Tzur (rtzur at shani net)</para
+></listitem>
+<listitem
+><para
+>Mario Weilguni (mweilguni at sime com)</para
+></listitem>
+<listitem
+><para
+>Wynn Wilkes (wynnw at calderasystems com)</para
+></listitem>
+<listitem
+><para
+>Robert D. Williams (rwilliams at kde org)</para
+></listitem>
+<listitem
+><para
+>Markus Wübben (markus wuebben at kde org): repareerde vele bugs</para
+></listitem>
+<listitem
+><para
+>Karl-Heinz Zimmer (khz at kde org): hoofdmedewerker</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="credits">
+<title
+>Dankbetuigingen -- de eerdere jaren</title>
+
+<para
+>Dit zijn de mensen die geholpen hebben bij het bouwen van het programma toen het nog tamelijk jong was. Denk aan hen als de vriendelijke naaste buur die &kmail; belangrijke lessen over het leven heeft geleerd en zorgden voor het kind toen hij weg dwaalde uit het huis van zijn ouders.</para>
+
+<itemizedlist>
+<listitem
+><para
+>Sam Abed (earlgreykde at pop netspace net au): Verwerking van smiley-->emoticons</para
+></listitem>
+<listitem
+><para
+>Joern Ahrens (joern ahrens at kdemail net): pop-up-menu "Bericht markeren als" verbeteren</para
+></listitem>
+<listitem
+><para
+>Tom Albers (toma at kde org): onderhoud van bugzilla</para
+></listitem>
+<listitem
+><para
+>Jaime Torres Amate (jtamate at gmail com): verbeteringen van snelheid</para
+></listitem>
+<listitem
+><para
+>Albert Cervera Areny (albertca at hotpop com): optioneel bijlagen comprimeren</para
+></listitem>
+<listitem
+><para
+>Jonathan Armond (jon armond at gmail com)</para
+></listitem>
+<listitem
+><para
+>Patrick Audley (unknown): Spamstatus aan elegante koppen toegevoegd</para
+></listitem>
+<listitem
+><para
+>Benjamin Azan (b azan at free fr): behandeling van taakstatus geïmplementeerd</para
+></listitem>
+<listitem
+><para
+>Davide Bettio (davide bettio at kdemail net): reparaties van bugs en opschonen van code</para
+></listitem>
+<listitem
+><para
+>Pradeepto Bhattacharya (pradeepto at kde org): ondersteuning van LDAP, onderhoud</para
+></listitem>
+<listitem
+><para
+>Bruno Bigras (bigras bruno at gmail com)</para
+></listitem>
+<listitem
+><para
+>Bertjan Broeksema (broeksema at kde org): hoofdmedewerker van Akonadi</para
+></listitem>
+<listitem
+><para
+>David Bryant (davidbryant at gvtc com): documentatie, nog steeds actief</para
+></listitem>
+<listitem
+><para
+>Albert Astals Cid (aacid at kde org): belangrijke medewerker, nog steeds actief</para
+></listitem>
+<listitem
+><para
+>Frederick Emmott (fred87 at users sf net): ondersteuning van antivirus</para
+></listitem>
+<listitem
+><para
+>Christophe Giboudeaux (christophe at krop fr): Hoofdmedewerker, nog steeds actief</para
+></listitem>
+<listitem
+><para
+>Sandro Giessl (sgiessl at gmail com): widgetstijlen gerepareerd</para
+></listitem>
+<listitem
+><para
+>Olivier Goffart (ogoffart at kde org): reparaties van bugs</para
+></listitem>
+<listitem
+><para
+>Severin Greimel (greimel-kde at fs-pw uni-muenchen de): diverse patches</para
+></listitem>
+<listitem
+><para
+>Shaheed Haque (shaheedhaque at gmail com): reparaties van bugs</para
+></listitem>
+<listitem
+><para
+>Ingo Heeskens (ingo at fivemile org): extern laden van verwijzingen voor een gehele map</para
+></listitem>
+<listitem
+><para
+>Kurt Hindenburg (kurt hindenburg at gmail com): een gehele discussie verwijderen</para
+></listitem>
+<listitem
+><para
+>Heiko Hund (heiko at ist eigentlich net): POP-filters</para
+></listitem>
+<listitem
+><para
+>Torsten Kasch (tk at genetik uni-bielefeld de): patch voor crash in Solaris</para
+></listitem>
+<listitem
+><para
+>Jason 'vanRijn' Kasper (vr at movingparts net): keuze van lettertype voor nieuwe/ongelezen/belangrijke berichten</para
+></listitem>
+<listitem
+><para
+>Martijn Klingens (klingens at kde org): reparatie van toetsenbordnavigatie voor snel zoeken</para
+></listitem>
+<listitem
+><para
+>Christoph Klünter (chris at inferno nadir org): slepen en loslaten uit adresboek naar opsteller gerepareerd</para
+></listitem>
+<listitem
+><para
+>Martin Koller (kollix at aon at): belangrijke medewerker</para
+></listitem>
+<listitem
+><para
+>Tobias König (tokoe at kde org): hoofdmedewerker</para
+></listitem>
+<listitem
+><para
+>Nikolai Kosjar (nikolai kosjar at qt io)</para
+></listitem>
+<listitem
+><para
+>Francois Kritzinger (unknown): configuratiedialoog verbeteren</para
+></listitem>
+<listitem
+><para
+>Danny Kukawka (danny kukawka at bisect de): verbeterde import van berichten</para
+></listitem>
+<listitem
+><para
+>Roger Larsson (roger larsson at norran net): details toegevoegd aan statusbalkbericht</para
+></listitem>
+<listitem
+><para
+>Michael Leupold (lemma at confuego org)</para
+></listitem>
+<listitem
+><para
+>Thiago Macieira (thiago at kde org)</para
+></listitem>
+<listitem
+><para
+>Andras Mantia (amantia at kde org)</para
+></listitem>
+<listitem
+><para
+>Jonathan Marten (jjm at keelhaul me uk)</para
+></listitem>
+<listitem
+><para
+>Sergio Luis Martins (iamsergio at gmail com)</para
+></listitem>
+<listitem
+><para
+>Jeffrey McGee (jeffreym at cs tamu edu): patch voor probleem met venstergrootte wijzigen</para
+></listitem>
+<listitem
+><para
+>Thomas Moenicke (tm at php-qt org)</para
+></listitem>
+<listitem
+><para
+>Dirk Müller (mueller at kde org): Optimalisatie van qt-cast; reparatie van QUrl()</para
+></listitem>
+<listitem
+><para
+>Torgny Nyblom (nyblom at kde org): belangrijke medewerker</para
+></listitem>
+<listitem
+><para
+>OpenUsability (contact at openusability org): Tests voor gebruiksvriendelijkheid en verbeteringen</para
+></listitem>
+<listitem
+><para
+>Mario Teijeiro Otero (emeteo at escomposlinux org)</para
+></listitem>
+<listitem
+><para
+>Kevin Ottens (ervin at kde org)</para
+></listitem>
+<listitem
+><para
+>Simon Perreault (nomis80 at nomis80 org): patch voor configuratie van opsteller</para
+></listitem>
+<listitem
+><para
+>Jakob Petsovits (jpetso at gmx at)</para
+></listitem>
+<listitem
+><para
+>Romain Pokrzywka (romain at kdab net)</para
+></listitem>
+<listitem
+><para
+>Bernhard Reiter (bernhard at intevation de): Ägypten- en Kroupware-projectbeheer</para
+></listitem>
+<listitem
+><para
+>Darío Andrés Rodríguez (andresbajotierra at gmail com)</para
+></listitem>
+<listitem
+><para
+>Edwin Schepers (yez at familieschepers nl): verbeterde HTML-ondersteuning</para
+></listitem>
+<listitem
+><para
+>Jakob Schröter (cvsci at camaya net): ondersteuning voor X-Face</para
+></listitem>
+<listitem
+><para
+>Cornelius Schumacher (schumacher at kde org): hoofdmedewerker</para
+></listitem>
+<listitem
+><para
+>Jan Simonson (jan at simonson pp se): beta tests voor PGP 6-ondersteuning</para
+></listitem>
+<listitem
+><para
+>Paul Sprakes (kdecvs at sprakes co uk): reparaties van bugs, contextmenu's opgeschoond</para
+></listitem>
+<listitem
+><para
+>Jarosław Staniek (staniek at kde org): overzetten naar MS Windows®</para
+></listitem>
+<listitem
+><para
+>Will Stephenson (wstephenson at kde org): IM-statusindicator</para
+></listitem>
+<listitem
+><para
+>Hasso Tepper (hasso at kde org): indeling van bewerker van ontvangers verbeterd</para
+></listitem>
+<listitem
+><para
+>Frank Thieme (frank at fthieme net): reparaties van bugs</para
+></listitem>
+<listitem
+><para
+>Patrick S. Vogt (patrick vogt at unibas ch): tijdaanduiding voor statusbericht "Transmissie voltooid"</para
+></listitem>
+<listitem
+><para
+>Jan-Oliver Wagner (jan at intevation de): Ägypten- en Kroupware-projectbeheer</para
+></listitem>
+<listitem
+><para
+>Wolfgang Westphal (wolfgang westphal at gmx de): meerdere cryptografische sleutels per adres</para
+></listitem>
+<listitem
+><para
+>Allen Winter (winter at kde org): hoofdmedewerker, nog steeds actief</para
+></listitem>
+<listitem
+><para
+>Urs Wolfer (uwolfer at kde org): verwerken van pictogram/afbeelding verbeterd</para
+></listitem>
+<listitem
+><para
+>Thorsten Zachmann (t zachmann at zagge de): POP-filters</para
+></listitem>
+<listitem
+><para
+>Thomas Zander (zander at kde org): veel bugs met &IMAP; gerepareerd</para
+></listitem>
+
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="documentation">
+<title
+>Documentatie</title>
+
+<para
+>Bijgewerkt voor &kmail; 5.14.2 door &David.Bryant; &David.Bryant.mail;.</para>
+
+<para
+>Bijwerken van &kmail; 4.11 door &Laurent.Montel; &Laurent.Montel.mail; en &Scarlett.Clark; &Scarlett.Clark.mail;.</para>
+
+<para
+>Bijgewerkt voor &kmail; 1.7 door &Ingo.Kloecker; &Ingo.Kloecker.mail; &Marc.Mutz; &Marc.Mutz.mail;, hoofdstuk Anti-Spam Wizard door &Andreas.Gungl; &Andreas.Gungl.mail;, sectie over filterlog door &Andreas.Gungl; &Andreas.Gungl.mail; en &Brad.Hards; &Brad.Hards.mail;. Extra wijzigingen door &Daniel.Naber; &Daniel.Naber.mail;.</para>
+
+<para
+>Wijzigingen in de documentatie van versie 1.2 tot 1.5 door &Daniel.Naber; &Daniel.Naber.mail;, het hoofdstuk over <application
+>OpenPGP</application
+> door &Andreas.Gungl; &Andreas.Gungl.mail; en &Ingo.Kloecker; &Ingo.Kloecker.mail;, het hoofdstuk over berichtfilters door &Marc.Mutz; &Marc.Mutz.mail;, het hoofdstuk over downloadfilters door &Thorsten.Zachmann; &Thorsten.Zachmann.mail;. Andere delen zijn aangeleverd door diverse &kmail;-ontwikkelaars.</para>
+
+<para
+>&kmail; 1.0 documentatie door &David.Rugge; &David.Rugge.mail;. Oorspronkelijke documentatie door &Bernd.Johannes.Wuebben; &Bernd.Johannes.Wuebben.mail;, Robert Williams <email
+>rwilliams@kde.org</email
+> (Editor).</para>
+
+<para
+>Dank aan Michael Elkins <email
+>me@cs.hmc.edu</email
+> voor zijn uitstekende uitleg van de verschillende &UNIX; mailformaten in de <application
+>Mutt</application
+>-documentatie.</para>
+
+<para
+>Dank aan de volgende personen die informatie hebben gegeven over het gebruik van mailbox-formaten van andere e-mailprogramma's binnen &kmail;:</para>
+
+<itemizedlist>
+<listitem
+><para
+>Nik Gaffney <email
+>nik@f0.am</email
+> (<application
+>Mailsmith</application
+>)</para
+></listitem>
+<listitem
+><para
+>David McMillen <email
+>mcmillen@math.bu.edu</email
+> en Mendel Mobach <email
+>mendel@mobach.nl</email
+> (&Netscape; mail)</para
+></listitem>
+<listitem
+><para
+>Ed Shapard <email
+>shapard@bigfoot.com</email
+> (<application
+>Pegasus</application
+> Mail)</para
+></listitem>
+<listitem
+><para
+>Ray Muir <email
+>rjmuir@ibm.net</email
+> (Forte <application
+>Agent</application
+>)</para
+></listitem>
+</itemizedlist>
+
+&meld.fouten;&vertaling.tom;&nagelezen.rinse;&nagelezen.natalie; 
+
+</sect1>
+</chapter>

@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>Handbok TNEF-filvisare</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2016-07-27</date>
+<releaseinfo
+>5.3.40 (Program 16.08)</releaseinfo>
+
+<abstract
+><para
+>TNEF-filvisaren är ett program för <ulink url="https://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+> e-postbilagor.</para
+></abstract>
+
+<keywordset>
+<keyword
+>brev</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Inledning</title>
+
+	<para
+>TNEF-filvisaren gör det möjligt att enkelt hantera e-postbilagor som använder TNEF-formatet. Dessa bilagor hittas oftast i brev som kommer från <trademark class="registered"
+>Microsoft</trademark
+> e-postservrar och inbäddar brevegenskaperna samt själva bilagorna.</para>
+		<para
+>En bilaga med TNEF-format heter oftast <filename
+>winmail.dat</filename
+> eller <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>Huvudfönstret i TNEF</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Huvudfönstret i TNEF</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Det här verktyget tillåter att diverse åtgärder utförs med dessa bilagor.</para>
+	<itemizedlist>
+		<listitem
+><para
+>Visa eller öppna bilagor med tillhörande program.</para
+></listitem>
+		<listitem
+><para
+>Extrahera själva bilagorna</para
+></listitem>
+		<listitem
+><para
+>Visa brevegenskaper (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Visa och extrahera brevets formaterade text (med RTF-format)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; visar automatiskt innehållet i en TNEF-bilaga. Det går att öppna eller spara bilagan med alternativen i den sammanhangsberoende menyn.</para>
+<screenshot>
+<screeninfo
+>TNEF-bilaga i &kmail;</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>TNEF-bilaga i &kmail;</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Tack till och licens</title>
+
+	<para
+>TNEF-filvisare (KTnef)</para>
+
+	<para
+>Program copyright 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Program copyright 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; &underGPL; </sect1>
+
+</article>

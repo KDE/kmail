@@ -1,0 +1,256 @@
+# translation of akonadi_archivemail_agent.po to Slovak
+# Roman Paholik <wizzardsk@gmail.com>, 2012, 2013, 2014, 2015, 2016, 2017.
+# Matej Mrenica <matejm98mthw@gmail.com>, 2019, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: akonadi_archivemail_agent\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-25 00:45+0000\n"
+"PO-Revision-Date: 2021-07-20 17:51+0200\n"
+"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
+"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 21.07.80\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: addarchivemaildialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Modify Archive Mail"
+msgstr "Zmeniť archívny mail"
+
+#: addarchivemaildialog.cpp:33
+#, kde-format
+msgctxt "@title:window"
+msgid "Add Archive Mail"
+msgstr "Pridať archívny mail"
+
+#: addarchivemaildialog.cpp:45
+#, kde-format
+msgid "&Folder:"
+msgstr "Priečinok:"
+
+#: addarchivemaildialog.cpp:59
+#, kde-format
+msgid "Format:"
+msgstr "Formát:"
+
+#: addarchivemaildialog.cpp:67
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "Archivovať všetky podpriečinky"
+
+#: addarchivemaildialog.cpp:73
+#, kde-format
+msgid "Path:"
+msgstr "Cesta:"
+
+#: addarchivemaildialog.cpp:83
+#, kde-format
+msgid "Backup each:"
+msgstr "Záloha každých:"
+
+#: addarchivemaildialog.cpp:99
+#, kde-format
+msgid "Maximum number of archive:"
+msgstr "Maximálny počet archívov:"
+
+#: addarchivemaildialog.cpp:104
+#, kde-format
+msgid "unlimited"
+msgstr "bez obmedzenia"
+
+#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#, kde-format
+msgctxt "Start of the filename for a mail archive file"
+msgid "Archive"
+msgstr "Archív"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Name"
+msgstr "Názov"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Last archive"
+msgstr "Posledný archív"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Next archive in"
+msgstr "Ďalší archív za"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Storage directory"
+msgstr "Adresár úložiska"
+
+#: archivemailwidget.cpp:89
+#, kde-format
+msgid "Archive Mail Agent"
+msgstr "Archivovať agenta pošty"
+
+#: archivemailwidget.cpp:91
+#, kde-format
+msgid "Archive emails automatically."
+msgstr "Archivovať e-maily automaticky."
+
+#: archivemailwidget.cpp:93
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-2021 Laurent Montel"
+msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgstr "Copyright (C) 2014-2021 Laurent Montel"
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Maintainer"
+msgstr "Správca"
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Roman Paholík"
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "wizzardsk@gmail.com"
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "Pridať..."
+
+#: archivemailwidget.cpp:113
+#, kde-format
+msgid "Open Containing Folder..."
+msgstr "Otvoriť obsahujúci priečinok..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Odstrániť"
+
+#: archivemailwidget.cpp:166
+#, kde-format
+msgid "Folder: %1"
+msgstr "Priečinok: %1"
+
+#: archivemailwidget.cpp:188
+#, kde-format
+msgid "Tomorrow"
+msgid_plural "%1 days"
+msgstr[0] "Zajtra"
+msgstr[1] "%1 dni"
+msgstr[2] "%1 dní"
+
+#: archivemailwidget.cpp:197
+#, kde-format
+msgid "Archive will be done %1"
+msgstr "Archív bude hotový %1"
+
+#: archivemailwidget.cpp:233
+#, kde-format
+msgid "Do you want to delete the selected items?"
+msgstr "Chcete vymazať vybrané položky?"
+
+#: archivemailwidget.cpp:234
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Odstrániť"
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid ""
+"Cannot add a second archive for this folder. Modify the existing one instead."
+msgstr ""
+"Nemôžem pridať druhý archív do tohto priečinka. Namiesto toho zmením "
+"existujúci."
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid "Add Archive Mail"
+msgstr "Pridať archívny mail"
+
+#: job/archivejob.cpp:58
+#, kde-format
+msgid "Directory does not exist. Please verify settings. Archive postponed."
+msgstr "Adresár neexistuje. Prosím skontrolujte nastavenia. Archív odložený."
+
+#: job/archivejob.cpp:76
+#, kde-format
+msgid "Start to archive %1"
+msgstr "Spustiť na archiváciu %1"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/archivemailwidget.ui:38
+#, kde-format
+msgid "Modify..."
+msgstr "Upraviť..."
+
+#: widgets/formatcombobox.cpp:14
+#, kde-format
+msgid "Compressed Zip Archive (.zip)"
+msgstr "Komprimovaný zip archív (.zip)"
+
+#: widgets/formatcombobox.cpp:15
+#, kde-format
+msgid "Uncompressed Archive (.tar)"
+msgstr "Nekomprimovaný archív (.tar)"
+
+#: widgets/formatcombobox.cpp:16
+#, kde-format
+msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
+msgstr "BZ2-komprimovaný tar archív (.tar.bz2)"
+
+#: widgets/formatcombobox.cpp:17
+#, kde-format
+msgid "GZ-Compressed Tar Archive (.tar.gz)"
+msgstr "GZ-komprimovaný tar archív (.tar.gz)"
+
+#: widgets/unitcombobox.cpp:13
+#, kde-format
+msgid "Days"
+msgstr "Dni"
+
+#: widgets/unitcombobox.cpp:14
+#, kde-format
+msgid "Weeks"
+msgstr "Týždne"
+
+#: widgets/unitcombobox.cpp:15
+#, kde-format
+msgid "Months"
+msgstr "Mesiace"
+
+#: widgets/unitcombobox.cpp:16
+#, kde-format
+msgid "Years"
+msgstr "Roky"
+
+#~ msgid "Remove items"
+#~ msgstr "Odstrániť položky"
+
+#~ msgid "Remove"
+#~ msgstr "Odstrániť"
+
+#~ msgid "Archive now"
+#~ msgstr "Archivovať teraz"
+
+#~ msgid "Configure Archive Mail Agent"
+#~ msgstr "Nastaviť agent archivácie mailov"

@@ -1,0 +1,248 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Kheyyam Gojayev <xxmn77@gmail.com>, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-25 00:45+0000\n"
+"PO-Revision-Date: 2022-01-11 23:45+0400\n"
+"Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
+"Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
+"Language: az\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 21.12.0\n"
+
+#: addarchivemaildialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Modify Archive Mail"
+msgstr "Poçt arxivini dəyişdirmək"
+
+#: addarchivemaildialog.cpp:33
+#, kde-format
+msgctxt "@title:window"
+msgid "Add Archive Mail"
+msgstr "Poçt arxivi əlavə edin"
+
+#: addarchivemaildialog.cpp:45
+#, kde-format
+msgid "&Folder:"
+msgstr "Qo&vluq:"
+
+#: addarchivemaildialog.cpp:59
+#, kde-format
+msgid "Format:"
+msgstr "Format:"
+
+#: addarchivemaildialog.cpp:67
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "Bütün alt qovluqları arxivləmək"
+
+#: addarchivemaildialog.cpp:73
+#, kde-format
+msgid "Path:"
+msgstr "Yol:"
+
+#: addarchivemaildialog.cpp:83
+#, kde-format
+msgid "Backup each:"
+msgstr "Hər birini ehtiyyat nüsxələmək:"
+
+#: addarchivemaildialog.cpp:99
+#, kde-format
+msgid "Maximum number of archive:"
+msgstr "Arxivin ən çox sayı:"
+
+#: addarchivemaildialog.cpp:104
+#, kde-format
+msgid "unlimited"
+msgstr "hədsiz"
+
+#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#, kde-format
+msgctxt "Start of the filename for a mail archive file"
+msgid "Archive"
+msgstr "Arxiv"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Name"
+msgstr "Ad"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Last archive"
+msgstr "Sonuncu arxiv"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Next archive in"
+msgstr "Sonrakı arxiv"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Storage directory"
+msgstr "Saxlama kataloqu"
+
+#: archivemailwidget.cpp:89
+#, kde-format
+msgid "Archive Mail Agent"
+msgstr "Poçtun arxivlənməsi vasitəsi"
+
+#: archivemailwidget.cpp:91
+#, kde-format
+msgid "Archive emails automatically."
+msgstr "E-poçtları avtomatik arxivləmək."
+
+#: archivemailwidget.cpp:93
+#, kde-format
+msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgstr "Müəllif Hüquqları (C) 2014-%1 Laurent Montel"
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Maintainer"
+msgstr "Himayəçi"
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Xəyyam Qocayev"
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "xxmn77@gmail.com"
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "Əlavə edin..."
+
+#: archivemailwidget.cpp:113
+#, kde-format
+msgid "Open Containing Folder..."
+msgstr "Bu tərkibli qovluğu açın..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Silmək"
+
+#: archivemailwidget.cpp:166
+#, kde-format
+msgid "Folder: %1"
+msgstr "Qovluq: %1"
+
+#: archivemailwidget.cpp:188
+#, kde-format
+msgid "Tomorrow"
+msgid_plural "%1 days"
+msgstr[0] "Sabah"
+msgstr[1] "%1 gün sonra"
+
+#: archivemailwidget.cpp:197
+#, kde-format
+msgid "Archive will be done %1"
+msgstr "Arxiv %1 yaradılacaq"
+
+#: archivemailwidget.cpp:233
+#, kde-format
+msgid "Do you want to delete the selected items?"
+msgstr "Seçilmiş eementləri silmək istəyirsiniz?"
+
+#: archivemailwidget.cpp:234
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Elementləri silin"
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid ""
+"Cannot add a second archive for this folder. Modify the existing one instead."
+msgstr ""
+"Bu qovluğa ikinci arxiv əlavə edilə biməz. Əvəzinə mövcud olanı dəyişin."
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid "Add Archive Mail"
+msgstr "Poçt arxivi əlavə edin"
+
+#: job/archivejob.cpp:58
+#, kde-format
+msgid "Directory does not exist. Please verify settings. Archive postponed."
+msgstr ""
+"Katalq mövcud deyil. Lütfən ayarları yoxlayın. Arxivləmə təxirə salındı."
+
+#: job/archivejob.cpp:76
+#, kde-format
+msgid "Start to archive %1"
+msgstr "%1 arxivlənməsini başlatmaq"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/archivemailwidget.ui:38
+#, kde-format
+msgid "Modify..."
+msgstr "Dəyişdirmək..."
+
+#: widgets/formatcombobox.cpp:14
+#, kde-format
+msgid "Compressed Zip Archive (.zip)"
+msgstr "Sıxılmış Zip Arxivi (.zip)"
+
+#: widgets/formatcombobox.cpp:15
+#, kde-format
+msgid "Uncompressed Archive (.tar)"
+msgstr "Sıxılmamış arxiv (.tar)"
+
+#: widgets/formatcombobox.cpp:16
+#, kde-format
+msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
+msgstr "BZ2 sıxılmış TAR arxivi (.tar.bz2)"
+
+#: widgets/formatcombobox.cpp:17
+#, kde-format
+msgid "GZ-Compressed Tar Archive (.tar.gz)"
+msgstr "GZ sıxılmış TAR arxivi (.tar.gz)"
+
+#: widgets/unitcombobox.cpp:13
+#, kde-format
+msgid "Days"
+msgstr "Günlər"
+
+#: widgets/unitcombobox.cpp:14
+#, kde-format
+msgid "Weeks"
+msgstr "Həftələr"
+
+#: widgets/unitcombobox.cpp:15
+#, kde-format
+msgid "Months"
+msgstr "Aylar"
+
+#: widgets/unitcombobox.cpp:16
+#, kde-format
+msgid "Years"
+msgstr "İllər"
+
+#~ msgid "Remove items"
+#~ msgstr "Elementləri silin"
+
+#~ msgid "Remove"
+#~ msgstr "Silmək"

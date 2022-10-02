@@ -1,0 +1,351 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Kheyyam Gojayev <xxmn77@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2021-07-13 15:27+0400\n"
+"Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
+"Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
+"Language: az\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 21.04.1\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Xəyyam Qocayev"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "xxmn77@gmail.com"
+
+#: attachpropertydialog.cpp:61
+#, kde-format
+msgid "Save..."
+msgstr "Saxlayın..."
+
+#: attachpropertydialog.cpp:94
+#, kde-format
+msgctxt "@title:window"
+msgid "Properties for Attachment %1"
+msgstr "%1 qoşmasının xüsusiyyətləri"
+
+#: attachpropertydialog.cpp:98
+#, kde-format
+msgid " bytes"
+msgstr " baytlar"
+
+#: attachpropertydialog.cpp:159
+#, kde-format
+msgctxt "@label"
+msgid "TNEF Attributes"
+msgstr "TNEF attributları"
+
+#: attachpropertydialog.cpp:168
+#, kde-format
+msgctxt "@info"
+msgid "Must select an item first."
+msgstr "Öncə bir element seçilməlidir."
+
+#: attachpropertydialog.cpp:174
+#, kde-format
+msgctxt "@info"
+msgid "The selected item cannot be saved because it has an empty tag."
+msgstr "Seçilmiş element saxlanıla bilməz, çünki o boş yarlıqdan ibarətdir."
+
+#: attachpropertydialog.cpp:199
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file for writing, check file permissions."
+msgstr "Fayl yazılmaq üçün açıla bilmədi, fayl icazələrini yoxlayın."
+
+#: ktnefmain.cpp:94
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"You will be presented with a dialog where you can configure the application-"
+"wide shortcuts."
+msgstr ""
+"Sizə, tam tətbiqi əhatə edən qısayolların tənzimləyə biləcəyiniz dialoq "
+"təqdim oluncaqdır."
+
+#: ktnefmain.cpp:108
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "View"
+msgstr "Baxış"
+
+#: ktnefmain.cpp:113
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "View With..."
+msgstr "Bununla nəzər salın..."
+
+#: ktnefmain.cpp:117 ktnefmain.cpp:399
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract"
+msgstr "Çıxartmaq"
+
+#: ktnefmain.cpp:121 ktnefmain.cpp:400
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract To..."
+msgstr "Buraya çıxarın..."
+
+#: ktnefmain.cpp:126
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract All To..."
+msgstr "Hamısını buraya çıxarın..."
+
+#: ktnefmain.cpp:131 ktnefmain.cpp:403
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr "Xüsusiyyətlər"
+
+#: ktnefmain.cpp:136
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Message Properties"
+msgstr "Məktub xüsusiyyətləri"
+
+#: ktnefmain.cpp:140
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Show Message Text"
+msgstr "Məktubun mətnini göstərmək"
+
+#: ktnefmain.cpp:145
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Save Message Text As..."
+msgstr "Məktubun mətnini belə saxlayın..."
+
+#: ktnefmain.cpp:158
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Default Folder..."
+msgstr "İlkin qovluq..."
+
+#: ktnefmain.cpp:170
+#, kde-format
+msgctxt "@info:status"
+msgid "No file loaded"
+msgstr "Fayl yüklənməyib"
+
+#: ktnefmain.cpp:193
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file \"%1\"."
+msgstr "\"%1\" faylı açıla bilmir."
+
+#: ktnefmain.cpp:198
+#, kde-format
+msgctxt "@info:status"
+msgid "%1 attachment found"
+msgid_plural "%1 attachments found"
+msgstr[0] "%1 qoşma tapıldı"
+msgstr[1] "%1 qoşma tapıldı"
+
+#: ktnefmain.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Open TNEF File"
+msgstr "TNEFF faylını açın"
+
+#: ktnefmain.cpp:244 ktnefmain.cpp:275
+#, kde-format
+msgctxt "@info"
+msgid "There is no file selected. Please select a file an try again."
+msgstr "Fayl seçilməyib. Lütfən bir fayl seçin və yenidən cəhd edin."
+
+#: ktnefmain.cpp:304 ktnefmain.cpp:380
+#, kde-format
+msgctxt "@info"
+msgid "Unable to extract file \"%1\"."
+msgstr "\"%1\" faylı çıxarıla bilmir."
+
+#: ktnefmain.cpp:486
+#, kde-format
+msgctxt "@info"
+msgid "The message does not contain any Rich Text data."
+msgstr "Məktub Rich Text formatı verilənlərindən ibarət deyil."
+
+#: ktnefmain.cpp:504
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file \"%1\" for writing, check file permissions."
+msgstr "\"%1\" faylı yazmaq üçün açıla bilmir, fayl icazələrini yoxlayın."
+
+#: ktnefmain.cpp:526
+#, kde-format
+msgid "Open &with %1"
+msgstr "%1 i&lə açın"
+
+#: ktnefmain.cpp:528
+#, kde-format
+msgctxt "@item:inmenu Open With, %1 is application name"
+msgid "%1"
+msgstr "%1"
+
+#: ktnefmain.cpp:553
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Open With"
+msgstr "Bununla &açın"
+
+#: ktnefmain.cpp:569
+#, kde-format
+msgctxt "@action:inmenu Open With"
+msgid "&Other..."
+msgstr "&Digər..."
+
+#: ktnefmain.cpp:571 ktnefmain.cpp:579
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Open With..."
+msgstr "Bununla &açın..."
+
+#. i18n: ectx: Menu (file)
+#: ktnefui.rc:6
+#, kde-format
+msgid "&File"
+msgstr "&Fayl"
+
+#. i18n: ectx: Menu (action)
+#: ktnefui.rc:9
+#, kde-format
+msgid "&Action"
+msgstr "Fə&aliyyət"
+
+#. i18n: ectx: Menu (settings)
+#: ktnefui.rc:24
+#, kde-format
+msgid "&Settings"
+msgstr "&Ayarlar"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: ktnefui.rc:29
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Əsas alətlər paneli"
+
+#: ktnefview.cpp:71
+#, kde-format
+msgctxt "@title:column file name"
+msgid "File Name"
+msgstr "Fayl adı"
+
+#: ktnefview.cpp:72
+#, kde-format
+msgctxt "@title:column file type"
+msgid "File Type"
+msgstr "Fayl növü"
+
+#: ktnefview.cpp:72
+#, kde-format
+msgctxt "@title:column file size"
+msgid "Size"
+msgstr "Ölçü"
+
+#: main.cpp:44
+#, kde-format
+msgid "KTnef"
+msgstr "KTnef"
+
+#: main.cpp:46
+#, kde-format
+msgid "Viewer for mail attachments using TNEF format"
+msgstr "THEF formatı istifadə edən poçt qoşmaları bələdçisi"
+
+#: main.cpp:48
+#, kde-format
+msgid ""
+"Copyright 2000 Michael Goffioul \n"
+"Copyright 2012  Allen Winter"
+msgstr ""
+"Müəllif Hüquqları 2000 Michael Goffioul \n"
+"Müəllif Hüquqları 2012  Allen Winter"
+
+#: main.cpp:50
+#, kde-format
+msgid "Michael Goffioul"
+msgstr "Michael Goffioul"
+
+#: main.cpp:50
+#, kde-format
+msgid "Author"
+msgstr "Müəllif"
+
+#: main.cpp:52
+#, kde-format
+msgid "Allen Winter"
+msgstr "Allen Winter"
+
+#: main.cpp:52
+#, kde-format
+msgid "Author, Ported to Qt4/KDE4"
+msgstr "Müəllif, Qt4/KDE4-ə daşınmış"
+
+#: main.cpp:58
+#, kde-format
+msgid "An optional argument 'file' "
+msgstr "İxtiyari bir 'fayl' arqimneti "
+
+#: messagepropertydialog.cpp:42
+#, kde-format
+msgctxt "@title:window"
+msgid "Message Properties"
+msgstr "Məktub xüsusiyyətləri"
+
+#: messagepropertydialog.cpp:55
+#, kde-format
+msgctxt "@title:column property name"
+msgid "Name"
+msgstr "Ad"
+
+#: messagepropertydialog.cpp:55
+#, kde-format
+msgctxt "@title:column property value"
+msgid "Value"
+msgstr "Dəyər"
+
+#. i18n: ectx: property (text), widget (QLabel, mDescriptionLabel)
+#: ui/attachpropertywidgetbase.ui:45
+#, kde-format
+msgid "Description:"
+msgstr "Xüsusiyyəti:"
+
+#. i18n: ectx: property (text), widget (QLabel, mIndexLabel)
+#: ui/attachpropertywidgetbase.ui:68
+#, kde-format
+msgid "Index:"
+msgstr "İndeks:"
+
+#. i18n: ectx: property (text), widget (QLabel, mDisplayLabel)
+#: ui/attachpropertywidgetbase.ui:107
+#, kde-format
+msgid "Comment:"
+msgstr "Şərh:"
+
+#. i18n: ectx: property (text), widget (QLabel, mSizeLabel)
+#: ui/attachpropertywidgetbase.ui:143
+#, kde-format
+msgid "File size:"
+msgstr "Fayl ölçüsü:"
+
+#. i18n: ectx: property (text), widget (QLabel, mMimeLabel)
+#: ui/attachpropertywidgetbase.ui:199
+#, kde-format
+msgid "MIME type:"
+msgstr "MİME növü:"

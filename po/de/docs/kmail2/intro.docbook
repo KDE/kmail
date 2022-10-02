@@ -1,0 +1,177 @@
+<chapter id="intro">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>Matthias</firstname
+><surname
+>Kiefer</surname
+> <affiliation
+><address
+><email
+>matthias.kiefer@gmx.de</email
+></address
+></affiliation
+> <contrib
+>Deutsche Übersetzung</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Alexander</firstname
+><surname
+>Gretencord</surname
+> <affiliation
+><address
+><email
+>arutha@gmx.de</email
+></address
+></affiliation
+> <contrib
+>Überarbeitung</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Frank</firstname
+><surname
+>Schütte</surname
+> <affiliation
+><address
+><email
+>F.Schuette@t-online.de</email
+></address
+></affiliation
+> <contrib
+>Überarbeitung ab Version 1.3</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Matthias Kalle</firstname
+><surname
+>Dalheimer</surname
+> <affiliation
+><address
+><email
+>kalle@kdab.net</email
+></address
+></affiliation
+> <contrib
+>Krypto-Übersetzung</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2020-08-16</date>
+<releaseinfo
+>5.14.2 (Anwendungen 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Einführung</title>
+
+<screenshot>
+<screeninfo
+>&kmail;-Startbildschirm</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="kmailwelcome.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&kmail;-Startbildschirm</phrase>
+    </textobject>
+    <caption>
+      <para
+>&kmail;-Startbildschirm</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Das &kmail;-Team begrüßt Sie zu &kmail;, dem benutzerfreundlichen E-Mail-Programm von &kde;. Unser Ziel ist eine hübsche und intuitive Oberfläche, ohne dabei die Funktionalität zu vernachlässigen. </para>
+
+<para
+>Falls Sie vorher noch nie ein E-Mail-Programm auf einem &UNIX;-System eingerichtet haben, schlagen wir vor, dass Sie zuerst den Abschnitt <link linkend="getting-started"
+>Erste Schritte</link
+> lesen.</para>
+<sect1 id="features">
+<title
+>Einige Leistungsmerkmale von &kmail;</title>
+<para
+>In der folgenden Liste finden Sie Verknüpfungen zu wichtigen Funktionen in &kmail;:</para>
+<itemizedlist>
+<listitem>
+<para
+>Man muss &kmail; nicht mit der Maus bedienen. Alle Funktionen können auch mit Hilfe von <link linkend="keyboard-shortcuts"
+>Tastatur-Kurzbefehlen</link
+> ausgeführt werden.</para>
+</listitem>
+<listitem>
+<para
+>Obwohl &kmail; als stabil bezeichnet werden kann, sollten Sie Sicherungen Ihrer Dateien vornehmen. Benutzen Sie eine der Möglichkeiten zum Export bzw. zur Archivierung, die im Kapitel <link linkend="backups"
+>&kmail;-Sicherung</link
+> genannt werden, um Ihre Einstellungen und E-Mail regelmäßig an einem sicheren Ort zu speichern.</para>
+</listitem>
+<listitem>
+<para
+>Mit &kmail; können Sie E-Mails in mehreren Formaten von vielen E-Mailprogramm mit den Einstellungen im Kapitel <link linkend="import-restore"
+>Wiederherstellen und Import in &kmail;</link
+> importieren.</para>
+</listitem>
+<listitem>
+<para
+>Organisieren Sie Ihre Nachrichten in &kmail; in verschiedene Kategorient mit den umfangreichen Einstellungen für <link linkend="folders"
+>Ordner</link
+>. Einige dieser Funktionen getrennt für jeden Ordner eingerichtet Werden, zum Beispiel Mailinglisten, Zugriffsrechte (nur für &IMAP;) und Archivierung.</para
+> <!-- todo: start a glossary -->
+</listitem>
+<listitem>
+<para
+>Ergänzen Sie die Einrichtung Ihrer Ordner mit <link linkend="filters"
+>Filtern</link
+>, die in großen Maße angepasst werden können.</para>
+</listitem>
+<listitem>
+<para
+>In der Voreinstellung erkennt &kmail; häufig vorkommende <link linkend="configure-security-email-scams"
+>betrügerische E-Mails</link
+>. Zur Abwehr von Spam und Viren können Sie Filter erstellen und externe Programme zum Scannen von E-Mails beim Empfang einbinden. Weitere Informationen finden Sie in den Abschnitten <link linkend="the-anti-spam-wizard"
+>Anti-Spam-Assistent</link
+> und <link linkend="the-anti-virus-wizard"
+>Anti-Virus-Assistent</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Einfache Verwaltung von verschiedenen Einstellungen für ein Postfach mit <link linkend="configure-identity"
+>Identitäten</link
+>.</para>
+</listitem>
+</itemizedlist>
+<para
+>Wir hoffen, Ihnen gefällt &kmail; !</para>
+<sect2 id="getting-help">
+<title
+>Weiterführende Hilfe</title>
+ 
+<para
+>Die Homepage von &kmail; ist <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail"
+>https://userbase.kde.org/KMail</ulink
+>. Hier finden Sie nützliche Links, etwa zu den Mailinglisten für Anwender und für Entwickler und zu Wiki-Seiten. Bitte melden Sie Fehler in &kmail; über <menuchoice
+><guimenu
+>Hilfe</guimenu
+><guimenuitem
+>Fehler melden ...</guimenuitem
+></menuchoice
+>.</para>
+</sect2>
+
+</sect1>
+</chapter>

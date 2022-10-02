@@ -1,0 +1,230 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>Agente di archiviazione della posta</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Italian "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>Manuale di &i18n-archivemailagent;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Luigi</firstname
+><surname
+>Toscano</surname
+><affiliation
+><address
+><email
+>luigi.toscano@tiscali.it</email
+></address
+></affiliation
+><contrib
+>Traduzione italiana</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introduzione</title>
+
+<para
+>&i18n-archivemailagent; è un'agente Akonadi che permette di archiviare automaticamente le cartelle di messaggi di posta elettronica. </para>
+
+<sect2 id="using-kapp">
+<title
+>Utilizzare &i18n-archivemailagent;</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Usa <menuchoice
+><guimenu
+>Impostazioni</guimenu
+><guimenuitem
+>Configura l'archiviazione automatica...</guimenuitem
+> </menuchoice
+><action
+> nella finestra di lettura di &kmail; per aprire una finestra di dialogo per impostare l'archiviazione automatica delle cartelle di posta.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>Si tratta di un potente strumento che può essere usato per assistere nella creazione di copie di sicurezza della posta. Per usarlo fai clic sul pulsante <guibutton
+>Aggiungi...</guibutton
+> e sarà mostrata la finestra di dialogo <guilabel
+>Aggiungi archivio di posta</guilabel
+>.</para>
+
+<screenshot>
+<screeninfo
+>Finestra di dialogo Aggiungi archivio di posta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Finestra di dialogo Aggiungi archivio di posta</phrase>
+    </textobject>
+    <caption>
+      <para
+>Finestra di dialogo Aggiungi archivio di posta</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Seleziona innanzitutto la cartella che vuoi archiviare.</para
+></listitem>
+<listitem
+><para
+>Seleziona il formato che vuoi usare per salvarla. &eg; <literal role="extension"
+>.tar.bz2</literal
+> nella lista a cascata. Il nome dell'archivio sarà composto dal prefisso <userinput
+>Archivio_</userinput
+>, il percorso della cartella selezionata nell'elenco delle cartelle di &kmail;, la data nel formato <userinput
+>anno-mese-giorno</userinput
+> e l'estensione selezionata, &eg; <filename
+>Archivio_Cartelle locali_posta in arrivo_2019-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Come impostazione predefinita l'opzione <guilabel
+>Archivia tutte le sottocartelle</guilabel
+> è abilitata. Deselezionala se vuoi che solo la cartella selezionata sia archiviata.</para
+></listitem>
+<listitem
+><para
+>Puoi digitare la posizione dove salvare l'archivio o fare clic sul pulsante <guibutton
+>Apri finestra file</guibutton
+> per selezionare la cartella.</para
+></listitem>
+<listitem
+><para
+>Seleziona la frequenza con cui vuoi effettuare delle copie di sicurezza tramite il menu a discesa accanto a <guilabel
+>Crea copia di sicurezza ogni:</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>Se lo spazio su disco che hai a disposizione è limitato potresti volere impostare un limite con <guilabel
+>Numero massimo di archivi:</guilabel
+></para
+></listitem>
+</itemizedlist>
+<para
+>Se hai aggiunto o modificato un'operazione di archiviazione, questa sarà eseguita automaticamente dopo la chiusura della finestra di dialogo. </para>
+
+<para
+>Se hai già aggiunto delle operazioni di archiviazione della posta la finestra di dialogo <guilabel
+>Configura l'agente di archiviazione della posta</guilabel
+> le mostrerà e ne permetterà la modifica. </para>
+<screenshot>
+<screeninfo
+>Configura l'agente di archiviazione della posta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configura l'agente di archiviazione della posta</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configura l'agente di archiviazione della posta</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Puoi usare la casella alla sinistra di ogni voce nell'elenco per abilitare o disabilitare la relativa operazione di archiviazione. </para>
+<para
+>È possibile accedere a questa finestra di configurazione successivamente tramite <menuchoice
+><guimenu
+>Impostazioni</guimenu
+> <guimenuitem
+>Configura &kmail;...</guimenuitem
+></menuchoice
+>, selezionando la pagina <guilabel
+>Estensioni</guilabel
+> nella finestra principale di &kmail; e premendo il pulsante di configurazione relativo all'elemento <guilabel
+>Agente di archiviazione della posta</guilabel
+>. </para>
+<para
+>Tramite il menu contestuale attivato dal clic del &RMB; su un'operazione di archiviazione puoi aprire la cartella contenente gli archivi o eseguire immediatamente l'operazione di archiviazione. Questa sovrascriverà senza notifica un eventuale archivio preesistente creato in precedenza nello stesso giorno. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Riconoscimenti e licenza</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Copyright del programma 2013-2019 Laurent Montel montel@kde.org </para>
+<para
+>Copyright della documentazione &copy; 2013-2019 Laurent Montel montel@kde.org </para>
+
+<para
+>Traduzione italiana di Luigi Toscano <email
+>luigi.toscano@tiscali.it</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

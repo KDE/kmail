@@ -1,0 +1,406 @@
+<chapter id="credits-and-licenses">
+
+<chapterinfo>
+<authorgroup>
+<author
+><firstname
+>Daniel</firstname
+> <surname
+>Naber</surname
+> <affiliation
+><address
+>&Daniel.Naber.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Rugge</surname
+> <affiliation
+><address
+>&David.Rugge.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+> <firstname
+>Juan Manuel</firstname
+> <surname
+>García Molina</surname
+> <affiliation
+><address
+><email
+>juanma@superiodico.net</email
+> </address
+></affiliation
+> <contrib
+>Traductor</contrib
+> </othercredit
+> <othercredit role="translator"
+> <firstname
+>Miguel</firstname
+> <surname
+>Revilla Rodríguez</surname
+> <affiliation
+><address
+><email
+>yo@miguelrevilla.com</email
+> </address
+></affiliation
+> <contrib
+>Traductor</contrib
+> </othercredit
+> <othercredit role="translator"
+> <firstname
+>Javier</firstname
+> <surname
+>Viñal</surname
+> <affiliation
+><address
+><email
+>fjvinal@gmail.com</email
+> </address
+></affiliation
+> <contrib
+>Traductor</contrib
+> </othercredit
+> 
+</authorgroup>
+<date
+>2013-04-24</date>
+<releaseinfo
+>&kde; 4.11</releaseinfo>
+</chapterinfo>
+
+<title
+>Créditos y licencia</title>
+
+<para
+>&kmail;: Derechos de autor, los desarrolladores de &kmail;, 1997-2013</para>
+&underGPL; &underFDL; <sect1 id="team">
+<title
+>Equipo de desarrollo</title>
+<!-- please keep in sync with the authors list on the webpage -->
+
+<!-- don't modify manually, this list is generated: -->
+<itemizedlist>
+<listitem
+><para
+>Laurent Montel (montel at kde org): Responsable</para
+></listitem>
+<listitem
+><para
+>Ingo Kl&ouml;cker (kloecker at kde org): Responsable inicial</para
+></listitem>
+<listitem
+><para
+>Don Sanders (sanders at kde org): Padre adoptivo y corresponsable</para
+></listitem>
+<listitem
+><para
+>Stefan Taferner (taferner at kde org): Autor original</para
+></listitem>
+<listitem
+><para
+>Michael H&auml;ckel (haeckel at kde org): Encargado anterior</para
+></listitem>
+<listitem
+><para
+>Till Adam (till at adam-lilienthal de): Miembro del núcleo de desarrolladores</para
+></listitem>
+<listitem
+><para
+>Carsten Burghardt (burghardt at kde org): Miembro del núcleo de desarrolladores</para
+></listitem>
+<listitem
+><para
+>Marc Mutz (mutz at kde org): Miembro del núcleo de desarrolladores</para
+></listitem>
+<listitem
+><para
+>Daniel Naber (daniel naber at t-online de): Documentación</para
+></listitem>
+<listitem
+><para
+>Zack Rusin (zack at kde org): Miembro del núcleo de desarrolladores</para
+></listitem>
+<listitem
+><para
+>Toyohiro Asukai (toyohiro at ksmplus com)</para
+></listitem>
+<listitem
+><para
+>Waldo Bastian (bastian at kde org)</para
+></listitem>
+<listitem
+><para
+>Ryan Breen (ryan at ryanbreen com): notificación a la bandeja del sistema</para
+></listitem>
+<listitem
+><para
+>Steven Brown (swbrown at ucsd edu)</para
+></listitem>
+<listitem
+><para
+>Matthias Kalle Dalheimer (kalle at kde org)</para
+></listitem>
+<listitem
+><para
+>Cristi Dumitrescu (cristid at chip ro)</para
+></listitem>
+<listitem
+><para
+>David Faure (faure at kde org)</para
+></listitem>
+<listitem
+><para
+>Philippe Fremy (pfremy at chez com)</para
+></listitem>
+<listitem
+><para
+>Kurt Granroth (granroth at kde org)</para
+></listitem>
+<listitem
+><para
+>Andreas Gungl (a gungl at gmx de): implementación PGP-6 y más mejoras en el uso de cifrado</para
+></listitem>
+<listitem
+><para
+>Steffen Hansen (hansen at kde org)</para
+></listitem>
+<listitem
+><para
+>Igor Janssen (rm at linux ru net)</para
+></listitem>
+<listitem
+><para
+>Matt Johnston (matt at caifex org)</para
+></listitem>
+<listitem
+><para
+>Christer Kaivo-oja (whizkid at telia com)</para
+></listitem>
+<listitem
+><para
+>Lars Knoll (knoll at kde org): Implementación original del cifrado, reconocimiento de PGP 2 y PGP 5</para
+></listitem>
+<listitem
+><para
+>J. Nick Koston (bdraco at darkorb net): reconocimiento de GnuPG</para
+></listitem>
+<listitem
+><para
+>Stephan Kulow (coolo at kde org)</para
+></listitem>
+<listitem
+><para
+>Guillaume Laurent (glaurent at telegraph-road org)</para
+></listitem>
+<listitem
+><para
+>Sam Magnuson (sam at trolltech com)</para
+></listitem>
+<listitem
+><para
+>Matt Newell (newellm at proaxis com)</para
+></listitem>
+<listitem
+><para
+>Denis Perchine (dyp at perchine com)</para
+></listitem>
+<listitem
+><para
+>Samuel Penn (sam at bifrost demon co uk)</para
+></listitem>
+<listitem
+><para
+>Carsten Pfeiffer (pfeiffer at kde org)</para
+></listitem>
+<listitem
+><para
+>Sven Radej (radej at kde org)</para
+></listitem>
+<listitem
+><para
+>Mark Roberts (mark at taurine demon co uk)</para
+></listitem>
+<listitem
+><para
+>Wolfgang Rohdewald (wrohdewald at dplanet ch)</para
+></listitem>
+<listitem
+><para
+>Espen Sand (espen at kde org)</para
+></listitem>
+<listitem
+><para
+>Aaron J. Seigo (aseigo at olympusproject org)</para
+></listitem>
+<listitem
+><para
+>George Staikos (staikos at kde org)</para
+></listitem>
+<listitem
+><para
+>Jason Stephenson (panda at mis net)</para
+></listitem>
+<listitem
+><para
+>Jacek Stolarczyk (jacek at mer chemia polsl gliwice pl)</para
+></listitem>
+<listitem
+><para
+>Roberto S. Teixeira (maragato at kde org)</para
+></listitem>
+<listitem
+><para
+>Bo Thorsen (bo at sonofthor dk)</para
+></listitem>
+<listitem
+><para
+>Ronen Tzur (rtzur at shani net)</para
+></listitem>
+<listitem
+><para
+>Mario Weilguni (mweilguni at sime com)</para
+></listitem>
+<listitem
+><para
+>Wynn Wilkes (wynnw at calderasystems com)</para
+></listitem>
+<listitem
+><para
+>Robert D. Williams (rwilliams at kde org)</para
+></listitem>
+<listitem
+><para
+>Markus W&uuml;bben (markus wuebben at kde org)</para
+></listitem>
+<listitem
+><para
+>Karl-Heinz Zimmer (khz at kde org)</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="credits">
+<title
+>Créditos</title>
+
+<itemizedlist>
+<listitem
+><para
+>Heiko Hund (heiko at ist eigentlich net): filtros POP</para
+></listitem>
+<listitem
+><para
+>Bernhard Reiter (bernhard at intevation de): gestión de los proyectos &Auml;gypten y Kroupware</para
+></listitem>
+<listitem
+><para
+>Jan Simonson (jan at simonson pp se): pruebas beta de uso de PGP-6</para
+></listitem>
+<listitem
+><para
+>Patrick S. Vogt (patrick vogt at unibas ch): marca de tiempo para mensajes de «Transmisión terminada»</para
+></listitem>
+<listitem
+><para
+>Jan-Oliver Wagner (jan at intevation de): gestión de los proyectos &Auml;gypten y Kroupware</para
+></listitem>
+<listitem
+><para
+>Wolfgang Westphal (wolfgang westphal at gmx de): múltiples claves de cifrado por dirección</para
+></listitem>
+<listitem
+><para
+>Thorsten Zachmann (t zachmann at zagge de): filtros POP</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="documentation">
+<title
+>Documentación</title>
+
+<para
+>Actualizado para &kmail; 4.11 por Laurent Montel <email
+>montel@kde.org</email
+> y Scarlett Clark <email
+>scarlett@scarlettgatelyclark.com</email
+></para>
+
+<para
+>Actualizado para &kmail; 1.7 por Ingo Kl&ouml;cker &Ingo.Kloecker.mail; y &Marc.Mutz; &Marc.Mutz.mail;, capítulo de asistente anti correo basura por &Andreas.Gungl; &Andreas.Gungl.mail;, sección sobre registro de filtrado por &Andreas.Gungl; &Andreas.Gungl.mail; y &Brad.Hards; &Brad.Hards.mail;, cambios adicionales por &Daniel.Naber; &Daniel.Naber.mail;.</para>
+
+<para
+>Actualizado para &kmail; 1.2 a 1.5 por &Daniel.Naber; &Daniel.Naber.mail;, capítulo <application
+>OpenPGP</application
+> por &Andreas.Gungl; &Andreas.Gungl.mail; e Ingo Kl&ouml;cker &Ingo.Kloecker.mail;, capítulo de filtrado de mensajes por &Marc.Mutz; &Marc.Mutz.mail;, capítulo de filtrado de descargas por &Thorsten.Zachmann; &Thorsten.Zachmann.mail;. Otros componentes han sido proporcionados por diversos desarrolladores de &kmail;.</para>
+
+<para
+>Documentación de &kmail; 1.0 por &David.Rugge; &David.Rugge.mail;. Documentación original por Markus Wuebben <email
+>markus.&Bernd.Johannes.Wuebben.mail;</email
+>, Robert Williams <email
+>rwilliams@kde.org</email
+> (Editor).</para>
+
+<para
+>Gracias a Michael Elkins <email
+>me@cs.hmc.edu</email
+> por su excelente descripción de los diferentes formatos de correo de &UNIX; en la documentación de <application
+>Mutt</application
+>.</para>
+
+<para
+>Gracias a las siguientes personas por proporcionar direcciones sobre el uso de los buzones de correo de otros clientes con &kmail;:</para>
+
+<itemizedlist>
+<listitem
+><para
+>Nik Gaffney <email
+>nik@f0.am</email
+> (<application
+>Mailsmith</application
+>)</para
+></listitem>
+<listitem
+><para
+>David McMillen <email
+>mcmillen@math.bu.edu</email
+> y Mendel Mobach <email
+>mendel@mobach.nl</email
+> (correo &Netscape;)</para
+></listitem>
+<listitem
+><para
+>Ed Shapard <email
+>shapard@bigfoot.com</email
+> (correo <application
+>Pegasus</application
+>)</para
+></listitem>
+<listitem
+><para
+>Ray Muir <email
+>rjmuir@ibm.net</email
+> (Forte <application
+>Agent</application
+>)</para
+></listitem>
+</itemizedlist>
+
+<para
+>Traducido por Juan Manuel García Molina <email
+>juanma@superiodico.net</email
+>.</para
+><para
+>Traducido por Miguel Revilla Rodríguez<email
+>yo@miguelrevilla.com</email
+></para
+> 
+
+</sect1>
+</chapter>

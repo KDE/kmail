@@ -1,0 +1,353 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Franklin Weng <franklin@goodhorse.idv.tw>, 2012, 2013, 2015.
+# pan93412 <pan93412@gmail.com>, 2018.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2018-05-01 23:19+0800\n"
+"Last-Translator: pan93412 <pan93412@gmail.com>\n"
+"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Franklin Weng"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "franklin@goodhorse.idv.tw"
+
+#: attachpropertydialog.cpp:61
+#, kde-format
+msgid "Save..."
+msgstr "儲存..."
+
+#: attachpropertydialog.cpp:94
+#, kde-format
+msgctxt "@title:window"
+msgid "Properties for Attachment %1"
+msgstr "附檔 %1 的屬性"
+
+#: attachpropertydialog.cpp:98
+#, kde-format
+msgid " bytes"
+msgstr " 位元組"
+
+#: attachpropertydialog.cpp:159
+#, kde-format
+msgctxt "@label"
+msgid "TNEF Attributes"
+msgstr "TNEF 屬性"
+
+#: attachpropertydialog.cpp:168
+#, kde-format
+msgctxt "@info"
+msgid "Must select an item first."
+msgstr "需要先選擇一個項目。"
+
+#: attachpropertydialog.cpp:174
+#, kde-format
+msgctxt "@info"
+msgid "The selected item cannot be saved because it has an empty tag."
+msgstr "選取的項目不能被儲存，因為有空的標籤。"
+
+#: attachpropertydialog.cpp:199
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file for writing, check file permissions."
+msgstr "無法開啟檔案以寫入。請檢查檔案權限。"
+
+#: ktnefmain.cpp:94
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"You will be presented with a dialog where you can configure the application-"
+"wide shortcuts."
+msgstr "您可以設定應用程式捷徑。"
+
+#: ktnefmain.cpp:108
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "View"
+msgstr "檢視"
+
+#: ktnefmain.cpp:113
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "View With..."
+msgstr "檢視方式..."
+
+#: ktnefmain.cpp:117 ktnefmain.cpp:399
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract"
+msgstr "解開"
+
+#: ktnefmain.cpp:121 ktnefmain.cpp:400
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract To..."
+msgstr "解開到..."
+
+#: ktnefmain.cpp:126
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract All To..."
+msgstr "全部解開到..."
+
+#: ktnefmain.cpp:131 ktnefmain.cpp:403
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr "屬性"
+
+#: ktnefmain.cpp:136
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Message Properties"
+msgstr "訊息屬性"
+
+#: ktnefmain.cpp:140
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Show Message Text"
+msgstr "顯示訊息文字"
+
+#: ktnefmain.cpp:145
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Save Message Text As..."
+msgstr "儲存訊息文字為..."
+
+#: ktnefmain.cpp:158
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Default Folder..."
+msgstr "預設資料夾..."
+
+#: ktnefmain.cpp:170
+#, kde-format
+msgctxt "@info:status"
+msgid "No file loaded"
+msgstr "沒有載入檔案"
+
+#: ktnefmain.cpp:193
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file \"%1\"."
+msgstr "無法開啟檔案  \"%1\"。"
+
+#: ktnefmain.cpp:198
+#, kde-format
+msgctxt "@info:status"
+msgid "%1 attachment found"
+msgid_plural "%1 attachments found"
+msgstr[0] "找到 %1 個附件"
+
+#: ktnefmain.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Open TNEF File"
+msgstr "開啟 TNEF 檔"
+
+#: ktnefmain.cpp:244 ktnefmain.cpp:275
+#, kde-format
+msgctxt "@info"
+msgid "There is no file selected. Please select a file an try again."
+msgstr "沒有選取檔案。請選擇一個檔案然後再試一次。"
+
+#: ktnefmain.cpp:304 ktnefmain.cpp:380
+#, kde-format
+msgctxt "@info"
+msgid "Unable to extract file \"%1\"."
+msgstr "無法解開檔案 \"%1\"。"
+
+#: ktnefmain.cpp:486
+#, kde-format
+msgctxt "@info"
+msgid "The message does not contain any Rich Text data."
+msgstr "訊息不包含任何 Rich Text 資料。"
+
+#: ktnefmain.cpp:504
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file \"%1\" for writing, check file permissions."
+msgstr "無法開啟檔案 \"%1\" 以寫入。請檢查檔案權限。"
+
+#: ktnefmain.cpp:526
+#, kde-format
+msgid "Open &with %1"
+msgstr "用 %1 開啟(&W)"
+
+#: ktnefmain.cpp:528
+#, kde-format
+msgctxt "@item:inmenu Open With, %1 is application name"
+msgid "%1"
+msgstr "%1"
+
+#: ktnefmain.cpp:553
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Open With"
+msgstr "開啟方式(&O)"
+
+#: ktnefmain.cpp:569
+#, kde-format
+msgctxt "@action:inmenu Open With"
+msgid "&Other..."
+msgstr "其他(&O)..."
+
+#: ktnefmain.cpp:571 ktnefmain.cpp:579
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Open With..."
+msgstr "開啟方式(&O)..."
+
+#. i18n: ectx: Menu (file)
+#: ktnefui.rc:6
+#, kde-format
+msgid "&File"
+msgstr ""
+
+#. i18n: ectx: Menu (action)
+#: ktnefui.rc:9
+#, kde-format
+msgid "&Action"
+msgstr "動作(&A)"
+
+#. i18n: ectx: Menu (settings)
+#: ktnefui.rc:24
+#, kde-format
+msgid "&Settings"
+msgstr "設定(&S)"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: ktnefui.rc:29
+#, kde-format
+msgid "Main Toolbar"
+msgstr "主工具列"
+
+#: ktnefview.cpp:71
+#, kde-format
+msgctxt "@title:column file name"
+msgid "File Name"
+msgstr "檔案名稱"
+
+#: ktnefview.cpp:72
+#, kde-format
+msgctxt "@title:column file type"
+msgid "File Type"
+msgstr "檔案型態"
+
+#: ktnefview.cpp:72
+#, kde-format
+msgctxt "@title:column file size"
+msgid "Size"
+msgstr "大小"
+
+#: main.cpp:44
+#, kde-format
+msgid "KTnef"
+msgstr "KTnef"
+
+#: main.cpp:46
+#, kde-format
+msgid "Viewer for mail attachments using TNEF format"
+msgstr "使用 TNEF 格式的郵件附檔檢視器"
+
+#: main.cpp:48
+#, fuzzy, kde-format
+#| msgid ""
+#| "Copyright 2000 Michael Goffioul\n"
+#| "Copyright 2012  Allen Winter"
+msgid ""
+"Copyright 2000 Michael Goffioul \n"
+"Copyright 2012  Allen Winter"
+msgstr ""
+"Copyright 2000 Michael Goffioul\n"
+"Copyright 2012  Allen Winter"
+
+#: main.cpp:50
+#, kde-format
+msgid "Michael Goffioul"
+msgstr "Michael Goffioul"
+
+#: main.cpp:50
+#, kde-format
+msgid "Author"
+msgstr "作者"
+
+#: main.cpp:52
+#, kde-format
+msgid "Allen Winter"
+msgstr "Allen Winter"
+
+#: main.cpp:52
+#, kde-format
+msgid "Author, Ported to Qt4/KDE4"
+msgstr "作者，移植至 Qt4/KDE4"
+
+#: main.cpp:58
+#, kde-format
+msgid "An optional argument 'file' "
+msgstr "選擇性參數 'file'"
+
+#: messagepropertydialog.cpp:42
+#, fuzzy, kde-format
+#| msgid "Message Properties"
+msgctxt "@title:window"
+msgid "Message Properties"
+msgstr "訊息屬性"
+
+#: messagepropertydialog.cpp:55
+#, kde-format
+msgctxt "@title:column property name"
+msgid "Name"
+msgstr "名稱"
+
+#: messagepropertydialog.cpp:55
+#, kde-format
+msgctxt "@title:column property value"
+msgid "Value"
+msgstr "數值"
+
+#. i18n: ectx: property (text), widget (QLabel, mDescriptionLabel)
+#: ui/attachpropertywidgetbase.ui:45
+#, kde-format
+msgid "Description:"
+msgstr "描述："
+
+#. i18n: ectx: property (text), widget (QLabel, mIndexLabel)
+#: ui/attachpropertywidgetbase.ui:68
+#, kde-format
+msgid "Index:"
+msgstr "索引："
+
+#. i18n: ectx: property (text), widget (QLabel, mDisplayLabel)
+#: ui/attachpropertywidgetbase.ui:107
+#, kde-format
+msgid "Comment:"
+msgstr "註解："
+
+#. i18n: ectx: property (text), widget (QLabel, mSizeLabel)
+#: ui/attachpropertywidgetbase.ui:143
+#, kde-format
+msgid "File size:"
+msgstr "檔案大小："
+
+#. i18n: ectx: property (text), widget (QLabel, mMimeLabel)
+#: ui/attachpropertywidgetbase.ui:199
+#, kde-format
+msgid "MIME type:"
+msgstr "MIME 型態："

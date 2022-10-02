@@ -1,0 +1,5339 @@
+<chapter id="configure">
+
+<chapterinfo>
+<authorgroup>
+  <author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+  <author
+>&David.Rugge; &David.Rugge.mail; </author>
+  <author
+>&Marc.Mutz; &Marc.Mutz.mail; </author>
+  <author
+>&Michel.Boyer; &Michel.Boyer.mail; </author>
+  <author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+  <author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+  <author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>13 лютого 2021 року</date>
+<releaseinfo
+>5.14.2 (Програми 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Налаштування &kmail;</title>
+
+<sect1 id="configure-generalinfo">
+<title
+>Загальні відомості</title>
+
+<screenshot>
+<screeninfo
+>Діалогове вікно налаштовування &kmail;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Діалогове вікно налаштовування &kmail;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Діалогове вікно налаштовування &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Діалогове вікно налаштування &kmail; надає вам змогу налаштувати &kmail;. Відкрити це вікно можна за допомогою пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Налаштування &kmail;...</guimenuitem
+></menuchoice
+>.</para>
+<para
+>У нижній частині цього діалогового вікна розташовано декілька кнопок.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="system-help.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Довідка</guibutton
+></term>
+<listitem
+><para
+>Ця кнопка відкриває підручник з &kmail; (цей підручник) на відповідній сторінці.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="edit-undo.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Скинути</guibutton
+></term>
+<listitem
+><para
+>За допомогою цієї кнопки можна скасувати всі зміни, які ви внесли з часу останнього зберігання параметрів.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Типові значення</guibutton
+></term>
+<listitem
+><para
+>Ця кнопка відновлює типові початкові параметри налаштування на поточній сторінці.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Гаразд</guibutton
+></term>
+<listitem
+><para
+>За допомогою цієї кнопки можна зберегти всі параметри і закрити діалогове вікно налаштування.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Застосувати</guibutton
+></term>
+<listitem
+><para
+>За допомогою цієї кнопки можна зберегти всі параметри без закриття діалогового вікна налаштування.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-cancel.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Скасувати</guibutton
+></term>
+<listitem
+><para
+>За допомогою цієї кнопки можна закрити діалогове вікно налаштування без збереження змін, які ви внесли.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Діалогове вікно налаштовування поділено на шість сторінок, кожній з яких відповідає одна з піктограм у списку у лівій частині діалогового вікна. Далі ми докладно зупинимося на параметрах кожної з цих сторінок. </para>
+</sect1>
+
+<sect1 id="configure-identity">
+<title
+>Сторінка облікових записів</title>
+
+<para
+>Сторінку <guilabel
+>Облікові записи</guilabel
+> буде автоматично показано у відповідь на вибір пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Налаштування &kmail;...</guimenuitem
+></menuchoice
+>. На сторінці ви побачите чотири вкладки: <guilabel
+>Профілі</guilabel
+>, <guilabel
+>Отримування</guilabel
+>, <guilabel
+>Надсилання</guilabel
+> і <guilabel
+>Сервер LDAP</guilabel
+>. (Вкладку <guilabel
+>Профілі</guilabel
+> проілюстровано у розділі <link linkend="configure-generalinfo"
+>Налаштовування &kmail;</link
+> вище.)</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-identities-tab">
+<title
+>Вкладка «Профілі»</title
+>    
+
+<para
+>Короткий вступ до параметрів вкладки <guilabel
+>Профілі</guilabel
+> можна знайти у розділі <link linkend="getting-started"
+>Початок роботи</link
+>.</para>
+
+<para
+>За допомогою цієї сторінки ви можете створити один або декілька <emphasis
+>профілів</emphasis
+>, тобто комбінацій з назви, адреси електронної пошти та інших параметрів. Наприклад, ви можете створити один профіль для ділового спілкування і ще один для особистих потреб. Якщо у вас є декілька адрес електронної пошти, ви можете створити по одному профілю на кожну з адрес. Після цього ви зможете вибирати профіль кожного разу, коли створюватимете повідомлення.</para>
+
+<para
+>У цьому вікні ви побачите список профілів та кнопки для керування профілями. Після початкового налаштовування у списку профілів завжди буде принаймні один профіль, який у такому разі буде <guilabel
+>Типовим</guilabel
+>. Щоб додати профіль, натисніть кнопку <guibutton
+>Додати…</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-newidentitydialog">
+<title
+>Діалогове вікно «Новий профіль»</title>
+<screenshot>
+<screeninfo
+>Діалогове вікно «Новий профіль»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="newidentity.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Діалогове вікно «Новий профіль»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Діалогове вікно «Новий профіль»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Вам слід ввести назву нового профілю до поля <guilabel
+>Новий профіль</guilabel
+>. Введену назву буде показано у списку профілів.</para>
+
+<para
+>Ви можете обрати спосіб отримання даних для створення нового профілю позначенням одного з трьох варіантів.</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>З порожніми полями</guilabel
+></term>
+<listitem>
+<para
+>Всі поля нового профілю буде спорожнено або заповнено стандартними значеннями.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Використовувати значення з Системних параметрів</guilabel
+></term>
+<listitem>
+<para
+>Використовує значення з вашого типового профілю.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Здублювати існуючу особу</guilabel
+></term>
+<listitem>
+<para
+>Копіювати всі поля з наявного профілю. Ви можете обрати профіль для копіювання, обравши відповідний запис у спадному списку <guilabel
+>Існуючі профілі</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-general">
+<title
+>Загальне</title>
+<screenshot>
+<screeninfo
+>Сторінка загальних параметрів профілю</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitygeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Сторінка загальних параметрів профілю</phrase>
+    </textobject>
+    <caption>
+      <para
+>Сторінка загальних параметрів профілю</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>На вкладці <guilabel
+>Загальне</guilabel
+> ви можете вказати деякі базові параметри для поточного обраного профілю.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Ваше ім'я</guilabel
+></term>
+<listitem>
+<para
+>У це поле слід ввести ваше повне ім'я (ім'я і прізвище). Хоча це поле і не є обов'язковим, ми рекомендуємо вам ввести до нього ваше ім'я.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Організація</guilabel
+></term>
+<listitem>
+<para
+>У це поле введіть назву установи чи підприємства, на якому ви працюєте. Це поле не є обов'язковим.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Адреса пошти:</guilabel
+></term>
+<listitem>
+<para
+>Тут слід ввести адресу електронної пошти, наприклад щось на зразок <userinput
+>ivan@example.com</userinput
+>.</para>
+<example>
+<title
+>Адреса пошти</title>
+<para
+>Нехай вашою адресою є <replaceable
+>Ivan User &lt;ivan@example.com&gt;</replaceable
+>, тоді вам слід ввести <userinput
+>Ivan User</userinput
+> до поля <guilabel
+>Ваше ім'я</guilabel
+> і <userinput
+>ivan@example.com</userinput
+> до поля <guilabel
+>Адреса пошти</guilabel
+>.</para
+></example>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Альтернативні адреси</guilabel
+></term>
+<listitem>
+<para
+>У цьому полі мають міститися альтернативні адреси, які пов'язано із цим профілем (на відміну від адрес, які призначено для інших профілів). Ви можете визначити декілька альтернативних адрес. Щоб додати альтернативну адресу, введіть адресу до поля <guilabel
+>Альтернативі адреси:</guilabel
+> і натисніть кнопку <guibutton
+>&plus; Додати</guibutton
+>.</para>
+<example>
+<title
+>Альтернативні адреси</title>
+<para
+>Основна адреса: ім'я.прізвище@example.org</para>
+<para
+>Альтернативні адреси: ім'я@example.org та прізвище@example.org</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-cryptography">
+<title
+>Криптографія</title>
+<screenshot>
+<screeninfo
+>Сторінка «Криптографія» профілю</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitycryptography.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Сторінка «Криптографія» профілю</phrase>
+    </textobject>
+    <caption>
+      <para
+>Сторінка «Криптографія» профілю</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>За допомогою вкладки <guilabel
+>Криптографія</guilabel
+> ви зможете вказати ключі &openpgp; і/або &smime;, пов'язані з цим профілем, а також обрати (криптографічний) формат повідомлення, якому ви надаєте перевагу.</para>
+
+ <variablelist>
+<varlistentry id="configure-identity-cryptography-openpgp-sign">
+<term
+><guilabel
+>Ключ OpenPGP для підписів:</guilabel
+></term>
+<listitem>
+<para
+>Тут ви можете вибрати ключ &openpgp; для підписування повідомлень, які написано з цього профілю. Щоб уникнути надмірного захаращення вікна, буде показано лише короткий ідентифікатор ключа. Якщо навести вказівник миші на пункт у списку, програма покаже докладніші відомості на панелі підказки. Щоб вибрати наявний ключ, скористайтеся спадним списком. Якщо ви хочете створити нову пару з відкритого і закритого ключів, виберіть пункт <guilabel
+>Створити нову пару ключів</guilabel
+>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-openpgp-encrypt">
+<term
+><guilabel
+>Ключ OpenPGP для шифрування:</guilabel
+></term>
+<listitem
+><para
+>Тут ви можете обрати ключ для шифрування повідомлень за допомогою &openpgp;, якщо використовується цей профіль і <xref linkend="configure-security-composing-encrypt-to-self"/>. Цей ключ також буде використано для реалізації можливості <xref linkend="composer-attach-attach-my-public-key"/>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-sign">
+<term
+><guilabel
+>&smime;-сертифікат для підписування:</guilabel
+></term>
+<listitem>
+<para
+>Тут ви можете вибрати сертифікат x.509, який буде використано для підписування повідомлень, які створено з цього профілю. Програма &kmail; не може самостійно створювати сертифікати x.509. Такі сертифікати видають служби сертифікації. Якщо вами було додано такий сертифікат до вашого сховища ключів, &kmail; може його імпортувати і використовувати.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-encrypt">
+<term
+><guilabel
+>&smime;-сертифікат для шифрування:</guilabel
+></term>
+<listitem>
+<para
+>Тут ви можете обрати сертифікат x.509 для шифрування повідомлень за допомогою. Використати цей сертифікат можна буде, якщо повідомлення буде написано від імені відповідного профілю, а також буде позначено пункт <xref linkend="configure-security-composing-encrypt-to-self"/>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-preferred-format">
+<term
+><guilabel
+>Основний формат:</guilabel
+></term>
+<listitem>
+<para
+>За допомогою цієї вкладки ви можете вибрати типовий криптографічний формат, який буде використовуватися у профілі. Ви можете вибрати будь-який з чотирьох форматів, які підтримує &kmail; або не змінювати значення цього параметра, тобто залишити у відповідному полі типове значення <guilabel
+>Будь-який</guilabel
+>, тоді програма вибиратиме належний формат на основі даних про отримувачів повідомлення, або може навіть створити декілька копій повідомлення: деякі з підписом і/або шифруванням за допомогою сертифіката x.509, а інші з підписом і/або шифруванням &openpgp;.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Автоматично підписувати повідомлення:</guilabel
+></term>
+<listitem
+><para
+>Якщо позначити цей пункт, &kmail; долучить ваш цифровий підпис до повідомлень, які створено у цьому профілі, якщо цю можливість не було вручну перевизначено у вікні <guilabel
+>Редактор</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Автоматично шифрувати повідомлення:</guilabel
+></term>
+<listitem
+><para
+>Якщо позначити цей пункт, &kmail; зашифрує повідомлення, які створено у цьому профілі, якщо таке шифрування є можливим (і шифрування не скасовано у вікні <guilabel
+>Редактор</guilabel
+>).</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-advanced">
+<title
+>Додатково</title>
+
+<screenshot>
+<screeninfo
+>Сторінка «Додатково» профілю</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitiesadvanced.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Сторінка «Додатково» профілю</phrase>
+    </textobject>
+    <caption>
+      <para
+>Сторінка «Додатково» профілю</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>За допомогою вкладки <guilabel
+>Додатково</guilabel
+> ви зможете вказати деякі рідковживані параметри для профілю, який ви редагуєте.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Зворотна адреса:</guilabel
+></term>
+<listitem>
+<para
+>У це поле слід ввести адресу, на яку слід надсилати відповіді на ваші повідомлення. Вам слід заповнювати це поле, лише якщо адреса для відповідей відрізняється від вашої звичайної адреси (вказаної за допомогою полів <guilabel
+>Ваше ім'я</guilabel
+> і <guilabel
+>Адреса пошти</guilabel
+> на <link linkend="configure-identity-general"
+>вкладці <guilabel
+>Загальне</guilabel
+></link
+>), оскільки у такому випадку відповіді типово надсилатимуться на адресу відправника.</para>
+<para
+>Це поле буде корисним, якщо вам потрібно, щоб відповіді на ваші повідомлення надходили на якусь іншу адресу, відмінну від вашої звичайної адреси електронної пошти, наприклад, якщо ви використовуєте для надсилання повідомлень профіль, адреса електронної пошти якого не може отримувати відповіді.</para>
+<note
+><para
+>У деяких списках листування це поле заголовка буде перезаписано поштовою адресою списку листування для того, щоб забезпечити надходження відповідей до списку, а не до окремих його учасників. Отже, корисність цього поля дуже обмежена, ним слід користуватися із осторогою.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Адреси копій:</guilabel
+></term>
+<listitem>
+<para
+>Якщо хочете, вкажіть одну або декілька адрес, куди буде надіслано копії ваших повідомлень. Під час створення повідомлень з використанням цього профілю поле <guilabel
+>Копія</guilabel
+> буде заповнено вказаними адресами.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Потайні адреси:</guilabel
+></term>
+<listitem>
+<para
+>Якщо хочете, вкажіть адресу, куди буде надіслано потайні (приховані) копії ваших повідомлень. Під час створення повідомлень з використанням цього профілю поле <guilabel
+>Потайна копія</guilabel
+> буде заповнено вказаними адресами. Якщо ви бажаєте надсилати потайні копії для усіх визначених вами профілів, вам слід зазирнути на вкладку <link linkend="configure-composer-headers"
+><guilabel
+>Заголовки</guilabel
+></link
+> сторінки <guilabel
+>Редактор листів</guilabel
+> (створіть нетиповий заголовок потайної копії (BCC)).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Словник:</guilabel
+></term>
+<listitem>
+<para
+>Тут можна вибрати типовий словник перевірки правопису для поточного профілю.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Тека надісланих повідомлень:</guilabel
+></term>
+<listitem>
+<para
+>Тут ви можете обрати теку, куди слід пересувати повідомлення після надсилання їх за допомогою цього профілю. Користувачам &IMAP; слід змінити значення цього параметра на теку &IMAP;, у якій слід зберігати надіслану пошту на сервері, замість зберігання цих повідомлень у локальній теці. Таким чином, ви зможете отримати доступ до надісланих повідомлень з інших комп'ютерів.</para>
+<tip
+><para
+>Точніше керувати пересуванням надісланих повідомлень до різних тек можна за допомогою відповідного <link linkend="filters"
+>фільтра повідомлень</link
+>, застосованого до вихідних повідомлень.</para
+></tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Тека чернеток:</guilabel
+></term>
+<listitem>
+<para
+>Тут ви можете обрати теку, куди слід пересувати чернетки повідомлень, створених за допомогою цього профілю. Користувачам &IMAP; слід змінити значення цього параметра на теку &IMAP;, у якій слід зберігати чернетки повідомлень на сервері, замість зберігання цих повідомлень у локальній теці. Таким чином, користувачі зможуть отримати доступ до чернеток повідомлень з інших комп'ютерів.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Тека шаблонів:</guilabel
+></term>
+<listitem>
+<para
+>Виберіть теку, до якої слід зберігати шаблони, якщо використовується цей профіль. Докладніші відомості щодо шаблонів можна знайти у <link linkend="new-compose-from-templates"
+>розділі щодо створення повідомлень на основі шаблонів</link
+>.</para>
+</listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term
+><guilabel
+>Обліковий запис вихідної пошти:</guilabel
+></term>
+<listitem>
+<para
+>Вкажіть адресу альтернативного сервера &SMTP;, &Sendmail; або &Microsoft; Exchange, який буде використано для надсилання повідомлень з цього профілю.</para>
+<note
+><para
+>Вам слід налаштувати сервери вихідної пошти, перш ніж ви зможете обрати один з них зі списку. Налаштування цих серверів можна виконати за допомогою <link linkend="configure-accounts-sending"
+>вкладки <guilabel
+>Надсилання</guilabel
+></link
+> <link linkend="configure-accounts"
+>сторінки <guilabel
+>Облікові записи</guilabel
+></link
+>.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Долучити до повідомлення вашу візитівку</guilabel
+></term>
+<listitem>
+<para
+>Позначте цей пункт, якщо ви хочете долучати файл vCard до кожного повідомлення, надісланого з цього профілю. Із цим пунктом пов'язано невеличке діалогове вікно.</para>
+    <variablelist>
+        <varlistentry>
+        <term
+><guilabel
+>З порожніми полями</guilabel
+></term>
+        <listitem
+><para
+>Використання цього пункту призведе до відкриття діалогового вікна, яке є подібним до вікна <ulink url="help:/kaddressbook/editing-contact-data.html"
+>додавання даних запису контакту &kaddressbook;</ulink
+>. Введіть ваше ім'я, адресу електронної пошти тощо, потім натисніть кнопку <guilabel
+>Гаразд</guilabel
+> для створення візитівки.</para
+></listitem>
+        </varlistentry>
+        <varlistentry>
+        <term
+><guilabel
+>На основі наявної візитівки</guilabel
+></term>
+        <listitem
+><para
+>Використання цього пункту призведе до відкриття вікна навігації каталогами, за допомогою якого ви зможете вибрати файл .vcf. (Підказка: скористайтеся &kaddressbook; для експортування файла vCard, яким можна скористатися тут.)</para
+></listitem>
+        </varlistentry
+>        
+        <varlistentry>
+        <term
+><guilabel
+>Здублювати вже створену візитівку</guilabel
+></term>
+        <listitem
+><para
+>Цей пункт відкриває доступ до спадного списку усіх інших профілів, які вже визначено. За його допомогою ви можете вибрати vCard, які пов'язано із одним з них.</para
+></listitem>
+        </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Мова автовиправлення:</guilabel
+></term>
+<listitem>
+<para
+>Скористайтеся спадним списком для вибору мови, пов'язаної із додатковим засобом автоматичного виправлення слів при використанні цього профілю.</para>
+</listitem
+><!-- FIXME Need a link to "Plugins" section -->
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Типовий домен:</guilabel
+></term>
+<listitem>
+<para
+>Це поле буде типово заповнено значенням із файла <filename
+>hostnames</filename
+> (у теці /etc). <guilabel
+>Редактор</guilabel
+> допише цю доменну назву до будь-якої вказаної вами локальної адреси електронної пошти. Ця можливість, в основному, корисна у середовищах &Sendmail;.</para>
+<example>
+<title
+>Типовий домен</title>
+<para
+>Типовим доменом є <userinput
+>kde.org</userinput
+>; значення поля адреси «Кому:» встановлено у <userinput
+>foo</userinput
+>.</para>
+<para
+><guilabel
+>Редактор</guilabel
+> надсилає повідомлення до foo@kde.org.</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-templates">
+<title
+>Шаблони</title>
+<screenshot>
+<screeninfo
+>Сторінка «Шаблони» профілю</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitytemplate.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Сторінка «Шаблони» профілю</phrase>
+    </textobject>
+    <caption>
+      <para
+>Сторінка «Шаблони» профілю</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Тут ви можете створити нетипові шаблони для цього профілю і керувати ними. Шаблонами можна скористатися для створення повідомлень, відповідей на повідомлення або переспрямовування повідомлень у вбудованому форматі. У шаблонах повідомлень можна використовувати команди-замінники. Ви можете просто ввести ці команди або вибрати їх за допомогою меню <guimenu
+>Вставити команду <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guimenu
+>. Передбачено три типи команд.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Початкове повідомлення &gt;</guilabel
+> / <guilabel
+>Поточне повідомлення &gt;</guilabel
+></term>
+        <listitem
+><para
+>Ці команди видобувають відомості з повідомлення, на яке ви відповідаєте або яке ви переспрямовуєте, і вставляють ці відомості до вікна редактора.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Обробка зовнішніми програмами &gt;</guilabel
+></term>
+        <listitem
+><para
+>Ці команди передадуть повідомлення, на яке ви відповідаєте, на обробку конвеєром зовнішньої програми, а потім вставлять результат обробки до вікна редактора &kmail;.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Інше &gt;</guilabel
+></term>
+        <listitem
+><para
+>Ці команди виконують завдання, які подібні до вибору словника перевірки правопису, яким слід скористатися, чи вставлення вмісту текстового файла до вікна редактора.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>За допомогою поля <guilabel
+>Позначка цитування:</guilabel
+> ви можете перевизначити типовий символ-індикатор цитування, «&gt;». За допомогою кнопки <guibutton
+>Копіювати глобальні шаблони</guibutton
+> можна скинути усі нетипові шаблони, які визначено за допомогою цього вікна, до типових для &kmail;. (Ви можете досягти того самого результату зняттям позначки <guilabel
+>Використовувати власні шаблони повідомлень для цього профілю</guilabel
+> у верхній лівій частині цього діалогового вікна.)</para>
+
+<para
+>Шаблони, що тут визначаються, застосовуватимуться лише для цього запису. Їм віддається перевага перед загальними шаблонами, але шаблони окремої теки, якщо їх встановлено, замінять ці шаблони.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-signature">
+<title
+>Підпис</title>
+<screenshot>
+<screeninfo
+>Сторінка «Підпис» профілю</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitysignature.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Сторінка «Підпис» профілю</phrase>
+    </textobject>
+    <caption>
+      <para
+>Сторінка «Підпис» профілю</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>За допомогою цієї вкладки ви можете вказати підпис (який іноді називають <quote
+>нижнім колонтитулом</quote
+> або <quote
+>відмовою</quote
+>), який буде додано до кожного з повідомлень, надісланих за допомогою цього профілю.</para>
+<note
+><para
+>Підписи цього типу не мають нічого спільного з (цифровими) підписами, які описано у розділі <link linkend="configure-identity-cryptography"
+>Криптографія</link
+>. «Підпис» — це не зовсім коректна назва для підписів такого виду, але оскільки цей термін вживається повсюдно, ми буде використовувати його і у цьому підручнику. Просто пам'ятайте, що ці підписи і цифрові підписи є абсолютно різними речами.</para
+></note>
+
+<para
+>Позначте пункт <guilabel
+>Увімкнути підпис</guilabel
+>, якщо ви хочете, щоб програма &kmail; дописувала підпис до повідомлень, створених за допомогою цього профілю. Щоб <emphasis
+>автоматично</emphasis
+> додавати цей підпис до кожного з ваших повідомлень, вам також слід позначити пункт <guilabel
+>Автоматично додавати підпис</guilabel
+> на сторінці налаштування <guilabel
+>Редактор листів</guilabel
+>.</para>
+
+<para
+>&kmail; може отримувати текст підпису з різних джерел. Типовим варіантом є <guilabel
+>Поле вводу нижче</guilabel
+>. Вам достатньо ввести рядок підпису у розташоване трохи нижче поле для введення тексту. Якщо ви хочете скористатися форматованим текстом, позначте пункт <guilabel
+>Використовувати &HTML;</guilabel
+> у нижній лівій частині вікна. У відповідь програма покаже панель інструментів форматування.</para>
+
+<para
+>Традиційним способом для Unix є читання тексту підпису з файла, який називається <filename
+>.signature</filename
+> і зберігається у вашій домашній теці. Цей файл є спільним для багатьох програм, отже ви зможете використовувати однаковий підпис у всіх програмах для роботи з електронною поштою, якими ви користуєтеся. З цією метою виберіть пункт <guilabel
+>Файл</guilabel
+> зі списку <guilabel
+>Отримувати текст підпису з</guilabel
+>. Якщо ви хочете внести зміни до файла, натисніть кнопку <guilabel
+>Змінити файл</guilabel
+>.</para>
+
+<para
+>Крім того, &kmail; може читати текст підпису з виводу команди. Ви можете скористатися програмою, зокрема <command
+>fortune</command
+>, для того, щоб створити випадковий текст підпису для кожного нового повідомлення. Всі дані, які програма виведе до <acronym
+>stdout</acronym
+>, буде перехоплено і використано як текст підпису. Щоб текст було прочитано з виведення команди, вам слід вибрати варіант <guilabel
+>Виводу команди</guilabel
+>. Введіть команду (зі шляхом до програми, який слід вказати повністю) у поле <guilabel
+>Вкажіть команду:</guilabel
+>.</para>
+
+<note
+><para
+>У інтернеті підписи прийнято відокремлювати від тексту повідомлення рядком, у якому міститься лише три символи <quote
+>-- </quote
+> (дефіс, дефіс, пробіл). Якщо позначено пункт <guilabel
+>Приєднати до підпису роздільник</guilabel
+> на сторінці налаштувань <guilabel
+>Редактор листів</guilabel
+>, &kmail; автоматично допише цей рядок перед текстом підпису (якщо його там ще немає).</para
+></note>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-pictures">
+<title
+>Зображення</title>
+<screenshot>
+<screeninfo
+>Сторінка «Зображення» профілю</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitypicture.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Сторінка «Зображення» профілю</phrase>
+    </textobject>
+    <caption>
+      <para
+>Сторінка «Зображення» профілю</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>KMail може надсилати малі (48x48 пікселів), низькоякісні, монохромні зображення з кожним повідомленням. Наприклад, це може бути малюнок з вашим підписом на папері. Це зображення буде показано у поштовій програмі адресата повідомлення (якщо підтримується).</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Надіслати зображення з кожним повідомленням</guilabel
+></term>
+<listitem>
+<para
+>Ввімкніть, якщо бажаєте, щоб &kmail; додавала так званий заголовок X-Face до повідомлень, створених за допомогою цього профілю. X-Face — це малі (48x48 пікселів) чорно-білі зображення, які відображаються деякими поштовими програмами.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Використовувати зображення з:</guilabel
+></term>
+<listitem>
+<para
+>За допомогою цього спадного списку ви можете вибрати зображення в один із двох способів.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Зовнішнє джерело <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> (типовий)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+>Вибрати файл...</guibutton
+></term>
+<listitem>
+<para
+>Скористайтесь цією кнопкою для вибору файла для створення зображення. Зображення має бути висококонтрастним і квадратним або майже квадратним. Додавання світлого тла допоможе покращити результат.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Вибрати з адресної книги</guibutton
+></term>
+<listitem>
+<para
+>Ви можете скористатися цією кнопкою для створення зменшеної версії зображення, яке було встановлено вами у вашому власному записів адресної книги.</para>
+</listitem>
+</varlistentry>
+</variablelist
+>  
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>поля вводу, розташованого нижче</guilabel
+></term>
+<listitem>
+<para
+>За допомогою цього пункту ви можете вказати довільний рядок X-Face. Приклади можна знайти <ulink url="https://ace.home.xs4all.nl/X-Faces/"
+>тут</ulink
+>. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-accounts">
+<title
+>Облікові записи ел. пошти</title>
+
+<para
+>Короткий вступ щодо сторінок облікових записів надсилання і отримання пошти можна знайти у розділі <link linkend="setting-up-your-account"
+>Налаштування вашого облікового запису</link
+>.</para>
+
+<para
+>За допомогою цієї сторінки ви зможете створити один або декілька (вхідних і вихідних) <emphasis
+>облікових записів</emphasis
+>, тобто комбінацій даних щодо поштових серверів, даних для доступу до них та інших параметрів. Зазвичай, вам слід створити один вихідний (такий, що використовується для надсилання повідомлень) і один вхідний (такий, що використовується для отримання повідомлень) обліковий запис. Ви можете створити довільну кількість облікових записів і поставити у відповідність кожному з них <link linkend="configure-identity"
+>профіль</link
+>. Також можна налаштувати один профіль і визначати, яким із облікових записів скористатися, під час роботи із кожним окремим повідомленням. За допомогою цієї сторінки ви можете налаштувати один або декілька серверів <acronym
+>LDAP</acronym
+> (Lightweight Directory Access Protocol або «невибагливого протоколу доступу до каталогів»).</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-accounts-receiving">
+<title
+>Отримування</title>
+<screenshot>
+<screeninfo
+>Обліковий запис отримування</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-receiving.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Обліковий запис отримування</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вкладка «Отримування»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Основні відомості ви можете дізнатися з розділу <link linkend="receiving-mail"
+>Налаштування вашого облікового запису: Отримування</link
+>.</para>
+
+<para
+>За допомогою стовпчика кнопок праворуч ви зможете <guibutton
+>Додати...</guibutton
+> новий обліковий запис і <guibutton
+>Змінити</guibutton
+> або <guilabel
+>Вилучити</guilabel
+> наявний обліковий запис. Ви не зможете змінити або вилучити запис <guilabel
+>Локальні теки</guilabel
+>, який є частиною типового набору даних програми. За допомогою натискання кнопки <guilabel
+>Перезапустити</guilabel
+> можна імітувати перезапуск програми.</para>
+
+<para
+>Натискання кнопки <guibutton
+>Налаштувати порядок записів...</guibutton
+> призводить до відкриття діалогового вікна, за допомогою якого ви зможете пересунути створені вами облікові записи IMAP та групу облікових записів, пов'язаних із пунктом <guilabel
+>Локальні теки</guilabel
+>, вище або нижче списком.</para>
+
+<para
+>За допомогою спадного меню <guilabel
+>Параметри отримання</guilabel
+> кожного з облікових записів ви можете вказати, слід &kmail; перевіряти поштову скриньку одразу після запуску. Ви також можете скористатися пунктами керування <guilabel
+>Включити до перевірки вручну</guilabel
+> та <guilabel
+>Переходити у режим «поза мережею» під час закриття &kmail;</guilabel
+>. </para>
+
+<para
+>Якщо ви позначите пункт <guilabel
+>Детальні повідомлення про надходження пошти</guilabel
+>, &kmail; показуватиме кількість нових повідомлень у кожній з тек, якщо ви обрали сповіщення за допомогою діалогового вікна. Доступ до інших параметрів сповіщення, зокрема відтворення звуку або синтезу звукового повідомлення на основі тексту, можна отримати натисканням кнопки <guibutton
+>інші дії</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-accounts-sending">
+<title
+>Надсилання</title>
+<screenshot>
+<screeninfo
+>Обліковий запис «Надсилання»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-sending.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Обліковий запис «Надсилання»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вкладка «Надсилання»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>За допомогою вкладки <guilabel
+>Надсилання</guilabel
+> ви зможете визначити нові сервери вихідної пошти і вказати декілька загальних параметрів, які впливають на усі надіслані вами повідомлення.</para>
+
+<para
+>Основні відомості ви можете дізнатися з розділу <link linkend="sending-mail"
+>Налаштування вашого облікового запису: Надсилання</link
+>.</para>
+
+<para
+>Після натискання кнопки <guibutton
+>Додати...</guibutton
+> або <guibutton
+>Змінити...</guibutton
+> буде відповідно відкрито діалогові вікна <guilabel
+>Створення облікового запису вихідної пошти</guilabel
+> або <guilabel
+>Налаштування облікового запису</guilabel
+>. Для надсилання повідомлень за допомогою програми &Sendmail; або подібної програми ви можете вказати назву і адресу програми &Sendmail;. Для &SMTP; ви можете вказати <guilabel
+>Назву</guilabel
+>, <guilabel
+>Сервер вихідної пошти</guilabel
+> і <guilabel
+>Порт</guilabel
+> сервера. Позначення пункту <guilabel
+>Сервер вимагає автентифікації</guilabel
+> увімкне поля <guilabel
+>Ім'я користувача</guilabel
+> і <guilabel
+>Пароль</guilabel
+>, а також кнопки <guilabel
+>Метод автентифікації</guilabel
+> на вкладці <guilabel
+>Додатково</guilabel
+>. Якщо ви не певні щодо параметрів безпеки, ви можете виконати перевірку за допомогою &kmail;: кнопка <guibutton
+>Автовизначення</guibutton
+> на вкладці <guilabel
+>Додатково</guilabel
+>.</para>
+
+<para
+>Якщо позначити пункт <guilabel
+>Підтвердити перед надсиланням</guilabel
+>, програма відкриватиме панель підтвердження дій кожного разу, коли ви надсилатимете повідомлення. За допомогою пункту <guilabel
+>Перевірити правопис до надсилання</guilabel
+> можна наказати програмі викликати засіб перевірки правопису до надсилання повідомлення.</para>
+
+<para
+>За допомогою пункту <guilabel
+>Надсилати повідомлення з теки «вихідні»</guilabel
+> ви зможете самі визначити час, коли повідомлення з черги, тобто повідомлення у теці «вихідні» підготовані для надсилання, має бути надіслано. Ви можете обрати між трьома варіантами.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Не робити це автоматично <inlinemediaobject
+><imageobject
+><imagedata
+fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+></term>
+<listitem
+><para
+>Повідомлення з черги буде надіслано лише після того, як ви скористаєтеся пунктом меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Надіслати повідомлення з черги</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>при перевірці пошти вручну</guilabel
+></term>
+<listitem
+><para
+>Повідомлення з черги буде надіслано після перевірки вами вручну наявності нових повідомлень, наприклад за допомогою пункту меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Перевірити пошту</guimenuitem
+></menuchoice
+>. Звичайно ж, ви зможете надіслати пошту і вручну, за допомогою пункту меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Надіслати повідомлення з черги</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>при будь-який перевірці пошти</guilabel
+></term>
+<listitem
+><para
+>Повідомлення з черги буде надіслано по завершенню всіх перевірок наявності нових повідомлень, тобто після автоматичних перевірок, а також після перевірки пошти вручну. Звичайно ж, ви зможете надіслати пошту і вручну, за допомогою пункту меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Надіслати повідомлення з черги</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>За допомогою пункту <guilabel
+>Типовий метод надсилання</guilabel
+> ви зможете визначити поведінку програми у відповідь на команду надсилання пошти. Якщо ви оберете варіант <guilabel
+>Надіслати зараз</guilabel
+>, у відповідь на таку команду повідомлення буде негайно надіслано на поштовий сервер, якщо ж ви оберете пункт <guilabel
+>Надіслати пізніше</guilabel
+>, повідомлення буде пересунуто до черги у теці «вихідні» для подальшого надсилання за допомогою пункту меню <menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Надіслати повідомлення з черги</guimenuitem
+></menuchoice
+> або автоматичного надсилання після виконання перевірки пошти, залежно від варіанта, який ви обрали для пункту <guilabel
+>Надсилати пошту з теки «вихідні»</guilabel
+>.</para>
+
+<para
+>Пункт <guilabel
+>Уможливити скасування надсилання:</guilabel
+> ви можете вказати інтервал часу (від 10 до 50 секунд), протягом якого ви можете перервати передавання пошти. Ваші повідомлення буде додано до черги надсилання, а в області сповіщень буде показано невеличку кнопку <guibutton
+>Скасувати надсилання</guibutton
+>. Натисніть цю кнопку (вчасно), щоб припинити надсилання повідомлення.</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-ldap-servers">
+<title
+>Сервери LDAP</title>
+<screenshot>
+<screeninfo
+>Сервери LDAP</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-ldap.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Сервери LDAP</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вкладка «Сервер LDAP»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Скористайтеся цією вкладкою для налаштовування серверів LDAP, до яких ви маєте отримати доступ. Будь ласка, ознайомтеся із вмістом <ulink url="help:/kaddressbook/configure-ldap-server.html"
+>додатка до підручника з &kaddressbook;</ulink
+>, щоб дізнатися більше.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-appearance">
+<title
+>Сторінка зовнішнього вигляду</title>
+
+<para
+>За допомогою сторінки «Вигляд» ви можете налаштувати параметри багатьох частин графічного інтерфейсу користувача &kmail;, зокрема схеми кольорів, набір шрифтів і навіть компонування списку повідомлень у головному вікні програми.</para>
+
+<!-- <sect2 id="configure-appearance-message-window"
+> -->
+<sect2 id="configure-appearance-general">
+<title
+>Загальне</title>
+
+<screenshot>
+<screeninfo
+>Вкладка «Загальні» сторінки «Вигляд»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancegeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Вкладка «Загальні» сторінки «Вигляд»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вкладка «Загальні» сторінки «Вигляд»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Якщо позначено пункт <guilabel
+>Закрити вікно повідомлення після відповіді або спрямування</guilabel
+>, &kmail; закриватиме окреме вікно повідомлення, якщо відкрито вікно редактора (для написання відповіді або переспрямовування повідомлення). Типово, позначено пункт <guilabel
+>Задіяти клавішу доступу</guilabel
+>. Клавіші доступу надають вам змогу використовувати клавіатуру для дій, які виконуються за допомогою миші, зокрема переходу за посиланнями. Докладніший опис клавіш доступу можна знайти у розділі <ulink url="help:/konqueror/accesskeys.html"
+>Клавіші доступу</ulink
+> підручника з &konqueror;.</para>
+
+<!-- <para
+><guilabel
+>Show HTML status bar</guilabel
+> activates a bar at the left side of the reader
+pane that tells you if a message is &HTML; or not. This is important because
+&HTML; messages might imitate the look of a signed and encrypted message, so
+you should be aware of the fact that you are reading an &HTML; message. The &HTML;
+status bar itself cannot be influenced by the &HTML; code of the message.</para>
+ 
+<para
+>Enable <guilabel
+>Replace smileys by emoticons</guilabel
+> if you want smileys 
+like <userinput
+>:-)</userinput
+> appearing in the message text to be 
+replaced by emoticons (small pictures) such as
+<inlinemediaobject
+><imageobject>
+<imagedata fileref="smile.png" format="PNG"/></imageobject>
+</inlinemediaobject
+>.</para
+> --><!-- No longer on the General tab. -->
+
+<para
+>Позначте пункт <guilabel
+>Зменшити шрифт цитованого тексту</guilabel
+>, щоб наказати програмі показувати цитований текст (у відповіді) шрифтом меншого розміру. За допомогою пункту <guilabel
+>Показувати позначки розкриття/згортання цитат</guilabel
+> можна наказати програмі показувати невеличкі віджети поряд із кожним фрагментом цитованого тексту. За їхньою допомогою ви зможете розкривати (+) або приховувати (-) вкладені цитати до певного рівня. Це корисно у довгих спілкуваннях, коли учасники не вилучають жодного з блоків попереднього обміну думками.</para>
+
+<!-- <para
+><guilabel
+>Fallback character encoding</guilabel
+>: 
+Some emails, especially those generated automatically, do not specify the 
+character encoding which needs to be used to properly display them. In such 
+cases a fallback character encoding will be used, which you can configure 
+here. Set it to the character encoding most commonly used in your part of 
+the world. As a default the encoding configured for the whole system is used.</para
+> -->
+
+<para
+><guilabel
+>Кодування символів</guilabel
+>: зміна значення з <guilabel
+>Автоматично</guilabel
+> змусить використовувати вказане кодування для всіх листів електронної пошти, незалежно від місту заголовків &MIME;. За допомогою пункту <guilabel
+>Мінімальний розмір шрифту:</guilabel
+> ви можете вказати мінімальний розмір шрифту, який використовуватиметься у &kmail;. Встановлення більшого значення надасть вам змогу не напружуватися при читанні повідомлень, які написано дуже малим шрифтом.</para>
+
+<para
+>За допомогою панелі <guilabel
+>Системний лоток</guilabel
+> можна керувати взаємодією &kmail; із панеллю задач &kde;. Якщо позначено пункт <guilabel
+>Ввімкнути піктограму системного лотка</guilabel
+> у системному лотку буде показано невелику піктограму (<inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject
+></inlinemediaobject
+>). Якщо буде позначено пункт <guilabel
+>Запускати згорнутим до лотка</guilabel
+>, після запуску &kmail; ви побачите лише цю піктограму у лотку. Якщо буде позначено пункт <guilabel
+>Показувати кількість непрочитаних повідомлень на панелі задач</guilabel
+> на кнопці &kmail; на панелі задач буде показано кількість непрочитаних повідомлень.</para>
+
+<para
+>Якщо піктограму системного лотка буде показано, ви зможете сховати головне вікно &kmail; натисканням цієї піктограми або натисканням кнопки закриття вікна. Повторним натисканням піктограми ви зможете знову зробити головне вікно &kmail; видимим. Якщо ви натиснете піктограму <mousebutton
+>правою</mousebutton
+> кнопкою миші, буде відкрито контекстне меню з декількома корисними пунктами. За його допомогою ви зможете перевірити надходження нових повідомлень, створити нове повідомлення або завершити роботу &kmail;. Якщо ви ще не прочитали якісь повідомлення, буде показано пункт <guilabel
+>Нові повідомлення &gt;</guilabel
+> разом зі списком тек, у яких містяться непрочитані повідомлення. Натисніть пункт будь-якої з цих тек, і програма відкриє теку у головному вікні &kmail;. </para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-fonts">
+<title
+>Шрифти</title>
+
+<screenshot>
+<screeninfo
+>Вкладка «Шрифти» сторінки «Вигляд»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancefonts.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Вкладка «Загальні» сторінки «Вигляд»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вкладка «Шрифти» сторінки «Вигляд»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>За допомогою цієї вкладки можна скоригувати шрифти, які використовуватиме &kmail;. Щоб задіяти усі інші пункти, позначте пункт <guilabel
+>Використовувати нетипові шрифти</guilabel
+>. Пункт <guilabel
+>Тіло повідомлення</guilabel
+> у списку «Застосовувати до:» надає змогу встановити параметри шрифту на панелі читання повідомлень. За допомогою пункту <guilabel
+>Редактор</guilabel
+> можна визначити шрифт, яким буде показано звичайні текстові повідомлення під час написання. Пункт <guilabel
+>Список повідомлень</guilabel
+> надає змогу змінити шрифт, який буде використано у списку повідомлень. Ви також можете вибрати спеціальні параметри шрифту для непрочитаних, важливих і таких, що потребують дій, пунктів списку повідомлень. За допомогою пункту <guilabel
+>Вихід друку</guilabel
+> можна змінити шрифт, який буде використано для друку. Пункт <guilabel
+>Моноширинний шрифт</guilabel
+> стосується показу деяких повідомлень у форматі &HTML;.</para>
+
+<para
+>За допомогою пункту <guilabel
+>Показувати лише моноширинні шрифти</guilabel
+> можна обмежити показаний список шрифтів. Якщо цей пункт буде позначено, у списку лишаться лише шрифти із фіксованою шириною символів.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-colors">
+<title
+>Кольори</title>
+
+<screenshot>
+<screeninfo
+>Вкладка «Кольори» сторінки «Вигляд»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancecolors.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Вкладка «Кольори» сторінки «Вигляд»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вкладка «Кольори» сторінки «Вигляд»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>За допомогою цього розділу ви зможете вказати кольори тексту інтерфейсу програми подвійним клацанням лівою кнопкою миші на пункті у списку. Позначте пункт <guilabel
+>Використовувати нетипові кольори</guilabel
+>, щоб задіяти цю можливість. Позначте пункт <guilabel
+>Не змінювати колір з початкового повідомлення HTML</guilabel
+>, щоб зберегти схему кольорів, яку було вибрано відправником для будь-якого повідомлення &HTML;.</para>
+
+<para
+>Якщо позначити пункт <guilabel
+>Повторювати кольори при глибокому цитуванні</guilabel
+>, навіть текст з рівнем глибини цитування більшим за три буде розфарбовано. Зауважте, що кольори <guilabel
+>Цитованого тексту</guilabel
+> буде використано лише під час читання повідомлень, їх не буде використано у редакторі повідомлень. Якщо ви бажаєте, щоб програма показувала теки, які близькі до перевищення квоти (обмеження простору, що використовується на серверах &IMAP;), було показано іншим кольором, ви можете вказати порогове значення у відсотках для зміни кольору.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-layout">
+<title
+>Розкладка</title>
+<screenshot>
+  <screeninfo
+>Типове компонування</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelayout.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Типове компонування</phrase>
+      </textobject>
+      <caption>
+        <para
+>Вкладка «Компонування» сторінки «Вигляд»</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>За допомогою цієї вкладки ви можете налаштувати компонування головного вікна &kmail;.</para>
+<para
+>На панелі <guilabel
+>Список тек</guilabel
+> ви можете вибрати між <guilabel
+>Великим списком тек</guilabel
+> (типовий варіант), для якого використовується уся висота вікна, і <guilabel
+>Малий список тек</guilabel
+>. Якщо вибрано варіант <guilabel
+>Малий</guilabel
+> і ви позначите <guilabel
+>Відображати перегляд повідомлення під списком повідомлень</guilabel
+>, список повідомлень і список тек буде показано у форматі горизонтального стрічки, а панель попереднього перегляду повідомлень використовуватиме усю нижню частину вікна. Якщо вами позначено пункт <guilabel
+>Відображати перегляд повідомлення збоку від списку повідомлень</guilabel
+>, список тек і список повідомлень буде показано як вертикальну стрічку, а панель попереднього перегляду повідомлень буде показано праворуч.</para>
+
+<para
+>Позначте пункт <guilabel
+>Показувати поле швидкого пошуку у теці</guilabel
+> для створення малого текстового поля над списком тек. Якщо ви введете якийсь текст у це поле, буде показано лише ті теки, які містять введені вами символи. Витріть усе з поля, щоб програма показала усі ваші теки.</para>
+
+<para
+>За допомогою розділу <guilabel
+>Показ панелі улюблених тек</guilabel
+> ви можете змінити спосіб показу тек улюблених повідомлень. Якщо буде вибрано варіант <guilabel
+>Як піктограми</guilabel
+> на показ буде витрачено багато місця. Тому, якщо у вас є декілька улюблених тек, варто скористатися варіантом <guilabel
+>Як список</guilabel
+>. Якщо у вас немає улюблених тек, ви можете вимкнути показ вибором пункту <guilabel
+>Ніколи</guilabel
+>.</para>
+
+<para
+>Типово, на панелі <guilabel
+>Підказки тек</guilabel
+> буде показано додаткову інформацію, зокрема дані щодо загальної кількості повідомлень, кількості непрочитаних повідомлень та розміру сховища повідомлень. Щоб побачити ці дані, достатньо навести вказівник миші на пункт теки. Виберіть варіант <guilabel
+>Ніколи</guilabel
+>, щоб вимкнути цю можливість.</para>
+
+<para
+>За допомогою розділу <guilabel
+>Панель перегляду повідомлення</guilabel
+> ви можете вибрати, де, відносно списку повідомлень, буде показано панель перегляду повідомлення. Ви також можете вимкнути показ панелі повністю і користуватися лише повноекранним засобом перегляду для перегляду позначених повідомлень (натисніть &Enter;).</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-message-list">
+<title
+>Список повідомлень</title>
+
+<screenshot>
+<screeninfo
+>Вкладка «Список повідомлень» сторінки «Вигляд»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelist.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Вкладка «Список повідомлень» сторінки «Вигляд»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вкладка «Список повідомлень» сторінки «Вигляд»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>За допомогою цієї вкладки можна змінити вигляд панелі списку повідомлень.</para>
+<para
+>Якщо буде позначено пункт <guilabel
+>Показувати підказки для повідомлень і заголовків груп</guilabel
+>, програма показуватиме коротке резюме щодо кожного повідомлення (або групи повідомлень, залежно від режиму перегляду), якщо ви наведете вказівник миші на пункт у списку повідомлень.</para>
+
+<para
+>Значення пунктів <guilabel
+>Типове складання</guilabel
+> та <guilabel
+>Типова тема</guilabel
+> може бути перевизначено за допомогою діалогового вікна <guilabel
+>Властивості теки</guilabel
+> для кожної з тек окремо. Натисканням кнопки <guibutton
+>Налаштувати</guibutton
+> можна відкрити діалогове вікно для попереднього налаштовування складання і тем. За його допомогою ви можете створювати власні схеми.</para>
+
+<para
+>Попередньо визначено вісім режимів складання і три теми.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Типове складання:</guilabel
+> (спадний список)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Дії за датою, плоский</term>
+<listitem
+><para
+>За цього різновиду перегляду буде використано розподіл на групи за днями. Повідомлення не буде розподілено за гілками. Отже, наприклад у групі «Сьогодні» ви знайдете просто всі повідомлення, які надійшли сьогодні. Групи, типово, буде показано у зворотному хронологічному порядку і позначено «Сьогодні», «Вчора», далі назвами п'яти попередніх днів тижня, а потім просто записом дати у форматі «день-місяць-рік».</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Дії за датами, з гілками</term>
+<listitem
+><para
+>За цього різновиду перегляду буде використано автоматичний розподіл на групи за днями. Повідомлення буде розподілено за гілками. Отже, наприклад, у групі «Сьогодні» ви знайдете всі повідомлення, які надійшли сьогодні і всі гілки, у яких сьогодні спостерігалася активність. Використовує те саме групування, що і у режимі «Дії за датою, плоский».</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Поточні дії, плоский</term>
+<listitem
+><para
+>За цього різновиду перегляду буде використано автоматичний розподіл на групи за діапазоном дат. Повідомлення не буде розподілено за гілками. Отже, наприклад, у групі «Сьогодні» ви знайдете всі повідомлення, які надійшли сьогодні. Групи, типово, буде показано у зворотному хронологічному порядку: «Сьогодні», «Вчора», п'ять попередніх днів тижня, «Попередній тиждень», «Два тижні тому», а потім за місяцями.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Поточні дії, з гілками </term>
+<listitem
+><para
+>За цього різновиду перегляду буде використано автоматичний розподіл на групи за діапазоном дат. Повідомлення буде розподілено за гілками. Отже, наприклад, у групі «Сьогодні» ви знайдете всі повідомлення, які надійшли сьогодні і всі гілки, у яких сьогодні спостерігалася активність. У іншому, подібний до «Поточні дії, плоский».</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Плоский перегляд за датами</term>
+<listitem
+><para
+>Це плоский традиційний перегляд списку повідомлень з впорядкуванням за датою: без груп, без розподілу на гілки.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Відправник/Отримувач, плоска</term>
+<listitem
+><para
+>За цього різновиду перегляду повідомлення буде згруповано за відправниками і отримувачами (залежно від типу теки). Ви можете вказати відправників (або отримувачів) за допомогою діалогового вікна, яке можна викликати за допомогою пункту меню <menuchoice
+><guimenu
+>Теки</guimenu
+> <guimenuitem
+>Властивості теки</guimenuitem
+></menuchoice
+>. (вкладка «Перегляд», пункт <guilabel
+>Показувати стовпчик</guilabel
+>). Повідомлення не буде розподілено за гілками.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Стандартний список листування</term>
+<listitem
+><para
+>Це плоский традиційний перегляд списку повідомлень: без груп зі строгим розбиттям на гілки і упорядкуванням за датою початку кожної з гілок.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>За тими, хто розпочинав гілки</term>
+<listitem
+><para
+>За цього різновиду перегляду повідомлення буде згруповано за гілками, а гілки буде згруповано за особами тих користувачів, які першими надіслали до них повідомлення.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-aggregation-theme">
+    <term
+>Кнопка <guibutton
+>Налаштувати...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message Aggregation Modes</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="aggregationtheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message Aggregation Modes</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message Aggregation Modes</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+   
+<para
+>Щоб створити нетипову тему складання, натисніть кнопку <guibutton
+>Налаштувати...</guibutton
+>. Виберіть пункт способу складання, який є близьким до того, який ви хочете створити, і натисніть кнопку <guibutton
+>Клонувати складання</guibutton
+>. Якщо подібних до потрібного вам способу ще немає, натисніть кнопку <guibutton
+>Створити складання</guibutton
+>. За допомогою вкладки <guilabel
+>Загальне</guilabel
+> ви можете змінити вміст полів <guilabel
+>Назва:</guilabel
+> і <guilabel
+>Опис:</guilabel
+>. За допомогою вкладки <guilabel
+>Групи і впорядкування</guilabel
+> ви можете налаштувати деякі з параметрів вашого способу складання.</para>
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Групування:</guilabel
+> — надає вам змогу вибрати групування за датою, відправником або отримувачем або вимкнути групування. Якщо буде увімкнено режим кмітливого упорядкування, &kmail; згрупує відповідні повідомлення. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Правила розгортання груп:</guilabel
+> — надає вам змогу наказати &kmail; автоматично розгортати групи повідомлень. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Впорядкування:</guilabel
+> — надає вам змогу змінити спосіб, у який &kmail; використовуватиме посилання і тему для впорядковування. Ви можете зовсім вимкнути впорядковування. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Перші у гілках:</guilabel
+> — надає змогу визначити, які повідомлення будуть першими у гілках, — найостанніші чи найперші. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Правила розгортання гілок:</guilabel
+> — надає змогу змінити спосіб, у який &kmail; визначатиме, чи слід розгортати гілку. </para
+></listitem>
+</itemizedlist>
+<para
+>За допомогою вкладки <guilabel
+>Додатково</guilabel
+> ви можете змінити значення параметра <guilabel
+>Стратегія перегляду</guilabel
+>. Ви можете віддати перевагу швидкості наповнення списку, якщо працюєте з повільним з'єднанням. Якщо буде вибрано варіант інтерактивності, усі поточні обговорення буде показано на початку списку. У пакетному режимі упорядковування списку перегляду не відбуватиметься.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Типова тема:</guilabel
+> (спадний список)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Класична</term>
+<listitem
+><para
+>Проста, зворотно сумісна, однорядкова тема</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Розумна</term>
+<listitem
+><para
+>Розумна багаторядкова і багатоелементна тема</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Розумна з можливістю натискання стану</term>
+<listitem
+><para
+>Розумна багаторядкова і багатоелементна тема з придатним до натискання стовпчиком стану.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-messagelist-theme">
+    <term
+>Кнопка <guibutton
+>Налаштувати...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message List Theme</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="messagelisttheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message List Theme</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message List Theme</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+  
+<para
+>Щоб створити нетипову тему списку повідомлень, натисніть кнопку <guibutton
+>Налаштувати...</guibutton
+>. Виберіть зі списку наявних тем ту, яка є найбільш подібною до теми, яку ви хочете створити, і натисніть кнопку <guibutton
+>Клонувати тему</guibutton
+>. Якщо подібної теми не виявиться, натисніть кнопку <guibutton
+>Створити тему</guibutton
+>. За допомогою вкладки <guilabel
+>Загальне</guilabel
+> ви можете змінити значення параметрів теми <guilabel
+>Назва:</guilabel
+> і <guilabel
+>Опис:</guilabel
+>.</para>
+
+<para
+>За допомогою вкладки <guilabel
+>Вигляд</guilabel
+> ви можете змінити перелік показаних стовпчиків та режим показу пунктів стану. Щоб додати стовпчик, наведіть вказівник миші на смужку стовпчиків, клацніть правою кнопкою і виберіть у контекстному меню пункт <guilabel
+>Додати стовпчик</guilabel
+>. Вкажіть назву стовпчика і виберіть дію зі списку <guilabel
+>Натискання заголовка впорядковує повідомлення:</guilabel
+>. Типово, пункт <guilabel
+>Типово видимий</guilabel
+> позначено. Зніміть з нього позначку, якщо стовпчик слід показувати лише у контекстному меню додавання або вилучення панелі упорядковування. Потім перетягніть відповідну мітку зі списку <guilabel
+>Пункти вмісту</guilabel
+> на панель перегляду під смужкою стовпчиків. Приклад: якщо потрібно додати стовпчик розмірів, вам слід перетягнути мітку «Розмір» під стовпчик «Розмір». Продовжуйте, аж доки не буде досягнуто бажаного результату. Ви можете змінити шрифт і колір пунктів стовпчиків за допомогою контекстного меню пунктів. Пересунути, вилучити або змінити розміри стовпчиків можна за допомогою контекстного меню смужки стовпчиків.</para>
+
+<para
+>За допомогою вкладки <guilabel
+>Додатково</guilabel
+> ви зможете визначити, чи слід показувати заголовки. Також можна змінити розмір піктограм показу стану.</para>
+</listitem
+></varlistentry
+> 
+</variablelist>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>За допомогою розділу <guilabel
+>Показ дати</guilabel
+> ви зможете зробити вибір між трьома форматами даних (або створити власний). Якщо вибрано <guilabel
+>Стандартний формат</guilabel
+>, програма покаже день тижня і дату. <guilabel
+>Локалізований формат</guilabel
+> є коротшим — у ньому не буде показано день тижня. У режимі <guilabel
+>Розумний формат</guilabel
+> буде показано «сьогодні», «вчора» тощо. Якщо ви хочете створити <guilabel
+>Нетиповий</guilabel
+> формат дати, просто натисніть пункт <guilabel
+>Дані нетипового формату</guilabel
+> і виконайте показані настанови.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="configure-message-tags">
+    <title
+>Мітки повідомлень</title>
+    
+<screenshot>
+<screeninfo
+>Вкладка «Мітки повідомлень» сторінки «Вигляд»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancetags.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Вкладка «Мітки повідомлень» сторінки «Вигляд»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вкладка «Мітки повідомлень» сторінки «Вигляд»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Типово &kmail; надає вам змогу позначати повідомлення (Важливе / Потрібна дія / День народження) у декілька способів. Доступ до цих способів можна отримати за допомогою підменю <menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guisubmenu
+>Позначити повідомлення &gt;</guisubmenu
+></menuchoice
+>. Ви можете також визначити додаткові мітки, які допоможуть вам категоризувати повідомлення.</para>
+
+<para
+>Скористайтеся полем для введення <guilabel
+>Доступні мітки</guilabel
+> для визначення назви вашої особливої мітки. Скористайтеся кнопкою <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> для додавання цієї назви до списку. Для вилучення мітки скористайтеся кнопкою <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+>. (Мітка «День народження» є вбудованою — її не можна вилучити.) Скористайтеся кнопками зі стрілками вгору і вниз для упорядковування пунктів у списку.</para>
+
+<para
+>Позначте пункт у списку, щоб відкрити діалогове вікно <guilabel
+>Параметри мітки</guilabel
+>. Ви можете вибрати будь-які з шести пунктів.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Змінити колір тексту:</guilabel
+></term>
+        <listitem
+><para
+>Виберіть цей пункт, щоб пункти повідомлень із міткою було показано іншим кольором. У відповідь на вибір цього пункту програма покаже палітру кольорів. Виберіть попередньо визначений колір або скористайтеся кнопкою «Нетиповий…», щоб вибрати колір самостійно.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Змінити колір тла:</guilabel
+></term>
+        <listitem
+><para
+>Виберіть цей пункт, щоб змінити колір тла пунктів списку повідомлень із мітками.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Змінити шрифт:</guilabel
+></term>
+        <listitem
+><para
+>Ви можете вибрати напівжирну або <emphasis
+>курсивну</emphasis
+> гарнітуру шрифту.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Піктограма мітки листа:</guilabel
+></term>
+        <listitem
+><para
+>Натисніть цю кнопку, щоб відкрити діалогове вікно вибору піктограми. Піктограму буде показано поряд із пунктами повідомлень із міткою у списку.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Скорочення:</guilabel
+></term>
+        <listitem
+><para
+>Скористайтеся цією кнопкою для створення клавіатурного скорочення для пов'язування цієї мітки із позначеними повідомленнями.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Увімкнути кнопку на панелі:</guilabel
+></term>
+        <listitem
+><para
+>Позначте цей пункт, щоб додати нову кнопку на панель інструментів &kmail;. Натискання цієї кнопки призведе до використання відповідної мітки для поточного позначеного повідомлення.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>Усі визначені тут мітки автоматично з'являться як нові пункти у підменю <menuchoice
+> <guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Позначити повідомлення &gt;</guisubmenu
+></menuchoice
+>.</para>
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-composer">
+    <title
+>Сторінка редактора </title>
+    
+    <para
+>Опис способів використання <guilabel
+>Редактора</guilabel
+> наведено на <link linkend="the-composer-window"
+>цій сторінці</link
+>. Щоб дізнатися більше про коригування поведінки <guilabel
+>Редактора</guilabel
+>, ознайомтеся із наведеними нижче даними. </para>
+
+    <sect2 id="configure-composer-general">
+      <title
+>Загальне </title>
+    
+    <screenshot>
+    <screeninfo
+>Вкладка «Загальні» сторінки редактора</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composergeneral.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Вкладка «Загальні» сторінки редактора</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Загальні» сторінки редактора</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>За допомогою цього діалогового вікна ви можете скоригувати обробку підписів у &kmail;. Воно надає вам змогу керувати деякими можливостями форматування, виправити параметри автоматичного доповнення та налаштувати можливість автоматичного зберігання у &kmail;. </para>
+    
+    <variablelist>
+	<varlistentry id="configure-composer-general-append-signature">
+	  <term>
+	    <guilabel
+>Автоматично додавати підпис</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначити цей пункт, ваш підпис, у тому вигляді, у якому його було визначено на <link linkend="configure-identity-signature"
+>сторінці профілів</link
+>, буде автоматично додано наприкінці всіх повідомлень, які ви створите (тобто нових повідомлень, відповідей тощо). </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Вставити підпис над цитованим текстом</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначено, &kmail; вставлятиме ваш підпис у верхній частині поля редагування, а не у нижній. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Приєднати до підпису роздільник</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначено, &kmail; вставлятиме «-- » (дефіс-дефіс-пробіл) перед підписом, якщо підпис не починається з цього рядка. (Цей рядок-роздільник є <emphasis
+>фактично</emphasis
+> інтернет-стандартом.) </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Вилучати підпис з відповіді на повідомлення</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначено, &kmail; вилучить підпис із початкового повідомлення, коли ви редагуватимете відповідь. Звичайно, якщо ви не вибрали підпис і було позначено пункт <guilabel
+>Цитувати лише позначений текст...</guilabel
+>, &kmail; пропустить підпис без використання цього параметра. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry id="configure-composer-general-quote-selection-only">
+    <term>
+      <guilabel
+>Цитувати у відповіді лише позначений текст</guilabel>
+    </term>
+    <listitem>
+      <para
+>Якщо буде позначено, &kmail; цитуватиме у вікні повідомлення лише позначений фрагмент тексту, а не ціле повідомлення. Таким чином, ви зможете пришвидшити створення відповідей, у яких цитуватиметься лише відповідний абзац, на який ви, власне, і відповідаєте. Якщо позначено цей пункт і нічого не позначено, &kmail; процитує усе повідомлення. </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry id="configure-composer-general-smart-quoting">
+	  <term>
+	    <guilabel
+>Використовувати кмітливе цитування</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначити цей пункт, &kmail; розриватиме довгі рядки, але програма намагатиметься зберегти правильне цитування (наприклад, символ <quote
+>&gt; </quote
+> завжди додаватиметься на початок рядка). </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Переносити слова на стовпчику:</guilabel>
+    </term>
+    <listitem>
+      <para
+>Якщо позначено, буде автоматично вибрано перенесення рядків (<menuchoice
+> <guimenu
+>Налаштування</guimenu
+><guimenuitem
+>Перенесення слів</guimenuitem
+> </menuchoice
+> у вікні редактора листів). Скористайтеся полем лічильника для встановлення максимальної довжини рядка. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Відповісти або переспрямувати за допомогою того самого візуального формату, що і у початковому повідомленні (звичайний текст або HTML)</guilabel>
+    </term>
+    <listitem>
+      <para
+>Якщо позначено, &kmail; завжди вмикатиме показ панелі інструментів редагування форматованого тексту, якщо повідомлення, на яке ви відповідаєте, містить заголовок &MIME; &HTML;. Якщо цей пункт не позначено, редактор листів зберігатиме стан показу панелі інструментів з попереднього сеансу. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Форматувати звичайний текст у повідомленні &HTML;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначено, &kmail; додаватиме нижні колонтитули до звичайної текстової версії кожного повідомлення, яке створено у форматі &HTML;. Ці нижні колонтитули у форматі звичайного тексту може бути створено придатними до натискання посиланнями на будь-які ресурси, які вказано як пов'язані мітки (тобто посилання) у &HTML;-версії повідомлення. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-auto-request-mdns">
+	  <term>
+	    <guilabel
+>Автоматично запитувати за сповіщенням про долю листа</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо буде позначено цей пункт, типовим значенням <xref linkend="composer-options-request-mdn"/> буде <emphasis
+>увімкнено</emphasis
+>. Позначте цей пункт, лише якщо вам відомі наслідки ваших дій. Сповіщення про отримання повідомлень вважаються набридливими (або просто ігноруються) більшістю людей. Надсилайте запити щодо таких сповіщень, лише якщо насправді цього потребуєте. </para>
+	  </listitem>
+    </varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Використовувати індексовані з повідомлень адреси для автодоповнення</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначено, &kmail; включить адреси з усіх ваших збережених повідомлень до списку автоматичного доповнення адрес отримувачів (наприклад, показуватиме їх у списку пропозицій, коли ви щось вводитимете у полі «Кому:»). Ці адреси буде показано як «Записи контактів, виявлені у ваших даних». Якщо цей пункт не буде позначено, у списку буде показано лише відповідні записи &kaddressbook; і «Нещодавніх адрес». Скористайтеся полем лічильника для обмеження кількості записів, які буде показано у списку. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Використовувати для автозавершення недавні адреси</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначено, &kmail; включатиме адреси, які було використано останніми, до до списку автоматичного доповнення адрес отримувачів (наприклад, показуватиме їх у списку пропозицій, коли ви щось вводитимете у полі «Копія:»). Ці адреси буде показано як «Нещодавні адреси». Якщо цей пункт не буде позначено, у списку буде показано лише відповідні записи &kaddressbook; і «Записи контактів, виявлені у ваших даних». Скористайтеся полем лічильника для обмеження кількості записів, які будуть вважатися нещодавніми. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term
+>Кнопка <guibutton
+>Налаштувати автодоповнення...</guibutton
+> </term>
+	  <listitem>
+	    <para
+>Натисніть цю кнопку, щоб відкрити діалогове вікно налаштовування автоматичного доповнення. Ви можете скоригувати порядок показу пропозицій, додати або вилучити «нещодавні» адреси і створити «чорний» список адрес, які ніколи не з'являтимуться у списку пропозицій автоматичного доповнення. Зауважте, що це діалогове вікно також можна відкрити з контекстного меню клацанням правою кнопкою миші, скажімо, у полі «Кому:» редактора листів. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-autosave-interval">
+	  <term>
+	    <guilabel
+>Інтервал автозбереження</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Резервні копії тексту у вікні редактора листів створюватимуться регулярно у автоматичному режимі. За допомогою цього пункту ви можете вказати наскільки часто створюватимуться резервні копії. Ви можете вимкнути автоматичне збереження, позначивши пункт «Без автозбереження». </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-standard-templates">
+    <title
+>Стандартні шаблони</title>
+    <screenshot>
+    <screeninfo
+>Вкладка «Стандартні шаблони» сторінки редактора</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerstandard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Вкладка «Стандартні шаблони» сторінки редактора</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Стандартні шаблони» сторінки редактора</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Тут ви можете редагувати типові шаблони повідомлень, які буде використано, коли ви створюватимете повідомлення, писатимете відповідь або переспрямовуватимете повідомлення. У шаблонах повідомлень передбачено підтримку команд-замінників. Достатньо просто ввести ці команди або вибрати їх у меню <guimenu
+>Вставити команду</guimenu
+>. Це загальні (типові) шаблони. Їх можна перевизначити на рівні профілів або тек, якщо для них визначено окремі шаблони. Більшості користувачів достатньо стандартних типових шаблонів. Втім, якщо вам хочеться скоригувати типові шаблони, це можна зробити саме тут. </para>
+
+    <para
+>Докладніший опис налаштовування шаблонів можна знайти у <link linkend="configure-identity-templates"
+>главі «Профілі»</link
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-custom-templates">
+    <title
+>Власні шаблони</title>
+    <screenshot>
+    <screeninfo
+>Вкладка «Власні шаблони» сторінки «Редактор листів»</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercustom.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Вкладка «Власні шаблони» сторінки «Редактор листів»</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Власні шаблони» сторінки «Редактор листів»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>За допомогою цієї вкладки ви можете додавати, редагувати і вилучати нетипові шаблони повідомлень для відповідей та переспрямувань. Створити нетиповий шаблон можна введенням його назви у поле для введення тексту з наступним натисканням кнопки <guiicon
+>+</guiicon
+>. Для пришвидшення роботи ви можете пов'язати з шаблоном якесь клавіатурне скорочення. </para>
+    <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
+    
+    <para
+>В шаблони повідомлень можна вставляти команди для підставляння тексту, це робиться шляхом введення цих команд вручну або вибору команди за допомогою меню <guimenu
+>Вставити команду</guimenu
+>. </para>
+    
+    <para
+>Передбачено чотири типи нетипових шаблонів: їх призначено для випадків <guilabel
+>Відповісти</guilabel
+>, <guilabel
+>Відповісти всім</guilabel
+>, <guilabel
+>Переспрямувати</guilabel
+> та <guilabel
+>Універсальний</guilabel
+>, тобто повного спектра дій. З шаблонами типу <guilabel
+>Універсальний</guilabel
+> не можна пов'язувати клавіатурні скорочення. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-subject">
+    <title
+>Тема</title>
+    <screenshot>
+    <screeninfo
+>Вкладка «Тема» сторінки «Редактор листів»</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composersubject.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Вкладка «Тема» сторінки «Редактор листів»</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Тема» на сторінці редактора</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>У цьому розділі міститься список префіксів для позначок <quote
+>Відповідь</quote
+> і <quote
+>Переспрямоване</quote
+>. Якщо ви отримаєте повідомлення, у якому буде використано префікси, відмінні від стандартних, ви зможете додати ці префікси на цій вкладці, щоб &kmail; міг їх розпізнати. Після їх зазначення &kmail; буде ігнорувати ці префікси для впорядкування повідомлень, а під час створення відповідей і переспрямованих повідомлень замінюватиме на вказані рядки позначок <quote
+>Re:</quote
+> і <quote
+>Fwd:</quote
+>, відповідно. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-charset">
+    <title
+>Кодування символів</title>
+    <screenshot>
+    <screeninfo
+>Кодування символів у редакторі</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercharset.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Кодування символів у редакторі</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Набір символів» сторінки редактора</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>За допомогою цього пункту ви зможете керувати типовими наборами символів, які буде використано для ваших власних повідомлень. Текст кожного з повідомлень, які ви надсилатимете, буде перевірено на належність до одного з наборів символів зі списку, починаючи з верхньої частини списку. Якщо повідомлення буде знайдено, саме його буде використано. Якщо набору символів не буде знайдено, програма відкриє діалогове вікно і повідомить вам про те, що вам слід вручну обрати набір символів за допомогою пункту меню <menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guisubmenu
+>Встановити кодування</guisubmenu
+></menuchoice
+>. </para>
+
+    <para
+>Якщо ви позначите пункт <guilabel
+>Зберігати початковий набір символів при відповіді або пересиланні (якщо можливо)</guilabel
+>, набір символів повідомлення буде збережено, якщо до нього не буде додано символів, яких немає у цьому наборі символів. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-headers">
+    <title
+>Заголовки</title>
+    <screenshot>
+    <screeninfo
+>«Заголовки» на сторінці редактора</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerheaders.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>«Заголовки» на сторінці редактора</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Заголовки» сторінки «Редактор листів»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Позначте пункт <guilabel
+>Використовувати власний суфікс ідентифікації повідомлення</guilabel
+>, якщо ви бажаєте, щоб &kmail; створював ідентифікатори повідомлень з нетиповим суфіксом. Введіть бажаний суфікс у поле <guilabel
+>Власний суфікс ідентифікації повідомлення</guilabel
+>. Будь ласка, не забувайте про те, що вказаний вами суфікс буде унікальним на глобальному рівні. Найкраще скористатися назвою домену, власником якого ви є. Якщо ви не позначатимете пункту <guilabel
+>Використовувати власний суфікс ідентифікації повідомлення</guilabel
+>, &kmail; автоматично створюватиме повний ідентифікатор повідомлення. Якщо вам невідомо про наслідки позначення цього пункту, не позначайте цього пункту. </para>
+
+    <para
+>За допомогою списку <guilabel
+>Власні нетипові заголовки для листів</guilabel
+> можна вказати заголовки, які &kmail; використає для вихідних повідомлень. Він допоможе вам створити нові поля заголовків або перезаписати наявні поля. Ця можливість буде корисною лише досвідченим користувачам. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-attachments">
+    <title
+>Долучення</title>
+    <screenshot>
+    <screeninfo
+>Вкладка «Долучення» сторінки «Редактор листів»</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerattach.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Вкладка «Долучення» сторінки «Редактор листів»</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Долучення» сторінки «Редактор листів»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Якщо вам потрібно буде надіслати долучення, назви файлів яких містять символи, яких немає у наборі символів англійської, користувачам <application
+>&Microsoft; Outlook</application
+> або <application
+>&Microsoft; Outlook Express</application
+>, вам слід позначити пункт <guilabel
+>Надавати долученням сумісні з Outlook назви</guilabel
+>. У разі позначення пункту &kmail; закодує назви долучень у нестандартний спосіб, зрозумілий <application
+>&Microsoft; Outlook</application
+>. </para>
+
+    <para
+>Якщо ви позначите цей пункт, &kmail; створюватиме несумісні зі стандартами електронної пошти повідомлення, а отже, ймовірно, ваші повідомлення можуть бути несумісними з стандартизованими клієнтами електронної пошти. Отже, якщо у вас є вибір, вам не слід позначати цей пункт. </para>
+
+    <para
+>Позначте пункт <guilabel
+>Увімкнути визначення відсутніх долучень</guilabel
+>, якщо ви бажаєте, щоб &kmail; попереджав вас про надсилання повідомлень без долучень, тоді як текст повідомлення містить рядки, які позначають те, що ви бажали долучити до повідомлення певний файл. Список відповідних ключових слів можна змінити. </para>
+    
+    <para
+>Скористайтеся полем лічильника <guilabel
+>Максимальний розмір долучення:</guilabel
+> для обмеження розміру будь-якого надісланого вами долучення. Якщо ви спробуєте долучити файл розміру, який перевищує вказаний, &kmail; покаже повідомлення про помилку і відмовиться долучити файл. Зауважте, що це обмеження на окреме долучення, а не на загальний об'єм долучень. Крім того, розмір файла буде перевірено до перетворення його даних до кодування за основою 64, якщо це потрібно. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-autocorrection">
+    <title
+>Автоматичне виправлення</title>
+    <screenshot>
+    <screeninfo
+>Вкладка «Автовиправлення» сторінки «Редактор листів»</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercorrect.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Вкладка «Автовиправлення» сторінки «Редактор листів»</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Автовиправлення» сторінки «Редактор листів»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>Щоб увімкнути автоматичне виправлення типових друкарських помилок, позначте пункт <guilabel
+>Увімкнути автовиправлення</guilabel
+>. За допомогою спадного списку виберіть мову, яку слід використовувати для автоматичного виправлення. Ви можете імпортувати словники автоматичного виправлення з <application
+>LibreOffice</application
+> або іншого екземпляра &kmail; або &calligra;, вибравши відповідний пункт за допомогою кнопки <guibutton
+>Імпортувати...<inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guibutton
+>. Якщо ви хочете зберегти словник автоматичного виправлення для іншого екземпляра програми або іншої програми, скористайтеся кнопкою <guibutton
+>Експортувати…</guibutton
+>. </para>
+    
+    <para>
+      <variablelist
+><title
+>Параметри автоматичного виправлення</title>
+        <varlistentry>
+             <term
+><guilabel
+>Просте автовиправлення</guilabel
+></term>
+             <listitem>
+               <para
+>Тут ви можете налаштувати &kmail; на автоматичне виправлення різноманітних поширених друкарських помилок. Позначте пункти тих можливостей автоматичного виправлення, які ви хочете увімкнути. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Спеціальні лапки</guilabel
+></term>
+             <listitem>
+               <para
+>Ви можете наказати програмі замінювати подвійні або одинарні лапки відповідними типографічними знаками, позначивши відповідний пункт. Ви можете також наказати програмі додавати нероздільний пробіл перед відповідними символами пунктуації (як це, наприклад, робиться у французькій мові). </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Додаткове автовиправлення</guilabel
+></term>
+             <listitem>
+               <para
+>За допомогою цього пункту ви можете визначити додаткові параметри заміни слів. Щоб визначити нетиповий рядок автоматичної заміни, вкажіть слово, яке слід виправити, у полі <guilabel
+>Знайти</guilabel
+>, а слово-замінник у полі <guilabel
+>Замінити</guilabel
+>, потім натисніть кнопку додавання. Щоб вилучити рядок зі списку, позначите відповідний пункт і натисніть кнопку <guibutton
+>Вилучити</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Виключення</guilabel
+></term>
+             <listitem>
+               <para
+>За допомогою цього діалогового вікна можна створити записи виключень, коли &kmail; має не зважати на параметри автоматичного виправлення наприкінці речення або для початкових двох літер верхнього регістру (наприклад, &kmail;). Вкажіть виключення і натисніть кнопку додавання. Для вилучення виключення позначте відповідний рядок і натисніть кнопку <guibutton
+>Вилучити</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+        </variablelist>
+    </para>
+      
+    <para
+>Щойно всі параметри автоматичного виправлення буде узгоджено, ви можете натиснути кнопку <guibutton
+>Застосувати</guibutton
+> або <guibutton
+>Гаразд</guibutton
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace --> 
+    </sect2>
+
+    <sect2 id="configure-resize-image">
+    <title
+>Автозміна розмірів зображень</title>
+    <screenshot>
+    <screeninfo
+>Вкладка «Автозміна розмірів зображень» сторінки «Редактор листів»</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerresize.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Вкладка «Автозміна розмірів зображень» сторінки «Редактор листів»</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Автозміна розмірів зображень» сторінки «Редактор листів»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>За певних обставин може виникнути потреба у автоматичній зміні розмірів зображень у вихідних повідомленнях за допомогою &kmail;. Така потреба, наприклад, може виникнути, якщо поштовий сервер накладає обмеження на розмір повідомлень. Щоб наказати програмі автоматично змінювати розміри зображень, позначте пункт <guilabel
+>Автоматична зміна розмірів зображень</guilabel
+>. Передбачено декілька параметрів налаштування поведінки цієї можливості. </para>
+      
+    <variablelist>
+     <varlistentry
+><term
+><guilabel
+>Загальне</guilabel
+></term>
+       <listitem>
+         <para
+>На вкладці «Загальні» ви побачите три пункти. Якщо слід зберігати співвідношення між довжиною і шириною зображення, позначте пункт <guilabel
+>Зберегти пропорції</guilabel
+>. Типово, &kmail; запитуватиме вас про те, чи слід змінювати розміри, перш ніж виконувати цю дію. Якщо ви хочете, щоб програма виконувала дії зі зміни розмірів без додаткових підтверджень, зніміть позначку з пункту <guilabel
+>Запитувати перед зміною розмірів</guilabel
+>. &kmail;, типово, надсилатиме зображення зі зміненими розмірами у форматі <acronym
+>JPG</acronym
+>, якщо ви хочете, щоб файли було збережено у форматі <acronym
+>PNG</acronym
+>, виберіть цей формат зі списку <guilabel
+>Резервне форматування:</guilabel
+>. </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Зображення</guilabel
+></term>
+       <listitem>
+         <para
+>Якщо, наприклад, один з ваших родичів може отримувати файли зображень, розмір яких не перевищує певної межі, встановленої надавачем інтернет-послуг, ви можете скористатися пунктом <guilabel
+>Зменшити зображення до максимальних розмірів</guilabel
+>, щоб вибрати розмір, до якого слід зменшувати зображення, і вказати відповідну адресу електронної пошти до фільтрів на вкладці <guilabel
+>Отримувачі</guilabel
+>. Відповідну вкладку ми обговоримо нижче. Якщо вам потрібні нетипові розміри, виберіть останній з пунктів у спадному списку ширини і висоти, <guilabel
+>Нетиповий</guilabel
+>, і вкажіть відповідне значення у пікселях у полі для введення тексту. Також передбачено можливість збільшення зображень. Для збільшення слід позначити пункт <guilabel
+>Збільшення зображення до мінімальних розмірів</guilabel
+>. За допомогою останнього пункту цієї вкладки ви можете наказати програмі пропускати зміну розмірів зображень, які є меншими за вказані розміри зображення. </para>
+       </listitem>
+     </varlistentry>
+     
+     <varlistentry
+><term
+><guilabel
+>Назва файла</guilabel
+></term>
+       <listitem>
+         
+           <variablelist>
+           <varlistentry
+><term
+><guilabel
+>Фільтрування</guilabel
+></term>
+             <listitem>
+               <para
+>Якщо ви хочете, щоб програма змінювала розміри лише файлів з певними назвами, тут ви можете вказати фільтр назв. Наприклад, вам може бути потрібно надсилати вашому начальнику декілька зображень щодня, і ці зображення мають бути однакових розмірів. Ви можете назвати ці робочі зображення робота1, робота2 тощо, а потім позначити пункт <guilabel
+>Включити всі файли, назви яких відповідають хоч одному із взірців</guilabel
+> і ввести <replaceable
+>робота</replaceable
+> до поля <guilabel
+>Взірець</guilabel
+>. Також можна виключити певні файли за допомогою пункту <guilabel
+>Виключити всі файли, назви яких відповідають хоч одному із взірців</guilabel
+>. Типово, фільтрування за назвою вимкнено. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Формат зображення</guilabel
+></term>
+             <listitem>
+               <para
+>Позначте пункт <guilabel
+>Змінити розміри всіх зображень у цих форматах</guilabel
+>, щоб вказати формат зображення, до якого слід застосовувати зміну розмірів. </para>
+               <itemizedlist>
+                 <listitem>
+                   <para
+>Якщо буде позначено цей пункт, вам слід натиснути кнопку <guibutton
+>Вибрати формат...</guibutton
+> і вибрати формат за допомогою діалогового вікна, яке буде відкрито. </para>
+                 </listitem>
+               </itemizedlist>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Назва файла зображення зі зміненими розмірами</guilabel
+></term>
+             <listitem>
+               <para
+>Позначте пункт <guilabel
+>Перейменувати зображення зі зміненими розмірами за таким взірцем</guilabel
+>, якщо ви хочете, щоб ваші зображення було перейменовано за певною схемою. Взірець можна вказати у полі для введення тексту. Можна використовувати такі замінники: <simplelist>
+                 <member
+>%t — поточний час</member>
+                 <member
+>%d — поточна дата</member>
+                 <member
+>%n — початкова назва файла</member>
+                 <member
+>%e — початковий суфікс назви</member>
+                 <member
+>%x — новий суфікс назви</member>
+               </simplelist>
+               </para>
+             </listitem>
+           </varlistentry>
+         </variablelist>
+         
+         </listitem>
+       </varlistentry>
+     
+       <varlistentry
+><term
+><guilabel
+>Отримувачі</guilabel
+></term>
+         <listitem>
+           <para
+>За допомогою цієї вкладки ви можете вказати отримувачів, для яких слід використовувати зміну розмірів зображень. Декілька адрес слід відокремлювати символом крапки з комою, «;». Ви також можете вказати перелік отримувачів, для яких не слід змінювати розмір зображень. Типово, фільтрування за отримувачем вимкнено. </para>
+         </listitem>
+       </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+</sect1>
+
+<sect1 id="configure-security">
+  <title
+>Сторінка безпеки</title>
+  
+  <para
+>За допомогою діалогового вікна налаштовування захисту ви можете скоригувати деякі з параметрів обробки форматованого тексту (&HTML;). Крім того, за його допомогою можна керувати можливостями з шифрування та розшифровування, скоригувати роботу деяких алгоритмів перевірки на шахрайство та вказати спосіб обробки запитів щодо отримання повідомлень. Зауважте, що це діалогове вікно <emphasis
+>не</emphasis
+> впливає на роботу антивірусних засобів. Якщо ви хочете захиститися від вірусів, ознайомтеся із вмістом розділу <link linkend="the-anti-virus-wizard"
+>Користування &kmail;: майстер блокування вірусів</link
+>. </para>
+  
+  <sect2 id="configure-security-reading">
+    <title
+>Читання</title>
+    
+    <screenshot>
+    <screeninfo
+>Вкладка «Читання» сторінки «Безпека»</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="securityreading.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Вкладка «Читання» сторінки «Безпека»</phrase>
+        </textobject>
+        <caption>
+          <para
+>Вкладка «Читання» сторінки «Безпека»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+    
+    <para
+>На цій сторінці ви зможете налаштувати параметри, пов'язані з безпекою читання повідомлень.</para>
+
+      <variablelist>
+        <varlistentry id="configure-security-reading-prefer-html">
+	  <term
+><guilabel
+>Надавати перевагу HTML над простим текстом</guilabel
+></term>
+	  <listitem>
+            <para
+>Типово, &kmail; показуватиме повідомлення у форматі &HTML; у форматі простого тексту. Якщо ви хочете переглядати повідомлення з форматуванням та компонуванням &HTML;, позначте цей пункт. Втім, ми рекомендуємо вам не позначати цей пункт через проблеми, які можуть виникнути через вади у захисті комп'ютера від зловмисного коду у &HTML;. </para>
+            <para
+>Ви зможете переглядати повідомлення у форматі &HTML;: достатньо натиснути кнопку перемикання простий текст/&HTML; у лівій частині панелі перегляду повідомлень. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-reading-external-references">
+	  <term
+><guilabel
+>Дозволити повідомленням завантаження зовнішніх посилань з Інтернет</guilabel
+></term>
+	  <listitem>
+            <para
+>Якщо ви позначите цей пункт, &kmail; зможе завантажувати зовнішні зображення, таблиці стилів тощо з інтернету під час перегляду &HTML;-повідомлень. Ми наполегливо рекомендуємо вам не позначати цей пункт (хоча він ні на що не вплине, доки ви не увімкнете форматування &HTML;). </para>
+            <para
+>За допомогою додавання зовнішніх посилань до повідомлень спамери можуть визначати те, чи переглянули ви повідомлення, ваше місце перебування та багато інших даних, які залишатимуться на вебсерверах. Зауважте, що цей пункт не стосуватиметься &Java; або JavaScript — їхньої підтримки у &kmail; не передбачено. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
+    <varlistentry id="configure-security-email-scams">
+      <term
+><guilabel
+>Інформувати, якщо повідомлення ймовірно є небажаним</guilabel
+></term>
+      <listitem>
+            <para
+>З набуттям електронною поштою популярності, на жаль, набуло популярності шахрайство за допомогою електронної пошти. Шахраї створюють повідомлення так, наче їх було надіслано якимись серйозними компаніями, але насправді такі повідомлення містять посилання на сайт зловмисників, де вас попросять вказати якісь конфіденційні дані. Розкриття цих даних може призвести до викрадення ваших облікових даних або навіть гірших наслідків. Типово, &kmail; виконує пошук зловмисного коду у повідомлення і інформує вас, якщо повідомлення вважається програмою зловмисним. Якщо вам захочеться позбутися цих попереджень, зніміть позначку з пункту <guilabel
+>Інформувати, якщо повідомлення ймовірно є небажаним</guilabel
+>. </para>
+            <para
+>Якщо як небажані позначаються повідомлення від ваших довірених кореспондентів, ви можете додати адреси цих кореспондентів до <guilabel
+>Білого списку</guilabel
+>: натисніть кнопку <guibutton
+>Додати...</guibutton
+> і введіть адресу електронної пошти до діалогового вікна, яке буде показано. Будь ласка, зауважте, що у поточній версії передбачено підтримку додавання до «білого» списку лише повних адрес електронної пошти. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Перевіряти адресу за допомогою системи нагляду Google</guilabel
+></term>
+          <listitem>
+            <para
+>Позначте цей пункт, щоб наказати &kmail; зв'язатися із базою даних Google, у якій зібрано адреси сайтів, які підозрюють у шахрайстві, і перевірити адреси із повідомлення, а потім попередити вас, якщо буде виявлено відповідність. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Шукати у повідомленнях адреси для стеження за користувачем</guilabel
+></term>
+          <listitem>
+            <para
+>Типово, &kmail; автоматично перевіряє усі адреси, які вбудовано до повідомлень у форматі &HTML;, і попереджає вас, якщо за допомогою якоїсь із адрес хтось намагається за вами стежити. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Спроба розшифрування зашифрованих листів під час перегляду</guilabel
+></term>
+          <listitem>
+            <para
+>Типово, &kmail; намагатиметься автоматично розшифровувати зашифровані повідомлення під час їхнього перегляду. Якщо ви хочете робити це вручну, зніміть позначення з цього пункту. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+	      <term
+><guilabel
+>Автоматично імпортувати ключі та сертифікат</guilabel
+></term>
+	      <listitem>
+	        <para
+>Якщо позначити цей пункт, &kmail; автоматично імпортуватиме всі долучення, що містять ключі &openpgp;, і всі долучення, які містять ключі &smime;, до локального сховища ключів. </para>
+	        <note>
+	          <para
+>Перевірка підписів &smime; завжди включатиме імпортування сертифікатів, які містяться у підписі. Отже цей пункт не вплине на роботу з підписами. Він також непов'язаний з можливістю <option
+>auto-key-retrieve</option
+> &gpg;, за допомогою якої &gpg; імпортує невідомі ключі з сервера ключів. </para>
+	        </note>
+	      </listitem>
+	    </varlistentry>
+      </variablelist>
+      <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-message-disposition-notifications">
+        <title
+>Сповіщення про долю повідомлення</title>
+        <screenshot>
+          <screeninfo
+>Вкладка «Сповіщення про долю повідомлень» сторінки «Безпека»</screeninfo>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="securitymdn.png" format="PNG"/>
+              </imageobject>
+              <textobject>
+                <phrase
+>Вкладка «Сповіщення про долю повідомлень» сторінки «Безпека»</phrase>
+              </textobject>
+              <caption>
+                <para
+>Вкладка «Сповіщення про долю повідомлення» сторінки «Безпека»</para>
+              </caption>
+            </mediaobject>
+          </screenshot>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+        <variablelist>
+          <varlistentry id="configure-security-reading-mdns">
+	      <term>
+	        <guilabel
+>Сповіщення про долю повідомлення</guilabel>
+	      </term>
+	      <listitem>
+	        <para
+>&mdn; — це узагальнення того, що зазвичай називають <quote
+>сповіщенням про отримання</quote
+>. Автор повідомлення надсилає запит на сповіщення про отримання свого повідомлення, і програма отримувача пошти створює відповідь, за допомогою якої автор дізнається про те, що сталося з повідомленням. Звичайними типами сповіщень є <quote
+>показано</quote
+> (тобто прочитано), <quote
+>вилучено</quote
+> і <quote
+>надіслано</quote
+> (тобто переспрямовано). </para>
+	        <para
+>За допомогою спадного меню <guilabel
+>Правила надсилання</guilabel
+> можна керувати обставинами, <emphasis
+>за яких</emphasis
+> &kmail; надсилатиме сповіщення про отримання повідомлення. </para>
+	        <variablelist>
+	          <varlistentry>
+		    <term
+><guilabel
+>Ігнорувати</guilabel
+> (рекомендується) </term>
+		    <listitem>
+		      <para
+>Ігнорувати всі запити на сповіщення про отримання. За вибору цього пункту сповіщення ніколи не надсилатиметься у автоматичному режимі. </para>
+		    </listitem>
+          </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Запитати</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Відповіді буде надіслано лише після підтвердження користувачем надсилання відповіді. Таким чином, ви зможете надсилати відповіді для вибраних повідомлень і не надсилати їх або ігнорувати їх для інших повідомлень. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Відмовити</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Завжди надсилати сповіщення <quote
+>відмовлено</quote
+>. Такий спосіб лише <emphasis
+>трохи</emphasis
+> кращий за варіанта з надсиланням відповідей завжди. Автор повідомлення знатиме, що з повідомленням виконано якусь дію, він просто не зможе визначити було його вилучено, прочитано тощо. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Завжди надсилати</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Завжди надсилати відповіді на запити щодо сповіщення про отримання. За вибору цього варіанта автор повідомлення отримуватиме відповідь про те, що над повідомленням було виконано певні дії, окрім того, отримуватиме сповіщення про те, що сталося з повідомленням (показано, вилучено тощо). Ми наполегливо не рекомендуємо обирати цей варіант, але іноді ним доцільно скористатися, якщо конфіденційність не є вирішальною, наприклад, у випадку роботи з користувачами. Саме тому його і реалізовано у програмі. </para>
+		    </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Якщо ви непевні, спробуйте скористатися варіантом <guilabel
+>Запитати</guilabel
+>, якщо ж питання &kmail; здадуться вам набридливими, перемкніть варіант на <guilabel
+>Ігнорувати</guilabel
+>. </para>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+	    <para
+>За допомогою наступних пунктів (у списку <guilabel
+>Цитування початкового повідомлення</guilabel
+>) ви можете керувати тим, <emphasis
+>яку частину</emphasis
+> початкового повідомлення &kmail; надішле назад у &mdn;. </para>
+        
+	    <variablelist>
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Нічого</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Окрім обов'язкового ідентифікатора повідомлень і адреси початкового отримувача у відповідь &mdn; не буде додано ніяких частин повідомлення. Цих даних має бути достатньо для того, щоб однозначно ідентифікувати повідомлення, для якого і було створено цю відповідь. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Повне повідомлення</guilabel>
+            </term>
+            <listitem>
+              <para
+>За вибору цього варіанта до сповіщення про отримання буде додано повідомлення повністю. Зазвичай, цього забагато. Додавання тексту повідомлення не додасть ніяких цінних відомостей, які автор повідомлення не зміг би встановити лише з заголовків повідомлення, але іноді відправники наполягають на такому додаванні, оскільки таким чином відправникові буде легше співвіднести сповіщення з вмістом повідомлення, ніж прості заголовки, які було б надіслано за вибору попереднього варіанта. </para>
+            </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Тільки заголовки</guilabel>
+            </term>
+            <listitem>
+              <para
+>За вибору цього варіанта до сповіщення буде долучено лише заголовки. Цього, зазвичай, достатньо для того, щоб люди (за темою) і комп'ютери (за ідентифікатором повідомлення) могли легко встановити відповідність між &mdn; і початковим повідомленням. </para>
+              </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Якщо не знаєте, що обрати, не змінюйте типове значення цього пункту (не визначено). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Не надсилати сповіщення про долю повідомлення для зашифрованих повідомлень</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>За допомогою цього пункту можна придушити надсилання &mdn;, якщо повідомлення зашифровано (частково або повністю). Таким чином можна перешкодити спробам використання можливостей сповіщення &kmail; для <emphasis
+>визначення</emphasis
+> того, чи можете ви дешифрувати повідомлення, чи ні. </para>
+	    <para
+>Строго кажучи, цей пункт не потрібен, оскільки &kmail; надсилатиме &mdn; незалежно від того, чи може бути повідомлення успішно розшифровано, чи ні (запит на сповіщення про отримання має бути розміщено поза зашифрованою частиною повідомлення), але за допомогою цього пункту користувачі, які переймаються безпекою, можуть або надсилати такі сповіщення за запитом (пункт не позначено) або ніколи (пункт позначено). </para>
+	    <para
+>Якщо не знаєте, що вибрати, залиште цей пункт позначеним (типовий варіант). </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-composing">
+      <title
+>Створення</title>
+        <screenshot>
+        <screeninfo
+>Вкладка «Створення» сторінки «Безпека»</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitycomposing.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Вкладка «Створення» сторінки «Безпека»</phrase>
+            </textobject>
+            <caption>
+              <para
+>Вкладка «Створення» сторінки «Безпека»</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+      <para
+>За допомогою цієї вкладки ви зможете налаштувати параметри створення повідомлень, пов'язані з безпекою. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-composing-automatically-sign">
+	  <term>
+	    <guilabel
+>Автоматично підписувати повідомлення</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо буде позначено цей пункт, параметр <xref linkend="composer-options-sign-message"/> у редакторі листів буде типово <emphasis
+>увімкнено</emphasis
+>. </para>
+	    <para
+>Але ви, звичайно ж, зможете увімкнути і вимкнути цей параметр для кожного з повідомлень. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-encrypt-to-self">
+	  <term>
+	    <guilabel
+>Під час шифрування листів завжди шифрувати ще і особистим сертифікатом</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо буде позначено цей пункт, будь-яке повідомлення, яке було зашифровано для отримувачів, буде додатково зашифровано вашим ключем. </para>
+	    <warning>
+	      <para
+>Якщо ви знімете позначку з цього пункту, ви не зможете розшифровувати написані вами повідомлення, які було зашифровано іншими учасниками листування. </para>
+	    </warning>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-store-sent-encrypted">
+	  <term>
+	    <guilabel
+>Зберігати відіслані повідомлення зашифрованими</guilabel>
+	      <footnote>
+	      <para
+>За допомогою цього пункту можна увімкнути режим використання шифрування пошти, який іноді (помилково) називається шифруванням <quote
+>лише транспорту</quote
+>. У цьому режимі роботи шифрування повідомлення буде вилучено, тільки-но повідомлення досягне призначення. Шифрування діятиме лише протягом пересилання повідомлення. </para>
+	      <para
+>&kmail; підтримує цей режим не повністю, оскільки подібні функціональні можливості слід надавати поштовому <emphasis
+>серверу</emphasis
+> (<acronym
+>MTA</acronym
+>), а не поштовому <emphasis
+>клієнту</emphasis
+> (<acronym
+>MUA</acronym
+>). Таким чином, у майбутніх версіях &kmail; підтримку цього пункту може бути вилучено. </para>
+	    </footnote>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо ви позначите цей пункт, повідомлення будуть зберігатися після надсилання у вашій теці <guilabel
+>надіслані</guilabel
+> (тобто, якщо їх було зашифровано, ці повідомлення також пересуватимуться до теки «надіслані»). </para>
+	    <para
+>Якщо зняти позначку з цього пункту, повідомлення <emphasis
+>завжди</emphasis
+> зберігатимуться незашифрованими у вашій теці <guilabel
+>надіслані</guilabel
+>, навіть якщо ви надсилатимете їх зашифрованими. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-show-encryption-key">
+	  <term>
+	    <guilabel
+>Завжди показувати ключі шифрування для схвалення</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо ви позначите цей пункт, кожного разу, коли ви шифруватимете повідомлення, програма відкриватиме діалогове вікно, у якому показуватиме ключі шифрування, використані для кожного з отримувачів. Ви зможете переглянути вибір ключів, змінити їх, підтвердити або скасувати дію з шифрування. Ми рекомендуємо вам не знімати позначку з цього пункту, оскільки за позначення пункту процес шифрування буде прозорішим. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-opportunistic-encryption">
+	  <term>
+	    <guilabel
+>Автоматично шифрувати повідомлення, якщо можливо</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Такий варіант також називається <quote
+>гнучке шифрування</quote
+>. Якщо позначити цей пункт, &kmail; намагатиметься знайти відповідність між отримувачами і (&openpgp; або &smime;) ключами, навіть коли ви <emphasis
+>не</emphasis
+> вказали, що повідомлення слід зашифрувати. Якщо належні ключі буде знайдено для всіх отримувачів, &kmail; запитає вас про те, чи бажаєте ви зашифрувати повідомлення. </para>
+	    <para
+>Наполегливо рекомендуємо вам позначити цей пункт, оскільки таким чином ви значно полегшите собі користування зашифрованими повідомленнями. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-never-sign-encrypt-drafts">
+	  <term>
+	    <guilabel
+>Ніколи не підписувати/шифрувати при збереженні чернетки</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначити цей пункт, &kmail; не намагатиметься підписати і/або зашифрувати повідомлення, які зберігатимуться у теці <guilabel
+>чернетки</guilabel
+>. Так зручніше працювати з поштовим архівом, позначення цього пункту не призведе до значної дірки у безпеці, якщо теку «чернетки» буде достатньо убезпечено. Користувачам &IMAP; слід, ймовірно, зняти позначку з цього пункту, якщо ваша тека <guilabel
+>чернетки</guilabel
+> зберігатиметься на сервері. </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-warnings">
+      <title
+>Інше</title>
+        <screenshot>
+        <screeninfo
+>Вкладка «Інше» сторінки «Безпека», автоматичне виправлення</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitymisc.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Вкладка «Інше» сторінки «Безпека»</phrase>
+            </textobject>
+            <caption>
+              <para
+>Вкладка «Інше» сторінки «Безпека»</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+
+      <para
+>За допомогою цієї вкладки ви зможете увімкнути або вимкнути пов'язані з безпекою попередження. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-warnings-warn-send-unsigned">
+	  <term>
+	    <guilabel
+>Попереджувати при спробі відіслати непідписане повідомлення</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначити цей пункт, &kmail; показуватиме попередження, якщо з будь-яких причин повідомлення буде надіслано без цифрового підпису. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-send-unencrypted">
+	  <term>
+	    <guilabel
+>Попереджати при надсиланні незашифрованих повідомлень</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначити цей пункт, &kmail; показуватиме попередження, якщо з будь-яких причин повідомлення буде надіслано без шифрування. </para>
+	    <note>
+	      <para
+>Хоча підписування всі вихідних повідомлень є звичайною практикою, шифрування повідомлень не завжди прийнятне. Отже, якщо правила вашої компанії не забороняють надсилання незашифрованих повідомлень, ймовірно, вам не слід позначати цей пункт і увімкнути <link linkend="configure-security-composing-opportunistic-encryption"
+>гнучке шифрування</link
+>, щоб програма попереджала вас про те, що ви <emphasis
+>можете</emphasis
+> надіслати шифроване повідомлення, але не вимагатиме від вас шифрування. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+
+	<!-- <varlistentry id="configure-security-warnings-warn-receiver-email-not-in-cert">
+	  <term>
+	    <guilabel
+>Warn if receiver's email address is not in certificate</guilabel>
+	  </term>
+	  <listitem>
+	    <para>
+	      If checked, &kmail; will emit a warning if an &smime;
+	      certificate or &openpgp; key will be used for a recipient
+	      whose email address is not listed in the email addresses
+	      stored in the certificate.
+	    </para>
+	    <para>
+	      Situations in which this warning will trigger include
+	      when configuring your per-identity &openpgp; keys or
+	      &smime; certificates, when encrypting, and when verifying
+	      signatures, if the signature was made with a certificate
+	      that does not include the email address of the sender.
+	    </para>
+	  </listitem>
+    </varlistentry
+> --> <!-- This option is no longer provided. @dcb2020340. -->
+
+	<varlistentry id="configure-security-warnings-warn-near-expire">
+	  <term>
+	    <guilabel
+>Попереджати, якщо сертифікати/ключі скоро застаріють</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначити цей пункт, &kmail; попереджатиме вас, якщо строк дії сертифіката &smime; або ключа &openpgp; наближатиметься до завершення. </para>
+	    <para
+>Строк до завершення дії сертифіката або ключа, за якого буде показано попередження про завершення строку дії, ви зможете окремо налаштувати для ключів підписування і шифрування, крім того (у випадку &smime;), ви зможете зробити це для сертифікатів кінцевого користувача, проміжних сертифікатів <acronym
+>CA</acronym
+> і кореневих сертифікатів. </para>
+	  </listitem>
+	</varlistentry>
+	
+    <varlistentry>
+	  <term>
+	    <guibutton
+>Параметри GnuPG…</guibutton>
+	  </term>
+	  <listitem>
+	    <para
+>Натисніть цю кнопку, щоб відкрити діалогове вікно налаштовування взаємодії між &kmail; та &gpg;, програмою захисту конфіденційності Gnu. &gpg; є надто складним комплексом програм, щоб його можна було повністю описати у цій документації. Докладні відомості можна знайти у <ulink url="https://www.gnupg.org/docs.html#guides"
+>Підручнику з конфіденційності &GNU;</ulink
+>. Якщо ви не є знавцем шифрування, вам не варто змінювати типові значення параметрів. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<varlistentry id="configure-security-warnings-reenable-all-warnings">
+	  <term>
+	    <guilabel
+>Ввімкнути знову всі попередження "більше не питати"</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Окрім описаних раніше основних попереджень, існують і інші попередження та інформаційні повідомлення, у вікнах яких міститься пункт, який надає вам змогу вимикати у майбутньому їх показ. Якщо ви бажаєте увімкнути їх знову після вибору подібного пункту, досягти цього можна за допомогою натискання саме цієї кнопки. <footnote
+> <para
+>Ця кнопка знову увімкне показ <emphasis
+>всіх</emphasis
+> таких попереджень у &kmail;. Створення вікна, у якому ви могли б окремо увімкнути кожне з таких попереджень не має сенсу: ви завжди можете вимкнути показ у майбутньому кожного з попереджень у вікні попередження під час його наступної появи. </para>
+        </footnote>
+	    </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-smime-validation">
+      <!-- copy of section configuration-smime-validation from kleopatra docbook
+      keep in sync, both apps have the same page in settings-->
+      <title
+>Перевірка &smime;</title>
+        <screenshot>
+        <screeninfo
+>Вкладка «Перевірка &smime;» сторінки «Безпека»</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitysmime.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Вкладка «Перевірка &smime;» сторінки «Безпека»</phrase>
+            </textobject>
+            <caption>
+              <para
+>Вкладка «Перевірка &smime;» сторінки «Безпека»</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+      <para
+>На цій вкладці містяться вибрані пункти з <ulink url="https://linux.die.net/man/1/gpgsm"
+>динамічного діалогового вікна налаштовування &gpgsm;</ulink
+>. Докладніший опис цих параметрів можна знайти у підручнику з &gpgsm;. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-smime-validation-certificate-crls">
+	  <term>
+	    <guilabel
+>Перевіряти сертифікати за допомогою CRL</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначити цей пункт, програма перевірятиме сертифікати &smime; за допомогою списків скасованих сертифікатів (Certificate Revocation List або <acronym
+>CRL</acronym
+>). Це типовий варіант налаштувань. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-validation-certificate-ocps">
+	  <term>
+	    <guilabel
+>Перевіряти сертифікати у мережі (OCSP)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо позначити цей пункт, програма перевірятиме сертифікати &smime; за допомогою мережевого протоколу стану сертифікатів (Online Certificates Status Protocol або <acronym
+>OCSP</acronym
+>). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-url">
+	  <term>
+	    <guilabel
+>Адреса OCSP-відповідача:</guilabel>
+          </term>
+         <listitem>
+	      <para
+>Тут слід ввести адресу сервера, призначеного для інтерактивної перевірки сертифікатів. Такі адреси &URL;, зазвичай, починаються з <emphasis
+>https://</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-signature">
+	  <term>
+	    <guilabel
+>Підпис OCSP-відповідача</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Тут можна обрати або змінити ключ &smime;, який використовуватиме програма. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-ignore">
+	  <term>
+	    <guilabel
+>Ігнорувати &URL; служби сертифікатів</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Позначте цей пункт, щоб програма не виконувала інтерактивної перевірки за допомогою OCSP. Для того, щоб цей пункт працював, вам слід встановити <emphasis
+>dirmngr &gt;= 0.9.0</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-policies">
+	  <term>
+	    <guilabel
+>Не перевіряти правила сертифікатів</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Типово, <guilabel
+>GnuPG</guilabel
+> використовує для перевірки дозволеності правил сертифіката файл <filename
+>~/.gnupg/policies.txt</filename
+>. Якщо буде позначено цей пункт, правила не перевірятимуться. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-consult-crls">
+	  <term>
+	    <guilabel
+>Ніколи не звертатися до CRL</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо буде позначено цей пункт, списки скасування сертифікатів ніколи не використовуватимуться для перевірки сертифікатів &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-fetch-issuer">
+	  <term>
+	    <guilabel
+>Надіслати запит щодо сертифікатів видавця, яких не вистачає</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Позначте цей пункт, якщо ви бажаєте, щоб за потреби програма отримувала відсутні сертифікати видавців. Цей пункт стосується обох способі перевірки: <acronym
+>CRL</acronym
+> і <acronym
+>OCSP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests">
+	  <term>
+	    <guilabel
+>Не виконувати жодних запитів &HTTP;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Повністю вимкнути використання &HTTP; для запитів &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-ignore-distribution-point">
+	  <term>
+	    <guilabel
+>Ігнорувати &HTTP;-точки розподілу CRL-сертифікатів</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Під час пошуків розташування <acronym
+>CRL</acronym
+> <quote
+>«піддослідного»</quote
+> сертифіката, буде використано записи, відомі як точки розповсюдження CRL (<acronym
+>DP</acronym
+>), які містяться у сертифікаті і у яких зазначено адреси &URL;, які визначають розташування самих списків. Програма використає перший зі знайдених записів <acronym
+>DP</acronym
+>. За допомогою цього пункту можна наказати програмі ігнорувати всі записи зі схемою адреси &HTTP; під час пошуку потрібного запису <acronym
+>DP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-proxy">
+	  <term>
+	    <guilabel
+>Використовувати системний проксі</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Якщо буде позначено цей пункт, програма використає показане праворуч значення адреси проксі-сервера &HTTP; (це значення буде взято зі змінної середовища <varname
+>http_proxy</varname
+>) для всіх запитів за допомогою &HTTP;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests-proxy">
+	  <term>
+	    <guilabel
+>Для запитів &HTTP; використовувати проксі</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>У це поле слід ввести адресу вашого &HTTP;-проксі, який буде використано для всіх &HTTP;-запитів, пов'язаних &smime;. Вказувати проксі-сервер слід у форматі «вузол:порт», наприклад, <emphasis
+>myproxy.nowhere.com:3128</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-requests">
+	  <term>
+	    <guilabel
+>Не виконувати жодних запитів LDAP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Повністю вимкнути використання LDAP для запитів &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-distribution-point">
+	  <term>
+	    <guilabel
+>Ігнорувати LDAP-точки розподілу CRL-сертифікатів</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Під час пошуків розташування <acronym
+>CRL</acronym
+> «піддослідного» сертифіката, буде використано записи, відомі як точки розповсюдження CRL (<acronym
+>DP</acronym
+>), які містяться у сертифікаті і у яких зазначено адреси <acronym
+>URL</acronym
+>, які визначають розташування самих списків. Програма використає перший зі знайдених записів <acronym
+>DP</acronym
+>. За допомогою цього пункту можна наказати програмі ігнорувати всі записи зі схемою адреси <acronym
+>LDAP</acronym
+> під час пошуку потрібного запису <acronym
+>DP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-proxy-host">
+	  <term>
+	    <guilabel
+>Основний вузол для LDAP-запитів</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Введення адреси сервера <acronym
+>LDAP</acronym
+> у це поле призведе до того, що всі запити <acronym
+>LDAP</acronym
+> проходитимуть спочатку через цей сервер. Якщо говорити точніше, цей параметр перевизначатиме будь-який вказаний у адресі <acronym
+>LDAP</acronym
+> вузол і порт, крім того, цей параметр буде використано і у випадку, якщо вузол і порт було пропущено у <acronym
+>URL</acronym
+>. Програма використовуватиме інші сервери <acronym
+>LDAP</acronym
+>, лише якщо спроба з'єднання з <emphasis
+>проксі-сервером</emphasis
+> завершиться невдало. Формат значення: <acronym
+>ВУЗОЛ</acronym
+> або <acronym
+>ВУЗОЛ:ПОРТ</acronym
+>. Якщо <acronym
+>ПОРТ</acronym
+> не буде вказано, буде використано значення <quote
+>389</quote
+> (стандартний порт <acronym
+>LDAP</acronym
+>). </para>
+	  </listitem>
+	</varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+</sect1
+> <!-- configure-security -->
+
+<sect1 id="configure-misc">
+<title
+>Сторінка «Різне»</title>
+
+  <sect2 id="configure-misc-folders">
+    <title
+>Теки</title>
+    <screenshot>
+      <screeninfo
+>Вкладка «Теки» сторінки «Різне»</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscfolders.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Вкладка «Теки» сторінки «Різне»</phrase>
+          </textobject>
+          <caption>
+            <para
+>Вкладка «Теки» сторінки «Різне»</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+  <variablelist>
+
+    <!--varlistentry>
+      <term
+><guilabel
+>Ask for confirmation before moving all messages to trash</guilabel
+></term>
+      <listitem>
+        <para>
+          Enable this option if you want to be asked for confirmation whenever
+          you use <menuchoice
+><guimenu
+>Folder</guimenu
+><guimenuitem
+>Move All to Trash</guimenuitem
+></menuchoice
+>.
+        </para>
+      </listitem>
+      </varlistentry--><!-- Option has been removed @dcb2020311 -->
+
+    <varlistentry>
+      <term
+><guilabel
+>Виключити важливі повідомлення з вилучення застарілих повідомлень</guilabel
+></term>
+      <listitem>
+        <para
+>Позначте цей пункт, якщо ви не бажаєте, щоб важливі повідомлення ніколи не вилучалися автоматично. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry id="configure-misc-folders-go-unread">
+      <term
+><guilabel
+>При спробі знайти непрочитані повідомлення</guilabel
+></term>
+      <listitem>
+        <para
+>Цей пункт керує тим, що траплятиметься, якщо ви натиснете одне із клавіатурних скорочень для переходу до наступного або попереднього непрочитаного повідомлення (наприклад, натиснете <keycap
+>Пробіл</keycap
+>). Якщо ви накажете &kmail; перейти до наступного непрочитаного повідомлення, коли у списку повідомлень нижче поточного повідомлення вже не буде непрочитаних повідомлень, буде виконано вказану вами тут дію. <itemizedlist>
+              <listitem>
+                <para
+>Якщо буде позначено пункт <guilabel
+>не виконувати циклічного пошуку</guilabel
+>, нічого не станеться. </para>
+              </listitem>
+              <listitem>
+                <para
+>Якщо буде позначено пункт <guilabel
+>виконати циклічний пошук в поточній теці</guilabel
+>, &kmail; виконає пошук непрочитаних повідомлень від початку поточної теки. Якщо таких повідомлень знайдено не буде, нічого не станеться. </para>
+              </listitem>
+              <listitem>
+                <para
+>Якщо буде позначено пункт <guilabel
+>виконати циклічний пошук в усіх теках</guilabel
+>, &kmail; спочатку виконає пошук непрочитаних повідомлень у поточній теці. Якщо таких повідомлень знайдено не буде, &kmail; виконає пошук наступної теки, у якій містяться непрочитані повідомлення. </para>
+              </listitem>
+            </itemizedlist>
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>При переході до теки</guilabel
+></term>
+      <listitem>
+        <para
+>За допомогою цього пункту можна керувати діями програми під час відкриття теки. <itemizedlist>
+              <listitem>
+                <para
+>Якщо буде позначено пункт <guilabel
+>показати перше непрочитане повідомлення</guilabel
+>, &kmail; покаже перше з повідомлень, які ще не було прочитано. </para>
+              </listitem>
+              <listitem>
+                <para
+>Якщо буде позначено пункт <guilabel
+>показати останнє позначене повідомлення</guilabel
+>, &kmail; покаже повідомлення, яке було позначено під час попереднього відкриття теки. </para>
+              </listitem>
+              <listitem>
+                <para
+>Якщо буде позначено пункт <guilabel
+>показати найновіше повідомлення</guilabel
+>, &kmail; позначить найновіше за датою повідомлення. </para>
+              </listitem>
+              <listitem>
+                <para
+>Якщо буде позначено пункт <guilabel
+>показати найстаріше повідомлення</guilabel
+>, &kmail; позначить найстаріше за датою повідомлення. </para>
+              </listitem>
+            </itemizedlist>
+
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Позначати вибране повідомлення як прочитане через...</guilabel
+></term>
+      <listitem>
+        <para
+>Після вибору вами <guilabel
+>нового</guilabel
+> або <guilabel
+>непрочитаного</guilabel
+> повідомлення &kmail; змінить стан повідомлення на <guilabel
+>прочитане</guilabel
+>, якщо ви переглядатимете повідомлення протягом вказаної у цьому пункті кількості секунд. Якщо ви знімете позначку з цього пункту, повідомлення зберігатимуть свій стан <guilabel
+>нове</guilabel
+> або <guilabel
+>непрочитане</guilabel
+>, аж доки ви не зміните його вручну (за допомогою меню <guilabel
+>Тека</guilabel
+>). </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Питати про дію після перетягування повідомлень до іншої теки</guilabel
+></term>
+      <listitem>
+        <para
+>Після перетягування зі скиданням повідомлення до нової теки, програма відкриє невеличке контекстне діалогове вікно, у якому запитає вас про те, бажаєте ви пересунути чи скопіювати це повідомлення. Якщо ви знімете позначку з цього пункту, повідомлення негайно буде пересунуто, без відкриття контекстного діалогового вікна. </para>
+      </listitem>
+    </varlistentry>
+
+<!-- not in kmail 2.0.96 varlistentry>
+<term
+><guilabel
+>By default, message folders on disk are...</guilabel
+></term>
+<listitem>
+<para
+>Here you can set the default <link linkend="folders-format"
+>folder format</link>
+that is used when you create a new folder.</para>
+</listitem>
+</varlistentry-->
+
+    <varlistentry>
+      <term
+><guilabel
+>Відкривати теку при запуску</guilabel
+></term>
+      <listitem>
+        <para
+>Тут ви можете вказати назву теки, яку програма має вибирати після запуску &kmail;. Якщо ви користуєтеся лише теками &IMAP;, ймовірно, вам слід вказати тут теку вхідних повідомлень &IMAP; (inbox). Якщо ви оберете тут теку, ви зможете згорнути у списку тек всі локальні теки, — вони залишатимуться згорнутими після запуску &kmail;. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Спорожняти локальну теку-смітник при виході з програми</guilabel
+></term>
+      <listitem>
+        <para
+>Якщо ви позначите цей пункт, програма спорожнятиме теку смітника кожного разу, коли ви завершуватимете роботу &kmail;. </para>
+      </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+      <term
+><guilabel
+>Дозволити вилучення повідомлень без підтвердження</guilabel
+></term>
+      <listitem>
+        <para
+>Типова поведінка &kmail; полягає у тому, щоб просити підтвердження вилучення повідомлення. Позначте цей пункт, якщо ви хочете пропустити цей крок підтвердження. (Зауважте, що у меню &kmail; немає пункту <guilabel
+>Вилучити</guilabel
+>. Втім, ви можете додати кнопку <guibutton
+>Вилучити</guibutton
+> на панель інструментів за допомогою пункту меню <menuchoice
+> <guimenu
+>Параметри</guimenu
+><guimenuitem
+>Налаштувати пенали...</guimenuitem
+></menuchoice
+> dialog.) </para>
+      </listitem>
+    </varlistentry>
+
+  </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-invitation">
+    <title
+>Запрошення</title>
+    <screenshot>
+      <screeninfo
+>Вкладка «Запрошення» сторінки «Різне»</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscinvite.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Вкладка «Запрошення» сторінки «Різне»</phrase>
+          </textobject>
+          <caption>
+            <para
+>Вкладка «Запрошення» сторінки «Різне»</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Перекручувати заголовки Від:/Кому: у відповідях на запрошення</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб клієнти з <application
+>&Microsoft; Outlook</application
+> могли зрозуміти ваші відповіді на запрошення. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Надсилати запрошення в тілі листа</guilabel
+></term>
+        <listitem>
+          <para
+>Зазвичай, запрошення надсилаються як долучення до повідомлень. Якщо позначити цей пункт, буде увімкнено можливість надсилання запрошень у тексті повідомлення, цей пункт знадобиться вам для надсилання запрошень і відповідей до клієнтів <application
+>&Microsoft; Outlook</application
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Сумісне з Exchange іменування запрошень</guilabel
+></term>
+        <listitem>
+          <para
+>У  <application
+>&Microsoft; Outlook</application
+>, якщо ця програма використовується разом з сервером &Microsoft; Exchange, існує проблема з розпізнаванням сумісних зі стандартами групових повідомлень електронної пошти. Позначте цей пункт, щоб програма надсилала групові запрошення у форматі, який розпізнається &Microsoft; Exchange. Запрошення буде надіслано у долученні з назвою <filename
+>ical.ics</filename
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+<!--varlistentry>
+<term
+><guilabel
+>Outlook compatible invitation reply comments</guilabel
+></term>
+<listitem>
+<para
+>When the user provides comments when responding to invitations, send the comment in a way that <application
+>&Microsoft; Outlook</application
+> understands. If this option is not enabled, the response comments will not be seen in Outlook.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Show invitation update differences in the Outlook style</guilabel
+></term>
+<listitem>
+<para
+>When viewing updated invitations, this option enables the differences between the previous
+and current invitations to be displayed in a way very much like <application
+>&Microsoft; Outlook</application
+>.
+This is the default. The user can turn this option off if they want to see the invitation
+  update differences shown in the <quote
+>classic</quote
+> &kmail; style.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Automatic invitation sending</guilabel
+></term>
+<listitem>
+<para
+>When this is checked, you will not see the mail composer window. Instead,
+all invitation mails are sent automatically. If you want to see the mail 
+before sending it, you can uncheck this option. However, be aware that the 
+text in the composer window is in iCalendar syntax, and you should not try 
+modifying it by hand.</para>
+</listitem>
+</varlistentry--><!-- These options are no longer available. @dcb2020342-->
+      
+      <varlistentry>
+        <term
+><guilabel
+>Вилучати листи-запрошення після надсилання відповіді на них</guilabel
+></term>
+        <listitem>
+          <para
+>Якщо позначено цей елемент, отримані листи-запрошення, на які слід відповідати, буде пересунуто до теки смітника, тільки-но відповідь на них буде надіслано. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-printing">
+    <title
+>Друк</title>
+    <screenshot>
+      <screeninfo
+>Вкладка «Друк» сторінки «Різне»</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscprint.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Вкладка «Друк» сторінки «Різне»</phrase>
+          </textobject>
+          <caption>
+            <para
+>Вкладка «Друк» сторінки «Різне»</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>За допомогою цієї вкладки ви можете скоригувати спосіб, у який працюватиме пункт меню <menuchoice
+> <guimenu
+>Файл</guimenu
+><guimenuitem
+>Друкувати</guimenuitem
+> </menuchoice
+>. </para
+> 
+    
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Надрукувати лише позначений текст</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб уможливити друк лише позначеної частини повідомлення. Типово, цей пункт не позначено, отже буде надруковано усе повідомлення. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Зважати на параметри розкриття/згортання цитат</guilabel
+></term>
+        <listitem>
+          <para
+>Цей пункт призначено для взаємодії із можливістю <guilabel
+>Показувати позначки розкриття/згортання цитат</guilabel
+> та вкладці <link linkend="configure-appearance-general"
+>Вигляд/Загальні</link
+>, але у поточній версії він не працює. Іншими словами, маємо справу із вадою. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Друкувати кольорове тло та зображення</guilabel
+></term>
+        <listitem>
+          <para
+>Подібно до попереднього пункту, тут маємо ваду у програмі: &kmail; завжди друкує зображення, незалежно від того, чи позначено цей пункт. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Завжди показувати параметри шифрування та підписування</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб наказати &kmail; друкувати параметри шифрування для зашифрованих повідомлень і/або повідомлень із цифровим підписом. </para>
+        </listitem>
+      </varlistentry>
+      
+  </variablelist>
+  </sect2>
+
+</sect1>
+
+<sect1 id="configure-plugins">
+    <title
+>Сторінка «Додатки»</title>
+    
+    <para
+>До складу &kmail; включено багато спеціальних функцій, які можуть бути корисними для окремих користувачів. Ви можете вибрати одну або декілька з цих спеціальних функцій, вибравши їх на сторінці налаштування додатків. Крім того, якщо вам не потрібна певна можливість, ви можете заощадити час і місце на диску, знявши позначку з відповідного модуля додатка. </para>
+    
+    <para
+>У багатьох дистрибутивах Linux більшість цих додатків не включено до основного пакунка &kmail;. Щоб отримати повний комплект додатків, встановіть пакунок із назвою «kdepim-addons» (або подібною). </para>
+    
+    <para
+>Загальне поняття про те, які завдання виконує певний додаток, можна отримати, позначивши назву додатка у списку на сторінці налаштувань &kmail;. Програма показуватиме короткий опис призначення додатка у правій частині діалогового вікна. </para>
+    
+    <para
+>Нижчен наведено список різноманітних додатків, які доступні у &kmail; (2021 рік). Зауважте, що набір «типових» додатків засновано на версії &kmail; (5.14.2) з openSUSE, яку використано як еталонну для цієї документації. Типовий набір у вашій системі може бути іншим. </para>
+    
+    <para
+>Оскільки час від часу розробники додають нові можливості, цей список може з часом бути розширено. Існує два загальних правила, яким підкоряється структура додатків, навіть якщо певного додатка, з яким ви працюєте, немає у наведеному нижче списку. </para>
+    
+    <para
+>1. Якщо у додатка є налаштовувані змінні, ви можете відкрити діалогове вікно налаштування цього додатка натисканням кнопки <guibutton
+>&nbsp;<inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+>, яку розташовано поряд із пунктом із назвою додатка. </para>
+    
+    <para
+>2. Після вмикання або вимикання додатка &kmail; має бути перезапущено, щоб бажані зміни набули чинності. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <sect2 id="configure-plugins-akonadi">
+    <title
+>Akonadi і перевірка перед надсиланням</title>
+    <screenshot>
+      <screeninfo
+>Зображення додатків 1</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin01.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Зображення додатків 1</phrase>
+          </textobject>
+          <caption>
+            <para
+>Додатки: Akonadi і перевірка перед надсиланням</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Агент архівування пошти</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути автоматичне архівування пошти. Докладні відомості можна знайти у <ulink url="help:/akonadi_archivemail_agent"
+>документації до агента архівування пошти</ulink
+>. Вам також варто прочитати розділ щодо <link linkend="archiving"
+>архівування</link
+> цього підручника. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Агент нагадування про відповіді</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути нагадування щодо відповідей. Додаткові відомості можна знайти у <ulink url="help:/akonadi_followupreminder_agent"
+>документації до агента нагадування про відповіді</ulink
+>. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Сповіщувач про нові повідомлення</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути сповіщення щодо нових повідомлень. Ви можете налаштувати перелік полів, які має бути показано у «стандартному» повідомлені сповіщення. Ви також можете вибрати звукові сигнали (декламування тексту, попередньо записані звуки), створення записів файла журналу тощо. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Агент відкладеного надсилання</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути відкладене надсилання пошти. Додаткові відомості можна знайти у <ulink url="help:/akonadi_sendlater_agent"
+>документації до агента відкладеного надсилання</ulink
+>. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Агент уніфікованої поштової скриньки</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт для створення набору «уніфікованих» поштових скриньок. &kmail; автоматично створить три такі скриньки із мітками «Вхідні», «Чернетки» і «Надіслані». Якщо вами було визначено теку вхідних повідомлень для «Локальних тек» і одну або декілька тек вхідної пошти &IMAP;, &kmail; покаже вміст усіх різноманітних вхідних повідомлень у одній об'єднаній віртуальній теці «Вхідні». Ви можете скористатися діалоговим вікном налаштувань для створення додаткових віртуальних поштових скриньок, налаштувавши кожну з них відповідно до ваших потреб. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Автоматичне додавання контактів</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додавати нові адреси до адреси вашої адресної книги кожного разу, коли ви надсилаєте повідомлення новому контакту. Скористайтеся діалоговим вікном налаштовування для прив'язки адресних книг до профілів. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Перевірка перед надсиланням</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб застосувати декілька правил до надсилання повідомлення. Цей додаток типово увімкнено, він автоматично сповіщатиме вас, коли ви спробуєте надіслати понад одну копію повідомлення одній особі. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Підтвердження адреси</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути перевірку адрес вихідних повідомлень. Скористайтеся діалоговим вікном налаштовування для визначення «білого» списку і/або «чорного» списку для кожного визначеного профілю. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-composer">
+    <title
+>Редактор</title>
+    <screenshot>
+      <screeninfo
+>Зображення додатків 2</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin02.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Зображення додатків 2</phrase>
+          </textobject>
+          <caption>
+            <para
+>Редактор повідомлень</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Відкриття зовнішнього редактора</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб наказати редактору повідомлень відкривати зовнішній текстовий редактор після запуску. Скористайтеся діалоговим вікном налаштовування цього додатка для визначення редактора, який слід викликати. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Автоматичне виправлення</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати у меню редактора пункт <menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Автоматичне виправлення тексту &gt;</guimenuitem
+></menuchoice
+>. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Змінити регістр</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати у меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Змінити регістр &gt;</guimenuitem
+></menuchoice
+>. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Вставлення адреси ел. пошти</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати у меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вставити адресу ел. пошти...</guimenuitem
+></menuchoice
+>. За допомогою цього пункту можна вставити вибрану адресу електронної пошти з адресної книги до тексту вашого повідомлення простим наведенням і клацанням лівою кнопкою миші. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Вставлення нерозривного пробілу</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати у меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вставити нерозривний пробіл</guimenuitem
+></menuchoice
+>. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Вставлення скороченої адреси</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб мати змову додавати невеличкий фрагмент нефункціонального коду. Цей додаток перебуває у розробці, його типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Вставлення спеціального символу</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати у меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вставити спеціальний символ…</guimenuitem
+></menuchoice
+>. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Швидкий текст</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати у меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Фрагменти</guimenuitem
+></menuchoice
+>. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Оприлюднення тексту</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати у меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Оприлюднити текст повідомлення &gt;</guimenuitem
+></menuchoice
+>. Передбачено чотири варіанти надсилання: Nextcloud, Pastebin, Bluetooth, і Надіслати електронною поштою (відкриває друге вікно редактора повідомлень). Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Масштабування тексту</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати у меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Масштаб… &gt;</guimenuitem
+></menuchoice
+>. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+        
+    <sect2 id="configure-plugins-grammar">
+    <title
+>Перевірка граматики і стилі заголовків</title>
+    <screenshot>
+      <screeninfo
+>Зображення додатків 3</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin03.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Зображення додатків 3</phrase>
+          </textobject>
+          <caption>
+            <para
+>Засоби перевірки граматики і стилі заголовків</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Перевірка граматики французькою</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати до меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Перевірити граматику (Grammalecte)</guimenuitem
+></menuchoice
+>. Цей пункт призначено лише для перевірки французькою мовою. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Перевірка граматики (LanguageTool)</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати до меню редактора повідомлень пункт <menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Перевірити граматику (LanguageTool)</guimenuitem
+></menuchoice
+>. Цей пункт є багатофункціональним, із підтримкою перевірки граматики багатьма різними мовами. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->  
+    
+    <para
+>Наступні шість доданків надають вам змогу визначити, які стилі заголовків можна буде вибрати за допомогою меню <guimenu
+>Перегляд</guimenu
+>. Докладніші відомості наведено у розділі щодо <link linkend="the-preview-pane-headers"
+>опису різноманітних режимі перегляду заголовків</link
+> у главі «Користування &kmail;». </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Короткий стиль заголовків</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути показ «Коротких» заголовків. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Типовий стиль заголовків Grantlee</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути показ заголовків «KMail 5.2». Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Красивий стиль заголовків</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути показ «Вишуканих» заголовків. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Стиль заголовків Grantlee</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути показ «Cute»-заголовків. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Довгий стиль заголовків</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути показ «Довгих» заголовків. Цей додаток типово вимкнено. (Довгі заголовки подібні до стандартних, але містять дещо менш типові дані, зокрема вміст поля «Відповідати», якщо такі дані є доступними.) </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Стандартний стиль заголовків</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути показ «Стандартних» заголовків. Цей додаток типово вимкнено. (Стандартні заголовки подібні до вишуканих, але без затіненого тла.) </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-misc">
+    <title
+>Перегляд повідомлень / Інше</title>
+    <screenshot>
+      <screeninfo
+>Зображення додатків 4</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin04.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Зображення додатків 4</phrase>
+          </textobject>
+          <caption>
+            <para
+>Перегляд повідомлень та інше</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Усі наступні шість додатків забезпечують роботи спеціальних можливостей, викликати які можна лише за допомогою кнопки панелі інструментів. Скористайтеся діалоговим вікном, яке можна викликати за допомогою пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Налаштувати пенали... </guimenuitem
+> </menuchoice
+>, щоб додати або вилучити кнопки панелі інструментів, які пов'язано із цими функціями після вмикання відповідних додатків. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Створити запис події</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб уможливити створення запису події календаря під час перегляду повідомлення у &kmail;. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Створити нотатку</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб уможливити створення нотатки &kontact; під час перегляду повідомлення у &kmail;. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Створення запису завдання</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб уможливити створення запису завдання у &korganizer; під час перегляду повідомлення у &kmail;. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Розгортання адреси</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути функціональну можливість «Розгорнути адресу». Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Зовнішній скрипт</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб уможливити виклик певної команди з панелі інструментів. Скористайтеся пов'язаним діалоговим вікном налаштовування для вибору виконуваного файла і визначення назви пункту програми. Вибрану вами назву згодом буде додано до кнопки на панелі інструментів, за допомогою якої ви зможете будь-коли викликати потрібну вам програми. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Перекладач</guilabel
+></term>
+        <listitem>
+          <para
+><link linkend="using-the-translator"
+>Можливість перекладу</link
+> є типово доступною у редакторі повідомлень. Скористайтеся цим додатком (за допомогою панелі інструментів), щоб відкрити доступ до засобу перекладу з вікна попереднього перегляду повідомлень. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Наступні чотири пункти насправді не є пунктами додатків. Це вбудовані функціональні можливості &kmail;. Кожну з них можна налаштувати окремо за допомогою кнопки <guibutton
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+>, яку буде показано поряд із назвою функції. Для застосування змінених налаштувань цих вбудованих можливостей не потрібен перезапуск програми. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Засіб перевірки DKIM</guilabel
+></term>
+        <listitem>
+          <para
+>За допомогою цього діалогового вікна ви можете керувати обробкою DomainKeys Identified Mail (DKIM). DKIM — криптографічний протокол, за допомогою якого можна переконатися, що певне повідомлення походить із саме того домену інтернету, який у ньому вказано. Якщо відправником належним чином налаштовано DKIM і увімкнено DKIM у цьому вікні налаштувань, ви побачите повідомлення «Чинний DKIM» і, іноді, назву запису, яким підписано повідомлення, у смужці стану у нижній частині вікна попереднього перегляду повідомлень. </para>
+          <note
+><para
+>Якщо ви позначите цей пункт, не забудьте замінити типове значення («Нічого») у полі лічильника «Зберегти ключ запису» на якесь інше. Засіб перевірки DKIM не зможе працювати належним чином, якщо для змінною буде встановлено значення «Нічого». </para
+></note>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Вилучення застарілих повідомлення з теки смітника</guilabel
+></term>
+        <listitem>
+          <para
+>Скористайтеся цим вікном налаштовування для встановлення критерію застарівання для ваших тек смітника. Докладніший опис можна знайти у <link linkend="folders-properties-expiry"
+>документації з властивостей теки</link
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Параметри тек</guilabel
+></term>
+        <listitem>
+          <para
+>Скористайтеся цим вікном налаштовування для встановлення нетипових властивостей теки для декількох тек одночасно. Ви можете вибрати теки для внесення змін з панелі ієрархічного перегляду усіх тек у лівій частині вікна програми і вибрати властивості, які буде для них встановлено за допомогою вкладок «Загальне», «Перегляд», «Шаблони» та «Архівування» діалогового вікна <link linkend="folders-properties-window"
+>«Властивості теки»</link
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Gravatar</guilabel
+></term>
+        <listitem>
+          <para
+>Скористайтеся цим діалоговим вікном налаштовування для вмикання або вимикання підтримки Gravatar (Globally Recognized Avatar або «загальновизнаного аватара»). </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-tools">
+        <title
+>Інструменти</title>
+
+    <screenshot>
+      <screeninfo
+>Зображення додатків 5</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin05.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Зображення додатків 5</phrase>
+          </textobject>
+          <caption>
+            <para
+>Інструменти і вебрушій</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Антиспам</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати пункт <link linkend="the-anti-spam-wizard"
+>Майстер блокування спаму</link
+> до меню <guimenu
+>Інструменти</guimenu
+>. Цей додаток типово вимкнено. Зауважте, що після встановлення програмного забезпечення для боротьби зі спамом цей додаток можна безпечно вимикати — він потрібен лише для встановлення відповідного програмного забезпечення, а не для користування ним. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Антивірус</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати пункт <link linkend="the-anti-virus-wizard"
+>Майстер блокування вірусів</link
+> до меню <guimenu
+>Інструменти</guimenu
+>. Цей додаток типово вимкнено. Зауважте, що після встановлення програмного забезпечення для боротьби із вірусами цей додаток можна безпечно вимикати — він потрібен лише для встановлення відповідного програмного забезпечення, а не для користування ним. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Додаток експерта</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати пункт меню <menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Показати структуру повідомлення Ctrl+Alt+D</guimenuitem
+></menuchoice
+> у вікні попереднього перегляду повідомлень. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Запис журналу дій</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб увімкнути можливість запису журналу дій, яку типово вимкнено. Цей додаток створює новий пункт <guilabel
+>Журнал дій</guilabel
+> у меню <guilabel
+>Інструменти</guilabel
+>. В основному, цю можливість призначено для розробників програми — типовий інструмент журналювання не зберігає багато даних (просто часові позначки і «Виконано» для більшості «подій»). </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Блокування реклами</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб додати фільтри <ulink url="https://adblockplus.org"
+>Adblock Plus</ulink
+> до &kmail;. Якщо ви активуєте цей додаток, вам доведеться приділити доволі багато часу для коригування файла налаштувань, щоб фільтри працювали належним чином. Цей додаток типово вимкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Вимикання стеження</guilabel
+></term>
+        <listitem>
+          <para
+>Позначте цей пункт, щоб примусити &kmail; до надсилання запиту «Не стежити» на віддалений сервер кожного разу, коли повідомлення &HTML; просить про отримання даних з віддаленого сервера. Результат надсилання запиту «Не стежити» залежить від правил, які встановлено на сервері, що отримує запит. Деякі сайти враховують такі побажання. Інші ні. </para>
+          <para
+>Рекламісти мають засоби стеження повсюду. Закодовані у &HTML; повідомлення часто містять «зображення» розмірами 0x0 або 1x1 пікселів (їх ще називають «піксель для стеження»), які насправді є шахрайськими посиланнями на адресу стеження. Коли &kmail; отримує дані зображення з сервера, він має скористатися адресою з повідомлення. Сервер може використати дані, які вбудовано до адреси для реєстрації відкриття вами повідомлення або отримання інших даних. </para>
+          <para
+>Надсилання запиту «Не стежити» може дещо підвищити рівень вашого захисту. Але єдиним певним способом уникнення пікселів для стеження є заборона отримання віддалених зображень, адреси яких вбудовано до коду повідомлень у форматі &HTML;. Цей додаток типово увімкнено. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    </sect2>
+    
+</sect1>
+
+<sect1 id="configure-non-gui-options">
+<title
+>Параметри, якими не можна керувати за допомогою графічного інтерфейсу користувача</title>
+<para
+>Окрім параметрів, які ви можете бачити у діалоговому вікні налаштування програми, існують і параметри, які можна встановити лише за допомогою редагування файла з налаштуваннями &kmail; або за допомогою KIOSK (наприклад, введення команди у вікні &konsole;). Ці налаштування називаються «прихованими», їх неможливо змінити за допомогою звичайного діалогового вікна параметрів &kmail;. Виконати ці налаштування можна редагуванням файла налаштувань за допомогою текстового редактора або програми <command
+>kwriteconfig</command
+>. Файл налаштувань складається з розділів, які починаються з рядка [Назва розділу]. За цим рядком йдуть рядки з назвами змінних та значеннями змінних. Якщо ви вноситимете зміни до файла налаштувань вручну, вам слід додати перед записами змінних рядок [Назва розділу]. Команда <command
+>kwriteconfig</command
+> автоматично додасть такий рядок, якщо ви скористаєтеся параметром <userinput
+>--group</userinput
+>. </para>
+
+<para
+>Файл, у якому зберігаються налаштування &kmail;, має назву <filename
+>kmail2rc</filename
+>, він зберігається у вашому домашньому каталозі. Розташування файла може залежати від вашої операційної системи або дистрибутива, але цей файл завжди можна знайти за допомогою команди <userinput
+><command
+>kf5-config --path config --locate kmail2rc</command
+></userinput
+>. У решті тексту цього розділу ми будемо припускати, що файл налаштувань розташовано за адресою <filename
+>/шлях/до/kmail2rc</filename
+>. </para>
+
+<warning
+><para
+>Якщо ви маєте намір змінити один з вказаних нижче параметрів, вам слід спочатку завершити роботу &kmail;, а вже потім редагувати файл налаштувань. Знову запустити &kmail; можна після внесення <emphasis
+>і збереження</emphasis
+> змін до файла налаштувань. </para
+></warning>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>SendMDNsWithEmptySender</guilabel
+></term>
+<listitem>
+<para
+>Надсилати сповіщення про долю повідомлення з порожнім відправником. Деякі сервери можуть бути налаштованими так, що не прийматимуть такі повідомлення, тому, якщо виникнуть проблеми зі сповіщеннями про долю повідомлення, слід встановити для цього параметра значення false. Щоб увімкнути можливість, додайте такий рядок до розділу «[MDN]»:</para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>SendMDNsWithEmptySender=true</programlisting
+></listitem>
+  <listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+  <para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group MDN --key SendMDNsWithEmptySender true</option
+></userinput
+> </para>
+</listitem>
+</itemizedlist>
+<note
+><para
+>Типове значення, «false», якщо бути строгим, порушує стандарти обміну даними у інтернеті, але таке значення встановлено з практичних міркувань, щоб запобігти відкиданню MDN, створених за допомогою &kmail;, серверами у інтернеті через підозру у небажаній кореспонденції (спамі).</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>CloseDespiteSystemTray</guilabel
+></term>
+<listitem>
+<para
+>За допомогою цього параметра можна змусити програму завершувати роботу після закриття головного вікна, навіть якщо програму налаштовано на роботу з піктограмою лотка (за таких налаштувань програма, зазвичай, згортається у лоток). Щоб увімкнути цю можливість, додайте такий рядок у розділ «[General]»: </para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>CloseDespiteSystemTray=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group General --key CloseDespiteSystemTray true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>disregardUmask</guilabel
+></term>
+<listitem>
+<para
+>У версіях, що передували версії 1.9, програма &kmail; зберігала всі долучення на диск з правами доступу 600 — читання і запис лише для власника файла. У відповідь на прохання користувачів програми параметри доступу до збережених файлів у &kmail; версії 1.9 можна налаштувати самому, типові значення відповідають встановленому значенню umask облікового запису користувача під час зберігання файлів на диск. Щоб увімкнути можливість зміни параметрів, додайте до розділу «[General]» такий рядок: </para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>disregardUmask=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group General --key disregardUmask true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>CheckOutOfOfficeOnStartup</guilabel
+></term>
+<listitem>
+<para
+>Якщо увімкнено цей параметр, &kmail; перевірятиме під час кожного запуску, чи налаштовано сервер на відповідь «мене немає» і, у разі виявлення подібних налаштувань попереджатиме вас про них. Щоб вимкнути цю можливість, додайте такий рядок у розділ «[OutOfOffice]»: </para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>CheckOutOfOfficeOnStartup=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group OutOfOffice --key CheckOutOfOfficeOnStartup false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeSettings</guilabel
+></term>
+<listitem>
+<para
+>Якщо ви не бажаєте дозволяти користувачам визначати власні скрипти відповідей «мене немає» на сервері, ви можете додати такий рядок до розділу «[OutOfOffice]»: </para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>AllowOutOfOfficeSettings=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeUploadButNoSettings</guilabel
+></term>
+<listitem>
+<para
+>Якщо ви бажаєте дозволити вашим користувачам визначати власні скрипти повідомлень «мене немає», але не бажаєте дозволяти їм змінювати параметри реакції на домен і реакції на спам, ви можете додати такий рядок до розділу [OutOfOffice]: </para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>AllowOutOfOfficeUploadButNoSettings=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeUploadButNoSettings true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeDomain</guilabel
+></term>
+<listitem>
+<para
+>Під час редагування скриптів відпустки («мене немає») користувач може вказати домен, яким обмежуватиметься надсилання таких відповідей. Застосування типових параметрів у діалоговому вікні налаштовування автоматичних повідомлень за допомогою відповідної кнопки відновити типове значення домену, якщо його було змінено користувачем. Для визначення типового значення цього параметра додайте рядок до розділу [OutOfOffice]:</para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>OutOfOfficeDomain=myMailDomain.test</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeDomain myMailDomain.test</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeReactToSpam</guilabel
+></term>
+<listitem>
+<para
+>Типово, повідомлення «мене немає» не надсилатимуться у відповідь на листи, позначені як спам. Щоб змінити таку поведінку програми, додайте такий рядок до розділу «[OutOfOffice]»:</para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>OutOfOfficeReactToSpam=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeReactToSpam true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>ShowUserAgent</guilabel
+></term>
+<listitem>
+<para
+>Починаючи з версії 1.9, &kmail; може показувати значення поля заголовка повідомлення User-Agent або X-Mailer, якщо ви використовуєте вишукані заголовки (див. пункт меню <menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guisubmenu
+>Заголовки</guisubmenu
+></menuchoice
+>). Щоб увімкнути цю можливість, додайте такий рядок до розділу «[Reader]»:</para>
+<itemizedlist>
+<listitem
+><para
+>Файл налаштувань:</para>
+<programlisting
+>ShowUserAgent=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/шлях/до/kmail2rc</replaceable
+> --group Reader --key ShowUserAgent true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</chapter>

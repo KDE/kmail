@@ -1,0 +1,177 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Agent voor later verzenden</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>Het handboek van &i18n-sendlateragent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+&Freek.de.Kruijf; 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Inleiding</title>
+
+<para
+>&i18n-sendlateragent; is een akonadi-agent die het u mogelijk maakt geplande e-mailberichten eenmalig of herhaald te verzenden. </para>
+
+<sect2 id="using-kapp">
+<title
+>&i18n-sendlateragent; gebruiken</title>
+
+<para
+>Gebruik <menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Later verzenden</guimenuitem
+></menuchoice
+> in het venster van de opsteller van &kmail; om een dialoogvenster te openen waarmee u uw e-mailberichten kunt zenden op een specifieke datum en tijd.</para>
+
+<screenshot>
+<screeninfo
+>Dialoogvenster van &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialoogvenster van &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialoogvenster van &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Veronderstel dat u een briljant e-mailbericht hebt gemaakt waarin taken staan waarvan u wilt dat uw medewerkers zullen afmaken terwijl u naar een conferentie bent, maar u zult in een vliegtuig zitten wanneer u het e-mailbericht wilt verzenden. Gebruik deze functie dan om het e-mailbericht op de juiste datum en tijd te verzenden. Om het e-mailbericht later te verzenden, activeert u eerst het vakje <guilabel
+>Vertragen</guilabel
+> en daarna selecteert u de datum en tijd in het menu <guilabel
+>Verzenden op:</guilabel
+>.</para>
+<para
+>Als het nodig is dat u een wekelijkse e-mailbericht als herinnering stuurt aan uw medewerkers, dan kunt u instellen om het zenden van het bericht te herhalen door het keuzevakje <guilabel
+>Herhalen elke</guilabel
+> te activeren en de gewenste intervallen te selecteren.</para>
+<para
+>U kunt het bericht in uw berichten in de wachtrij zetten door de knop <guibutton
+>Later verzenden</guibutton
+> te selecteren om het bericht onmiddellijk te plannen. </para>
+<para
+>Deze agent werkt onafhankelijk van &kmail; en heeft geen actief exemplaar van &kmail; nodig of dat &kmail; in online modus is om geplande e-mailberichten te verzenden.</para>
+<para
+>Als u geen netwerkverbinding hebt wanneer een gepland bericht verzonden zou moeten worden, zal de agent een fout rapporteren en vragen of u het later wilt verzenden.</para>
+<para
+>Bij aanmelden van een &kde;-sessie zal de agent de geplande berichten controleren en alle berichten, die over tijd zijn sinds de laatste keer afmelden, indien nodig verzenden. </para>
+<para
+>Om de opties voor later geplande berichten te wijzigen gebruikt u <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>&kmail; configureren...</guimenuitem
+></menuchoice
+> en selecteer de pagina <guilabel
+>Plug-ins</guilabel
+> in &kmail; en druk op de configuratieknop tegen het item <guilabel
+>Agent voor later verzenden</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>&i18n-sendlateragent; instellen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&i18n-sendlateragent; instellen</phrase>
+    </textobject>
+    <caption>
+      <para
+>&i18n-sendlateragent; instellen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Dit toont een dialoog waarmee u de planning van e-mailberichten, die zijn verzonden met de functie later verzenden, kunt wijzigen of deze kunt verwijderen.</action>
+</para>
+<para
+>Het is niet mogelijk de inhoud (berichtinhoud, berichtkoppen &etc;) van een gepland bericht te wijzigen. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Dankbetuigingen en licentie</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Programma copyright 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Documentatie Copyright &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+&meld.fouten;&vertaling.freek; &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

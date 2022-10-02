@@ -1,0 +1,188 @@
+# Translation of akonadi_mailfilter_agent.po to Catalan
+# Copyright (C) 2011-2022 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Manuel Tortosa <manutortosa@chakra-project.org>, 2011.
+# Josep M. Ferrer <txemaq@gmail.com>, 2012, 2014, 2015, 2017, 2021, 2022.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2017, 2018, 2019, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"PO-Revision-Date: 2022-09-07 19:15+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.12.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Accelerator-Marker: &\n"
+
+#: filterlogdialog.cpp:44
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Visualitzador del registre de filtratge"
+
+#: filterlogdialog.cpp:74
+#, kde-format
+msgid "Share..."
+msgstr "Comparteix..."
+
+#: filterlogdialog.cpp:80
+#, kde-format
+msgid "&Log filter activities"
+msgstr "&Registra les activitats de filtratge"
+
+#: filterlogdialog.cpp:85
+#, kde-format
+msgid ""
+"You can turn logging of filter activities on and off here. Of course, log "
+"data is collected and shown only when logging is turned on. "
+msgstr ""
+"Aquí podeu activar i desactivar el registre de les activitats de filtratge. "
+"Naturalment, només es recullen i es mostren les dades de registre quan "
+"s'activa el registre. "
+
+#: filterlogdialog.cpp:89
+#, kde-format
+msgid "Logging Details"
+msgstr "Detalls del registre"
+
+#: filterlogdialog.cpp:96
+#, kde-format
+msgid "Log pattern description"
+msgstr "Descripció del patró de registre"
+
+#: filterlogdialog.cpp:101
+#, kde-format
+msgid "Log filter &rule evaluation"
+msgstr "Registra l'avaluació de les &regles de filtratge"
+
+#: filterlogdialog.cpp:106
+#, kde-format
+msgid ""
+"You can control the feedback in the log concerning the evaluation of the "
+"filter rules of applied filters: having this option checked will give "
+"detailed feedback for each single filter rule; alternatively, only feedback "
+"about the result of the evaluation of all rules of a single filter will be "
+"given."
+msgstr ""
+"Podeu controlar la informació al registre referent a l'avaluació de les "
+"regles de filtratge dels filtres aplicats: tenir marcada aquesta opció "
+"donarà informació detallada per a cada regla de filtratge. De manera "
+"alternativa, només es donarà informació quant al resultat de l'avaluació de "
+"totes les regles d'un sol filtre."
+
+#: filterlogdialog.cpp:113
+#, kde-format
+msgid "Log filter pattern evaluation"
+msgstr "Registra l'avaluació del patró de filtratge"
+
+#: filterlogdialog.cpp:118
+#, kde-format
+msgid "Log filter actions"
+msgstr "Registra les accions de filtratge"
+
+#: filterlogdialog.cpp:128
+#, kde-format
+msgid "Log size limit:"
+msgstr "Límit de mida del registre:"
+
+#: filterlogdialog.cpp:136
+#, kde-format
+msgid " KB"
+msgstr " kB"
+
+#: filterlogdialog.cpp:137
+#, kde-format
+msgctxt "@label:spinbox Set the size of the logfile to unlimited."
+msgid "unlimited"
+msgstr "Sense límit"
+
+#: filterlogdialog.cpp:140
+#, kde-format
+msgid ""
+"Collecting log data uses memory to temporarily store the log data; here you "
+"can limit the maximum amount of memory to be used: if the size of the "
+"collected log data exceeds this limit then the oldest data will be discarded "
+"until the limit is no longer exceeded. "
+msgstr ""
+"En recollir dades de registre s'usa memòria per a desar-les temporalment. "
+"Aquí podeu limitar la quantitat màxima de memòria a usar: si la mida de les "
+"dades de registre recollides excedeix aquest límit, llavors es descartaran "
+"les dades més antigues fins que ja no s'excedeixi el límit. "
+
+#: filterlogdialog.cpp:318
+#, kde-format
+msgid ""
+"Could not write the file %1:\n"
+"\"%2\" is the detailed error description."
+msgstr ""
+"No s'ha pogut escriure el fitxer %1:\n"
+"«%2» és la descripció detallada de l'error."
+
+#: filterlogdialog.cpp:322
+#, kde-format
+msgid "KMail Error"
+msgstr "S'ha produït un error al KMail"
+
+#: filtermanager.cpp:100
+#, kde-format
+msgid "Filtering message %1 of %2"
+msgstr "S'està filtrant el missatge %1 de %2"
+
+#: filtermanager.cpp:187
+#, kde-format
+msgid "Error applying mail filter move"
+msgstr "Error en aplicar el moviment del filtre de correu"
+
+#: filtermanager.cpp:195
+#, kde-format
+msgid "Error applying mail filter delete"
+msgstr "Error en aplicar la supressió del filtre de correu"
+
+#: filtermanager.cpp:203
+#, kde-format
+msgid "Error applying mail filter modifications"
+msgstr "Error en aplicar les modificacions del filtre de correu"
+
+#: filtermanager.cpp:220
+#, kde-format
+msgid "<b>Evaluating filter rules:</b> "
+msgstr "<b>S'estan avaluant les regles del filtre:</b> "
+
+#: filtermanager.cpp:227
+#, kde-format
+msgid "<b>Filter rules have matched.</b>"
+msgstr "<b>Les regles del filtre han coincidit.</b>"
+
+#: filtermanager.cpp:246
+#, kde-format
+msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
+msgstr "<b>Comença el filtratge en el missatge «%1» des de «%2» a «%3»:</b>"
+
+#: filtermanager.cpp:580 filtermanager.cpp:608
+#, kde-format
+msgid "Filtering messages"
+msgstr "Filtratge de missatges"
+
+#: mailfilteragent.cpp:109
+#, kde-format
+msgctxt "Notification when the filter log was enabled"
+msgid "Mail Filter Log Enabled"
+msgstr "Activat el registre de filtratge de correu"
+
+#: mailfilteragent.cpp:173
+#, kde-format
+msgid "Ready"
+msgstr "Preparat"
+
+#: mailfilteragent.cpp:259
+#, kde-format
+msgid "Filtering in %1"
+msgstr "Filtratge a %1"

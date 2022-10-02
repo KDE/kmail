@@ -1,0 +1,195 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Агент відкладеного надсилання</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Ukrainian "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>Підручник з агента відкладеного надсилання пошти</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>21 вересня 2019 року</date>
+<releaseinfo
+>5.13 (Програми 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Вступ</title>
+
+<para
+>&i18n-sendlateragent; — агент akonadi, який надає змогу надсилати повідомлення електронної пошти у вказані вами моменти часу або регулярно. </para>
+
+<sect2 id="using-kapp">
+<title
+>Користування агентом відкладеного надсилання пошти</title>
+
+<para
+>Щоб відкрити діалогове вікно за допомогою якого ви зможете запланувати надсилання вашого повідомлення у певний день і час, скористайтеся пунктом <menuchoice
+><guimenu
+>Повідомлення</guimenu
+><guimenuitem
+>Надіслати пізніше</guimenuitem
+></menuchoice
+> меню редактора повідомлень &kmail;.</para>
+
+<screenshot>
+<screeninfo
+>Діалогове вікно агента відкладеного надсилання пошти</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Діалогове вікно агента відкладеного надсилання пошти</phrase>
+    </textobject>
+    <caption>
+      <para
+>Діалогове вікно агента відкладеного надсилання пошти</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Припустімо, вам складено чудове повідомлення електронної пошти з окресленням завдань, які мають виконувати ваші наймані працівники, доки ви перебуваєте у відрядженні, але у той час, коли слід надіслати повідомлення, ви перебуватимете на літаку. Тоді ви можете скористатися цією можливістю програми для надсилання повідомлення у призначений вами день і час. Щоб запланувати надсилання повідомлення, спочатку позначте пункт <guilabel
+>Затримка</guilabel
+>, а потім виберіть дату і час у меню <guilabel
+>Надіслати:</guilabel
+>.</para>
+<para
+>Якщо вам потрібно надсилати щотижневе нагадування вашим найманим працівникам, ви можете налаштувати цей засіб на регулярне надсилання повідомлення, якщо позначите пункт <guilabel
+>Повторювати кожні</guilabel
+> і виберете бажаний проміжок часу між послідовними надсиланнями.</para>
+<para
+>Ви можете додати повідомлення до повідомлень черги надсилання натисканням кнопки <guibutton
+>Надіслати пізніше</guibutton
+>, щоб запланувати надсилання повідомлення негайно. </para>
+<para
+>Цей агент може працювати незалежно від &kmail; і не потребує для роботи запущеного екземпляра &kmail; або програми &kmail; у режимі з’єднання з мережею, щоб надсилати повідомлення за розкладом.</para>
+<para
+>Якщо на час запланованого надсилання повідомлення комп’ютер не буде з’єднано з мережею, агент повідомить про помилку і запитає вас, чи слід намагатися надіслати повідомлення пізніше.</para>
+<para
+>Під час кожного запуску сеансу роботи у &kde; агент виконує перевірку списку запланованих до надсилання повідомлень і надсилає, якщо це потрібно, усі повідомлення, які мало бути надіслано з часу останнього завершення роботи у сеансі. </para>
+<para
+>Щоб змінити параметри надсилання вже запланованих повідомлень, скористайтеся пунктом меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштування &kmail;...</guimenuitem
+></menuchoice
+> у вікні &kmail;, потім виберіть сторінку <guilabel
+>Додатки</guilabel
+> і натисніть кнопку налаштовування навпроти пункту <guilabel
+>Агент відкладеного надсилання</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Налаштовування агента відкладеного надсилання пошти</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Налаштовування агента відкладеного надсилання пошти</phrase>
+    </textobject>
+    <caption>
+      <para
+>Налаштовування агента відкладеного надсилання пошти</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>За допомогою цього пункту можна відкрити діалогове вікно для внесення змін або вилучення повідомлень, які надсилаються засобом відкладеного надсилання.</action>
+</para>
+<para
+>Змінювати вміст (текст, заголовки тощо) запланованого до надсилання повідомлення не можна. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Подяки і ліцензування</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Авторські права на програму належать &Laurent.Montel; &Laurent.Montel.mail;, 2013–2019 </para>
+<para
+>Авторські права на документацію належать &Laurent.Montel; &Laurent.Montel.mail;, 2013–2019 </para>
+
+<para
+>Переклад українською: Юрій Чорноіван<email
+>yurchor@ukr.net</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

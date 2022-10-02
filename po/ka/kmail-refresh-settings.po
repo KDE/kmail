@@ -1,0 +1,105 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-01-02 00:48+0000\n"
+"PO-Revision-Date: 2022-08-21 06:09+0200\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Temuri Doghonadze"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Temuri.doghonadze@gmail.com"
+
+#: main.cpp:32 main.cpp:34
+#, kde-format
+msgid "KMail Assistant for refreshing settings"
+msgstr ""
+
+#: main.cpp:36
+#, kde-format
+msgid "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+msgstr "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+
+#: main.cpp:37
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: main.cpp:37
+#, kde-format
+msgid "Author"
+msgstr "ავტორი"
+
+#: refreshsettingsassistant.cpp:22
+#, kde-format
+msgctxt "@title:window"
+msgid "KMail Refresh Settings"
+msgstr "KMail-ის განახლების პარამეტრები"
+
+#: refreshsettingsassistant.cpp:39
+#, kde-format
+msgid "Warning"
+msgstr "გაფრთხილება"
+
+#: refreshsettingsassistant.cpp:43
+#, kde-format
+msgid "Clean up Settings"
+msgstr "პარამეტრების გასუფთავება"
+
+#: refreshsettingsassistant.cpp:47
+#, kde-format
+msgid "Finish"
+msgstr "დასრულება"
+
+#: refreshsettingscleanuppage.cpp:20
+#, kde-format
+msgid "Clean"
+msgstr "გასუფთავება"
+
+#: refreshsettingscleanuppage.cpp:50
+#, kde-format
+msgid "Remove obsolete \"TipOfDay\" settings: Done"
+msgstr ""
+
+#: refreshsettingscleanuppage.cpp:62
+#, kde-format
+msgid "Delete Dialog settings in file `%1`: Done"
+msgstr ""
+
+#: refreshsettingscleanuppage.cpp:74
+#, kde-format
+msgid "Delete Filters settings in file `%1`: Done"
+msgstr ""
+
+#: refreshsettingscleanuppage.cpp:90
+#, kde-format
+msgid "Clean Folder Settings in setting file `%1`: Done"
+msgstr ""
+
+#: refreshsettingscleanuppage.cpp:146
+#, kde-format
+msgid "Clean Dialog Size in setting file `%1`: Done"
+msgstr ""
+
+#: refreshsettingsfirstpage.cpp:18
+#, kde-format
+msgid "Please close KMail/Kontact before using it."
+msgstr ""

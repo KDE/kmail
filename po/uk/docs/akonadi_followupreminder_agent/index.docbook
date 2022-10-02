@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>Агент нагадування щодо стеження</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Ukrainian "INCLUDE"
+> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>Підручник із засобу &i18n-followupreminderagent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>21 вересня 2019 року</date>
+<releaseinfo
+>5.13 (Програми 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Вступ</title>
+
+<para
+>&i18n-followupreminderagent; — агент Akonadi, призначений для нагадування за стеженнями за відповідями на поштові повідомлення. </para>
+
+<sect2 id="using-kapp">
+<title
+>Користування програмою &i18n-followupreminderagent;</title>
+
+<para
+>Скористайтеся пунктом <menuchoice
+><guimenu
+>Налаштування</guimenu
+><guimenuitem
+>Створити нагадування щодо стеження</guimenuitem
+></menuchoice
+> у вікні редактора повідомлень &kmail;, щоб відкрити діалогове вікно, за допомогою якого ви зможете створити нагадування щодо відповіді на ваше поточне повідомлення на певну дату.</para>
+
+<screenshot>
+<screeninfo
+>Діалогове вікно програми &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Діалогове вікно програми &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Діалогове вікно програми &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Натисніть кнопку зі стрілкою вниз, яку розташовано у пункті <guilabel
+>Дата</guilabel
+>, щоб вибрати дату за допомогою віджета календаря &kde;. Ви також можете вибрати ваш календар для нагадування за допомогою спадного списку <guilabel
+>Зберегти завдання у</guilabel
+>.</para>
+<para
+>Щоб вилучити заплановані нагадування, скористайтеся пунктом <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштування &kmail;...</guimenuitem
+></menuchoice
+> головного вікна програми &kmail;. Далі, виберіть сторінку <guilabel
+>Додатки</guilabel
+> і натисніть кнопку налаштовування, яку розташовано навпроти пункту <guilabel
+>Агент нагадування про відповіді</guilabel
+>. Далі, скористайтеся контекстним меню, яке можна викликати клацанням правою кнопкою миші на пункті нагадування, щоб вибрати дію <guimenuitem
+>Вилучити</guimenuitem
+>. </para>
+
+<screenshot>
+<screeninfo
+>Налаштовування програми &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Налаштовування програми &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Налаштовування програми &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Подяки і ліцензування</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>Авторські права на програму належать &Laurent.Montel; &Laurent.Montel.mail;, 2014–2019 </para>
+<para
+>Авторські права на документацію належать &Laurent.Montel; &Laurent.Montel.mail;, 2014–2019 </para>
+
+<para
+>Переклад українською: Юрій Чорноіван<email
+>yurchor@ukr.net</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

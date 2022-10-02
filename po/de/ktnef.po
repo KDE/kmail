@@ -1,0 +1,820 @@
+# Thomas Diehl <thd@kde.org>, 2003.
+# Stefan Winter <swinter@kde.org>, 2003, 2004.
+# Stephan Johach <hunsum@gmx.de>, 2003, 2004, 2005, 2007.
+# Thomas Reitelbach <tr@erdfunkstelle.de>, 2005, 2007.
+# Burkhard Lück <lueck@hube-lueck.de>, 2012, 2013, 2015, 2020, 2021.
+# Frederik Schwarzer <schwarzer@kde.org>, 2012, 2016.
+msgid ""
+msgstr ""
+"Project-Id-Version: ktnef\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2021-05-14 10:34+0200\n"
+"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Stefan Winter"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "swinter@kde.org"
+
+#: attachpropertydialog.cpp:61
+#, kde-format
+msgid "Save..."
+msgstr "Speichern ..."
+
+#: attachpropertydialog.cpp:94
+#, kde-format
+msgctxt "@title:window"
+msgid "Properties for Attachment %1"
+msgstr "Eigenschaften von Anhang %1"
+
+#: attachpropertydialog.cpp:98
+#, kde-format
+msgid " bytes"
+msgstr " Bytes"
+
+#: attachpropertydialog.cpp:159
+#, kde-format
+msgctxt "@label"
+msgid "TNEF Attributes"
+msgstr "TNEF-Attribute"
+
+#: attachpropertydialog.cpp:168
+#, kde-format
+msgctxt "@info"
+msgid "Must select an item first."
+msgstr "Sie müssen zuerst einen Eintrag auswählen."
+
+#: attachpropertydialog.cpp:174
+#, kde-format
+msgctxt "@info"
+msgid "The selected item cannot be saved because it has an empty tag."
+msgstr ""
+"Der gewählte Eintrag kann nicht gespeichert werden, da er ein leeres Tag "
+"enthält."
+
+#: attachpropertydialog.cpp:199
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file for writing, check file permissions."
+msgstr ""
+"Die Datei kann nicht zum Schreiben geöffnet werden, überprüfen Sie die "
+"Dateirechte."
+
+#: ktnefmain.cpp:94
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"You will be presented with a dialog where you can configure the application-"
+"wide shortcuts."
+msgstr ""
+"Es wird ein Dialogfenster angezeigt, in dem alle Kurzbefehle der Anwendung "
+"eingestellt werden können."
+
+#: ktnefmain.cpp:108
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "View"
+msgstr "Ansicht"
+
+#: ktnefmain.cpp:113
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "View With..."
+msgstr "Ansehen mit ..."
+
+#: ktnefmain.cpp:117 ktnefmain.cpp:399
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract"
+msgstr "Entpacken"
+
+#: ktnefmain.cpp:121 ktnefmain.cpp:400
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract To..."
+msgstr "Entpacken nach ..."
+
+#: ktnefmain.cpp:126
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract All To..."
+msgstr "Alles entpacken nach ..."
+
+#: ktnefmain.cpp:131 ktnefmain.cpp:403
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: ktnefmain.cpp:136
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Message Properties"
+msgstr "Eigenschaften der Nachricht"
+
+#: ktnefmain.cpp:140
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Show Message Text"
+msgstr "Nachrichtentext anzeigen"
+
+#: ktnefmain.cpp:145
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Save Message Text As..."
+msgstr "Nachrichtentext speichern unter ..."
+
+#: ktnefmain.cpp:158
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Default Folder..."
+msgstr "Standardordner ..."
+
+#: ktnefmain.cpp:170
+#, kde-format
+msgctxt "@info:status"
+msgid "No file loaded"
+msgstr "Keine Datei geladen"
+
+#: ktnefmain.cpp:193
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file \"%1\"."
+msgstr "Das Öffnen der Datei „%1“ ist nicht möglich."
+
+#: ktnefmain.cpp:198
+#, kde-format
+msgctxt "@info:status"
+msgid "%1 attachment found"
+msgid_plural "%1 attachments found"
+msgstr[0] "%1 Anhang gefunden"
+msgstr[1] "%1 Anhänge gefunden"
+
+#: ktnefmain.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Open TNEF File"
+msgstr "TNEF-Datei öffnen"
+
+#: ktnefmain.cpp:244 ktnefmain.cpp:275
+#, kde-format
+msgctxt "@info"
+msgid "There is no file selected. Please select a file an try again."
+msgstr ""
+"Es ist keine Datei ausgewählt. Wählen Sie zuerst eine Datei und versuchen "
+"Sie es erneut."
+
+#: ktnefmain.cpp:304 ktnefmain.cpp:380
+#, kde-format
+msgctxt "@info"
+msgid "Unable to extract file \"%1\"."
+msgstr "Die Datei „%1“ kann nicht entpackt werden."
+
+#: ktnefmain.cpp:486
+#, kde-format
+msgctxt "@info"
+msgid "The message does not contain any Rich Text data."
+msgstr "Die Nachricht enthält keine Daten im Format „Rich Text“."
+
+#: ktnefmain.cpp:504
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file \"%1\" for writing, check file permissions."
+msgstr ""
+"Die Datei „%1“ kann nicht zum Schreiben geöffnet werden, überprüfen Sie die "
+"Dateirechte."
+
+#: ktnefmain.cpp:526
+#, kde-format
+msgid "Open &with %1"
+msgstr "Öffnen &mit %1"
+
+#: ktnefmain.cpp:528
+#, kde-format
+msgctxt "@item:inmenu Open With, %1 is application name"
+msgid "%1"
+msgstr "%1"
+
+#: ktnefmain.cpp:553
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Open With"
+msgstr "&Öffnen mit"
+
+#: ktnefmain.cpp:569
+#, kde-format
+msgctxt "@action:inmenu Open With"
+msgid "&Other..."
+msgstr "&Weitere ..."
+
+#: ktnefmain.cpp:571 ktnefmain.cpp:579
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Open With..."
+msgstr "&Öffnen mit ..."
+
+#. i18n: ectx: Menu (file)
+#: ktnefui.rc:6
+#, kde-format
+msgid "&File"
+msgstr "&Datei"
+
+#. i18n: ectx: Menu (action)
+#: ktnefui.rc:9
+#, kde-format
+msgid "&Action"
+msgstr "&Aktion"
+
+#. i18n: ectx: Menu (settings)
+#: ktnefui.rc:24
+#, kde-format
+msgid "&Settings"
+msgstr "Ein&stellungen"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: ktnefui.rc:29
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Haupt-Werkzeugleiste"
+
+#: ktnefview.cpp:71
+#, kde-format
+msgctxt "@title:column file name"
+msgid "File Name"
+msgstr "Dateiname"
+
+#: ktnefview.cpp:72
+#, kde-format
+msgctxt "@title:column file type"
+msgid "File Type"
+msgstr "Dateityp"
+
+#: ktnefview.cpp:72
+#, kde-format
+msgctxt "@title:column file size"
+msgid "Size"
+msgstr "Größe"
+
+#: main.cpp:44
+#, kde-format
+msgid "KTnef"
+msgstr "KTnef"
+
+#: main.cpp:46
+#, kde-format
+msgid "Viewer for mail attachments using TNEF format"
+msgstr "Anzeigeprogramm für E-Mail-Anhänge im TNEF-Format"
+
+#: main.cpp:48
+#, kde-format
+msgid ""
+"Copyright 2000 Michael Goffioul \n"
+"Copyright 2012  Allen Winter"
+msgstr ""
+"Copyright 2000 Michael Goffioul \n"
+"Copyright 2012  Allen Winter"
+
+#: main.cpp:50
+#, kde-format
+msgid "Michael Goffioul"
+msgstr "Michael Goffioul"
+
+#: main.cpp:50
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: main.cpp:52
+#, kde-format
+msgid "Allen Winter"
+msgstr "Allen Winter"
+
+#: main.cpp:52
+#, kde-format
+msgid "Author, Ported to Qt4/KDE4"
+msgstr "Autor. Portierung auf Qt4/KDE4"
+
+#: main.cpp:58
+#, kde-format
+msgid "An optional argument 'file' "
+msgstr "Ein optionales Argument „Datei“"
+
+#: messagepropertydialog.cpp:42
+#, kde-format
+msgctxt "@title:window"
+msgid "Message Properties"
+msgstr "Eigenschaften der Nachricht"
+
+#: messagepropertydialog.cpp:55
+#, kde-format
+msgctxt "@title:column property name"
+msgid "Name"
+msgstr "Name"
+
+#: messagepropertydialog.cpp:55
+#, kde-format
+msgctxt "@title:column property value"
+msgid "Value"
+msgstr "Wert"
+
+#. i18n: ectx: property (text), widget (QLabel, mDescriptionLabel)
+#: ui/attachpropertywidgetbase.ui:45
+#, kde-format
+msgid "Description:"
+msgstr "Beschreibung:"
+
+#. i18n: ectx: property (text), widget (QLabel, mIndexLabel)
+#: ui/attachpropertywidgetbase.ui:68
+#, kde-format
+msgid "Index:"
+msgstr "Index:"
+
+#. i18n: ectx: property (text), widget (QLabel, mDisplayLabel)
+#: ui/attachpropertywidgetbase.ui:107
+#, kde-format
+msgid "Comment:"
+msgstr "Kommentar:"
+
+#. i18n: ectx: property (text), widget (QLabel, mSizeLabel)
+#: ui/attachpropertywidgetbase.ui:143
+#, kde-format
+msgid "File size:"
+msgstr "Dateigröße:"
+
+#. i18n: ectx: property (text), widget (QLabel, mMimeLabel)
+#: ui/attachpropertywidgetbase.ui:199
+#, kde-format
+msgid "MIME type:"
+msgstr "MIME-Typ:"
+
+#~ msgctxt "@info:status"
+#~ msgid "100 attachments found"
+#~ msgstr "100 Anhänge gefunden"
+
+#~ msgid "Save Property to File"
+#~ msgstr "Eigenschaften in Datei speichern"
+
+#~ msgid ""
+#~ "Push this button if you want to save the selected property to a file. You "
+#~ "will be prompted for a file name."
+#~ msgstr ""
+#~ "Drücken Sie diesen Knopf, wenn Sie die gewählte Eigenschaft in einer "
+#~ "Datei speichern möchten. Der Name der Datei wird abgefragt."
+
+#~ msgid "Close this dialog"
+#~ msgstr "Diesen Dialog schließen"
+
+#~ msgid "Push this button if you want to close this dialog."
+#~ msgstr "Drücken Sie diesen Knopf, wenn Sie den Dialog schließen möchten."
+
+#~ msgid "&Close"
+#~ msgstr "S&chließen"
+
+#~ msgid ""
+#~ "_n: %n attachment found\n"
+#~ "%n attachments found"
+#~ msgstr ""
+#~ "%n Anhang gefunden\n"
+#~ "%n Anhänge gefunden"
+
+#~ msgid "Alternate Recipient Allowed"
+#~ msgstr "Alternativer Empfänger erlaubt"
+
+#~ msgid "Message Class"
+#~ msgstr "Nachrichtenklasse"
+
+#~ msgid "Originator Delivery Report Requested"
+#~ msgstr "Absender erbittet Empfangsbestätigung"
+
+#~ msgid "Originator Return Address"
+#~ msgstr "Antwortadresse des Absenders"
+
+#~ msgid "Priority"
+#~ msgstr "Priorität"
+
+#~ msgid "Read Receipt Requested"
+#~ msgstr "Lesebestätigung erbeten"
+
+#~ msgid "Recipient Reassignment Prohibited"
+#~ msgstr "Neuzuweisung des Empfängers ist verboten"
+
+#~ msgid "Original Sensitivity"
+#~ msgstr "Ursprüngliche Einstufung"
+
+#~ msgid "Report Tag"
+#~ msgstr "Reportmarker"
+
+#~ msgid "Sensitivity"
+#~ msgstr "Einstufung"
+
+#~ msgid "Subject"
+#~ msgstr "Betreff"
+
+#~ msgid "Client Submit Time"
+#~ msgstr "Versandzeitpunkt des Clients"
+
+#~ msgid "Sent Representing Search Key"
+#~ msgstr "Suchschlüssel des Auftraggebers"
+
+#~ msgid "Subject Prefix"
+#~ msgstr "Text im Betreff"
+
+#~ msgid "Sent Representing Entry ID"
+#~ msgstr "Eintragskennung des Auftraggebers"
+
+#~ msgid "Sent Representing Name"
+#~ msgstr "Name des Auftraggebers"
+
+#~ msgid "Message Submission ID"
+#~ msgstr "Kennung für Nachrichtenversand"
+
+#~ msgid "Original Author Name"
+#~ msgstr "Name des ursprünglichen Autors"
+
+#~ msgid "Owner Appointment ID"
+#~ msgstr "Terminkennung im Kalender des Eigentümers"
+
+#~ msgid "Response Requested"
+#~ msgstr "Antwort erbeten"
+
+#~ msgid "Sent Representing Address Type"
+#~ msgstr "Adresstyp des Auftraggebers"
+
+#~ msgid "Sent Representing E-mail Address"
+#~ msgstr "E-Mail-Adresse des Auftraggebers"
+
+#~ msgid "Conversation Topic"
+#~ msgstr "Thema der Unterhaltung"
+
+#~ msgid "Conversation Index"
+#~ msgstr "Index der Unterhaltung"
+
+#~ msgid "TNEF Correlation Key"
+#~ msgstr "TNEF-Zuordnungsschlüssel"
+
+#~ msgid "Reply Requested"
+#~ msgstr "Antwort erbeten"
+
+#~ msgid "Sender Name"
+#~ msgstr "Name des Senders"
+
+#~ msgid "Sender Search Key"
+#~ msgstr "Suchschlüssel des Absenders"
+
+#~ msgid "Sender Address Type"
+#~ msgstr "Adresstyp des Absenders"
+
+#~ msgid "Sender E-mail Address"
+#~ msgstr "E-Mail-Adresse des Absenders"
+
+#~ msgid "Delete After Submit"
+#~ msgstr "Nach dem Versenden löschen"
+
+#~ msgid "Display Bcc"
+#~ msgstr "Blindkopie-Empfänger anzeigen"
+
+#~ msgid "Display Cc"
+#~ msgstr "Kopie-Empfänger anzeigen"
+
+#~ msgid "Display To"
+#~ msgstr "Anzeigen für"
+
+#~ msgid "Message Delivery Time"
+#~ msgstr "Empfangszeitpunkt der Nachricht"
+
+#~ msgid "Message Flags"
+#~ msgstr "Nachrichtenmarker"
+
+#~ msgid "Message Size"
+#~ msgstr "Nachrichtengröße"
+
+#~ msgid "Parent Entry ID"
+#~ msgstr "Kennung des übergeordneten Eintrags"
+
+#~ msgid "Sent-Mail Entry ID"
+#~ msgstr "Eintragskennung des Versandordners"
+
+#~ msgid "Message Recipients"
+#~ msgstr "Empfänger der Nachricht"
+
+#~ msgid "Submit Flags"
+#~ msgstr "Versandmarker"
+
+#~ msgid "Has Attachment"
+#~ msgstr "enthält Anhang"
+
+#~ msgid "Normalized Subject"
+#~ msgstr "Normalisierter Betreff"
+
+#~ msgid "RTF In Sync"
+#~ msgstr "RTF ist synchronisiert"
+
+#~ msgid "Attachment Size"
+#~ msgstr "Größe des Anhangs"
+
+#~ msgid "Attachment Number"
+#~ msgstr "Nummer des Anhangs"
+
+#~ msgid "Access"
+#~ msgstr "Zugriff"
+
+#~ msgid "Access Level"
+#~ msgstr "Zugriffsebene"
+
+#~ msgid "Mapping Signature"
+#~ msgstr "Zuordnungssignatur"
+
+#~ msgid "Record Key"
+#~ msgstr "Datensatzschlüssel"
+
+#~ msgid "Store Record Key"
+#~ msgstr "Datensatzschlüssel der Nachrichtenablage"
+
+#~ msgid "Store Entry ID"
+#~ msgstr "Eintragskennung der Nachrichtenablage"
+
+#~ msgid "Object Type"
+#~ msgstr "Objekttyp"
+
+#~ msgid "Entry ID"
+#~ msgstr "Eintragskennung"
+
+#~ msgid "Message Body"
+#~ msgstr "Nachrichtentext"
+
+#~ msgid "RTF Sync Body CRC"
+#~ msgstr "Prüfsumme RTF-Nachrichtentext"
+
+#~ msgid "RTF Sync Body Count"
+#~ msgstr "Zeichenzahl RTF-Nachrichtentext"
+
+#~ msgid "RTF Sync Body Tag"
+#~ msgstr "Synchronmarker RTF-Nachrichtentext"
+
+#~ msgid "RTF Compressed"
+#~ msgstr "komprimiertes RTF"
+
+#~ msgid "RTF Sync Prefix Count"
+#~ msgstr "RTF-Vorspanngröße"
+
+#~ msgid "RTF Sync Trailing Count"
+#~ msgstr "RTF-Abspanngröße"
+
+#~ msgid "HTML Message Body"
+#~ msgstr "HTML-Nachrichtentext"
+
+#~ msgid "Message ID"
+#~ msgstr "Nachrichtenkennung"
+
+#~ msgid "Parent's Message ID"
+#~ msgstr "Übergeordnete Nachrichtenkennung"
+
+#~ msgid "Action"
+#~ msgstr "Aktion"
+
+#~ msgid "Action Flag"
+#~ msgstr "Aktionsmarker"
+
+#~ msgid "Action Date"
+#~ msgstr "Aktionszeitpunkt"
+
+#~ msgid "Display Name"
+#~ msgstr "Angezeigter Name"
+
+#~ msgid "Creation Time"
+#~ msgstr "Erstellungszeit"
+
+#~ msgid "Last Modification Time"
+#~ msgstr "Zeitpunkt der letzten Änderung"
+
+#~ msgid "Search Key"
+#~ msgstr "Suchschlüssel"
+
+#~ msgid "Store Support Mask"
+#~ msgstr "Maske für Ablageeigenschaften"
+
+#~ msgid "MDB Provider"
+#~ msgstr "Typ der Nachrichtenablage"
+
+#~ msgid "Attachment Data"
+#~ msgstr "Daten des Anhangs"
+
+#~ msgid "Attachment Encoding"
+#~ msgstr "Kodierung des Anhangs"
+
+#~ msgid "Attachment Extension"
+#~ msgstr "Erweiterung des Anhangs"
+
+#~ msgid "Attachment Method"
+#~ msgstr "Art des Anhangs"
+
+#~ msgid "Attachment Long File Name"
+#~ msgstr "Langer Dateiname des Anhangs"
+
+#~ msgid "Attachment Rendering Position"
+#~ msgstr "Zeichenoffset für Anhänge im Nachrichtentext"
+
+#~ msgid "Attachment Mime Tag"
+#~ msgstr "Formatinfo für MIME-Anhang"
+
+#~ msgid "Attachment Flags"
+#~ msgstr "Eigenschaften des Anhangs"
+
+#~ msgid "Account"
+#~ msgstr "Zugang"
+
+#~ msgid "Generation"
+#~ msgstr "Generation"
+
+#~ msgid "Given Name"
+#~ msgstr "Vorname"
+
+#~ msgid "Initials"
+#~ msgstr "Initialen"
+
+#~ msgid "Keyword"
+#~ msgstr "Schlüsselwort"
+
+#~ msgid "Language"
+#~ msgstr "Sprache"
+
+#~ msgid "Location"
+#~ msgstr "Adresse"
+
+#~ msgid "Company Name"
+#~ msgstr "Firma"
+
+#~ msgid "Title"
+#~ msgstr "Titel"
+
+#~ msgid "Department Name"
+#~ msgstr "Name der Abteilung"
+
+#~ msgid "Country"
+#~ msgstr "Land"
+
+#~ msgid "Locality"
+#~ msgstr "Ort"
+
+#~ msgid "State/Province"
+#~ msgstr "Bundesland"
+
+#~ msgid "Middle Name"
+#~ msgstr "Zweiter Vorname"
+
+#~ msgid "Display Name Prefix"
+#~ msgstr "Titel anzeigen"
+
+#~ msgid "From"
+#~ msgstr "Von"
+
+#~ msgid "Date Sent"
+#~ msgstr "Gesendet am"
+
+#~ msgid "Date Received"
+#~ msgstr "Empfangen am"
+
+#~ msgid "Message Status"
+#~ msgstr "Nachrichtenstatus"
+
+#~ msgid "Parent ID"
+#~ msgstr "Übergeordnete Kennung"
+
+#~ msgid "Conversation ID"
+#~ msgstr "Kennung der Unterhaltung"
+
+#~ msgid "Body"
+#~ msgstr "Nachrichtentext"
+
+#~ msgid "Attachment Title"
+#~ msgstr "Titel des Anhangs"
+
+#~ msgid "Attachment Meta File"
+#~ msgstr "Metadatei-Anhang"
+
+#~ msgid "Attachment Create Date"
+#~ msgstr "Erstellungsdatum des Anhangs"
+
+#~ msgid "Attachment Modify Date"
+#~ msgstr "Änderungsdatum des Anhangs"
+
+#~ msgid "Date Modified"
+#~ msgstr "Datum der Änderung"
+
+#~ msgid "Attachment Transport File Name"
+#~ msgstr "Dateiname des Anhangs für Übertragung"
+
+#~ msgid "Attachment Rendering Data"
+#~ msgstr "Darstellungsdaten für Anhang"
+
+#~ msgid "Recipients Table"
+#~ msgstr "Tabelle der Empfänger"
+
+#~ msgid "Attachment MAPI Properties"
+#~ msgstr "MAPI-Eigenschaften des Anhangs"
+
+#~ msgid "TNEF Version"
+#~ msgstr "TNEF-Version"
+
+#~ msgid "OEM Code Page"
+#~ msgstr "OEM-Codepage"
+
+#~ msgid "Contact File Under"
+#~ msgstr "Kontakt ablegen unter"
+
+#~ msgid "Contact Last Name And First Name"
+#~ msgstr "Nachname und Vorname des Kontakts"
+
+#~ msgid "Contact Company And Full Name"
+#~ msgstr "Firma und vollständiger Name des Kontakts"
+
+#~ msgid "Contact EMail-1 Full"
+#~ msgstr "volle 1. E-Mail-Adresse des Kontakts"
+
+#~ msgid "Contact EMail-1 Address Type"
+#~ msgstr "Adresstyp der 1. E-Mail-Adresse"
+
+#~ msgid "Contact EMail-1 Address"
+#~ msgstr "1. E-Mail-Adresse des Kontakts"
+
+#~ msgid "Contact EMail-1 Display Name"
+#~ msgstr "Angezeigter Name für 1. E-Mail-Adresse"
+
+#~ msgid "Contact EMail-1 Entry ID"
+#~ msgstr "Eintragskennung für E-Mail-1 des Kontaktes"
+
+#~ msgid "Contact EMail-2 Full"
+#~ msgstr "volle 2. E-Mail-Adresse des Kontakts"
+
+#~ msgid "Contact EMail-2 Address Type"
+#~ msgstr "Adresstyp der 2. E-Mail-Adresse"
+
+#~ msgid "Contact EMail-2 Address"
+#~ msgstr "2. E-Mail-Adresse des Kontakts"
+
+#~ msgid "Contact EMail-2 Display Name"
+#~ msgstr "Angezeigter Name für 2. E-Mail-Adresse"
+
+#~ msgid "Contact EMail-2 Entry ID"
+#~ msgstr "Eintragskennung für E-Mail-2 des Kontaktes"
+
+#~ msgid "Appointment Location"
+#~ msgstr "Ort der Verabredung"
+
+#~ msgid "Appointment Start Date"
+#~ msgstr "Beginn der Verabredung"
+
+#~ msgid "Appointment End Date"
+#~ msgstr "Ende der Verabredung"
+
+#~ msgid "Appointment Duration"
+#~ msgstr "Dauer der Verabredung"
+
+#~ msgid "Appointment Response Status"
+#~ msgstr "Antwortstatus der Verabredung"
+
+#~ msgid "Appointment Is Recurring"
+#~ msgstr "Verabredung wiederholt sich"
+
+#~ msgid "Appointment Recurrence Type"
+#~ msgstr "Wiederholungsart der Verabredung"
+
+#~ msgid "Appointment Recurrence Pattern"
+#~ msgstr "Wiederholungsmuster der Verabredung"
+
+#~ msgid "Reminder Time"
+#~ msgstr "Erinnerungszeitpunkt"
+
+#~ msgid "Reminder Set"
+#~ msgstr "Erinnerung aktiv"
+
+#~ msgid "Start Date"
+#~ msgstr "Anfangsdatum"
+
+#~ msgid "End Date"
+#~ msgstr "Enddatum"
+
+#~ msgid "Reminder Next Time"
+#~ msgstr "Zeitpunkt nächste Erinnerung"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr "Stefan Winter"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr "swinter@kde.org"

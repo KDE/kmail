@@ -1,0 +1,140 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2014, 2015, 2016, 2017, 2018, 2019, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2022-02-12 16:04+0100\n"
+"Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
+"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 22.03.70\n"
+
+#: followupreminderinfoconfigwidget.cpp:25
+#, kde-format
+msgid "Follow Up Reminder Agent"
+msgstr "Usługa przypomnienia o kontynuacji"
+
+#: followupreminderinfoconfigwidget.cpp:27
+#, kde-format
+msgid "Follow Up Reminder"
+msgstr "Przypomnienie o kontynuacji"
+
+#: followupreminderinfoconfigwidget.cpp:29
+#, kde-format
+msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgstr "Copyright (C) 2014-%1 Laurent Montel"
+
+#: followupreminderinfoconfigwidget.cpp:31
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: followupreminderinfoconfigwidget.cpp:31
+#, kde-format
+msgid "Maintainer"
+msgstr "Opiekun"
+
+#: followupreminderinfoconfigwidget.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Łukasz Wojniłowicz"
+
+#: followupreminderinfoconfigwidget.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "lukasz.wojnilowicz@gmail.com"
+
+#: followupreminderinfowidget.cpp:61
+#, kde-format
+msgid "To"
+msgstr "Do"
+
+#: followupreminderinfowidget.cpp:61
+#, kde-format
+msgid "Subject"
+msgstr "Temat"
+
+#: followupreminderinfowidget.cpp:61
+#, kde-format
+msgid "Deadline"
+msgstr "Termin ostateczny"
+
+#: followupreminderinfowidget.cpp:61
+#, kde-format
+msgid "Answer"
+msgstr "Odpowiedź"
+
+#: followupreminderinfowidget.cpp:145
+#, kde-format
+msgid "Received"
+msgstr "Odebrano"
+
+#: followupreminderinfowidget.cpp:145
+#, kde-format
+msgid "On hold"
+msgstr "Wstrzymano"
+
+#: followupreminderinfowidget.cpp:217
+#, kde-format
+msgid "Show Message"
+msgstr "Pokaż wiadomość"
+
+#: followupreminderinfowidget.cpp:220
+#, kde-format
+msgid "Show Original Message"
+msgstr "Pokaż pierwotną wiadomość"
+
+#: followupreminderinfowidget.cpp:223
+#, kde-format
+msgid "Delete"
+msgstr "Usuń"
+
+#: followupreminderinfowidget.cpp:250
+#, kde-format
+msgid "Do you want to delete this selected item?"
+msgid_plural "Do you want to delete these %1 selected items?"
+msgstr[0] "Czy chcesz usunąć ten zaznaczony element?"
+msgstr[1] "Czy chcesz usunąć te %1 zaznaczone elementy?"
+msgstr[2] "Czy chcesz usunąć tych %1 zaznaczonych elementów?"
+
+#: followupreminderinfowidget.cpp:251
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Usuń elementy"
+
+#: followupremindermanager.cpp:154
+#, kde-format
+msgid "Answer from %1 received"
+msgstr "Otrzymano odpowiedź od %1"
+
+#: followupremindernoanswerdialog.cpp:37
+#, kde-format
+msgctxt "@title:window"
+msgid "Follow Up Reminder"
+msgstr "Przypomnienie o kontynuacji"
+
+#: followupremindernoanswerdialog.cpp:43
+#, kde-format
+msgid "You still wait an answer about this mail:"
+msgstr "Nadal oczekujesz na odpowiedź na tę wiadomość:"
+
+#~ msgid "Configure"
+#~ msgstr "Ustawienia"
+
+#~ msgid "Follow Up Mail."
+#~ msgstr "Poczta potwierdzenia."
+
+#~ msgid "Follow Up Mail"
+#~ msgstr "Poczta potwierdzenia."

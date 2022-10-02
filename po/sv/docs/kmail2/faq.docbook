@@ -1,0 +1,1482 @@
+<chapter id="faq">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail;</author>
+<author
+>&David.Rugge; &David.Rugge.mail;</author>
+<author
+>&David.Bryant; &David.Bryant.mail;</author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2021-04-09</date>
+<releaseinfo
+>5.14.2 (Program 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Vanliga frågor</title>
+<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section
+> -->
+
+<qandaset id="faq-set">
+
+<qandaentry>
+  <question
+><para
+>Hur ställer man in Firefox som standardwebbläsare?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du vill klicka på en länk i &kmail; och få den att visas i <application
+>Firefox</application
+>. För närvarande används en annan webbläsare. Du vill ändra det.</para>
+    <para
+><emphasis
+>Lösning:</emphasis
+> Ändringen påverkar hela &kde;, inte bara &kmail;. Starta <menuchoice
+> <guimenu
+>Systeminställningar</guimenu
+><guisubmenu
+>Standardprogram</guisubmenu
+><guimenuitem
+>Webbläsare</guimenuitem
+><guimenuitem
+>Mozilla Firefox</guimenuitem
+></menuchoice
+>.</para>
+    
+    <para
+>Om du är administratör och vill ange inställningen automatiskt för alla användare, utför följande.</para>
+    <itemizedlist>
+      <listitem>
+        <para
+>Kör <screen
+># qtpaths --paths ConfigLocation</screen
+> i en terminal. Det visar sökvägarna som leder till inställningsfiler för KDE-program på ditt system. Använd sökvägen som börjar i varje användares hemkatalog, och leta rätt på filen som heter <filename
+>kdeglobals</filename
+>, lägg sedan till följande rad under kategorin <guilabel
+>[General]</guilabel
+>:</para>
+        <para
+><userinput
+>BrowserApplication[$e]=firefox.desktop</userinput>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para
+>Du kan också prova skriptet i <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults"
+>Tutorials/Modify_KDE_Software_Defaults</ulink
+></para>
+    <note
+><para
+>Den verkliga fysiska platsen för inställningsvariabler beror på distributionen. Bli inte förvånad om vissa av instruktionerna om hur inställningsvariabler ändras dokumenterade i &kde;:s wiki inte fungerar för dig. De öppna forumen för din distribution är ett bra ställe att fråga efter hjälp.</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur hanterar man roamingprofilens anslutning?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du har ställt in en <emphasis
+>roamingprofil</emphasis
+> så att du kan komma åt hemservern när du är ute och reser, men den försöker ansluta också när du är hemma. Automatisk anslutning är inaktiverad i inställningsrutorna.</para>
+    <para
+><emphasis
+>Lösning:</emphasis
+> Gå till <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa Kmail</guisubmenu
+><guimenuitem
+>Konton</guimenuitem
+><guimenuitem
+>Ta emot (flik)</guimenuitem
+><guimenuitem
+>(markera konto att undanta)</guimenuitem
+><guimenuitem
+>Hämtningsalternativ</guimenuitem
+> </menuchoice
+>, avmarkera sedan <guilabel
+>Inkludera i manuell brevkontroll</guilabel
+>. Det undantar den profilen när du klickar på nerladdningsikonen, men kontot är fortfarande tillgänglig i kombinationsrutan, vilket gör det enkelt att hämta din post när du inte är hemma.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur lagrar man skickade brev i en särskild korg?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du vill lagra breven du har skickat i en särskild korg. Kanske använder du en &IMAP;-server och vill lagra dina skickade brev på servern, inte i en lokal korg.</para>
+    <para
+><emphasis
+>Lösning:</emphasis
+> I &kmail;, gå till<menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa Kmail</guisubmenu
+><guimenuitem
+>Identiteter</guimenuitem
+><guimenuitem
+>(markera identitet)</guimenuitem
+><guimenuitem
+>Ändra</guimenuitem
+><guimenuitem
+>Avancerat</guimenuitem
+><guimenuitem
+>Skickade brev-korg</guimenuitem
+></menuchoice
+> och markera korgen du vill använda.</para>
+    <para
+>Som ett alternativ, kan du använda fältet <guilabel
+>Skickade brev-korg</guilabel
+> (går att komma åt via menyn <guimenu
+>Visa</guimenu
+> i brevfönstret) för att överskrida den förvalda korgen för skickade brev i ett visst brev.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur flyttar man kastade brev till en särskild korg?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du vill lagra kastade brev i en särskild korg. Kanske använder du en &IMAP;-server och vill att kastade brev ska lagras på servern, inte lokalt.</para>
+    <para
+><emphasis
+>Lösning:</emphasis
+> Markera ett &IMAP;-konto på sidan <guilabel
+>Konton</guilabel
+> i inställningsdialogrutan. Klicka på <guibutton
+>Ändra</guibutton
+> och ändra platsen för papperskorgen under fliken <guilabel
+>Avancerat</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #5 -->
+<qandaentry>
+  <question
+><para
+>Hur lagrar man krypterade brev utan kryptering?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du utbyter krypterade brev med en vän, men skulle vilja lagra dina egna kopior okrypterade, när du  väl har öppnat breven.</para>
+    <para
+><emphasis
+>Lösning:</emphasis
+> För att  i fortsättningen lagra brev som har avkodats en gång med okrypterat format, lägg till följande post i inställningsfilen <filename
+>kmail2rc</filename
+>, under sektionen [Reader]:</para>
+    <para
+><userinput
+>store-displayed-messages-unencrypted=true</userinput
+></para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur filtrerar man skräppost på en &IMAP;-server?</para
+></question>
+  <!--FIXME replace this with a link to the sieve section?-->
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du har för avsikt att läsa posten från en &IMAP;-server, och undrar över hur filtrering och hantering av skräppost sker.</para>
+    <para
+><emphasis
+>Lösning:</emphasis
+> Datorn som redan har posten kan bli din &IMAP;-server. Du måste ställa in ett serverprogram. <application
+>Dovecot</application
+> är ett sådant, och hjälpen på projektets webbsidor gör det enkelt att installera. Problemet med filtrering återstår fortfarande, eftersom det är vettigt att göra det på servern (när du pekar ut servern för &kmail;, syns korgarna som du har skapat på servern). Det finns flera olika alternativ. Ett av de mest välkända är <application
+>Procmail</application
+>. Ett annat är <application
+>Imapfilter</application
+>. Det finns gott om information på Internet om hur man ställer in dem. Ytterligare information om de här paketen med öppen källkod ligger utanför ramen för den här dokumentationen.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur får man mer skärmutrymme i &kmail;?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du använder &kmail; på en bärbar dator eller nätdator och märker att den nya visningen av <emphasis
+>Sammanställning</emphasis
+> lämnar för lite skärmutrymme.</para>
+
+    <para
+><emphasis
+>Lösning:</emphasis
+> Om du vill ändra brevlistan så att varje brev använder en enda rad istället för två, gå till <menuchoice
+><guimenu
+>Visa</guimenu
+><guisubmenu
+>Brevlista</guisubmenu
+><guimenuitem
+>Tema</guimenuitem
+></menuchoice
+> och ändra temat till <guilabel
+>Klassiskt</guilabel
+>. Om du vill inaktivera gruppering enligt datum, ändra sammanställningen genom att använda <menuchoice
+><guimenu
+>Visa</guimenu
+><guisubmenu
+>Brevlista</guisubmenu
+><guimenuitem
+>Sammanställning</guimenuitem
+></menuchoice
+> till <guilabel
+>Vanlig sändlista</guilabel
+>. Nu ser &kmail; precis ut som det gjorde i programmets tidiga versioner.</para>
+
+    <para
+>Med <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa &kmail;</guisubmenu
+><guimenuitem
+>Utseende</guimenuitem
+><guimenuitem
+>Teckensnitt</guimenuitem
+></menuchoice
+> kan du välja <guilabel
+>Använd egna teckensnitt</guilabel
+> och ändra inställningarna för brevlistan. Du kan också ställa in teckenstorleken i dialogrutan <guilabel
+>Använd egna teckensnitt</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur stänger man av verktygstips för &kmail;s korgar?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du använder &kmail; på en bärbar dator eller nätdator, och märker att <emphasis
+>verktygstips</emphasis
+> som dyker upp döljer för många korgnamn.</para>
+    <para
+><emphasis
+>Lösning:</emphasis
+> Högerklicka på rubriken "Namn" ovanför <guilabel
+>Korglista</guilabel
+> och markera <guilabel
+>Aldrig</guilabel
+> under <guilabel
+>Visa verktygstips</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur kan man dölja verktygstips i brevlistan?</para
+></question>
+  <answer>
+    <para
+>Under fliken <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa Kmail</guisubmenu
+><guimenuitem
+>Utseende</guimenuitem
+><guimenuitem
+>Brevlista</guimenuitem
+></menuchoice
+> i &kmail;, avmarkera <menuchoice
+><guimenu
+>Allmänt</guimenu
+><guimenuitem
+>Visa verktygstips för brev och grupprubriker</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>Som alternativ, högerklicka på en av rubrikerna ovanför korglistan och avmarkera kryssrutan <guilabel
+>Visa verktygstips</guilabel
+>.</para>
+    <note
+><para
+>Rubrikerna ovanför brevlistan visas inte om du har valt temat "Smart".</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- <qandaentry>
+<question
+><para
+>How can I remove alternate line colorings?</para
+></question>
+<answer>
+<para
+>In <menuchoice
+><guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Application 
+Appearance</guisubmenu
+><guimenuitem
+>Colors</guimenuitem
+><guimenuitem
+>Colors</guimenuitem
+></menuchoice
+>, for each color 
+set except <guilabel
+>Common Colors</guilabel
+> (which doesn't have it), change the <guilabel
+>Alternate 
+Background</guilabel
+> to be the same as the <guilabel
+>Normal Background</guilabel
+>.</para>
+<para
+><emphasis
+>Mandriva</emphasis
+> and <emphasis
+>Mageia</emphasis
+> doesn't use the name <guilabel
+>System 
+Settings</guilabel
+>.  As in <guilabel
+>KControl</guilabel
+>, the KDE 3 control centre, they name it <quote
+>Configure your 
+Desktop</quote
+> to distinguish it from <quote
+>Configure your Computer</quote
+>, a.k.a. the Mandriva/Mageia Control 
+Center (MCC). Other than this name change, the method is as described above.</para>
+</answer>
+</qandaentry
+> --><!-- This trick hasn't worked in a long time. @dcb2021101. -->
+
+<!-- FAQ #10 -->
+<qandaentry id="transfer-mail-and-settings">
+  <question>
+    <para
+>Hur överför man sina brev och inställningar till en annan dator (eller ett annat användarkonto på samma dator)?</para>
+  </question>
+  <answer>
+    <para
+>Använd <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Importera och exportera &kmail;-data...</guimenuitem
+></menuchoice
+> för att exportera och importera inställningar och data. Se <ulink url="help:/pimsettingexporter"
+>Export av inställningar för personlig informationshantering</ulink
+> för detaljerad information.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Varför kan jag inte kopiera mina brevkorgar till en USB-minnessticka?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du håller på att ställa in en ny dator, och vill överföra all din post. Du bestämmer dig för att kopiera allting till en USB-sticka. Jobbet startar, och därefter får du ett felmeddelande:</para>
+    <screen
+>Kan inte kopiera ............ Ogiltigt argument</screen>
+    
+    <para
+><emphasis
+>Lösning:</emphasis
+> Din USB-sticka är formaterad med <ulink url="http://wiki.linuxquestions.org/wiki/VFAT"
+>VFAT</ulink
+>, och kan sålunda inte hantera korgnamnen i <emphasis
+>maildir</emphasis
+> (och inte heller <emphasis
+>rättigheter</emphasis
+>, vilket kan orsaka många problem). Du har två val. Antingen formaterar du <acronym
+>USB</acronym
+>-stickan som ext2 (eller ext3 / 4, i detta fall måste du vara medveten om att den inte kan läsas av &Windows; operativsystem utan att installera ytterligare programvara), eller skapa ett tar- eller zip-arkiv med all post, kopiera det till stickan och packa upp det på den nya värddatorn.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Varför används inte mina filter för inkommande brev från &IMAP;-konton?</para
+></question>
+  <answer>
+    <para
+>Normalt &IMAP;-läge stöder inte filtrering, men den nya kontotypen för nerkopplad &IMAP; gör det. Du kan försöka använda filtrering på serversidan (fråga administratören hur man installerar filter på serversidan, och vilket format de har), eftersom &IMAP; helt och hållet används för att hantera e-post <emphasis
+>på servern</emphasis
+>. Se <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa &kmail;...</guisubmenu
+><guimenuitem
+>Ta emot</guimenuitem
+><guimenuitem
+>(något &IMAP;-konto)</guimenuitem
+></menuchoice
+>, klicka sedan på <guilabel
+>Ändra...</guilabel
+> och därefter fliken <guilabel
+>Filtrering</guilabel
+> för att anpassa filtrering på serversidan genom att använda programspråket <ulink url="http://sieve.info/"
+>Sieve</ulink
+> (om &IMAP;-server stöder det).</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="pgp-faq">
+<question
+><para
+>Vad bör jag veta om jag vill använda <application
+>PGP</application
+>/<application
+>GnuPG</application
+> med &kmail;?</para
+></question>
+
+  <answer>
+    <para
+>&kmail; tillhandahåller ett enkelt och lättanvänt gränssnitt för de grundläggande funktioner i de här programmen. Du måste ändå förstå hur programmen fungerar och vad som kan göra användning av dem osäker. Några viktiga punkter:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para
+>Du <emphasis
+>måste</emphasis
+> verkligen prova att kryptering fungerar innan du använder den. &kmail; förlitar sig delvis på <application
+>PGP</application
+>/<application
+>GnuPG</application
+>s felmeddelanden, som ofta ändras mellan olika versioner.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>&kmail; krypterar inte brev med en opålitlig (osignerad) öppen nyckel. Om du vill kryptera med en sådan nyckel, bör du kontrollera nyckelägarens identitet och bara därefter signera nyckeln med din hemliga nyckel. Om du inte vill, eller inte kan, kontrollera nyckelägarens identitet, men ändå vill kryptera brevet, signera då nyckeln lokalt med <userinput
+><command
+>gpg</command
+> <option
+>--lsign</option
+> <replaceable
+>nyckel-ID</replaceable
+></userinput
+>.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>Att lita på en främmande öppen nyckel utan att kontrollera den är inte en god idé.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>Med början på GnuPG 1.0.7 måste du ställa in din egen nyckel för fullständig pålitlighet. Det görs inte längre automatiskt åt dig.</para>
+      </listitem>
+    </itemizedlist>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Var sparar &kmail; mina inställningar och mina brev?</para
+></question>
+  <answer>
+    <para
+>De flesta inställningarna av &kmail; lagras i <filename
+>~/.config/kmail2rc</filename
+>&nbsp;.</para>
+    <para
+>Poster hanterade av <emphasis
+>Akonadi</emphasis
+> lagras i följande kataloger:</para>
+      <itemizedlist>
+        <listitem
+><para
+><filename class="directory"
+>~/.local/share/</filename
+>.</para
+></listitem>
+        <listitem
+><para
+><filename class="directory"
+>~/.config/akonadi/</filename
+>.</para
+></listitem>
+      </itemizedlist>
+    <para
+>Observera att vissa av filerna är dolda: kom ihåg att också kopiera dem om du vill säkerhetskopiera eller arkivera brev. För att vara på säkra sida, använd <ulink url="help:/pimdataexporter"
+>Export av data för personlig informationshantering</ulink
+> för att säkerhetskopiera brev och inställningar.</para
+><para
+>&nbsp;</para
+> 
+  </answer>
+</qandaentry>
+
+<!-- FAQ #15 -->
+<qandaentry id="faq-index-regeneration">
+  <question
+><para
+>Varför skapade &kmail; om en korgs index?</para
+></question>
+  <answer>
+    <para
+>&kmail; skapar om en korgs index så fort indexet verkar vara för gammalt, dvs. så fort innehållet i en korg är nyare än indexet. &kmail; skapar om indexet, i detta fall för att förhindra förlust eller skada av brev.</para>
+    <para
+>Ett föråldrat index kan uppstå av flera skäl. Här är de vanligaste: <itemizedlist>
+        <listitem
+><para
+>Något annat program ändrade innehållet i korgen. Om du vill använda &kmail; tillsammans med procmail, läs då gärna <link linkend="faq-procmail"
+>svaren på dessa vanliga frågor</link
+>. Om du vill använda &kmail; tillsammans med ett annat e-postprogram, läs då gärna <link linkend="faq-other-muas"
+>svaren på dessa vanliga frågor</link
+>.</para
+></listitem>
+        <listitem
+><para
+>Om din brevkatalog finns på en disk som är monterad via NFS, och klockan på NFS-servern är före klockan på din dator, rapporterar NFS-servern ibland ett felaktigt fildatum för indexfilen. I detta fall drar &kmail; slutsatsen att indexet är för gammalt, fastän det i själva verket inte är det. För att lösa problemet, måste du (eller systemadministratören) se till att klockan på NFS-servern och klockan på din dator alltid är synkroniserade. Ett sätt att åstadkomma det är att använda NTP-demonen.</para
+></listitem>
+      </itemizedlist>
+    </para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Varför startar inte &kmail;?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Problem:</emphasis
+> Du vill starta &kmail; från en minimal skrivbordsmiljö som <ulink url="https://en.wikipedia.org/wiki/Fvwm2"
+>fvwm2</ulink
+>. Det startar inte.</para>
+    <para
+><emphasis
+>Lösning:</emphasis
+> Det händer eftersom du saknar funktionerna i <emphasis
+>D-Bus</emphasis
+>. Starta &kmail; från ett terminalfönster genom att använda dbus-launch, på följande sätt:</para>
+    <screen
+># dbus-launch kmail</screen
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-other-muas">
+  <question
+><para
+>Kan jag använda &kmail; med en annat e-postprogram, t.ex. <application
+>mutt</application
+>?</para
+></question>
+  <answer>
+    <para
+>Om du använder mbox-formatet för dina korgar, är det inte möjligt att använda en annan e-postklient medan &kmail; kör. Med <application
+>mutt</application
+> kan det finnas problem även om båda programmen inte kör samtidigt. Vi rekommenderar att du använder maildir-formatet om du vill använda mutt med &kmail;.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry
+><!-- Valid for 4.12-->
+  <question
+><para
+>Hur kan jag konvertera mina brevlådor från mbox till maildir?</para
+></question>
+  <answer>
+    <para
+>Det finns inget automatiskt sätt att göra det. Du måste skapa en ny korg med maildir-format, och sedan kopiera breven från mbox-korgen till den nya korgen. Kom ihåg att ändra eventuella filterregler som hör ihop med den gamla korgen innan du tar bort den.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur kan jag ta bort bilagor från ett brev utan att ta bort själva brevet?</para
+></question>
+  <answer>
+    <para
+>Öppna den sammanhangsberoende meny med höger musknapp, klicka på en bilaga och välj <guimenuitem
+>Ta bort bilaga</guimenuitem
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #20 -->
+<qandaentry>
+  <question
+><para
+>Hur kan jag få &kmail; att leta efter nya meddelanden vid start?</para
+></question>
+  <answer>
+    <para
+>Om &kmail; alltid ska titta efter nya brev vid start aktivera <guilabel
+>Titta efter nya brev vid start</guilabel
+> på <link linkend="configure-accounts-receiving"
+>inställningssidan för konton</link
+>. Som alternativ, starta &kmail; med <command
+>kmail <option
+>--check</option
+></command
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Var kan jag skaffa en lista på ändringar mellan en version av &kmail; och nästa?</para
+></question>
+  <answer>
+    <para
+>Välkomstskärmen listar alla viktiga ändringar hos din version. Den visas när du väljer <menuchoice
+><guimenu
+>Hjälp</guimenu
+><guimenuitem
+>Introduktion till &kmail;</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Jag är en av de personer som skickar brev som består av 100 citerade rader och en rad som jag skriver själv. Av någon underlig anledning irriterar det andra. Kan &kmail; hjälpa till och göra allas liv lättare?</para
+></question>
+  <answer>
+    <para
+>Visst. Markera bara en kort passande del av originalbrevet med musen innan du klickar på "svara". Bara den delen av originalbrevet citeras då i brevfönstret.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Varför uppvisar en del brev värdet "okänt" i fältet <guilabel
+>Datum</guilabel
+>? Varför är datumet ibland felaktigt?</para
+></question>
+  <answer>
+    <para
+>Troligen är huvudfältet "Date:" felaktigt för dessa brev, och &kmail; kan inte tolka det. Det är inte ett fel i &kmail;, utan i programvaran som skickade brevet.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Min brevfot har två streck ovanför. Vad står på?</para
+></question>
+  <answer>
+    <para
+>Att separera brevfoten från brevets text med två streck och ett mellanslag är vanligt förekommande. Dessa symboler gör det möjligt för e-postprogram som känner igen dem att kapa brevfoten från ett svar. Om din brevfot inte inkluderar skiljeraden, lägger &kmail; automatiskt till den.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #25 -->
+<qandaentry>
+  <question
+><para
+>Finns det några kända fel i &kmail;?</para
+></question>
+  <answer>
+    <para
+>Det finns en hel del, som du kan se genom att söka på &kmail;s <ulink url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2"
+>Bugzilla sida</ulink
+>. När det här skrivs (april, 2021) är ungefär 70 % av de rapporterade felen inte bekräftade, eller inte möjliga att upprepa. I stort sett tycker vi att &kmail; är en robust programvara.</para>
+    <warning
+><para
+>Du bör dock inte köra &kmail; medan en annan e-postklient redan använder filerna i brevkatalogen. Om du gör det, kan du förlora brev. Observera att du bör göra säkerhetskopior av dina brev, och all annan viktig data, regelbundet. Det är helt enkelt bra digital hygien.</para
+></warning
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Varför visar inte &kmail; &HTML;-brev riktigt?</para
+></question>
+  <answer>
+    <para
+>Referenser till externa objekt som bilder är normalt inte aktiverade, eftersom avsändare av skräppost kan använda dem för att spåra om och när du läser ett brev. Att läsa in externa referenser kan aktiveras under fliken <guilabel
+>Säkerhet</guilabel
+> i &kmail;s inställningsdialogruta. Insticksprogram (som <trademark class="registered"
+>Adobe</trademark
+> <application
+>Flash</application
+>), &Java; och Javaskript visas inte i &kmail; av säkerhetsskäl, och det finns inget sätt att aktivera dem.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Kan jag använda två olika versioner av &kmail; samtidigt? Kan jag gå tillbaka från en aktuell version av &kmail; till en äldre?</para
+></question>
+  <answer>
+    <para
+>Du ska bara köra en instans av &kmail; på en gång. Vi rekommenderar också att du håller dig till en viss version och inte byter fram och tillbaka mellan olika versioner. Att gå tillbaka till en äldre version kan fungera, men orsakar troligen problem, eftersom exempelvis indexfilformaten har ändrats. Att uppgradera ska aldrig vara ett problem.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Stöder &kmail; filer kodade med uuencode?</para
+></question>
+  <answer>
+    <para
+>Bilagor kodade med uuencode stöds inte. Spara brev med bilagor som är kodade med uuencode, och använd sedan <command
+>uudecode</command
+> för att avkoda bilagorna.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>&kmail; kraschade medan jag höll på att skriva ett brev. Har det brevet nu gått förlorat nu?</para
+></question>
+  <answer>
+    <para
+>&kmail; försöker spara brevet i <filename class="directory"
+>~/.local/share/kmail2/autosave/</filename
+> om en krasch inträffar. Nästa gång du startar &kmail; ska brevfönstret dyka upp med ditt brev igen. Om det inte gör det, försök att öppna filerna i <filename class="directory"
+>~/.local/share/kmail2/autosave/</filename
+> med en editor. Om det inte finns några filer i katalogen, var kraschen så svår att &kmail; inte kunde spara ditt brev.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #30 -->
+<qandaentry>
+  <question
+><para
+>En korg har ställts in att vara medveten om e-postlistor, men brev från listan sparas inte i korgen. Vad är fel?</para
+></question>
+  <answer>
+    <para
+>Att koppla samman en korg med en e-postlista har ingenting att göra med att filtrera brev till e-postlistan. Du måste lägga till en ny filterregel för hand. När du väl har kopplat ihop en korg med en e-postlista kan du dock använda <menuchoice
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Svara till sändlista...</guimenuitem
+></menuchoice
+> eller <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Nytt brev till sändlista...</guimenuitem
+></menuchoice
+> och e-postlistans adress anges i fältet <guilabel
+>Till:</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Min SMTP-server kräver behörighetskontroll. Stöder &kmail; det?</para
+></question>
+  <answer>
+    <para
+><guilabel
+>Behörighetskontroll</guilabel
+> kan ställas in under fliken <guilabel
+>Avancerat</guilabel
+> i <link linkend="configure-accounts-sending"
+>SMTP-inställningsdialogrutan</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-procmail">
+  <question
+><para
+>Kan jag använda &kmail; med <application
+>procmail</application
+>?</para
+></question>
+  <answer>
+    <para
+>Ja, men det är viktigt att göra det på rätt sätt, annars kan du förlora brev. För att använda <application
+>procmail</application
+> och &kmail; måste du ställa in &kmail; så att nya brev hämtas från spool-filerna där <application
+>procmail</application
+> lämnar dina brev. Ställ <emphasis
+>inte</emphasis
+> in procmail att leverera brev till en &kmail;-korg. Det kan inte fungera.</para>
+
+    <para
+>Därefter måste du skapa ett konto som &kmail; hämtar nya brev från för varje procmail spool-fil. Du måste också ange rätt låsfilnamn för kontot. När ett konto skapas gör &kmail; en viss minimal tolkning av din <filename
+>.procmail</filename
+>-fil, och försöker lista varje spool-fil som hittas, och också låsfilerna som finns intill objektet <guilabel
+>procmail lockfile</guilabel
+>. Procmail låter användaren ange låsfiler på tre olika sätt, så det finns inget sätt att upprätta en samhörighet mellan spool-filerna och låsfiler. Det är din sak att försäkra dig om att rätt låsfil har angivits för varje spool-fil.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Stavningskontrollen känner inte igen tecken som inte ingår i engelska. Varför?</para
+></question>
+  <answer>
+    <para
+>Innan du kan använda stavningskontroll, måste du ställa in den. Du kan göra det i brevfönstret, under <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Stavningskontroll...</guimenuitem
+></menuchoice
+>. Där kan du välja en ordlista.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur använder jag mina <application
+>Eudora</application
+>/&Netscape;/<application
+>Outlook</application
+>/... brevlådor i &kmail;?</para
+></question>
+  <answer>
+    <para
+>Se avsnittet <link linkend="importing-options"
+>Återställning och import i &kmail;</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #35 -->
+<qandaentry>
+  <question
+><para
+>Kan jag använda kryptering med mitt normala (icke-<acronym
+>SSL</acronym
+>) POP3-konto?</para
+></question>
+  <answer>
+    <para
+>Om din POP3-server kör en <application
+>ssh</application
+>-demon, kan du använda ssh för att tunnla din POP3-anslutning med följande kommando:</para>
+
+    <para
+><userinput
+><command
+>ssh</command
+> <option
+>-L 11000:127.0.0.1:110 användare@värddator</option
+></userinput
+></para>
+
+    <para
+>Ändra din &kmail; inställning för att hämta e-post via POP3 från <userinput
+>localhost</userinput
+> och ssh tunnlar förbindelsen åt dig. </para>
+
+    <note
+><para
+>Om brev utan kryptering redan har skickats via Internet, är den enda fördelen med att använda <application
+>ssh</application
+> att ditt <emphasis
+>lösenord</emphasis
+> skickas krypterat till POP3-servern.</para
+></note>
+
+    <para
+>För mer information om att ställa in ssh, se <ulink url="http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html"
+>den här webbsidan</ulink
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-file-locking">
+  <question
+><para
+>Låser &kmail; brevlådorna som den använder?</para
+></question>
+  <answer>
+    <para
+>&kmail; låser inte filerna i <filename class="directory"
+>~/.local/share</filename
+>.</para>
+    <para
+>För att undvika risken att förlora brev <emphasis
+>när ett lokalt konto används</emphasis
+> är det nödvändigt att försäkra sig om att  &kmail; använder samma låsningsmekanism som ditt leverantörsprogram av e-post.</para>
+
+    <para
+>Det finns fem olika låsningsalternativ som du kan använda:</para>
+
+      <itemizedlist>
+        <listitem
+><para
+><guilabel
+>Procmail låsfil</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Mutt dotlock</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Mutt dotlock privilegierad</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>FCNTL</guilabel
+> (förvalt)</para
+></listitem>
+        <listitem
+><para
+><guilabel
+>ingen (använd med försiktighet)</guilabel
+></para
+></listitem>
+      </itemizedlist>
+
+    <para
+><guilabel
+>Procmail låsfil</guilabel
+> använder ett litet verktyg som följer med <application
+>procmail</application
+> som heter <command
+>lockfile</command
+>. Du kan använda det om din brevlåda är i en katalog där du har skrivrättigheter. Det fungerar inte för filen <filename class="directory"
+>/var/spool/mail/user</filename
+> i de flesta fall. Det skapar <filename
+>.lock</filename
+>-filer i ditt konto när &kmail; tittar efter ny post. Observera att detta bara fungerar om <application
+>procmail</application
+> är installerad på systemet.</para>
+
+    <para
+><guilabel
+>Mutt dotlock</guilabel
+> och <guilabel
+>Mutt dotlock privilegierad</guilabel
+> använder båda ett litet verktyg som följer med mutt som heter <command
+>mutt_dotlock</command
+>. <guilabel
+>Mutt dotlock</guilabel
+> kan användas på samma sätt som alternativet <guilabel
+>Procmails låsfil</guilabel
+>, med samma begränsning när det gäller kataloger i <filename class="directory"
+>/var/spool/mail/</filename
+>. Men alternativet <guilabel
+>Mutt dotlock privilegierad</guilabel
+> kan också skapa låsfiler i katalogen <filename class="directory"
+>/var/spool/mail</filename
+>. <command
+>mutt_dotlock</command
+> är ett setgid-program och det här alternativet kör i setgid-läge. Observera att de här alternativen fungerar bara om <application
+>mutt</application
+> är installerat på systemet.</para>
+
+    <para
+><guilabel
+>FCNTL</guilabel
+> använder systemanropet <function
+>fcntl()</function
+>.</para>
+
+    <warning
+><para
+>Att använda låsning med FCNTL kan orsaka låsning av datorn när e-postfilen finns på en NFS-monterad enhet.</para
+></warning>
+
+    <para
+>Om du inte vill använda någon låsning, är alternativet <guilabel
+>ingen</guilabel
+> tillgängligt. Det finns dock risk att förlora brev när ingen låsning används.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur låter jag brev vara kvar på POP3-servern?</para
+></question>
+  <answer>
+    <para
+>Om du vill lämna alla brev på servern, öppna fönstret <menuchoice
+><guimenu
+> Inställningar</guimenu
+><guimenuitem
+>Anpassa &kmail;...</guimenuitem
+> </menuchoice
+> Klicka på sidan <guilabel
+>Konton</guilabel
+>. Välj ditt konto från listan på konton och klicka på knappen <guibutton
+>Ändra...</guibutton
+>. Den här dialogrutan innehåller inställningen <guilabel
+>Lämna hämtade brev på servern</guilabel
+> (fliken Avancerat) som du kan aktivera.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur infogar jag automatiskt en textfot i mina brev?</para
+></question>
+  <answer>
+    <para
+>Textfoten kallas också signatur (vilket inte ska förväxlas med en kryptografisk signatur). Välj <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa &kmail;...</guimenuitem
+></menuchoice
+>. Titta på sidan <guilabel
+>Identitet</guilabel
+> efter fliken <guilabel
+>Brevfot</guilabel
+> och skriv in din brevfot där. Gå därefter till fliken <guilabel
+>Allmänt</guilabel
+> på sidan <guilabel
+>Brevfönster</guilabel
+>, och aktivera <xref linkend="configure-composer-general-append-signature"/>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur ställer jag in &Sendmail; att fungera med &kmail; om jag har en uppringd förbindelse?</para
+></question>
+  <answer>
+    <para
+>Först bör du kontrollera för att se om din distribution kan göra det åt dig. Det har förmodligen redan ställts in under installationen.</para>
+
+    <para
+>Om detta inte är fallet, kanske du vill ta en titt på <ulink url="https://tldp.org/HOWTO/Mail-Queue.html"
+>Mail Queue HOWTO</ulink
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #40 -->
+<qandaentry>
+  <question
+><para
+>Jag har sett demonstration av fjärrkontrollbeteende med &kmail;. Finns det någon dokumentation av de tillgängliga gränssnitten?</para
+></question>
+  <answer>
+    <para
+>Du kan få en lista på funktioner genom att använda det här kommandot i ett skal: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail</option
+></userinput
+>. Därefter kan &kmail; styras så här: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option
+></userinput
+>. Det går också att använda <application
+>qdbusviewer</application
+> för att bläddra bland tillgängliga metoder i det grafiska användargränssnittet.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>När jag svarar på ett brev, citeras bara en del av brevet. Vad beror det på?</para
+></question>
+  <answer>
+    <para
+>Det kan inträffa när brevet innehåller två bindestreck och ett mellanslag på en ensam rad. Det betraktas som början på en brevfot. Återstoden av brevet citeras inte, eftersom när du svarar på ett brev så tar &kmail; bort brevfoten.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Jag använder bara &IMAP;. Kan jag bli av med de lokala korgarna i korglistan, eller åtminstone låta dem vara hopdragna hela tiden?</para
+></question>
+  <answer>
+    <para
+>Nej, du kan inte bli av med dem. De lokala korgarna fungerar som reservalternativ när &IMAP;-servern inte kan nås. Även om du bara använder &IMAP;, använder &kmail; utkorgen för att skicka brev. Om alla lokala korgar tas bort kan du inte korrigera brev i utkorgen som inte kan skickas av någon orsak. Det är dock möjligt att hålla de lokala korgarna ihopdragna. Vad du måste göra är att gå till <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa &kmail;...</guimenuitem
+></menuchoice
+> och visa sidan Diverse. Där kan du ställa in korgen vid start. Om du ändrar det till en korg under &IMAP;-kontot, förblir de lokala korgarna ihopdragna när &kmail; startar.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur bevakar man en viss tråd?</para
+></question>
+  <answer>
+    <para
+>Om du vill följa en tråd, högerklicka och välj <menuchoice
+><guimenu
+>Markera tråd</guimenu
+> <guimenuitem
+>Bevaka tråd</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>Hädanefter kommer varje brev i tråden som börjar med det här brevet att markeras som <guilabel
+>Bevakat</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hur bevakar man sina egna trådar?</para
+></question>
+  <answer>
+    <para
+>Det är användbart om du prenumererar på en e-postlista som kdepim-users@kde.org och vill filtrera trådar som du deltar i.</para>
+      <itemizedlist>
+        <listitem>
+          <para
+>Skapa ett filter för att markera alla inkommande brev till en brevlista som bevakade</para>
+          <para
+>För att skapa ett filter, gå till:</para>
+          <para
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa filter</guimenuitem
+></menuchoice
+></para>
+            <itemizedlist>
+              <listitem>
+	            <para
+>välj <guilabel
+>Matchar alla följande</guilabel
+></para>
+              </listitem>
+              <listitem>
+	            <para
+>Lägg till villkoren: <itemizedlist>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>Från</guimenu
+><guisubmenu
+>innehåller</guisubmenu
+><guimenuitem
+></guimenuitem
+></menuchoice
+> <replaceable
+>din-epostadress@brevdomän</replaceable
+> <footnote
+><para
+>ersätt <replaceable
+>din-epostadress@brevdomän</replaceable
+>&nbsp;med din utgående e-postadress</para
+></footnote
+></para>
+	                </listitem>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>List-Id</guimenu
+><guimenuitem
+>innehåller</guimenuitem
+></menuchoice
+> <replaceable
+>list-identifikation</replaceable
+><footnote
+><para
+>ersätt <replaceable
+>list-identifikation</replaceable
+> med den specifika identifikationen för en e-postlista, t.ex. (&lt;kdepim-users.kde.org&gt;) eller bara med <quote
+>.</quote
+> för att inkludera all utgående post till alla brevlistor med <quote
+>.</quote
+> i sin identifikation (egentligen alla).</para
+></footnote
+></para>
+	                </listitem>
+	              </itemizedlist>
+	            </para>
+              </listitem>
+              <listitem>
+	            <para
+>Under <guilabel
+>Filteråtgärder</guilabel
+> välj <menuchoice
+><guimenu
+>Markera som</guimenu
+><guimenuitem
+>Bevakat</guimenuitem
+></menuchoice
+>.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para
+>Under fliken <guilabel
+>Avancerat</guilabel
+>.</para>
+              <itemizedlist>
+                <listitem>
+	              <para
+>Avmarkera <guilabel
+>Om detta filter matchar, avbryt behandlingen här</guilabel
+>, så att andra filter som sortering av inkommande brev från brevlistan till underkataloger kommer att utföras.</para>
+                </listitem>
+                <listitem>
+	              <para
+>Placera filtret innan andra filter som kan stoppa filtreringsprocessen, eller placera det helt enkelt först (filterordningen ändras med de två pilarna, upp eller ner, i listan <guilabel
+>Tillgängliga filter</guilabel
+>).</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para
+>Skapa en sökning efter brev i sändlistor</para>
+              <para
+>Gå till korgen där breven från sändlistan är lagrade, t.ex. (t.ex. Lokala korgar/KDE-PIM-USERS) och tryck på tangenten <keycap
+>S</keycap
+> eller välj <menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Sök brev</guimenuitem
+></menuchoice
+> i menyn.</para>
+                <itemizedlist>
+                  <listitem>
+	                <para
+>Välj <guilabel
+>Matchar alla följande</guilabel
+><footnote
+><para
+>Ta hänsyn till <guilabel
+>Inkludera underkorgar</guilabel
+></para
+></footnote
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Lägg till villkoret <menuchoice
+><guimenu
+>Brevstatus</guimenu
+><guisubmenu
+>är</guisubmenu
+> <guimenuitem
+>Bevakat</guimenuitem
+></menuchoice
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Ange sökningen som ett informativt namn (<guilabel
+>Sökkorgnamn</guilabel
+>) som <replaceable
+>KDE-PIM-USERS-Bevakat</replaceable
+>.</para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Utför sökningen. Efter den är klar kan du stänga sökfönstret.</para>
+                  </listitem>
+                </itemizedlist>
+              <para
+>Så fort du påbörjar eller deltar i en tråd hädanefter, är den <guilabel
+>Bevakad</guilabel
+>.</para>
+        </listitem>
+      </itemizedlist>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #45 -->
+<qandaentry>
+  <question
+><para
+>Hur använder man översättning av e-post?</para
+></question>
+  <answer>
+    <para
+>Läs avsnittet <link linkend="using-the-translator"
+>Använda den inbyggda översttningen</link
+> för att översätta text i brevfönstret</para>
+    <para
+>Markera texten du vill översätta i brevets förhandsgranskningsruta och välj <guimenuitem
+>Översätt</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+>) i den sammanhangsberoende menyn som visas med höger musknapp.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+</qandaset>
+
+</chapter>

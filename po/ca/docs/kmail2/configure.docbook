@@ -1,0 +1,5299 @@
+<chapter id="configure">
+
+<chapterinfo>
+<authorgroup>
+  <author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+  <author
+>&David.Rugge; &David.Rugge.mail; </author>
+  <author
+>&Marc.Mutz; &Marc.Mutz.mail; </author>
+  <author
+>&Michel.Boyer; &Michel.Boyer.mail; </author>
+  <author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+  <author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+  <author
+>&David.Bryant; &David.Bryant.mail; </author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<date
+>13 de febrer de 2021</date>
+<releaseinfo
+>5.14.2 (Aplicacions 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Configurar el &kmail;</title>
+
+<sect1 id="configure-generalinfo">
+<title
+>Informació general</title>
+
+<screenshot>
+<screeninfo
+>El diàleg de configuració del &kmail;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>El diàleg de configuració del &kmail;</phrase>
+    </textobject>
+    <caption>
+      <para
+>El diàleg Configuració del &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>La finestra de configuració del &kmail; permet configurar-lo de moltes maneres. Podeu fer-ho mitjançant <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Configura el &kmail;...</guimenuitem
+></menuchoice
+></para>
+<para
+>El diàleg disposa de diversos botons a la part inferior.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="system-help.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Ajuda</guibutton
+></term>
+<listitem
+><para
+>Obrirà el Manual del &kmail; (aquest manual) a la pàgina corresponent.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="edit-undo.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Inicialitza</guibutton
+></term>
+<listitem
+><para
+>Restablirà tots els canvis que heu fet des de l'última vegada que s'han desat les opcions de configuració.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Per omissió</guibutton
+></term>
+<listitem
+><para
+>Reiniciarà les opcions de configuració de la pàgina actual amb els valors predeterminats.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> D'acord</guibutton
+></term>
+<listitem
+><para
+>Desarà les opcions de configuració i tancarà el diàleg de configuració.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Aplica</guibutton
+></term>
+<listitem
+><para
+>Desarà les opcions de configuració sense tancar el diàleg de configuració.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-cancel.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Cancel·la</guibutton
+></term>
+<listitem
+><para
+>Tancarà el diàleg de configuració sense desar els canvis que hi hàgiu fet.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>El diàleg de configuració està dividit en sis subconjunts, cadascun representat per una de les icones a la llista que hi ha al costat esquerre. Aquests subconjunts es descriuen amb detall a continuació. </para>
+</sect1>
+
+<sect1 id="configure-identity">
+<title
+>La pàgina Comptes</title>
+
+<para
+>La pàgina <guilabel
+>Comptes</guilabel
+> es presenta automàticament quan se selecciona l'element de menú <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+>Configura el &kmail;...</guimenuitem
+></menuchoice
+>. Hi ha quatre pestanyes: <guilabel
+>Identitats</guilabel
+>, <guilabel
+>Recepció</guilabel
+>, <guilabel
+>Enviament</guilabel
+> i <guilabel
+>Servidor LDAP</guilabel
+>. (La pestanya <guilabel
+>Identitats</guilabel
+> s'il·lustra a la secció anterior <link linkend="configure-generalinfo"
+>Configurar el &kmail;</link
+>).</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-identities-tab">
+<title
+>La pestanya Identitats</title
+>    
+
+<para
+>Trobareu una ràpida introducció a la pestanya <guilabel
+>Identitats</guilabel
+> a la secció <link linkend="getting-started"
+>Començar</link
+>.</para>
+
+<para
+>Aquesta pàgina permet crear una o més <emphasis
+>Identitats</emphasis
+>, &ead;, combinacions de nom, adreces de correu i d'altres opcions. Per exemple, podeu crear una identitat per a les comunicacions de negocis i una altra per a ús personal. Si teniu més d'una adreça de correu electrònic, podreu crear una identitat per adreça. Aleshores podreu seleccionar una identitat diferent cada vegada que editeu un missatge nou.</para>
+
+<para
+>Aquest diàleg consisteix d'una llista d'identitats, a més dels botons per a gestionar-les. Després de la configuració inicial, la llista sempre mostrarà almenys una identitat, la qual és la identitat <guilabel
+>Predeterminada</guilabel
+>. Per a afegir una identitat nova a la llista d'identitats, feu clic al botó <guibutton
+>Afegeix...</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-newidentitydialog">
+<title
+>El diàleg Identitat nova</title>
+<screenshot>
+<screeninfo
+>El diàleg Identitat nova</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="newidentity.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>El diàleg Identitat nova</phrase>
+    </textobject>
+    <caption>
+      <para
+>El diàleg Identitat nova</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Introduïu el nom per a la identitat nova en el camp d'edició <guilabel
+>Identitat nova</guilabel
+>. Aquest serà el nom mostrat a la llista de la identitat.</para>
+
+<para
+>Podeu escollir com hauria de ser inicialitzada la nova identitat marcant un dels tres botons d'opció.</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Amb els camps buits</guilabel
+></term>
+<listitem>
+<para
+>Tots els camps de la nova identitat estaran nets o preestablerts amb els valors predeterminats.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Usa els valors de l'Arranjament del sistema</guilabel
+></term>
+<listitem>
+<para
+>Utilitza els valors de la vostra identitat predeterminada.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Duplica la identitat existent</guilabel
+></term>
+<listitem>
+<para
+>Copia tots els camps des d'una identitat existent. Podeu escollir quina identitat copiar seleccionant l'entrada corresponent a la llista desplegable <guilabel
+>Identitats existents</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-general">
+<title
+>General</title>
+<screenshot>
+<screeninfo
+>Identitat - General</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitygeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitat - General</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitat - General</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>La pestanya <guilabel
+>General</guilabel
+> permet especificar algunes opcions bàsiques per a la identitat actualment seleccionada.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>El vostre nom</guilabel
+></term>
+<listitem>
+<para
+>Introduïu aquí el vostre nom complet (de vegades també s'anomena <emphasis
+>nom mostrat</emphasis
+>). Encara que aquest camp no és obligatori, haureu d'introduir aquí el vostre nom.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Organització</guilabel
+></term>
+<listitem>
+<para
+>Introduïu aquí l'organització. És un camp opcional.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Adreça de correu</guilabel
+></term>
+<listitem>
+<para
+>Introduïu aquí l'adreça de correu electrònic, &ead;, quelcom com <userinput
+>jordi@exemple.cat</userinput
+>.</para>
+<example>
+<title
+>Adreça de correu electrònic</title>
+<para
+>Si la vostra adreça és <replaceable
+>Jordi Usuari &lt;jordi@exemple.cat&gt;</replaceable
+>, haureu d'introduir <userinput
+>Jordi Usuari</userinput
+> en el camp <guilabel
+>El vostre nom</guilabel
+> i <userinput
+>jordi@exemple.cat</userinput
+> en el camp <guilabel
+>Adreça de correu</guilabel
+>.</para
+></example>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Àlies de correu electrònic</guilabel
+></term>
+<listitem>
+<para
+>Aquest camp conté àlies d'adreces que també pertanyen a aquesta identitat (en lloc de representar una identitat diferent). Podeu definir múltiples àlies. Per a afegir un altre àlies, introduïu una adreça de correu electrònic en el camp <guilabel
+>Àlies de correu electrònic:</guilabel
+>, després feu clic al botó <guibutton
+>&plus; Afegeix</guibutton
+>.</para>
+<example>
+<title
+>Àlies de correu electrònic</title>
+<para
+>Adreça principal: nom.cognom@exemple.org</para>
+<para
+>Àlies: nom@exemple.org i cognom@exemple.org</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-cryptography">
+<title
+>Criptografia</title>
+<screenshot>
+<screeninfo
+>Identitat - Criptografia</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitycryptography.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitat - Criptografia</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitat - Criptografia</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>La pestanya <guilabel
+>Criptografia</guilabel
+> permet especificar les claus &openpgp; i/o &smime; associades amb aquesta identitat, així com triar la vostra preferència quant al format (criptogràfic) del missatge a emprar.</para>
+
+ <variablelist>
+<varlistentry id="configure-identity-cryptography-openpgp-sign">
+<term
+><guilabel
+>Clau de signatura OpenPGP:</guilabel
+></term>
+<listitem>
+<para
+>Aquí podeu seleccionar una clau &openpgp; per a signar els missatges escrits amb aquesta identitat. Per abreujar, només es mostra l'ID de la clau de les claus seleccionades. En passar el cursor per sobre de l'element, es mostrarà més informació en un consell d'eina. Per a seleccionar una clau existent, empreu la llista desplegable. Si voleu crear un parell nou de claus pública/privada, seleccioneu <guilabel
+>Genera un parell nou de claus:</guilabel
+>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-openpgp-encrypt">
+<term
+><guilabel
+>Clau d'encriptatge OpenPGP:</guilabel
+></term>
+<listitem
+><para
+>Aquí podeu seleccionar la clau &openpgp; per als missatges encriptats amb aquesta identitat i que l'opció <xref linkend="configure-security-composing-encrypt-to-self"/> sigui efectiva. Aquesta clau també s'utilitzarà per a la funció <xref linkend="composer-attach-attach-my-public-key"/>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-sign">
+<term
+><guilabel
+>Certificat de signatura &smime;:</guilabel
+></term>
+<listitem>
+<para
+>Aquí podeu seleccionar un certificat x.509 utilitzat per a signar els missatges escrits amb aquesta identitat. El &kmail; no pot generar certificats x.509. Aquests són emesos per les autoritats de certificació. Si heu afegit el certificat al vostre clauer de claus, el &kmail; podrà importar-lo i utilitzar-lo.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-encrypt">
+<term
+><guilabel
+>Certificat d'encriptatge &smime;:</guilabel
+></term>
+<listitem>
+<para
+>Aquí podeu seleccionar un certificat x.509 per a l'encriptatge dels missatges amb aquesta identitat i <xref linkend="configure-security-composing-encrypt-to-self"/>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-preferred-format">
+<term
+><guilabel
+>Format preferit:</guilabel
+></term>
+<listitem>
+<para
+>Aquí es pot escollir quin format predeterminat de missatge criptogràfic utilitzar amb aquesta identitat. Podeu escollir entre qualsevol dels quatre formats admesos pel &kmail; o deixar l'opció recomanada de <guilabel
+>Qualsevol</guilabel
+>, la qual escollirà un format adequat per a cada destinatari especificat, fins i tot es poden crear múltiples còpies del missatge, algunes signades i/o encriptades amb un certificat x.509 i les altres amb signades i/o encriptades amb una clau &openpgp;.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Signa automàticament els missatges:</guilabel
+></term>
+<listitem
+><para
+>Marcar aquesta casella farà que el &kmail; afegeixi la vostra signatura digital als missatges editats per aquesta identitat, llevat que aquesta opció s'anul·li manualment a la finestra <guilabel
+>Editor</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Encripta automàticament els missatges:</guilabel
+></term>
+<listitem
+><para
+>Marcar aquesta casella farà que el &kmail; encripti els missatges editats per aquesta identitat, sempre que aquest encriptatge sigui possible (a menys que s'anul·li a la finestra <guilabel
+>Editor</guilabel
+>).</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-advanced">
+<title
+>Avançat</title>
+
+<screenshot>
+<screeninfo
+>Identitat - Avançat</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitiesadvanced.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitat - Avançat</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitat - Avançat</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>La pestanya <guilabel
+>Avançat</guilabel
+> permet especificar algunes opcions de configuració poc freqüents per a la identitat que esteu editant.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Adreça de Respon-a:</guilabel
+></term>
+<listitem>
+<para
+>Introduïu-hi l'adreça a la qual s'haurien de respondre els vostres missatges. Tan sols necessitareu aquest camp si difereix de la vostra adreça normal (especificada emprant la pestanya <link linkend="configure-identity-general"
+><guilabel
+>General</guilabel
+></link
+> als camps <guilabel
+>Nom</guilabel
+> i <guilabel
+>Adreça de correu</guilabel
+> ), ja que de totes maneres les respostes predeterminades apuntaran a l'adreça del remitent.</para>
+<para
+>Aquest camp és d'utilitat si voleu les respostes al vostre correu en un altre lloc que la vostra adreça normal, &pex;, si esteu emprant aquesta identitat per a enviar missatges des d'una adreça que no pot rebre respostes.</para>
+<note
+><para
+>Algunes llistes de correu sobreescriuen aquest camp de capçalera amb la seva adreça postal (per a assegurar-se que les respostes vagin cap a la llista en lloc dels individus). Per tant, la fiabilitat d'aquest camp és limitada i s'ha d'emprar amb precaució.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Adreces CC:</guilabel
+></term>
+<listitem>
+<para
+>De manera opcional, introduïu una o més adreces, separades per comes, a les quals s'hauran de remetre còpies ocultes dels vostres missatges. Quan editeu un missatge amb aquesta identitat, el camp <guilabel
+>CC</guilabel
+> s'omplirà amb aquestes adreces.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Adreces BCC:</guilabel
+></term>
+<listitem>
+<para
+>De manera opcional, introduïu adreces, separades per comes, a les quals s'hauran de remetre còpies ocultes dels vostres missatges. Quan editeu un missatge amb aquesta identitat, el camp <guilabel
+>BCC</guilabel
+> s'omplirà amb aquestes adreces. Si voleu enviar una BCC a aquesta adreça per a cada identitat que definiu, vegeu la pestanya <link linkend="configure-composer-headers"
+><guilabel
+>Capçaleres</guilabel
+> del subconjunt <guilabel
+>Editor</guilabel
+></link
+> (creeu una capçalera BCC personalitzada).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Diccionari:</guilabel
+></term>
+<listitem>
+<para
+>Seleccioneu el diccionari predeterminat per a la identitat actual.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Carpeta del correu enviat:</guilabel
+></term>
+<listitem>
+<para
+>Seleccioneu la carpeta a la qual s'hauran de desar els missatges després d'enviar-los emprant aquesta identitat. Els usuaris d'&IMAP; haurien de plantejar-se canviar-ho a una carpeta &IMAP;, de manera que el correu que enviïn sigui emmagatzemat en el servidor en comptes d'una carpeta local. Després podran accedir a aquests missatges des d'una ubicació diferent.</para>
+<tip
+><para
+>Podeu exercitar un control més fi sobre els missatges enviats creant el corresponent <link linkend="filters"
+>filtre de missatges</link
+> que s'aplicarà als missatges sortints.</para
+></tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Carpeta dels esborranys:</guilabel
+></term>
+<listitem>
+<para
+>Seleccioneu la carpeta en la qual s'hauran de desar els esborranys emprant aquesta identitat. Els usuaris d'&IMAP; haurien de plantejar-se canviar-ho a una carpeta &IMAP;, de manera que el correu que enviïn sigui emmagatzemat en el servidor en comptes d'una carpeta local. Després podran accedir a aquests missatges d'una ubicació diferent.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Carpeta de les plantilles:</guilabel
+></term>
+<listitem>
+<para
+>Seleccioneu la carpeta en la qual s'hauran de desar les plantilles quan s'empri aquesta identitat. Per a més informació sobre les plantilles, vegeu <link linkend="new-compose-from-templates"
+>Editar des de plantilles</link
+>.</para>
+</listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term
+><guilabel
+>Compte sortint:</guilabel
+></term>
+<listitem>
+<para
+>Especifiqueu un servidor &SMTP; / &Sendmail; / &Microsoft; Exchange alternatiu que s'utilitzarà quan s'enviïn missatges emprant aquesta identitat.</para>
+<note
+><para
+>Abans d'escollir-lo des de la llista, primer caldrà configurar els servidors de sortida del correu. Podeu fer això a la pestanya <link linkend="configure-accounts-sending"
+><guilabel
+>Envia</guilabel
+></link
+> de la pàgina <link linkend="configure-accounts"
+><guilabel
+>Comptes</guilabel
+></link
+>.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Adjunta la meva vCard al missatge</guilabel
+></term>
+<listitem>
+<para
+>Trieu aquesta opció si voleu adjuntar un fitxer vCard a cada missatge enviat des d'aquesta identitat. Es produirà un diàleg curt.</para>
+    <variablelist>
+        <varlistentry>
+        <term
+><guilabel
+>Amb els camps buits</guilabel
+></term>
+        <listitem
+><para
+>Aquesta opció obrirà un diàleg com el diàleg <ulink url="help:/kaddressbook/editing-contact-data.html"
+>Afegir dades de contacte al &kaddressbook;</ulink
+>. Introduïu el vostre nom, adreça de correu electrònic, &etc;, després feu clic a <guilabel
+>D'acord</guilabel
+> per a crear una vCard nova.</para
+></listitem>
+        </varlistentry>
+        <varlistentry>
+        <term
+><guilabel
+>Des d'una vCard existent</guilabel
+></term>
+        <listitem
+><para
+>Aquesta opció obrirà un diàleg per a navegar pels directoris, el qual permetrà seleccionar un fitxer .vcf. (Consell: utilitzeu el &kaddressbook; per a exportar un fitxer vCard que es podrà emprar aquí).</para
+></listitem>
+        </varlistentry
+>        
+        <varlistentry>
+        <term
+><guilabel
+>Duplica una vCard existent</guilabel
+></term>
+        <listitem
+><para
+>Aquesta opció obre una llista desplegable de totes les altres identitats ja definides, així que es podrà seleccionar la vCard associada amb una d'elles.</para
+></listitem>
+        </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Idioma de correcció automàtica:</guilabel
+></term>
+<listitem>
+<para
+>Utilitzeu la llista desplegable per a seleccionar l'idioma associat amb l'eina de correcció automàtica opcional quan empreu aquesta identitat.</para>
+</listitem
+><!-- FIXME Need a link to "Plugins" section -->
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Domini predeterminat:</guilabel
+></term>
+<listitem>
+<para
+>Aquest camp s'omple amb el valor des del fitxer <filename
+>hostnames</filename
+> predeterminat que hi ha a /etc. L'<guilabel
+>Editor</guilabel
+> adjuntarà aquest nom de domini a qualsevol adreça de correu electrònic purament local que especifiqueu. Aquesta característica és principalment útil en un entorn de &Sendmail;.</para>
+<example>
+<title
+>Domini predeterminat</title>
+<para
+>Domini predeterminat establert a <userinput
+>kde.org</userinput
+>, l'adreça «A:» establerta a <userinput
+>foo</userinput
+>.</para>
+<para
+><guilabel
+>Editor</guilabel
+> envia el missatge a foo@kde.org.</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-templates">
+<title
+>Plantilles</title>
+<screenshot>
+<screeninfo
+>Identitat - Plantilles</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitytemplate.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitat - Plantilles</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitat - Plantilles</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Aquí podreu crear i gestionar plantilles personalitzades perquè aquesta identitat les utilitzi en redactar missatges nous, respondre a algú o reenviar els missatges inclosos. Les plantilles de missatge admeten ordres de substitució. Podeu escriure-les o seleccionar-les des del menú <guimenu
+>Insereix una ordre <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guimenu
+>. Es proporcionen tres tipus d'ordres.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Missatge original &gt;</guilabel
+> / <guilabel
+>Missatge actual &gt;</guilabel
+></term>
+        <listitem
+><para
+>Aquestes ordres extreuen informació des del missatge al qual esteu responent o reenviant i la insereixen a la finestra d'edició.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Processa amb programes externs &gt;</guilabel
+></term>
+        <listitem
+><para
+>Aquestes ordres canalitzaran el missatge al qual esteu responent a través d'un programa extern, després inseriran la sortida a la finestra d'edició del &kmail;.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Miscel·lània &gt;</guilabel
+></term>
+        <listitem
+><para
+>Aquestes ordres realitzen funcions com triar el diccionari que ha d'emprar el corrector ortogràfic o inserir el contingut d'un arxiu de text a la finestra d'edició.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>El camp <guilabel
+>Indicador de citació:</guilabel
+> permet superposar el caràcter predeterminat «&gt;» de l'indicador de citació. El botó <guibutton
+>Copia les plantilles globals</guibutton
+> restablirà totes les plantilles personalitzades definides aquí als valors predeterminats del &kmail;. (Aconseguireu el mateix resultat final si desseleccioneu la casella de selecció <guilabel
+>Usa plantilles de missatge personalitzades per a aquesta identitat</guilabel
+> a la part superior esquerra d'aquest diàleg).</para>
+
+<para
+>Les plantilles especificades aquí són específiques de la identitat. Superposen les plantilles globals, però poden esdevenir superposades per les plantilles específiques de la carpeta, si s'han especificat.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-signature">
+<title
+>Signatura</title>
+<screenshot>
+<screeninfo
+>Identitat - Signatura</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitysignature.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitat - Signatura</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitat - Signatura</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Aquesta pestanya permet especificar una signatura (a vegades anomenada «peu de pàgina» o «declinació de responsabilitats») que s'afegirà a cada missatge enviat des d'aquesta identitat.</para>
+<note
+><para
+>Aquest tipus de signatura no té res a veure amb les signatures (digitals) que tractades a la secció <link linkend="configure-identity-cryptography"
+>Criptografia</link
+>. És una mica confús anomenar a això una signatura, però com el terme ja s'empra a tot arreu, mantenim aquesta nomenclatura. Cal tenir present que aquestes «signatures» i les signatures digitals són dues coses completament diferents.</para
+></note>
+
+<para
+>Marqueu l'opció <guilabel
+>Habilita la signatura</guilabel
+> si voleu que el &kmail; adjunti la signatura quan empreu aquesta identitat. Per a adjuntar-la <emphasis
+>automàticament</emphasis
+> en cada missatge nou, haureu de seleccionar l'opció <guilabel
+>Insereix automàticament la signatura</guilabel
+> a la pàgina <guilabel
+>Editor</guilabel
+> de la configuració.</para>
+
+<para
+>El &kmail; pot obtenir el text de la signatura des de diverses fonts. De manera predeterminada és <guilabel
+>del camp d'entrada inferior</guilabel
+>. Introduïu el que voleu com a signatura a dins del quadre de text. Si voleu emprar text enriquit, seleccioneu la casella de selecció <guilabel
+>Usa &HTML;</guilabel
+> a la part inferior esquerra. Llavors apareixerà una barra d'eines de format.</para>
+
+<para
+>El procediment tradicional a Unix és llegir el text des d'un fitxer anomenat <filename
+>.signature</filename
+> en la vostra carpeta d'inici. Aquest fitxer pot compartir-se amb altres programes, de manera que apareixerà la mateixa signatura en cada programa de correu que empreu. Seleccioneu <guilabel
+>d'un fitxer</guilabel
+> des de la llista desplegable <guilabel
+>Obtén el text de la signatura des de:</guilabel
+>. Si voleu editar el fitxer, feu clic al botó <guilabel
+>Edita el fitxer</guilabel
+>.</para>
+
+<para
+>El &kmail; també pot llegir la signatura des de la sortida d'una ordre. Tant és així que podeu emprar programes com el <command
+>fortune</command
+> per a crear un text nou de signatura per a cada missatge. Tota la impressió sobre la <acronym
+>stdout</acronym
+> (sortida estàndard) serà desada al cau i emprada com al text de la signatura. Per a llegir el text des de la sortida d'una ordre seleccioneu l'opció <guilabel
+>de la sortida d'una ordre</guilabel
+>. Introduïu l'ordre (amb el camí complet) al camp d'edició <guilabel
+>Especifiqueu l'ordre:</guilabel
+>.</para>
+
+<note
+><para
+>A Internet, per convenció, les signatures estan separades del cos del missatge per una línia que només conté tres caràcters «-- » (guionet, guionet, espai). Si s'ha establert l'opció <guilabel
+>Preposa un separador a la signatura</guilabel
+> a la pàgina <guilabel
+>Editor</guilabel
+> de la configuració, el &kmail; anteposarà automàticament aquesta línia al text de la signatura (llevat que ja estigui present).</para
+></note>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-pictures">
+<title
+>Imatge</title>
+<screenshot>
+<screeninfo
+>Identitat - Imatge</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitypicture.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitat - Imatge</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitat - Imatge</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>El &kmail; pot enviar una imatge petita (48x48 pixels), monocroma i de baixa qualitat amb cada missatge. Per exemple, podria ser una foto vostra o un glif. Es mostrarà al client de correu del destinatari (si ho admet).</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Envia la imatge amb cada missatge</guilabel
+></term>
+<listitem>
+<para
+>Marqueu aquesta casella si voleu que el &kmail; afegeixi el què s'anomena una capçalera X-Face als missatges escrits amb aquesta identitat. Una X-Face és una imatge petita en blanc i negre (48x48 píxels) que poden mostrar alguns clients de correu.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Obtén la imatge des de:</guilabel
+></term>
+<listitem>
+<para
+>Aquesta llista desplegable ofereix dues maneres de seleccionar una imatge.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Font externa <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> (la predeterminada)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+>Selecciona un fitxer...</guibutton
+></term>
+<listitem>
+<para
+>Utilitzeu-ho per a seleccionar un fitxer d'imatge a partir del qual crear la imatge. Empreu una imatge d'alt contrast que sigui quadrada o gairebé. Un fons suau ajudarà a millorar el resultat.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Estableix des de la llibreta d'adreces</guibutton
+></term>
+<listitem>
+<para
+>Podeu utilitzar aquest botó per a crear una versió reduïda de la imatge que heu establert en la vostra pròpia entrada de la llibreta d'adreces.</para>
+</listitem>
+</varlistentry>
+</variablelist
+>  
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>El camp d'entrada inferior</guilabel
+></term>
+<listitem>
+<para
+>Utilitzeu aquesta opció per a introduir una cadena X-Face arbitrària. Hi ha exemples disponibles a <ulink url="https://ace.home.xs4all.nl/X-Faces/"
+>https://ace.home.xs4all.nl/X-Faces/</ulink
+> </para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-accounts">
+<title
+>Comptes de correu</title>
+
+<para
+>Trobareu una ràpida introducció als comptes d'enviament i recepció a la secció <link linkend="setting-up-your-account"
+>Arranjar el vostre compte</link
+>.</para>
+
+<para
+>Aquesta pàgina permet configurar un o més <emphasis
+>comptes</emphasis
+> (d'entrada i de sortida), &pex;, combinacions de servidors de correu, informació per a l'inici de la sessió i d'altres opcions. Podreu crear un compte de sortida (emprat per a enviar els missatges) i un compte d'entrada (emprat per a rebre els missatges). Podreu crear tants comptes com vulgueu i assignar cadascun a una <link linkend="configure-identity"
+>identitat</link
+> diferent. O podeu configurar només una identitat i decidir quin compte emprar cada vegada que editeu un missatge. Aquesta pàgina també permet establir un o més servidors <acronym
+>LDAP</acronym
+> (Protocol lleuger d'accés a directoris).</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-accounts-receiving">
+<title
+>Recepció</title>
+<screenshot>
+<screeninfo
+>Compte de recepció</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-receiving.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Compte de recepció</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pestanya Compte de recepció</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Per a informació bàsica, vegeu <link linkend="receiving-mail"
+>Configurar el vostre compte: Recepció</link
+>.</para>
+
+<para
+>La columna de botons de la dreta permet fer <guibutton
+>Afegeix...</guibutton
+> un compte nou i <guibutton
+>Modifica</guibutton
+> o <guilabel
+>Elimina</guilabel
+> un compte existent. No heu de canviar ni eliminar l'entrada <guilabel
+>Carpetes locals</guilabel
+>, la qual està present de manera predeterminada. El botó <guilabel
+>Reinicia</guilabel
+> simularà un reinici del programa.</para>
+
+<para
+>El botó <guibutton
+>Personalitza l'ordre dels comptes...</guibutton
+> obre un diàleg que permet moure qualsevol compte &IMAP; que hàgiu creat i el grup de comptes associat amb les <guilabel
+>Carpetes locals</guilabel
+>, a dalt o a baix en la llista.</para>
+
+<para
+>El menú emergent <guilabel
+>Opcions de recuperació</guilabel
+> per a cada recurs permet especificar si el &kmail; haurà de comprovar si hi ha correu nou immediatament després d'iniciar-se. També podeu seleccionar <guilabel
+>Inclou en la comprovació manual del correu</guilabel
+> i <guilabel
+>Canvia a fora de línia en aturar el &kmail;</guilabel
+>. </para>
+
+<para
+>Si està activada <guilabel
+>Notificació detallada de correu nou</guilabel
+>, llavors el &kmail; mostrarà el nombre de missatges nous per a cada carpeta sempre que escolliu ser notificat amb un diàleg. Opcions de notificació més avançades, com reproduir un so o sintetitzar una veu, estan disponibles mitjançant el botó <guibutton
+>Altres accions</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-accounts-sending">
+<title
+>Enviament</title>
+<screenshot>
+<screeninfo
+>Compte d'enviament</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-sending.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Compte d'enviament</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pestanya Compte d'enviament</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>La pestanya <guilabel
+>Enviament</guilabel
+> permet definir servidors nous de correu sortint i també establir algunes opcions que afectaran a tots els missatges que envieu.</para>
+
+<para
+>Per a informació bàsica, vegeu <link linkend="sending-mail"
+>Arranjar el vostre compte: Enviament</link
+>.</para>
+
+<para
+>Quan feu clic a <guibutton
+>Afegeix...</guibutton
+> o <guibutton
+>Modifica...</guibutton
+> s'obrirà un dels diàlegs <guilabel
+>Creació d'un compte sortint</guilabel
+> o <guilabel
+>Configuració del compte</guilabel
+> respectivament. Per a enviar mitjançant el &Sendmail; o programes similars, podeu especificar-ne el nom i la ubicació del programa &Sendmail;. Per a &SMTP;, podeu especificar el <guilabel
+>Nom</guilabel
+>, <guilabel
+>Servidor del correu de sortida</guilabel
+> i <guilabel
+>Port</guilabel
+> del servidor. <guilabel
+>El servidor requereix autenticació</guilabel
+> habilitarà els camps <guilabel
+>Usuari</guilabel
+> i <guilabel
+>Contrasenya</guilabel
+> i els botons del <guilabel
+>Mètode d'autenticació</guilabel
+> a la pestanya <guilabel
+>Avançat</guilabel
+>. Si no n'esteu segur quant a les opcions de seguretat, caldrà emprar la prova del &kmail; per a la millor configuració mitjançant l'ús del botó <guibutton
+>Detecta automàticament</guibutton
+> a la pestanya <guilabel
+>Avançat</guilabel
+>.</para>
+
+<para
+>Amb <guilabel
+>Confirma abans d'enviar</guilabel
+> apareixerà un quadre de confirmació cada vegada que envieu un missatge. <guilabel
+>Verifica l'ortografia abans d'enviar</guilabel
+> invocarà al corrector ortogràfic abans d'enviar un missatge.</para>
+
+<para
+><guilabel
+>Envia els missatges que hi ha a la carpeta sortida</guilabel
+> permet especificar quan s'enviaran tots els missatges que estan a la cua, &ead;, els missatges a la carpeta de la safata de sortida que esperen a ser enviats. Podreu triar entre tres opcions.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Mai automàticament <inlinemediaobject
+><imageobject
+><imagedata
+fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+></term>
+<listitem
+><para
+>Els missatges a la cua tan sols seran enviats si seleccioneu <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Envia la cua de missatges</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>En les comprovacions manuals de correu</guilabel
+></term>
+<listitem
+><para
+>Els missatges que estan a la cua s'enviaran després d'haver comprovat manualment si hi ha correu nou, &pex;, amb <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Comprova el correu</guimenuitem
+></menuchoice
+>. Per descomptat, també podreu fer-ho manualment enviant els missatges que hi ha a la cua amb <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Envia la cua de missatges</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>En totes les comprovacions de correu</guilabel
+></term>
+<listitem
+><para
+>Els missatges que estan a la cua s'enviaran després de cada comprovació de correu nou, &ead;, després de comprovar automàticament o manualment si hi ha missatges. Per descomptat, també podreu fer-ho manualment enviant els missatges que hi ha a la cua amb <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Envia la cua de missatges</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>El <guilabel
+>Mètode d'enviament predeterminat:</guilabel
+> permet definir què succeirà quan s'enviï un missatge. Si seleccioneu <guilabel
+>Envia ara</guilabel
+>, el missatge serà enviat immediatament al servidor de correu. Si escolliu <guilabel
+>Envia més tard</guilabel
+>, el missatge serà enviat a la cua de missatges de la sortida per a ser enviats després amb l'ordre <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Envia la cua de missatges</guimenuitem
+></menuchoice
+> o automàticament quan comproveu el vostre correu, depenent de l'opció de més amunt <guilabel
+>Envia els missatges que hi ha a la carpeta sortida</guilabel
+>.</para>
+
+<para
+>La casella de selecció <guilabel
+>Activa «Desfés l'enviament»</guilabel
+> permet especificar un interval de temps (des de 10 fins a 50 segons) durant el qual podreu cancel·lar el transport de correu. El missatge es posarà a la cua i apareixerà un petit botó <guibutton
+>Desfés l'enviament</guibutton
+> a l'àrea de notificació. Feu clic al botó (a temps) per a aturar l'enviament del missatge.</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-ldap-servers">
+<title
+>Servidors LDAP</title>
+<screenshot>
+<screeninfo
+>Servidors LDAP</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-ldap.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Servidors LDAP</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pestanya Servidors LDAP</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Utilitzeu aquest diàleg per a configurar els servidors LDAP als quals voleu accedir. Per a més detalls, vegeu l'<ulink url="help:/kaddressbook/configure-ldap-server.html"
+>Apèndix del &kaddressbook;</ulink
+>.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-appearance">
+<title
+>La pàgina Aparença</title>
+
+<para
+>La pàgina Aparença permet ajustar molts aspectes de la interfície gràfica d'usuari del &kmail;, inclosos els esquemes de color, la selecció del tipus de lletra i fins i tot la disposició física de la llista de missatges a la finestra principal.</para>
+
+<!-- <sect2 id="configure-appearance-message-window"
+> -->
+<sect2 id="configure-appearance-general">
+<title
+>General</title>
+
+<screenshot>
+<screeninfo
+>Aparença general</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancegeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Aparença general</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pestanya General - Aparença</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Si està activada l'opció <guilabel
+>Tanca la finestra de missatge després de contestar o reenviar</guilabel
+>, el &kmail; tancarà la finestra de missatge separada quan s'obri una finestra d'edició (per a respondre o reenviar el missatge). De manera predeterminada, <guilabel
+>Activa les tecles d'accessibilitat</guilabel
+> està seleccionada. Les tecles d'accés permeten utilitzar el teclat per a funcions que normalment es realitzen amb el ratolí, com els següents enllaços. Per a més informació, vegeu <ulink url="help:/konqueror/accesskeys.html"
+>Tecles d'accés</ulink
+>.</para>
+
+<!-- <para
+><guilabel
+>Show HTML status bar</guilabel
+> activates a bar at the left side of the reader
+pane that tells you if a message is &HTML; or not. This is important because
+&HTML; messages might imitate the look of a signed and encrypted message, so
+you should be aware of the fact that you are reading an &HTML; message. The &HTML;
+status bar itself cannot be influenced by the &HTML; code of the message.</para>
+ 
+<para
+>Enable <guilabel
+>Replace smileys by emoticons</guilabel
+> if you want smileys 
+like <userinput
+>:-)</userinput
+> appearing in the message text to be 
+replaced by emoticons (small pictures) such as
+<inlinemediaobject
+><imageobject>
+<imagedata fileref="smile.png" format="PNG"/></imageobject>
+</inlinemediaobject
+>.</para
+> --><!-- No longer on the General tab. -->
+
+<para
+>Habiliteu <guilabel
+>Redueix la mida del tipus de lletra per al text citat</guilabel
+> per a mostrar el text entre cometes (en una resposta) amb un tipus de lletra més petit. <guilabel
+>Mostra les marques per a plegar/desplegar les cites</guilabel
+> mostrarà petits ginys juntament amb cada fragment de text citat. Aquests permeten mostrar (+) o ocultar (-) les cometes niuades més enllà d'un cert nivell. Això és útil en converses de correu electrònic prolongades on ningú elimina el que ha succeït abans.</para>
+
+<!-- <para
+><guilabel
+>Fallback character encoding</guilabel
+>: 
+Some emails, especially those generated automatically, do not specify the 
+character encoding which needs to be used to properly display them. In such 
+cases a fallback character encoding will be used, which you can configure 
+here. Set it to the character encoding most commonly used in your part of 
+the world. As a default the encoding configured for the whole system is used.</para
+> -->
+
+<para
+>Canviant <guilabel
+>Rectifica la codificació dels caràcters:</guilabel
+> des del seu valor predeterminat <guilabel
+>Automàtic</guilabel
+> forçarà l'ús de la codificació especificada per a tots els missatges, sense importar el que diguin les capçaleres &MIME;. <guilabel
+>Mida mínima del tipus de lletra:</guilabel
+> permet controlar el tipus de lletra més petit que utilitzarà el &kmail;. Ajusteu-lo més alt si teniu problemes per a llegir tipus de lletra molt petits.</para>
+
+<para
+><guilabel
+>Safata del sistema</guilabel
+> proporciona tres formes de controlar la interacció del &kmail; amb la barra / plafó de tasques del &kde;. Si se selecciona <guilabel
+>Activa la icona a la safata del sistema</guilabel
+>, es mostrarà una petita icona (<inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject
+></inlinemediaobject
+>) en l'àrea de la safata de sistema. Si està activada <guilabel
+>Inicia minimitzat a la safata</guilabel
+>, només apareixerà aquesta icona quan s'iniciï el &kmail;. Si seleccioneu <guilabel
+>Mostra els correus sense llegir a la barra de tasques</guilabel
+>, apareixerà el nombre de missatges sense llegir en el botó de la barra de tasques del &kmail;.</para>
+
+<para
+>Quan la icona està visible, podreu ocultar la finestra principal del &kmail; fent clic a sobre de la icona o fent clic a sobre del botó tanca de la finestra principal. En fer clic sobre la icona podreu fer que la finestra principal del &kmail; torni a ser visible. Si feu clic a sobre de la icona amb el &BDR; apareixerà un menú contextual. Podreu comprovar si hi ha correu nou, crear un missatge nou o sortir del &kmail;. Si hi ha missatges sense llegir, apareixerà l'entrada <guilabel
+>Missatges nous a &gt;</guilabel
+>, juntament amb una llista de les carpetes que contenen missatges sense llegir. Seleccioneu una d'aquestes carpetes i s'obrirà a la finestra principal del &kmail;. </para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-fonts">
+<title
+>Tipus de lletra</title>
+
+<screenshot>
+<screeninfo
+>Aparença dels tipus de lletra</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancefonts.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Aparença general</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pestanya Tipus de lletra - Aparença</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Aquesta secció permet personalitzar els tipus de lletra que empra el &kmail;. Seleccioneu <guilabel
+>Empra tipus de lletra personalitzats</guilabel
+> per a activar el diàleg. Aplicar al: <guilabel
+>Cos del missatge</guilabel
+> establirà el tipus de lletra per a la subfinestra del lector. L'opció <guilabel
+>Editor</guilabel
+> establirà el tipus de lletra en què es mostraran els missatges nous de text sense format mentre s'escriuen. <guilabel
+>Llista de missatges</guilabel
+> canviarà el tipus de lletra emprada per a mostrar la llista de missatges. També podreu triar tipus de lletra especials per a les entrades Sense llegir, Important i Element d'acció de la llista de missatges. <guilabel
+>Sortida de la impressió</guilabel
+> alterarà el tipus de lletra emprada en imprimir. <guilabel
+>Tipus de lletra d'amplada fixa</guilabel
+> afectarà la visualització d'alguns missatges en &HTML;.</para>
+
+<para
+><guilabel
+>Mostra només els tipus de lletra monoespai</guilabel
+> restringeix el nombre de tipus de lletra disponibles. Quan estigui activa aquesta opció, només es mostraran els noms dels tipus de lletra d'amplada fixa.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-colors">
+<title
+>Colors</title>
+
+<screenshot>
+<screeninfo
+>Aparença dels colors</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancecolors.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Aparença dels colors</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pestanya Colors - Aparença</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Aquesta secció permet canviar el color d'algunes coses fent doble clic sobre una entrada al quadre de llista. Seleccioneu <guilabel
+>Usa colors personalitzats</guilabel
+> per a activar aquesta característica. Seleccioneu <guilabel
+>No canviïs el color del correu HTML original</guilabel
+> per a conservar l'esquema de color seleccionat pel remitent de qualsevol missatge &HTML;.</para>
+
+<para
+><guilabel
+>Recicla els colors en texts molt citats</guilabel
+> reiniciarà el color de la cita al primer nivell una vegada assolit el tercer nivell de cita. Cal tenir present que el color del <guilabel
+>Text citat</guilabel
+> tan sols funcionarà en llegir el missatge, no a l'editor. Si voleu que les carpetes que estan exhaurint la seva quota (limitació d'espai, normalment s'utilitza en els servidors &IMAP;) es mostrin en un color diferent, podeu especificar un valor en percentatge com a llindar.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-layout">
+<title
+>Disposició</title>
+<screenshot>
+  <screeninfo
+>Disposició predeterminada</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelayout.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Disposició predeterminada</phrase>
+      </textobject>
+      <caption>
+        <para
+>La pestanya Disposició - Aparença</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Aquesta pestanya permet configurar la disposició de la finestra principal del &kmail;.</para>
+<para
+>A la secció <guilabel
+>Llista de carpetes</guilabel
+> podreu triar entre <guilabel
+>Llista de carpetes llarga</guilabel
+> (opció predeterminada), la qual utilitza tota l'alçada de la finestra i <guilabel
+>Llista de carpetes curta</guilabel
+>. Amb l'opció curta si heu seleccionat <guilabel
+>Mostra la subfinestra de vista prèvia del missatge a sota de la llista de missatges</guilabel
+>, la llista de missatges i la llista de carpetes ocuparan una franja horitzontal, i la subfinestra de vista prèvia del missatge ocuparà tota la part inferior de la finestra. Si heu seleccionat <guilabel
+>Mostra la subfinestra de vista prèvia del missatge a continuació de la llista de missatges</guilabel
+>, la llista de carpetes i la llista de missatges ocuparan una franja vertical, amb la subfinestra de vista prèvia del missatge a la dreta.</para>
+
+<para
+>Seleccioneu <guilabel
+>Mostra el camp de cerca ràpida de carpeta</guilabel
+> per a crear un petit quadre de text a la part superior de la llista de carpetes. Quan escriviu quelcom en aquest quadre, només apareixeran les carpetes amb un nom que coincideixi amb els caràcters que heu introduït. Desactiveu la casella per a mostrar totes les carpetes.</para>
+
+<para
+>La secció <guilabel
+>Mostra la vista de carpetes preferides</guilabel
+> permet canviar com es mostraran les carpetes preferides. <guilabel
+>Com a icones</guilabel
+> utilitza un munt d'espai, així que si teniu diverses carpetes preferides, trieu <guilabel
+>Com a llista</guilabel
+>. Si no us importen les carpetes preferides, podeu desactivar aquesta característica completament seleccionant <guilabel
+>Mai</guilabel
+>.</para>
+
+<para
+>De manera predeterminada, els <guilabel
+>Consells de les carpetes</guilabel
+> mostra informació addicional (el nombre total de missatges, missatges sense llegir i la mida d'emmagatzematge) quan es passa per sobre d'una carpeta amb el punter del ratolí. Seleccioneu <guilabel
+>Mai</guilabel
+> per a desactivar aquesta característica.</para>
+
+<para
+>A la secció <guilabel
+>Subfinestra de vista prèvia del missatge</guilabel
+> podreu triar on, en relació amb la llista de missatges, voleu que aparegui la subfinestra de vista prèvia de missatges. O la podeu eliminar i només emprar el lector de pantalla completa per a veure els missatges seleccionats (premeu &Intro;).</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-message-list">
+<title
+>Llista de missatges</title>
+
+<screenshot>
+<screeninfo
+>Aparença de la Llista de missatges</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelist.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Aparença de la Llista de missatges</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pestanya Llista de missatges - Aparença</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Utilitzeu aquest diàleg per a modificar l'aparença de la subfinestra Llista de missatges.</para>
+<para
+>Si seleccioneu <guilabel
+>Mostra els consells per a les capçaleres dels missatges i dels grups</guilabel
+>, veureu un breu resum de cada missatge (o grup -depèn del mode de vista-) quan el cursor del ratolí se situï a sobre d'un element de la llista de missatges.</para>
+
+<para
+><guilabel
+>Agregació predeterminada</guilabel
+> i <guilabel
+>Tema predeterminat</guilabel
+> es poden anul·lar individualment utilitzant el diàleg <guilabel
+>Propietats de la carpeta</guilabel
+> per a cada carpeta. En fer clic al botó <guibutton
+>Configura</guibutton
+>, s'obrirà una finestra per a personalitzar les agregacions/temes preconfigurats. D'aquesta manera podreu crear els vostres propis esquemes.</para>
+
+<para
+>S'han preconfigurat vuit modes d'agregació i tres temes.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Agregació predeterminada:</guilabel
+> (llista desplegable)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Activitat per data, plana</term>
+<listitem
+><para
+>Aquesta vista utilitza els grups dia-a-dia. Els missatges no estaran en fils de conversa. Per exemple, a «Avui» senzillament trobareu tots els missatges que han arribat avui. Els grups es mostraran de manera predeterminada en ordre cronològic invers i s'anomenen «Avui», «Ahir», després els cinc dies anteriors de la setmana, seguits per mm/dd/aa.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Activitat per data, per conversa</term>
+<listitem
+><para
+>Aquesta vista utilitza els grups dia-a-dia. Els missatges estaran en fils de conversa. Per exemple, «Avui» trobareu tots els missatges arribats avui i tots els fils de conversa que han estat actius avui. Utilitza la mateixa agrupació que <guilabel
+>Activitat per data, plana</guilabel
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Activitat actual, plana</term>
+<listitem
+><para
+>Aquesta vista utilitza grups per intervals de dates intel·ligents. Els missatges no estaran en fils de conversa. Per exemple, a «Avui» senzillament trobareu tots els missatges que han arribat avui. Els grups es mostraran de manera predeterminada en ordre cronològic invers: «Avui», «Ahir», els cinc dies anteriors de la setmana, «La setmana passada», «Fa dues setmanes», i després mes a mes.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Activitat actual, per conversa </term>
+<listitem
+><para
+>Aquesta vista utilitza els grups per intervals de dates intel·ligents. Els missatges s'ordenaran per fil de conversa. Per exemple, a «Avui» trobareu tots els missatges arribats avui i tots els fils de conversa que han estat actius avui. En cas contrari, el mateix que <guilabel
+>Activitat actual, plana</guilabel
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Vista plana per data</term>
+<listitem
+><para
+>Aquesta és una llista senzilla i antiga dels missatges ordenats per data. Sense grups ni fils de conversa.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Remitents/Destinataris, plana</term>
+<listitem
+><para
+>Aquesta vista agrupa els missatges per remitent o destinatari (segons el tipus de carpeta). Podreu especificar els remitents (o destinataris) en el diàleg <menuchoice
+><guimenu
+>Carpetes</guimenu
+> <guimenuitem
+>Propietats de la carpeta</guimenuitem
+></menuchoice
+> (pestanya «Vista», <guilabel
+>Mostra la columna:</guilabel
+>). Els missatges no estaran en fils de conversa.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Llista de correu estàndard</term>
+<listitem
+><para
+>Aquesta és una vista de llista de correu senzilla i antiga: sense grups ni fils de conversa feixucs, ordenats per la data d'inici de cada fil de conversa.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Iniciadors dels fils de conversa</term>
+<listitem
+><para
+>Aquesta vista organitza els missatges per fils de conversa i després els agrupa per l'usuari que l'ha començat.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-aggregation-theme">
+    <term
+>Botó <guibutton
+>Configura...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message Aggregation Modes</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="aggregationtheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message Aggregation Modes</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message Aggregation Modes</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+   
+<para
+>Per a crear un tema d'agregació personalitzat, feu clic al botó <guibutton
+>Configura...</guibutton
+>. Seleccioneu una agregació existent similar a la que voleu crear i feu clic a <guibutton
+>Clona l'agregació</guibutton
+>. Si no n'hi ha cap de similar, feu clic al botó <guibutton
+>Agregació nova</guibutton
+>. La pestanya <guilabel
+>General</guilabel
+> permet canviar el <guilabel
+>Nom:</guilabel
+> i la <guilabel
+>Descripció:</guilabel
+>. La pestanya <guilabel
+>Grups i converses</guilabel
+> permet configurar diversos elements per a personalitzar la vostra agregació.</para>
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Agrupament:</guilabel
+> permet seleccionar dates, remitent/destinatari o cap. Amb les opcions intel·ligents, el &kmail; agruparà els correus electrònics relacionats. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Política de desplegament dels grups:</guilabel
+> permet establir si el &kmail; desplegarà automàticament o no els correus electrònics agrupats. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Converses:</guilabel
+> permet decidir si el &kmail; inclourà referències i assumptes per a detectar més correctament els fils de conversa. També podeu desactivar completament els fils de conversa. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Líder de la conversa:</guilabel
+> permet canviar el líder del fil de conversa: entre el missatge més recent o el primer. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Política de desplegament de les converses:</guilabel
+> permet canviar la forma com el &kmail; determina si un fil de conversa s'ha de desplegar. </para
+></listitem>
+</itemizedlist>
+<para
+>La pestanya <guilabel
+>Avançat</guilabel
+> permet canviar l'<guilabel
+>Estratègia de càrrega dels fils:</guilabel
+>. Podeu escollir <guilabel
+>Afavoreix la velocitat</guilabel
+> si teniu una connexió lenta, <guilabel
+>Afavoreix la interactivitat</guilabel
+> mostrarà primer totes les seves converses existents i el mode <guilabel
+>Treball per lots (sense interactivitat)</guilabel
+>, el qual no ordenarà la vista.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Tema predeterminat:</guilabel
+> (llista desplegable)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Clàssic</term>
+<listitem
+><para
+>Un tema senzill, compatible amb els anteriors, de fila única.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Intel·ligent</term>
+<listitem
+><para
+>Un tema intel·ligent multilínia i multielement.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Intel·ligent amb estat clicable</term>
+<listitem
+><para
+>Un tema intel·ligent multilínia i multielement amb una columna d'estat clicable.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-messagelist-theme">
+    <term
+>Botó <guibutton
+>Configura...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message List Theme</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="messagelisttheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message List Theme</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message List Theme</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+  
+<para
+>Per a crear un tema personalitzat per a la llista de missatges, feu clic al botó <guibutton
+>Configura...</guibutton
+>. Seleccioneu un tema existent similar al que voleu crear i feu clic a <guibutton
+>Clona el tema</guibutton
+>. Si no n'hi ha cap de similar, feu clic al botó <guibutton
+>Tema nou</guibutton
+>. La pestanya <guilabel
+>General</guilabel
+> permet canviar el <guilabel
+>Nom:</guilabel
+> i la <guilabel
+>Descripció:</guilabel
+>.</para>
+
+<para
+>La pestanya <guilabel
+>Aparença</guilabel
+> permet configurar les columnes visibles i els elements d'estat. Per a afegir una columna, feu clic dret a la barra de columnes i seleccioneu <guilabel
+>Afegeix una columna...</guilabel
+>. Doneu un nom a la columna i seleccioneu la columna que representarà des de la llista desplegable <guilabel
+>Un clic a la capçalera ordena els missatges:</guilabel
+>. De manera predeterminada, <guilabel
+>Visible de manera predeterminada</guilabel
+> estarà marcada, desmarqueu-la només si voleu que la columna estigui disponible sobre el menú contextual per a la barra d'ordenació clicable. A continuació, arrossegueu l'etiqueta apropiada des dels <guilabel
+>Elements de contingut</guilabel
+> al quadre de vista de la columna que hi ha a sota la barra de columnes, &pex;, si trieu afegir una columna de mida, arrossegueu l'etiqueta de mida fins a sota de la columna Mida. Continueu fent això fins que tingueu totes les columnes que desitgeu. Podeu canviar el tipus de lletra i el color dels elements de la columna utilitzant l'àrea de vista mitjançant el menú del &BDR;. Moveu, suprimiu i canvieu la mida de les columnes mitjançant el menú del &BDR; a la barra de columnes.</para>
+
+<para
+>La pestanya <guilabel
+>Avançat</guilabel
+> permet mostrar les capçaleres. També podreu canviar la mida de les icones d'estat.</para>
+</listitem
+></varlistentry
+> 
+</variablelist>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>A la secció <guilabel
+>Mostra la data</guilabel
+> podreu escollir un dels tres formats de la data (o crear-ne un). El <guilabel
+>Format estàndard</guilabel
+> mostra el dia de la setmana i la data. El <guilabel
+>Format localitzat</guilabel
+> és més curt, omet el dia de la setmana. El <guilabel
+>Format intel·ligent</guilabel
+> mostrarà avui, ahir, &etc; Si voleu crear un format de data <guilabel
+>Personalitza</guilabel
+>, senzillament feu clic a <guilabel
+>Informació sobre els formats personalitzats...</guilabel
+> i seguiu les instruccions.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="configure-message-tags">
+    <title
+>Etiquetes del missatge</title>
+    
+<screenshot>
+<screeninfo
+>Etiquetes d'aparença</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancetags.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Etiquetes d'aparença</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pestanya Etiquetes - Aparença</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>De manera predeterminada, el &kmail; ofereix diverses formes de marcar els missatges (Important / Element d'acció / Aniversari), accessible a través del submenú <menuchoice
+><guimenu
+>Missatge</guimenu
+> <guisubmenu
+>Marca el missatge &gt;</guisubmenu
+></menuchoice
+>. També podeu definir etiquetes addicionals per a ajudar-vos a categoritzar els missatges.</para>
+
+<para
+>Utilitzeu el camp d'entrada <guilabel
+>Etiquetes disponibles</guilabel
+> per a donar nom a la vostra etiqueta especial. Utilitzeu el botó <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> per a afegir aquest nom a la llista. Utilitzeu el botó <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> per a eliminar una etiqueta. (L'etiqueta «Aniversari» està integrada i no es pot eliminar). Utilitzeu els botons &Up; i &Down; per a ordenar els elements que hi ha a la llista.</para>
+
+<para
+>Ressalteu un element de la llista per a activar el diàleg <guilabel
+>Configuració de l'etiqueta</guilabel
+>. Podreu triar qualsevol de les sis opcions o totes.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Canvia el color del text:</guilabel
+></term>
+        <listitem
+><para
+>Seleccioneu aquesta opció per a mostrar les entrades de la llista de missatges etiquetades en un color diferent. Es presentarà una paleta de colors mentre trieu aquesta opció. Seleccioneu un color preestablert o seleccioneu <guilabel
+>Personalitza...</guilabel
+> per a més flexibilitat.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Canvia el color de fons:</guilabel
+></term>
+        <listitem
+><para
+>Seleccioneu aquesta opció per a modificar el color de fons de les entrades a la llista de missatges etiquetada.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Canvia el tipus de lletra:</guilabel
+></term>
+        <listitem
+><para
+>Podeu seleccionar un tipus de lletra en negreta o <emphasis
+>cursiva</emphasis
+>.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Icona d'etiqueta del missatge:</guilabel
+></term>
+        <listitem
+><para
+>Feu clic en aquest botó per obrir un diàleg per a la selecció d'icones. La icona es mostrarà a les entrades en la llista de missatges etiquetada.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Drecera:</guilabel
+></term>
+        <listitem
+><para
+>Utilitzeu aquest botó per a crear una drecera de teclat per a associar aquesta etiqueta amb els missatges seleccionats.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Activa el botó de la barra d'eines:</guilabel
+></term>
+        <listitem
+><para
+>Seleccioneu aquesta opció per a afegir un botó nou a la barra d'eines del &kmail;. En fer clic al botó, s'etiquetarà el missatge seleccionat.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>Totes les etiquetes definides aquí apareixeran automàticament com a opcions noves en el submenú <menuchoice
+><guimenu
+>Missatge</guimenu
+> <guisubmenu
+>Marca el missatge &gt;</guisubmenu
+></menuchoice
+>.</para>
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-composer">
+    <title
+>La pàgina Editor </title>
+    
+    <para
+>Llegiu <link linkend="the-composer-window"
+>aquesta pàgina</link
+> per a obtenir una descripció de com utilitzar l'<guilabel
+>Editor</guilabel
+>. Per a obtenir més informació sobre com ajustar el comportament de l'<guilabel
+>Editor</guilabel
+>, premeu l'enllaç. </para>
+
+    <sect2 id="configure-composer-general">
+      <title
+>General </title>
+    
+    <screenshot>
+    <screeninfo
+>Editor - General</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composergeneral.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Editor - General</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya General - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Aquest diàleg permet ajustar la forma en què el &kmail; maneja les signatures. També permet controlar algunes característiques de format, ajustar algunes opcions de la compleció automàtica i modificar la característica de desament automàtic del &kmail;. </para>
+    
+    <variablelist>
+	<varlistentry id="configure-composer-general-append-signature">
+	  <term>
+	    <guilabel
+>Insereix automàticament la signatura</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, la signatura definida a la <link linkend="configure-identity-signature"
+>pàgina Identitat</link
+> serà inclosa automàticament al final de cada missatge que creeu (&ead;, els missatges nous, les respostes, &etc;). </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Afegeix la signatura a dalt del text citat</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; inserirà la vostra signatura a la part superior de la finestra de l'editor i no a la part inferior. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Preposa un separador a la signatura</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; inserirà «-- » (guió guió espai) abans de la vostra signatura, si aquesta no comença d'aquesta manera. (Aquesta línia de separació és un estàndard <emphasis
+>de facto</emphasis
+> a Internet). </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Elimina la signatura en respondre</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; eliminarà la signatura del missatge original quan es redacti una resposta. Per descomptat, si no heu seleccionat la signatura i s'ha marcat l'opció <guilabel
+>Cita només el text seleccionat en contestar</guilabel
+>, el &kmail; ometrà la signatura sense fer referència a aquesta opció de configuració. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry id="configure-composer-general-quote-selection-only">
+    <term>
+      <guilabel
+>Cita només el text seleccionat en contestar</guilabel>
+    </term>
+    <listitem>
+      <para
+>Si està marcada, en contestar el &kmail; només citarà el text seleccionat a la finestra de missatge, en lloc de tot el missatge. Amb això és possible generar ràpidament respostes que només citin el paràgraf pertinent al qual esteu contestant realment. Si aquesta opció està marcada i no heu seleccionat res, el &kmail; citarà tot el missatge. </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry id="configure-composer-general-smart-quoting">
+	  <term>
+	    <guilabel
+>Empra el citat intel·ligent</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; trencarà les línies llargues, però intentarà mantenir el citat correcte (&pex;, la «&gt;» sempre estarà al començament de la línia). </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Ajusta les paraules a la columna:</guilabel>
+    </term>
+    <listitem>
+      <para
+>Si està marcada, se seleccionarà automàticament l'opció d'ajust de paraules (<menuchoice
+><guimenu
+>Opcions</guimenu
+> <guimenuitem
+>Talla les paraules</guimenuitem
+></menuchoice
+> a la finestra de l'editor). Utilitzeu el botó de selecció de valors per a establir la longitud màxima de la línia. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Respon o reenvia emprant el mateix format visual com el missatge original (text net o &HTML;)</guilabel>
+    </term>
+    <listitem>
+      <para
+>Si està marcada, el &kmail; sempre habilitarà la barra d'eines per a l'edició de text enriquit si el missatge al qual esteu responent conté una capçalera &MIME; d'&HTML;. Si aquesta opció no està seleccionada, l'editor conservarà l'estat de la barra d'eines de la sessió anterior. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Millora la versió de text net del missatge en &HTML;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; afegirà notes a peu de pàgina a la versió de text sense format de cada missatge redactat en &HTML;. Aquestes notes a peu de pàgina amb text sense format seran enllaços en els quals es podrà fer clic i que apuntaran a qualsevol recurs codificat com a etiquetes d'ancoratge (també coneguts com a enllaços) en la versió &HTML; del missatge. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-auto-request-mdns">
+	  <term>
+	    <guilabel
+>Petició automàtica de les notificacions de processament del missatge</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, <xref linkend="composer-options-request-mdn"/> restarà <emphasis
+>activada</emphasis
+> de manera predeterminada. Marqueu aquesta opció tan sols si sabeu el que esteu fent. Moltes persones consideren que les &mdn; són molestes (o simplement les ignoren). És millor sol·licitar-les només quan sigui necessari. </para>
+	  </listitem>
+    </varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Usa les adreces indexades dels correus per a la compleció automàtica</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; inclourà les adreces de tots els vostres missatges desats a la llista d'objectius per a la compleció automàtica (&pex;, quan comenceu a escriure en el camp d'entrada «A:»). Aquests apareixeran com a «Contactes trobats a les vostres dades». Si desactiveu aquesta opció, només apareixeran a la llista les entrades del &kaddressbook; i les «Adreces recents» que coincideixin. Utilitzeu el botó de selecció de valors per a limitar el nombre d'elements que es mostraran a la llista. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Usa les adreces recents per a la compleció automàtica</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; inclourà les adreces que s'han utilitzat recentment a la llista d'objectius per a la compleció automàtica (&pex;, quan comenceu a escriure en el camp d'entrada «CC:»). Apareixeran com a «Adreces recents». Si desactiveu aquesta opció, només apareixeran a la llista les entrades del &kaddressbook; que coincideixin i els «Contactes trobats a les vostres dades». Utilitzeu el botó de selecció de valors per a limitar el nombre d'elements considerats «recents». </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term
+>El botó <guibutton
+>Configura la compleció...</guibutton
+> </term>
+	  <listitem>
+	    <para
+>Feu clic sobre aquest botó per a obrir el diàleg de configuració per a la compleció automàtica. Podeu ajustar l'ordre en què apareixen els elements, afegir o eliminar adreces «recents» i crear una llista negra de les adreces que mai haurien d'aparèixer com a objectius per a la compleció automàtica. Recordeu que aquest diàleg també es pot invocar des d'un menú contextual fent clic amb el &BDR; a, diguem, el camp «A:» de l'editor. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-autosave-interval">
+	  <term>
+	    <guilabel
+>Desa automàticament cada</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>De manera predeterminada, es crearà amb regularitat una còpia de seguretat del text que hi ha a la finestra de l'editor. Aquesta opció permet especificar la freqüència amb la qual es crearà una còpia de seguretat. Podreu inhabilitar el desament automàtic seleccionant «No desis automàticament». </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-standard-templates">
+    <title
+>Plantilles estàndard</title>
+    <screenshot>
+    <screeninfo
+>Plantilles estàndard - Editor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerstandard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Plantilles estàndard - Editor</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Plantilles estàndard - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Aquí podreu editar les plantilles predeterminades de missatge que s'utilitzaran quan redacteu un missatge nou, escriu una resposta o reenvieu un missatge. Les plantilles de missatge admeten ordres de substitució, senzillament escrivint-la o seleccionant-la al menú <guimenu
+>Insereix una ordre</guimenu
+>. Aquestes són plantilles globals (predeterminades). Poden substituir-se per plantilles per identitat o plantilles per carpeta si se n'especifica alguna. La majoria de la gent està contenta amb les plantilles predeterminades estàndard. Però si voleu modificar els valors predeterminats, aquest és el lloc per a fer-ho. </para>
+
+    <para
+>Per a obtenir una explicació més detallada de la configuració de la plantilla, vegeu <link linkend="configure-identity-templates"
+>el capítol Identitats</link
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-custom-templates">
+    <title
+>Plantilles personalitzades</title>
+    <screenshot>
+    <screeninfo
+>Plantilles personalitzades - Editor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercustom.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Plantilles personalitzades - Editor</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Plantilles personalitzades - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Aquí podeu afegir, editar i suprimir les plantilles personalitzades dels missatges a utilitzar quan es redacta un missatge de resposta o de reenviament. Creeu la plantilla personalitzada escrivint el nom al quadre d'entrada corresponent i premeu el botó <guiicon
+>+</guiicon
+>. Podeu associar una combinació de tecles a la plantilla per a fer operacions més ràpides. </para>
+    <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
+    
+    <para
+>Les plantilles de missatge permeten ordres de substitució, escrivint-les o seleccionant-les des del menú <guimenu
+>Insereix una ordre</guimenu
+>. </para>
+    
+    <para
+>Hi ha quatre tipus de plantilla personalitzada: L'emprada per a <guilabel
+>Respondre</guilabel
+>, <guilabel
+>Respondre a tots</guilabel
+>, <guilabel
+>Reenviar</guilabel
+> i la <guilabel
+>Universal</guilabel
+> que es pot utilitzar per a qualsevol classe d'operació. No es pot assignar una drecera de teclat a les plantilles de tipus <guilabel
+>Universal</guilabel
+>. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-subject">
+    <title
+>Assumpte</title>
+    <screenshot>
+    <screeninfo
+>Assumpte - Editor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composersubject.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Assumpte - Editor</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Assumpte - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Aquesta secció conté una llista de prefixos per a «Respondre» i «Reenviar». Si rebeu missatges que empren prefixos que difereixen dels estàndards, els podreu afegir a aquesta llista perquè el &kmail; els reconegui. El &kmail; ignorarà els prefixos extravagants quan ordeni els missatges (i quan estableixi l'assumpte d'una resposta o reenviament, substituint-los de manera opcional per «Re:» o «Fwd:» respectivament. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-charset">
+    <title
+>Joc de caràcters</title>
+    <screenshot>
+    <screeninfo
+>Joc de caràcters - Editor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercharset.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Joc de caràcters - Editor</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Joc de caràcters - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Des d'aquí podreu gestionar els jocs de caràcters predeterminats emprats als vostres propis missatges. Cada missatge que envieu serà verificat per a si està escrit amb un dels jocs de caràcters aquí llistats, començant de dalt a baix. Si ho està, s'utilitzarà aquest conjunt de caràcters. Si no ho està, apareixerà un diàleg que us demanarà que escolliu un joc de caràcters utilitzant <menuchoice
+><guimenu
+>Opcions</guimenu
+> <guisubmenu
+>Estableix la codificació</guisubmenu
+></menuchoice
+>. </para>
+
+    <para
+>Si seleccioneu <guilabel
+>Mantén el joc de caràcters original en respondre o reenviar (si és possible)</guilabel
+>, es mantindrà el joc de caràcters del missatge original, a menys que ara hi hagi caràcters nous que no estiguin representats emprant aquest joc de caràcters. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-headers">
+    <title
+>Capçaleres</title>
+    <screenshot>
+    <screeninfo
+>Capçaleres - Editor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerheaders.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Capçaleres - Editor</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Capçaleres - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Marqueu la casella de selecció <guilabel
+>Usa el sufix personalitzat d'identificador del missatge</guilabel
+> si voleu que el &kmail; generi l'ID del missatge amb un sufix personalitzat. Introduïu el sufix que desitgeu en el camp <guilabel
+>Sufix personalitzat d'identificador del missatge:</guilabel
+>. Assegureu-vos que el que especifiqueu sigui únic (a l'univers web). La forma més senzilla de garantir la unicitat és utilitzar el nom del vostre propi domini, si en teniu un. Si no marqueu <guilabel
+>Usa el sufix personalitzat d'identificador del missatge</guilabel
+>, el &kmail; generarà automàticament tot l'ID del missatge. Si no sabeu del que estem parlant, no trieu aquesta opció. </para>
+
+    <para
+>La llista <guilabel
+>Defineix els camps personalitzats per a la capçalera MIME</guilabel
+> estableix les capçaleres que el &kmail; emprarà per als seus missatges sortints. Podeu inventar camps nous i sobreescriure els existents. Aquesta característica tan sols és d'utilitat per a experts. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-attachments">
+    <title
+>Adjunts</title>
+    <screenshot>
+    <screeninfo
+>Adjunts - Editor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerattach.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Adjunts - Editor</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Adjunts - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Si heu d'enviar adjunts amb noms de fitxer que tinguin caràcters no anglesos per als usuaris de <application
+>&Microsoft; Outlook</application
+> o <application
+>&Microsoft; Outlook Express</application
+>, potser voldreu marcar l'opció <guilabel
+>Denominació dels adjunts compatible amb l'Outlook</guilabel
+>. El &kmail; intentarà codificar els noms dels adjunts d'una forma no estàndard que entendrà el <application
+>&Microsoft; Outlook</application
+>. </para>
+
+    <para
+>Quan seleccioneu aquesta opció, el &kmail; crearà missatges no conformes amb els estàndards del correu electrònic i, en conseqüència, és possible que els clients de correu que els compleixen no puguin comprendre el missatge. Per tant, no hauríeu d'habilitar aquesta opció llevat que hàgiu de fer-ho. </para>
+
+    <para
+>Marqueu la casella de selecció <guilabel
+>Habilita la detecció de la falta d'adjunts</guilabel
+> si voleu que el &kmail; us avisi si procediu a enviar un missatge sense adjunts tot i que el text del missatge conté certes paraules que indiquen que n'hi volíeu incloure un. La llista de paraules clau es pot modificar. </para>
+    
+    <para
+>Utilitzeu el botó de selecció de valors <guilabel
+>Mida màxima de l'adjunt:</guilabel
+> per a limitar la mida de qualsevol adjunt que envieu. Si intenteu adjuntar un fitxer més gran que el límit especificat, el &kmail; emetrà un missatge d'error i refusarà adjuntar-lo. Cal tenir en compte que aquest és un límit individual i no un límit agregat. A més, la mida del fitxer es verifica abans que el fitxer es converteixi a la codificació base 64, si això és necessari. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-autocorrection">
+    <title
+>Correcció automàtica</title>
+    <screenshot>
+    <screeninfo
+>Correcció automàtica - Editor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercorrect.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Correcció automàtica - Editor</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Correcció automàtica - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>Per a habilitar la correcció automàtica dels errors tipogràfics comuns, seleccioneu l'opció <guilabel
+></guilabel
+>. Utilitzeu la llista desplegable per a triar el vostre idioma. Podeu importar les configuracions, sigui des del <application
+>LibreOffice</application
+> o una altra instal·lació del &kmail; / &calligra;, a través del botó <guibutton
+>Importa... <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guibutton
+>. Si necessiteu desar la vostra configuració per a una altra instal·lació o aplicació, utilitzeu el botó <guibutton
+>Exporta...</guibutton
+>. </para>
+    
+    <para>
+      <variablelist
+><title
+>Opcions per a la correcció automàtica</title>
+        <varlistentry>
+             <term
+><guilabel
+>Correcció automàtica simple</guilabel
+></term>
+             <listitem>
+               <para
+>Permet configurar el &kmail; per a corregir automàticament diversos errors tipogràfics comuns. Marqueu les caselles al costat de les característiques de correcció automàtica que vulgueu. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Cometes personalitzades</guilabel
+></term>
+             <listitem>
+               <para
+>Podeu substituir les cometes dobles o individuals amb cometes «intel·ligents» marcant la casella corresponent. En seleccionar aquesta opció també podreu afegir un espai no divisible abans dels signes de puntuació específics en el text francès. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Correcció automàtica avançada</guilabel
+></term>
+             <listitem>
+               <para
+>Podeu personalitzar la substitució automàtica personalitzada de les paraules marcant aquesta opció. Per a introduir una cadena personalitzada que substituirà automàticament, introduïu la paraula a substituir en el quadre <guilabel
+>Cerca</guilabel
+> i la paraula de substitució en el quadre <guilabel
+>Substitueix</guilabel
+>, després feu clic al botó <guibutton
+>Afegeix</guibutton
+>. Per a eliminar una paraula personalitzada, ressalteu aquesta entrada i feu clic a <guibutton
+>Elimina</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Excepcions</guilabel
+></term>
+             <listitem>
+               <para
+>Aquest diàleg permet crear excepcions en les quals podreu dir-li al &kmail; que ignori alguns punts (final de la frase) i dues lletres majúscules (&pex;, &kmail;). Introduïu l'excepció i feu clic al botó <guibutton
+>Afegeix</guibutton
+>. Per a eliminar l'excepció, ressalteu la cadena i feu clic a <guibutton
+>Elimina</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+        </variablelist>
+    </para>
+      
+    <para
+>Una vegada hàgiu fet totes les vostres seleccions, feu clic al botó <guibutton
+>Aplica</guibutton
+> o <guibutton
+>D'acord</guibutton
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace --> 
+    </sect2>
+
+    <sect2 id="configure-resize-image">
+    <title
+>Redimensionar automàticament les imatges</title>
+    <screenshot>
+    <screeninfo
+>Redimensiona automàticament - Editor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerresize.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Redimensiona automàticament - Editor</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Redimensiona automàticament - Editor</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>En algunes circumstàncies, potser us caldrà que el &kmail; redimensioni automàticament la mida de les imatges adjuntes en els correus electrònics sortints (&pex;, límits del servidor de correu). Per a això, seleccioneu <guilabel
+>Redimensiona automàticament les imatges</guilabel
+>. Hi ha diverses opcions que venen amb aquesta característica. </para>
+      
+    <variablelist>
+     <varlistentry
+><term
+><guilabel
+>General</guilabel
+></term>
+       <listitem>
+         <para
+>Hi ha tres opcions a «General». Si voleu mantenir la relació d'aspecte de totes les imatges, seleccioneu <guilabel
+>Mantén la proporció</guilabel
+>. De manera predeterminada, el &kmail; pregunta si voleu canviar la mida abans de canviar-la. Si voleu que el programa canviï la mida de les imatges sense preguntar, desseleccioneu <guilabel
+>Pregunta abans de redimensionar</guilabel
+>. El &kmail; enviarà de manera predeterminada la imatge redimensionada en format <acronym
+>JPG</acronym
+>. Si preferiu que aquestes imatges s'enviïn en format <acronym
+>PNG</acronym
+>, seleccioneu-lo des de la llista desplegable <guilabel
+>Retorna amb el format:</guilabel
+>. </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Imatge</guilabel
+></term>
+       <listitem>
+         <para
+>Suposem que teniu un familiar que només pot rebre fitxers d'imatge d'una certa grandària a causa dels límits del seu proveïdor de correu electrònic. Podeu utilitzar l'opció <guilabel
+>Redueix les imatges a la dimensió màxima:</guilabel
+> per a seleccionar una mida a la qual reduir la imatge i introduïu el seu correu electrònic en els filtres a la pestanya <guilabel
+>Destinataris</guilabel
+>. (La pestanya <guilabel
+>Destinataris</guilabel
+> es debat en més detall al final d'aquesta secció). Si necessiteu una mida personalitzada, escolliu l'última opció <guilabel
+>Personalitzada</guilabel
+> des de les llistes desplegables amplada i alçada, i introduïu el nombre de píxels en el quadre de text. També podreu ampliar les imatges seleccionant <guilabel
+>Augmenta les imatges a la dimensió mínima</guilabel
+>. L'última opció permet ometre el canvi de mida de les imatges que són més petites que la mida de fitxer especificada. </para>
+       </listitem>
+     </varlistentry>
+     
+     <varlistentry
+><term
+><guilabel
+>Nom de fitxer</guilabel
+></term>
+       <listitem>
+         
+           <variablelist>
+           <varlistentry
+><term
+><guilabel
+>Filtre d'origen</guilabel
+></term>
+             <listitem>
+               <para
+>Si voleu que el canvi de mida es realitzi amb base al nom del fitxer, haureu de seleccionar aquí el filtre apropiat. Suposem que necessiteu enviar al cap de la feina múltiples imatges al dia, i us requereix que totes siguin de la mateixa mida. Podríeu anomenar les imatges treball_1 treball_2, &etc;, a continuació, seleccioneu <guilabel
+>Inclou tots els fitxers on el nom contingui un dels patrons</guilabel
+> i introduïu treball en el quadre de text <guilabel
+>Patró:</guilabel
+>. També podreu excloure els fitxers de la mateixa manera seleccionant <guilabel
+>Exclou tots els fitxers on el nom contingui un dels patrons</guilabel
+>. El comportament predeterminat és no filtrar. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Format de la imatge</guilabel
+></term>
+             <listitem>
+               <para
+>Seleccioneu <guilabel
+>Redimensiona totes les imatges amb un d'aquests formats</guilabel
+> per a establir un format específic per a canviar la mida de la imatge. </para>
+               <itemizedlist>
+                 <listitem>
+                   <para
+>Quan aquesta opció està habilitada, haureu de fer clic al botó <guibutton
+>Selecciona el format...</guibutton
+> i després seleccionar un format des del diàleg. </para>
+                 </listitem>
+               </itemizedlist>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Redimensió de la imatge</guilabel
+></term>
+             <listitem>
+               <para
+>Seleccioneu <guilabel
+>Canvia el nom de les imatges redimensionades amb el següent patró:</guilabel
+> si voleu canviar el nom de les imatges redimensionades seguint un patró específic. Introduïu el patró en el quadre de text. Podeu utilitzar: <simplelist>
+                 <member
+>%t estableix l'hora actual</member>
+                 <member
+>%d estableix la data actual</member>
+                 <member
+>%n el nom de fitxer original</member>
+                 <member
+>%e l'extensió original</member>
+                 <member
+>%x la nova extensió</member>
+               </simplelist>
+               </para>
+             </listitem>
+           </varlistentry>
+         </variablelist>
+         
+         </listitem>
+       </varlistentry>
+     
+       <varlistentry
+><term
+><guilabel
+>Destinataris</guilabel
+></term>
+         <listitem>
+           <para
+>Aquesta pestanya és on heu d'especificar els destinataris que necessiten rebre les imatges redimensionades. Haureu de decidir si necessiteu múltiples entrades o només una, i introduir el/s correu/s electrònic/s en el quadre de text utilitzant el «;» (punt i coma) com a separador quan hi hagi múltiples elements. També podreu especificar certs destinataris per als quals no s'haurà de canviar la mida de les imatges. El valor predeterminat és sense filtratge. </para>
+         </listitem>
+       </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+</sect1>
+
+<sect1 id="configure-security">
+  <title
+>La pàgina Seguretat</title>
+  
+  <para
+>El diàleg de configuració Seguretat permet ajustar certes opcions per al text enriquit (&HTML;). També permet controlar les característiques de l'encriptatge i desencriptatge, ajustar part de la lògica integrada contra la suplantació de la identitat i especificar com es gestionaran les sol·licituds de notificació de disposició del missatge (també conegudes com a rebuts de devolució). Recordeu que aquest diàleg <emphasis
+>no</emphasis
+> té res a veure amb les mesures de seguretat antivirus. Si voleu seguretat antivirus, vegeu el capítol <link linkend="the-anti-virus-wizard"
+>Usar el &kmail;: L'assistent contra els virus</link
+>. </para>
+  
+  <sect2 id="configure-security-reading">
+    <title
+>Lectura</title>
+    
+    <screenshot>
+    <screeninfo
+>Lectura - Seguretat</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="securityreading.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Lectura - Seguretat</phrase>
+        </textobject>
+        <caption>
+          <para
+>La pestanya Lectura - Seguretat</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+    
+    <para
+>En aquesta pestanya podreu configurar les opcions de seguretat que afecten la lectura dels missatges.</para>
+
+      <variablelist>
+        <varlistentry id="configure-security-reading-prefer-html">
+	  <term
+><guilabel
+>Prefereix HTML sobre text net</guilabel
+></term>
+	  <listitem>
+            <para
+>De manera predeterminada, el &kmail; mostrarà els missatges &HTML; en text net. Si preferiu veure els missatges amb format i disseny &HTML; de manera automàtica, seleccioneu aquesta opció. Tanmateix, es recomana deixar aquesta opció inhabilitada, ja que poden aparèixer problemes de seguretat amb l'&HTML; habilitat. </para>
+            <para
+>Encara podreu veure amb facilitat els missatges en format &HTML; fent clic a la barra per a alternar entre missatge pla/missatge &HTML; que hi ha al costat esquerre de la subfinestra de vista prèvia. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-reading-external-references">
+	  <term
+><guilabel
+>Permet als missatges carregar les referències externes d'Internet</guilabel
+></term>
+	  <listitem>
+            <para
+>Si està marcada, el &kmail; podrà carregar les imatges externes, els fulls d'estil, &etc; des d'Internet quan s'estigui mostrant un missatge &HTML;. Recomanen encaridament que deixeu desactivada aquesta opció (encara que no tindrà cap efecte fins que habiliteu l'&HTML;). </para>
+            <para
+>Afegint referències externes als seus missatges, la gent pot enviar correu brossa que podria detectar que esteu mirant el seu missatge. Cal tenir present que aquesta opció no afectarà el &Java;, JavaScript, ja que no estan admesos pel &kmail;. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
+    <varlistentry id="configure-security-email-scams">
+      <term
+><guilabel
+>Informa si el missatge llegit és sospitós de suplantació</guilabel
+></term>
+      <listitem>
+            <para
+>A mesura que el correu electrònic ha esdevingut més popular, han proliferat les estafes per correu electrònic. Aquestes poden incloure correus electrònics que semblen provenir des de companyies legítimes, encara que en realitat es vinculen a llocs web maliciosos que sol·liciten la vostra informació personal. Això pot conduir al robatori de la identitat i coses pitjors. De manera predeterminada, el &kmail; analitza els missatges a la recerca d'estafes comunes i us informarà si se sospita que es tracta d'una estafa. Recomanem que manteniu activada aquesta característica. Si voleu desactivar aquests avisos, desmarqueu <guilabel
+>Informa si el missatge llegit és sospitós de suplantació</guilabel
+>. </para>
+            <para
+>Si s'etiqueten missatges de correu electrònic com a legítims (&pex;, d'amics de confiança), podreu afegir les seves adreces de correu electrònic a la <guilabel
+>Llista blanca:</guilabel
+> fent clic al botó <guibutton
+>Afegeix...</guibutton
+> i introduir el correu electrònic en el diàleg que aparegui. Cal tenir en compte que en aquest moment, només es poden incloure a la llista blanca les adreces de correu electrònic completes. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Comprova l'URL amb el sistema de pesca de Google</guilabel
+></term>
+          <listitem>
+            <para
+>Seleccioneu aquesta opció per a forçar al &kmail; a consultar la base de dades de Google de llocs web sospitosos de suplantació d'identitat quan hi hagi algun &URL; incrustat en un missatge i perquè us avisi sempre que es trobi alguna coincidència. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Explora els correus per als URL de seguiment</guilabel
+></term>
+          <listitem>
+            <para
+>De manera predeterminada, el &kmail; verificarà automàticament els &URL; incrustats en els missatges &HTML; i us avisarà si algun d'ells sembla estar intentant rastrejar-vos. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Intenta el desencriptatge dels missatges encriptats en llegir-los</guilabel
+></term>
+          <listitem>
+            <para
+>De manera predeterminada, el &kmail; intentarà desencriptar automàticament els missatges encriptats en veure'ls. Si preferiu fer-ho manualment, desseleccioneu aquesta opció. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+	      <term
+><guilabel
+>Importa automàticament les claus i els certificats</guilabel
+></term>
+	      <listitem>
+	        <para
+>Si està marcada, el &kmail; importarà automàticament qualsevol adjunt que contingui claus &openpgp; cap a l'anell de claus local, i qualsevol adjunt que contingui claus &smime; cap a la caixa de claus local. </para>
+	        <note>
+	          <para
+>Verificar les signatures &smime; sempre implica importar els certificats que contenen. Aquesta opció no té efecte sobre això. Tampoc està relacionada amb la característica <option
+>auto-key-retrieve</option
+> (recuperació automàtica de claus), a on el &gpg; intenta importar les claus desconegudes des d'un servidor de claus. </para>
+	        </note>
+	      </listitem>
+	    </varlistentry>
+      </variablelist>
+      <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-message-disposition-notifications">
+        <title
+>Notificacions de processament del missatge (MDN)</title>
+        <screenshot>
+          <screeninfo
+>MDN - Seguretat</screeninfo>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="securitymdn.png" format="PNG"/>
+              </imageobject>
+              <textobject>
+                <phrase
+>MDN - Seguretat</phrase>
+              </textobject>
+              <caption>
+                <para
+>La pestanya Notificacions de processament del missatge (MDN) - Seguretat</para>
+              </caption>
+            </mediaobject>
+          </screenshot>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+        <variablelist>
+          <varlistentry id="configure-security-reading-mdns">
+	      <term>
+	        <guilabel
+>Notificacions de processament del missatge (MDN)</guilabel>
+	      </term>
+	      <listitem>
+	        <para
+>Les &mdn; són una generalització del que normalment s'anomena un «rebut de lectura». L'autor del missatge sol·licita que li envieu una notificació de disposició i el programa de correu electrònic del destinatari generarà una resposta perquè l'autor pugui saber què ha succeït amb el seu missatge. Els diferents tipus de disposició són «mostrats» (&ead;, llegit), «suprimit» i «tramés» (&pex;, reenviat). </para>
+	        <para
+>Hi ha disponibles les següents opcions (llistades com <guilabel
+>Política d'enviament</guilabel
+>) per a controlar <emphasis
+>quan</emphasis
+> envia les &mdn; el &kmail;. </para>
+	        <variablelist>
+	          <varlistentry>
+		    <term
+><guilabel
+>Ignora</guilabel
+> (recomanat) </term>
+		    <listitem>
+		      <para
+>Ignora qualsevol petició de notificació de disposició. No s'enviarà cap &mdn; automàticament. </para>
+		    </listitem>
+          </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Pregunta</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Tan sols respon a les peticions després de demanar permís a l'usuari. D'aquesta manera, podreu enviar les &mdn; per als missatges que seleccioneu i denegar o ignorar les altres. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Denega</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Envia sempre una notificació de «denegat». Tan sols és <emphasis
+>una mica</emphasis
+> millor que enviar les &mdn; sempre. L'autor encara reconeix que ha actuat amb el missatge, tot i que no es pot dir si l'ha suprimit o si l'ha llegit, &etc; </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Envia sempre</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Envia sempre la notificació de disposició sol·licitada. Això vol dir que l'autor del missatge reconeixerà quan heu actuat amb el missatge i, a més, què ha ocorregut amb aquest (visualitzat, suprimit, &etc;). Aquesta opció està altament desaconsellada, però té sentit quan no us preocupi la vostra privadesa, &pex;, en la gestió d'una relació comercial, aquesta restarà disponible. </para>
+		    </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Si no esteu segur, experimenteu una mica amb <guilabel
+>Pregunta</guilabel
+>. Després, si considereu molestes les preguntes del &kmail;, canvieu-ho a <guilabel
+>Ignora</guilabel
+>. </para>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+	    <para
+>Hi ha disponibles les següents opcions (llistades com <guilabel
+>Citació del missatge original</guilabel
+>) per a controlar <emphasis
+>quant</emphasis
+> del missatge original haurà d'enviar el &kmail; amb les &mdn;. </para>
+        
+	    <variablelist>
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Res</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>No s'enviarà cap part del missatge que els obligatoris ID del missatge i el destinatari original que s'inclouen en la resposta &mdn;. Es mantindrà prou informació perquè el remitent identifiqui de forma única el missatge per al qual es va generar aquesta &mdn;. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Tot el missatge</guilabel>
+            </term>
+            <listitem>
+              <para
+>Adjunta tot el missatge a la notificació de disposició. Normalment, és un excés. No afegeix cap informació valuosa que es pugui deduir de les capçaleres del missatge, però la gent insisteix a vegades en aquesta forma, perquè per als humans és molt més fàcil correlacionar el contingut del missatge (en comptes de només les capçaleres) amb el que han enviat anteriorment. </para>
+            </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Només les capçaleres</guilabel>
+            </term>
+            <listitem>
+              <para
+>Tan sols adjunta les capçaleres a la notificació de disposició. Normalment, n'hi ha prou perquè tant els humans (per l'assumpte) com els ordinadors (per l'ID del missatge) puguin correlacionar amb facilitat la &mdn; amb el missatge original. </para>
+              </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Si no esteu segur, deixeu aquesta opció establerta al valor predeterminat (res). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>No enviïs les MDN en resposta a missatges encriptats</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Aquesta opció suprimeix l'enviament de les &mdn; si el missatge està encriptat (parcialment o totalment). És quelcom així com un intent d'emprar la característica &mdn; del &kmail; com a un <emphasis
+>oracle</emphasis
+> per a deduir si sereu capaç o no de desencriptar el missatge. </para>
+	    <para
+>Parlant estrictament, aquesta opció no és necessària, perquè el &kmail; envia les &mdn; sense importar que el missatge es pugui desencriptar correctament o no (la petició de notificació de disposició es basa en la part no encriptada del missatge), però li dona una opció a l'usuari preocupat per la seguretat: enviar-les sempre si així ho ha sol·licitat (opció sense marcar) o mai (opció marcada). </para>
+	    <para
+>Si no esteu segur, deixeu aquesta opció marcada (el valor predeterminat). </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-composing">
+      <title
+>Edició</title>
+        <screenshot>
+        <screeninfo
+>Edició - Seguretat</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitycomposing.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Edició - Seguretat</phrase>
+            </textobject>
+            <caption>
+              <para
+>La pestanya Edició - Seguretat</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+      <para
+>Sobre aquesta pestanya podreu configurar les opcions apropiades de seguretat per a editar els missatges. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-composing-automatically-sign">
+	  <term>
+	    <guilabel
+>Signa automàticament els missatges</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, s'<emphasis
+>activarà</emphasis
+> de manera predeterminada l'opció <xref linkend="composer-options-sign-message"/>. </para>
+	    <para
+>De tota manera, la podeu activar i desactivar per a cada missatge en particular. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-encrypt-to-self">
+	  <term>
+	    <guilabel
+>En encriptar els correus, també encripta sempre amb el certificat de la meva pròpia identitat</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, qualsevol missatge que s'encripti per als destinataris també serà encriptat per a vosaltres. </para>
+	    <warning>
+	      <para
+>Si desmarqueu aquesta opció, podríeu no ser capaç de desencriptar els missatges que escriviu i els encriptats per altra gent. </para>
+	    </warning>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-store-sent-encrypted">
+	  <term>
+	    <guilabel
+>Emmagatzema els missatges que s'enviïn encriptats</guilabel>
+	      <footnote>
+	      <para
+>Aquesta opció habilita un mode d'ús de l'encriptatge de correu que a vegades (de forma incorrecta) s'anomena encriptatge de «tan sols transport». En aquest mode d'operació, l'encriptatge del missatge es descarta tan aviat com s'abasta la destinació. L'encriptatge tan sols es manté mentre el missatge està de camí. </para>
+	      <para
+>El &kmail; admet aquest mode a mitges, perquè aquesta funcionalitat hauria d'estar ubicada al <emphasis
+>servidor</emphasis
+> de correu (<acronym
+>MTA</acronym
+>) i no en l'àmbit del <emphasis
+>client</emphasis
+> de correu (<acronym
+>MUA</acronym
+>). Per tant, les futures versions del &kmail; poden deixar d'admetre aquesta opció. </para>
+	    </footnote>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, els missatges seran emmagatzemats en la vostra carpeta <guilabel
+>enviats</guilabel
+> com si els haguéssiu enviat (&ead;, si estaven encriptats, aleshores seran emmagatzemats d'aquesta manera). </para>
+	    <para
+>Si no està marcada, els missatges <emphasis
+>sempre</emphasis
+> seran emmagatzemats sense encriptar en la vostra carpeta <guilabel
+>enviats</guilabel
+>, encara que s'hagin enviat encriptats. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-show-encryption-key">
+	  <term>
+	    <guilabel
+>Mostra sempre les claus d'encriptatge per a aprovar-les</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, cada vegada que encripteu un missatge apareixerà un diàleg que us mostrarà les claus d'encriptatge que s'empraran per a cada destinatari. Podreu revisar l'elecció de claus, aleshores canviar-la i aprovar o cancel·lar l'operació d'encriptatge. Us recomanem que es mantingui marcada aquesta opció, perquè fa que el procediment d'encriptatge sigui més transparent. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-opportunistic-encryption">
+	  <term>
+	    <guilabel
+>Encripta automàticament els missatges sempre que sigui possible</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>També conegut com a «encriptatge oportunista». Si està marcada, el &kmail; intentarà fer coincidir els destinataris amb les claus (&openpgp; o &smime;), encara que <emphasis
+>no</emphasis
+> hagin requerit específicament l'encriptatge. Si es trobessin claus utilitzables per a tots els destinataris, el &kmail; us preguntaria si s'ha o no d'encriptar el missatge. </para>
+	    <para
+>És molt recomanable que l'activeu, d'aquesta manera fareu que l'encriptatge sigui realment fàcil d'emprar. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-never-sign-encrypt-drafts">
+	  <term>
+	    <guilabel
+>No signis/encriptis mai en desar com a esborrany</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; no intentarà signar ni encriptar els missatges que es desin a la carpeta <guilabel
+>esborranys</guilabel
+>. És més còmode, i no provoca una gran pèrdua de seguretat, atès que la carpeta dels esborranys és segura. Els usuaris d'&IMAP; poden voler desactivar aquesta opció si la seva carpeta <guilabel
+>esborranys</guilabel
+> resta en el servidor. </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-warnings">
+      <title
+>Miscel·lània</title>
+        <screenshot>
+        <screeninfo
+>Correcció automàtica - Miscel·lània - Seguretat</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitymisc.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Miscel·lània - Seguretat</phrase>
+            </textobject>
+            <caption>
+              <para
+>La pestanya Miscel·lània - Seguretat</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+
+      <para
+>En aquesta pestanya podreu activar i desactivar els avisos relacionats amb la seguretat. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-warnings-warn-send-unsigned">
+	  <term>
+	    <guilabel
+>Avisa si s'intenten enviar missatges sense signar</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; mostrarà un avís si per qualsevol motiu s'ha d'enviar un missatge sense que estigui signat digitalment. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-send-unencrypted">
+	  <term>
+	    <guilabel
+>Avisa si s'intenten enviar missatges sense encriptar</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; mostrarà un avís si per algun motiu s'ha d'enviar un missatge sense encriptar. </para>
+	    <note>
+	      <para
+>Tot i que és freqüent signar tots els missatges que s'envien, no ho és encriptar-los sempre. A menys que la política d'empresa sigui el no enviar mai missatges sense encriptar, podria ser una bona idea deixar aquesta opció sense marcar i confiar en l'<link linkend="configure-security-composing-opportunistic-encryption"
+>encriptatge oportunista</link
+> perquè us avisi si <emphasis
+>s'haurien</emphasis
+> d'enviar els missatges encriptats tot i sense la sol·licitud dels remitents. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+
+	<!-- <varlistentry id="configure-security-warnings-warn-receiver-email-not-in-cert">
+	  <term>
+	    <guilabel
+>Warn if receiver's email address is not in certificate</guilabel>
+	  </term>
+	  <listitem>
+	    <para>
+	      If checked, &kmail; will emit a warning if an &smime;
+	      certificate or &openpgp; key will be used for a recipient
+	      whose email address is not listed in the email addresses
+	      stored in the certificate.
+	    </para>
+	    <para>
+	      Situations in which this warning will trigger include
+	      when configuring your per-identity &openpgp; keys or
+	      &smime; certificates, when encrypting, and when verifying
+	      signatures, if the signature was made with a certificate
+	      that does not include the email address of the sender.
+	    </para>
+	  </listitem>
+    </varlistentry
+> --> <!-- This option is no longer provided. @dcb2020340. -->
+
+	<varlistentry id="configure-security-warnings-warn-near-expire">
+	  <term>
+	    <guilabel
+>Avisa si els certificats/claus caduquen aviat</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, el &kmail; us avisarà si el certificat &smime; o la clau &openpgp; que s'utilitza caducarà aviat. </para>
+	    <para
+>El període en el qual avisar abans de la caducitat de la clau/certificat es pot configurar per separat per a les claus de signat i d'encriptatge, així com (en el cas de &smime;), per als certificats d'usuari final, els certificats <acronym
+>CA</acronym
+> intermedis i els certificats arrel. </para>
+	  </listitem>
+	</varlistentry>
+	
+    <varlistentry>
+	  <term>
+	    <guibutton
+>Configuració del GnuPG...</guibutton>
+	  </term>
+	  <listitem>
+	    <para
+>Feu clic en aquest botó per a obrir un diàleg extens que configura les interaccions entre el &kmail; i &gpg;, el programa GNU Privacy Guard. El &gpg; és massa complex per a documentar-lo aquí. Per a més informació, vegeu el <ulink url="https://www.gnupg.org/docs.html#guides"
+>Manual de privacitat de &GNU;</ulink
+>. Si no sou un expert en encriptatge, probablement hauríeu d'acceptar aquí les opcions de configuració predeterminades. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<varlistentry id="configure-security-warnings-reenable-all-warnings">
+	  <term>
+	    <guilabel
+>Torna a activar tots els avisos «No ho tornis a preguntar»</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>A part dels principals missatges d'avís descrits anteriorment, n'hi ha més d'avis i d'informació, cadascun amb una opció per a no tornar-lo a mostrar. Si els voleu tornar a habilitar després de suprimir-los, podreu fer-ho prement aquest botó. <footnote
+> <para
+>Tornarà a habilitar <emphasis
+>tots</emphasis
+> aquests avisos per al &kmail;. No té gaire sentit en pro de permetre una selecció més fina de quins avisos mostrar, ja que podeu marcar de nou l'opció de suprimir la pròxima vegada que apareguin. </para>
+        </footnote>
+	    </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-smime-validation">
+      <!-- copy of section configuration-smime-validation from kleopatra docbook
+      keep in sync, both apps have the same page in settings-->
+      <title
+>Validació &smime;</title>
+        <screenshot>
+        <screeninfo
+>Validació &smime; - Seguretat</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitysmime.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Validació &smime; - Seguretat</phrase>
+            </textobject>
+            <caption>
+              <para
+>La pestanya Validació &smime; - Seguretat</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+      <para
+>Aquesta pestanya conté les entrades seleccionades des del <ulink url="https://linux.die.net/man/1/gpgsm"
+>diàleg de configuració del dorsal dinàmic</ulink
+> per a &gpgsm;. Si us plau, consulteu el manual de &gpgsm; si voleu una descripció més detallada d'aquestes opcions. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-smime-validation-certificate-crls">
+	  <term>
+	    <guilabel
+>Valida els certificats usant les CRL</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si està marcada, els certificats &smime; es validaran emprant llistes de revocació de certificats (les <acronym
+>CRL</acronym
+> -Certificate Revocation Lists-). Aquesta és l'opció de configuració predeterminada. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-validation-certificate-ocps">
+	  <term>
+	    <guilabel
+>Valida els certificats en línia (OCSP)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si aquesta opció està seleccionada, els certificats &smime; seran validats emprant el protocol d'estat dels certificats en línia (<acronym
+>OCSP</acronym
+> -Online Certificate Status Protocol-). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-url">
+	  <term>
+	    <guilabel
+>&URL; del contestador OCSP:</guilabel>
+          </term>
+         <listitem>
+	      <para
+>Introduïu l'adreça del servidor de validació de certificats en línia. Aquest &URL; usualment comença per <emphasis
+>https://</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-signature">
+	  <term>
+	    <guilabel
+>Signatura del contestador OCSP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Seleccioneu o canvieu i introduïu la clau &smime; a emprar. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-ignore">
+	  <term>
+	    <guilabel
+>Ignora l'&URL; de servei dels certificats</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Marqueu aquesta opció per a evitar la validació en línia utilitzant l'OCSP. Aquesta opció requereix <emphasis
+>dirmngr &gt;= 0.9.0</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-policies">
+	  <term>
+	    <guilabel
+>No comprovar les polítiques del certificat</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>De manera predeterminada, el <guilabel
+>GnuPG</guilabel
+> utilitza el fitxer <filename
+>~/.gnupg/policies.txt</filename
+> per a comprovar si s'admet la política d'un certificat. Si aquesta opció està seleccionada, aquestes polítiques no estaran marcades. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-consult-crls">
+	  <term>
+	    <guilabel
+>No consultar mai una CRL</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si aquesta opció està marcada, no s'empraran mai les llistes de revocació de certificats per a validar els certificats &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-fetch-issuer">
+	  <term>
+	    <guilabel
+>Obtén els certificats de l'emissor que falten</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Marqueu aquesta opció si voleu que els certificats dels emissors de qui no se'n disposi, siguin obtinguts quan calgui. Això s'aplica a ambdós mètodes de validació, les <acronym
+>CRL</acronym
+> i <acronym
+>OCSP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests">
+	  <term>
+	    <guilabel
+>No fer cap sol·licitud &HTTP;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Inhabilita totalment l'ús d'&HTTP; per a &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-ignore-distribution-point">
+	  <term>
+	    <guilabel
+>Ignora el punt de distribució CRL mitjançant &HTTP; dels certificats</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Quan se cerca la localització d'una CRL, el certificat «a comprovar» usualment conté el que es coneix com a entrades punt de distribució (<acronym
+>DP</acronym
+> -Distribution Point-) CRL, les quals són els &URL; que descriuen la manera d'accedir a l'&URL;. La primera entrada <acronym
+>DP</acronym
+> que es trobi és la que s'usarà. Amb aquesta opció, totes les entrades que emprin l'esquema &HTTP; seran ignorades quan s'estigui cercant un <acronym
+>DP</acronym
+> adequat. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-proxy">
+	  <term>
+	    <guilabel
+>Usa l'intermediari &HTTP; del sistema</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Si aquesta opció està seleccionada, el valor de l'intermediari &HTTP; que es mostra a la dreta (i que prové de la variable d'entorn <varname
+>http_proxy</varname
+>) serà l'emprada per a qualsevol sol·licitud &HTTP;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests-proxy">
+	  <term>
+	    <guilabel
+>Usa aquest intermediari per a les sol·licituds &HTTP;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Introduïu aquí la ubicació de l'intermediari &HTTP;, el qual s'emprarà per a totes les sol·licituds &HTTP; relacionades amb &smime;. La sintaxi és «màquina:port», per exemple <emphasis
+>el_meu_intermediari.algun_lloc.cat:3128</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-requests">
+	  <term>
+	    <guilabel
+>No fer cap sol·licitud LDAP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Inhabilita totalment l'ús d'LDAP per a &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-distribution-point">
+	  <term>
+	    <guilabel
+>Ignora el punt de distribució CRL mitjançant LDAP dels certificats</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Quan se cerca la localització d'una <acronym
+>CRL</acronym
+>, el certificat «a comprovar» usualment conté el que es coneix com a entrades punt de distribució (<acronym
+>DP</acronym
+> -Distribution Point-) CRL, les quals són els &URL; que descriuen la manera d'accedir a l'&URL;. La primera entrada <acronym
+>DP</acronym
+> que es trobi és la que s'usarà. Amb aquesta opció, totes les entrades que emprin l'esquema <acronym
+>LDAP</acronym
+> seran ignorades quan s'estigui cercant un <acronym
+>DP</acronym
+> adequat. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-proxy-host">
+	  <term>
+	    <guilabel
+>Màquina primària per a les sol·licituds LDAP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>La introducció d'un servidor <acronym
+>LDAP</acronym
+> aquí farà que totes les sol·licituds <acronym
+>LDAP</acronym
+> vagin primer a aquest servidor. Més precisament, aquesta opció modifica la màquina i el port especificats a un &URL; <acronym
+>LDAP</acronym
+> i també s'usarà si la màquina i el port s'han omès a l'&URL;. Altres servidors <acronym
+>LDAP</acronym
+> només s'usaran si falla la connexió amb l'<emphasis
+>intermediari</emphasis
+>. La sintaxi és <acronym
+>màquina</acronym
+> o <acronym
+>màquina:port</acronym
+>. Si s'omet el <acronym
+>port</acronym
+>, s'usarà el «port 389» (que és l'estàndard <acronym
+>LDAP</acronym
+>). </para>
+	  </listitem>
+	</varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+</sect1
+> <!-- configure-security -->
+
+<sect1 id="configure-misc">
+<title
+>La pàgina Miscel·lània</title>
+
+  <sect2 id="configure-misc-folders">
+    <title
+>Carpetes</title>
+    <screenshot>
+      <screeninfo
+>Carpetes - Miscel·lània</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscfolders.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Carpetes - Miscel·lània</phrase>
+          </textobject>
+          <caption>
+            <para
+>La pestanya Carpetes - Miscel·lània</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+  <variablelist>
+
+    <!--varlistentry>
+      <term
+><guilabel
+>Ask for confirmation before moving all messages to trash</guilabel
+></term>
+      <listitem>
+        <para>
+          Enable this option if you want to be asked for confirmation whenever
+          you use <menuchoice
+><guimenu
+>Folder</guimenu
+><guimenuitem
+>Move All to Trash</guimenuitem
+></menuchoice
+>.
+        </para>
+      </listitem>
+      </varlistentry--><!-- Option has been removed @dcb2020311 -->
+
+    <varlistentry>
+      <term
+><guilabel
+>Impedeix que caduquin els missatges importants</guilabel
+></term>
+      <listitem>
+        <para
+>Habiliteu aquesta opció si els missatges importants no s'han de suprimir mai automàticament. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry id="configure-misc-folders-go-unread">
+      <term
+><guilabel
+>Quan s'intentin trobar missatges sense llegir</guilabel
+></term>
+      <listitem>
+        <para
+>Aquesta opció controla el que succeeix si premeu una de les dreceres per a anar al següent o anterior missatge sense llegir (&pex;, &Space;). Si demaneu al &kmail; que vagi al següent missatge sense llegir encara que no n'hi hagi cap per sota del missatge actualment seleccionat, succeeix el següent. <itemizedlist>
+              <listitem>
+                <para
+>Si s'ha seleccionat <guilabel
+>No tornis al començament</guilabel
+>, no succeirà res. </para>
+              </listitem>
+              <listitem>
+                <para
+>Si s'ha seleccionat <guilabel
+>Recorre la carpeta actual</guilabel
+>, llavors el &kmail; cercarà un missatge sense llegir des del començament de la carpeta actual. Si no en troba cap, no succeirà res. </para>
+              </listitem>
+              <listitem>
+                <para
+>Si s'ha seleccionat <guilabel
+>Recorre totes les carpetes</guilabel
+>, llavors el &kmail; cercarà un altre missatge sense llegir primer a la carpeta actual. Si no en troba cap, el &kmail; cercarà a la següent carpeta que contingui missatges sense llegir. </para>
+              </listitem>
+            </itemizedlist>
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>En entrar a una carpeta</guilabel
+></term>
+      <listitem>
+        <para
+>Aquesta opció controla què succeeix quan obriu una carpeta. <itemizedlist>
+              <listitem>
+                <para
+>Si s'ha seleccionat <guilabel
+>Ves al primer missatge sense llegir</guilabel
+>, el &kmail; seleccionarà el primer missatge que trobi marcat com a sense llegir. </para>
+              </listitem>
+              <listitem>
+                <para
+>Si s'ha seleccionat <guilabel
+>Ves a l'últim missatge seleccionat</guilabel
+>, el &kmail; seleccionarà el missatge que estava seleccionat quan es va obrir la carpeta per darrera vegada. </para>
+              </listitem>
+              <listitem>
+                <para
+>Si s'ha seleccionat <guilabel
+>Ves al missatge més nou</guilabel
+>, el &kmail; seleccionarà el missatge més nou. </para>
+              </listitem>
+              <listitem>
+                <para
+>Si s'ha seleccionat <guilabel
+>Ves al missatge més antic</guilabel
+>, el &kmail; seleccionarà el missatge més antic. </para>
+              </listitem>
+            </itemizedlist>
+
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Marca els missatges seleccionats com a llegits després de...</guilabel
+></term>
+      <listitem>
+        <para
+>Quan seleccioneu un missatge <guilabel
+>nou</guilabel
+> o <guilabel
+>sense llegir</guilabel
+>, el &kmail; canviarà l'estat del mateix a <guilabel
+>llegit</guilabel
+> després de la quantitat de segons que heu introduït aquí. Si inhabiliteu aquesta opció, els missatges es mantindran en l'estat de <guilabel
+>nou</guilabel
+> o <guilabel
+>sense llegir</guilabel
+> fins que l'ajusteu manualment (mitjançant el menú <guilabel
+>Carpeta</guilabel
+>). </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Pregunta què fer després d'arrossegar missatges a una altra carpeta</guilabel
+></term>
+      <listitem>
+        <para
+>Durant l'arrossegat d'un missatge cap a una altra carpeta, apareixerà una petita finestra emergent que us preguntarà si el voleu copiar o moure. Si inhabiliteu aquesta opció, el missatge serà mogut immediatament, sense la finestra emergent. </para>
+      </listitem>
+    </varlistentry>
+
+<!-- not in kmail 2.0.96 varlistentry>
+<term
+><guilabel
+>By default, message folders on disk are...</guilabel
+></term>
+<listitem>
+<para
+>Here you can set the default <link linkend="folders-format"
+>folder format</link>
+that is used when you create a new folder.</para>
+</listitem>
+</varlistentry-->
+
+    <varlistentry>
+      <term
+><guilabel
+>Obre aquesta carpeta en iniciar</guilabel
+></term>
+      <listitem>
+        <para
+>Aquí podeu establir la carpeta que haurà d'estar seleccionada quan engegueu el &kmail;. Si tan sols utilitzeu carpetes &IMAP;, potser voldreu establir aquí la carpeta d'entrada &IMAP;. Si ho feu, podreu plegar les carpetes locals de la llista i, en aquest cas, romandran plegades quan s'engegui el &kmail;. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Buida la paperera local en sortir del programa</guilabel
+></term>
+      <listitem>
+        <para
+>Si aquesta opció està seleccionada quan sortiu del &kmail; es buidarà de missatges la carpeta paperera. </para>
+      </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+      <term
+><guilabel
+>Permet suprimir els missatges sense confirmació</guilabel
+></term>
+      <listitem>
+        <para
+>El comportament predeterminat al &kmail; és demanar confirmació quan se suprimeixi un missatge. Seleccioneu aquesta opció si voleu ometre aquest pas de verificació. (Recordeu que no es pot accedir a la funció <guilabel
+>Suprimeix</guilabel
+> des dels menús del &kmail;. Però podreu afegir un botó <guibutton
+>Suprimeix</guibutton
+> a la barra d'eines mitjançant el diàleg <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura les barres d'eines...</guimenuitem
+></menuchoice
+>. </para>
+      </listitem>
+    </varlistentry>
+
+  </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-invitation">
+    <title
+>Invitacions</title>
+    <screenshot>
+      <screeninfo
+>Invitació - Miscel·lània</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscinvite.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Invitació - Miscel·lània</phrase>
+          </textobject>
+          <caption>
+            <para
+>La pestanya Invitació - Miscel·lània</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Suprimeix les capçaleres De:/A: en les respostes a invitacions</guilabel
+></term>
+        <listitem>
+          <para
+>Habiliteu aquesta opció per a fer que el <application
+>&Microsoft; Outlook</application
+> comprengui la vostra resposta a una invitació. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Envia les invitacions al cos del missatge</guilabel
+></term>
+        <listitem>
+          <para
+>Les invitacions se solen enviar com a adjunts a un missatge. Quan aquesta opció està habilitada, les invitacions s'enviaran en el cos del missatge. Això és necessari per a enviar invitacions i respostes al <application
+>&Microsoft; Outlook</application
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Denominació de les invitacions compatible amb l'Exchange</guilabel
+></term>
+        <listitem>
+          <para
+>El <application
+>&Microsoft; Outlook</application
+>, quan s'utilitza en combinació amb un servidor &Microsoft; Exchange, té un problema en entendre el correu electrònic de treball en grup que compleix els estàndards. Habiliteu aquesta opció per a enviaran les invitacions de treball en grup de manera que el &Microsoft; Exchange les pugui desxifrar. La invitació s'enviarà com a un adjunt amb el nom <filename
+>ical.ics</filename
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+<!--varlistentry>
+<term
+><guilabel
+>Outlook compatible invitation reply comments</guilabel
+></term>
+<listitem>
+<para
+>When the user provides comments when responding to invitations, send the comment in a way that <application
+>&Microsoft; Outlook</application
+> understands. If this option is not enabled, the response comments will not be seen in Outlook.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Show invitation update differences in the Outlook style</guilabel
+></term>
+<listitem>
+<para
+>When viewing updated invitations, this option enables the differences between the previous
+and current invitations to be displayed in a way very much like <application
+>&Microsoft; Outlook</application
+>.
+This is the default. The user can turn this option off if they want to see the invitation
+  update differences shown in the <quote
+>classic</quote
+> &kmail; style.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Automatic invitation sending</guilabel
+></term>
+<listitem>
+<para
+>When this is checked, you will not see the mail composer window. Instead,
+all invitation mails are sent automatically. If you want to see the mail 
+before sending it, you can uncheck this option. However, be aware that the 
+text in the composer window is in iCalendar syntax, and you should not try 
+modifying it by hand.</para>
+</listitem>
+</varlistentry--><!-- These options are no longer available. @dcb2020342-->
+      
+      <varlistentry>
+        <term
+><guilabel
+>Suprimeix els correus d'invitació després d'enviar la seva resposta</guilabel
+></term>
+        <listitem>
+          <para
+>Quan aquesta opció està marcada, les invitacions a les quals s'ha respost es mouran a la carpeta Paperera tan aviat com s'enviï la resposta. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-printing">
+    <title
+>Imprimir</title>
+    <screenshot>
+      <screeninfo
+>Impressió - Miscel·lània</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscprint.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Impressió - Miscel·lània</phrase>
+          </textobject>
+          <caption>
+            <para
+>La pestanya Impressió - Miscel·lània</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Aquest diàleg us ajudarà a afinar la forma en què opera la funció <menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Imprimeix</guimenuitem
+></menuchoice
+>. </para
+> 
+    
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Imprimeix només el text seleccionat</guilabel
+></term>
+        <listitem>
+          <para
+>Habiliteu aquesta opció per a permetre la impressió de només la part seleccionada d'un missatge. El valor predeterminat inhabilita aquesta característica, de manera predeterminada s'imprimirà tot el missatge. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Respecta la configuració de les marques de plegar/desplegar cites</guilabel
+></term>
+        <listitem>
+          <para
+>Aquesta opció està dissenyada per a interactuar amb la característica <guilabel
+>Mostra les marques per a plegar/desplegar les cites</guilabel
+> de la <link linkend="configure-appearance-general"
+>pestanya Aparença</link
+> a la secció <guilabel
+>General</guilabel
+>, però actualment no funciona correctament. En altres paraules, hi ha un error. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Imprimeix el color de fons i les imatges</guilabel
+></term>
+        <listitem>
+          <para
+>Com l'opció anterior, aquí hi ha un error, de manera que el &kmail; sempre imprimirà les imatges, sense importar com estigui establerta aquesta opció. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Mostra sempre els detalls de l'encriptatge/signatura</guilabel
+></term>
+        <listitem>
+          <para
+>Habiliteu aquesta opció per a fer que el &kmail; imprimeixi els detalls de l'encriptatge per als missatges encriptats i/o signats digitalment. </para>
+        </listitem>
+      </varlistentry>
+      
+  </variablelist>
+  </sect2>
+
+</sect1>
+
+<sect1 id="configure-plugins">
+    <title
+>La pàgina Connectors</title>
+    
+    <para
+>El &kmail; conté una gran quantitat de funcions especials que poden ser útils o no per a usuaris particulars. Podeu seleccionar una o més d'aquestes funcions especials triant-les a la pàgina de configuració «Connectors». O, si no desitgeu o necessiteu una funció en particular, podreu estalviar temps i espai d'emmagatzematge desseleccionant el mòdul de connector associat. </para>
+    
+    <para
+>En moltes distribucions de Linux, la majoria d'aquests connectors no estan inclosos en el paquet bàsic del &kmail;. Per a obtenir la completa funcionalitat del connector, assegureu-vos d'instal·lar el paquet anomenat «kdepim-addons» (o alguna cosa semblant). </para>
+    
+    <para
+>Obtindreu una idea aproximada del que fa un connector en particular senzillament ressaltant el nom del connector a la pàgina de configuració del &kmail;. A continuació, apareixerà una breu descripció de la funció d'aquest connector al costat dret del diàleg. </para>
+    
+    <para
+>Els diversos connectors disponibles actualment en el &kmail; (2021) es llisten a continuació. Recordeu que el conjunt de connectors «predeterminats» es basa en la versió openSUSE del &kmail; (5.14.2) que s'utilitza com a referència per a aquesta edició de la documentació. Els valors predeterminats reals al vostre sistema poden ser diferents; depenent de la distribució. </para>
+    
+    <para
+>A causa que s'afegeixen funcions noves de tant en tant, aquesta llista pot augmentar amb el pas el temps. Hi ha dues regles generals que regeixen l'estructura dels connectors amb què podeu comptar, encara que el connector en particular amb què us encareu no es llisti a continuació. </para>
+    
+    <para
+>1.- Si el connector té variables configurables, podreu obrir el diàleg de configuració per a aquest connector fent clic al botó <guibutton
+>&nbsp;<inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> que apareix al costat del nom del connector. </para>
+    
+    <para
+>2.- Sempre que se seleccioni o desseleccioni un connector, s'haurà de reiniciar el &kmail; abans que el/s canvi/s desitjat/s tingui/n efecte. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <sect2 id="configure-plugins-akonadi">
+    <title
+>Akonadi i comprovar abans d'enviar</title>
+    <screenshot>
+      <screeninfo
+>Imatge núm. u - Connectors</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin01.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Imatge núm. u - Connectors</phrase>
+          </textobject>
+          <caption>
+            <para
+>Connectors: Akonadi i Comprova abans d'enviar</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Agent d'arxivat de correu</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar l'arxivat automàtic. Per a obtenir informació detallada, vegeu la documentació de l'<ulink url="help:/akonadi_archivemail_agent"
+>Agent per a arxivar el correu</ulink
+>. Possiblement també voldreu llegir la secció <link linkend="archiving"
+>Arxivament</link
+> d'aquest manual. De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Agent de recordatoris de seguiment</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar els recordatoris de seguiment. Per a obtenir informació detallada, vegeu la documentació de l'<ulink url="help:/akonadi_followupreminder_agent"
+>Agent per als recordatoris de seguiment</ulink
+>. De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Notificador de correu electrònic nou</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar les notificacions noves per correu electrònic. Podreu adaptar els camps perquè es mostrin en el missatge de notificació «estàndard». També podreu seleccionar senyals d'àudio (text parlat, sons preenregistars), crear entrades a fitxers de registre, &etc; De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Agent d'enviament més tard</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar l'enviament retardat. Per a obtenir informació addicional, vegeu la documentació de l'<ulink url="help:/akonadi_sendlater_agent"
+>Agent per a enviar més tard</ulink
+>. De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Agent de la bústia unificada</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a crear un conjunt de bústies de correu «unificades». El &kmail; crearà automàticament tres d'aquestes, etiquetades com a Safata d'entrada, Esborranys i Enviats. Si heu definit tant una safata d'entrada de Carpetes locals com una o més destinacions de safata d'entrada &IMAP;, el &kmail; mostrarà tots els fitxers de la safata d'entrada com a una carpeta consolidada de Safata d'entrada virtual. Podeu utilitzar el diàleg de configuració per a crear bústies de correu virtuals addicionals, adaptant cadascuna com millor us sembli. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Afegeix automàticament als contactes</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir adreces noves a una de les vostres llibretes d'adreces cada vegada que envieu un correu electrònic a un contacte nou. Utilitzeu el diàleg de configuració per a associar les llibretes d'adreces amb les identitats. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Comprova abans d'enviar</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a aplicar algunes regles abans d'enviar un missatge. De manera predeterminada, aquest connector està habilitat i us notificarà automàticament si s'intenta enviar més d'una còpia del missatge a la mateixa persona. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Confirma l'adreça</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar el filtratge de les adreces en els missatges de sortida. Utilitzeu el diàleg de configuració per a definir una llista blanca i/o una llista negra per a cada identitat definida. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-composer">
+    <title
+>Editor</title>
+    <screenshot>
+      <screeninfo
+>Imatge núm. dos - Connectors</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin02.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Imatge núm. dos - Connectors</phrase>
+          </textobject>
+          <caption>
+            <para
+>Editor</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Obre un editor extern</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a forçar que l'editor obri un editor de text extern quan s'iniciï. Utilitzeu el diàleg de configuració d'aquest connector per a especificar l'editor al qual es cridarà. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Correcció automàtica</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor la funció <menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Correcció automàtica del text &gt;</guimenuitem
+></menuchoice
+>. De manera predeterminada, aquest connector està inhabilitat i aparentment encara està en construcció. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Canvia la caixa</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor la funció <menuchoice
+><guimenu
+>Edita</guimenu
+> <guimenuitem
+>Canvia la caixa &gt;</guimenuitem
+></menuchoice
+>. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Insereix un correu electrònic</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor la funció <menuchoice
+><guimenu
+>Edita</guimenu
+> <guimenuitem
+>Insereix un correu electrònic...</guimenuitem
+></menuchoice
+>. Permet inserir una adreça de correu electrònic seleccionada des d'una llibreta d'adreces en el cos del missatge amb un senzill apuntar i fer clic amb el &BER;. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Insereix un espai no divisible</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor la funció <menuchoice
+><guimenu
+>Edita</guimenu
+> <guimenuitem
+>Insereix un espai no divisible</guimenuitem
+></menuchoice
+>. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Insereix un URL curt</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir una mica de codi que no sigui del tot funcional. Aquest connector encara està en construcció i de manera predeterminada també està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Insereix un caràcter especial</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor la funció <menuchoice
+><guimenu
+>Edita</guimenu
+> <guimenuitem
+>Insereix un caràcter especial...</guimenuitem
+></menuchoice
+>. De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Text ràpid</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor la característica <menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Retalls</guimenuitem
+></menuchoice
+>. De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Comparteix el text</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor la funció <menuchoice
+><guimenu
+>Missatge</guimenu
+> <guimenuitem
+>Comparteix el text del correu... &gt;</guimenuitem
+></menuchoice
+>. Ofereix quatre opcions: Nextcloud, Pastebin, Bluetooth i Correu electrònic (s'obrirà una segona finestra de l'editor). De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Amplia el text</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor la funció <menuchoice
+><guimenu
+>Edita</guimenu
+> <guimenuitem
+>Zoom... &gt;</guimenuitem
+></menuchoice
+>. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+        
+    <sect2 id="configure-plugins-grammar">
+    <title
+>Comprovadors de la gramàtica / Estils de capçalera</title>
+    <screenshot>
+      <screeninfo
+>Imatge núm. tres - Connectors</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin03.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Imatge núm. tres - Connectors</phrase>
+          </textobject>
+          <caption>
+            <para
+>Comprovadors de la gramàtica i estils de capçalera</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Comprova la gramàtica en francès</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor l'opció <menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Comprova la gramàtica (Grammalecte)</guimenuitem
+></menuchoice
+>. Aquesta opció és especial, només per a l'idioma francès. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Comprova la gramàtica (LanguageTool)</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a l'editor l'opció <menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Comprova la gramàtica (LanguageTool)</guimenuitem
+></menuchoice
+>. Aquesta és una eina de múltiples usos, amb suport per a comprovar la gramàtica en molts idiomes diferents. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->  
+    
+    <para
+>Els següents 6 connectors permeten decidir quins estils de capçalera es poden seleccionar al menú <guimenu
+>Visualitza</guimenu
+>. Per a més informació, vegeu <link linkend="the-preview-pane-headers"
+>la descripció de diverses vistes de capçalera</link
+> en el capítol «Usar el &kmail;». </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Estil de capçalera breu</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Breus». De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Estil de capçalera «Grantlee» predeterminada</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «KMail 5.2». De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Estil de capçalera sofisticada</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Sofisticades». De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Estil de capçalera «Grantlee»</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Bufones». De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Estil de capçalera llarga</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Llargues». De manera predeterminada, aquest connector està inhabilitat. (Les capçaleres llargues són similars a les capçaleres estàndard, però mostren informació de capçalera menys habitual, com «Respon-a», quan aquestes capçaleres estiguin presents). </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Estil de capçalera estàndard</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Estàndard». De manera predeterminada, aquest connector està inhabilitat. (Les capçaleres estàndard són les mateixes que les capçaleres Bufones, però sense el fons ombrejat). </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-misc">
+    <title
+>Visualitzador del missatge / Miscel·lània</title>
+    <screenshot>
+      <screeninfo
+>Imatge núm. quatre - Connectors</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin04.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Imatge núm. quatre - Connectors</phrase>
+          </textobject>
+          <caption>
+            <para
+>Visualitzador del missatge i miscel·lània</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Els 6 connectors següents proporcionen funcions especials que només es poden invocar amb un botó de la barra d'eines. Utilitzeu el diàleg <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Configura les barres d'eines... </guimenuitem
+></menuchoice
+> per a afegir o eliminar els botons de la barra d'eines associats amb aquestes funcions després de seleccionar o inhabilitar un d'aquests connectors. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Crea un esdeveniment</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a permetre la creació d'un esdeveniment de calendari mentre visualitzeu un missatge en el &kmail;. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Crea una nota</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a permetre la creació d'una nota del &kontact; mentre visualitzeu un missatge en el &kmail;. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Crea una tasca pendent</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a permetre la creació d'un element de tasca pendent en el &korganizer; mentre visualitzeu un missatge en el &kmail;. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Expandeix l'URL</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar l'opció «Expandeix l'URL». De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Script extern</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a permetre la invocació d'una ordre executable des de la barra d'eines. Utilitzeu el diàleg de configuració associat per a seleccionar l'executable i donar-li un nom. El nom que trieu es podrà afegir més tard a la barra d'eines com a un botó, de manera que podreu invocar l'script a voluntat. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Traductor</guilabel
+></term>
+        <listitem>
+          <para
+>De manera predeterminada, la <link linkend="using-the-translator"
+>funció de traductor</link
+> està disponible a l'editor. Utilitzeu aquest connector (a través de la barra d'eines) perquè el traductor estigui disponible a la finestra de vista prèvia del missatge. De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Els quatre elements següents no són realment connectors; són funcions integrades del &kmail;. Cadascun d'aquests es pot configurar per separat, utilitzant el botó <guibutton
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> que apareix al costat del nom de la funció. No caldrà reiniciar perquè aquestes variables de configuració tinguin efecte. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Verificador del DKIM</guilabel
+></term>
+        <listitem>
+          <para
+>Aquest diàleg permet controlar el processament del correu identificat de DomainKeys (DKIM). El DKIM és un protocol criptogràfic que pot assegurar-vos que un missatge en particular es va originar en el domini d'Internet d'on diu ser. Si el remitent ha configurat el DKIM correctament i DKIM està habilitat aquí, algunes vegades veureu un missatge «DKIM vàlid» i el nom de l'entitat que va signar el missatge a la barra d'estat a la part inferior de la finestra de vista prèvia del missatge. </para>
+          <note
+><para
+>Si habiliteu aquesta opció, assegureu-vos de canviar el valor predeterminat («Res») en el botó de selecció de valors etiquetat com a «Desa la clau de registre:» a algun altre valor. El Verificador del DKIM no funcionarà correctament si aquesta variable està configurada com «Res». </para
+></note>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Caducitat de la carpeta paperera</guilabel
+></term>
+        <listitem>
+          <para
+>Utilitzeu aquest diàleg de configuració per a establir els criteris de caducitat per a la/es vostra/es carpeta/es de paperera. Per a més informació, vegeu la documentació <link linkend="folders-properties-expiry"
+>«Propietats de la carpeta»</link
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Paràmetres de les carpetes</guilabel
+></term>
+        <listitem>
+          <para
+>Utilitzeu aquest diàleg de configuració per a establir les propietats de carpeta personalitzades per a diverses carpetes diferents alhora. Podeu seleccionar les carpetes que es modificaran des d'una vista en arbre de totes les vostres carpetes a l'esquerra, i seleccionar les propietats que s'establiran a les pestanyes General, Vista, Plantilles i Caducitat del diàleg <link linkend="folders-properties-expiry"
+>«Propietats de la carpeta»</link
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Gravatar</guilabel
+></term>
+        <listitem>
+          <para
+>Utilitzeu aquest diàleg de configuració per a habilitar / inhabilitar la compatibilitat amb Gravatar (avatar reconegut mundialment). </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-tools">
+        <title
+>Eines</title>
+
+    <screenshot>
+      <screeninfo
+>Imatge núm. cinc - Connectors</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin05.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Imatge núm. cinc - Connectors</phrase>
+          </textobject>
+          <caption>
+            <para
+>Eines i el motor web</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Contra el correu brossa</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir l'<link linkend="the-anti-spam-wizard"
+>Auxiliar contra el correu brossa</link
+> al menú <guimenu
+>Eines</guimenu
+>. De manera predeterminada, aquest connector està inhabilitat. Recordeu que un cop instal·lat el programari contra el correu brossa, aquest connector es pot inhabilitar de forma segura; el connector només és necessari per a instal·lar el programari contra el correu brossa, no per a executar-lo. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Contra els virus</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir l'<link linkend="the-anti-virus-wizard"
+>Auxiliar contra els virus</link
+> al menú <guimenu
+>Eines</guimenu
+>. De manera predeterminada, aquest connector està inhabilitat. Recordeu que un cop instal·lat el programari antivirus, aquest connector es pot inhabilitar de forma segura; el connector només és necessari per a instal·lar el programari antivirus, no per a executar-lo. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Connector expert</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir a la finestra de vista prèvia del missatge la funció <menuchoice
+><guimenu
+>Missatge</guimenu
+> <guimenuitem
+>Mostra l'estructura del missatge Ctrl+Alt+D</guimenuitem
+></menuchoice
+>. De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Registra les activitats</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a habilitar la funció Registra les activitats, la qual de manera predeterminada està inhabilitada. Aquest connector afegeix una entrada nova <guilabel
+>Registra les activitats...</guilabel
+> al menú <guilabel
+>Eines</guilabel
+>. Principalment per a ús dels desenvolupadors de programes: la funció de registre predeterminada no proporciona molta informació (només una marca de temps i «A punt», per a la majoria dels «esdeveniments»). </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Adblock</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a afegir els filtres de l'<ulink url="https://adblockplus.org"
+>Adblock Plus</ulink
+> al &kmail;. Si trieu activar aquest connector, prepareu-vos per a dedicar molt de temps a ajustar el fitxer de configuració per a obtenir els filtres que realment voleu. De manera predeterminada, aquest connector està inhabilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>No deixis rastre</guilabel
+></term>
+        <listitem>
+          <para
+>Seleccioneu aquesta opció per a forçar al &kmail; a enviar una sol·licitud «No deixis rastre» a un servidor remot quan un missatge &HTML; sol·licita descarregar contingut remot. L'efecte d'aquesta sol·licitud dependrà de la política adoptada pel servidor web que rep la sol·licitud. Alguns llocs ho respecten. D'altres no ho fan. </para>
+          <para
+>Els anunciants tenen els seus ulls a tot arreu. Els missatges codificats en &HTML; sovint inclouen una «imatge» de 0x0 o 1x1 píxels (també coneguda com a «píxel de seguiment») que en realitat és un &URL; de seguiment disfressat. Quan el &kmail;l obté les dades de la imatge des d'un servidor web, haurà d'utilitzar els &URL; inclosos en el missatge. El servidor pot utilitzar la informació incrustada en l'&URL; per a inferir que heu obert el missatge, &etc; </para>
+          <para
+>Enviar una sol·licitud de «No deixis rastre» pot millorar lleugerament la vostra privacitat. Però l'única manera segura d'evitar els píxels de seguiment és no descarregar mai les imatges remotes codificades en els missatges &HTML;. De manera predeterminada, aquest connector està habilitat. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    </sect2>
+    
+</sect1>
+
+<sect1 id="configure-non-gui-options">
+<title
+>Opcions sense una interfície d'usuari</title>
+<para
+>A banda de les opcions que es presenten en el diàleg de configuració, algunes opcions només es poden establir directament en el fitxer de configuració del &kmail; o a través del KIOSK (&pex;, «Input» en el &konsole;). Aquestes opcions de configuració anomenades «ocultes» no es poden canviar amb el diàleg normal d'arranjament del &kmail;. S'ha de fer modificant el fitxer de configuració utilitzant un editor de text o el programa <command
+>kwriteconfig</command
+>. El fitxer de configuració s'escriurà en el format [Nom de la secció] i les línies següents seran les variables i els seus valors. Si editeu manualment el fitxer de configuració, cal afegir el [Nom de la secció] abans d'afegir les variables. El <command
+>kwriteconfig</command
+> afegirà la secció per vosaltres, sempre que s'utilitzi el paràmetre <userinput
+>--group</userinput
+>. </para>
+
+<para
+>El fitxer de configuració del &kmail; s'anomena <filename
+>kmail2rc</filename
+> i es troba en el vostre directori personal. La ubicació pot variar segons el sistema operatiu o distribució, però sempre es pot trobar executant l'ordre <userinput
+><command
+>kf5-config --path config --locate kmail2rc</command
+></userinput
+>. Per a la resta d'aquesta secció, s'assumeix que el fitxer de configuració està situat a <filename
+>/camí/a/kmail2rc</filename
+>. </para>
+
+<warning
+><para
+>Per a qualsevol canvi d'aquestes opcions, primer assegureu-vos de sortir del &kmail; abans d'editar el fitxer de configuració. Només inicieu el &kmail; després que hàgiu fet <emphasis
+>i desat</emphasis
+> els canvis al fitxer de configuració. </para
+></warning>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>SendMDNsWithEmptySender</guilabel
+></term>
+<listitem>
+<para
+>Envia notificacions de processament de missatge (MDN) amb un remitent buit. Alguns servidors poden haver-se configurat per a rebutjar aquests missatges, per tant, si experimenteu problemes en enviar les MDN, assegureu-vos d'establir aquesta opció a «false» (fals). Per a habilitar aquesta característica, afegiu-la a la secció «[MDN]»:</para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>SendMDNsWithEmptySender=true</programlisting
+></listitem>
+  <listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+  <para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group MDN --key SendMDNsWithEmptySender true</option
+></userinput
+> </para>
+</listitem>
+</itemizedlist>
+<note
+><para
+>L'opció predeterminada de «false» (fals) viola en sentit estricte els estàndards d'Internet, però s'estableix d'aquesta manera per raons pràctiques, per a evitar que els servidors rebutgin les MDN que genera el &kmail;, perquè pensen que són correu brossa.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>CloseDespiteSystemTray</guilabel
+></term>
+<listitem>
+<para
+>Aquesta opció permet configurar el tancament complet de l'aplicació, inclús si hi ha configurada una icona a la safata del sistema, la qual normalment manté l'aplicació en execució. Per a habilitar aquesta característica, afegiu-la a la secció «[General]»: </para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>CloseDespiteSystemTray=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group General --key CloseDespiteSystemTray true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>disregardUmask</guilabel
+></term>
+<listitem>
+<para
+>En versions anteriors a la 1.9, el &kmail; desava tots els adjunts al disc amb els permisos definits a 600 &mdash; només amb accés de lectura i modificació per al propietari del fitxer. En resposta als comentaris dels usuaris, això s'ha fet configurable en la versió 1.9 del &kmail;, amb el valor predeterminat canviat per a respectar la màscara definida en el compte de l'usuari per a desar fitxers al disc. Per a activar aquesta característica, afegiu-la a la secció «[General]»: </para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>disregardUmask=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group General --key disregardUmask true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>CheckOutOfOfficeOnStartup</guilabel
+></term>
+<listitem>
+<para
+>Amb aquesta opció habilitada, el &kmail; comprovarà en cada engegada si hi ha activa una resposta de «fora de l'oficina» i mostrarà un avís si és el cas. Per a inhabilitar aquesta característica, afegiu-la a la secció «[OutOfOffice]»: </para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>CheckOutOfOfficeOnStartup=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group OutOfOffice --key CheckOutOfOfficeOnStartup false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeSettings</guilabel
+></term>
+<listitem>
+<para
+>En el cas que no vulgueu que els usuaris puguin pujar els seus propis scripts «fora de l'oficina» al servidor, podeu afegir-la a la secció «[OutOfOffice]»: </para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>AllowOutOfOfficeSettings=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeUploadButNoSettings</guilabel
+></term>
+<listitem>
+<para
+>Si voleu permetre als vostres usuaris que pugin els seus propis scripts «fora de l'oficina», però no voleu que puguin canviar les opcions domini a reaccionar a i reacció al correu brossa, podeu afegir-la a la secció «[OutOfOffice]»: </para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>AllowOutOfOfficeUploadButNoSettings=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeUploadButNoSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeDomain</guilabel
+></term>
+<listitem>
+<para
+>Quan s'editin els scripts de vacances («fora de l'oficina»), l'usuari pot especificar un domini per a limitar l'enviament d'aquestes respostes. L'aplicació predeterminada dels valors preestablerts al diàleg de configuració fora de l'oficina a través del botó corresponent, restaurarà aquest domini, en cas que l'usuari l'hagi canviat. Per a precarregar aquesta opció amb un valor predeterminat, afegiu-la a la secció «[OutOfOffice]»:</para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>OutOfOfficeDomain=elMeuDominiDeCorreu.test</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeDomain elMeuDominiDeCorreu.test</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeReactToSpam</guilabel
+></term>
+<listitem>
+<para
+>De manera predeterminada, les respostes «fora de l'oficina» no s'envien als missatges marcats com a correu brossa. Per a substituir aquest comportament, afegiu-la a la secció «[OutOfOffice]»:</para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>OutOfOfficeReactToSpam=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeReactToSpam false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>ShowUserAgent</guilabel
+></term>
+<listitem>
+<para
+>Inicialment a la versió 1.9, el &kmail; pot mostrar el valor User-Agent o X-Mailer de la capçalera del missatge en utilitzar les capçaleres sofisticades (vegeu el menú <menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guisubmenu
+>Capçaleres</guisubmenu
+></menuchoice
+>). Per a habilitar aquesta característica, afegiu-la a la secció «[Reader]»:</para>
+<itemizedlist>
+<listitem
+><para
+>Fitxer de configuració:</para>
+<programlisting
+>ShowUserAgent=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/camí/a/kmail2rc</replaceable
+> --group Reader --key ShowUserAgent true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</chapter>

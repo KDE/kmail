@@ -1,0 +1,135 @@
+<chapter id="intro">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>16 серпня 2020 року</date>
+<releaseinfo
+>5.14.2 (Програми 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Вступ</title>
+
+<screenshot>
+<screeninfo
+>Вікно вітання &kmail;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="kmailwelcome.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Вікно вітання &kmail;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Вікно вітання &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Команда розробки &kmail; запрошує вас до користування &kmail;, дружнім до користувача клієнтом електронної пошти, створеним &kde;. Нашою метою є зробити програму &kmail; красивою і інтуїтивно зрозумілою без шкоди для потужності програми. </para>
+
+<para
+>Якщо ви ще ніколи не налаштовували клієнти електронної пошти у системах &UNIX;, ми сподіваємося, що ви почнете читання з розділу <link linkend="getting-started"
+>Початок роботи</link
+>.</para>
+<sect1 id="features">
+<title
+>Деякі з можливостей &kmail;</title>
+<para
+>Тут наведено короткі настанови щодо деяких чудових можливостей &kmail;:</para>
+<itemizedlist>
+<listitem>
+<para
+>Для користування &kmail; вам не знадобиться миша. Всі дії можна виконати за допомогою <link linkend="keyboard-shortcuts"
+>клавіатурних скорочень</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Хоча програму &kmail; можна вважати достатньо надійною, вам слід робити резервні копії ваших повідомлень, тобто користуватися одним з варіантів експортування або архівування даних, описаних у розділі <link linkend="backups"
+>резервне копіювання</link
+>, щоб забезпечити надійне зберігання ваших даних у безпечному місці.</para>
+</listitem>
+<listitem>
+<para
+>&kmail; може імпортувати дані електронної пошти у декількох форматах з ваших попередніх програм для роботи з електронною поштою. Докладніше про це у розділі щодо <link linkend="import-restore"
+>відновлення та імпортування даних у &kmail;</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Ви можете поділити повідомлення за різними категоріями за допомогою системи <link linkend="folders"
+>тек</link
+> &kmail;. Передбачено обробку повідомлень у окремих визначених вами теках: списки листування, списки керування доступом (лише &IMAP;) та архівування даних.</para
+> <!-- todo: start a glossary -->
+</listitem>
+<listitem>
+<para
+>Доповнити засоби обробки тек можна за допомогою гнучких у налаштовуванні <link linkend="filters"
+>фільтрів</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Типово, &kmail; виявлятиме <link linkend="configure-security-email-scams"
+>небажану кореспонденцію</link
+>. Ви також можете боротися зі спамом та вірусами за допомогою допоміжних інструментів, які виконуватимуть сканування вхідних повідомлень. Докладніший опис можна знайти у розділах щодо <link linkend="the-anti-spam-wizard"
+>боротьби зі спамом</link
+> та <link linkend="the-anti-virus-wizard"
+>боротьби з вірусами</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Просте керування параметрами окремих облікових записів за допомогою <link linkend="configure-identity"
+>профілів</link
+>.</para>
+</listitem>
+</itemizedlist>
+<para
+>Сподіваємося, ви отримаєте задоволення від роботи з &kmail;!</para>
+<sect2 id="getting-help">
+<title
+>Отримання допомоги</title>
+ 
+<para
+>Домашня сторінка &kmail; знаходиться за адресою <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail"
+>https://userbase.kde.org/KMail</ulink
+>. На ній ви знайдете корисні посилання, зокрема на списки листування користувачів і розробників програми та сторінки вікі спільноти. Будь ласка, повідомляйте про помилки у &kmail; за допомогою пункту меню <menuchoice
+><guimenu
+>Довідка</guimenu
+> <guimenuitem
+>Надіслати звіт про помилку...</guimenuitem
+></menuchoice
+>.</para>
+</sect2>
+
+</sect1>
+</chapter>

@@ -1,0 +1,268 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Einars Sprugis <einars8@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-25 00:45+0000\n"
+"PO-Revision-Date: 2012-07-01 15:43+0300\n"
+"Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
+"Language-Team: Latvian <locale@laka.lv>\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+"X-Generator: Lokalize 1.4\n"
+
+#: addarchivemaildialog.cpp:31
+#, fuzzy, kde-format
+#| msgid "Modify Archive Mail"
+msgctxt "@title:window"
+msgid "Modify Archive Mail"
+msgstr "Modificēt arhivēto pastu"
+
+#: addarchivemaildialog.cpp:33
+#, fuzzy, kde-format
+#| msgid "Add Archive Mail"
+msgctxt "@title:window"
+msgid "Add Archive Mail"
+msgstr "Pievienot arhivēto pastu"
+
+#: addarchivemaildialog.cpp:45
+#, kde-format
+msgid "&Folder:"
+msgstr "&Mape:"
+
+#: addarchivemaildialog.cpp:59
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
+msgid "Format:"
+msgstr "F&ormāts:"
+
+#: addarchivemaildialog.cpp:67
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "Arhivēt visas apakšmapes"
+
+#: addarchivemaildialog.cpp:73
+#, kde-format
+msgid "Path:"
+msgstr "Ceļš:"
+
+#: addarchivemaildialog.cpp:83
+#, kde-format
+msgid "Backup each:"
+msgstr "Veidot rezerves kopiju katras:"
+
+#: addarchivemaildialog.cpp:99
+#, kde-format
+msgid "Maximum number of archive:"
+msgstr ""
+
+#: addarchivemaildialog.cpp:104
+#, kde-format
+msgid "unlimited"
+msgstr ""
+
+#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#, kde-format
+msgctxt "Start of the filename for a mail archive file"
+msgid "Archive"
+msgstr "Arhīvs"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Name"
+msgstr "Nosaukums"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Last archive"
+msgstr "Pēdējais arhīvs"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Next archive in"
+msgstr "Nākamais arhīvs"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Storage directory"
+msgstr ""
+
+#: archivemailwidget.cpp:89
+#, fuzzy, kde-format
+#| msgid "Configure Archive Mail Agent"
+msgid "Archive Mail Agent"
+msgstr "Konfigurēt arhivētā pasta aģentu"
+
+#: archivemailwidget.cpp:91
+#, kde-format
+msgid "Archive emails automatically."
+msgstr ""
+
+#: archivemailwidget.cpp:93
+#, kde-format
+msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgstr ""
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Laurent Montel"
+msgstr ""
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Maintainer"
+msgstr ""
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "Pievienot..."
+
+#: archivemailwidget.cpp:113
+#, kde-format
+msgid "Open Containing Folder..."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr ""
+
+#: archivemailwidget.cpp:166
+#, kde-format
+msgid "Folder: %1"
+msgstr "Mape: %1"
+
+#: archivemailwidget.cpp:188
+#, kde-format
+msgid "Tomorrow"
+msgid_plural "%1 days"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: archivemailwidget.cpp:197
+#, kde-format
+msgid "Archive will be done %1"
+msgstr "Arhīvs būs gatavs %1"
+
+#: archivemailwidget.cpp:233
+#, fuzzy, kde-format
+#| msgid "Do you want to delete selected items? Do you want to continue?"
+msgid "Do you want to delete the selected items?"
+msgstr "Vai vēlaties dzēst izvēlētās vienības? Vai vēlaties turpināt?"
+
+#: archivemailwidget.cpp:234
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr ""
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid ""
+"Cannot add a second archive for this folder. Modify the existing one instead."
+msgstr "Šajai mapei nevar pievienot otru arhīvu. Labojiet jau esošo."
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid "Add Archive Mail"
+msgstr "Pievienot arhivēto pastu"
+
+#: job/archivejob.cpp:58
+#, kde-format
+msgid "Directory does not exist. Please verify settings. Archive postponed."
+msgstr ""
+
+#: job/archivejob.cpp:76
+#, kde-format
+msgid "Start to archive %1"
+msgstr "Sākt arhivēt %1"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/archivemailwidget.ui:38
+#, kde-format
+msgid "Modify..."
+msgstr "Labot..."
+
+#: widgets/formatcombobox.cpp:14
+#, kde-format
+msgid "Compressed Zip Archive (.zip)"
+msgstr "Saspiests Zip arhīvs (.zip)"
+
+#: widgets/formatcombobox.cpp:15
+#, kde-format
+msgid "Uncompressed Archive (.tar)"
+msgstr "Nesaspiests arhīvs (.tar)"
+
+#: widgets/formatcombobox.cpp:16
+#, kde-format
+msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
+msgstr "BZ2-saspiests Tar arhīvs (.tar.bz2)"
+
+#: widgets/formatcombobox.cpp:17
+#, kde-format
+msgid "GZ-Compressed Tar Archive (.tar.gz)"
+msgstr "GZ-saspiests Tar arhīvs (.tar.gz)"
+
+#: widgets/unitcombobox.cpp:13
+#, kde-format
+msgid "Days"
+msgstr "dienas"
+
+#: widgets/unitcombobox.cpp:14
+#, kde-format
+msgid "Weeks"
+msgstr "nedēļas"
+
+#: widgets/unitcombobox.cpp:15
+#, kde-format
+msgid "Months"
+msgstr "mēnešus"
+
+#: widgets/unitcombobox.cpp:16
+#, kde-format
+msgid "Years"
+msgstr ""
+
+#~ msgid "Remove items"
+#~ msgstr "Izņemt vienības"
+
+#~ msgid "Remove"
+#~ msgstr "Izņemt"
+
+#, fuzzy
+#~| msgctxt "Start of the filename for a mail archive file"
+#~| msgid "Archive"
+#~ msgid "Archive now"
+#~ msgstr "Arhīvs"
+
+#~ msgid "Configure Archive Mail Agent"
+#~ msgstr "Konfigurēt arhivētā pasta aģentu"
+
+#~ msgid "1 day"
+#~ msgid_plural "%1 days"
+#~ msgstr[0] "%1 diena"
+#~ msgstr[1] "%1 dienas"
+#~ msgstr[2] "%1 dienu"

@@ -1,0 +1,268 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Balázs Úr <urbalazs@gmail.com>, 2012, 2013, 2014.
+# Kristóf Kiszel <ulysses@kubuntu.org>, 2014.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-25 00:45+0000\n"
+"PO-Revision-Date: 2014-09-04 16:34+0200\n"
+"Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: addarchivemaildialog.cpp:31
+#, fuzzy, kde-format
+#| msgid "Modify Archive Mail"
+msgctxt "@title:window"
+msgid "Modify Archive Mail"
+msgstr "Archivált levél módosítása"
+
+#: addarchivemaildialog.cpp:33
+#, fuzzy, kde-format
+#| msgid "Add Archive Mail"
+msgctxt "@title:window"
+msgid "Add Archive Mail"
+msgstr "Archivált levél hozzáadása"
+
+#: addarchivemaildialog.cpp:45
+#, kde-format
+msgid "&Folder:"
+msgstr "&Mappa:"
+
+#: addarchivemaildialog.cpp:59
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
+msgid "Format:"
+msgstr "&Formátum:"
+
+#: addarchivemaildialog.cpp:67
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "Minden almappa archiválása"
+
+#: addarchivemaildialog.cpp:73
+#, kde-format
+msgid "Path:"
+msgstr "Elérési út:"
+
+#: addarchivemaildialog.cpp:83
+#, kde-format
+msgid "Backup each:"
+msgstr "Biztonsági mentés minden:"
+
+#: addarchivemaildialog.cpp:99
+#, kde-format
+msgid "Maximum number of archive:"
+msgstr "Az archívumok maximális száma:"
+
+#: addarchivemaildialog.cpp:104
+#, kde-format
+msgid "unlimited"
+msgstr "korlátlan"
+
+#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#, kde-format
+msgctxt "Start of the filename for a mail archive file"
+msgid "Archive"
+msgstr "Archívum"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Name"
+msgstr "Név"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Last archive"
+msgstr "Utolsó archiválás"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Next archive in"
+msgstr "Következő archiválás"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Storage directory"
+msgstr "Tároló könyvtár"
+
+#: archivemailwidget.cpp:89
+#, kde-format
+msgid "Archive Mail Agent"
+msgstr "Levélarchiváló ügynök"
+
+#: archivemailwidget.cpp:91
+#, kde-format
+msgid "Archive emails automatically."
+msgstr "E-mailek automatikus archiválása."
+
+#: archivemailwidget.cpp:93
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2012, 2013, 2014 Laurent Montel"
+msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgstr "Copyright © Laurent Montel, 2012, 2013, 2014."
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Maintainer"
+msgstr "Karbantartó"
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Kiszel Kristóf,Úr Balázs"
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "ulysses@kubuntu.org,urbalazs@gmail.com"
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "Hozzáadás…"
+
+#: archivemailwidget.cpp:113
+#, kde-format
+msgid "Open Containing Folder..."
+msgstr "Tartalmazó mappa megnyitása…"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Törlés"
+
+#: archivemailwidget.cpp:166
+#, kde-format
+msgid "Folder: %1"
+msgstr "Mappa: %1"
+
+#: archivemailwidget.cpp:188
+#, kde-format
+msgid "Tomorrow"
+msgid_plural "%1 days"
+msgstr[0] "Holnap"
+msgstr[1] "%1 nap"
+
+#: archivemailwidget.cpp:197
+#, kde-format
+msgid "Archive will be done %1"
+msgstr "Az archívum elkészül: %1"
+
+#: archivemailwidget.cpp:233
+#, fuzzy, kde-format
+#| msgid "Do you want to delete selected items? Do you want to continue?"
+msgid "Do you want to delete the selected items?"
+msgstr "Szeretné törölni a kijelölt elemeket? Szeretné folytatni?"
+
+#: archivemailwidget.cpp:234
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Törlés"
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid ""
+"Cannot add a second archive for this folder. Modify the existing one instead."
+msgstr ""
+"Nem adható hozzá egy második archívum ehhez a mappához. Inkább módosítsa a "
+"meglévőt."
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid "Add Archive Mail"
+msgstr "Archivált levél hozzáadása"
+
+#: job/archivejob.cpp:58
+#, kde-format
+msgid "Directory does not exist. Please verify settings. Archive postponed."
+msgstr ""
+"A könyvtár nem létezik. Ellenőrizze a beállításokat. Az archiválás "
+"elhalasztva."
+
+#: job/archivejob.cpp:76
+#, kde-format
+msgid "Start to archive %1"
+msgstr "%1 archiválásának elkezdése"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/archivemailwidget.ui:38
+#, kde-format
+msgid "Modify..."
+msgstr "Módosítás…"
+
+#: widgets/formatcombobox.cpp:14
+#, kde-format
+msgid "Compressed Zip Archive (.zip)"
+msgstr "Tömörített zip archívum (.zip)"
+
+#: widgets/formatcombobox.cpp:15
+#, kde-format
+msgid "Uncompressed Archive (.tar)"
+msgstr "Tömörítetlen archívum (.tar)"
+
+#: widgets/formatcombobox.cpp:16
+#, kde-format
+msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
+msgstr "BZ2-vel tömörített tar archívum (.tar.bz2)"
+
+#: widgets/formatcombobox.cpp:17
+#, kde-format
+msgid "GZ-Compressed Tar Archive (.tar.gz)"
+msgstr "GZ-vel tömörített tar archívum (.tar.gz)"
+
+#: widgets/unitcombobox.cpp:13
+#, kde-format
+msgid "Days"
+msgstr "Nap"
+
+#: widgets/unitcombobox.cpp:14
+#, kde-format
+msgid "Weeks"
+msgstr "Hét"
+
+#: widgets/unitcombobox.cpp:15
+#, kde-format
+msgid "Months"
+msgstr "Hónap"
+
+#: widgets/unitcombobox.cpp:16
+#, kde-format
+msgid "Years"
+msgstr "Év"
+
+#~ msgid "Remove items"
+#~ msgstr "Elemek eltávolítása"
+
+#~ msgid "Remove"
+#~ msgstr "Eltávolítás"
+
+#~ msgid "Archive now"
+#~ msgstr "Archiválás most"
+
+#~ msgid "Configure Archive Mail Agent"
+#~ msgstr "Levélarchiváló ügynök beállítása"
+
+#~ msgid "1 day"
+#~ msgid_plural "%1 days"
+#~ msgstr[0] "1 nap"
+#~ msgstr[1] "%1 nap"

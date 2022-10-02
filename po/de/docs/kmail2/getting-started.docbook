@@ -1,0 +1,868 @@
+<chapter id="getting-started">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+<othercredit role="translator"
+><firstname
+>Matthias</firstname
+><surname
+>Kiefer</surname
+> <affiliation
+><address
+><email
+>matthias.kiefer@gmx.de</email
+></address
+></affiliation
+> <contrib
+>Deutsche Übersetzung</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Alexander</firstname
+><surname
+>Gretencord</surname
+> <affiliation
+><address
+><email
+>arutha@gmx.de</email
+></address
+></affiliation
+> <contrib
+>Überarbeitung</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Frank</firstname
+><surname
+>Schütte</surname
+> <affiliation
+><address
+><email
+>F.Schuette@t-online.de</email
+></address
+></affiliation
+> <contrib
+>Überarbeitung ab Version 1.3</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Matthias Kalle</firstname
+><surname
+>Dalheimer</surname
+> <affiliation
+><address
+><email
+>kalle@kdab.net</email
+></address
+></affiliation
+> <contrib
+>Krypto-Übersetzung</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2020-08-18</date>
+<releaseinfo
+>KDE 5.14.2 (Anwendungen 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Erste Schritte</title>
+
+<para
+>Dieser Abschnitt ist eine kurze Einführung in &kmail; und seine Benutzung, sodass Sie gleich damit arbeiten können. Weitergehende Informationen finden Sie im Abschnitt <link linkend="using-kmail"
+>&kmail; verwenden</link
+></para>
+
+<sect1 id="account-wizard">
+<title
+>Zugangs-Assistent</title>
+
+<para
+>Beim erstmaligen Start von &kmail; wird der Dialog Postfach-Assistent angezeigt.</para>
+<note
+><para
+>Möchten Sie diesen Assistenten später nochmal benutzen, wählen Sie <menuchoice
+><guimenu
+>Extras</guimenu
+><guimenuitem
+>Postfach-Assistent</guimenuitem
+></menuchoice
+> aus dem Menü.</para
+></note>
+<para
+>Der Assistent unterstützt Sie bei der Erstellung Ihrer E-Mail-Postfächer. Abhängig von den Daten, die der Assistent ermitteln kann, werden die Dialog unterschiedlich aussehen. Im folgenden sehen Sie einen Überblick der Dialog, die Ihnen bei der Benutzung dieses Assistenten präsentiert werden.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<procedure id="procedure-add-an-email-account">
+  <step id="Provide-personal-data">
+    <para
+><guilabel
+>Persönliche Daten angeben</guilabel
+> ist die erste Dialogseite des Assistenten. Hier geben Sie die Basisinformationen für Ihr Postfach ein: <guilabel
+>Vollständiger Name</guilabel
+>, <guilabel
+>E-Mail</guilabel
+> und <guilabel
+>Passwort</guilabel
+>. Es wird empfohlen, <guilabel
+>Anbieter-Einstellungen im Internet suchen</guilabel
+> zu aktivieren, damit der Assistent die benötigten Informationen vom Server abholen kann. Sind Sie ein erfahrener Benutzer und müssen eine schwierigere Einrichtung vornehmen, deaktivieren Sie diese Option. Klicken Sie auf <guibutton
+>Weiter</guibutton
+>, wenn alle Felder ausgefüllt ist.</para>
+    
+    <screenshot>
+    <screeninfo
+>Zugangs-Assistent</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Zugangs-Assistent</phrase>
+        </textobject>
+        <caption>
+        <para
+>Der Dialog „Persönliche Daten angeben“</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <note
+><para
+>Gmail-Konten müssen &IMAP; verwenden. Wenn Sie die Zwei-Faktor-Authentisierung für Ihr Gmail-Konto aktiviert haben  müssen Sie einen Authentisierungcode von Google bei der Einrichtung des Konto angeben. Sie müssen keine Zwei-Faktor-Authentisierung durchführen, nachdem das &kmail;-Konto erstellt wurde, da Google  Ihre &IMAP;-Verknüpfung als vollständig vertrauenswürdig markiert.</para
+></note>
+    
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  <step id="GPG-security">
+    
+    <para
+>Auf der nächsten Seite können Sie die Verschlüsselung für E-Mails einrichten.</para>
+    
+    <screenshot>
+    <screeninfo
+>Zugangs-Assistent 2</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Zugangs-Assistent 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Der Dialog „Verschlüsselungseinstellungen“</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Wenn Sie Ihre Kommunikation mit GnuPG absichern möchten, können Sie einen neuen Schlüssel generieren und den Schlüssel auf einem öffentlichen Schlüsselserver veröffentlichen oder Sie importieren einen vorhandenen Schlüssel. Wenn Sie ein neues Schlüsselpaar erzeugen, vergessen Sie nicht das Passwort, mit dem es erzeugt wurde. Sie benötigen dieses Passwort jedes Mal, wenn Sie den Schlüssel verwenden wollen. </para>
+    <para
+>Beim Versenden von E-Mails sucht &kmail; dann optional nach Schlüsseln Ihrer Empfänger und verschlüsselt die Nachricht, wenn Schlüssel. Ihre E-Mails können auch kryptographisch signiert werden, so dass der Empfänger überprüfen kann, ob Ihre Nachrichten manipuliert wurde. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Select-account-type">
+    <para
+>Wenn der Assistent den Kontotyp erfolgreich ermittelt hat, wird ein Dialog angezeigt. Klicken Sie auf <guibutton
+>Details ...</guibutton
+>, um die Einstellungen von &kmail; zu sehen. Klicken Sie auf  <guibutton
+>Fertigstellen</guibutton
+>, um das Konto einzurichten und den Assistenten und den Dialog zu schließen. </para>
+    
+    <screenshot>
+    <screeninfo
+>Zugangs-Assistent 3</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard3.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Zugangs-Assistent 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Der Dialog „Art des Kontos auswählen“</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Kann der Assistent die Art Ihres Kontos nicht selbständig ermitteln, wird als nächstes der Dialog <guilabel
+>Art des Konto auswählen</guilabel
+> angezeigt. Wählen Sie einen Typ aus der Liste. Kennen Sie die Art des Kontos nicht, müssen Sie diese Information bei Ihrem Anbieter erfragen. Wird Ihr Konto nicht aufgeführt, klicken Sie auf <guibutton
+>Im Internet nach weiteren suchen</guibutton
+>. Haben Sie ein Konto ausgewählt, klicken Sie auf <guibutton
+>Weiter</guibutton
+>. Dann erscheint der Dialog <guilabel
+>Persönliche Einstellungen</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Personal-settings">
+      
+    <para
+>Wenn der Assistent Ihren E-Mail-Server bei der Suche im Internet nicht finden kann, wird der Dialog <guibutton
+>Persönliche Einstellungen</guibutton
+> angezeigt.</para
+>  
+        
+    <screenshot>
+    <screeninfo
+>Zugangs-Assistent 4</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard4.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Zugangs-Assistent 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Der Dialog „Persönliche Einstellungen“</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Überprüfen Sie, ob alle Angaben korrekt sind. Wählen Sie <guilabel
+>Alle Nachrichten zur Offline-Verwendung herunterladen</guilabel
+>, wenn Sie Ihre Nachrichten auch ohne Internetverbindung bearbeiten möchten. Diese Einstellung ist nur für &IMAP;-Konten verfügbar. Klicken Sie auf <guibutton
+>Weiter</guibutton
+>, wenn Sie fertig sind.</para>
+    
+    <para
+>Ihr Konto wurde nun eingerichtet, klicken Sie den Knopf <guibutton
+>Fertigstellen</guibutton
+>, um den Assistenten und den Dialog zu schließen oder auf <guibutton
+>Details ...</guibutton
+>, um die Eingaben zu überprüfen.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+</procedure>
+  
+  <para
+>Wenn Sie ein Konto manuell anlegen möchten, lesen Sie bitte das nächste Kapitel. Andernfalls gehen Sie zu <link linkend="testing-your-setup"
+>Testen der Einstellungen</link
+>.</para>
+
+</sect1>
+
+<sect1 id="manual-configuration-quickstart">
+  <title
+>Einführung zur manuellen Einrichtung</title>
+  <screenshot>
+    <screeninfo
+>Der Einrichtungsdialog</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="configure.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Der Einrichtungsdialog</phrase>
+        </textobject>
+        <caption>
+        <para
+>Der Einrichtungsdialog von &kmail;</para>
+        </caption>
+      </mediaobject>
+  </screenshot>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+  
+  <para
+>Der Dialog <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> besteht aus sechs Seiten: <guilabel
+> Konten</guilabel
+>, <guilabel
+>Zugänge</guilabel
+>, <guilabel
+> Erscheinungsbild</guilabel
+>, <guilabel 
+>E-Mail-Editor</guilabel
+>, <guilabel 
+>Sicherheit</guilabel
+>, <guilabel 
+>Diverses</guilabel
+> und <guilabel
+>Module</guilabel
+>. </para>
+
+  <para
+>Um mit dem Senden und Empfangen von Nachrichten zu beginnen, müssen Sie nur einige Einstellungen auf der Seite <guilabel
+>Konten</guilabel
+> vornehmen. Hier ist eine kurze Zusammenfassung der nötigen Schritte für ein neues E-Mail-Konto. Eine ausführlichere Beschreibung finden Sie im Kapitel <link linkend="configure-generalinfo"
+> Einrichtung von &kmail;</link
+>.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <sect2 id="setting-your-identity">
+    <title
+>Einstellen Ihrer Identität </title>
+
+    <para
+>Um eine neue Identität zu erstellen, klicken Sie auf die <guilabel
+>Hinzufügen ...</guilabel
+> auf der der Karteikarte <guilabel
+>Identitäten</guilabel
+> der Seite <guilabel
+>Konten</guilabel
+>.</para>
+  
+    <screenshot>
+    <screeninfo
+>Der Dialog Neue Identität</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Der Dialog Neue Identität</phrase>
+        </textobject>
+        <caption>
+        <para
+>Eine neue Identität hinzufügen</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Geben Sie der neuen Identität einen Namen und wählen Sie eine der der verfügbaren Einstellungen „Mit leeren Feldern“, „Werte der Systemeinstellungen verwenden“ oder „Existierende Identität kopieren“. Klicken Sie dann auf <guilabel
+>OK</guilabel
+>.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <screenshot>
+    <screeninfo
+>Der Dialog Neue Identität</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Der Dialog Neue Identität</phrase>
+        </textobject>
+        <caption>
+        <para
+>Einstellungen für die neue Identität</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <para
+>Die Einstellungen auf der Seite <guilabel
+>Allgemein</guilabel
+> sind ziemlich einfach. Tragen Sie unter <guilabel
+>Ihr Name</guilabel
+> Ihren vollständigen Namen (z.B. <userinput
+>Hans Mustermann</userinput
+>) und optional unter <guilabel
+>Organisation</guilabel
+> Ihre Organisation ein. </para>
+    <para
+>Wenn Sie <application
+>PGP</application
+> oder <application
+>GnuPG</application
+> verwenden, können Sie Ihre &openpgp;-Schlüssel und/oder &smime;-Zertifikate auf der Karteikarte <link linkend="configure-identity-cryptography"
+><guilabel
+>Kryptografie</guilabel
+></link
+> auswählen. </para>
+    <para
+>Auf den Karteikarten <guilabel
+>Erweitert</guilabel
+> und <guilabel
+>Vorlagen</guilabel
+> können Sie die Art und Weise einstellen, wie ausgehende Nachrichten von dieser Identität formatiert und verarbeitet werden. Eine ausführlichere Beschreibung finden Sie im Kapitel <link linkend="configure-generalinfo"
+> Einrichtung von &kmail;</link
+>. </para>
+    <para
+>Optional können Sie auf der Karteikarte <guilabel
+>Signatur</guilabel
+> Ihre Signatur eintragen. Dies ist ein kurzer Text, der automatisch an all Ihre Nachrichten angehängt wird, und hat nichts mit <emphasis
+>digitalen Signaturen</emphasis
+> zu tun. Auf der Karteikarte <guilabel
+>Bild</guilabel
+> können auch einen kleinen Avatar für die Kopfzeilen ausgehender Nachrichten auswählen. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  </sect2>
+
+<sect2 id="setting-up-your-account">
+  <title
+>Einrichtung des Kontos</title>
+
+  <para
+>Die Seite <guilabel
+>Konten</guilabel
+> enthält die Festlegungen, wie &kmail; Ihre Nachrichten verschicken oder empfangen soll. Viele dieser Einstellungen hängen stark von Ihren System-Einstellungen ab sowie von der Art des Netzwerks, über das Sie Ihren Mail-Server erreichen. Falls Sie nicht wissen, welche Einstellungen Sie wählen sollen oder was Sie in ein Feld eintragen müssen, fragen Sie Ihren Internet Service Provider (<acronym
+>ISP</acronym
+>) oder Ihren Systemverwalter.</para>
+</sect2>
+
+<sect2 id="sending-mail">
+  <title
+>Versenden von Nachrichten</title>
+  <para
+>Erstellen eines Versand-Konto.</para>
+  
+  <screenshot>
+    <screeninfo
+>Auswahl der Versandart für ausgehende E-Mails</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Auswahl der Versandart für ausgehende E-Mails</phrase>
+        </textobject>
+        <caption>
+        <para
+>Auswahl der Versandart für ausgehende E-Mails</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+
+  <para
+>Wenn Sie auf <guibutton
+>Hinzufügen ...</guibutton
+> auf der Karteikarte <guilabel
+>Versand</guilabel
+> klicken, wird dieser Dialog angezeigt. Wenn Ihr Rechner direkt mit dem Internet verbunden ist, werden Sie wahrscheinlich die Einstellung &SMTP; benutzen. Wenn Sie &Sendmail; oder <acronym
+>EWS</acronym
+> von &Microsoft; verwenden möchten, konsultieren Sie bitte das Kapitel <link linkend="configure-accounts-sending"
+>Einrichtung</link
+> Aktivieren Sie dann das <guibutton
+>Diese Versandart als Standard für den Postausgang festlegen</guibutton
+>. Sie können dies später ändern, wenn Sie mehr als ein E-Mail-Konto haben.</para>
+
+  <para
+>Wählen Sie <guilabel
+>&SMTP;</guilabel
+> und klicken auf <guibutton
+>✓ Erstellen und einrichten</guibutton
+>, dann wird der folgende Dialog angezeigt.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <screenshot>
+    <screeninfo
+>Der Dialog Konto einrichten</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Der Dialog Konto einrichten</phrase>
+        </textobject>
+        <caption>
+        <para
+>Einrichtung eines &SMTP;-Kontos</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <para
+>Sie müssen mindestens die Adresse eines E-Mail-Servers angeben. Wenn Ihr E-Mail-Dienst eine Authentifizierung vor dem Senden von Nachrichten erfordert, aktivieren Sie das Feld <guilabel
+>Server erfordert Authentifizierung</guilabel
+> und geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein. Wenn &kmail; sich Ihr Passwort merken soll, aktivieren Sie <guilabel
+>SMTP-Passwort speichern</guilabel
+>. Haben Sie noch keinen Passwortspeicher erstellt, müssen Sie ein Passwort eingeben.</para>
+
+  <para
+>Überprüfen Sie, ob die Verbindung zum SMTP-Server funktioniert, indem Sie auf der Karteikarte <guilabel
+>Erweiterte Einstellungen</guilabel
+> auf <guibutton
+>Automatisch erkennen</guibutton
+> klicken. &kmail; fragt Ihren &SMTP; Server nach den richtigen Einstellungen (Verschlüsselung, Portnummer und Authentifizierungsmethode). Nachdem die richtigen Einstellungen erkannt wurden, ist das Ausgangskonto einsatzbereit. Bitte lesen Sie den Abschnitt <link linkend="configure-accounts-sending"
+>Einrichtung</link
+>, wenn die &SMTP;-Verbindung eine zusätzliche Feinabstimmung erfordert.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+</sect2>
+
+<sect2 id="receiving-mail">
+  <title
+>Empfang von Nachrichten</title>
+
+  <para
+>Als Voreinstellung ist der <guilabel
+>Lokale Ordner</guilabel
+> mit Posteingang, Postausgang, Versendete Nachrichten, Papierkorb, Entwürfe und Vorlagen mit den Daten eines lokalen Mailordners vordefiniert. Mit dem Auswahlfeld können Sie die <guilabel
+>Abrufeinstellungen</guilabel
+> dieser Ordner auswählen. &kmail; verwendet das Maildir-Format, um Nachrichten auf Ihrer Festplatte zu speichern: Jede Nachricht wird als eine eigene Datei gespeichert. Der genaue Ort des &kmail; -Ordners hängt von der &Linux; -Distribution ab, die Sie installiert haben. Normalerweise finden Sie diesen Ordner in <filename class="directory"
+>~/.local/share/</filename
+>.</para>
+
+  <para
+>Um ein Konto für den Empfang von E-Mails einzurichten, klicken Sie auf  <guibutton
+>Hinzufügen...</guibutton
+> auf der Karteikarte <guilabel
+>Empfang</guilabel
+>. Wählen Sie im Auswahlfeld<guilabel
+>Benutzerdefiniertes Konto</guilabel
+>. Dann müssen Sie eine Zugangsart einstellen. In den meisten Fällen ist das entweder <guilabel
+>POP3-E-Mail-Server</guilabel
+> oder <guilabel
+>IMAP-E-Mail-Server</guilabel
+> sein. Falls Sie ein lokales Postfach verwenden möchten, lesen Sie Informationen über <link linkend="faq-file-locking"
+>FAQ über das Sperren von Dateien</link
+>.</para>
+    
+  <screenshot>
+    <screeninfo
+>Der Einrichtungsdialog Empfang</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="receiving.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Der Einrichtungsdialog Empfang</phrase>
+        </textobject>
+        <caption>
+        <para
+>Einrichtung eines &IMAP;-Kontos</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->  
+
+  <para
+>Wenn Sie &POP3; oder &IMAP; ausgewählt haben, erscheint der Dialog Konto-Einstellungen. Geben Sie zuerst einen Namen für das Konto im Feld <guilabel 
+>Kontoname</guilabel
+> an. In die Felder <guilabel 
+>Benutzername</guilabel
+>, <guilabel 
+>Passwort</guilabel
+> und <guilabel
+>Eingangs-Mailserver</guilabel
+> oder <guilabel
+>IMAP Server</guilabel
+> müssen Sie die entsprechenden Informationen eingeben, die Sie vom eigenen Internet-Anbieter (ISP) oder vom Systemverwalter erhalten haben. Wenn &kmail; automatisch nach neuen Nachrichten suchen soll, aktivieren Sie <guilabel
+>Konto regelmäßig überprüfen</guilabel
+> und stellen Sie das gewünschte Zeitintervall ein.</para>
+
+  <para
+>Klicken Sie als nächstes auf der Karteikarte <guilabel
+>Erweiterte Einstellungen</guilabel
+> auf <guibutton
+>Automatisch erkennen</guibutton
+>. &kmail; fragt dann Ihren Eingangs-Server nach den richtigen Einstellungen (Verschlüsselung, Portnummer und Authentifizierungsmethode) für diese Konto. </para>
+
+  <sect3 id="receiving-mail-imap">
+    <title
+>Einstellungen nur für IMAP</title>
+
+    <para
+>Wenn Sie <guilabel
+>Ordner automatisch komprimieren</guilabel
+> auf der Karteikarte <guilabel
+>Erweiterte Einstellungen</guilabel
+> aktivieren, entfernt &kmail; die entsprechenden Nachrichten vom Server, sobald der Benutzer den Ordner verlässt. Ansonsten bleiben die Nachrichten nur zur endgültigen Löschung markiert und Sie müssen die Ordner komprimieren.</para>
+    
+  </sect3>
+
+
+  <sect3 id="receiving-mail-pop3">
+    <title
+>Einstellungen nur für POP3</title>
+      
+    <para
+>Wählen Sie <guilabel
+>Abgerufene Nachrichten auf dem Server lassen</guilabel
+> auf der Karteikarte <guilabel
+>Erweiterte Einstellungen</guilabel
+>, wenn Sie die Nachrichten nach dem Herunterladen auf dem Server behalten möchten. Es gibt sieben Möglichkeiten um festzulegen, wie lange alte Nachrichten nach dem Herunterladen aufbewahrt werden sollen: Unbegrenzt (alle Optionen nicht ausgewählt lassen), oder Anzahl der Tage / Anzahl der Nachrichten / maximale Größe des serverseitigen Posteingangs. Wählen Sie eine, zwei oder alle drei Einstellungen. Wenn dies nicht aktiviert ist, werden alle Nachrichten sofort nach dem Herunterladen vom entfernten Server gelöscht.</para
+>  
+  
+    <para
+>Auf der Karteikarte <guilabel
+>Erweiterte Einstellungen</guilabel
+> können Sie <guilabel
+>Pipelining zum schnelleren Abholen aktivieren</guilabel
+> wählen, falls dies vom Server unterstützt wird. Sie sollten die Arbeitsweise dieser Funktion ausreichend testen.</para>
+
+    <para
+><guilabel
+>Posteingang</guilabel
+> ist der Standardordner für eingehende Nachrichten. Falls Sie dies aus irgendeinem Grund ändern wollen, können Sie dies über <guilabel
+>Zielordner</guilabel
+> tun. Aber normalerweise sollten Sie <link linkend="filters"
+>Filter</link
+> benutzen.</para>
+
+    <para
+>Unter <guilabel
+>Vorverarbeitungsbefehl</guilabel
+> kann man ein beliebiges Programm angeben, das von &kmail; vor dem Abrufen von E-Mail ausgeführt werden soll. Man muss hier den ganzen Pfad angeben (hier darf keine <quote
+>~</quote
+> verwendet werden). &kmail; fährt mit der Programmausführung erst fort, wenn das externe Programm beendet ist.</para>
+
+  </sect3>
+
+  <sect3 id="receiving-mail-imap-pop3">
+    <title
+>Einstellungen für <acronym
+>IMAP</acronym
+> und POP3</title>
+    
+    <para
+>Wählen Sie auf der Karteikarte <guilabel
+>Empfang</guilabel
+> als <guilabel
+>Abrufeinstellungen</guilabel
+> <guilabel
+>Bei manueller Prüfung einbeziehen</guilabel
+>, wenn dieses Konto immer auf neue Nachrichten überprüft werden soll, wenn Sie <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Nach E-Mail sehen</guimenuitem
+></menuchoice
+> im Menü auswählen. Ist diese Einstellung deaktiviert, können Sie dennoch manuell nach neuen Nachrichten für dieses Konto mit <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Nach E-Mail sehen in &gt;</guimenuitem
+></menuchoice
+> suchen lassen.</para>
+    
+    <para
+>&kmail; unterstützt Verschlüsselung per <guilabel
+>SSL/TLS</guilabel
+> und <guilabel
+>STARTTLS</guilabel
+>, <guilabel
+>SSL/TLS</guilabel
+> sollte verwendet werden, falls es verfügbar ist.</para>
+
+    <para
+>&kmail; unterstützt neun Authentifizierungsmethoden:</para>
+
+    <itemizedlist>
+      <listitem
+><para
+><guilabel
+>Einfacher Text</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>PLAIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>LOGIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>CRAM-MD5</guilabel
+> (empfohlen, falls <guilabel
+>DIGEST-MD5</guilabel
+> nicht verfügbar ist),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>DIGEST-MD5</guilabel
+> (empfohlen),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>NTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>GSSAPINTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>APOP (aka Anonymous)</guilabel
+>, und </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>Gmail</guilabel
+>.</para
+></listitem>
+    </itemizedlist>
+
+    <para
+><guilabel
+>DIGEST-MD5</guilabel
+>, <guilabel
+>CRAM-MD5</guilabel
+> und <guilabel
+>APOP</guilabel
+> sind von sich aus sicher, alle anderen Optionen sind nur sicher, wenn <guilabel
+>SSL</guilabel
+> oder <guilabel
+>TLS</guilabel
+> verwendet wird. Sie sollten <guilabel
+>Einfacher Text</guilabel
+> nur benutzen wenn Ihr Server keine andere Authentifizierungsmethoden bietet. Für &IMAP; wird zusätzlich <guilabel
+>Anonym</guilabel
+> unterstützt, aber <guilabel
+>APOP</guilabel
+> nicht. <guilabel
+>Gmail</guilabel
+>-Authentifizierung ist nur für &IMAP;-Konten verfügbar, die den Gmail-Dienst von Google verwenden.</para>
+  
+    <para
+>benutzen Sie <guibutton
+>Automatisch erkennen</guibutton
+> auf der Karteikarte <guilabel
+>Erweiterte Einstellungen</guilabel
+>, um die sicherste Methode zu finden, die der Server unterstützt.</para>
+
+    <para
+>Sie sind nun bereit Nachrichten zu empfangen. Für &IMAP; öffnet man einfach die Ordner in der  Ordnerliste in &kmail;'s Hauptfenster. &kmail; wird sich dann mit Ihrem Server verbinden und die Nachrichten anzeigen, die es findet. Für POP3 benutzen Sie <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Nach E-Mail sehen</guimenuitem
+></menuchoice
+>.</para>
+
+  </sect3>
+</sect2>
+
+<sect2 id="testing-your-setup">
+  <title
+>Testen der Einstellungen</title>
+
+  <para
+>Zunächst sollten Sie sich selbst eine Nachricht senden, um die Einrichtung zu testen. Um eine Nachricht zu senden, drücken Sie <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>, wählen Sie das <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&nbsp;Neu</guiicon
+> oder wählen Sie <menuchoice
+><guimenu
+>Nachricht</guimenu
+><guimenuitem
+>Neue Nachricht</guimenuitem
+></menuchoice
+>. Das <link linkend="the-composer-window"
+>Editorfenster</link
+> wird angezeigt. Füllen Sie das Feld <guilabel
+>An:</guilabel
+> mit Ihrer Adresse und schreiben Sie etwas in das Feld <guilabel
+>Betreff</guilabel
+> Senden Sie die Nachricht, indem Sie <menuchoice
+><guimenu
+>Nachricht</guimenu
+> <guimenuitem
+>E-Mail versenden</guimenuitem
+> </menuchoice
+> wählen.</para>
+
+  <para
+>Um nach zuschauen, ob neue E-Mail vorhanden ist, wählen Sie <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Nach E-Mail sehen</guimenuitem
+></menuchoice
+> In der rechten unteren Ecke wird angezeigt, wie viele E-Mails von Ihrem Konto geholt werden. Wenn Sie die Nachricht erhalten, die Sie gerade gesendet haben, dann Herzlichen Glückwunsch! Falls Sie während dieses Test irgendeine Fehlermeldung erhalten, prüfen Sie die Verbindung zum Netzwerk und schauen Sie nochmal genau Ihre Einstellungen durch, indem Sie <menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>&kmail; einrichten...</guimenuitem
+></menuchoice
+> wählen.</para>
+
+</sect2>
+</sect1>
+
+</chapter>

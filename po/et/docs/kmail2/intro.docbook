@@ -1,0 +1,155 @@
+<chapter id="intro">
+
+<chapterinfo>
+<authorgroup>
+<author
+><firstname
+>Daniel</firstname
+> <surname
+>Naber</surname
+> <affiliation
+><address
+> <email
+>daniel.naber@t-online.de</email>
+</address
+></affiliation>
+</author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2013-12-12</date>
+<releaseinfo
+>&kde; 4.12</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Sissejuhatus</title>
+
+<screenshot>
+<screeninfo
+>&kmail;i tiitelkuva</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="kmailwelcome.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&kmail;i tiitelkuva</phrase>
+    </textobject>
+    <caption>
+      <para
+>&kmail;i tiitelkuva</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>&kmail;i meeskond tervitab sind, &kde; kasutajasõbraliku e-posti rakenduse kasutajat. Meie eesmärk on muuta &kmail; rakenduseks, mis on ühtaegu ilus ja tundlik kui ka võimas ja tõhus. </para>
+
+<para
+>Kui sa ei ole kunagi varem seadistanud e-posti klienti &UNIX; süsteemis, soovitame sul esmalt läbi lugeda osa <link linkend="getting-started"
+>Alustamine</link
+>.</para>
+<sect1 id="features">
+<title
+>Mõned &kmail;i omadused</title>
+<para
+>Mõned lingid &kmail;i suurepärastele omadustele</para>
+<itemizedlist>
+<listitem>
+<para
+>&kmail;i kasutamiseks ei ole hiir vajalik. Kõike on võimalik teha <link linkend="keyboard-shortcuts"
+>kiirklahvide</link
+> abil.</para>
+</listitem>
+<listitem>
+<para
+>Kuigi &kmail; on vägagi usaldusväärne, võiksid ometi enda kirjadest varukoopiaid teha, &ie; kasutada mõnda eksportimise või arhiveerimise viisi, mida tutvustab osa <link linkend="backups"
+>Varundamisvalikud</link
+> ning varundada oma seadistused ja kirjad kuhugi turvalisse kohta.</para>
+</listitem>
+<listitem>
+<para
+>&kmail; suudab importida kirju mitmest sinu varasema e-posti rakenduse vormingust, kasutades mõnda valikut, millest räägib osa <link linkend="import-restore"
+>Taastamine ja import &kmail;is</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Kaustasid on imelihtne korraldada &kmail;i ulatuslike <link linkend="folders"
+>kaustade</link
+> valikutega. Mõned võimalused lubavad asju korraldada ka vaid ühe kausta kaupa: postiloendid, pääsuloendid (ainult &imap; korral), arhiveerimine.</para>
+</listitem>
+<listitem>
+<para
+>Kaustapuud saab täiendada igati seadistatavate <link linkend="filters"
+>filtritega</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Vaikimisi tuvastab &kmail; levinumad <link linkend="configure-security-email-scams"
+>rämpsposti</link
+> liigid. Rämpsposti ja viirustega saab samuti võidelda kaasasolevate nõustajatega, mis aitavad välistel programmidel uurida kirju juba saabumise ajal. Täpsemalt kõnelevad sellest osad <link linkend="the-anti-spam-wizard"
+>Rämpspostiga võitlemise nõustaja</link
+> ja <link linkend="the-anti-virus-wizard"
+>Viirustega võitlemise nõustaja</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Väga hõlpus on hallata eri kontode seadistusi mitme <link linkend="configure-identity"
+>identiteedi</link
+> abil.</para>
+</listitem>
+</itemizedlist>
+<para
+>Me loodame, et &kmail; pakub sulle naudingut!</para>
+<sect2 id="getting-help">
+<title
+>Abi saamine</title>
+<note
+><para
+>Kui satud &kmail; 2 peale migreerimisel kokku probleemidega, loe palun peatükki <link linkend="troubleshooting"
+>Probleemide lahendamine</link
+>. </para
+></note>
+<para
+>&kmail;i kodulehekülg on <ulink url="http://userbase.kde.org/KMail"
+>http://userbase.kde.org/KMail</ulink
+>. Seal on mitmeid kasulikke linke, &eg; kasutajate ja arendajate postiloendi lingid. Palun anna &kmail;i vigadest teada, kasutades menüükäsku <menuchoice
+><guimenu
+>Abi</guimenu
+><guimenuitem
+>Saada vearaport...</guimenuitem
+></menuchoice
+></para>
+</sect2>
+
+</sect1>
+</chapter>

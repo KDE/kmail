@@ -1,0 +1,293 @@
+# translation of akonadi_sendlater_agent.po to
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Joëlle Cornavin <jcorn@free.fr>, 2013, 2014.
+# Ludovic Grossard <ludovic.grossard@unilim.fr>, 2014.
+# Maxime Corteel <mcorteel@gmail.com>, 2014, 2015, 2016.
+# Vincent Pinon <vpinon@kde.org>, 2017, 2018.
+# Simon Depiets <sdepiets@gmail.com>, 2019, 2020.
+# Xavier Besnard <xavier.besnard@neuf.fr>, 2021, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: akonadi_sendlater_agent\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2022-01-09 09:57+0100\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.12.1\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Configurer"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Agent d'envoi postérieur"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Agent d'envoi postérieur de courriels."
+
+#: sendlaterconfiguredialog.cpp:53
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Copyright (C) 2013 - %1 Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Mainteneur"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Joëlle Cornavin, Maxime Corteel"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "jcorn@free.fr, mcorteel@gmail.com"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "À"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Objet"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Faire parvenir"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Récurrent"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Identifiant de message"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "Aucun message en attente..."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Envoyer maintenant"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Supprimer"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Oui"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Non"
+
+#: sendlaterconfigurewidget.cpp:207
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Voulez-vous supprimer l'élément sélectionné ?"
+msgstr[1] "Voulez-vous supprimer les éléments sélectionnés ?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Supprimer des éléments"
+
+#: sendlaterconfigurewidget.cpp:216
+#, kde-format
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Voulez-vous vraiment supprimer également le message ?"
+msgstr[1] "Voulez-vous supprimer également les messages ?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Supprimer des messages"
+
+#: sendlaterconfigurewidget.cpp:219
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Ne pas supprimer"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "Aucun message n'a été trouvé."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "Aucun message n'a été trouvé."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Erreur pendant l'extraction du message."
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Il est impossible d'extraire le message. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Impossible de créer un transport"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "Le message n'est pas un message réel"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Il est impossible d'envoyer un message."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Message envoyé"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Une erreur est survenue. Voulez-vous effectuer un nouvel envoi ?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "Erreur rencontrée"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr "Renvoyer"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Modifier..."
+
+#~ msgid "Remove items"
+#~ msgstr "Supprimer des éléments"
+
+#~ msgid "Remove"
+#~ msgstr "Supprimer"
+
+#~ msgctxt "@title:window"
+#~ msgid "Send Later"
+#~ msgstr "Envoyer plus tard"
+
+#~ msgid "Send Later"
+#~ msgstr "Envoyer plus tard"
+
+#~ msgid "Delay"
+#~ msgstr "Retard"
+
+#~ msgid "Days"
+#~ msgstr "Jours"
+
+#~ msgid "Weeks"
+#~ msgstr "Semaines"
+
+#~ msgid "Months"
+#~ msgstr "Mois"
+
+#~ msgid "Years"
+#~ msgstr "Années"
+
+#~ msgid "You cannot select a date prior to the current date."
+#~ msgstr ""
+#~ "Il est impossible de sélectionner une date antérieure à la date actuelle."
+
+#~ msgid "Send at:"
+#~ msgstr "Envoyer le :"
+
+#~ msgid "Repeat every:"
+#~ msgstr "Répéter chaque :"
+
+#, fuzzy
+#~| msgid "Send Later"
+#~ msgid "SendLater"
+#~ msgstr "Envoyer plus tard"
+
+#~ msgid "Put in outbox"
+#~ msgstr "Placer dans la boîte d'envoi"
+
+#, fuzzy
+#~| msgid "Recursive"
+#~ msgid "Recurrence"
+#~ msgstr "Récursif"
+
+#~ msgid "Each:"
+#~ msgstr "Chaque :"
+
+#~ msgid "30 minutes later"
+#~ msgstr "30 minutes plus tard"
+
+#~ msgid "1 hour later"
+#~ msgstr "1 heure plus tard"
+
+#, fuzzy
+#~| msgid "2 hour later"
+#~ msgid "2 hours later"
+#~ msgstr "2 heures plus tard"
+
+#, fuzzy
+#~ msgid "Send around %1"
+#~ msgstr "Envoyer aux alentours de %1"
+
+#~ msgid "Send Now"
+#~ msgstr "Envoyer maintenant"
+
+#~ msgid "Recursive"
+#~ msgstr "Récursif"
+
+#~ msgid "Date"
+#~ msgstr "Date"

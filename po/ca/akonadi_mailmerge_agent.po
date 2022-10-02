@@ -1,0 +1,64 @@
+# Translation of akonadi_mailmerge_agent.po to Catalan
+# Copyright (C) 2021-2022 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2021, 2022.
+# Josep M. Ferrer <txemaq@gmail.com>, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-01-02 00:48+0000\n"
+"PO-Revision-Date: 2022-02-25 15:56+0100\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 20.12.0\n"
+
+#: mailmergeconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Configura"
+
+#: mailmergeconfiguredialog.cpp:48
+#, kde-format
+msgid "Mail Merge Agent"
+msgstr "Agent de fusió del correu"
+
+#: mailmergeconfiguredialog.cpp:50
+#, kde-format
+msgid "Merge email addresses agent."
+msgstr "Agent de fusió d'adreces de correu electrònic."
+
+#: mailmergeconfiguredialog.cpp:52
+#, kde-format
+msgid "Copyright (C) 2021-%1 Laurent Montel"
+msgstr "Copyright (C) 2021-%1, Laurent Montel"
+
+#: mailmergeconfiguredialog.cpp:54
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: mailmergeconfiguredialog.cpp:54
+#, kde-format
+msgid "Maintainer"
+msgstr "Mantenidor"
+
+#: mailmergeconfiguredialog.cpp:57
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Antoni Bella"
+
+#: mailmergeconfiguredialog.cpp:57
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "antonibella5@yahoo.com"

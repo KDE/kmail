@@ -1,0 +1,836 @@
+<chapter id="getting-started">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+<othercredit role="translator"
+><firstname
+>Олег</firstname
+><surname
+>Баталов</surname
+><affiliation
+><address
+><email
+>olegbatalov@mail.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Мария</firstname
+><surname
+>Шикунова</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>18 августа 2020</date>
+<releaseinfo
+>5.14.2 (Приложения KDE 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Начало работы</title>
+
+<para
+>В этом разделе приведено краткое введение в &kmail;, позволяющее начать работу сразу же после его прочтения. Более подробная информация содержится в разделе <link linkend="using-kmail"
+>«Использование &kmail;»</link
+>.</para>
+
+<sect1 id="account-wizard">
+<title
+>Мастер учётных записей</title>
+
+<para
+>При первом запуске &kmail; появится мастер учётных записей.</para>
+<note
+><para
+>Если потребуется запустить мастер учётных записей ещё раз, воспользуйтесь пунктом меню <menuchoice
+><guimenu
+>Настройка</guimenu
+><guimenuitem
+>Добавить учётную запись...</guimenuitem
+></menuchoice
+>.</para
+></note>
+<para
+>Мастер поможет пройти через весь процесс создания учётной записи электронной почты. Количество диалогов будет отличаться в зависимости от того, сколько информации мастер сможет определить самостоятельно. Далее представлено краткое описание диалогов, которые могут появиться при использовании этого мастера.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<procedure id="procedure-add-an-email-account">
+  <step id="Provide-personal-data">
+    <para
+>Первый диалог мастера — это <guilabel
+>Ввод личных данных</guilabel
+>. Этот диалог запрашивает основную информацию: <guilabel
+>Полное имя:</guilabel
+>, <guilabel
+>Адрес электронной почты:</guilabel
+> и <guilabel
+>Пароль:</guilabel
+>. По умолчанию флажок <guilabel
+>Найти параметры сервера в Интернете</guilabel
+> установлен, поэтому мастер попробует получить всю необходимую информацию с сервера электронной почты. Опытные пользователи, которые хотят самостоятельно настроить информацию на данном этапе могут снять флажок. После завершения настройки нажмите кнопку <guibutton
+>Далее</guibutton
+>.</para>
+    
+    <screenshot>
+    <screeninfo
+>Мастер учётных записей</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Мастер учётных записей</phrase>
+        </textobject>
+        <caption>
+        <para
+>Диалог «Ввод личных данных»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <note
+><para
+>Для учётных записей GMail следует использовать &IMAP;. Если для учётной записи GMail включена двухэтапная проверка, необходимо будет получить код подтверждения от Google при первоначальной настройке учётной записи. После создания учётной записи &kmail; повторять двухэтапную проверку не потребуется, потому что Google пометит ссылку  &IMAP; как надёжную.</para
+></note>
+    
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  <step id="GPG-security">
+    
+    <para
+>Следующий диалог поможет установить ключ шифрования для электронной почты.</para>
+    
+    <screenshot>
+    <screeninfo
+>Мастер учётных записей 2</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Мастер учётных записей 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Диалог параметров шифрования</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Чтобы защитить обмен данными с помощью GnuPG, возможно создать новый ключ и опубликовать его на сервере открытых ключей или импортировать существующий ключ. Если потребуется создать новую пару ключей, запомните пароль, который был использован для её создания. Этот пароль будет запрашиваться каждый раз при использовании ключа. </para>
+    <para
+>При отправке писем &kmail; может искать ключи шифрования для получателей и шифровать письмо, если ключ удаётся найти. &kmail; также может криптографически подписывать почту, чтобы исключить изменение содержимого письма сторонними лицами при его доставке получателю. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Select-account-type">
+    <para
+>Диалог <guilabel
+>Настройка завершена</guilabel
+> появится если мастеру удастся успешно определить тип учётной записи. Чтобы просмотреть заданные &kmail;  параметры, нажмите кнопку <guibutton
+>Подробности...</guibutton
+>. Чтобы завершить установку параметров учётной записи и закрыть окно, нажмите кнопку <guibutton
+>Завершить</guibutton
+>. </para>
+    
+    <screenshot>
+    <screeninfo
+>Мастер учётных записей 3</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard3.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Мастер учётных записей 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Диалог выбора типа учётной записи</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Если мастер не сможет определить тип учётной записи, появится диалог <guilabel
+>Выберите тип учётной записи</guilabel
+>. Выберите тип учётной записи в раскрывающемся списке (если не знаете, что выбрать, свяжитесь с поставщиком услуг, предоставившим используемый электронный адрес). Если тип учётной записи отсутствует в списке, нажмите кнопку <guibutton
+>Найти больше в Интернете</guibutton
+>. После установки типа учётной записи нажмите кнопку <guibutton
+>Далее</guibutton
+>, и откроется диалог <guilabel
+>Личные параметры</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Personal-settings">
+      
+    <para
+>Если мастеру не удалось определить расположение сервера электронной почты с помощью поиска в Интернете, откроется диалог <guibutton
+>Личные параметры</guibutton
+>.</para
+>  
+        
+    <screenshot>
+    <screeninfo
+>Мастер учётных записей 4</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard4.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Мастер учётных записей 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Диалог «Личные параметры»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Убедитесь, что данные указаны правильно. Если требуется иметь доступ к письмам при отсутствии Интернет-соединения (только для учётных записей &IMAP;), установите флажок <guilabel
+>Загружать все письма для чтения в автономном режиме</guilabel
+>. После завершения нажмите кнопку <guibutton
+>Далее</guibutton
+>. Появится диалог <guilabel
+>Настройка завершена</guilabel
+>.</para>
+    
+    <para
+>После этого в &kmail; будет создана соответствующая учётная запись. Чтобы закрыть мастер настройки, нажмите кнопку <guibutton
+>Завершить</guibutton
+>, а чтобы просмотреть параметры только что созданной учётной записи, нажмите кнопку <guibutton
+>Подробности...</guibutton
+>.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+</procedure>
+  
+  <para
+>Чтобы узнать, как создать учётную запись вручную, продолжите чтение этой главы. Если эта информация не нужна, перейдите в раздел <link linkend="testing-your-setup"
+>«Проверка конфигурации»</link
+>.</para>
+
+</sect1>
+
+<sect1 id="manual-configuration-quickstart">
+  <title
+>Введение в ручную настройку</title>
+  <screenshot>
+    <screeninfo
+>Диалог настройки</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="configure.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Диалог настройки</phrase>
+        </textobject>
+        <caption>
+        <para
+>Основной диалог настройки &kmail;</para>
+        </caption>
+      </mediaobject>
+  </screenshot>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+  
+  <para
+>Окно <menuchoice
+><guimenu
+>Настройка</guimenu
+><guisubmenu
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+>Настроить &kmail;...</guisubmenu
+></menuchoice
+> состоит из шести разделов: <guilabel
+>Учётные записи</guilabel
+>, <guilabel
+>Внешний вид</guilabel
+>, <guilabel
+>Редактор писем</guilabel
+>, <guilabel
+>Безопасность</guilabel
+>, <guilabel
+>Модули</guilabel
+> и <guilabel
+>Прочее</guilabel
+>. </para>
+
+  <para
+>Чтобы начать отправлять и получать письма, достаточно изменить только некоторые параметры в разделе <guilabel
+>Учётные записи</guilabel
+>. Далее представлен краткий обзор шагов, которые требуется предпринять, чтобы создать и настроить новую учётную запись электронной почты. Более подробная информация содержится в главе <link linkend="configure-generalinfo"
+>«Настройка &kmail;»</link
+>.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <sect2 id="setting-your-identity">
+    <title
+>Настройка профиля </title>
+
+    <para
+>Чтобы создать новый профиль, нажмите кнопку <guilabel
+>Добавить...</guilabel
+> на вкладке <guilabel
+>Профили</guilabel
+> в разделе <guilabel
+>Учётные записи</guilabel
+>. Появится небольшой диалог.</para>
+  
+    <screenshot>
+    <screeninfo
+>Диалог создания профиля</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Диалог создания профиля</phrase>
+        </textobject>
+        <caption>
+        <para
+>Создание нового профиля</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Здесь есть несколько параметров. Задайте имя профиля и выберите одну из доступных опций («С пустыми полями» или «Использовать значения системных параметров»). Затем нажмите кнопку <guilabel
+>OK</guilabel
+>, и появится диалог настройки профиля.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <screenshot>
+    <screeninfo
+>Продолжение диалога создания профиля</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Продолжение диалога создания профиля</phrase>
+        </textobject>
+        <caption>
+        <para
+>Создание нового профиля</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <para
+>Параметры вкладки <guilabel
+>Профили</guilabel
+> достаточно просты для понимания. Введите в поле <guilabel
+>Ваше имя</guilabel
+> своё полное имя (например, <userinput
+>Иван Иванов</userinput
+>) и соответствующую информацию в поле <guilabel
+>Организация</guilabel
+> (необязательно). Далее введите адрес используемой электронной почты в поле <guilabel
+>Электронный адрес</guilabel
+> (например, <userinput
+>ivanov@example.net</userinput
+>). </para>
+    <para
+>Если используется <application
+>PGP</application
+> или <application
+>GnuPG</application
+> для подписи или шифрования писем, возможно указать свои ключи &openpgp; и/или сертификаты&smime; на вкладке <link linkend="configure-identity-cryptography"
+><guilabel
+>Криптография</guilabel
+></link
+>. </para>
+    <para
+>С помощью вкладок <guilabel
+>Дополнительно</guilabel
+> и <guilabel
+>Шаблоны</guilabel
+> возможно настроить способ форматирования и обработки исходящих писем с этого профиля. Более подробная информация содержится в разделе <link linkend="configure-generalinfo"
+>Настройка &kmail;</link
+>. </para>
+    <para
+>При желании перейдите на вкладку <guilabel
+>Подпись</guilabel
+> и укажите короткий текст, который будет добавляться в конец создаваемых писем. Такая подпись не имеет ничего общего с <emphasis
+>цифровыми подписями</emphasis
+>. Также возможно вставить небольшое личное изображение в заголовки исходящих писем с помощью вкладки <guilabel
+>Картинка</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  </sect2>
+
+<sect2 id="setting-up-your-account">
+  <title
+>Настройка учётной записи</title>
+
+  <para
+>Страница <guilabel
+>Учётные записи</guilabel
+> содержит параметры, которые сообщают &kmail;, как посылать и получать письма. Большинство этих параметров могут очень сильно зависеть от используемой системы и вида сети в которой расположен почтовый сервер. Если неизвестно, какие параметры необходимо изменить, или что поместить в поля, проконсультируйтесь с Интернет-провайдером (<acronym
+>ISP</acronym
+>) или системным администратором.</para>
+</sect2>
+
+<sect2 id="sending-mail">
+  <title
+>Отправка писем</title>
+  <para
+>Далее представлен один из способов создать учётную запись исходящей электронной почты.</para>
+  
+  <screenshot>
+    <screeninfo
+>Опции учётной записи для исходящей почты</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Опции учётной записи для исходящей почты</phrase>
+        </textobject>
+        <caption>
+        <para
+>Выбор типа учётной записи для исходящей почты</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+
+  <para
+>При нажатии кнопки <guibutton
+>Добавить...</guibutton
+> на вкладке <guilabel
+>Отправка</guilabel
+> откроется диалог создания учётной записи для отправки почты. Если компьютер подключён к Интернету напрямую, рекомендуется выбрать тип учётной записи &SMTP;. Если требуется использовать тип учётной записи &Sendmail; или &Microsoft; <acronym
+>EWS</acronym
+>, обратитесь к разделу <link linkend="configure-accounts-sending"
+>настройки</link
+>. Независимо от того, какой был выбран тип учётной записи, установите флажок «Сделать учётной записью исходящей почты по умолчанию» (эту настройку можно будет легко изменить эту настройку, если есть несколько учётных записей электронной почты).</para>
+
+  <para
+>При выборе опции <guilabel
+>&SMTP;</guilabel
+> и нажатии на кнопку <guibutton
+>✓ Создать и настроить</guibutton
+> появится следующее окно настройки.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <screenshot>
+    <screeninfo
+>Диалог настройки отправки</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Диалог настройки отправки</phrase>
+        </textobject>
+        <caption>
+        <para
+>Настройка учётной записи &SMTP;</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <para
+>Как минимум требуется указать адрес сервера электронной почты. Если служба электронной почты требует идентификацию перед отправкой писем, установите флажок «Сервер требует идентификацию» и укажите свой адрес электронной почты и пароль. Чтобы &kmail; запомнил пароль, установите флажок «Сохранить пароль SMTP». Если бумажник ещё не создан, будет предложено ввести пароль.</para>
+
+  <para
+>Убедитесь, что подключение к SMTP-серверу работает, выбрав вкладку <guilabel
+>Дополнительно</guilabel
+> и нажав кнопку <guibutton
+>Автоопределение</guibutton
+>. &kmail; запросит у &SMTP;-сервера правильные параметры (шифрование, номер порта и метод аутентификации). После определения всех параметров учётная запись для отправки писем готова к использованию (если &SMTP;-соединение требует дополнительной обратитесь к разделу <link linkend="configure-accounts-sending"
+>настройки</link
+>).</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+</sect2>
+
+<sect2 id="receiving-mail">
+  <title
+>Получение писем</title>
+
+  <para
+>По умолчанию на этой вкладке указаны <guilabel
+>Локальные папки</guilabel
+> (входящие, исходящие, отправленные, корзина, черновики и шаблоны) для главного каталога &kmail;. Раскрывающийся список позволяет указать для этих папок <guilabel
+>Параметры синхронизации</guilabel
+> (обратите внимание, что &kmail; использует формат Maildir, чтобы хранить письма на жёстком диске, каждое письмо хранится в отдельном файле. Точное расположение главного каталога &kmail; зависит от установленного дистрибутива &Linux;, но, возможно, он находится где-то в ~/.local/share/).</para>
+
+  <para
+>Чтобы настроить учётную запись на получение почты, нажмите кнопку <guibutton
+>Добавить...</guibutton
+> на вкладке <guilabel
+>Получение</guilabel
+>. В раскрывающемся списке выберите пункт «Другая учётная запись». Откроется диалог, где потребуется выбрать тип учётной записи. Большинство выбирает вариант <guilabel
+>Почтовый сервер POP3</guilabel
+> или <guilabel
+>Почтовый сервер IMAP</guilabel
+>. Чтобы использовать локальный файл <guilabel
+>Mbox</guilabel
+>, обратитесь к <link linkend="faq-file-locking"
+>FAQ о блокировке файлов</link
+>.</para>
+    
+  <screenshot>
+    <screeninfo
+>Диалог настройки получения</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="receiving.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Диалог настройки получения</phrase>
+        </textobject>
+        <caption>
+        <para
+>Настройка учётной записи &IMAP;</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->  
+
+  <para
+>При выборе &POP3; или &IMAP; появится окно настройки учётной записи. Сначала заполните поле <guilabel
+>Имя учётной записи</guilabel
+>, выбрав любое имя. Введите соответствующую информацию, полученную от поставщика услуг или от системного администратора, в поля <guilabel
+>Сервер входящей почты</guilabel
+>, <guilabel
+>Имя пользователя</guilabel
+> и <guilabel
+>Пароль</guilabel
+> (или <guilabel
+>Сервер IMAP</guilabel
+>). Чтобы &kmail; автоматически проверял новые письма, установите флажок <guilabel
+>Периодическая проверка почты</guilabel
+> и укажите требуемый интервал между проверками почты.</para>
+
+  <para
+>Далее перейдите на вкладку <guilabel
+>Дополнительно</guilabel
+> и нажмите кнопку <guibutton
+>Автоопределение</guibutton
+>. &kmail; отправит запрос на сервер входящих писем, чтобы определить правильные параметры для этой учётной записи (шифрование, номер порта и метод аутентификации).</para>
+
+  <sect3 id="receiving-mail-imap">
+    <title
+>Параметры, относящиеся только к IMAP</title>
+
+    <para
+>При установленном флажке <guilabel
+>Автоматически очищать удалённые сообщения</guilabel
+> на вкладке параметров <guilabel
+>Дополнительно</guilabel
+> &kmail; будет удалять письма на сервере сразу после выхода пользователя из папки. В противном случае письма будут только отмечаться как удалённые, и пользователю придётся очищать папки вручную.</para>
+    
+  </sect3>
+
+
+  <sect3 id="receiving-mail-pop3">
+    <title
+>Параметры, относящиеся только к POP3</title>
+      
+    <para
+>Чтобы оставлять письма на сервере после их получения, в параметрах на вкладке <guilabel
+>Дополнительно</guilabel
+> установите флажок <guilabel
+>Оставить полученные письма на сервере</guilabel
+>. Существует семь способов указать как долго письма должны храниться после загрузки: бесконечно (снимите все флажки) или количество дней/количество писем/максимальный размер почтового ящика на стороне сервера (выберите один, два или все три варианта). Если этот флажок не установлен, все письма будут немедленно удалены с удалённого сервера сразу после получения.</para
+>  
+  
+    <para
+>На вкладке <guilabel
+>Прочее</guilabel
+> представлена функция <guilabel
+>Использовать конвейерный режим для быстрой загрузки писем</guilabel
+>, если она поддерживается используемым сервером. Проверьте эту возможность, чтобы убедиться, что всё работает корректно.</para>
+
+    <para
+><guilabel
+>Входящие</guilabel
+> является папкой по умолчанию для всех входящих писем. Если по какой-либо причине требуется это изменить, сделать это возможно с помощью настройки <guilabel
+>Сохранять новую почту в</guilabel
+>. Но что действительно может вызвать интерес, так это <link linkend="filters"
+>фильтрация писем</link
+>.</para>
+
+    <para
+>Функция <guilabel
+>Предварительная команда</guilabel
+> позволяет указать программу, которую &kmail; будет выполнять перед получением почты. Указывайте полный путь (не используйте <quote
+>~</quote
+>) и обратите внимание, что &kmail; будет приостановлен, пока программа не завершится.</para>
+
+  </sect3>
+
+  <sect3 id="receiving-mail-imap-pop3">
+    <title
+>Параметры, общие для IMAP и POP3</title>
+    
+    <para
+>На вкладке <guilabel
+>Получение</guilabel
+> в разделе <guilabel
+>Параметры синхронизации</guilabel
+> установите флажок <guilabel
+>Включить в проверку почты</guilabel
+>, чтобы на этой учётной записи выполнялась проверка почты при использовании функции <menuchoice
+><guimenu
+>Файл</guimenu
+><guimenuitem
+>Проверить почту</guimenuitem
+></menuchoice
+>. Если флажок снят, обновить эту учётную запись возможно с помощью пункта меню <menuchoice
+><guimenu
+>Файл</guimenu
+><guimenuitem
+>Проверить почту в ящике</guimenuitem
+></menuchoice
+>.</para>
+    
+    <para
+>&kmail; поддерживает шифрование <guilabel
+>SSL/TLS</guilabel
+> и <guilabel
+>STARTTLS</guilabel
+> (<guilabel
+>SSL/TLS</guilabel
+> должно быть предпочтительным, если доступно).</para>
+
+    <para
+>&kmail; поддерживает девять методов аутентификации:</para>
+
+    <itemizedlist>
+      <listitem
+><para
+><guilabel
+>Обычный текст</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>PLAIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>LOGIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>CRAM-MD5</guilabel
+> (рекомендуется, если недоступен <guilabel
+>DIGEST-MD5</guilabel
+>),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>DIGEST-MD5</guilabel
+> (рекомендуется),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>NTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>GSSAPINTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>APOP (также Anonymous)</guilabel
+> и </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>Gmail</guilabel
+>.</para
+></listitem>
+    </itemizedlist>
+
+    <para
+><guilabel
+>DIGEST-MD5</guilabel
+>, <guilabel
+>CRAM-MD5</guilabel
+> и <guilabel
+>APOP</guilabel
+> безопасны сами по себе, другие параметры безопасны только в сочетании с <guilabel
+>SSL</guilabel
+> или <guilabel
+>TLS</guilabel
+>. Рекомендуется использовать <guilabel
+>Простой текст</guilabel
+> только если используемый сервер не поддерживает любой другой метод аутентификации. Для &IMAP; поддерживается способ <guilabel
+>Анонимный</guilabel
+>, а способ <guilabel
+>APOP</guilabel
+> — нет. Аутентификация <guilabel
+>Gmail</guilabel
+> доступна только для учётных записей &IMAP;, использующих службу Google GMail.</para>
+  
+    <para
+>Чтобы автоматически применить наиболее эффективные параметры безопасности, поддерживаемые используемым сервером, нажмите кнопку <guibutton
+>Автоопределение</guibutton
+> на вкладке <guilabel
+>Дополнительно</guilabel
+>.</para>
+
+    <para
+>Теперь всё готово для отправки и получения почты. Для &IMAP;: просто откройте папки в дереве главного окна &kmail;. &kmail; соединится с сервером и покажет письма, найденные в папках. Для POP3: используйте пункт меню <menuchoice
+><guimenu
+>Файл</guimenu
+><guimenuitem
+>Проверить почту</guimenuitem
+></menuchoice
+>.</para>
+
+  </sect3>
+</sect2>
+
+<sect2 id="testing-your-setup">
+  <title
+>Проверка конфигурации</title>
+
+  <para
+>Сначала попробуйте отправить письмо самому себе для проверки конфигурации. Для отправки письма нажмите комбинацию клавиш <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>, кнопку <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+>Создать</guiicon
+> или воспользуйтесь пунктом меню <menuchoice
+><guimenu
+>Письмо</guimenu
+><guimenuitem
+>Написать письмо...</guimenuitem
+></menuchoice
+>. Появится <link linkend="the-composer-window"
+>окно редактора</link
+>. Заполните поле <guilabel
+>Получатель:</guilabel
+> собственным адресом электронной почты и напишите что-нибудь в поле <guilabel
+>Тема</guilabel
+>. Отправьте письмо с помощью меню <menuchoice
+><guimenu
+>Письмо</guimenu
+><guimenuitem
+>Отправить письмо</guimenuitem
+> </menuchoice
+>.</para>
+
+  <para
+>Чтобы проверить наличие новых писем в ящике, воспользуйтесь пунктом меню <menuchoice
+><guimenu
+>Файл</guimenu
+><guimenuitem
+>Проверить почту</guimenuitem
+></menuchoice
+>. В нижнем правом углу главного окна программы будет располагаться панель прогресса, на которой будет показано количество новых писем и процесс их загрузки. Если письмо пришло сразу после его отправки, значит, всё настроено правильно. Если было получено какое-нибудь сообщение об ошибке во время проверки параметров, убедитесь, что подключение к сети работает, и проверьте правильность указанных параметров в меню <menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Настроить &kmail;...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect2>
+</sect1>
+
+</chapter>

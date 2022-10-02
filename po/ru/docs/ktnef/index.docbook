@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Russian "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>Руководство пользователя средства просмотра файлов TNEF</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>Мария</firstname
+><surname
+>Шикунова</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>27 июля 2016 г.</date>
+<releaseinfo
+>5.3.40 (Приложения KDE 16.08)</releaseinfo>
+
+<abstract
+><para
+>Средство просмотра файлов TNEF — это приложение для почтовых вложений в формате <ulink url="https://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+>.</para
+></abstract>
+
+<keywordset>
+<keyword
+>почта</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Введение</title>
+
+	<para
+>Средство просмотра файлов в формате TNEF позволяет легко обрабатывать почтовые вложения в формате TNEF. Эти вложения обычно находятся в письмах, поступающих с почтовых серверов <trademark class="registered"
+>Microsoft</trademark
+>. В них вместе с данными вложений содержатся свойства письма.</para>
+		<para
+>Вложение в формате TNEF чаще всего называется <filename
+>winmail.dat</filename
+> или <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>Главное окно TNEF</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Главное окно TNEF</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Эта служебная программа позволяет выполнять различные операции с такими вложениями:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Просмотр вложений в соответствующих приложениях</para
+></listitem>
+		<listitem
+><para
+>Извлечение вложений</para
+></listitem>
+		<listitem
+><para
+>Просмотр свойств письма (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Просмотр или извлечение форматированного текста письма (в формате RTF)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; автоматически показывает содержимое вложения TNEF. С помощью действий контекстного меню возможно открывать или сохранять вложения.</para>
+<screenshot>
+<screeninfo
+>Вложение TNEF в &kmail;</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Вложение TNEF в &kmail;</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Авторские права и лицензия</title>
+
+	<para
+>Средство просмотра файлов в формате TNEF (KTnef)</para>
+
+	<para
+>Авторские права на программу &copy; 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Авторские права на программу &copy; 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>Перевод на русский язык — Мария Шикунова <email
+>translation-team@basealt.ru</email
+></para
+> &underFDL; &underGPL; </sect1>
+
+</article>

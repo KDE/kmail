@@ -1,0 +1,104 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# Tommi Nieminen <translator@legisign.org>, 2019, 2020, 2021, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-01-02 00:48+0000\n"
+"PO-Revision-Date: 2022-01-28 16:30+0200\n"
+"Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
+"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 20.04.2\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Tommi Nieminen"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "translator@legisign.org"
+
+#: main.cpp:32 main.cpp:34
+#, kde-format
+msgid "KMail Assistant for refreshing settings"
+msgstr "KMail-avustaja asetusten virkistämiseksi"
+
+#: main.cpp:36
+#, kde-format
+msgid "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+msgstr "© 2019–2022 Laurent Montel <montel@kde.org>"
+
+#: main.cpp:37
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: main.cpp:37
+#, kde-format
+msgid "Author"
+msgstr "Tekijä"
+
+#: refreshsettingsassistant.cpp:22
+#, kde-format
+msgctxt "@title:window"
+msgid "KMail Refresh Settings"
+msgstr "KMailin asetusten virkistys"
+
+#: refreshsettingsassistant.cpp:39
+#, kde-format
+msgid "Warning"
+msgstr "Varoitus"
+
+#: refreshsettingsassistant.cpp:43
+#, kde-format
+msgid "Clean up Settings"
+msgstr "Puhdista asetukset"
+
+#: refreshsettingsassistant.cpp:47
+#, kde-format
+msgid "Finish"
+msgstr "Valmis"
+
+#: refreshsettingscleanuppage.cpp:20
+#, kde-format
+msgid "Clean"
+msgstr "Puhdista"
+
+#: refreshsettingscleanuppage.cpp:50
+#, kde-format
+msgid "Remove obsolete \"TipOfDay\" settings: Done"
+msgstr "Vanhentuneiden asetusvinkkien poisto: tehty"
+
+#: refreshsettingscleanuppage.cpp:62
+#, kde-format
+msgid "Delete Dialog settings in file `%1`: Done"
+msgstr "Tiedoston ”%1” kyselyikkuna-asetusten poisto: tehty"
+
+#: refreshsettingscleanuppage.cpp:74
+#, kde-format
+msgid "Delete Filters settings in file `%1`: Done"
+msgstr "Suodatinasetusten poisto asetustiedostosta ”%1”: tehty"
+
+#: refreshsettingscleanuppage.cpp:90
+#, kde-format
+msgid "Clean Folder Settings in setting file `%1`: Done"
+msgstr "Kansioasetusten puhdistus asetustiedostosta ”%1”: tehty"
+
+#: refreshsettingscleanuppage.cpp:146
+#, kde-format
+msgid "Clean Dialog Size in setting file `%1`: Done"
+msgstr "Valintaikkunan koon puhdistus asetustiedostossa ”%1”: tehty"
+
+#: refreshsettingsfirstpage.cpp:18
+#, kde-format
+msgid "Please close KMail/Kontact before using it."
+msgstr "Käynnistä KMail tai Kontact uudelleen ennen käyttöä."

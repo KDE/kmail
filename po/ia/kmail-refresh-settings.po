@@ -1,0 +1,104 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# giovanni <g.sora@tiscali.it>, 2020, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-01-02 00:48+0000\n"
+"PO-Revision-Date: 2022-01-05 22:05+0100\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
+"Language: ia\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 21.12.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Giovanni Sora"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "g.sora@tiscali.it"
+
+#: main.cpp:32 main.cpp:34
+#, kde-format
+msgid "KMail Assistant for refreshing settings"
+msgstr "KMail Assistant (Assistente de KMail)  per refrescar preferentias"
+
+#: main.cpp:36
+#, kde-format
+msgid "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+msgstr "(c), 2021-2022 Laurent Montel <montel@kde.org>"
+
+#: main.cpp:37
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: main.cpp:37
+#, kde-format
+msgid "Author"
+msgstr "Autor"
+
+#: refreshsettingsassistant.cpp:22
+#, kde-format
+msgctxt "@title:window"
+msgid "KMail Refresh Settings"
+msgstr "KMail Refresh Settings (Refresca preferentias de KMail)"
+
+#: refreshsettingsassistant.cpp:39
+#, kde-format
+msgid "Warning"
+msgstr "Aviso"
+
+#: refreshsettingsassistant.cpp:43
+#, kde-format
+msgid "Clean up Settings"
+msgstr "Netta preferentias"
+
+#: refreshsettingsassistant.cpp:47
+#, kde-format
+msgid "Finish"
+msgstr "Termina"
+
+#: refreshsettingscleanuppage.cpp:20
+#, kde-format
+msgid "Clean"
+msgstr "Netta"
+
+#: refreshsettingscleanuppage.cpp:50
+#, kde-format
+msgid "Remove obsolete \"TipOfDay\" settings: Done"
+msgstr "Remove preferentias de obsolete \"Condilios del die\":Facite"
+
+#: refreshsettingscleanuppage.cpp:62
+#, kde-format
+msgid "Delete Dialog settings in file `%1`: Done"
+msgstr "Dele preferentias de Dialogo in file '%1': Facite"
+
+#: refreshsettingscleanuppage.cpp:74
+#, kde-format
+msgid "Delete Filters settings in file `%1`: Done"
+msgstr "Dele preferentias de filtros in file '%1':Facite"
+
+#: refreshsettingscleanuppage.cpp:90
+#, kde-format
+msgid "Clean Folder Settings in setting file `%1`: Done"
+msgstr "Netta preferentias de dossier in file de preferentia '%1':Facite"
+
+#: refreshsettingscleanuppage.cpp:146
+#, kde-format
+msgid "Clean Dialog Size in setting file `%1`: Done"
+msgstr "Netta grandor de dialogo in file de preferentia '%1':Facite"
+
+#: refreshsettingsfirstpage.cpp:18
+#, kde-format
+msgid "Please close KMail/Kontact before using it."
+msgstr "Pro favor claude KMail/Kontact ante que usar lo."

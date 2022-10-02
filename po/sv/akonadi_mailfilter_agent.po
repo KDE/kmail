@@ -1,0 +1,180 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2012, 2013, 2014, 2018, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"PO-Revision-Date: 2019-12-17 18:35+0100\n"
+"Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
+"Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: filterlogdialog.cpp:44
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Visning av filterlogg"
+
+#: filterlogdialog.cpp:74
+#, kde-format
+msgid "Share..."
+msgstr "Dela..."
+
+#: filterlogdialog.cpp:80
+#, kde-format
+msgid "&Log filter activities"
+msgstr "&Logga filteraktivitet"
+
+#: filterlogdialog.cpp:85
+#, kde-format
+msgid ""
+"You can turn logging of filter activities on and off here. Of course, log "
+"data is collected and shown only when logging is turned on. "
+msgstr ""
+"Du kan stänga av eller sätta på loggning av filteraktiviteter här. Loggdata "
+"samlas bara in och visas när loggning är aktiverad. "
+
+#: filterlogdialog.cpp:89
+#, kde-format
+msgid "Logging Details"
+msgstr "Loggningsinformation"
+
+#: filterlogdialog.cpp:96
+#, kde-format
+msgid "Log pattern description"
+msgstr "Beskrivning av loggmönster"
+
+#: filterlogdialog.cpp:101
+#, kde-format
+msgid "Log filter &rule evaluation"
+msgstr "Logga filter&regelutvärdering"
+
+#: filterlogdialog.cpp:106
+#, kde-format
+msgid ""
+"You can control the feedback in the log concerning the evaluation of the "
+"filter rules of applied filters: having this option checked will give "
+"detailed feedback for each single filter rule; alternatively, only feedback "
+"about the result of the evaluation of all rules of a single filter will be "
+"given."
+msgstr ""
+"Du kan styra återmatning i loggen avseende utvärderingen av filterreglerna "
+"för tillämpade filter. Lämnas alternativet markerat erhålls detaljerad "
+"återmatning för varje enskild filterregel. Alternativt ges bara återmatning "
+"om resultat efter utvärdering av ett enstaka filter."
+
+#: filterlogdialog.cpp:113
+#, kde-format
+msgid "Log filter pattern evaluation"
+msgstr "Logga filterregelutvärdering"
+
+#: filterlogdialog.cpp:118
+#, kde-format
+msgid "Log filter actions"
+msgstr "Logga filteråtgärder"
+
+#: filterlogdialog.cpp:128
+#, kde-format
+msgid "Log size limit:"
+msgstr "Storleksbegränsning för logg:"
+
+#: filterlogdialog.cpp:136
+#, kde-format
+msgid " KB"
+msgstr " Kibyte"
+
+#: filterlogdialog.cpp:137
+#, kde-format
+msgctxt "@label:spinbox Set the size of the logfile to unlimited."
+msgid "unlimited"
+msgstr "obegränsad"
+
+#: filterlogdialog.cpp:140
+#, kde-format
+msgid ""
+"Collecting log data uses memory to temporarily store the log data; here you "
+"can limit the maximum amount of memory to be used: if the size of the "
+"collected log data exceeds this limit then the oldest data will be discarded "
+"until the limit is no longer exceeded. "
+msgstr ""
+"Att samla in loggdata använder minne för att tillfällig lagra loggdata. Här "
+"kan du begränsa maximal minnesstorlek som ska användas. Om insamlad loggdata "
+"överskrider gränsen, kastas äldsta data till gränsen inte längre överskrids. "
+
+#: filterlogdialog.cpp:318
+#, kde-format
+msgid ""
+"Could not write the file %1:\n"
+"\"%2\" is the detailed error description."
+msgstr ""
+"Kunde inte skriva till filen %1:\n"
+"Den detaljerade felbeskrivningen är \"%2\"."
+
+#: filterlogdialog.cpp:322
+#, kde-format
+msgid "KMail Error"
+msgstr "Kmail-fel"
+
+#: filtermanager.cpp:100
+#, kde-format
+msgid "Filtering message %1 of %2"
+msgstr "Filtrerar brev %1 av %2"
+
+#: filtermanager.cpp:187
+#, kde-format
+msgid "Error applying mail filter move"
+msgstr "Fel vid användning av e-postfilter för att flytta"
+
+#: filtermanager.cpp:195
+#, kde-format
+msgid "Error applying mail filter delete"
+msgstr "Fel vid användning av e-postfilter för att ta bort"
+
+#: filtermanager.cpp:203
+#, kde-format
+msgid "Error applying mail filter modifications"
+msgstr "Fel vid användning av e-postfilter för ändring"
+
+#: filtermanager.cpp:220
+#, kde-format
+msgid "<b>Evaluating filter rules:</b> "
+msgstr "<b>Utvärderar filterregler:</b> "
+
+#: filtermanager.cpp:227
+#, kde-format
+msgid "<b>Filter rules have matched.</b>"
+msgstr "<b>Filterregel har matchat.</b>"
+
+#: filtermanager.cpp:246
+#, kde-format
+msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
+msgstr "<b>Börja filtrering med brevet \"%1\" från \"%2\", \"%3\":</b>"
+
+#: filtermanager.cpp:580 filtermanager.cpp:608
+#, kde-format
+msgid "Filtering messages"
+msgstr "Filtrerar brev"
+
+#: mailfilteragent.cpp:109
+#, kde-format
+msgctxt "Notification when the filter log was enabled"
+msgid "Mail Filter Log Enabled"
+msgstr "Logg för e-postfilter aktiverad"
+
+#: mailfilteragent.cpp:173
+#, kde-format
+msgid "Ready"
+msgstr "Klar"
+
+#: mailfilteragent.cpp:259
+#, kde-format
+msgid "Filtering in %1"
+msgstr "Filtrerar i %1"

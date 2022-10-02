@@ -1,0 +1,384 @@
+# Translation of ktnef.po to Ukrainian
+# Copyright (C) 2012-2020 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2013, 2015, 2016, 2019, 2020, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: ktnef\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2021-05-14 08:56+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.12.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#: attachpropertydialog.cpp:61
+#, kde-format
+msgid "Save..."
+msgstr "Зберегти…"
+
+#: attachpropertydialog.cpp:94
+#, kde-format
+msgctxt "@title:window"
+msgid "Properties for Attachment %1"
+msgstr "Властивості долучення %1"
+
+#: attachpropertydialog.cpp:98
+#, kde-format
+msgid " bytes"
+msgstr " байтів"
+
+#: attachpropertydialog.cpp:159
+#, kde-format
+msgctxt "@label"
+msgid "TNEF Attributes"
+msgstr "Атрибути TNEF"
+
+#: attachpropertydialog.cpp:168
+#, kde-format
+msgctxt "@info"
+msgid "Must select an item first."
+msgstr "Спочатку слід позначити елемент."
+
+#: attachpropertydialog.cpp:174
+#, kde-format
+msgctxt "@info"
+msgid "The selected item cannot be saved because it has an empty tag."
+msgstr "Позначений елемент не може бути збережено, оскільки має порожню мітку."
+
+#: attachpropertydialog.cpp:199
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file for writing, check file permissions."
+msgstr ""
+"Не вдалося відкрити файл для запису. Перевірте, чи є у вас відповідні права "
+"доступу."
+
+#: ktnefmain.cpp:94
+#, kde-format
+msgctxt "@info:whatsthis"
+msgid ""
+"You will be presented with a dialog where you can configure the application-"
+"wide shortcuts."
+msgstr ""
+"Буде показано нове вікно, у якому ви зможете налаштувати загальні для "
+"програми клавіатурні скорочення."
+
+#: ktnefmain.cpp:108
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "View"
+msgstr "Переглянути"
+
+#: ktnefmain.cpp:113
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "View With..."
+msgstr "Переглянути за допомогою…"
+
+#: ktnefmain.cpp:117 ktnefmain.cpp:399
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract"
+msgstr "Видобути"
+
+#: ktnefmain.cpp:121 ktnefmain.cpp:400
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract To..."
+msgstr "Видобути до…"
+
+#: ktnefmain.cpp:126
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Extract All To..."
+msgstr "Видобути все до…"
+
+#: ktnefmain.cpp:131 ktnefmain.cpp:403
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Properties"
+msgstr "Властивості"
+
+#: ktnefmain.cpp:136
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Message Properties"
+msgstr "Властивості повідомлення"
+
+#: ktnefmain.cpp:140
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Show Message Text"
+msgstr "Показати текст повідомлення"
+
+#: ktnefmain.cpp:145
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Save Message Text As..."
+msgstr "Зберегти текст повідомлення як…"
+
+#: ktnefmain.cpp:158
+#, kde-format
+msgctxt "@action:inmenu"
+msgid "Default Folder..."
+msgstr "Типова тека…"
+
+#: ktnefmain.cpp:170
+#, kde-format
+msgctxt "@info:status"
+msgid "No file loaded"
+msgstr "Не завантажено жодного файла"
+
+#: ktnefmain.cpp:193
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file \"%1\"."
+msgstr "Не вдалося відкрити файл «%1»."
+
+#: ktnefmain.cpp:198
+#, kde-format
+msgctxt "@info:status"
+msgid "%1 attachment found"
+msgid_plural "%1 attachments found"
+msgstr[0] "Виявлено %1 долучення"
+msgstr[1] "Виявлено %1 долучення"
+msgstr[2] "Виявлено %1 долучень"
+msgstr[3] "Виявлено одне долучення"
+
+#: ktnefmain.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Open TNEF File"
+msgstr "Відкриття файла TNEF"
+
+#: ktnefmain.cpp:244 ktnefmain.cpp:275
+#, kde-format
+msgctxt "@info"
+msgid "There is no file selected. Please select a file an try again."
+msgstr ""
+"Не позначено жодного файла. Будь ласка, позначте файл і повторіть спробу."
+
+#: ktnefmain.cpp:304 ktnefmain.cpp:380
+#, kde-format
+msgctxt "@info"
+msgid "Unable to extract file \"%1\"."
+msgstr "Не вдалося видобути файл «%1»."
+
+#: ktnefmain.cpp:486
+#, kde-format
+msgctxt "@info"
+msgid "The message does not contain any Rich Text data."
+msgstr "У повідомленні не міститься жодних текстових даних з форматуванням."
+
+#: ktnefmain.cpp:504
+#, kde-format
+msgctxt "@info"
+msgid "Unable to open file \"%1\" for writing, check file permissions."
+msgstr ""
+"Не вдалося відкрити файл «%1» для запису. Перевірте, чи є у вас відповідні "
+"права доступу."
+
+#: ktnefmain.cpp:526
+#, kde-format
+msgid "Open &with %1"
+msgstr "Відкрити з&а допомогою %1"
+
+#: ktnefmain.cpp:528
+#, kde-format
+msgctxt "@item:inmenu Open With, %1 is application name"
+msgid "%1"
+msgstr "%1"
+
+#: ktnefmain.cpp:553
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Open With"
+msgstr "&Відкрити за допомогою"
+
+#: ktnefmain.cpp:569
+#, kde-format
+msgctxt "@action:inmenu Open With"
+msgid "&Other..."
+msgstr "&Інша…"
+
+#: ktnefmain.cpp:571 ktnefmain.cpp:579
+#, kde-format
+msgctxt "@title:menu"
+msgid "&Open With..."
+msgstr "&Відкрити за допомогою…"
+
+#. i18n: ectx: Menu (file)
+#: ktnefui.rc:6
+#, kde-format
+msgid "&File"
+msgstr "&Файл"
+
+#. i18n: ectx: Menu (action)
+#: ktnefui.rc:9
+#, kde-format
+msgid "&Action"
+msgstr "&Дія"
+
+#. i18n: ectx: Menu (settings)
+#: ktnefui.rc:24
+#, kde-format
+msgid "&Settings"
+msgstr "П&араметри"
+
+#. i18n: ectx: ToolBar (mainToolBar)
+#: ktnefui.rc:29
+#, kde-format
+msgid "Main Toolbar"
+msgstr "Головна панель інструментів"
+
+#: ktnefview.cpp:71
+#, kde-format
+msgctxt "@title:column file name"
+msgid "File Name"
+msgstr "Назва файла"
+
+#: ktnefview.cpp:72
+#, kde-format
+msgctxt "@title:column file type"
+msgid "File Type"
+msgstr "Тип файлів"
+
+#: ktnefview.cpp:72
+#, kde-format
+msgctxt "@title:column file size"
+msgid "Size"
+msgstr "Розмір"
+
+#: main.cpp:44
+#, kde-format
+msgid "KTnef"
+msgstr "KTnef"
+
+#: main.cpp:46
+#, kde-format
+msgid "Viewer for mail attachments using TNEF format"
+msgstr "Програма для перегляду долучень до повідомлень у форматі TNEF"
+
+#: main.cpp:48
+#, kde-format
+msgid ""
+"Copyright 2000 Michael Goffioul \n"
+"Copyright 2012  Allen Winter"
+msgstr ""
+"© Michael Goffioul, 2000\n"
+"© Allen Winter, 2012"
+
+#: main.cpp:50
+#, kde-format
+msgid "Michael Goffioul"
+msgstr "Michael Goffioul"
+
+#: main.cpp:50
+#, kde-format
+msgid "Author"
+msgstr "Автор"
+
+#: main.cpp:52
+#, kde-format
+msgid "Allen Winter"
+msgstr "Allen Winter"
+
+#: main.cpp:52
+#, kde-format
+msgid "Author, Ported to Qt4/KDE4"
+msgstr "Автор, портування на Qt4/KDE4"
+
+#: main.cpp:58
+#, kde-format
+msgid "An optional argument 'file' "
+msgstr "Додатковий параметр «file» "
+
+#: messagepropertydialog.cpp:42
+#, kde-format
+msgctxt "@title:window"
+msgid "Message Properties"
+msgstr "Властивості повідомлення"
+
+#: messagepropertydialog.cpp:55
+#, kde-format
+msgctxt "@title:column property name"
+msgid "Name"
+msgstr "Назва"
+
+#: messagepropertydialog.cpp:55
+#, kde-format
+msgctxt "@title:column property value"
+msgid "Value"
+msgstr "Значення"
+
+#. i18n: ectx: property (text), widget (QLabel, mDescriptionLabel)
+#: ui/attachpropertywidgetbase.ui:45
+#, kde-format
+msgid "Description:"
+msgstr "Опис:"
+
+#. i18n: ectx: property (text), widget (QLabel, mIndexLabel)
+#: ui/attachpropertywidgetbase.ui:68
+#, kde-format
+msgid "Index:"
+msgstr "Індекс:"
+
+#. i18n: ectx: property (text), widget (QLabel, mDisplayLabel)
+#: ui/attachpropertywidgetbase.ui:107
+#, kde-format
+msgid "Comment:"
+msgstr "Коментар:"
+
+#. i18n: ectx: property (text), widget (QLabel, mSizeLabel)
+#: ui/attachpropertywidgetbase.ui:143
+#, kde-format
+msgid "File size:"
+msgstr "Розмір файла:"
+
+#. i18n: ectx: property (text), widget (QLabel, mMimeLabel)
+#: ui/attachpropertywidgetbase.ui:199
+#, kde-format
+msgid "MIME type:"
+msgstr "Тип MIME:"
+
+#~ msgctxt "@info:status"
+#~ msgid "100 attachments found"
+#~ msgstr "Виявлено 100 долучень"
+
+#~ msgid "Save Property to File"
+#~ msgstr "Зберегти властивість до файла"
+
+#~ msgid ""
+#~ "Push this button if you want to save the selected property to a file. You "
+#~ "will be prompted for a file name."
+#~ msgstr ""
+#~ "Натисніть цю кнопку, якщо вам потрібно зберегти позначену властивість до "
+#~ "файла. Програма попросить вас ввести назву файла."
+
+#~ msgid "Close this dialog"
+#~ msgstr "Закрити це вікно"
+
+#~ msgid "Push this button if you want to close this dialog."
+#~ msgstr "Натисніть цю кнопку, якщо діалогове вікно слід закрити."
+
+#~ msgid "&Close"
+#~ msgstr "&Закрити"

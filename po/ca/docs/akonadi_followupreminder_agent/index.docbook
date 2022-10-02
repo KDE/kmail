@@ -1,0 +1,151 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>Agent de recordatoris de seguiment</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Catalan  "INCLUDE"
+> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>El manual de l'&i18n-followupreminderagent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>21 de setembre de 2019</date>
+<releaseinfo
+>5.13 (Aplicacions 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introducció</title>
+
+<para
+>L'&i18n-followupreminderagent; és un agent de l'Akonadi que permet utilitzar correus com a recordatoris de seguiment </para>
+
+<sect2 id="using-kapp">
+<title
+>Usar l'&i18n-followupreminderagent;</title>
+
+<para
+>Utilitzeu <menuchoice
+><guimenu
+>Opcions</guimenu
+><guimenuitem
+>Crea un recordatori de seguiment...</guimenuitem
+></menuchoice
+> a la finestra de l'editor del &kmail; per a obrir un diàleg que permetrà crear un recordatori per a fer el seguiment del vostre correu electrònic actual en una data concreta.</para>
+
+<screenshot>
+<screeninfo
+>Diàleg de l'&i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Diàleg de l'&i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Diàleg de l'&i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Premeu el botó de fletxa cap avall al camp <guilabel
+>Data</guilabel
+> per a seleccionar la data des del giny de calendari del &kde;. També és possible triar el calendari per al recordatori mitjançant la llista desplegable <guilabel
+>Emmagatzema la tasca pendent a</guilabel
+>.</para>
+<para
+>Per a eliminar els recordatoris que heu programat, utilitzeu <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura el &kmail;...</guimenuitem
+></menuchoice
+>, després seleccioneu la pàgina <guilabel
+>Connectors</guilabel
+> al &kmail; i premeu el botó de configuració amb l'element <guilabel
+>Agent per a recordatoris de seguiment</guilabel
+>. A continuació, utilitzeu el menú contextual llançat amb un clic del &BDR; sobre un element de recordatori per a seleccionar l'acció <guimenuitem
+>Suprimeix</guimenuitem
+>. </para>
+
+<screenshot>
+<screeninfo
+>Configurant l'&i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configurant l'&i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configurant l'&i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Crèdits i llicència</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>Copyright del programa 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Copyright de la documentació &copy; 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Traductor/Revisor de la documentació: &credits.Antoni.Bella;</para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

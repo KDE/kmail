@@ -1,0 +1,182 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Safa Alfulaij <safa1996alfulaij@gmail.com>, 2015, 2018.
+# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"PO-Revision-Date: 2022-01-02 20:34+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: ar\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"X-Generator: Lokalize 21.07.70\n"
+
+#: filterlogdialog.cpp:44
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "عارض سجلّات التّرشيح"
+
+#: filterlogdialog.cpp:74
+#, kde-format
+msgid "Share..."
+msgstr "شارك..."
+
+#: filterlogdialog.cpp:80
+#, kde-format
+msgid "&Log filter activities"
+msgstr "&سجّل أنشطة التّرشيح"
+
+#: filterlogdialog.cpp:85
+#, kde-format
+msgid ""
+"You can turn logging of filter activities on and off here. Of course, log "
+"data is collected and shown only when logging is turned on. "
+msgstr ""
+"يمكنك هنا تفعيل وتعطيل تسجيل أنشطة التّرشيح. بطبيعة الحال، تُجمع بيانات "
+"السّجلّات وتُعرض فقط إن كان التّسجيل مفعّلًا."
+
+#: filterlogdialog.cpp:89
+#, kde-format
+msgid "Logging Details"
+msgstr "تفاصيل التّسجيل"
+
+#: filterlogdialog.cpp:96
+#, kde-format
+msgid "Log pattern description"
+msgstr "سجّل وصف الأنماط"
+
+#: filterlogdialog.cpp:101
+#, kde-format
+msgid "Log filter &rule evaluation"
+msgstr "سجّل تقدير &قاعدة المرشّحات"
+
+#: filterlogdialog.cpp:106
+#, kde-format
+msgid ""
+"You can control the feedback in the log concerning the evaluation of the "
+"filter rules of applied filters: having this option checked will give "
+"detailed feedback for each single filter rule; alternatively, only feedback "
+"about the result of the evaluation of all rules of a single filter will be "
+"given."
+msgstr ""
+"يمكنك التّحكّم بالمعلومات المسجّلة في السّجلّ بخصوص تقدير قواعد التّرشيح للمرشّحات "
+"المطبّقة: إن كان هذا الخيار مؤشّرًا عليه فستحصل على معلومات مفصّلة لكلّ قاعدة "
+"ترشيح بمفردها، وإلّا فستجد معلومات عن نتيجة تقدير كلّ قواعد التّرشيح للمرشّح "
+"الوحيد."
+
+#: filterlogdialog.cpp:113
+#, kde-format
+msgid "Log filter pattern evaluation"
+msgstr "سجّل تقدير أ&نماط المرشّحات"
+
+#: filterlogdialog.cpp:118
+#, kde-format
+msgid "Log filter actions"
+msgstr "سجّل إجراءات المرشّحات"
+
+#: filterlogdialog.cpp:128
+#, kde-format
+msgid "Log size limit:"
+msgstr "اقصر حجم السّجلّات:"
+
+#: filterlogdialog.cpp:136
+#, kde-format
+msgid " KB"
+msgstr " ك.بايت"
+
+#: filterlogdialog.cpp:137
+#, kde-format
+msgctxt "@label:spinbox Set the size of the logfile to unlimited."
+msgid "unlimited"
+msgstr "بلا حدّ"
+
+#: filterlogdialog.cpp:140
+#, kde-format
+msgid ""
+"Collecting log data uses memory to temporarily store the log data; here you "
+"can limit the maximum amount of memory to be used: if the size of the "
+"collected log data exceeds this limit then the oldest data will be discarded "
+"until the limit is no longer exceeded. "
+msgstr ""
+"يستخدم تجميع بيانات السّجلّات الذّاكرةَ لتخزين بيانات السّجلّات مؤقّتًا. يمكنك هنا "
+"قصر أقصى حدّ للذّاكرة المستخدمة لذلك، فإن تخطّى حجم السّجلّات المجموعة هذا الحدّ "
+"فستُهمل البيانات الأكثر قدمًا طالما وصل التّطبيق إلى الحدّ."
+
+#: filterlogdialog.cpp:318
+#, kde-format
+msgid ""
+"Could not write the file %1:\n"
+"\"%2\" is the detailed error description."
+msgstr ""
+"تعذّرت كتابة الملفّ %1:\n"
+"وصف الخطأ المفصّل هو ”%2“."
+
+#: filterlogdialog.cpp:322
+#, kde-format
+msgid "KMail Error"
+msgstr "خطأ في «بريدك»"
+
+#: filtermanager.cpp:100
+#, kde-format
+msgid "Filtering message %1 of %2"
+msgstr "يرشّح الرّسالة %1 من أصل %2"
+
+#: filtermanager.cpp:187
+#, kde-format
+msgid "Error applying mail filter move"
+msgstr "خطأ أثناء تطبيق نقل مرشّح البريد"
+
+#: filtermanager.cpp:195
+#, kde-format
+msgid "Error applying mail filter delete"
+msgstr "خطأ أثناء تطبيق حذف مرشّح البريد"
+
+#: filtermanager.cpp:203
+#, kde-format
+msgid "Error applying mail filter modifications"
+msgstr "خطأ أثناء تطبيق تعديلات مرشّح البريد"
+
+#: filtermanager.cpp:220
+#, kde-format
+msgid "<b>Evaluating filter rules:</b> "
+msgstr "<b>يقدّر قواعد المرشّحات:</b> "
+
+#: filtermanager.cpp:227
+#, kde-format
+msgid "<b>Filter rules have matched.</b>"
+msgstr "<b>تطابقت قواعد التّرشيح.</b>"
+
+#: filtermanager.cpp:246
+#, kde-format
+msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
+msgstr "<b>بدأ ترشيح الرّسالة ”%1“ من ”%2“ في ”%3“:</b>"
+
+#: filtermanager.cpp:580 filtermanager.cpp:608
+#, kde-format
+msgid "Filtering messages"
+msgstr "يرشّح الرّسائل"
+
+#: mailfilteragent.cpp:109
+#, kde-format
+msgctxt "Notification when the filter log was enabled"
+msgid "Mail Filter Log Enabled"
+msgstr "فُعّل تسجيل مرشّح البريد"
+
+#: mailfilteragent.cpp:173
+#, kde-format
+msgid "Ready"
+msgstr "جاهز"
+
+#: mailfilteragent.cpp:259
+#, kde-format
+msgid "Filtering in %1"
+msgstr "يرشّح في %1"

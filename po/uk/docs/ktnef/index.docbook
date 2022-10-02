@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Ukrainian "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>Підручник з програми для перегляду файлів TNEF</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>27 липня 2016 року</date>
+<releaseinfo
+>5.3.40 (Програми 16.08)</releaseinfo>
+
+<abstract
+><para
+>Переглядач файлів TNEF — програма для перегляду долучень до повідомлень у форматі <ulink url="https://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+>.</para
+></abstract>
+
+<keywordset>
+<keyword
+>пошта</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Вступ</title>
+
+	<para
+>За допомогою переглядача файлів TNEF можна без проблем обробляти долучення до повідомлень електронної пошти у форматі TNEF. Такі долучення, зазвичай, надходять з поштових серверів <trademark class="registered"
+>Microsoft</trademark
+>. У них разом з даними долучень містяться властивості повідомлення.</para>
+		<para
+>Долучення у форматі TNEF найчастіше має назву <filename
+>winmail.dat</filename
+> або <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>Головне вікно TNEF</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Головне вікно TNEF</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>За допомогою цієї допоміжної програми ви зможете виконувати декілька дій над такими долученнями, а саме:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Переглядати та відкривати долучення за допомогою відповідних програм.</para
+></listitem>
+		<listitem
+><para
+>Видобувати дані долучень</para
+></listitem>
+		<listitem
+><para
+>Переглядати властивості повідомлень (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Переглядати або видобувати з повідомлення форматований текст (у форматі RTF)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; показує вміст долучення TNEF автоматично. Ви можете відкрити або зберегти долучення за допомогою пунктів відповідного контекстного меню.</para>
+<screenshot>
+<screeninfo
+>Долучення TNEF у &kmail;</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Долучення TNEF у &kmail;</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Авторські права та ліцензування</title>
+
+	<para
+>Програма для перегляду файлів TNEF (KTnef)</para>
+
+	<para
+>Авторські права на програму належать &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>, 2000.</para>
+	<para
+>Авторські права на програму належать Allen Winter <email
+>winter@kde.org</email
+>, 2012.</para>
+
+<para
+>Переклад українською: Юрій Чорноіван <email
+>yurchor@ukr.net</email
+></para
+> &underFDL; &underGPL; </sect1>
+
+</article>

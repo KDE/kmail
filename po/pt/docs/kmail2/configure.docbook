@@ -1,0 +1,3330 @@
+<chapter id="configure">
+
+<chapterinfo>
+<authorgroup>
+<author
+><firstname
+>Daniel</firstname
+> <surname
+>Naber</surname
+> <affiliation
+><address
+>&Daniel.Naber.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Rugge</surname
+> <affiliation
+><address
+>&David.Rugge.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Marc</firstname
+> <surname
+>Mutz</surname
+> <affiliation
+><orgname
+>Klar&auml;lvdalens Datakonsult AB</orgname
+> <address
+> &Marc.Mutz.mail; </address
+> </affiliation>
+</author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <affiliation
+><address
+> <email
+>michel@kdab.net</email>
+</address
+></affiliation>
+</author>
+<author
+><firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> <affiliation
+><address
+>&Laurent.Montel.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+
+</author>
+<othercredit role="translator"
+><firstname
+>José</firstname
+><surname
+>Pires</surname
+><affiliation
+><address
+><email
+>zepires@gmail.com</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2013-12-18</date>
+<releaseinfo
+>(&kde; 4.12)</releaseinfo>
+</chapterinfo>
+
+<title
+>Configurar o &kmail;</title>
+
+<sect1 id="configure-generalinfo">
+<title
+>Informações Gerais</title>
+
+<screenshot>
+<screeninfo
+>Janela para Configurar o &kmail;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Janela para Configurar o &kmail;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Janela para Configurar o &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>A janela de configuração do &kmail; permite-lhe configurar o &kmail; de várias formas. Você poderá aceder à mesma através da opção <menuchoice
+><guimenu
+>Configuração</guimenu
+><guimenuitem
+>Configurar o &kmail;...</guimenuitem
+></menuchoice
+>.</para>
+<para
+>A janela tem vários botões:</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+>Ajuda</guibutton
+></term>
+<listitem
+><para
+>Isto irá abrir este manual na página apropriada.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Predefinições</guibutton
+></term>
+<listitem
+><para
+>Isto irá repor os valores de configuração da página actual para os valores predefinidos.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Reiniciar</guibutton
+></term>
+<listitem
+><para
+>Isto irá repor todas as alterações que tenha feito desde que gravou as alterações da última vez.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>OK</guibutton
+></term>
+<listitem
+><para
+>Isto irá gravar as opções e fechar a janela de configuração.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Aplicar</guibutton
+></term>
+<listitem
+><para
+>Isto irá gravar as opções sem fechar a janela de configuração.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Cancelar</guibutton
+></term>
+<listitem
+><para
+>Isto irá fechar a janela de configuração sem gravar as alterações que você tenha feito.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>Ela está dividida em seis páginas, sendo cada uma delas representada por um dos ícones da lista do lado esquerdo da janela. Por baixo, as páginas serão descritas em detalhe.</para>
+</sect1>
+
+<sect1 id="configure-identity">
+<title
+>Página de Identidades</title>
+
+
+<para
+>Você poderá obter uma breve introdução à página <guilabel
+>Identidades</guilabel
+> na secção do <link linkend="getting-started"
+>Guia Introdutório</link
+>.</para>
+
+<para
+>Esta página permite-lhe criar uma ou mais <emphasis
+>Identidades</emphasis
+>, &ie; combinações de nomes, endereços de e-mail e outras opções. Por exemplo, você poderá usar uma identidade para a comunicação da empresa e outra para a comunicação pessoal. Se você tiver mais do que um endereço de e-mail, você poderá criar uma identidade por endereço .Você será então capaz de seleccionar uma identidade por mensagem.</para>
+
+<para
+>A página consiste numa lista de identidades e de botões para as gerir. A lista de identidades irá sempre mostrar pelo menos uma identidade, a qual é a identidade <guilabel
+>Por Omissão</guilabel
+>.</para>
+
+<para
+>Para adicionar uma identidade nova à lista, carregue no botão <guibutton
+>Adicionar...</guibutton
+>.</para>
+
+<sect2 id="configure-identity-newidentitydialog">
+<title
+>A Janela de Nova Identidade</title>
+<screenshot>
+<screeninfo
+>Janela de Nova Identidade</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identity.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Janela de Nova Identidade</phrase>
+    </textobject>
+    <caption>
+      <para
+>Janela de Nova Identidade</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Você poderá indicar o nome da nova identidade no campo de texto <guilabel
+>Nova Identidade</guilabel
+>. Este será o nome mostrado na lista de identidades.</para>
+
+<para
+>Você poderá escolher como é que a nova identidade deverá ser inicializada, assinalando uma das três opções exclusivas a meio da janela:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Com campos vazios</guilabel
+></term>
+<listitem>
+<para
+>Todos os campos da identidade nova são limpos ou configurados com valores-padrão.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Usar os valores da Configuração do Sistema</guilabel
+></term>
+<listitem>
+<para
+>Usa os valores definidos em <menuchoice
+><guimenu
+>Detalhes da Conta</guimenu
+><guimenuitem
+>Senha &amp; Conta do Utilizador</guimenuitem
+></menuchoice
+>, na &systemsettings;, na categoria <guilabel
+>Aparência e Comportamento Comuns</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Duplicar uma identidade já existente</guilabel
+></term>
+<listitem>
+<para
+>Copia todos os campos de uma identidade existente. Você poderá escolher a identidade de onde copiar, seleccionando o item correspondente na lista <guilabel
+>Identidades existentes</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="configure-identity-general">
+<title
+>Geral</title>
+<screenshot>
+<screeninfo
+>Identidade - Geral</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitygeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identidade - Geral</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identidade - Geral</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>A página <guilabel
+>Geral</guilabel
+> permite-lhe indicar algumas configurações básicas para a identidade seleccionada de momento.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>O seu nome</guilabel
+></term>
+<listitem>
+<para
+>Indique o seu nome completo aqui (normalmente chamado também de <emphasis
+>nome apresentado</emphasis
+>). Ainda que este campo não seja estritamente obrigatório, recomenda-se que indique o valor correcto aqui.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Organização</guilabel
+></term>
+<listitem>
+<para
+>Indique aqui a sua organização. Este campo é opcional.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Endereço de e-mail</guilabel
+></term>
+<listitem>
+<para
+>Indique aqui o seu endereço de e-mail, &ie; algo do género <userinput
+>ze@exemplo.com</userinput
+>.</para>
+<example>
+<title
+>Endereço de e-mail</title>
+<para
+>Por isso, se o seu endereço é igual a <replaceable
+>Zé Povinho &lt;ze@exemplo.com&gt;</replaceable
+>, você deverá indicar <userinput
+>Zé Povinho</userinput
+> no campo <guilabel
+>O seu nome</guilabel
+> e <userinput
+>ze@exemplo.com</userinput
+> no campo <guilabel
+>Endereço de e-mail</guilabel
+>.</para
+></example>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Endereço de e-mail</guilabel
+></term>
+<listitem>
+<para
+>Este campo contém os endereços alternativos que também deverão ser considerados como pertencentes a esta identidade (em oposição a uma identidade diferente).</para>
+<example>
+<title
+>Endereços alternativos de e-mail</title>
+<para
+>Endereço primário: nome.apelido@exemplo.org</para>
+<para
+>Alternativos: nome@exemplo.org e apelido@exemplo.org</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="configure-identity-cryptography">
+<title
+>Criptografia</title>
+<screenshot>
+<screeninfo
+>Identidade - Cifra</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitycryptography.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identidade - Cifra</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identidade - Cifra</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>A página de <guilabel
+>Cifra</guilabel
+> permite-lhe configurar as chaves de &openpgp; e &smime; associadas com esta identidade, assim como escolher o formato de cifra de mensagens preferido a usar.</para>
+<variablelist>
+<varlistentry id="configure-identity-cryptography-openpgp-sign">
+<term
+><guilabel
+>Chave de assinatura do OpenPGP</guilabel
+></term>
+<listitem>
+<para
+>Aqui poderá seleccionar a chave a usar quando assinar com o &openpgp; as mensagens escritas com esta identidade.</para>
+<para
+>Por questões de brevidade, só o ID curto das chaves seleccionadas é que é mostrado. Se passar com o rato por cima da lista de chaves, irão aparecer mais informações numa dica.</para>
+<para
+>Para limpar o texto, carregue no botão <guibutton
+>Limpar</guibutton
+>. Para mudar a tecla seleccionada, carregue no botão <guibutton
+>Modificar...</guibutton
+>. Será apresentada uma janela que enumera todas as chaves privadas do &openpgp;, permitindo-lhe seleccionar a que deseja usar. Se não tiver ainda a chave configurada, carregue no botão <guibutton
+>Iniciar o Gestor de Certificados</guibutton
+> para abrir o &kleopatra;. Veja o <ulink url="help:kleopatra"
+>&kleopatra;</ulink
+> para saber mais informações sobre a utilização do &kleopatra; para criar e gerir as chaves e certificados do OpenPGP. Em baixo encontra-se uma breve descrição das utilizações das chaves/certificados escolhidos.</para>
+</listitem
+></varlistentry>
+<varlistentry id="configure-identity-cryptography-openpgp-encrypt">
+<term
+><guilabel
+>Chave de cifra do OpenPGP</guilabel
+></term>
+<listitem
+><para
+>Aqui você poderá seleccionar a chave para cifrar com o &openpgp; as mensagens se usar esta identidade e se o <xref linkend="configure-security-composing-encrypt-to-self"/> estiver em efeito. Esta chave também é usada para a função de <xref linkend="composer-attach-attach-my-public-key"/> do <link linkend="the-composer-window"
+>Compositor</link
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry id="configure-identity-cryptography-smime-sign">
+<term
+><guilabel
+>Certificado de assinatura &smime;</guilabel
+></term>
+<listitem>
+<para
+>Aqui pode seleccionar o certificado a usar ao assinar com o &smime; as mensagens criadas com esta identidade.</para>
+</listitem
+></varlistentry>
+<varlistentry id="configure-identity-cryptography-smime-encrypt">
+<term
+><guilabel
+>Certificado de cifra &smime;</guilabel
+></term>
+<listitem>
+<para
+>Aqui você poderá seleccionar a chave para cifrar com o &smime; as mensagens se usar esta identidade e se o <xref linkend="configure-security-composing-encrypt-to-self"/> estiver em efeito.</para>
+</listitem
+></varlistentry>
+<varlistentry id="configure-identity-cryptography-preferred-format">
+<term
+><guilabel
+>Formato preferido</guilabel
+></term>
+<listitem>
+<para
+>Aqui poderá escolher o formato criptográfico das mensagens a usar por omissão com esta identidade. Você poderá seleccionar qualquer um dos quatro formatos suportados pelo &kmail; ou deixar a opção no valor por omissão <guilabel
+>Qualquer</guilabel
+>, o que irá escolher um formato conveniente com base nos destinatários da mensagem, sendo um assinado e/ou cifrado com &smime; e o outro assinado e/ou cifrado com o &openpgp;.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="configure-identity-advanced">
+<title
+>Avançado</title>
+
+<screenshot>
+<screeninfo
+>Identidade - Avançado</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitiesadvanced.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identidade - Avançado</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identidade - Avançado</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>A página <guilabel
+>Avançado</guilabel
+> permite-lhe indicar algumas opções usadas com menos frequência ou mais especializadas para a identidade seleccionada de momento.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Endereço de resposta</guilabel
+></term>
+<listitem>
+<para
+>Indique o endereço para onde as respostas às suas mensagens deverão ser enviadas. Preencha este campo somente se for diferente do seu endereço normal (indicando com os campos <guilabel
+>Nome</guilabel
+> e <guilabel
+>Endereço de E-mail</guilabel
+> da página <link linkend="configure-identity-general"
+><guilabel
+>Geral</guilabel
+></link
+>), dado que as respostas vão por omissão para o endereço do remetente, de qualquer forma.</para>
+<para
+>Este campo só é útil se quiser quer as respostas às suas mensagens vão para outro lado que não o seu endereço de e-mail normal, &eg; se você está a usar esta identidade para enviar mensagens de um endereço que não pode de alguma forma receber mensagens.</para>
+<note
+><para
+>Lembre-se que algumas listas de correio sobrepõem este campo com o endereço de publicação delas para se certificarem que as respostas vão para a lista em vez de irem para pessoas individuais. Por isso, a utilidade deste campo é muito limitada e só deverá ser usada em casos raros.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Endereços de BCC</guilabel
+></term>
+<listitem>
+<para
+>Indique opcionalmente um endereço para onde as cópias invisíveis das suas mensagens deverão ser enviadas. Quando compor uma mensagem com esta identidade, o campo <guilabel
+>BCC</guilabel
+> será preenchido com estes endereços. Se quiser enviar uma BCC independentemente desta opção, você deverá olhar para a página <guilabel
+>Cabeçalhos</guilabel
+> da página <guilabel
+>Compositor</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Dicionário</guilabel
+></term>
+<listitem>
+<para
+>Selecciona o dicionário predefinido para a identidade actual.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Pasta de e-mail enviado</guilabel
+></term>
+<listitem>
+<para
+>Seleccione a pasta para onde deverão ser enviadas depois de usar esta identidade. Os utilizadores do &imap; deverão pensar em mudar isto para uma pasta &imap;, para que a sua pasta de mensagens enviadas seja guardada num servidor em vez de ser numa pasta local. Desta forma, eles poderão aceder a estas mensagens noutro local.</para>
+<tip
+><para
+>Você poderá exercitar um controlo mais refinado sobre onde colocar as mensagens enviadas, criando um <link linkend="filters"
+>filtro de mensagens</link
+> correspondente que se aplique às mensagens enviadas.</para
+></tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Pasta de rascunhos</guilabel
+></term>
+<listitem>
+<para
+>Seleccione a pasta para onde os rascunhos serão enviados, quando é usada esta identidade. Os utilizadores de &imap; deverão pensar em mudar isto para uma pasta de &imap;, para que os seus rascunhos sejam guardados num servidor em vez de numa pasta local. Desta forma, poderão continuar a trabalhar facilmente nos seus rascunhos num local diferente.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Pasta de modelos</guilabel
+></term>
+<listitem>
+<para
+>Seleccione a pasta onde os modelos deverão ser preenchidos, usando esta identidade. Veja mais informações por favor em <link linkend="new-compose-from-templates"
+>Compor a partir de modelos</link
+> sobre os modelos.</para>
+</listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term
+><guilabel
+>Conta de Envio</guilabel
+></term>
+<listitem>
+<para
+>Seleccione ou indique um servidor de &SMTP; alternativo a usar quando se enviam mensagens com esta identidade.</para>
+<note
+><para
+>Você precisa de configurar os servidores de envio primeiro, antes de os poder escolher na lista. Você podê-lo-á fazer na <link linkend="configure-accounts-sending"
+>página de <guilabel
+>Envio</guilabel
+></link
+> da <link linkend="configure-accounts"
+> página de <guilabel
+>Contas</guilabel
+></link
+>.</para
+></note>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="configure-identity-templates">
+<title
+>Modelos</title>
+<screenshot>
+<screeninfo
+>Identidade - Modelos</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitytemplate.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identidade - Modelos</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identidade - Modelos</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Aqui poderá criar e gerir os modelos a usar quando compor mensagens novas, respostas ou mensagens encaminhadas.</para>
+<para
+>Os modelos de mensagens suportam os comandos de substituição, bastando para tal escrevê-los ou seleccioná-los no menu <guimenu
+>Inserir um Comando</guimenu
+>.</para>
+<para
+>Os modelos aqui indicados são específicos da identidade. Estes substituem-se aos modelos globais, mas poderão ser substituídos por modelos específicos por pasta, caso sejam indicados.</para>
+</sect2>
+
+<sect2 id="configure-identity-signature">
+<title
+>Assinatura</title>
+<screenshot>
+<screeninfo
+>Identidade - Assinatura</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitysignature.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identidade - Assinatura</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identidade - Assinatura</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Esta página permite-lhe indicar uma assinatura (algumas vezes chamada de <quote
+>rodapé</quote
+> ou <quote
+>termo de responsabilidade</quote
+>) para ser adicionada a cada mensagem enviada com esta identidade.</para>
+<note
+><para
+>Este tipo de assinatura não tem nada a ver com as assinaturas (digitais) para as quais selecciona a chave a usar na <link linkend="configure-identity-cryptography"
+>página Cifra</link
+>. É um lapso chamar a isto uma assinatura, mas já que este termo já é usado noutros contextos, mantemos esta notação. Basta ter em mente que estas assinaturas e as assinaturas digitais são termos completamente diferentes.</para
+></note>
+<para
+>Assinale a opção <guilabel
+>Activar a assinatura</guilabel
+> se quiser ter a possibilidade de adicionar a assinatura ao usar esta identidade. Para adicioná-la <emphasis
+>automaticamente</emphasis
+> a todas as mensagens novas, você terá de seleccionar também a opção <guilabel
+>Adicionar a assinatura automaticamente</guilabel
+> na página de configuração <guilabel
+>Compositor</guilabel
+>.</para>
+<para
+>O &kmail; pode obter o texto da assinatura a partir de várias fontes. Por omissão, usa a opção <guilabel
+>Campo Indicado em Baixo</guilabel
+>. Basta indicar o texto no campo que aparece.</para>
+<para
+>A forma tradicional no Unix é ler o texto de um ficheiro chamado <filename
+>.signature</filename
+> na sua pasta pessoal. Este ficheiro poderá ser partilhado entre vários programas, por isso você obtém a mesma assinatura em cada programa de correio electrónico que usar. Seleccione o <guilabel
+>Ficheiro</guilabel
+> na opção <guilabel
+>Obter o texto da assinatura de</guilabel
+>. Se quiser editar o ficheiro, carregue no botão <guilabel
+>Editar o Ficheiro</guilabel
+>.</para>
+<para
+>O &kmail; poderá também ler o texto da assinatura do resultado de um comando. Deste modo, você poderá usar os programas como o <command
+>fortune</command
+> para criar um texto de assinatura novo para cada mensagem. Tudo o que o programa imprimir no <acronym
+>stdout</acronym
+> é capturado e usado como texto da assinatura. Para ler o texto do resultado de um comando, poderá seleccionar <guilabel
+>Resultado do Comando</guilabel
+>. Indique o comando (de preferência com a localização completa) no campo de edição <guilabel
+>Indicar o comando</guilabel
+>.</para>
+<note
+><para
+>Na Internet, as assinaturas são por convenção separadas do conteúdo da mensagem por uma linha que contém apenas os três caracteres <quote
+>-- </quote
+> (traço, traço, espaço). O &kmail; irá anteceder automaticamente o texto da assinatura com esta linha, se não estiver já presente no texto da assinatura.</para>
+<para
+>Se você não quiser que o separador seja adicionado automaticamente pelo &kmail;, basta adicioná-lo ao próprio texto da assinatura.</para>
+</note>
+
+</sect2>
+
+<sect2 id="configure-identity-pictures">
+<title
+>Imagem</title>
+<screenshot>
+<screeninfo
+>Identidade - Imagem</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitypicture.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identidade - Imagem</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identidade - Imagem</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>O &kmail; poderá enviar uma imagem pequena (48x48 pixels), de baixa qualidade e monocromática com cada mensagem. Por exemplo, poderá ser uma imagem ou um símbolo de si. Aparece no cliente de e-mail do destinatário (caso seja suportado).</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Enviar a imagem com todas as mensagens</guilabel
+></term>
+<listitem>
+<para
+>Assinale esta opção se quiser que o &kmail; adicione um cabeçalho X-Face às mensagens escritas com esta identidade. Uma X-Face é uma pequena (48x48 pontos) imagem a preto-e-branco que alguns clientes de e-mail poderão mostrar.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Fonte Externa</guilabel
+></term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Seleccionar o Ficheiro...</guilabel
+></term>
+<listitem>
+<para
+>Use isto para seleccionar um ficheiro de imagem de onde criar a imagem. A imagem deverá ser de alto contraste e praticamente quadrado. Um fundo claro ajuda a melhorar o resultado.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Escolher do Livro de Endereços</guilabel
+></term>
+<listitem>
+<para
+>Poderá usar uma versão reduzida da imagem que tenha definido no seu item do livro de endereços.</para>
+</listitem>
+</varlistentry>
+</variablelist
+>  
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Campo de Texto Abaixo</guilabel
+></term>
+<listitem>
+<para
+>Use este campo para introduzir um texto arbitrário do X-Face. Estão disponíveis exemplos em <ulink url="http://ace.home.xs4all.nl/X-Faces/"
+>http://ace.home.xs4all.nl/X-Faces/</ulink
+> </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-accounts">
+<title
+>Página de Contas</title>
+
+<para
+>Você poderá ver uma introdução breve à página de <guilabel
+>Contas</guilabel
+> na secção sobre como <link linkend="setting-up-your-account"
+>Configurar a Sua Conta</link
+>.</para>
+
+<para
+>Esta página permite-lhe criar uma ou mais <emphasis
+>contas</emphasis
+> (de recepção e envio), &ie; combinações de servidores de correio, informações de autenticação e outras opções. Tipicamente, você irá criar uma conta de envio (usada para enviar mensagens) e uma de recepção (para obter as mensagens). Você pode criar tantas contas quantas desejar, de qualquer forma, e atribuir uma <link linkend="configure-identity"
+>identidade</link
+> diferente ou ainda decidir a nível da mensagem.</para>
+
+<sect2 id="configure-accounts-sending">
+<title
+>Envio</title>
+
+<para
+>A página <guilabel
+>Envio</guilabel
+> permite-lhe definir outros servidores de envio novos para definir algumas opções comuns.</para>
+
+<para
+>Para a informação básica, veja a secção <link linkend="sending-mail"
+>Configurar a Sua Conta: Envio</link
+>.</para>
+
+<para
+>Quando você carrega em <guibutton
+>Adicionar...</guibutton
+> ou em <guibutton
+>Modificar...</guibutton
+>, as janelas para <guilabel
+>Criar uma Conta de Envio</guilabel
+> ou <guilabel
+>Configurar a conta</guilabel
+> abrir-se-ão, respectivamente. Para enviar através do &Sendmail;, você poderá indicar o nome e a localização do programa &Sendmail;. Para o &SMTP;, você poderá configurar o <guilabel
+>Nome</guilabel
+>, a <guilabel
+>Máquina</guilabel
+> e o <guilabel
+>Porto</guilabel
+> do servidor. A opção <guilabel
+>O servidor necessita de autenticação</guilabel
+> irá activar os campos <guilabel
+>Utilizador</guilabel
+> e <guilabel
+>Senha</guilabel
+>. Se você não tiver a certeza sobre a configuração da segurança, você poderá dizer ao &kmail; para testar as configurações melhores, usando o botão <guibutton
+>Auto-Detectar</guibutton
+> da página <guilabel
+>Avançado</guilabel
+>.</para>
+
+<para
+>A opção <guilabel
+>Confirmar antes de enviar</guilabel
+> irá mostrar uma janela de confirmação, sempre que você envia uma mensagem.</para>
+
+<para
+>A opção <guilabel
+>Enviar o correio na pasta A Enviar</guilabel
+> permite-lhe indicar quando é que as mensagens em espera, &ie; as mensagens na pasta A Enviar serão enviadas. Você poderá optar por:</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Nunca Automaticamente</guilabel
+></term>
+<listitem
+><para
+>As mensagens em espera só serão enviadas se escolher a opção <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Enviar as Mensagens em Espera...</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Na Verificação Manual de E-mail</guilabel
+></term>
+<listitem
+><para
+>As mensagens em espera serão enviadas depois de você ter verificado o correio novo manualmente, &eg; com a opção <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Verificar o Correio</guimenuitem
+></menuchoice
+>. Claro, você poderá enviar as mensagens em espera manualmente com a opção <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Enviar as mensagens em espera</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Em Todas as Verificações de E-mail</guilabel
+></term>
+<listitem
+><para
+>As mensagens em espera serão enviadas depois de  todas as verificações de correio novo, &ie; depois de todas as verificações de correio automáticas e manuais. Claro, você poderá enviar as mensagens em espera manualmente com a opção <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Enviar as mensagens em espera</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>O <guilabel
+>Método de envio por omissão</guilabel
+> permite-lhe definir o que acontece quando uma mensagem é enviada. Se o <guilabel
+>Enviar agora</guilabel
+> for seleccionado, a mensagem é enviada para o servidor imediatamente, enquanto que se estiver o <guilabel
+>Enviar mais tarde</guilabel
+>, a mensagem é posta em fila de espera na pasta de saída para ser enviada depois com a opção <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Enviar as Mensagens em Espera</guimenuitem
+></menuchoice
+> ou automaticamente quando você verifica por correio novo, dependendo da configuração da opção <guilabel
+>Enviar o correio na pasta A Enviar</guilabel
+>.</para>
+
+</sect2>
+
+<sect2 id="configure-accounts-receiving">
+<title
+>Recepção</title>
+
+<para
+>Para as informações básicas, veja a secção <link linkend="receiving-mail"
+>Configurar a sua Conta: Recepção</link
+>.</para>
+
+<para
+>Se usar o menu de contexto das <guilabel
+>Opções de Recepção</guilabel
+> para cada recurso, poderá indicar se o &kmail; deverá verificar correio novo imediatamente após ter sido iniciado. Poderá também seleccionar a opção <guilabel
+>Incluir na Verificação Manual do Correio</guilabel
+> e <guilabel
+>Mudar para desligado ao encerrar o &kmail;</guilabel
+>. </para>
+
+<para
+>Com a <guilabel
+>Notificação de Correio Novo</guilabel
+> você poderá configurar como é que o &kmail; o irá notificar se forem recebidas mensagens novas: o <guilabel
+>Apitar</guilabel
+> irá tocar um som curto; se o o <guilabel
+>Notificação detalhada de correio novo</guilabel
+> estiver activa, então o &kmail; irá mostrar o número de mensagens novas para cada pasta, desde que você tenha optado por ser notificado com uma janela. As opções de notificação mais avançadas, como a apresentação de uma janela ou a execução de um comando, estão disponíveis através do botão <guibutton
+>Outras Acções</guibutton
+>.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-appearance">
+<title
+>Página da Aparência</title>
+
+<sect2 id="configure-appearance-fonts">
+<title
+>Tipos de Letra</title>
+
+<para
+>Esta secção permite-lhe alterar o tipo, o tamanho e a codificação dos tipos de letra usados. O <guilabel
+>Corpo da Mensagem</guilabel
+> configura o tipo de letra para a área de leitura da mensagem, o <guilabel
+>Compositor</guilabel
+> muda o tipo de letra usado para escrever as mensagens na janela de composição do &kmail;. </para>
+
+</sect2>
+
+<sect2 id="configure-appearance-colors">
+<title
+>Cores</title>
+
+<para
+>Esta secção permite-lhe alterar a cor do texto. A opção <guilabel
+>Reutilizar as cores em citações encadeadas</guilabel
+> significa que até mesmo o texto que seja citado mais do que três vezes irá aparecer a cores. Lembre-se que as cores do <guilabel
+>Texto citado</guilabel
+> só funcionam no leitor de mensagens, não no compositor. Se quiser que as pastas cujo tamanho esteja próximo da quota máxima (esgotamento do espaço, normalmente usado nos servidores de &imap;) sejam apresentadas com uma cor diferente, poderá definir um valor percentual como limite para que isto aconteça. A cor usada poderá ser configurada em conjunto com as outras cores personalizadas. </para>
+
+</sect2>
+
+<sect2 id="configure-appearance-layout">
+<title
+>Disposição</title>
+<screenshot>
+  <screeninfo
+>Disposição Predefinida</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="layout.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Disposição Predefinida</phrase>
+      </textobject>
+      <caption>
+        <para
+>Disposição Predefinida</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>Esta página permite-lhe configurar a disposição da janela principal.</para>
+<para
+>Na secção da <guilabel
+>Lista de Pastas</guilabel
+>, poderá optar entre a <guilabel
+>Lista de pastas longa</guilabel
+>, que usa toda a altura da janela e a <guilabel
+>Lista de pastas curta</guilabel
+>, com a área de antevisão da mensagem na parte inferior da janela.</para>
+<para
+>Se quiser ter as suas pastas favoritas e um campo de pesquisa rápida para  as pastas na parte superior esquerda da janela, seleccione as seguintes duas opções.</para>
+<para
+>A secção <guilabel
+>Mostrar a Área das Pastas Favoritas</guilabel
+> permite-lhe mudar a forma como a sua pasta de favoritos mostra a sua pasta favorita. A opção <guilabel
+>Como Ícones</guilabel
+> ocupa bastante espaço, pelo que, se tiver várias pastas favoritas, poderá tentar a opção <guilabel
+>Como Lista</guilabel
+>. Se não tiver nenhumas pastas favoritas, poderá desactivar esta área por completo com a opção <guilabel
+>Nunca</guilabel
+>.</para>
+<para
+>Activada por omissão, a opção <guilabel
+>Dicas das Pastas</guilabel
+> mostra informações adicionais, como o número total de mensagens, as mensagens não-lidas e o tamanho do armazenamento, sempre que passa o cursor do rato sobre uma pasta. Seleccione a opção <guilabel
+>Nunca</guilabel
+> para desactivar esta funcionalidade.</para>
+<para
+>Você poderá escolher onde é que deseja ter a <guilabel
+>Área de Antevisão da Mensagem</guilabel
+>, face à lista de mensagens, ou pode optar em não a ter de todo.</para>
+</sect2>
+
+<sect2 id="configure-appearance-message-list">
+<title
+>Lista de Mensagens</title>
+<para
+>Na secção <guilabel
+>Geral</guilabel
+>, pode alterar a aparência da área da Lista de Mensagens.</para>
+<para
+>Escolha a opção <guilabel
+>Mostrar as dicas para as mensagens e cabeçalhos do grupo</guilabel
+>. Assinale a opção <guilabel
+>Esconder a barra de páginas apenas com uma página aberta</guilabel
+> para ter mais espaço para as mensagens na lista.</para>
+
+<para
+>As opções seguintes são as definições da <guilabel
+>Agregação Predefinida</guilabel
+> e o <guilabel
+>Tema Predefinido</guilabel
+>, os quais poderão ser modificados com a janela de <guilabel
+>Propriedades da Pasta</guilabel
+> de cada pasta individual.</para>
+<para
+>Se usar o botão <guibutton
+>Configurar</guibutton
+>, irá abrir uma janela para personalizar a agregação ou tema predefinidos de acordo com as suas necessidades e permitir-lhe adicionar os seus próprios.</para>
+<para
+>Agregações e temas predefinidos:</para>
+<variablelist>
+<varlistentry>
+<term
+>Agregação predefinida</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Remetentes/Destinatários, Plana</term>
+<listitem
+><para
+>Esta vista agrupa as mensagens pelos remetentes ou destinatários (dependendo do tipo de pasta). As mensagens não são organizadas por tópicos.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Actividade por Data, Plana</term>
+<listitem
+><para
+>Esta vista usa grupos diários. As mensagens não são organizadas por tópicos. Assim por exemplo, em <quote
+>Hoje</quote
+> iria encontrar simplesmente todas as mensagens que chegaram hoje.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Actividade por Data, por Tópico</term>
+<listitem
+><para
+>Esta vista usa grupos diários. As mensagens são organizadas por tópicos. Assim por exemplo, em <quote
+>Hoje</quote
+> iria encontrar simplesmente todas as mensagens que chegaram hoje, bem como os respectivos tópicos.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Actividade Actual, Plana</term>
+<listitem
+><para
+>Esta vista usa grupos de intervalos de datas inteligentes. As mensagens não são organizadas por tópicos. Assim por exemplo, em <quote
+>Hoje</quote
+> iria encontrar simplesmente todas as mensagens que chegaram hoje.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Actividade Actual, por Tópico </term>
+<listitem
+><para
+>Esta vista usa grupos de intervalos de datas inteligentes. As mensagens são organizadas por tópicos. Assim por exemplo, em <quote
+>Hoje</quote
+> iria encontrar simplesmente todas as mensagens que chegaram hoje, bem como todos os tópicos activos hoje.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Iniciantes do Tópico</term>
+<listitem
+><para
+>Esta vista agrupa as mensagens por tópicos e depois agrupa estes pelo utilizador inicial.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Vista por Data Plana</term>
+<listitem
+><para
+>Esta é uma vista em lista antiga e plana de mensagens ordenadas por data: sem grupos e sem tópicos.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Lista de Correio Normal</term>
+<listitem
+><para
+>Esta é uma vista em lista antiga e plana de listas de correio: sem grupos e com tópicos fortes.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-aggregation-theme">
+<term
+>Personalizar...</term>
+<listitem>
+<screenshot>
+  <screeninfo
+>Personalizar os Modos de Agregação das Mensagens</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="aggregationtheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Personalizar os Modos de Agregação das Mensagens</phrase>
+      </textobject>
+      <caption>
+        <para
+>Personalizar os Modos de Agregação das Mensagens</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>Para criar um tema de agregação personalizado, carregue no botão <guibutton
+>Configurar...</guibutton
+>. Seleccione uma agregação existente, de forma semelhante à que deseja alterar e carregue em <guibutton
+>Clonar a Agregação</guibutton
+>; se não existirem semelhanças, carregue no botão <guibutton
+>Nova Agregação</guibutton
+>. A página <guilabel
+>Geral</guilabel
+> permite-lhe alterar o <guilabel
+>Nome:</guilabel
+> e a <guilabel
+>Descrição:</guilabel
+>. A página de <guilabel
+>Grupos &amp; Tópicos</guilabel
+> permite-lhe configurar os diversos elementos que personalizam a sua agregação.</para>
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Agrupamento:</guilabel
+> Permite-lhe seleccionar a partir das datas, do remetente/destinatário ou nenhum deles. Com as opções inteligentes, o &kmail; irá agrupar as mensagens relacionadas em conjunto. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Política de expansão dos grupos:</guilabel
+> Permite-lhe definir se o &kmail; irá expandir automaticamente as mensagens agrupadas. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Tópicos:</guilabel
+> Permite-lhe alterar se o &kmail; irá incluir as referências e os assuntos para detectar mais correctamente os tópicos. Poderá também desactivar os tópicos por completo. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Líder do tópico:</guilabel
+> Permite-lhe alterar o dono do tópico entre a mensagem mais recente ou a mensagem de topo. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Política de expansão dos tópicos:</guilabel
+> Permite-lhe alterar a forma como o &kmail; determina se um tópico deverá ser expandido ou não. </para
+></listitem>
+</itemizedlist>
+<para
+>O modo <guilabel
+>Avançado</guilabel
+> permite-lhe alterar a <guilabel
+>Estratégia de preenchimento da janela:</guilabel
+>. Poderá escolher a opção 'Favorecer a velocidade' se tiver uma ligação lenta. A interactividade irá mostrar todas as suas conversações actuais em primeiro lugar. Para além disso, o modo em Lote não irá ordenar de todo a janela.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<varlistentry>
+<term
+>Tema Predefinido</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Clássico</term>
+<listitem
+><para
+>Um tema de linhas simples e únicas, retro-compatível</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Inteligente</term>
+<listitem
+><para
+>Um tema multi-itens e multi-linhas inteligente</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Inteligente com Estado Carregável</term>
+<listitem
+><para
+>Um tema multi-linhas e multi-itens inteligente com uma coluna de estado carregável</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-messagelist-theme">
+<term
+>Configurar...</term>
+<listitem>
+<screenshot>
+  <screeninfo
+>Personalizar o Tema da Lista de Mensagens</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="messagelisttheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Personalizar o Tema da Lista de Mensagens</phrase>
+      </textobject>
+      <caption>
+        <para
+>Personalizar o Tema da Lista de Mensagens</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>Para criar um tema de lista de mensagens personalizado, carregue no botão <guibutton
+>Configurar...</guibutton
+>. Seleccione um tema semelhante ao que deseja alterar e carregue no botão <guibutton
+>Clonar o Tema</guibutton
+>; se não existir qualquer semelhança, carregue no botão <guibutton
+>Novo Tema</guibutton
+>. A página <guilabel
+>Geral</guilabel
+> permite-lhe alterar o <guilabel
+>Nome:</guilabel
+> e a <guilabel
+>Descrição:</guilabel
+>. </para>
+<para
+>A página da <guilabel
+>Aparência</guilabel
+> permite-lhe configurar as colunas visíveis e os itens de estado. Para adicionar uma coluna, carregue com o botão direito na barra da coluna e seleccione a opção <guilabel
+>Adicionar a Coluna</guilabel
+>. Dê um nome à coluna e seleccione o que a coluna irá representar a partir da lista <guilabel
+>Ao carregar na coluna ordena as mensagens:</guilabel
+>. Por omissão, a opção <guilabel
+>Visível por omissão</guilabel
+> está assinalada; desligue-a se só quiser ter a coluna disponível no menu de adição/remoção do &RMB; para a barra de ordenação. Depois arraste a legenda apropriada nos <guilabel
+>Itens de Conteúdo</guilabel
+> para a área de colunas por baixo da respectiva barra; &eg;, se optar por adicionar uma coluna de tamanho, iria arrastar a legenda Tamanho para baixo da coluna Tamanho. Continue a fazer isto até que tenha todas as colunas que desejar. Poderá alterar o tipo de letra e a cor dos itens das colunas através do menu de &RMB; da área de visualização. Mova, apague e dimensione as colunas através do menu do &RMB; para a barra de colunas.</para>
+<para
+>A página <guilabel
+>Avançado</guilabel
+> permite-lhe definir se deseja ou não mostrar os cabeçalhos. Poderá também alterar o tamanho dos ícones de estado.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+>Com a <guilabel
+>Visualização da Data</guilabel
+>, você poderá escolher vários formatos de datas. O <guilabel
+>Formato Localizado</guilabel
+> é o que você indica em <guilabel
+>País/Região &amp; Língua</guilabel
+> no &systemsettings;. O <guilabel
+>Formato inteligente</guilabel
+> irá mostrar 'hoje', 'ontem', &etc;. Com o formato <guilabel
+>Personalizado</guilabel
+>, você poderá obter uma descrição dos valores possíveis se carregar na opção <guilabel
+>Informação do formato personalizado</guilabel
+>.</para>
+</sect2>
+
+<sect2 id="configure-appearance-message-window">
+<title
+>Janela de Mensagem</title>
+
+<para
+>Se a opção <guilabel
+>Fechar a janela da mensagem após a resposta ou encaminhamento</guilabel
+> estiver activada, o &kmail; irá fechar a janela da mensagem, após uma resposta ou o encaminhamento da mensagem que está apresentada nessa janela. Isto só se aplica a uma janela de mensagens em separado, não à área de antevisão das mensagens incorporada.</para>
+<para
+>Por omissão, a opção <guilabel
+>Activar a tecla de acesso</guilabel
+> está activa. As teclas de acesso permitem-lhe usar as teclas do teclado para funções que poderiam vir a necessitar do rato, como o seguimento de hiperligações. Para mais informações sobre as teclas de acesso, veja por favor as <ulink url="http://docs.kde.org/stable/en/applications/konqueror/accesskeys.html"
+>Teclas de acesso</ulink
+>.</para>
+<para
+><guilabel
+>Mostrar a barra de estado HTML</guilabel
+> activa uma barra do lado esquerdo da área de leitura, que lhe indica se uma mensagem está em &html; ou não. Isto é importante porque as mensagens em &html; podem imitar a aparência de uma mensagem assinada e cifrada, por isso você deverá estar a par do facto de que está a ler uma mensagem em &html;. A barra de estado de &html; em si não é influenciada pelo código &html; da mensagem.</para>
+ 
+<para
+>Active a opção <guilabel
+>Substituir os sorrisos por ícones emotivos</guilabel
+> se quiser que os sorrisos do tipo <userinput
+>:-)</userinput
+> apareçam substituídos no texto da mensagem por ícones emotivos (pequenas imagens), como por exemplo <inlinemediaobject
+><imageobject
+><imagedata fileref="smile.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>.</para>
+
+<para
+>Active a opção <guilabel
+>Reduzir o tamanho da letra do texto citado</guilabel
+> para mostrar o texto citado com um tamanho menor.</para>
+
+<para
+>Active a opção <guilabel
+>Mostrar as marcas de citação para expandir/recolher</guilabel
+> para mostrar os diferentes níveis do texto citado. Desactive para esconder os níveis de texto citado.</para>
+
+<para
+><guilabel
+>Codificação de caracteres de recurso</guilabel
+>: Algumas mensagens, especialmente as que são geradas automaticamente, não indicam a codificação de caracteres que deverá ser usada para as mostrar correctamente. Nesses casos, será usada uma codificação de recurso, a qual poderá configura aqui. Configure com a codificação de caracteres mais usada na sua parte do mundo. Por omissão, será usada a codificação configurada para todo o sistema.</para>
+
+<para
+><guilabel
+>Substituir a codificação de caracteres</guilabel
+>: Se alterar o valor predefinido <guilabel
+>Auto</guilabel
+>, irá forçar a utilização da codificação indicada para todas as mensagens, independentemente do que estas possam indicar.</para>
+
+<para
+><guilabel
+>Tamanho de letra mínimo:</guilabel
+> Esta opção permite-lhe definir o tamanho mínimo com que determinado texto será visível. Isto pode ser útil se tiver problemas em ler texto realmente pequeno.</para>
+
+<para
+>Para personalizar os cabeçalhos que deseja ver na janela da mensagem (&eg; assunto, de, para, CC, BCC, data), carregue no botão <guibutton
+>Configurar os Cabeçalhos Personalizados</guibutton
+> ao lado de <guilabel
+>Cabeçalhos:</guilabel
+>. Adicione a sua selecção na janela que aparece. Se estiver a usar cabeçalhos bonitos, poderá activar a opção <guilabel
+>Mostrar o estado de lixo nos cabeçalhos bonitos</guilabel
+>. Lembre-se que, se o seu fornecedor de e-mail não oferecer os serviços do <application
+>Spamassassin</application
+> para verificar o seu correio, terá de o instalar no seu computador, &eg; através de um gestor de pacotes (Yast no &SuSE;, &ubuntu; Software Center no &ubuntu; &etc;). Para mais informações, veja: <link linkend="the-anti-spam-wizard"
+>Assistente Anti-Lixo Electrónico</link
+> como configurar o SpamAssassin com o &kmail;.</para>
+</sect2>
+
+
+
+<sect2 id="configure-appearance-systemtray">
+<title
+>Bandeja do Sistema</title>
+
+<para
+>Se você activar o ícone da bandeja do sistema, então um pequeno ícone do &kmail; com o número de mensagens não lidas será mostrado na bandeja do sistema. Você poderá activar o ícone da bandeja do sistema com a opção <guilabel
+>Activar o ícone da bandeja do sistema</guilabel
+>, e com o <guilabel
+>Modo da Bandeja do Sistema</guilabel
+> você poderá indicar se o ícone da bandeja deverá sempre ser mostrado ou só quando tiver mensagens não-lidas.</para>
+
+<para
+>Se o ícone estiver visível, então você poderá esconder a janela principal do &kmail; ao carregar no ícone ou no botão de fecho da janela. Se carregar no ícone, você poderá tornar a janela principal do &kmail; visível de novo. Se carregar no ícone com o botão <mousebutton
+>direito</mousebutton
+> do rato, então você irá ter um menu com alguns comandos úteis. Você poderá verificar o correio novo, criar uma mensagem nova ou sair do &kmail;. Para além disso, existe a opção <guilabel
+>Novas Mensagens Em</guilabel
+>, a qual lista todas as pastas que contenham mensagens por ler. Se optar por uma dessas pastas, então esta pasta ficará seleccionada na janela principal do &kmail;. </para>
+
+</sect2>
+
+ <!-- Message Tags tab missing for 2.1.96 -->
+ 
+</sect1>
+
+  <sect1 id="configure-composer">
+    <title
+>Página do Compositor </title>
+
+    <sect2 id="configure-composer-general">
+      <title
+>Geral </title>
+
+      <variablelist>
+	<varlistentry id="configure-composer-general-append-signature">
+	  <term>
+	    <guilabel
+>Inserir automaticamente a assinatura</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalado, a sua assinatura, tal como está definida na <link linkend="configure-identity-signature"
+>página de identidade</link
+>, é automaticamente adicionada ao fim de todas as mensagens que criar (&ie; mensagens novas, respostas, &etc;). </para>
+	  </listitem>
+	</varlistentry>
+	<!-- Insert signature above quoted text + Prepend separator to signature missing -->
+	<varlistentry id="configure-composer-general-smart-quoting">
+	  <term>
+	    <guilabel
+>Usar a citação inteligente</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada esta opção, irá repartir as linhas compridas mas irá tentar manter a citação correcta (&eg; o <quote
+>&gt; </quote
+> irá aparecer sempre no início da linha). </para>
+	  </listitem>
+	</varlistentry>
+  <varlistentry id="configure-composer-general-quote-selection-only">
+    <term>
+      <guilabel
+>Só citar o texto seleccionado ao responder</guilabel>
+    </term>
+    <listitem>
+      <para
+>Se estiver assinalado, o &kmail; irá citar apenas o texto seleccionado na janela da mensagem, em vez da mensagem completa, ao responder. Com isto, é possível gerar rapidamente respostas que citem apenas o parágrafo relevante para o qual está a responder de facto, omitindo os outros parágrafos que não são relevantes para o contexto. </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry id="configure-composer-general-strip-signatures">
+    <term>
+      <guilabel
+>Remover a assinatura ao responder</guilabel>
+    </term>
+    <listitem>
+      <para
+>Se estiver assinalado, o &kmail; irá remover a assinatura do texto citado ao responder a uma mensagem. Isto é útil, dado que reduz a quantidade de texto citado, o facilita a leitura da resposta. </para>
+    </listitem>
+  </varlistentry>
+	<varlistentry id="configure-composer-general-auto-request-mdns">
+	  <term>
+	    <guilabel
+>Pedir automaticamente as notificações de disposição das mensagens</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada esta opção, o <xref linkend="composer-options-request-mdn"/> ficará por omissão <emphasis
+>activo</emphasis
+>. Assinale esta opção apenas se souber o que está a fazer. Os &mdn;s são considerados incómodos (ou são simplesmente ignorados) por bastantes pessoas. É melhor optar por pedir as confirmações mensagem-a-mensagem. </para>
+	  </listitem>
+	</varlistentry>
+	<!-- Use recent addresses for autocompletion missing -->
+	<varlistentry id="configure-composer-general-word-wrap">
+	  <term>
+	    <guilabel
+>Mudança de linha na coluna</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Permite-lhe activar ou desactivar a mudança de linha na janela do compositor e permite-lhe escolher a coluna em que as linhas passarão a ser repartidas (você não deverá provavelmente necessitar de mudar o valor por omissão, que é igual a <userinput
+>78</userinput
+>). </para>
+	  </listitem>
+	</varlistentry>
+    <!-- not in kmail 2.0.96 varlistentry id="configure-composer-general-too-many-recipients">
+      <term>
+        <guilabel
+>Warn if the number of recipients is larger than</guilabel>
+      </term>
+      <listitem>
+        <para>
+          If the number of recipients is larger than this value, &kmail; will
+          warn and ask for a confirmation before sending the mail.
+          The default is to warn if there are more than <literal
+>5</literal
+> recipients.
+          This warning can be turned off.
+        </para>
+      </listitem>
+    </varlistentry-->
+	<varlistentry id="configure-composer-general-autosave-interval">
+	  <term>
+	    <guilabel
+>Intervalo de gravação automática</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Poderá ser criada uma cópia de segurança do texto no compositor regularmente. Esta opção permite-lhe indicar o intervalo usado para criar a cópia de segurança. Você poderá desactivar a gravação automática se configurar este valor como <literal
+>0</literal
+>. </para>
+	  </listitem>
+	</varlistentry>
+    <!-- not in kmail 2.0.96 varlistentry id="configure-composer-general-forwading-type">
+	  <term>
+	    <guilabel
+>Default Forwarding Type</guilabel>
+	  </term>
+	  <listitem>
+	    <para>
+           Lets you decide whether you want to forward messages inline or as an attachment by default.
+           This changes which type of forwarding mechanism is used when you click the toolbar icon or
+           when you activate the shortcut for forwarding.
+	    </para>
+	  </listitem>
+	</varlistentry-->
+	<!--missing: Configure Completion Order + Edit Recent Addresses -->
+
+      </variablelist>
+
+    </sect2>
+
+<sect2 id="configure-composer-standard-templates">
+<title
+>Modelos-Padrão</title>
+<para
+>Aqui poderá adicionar, editar e remover os modelos de mensagens personalizados a usar quando compor uma resposta ou uma mensagem de encaminhamento.</para>
+<para
+>Os modelos de mensagens suportam os comandos de substituição, bastando para tal escrevê-los ou seleccioná-los com a opção do menu <guimenu
+>Inserir um Comando</guimenu
+>.</para>
+<para
+>Estes são modelos globais (predefinidos). Estes poderão ser substituídos por modelos específicos por identidade ou por pasta.</para>
+</sect2>
+
+<sect2 id="configure-composer-custom-templates">
+<title
+>Modelos Personalizados</title>
+<para
+>Aqui poderá adicionar, editar e remover os modelos de mensagens personalizadas a usar quando compor uma resposta ou uma mensagem de encaminhamento. Crie o modelo personalizado, escrevendo para tal o nome no campo de texto e carregando no botão <guiicon
+>+</guiicon
+>. Poderá associar uma combinação de teclas ao modelo para obter operações mais rápidas.</para>
+<!-- To and CC field-->
+<para
+>Os modelos de mensagens suportam os comandos de substituição, bastando para tal escrevê-los ou seleccioná-los com a opção do menu <guimenu
+>Inserir um Comando</guimenu
+>.</para>
+<para
+>Existem quatro tipos de modelos personalizados: usados para <guilabel
+>Respostas</guilabel
+>, <guilabel
+>Respostas para Todos</guilabel
+>, <guilabel
+>Encaminhamento</guilabel
+> e <guilabel
+>Universal</guilabel
+>, o qual poderá ser usado para todos os tipos de operações. Não poderá associar uma combinação de teclas aos modelos  <guilabel
+>Universais</guilabel
+>.</para>
+</sect2>
+ <!-- replaced by Standard Templates / Custom Templates tabs, remove it lueck 31.05.2011
+<sect2 id="configure-composer-phrases">
+<title
+>Phrases</title>
+
+<para
+>The <guilabel
+>Phrases</guilabel
+> tab lets you define the automatically
+generated lines that are added to message replies, forwarded messages, and the
+character that is added in front of quoted text.
+There are special &percnt;-denoted characters that will insert certain
+values, which are also displayed at the top of the <guilabel
+>Phrases</guilabel
+> section.
+You can add reply phrases in languages other than
+your default &kde; language using the <guibutton
+>Add...</guibutton
+> button.
+You can then choose between different languages with the
+<guilabel
+>Language</guilabel
+> drop down box.
+This will only work for languages whose i18n package you have installed.</para>
+</sect2>
+-->
+<sect2 id="configure-composer-subject">
+<title
+>Assunto</title>
+
+<para
+>Esta secção contém uma lista dos prefixos de <quote
+>Resposta</quote
+> e <quote
+>Reencaminhamento</quote
+>. Se você receber mensagens que usam prefixos diferentes dos normais, você podê-los-á adicionar aqui para que o &kmail; os reconheça. Desta forma, o &kmail; podê-los-á ignorar para ordenar as mensagens e ao definir o assunto de uma resposta, substituindo-os opcionalmente por <quote
+>Re:</quote
+> ou <quote
+>Fwd:</quote
+>, respectivamente.</para>
+
+</sect2>
+
+<sect2 id="configure-composer-charset">
+<title
+>Codificação</title>
+
+<para
+>Aqui, você poderá gerir as codificações por omissão usadas para as suas próprias mensagens. Todas as mensagens que enviar serão analisadas para saber se estão escritas numa das codificações indicadas, começando pelo início da lista. Se estiver, será usada esta codificação. Se não estiver, irá aparecer uma janela que lhe dirá para escolher manualmente uma codificação com a opção <menuchoice
+><guimenu
+>Opções</guimenu
+><guisubmenu
+>Mudar a Codificação</guisubmenu
+></menuchoice
+>. </para>
+
+<para
+>Se você seleccionar a opção <guilabel
+>Manter a codificação original ao responder ou ao reencaminhar</guilabel
+>, será mantida a codificação original da mensagem, a menos que existam caracteres que não possam ser representados com essa codificação.</para>
+
+</sect2>
+
+<sect2 id="configure-composer-headers">
+<title
+>Cabeçalhos</title>
+
+<para
+>Assinale a opção <guilabel
+>Usar o sufixo Message-ID personalizado</guilabel
+> se quiser que o &kmail; gere Message-Id's com um sufixo personalizado. Indique o sufixo desejado no <guilabel
+>Sufixo personalizado do Message-ID</guilabel
+>. Por favor, garanta que o sufixo que indicar é único a nível mundial. A melhor coisa a fazer é usar o nome de um domínio que você possua. Se não assinalar o <guilabel
+>Usar o sufixo Message-ID personalizado</guilabel
+>, então o &kmail; irá gerar automaticamente o Message-Id completo. Se você não souber o que é isto, não assinale esta opção.</para>
+
+<para
+>A lista <guilabel
+>Definir os cabeçalhos de MIME personalizados</guilabel
+> define os cabeçalhos que o &kmail; irá usar para as mensagens enviadas. Você poderá inventar campos novos ou sobrepor os existentes. Esta funcionalidade só é útil para os utilizadores avançados.</para>
+
+</sect2>
+
+<sect2 id="configure-composer-attachments">
+<title
+>Anexos</title>
+
+<para
+>Se você tiver de enviar anexos com nomes de ficheiros que tenham caracteres não-ingleses para utilizadores do <application
+>&Microsoft; Outlook</application
+> ou do <application
+>&Microsoft; Outlook Express</application
+>, então você deverá ver a opção <guilabel
+>Nomes de anexos compatíveis com o Outlook</guilabel
+>. O &kmail; irá então codificar os nomes dos anexos de uma forma fora do padrão que seja compreendida pelo  <application
+>&Microsoft; Outlook</application
+>. </para>
+<para
+>Lembre-se que o &kmail; irá criar mensagens incompatíveis com a norma, como tal é possível que as suas mensagens não sejam compreendidas pelos clientes de correio compatíveis com a norma. Como tal, a menos que você não tenha outra escolha, você não deverá activar esta opção.</para>
+
+<para
+>Assinale a opção <guilabel
+>Activar a detecção dos anexos em falta</guilabel
+> se quiser que o &kmail; o avise quando estiver prestes a enviar uma mensagem sem anexos, ainda que o texto da mensagem contenha certas palavras que indiquem que você deseja incluir um anexo. A lista de palavras-chave pode ser modificada.</para>
+
+</sect2>
+
+ <sect2 id="configure-composer-autocorrection">
+   <title
+>Auto-correcção</title>
+   <para
+>Para activar a funcionalidade, assinale a opção <guilabel
+>Activar a correcção automática</guilabel
+>. Na lista, escolha a língua que deseja usar. Poderá importar a a configuração do <application
+>LibreOffice</application
+> ou de outra instalação do &kmail; se seleccionar o local apropriado na lista <guilabel
+>Importar</guilabel
+>. Se precisar de gravar a sua configuração para outra instalação ou aplicação, seleccione o botão <guibutton
+>Exportar</guibutton
+>. </para>
+       <para>
+         <variablelist
+><title
+>Opções de Correcção Automática</title>
+           <varlistentry>
+             <term
+><guilabel
+>Correcção Automática Simples</guilabel
+></term>
+             <listitem>
+               <para
+>Isto permite-lhe configurar o &kmail; para corrigir automaticamente várias correcções simples. Assinale a opção a seguir à funcionalidade de correcção que deseja activar. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Aspas Personalizadas</guilabel
+></term>
+             <listitem>
+               <para
+>Poderá substituir as plicas ou aspas por plicas ou aspas tipográficas se assinalar a opção apropriada. Também poderá adicionar espaços inquebráveis antes de sinais de pontuação específicos, seleccionando a opção apropriada. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Correcção Automática Avançada</guilabel
+></term>
+             <listitem>
+               <para
+>Poderá introduzir a substituição de palavra automática personalizada, assinalando esta opção. Para indicar um texto personalizado para substituir automaticamente, indique a palavra a substituir no campo <guilabel
+>Procurar</guilabel
+> e a palavra de substituição no campo <guilabel
+>Substituir</guilabel
+> e carregue no botão <guibutton
+>Adicionar</guibutton
+>. Para remover um texto de substituição personalizado, seleccione o texto e carregue em <guibutton
+>Remover</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Excepções</guilabel
+></term>
+             <listitem>
+               <para
+>Isto permite-lhe definir as excepções que deseja que o &kmail; ignore as suas selecções de correcção automática para os fins de frases e para as duas letras maiúsculas. Indique a excepção e carregue em <guibutton
+>Adicionar</guibutton
+>. Para remover a excepção, seleccione o texto e carregue em <guibutton
+>Remover</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+        </variablelist>
+      </para>
+      <para
+>Assim que tiver feito todas as suas selecções de correcção automática, carregue no botão <guibutton
+>Aplicar</guibutton
+>. </para>
+ </sect2>
+  <sect2 id="configure-resize-image">
+   <title
+>Auto-Dimensionar a Imagem</title>
+   <para
+>Em algumas circunstâncias, poderá ter de ter o &kmail; a dimensionar automaticamente os anexos de imagens ao enviar as mensagens, &eg; por limites no servidor de correio. Para o fazer, seleccione a opção <guilabel
+>Automaticamente dimensionar as imagens</guilabel
+>. Existem várias opções que vêm com esta funcionalidade.</para>
+   <variablelist>
+     <varlistentry
+><term
+><guilabel
+>Geral</guilabel
+></term>
+       <listitem>
+         <para
+>Algumas opções gerais para o dimensionamento automático de imagens são as seguintes: Se precisar as que as imagens mantenham as proporções de tamanho intactas &eg; fotografias, seleccione <guilabel
+>Manter as proporções</guilabel
+>. O comportamento por omissão é o &kmail; perguntar-lhe se deseja mudar o tamanho antes de efectuar a operação; se quiser que ele as dimensione sem perguntar, desligue a opção <guilabel
+>Perguntar antes de dimensionar</guilabel
+>. O &kmail; irá gravar o ficheiro em <acronym
+>JPG</acronym
+>; se preferir que ele grave as imagens no formato <acronym
+>PNG</acronym
+>, seleccione-o na lista <guilabel
+>Gravar no formato</guilabel
+>.</para>
+        </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Imagem</guilabel
+></term>
+       <listitem>
+         <para
+>Imagine que tem um parente que só consegue receber ficheiros de imagens de um determinado tamanho, devido aos limites dos fornecedores de e-mail dele; poderá usar a opção <guilabel
+>Reduzir a imagem à dimensão máxima:</guilabel
+> para seleccionar um tamanho para o qual reduzir a imagens e indicar o endereço de e-mail dele nos filtros da página <guilabel
+>Destinatários</guilabel
+>. A página de destinatários é referida com mais detalhes no fim desta secção. Se precisar de um tamanho personalizado, escolha a última opção <guilabel
+>Personalizado</guilabel
+> com os campos de largura e altura, indicando o número no campo de texto. Poderá também ampliar as imagens se seleccionar a opção <guilabel
+>Aumentar a imagem para a dimensão mínima</guilabel
+>. A última opção permite-lhe ignorar as imagens com um determinado tamanho de ficheiro (isto irá verificar o tamanho da imagem apenas pela largura x altura).</para>
+       </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Nome do Ficheiro</guilabel
+></term>
+       <listitem>
+         <variablelist>
+           <varlistentry
+><term
+><guilabel
+>Filtro da origem</guilabel
+></term>
+             <listitem
+><para
+>Se quiser que o dimensionamento seja feito com base no nome do ficheiro, iria seleccionar aqui o filtro apropriado. &eg; pode precisar de enviar diariamente ao seu patrão várias imagens e ele querer que elas tenham todas o mesmo tamanho. Poderá dar um nome semelhante a todas as suas imagens de trabalho (trabalho1, trabalho2, trabalho3 &etc;), seleccionando depois a opção <guilabel
+>Incluir todos os ficheiros cujos nomes incluam um dos padrões</guilabel
+> e indicar 'trabalho' no campo <guilabel
+>Padrão:</guilabel
+>. Poderá também excluir ficheiros da mesma forma, seleccionando a opção <guilabel
+>Excluir todos os ficheiros cujos nomes incluam um dos padrões</guilabel
+>. O comportamento por omissão é sem filtragem.</para>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Formato da Imagem</guilabel
+></term>
+             <listitem>
+               <para
+>Seleccione <guilabel
+>Dimensionar todas as imagens com um destes formatos</guilabel
+> para definir um formato específico para o qual dimensionar a imagem.</para>
+               <itemizedlist>
+                 <listitem
+><para
+>Quando esta opção estiver activa, terá de seleccionar o botão <guibutton
+>Seleccionar o Formato...</guibutton
+> e indicar um formato na janela.</para
+></listitem>
+               </itemizedlist>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Nome dos ficheiros dimensionados</guilabel
+></term>
+             <listitem>
+             <para
+>Seleccione <guilabel
+>Mudar o nome das imagens com o seguinte padrão</guilabel
+> se quiser que as suas imagens dimensionadas mudem de nome de acordo com um dado padrão. Indique o padrão no campo de texto. Poderá usar: <simplelist>
+                 <member
+>%t para a hora actual</member>
+                 <member
+>%d para a data actual</member>
+                 <member
+>%n para o nome do ficheiro original</member>
+                 <member
+>%e para a extensão original</member>
+                 <member
+>%x para a nova extensão</member>
+                 </simplelist
+></para>
+             </listitem>
+           </varlistentry>
+         </variablelist>
+         </listitem>
+       </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Destinatários</guilabel
+></term>
+       <listitem>
+       <para
+>Esta página é onde poderá definir destinatários que possam querer ter as imagens dimensionadas: &eg; avo@minha-familia.net; patrao@meu-trabalho.com. Terá de decidir se precisa de várias ou apenas uma e indicar os endereços de e-mail no campo de texto, usando o <quote
+>;</quote
+> como separador quando tiver vários. Também poderá indicar se não quiser que as imagens de certos destinatários sejam dimensionadas. Por omissão, não existe qualquer filtragem.</para>
+       </listitem>
+     </varlistentry>
+   </variablelist>
+ </sect2>
+
+ <sect2 id="configure-composer-general-external-editor">
+   <title
+>Editor Externo</title>
+   <variablelist>
+     <varlistentry>
+       <term
+><guilabel
+>Usar um editor externo em vez do compositor</guilabel
+></term>
+       <listitem>
+         <para
+>Esta selecção permite-lhe usar um editor diferente. Repare que a janela do Compositor irá abrir à mesma e o editor externo também, assim que você começar a escrever um carácter no corpo da mensagem. Quando terminar, grave o texto e saia do editor. O texto irá então aparecer na janela do compositor, para que o possa enviar. Repare que o seu editor pode não regressar imediatamente; &eg;, poderá ter de usar o <userinput
+><command
+>gvim</command
+> <option
+>-f</option
+> <varname
+>%f</varname
+></userinput
+> para o <application
+>gvim</application
+>.</para>
+       </listitem>
+     </varlistentry>
+   </variablelist>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-security">
+  <title
+>Página de Segurança</title>
+  <sect2 id="configure-security-reading">
+    <title
+>Leitura</title>
+    <para
+>Neta página, você poderá configurar as opções relevantes para a segurança, destinadas à leitura das mensagens.</para>
+      <variablelist>
+        <varlistentry id="configure-security-reading-prefer-html">
+	  <term
+><guilabel
+>Preferir o HTML ao texto simples</guilabel
+></term>
+	  <listitem>
+            <para
+>Por omissão, o &kmail; irá mostrar as mensagens de &html; em texto simples. Se preferir ver as mensagens com a sua formatação e disposição em &html;, seleccione esta opção. Recomendamos em grande medida que deixe esta opção desligada, dado que poderão ocorrer alguns problemas de segurança relacionados com o &html;.</para>
+            <para
+>Pode á mesma ver as mensagens no formato &html; por e-mail se carregar na barra de comutação da mensagem em texto simples/HTML do lado esquerdo da janela da mensagem. Por favor, veja a <link linkend="configure-appearance-message-window"
+>Janela da Mensagem</link
+> para activar esta funcionalidade.</para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-reading-external-references">
+	  <term
+><guilabel
+>Permitir o carregamento das referências externas da Internet</guilabel
+></term>
+	  <listitem>
+            <para
+>Se estiver assinalada, o &kmail; poderá carregar imagens externas, folhas de estilo, &etc; da Internet, quando você ver uma mensagem em &html;. Recomendamos-lhe que deixe esta opção desligada (ainda que não faça efeito se você só vir mensagens de texto normal).</para>
+            <para
+>Ao adicionar referências externas às mensagens deles, as pessoas que enviam lixo podem detectar quando você leu a mensagem deles, a sua localização e bastantes outros dados que podem ficar registados em servidores Web. Lembre-se que esta opção não efeito sobre o &Java;,JavaScript e 'Plugins', dado que estes não são suportados de todo no &kmail;, o que é bom, dado que a maioria dos vírus se propagam através destes meios.</para>
+	  </listitem>
+	</varlistentry>
+	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
+         <varlistentry id="configure-security-email-scams">
+          <term
+><guilabel
+>Informa se a mensagem lida é uma suspeita de farsa por e-mail</guilabel
+></term>
+          <listitem>
+            <para
+>Com a popularidade do e-mail, infelizmente vem a popularidade das burlas por e-mail. Estas burlas podem incluir as mensagens que são feitas de forma a parecerem vir de companhias legítimas, mas de facto apontam para páginas Web maliciosas que pedem a sua informação pessoal. Isto poderá levar ao roubo de identidades ou algo pior ainda. Por omissão, o &kmail; analisa as mensagens à procura de burlas comuns, informando-o se o e-mail é uma suspeita de burla. É altamente recomendado que deixe esta funcionalidade activa. Se quiser desactivar esta grande funcionalidade, desligue a opção <guilabel
+>Informar se a leitura da mensagem é uma suspeita de burla por e-mail</guilabel
+>.</para>
+            <para
+>Se tiver e-mails legítimos a serem marcados, &eg; de pessoas de confiança, poderá adicionar o e-mail deles à <guilabel
+>Lista de Permissões:</guilabel
+> se carregar em <guibutton
+>Adicionar...</guibutton
+> e introduzir o e-mail na janela que aparece. Lembre-se que, desta vez, só são suportados endereços individuais.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term
+><guilabel
+>Mensagens encriptadas</guilabel
+></term>
+          <listitem>
+            <para
+>Por omissão, o &kmail; irá tentar automaticamente descodificar as mensagens encriptadas quando as ver. Se o preferir fazer manualmente, desligue esta opção.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term
+><guilabel
+>Anexos de Certificados &amp; Conjuntos de Chaves</guilabel
+></term>
+          <listitem>
+            <para
+>Se quiser que o &kmail; possa <guilabel
+>Importar automaticamente as chaves e certificados</guilabel
+> das mensagens recebidas para descodificação, seleccione esta opção.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry id="configure-security-reading-mdns">
+	  <term>
+	    <guilabel
+>Notificações de Disposição da Mensagem</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Os &mdn;s são uma generalização do que é conhecido por <quote
+>aviso de recepção ou de leitura</quote
+>. O autor de mensagem pede que seja enviada uma notificação de entrega e o programa de correio do destinatário poderá deste modo gerar uma resposta, da qual o remetente poderá saber o que aconteceu à sua mensagem. Os tipos de confirmações incluem as <quote
+>mostradas</quote
+> (&ie; lidas), <quote
+>removidas</quote
+> e as <quote
+>despachadas</quote
+> (&eg; reencaminhadas). </para>
+	    <para
+>As opções seguintes (indicadas na <guilabel
+>Política de envio</guilabel
+>) estão disponíveis para controlar <emphasis
+>quando</emphasis
+> o &kmail; envia os &mdn;s: </para>
+	    <variablelist>
+	      <varlistentry>
+		<term
+><guilabel
+>Ignorar</guilabel
+> (recomendado) </term>
+		<listitem>
+		  <para
+>Ignora os pedidos de notificações de entre. Não serão enviados nenhuns &mdn;s automáticos. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Perguntar</guilabel>
+		</term>
+		<listitem>
+		  <para
+>As respostas aos pedidos só são enviadas depois de pedir autorização ao utilizador. Desta forma, você poderá enviar &mdn;s para as mensagens seleccionadas e ignorar ou recusar outras mensagens. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Recusar</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Enviar sempre uma notificação de <quote
+>recusada</quote
+>. Este é só <emphasis
+>ligeiramente</emphasis
+> melhor do que enviar sempre &mdn;s. O autor ficará a saber à mesma que as mensagens foram manipuladas, só não sabe se foram apagadas ou lidas &etc; </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Enviar sempre</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Envia sempre a notificação de entrega pedida. Isto significa que o autor da mensagem fica a saber se a mensagem foi manipulada e, para além disso, o que aconteceu a ela (mostrada, removida, &etc;). Esta opção é altamente desencorajada mas, dado que faz sentido onde a privacidade não seja um problema, &eg; na gestão de relações com o cliente (CRM), foi tornada disponível. </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
+	    <para
+>Se não tiver a certeza, experimente um pouco o <guilabel
+>Perguntar</guilabel
+> e, se achar que os pedidos do &kmail; o incomodam, mude para <guilabel
+>Ignorar</guilabel
+>. </para>
+	    <para
+>As opções seguidas (apresentadas no <guilabel
+>Citar a mensagem original</guilabel
+>) estão disponíveis para controlar <emphasis
+>quanto</emphasis
+> da mensagem original é que o &kmail; envia de volta nos &mdn;s. </para>
+	    <variablelist>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Nada</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Não são enviadas nenhumas partes da mensagem, a não ser o ID da mensagem obrigatório e o destinatário original, na resposta do &mdn;. Isto mantém informação suficiente para o remetente encontrar a mensagem, na sua lista de mensagens enviadas, para a qual este &mdn; foi gerado. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Mensagem completa</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Anexa a mensagem por completo à notificação de entrega. Normalmente, isto é um abuso. Não adiciona nenhuma informação valiosa que não possa ser deduzida pelos cabeçalhos da mensagem por si só, mas as pessoas algumas vezes insistem nisto, dado que é mais fácil para as pessoas correlacionarem o conteúdo da mensagem do que pelos seus cabeçalhos. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Só os cabeçalhos</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Anexa apenas os cabeçalhos à notificação de entrega. Isto é normalmente o suficiente para as pessoas (pelo assunto) e os computadores (pelo ID da mensagem) relacionarem facilmente o &mdn; com a mensagem original. </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
+	    <para
+>Se não tiver a certeza, deixe a opção como está. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Não enviar MDNs em resposta a mensagens cifradas</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Esta opção suprime o envio de &mdn;s se a mensagem estiver cifrada (parcialmente ou totalmente). Isto limita as tentativas de usar a funcionalidade do &mdn; do &kmail; como uma <emphasis
+>técnica</emphasis
+> para deduzir se foi capaz de decifrar a mensagem ou não. </para>
+	    <para
+>De forma mais restrita, esta opção não é necessária, dado que o &kmail; envia os &mdn;s independentemente do facto de a mensagem conseguir ou não ser decifrada com sucesso (o pedido de notificação da entrega vai numa parte não-cifrada da mensagem), mas dá ao utilizador ciente da segurança a opção de os enviar sempre que for pedido (opção desligada) ou nunca (opção ligada). </para>
+	    <para
+>Se não tiver a certeza, deixe a opção activa. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Importar automaticamente assinaturas e certificados</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada a opção, os anexos com chaves de &openpgp; ou chaves de &smime; são automaticamente importados para o seu chaveiro local. </para>
+	    <note>
+	      <para
+>A verificação das assinaturas de  &smime; envolve sempre a importação dos certificados contidos na mensagem. Esta opção não afecta esse comportamento. Não tem nada a ver também com a funcionalidade de obtenção automática de chaves do &gpg;, onde o &gpg; irá tentar importar as chaves desconhecidas de um servidor de chaves. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="configure-security-composing">
+      <title
+>Composição </title>
+
+      <para
+>Nesta página, você poderá configurar as opções relevantes de segurança para compor mensagens. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-composing-automatically-sign">
+	  <term>
+	    <guilabel
+>Assinar automaticamente as mensagens</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada, a funcionalidade para <xref linkend="composer-options-sign-message"/> no compositor ficará por omissão <emphasis
+>activa</emphasis
+>. </para>
+	    <para
+>Contudo, você poderá à mesma activar ou desactivar a opção a nível da mensagem. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-encrypt-to-self">
+	  <term>
+	    <guilabel
+>Ao encriptar os e-mails, encriptar também sempre para o certificado da minha identidade</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se a opção estiver assinalada, todas as mensagens cifradas para os destinatários serão também cifradas para si próprio. </para>
+	    <warning>
+	      <para
+>Se desligar esta opção, você poderá não ser mais capaz de decifrar as mensagens que escreveu e cifrou para as outras pessoas. </para>
+	    </warning>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-store-sent-encrypted">
+	  <term>
+	    <guilabel
+>Guardar as mensagens enviadas cifradas</guilabel
+><!--
+	    --><footnote>
+	      <para
+>Esta opção activa um modo de cifra do correio que é algumas vezes (de forma enganadora) chamado de cifra <quote
+>apenas para transporte</quote
+>. Neste modo de operação, a cifra da mensagem é retirada logo que a mensagem chegou ao seu destino. A cifra dura apenas enquanto a mensagem vai a caminho. </para>
+	      <para
+>O &kmail; suporta este modo pela metade, dado que esta funcionalidade deveria ser colocada ao nível do <emphasis
+>servidor</emphasis
+> de correio (<acronym
+>MTA</acronym
+>) do que no <emphasis
+>cliente</emphasis
+> (<acronym
+>MUA</acronym
+>). Como tal, as versões futuras do &kmail; poderão perder o suporte para esta opção. </para>
+	    </footnote>
+	  </term>
+	  <listitem>
+	    <para
+>Se a opção estiver assinalada, as mensagens são gravadas na sua pasta <guilabel
+>enviado</guilabel
+> tal e qual as enviou (&ie; se foram cifradas, serão gravadas nesse mesmo modo). </para>
+	    <para
+>Se não estiver, as mensagens serão <emphasis
+>sempre</emphasis
+> gravadas sem cifra nenhuma na sua pasta <guilabel
+>enviado</guilabel
+>, mesmo que tenham sido enviadas cifradas. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-show-encryption-key">
+	  <term>
+	    <guilabel
+>Mostrar sempre as chaves de cifra para aprovação</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada a opção, sempre que cifrar uma mensagem, irá aparecer uma janela que lhe apresenta as chaves de cifra que serão usadas para cada destinatário. Você poderá então rever a escolha das chaves, alterá-las e aprovar ou cancelar a operação de cifra. Recomenda-se que esta opção fique assinalada, dado que torna o processo de cifra mais transparente. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-opportunistic-encryption">
+	  <term>
+	    <guilabel
+>Cifrar automaticamente as mensagens sempre que possível</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Também é chamada de <quote
+>cifra oportunista</quote
+>. Se estiver assinalada, o &kmail; irá tentar fazer a correspondência dos destinatários às chaves (&openpgp; ou &smime;), mesmo quando você <emphasis
+>não</emphasis
+> pediu explicitamente a cifra. Se forem encontradas chaves válidas para todos os destinatários, o &kmail; irá perguntar se deseja ou não cifrar a mensagem. </para>
+	    <para
+>Recomenda-se bastante a activação desta opção, dado que torna a cifra de mensagens bastante simples de usar. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-never-sign-encrypt-drafts">
+	  <term>
+	    <guilabel
+>Nunca assinar/cifrar ao gravar como rascunho</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada a opção, o &kmail; não irá tentar assinar e/ou cifrar as mensagens que são simplesmente gravadas na pasta de <guilabel
+>rascunhos</guilabel
+>. Isto é mais conveniente e não resulta numa grande perda de segurança, desde que a que a pasta de rascunhos esteja segura. Os utilizadores do &imap; poderão querer ter esta opção desactivada, se a sua pasta de <guilabel
+>rascunhos</guilabel
+> estiver no servidor. </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+
+    </sect2>
+
+    <sect2 id="configure-security-warnings">
+      <title
+>Diversos </title>
+
+      <para
+>Nesta página, você poderá activar ou desactivar os avisos relacionados com a segurança. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-warnings-warn-send-unsigned">
+	  <term>
+	    <guilabel
+>Avisar ao tentar enviar mensagens não assinadas</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada, o &kmail; irá mostrar um aviso se, por alguma razão, uma mensagem seria enviada sem ser assinada digitalmente. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-send-unencrypted">
+	  <term>
+	    <guilabel
+>Avisar ao tentar enviar mensagens não cifradas</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada a opção, o &kmail; irá mostrar um aviso se, por alguma razão, uma mensagem seria enviada sem ir cifrada. </para>
+	    <note>
+	      <para
+>Embora seja comum assinar todas as mensagens enviadas, não o é em relação à cifra. Por isso, a menos que a sua empresa tenha uma política para nunca enviar mensagens não cifradas, poderá ser uma boa ideia manter esta opção desligada e confiar na <link linkend="configure-security-composing-opportunistic-encryption"
+>cifra oportunista</link
+> para o alertar se <emphasis
+>pode</emphasis
+> enviar mensagens cifradas, mas não o pedir. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-receiver-email-not-in-cert">
+	  <term>
+	    <guilabel
+>Avisar se o endereço de e-mail do destinatário não estiver no certificado</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se a opção estiver assinalada, o &kmail; irá emitir um aviso se o certificado do &smime; ou a chave do &openpgp; forem usados para um destinatário cujo endereço de e-mail não esteja na lista de endereços de e-mail guardada no certificado. </para>
+	    <para
+>As situações em que este aviso será despoletado incluem a configuração das suas chaves de &openpgp; ou certificados de &smime; por identidade, ao cifrar e ao verificar as assinaturas, se a assinatura foi feita com um certificado que não inclua o endereço de e-mail do remetente. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-near-expire">
+	  <term>
+	    <guilabel
+>Avisar se os certificados/chaves expiram em breve</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se estiver assinalada a opção, o &kmail; avisá-lo-á quando estiver a usar um certificado de &smime; ou uma chave de &openpgp; que irá expirar em breve. </para>
+	    <para
+>O período antes do qual será avisado da expiração da chave/certificado poderá então ser configurado em separado para as chaves de assinatura e de cifra, assim como (no caso do &smime;), para os certificados do utilizador final, para os certificados das <acronym
+>AC</acronym
+>s intermédias e para os certificados de raiz. </para>
+	  </listitem>
+	</varlistentry>
+	<!-- 
+	GnuPG Settings
+	-->
+	<varlistentry id="configure-security-warnings-reenable-all-warnings">
+	  <term>
+	    <guilabel
+>Reactivar Todos os Avisos &quot;Não Perguntar de Novo&quot;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>À parte dos avisos principais descritos acima, existem ainda mais mensagens de aviso e de informações que contêm uma opção para não as mostrar de novo. Se as quiser reactivar de novo, após ter optado por não as ver mais nenhuma vez, você podê-lo-á fazer se carregar neste botão.<footnote
+> <para
+>Isto irá activar <emphasis
+>todos</emphasis
+> esses avisos para o &kmail;. Não faz muito sentido permitir uma selecção mais fina de quais os avisos a mostrar, dado que você poderá assinalar de novo a opção para as suprimir, logo que apareçam. </para>
+	      </footnote>
+	    </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+
+    </sect2>
+
+    <sect2 id="configure-security-smime-validation">
+      <!-- copy of section configuration-smime-validation from kleopatra docbook
+      keep in sync, both apps have the same page in settings-->
+      <title
+>Validação do &smime; </title>
+
+      <para
+>Esta página contém os itens seleccionados do &gpgsm;. Por favor veja o manual do &gpgsm; para uma descrição destas opções. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-smime-validation-certificate-crls">
+	  <term>
+	    <guilabel
+>Validar os certificados com as CRLs</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se a opção estiver assinalada, os certificados &smime; são validados de acordo com as Listas de Revogação de Certificados (<acronym
+>CRLs</acronym
+>). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-validation-certificate-ocps">
+	  <term>
+	    <guilabel
+>Validar os 'certificados' a nível 'online' (OCSP)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se esta opção estiver seleccionada, os certificados &smime; são validados de acordo com o Online Certificates Status Protocol (<acronym
+>OCSP</acronym
+>). </para>
+            <para
+>Preencha o &URL; do sistema de <acronym
+>OCSP</acronym
+>, no campo reservado para este efeito. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-url">
+	  <term>
+	    <guilabel
+>&URL; de resposta do OCSP</guilabel>
+          </term>
+         <listitem>
+	      <para
+>Indique o endereço do servidor para uma validação 'online' dos certificados. O &URL; começa normalmente por <emphasis
+>http://</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-signature">
+	  <term>
+	    <guilabel
+>Assinatura de resposta do OCSP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Seleccione ou altere a chave de &smime; a usar. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-ignore">
+	  <term>
+	    <guilabel
+>Ignorar o &URL; de serviço dos certificados</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Assinale esta opção para ignorar a validação 'online' do OCSP. Esta opção necessita do <emphasis
+>dirmngr &gt;= 0.9.0</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-policies">
+	  <term>
+	    <guilabel
+>Não verificar políticas de certificados</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Por omissão, o <guilabel
+>GnuPG</guilabel
+> usa  o ficheiro <emphasis
+>~/.gnupg/policies.txt</emphasis
+> para verificar se é permitida uma dada política de certificados. Se esta opção estiver seleccionada, as políticas não são validadas. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-consult-crls">
+	  <term>
+	    <guilabel
+>Nunca consultar um CRL</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se esta opção estiver assinalada, as Listas de Revogação de Certificados nunca são usadas para validar os certificados de &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-fetch-issuer">
+	  <term>
+	    <guilabel
+>Obter os certificados do emissor em falta</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Assinale esta opção se quiser que os certificados do remetente em falta sejam obtidos, sempre que for necessário. Isto aplica-se a ambos os métodos de validação, as <acronym
+>CRLs</acronym
+> e o <acronym
+>OCSP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests">
+	  <term>
+	    <guilabel
+>Não efectuar pedidos &HTTP;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Desactiva por inteiro a utilização do &HTTP; para o &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-ignore-distribution-point">
+	  <term>
+	    <guilabel
+>Ignorar o Ponto de Distribuição CRL &HTTP; dos certificados</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Ao procurar a localização de uma <acronym
+>CRL</acronym
+>, o certificado <quote
+>"a-testar"</quote
+> contém normalmente o que são conhecidos por Pontos de Distribuição de CRLs (<acronym
+>DP</acronym
+>), os quais são &URL;'s que descrevem a forma de aceder ao &URL;. É usado o primeiro item <acronym
+>DP</acronym
+> encontrado. Com esta opção, todos os itens que usarem o esquema de &HTTP; serão ignorados, ao procurar por um <acronym
+>DP</acronym
+> adequado. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-proxy">
+	  <term>
+	    <guilabel
+>Utilizar o 'proxy' &HTTP; do sistema</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Se esta opção estiver seleccionada, o valor do 'proxy' de &HTTP; que aparece à direita (e que vem da variável de ambiente 'http_proxy'), será usado para todos os pedidos de &HTTP;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests-proxy">
+	  <term>
+	    <guilabel
+>Utilizar este 'proxy' para pedidos &HTTP;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Indique aqui a localização do seu 'proxy' de &HTTP;, que será usado para todos os pedidos de &HTTP; relacionados com o &smime;. A sintaxe equivale a <quote
+>"maquina:porto"</quote
+>, como por exemplo <emphasis
+>meu_proxy.nenhures.com:3128</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-requests">
+	  <term>
+	    <guilabel
+>Não efectuar pedidos LDAP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Desactiva por inteiro a utilização do LDAP para o &smime;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-distribution-point">
+	  <term>
+	    <guilabel
+>Ignorar o Ponto de Distribuição CRL LDAP dos certificados</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Ao procurar a localização de uma <acronym
+>CRL</acronym
+>, o certificado <quote
+>"a-testar"</quote
+> contém normalmente o que são conhecidos por Pontos de Distribuição de CRLs (<acronym
+>DP</acronym
+>), os quais são &URL;'s que descrevem a forma de aceder ao &URL;. É usado o primeiro item <acronym
+>DP</acronym
+> encontrado. Com esta opção, todos os itens que usarem o esquema de <acronym
+>LDAP</acronym
+> serão ignorados, ao procurar por um <acronym
+>DP</acronym
+> adequado. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-proxy-host">
+	  <term>
+	    <guilabel
+>Servidor primário para pedidos LDAP</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Ao indicar aqui um servidor de <acronym
+>LDAP</acronym
+>, fará com que todos os pedidos de <acronym
+>LDAP</acronym
+> venham para este servidor em primeiro lugar. Mais precisamente, esta opção sobrepõe-se a todas as indicações de máquinas e portos de um &URL; de LDAP e será também usada se a máquina e o porto tiverem sido omitidos no &URL;. Os outros servidores de <acronym
+>LDAP</acronym
+> só serão usados se a ligação ao <emphasis
+>proxy</emphasis
+> for mal-sucedida. A sintaxe equivale a <acronym
+>MAQUINA</acronym
+> ou <acronym
+>MAQUINA:PORTO</acronym
+>. Se o <acronym
+>PORTO</acronym
+> for omitido, será usado o <quote
+>porto 389</quote
+> (porto predefinido do <acronym
+>LDAP</acronym
+>). </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    </sect2>
+  </sect1
+> <!-- configure-security -->
+
+<sect1 id="configure-misc">
+<title
+>Página Diversos</title>
+
+<sect2 id="configure-misc-folders">
+<title
+>Pastas</title>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Pedir confirmação antes de mover todas as mensagens para o lixo</guilabel
+></term>
+<listitem>
+<para
+>Active esta opção se desejar ser questionado acerca da confirmação da utilização da opção <menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Enviar Tudo para o Lixo</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Excluir as mensagens importantes da expiração</guilabel
+></term>
+<listitem>
+<para
+>Active esta opção se as mensagens importantes nunca deverão ser removidas ao expirar as mensagens, &ie; durante a remoção automática das mensagens antigas.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="configure-misc-folders-go-unread">
+<term
+><guilabel
+>Ao tentar encontrar mensagens não-lidas</guilabel
+></term>
+<listitem>
+<para
+>Esta opção controla o que acontece se carregar num dos atalhos para ir para a próxima ou anterior mensagem não-lida (&eg;, o <keycap
+>Espaço</keycap
+>). Se pedir ao &kmail; para ir para a próxima mensagem não-lida, ainda que não exista mais nenhuma, então fará o seguinte: <itemizedlist
+> <listitem
+> <para
+>Se o <guilabel
+>Não Circular</guilabel
+> estiver seleccionado, então nada acontecerá. </para
+> </listitem
+> <listitem
+> <para
+>Se o <guilabel
+>Circular na Pasta Actual</guilabel
+> estiver seleccionado, então o &kmail; irá procurar de novo no início da pasta actual por uma mensagem não-lida. Se não for encontrada nenhuma, então não acontecerá nada.</para
+> </listitem
+> <listitem
+> <para
+>Se o <guilabel
+>Circular em Todas as Pastas</guilabel
+> estiver seleccionado, então o &kmail; irá procurar primeiro na pasta actual por outra mensagem não-lida. Se não for encontrada nenhuma, então o &kmail; irá procurar pela próxima pasta que contenha mensagens não-lidas.</para
+> </listitem
+> </itemizedlist
+> Aplica-se o mesmo, se você pedir ao &kmail; para ir para a mensagem não-lida anterior. </para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+
+<term
+><guilabel
+>Ao entrar numa pasta</guilabel
+></term>
+<listitem>
+<para
+>Esta opção controla o que acontece se você abrir uma pasta. <itemizedlist>
+<listitem>
+<para
+>Se estiver seleccionada a opção <guilabel
+>Ir Para a Primeira Mensagem Não-Lida</guilabel
+>, o &kmail; irá seleccionar a primeira mensagem que encontrar e que esteja marcada como não-lida. </para>
+</listitem>
+<listitem>
+<para
+>Se estiver seleccionada a opção <guilabel
+>Saltar Para a Última Mensagem Seleccionada</guilabel
+>, o &kmail; irá seleccionar a mensagem que estava seleccionada da última vez que abriu a pasta. </para>
+</listitem>
+<listitem>
+<para
+>Se estiver seleccionada a opção <guilabel
+>Saltar Para a Mensagem Mais Recente</guilabel
+>, o &kmail; irá seleccionar a mensagem mais recente, de acordo com a sua data. </para>
+</listitem>
+<listitem>
+<para
+>Se estiver seleccionada a opção <guilabel
+>Saltar Para a Mensagem Mais Antiga</guilabel
+>, o &kmail; irá seleccionar a mensagem mais antiga, de acordo com a sua data. </para>
+</listitem>
+</itemizedlist>
+
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Marcar a mensagem seleccionada como lida ao fim de...</guilabel
+></term>
+<listitem>
+<para
+>Quando você seleccionar uma mensagem <guilabel
+>nova</guilabel
+>, o &kmail; irá mudar o estado da mensagem para <guilabel
+>lida</guilabel
+> após o período em segundos aqui indicado. Se você desactivar esta opção, as mensagens irão manter o seu estado de <guilabel
+>novas</guilabel
+> ou <guilabel
+>não-lidas</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Pedir a acção após arrastar as mensagens para outra pasta</guilabel
+></term>
+<listitem>
+<para
+>Quando você arrastar uma mensagem para uma pasta diferente, irá aparecer uma pequena janela a perguntar se você quer copiar ou mover a mensagem. Se você desligar esta opção, a mensagem será movida imediatamente e sem perguntar.</para>
+</listitem>
+</varlistentry>
+
+<!-- not in kmail 2.0.96 varlistentry>
+<term
+><guilabel
+>By default, message folders on disk are...</guilabel
+></term>
+<listitem>
+<para
+>Here you can set the default <link linkend="folders-format"
+>folder format</link>
+that is used when you create a new folder.</para>
+</listitem>
+</varlistentry-->
+
+<varlistentry>
+<term
+><guilabel
+>Abrir esta pasta no arranque</guilabel
+></term>
+<listitem>
+<para
+>Aqui você poderá definir a pasta que deverá ficar seleccionada por omissão quando iniciar o &kmail;. Se você só usar pastas do &imap;, então você poderá configurar isto para a sua pasta Recebido do &imap;. Se o fizer, poderá recolher as pastas locais na lista de pastas, para que elas se mantenham fechadas quando o &kmail; inicia.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Esvaziar a pasta de lixo local ao sair do programa</guilabel
+></term>
+<listitem>
+<para
+>A pasta do lixo é limpa de mensagens quando você sair do &kmail;, se esta opção for seleccionada.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="configure-misc-invitation">
+<title
+>Convites</title>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Codificar os cabeçalhos De:/Para: nas respostas aos convites</guilabel
+></term>
+<listitem>
+<para
+>Active esta opção para que o  <application
+>&Microsoft; Outlook</application
+> compreenda as suas respostas aos convites.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Enviar os convites no conteúdo da mensagem</guilabel
+></term>
+<listitem>
+<para
+>Os convites costumavam ser enviados como anexos numa mensagem de e-mail. Ao activar esta opção, permite que as mensagens de convite sejam enviadas no próprio conteúdo da mensagem, o que será necessário ao enviar convites e respostas para o <application
+>&Microsoft; Outlook</application
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Nomenclatura de convites compatível com o Exchange</guilabel
+></term>
+<listitem>
+<para
+>O <application
+>&Microsoft; Outlook</application
+>, ao ser usado em conjunto com um servidor &Microsoft; Exchange, tem um problema ao compreender o e-mail de 'groupware' compatível com as normas. Active esta opção para enviar os convites de 'groupware' de forma que o &Microsoft; Exchange compreenda. O convite será enviado como uma anexo com o nome <filename
+>ical.ics</filename
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Comentários de resposta aos convites compatíveis com o Outlook</guilabel
+></term>
+<listitem>
+<para
+>Quando o utilizador fornecer comentários ao responder aos convites, envia o comentário de forma que o <application
+>&Microsoft; Outlook</application
+> compreenderá. Se esta opção não estiver activa, os comentários de resposta não serão vistos no Outlook.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Mostrar as diferenças na actualização do convite como no Outlook</guilabel
+></term>
+<listitem>
+<para
+>Ao ver os convites actualizados, esta opção activa as diferenças entre os convites anterior e actual, apresentando-as de forma muito semelhante à do  <application
+>&Microsoft; Outlook</application
+>. Esta é a opção por omissão. O utilizador poderá desligar esta opção, caso queira ver as diferenças de actualizações como aparecem no estilo "clássico" do KMail. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Envio automático de convites</guilabel
+></term>
+<listitem>
+<para
+>Quando esta opção estiver seleccionada, não verá a janela de composição da mensagem. Em vez disso, todas as mensagens de convites são enviadas automaticamente. Se quiser ver a mensagem antes de a enviar, poderá desligar esta opção. Contudo, tenha em atenção que o texto na janela de composição está na sintaxe iCalendar, pelo que não deverá tentar modificá-la à mão.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Apagar os e-mails de convite após ter enviado a resposta para eles</guilabel
+></term>
+<listitem>
+<para
+>Quando esta opção está assinalada, os e-mails de convites recebidos que tenham sido respondidos serão enviados para a pasta de Lixo, logo que tenha sido enviada a resposta com sucesso.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-non-gui-options">
+<title
+>Opções sem uma representação de interface do utilizador</title>
+<para
+>À parte das opções apresentadas na janela de configuração, existem algumas opções que só podem ser definidas directamente no ficheiro de configuração do &kmail; ou através do KIOSK (&eg; introduzido pelo &konsole;). Estas opções <quote
+>escondidas</quote
+> não podem ser alteradas com a janela de Configuração normal do &kmail;; terão de ser feitas modificando o ficheiro de configuração com um editor de texto ou com o programa <command
+>kwriteconfig</command
+>. O ficheiro de configuração é para ser escrito segundo o formato de [Nome da Secção] e as seguintes linhas são as variáveis e os seus respectivos valores. Se estiver a editar manualmente o ficheiro de configuração, terá de adicionar o [Nome da Secção] antes de adicionar as variáveis. O <command
+>kwriteconfig</command
+> irá adicionar a secção por si, desde que use a opção <userinput
+>--group</userinput
+>. </para>
+
+<para
+>O ficheiro de configuração do &kmail; chama-se <filename
+>kmail2rc</filename
+> e pode ser encontrado na sua pasta pessoal. A localização poderá variar de acordo com o seu sistema operativo ou distribuição, mas poderá ser sempre encontrada se invocar o comando <userinput
+><command
+>kde4-config --path config --locate kmail2rc</command
+></userinput
+>. Para o resto desta secção, assuma que o ficheiro de configuração se encontra em <filename
+>/local/do/kmail2rc</filename
+>. </para>
+
+<warning
+><para
+>Sempre que alterar estas opções, certifique-se que sai do &kmail; primeiro, antes mesmo de alterar o ficheiro de configuração. Reinicie o &kmail; apenas depois de ter feito <emphasis
+>e gravado</emphasis
+> as suas alterações no ficheiro de configuração. </para
+></warning>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>SendMDNsWithEmptySender</guilabel
+></term>
+<listitem>
+<para
+>Envia Notificações de Entrega de Mensagens (MDN's) com um texto de remetente vazio. Alguns servidores poderão estar configurados para rejeitar estas mensagens, pelo que, se estiver com problemas no envio de MDN's, certifique-se que esta opção está configurada como 'false'. Para activar esta funcionalidade, adicione à secção <quote
+>[MDN]</quote
+>:</para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>SendMDNsWithEmptySender=true</programlisting
+></listitem>
+  <listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+  <para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group MDN --key SendMDNsWithEmptySender true</option
+></userinput
+> </para>
+</listitem>
+</itemizedlist>
+<note
+><para
+>O valor predefinido <quote
+>false</quote
+>, de uma forma concreta, viola as normas da Internet, mas está definida desta forma por razões práticas, para evitar que os servidores rejeitem MDN's que o &kmail; gera por pensarem que sejam LIXO.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>CloseDespiteSystemTray</guilabel
+></term>
+<listitem>
+<para
+>Esta opção permite-lhe configurar a aplicação para se fechar por completo, mesmo quando existe um ícone da bandeja de sistema configurado, o que iria manter normalmente a aplicação em execução. Para activar a funcionalidade, adicione uma linha como a seguinte (sob a secção <quote
+>[General]</quote
+>): </para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>CloseDespiteSystemTray=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group General --key CloseDespiteSystemTray true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>disregardUmask</guilabel
+></term>
+<listitem>
+<para
+>Nas versões anteriores à 1.9, o &kmail; gravava todos os anexos no disco com permissões iguais a 600 &mdash; só legíveis ou alteráveis pelo dono do ficheiro. Em função das reacções dos utilizadores, estas permissões tornam-se configuráveis a partir da versão 1.9 do &kmail;, com as opções por omissão alteradas de forma a respeitar a máscara definida para a conta do utilizador, ao gravar os ficheiros no disco. Para activar esta funcionalidade, adicione uma linha (sob a secção <quote
+>[General]</quote
+>): </para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>disregardUmask=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group General --key disregardUmask true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>CheckOutOfOfficeOnStartup</guilabel
+></term>
+<listitem>
+<para
+>Com esta opção activa, o &kmail; irá verificar sempre no arranque se existe uma mensagem "Fora do Escritório" configurada e mostrar um aviso se for esse o caso. Para desactivar a funcionalidade, adicione uma linha (na secção <quote
+>[OutOfOffice]</quote
+>): </para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>CheckOutOfOfficeOnStartup=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group OutOfOffice --key CheckOutOfOfficeOnStartup false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeSettings</guilabel
+></term>
+<listitem>
+<para
+>No caso de não querer que os utilizadores possam enviar a sua própria programação de 'fora-do-escritório' para o servidor, poderá adicionar à secção <quote
+>[OutOfOffice]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>AllowOutOfOfficeSettings=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeUploadButNoSettings</guilabel
+></term>
+<listitem>
+<para
+>Se quiser permitir que os seus utilizadores enviem a sua própria programação 'fora-do-escritório', mas não os quiser permitir que alterem o domínio onde reagir e a configuração de reacção ao lixo electrónico, poderá adicionar à secção <quote
+>[OutOfOffice]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>AllowOutOfOfficeUploadButNoSettings=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeUploadButNoSettings true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeDomain</guilabel
+></term>
+<listitem>
+<para
+>Ao editar a programação de férias (fora-do-escritório), o utilizador poderá definir um domínio para o qual irá restringir o envio exclusivo destas respostas. A aplicação das predefinições na janela de configuração do 'fora-do-escritório', através do botão correspondente, irá repor este domínio, no caso de o utilizador o tiver alterado. Para pré-carregar esta opção com um valor por omissão, adicione à secção <quote
+>[OutOfOffice]</quote
+>:</para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>OutOfOfficeDomain=o.meu.dominio.de.e-mail</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeDomain meu.dominio.teste</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeReactToSpam</guilabel
+></term>
+<listitem>
+<para
+>Por omissão, as respostas 'fora-do-escritório' não são enviadas para as mensagens marcadas como lixo. Para substituir este comportamento, adicione à secção [OutOfOffice]:</para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>OutOfOfficeReactToSpam=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeReactToSpam true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>ShowUserAgent</guilabel
+></term>
+<listitem>
+<para
+>A partir da versão 1.9, o &kmail; poderá mostrar o valor do 'User-Agent' ou do 'X-Mailer' no cabeçalho da mensagem, sempre que usar os Cabeçalhos Bonitos (veja o menu <menuchoice
+><guimenu
+>Ver</guimenu
+> <guisubmenu
+>Cabeçalhos</guisubmenu
+></menuchoice
+>). Para activar esta funcionalidade, adicione uma linha (na secção <quote
+>[Reader]</quote
+>):</para>
+<itemizedlist>
+<listitem
+><para
+>Ficheiro de configuração:</para>
+<programlisting
+>ShowUserAgent=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/local/do/kmail2rc</replaceable
+> --group Reader --key ShowUserAgent true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</chapter>

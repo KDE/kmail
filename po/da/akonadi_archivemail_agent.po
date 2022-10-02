@@ -1,0 +1,261 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Martin Schlander <mschlander@opensuse.org>, 2012, 2013, 2014, 2015, 2016, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-25 00:45+0000\n"
+"PO-Revision-Date: 2020-07-27 22:47+0200\n"
+"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"Language-Team: Danish <kde-i18n-doc@kde.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 20.04.2\n"
+
+#: addarchivemaildialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Modify Archive Mail"
+msgstr "Ændr mailarkivering"
+
+#: addarchivemaildialog.cpp:33
+#, kde-format
+msgctxt "@title:window"
+msgid "Add Archive Mail"
+msgstr "Tilføj mailarkivering"
+
+#: addarchivemaildialog.cpp:45
+#, kde-format
+msgid "&Folder:"
+msgstr "&Mappe:"
+
+#: addarchivemaildialog.cpp:59
+#, kde-format
+msgid "Format:"
+msgstr "Format:"
+
+#: addarchivemaildialog.cpp:67
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "Arkivér alle undermapper"
+
+#: addarchivemaildialog.cpp:73
+#, kde-format
+msgid "Path:"
+msgstr "Sti:"
+
+#: addarchivemaildialog.cpp:83
+#, kde-format
+msgid "Backup each:"
+msgstr "Lav backup hver:"
+
+#: addarchivemaildialog.cpp:99
+#, kde-format
+msgid "Maximum number of archive:"
+msgstr "Maks. antal af arkiver:"
+
+#: addarchivemaildialog.cpp:104
+#, kde-format
+msgid "unlimited"
+msgstr "ubegrænset"
+
+#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#, kde-format
+msgctxt "Start of the filename for a mail archive file"
+msgid "Archive"
+msgstr "Arkiv"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Name"
+msgstr "Navn"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Last archive"
+msgstr "Seneste arkiv"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Next archive in"
+msgstr "Næste arkiv om"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Storage directory"
+msgstr "Lagermappe"
+
+#: archivemailwidget.cpp:89
+#, kde-format
+msgid "Archive Mail Agent"
+msgstr "Agent til mail-arkivering"
+
+#: archivemailwidget.cpp:91
+#, kde-format
+msgid "Archive emails automatically."
+msgstr "Arkivér e-mails automatisk."
+
+#: archivemailwidget.cpp:93
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-2020 Laurent Montel"
+msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgstr "Ophavsret (C) 2012-2020 Laurent Montel"
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Maintainer"
+msgstr "Vedligeholder"
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Martin Schlander"
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mschlander@opensuse.org"
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "Tilføj..."
+
+#: archivemailwidget.cpp:113
+#, kde-format
+msgid "Open Containing Folder..."
+msgstr "Åbn indeholdende mappe..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Slet"
+
+#: archivemailwidget.cpp:166
+#, kde-format
+msgid "Folder: %1"
+msgstr "Mappe: %1"
+
+#: archivemailwidget.cpp:188
+#, kde-format
+msgid "Tomorrow"
+msgid_plural "%1 days"
+msgstr[0] "I morgen"
+msgstr[1] "%1 dage"
+
+#: archivemailwidget.cpp:197
+#, kde-format
+msgid "Archive will be done %1"
+msgstr "Arkivering vil blive udført %1"
+
+#: archivemailwidget.cpp:233
+#, kde-format
+msgid "Do you want to delete the selected items?"
+msgstr "Vil du slette de valgte elementer?"
+
+#: archivemailwidget.cpp:234
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Slet"
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid ""
+"Cannot add a second archive for this folder. Modify the existing one instead."
+msgstr ""
+"Kan ikke tilføje endnu et arkiv for denne mappe. Ændr i stedet det "
+"eksisterende arkiv."
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid "Add Archive Mail"
+msgstr "Tilføj mailarkivering"
+
+#: job/archivejob.cpp:58
+#, kde-format
+msgid "Directory does not exist. Please verify settings. Archive postponed."
+msgstr "Mappen findes ikke. Kontrollér indstillinger. Arkiv udsat."
+
+#: job/archivejob.cpp:76
+#, kde-format
+msgid "Start to archive %1"
+msgstr "Start arkivering af %1"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/archivemailwidget.ui:38
+#, kde-format
+msgid "Modify..."
+msgstr "Ændr..."
+
+#: widgets/formatcombobox.cpp:14
+#, kde-format
+msgid "Compressed Zip Archive (.zip)"
+msgstr "Komprimeret Zip-arkiv (.zip)"
+
+#: widgets/formatcombobox.cpp:15
+#, kde-format
+msgid "Uncompressed Archive (.tar)"
+msgstr "Ukomprimeret arkiv (.tar)"
+
+#: widgets/formatcombobox.cpp:16
+#, kde-format
+msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
+msgstr "BZ2-komprimeret Tar-arkiv (.tar.bz2)"
+
+#: widgets/formatcombobox.cpp:17
+#, kde-format
+msgid "GZ-Compressed Tar Archive (.tar.gz)"
+msgstr "GZ-komprimeret Tar-arkiv (.tar.gz)"
+
+#: widgets/unitcombobox.cpp:13
+#, kde-format
+msgid "Days"
+msgstr "Dage"
+
+#: widgets/unitcombobox.cpp:14
+#, kde-format
+msgid "Weeks"
+msgstr "Uger"
+
+#: widgets/unitcombobox.cpp:15
+#, kde-format
+msgid "Months"
+msgstr "Måneder"
+
+#: widgets/unitcombobox.cpp:16
+#, kde-format
+msgid "Years"
+msgstr "År"
+
+#~ msgid "Remove items"
+#~ msgstr "Fjern elementer"
+
+#~ msgid "Remove"
+#~ msgstr "Fjern"
+
+#~ msgid "Archive now"
+#~ msgstr "Arkivér nu"
+
+#~ msgid "Configure Archive Mail Agent"
+#~ msgstr "Konfigurér mailarkiveringsagent"
+
+#~ msgid "1 day"
+#~ msgid_plural "%1 days"
+#~ msgstr[0] "1 dag"
+#~ msgstr[1] "%1 dage"

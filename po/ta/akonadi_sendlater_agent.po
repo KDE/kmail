@@ -1,0 +1,206 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Kishore G <kishore96@gmail.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2022-09-15 19:40+0530\n"
+"Last-Translator: Kishore G <kishore96@gmail.com>\n"
+"Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
+"Language: ta\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.08.1\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "அமை"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "பின்னர் அனுப்பும் சேவை"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "அஞ்சல்களை பின்னர் அனுப்பும் சேவை."
+
+#: sendlaterconfiguredialog.cpp:53
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "பதிப்புரிமை (C) 2013-%1 லாரென்டு மான்டெல்"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "லாரெண்டு மாண்டெல்"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "பராமரிப்பாளர்"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "கோ. கிஷோர்"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Kde-l10n-ta@kde.org"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "பெறுநர்"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "தலைப்பு"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "அனுப்ப வேண்டிய நேரம்"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "மீளநிகழ்வது"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr ""
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "அனுப்புவதற்கு எந்த அஞ்சலும் இல்லை..."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "இப்போது அனுப்பு"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "நீக்கு"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "ஆம்"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "இல்லை"
+
+#: sendlaterconfigurewidget.cpp:207
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "தேர்ந்தெடுக்கப்பட்டதை அனுப்பவேண்டியவற்றின் பட்டியலிலிருந்து நீக்க வேண்டுமா?"
+msgstr[1] "தேர்ந்தெடுக்கப்பட்டவற்றை அனுப்பவேண்டியவற்றின் பட்டியலிலிருந்து நீக்க வேண்டுமா?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "அனுப்ப வேண்டியதை நீக்குவது"
+
+#: sendlaterconfigurewidget.cpp:216
+#, kde-format
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "அஞ்சலையும் நீக்க வேண்டுமா?"
+msgstr[1] "அஞ்சல்களையும் நீக்க வேண்டுமா?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "அஞ்சல்களை நீக்குவது"
+
+#: sendlaterconfigurewidget.cpp:219
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "நீக்காதே"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "அஞ்சல் கண்டுபிடிக்கப்படவில்லை."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "அஞ்சல் கண்டுபிடிக்கப்படவில்லை."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "அஞ்சலை மீட்டெடுப்பதில் சிக்கல்"
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "அஞ்சலை மீட்டெடுக்க முடியவில்லை. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "பரிமாற்றநிரலை (transport-ஐ) உருவாக்க முடியவில்லை"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "மீட்டெடுத்த உருப்படி அஞ்சல‍ல்ல"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "அஞ்சலை அனுப்ப முடியவில்லை."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "அஞ்சல் அனுப்பப்பட்டது"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "சிக்கல் நேர்ந்த‍து. அஞ்சலை மீண்டும் அனுப்ப வேண்டுமா?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "சிக்கல் நேர்ந்த‍து"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr "மீண்டும் அனுப்பு"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "திருத்து…"

@@ -1,0 +1,215 @@
+# Translation for akonadi_sendlater_agent.po to Euskara/Basque (eu).
+# Copyright (C) 2021-2022, This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>.
+#
+# Translators:
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2022-09-07 07:51+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
+"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 22.08.0\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Konfiguratu"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Beranduago bidaltzeko agentea"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "E-postak beranduago bidaltzeko agentea"
+
+#: sendlaterconfiguredialog.cpp:53
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Copyright (C) 2013-%1 Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Arduraduna"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñigo Salvador Azurmendi"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "xalba@ni.eus"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "Nori"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Gaia"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Bidali honen inguruan,"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Errepikakorra"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Mezu ID"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "Ez dago mezurik zain..."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Bidali orain"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Ezabatu"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Bai"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Ez"
+
+#: sendlaterconfigurewidget.cpp:207
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Hautatutako elementua ezabatu nahi duzu?"
+msgstr[1] "Hautatutako elementuak ezabatu nahi dituzu?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Ezabatu elementuak"
+
+#: sendlaterconfigurewidget.cpp:216
+#, kde-format
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Mezua ere ezabatu nahi duzu?"
+msgstr[1] "Mezuak ere ezabatu nahi dituzu?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Ezabatu mezuak"
+
+#: sendlaterconfigurewidget.cpp:219
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Ez ezabatu"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "Ez da mezurik aurkitu."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "Ez da mezurik aurkitu."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Errorea mezua ekartzean."
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Ezin du mezua ekarri. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Ezin dugu garraioa sortu"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "Mezua ez da benetako mezua"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Ezin du mezua bidali."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Mezua bidali da"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Errore bat aurkitu da. Berriz bidali nahi duzu?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "Errore bat aurkitu da"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr "Berri bidali"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Aldatu..."
+
+#~ msgid "Remove items"
+#~ msgstr "Kendu elementuak"
+
+#~ msgid "Remove"
+#~ msgstr "Kendu"

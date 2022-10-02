@@ -1,0 +1,3348 @@
+<chapter id="configure">
+
+<chapterinfo>
+<authorgroup>
+<author
+><firstname
+>Daniel</firstname
+> <surname
+>Naber</surname
+> <affiliation
+><address
+>&Daniel.Naber.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Rugge</surname
+> <affiliation
+><address
+>&David.Rugge.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Marc</firstname
+> <surname
+>Mutz</surname
+> <affiliation
+><orgname
+>Klar&auml;lvdalens Datakonsult AB</orgname
+> <address
+> &Marc.Mutz.mail; </address
+> </affiliation>
+</author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <affiliation
+><address
+> <email
+>michel@kdab.net</email>
+</address
+></affiliation>
+</author>
+<author
+><firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> <affiliation
+><address
+>&Laurent.Montel.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+
+</author>
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2013-12-18</date>
+<releaseinfo
+>(&kde; 4.12)</releaseinfo>
+</chapterinfo>
+
+<title
+>&kmail;i seadistamine</title>
+
+<sect1 id="configure-generalinfo">
+<title
+>Üldinfo</title>
+
+<screenshot>
+<screeninfo
+>&kmail;i seadistustedialoog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&kmail;i seadistustedialoog</phrase>
+    </textobject>
+    <caption>
+      <para
+>&kmail;i seadistustedialoog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&kmail; seadistustedialoog võimaldab sul &kmail;i igati seadistada. Selle saab avada menüükäsuga <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guimenuitem
+>&kmail;i seadistamine...</guimenuitem
+></menuchoice
+></para>
+<para
+>Dialoogil on mitu nuppu:</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+>Abi</guibutton
+></term>
+<listitem
+><para
+>Avab käsiraamatu vajalikus kohas.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Vaikeväärtused</guibutton
+></term>
+<listitem
+><para
+>Taastab parajasti avatud seadistustekaardil vaikeväärtused.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Lähtesta</guibutton
+></term>
+<listitem
+><para
+>Tühistab kõik muudatused, mida oled ette võtnud pärast seadistuste viimast salvestamist.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>OK</guibutton
+></term>
+<listitem
+><para
+>Salvestab seadistused ja sulgeb seadistustedialoogi.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Rakenda</guibutton
+></term>
+<listitem
+><para
+>Salvestab seadistused ilma seadistustedialoogi sulgemata.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Loobu</guibutton
+></term>
+<listitem
+><para
+>Sulgeb seadistustedialoogi ilma tehtud muudatusi salvestamata.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>Dialoog jaguneb kuueks kaardiks, mida kujutavad ikoonid dialoogi vasakus servas. See peatükk kirjeldab põhjalikult iga kaarti.</para>
+</sect1>
+
+<sect1 id="configure-identity">
+<title
+>Identiteedikaart</title>
+
+
+<para
+>Põgusa sissejuhatuse kaardi <guilabel
+>Identiteedid</guilabel
+> kohta leiab peatükist <link linkend="getting-started"
+>Alustamine</link
+>.</para>
+
+<para
+>See kaart võimaldab luua ühe või rohkem <emphasis
+>identiteedi</emphasis
+>, &ie; nime, meiliaadressi ja muu vajaliku info kombinatsiooni. Näiteks võib luua ühe identiteedi ärialaseks suhtlemiseks, teise aga oma eravajadusteks. Kui sul on enam kui üks meiliaadress, võib luua igale aadressile omaette identiteedi. Seejärel võid iga kirja puhul valida, millist identiteeti kasutada.</para>
+
+<para
+>Kaart koosneb identiteetide nimekirjast ning nuppudest, mis võimaldavad neid hallata. Identiteetide nimekirjas on alati vähemalt üks identiteet, mis kannab nimetust <guilabel
+>Vaikeväärtus</guilabel
+>.</para>
+
+<para
+>Uue identiteedi lisamiseks nimekirja klõpsa nupul <guibutton
+>Lisa...</guibutton
+></para>
+
+<sect2 id="configure-identity-newidentitydialog">
+<title
+>Uue identiteedi dialoog</title>
+<screenshot>
+<screeninfo
+>Uue identiteedi dialoog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identity.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Uue identiteedi dialoog</phrase>
+    </textobject>
+    <caption>
+      <para
+>Uue identiteedi dialoog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Väljale <guilabel
+>Uus identiteet:</guilabel
+> saad kirjutada selle nime, mida hiljem näidatakse identiteetide nimekirjas.</para>
+
+<para
+>Lisaks saad valida, kuidas uus identiteet luuakse, kasutades dialoogi keskosas asuvat kolme raadionuppu:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Tühjade väljadega</guilabel
+></term>
+<listitem>
+<para
+>Uue identiteedi kõik väljad puhastatakse või täidetakse standardväärtustega.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Süsteemi seadistuste väärtuste kasutamine</guilabel
+></term>
+<listitem>
+<para
+>Kasutatakse väärtusi, mis on määratud Süsteemi seadistuste rubriigis <guilabel
+>Üldine välimus ja käitumine</guilabel
+> <menuchoice
+><guimenu
+>Konto üksikasjad</guimenu
+> <guimenuitem
+>Parool ja kasutaja konto</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Luuakse eksisteeriva identiteedi koopia</guilabel
+></term>
+<listitem>
+<para
+>Kopeerib kõik juba olemasoleva identiteedi väljad. Aluseks võetava identiteedi saab valida rippmenüüst <guilabel
+>Olemasolevad identiteedid</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="configure-identity-general">
+<title
+>Üldine</title>
+<screenshot>
+<screeninfo
+>Identiteedi üldised seadistused</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitygeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteedi üldised seadistused</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteedi üldised seadistused</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Kaart <guilabel
+>Üldine</guilabel
+> võimaldab määrata valitud identiteedi mõningad põhilised seadistused.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Sinu nimi</guilabel
+></term>
+<listitem>
+<para
+>Kirjuta siia oma täielik nimi (vahel nimetatakse seda ka <emphasis
+>ekraaninimeks</emphasis
+>). Kuigi see väli ei ole tingimata kohustuslik, on soovitav siia sisestada korrektsed andmed.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Organisatsioon</guilabel
+></term>
+<listitem>
+<para
+>Kirjuta siia oma organisatsioon. See pole kohustuslik.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>E-posti aadress</guilabel
+></term>
+<listitem>
+<para
+>Kirjuta siia oma e-posti aadress, &ie; midagi sellist, nagu <userinput
+>juku@kuskil.ee</userinput
+>.</para>
+<example>
+<title
+>E-posti aadress</title>
+<para
+>Kui su aadress on näiteks <replaceable
+>Tom Tegija &lt;tom@kusagil.ee&gt;</replaceable
+>, võiksid kirjutada <userinput
+>Tom Tegija</userinput
+> väljale <guilabel
+>Sinu nimi</guilabel
+> ning <userinput
+>tom@kusagil.ee</userinput
+> väljale <guilabel
+>E-posti aadress</guilabel
+>.</para
+></example>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>E-posti aliased</guilabel
+></term>
+<listitem>
+<para
+>See väli sisaldab aliasaadresse, mida käsitletakse samuti selle indetiteedi juurde kuuluvana (mitte aga teise identiteedi osana).</para>
+<example>
+<title
+>E-posti aliased</title>
+<para
+>Esmane aadress: eesnimi.perekonnanimi@kuskil.ee</para>
+<para
+>Aliased: eesnimi@kuskil.ee ja perekonnanimi@kuskil.ee</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="configure-identity-cryptography">
+<title
+>Krüptograafia</title>
+<screenshot>
+<screeninfo
+>Identiteedi krüptoseadistused</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitycryptography.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteedi krüptoseadistused</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteedi krüptoseadistused</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Kaardil <guilabel
+>Krüptograafia</guilabel
+> saab määrata identiteediga seotud &openpgp; ja &smime; võtmed ning kasutamiseks eelistatava (krüptograafilise) kirja vormingu.</para>
+<variablelist>
+<varlistentry id="configure-identity-cryptography-openpgp-sign">
+<term
+><guilabel
+>OpenPGP allkirjastamisvõti</guilabel
+></term>
+<listitem>
+<para
+>Siin saab valida võtme, mida kasutada &openpgp;-ga allkirjastatud kirjade saatmisel antud identiteediga.</para>
+<para
+>Lühiduse huvides näidatakse ainult valitud võtme ID-d. Hiirekursori viimisel võtmeloendi kohale ilmub kohtspikker põhjalikuma infoga.</para>
+<para
+>Välja puhastamiseks klõpsa nupule <guibutton
+>Puhasta</guibutton
+>. Valitud võtme muutmiseks klõpsa nupule <guibutton
+>Muuda...</guibutton
+> Selle peale näidatakse kõiki seadistatud salajasi &openpgp; võtmeid, kust saad valida vajaliku. Kui sa pole veel ühtegi võtit seadistanud, klõpsa nupule <guibutton
+>Käivita sertifikaadihaldur</guibutton
+>, mis avab rakenduse &kleopatra;. Uuri <ulink url="help:kleopatra"
+>&kleopatra; käsiraamatust</ulink
+> lähemalt, kuidas &kleopatra; abil luua ja hallata OpenPGP võtmeid ja sertifikaate. Allpool on lühidalt kirjeldatud valitud võtmete või sertifikaatide olemust.</para>
+</listitem
+></varlistentry>
+<varlistentry id="configure-identity-cryptography-openpgp-encrypt">
+<term
+><guilabel
+>OpenPGP krüptovõti</guilabel
+></term>
+<listitem
+><para
+>Siin saab valida võtme &openpgp;-ga krüptitud kirjade saatmiseks antud identiteediga, kui sisse on lülitatud <xref linkend="configure-security-composing-encrypt-to-self"/>. Sama võtit kasutatakse ka võimaluse <xref linkend="composer-attach-attach-my-public-key"/> valimisel <link linkend="the-composer-window"
+>redaktoris</link
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry id="configure-identity-cryptography-smime-sign">
+<term
+><guilabel
+>&smime; allkirjastamissertifikaat</guilabel
+></term>
+<listitem>
+<para
+>Siin saab valida sertifikaadi, mida kasutada kirjade &smime;-ga allkirjastamisel antud identiteediga.</para>
+</listitem
+></varlistentry>
+<varlistentry id="configure-identity-cryptography-smime-encrypt">
+<term
+><guilabel
+>&smime; krüptosertifikaat</guilabel
+></term>
+<listitem>
+<para
+>Siin saab valida võtme &openpgp;-ga krüptitud kirjade saatmiseks antud identiteediga, kui sisse on lülitatud <xref linkend="configure-security-composing-encrypt-to-self"/>.</para>
+</listitem
+></varlistentry>
+<varlistentry id="configure-identity-cryptography-preferred-format">
+<term
+><guilabel
+>Eelistatud vorming</guilabel
+></term>
+<listitem>
+<para
+>Siin saab valida millist krüptitud kirja vormingut kasutada vaikimisi antud identiteedi korral. Valida on võimalik üks neljast &kmail;i toetatud vormingust või jätta kehtima vaikimisi heakspeetav seadistus, valides võimaluse <guilabel
+>Suvaline</guilabel
+>, mille korral valitakse vorming vastavalt kirja saajale või isegi luuakse kaks kirja, üks neist &smime;-ga allkirjastatud ja/või krüptitud, teine &openpgp;-ga allkirjastatud ja/või krüptitud.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="configure-identity-advanced">
+<title
+>Muu</title>
+
+<screenshot>
+<screeninfo
+>Identiteedi muud seadistused</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitiesadvanced.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteedi muud seadistused</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteedi muud seadistused</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Kaart <guilabel
+>Muu</guilabel
+> võimaldab määrata mõningaid harvemini kasutatavaid või mingil moel spetsiifilisemaid seadistusi.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Vastamise aadress</guilabel
+></term>
+<listitem>
+<para
+>Kirjuta siia aadress, millele tuleks saata vastused sinu kirjadele. Täida see ainult siis, kui see erineb sinu tavalisest aadressist (mis on määratud väljadega <guilabel
+>Sinu nimi</guilabel
+> ja <guilabel
+>Meiliaadress</guilabel
+> kaardil <link linkend="configure-identity-general"
+><guilabel
+>Üldine</guilabel
+></link
+>), sest vaikimisi saab nagunii vastuseid saata tavalisele aadressile.</para>
+<para
+>Selle välja täitmisel on mõte ainult siis, kui soovid, et vastused sinu kirjadele suunduksid kuhugi mujale kui sinu tavalisele meiliaadressile, &eg; siis, kui kasutad kirjade saatmiseks identiteeti, millega kirju vastu võtta ei saa.</para>
+<note
+><para
+>Arvesta, et mõned postiloendid kirjutavad selle päisevälja üle oma postiaadressiga tagamaks, et vastused saadetakse listi, mitte üksikisikutele. Seepärast on selle välja kasulikkus üpris piiratud ja seda on usutavasti mõtet kasutada üsna vähestel juhtudel.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Salakoopia (BCC) aadressid</guilabel
+></term>
+<listitem>
+<para
+>Siia saab vajadusel sisestada komadega eraldatult aadressid, kuhu saadetakse sinu saadetud kirjadest salakoopia. Selle identiteediga kirja koostades täidetakse väli <guilabel
+>BCC</guilabel
+> siin antud aadressidega. Kui soovid saata pimekoopia selle võimaluse sisse- või väljalülitatusest hoolimata, vaata lähemalt lehekülje <guilabel
+>Redaktor</guilabel
+> kaarti <guilabel
+>Päised</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Sõnaraamat</guilabel
+></term>
+<listitem>
+<para
+>Siin saab valida antud identiteedi korral vaikimisi kasutava sõnaraamatu.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Saadetud kirjade kaust</guilabel
+></term>
+<listitem>
+<para
+>Võimalus valida kaust, kuhu suunatakse selle identiteediga saadetud kirjad pärast nende ärasaatmist. &imap;-i kasutajad peaksid selle muutma &imap;-i kaustaks, et nende saadetud kirjad salvestataks serveris, mitte kohalikus kaustas. Sel moel pääseb neile kirjadele ligi ka muust asukohast.</para>
+<tip
+><para
+>Täpsema kontrolli selle üle, kuhu ja kuidas saadetud kirjad suunatakse, saab saavutada <link linkend="filters"
+>kirju filtreerides</link
+>.</para
+></tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Mustandite kaust</guilabel
+></term>
+<listitem>
+<para
+>Võimalus valida kaust, kuhu suunatakse selle identiteedi kasutamisel kirjade mustandid. &imap;-i kasutajad peaksid selle muutma &imap;-i kaustaks, et nende mustandid salvestataks serveril, mitte kohalikus kaustas. Sel moel pääseb neile ligi ja saab kirjutamist jätkata ka muust asukohast.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Mallide kaust</guilabel
+></term>
+<listitem>
+<para
+>Võimalus valida kaust, kuhu salvestada selle identiteedi kasutamisel mallid. Mallidest kõneleb täpsemalt osa <link linkend="new-compose-from-templates"
+>Kiri malli põhjal</link
+>.</para>
+</listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term
+><guilabel
+>Väljuvate kirjade konto</guilabel
+></term>
+<listitem>
+<para
+>Vali või sisesta alternatiivne &SMTP; server, mida kasutada kirjade saatmisel antud identiteediga.</para>
+<note
+><para
+>Enne seda, kui on võimalik nimekirjast valida, tuleb seadistada väljuvate kirjade serverid. Seda saab teha <link linkend="configure-accounts"
+>kaardi <guilabel
+>Kontod</guilabel
+></link
+> <link linkend="configure-accounts-sending"
+>alamkaardil <guilabel
+>Saatmine</guilabel
+></link
+>.</para
+></note>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="configure-identity-templates">
+<title
+>Mallid</title>
+<screenshot>
+<screeninfo
+>Identiteedi malliseadistused</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitytemplate.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteedi malliseadistused</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteedi malliseadistused</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Siin saab luua ja hallata malle, mida kasutatakse uute kirjade koostamisel, kirjadele vastamisel või nende edasisaatmisel.</para>
+<para
+>Kirjamallide puhul saab kasutada asenduskäske kas neid lihtsalt kirja pannes või valides menüüst <guimenu
+>Lisa käsk</guimenu
+>.</para>
+<para
+>Siin määratud mallid on identiteedipõhised. Need tühistavad globaalsed mallid, kuid neid omakorda võivad tühistada kaustapõhised mallid, kui viimased peaksid olema määratud.</para>
+</sect2>
+
+<sect2 id="configure-identity-signature">
+<title
+>Allkiri</title>
+<screenshot>
+<screeninfo
+>Identiteedi allkirjaseadistused</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitysignature.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteedi allkirjaseadistused</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteedi allkirjaseadistused</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Sellel kaardil on võimalik määrata allkiri (vahel nimetatud ka <quote
+>jaluseks</quote
+>), mis lisatakse igale selle identiteediga saadetud kirjale.</para>
+<note
+><para
+>Siin määrataval allkirjal ei ole mingit seost (digitaalse) allkirjaga, mille jaoks saad valida kasutatava võtme kaardil <link linkend="configure-identity-cryptography"
+>Krüptograafia</link
+>. On küll üsna halb, et ka seda nimetatakse allkirjaks, aga kuivõrd seda nii üldiselt kasutatakse, ei ole ka meie hakanud seda muutma. Jäta lihtsalt meelde, et siin määratud allkiri ja digitaalne allkiri on kaks täiesti erinevat asja.</para
+></note>
+<para
+>Märgi <guilabel
+>Allkirja lubamine</guilabel
+>, kui soovid lisada antud identiteeti kasutades väljuvatele kirjadele oma allkirja. Et see <emphasis
+>automaatselt</emphasis
+> kõigile kirjadele lisataks, tuleb märkida ka võimalus <guilabel
+>Allkiri lisatakse automaatselt</guilabel
+>, milleks avaneb võimalus kaardil <guilabel
+>Redaktor</guilabel
+>.</para>
+<para
+>&kmail; võib allkirja hankida mitmest allikast. Vaikimisi on selleks <guilabel
+>Allolevalt sisestusväljalt</guilabel
+>. Sisesta ilmuvasse kasti lihtsalt meelepärane tekst.</para>
+<para
+>Traditsiooniline UNIXi viis on lugeda tekst kasutaja kodukataloogis asuvast failist <filename
+>.signature</filename
+>. Seda faili võivad jagada mitmed rakendused, mis võimaldab kasutada ühesugust allkirja erinevates e-posti rakendustes. Vali rippmenüüs <guilabel
+>Allkirja tekst hangitakse</guilabel
+> võimalus <guilabel
+>Failist</guilabel
+>. Kui soovid faili muuta, klõpsa nupule <guilabel
+>Muuda faili</guilabel
+>.</para>
+<para
+>&kmail; võib võtta allkirja teksti ka käsu väljundist. Nii saad näiteks kasutada rakendust <command
+>fortune</command
+> igale kirjale uue allkirja tekitamiseks. Allkirjatekstina kasutatakse ära kõik, mida rakendus väljastab standardväljundisse (<acronym
+>stdout</acronym
+>). Teksti lugemiseks käsu väljundist tuleb valida <guilabel
+>Käsu väljundist</guilabel
+>. Sisesta käsk (eelistatavalt täieliku asukohaga) väljale <guilabel
+>Käsk</guilabel
+>.</para>
+<note
+><para
+>Internetis on kombeks eraldada allkirjad sisust reaga, mis sisaldab vaid kolm märki: <quote
+>-- </quote
+> (kriips-kriips-tühik). &kmail; eraldab allkirjateksti automaatselt sellise reaga, kui see ei ole juba allkirjatekstis kindlaks määratud.</para>
+<para
+>Kui sa ei soovi, et &kmail; lisaks automaatselt eraldaja, lisa see ise allkirjatekstile.</para>
+</note>
+
+</sect2>
+
+<sect2 id="configure-identity-pictures">
+<title
+>Pilt</title>
+<screenshot>
+<screeninfo
+>Identiteedi pildiseadistused</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitypicture.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteedi pildiseadistused</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteedi pildiseadistused</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&kmail; võib saata koos kirjaga väikeseid (48x48 pikslit), kesise kvaliteediga mustvalgeid pilte. See võib olla näiteks sinu enda pilt või mõni glüüf. Kui saaja e-posti klient seda toetab, näeb ta sinu pilti.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Pildi saatmine iga kirjaga</guilabel
+></term>
+<listitem>
+<para
+>Märkimisel lisab &kmail; selle identiteediga kirjutatud kirjadele niinimetatud X-Face päise. X-Face on pisike (48x48 pikslit) mustvalge pilt, mida mõnedki e-posti kliendid oskavad näidata.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Väline allikas</guilabel
+></term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Vali fail...</guilabel
+></term>
+<listitem>
+<para
+>Selle abil saab valida pildifaili, mille põhjal pilt luuakse. Pilt peaks olema väga kontrastne ja võimalikult nelinurkne. Parem oleks ka, kui selle taust oleks hele.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Määra aadressiraamatu põhjal</guilabel
+></term>
+<listitem>
+<para
+>See võimaldab kasutada skaleeritult pilti, mille oled määranud oma aadressiraamatu kirjes.</para>
+</listitem>
+</varlistentry>
+</variablelist
+>  
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Allolevast tekstikastist</guilabel
+></term>
+<listitem>
+<para
+>Selle välja abil saab määrata meelepärase X-Face'i stringi. Selle kohta leiab näiteid aadressilt <ulink url="http://ace.home.xs4all.nl/X-Faces/"
+>http://ace.home.xs4all.nl/X-Faces/</ulink
+> </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-accounts">
+<title
+>Kontode kaart</title>
+
+<para
+>Põgusa sissejuhatuse kaardi <guilabel
+>Kontod</guilabel
+> kohta leiab osast <link linkend="setting-up-your-account"
+>Konto loomine</link
+>.</para>
+
+<para
+>See kaart võimaldab luua ühe või rohkem (sisenevate ja väljuvate kirjade) <emphasis
+>konto</emphasis
+>, &ie; e-posti serverite, sisselogimisinfo ja muude vajalike seadistuste kombinatsiooni. Tüüpiliselt on vaja luua üks väljuvate kirjade (saatmiseks) ja üks sisenevate kirjade (vastuvõtmiseks) konto. Kontosid võib luua aga nii palju, kui süda lustib, ning siduda nad erinevate <link linkend="configure-identity"
+>identiteetidega</link
+> või otsustada selle üle iga kirja puhul eraldi.</para>
+
+<sect2 id="configure-accounts-sending">
+<title
+>Saatmine</title>
+
+<para
+>Kaart <guilabel
+>Saatmine</guilabel
+> võimaldab määrata uusi väljuvate kirjade servereid ning mõningaid üldisi parameetreid.</para>
+
+<para
+>Põgusat ülevaadet vaata osast <link linkend="sending-mail"
+>Konto loomine: saatmine</link
+>.</para>
+
+<para
+>Klõpsuga nupul <guibutton
+>Lisa...</guibutton
+> või <guibutton
+>Muuda...</guibutton
+> ilmub vastavalt dialoog <guilabel
+>Väljuvate kirjade konto loomine</guilabel
+> või <guilabel
+>Konto seadistamine</guilabel
+>. Saatmiseks &Sendmail;iga tuleb määrata programmi &Sendmail; nimi ja asukoht. &SMTP; puhul tuleb määrata <guilabel
+>nimi</guilabel
+>, <guilabel
+>väljuvate kirjade server</guilabel
+> ja serveri <guilabel
+>port</guilabel
+>. Võimalus <guilabel
+>Server nõuab autentimist</guilabel
+> lubab täita väljad <guilabel
+>Kasutajanimi</guilabel
+> ja <guilabel
+>Parool</guilabel
+>. Kui sa ei ole turvalisuse asjades väga kindel, saad lasta &kmail;il leida parimad võimalused nupu <guibutton
+>Automaatne tuvastamine</guibutton
+> abil, mille leiab kaardilt <guilabel
+>Muu</guilabel
+>.</para>
+
+<para
+>Võimaluse <guilabel
+>Enne saatmist nõutakse kinnitust</guilabel
+> märkimisel ilmub alati enne kirja saatmist kinnitust sooviv dialoog.</para>
+
+<para
+>Võimaluse <guilabel
+>Kontrollimisel saadetakse ära kirjad kaustast 'väljuvad'</guilabel
+> märkimisel saab valida, millal ja kuidas saata ära ootel kirjad, &ie; kirjad, mis ootavad oma saatmist väljuvate kirjade kaustas. Valikud on järgmised:</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Mitte kunagi automaatselt</guilabel
+></term>
+<listitem
+><para
+>Ootel kirjad saadetakse ära ainult siis, kui kasutatakse menüükäsku <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Saada järjekorras ootavad kirjad</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Kirjade käsitsikontrollimisel</guilabel
+></term>
+<listitem
+><para
+>Ootel kirjad saadetakse ära pärast seda, kui oled käsitsi uusi kirju kontrollinud, &eg; menüükäsuga <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Kontrolli posti</guimenuitem
+></menuchoice
+>. Mõistagi võib ootel kirju saata ka käsitsi menüükäsuga <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Saada järjekorras ootavad kirjad</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Alati uute kirjade kontrollimisel</guilabel
+></term>
+<listitem
+><para
+>Ootel kirjad saadetakse ära alati uute kirjade kontrollimisel, &ie; nii pärast posti automaatset kui käsitsikontrollimist. Mõistagi võib ootel kirju saata ka käsitsi menüükäsuga <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Saada järjekorras ootavad kirjad</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+><guilabel
+>Saatmise vaikemeetod</guilabel
+> võimaldab määrata, mis juhtub kirja saatmisel. Kui valitud on <guilabel
+>Saada kohe</guilabel
+>, saadetakse kiri e-posti serverisse viivitamata, kui valitud on <guilabel
+>Saada hiljem</guilabel
+>, siis suunatakse kiri väljuvate kirjade kausta, kust selle saab hiljem saata menüükäsuga <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Saada järjekorras ootavad kirjad</guimenuitem
+></menuchoice
+> või uute kirjade kontrollimisel sõltuvalt sellest, kas ülalmainitud võimalus <guilabel
+>Kontrollimisel saadetakse ära kirjad kaustast 'väljuvad'</guilabel
+> on märgitud või mitte.</para>
+
+<para
+><guilabel
+>Vaikedomeen</guilabel
+> võimaldab määrata, millist domeeninime kasutatakse e-posti aadressi lõpetamiseks, kui määratud on ainult saaja nimi. Kui näiteks määrad vaikedomeeniks <replaceable
+>eesti.ee</replaceable
+>, saadetakse kirjad, mille aadressiväljale on kirjutatud vaid <replaceable
+>tomtegija</replaceable
+>, aadressile <replaceable
+>tomtegija@eesti.ee</replaceable
+>.</para>
+
+</sect2>
+
+<sect2 id="configure-accounts-receiving">
+<title
+>Vastuvõtmine</title>
+
+<para
+>Põgusa ülevaate leiab osast <link linkend="receiving-mail"
+>Konto loomine: vastuvõtmine</link
+>.</para>
+
+<para
+>Iga ressursi hüpikmenüü <guilabel
+>Tõmbamise valikud</guilabel
+> abil saab määrata, kas &kmail; peaks kontrollima uute kirjade olemasolu kohe pärast käivitamist. Valikuteks on veel <guilabel
+>Kaasatakse uute kirjade kontrollimisel käsitsi</guilabel
+> ja <guilabel
+>Võrguta režiimi lülitumine &kmail;ist väljumisel</guilabel
+>. </para>
+
+<para
+>Võimalus <guilabel
+>Uutest kirjadest teatamine</guilabel
+> võimaldab määrata, kuidas &kmail; annab teada uute kirjade saabumisest. <guilabel
+>Helisignaal</guilabel
+> tähendab lühikest piiksu. Kui sisse on lülitatud <guilabel
+>Üksikasjalik uutest kirjadest teatamine</guilabel
+>, näitab &kmail; igasse kausta saabunud uute kirjade arvu - seda muidugi juhul, kui oled lubanud enda teavitamise märguannetega. Üksikasjalikumalt saab märguannet seadistada nupule <guibutton
+>Muud tegevused</guibutton
+> klõpsates.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-appearance">
+<title
+>Välimuse kaart</title>
+
+<sect2 id="configure-appearance-fonts">
+<title
+>Fondid</title>
+
+<para
+>See kaart võimaldab muuta esitamisel kasutatavate fontide tüüpi, suurust ja märgistikku. <guilabel
+>Kirja tekst</guilabel
+> määrab lugemispaneelis kasutatava fondi, <guilabel
+>Redaktor</guilabel
+> fondi, mida pruugitakse kirjade kirjutamisel &kmail;i redaktori aknas. </para>
+
+</sect2>
+
+<sect2 id="configure-appearance-colors">
+<title
+>Värvid</title>
+
+<para
+>See kaart võimaldab muuta teksti värvi, tehes nimekirjas vajalikult kirjel topeltklõpsu.. Võimalus <guilabel
+>Paljude tsiteerimiste korral alustatakse otsast</guilabel
+> tähendab, et isegi teksti, mida on tsiteeritud enam kui kolm korda, esitatakse värvilisena. Arvesta, et <guilabel
+>tsiteeritud tekst</guilabel
+>i värv toimib ainult lugemisel, mitte aga redaktori aknas. Kui soovid lasta näidata kaustu, mille kvoot on peaaegu täis (s.t. eraldatud ruum, mida tavaliselt kasutatakse &imap; serverites), siis saab määrata kindlaks vastava läve protsendina. Kasutatavat värvi saab määrata koos teiste kohandatavate värvidega. </para>
+
+</sect2>
+
+<sect2 id="configure-appearance-layout">
+<title
+>Esitus</title>
+<screenshot>
+  <screeninfo
+>Vaikimisi esitus</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="layout.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Vaikimisi esitus</phrase>
+      </textobject>
+      <caption>
+        <para
+>Vaikimisi esitus</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>See kaart võimaldab seadistada peaakna väljanägemist.</para>
+<para
+>Sektsioonis <guilabel
+>Kaustade nimekiri</guilabel
+> saab valida kas <guilabel
+>Pikk kaustade nimekiri</guilabel
+> (vaikimisi), mille puhul kasutatakse kogu akna kõrgust, või <guilabel
+>Lühike kaustade nimekiri</guilabel
+>, mille puhul akna alumises osas näidatakse kirja eelvaatluse paneeli.</para>
+<para
+>Kui soovid, et peaakna ülemises vasakus osas näidataks sinu lemmikkaustu ja kiirotsinguvälja, märgi kaks järgmist valikut.</para>
+<para
+>Sektsioonis <guilabel
+>Lemmikkaustade vaate näitamine</guilabel
+> saab muuta seda, kuidas lemmikkaustu kuvatakse. <guilabel
+>Ikoonidena</guilabel
+> võtab palju ruumi, nii et kui sul on lemmikkaustu mitu, võiks mõttekam olla valik <guilabel
+>Nimekirjana</guilabel
+>. Kui sul polegi aga lemmikkaustu, võid vaate üldse tühistada, valides <guilabel
+>Mitte kunagi</guilabel
+>.</para>
+<para
+>Vaikimisi näitavad <guilabel
+>kausta kohtspikrid</guilabel
+> lisateavet, näiteks kirjade koguarv, lugemata kirjade arv ja hõlmatav maht, kui viia hiirekursor kausta nime peale. Kui sa seda näha ei soovi, vali <guilabel
+>Mitte kunagi</guilabel
+>.</para>
+<para
+>Võid valida, kus asub kirjade nimekirja suhtes <guilabel
+>lugemispaneel</guilabel
+>, või selle ka üldse näitamata jätta.</para>
+</sect2>
+
+<sect2 id="configure-appearance-message-list">
+<title
+>Kirjade nimekiri</title>
+<para
+>Sektsioonis <guilabel
+>Üldine</guilabel
+> saab muuta kirjade nimekirja paneeli välimust.</para>
+<para
+>Vali <guilabel
+>Kirjade ja rühma päiste kohtspikrite näitamine</guilabel
+>. Et kirjadel oleks nimekirjas rohkem ruumi, märgi ära <guilabel
+>Kaardiriba peitmine ainult ühe kaardi puhul</guilabel
+>.</para>
+
+<para
+>Järgmised valikud puudutavad <guilabel
+>vaikimisi koondamisviisi</guilabel
+> ja <guilabel
+>vaikimisi teemat</guilabel
+>, mida saab tühistada, kui kasutada vajaliku kausta korral dialoogi <guilabel
+>Kausta omadused</guilabel
+>.</para>
+<para
+>Nupuga <guibutton
+>Seadista</guibutton
+> saab avada akna, kus on võimalik seadistada vaikimisi koondamisviisi või teemat just oma maitse kohaselt ning lisada ka enda oma.</para>
+<para
+>Saadaolevad koondamisviisid ja teemad:</para>
+<variablelist>
+<varlistentry>
+<term
+>Vaikimisi koondamisviis</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Saatjad/Saajad lõimedeta</term>
+<listitem
+><para
+>See vaade rühmitab kirjad saatjate või saajate järgi (sõltuvalt sellest, millist tüüpi kaustaga on tegemist). Kirju ei seata lõime.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Kuupäevade järgi lõimedeta</term>
+<listitem
+><para
+>See vaade kasutab päevakaupa rühmitamist. Kirju ei seata lõime. Nii leiab näiteks <quote
+>Täna</quote
+> alt lihtsalt kõik täna saabunud kirjad.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Kuupäevade järgi lõimedega</term>
+<listitem
+><para
+>See vaade kasutade päevakaupa rühmitamist. Kirjad on seatud lõime. Nii leiab näiteks <quote
+>Täna</quote
+> alt kõik täna saabunud kirjad ja kõik lõimed.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Ajaline lõimedeta</term>
+<listitem
+><para
+>See vaade kasutab nutikat kuupäevade kaupa rühmitamist. Kirju ei seata lõime. Nii leiab näiteks <quote
+>Täna</quote
+> alt lihtsalt kõik täna saabunud kirjad.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Ajaline lõimedega </term>
+<listitem
+><para
+>See vaade kasutab nutikat kuupäevade järgi rühmitamist. Kirjad seatakse lõime. Nii leiab näiteks <quote
+>Täna</quote
+> alt kõik täna saabunud kirjad ja kõik lõimed, milles täna midagi juhtus.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Lõime algatajad</term>
+<listitem
+><para
+>See vaade rühmitab kirjad lõime ja seejärel rühmitab lõimed nende algatajate järgi.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Ühtlane kuupäevavaade</term>
+<listitem
+><para
+>See on vana lihtne kuupäevade järgi sorditud kirjade vaade: ei mingeid rühmi, ei mingeid lõimi.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Tavapärane postiloend</term>
+<listitem
+><para
+>See on vana lihtne postiloendi vaade: ei mingeid rühmi, aga vägev lõimedesse seadmine.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-aggregation-theme">
+<term
+>Kohandamine...</term>
+<listitem>
+<screenshot>
+  <screeninfo
+>Kirjade koondamisviisi seadistamine</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="aggregationtheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Kirjade koondamisviisi seadistamine</phrase>
+      </textobject>
+      <caption>
+        <para
+>Kirjade koondamisviisi seadistamine</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>Kohandatud koondamisviisi loomiseks klõpsa nupule <guibutton
+>Seadista...</guibutton
+> Vali olemasolevate koondamisviiside seast selline, millest soovid juhinduda, ja klõpsa nupule <guibutton
+>Klooni koondamisviis</guibutton
+> või nupule <guibutton
+>Uus koondamisviis</guibutton
+>, kui sa ühtegi natukenegi meelepärast ei leia. Kaardil <guilabel
+>Üldine</guilabel
+> saad muuta <guilabel
+>nime</guilabel
+> ja <guilabel
+>kirjeldust</guilabel
+>. Kaardil <guilabel
+>Rühmad ja lõimed</guilabel
+> saad seadistada mitmeid elemente just sobiva koondamisviisi leidmiseks.</para>
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Rühmitamine</guilabel
+>: võimaldab valida kuupäevad, saatja/saaja või mitte midagi. Nutikate valikutega rühmitab &kmail; kokkukuuluvad kirjad ühte. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Rühmade avamise reegel</guilabel
+>: võimaldab määrata, kas &kmail; avab automaatselt rühmitatud kirjad. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Lõimedesse seadmine</guilabel
+>: võimaldab muuta seda, kas &kmail; arvestab lõimedesse jaotamisel viiteid ja teemasid. Samuti võib lõimedesse jaotamise üldse keelata. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Lõimejuht</guilabel
+>: võimaldab valida lõimejuhiks kas kõige uuema või kõige esimese kirja. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Lõimede avamise reegel</guilabel
+>: võimaldab muuta seda, kuidas &kmail; määrab, kas lõim avada või mitte. </para
+></listitem>
+</itemizedlist>
+<para
+><guilabel
+>Muu</guilabel
+>: võimaldab muuta <guilabel
+>vaate täitmise strateegiat</guilabel
+>. Valida võiks kiiruse eelistamise, kui sul on aeglane ühendus. Interaktiivsuse eelistamisel näidatakse esimesena sinu viimaseid vestlusi. Hulgirežiimis ei sordita aga vaadet üldse.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<variablelist>
+<varlistentry>
+<term
+>Vaikimisi teema</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Klassikaline</term>
+<listitem
+><para
+>Lihtne tagasiühilduv üherealine teema</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Uhke</term>
+<listitem
+><para
+>Uhke mitmerealine ja mitmeelemendiline teema</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Uhke klõpsatava olekuga</term>
+<listitem
+><para
+>Uhke mitmerealine ja mitmeelemendiline teema klõpsatava olekuveeruga</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-messagelist-theme">
+<term
+>Seadistamine...</term>
+<listitem>
+<screenshot>
+  <screeninfo
+>Teemade seadistamine</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="messagelisttheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Teemade seadistamine</phrase>
+      </textobject>
+      <caption>
+        <para
+>Teemade seadistamine</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>Kirjade nimekirja kohandatud teema loomiseks klõpsa nupule <guibutton
+>Seadista...</guibutton
+> Vali olemasolevate teemade seast selline, millest sooviksid eeskuju võtta, ja klõpsa nupule <guibutton
+>Klooni teema</guibutton
+>. Kui sellist pole, klõpsa nupule <guibutton
+>Uus teema</guibutton
+>. Kaardil <guilabel
+>Üldine</guilabel
+> saab muuta <guilabel
+>nime</guilabel
+> ja <guilabel
+>kirjeldust</guilabel
+>. </para>
+<para
+>Kaardil <guilabel
+>Välimus</guilabel
+> saab seadistada näidatavaid veerge ja olekuelemente. Veeru lisamiseks klõpsa veeruribale ja vali <guilabel
+>Lisa veerg</guilabel
+>. Anna veerule nimi ja vali, mida veerg peab esindama, rippmenüüst <guilabel
+>Klõps pealdisele sordib kirjad</guilabel
+>. Vaikimisi on märgitud kastike <guilabel
+>Vaikimisi nähtav</guilabel
+>: eemalda märge, kui soovid, et veerg oleks sortimist võimaldavate klõpsatavate veergude korral lisamiseks või eemaldamiseks saadaval ainult &HPNga; klõpsates. Seejärel lohista vajalik pealdis <guilabel
+>sisuelementidest</guilabel
+> veeruriba alla veeruvaate kasti, &eg; kui tahad lisada suuruseveeru, peaksid lohistama suuruse pealdise suuruseveeru alla. Jätka, kuni oled paika pannud kõik veerud, mida soovid. Veeruelementide fonti ja värvi saab muuta vaatealas &HPNga; klõpsates. Veerge saab liigutada, kustutada ja nende suurust muuta veeruribale &HPNga; klõpsates.</para>
+<para
+>Kaart <guilabel
+>Muu</guilabel
+> võimaldab määrata, kas päiseid näidatakse või mitte. Samuti saab muuta olekuikoonide suurust.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+>Sektsioonis <guilabel
+>Kuupäeva esitus</guilabel
+> saab valida mitme erineva kuupäevavormingu vahel. <guilabel
+>Lokaliseeritud vorming</guilabel
+> on see, mida saab määrata Süsteemi seadistustes rubriigis <guilabel
+>Riik/piirkond &amp; keel</guilabel
+>. <guilabel
+>Nutikas</guilabel
+> vorming näitab tänast, eilset &etc; <guilabel
+>Kohandatud</guilabel
+> vormingu võimaluste kohta saab lähemat infot, kui klõpsata valikul <guilabel
+>Kohandatud vormingu teave</guilabel
+>.</para>
+</sect2>
+
+<sect2 id="configure-appearance-message-window">
+<title
+>Kirjade aken</title>
+
+<para
+>Kui sisse on lülitatud valik <guilabel
+>Kirjaakna sulgemine pärast vastamist või edastamist</guilabel
+>, sulgeb&kmail; kirjaakna pärast aknas näidatud kirjale vastamist või selle edastamist. See käib ainult eraldi kirjaakna, mitte põimitud kirja eelvaatluse paneeli kohta.</para>
+<para
+>Vaikimisi on valik <guilabel
+>Hõlbustusklahvi lubamine</guilabel
+> märgitud. Hõlbustusklahvid võimaldavad kasutada klaviatuuri ülesanneteks, mida tavaliselt tehakse hiirega, näiteks avada linke. Täpsemalt kõneleb hõlbustusklahvidest osa <ulink url="http://docs.kde.org/stable/et/applications/konqueror/accesskeys.html"
+>Liikumisklahvid</ulink
+>.</para>
+<para
+><guilabel
+>HTML olekuriba näitamine</guilabel
+> aktiveerib riba lugemispaneeli vasakus servas, mis annab teada, kas kiri kasutab &html;-i või mitte. See on üsna oluline, sest &html;-kirjad võivad jäljendada signeeritud ja krüptitud kirja välimust, mistõttu peaksid teadma, et loed ikka &html;-kirja. &html; olekuriba ennast ei saa kirja &html;-koodiga kuidagi mõjutada.</para>
+ 
+<para
+>Valiku <guilabel
+>Smiley'd asendatakse emotikonidega</guilabel
+> märkimisel asendatakse smiley'd, näiteks <userinput
+>:-)</userinput
+>, kirja tekstis emotikonidega (tillukeste piltidega), näiteks <inlinemediaobject
+><imageobject
+> <imagedata fileref="smile.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>.</para>
+
+<para
+>Valiku <guilabel
+>Tsiteeritava teksti fondi suuruse vähendamine</guilabel
+> näidatakse tsiteeritud teksti väiksema fondiga.</para>
+
+<para
+>Valiku <guilabel
+>Avatavate/suletavate tsitaadimärkide näitamine</guilabel
+> märkimisel näidatakse tsiteeritava teksti eri tasemeid.</para>
+
+<para
+><guilabel
+>Tagavarakodeering</guilabel
+>: mõned kirjad, eriti automaatselt genereeritud, ei määra kodeeringut, mida läheb vaja nende korrektseks kuvamiseks. Sellisel juhul kasutatakse tagavarakodeeringut, mille saabki siin määrata. Vali selline kodeering, mida kasutatakse sinu elupaigas kõige sagedamini. Vaikimisi kasutatakse kogu süsteemis kasutatavat kodeeringut.</para>
+
+<para
+><guilabel
+>Tühistav kodeering</guilabel
+>: vaikimisi <guilabel
+>automaatse</guilabel
+> asemele millegi muu valimine sunnib seda kodeeringut kasutama kõigi kirjade puhul sõltumata sellest, mida nad ise määravad.</para>
+
+<para
+><guilabel
+>Minimaalne fondisuurus</guilabel
+>: see võimaldab määrata fondi väikseima suuruse. See võib olla abiks, kui sul on raskusi päris väikeste fontide lugemisel.</para>
+
+<para
+>Kohandamaks seda, milliseid päiseid kirjade aknas näidatakse (&eg; teema, saatja, saaja, koopia, pimekoopia, kuupäev), klõpsa nupule <guibutton
+>Seadista kohandatud päiseid</guibutton
+> kirje <guilabel
+>Päised</guilabel
+> kõrval. Tee oma valik ilmuvas dialoogis. Kui kasutad uhkeid päiseid, võid siin ära märkida valiku <guilabel
+>Rämpsposti oleku näitamine uhketes päistes</guilabel
+>. Palun arvesta, et kui sinu e-posti teenuse pakkuja ei paku <application
+>SpanAssassini</application
+> teenust rämpsposti kontrollimiseks, tuleb sul see ise enda arvutisse paigaldada, &eg; tarkvarahalduriga (Yast &SuSE; korral, &ubuntu; tarkvarakeskus &ubuntu; korral &etc;). Täpsemalt kõneleb SpamAssassini kasutamisest &kmail;is osa <link linkend="the-anti-spam-wizard"
+>Rämpspostiga võitlemise nõustaja</link
+>.</para>
+</sect2>
+
+
+
+<sect2 id="configure-appearance-systemtray">
+<title
+>Süsteemisalv</title>
+
+<para
+>Süsteemisalve kasutamisel hakatakse seal näitama väikest &kmail;i ikooni koos lugemata kirjade arvuga. &kmail;i süsteemisalve ikooni saab sisse lülitada valikuga <guilabel
+>Ikoon süsteemisalves</guilabel
+> ning <guilabel
+>Süsteemisalve režiim</guilabel
+> lubab täpsustada, kas ikooni tuleb näidata alati või ainult siis, kui on lugemata kirju.</para>
+
+<para
+>Kui ikoon on nähtavalt, saab &kmail;i peaakna peita klõpsuga ikoonile või akna sulgemisnupule. Ikoonile uuesti klõpsates ilmub &kmail; taas nähtavale. Kui klõpsata ikoonil hiire <mousebutton
+>parem</mousebutton
+>a nupuga, saab hüpikmenüüst kasutada mitut tulusat võimalust: kontrollida posti, kirjutada uus kiri või sulgeda &kmail;. Lisaks on seal kirje <guilabel
+>Uued kirjad kaustas</guilabel
+>, mis näitab kõiki lugemata kirjadega kaustu. Neist mõne valimisel avatakse &kmail;i aken just selles kaustas. </para>
+
+</sect2>
+
+ <!-- Message Tags tab missing for 2.1.96 -->
+ 
+</sect1>
+
+  <sect1 id="configure-composer">
+    <title
+>Redaktori kaart </title>
+
+    <sect2 id="configure-composer-general">
+      <title
+>Üldine </title>
+
+      <variablelist>
+	<varlistentry id="configure-composer-general-append-signature">
+	  <term>
+	    <guilabel
+>Allkiri lisatakse automaatselt</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel lisatakse kõigi sinu loodavate kirjade (&ie; uute kirjade, vastuste &etc;) lõppu automaatselt allkiri, mille oled määranud <link linkend="configure-identity-signature"
+>identiteedikaardil</link
+>. </para>
+	  </listitem>
+	</varlistentry>
+	<!-- Insert signature above quoted text + Prepend separator to signature missing -->
+	<varlistentry id="configure-composer-general-smart-quoting">
+	  <term>
+	    <guilabel
+>Tark tsiteerimine</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel murrab &kmail; pikad kirjaread, kuid tsiteerimine püütakse hoida korrektsena (&eg; alati seisab rea ees <quote
+>&gt; </quote
+>). </para>
+	  </listitem>
+	</varlistentry>
+  <varlistentry id="configure-composer-general-quote-selection-only">
+    <term>
+      <guilabel
+>Vastamisel ainult valitud teksti tsiteerimine</guilabel>
+    </term>
+    <listitem>
+      <para
+>Sisselülitamisel tsiteerib &kmail; vastamisel kirjaaknas ainult valitud teksti, mitte kogu kirja. Nii on võimalik luua kiiresti vastuseid, milles tsiteeritakse ainult seda lõiku, millele sa tegelikult vastad, ja jäetakse välja antud kontekstis ülearused lõigud. </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry id="configure-composer-general-strip-signatures">
+    <term>
+      <guilabel
+>Allkirja eemaldamine vastamisel</guilabel>
+    </term>
+    <listitem>
+      <para
+>Sisselülitamisel eemaldab &kmail; vastamisel tsiteeritavast tekstist allkirja. See vähendab tsiteeritud teksti mahtu ning muudab vastuse lugemise hõlpsamaks. </para>
+    </listitem>
+  </varlistentry>
+	<varlistentry id="configure-composer-general-auto-request-mdns">
+	  <term>
+	    <guilabel
+>Vastuvõtu ja lugemise kinnitus saadetakse automaatselt</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel on võimalus <xref linkend="composer-options-request-mdn"/> vaikimisi alati <emphasis
+>sees</emphasis
+>. Märgi see ainult juhul, kui täpselt tead, mida teed. Paljud peavad sellist kinnituse nõudmist halvaks tooniks ja jätavad neile üldse reageerimata. Kõige mõttekam oleks sellist kinnitust vajaduse korral nõuda ainult konkreetsetele kirjadele. </para>
+	  </listitem>
+	</varlistentry>
+	<!-- Use recent addresses for autocompletion missing -->
+	<varlistentry id="configure-composer-general-word-wrap">
+	  <term>
+	    <guilabel
+>Reamurdmine veerust</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>See võimaldab lülitada reamurdmist redaktori aknas ning valida veeru, millest read murtakse (tõenäoliselt puudub vajadus muuta vaikeväärtust <userinput
+>78</userinput
+>). </para>
+	  </listitem>
+	</varlistentry>
+    <!-- not in kmail 2.0.96 varlistentry id="configure-composer-general-too-many-recipients">
+      <term>
+        <guilabel
+>Warn if the number of recipients is larger than</guilabel>
+      </term>
+      <listitem>
+        <para>
+          If the number of recipients is larger than this value, &kmail; will
+          warn and ask for a confirmation before sending the mail.
+          The default is to warn if there are more than <literal
+>5</literal
+> recipients.
+          This warning can be turned off.
+        </para>
+      </listitem>
+    </varlistentry-->
+	<varlistentry id="configure-composer-general-autosave-interval">
+	  <term>
+	    <guilabel
+>Automaatsalvestuse intervall</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Redaktori aknas olevast tekstist saab regulaarselt teha varukoopia. Selle valikuga saab määrata, millise ajavahemiku järel varukoopida tehakse. Automaatse salvestamise saab välja lülitada, kui määrata siin <literal
+>0</literal
+>. </para>
+	  </listitem>
+	</varlistentry>
+    <!-- not in kmail 2.0.96 varlistentry id="configure-composer-general-forwading-type">
+	  <term>
+	    <guilabel
+>Default Forwarding Type</guilabel>
+	  </term>
+	  <listitem>
+	    <para>
+           Lets you decide whether you want to forward messages inline or as an attachment by default.
+           This changes which type of forwarding mechanism is used when you click the toolbar icon or
+           when you activate the shortcut for forwarding.
+	    </para>
+	  </listitem>
+	</varlistentry-->
+	<!--missing: Configure Completion Order + Edit Recent Addresses -->
+
+      </variablelist>
+
+    </sect2>
+
+<sect2 id="configure-composer-standard-templates">
+<title
+>Standardmallid</title>
+<para
+>Siin saab lisada, muuta ja kustutada kohandatud kirjamalle, mida kasutatakse kirja koostamisel, neile vastamisel või edasisaatmisel.</para>
+<para
+>Kirjamallide puhul saab kasutada asenduskäske kas neid otse kirja pannes või valides menüüst <guimenu
+>Lisa käsk</guimenu
+>.</para>
+<para
+>Need on globaalsed (vaike)mallid. Neid saab tühistada identiteedi- või kaustapõhiste mallidega, kui viimased on määratud.</para>
+</sect2>
+
+<sect2 id="configure-composer-custom-templates">
+<title
+>Kohandatud mallid</title>
+<para
+>Siin saab lisada, muuta ja kustutada kohandatud kirjamalle, mida kasutatakse kirjade koostamisel, neile vastamisel või edasisaatmisel. Kohandatud malli saab luua, kui kirjutada selle nimi sisendkasti ja vajutada nupule <guiicon
+>+</guiicon
+>. Kiiremaks kasutamiseks võib malliga siduda kiirklahvi.</para>
+<!-- To and CC field-->
+<para
+>Kirjamallide puhul saab kasutada asenduskäske kas neid otse kirja pannes või valides menüüst <guimenu
+>Lisa käsk</guimenu
+>.</para>
+<para
+>Kohandatud malle on nelja laadi vastavalt sellele, kas neid kasutatakse <guilabel
+>vastamiseks</guilabel
+>, <guilabel
+>vastamiseks kõigile</guilabel
+> või <guilabel
+>edasisaatmiseks</guilabel
+>. Samuti on <guilabel
+>universaalne</guilabel
+> mall, mida saab kasutada kõikvõimalikeks toiminguteks. <guilabel
+>Universaalsetele</guilabel
+> mallidele ei saa kiirklahvi omistada.</para>
+</sect2>
+ <!-- replaced by Standard Templates / Custom Templates tabs, remove it lueck 31.05.2011
+<sect2 id="configure-composer-phrases">
+<title
+>Phrases</title>
+
+<para
+>The <guilabel
+>Phrases</guilabel
+> tab lets you define the automatically
+generated lines that are added to message replies, forwarded messages, and the
+character that is added in front of quoted text.
+There are special &percnt;-denoted characters that will insert certain
+values, which are also displayed at the top of the <guilabel
+>Phrases</guilabel
+> section.
+You can add reply phrases in languages other than
+your default &kde; language using the <guibutton
+>Add...</guibutton
+> button.
+You can then choose between different languages with the
+<guilabel
+>Language</guilabel
+> drop down box.
+This will only work for languages whose i18n package you have installed.</para>
+</sect2>
+-->
+<sect2 id="configure-composer-subject">
+<title
+>Teema</title>
+
+<para
+>See kaart sisaldab valiku prefikseid käskude <quote
+>vasta</quote
+> ja <quote
+>edasta</quote
+> kasutamisel. Kui saad kirja, mis kasutab standardsetest erinevaid prefikseid, võib need siia lisada, et &kmail; need edaspidi ära tunneks. Sel moel võib &kmail; neid kirjade sortimisel ning vastuse subjekti määramisel eirata ja soovi korral asendada märkega <quote
+>Re:</quote
+> või <quote
+>Fwd:</quote
+>.</para>
+
+</sect2>
+
+<sect2 id="configure-composer-charset">
+<title
+>Kooditabel</title>
+
+<para
+>Siin saab muuta sinu saadetavate kirjade vaikimisi kasutatavat kooditabelit. Kõigi saadetavate kirjade puhul kontrollitakse, kas see on kirjutatud mõnes nimekirjas leiduvas kooditabelis (alustades nimekirja algusest). Kui jah, kasutatakse antud kooditabelit. Kui ei, ilmub dialoog, mis palub sul käsitsi määrata kooditabeli menüükäsuga <menuchoice
+><guimenu
+>Vaade</guimenu
+><guisubmenu
+>Määra kodeering</guisubmenu
+></menuchoice
+>. </para>
+
+<para
+>Kui valid <guilabel
+>Vastamisel või edastamisel kasutatakse originaali kooditabelit (kui võimalik)</guilabel
+>, säilitatakse esialgse kirja kooditabel, kui see ei sisalda just märke, mida seda kooditabelit kasutades ei saa esitada.</para>
+
+</sect2>
+
+<sect2 id="configure-composer-headers">
+<title
+>Päised</title>
+
+<para
+>Märgi <guilabel
+>Järgmise Message-Id sufiksi kasutamine</guilabel
+>, kui soovid, et &kmail; tekitaks sinu valitud sufiksiga Message-Id. Kirjuta meelepärane sufiks väljale <guilabel
+>Message-Id sufiks:</guilabel
+>. Palun kontrolli, et sinu määratud sufiks oleks üleilmselt unikaalne. Parim võimalus seda tagada on kasutada endale kuuluvat domeeninime. Kui võimalus <guilabel
+>Järgmise Message-Id sufiksi kasutamine</guilabel
+> märkimata jätta, tekitab &kmail; automaatselt kogu Message-Id. Kui sa ei tea, mida see kõik üldse tähendab, ära seda võimalust kasuta.</para>
+
+<para
+>Nimekiri <guilabel
+>Kohandatud MIME päiste defineerimine väljuvatele kirjadele</guilabel
+> võimaldab määrata päised, mida &kmail; kasutab väljuvate kirjade puhul. Sa võid tekitada nii uusi välju kui ka kirjutada üle olemasolevad. Seda võimalust peaksid kasutama ainult kogenud kasutajad.</para>
+
+</sect2>
+
+<sect2 id="configure-composer-attachments">
+<title
+>Kaasatud failid</title>
+
+<para
+>Kui sul on vaja saata mõnele <application
+>&Microsoft; Outlooki</application
+> või <application
+>&Microsoft; Outlook Expressi</application
+> kasutajale kiri, mille kaasatud faili failinimes esineb muid kui inglise keelele omaseid tähti, oleks mõttekas ära märkida võimalus <guilabel
+>Outlookiga ühilduvad kaasatud failide nimed</guilabel
+>. &kmail; kodeerib sellisel juhul kaasatud failide nimed mittestandardsel viisil, mis paraku on ainus, mida <application
+>&Microsoft; Outlook</application
+> mõistab. </para>
+<para
+>Arvesta, et &kmail; loob standardeid eirava kirja, mistõttu on võimalik, et nüüd ei saa sellest aru standardeid järgivad e-posti kliendid. Seepärast tasuks see võimalus sisse lülitada ainult siis, kui seda tõesti väga vaja läheb.</para>
+
+<para
+>Kasti <guilabel
+>Puuduvate kaasatud failide tuvastamine</guilabel
+> märkimisel hoiatab &kmail;, kui kavatsed saata kirja ilma kaasatud failita, kuigi kirja tekstis esinevad sõnad, mis osutavad sellele, et sul on kavas kirjale mingi fail kaasata. Vastavaid võtmesõnu saab kohe samas lisada ja/või muuta.</para>
+
+</sect2>
+
+ <sect2 id="configure-composer-autocorrection">
+   <title
+>Automaatkorrigeerimine</title>
+   <para
+>Selle lubamiseks märgi valik <guilabel
+>Automaatkorrektuuri lubamine</guilabel
+>. Rippmenüüst vali keel, mida soovid kasutada. Soovi korral võid importida seadistused <application
+>LibreOffice'ist</application
+> või teisest &kmail;i paigaldusest, valides vajaliku võimaluse rippmenüüst <guilabel
+>Impordi</guilabel
+>. Kui soovid salvestada oma seadistused teise paigalduse või rakenduse jaoks, klõpsa nupule <guibutton
+>Ekspordi</guibutton
+>. </para>
+       <para>
+         <variablelist
+><title
+>Automaatkorrektuuri valikud</title>
+           <varlistentry>
+             <term
+><guilabel
+>Lihtne automaatkorrektuur</guilabel
+></term>
+             <listitem>
+               <para
+>See võimaldab seadistada &kmail;i automaatselt korrigeerima mitmesuguseid lihtsaid eksimusi. Märgi kastike võimaluse juures, mida soovid lubada. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Kohandatud tsitaadimärgid</guilabel
+></term>
+             <listitem>
+               <para
+>Ühe- või kahekordsed (klaviatuuri)jutumärgid võib asendada tüpograafilistega, kui märkida vastav kastike. Samuti võib lasta lisada mittekatkestava tühiku teatavate kirjavahemärkide ette prantsuskeelsetes tekstides. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Täpsem automaatkorrektuur</guilabel
+></term>
+             <listitem>
+               <para
+>Seda valides saab sisestada enda soovi järgi asendussõnasid. Selleks kirjuta sõna või tähekombinatsioon, mida soovid lasta asendada, kasti <guilabel
+>Otsing</guilabel
+>, ning sõna või tähekombinatsioon, millega soovid seda asendada, kasti <guilabel
+>Asendus</guilabel
+> ja klõpsa nupule <guibutton
+>Lisa</guibutton
+>. Mõne asenduse eemaldamiseks tõsta see esile ja klõpsa nupule <guibutton
+>Eemalda</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Erandid</guilabel
+></term>
+             <listitem>
+               <para
+>Siin saab määrata erandeid, mille korral &kmail; peab eirama automaatkorrektuuri valikuid lause lõpu tuvastamisel ja kahe suurtähe esinemisel. Kirjuta erand ja klõpsa nupule <guibutton
+>Lisa</guibutton
+>. Erandi eemaldamiseks tõsta see esile ja klõpsa nupule <guibutton
+>Eemalda</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+        </variablelist>
+      </para>
+      <para
+>Kui oled automaatkorrektuuri valikud kindlaks määranud, klõpsa nupule <guibutton
+>Rakenda</guibutton
+>. </para>
+ </sect2>
+  <sect2 id="configure-resize-image">
+   <title
+>Piltide suuruse automaatne muutmine</title>
+   <para
+>Mõnel juhul võib olla vajalik lasta &kmail;il automaatselt muuta saadetavatele kirjadele lisatud piltide suurust, &eg; e-posti serveri piirangute tõttu. Selleks vali <guilabel
+>Piltide suuruse automaatne muutmine</guilabel
+>. Siin saab määrata mitmeid valikuid.</para>
+   <variablelist>
+     <varlistentry
+><term
+><guilabel
+>Üldine</guilabel
+></term>
+       <listitem>
+         <para
+>Mõned üldised piltide suuruse automaatse muutmise valikud on järgmised. Kui soovid, et pildi kõrguse ja laiuse vahekord säilitataks muutumatuna (&eg; fotode puhul), märgi ära <guilabel
+>Proportsiooni säilitamine</guilabel
+>. Vaikimisi küsib &kmail; enne suuruse muutmist, kas soovid seda teha. Kui tahad, et seda ei küsitaks, eemalda märge valiku <guilabel
+>Küsitakse enne suuruse muutmist</guilabel
+> eest. &kmail; salvestab faili <acronym
+>JPG</acronym
+>-vormingus. Kui tahad, et see salvestataks pigem <acronym
+>PNG</acronym
+>-vormingus, vali see rippmenüüst <guilabel
+>Kirjutatakse vormingusse</guilabel
+>.</para>
+        </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Pilt</guilabel
+></term>
+       <listitem>
+         <para
+>Oletame, et sul on sugulane, kes saab e-posti teenuse pakkuja piirangute tõttu vastu võtta ainult teatavas suuruses pildifaile. Sel juhul saab valikuga <guilabel
+>Pildi vähendamine maksimaalsete mõõtmeteni</guilabel
+> vähendada pildi suurust ja kirjutada vastavad isikud filtritesse kaardil <guilabel
+>Saajad</guilabel
+>. Saajate kaardist tuleb lähemalt juttu allpool. Kui sul läheb tarvis kohandatud suurust, vali laiuse ja kõrguse rippmenüüdest <guilabel
+>Kohandatud</guilabel
+> ning kirjuta arv tekstikasti. Samuti võib pilte suurendada, kui valida <guilabel
+>Pildi suurendamine minimaalsete mõõtmeteni</guilabel
+>. Viimane valik lubab jätta vahele teatava failisuurusega pildid (siin kontrollitakse ainult pildi suurust laius x kõrgus järgi).</para>
+       </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Failinimi</guilabel
+></term>
+       <listitem>
+         <variablelist>
+           <varlistentry
+><term
+><guilabel
+>Lähtefailide filtreerimine</guilabel
+></term>
+             <listitem
+><para
+>Kui soovid, et suuruse muutmist tehtaks failide nime põhjal, võid siin valida sobiva filtri. Näiteks võib sul olla vaja saata iga päev ülemusele mitmeid pilte ja ülemus nõuab, et need oleksid ühesuurused. Võid sel juhul nimetada oma pildifailid bossile1, bossile2 &etc;, siis valida siin <guilabel
+>Kaasatakse kõik failid, mille nimi vastab mõnele mustrile</guilabel
+> ja kirjutada tekstikasti <guilabel
+>Muster</guilabel
+> 'bossile'. Samamoodi võib teatavaid faile välja jätta, kui valida <guilabel
+>Jäetakse välja kõik failid, mille nimi vastab mõnele mustrile</guilabel
+>. Vaikimisi faile ei filtreerita.</para>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Pildivorming</guilabel
+></term>
+             <listitem>
+               <para
+>Vali <guilabel
+>Kõigi piltide vorming muudetakse vastavaks valitud vormingule</guilabel
+>, kui soovid, et piltide puhul kasutataks kindlat vormingut.</para>
+               <itemizedlist>
+                 <listitem
+><para
+>Kui oled selle märkinud, tuleb ka klõpsata nupule <guibutton
+>Vali vorming...</guibutton
+> ja valida dialoogist vajalik vorming.</para
+></listitem>
+               </itemizedlist>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Failinimi suuruse muutmise korral</guilabel
+></term>
+             <listitem>
+             <para
+>Vali <guilabel
+>Muudetud suurusega piltide nime muudetakse järgmise mustri järgi</guilabel
+>, kui soovid, et muudetud suurusega piltidel muudetaks kindla mustri järgi ka nime. Kirjuta muster tekstikasti. Kasutada võib järgmisi kohatäitjaid: <simplelist>
+                 <member
+>%t - parajasti kehtiv kellaaeg</member>
+                 <member
+>%d - parajasti kehtiv kuupäev</member>
+                 <member
+>%n - originaali failinimi</member>
+                 <member
+>%e - originaali faililaiend</member>
+                 <member
+>%x - uus faililaiend</member>
+                 </simplelist
+></para>
+             </listitem>
+           </varlistentry>
+         </variablelist>
+         </listitem>
+       </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Saajad</guilabel
+></term>
+       <listitem>
+       <para
+>Sellel kaardil saab määrata saajad, kes peavad saama muudetud suurusega pilte, &eg; vanaema@minupere.ee, boss@minufirma.ee. Pead otsustama, kas selliseid saajaid on üks või mitu, ning siis sisestama nende aadressid tekstikasti, kasutades eraldajana semikoolonit <quote
+>;</quote
+>, kui saajaid on mitu. Samuti saab määrata, et mõne saaja puhul ei ole vaja piltide suurust muuta. Vaikimisi sellist filtreerimist ei kasutata.</para>
+       </listitem>
+     </varlistentry>
+   </variablelist>
+ </sect2>
+
+ <sect2 id="configure-composer-general-external-editor">
+   <title
+>Väline redaktor</title>
+   <variablelist>
+     <varlistentry>
+       <term
+><guilabel
+>Sisemise redaktori asemel kasutatakse välist</guilabel
+></term>
+       <listitem>
+         <para
+>See võimaldab kasutada suvalist redaktorit. Arvesta, et isegi sel puhul avatakse ikkagi redaktori aken ning väline redaktor avaneb alles siis, kui oled sisestanud kirja teksti esimese märgi. Kui oled valmis, salvesta tekst ja välju redaktorist. Tekst ilmub nüüd redaktori aknasse, kust see on võimalik ära saata, Arvesta, et sinu eelistatud redaktor ei pruugi kohe reageerida, &eg; redaktori <application
+>gvim</application
+> puhul tuleb kasutada <userinput
+><command
+> gvim <option
+>-f</option
+> <varname
+>%f</varname
+></command
+></userinput
+>.</para>
+       </listitem>
+     </varlistentry>
+   </variablelist>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-security">
+  <title
+>Turvalisuse kaart</title>
+  <sect2 id="configure-security-reading">
+    <title
+>Lugemine</title>
+    <para
+>Sellel kaardil saab seadistada kirjade lugemise turvalisusega seonduvaid võimalusi.</para>
+      <variablelist>
+        <varlistentry id="configure-security-reading-prefer-html">
+	  <term
+><guilabel
+>HTMLi eelistamine tavalisele tekstile</guilabel
+></term>
+	  <listitem>
+            <para
+>Vaikimisi näitab &kmail; &html;-kirju lihttekstina. Kui eelistad näha kirju automaatselt algupärases &html;-vormingus ja -esituses, märgi see valik. Siiski soovitame tungivalt jätta selle sisse lülitamata, sest see võib kaasa tuua tõsiseid &html;-iga seotud turvaprobleeme.</para>
+            <para
+>Siiski saab konkreetset kirja hõlpsasti näha &html;-vormingus, kui klõpsata lugemisakna vasakus servas lihttekstis ja HTML-kirja lülitamise ribale. Täpsemalt kõneleb sellest osa <link linkend="configure-appearance-message-window"
+>Lugemispaneel</link
+>.</para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-reading-external-references">
+	  <term
+><guilabel
+>Võrgust väliste viidete laadimine</guilabel
+></term>
+	  <listitem>
+            <para
+>Sisselülitamisel võib &kmail; laadida internetist pilte, laaditabeleid &etc;, kui vaatad &html;-kirja. Me soovitame tungivalt selle võimaluse keelata (kuigi see ei toimi niikuinii, kui vaatad ainult puhta tekstiga kirju).</para>
+            <para
+>Väliste viidete lisamisega kirjadele saavad rämpsposti saatjad tuvastada, et sa oled nende kirja vaadanud, samuti seda, millal sa seda tegid, sinu asukohta ja veel paljut muudki. Arvesta, et see võimalus ei ole seotud &Java;, JavaScripti ja pluginatega - need on nagunii keelatud ega kuulu mingil juhul rakendamisele, mis on hea, sest enamik viirusi just nii levibki.</para>
+	  </listitem>
+	</varlistentry>
+	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
+         <varlistentry id="configure-security-email-scams">
+          <term
+><guilabel
+>Teavitamine, kas loetav kiri võib olla petukiri</guilabel
+></term>
+          <listitem>
+            <para
+>E-kirjade menu levimisega on paraku käsikäes käinud rämpsposti ja petukirjade levik. Nende hulka kuulub selliseid kirju, mis esmapilgul paistavad täiesti ehtsana, aga sisaldavad siiski linke pahatahtlikele veebilehekülgedele, mis nõuavad sinu isiklikke andmeid. Sellega võib kaasneda identiteedivargus või midagi hullematki. Vaikimisi analüüsib &kmail; kirju, et tuvastada levinumad rämpsposti liigid, ning annab teada, kas kiri võib olla petukiri. Äärmiselt soovitatav on see jätta see valik märgituks. Kui sa aga mingil põhjusel siiski seda ei soovi, eemalda märge valiku <guilabel
+>Teavitamine, kas loetav kiri võib olla petukiri</guilabel
+> eest.</para>
+            <para
+>Kui sellist kahtlust avaldatakse mõne kirja suhtes, mis on igati puhas, &eg; mõnelt usaldusväärselt sõbralt, võid lisada nende kirjad <guilabel
+>valgesse nimekirja</guilabel
+>, klõpsates nupule <guibutton
+>Lisa...</guibutton
+> ja kirjutades e-posti aadressi ilmuvasse dialoog. Palun arvesta, et praegu on toetatud ainult lisamine ühe aadressi kaupa.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term
+><guilabel
+>Krüptitud kirjad</guilabel
+></term>
+          <listitem>
+            <para
+>Vaikimisi üritab &kmail; automaatselt lahti krüptida kõik krüptitud kirjad, kui sa neid vaatad. Kui eelistad seda käsitsi teha, eemalda valiku eest märge.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term
+><guilabel
+>Kirjale lisatud sertifikaadid ja võtmekimbud</guilabel
+></term>
+          <listitem>
+            <para
+>Kui soovid, et saabuvate kirjade lahtikrüptimiseks &kmail;is <guilabel
+>võtmed ja sertifikaat imporditaks automaatselt</guilabel
+>, märgi see valik.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry id="configure-security-reading-mdns">
+	  <term>
+	    <guilabel
+>Kirja kättesaamise/lugemise kinnitused</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Nende kinnituste korral soovib kirja autor saada teada, kas tema kirja on loetud, ning saaja e-posti rakendus loobki vastuse, millega saatja saab teada, mida tema kirjaga ette võeti. Kinnituse tüüpideks on <quote
+>vaadatud</quote
+> (&ie; loetud), <quote
+>kustutatud</quote
+> ja <quote
+>edastatud</quote
+> (&eg; edasi saadetud). </para>
+	    <para
+>Järgmised võimalused (<guilabel
+>Saatmise reegel</guilabel
+>) lubavad määrata, <emphasis
+>mida</emphasis
+> &kmail; selliste kinnitustega teeb. </para>
+	    <variablelist>
+	      <varlistentry>
+		<term
+><guilabel
+>Ignoreeritakse</guilabel
+> (soovitatav) </term>
+		<listitem>
+		  <para
+>Selle korral ignoreeritakse alati kinnituse nõudmist ning neid ei saadeta mingil juhul automaatselt. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Küsitakse</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Selle korral vastatakse kinnituse nõudmisele anult juhul, kui kasutaja selleks spetsiaalselt loa annab. Nii on sul võimalik saata teatud kirjadele kättesaamise/lugemise kinnitus, teiste korral aga sellest keelduda või ignoreerida. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Lükatakse tagasi</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Alati saadetakse vastuseks <quote
+>keeldutud</quote
+>. See on ainult <emphasis
+>imevähe</emphasis
+> parem võimalus kui alati kinnituste saatmine. Saatja saab sel juhul igatahes teada, et tema kiri on kohale jõudnud, ta ei saa teada ainult seda, kas seda loeti või kustutati vms. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Saadetakse alati</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Selle korral saadetakse alati vastus kinnituse soovile. See tähendab, et kirja saatja saab teada, et tema kiri jõudis pärale ning ühtlasi saab ta teada ka seda, mida sellega ette võeti (vaadati, kustutati &etc;). Me soovitamse tungivalt seda võimalust mitte kasutada, aga kuna sellel võib olla oma mõte juhtudel, kus privaatsus ei ole esmatähtis, &eg; klienditeeninduses, siis on seda võimalik vajaduse korral ka kasutada. </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
+	    <para
+>Kui sa ei ole päris kindel, vali katsetamiseks <guilabel
+>Küsitakse</guilabel
+> ning kui pead &kmail;i küsimusi tüütavaks, vaheta see välja võimalusega <guilabel
+>Ignoreeritakse</guilabel
+>. </para>
+	    <para
+>Järgnevad võimalused (<guilabel
+>Originaalkirja tsiteerimine</guilabel
+>) lubavad määrata, <emphasis
+>kui suure osa</emphasis
+> originaalkirjast saadab &kmail; kättesaamise/lugemise kinnituse vastuses tagasi. </para>
+	    <variablelist>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Puudub</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Kinnituse saatmisel kaasatakse originaalkirjast vastusse ainult kohustuslikud kirja ID ja saatja. See annab saatjale piisavalt palju infot tuvastamaks enda saadetud kirjade seas seda kirja, millele ta kinnituse saab. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Kogu kiri</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Vastusse kaasatakse kogu originaalkiri. Tavaliselt on see mõttetu, kuivõrd ei lisa mingit olulist infot selle kõrval, mida võib välja lugeda ainuüksi päistest, kuid mõned inimesed siiski soovivad seda, sest nii on inimesel lihtsam siduda seda originaalkirjaga kui ainult päiseid silmitsedes. </para>
+		</listitem>
+	      </varlistentry>
+	      <varlistentry>
+		<term>
+		  <guilabel
+>Ainult päised</guilabel>
+		</term>
+		<listitem>
+		  <para
+>Vastusse kaasatakse ainult originaalkirja päised. Sellest piisab tavaliselt nii inimesele (teema) kui ka arvutile (kirja ID) vastuse ja originaalkirja seose tuvastamiseks. </para>
+		</listitem>
+	      </varlistentry>
+	    </variablelist>
+	    <para
+>Kui sa ei ole kindel, jäta kehtima vaikeväärtused. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Vastuvõtu kinnitusi ei saadeta krüptitud kirjadele</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>See väldib kinnituste saatmist juhul, kui originaalkiri on krüptitud (osaliselt või täielikult). Nii on võimalik nurjata katsed pruukida &kmail;i kättesaamise/lugemise kinnituste saatmise võimalust <emphasis
+>oraaklina</emphasis
+>, mis kuulutab, kas sa oled võimeline kirja lahti krüptima või mitte. </para>
+	    <para
+>Põhimõtteliselt ei ole see võimalus eriti vajalik, sest &kmail; saadab kinnituse sõltumata sellest, kas kirja õnnestus lahti krüptida või mitte (kinnituse nõue on alati kirja krüptimata osas), kuid turvalisust au sees hoidvale kasutajale annab see siiski võimaluse määrata, kas saata sellisel juhul kinnitusi alati, kui seda nõutakse (kasti märkimatajätmisel) või mitte kunagi (kasti märkimisel). </para>
+	    <para
+>Kui sa ei ole kindel, jäta see märgituks. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Võtmed ja sertifikaadid imporditakse automaatselt</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel imporditakse kõik &openpgp; võtmeid sisaldavad kaasatud failid automaatselt sinu kohalikku võtmerõngasse ja kõik &smime; võtmeid sisaldavad kaasatud failid sinu kohalikku võtmekasti. </para>
+	    <note>
+	      <para
+>&smime; signatuuri kontrollimisel imporditakse sertifikaadid alati, mistõttu antud võimalus seda ei mõjuta. See ei ole seotud ka &gpg; võtme automaatse hankimise võimalusega (<option
+>auto-key-retrieve</option
+>), mille korral &gpg; püüab tundmatud võtmed importida võtmeserverilt. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="configure-security-composing">
+      <title
+>Koostamine </title>
+
+      <para
+>Sellel kaardil saab seadistada kirjade koostamise turvalisusega seonduvaid võimalusi. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-composing-automatically-sign">
+	  <term>
+	    <guilabel
+>Kirjad allkirjastatakse automaatselt</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel on redaktori võimalus <xref linkend="composer-options-sign-message"/> vaikimisi alati <emphasis
+>sees</emphasis
+>. </para>
+	    <para
+>Seda saab muidugi sisse ja välja lülitada ka iga konkreetse kirja puhul eraldi. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-encrypt-to-self">
+	  <term>
+	    <guilabel
+>Kirjade krüptimisel krüptitakse alati ka minu enda identiteedi sertifikaadiga</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel krüptitakse iga saajatele krüptitud kiri lisaks ka iseenda jaoks. </para>
+	    <warning>
+	      <para
+>Märkimatajätmisel ei ole sul hiljem võimalik lahti krüptida kirju, mille oled koostanud ja krüptinud teiste jaoks. </para>
+	    </warning>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-store-sent-encrypted">
+	  <term>
+	    <guilabel
+>Saadetud kirjad salvestatakse krüptitult</guilabel
+><!--
+	    --><footnote>
+	      <para
+>See lülitab sisse režiimi, mida mõnikord (eksitavalt) kutsutakse <quote
+>transporditasandi</quote
+> krüptimiseks. Selle korral kõrvaldatakse kirja krüptimine kohe, kui see jõuab sihtkohta, see tähendab, et kiri on krüptitud ainult ajal, mil ta on teel. </para>
+	      <para
+>&kmail; toetab seda võimalust nii poolest hingest, sest õigupoolest peaks sellist asja rakendama <emphasis
+>serveri</emphasis
+> (<acronym
+>MTA</acronym
+>), mitte aga <emphasis
+>kliendi</emphasis
+> (<acronym
+>MUA</acronym
+>) tasandil. Seepärast on täiesti võimalik, et &kmail;i tulevastes versioonides seda võimalust enam ei toetata. </para>
+	    </footnote>
+	  </term>
+	  <listitem>
+	    <para
+>Märkimisel salvestatakse kirjad sinu <guilabel
+>saadetud kirjad</guilabel
+>e kausta sellisel kujul, nagu nad on teele saadetud (&ie; kui nad olid krüptitud, nad ka salvestatakse krüptituna). </para>
+	    <para
+>Märkimatajätmisel salvestatakse kirjad sinu <guilabel
+>saadetud kirjad</guilabel
+>e kausta <emphasis
+>alati</emphasis
+> krüptimata isegi juhul, kui nad saadeti krüptitult. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-show-encryption-key">
+	  <term>
+	    <guilabel
+>Alati palutakse valida vajalik krüptovõti</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel ilmub kirja krüptimisel alati dialoog krüptovõtmetega, mida on võimalik iga saaja jaoks kasutada. Seal saad võtmete valiku üle vaadata, neid muuta ning krüptimise heaks kiita või sellest loobuda. Me soovitame selle võimaluse sisse lülitada, sest nii on krüptimine läbipaistvam ja selgem. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-opportunistic-encryption">
+	  <term>
+	    <guilabel
+>Kirjad krüptitakse automaatselt, kui vähegi võimalik</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Seda nimetatakse ka <quote
+>oportunistlikuks krüptimiseks</quote
+>. Sisselülitamisel püüab &kmail; leida saajatele (&openpgp; või &smime;) võtmed isegi juhul, kui sa <emphasis
+>ei</emphasis
+> avaldanud spetsiaalselt krüptimise soovi. Kui kõigile saajatele leitakse kasutatavad võtmed, pärib &kmail; kas kiri krüptida või mitte. </para>
+	    <para
+>On äärmiselt soovitatav see võimalus sisse lülitada, sest nii on kirjade krüptimine kohe palju hõlpsam. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-never-sign-encrypt-drafts">
+	  <term>
+	    <guilabel
+>Ei allkirjastata/krüptita salvestamisel mustandina</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel ei ürita &kmail; allkirjastada ja/või krüptida kirju, mis salvestatakse <guilabel
+>mustandite</guilabel
+> kausta. See on üsna käepärane ja turvalisust väheohustav võimalus &mdash; eeldusel muidugi, et mustandite kaust ise on turvaline. &imap;-i kasutajad võiksid selle võimaluse siiski välja lülitada, kui nende <guilabel
+>mustandite</guilabel
+> kaust asub serveris. </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+
+    </sect2>
+
+    <sect2 id="configure-security-warnings">
+      <title
+>Muu </title>
+
+      <para
+>Sellel kaardil saab turvalisusega seotud hoiatusi sisse ja välja lülitada. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-warnings-warn-send-unsigned">
+	  <term>
+	    <guilabel
+>Hoiatus allkirjastamata kirja saatmise korral</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel näitab &kmail; hoiatust, kui mis tahes põhjusel kavatsed kirja ära saata seda digitaalselt allkirjastamata. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-send-unencrypted">
+	  <term>
+	    <guilabel
+>Hoiatus krüptimata kirjade saatmise puhul</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel näitab &kmail; hoiatust, kui mis tahes põhjusel kavatsed kirja ära saata seda krüptimata. </para>
+	    <note>
+	      <para
+>Kuigi kõigi väljuvate kirjade allkirjastamine on päris tavaline, ei ole krüptimine seda mitte. Seepärast oleks mõttekas, kui just sinu firma ei ole kehtestanud reeglit mitte lubada krüptimata kirjade saatmist, see võimalus jätta sisse lülitamata ja kasutada <link linkend="configure-security-composing-opportunistic-encryption"
+>oportunistlikku krüptimist</link
+>, mis annab sulle teada, et sa <emphasis
+>võid</emphasis
+> saata krüptitud kirja, aga ei <emphasis
+>pea</emphasis
+> seda tegema. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-receiver-email-not-in-cert">
+	  <term>
+	    <guilabel
+>Hoiatus, kui saaja e-posti aadressi ei ole sertifikaadis</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel näitab &kmail; hoiatust, kui &smime; sertifikaati või &openpgp; võtit kasutatakse saaja puhul, kelle e-posti aadressi ei leidu sertifikaadis salvestatud e-posti aadresside seas. </para>
+	    <para
+>Sellist hoiatus näidatakse näiteks siis, kui seadistad identiteedi alusel &openpgp; võtmeid või &smime; sertifikaate, krüptid või kontrollid allkirju, kui allkiri on loodud sertifikaadiga, milles ei leidu saatja e-posti aadressi. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-near-expire">
+	  <term>
+	    <guilabel
+>Hoiatus, kui sertifikaat/võti peagi aegub</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel näitab &kmail; hoiatust, kui kasutatav &smime; sertifikaat või &openpgp; võti on peagi aegumas. </para>
+	    <para
+>Seda, kui palju enne võtme/sertifikaadi aegumist hoiatust näidatakse, saab seadistada eraldi allkirjastamis- ja krüptovõtmetele, samuti (&smime; korral) lõppkasutaja, <acronym
+>SK</acronym
+> ja juursertifikaatidele. </para>
+	  </listitem>
+	</varlistentry>
+	<!-- 
+	GnuPG Settings
+	Chiasmus Settings
+	-->
+	<varlistentry id="configure-security-warnings-reenable-all-warnings">
+	  <term>
+	    <guilabel
+>Kõigi "Rohkem ei pärita" hoiatuste taaslubamine</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Lisaks ülalkirjeldatud põhilistele hoiatustele on märksa enam hoiatusi ja informatiivseid teadaandeid, mis kõik pakuvad võimalust end mitte enam näidata lasta. Kui oled seda teinud, aga nüüd soovid neid kangesti uuesti näha, on see võimalik sellele nupule klõpsates.<footnote
+> <para
+>See lubab &kmail;is uuesti <emphasis
+>kõik</emphasis
+> sellised hoiatused. Ega tegelikult ei olegi mõtet siinkohal võimaldada täpselt määrata, milliseid hoiatusi uuesti näidata, sest kui nad peaksid nüüd ilmuma, saad ju nende edasise näitamise taas välja lülitada. </para>
+	      </footnote>
+	    </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+
+    </sect2>
+
+    <sect2 id="configure-security-smime-validation">
+      <!-- copy of section configuration-smime-validation from kleopatra docbook
+      keep in sync, both apps have the same page in settings-->
+      <title
+>&smime; kontrollimine </title>
+
+      <para
+>Sellel kaardil leiduvad mõningad &gpgsm; kirjed. Palun tutvu nende lähema kirjeldusega &gpgsm; manuaalis. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-smime-validation-certificate-crls">
+	  <term>
+	    <guilabel
+>Sertifikaatide kontroll CRL-ide vahendusel</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel kontrollitakse &smime; sertifikaate sertifikaatide tühistamine nimekirju (<acronym
+>CRLs</acronym
+>) kasutades. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-validation-certificate-ocps">
+	  <term>
+	    <guilabel
+>Sertifikaatide kontroll võrgus (OCSP)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel kontrollitakse &smime; sertifikaate võrgus interneti sertifikaatide staatuse protokolli (<acronym
+>OCSP</acronym
+>) kasutades. </para>
+            <para
+>Kui soovid seda kasutada, määra ka <acronym
+>OCSP</acronym
+>-serveri &URL;. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-url">
+	  <term>
+	    <guilabel
+>OCSP-serveri &URL;</guilabel>
+          </term>
+         <listitem>
+	      <para
+>Anna siin sertifikaatide kontrollimise serveri aadress. &URL;-i alguses seisab tavaliselt <emphasis
+>http://</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-signature">
+	  <term>
+	    <guilabel
+>OCSP-serveri allkiri</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Vali kasutatav &smime; võti või muuda seda. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-ignore">
+	  <term>
+	    <guilabel
+>Sertifikaatide teenuse &URL;-i ignoreerimine</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel saab vältida võrgus kontrollimist OCSP abil. Selleks on vajalik <emphasis
+>dirmngr &gt;= 0.9.0</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-policies">
+	  <term>
+	    <guilabel
+>Sertifikaadi reegleid ei kontrollita</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Vaikimisi kasutab <guilabel
+>GnuPG</guilabel
+> faili <emphasis
+>~/.gnupg/policies.txt</emphasis
+> kontrollimaks, kas sertifikaadi reegel on lubatud. Selle sisselülitamisel reegleid ei kontrollita. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-consult-crls">
+	  <term>
+	    <guilabel
+>CRL-i ei kontrollita kunagi</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel ei kasutata &smime; sertifikaatide kontrollimiseks kunagi sertifikaatide tühistamise loendeid (CRL). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-fetch-issuer">
+	  <term>
+	    <guilabel
+>Tõmmatakse puuduvad väljaandja sertifikaadid</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Sisselülitamisel tõmmatakse vajadusel puuduvad väljaandja sertifikaadid. See kehtib <acronym
+>CRL</acronym
+>-ide kui <acronym
+>OCSP</acronym
+> korral. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests">
+	  <term>
+	    <guilabel
+>&HTTP; päringuid ei sooritata</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Keelab täielikult &HTTP; kasutamise &smime; korral. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-ignore-distribution-point">
+	  <term>
+	    <guilabel
+>&HTTP; sertifikaatide CRL jagamispunkte ignoreeritakse</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>CRL-i asukoha otsimisel sisaldab testitav sertifikaat tavaliselt niinimetatud <quote
+>CRL jagamispunkti</quote
+> (<acronym
+>DP</acronym
+>) kirjet, mis kujutab endast vajalikule &URL;-ile viivat &URL;-ide rida. Kasutatakse esimesena leitud jagamispunkti (<acronym
+>DP</acronym
+>). Selle valikuga jäetakse sobiva <acronym
+>DP</acronym
+> otsimisel kõrvale kõik &HTTP;-skeemi kasutavad kirjed. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-proxy">
+	  <term>
+	    <guilabel
+>Kasutatakse süsteemi &HTTP; puhverserverit</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Selle valimisel kasutatakse paremal asuvat &HTTP; puhverserveri väärtust (mille määrab keskkonnamuutuja <varname
+>http_proxy</varname
+>) kõigi &HTTP; päringute korral. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests-proxy">
+	  <term>
+	    <guilabel
+>&HTTP; päringuteks kasutatakse järgmist puhverserverit</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Kirjuta siia &HTTP; puhverserveri asukoht, mida kasutatakse kõigi &HTTP; päringute jaoks &smime; puhul. Süntaks on <quote
+>"masin:port"</quote
+>, näiteks <emphasis
+>minupuhverserver.kuskil.ee:3128</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-requests">
+	  <term>
+	    <guilabel
+>LDAP päringuid ei sooritata</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>LDAP-i täielik keelamine &smime; puhul. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-distribution-point">
+	  <term>
+	    <guilabel
+>LDAP sertifikaatide CRL jagamispunkte ignoreeritakse</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+><acronym
+>CRL</acronym
+>-i asukoha otsimisel sisaldab testitav sertifikaat tavaliselt niinimetatud <quote
+>"CRL jagamispunkti"</quote
+> (<acronym
+>DP</acronym
+>) kirjet, mis kujutab endast vajalikule &URL;-ile viivat &URL;-ide rida. Kasutatakse esimesena leitud jagamispunkti (<acronym
+>DP</acronym
+>). Selle valikuga jäetakse sobiva <acronym
+>DP</acronym
+> otsimisel kõrvale kõik <acronym
+>LDAP</acronym
+>-skeemi kasutavad kirjed. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-proxy-host">
+	  <term>
+	    <guilabel
+>LDAP päringute primaarne masin</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Kirjuta siia <acronym
+>LDAP</acronym
+>-server, millele suunatakse kõik <acronym
+>LDAP</acronym
+>-päringud. See tühistab kõik <acronym
+>LDAP</acronym
+> &URL;-is määratud masina ja pordi seadistused ning seda kasutatakse ka siis, kui &URL;-is ei olegi masinat ja porti määratud. Muid <acronym
+>LDAP</acronym
+>-servereid kasutatakse ainult siis, kui ühendus <emphasis
+>puhverserveriga</emphasis
+> ebaõnnestub. Süntaks on <acronym
+>MASIN</acronym
+> või <acronym
+>MASIN:PORT</acronym
+>. Kui <acronym
+>PORT</acronym
+> ära jätta, kasutatakse <quote
+>porti 389</quote
+> (standardne <acronym
+>LDAP</acronym
+> port). </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    </sect2>
+  </sect1
+> <!-- configure-security -->
+
+<sect1 id="configure-misc">
+<title
+>Muud seadistused</title>
+
+<sect2 id="configure-misc-folders">
+<title
+>Kaustad</title>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Enne kõigi kirjade prügikasti viskamist küsitakse</guilabel
+></term>
+<listitem>
+<para
+>Selle sisselülitamisel küsitakse sinu käest alati kinnitust, kui annad menüükäsu <menuchoice
+><guimenu
+>Kaustad</guimenu
+><guimenuitem
+>Liiguta kõik kirjad prügikasti</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Tähtsaid kirju ei kustutata</guilabel
+></term>
+<listitem>
+<para
+>Selle sisselülitamisel ei kustutata aegunud kirjade kustutamisel kirju, millele on antud tähtsa kirja staatus.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="configure-misc-folders-go-unread">
+<term
+><guilabel
+>Lugemata kirjade otsimisel</guilabel
+></term>
+<listitem>
+<para
+>Siin saab määrata, mis juhtub siis, kui kasutad mõnd järgmisele või eelmisele lugemata kirjale viivat kiirklahvi (&eg; <keycap
+>tühikuklahv</keycap
+>). Kui annad &kmail;ile korralduse minna järgmisele lugemata kirjale, ent antud kirjast edasi pole enam ühtki lugemata kirja, võib juhtuda üks järgmistest võimalustest: <itemizedlist
+> <listitem
+> <para
+>Kui valitud on <guilabel
+>ei hüpata tagasi</guilabel
+>, ei juhtu üldse midagi. </para
+> </listitem
+> <listitem
+> <para
+>Kui valitud on <guilabel
+>hüpatakse tagasi aktiivses kaustas</guilabel
+>, alustab &kmail; lugemata kirjade otsimist samas kaustas alates esimesest kirjast. Kui midagi ei leita, siis ei juhtu jälle midagi. </para
+> </listitem
+> <listitem
+> <para
+>Kui valitud on <guilabel
+>hüpatakse tagasi kõigis kaustades</guilabel
+>, otsib &kmail; kõigepealt lugemata kirju aktiivses kaustas alates algusest. Kui midagi ei leita, võtab &kmail; ette järgmise lugemata kirju sisaldava kausta. </para
+> </listitem
+> </itemizedlist
+>  </para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+
+<term
+><guilabel
+>Sisenemisel kausta</guilabel
+></term>
+<listitem>
+<para
+>See valik määrab, mis juhtub kausta avamisel. <itemizedlist>
+<listitem>
+<para
+>Kui valitud on <guilabel
+>Hüpatakse esimesele lugemata kirjale</guilabel
+>, valib &kmail; esimese leitud kirja, mis on märgitud lugemata kirjaks. </para>
+</listitem>
+<listitem>
+<para
+>Kui valitud on <guilabel
+>Hüpatakse viimati valitud kirjale</guilabel
+>, valib &kmail; kirja, mis oli valitud viimasel kaustas viibimise korral. </para>
+</listitem>
+<listitem>
+<para
+>Kui valitud on <guilabel
+>Hüpatakse uusimale kirjale</guilabel
+>, valib &kmail; kuupäeva järgi uusima kirja. </para>
+</listitem>
+<listitem>
+<para
+>Kui valitud on <guilabel
+>Hüpatakse vanimale kirjale</guilabel
+>, valib &kmail; kuupäeva järgi vanima kirja. </para>
+</listitem>
+</itemizedlist>
+
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Valitud kiri märgistatakse loetuks pärast...</guilabel
+></term>
+<listitem>
+<para
+>Kui valid <guilabel
+>uue</guilabel
+> või <guilabel
+>lugemata</guilabel
+> kirja, muudab &kmail; selle oleku <guilabel
+>loetuks</guilabel
+> pärast teatud hulka sekundeid, mida saabki siin määrata. Kui sa seda ei luba, ei kaota kirjad staatust <guilabel
+>uus</guilabel
+> või <guilabel
+>lugemata</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Kirjade lohistamisel teise kausta lastakse valida tegevus</guilabel
+></term>
+<listitem>
+<para
+>Kui lohistad kirja teise kausta, ilmub väike hüpikmenüü, mis pärib, kas soovid kirja kopeerida või liigutada. Kui jätad selle võimaluse lubamata, liigutatakse kiri kohe ilma liigseid küsimusi esitamata.</para>
+</listitem>
+</varlistentry>
+
+<!-- not in kmail 2.0.96 varlistentry>
+<term
+><guilabel
+>By default, message folders on disk are...</guilabel
+></term>
+<listitem>
+<para
+>Here you can set the default <link linkend="folders-format"
+>folder format</link>
+that is used when you create a new folder.</para>
+</listitem>
+</varlistentry-->
+
+<varlistentry>
+<term
+><guilabel
+>Käivitamisel avatakse kaust</guilabel
+></term>
+<listitem>
+<para
+>Siin saab määrata kausta, millesse &kmail;i käivitamisel kohe automaatselt suundutakse. Kui kasutad ainult &imap;-i kaustu, võiks siin selleks määrata näiteks oma &imap;-i sisenevate kirjade kausta.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Väljumisel tühjendatakse kohalik prügikast</guilabel
+></term>
+<listitem>
+<para
+>Kui see on valitud, tühjendatakse prügikast kirjadest &kmail;ist väljumisel.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="configure-misc-invitation">
+<title
+>Kutsed</title>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Päiseväljade Kellelt:/Kellele: muutmine kutsetele vastates</guilabel
+></term>
+<listitem>
+<para
+>Sisselülitamisel mõistab <application
+>&Microsoft; Outlook</application
+> sinu kutsetele saadetud vastuseid (loodetavasti...).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Kutsete saatmine kirja põhiosas</guilabel
+></term>
+<listitem>
+<para
+>Kutsed saadetakse tihtipeale kirjale lisatuna. Selle sisselülitamisel aga saab kutseid saata otse kirja põhiteksti, mis on lausa hädavajalik kutsete ja nende vastuste saatmiseks <application
+>&Microsoft; Outlook</application
+>-ile.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Exchange'iga ühilduvad kutsed</guilabel
+></term>
+<listitem>
+<para
+><application
+>&Microsoft; Outlook</application
+> koostöös &Microsoft; Exchange serveriga on raskustes standarditele vastavate grupitöö e-kirjade mõistmisega. Selle valiku sisselülitamisel saadetakse grupitöö kutsed sellisena, et neid mõistab ka &Microsoft; Exchange. Kutse saadetakse kirja manusena, mille nimi on <filename
+>ical.ics</filename
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Outlookiga ühilduvad kutsevastuse kommentaarid</guilabel
+></term>
+<listitem>
+<para
+>Kui kasutaja lisab kutsele vastates kommentaare, saadetakse need nii, et neid mõistab <application
+>&Microsoft; Outlook</application
+>. Kui valik pole sisse lülitatud, ei näe Outlookis vastuse kommentaare.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Kutseuuenduste erinevuse näitamine Outlooki moodi</guilabel
+></term>
+<listitem>
+<para
+>Uuendatud kutsete vaatamisel võimaldab see valik näidata erinevusi algse ja praeguse kutse vahel üsna samamoodi, nagu seda teeb <application
+>&Microsoft; Outlook</application
+>. See on vaikevalik. Kasutaja võib selle välja lülitada, kui soovib näha erinevusi <quote
+>klassikalises</quote
+> &kmail;i stiilis. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Kutse automaatne saatmine</guilabel
+></term>
+<listitem>
+<para
+>Selle sisselülitamisel ei avata kirja koostamise akent, vaid kõik kutsekirjad saadetakse ära automaatselt. Kui soovid kirja enne saatmist siiski näha, lülita see võimalus välja. Kuid arvesta, et redaktoriaknas nähtav tekst on iCalendari süntaksiga, mida ei peaks mitte käsitsi muutma hakkama.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Kutsekirjad kustutatakse pärast vastuse saatmist</guilabel
+></term>
+<listitem>
+<para
+>Sisselülitamisel liigutatakse kutsega kirjad, millele on vastatud, kohe prügikasti, kui neile on edukalt saadetud vastus.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-non-gui-options">
+<title
+>Kasutajaliidese välised valikud</title>
+<para
+>Lisaks seadistamisdialoogis leiduvatele valikutele saab mõningaid asju määrata otse &kmail;i seadistusfailis või KIOSKi kaudu (&eg; sisend &konsole;'ile). Neid niinimetatud <quote
+>peidetud</quote
+> seadistamisvõimalusi ei saa muuta &kmail; tavalise seadistustedialoogi abil, vaid selleks peab muutma seadistusfaili tekstiredaktoris või programmiga <command
+>kwriteconfig</command
+>. Seadistusfail tuleb kirjutada vormingus [Sektsiooni nimi], millele järgnevatel ridadel antakse muutujad ja nende määratlused. Kui redigeerid seadistusfaili käsitsi, tuleb muutujate ette [Sektsiooni nimi] ise lisada. Käsk <command
+>kwriteconfig</command
+> lisab selle sinu eest, kui kasutad võtit <userinput
+>--group</userinput
+>. </para>
+
+<para
+>&kmail;i seadistusfaili nimega <filename
+>kmail2rc</filename
+> leiab kasutaja kodukataloogist. Selle asukoht võib sõltuvalt operatsioonisüsteemist või distributsioonist erineda, kuid see on võimalik üles leida käsuga <userinput
+><command
+>kde4-config --path config --locate kmail2rc</command
+></userinput
+>. Edasises eeldame, et seadistusfaili asukoht on <filename
+>/kmail2rc/asukoht</filename
+>. </para>
+
+<warning
+><para
+>Neid valikuid muutma asudes tuleb kindlasti enne seadistusfaili redigeerimist &kmail; kõigepealt sulgeda. Uuesti võib &kmail;i käivitada alles siis, kui oled teinud muudatused seadistusfaili <emphasis
+>ja need salvestanud</emphasis
+>. </para
+></warning>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>SendMDNsWithEmptySender</guilabel
+></term>
+<listitem>
+<para
+>Kirja kättesaamise/lugemise kinnituste saatmine puuduva saatjaga. Mõned serverid võivad selliseid kinnitusi tagasi lükata, nii et kui sul tekib nende saatmisega probleeme, lülita see valik välja (määra väärtuseks 'false'). Võimaluse sisselülitamiseks lisa sektsiooni <quote
+>[MDN]</quote
+>:</para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>SendMDNsWithEmptySender=true</programlisting
+></listitem>
+  <listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+  <para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group MDN --key SendMDNsWithEmptySender true</option
+></userinput
+> </para>
+</listitem>
+</itemizedlist>
+<note
+><para
+>Vaikimisi määratud <quote
+>false</quote
+> rikub rangelt võttes internetis kehtivaid standardeid, kuid see on nii väga praktilistel põhjustel: et vältida &kmail;i loodud kättesaamiste kinnituste tagasilükkamist serverites, kus seda võidakse pidada rämpspostiks.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>CloseDespiteSystemTray</guilabel
+></term>
+<listitem>
+<para
+>See võimaldab rakenduse täielikult sulgeda isegi siis, kui seadistustes on ette nähtud ikoon süsteemses salves, mis muidu jätab rakenduse tegelikult veel tööle. Selle omaduse kasutamiseks lisa sektsiooni <quote
+>[General]</quote
+> rida: </para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>CloseDespiteSystemTray=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group General --key CloseDespiteSystemTray true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>disregardUmask</guilabel
+></term>
+<listitem>
+<para
+>Versioonides enne 1.9 salvestas &kmail; kõik kaasatud failid kettale õigustega 600 &mdash; loetav või kirjutatav ainult faili omanikule. Kasutajate tagasiside tõttu muudeti see alates &kmail;i versioonist 1.9 seadistatavaks, nii et vaikimisi tunnustatakse failide salvestamisel kettale kasutaja konto umask'i. Selle lubamiseks lisa sektsiooni <quote
+>[General]</quote
+> rida: </para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>disregardUmask=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group General --key disregardUmask true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>CheckOutOfOfficeOnStartup</guilabel
+></term>
+<listitem>
+<para
+>Kui see sisse on sisse lülitatud, kontrollib &kmail; igal käivitamisel, kas mõni puhkuseteade on aktiivne ja kui see peaks nii olema, näitab hoiatust. Selle väljalülitamiseks lisa sektsiooni <quote
+>[OutOfOffice]</quote
+> rida: </para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>CheckOutOfOfficeOnStartup=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group OutOfOffice --key CheckOutOfOfficeOnStartup false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeSettings</guilabel
+></term>
+<listitem>
+<para
+>Kui sa ei soovi, et kasutajad saaksid laadida oma puhkuseteadete skripti serverisse, võid lisada sektsiooni <quote
+>[OutOfOffice]</quote
+> rea: </para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>AllowOutOfOfficeSettings=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeUploadButNoSettings</guilabel
+></term>
+<listitem>
+<para
+>Kui soovid, et kasutajad saaksid laadida oma puhkuseteadete skripti serverisse, aga et nad ei saaks muuta reageeritavat domeeni ega rämpspostile reageerimise seadistust, võib lisada sektsiooni <quote
+>[OutOfOffice]</quote
+> rea: </para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>AllowOutOfOfficeUploadButNoSettings=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeUploadButNoSettings true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeDomain</guilabel
+></term>
+<listitem>
+<para
+>Puhkuseteadete skripte redigeerides võib kasutaja määrata domeeni, ainult kuhu vastused saadetakse. Vaikeväärtuste rakendamine puhkuseteadete seadistusdialoogis vastava nupu abil taastab selle domeeni, kui kasutaja on seda muutnud. Selle laadimiseks eelnevalt määratud vaikeväärtusega lisa sektsiooni <quote
+>[OutOfOffice]</quote
+> rida:</para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>OutOfOfficeDomain=minuKirjadeDomeen.test</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group OutOfOffice --key OutOfOfficeDomain minuKirjadeDomeen.test</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeReactToSpam</guilabel
+></term>
+<listitem>
+<para
+>Vaikimisi ei saadeta puhkuseteateid kirjadele, mis on märgitud rämpspostiks. Selle tühistamiseks lisa sektsiooni [OutOfOffice] rida:</para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>OutOfOfficeReactToSpam=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group OutOfOffice --key OutOfOfficeReactToSpam true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>ShowUserAgent</guilabel
+></term>
+<listitem>
+<para
+>Alates versioonist 1.9 võib &kmail; näidata kirja päise välja User-Agent või X-Mailer väärtust uhkete päiste kasutamise korral (vaata menüüs <menuchoice
+><guimenu
+>Vaade</guimenu
+> <guisubmenu
+>Päised</guisubmenu
+></menuchoice
+>). Selle lubamiseks lisa sektsiooni <quote
+>[Reader]</quote
+> rida:</para>
+<itemizedlist>
+<listitem
+><para
+>Seadistusfail:</para>
+<programlisting
+>ShowUserAgent=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/kmail2rc/asukoht</replaceable
+> --group Reader --key ShowUserAgent true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</chapter>

@@ -1,0 +1,230 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>E-postarkiveringsmodul</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>Handbok &i18n-archivemailagent;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Program 19.12)</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Inledning</title>
+
+<para
+>&i18n-archivemailagent; är en Akonadi-modul som gör det möjligt att arkivera brev automatiskt. </para>
+
+<sect2 id="using-kapp">
+<title
+>Använda &i18n-archivemailagent;</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Använd <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa automatisk arkivering...</guimenuitem
+></menuchoice
+><action
+> i &kmail;s läsfönster för att öppna en dialogruta för att ställa in automatisk arkivering av brevkorgar.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>Detta är ett kraftfullt verktyg som kan användas för att hjälpa till med säkerhetskopiering av e-post. Klicka på knappen <guibutton
+>Lägg till...</guibutton
+> för att använda det, så dyker dialogrutan <guilabel
+>Lägg till arkiverad post</guilabel
+>.</para>
+
+<screenshot>
+<screeninfo
+>Dialogrutan Lägg till arkiverad post</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialogrutan Lägg till arkiverad post</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialogrutan Lägg till arkiverad post</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Markera först korgen som du vill arkivera.</para
+></listitem>
+<listitem
+><para
+>Välj formatet som du vill spara med, t.ex. <literal role="extension"
+>.tar.bz2</literal
+> i kombinationsrutan. Arkivets filnamn består av prefixet <userinput
+>Archive_</userinput
+>, sökvägen till den valda korgen i &kmail;s korglista, datum på formatet <userinput
+>år-månad-dag</userinput
+> och den valda filändelsen, t.ex. <filename
+>Archive_Lokala korgar_inkorg_2019-09-03.tar.bz2</filename
+> </para
+></listitem>
+<listitem
+><para
+>Normalt är <guilabel
+>Arkivera alla underkorgar</guilabel
+> aktiverad. Avmarkera det om du bara vill att den översta korgen ska arkiveras.</para
+></listitem>
+<listitem
+><para
+>Du kan skriva in platsen där du vill spara arkivet, eller klicka på knappen <guibutton
+>Öppna fildialogruta</guibutton
+> för att välja katalogen.</para
+></listitem>
+<listitem
+><para
+>Välj hur ofta du vill säkerhetskopiera via kombinationsmenyerna intill <guilabel
+>Säkerhetskopiera var:</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>Om du har begränsat diskutrymme bör du ange en gräns för <guilabel
+>Maximalt antal arkiv:</guilabel
+>.</para
+></listitem>
+</itemizedlist>
+<para
+>Om du har lagt till eller ändrat ett arkiveringsjobb utförs det automatiskt efter att dialogrutan har stängts. </para>
+
+<para
+>Om du redan har lagt till brevarkiveringsjobb visas de i dialogrutan <guilabel
+>Anpassa postarkivering</guilabel
+> och du har möjlighet att ändra dem. </para>
+<screenshot>
+<screeninfo
+>Anpassa postarkivering</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Anpassa postarkivering</phrase>
+    </textobject>
+    <caption>
+      <para
+>Anpassa postarkivering</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Du kan använda kryssrutorna till vänster om varje rad i listan för att aktivera eller inaktivera arkivering med detta jobb. </para>
+<para
+>Det är möjligt att komma åt inställningsdialogrutan när som helst senare genom att använda <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa &kmail;...</guimenuitem
+></menuchoice
+> och därefter välja sidan <guilabel
+>Insticksprogram</guilabel
+> i &kmail;s huvudfönster och klicka på inställningsknappen för alternativet <guilabel
+>E-postarkiveringsmodul</guilabel
+>. </para>
+<para
+>Genom att Använda den sammanhangsberoende menyn som visas med ett klick med höger musknapp på ett arkiveringsjobb kan du öppna katalogen som innehåller arkiven eller starta arkiveringsjobbet omedelbart. Det skriver över ett befintligt arkiv som skapats tidigare samma dag utan underrättelse. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Tack till och licens</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Program copyright 2013-2019 Laurent Montel montel@kde.org </para>
+<para
+>Dokumentation Copyright &copy; 2013-2019 Laurent Montel montel@kde.org </para>
+
+<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

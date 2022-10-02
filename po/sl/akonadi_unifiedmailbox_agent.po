@@ -1,0 +1,94 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Matjaž Jeran <matjaz.jeran@amis.net>, 2020, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2021-06-25 22:32+0200\n"
+"Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 20.12.2\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+
+#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "Dodaj"
+
+#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "Spremeni"
+
+#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#, kde-format
+msgid "Remove"
+msgstr "Odstrani"
+
+#: settingsdialog.cpp:100
+#, kde-format
+msgid "Do you really want to remove unified mailbox <b>%1</b>?"
+msgstr "Ali zares želite odstraniti poenoten poštni nabiralnik <b>%1</b>?"
+
+#: settingsdialog.cpp:101
+#, kde-format
+msgid "Really Remove?"
+msgstr "Naj res odstranim?"
+
+#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#, kde-format
+msgid "Unified Mailboxes"
+msgstr "Poenoteni poštni nabiralniki"
+
+#: unifiedmailboxagent.cpp:168
+#, kde-format
+msgid "Synchronizing unified mailbox %1"
+msgstr "Usklajujem poenoten poštni nabiralnik %1"
+
+#: unifiedmailboxeditor.cpp:85
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure Unified Mailbox"
+msgstr "Nastavi poenoteni poštni nabiralnik"
+
+#: unifiedmailboxeditor.cpp:97
+#, kde-format
+msgid "Name:"
+msgstr "Ime:"
+
+#: unifiedmailboxeditor.cpp:102
+#, kde-format
+msgid "Pick icon..."
+msgstr "Izberite ikono..."
+
+#: unifiedmailboxeditor.cpp:103
+#, kde-format
+msgid "Icon:"
+msgstr "Ikona:"
+
+#: unifiedmailboxmanager.cpp:294
+#, kde-format
+msgid "Inbox"
+msgstr "Prejeta pošta"
+
+#: unifiedmailboxmanager.cpp:301
+#, kde-format
+msgid "Sent"
+msgstr "Poslano"
+
+#: unifiedmailboxmanager.cpp:308
+#, kde-format
+msgid "Drafts"
+msgstr "Osnutki"
+
+#~ msgctxt "@title:window"
+#~ msgid "Add an Unified MailBox"
+#~ msgstr "Dodaj poenoten poštni nabiralnik"

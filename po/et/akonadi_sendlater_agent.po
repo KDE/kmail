@@ -1,0 +1,256 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Marek Laane <bald@smail.ee>, 2014, 2016, 2019, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2020-01-02 11:46+0200\n"
+"Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
+"Language-Team: Estonian <kde-et@lists.linux.ee>\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 19.08.1\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Seadistused"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Hilisema saatmise agent"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Kirjade hilisema saatmise agent."
+
+#: sendlaterconfiguredialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2013-2020 Laurent Montel"
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Autoriõigus (C) 2013-2020: Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Hooldaja"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Marek Laane"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "qiilaq69@gmail.com"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "Saaja"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Teema"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Saatmise aeg"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Korduv"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Kirja ID"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "Ühtegi kirja pole ootel..."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Saada kohe"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Kustuta"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Jah"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Ei"
+
+#: sendlaterconfigurewidget.cpp:207
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Kas kustutada valitud element?"
+msgstr[1] "Kas kustutada valitud elemendid?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Kustuta"
+
+#: sendlaterconfigurewidget.cpp:216
+#, fuzzy, kde-format
+#| msgid "Do you want to remove the messages as well?"
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Kas eemaldada ka kirjad?"
+msgstr[1] "Kas eemaldada ka kirjad?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, fuzzy, kde-format
+#| msgid "Remove messages"
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Kirjade eemaldamine"
+
+#: sendlaterconfigurewidget.cpp:219
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Kustuta"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "Ühtegi kirja ei leitud."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "Ühtegi kirja ei leitud."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Tõrge kirja hankimisel."
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Kirja ei õnnestunud hankida. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Transpordiviisi loomine nurjus"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "See ei ole tegelik kiri"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Kirja saatmine nurjus."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Kiri saadetud"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Tekkis tõrge. Kas saata uuesti?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "Tekkis tõrge"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Muuda..."
+
+#~ msgid "Remove items"
+#~ msgstr "Elementide eemaldamine"
+
+#~ msgid "Remove"
+#~ msgstr "Eemalda"
+
+#~ msgctxt "@title:window"
+#~ msgid "Send Later"
+#~ msgstr "Hilisem saatmine"
+
+#, fuzzy
+#~| msgctxt "@title:window"
+#~| msgid "Send Later"
+#~ msgid "Send Later"
+#~ msgstr "Hilisem saatmine"
+
+#~ msgid "Delay"
+#~ msgstr "Viivitus"
+
+#~ msgid "Days"
+#~ msgstr "päeva"
+
+#~ msgid "Weeks"
+#~ msgstr "nädalat"
+
+#~ msgid "Months"
+#~ msgstr "kuud"
+
+#~ msgid "Years"
+#~ msgstr "aastat"
+
+#~ msgid "You cannot select a date prior to the current date."
+#~ msgstr "Praegusest varasemat hetke ei saa valida."
+
+#~ msgid "Send at:"
+#~ msgstr "Saatmise aeg:"
+
+#~ msgid "Repeat every:"
+#~ msgstr "Kordumise intervall:"
+
+#, fuzzy
+#~| msgid "Send Later"
+#~ msgid "SendLater"
+#~ msgstr "Saada hiljem"
