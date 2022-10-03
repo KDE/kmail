@@ -58,7 +58,7 @@ msgid ""
 "KMail has many powerful features that are described in the <a href='help:/"
 "kmail2/index.html'>documentation</a>."
 msgstr ""
-"KMail té moltes característiques potents que es descriuen a la <a "
+"KMail té moltes característiques potents que es descriuen en la <a "
 "href='help:/kmail2/index.html'>documentació</a>."
 
 #: about/introduction_kmail.html:16
@@ -630,7 +630,7 @@ msgstr "En totes les comprovacions de correu"
 #: configuredialog/configureaccountpage.cpp:106
 #, kde-format
 msgid "Send &messages in outbox folder:"
-msgstr "Envia els &missatges que hi ha a la carpeta eixida:"
+msgstr "Envia els &missatges que hi ha en la carpeta eixida:"
 
 #: configuredialog/configureaccountpage.cpp:112
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
@@ -2354,8 +2354,8 @@ msgid ""
 msgstr ""
 "<qt><p>Heu demanat que el missatge s'encripte a vós mateix, però la "
 "identitat seleccionada no definix una clau d'encriptació (OpenPGP o S/MIME) "
-"per a utilitzar-la amb este objectiu.</p><p>Seleccioneu la clau o claus a "
-"utilitzar a la configuració de la identitat.</p></qt>"
+"per a utilitzar-la amb este objectiu.</p><p>Seleccioneu la clau o claus que "
+"s'utilitzaran en la configuració de la identitat.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2544
 #, kde-format
@@ -2370,8 +2370,8 @@ msgid ""
 "in the identity configuration.</p></qt>"
 msgstr ""
 "<qt> <p>Per a poder signar este missatge primer haureu de definir la clau de "
-"signatura a utilitzar (OpenPGP o S/MIME).</p><p>Escolliu la clau a utilitzar "
-"a la configuració de la identitat.</p></qt>"
+"signatura a utilitzar (OpenPGP o S/MIME).</p><p>Escolliu la clau que "
+"s'utilitzarà en la configuració de la identitat.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2615
 #, kde-format
@@ -2582,7 +2582,7 @@ msgstr "Detalls"
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:22
 #, kde-format
 msgid "Select email to put in whitelist:"
-msgstr "Seleccioneu un correu electrònic per a posar-lo a la llista blanca:"
+msgstr "Seleccioneu un correu electrònic per a posar-lo en la llista blanca:"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
 #, kde-format
@@ -2812,7 +2812,7 @@ msgstr "Imatge"
 #: identity/encodedimagepicker.cpp:132
 #, kde-format
 msgid "You do not have your own contact defined in the address book."
-msgstr "No teniu el vostre propi contacte definit a la llibreta d'adreces."
+msgstr "No teniu el vostre propi contacte definit en la llibreta d'adreces."
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
@@ -2824,7 +2824,7 @@ msgstr "Cap imatge"
 #, kde-format
 msgid "No picture set for your address book entry."
 msgstr ""
-"No teniu cap imatge establida a la vostra entrada de la llibreta d'adreces."
+"No teniu cap imatge establida en la vostra entrada de la llibreta d'adreces."
 
 #: identity/identityaddvcarddialog.cpp:27
 #: identity/identityeditvcarddialog.cpp:42
@@ -2846,7 +2846,7 @@ msgstr "&Des d'una vCard existent"
 #: identity/identityaddvcarddialog.cpp:65
 #, kde-format
 msgid "&vCard path:"
-msgstr "Camí a la &vCard:"
+msgstr "Camí cap a la &vCard:"
 
 #: identity/identityaddvcarddialog.cpp:76
 #, kde-format
@@ -2908,7 +2908,7 @@ msgid ""
 "this blank your real name will not appear, only the email address.</p></qt>"
 msgstr ""
 "<qt><h3>El vostre nom</h3><p>Este camp hauria de contindre el vostre nom, "
-"tal com voleu que aparega a la capçalera del correu electrònic que envieu.</"
+"tal com voleu que aparega en la capçalera del correu electrònic que envieu.</"
 "p><p>Si el deixeu en blanc, el vostre nom real no apareixerà, tan sols "
 "l'adreça de correu electrònic.</p></qt>"
 
@@ -2925,7 +2925,7 @@ msgid ""
 "sent out.</p><p>It is safe (and normal) to leave this blank.</p></qt>"
 msgstr ""
 "<qt><h3>Organització</h3><p>Este camp hauria de contindre el nom de la "
-"vostra organització, tal com voleu que aparega a la capçalera del correu "
+"vostra organització, tal com voleu que aparega en la capçalera del correu "
 "electrònic que envieu.</p><p>És segur (i normal) deixar este espai en blanc."
 "</p></qt>"
 
@@ -3264,7 +3264,7 @@ msgid ""
 msgstr ""
 "Una de les claus de signatura configurades a OpenPGP no conté cap ID de "
 "l'usuari amb l'adreça de correu configurada per a esta identitat (%1).\n"
-"Açò pot provocar missatges d'avís a la banda receptora en provar de "
+"Açò pot provocar missatges d'avís en la banda receptora en provar de "
 "verificar signatures fetes amb esta configuració."
 
 #: identity/identitydialog.cpp:766
@@ -3286,7 +3286,7 @@ msgid ""
 msgstr ""
 "Un dels certificats de signatura configurats a l'S/MIME no conté l'adreça de "
 "correu configurada per a esta identitat (%1).\n"
-"Açò pot provocar missatges d'avís a la banda receptora en provar de "
+"Açò pot provocar missatges d'avís en la banda receptora en provar de "
 "verificar signatures fetes amb esta configuració."
 
 #: identity/identitydialog.cpp:782
@@ -3301,7 +3301,7 @@ msgstr ""
 #: identity/identitydialog.cpp:792
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
-msgstr "No s'ha trobat l'adreça de correu a la clau/certificat"
+msgstr "No s'ha trobat l'adreça de correu en la clau/certificat"
 
 #: identity/identitydialog.cpp:804
 #, kde-format
@@ -3594,7 +3594,7 @@ msgid ""
 "it shows will still be available in their original folder.</qt>"
 msgstr ""
 "<qt>Segur que voleu suprimir la busca <b>%1</b>? <br />Tots els missatges "
-"encara estaran disponibles a la seua carpeta original.</qt>"
+"encara estaran disponibles en la seua carpeta original.</qt>"
 
 #: job/removecollectionjob.cpp:61
 #, kde-format
@@ -3686,7 +3686,7 @@ msgstr "S'ha produït un error en eliminar els duplicats"
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File as"
-msgstr "Guarda el fitxer com a"
+msgstr "Anomeneu i guardeu el fitxer"
 
 #: kmail_options.h:15
 #, kde-format
@@ -4909,7 +4909,7 @@ msgstr "Importa/Exporta les dades de KMail..."
 #: kmmainwidget.cpp:3389
 #, kde-format
 msgid "New AddressBook Contact..."
-msgstr "Contacte nou a la llibreta d'adreces..."
+msgstr "Contacte nou en la llibreta d'adreces..."
 
 #: kmmainwidget.cpp:3409
 #, kde-format
@@ -5109,13 +5109,13 @@ msgstr ""
 "Voleu activar la característica de bústia unificada per a mostrar el "
 "contingut unificat de les carpetes d'entrada, enviats i esborranys?\n"
 "Podeu configurar les bústies unificades, crear-ne personalitzades o "
-"desactivar completament la característica a la configuració del connector de "
-"KMail."
+"desactivar completament la característica en la configuració del connector "
+"de KMail."
 
 #: kmmainwidget.cpp:4846
 #, kde-format
 msgid "Enable Unified Mailboxes?"
-msgstr "Active les bústies unificades?"
+msgstr "Voleu activar les bústies unificades?"
 
 #: kmmainwidget.cpp:4847
 #, kde-format
@@ -5196,7 +5196,7 @@ msgstr "Afig a un contacte existent"
 #: kmreaderwin.cpp:150
 #, kde-format
 msgid "Open in Address Book"
-msgstr "Obri a la llibreta d'adreces"
+msgstr "Obri en la llibreta d'adreces"
 
 #: kmreaderwin.cpp:155
 #, kde-format
@@ -5473,7 +5473,8 @@ msgstr "Nom del connector de resum"
 #, kde-format
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
-"Seleccioneu els connectors de resum a visualitzar a la pàgina de resum."
+"Seleccioneu els connectors de resum que es visualitzaran en la pàgina de "
+"resum."
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:86
 #, kde-format

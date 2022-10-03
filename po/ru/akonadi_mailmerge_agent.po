@@ -1,42 +1,43 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Alexander Yavorsky <kekcuha@gmail.com>, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: kdeorg\n"
+"Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-01-02 00:48+0000\n"
-"PO-Revision-Date: 2022-10-02 15:49\n"
-"Last-Translator: \n"
-"Language-Team: Chinese Simplified\n"
-"Language: zh_CN\n"
+"PO-Revision-Date: 2022-10-01 14:59+0300\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: kdeorg\n"
-"X-Crowdin-Project-ID: 269464\n"
-"X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/kmail/akonadi_mailmerge_agent.pot\n"
-"X-Crowdin-File-ID: 25358\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 21.08.3\n"
 
 #: mailmergeconfiguredialog.cpp:31
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
-msgstr "配置"
+msgstr "Настройка"
 
 #: mailmergeconfiguredialog.cpp:48
 #, kde-format
 msgid "Mail Merge Agent"
-msgstr "邮件合并代理程序"
+msgstr "Агент объединения почты"
 
 #: mailmergeconfiguredialog.cpp:50
 #, kde-format
 msgid "Merge email addresses agent."
-msgstr "电子邮件地址合并代理程序。"
+msgstr "Агент объединения адресов электронной почты."
 
 #: mailmergeconfiguredialog.cpp:52
 #, kde-format
 msgid "Copyright (C) 2021-%1 Laurent Montel"
-msgstr "Copyright (C) 2021-%1 Laurent Montel"
+msgstr "© Laurent Montel, 2021–%1"
 
 #: mailmergeconfiguredialog.cpp:54
 #, kde-format
@@ -46,16 +47,16 @@ msgstr "Laurent Montel"
 #: mailmergeconfiguredialog.cpp:54
 #, kde-format
 msgid "Maintainer"
-msgstr "维护者"
+msgstr "Сопровождающий"
 
 #: mailmergeconfiguredialog.cpp:57
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, EasternLi, Wordless Echo"
+msgstr "Александр Яворский"
 
 #: mailmergeconfiguredialog.cpp:57
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, easternli@kde.org, wordless@echo.moe"
+msgstr "kekcuha@gmail.com"
