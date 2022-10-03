@@ -383,7 +383,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mSplitter->addWidget(mSnippetSplitter);
 
     auto editorAndCryptoStateIndicators = new QWidget(mSplitter);
-    mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     auto vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setContentsMargins({});
@@ -512,6 +511,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMComposerWin::slotFolderRemoved);
     connect(kmkernel, &KMKernel::configChanged, this, &KMComposerWin::slotConfigChanged);
+    connect(kmkernel, &KMKernel::configChanged, this, &KMComposerWin::runKeyResolver);
 
     mMainWidget->resize(800, 600);
     setCentralWidget(mMainWidget);
@@ -762,6 +762,7 @@ void KMComposerWin::readConfig(bool reload)
 {
     mEdtFrom->setCompletionMode(static_cast<KCompletion::CompletionMode>(KMailSettings::self()->completionMode()));
     mComposerBase->recipientsEditor()->setCompletionMode(static_cast<KCompletion::CompletionMode>(KMailSettings::self()->completionMode()));
+    mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     if (MessageCore::MessageCoreSettings::self()->useDefaultFonts()) {
         mBodyFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
