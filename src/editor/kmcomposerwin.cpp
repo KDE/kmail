@@ -368,8 +368,11 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
         insertFromMimeData(mimeData, false);
     });
 
+    connect(&mEncryptionState, &EncryptionState::encryptChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::encryptChanged, this, &KMComposerWin::updateSignatureAndEncryptionStateIndicators);
+    connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::runKeyResolver);
+    connect(&mEncryptionState, &EncryptionState::acceptedSolutionChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
 
     mLblIdentity = new QLabel(i18n("&Identity:"), mHeadersArea);
@@ -2585,13 +2588,6 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
         mEncryptionState.unsetOverride();
     }
 
-    // show the appropriate icon
-    if (encrypt) {
-        mEncryptAction->setIcon(QIcon::fromTheme(QStringLiteral("document-encrypt")));
-    } else {
-        mEncryptAction->setIcon(QIcon::fromTheme(QStringLiteral("document-decrypt")));
-    }
-
     if (setByUser) {
         if (encrypt) {
             if (mKeyCache->initialized()) {
@@ -3547,6 +3543,37 @@ std::unique_ptr<Kleo::KeyResolverCore> KMComposerWin::fillKeyResolver()
 
     keyResolverCore->setRecipients(recipients);
     return keyResolverCore;
+}
+
+void KMComposerWin::slotEncryptionButtonIconUpdate()
+{
+    const auto state = mEncryptionState.encrypt();
+    const auto override = mEncryptionState.override();
+    const auto acceptedSolution = mEncryptionState.acceptedSolution();
+
+    auto icon = QIcon::fromTheme(QStringLiteral("document-encrypt"));
+    QString tooltip;
+    if (state) {
+        tooltip = i18n("Encrypt");
+    } else {
+        tooltip = i18n("Not Encrypt");
+        icon = QIcon::fromTheme(QStringLiteral("document-decrypt"));
+    }
+
+    if (acceptedSolution) {
+        auto overlay = QIcon::fromTheme(QStringLiteral("emblem-added"));
+        if (state) {
+            overlay = QIcon::fromTheme(QStringLiteral("emblem-checked"));
+        }
+        icon = KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner);
+    } else {
+        if (state && setByUser) {
+            auto overlay = QIcon::fromTheme(QStringLiteral("emblem-warning"));
+            icon = KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner);
+        }
+    }
+    mEncryptAction->setIcon(icon);
+    mEncryptAction->setToolTip(tooltip);
 }
 
 void KMComposerWin::runKeyResolver()

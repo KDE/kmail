@@ -428,6 +428,8 @@ private Q_SLOTS:
     void slotDelayedCheckSendNow();
     void slotUpdateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
 
+    void slotEncryptionButtonIconUpdate();
+
 public: // kmcommand
     void addAttach(KMime::Content *msgPart) override;
 
