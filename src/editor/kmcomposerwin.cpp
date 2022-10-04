@@ -3649,23 +3649,26 @@ void KMComposerWin::runKeyResolver()
         }
 
         auto resolved_keys = result.solution.encryptionKeys[addrSpec];
+        GpgME::Key key;
         if (resolved_keys.size() == 0) {                // no key found for recipient
             recipient->setKey(GpgME::Key());
         } else {                                        // A key was found for recipient
-            auto key = resolved_keys.front();
+            key = resolved_keys.front();
             if (recipient->key().primaryFingerprint() != key.primaryFingerprint()) {
                 key.update();                               // We need tofu information for key.
                 recipient->setKey(key);
 
             }
-            mComposerBase->nearExpiryChecker()->checkKey(key);
         }
 
         const bool autocryptKey = autocrypt_keys.contains(addrSpec);
         const bool gossipKey = gossip_keys.contains(addrSpec);
         annotateRecipientEditorLineWithCrpytoInfo(line, autocryptKey, gossipKey);
-    }
 
+        if (!key.isNull()) {
+            mComposerBase->nearExpiryChecker()->checkKey(key);
+        }
+    }
 }
 
 void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG* line, bool autocryptKey, bool gossipKey)
