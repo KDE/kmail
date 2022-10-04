@@ -3676,6 +3676,13 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
     auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
     const auto key = recipient->key();
 
+    const auto showCryptoIndicator = KMailSettings::self()->showCryptoLabelIndicator();
+    const auto hasOverride = mEncryptionState.hasOverride();
+    const auto encrypt = mEncryptionState.encrypt();
+
+    const bool showPositiveIcons = showCryptoIndicator && encrypt;
+    const bool showAllIcons = showCryptoIndicator && hasOverride && encrypt;
+
     QString dummy;
     QString addrSpec;
     bool invalidEmail = false;
@@ -3686,7 +3693,12 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
 
     if (key.isNull()) {
         recipient->setEncryptionAction(Kleo::Impossible);
-        line->setIcon(QIcon());
+        if (showAllIcons && !invalidEmail) {
+            const auto icon = QIcon::fromTheme(QStringLiteral("emblem-error"));
+            line->setIcon(icon, QStringLiteral("No key found for the user."));
+        } else {
+            line->setIcon(QIcon());
+        }
         line->setProperty("keyStatus", invalidEmail ? InProgress : NoKey);
         return;
     }
@@ -3698,13 +3710,12 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
     }
 
     if (autocryptKey) {       // We found an Autocrypt key for recipient
-        const QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
-        QIcon overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
+        QIcon icon = QIcon::fromTheme(QStringLiteral("emblem-success"));
         QString tooltip;
         const auto storage = MessageCore::AutocryptStorage::self();
         const auto rec = storage->getRecipient(addrSpec.toUtf8());
         if (gossipKey) {       // We found an Autocrypt gossip key for recipient
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-informations"));
+            icon = QIcon::fromTheme(QStringLiteral("emblem-informations"));
             tooltip = i18n("Autocrypt gossip key is used for this recipient. We got this key from 3rd party recipients. This key is not verified.");
         } else if (rec->prefer_encrypt()) {
             tooltip = i18n(
@@ -3715,16 +3726,23 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                 "Autocrypt key is used for this recipient. This key is not verified. "
                 "The recipient does not prefer encrypted replies.");
         }
-        line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
+        if (showAllIcons) {
+            line->setIcon(icon, tooltip);
+        } else {
+            line->setIcon(QIcon());
+        }
+
     } else {
         QIcon icon;
         QString tooltip;
 
         const auto uids =  key.userIDs();
         const auto _uid = findSendersUid(addrSpec.toStdString(), uids);
-        GpgME::UserID uid = *_uid;
+        GpgME::UserID uid;
         if (_uid == uids.cend()) {
             uid = key.userID(0);
+        } else {
+           uid = *_uid;
         }
 
         const auto trustLevel = Kleo::trustLevel(uid);
@@ -3745,7 +3763,8 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                             keyState = NoKey;
                             break;
                         default:
-                            Q_UNREACHABLE();
+                            //TODO a bad key was selected -> give user help to fix this
+                            keyState = NoKey;
                     }
                 }
                 break;
@@ -3769,8 +3788,17 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                 Q_UNREACHABLE();
         }
 
-        // Magically, the icon name maps precisely to each trust level
-        line->setIcon(QIcon::fromTheme(QStringLiteral("gpg-key-trust-level-%1").arg(trustLevel)), tooltip);
+        if (keyState == NoKey && showAllIcons) {
+            line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-error")), tooltip);
+        } else if (trustLevel == Kleo::Level0 && encrypt) {
+            line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-warning")), tooltip);
+        } else if (showPositiveIcons) {
+            // Magically, the icon name maps precisely to each trust level
+            // line->setIcon(QIcon::fromTheme(QStringLiteral("gpg-key-trust-level-%1").arg(trustLevel)), tooltip);
+            line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-success")), tooltip);
+        } else {
+            line->setIcon(QIcon());
+        }
     }
 
     if (line->property("keyStatus") != keyState) {
