@@ -3511,11 +3511,10 @@ auto findSendersUid(const std::string &addrSpec, const std::vector<GpgME::UserID
             });
 }
 
-void KMComposerWin::runKeyResolver()
+std::unique_ptr<Kleo::KeyResolverCore> KMComposerWin::fillKeyResolver()
 {
-    auto keyResolverCore = std::unique_ptr<Kleo::KeyResolverCore>(new Kleo::KeyResolverCore(true, false));
-
     const auto ident = identity();
+    auto keyResolverCore = std::make_unique<Kleo::KeyResolverCore>(true, sign());
 
     QStringList signingKeys, encryptionKeys;
 
@@ -3549,6 +3548,13 @@ void KMComposerWin::runKeyResolver()
     }
 
     keyResolverCore->setRecipients(recipients);
+    return keyResolverCore;
+}
+
+void KMComposerWin::runKeyResolver()
+{
+    const auto ident = identity();
+    auto keyResolverCore = fillKeyResolver();
     auto result = keyResolverCore->resolve();
 
     QStringList autocrypt_keys;

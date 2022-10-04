@@ -30,6 +30,7 @@
 
 // Other includes
 #include <Libkleo/Enum>
+#include <Libkleo/KeyResolverCore>
 
 class QUrl;
 
@@ -594,6 +595,8 @@ private:
     void slotTooManyRecipients(bool b);
 
     Q_REQUIRED_RESULT bool sign() const;
+
+    std::unique_ptr<Kleo::KeyResolverCore> fillKeyResolver();
     void runKeyResolver();
     void annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey);
 
