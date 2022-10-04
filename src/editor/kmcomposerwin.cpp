@@ -3625,6 +3625,16 @@ void KMComposerWin::runKeyResolver()
     }
 
 
+    const auto lst = mComposerBase->recipientsEditor()->lines();
+
+    if (lst.size() == 1) {
+        const auto line = qobject_cast<MessageComposer::RecipientLineNG *>(lst.first());
+        if (line->recipientsCount() == 0) {
+            mEncryptionState.setAcceptedSolution(false);
+            return;
+        }
+    }
+
     mEncryptionState.setAcceptedSolution(result.flags & Kleo::KeyResolverCore::AllResolved);
 
     for (auto line_ : lst) {
