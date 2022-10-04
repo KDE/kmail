@@ -8,11 +8,10 @@
 
 #include "configuredialog_p.h"
 #include "kmail_export.h"
-#include "ui_composercryptoconfiguration.h"
+#include "ui_securitypageencryptiontab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_securitypagemdntab.h"
 #include "ui_smimeconfiguration.h"
-#include "ui_warningconfiguration.h"
 
 #include <KCMultiDialog>
 
@@ -58,31 +57,12 @@ private:
     Ui_SecurityPageMDNTab mUi;
 };
 
-class SecurityPageComposerCryptoTab : public ConfigModuleTab
+class SecurityPageEncryptionTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit SecurityPageComposerCryptoTab(QWidget *parent = nullptr);
-    ~SecurityPageComposerCryptoTab() override;
-
-    Q_REQUIRED_RESULT QString helpAnchor() const;
-
-    void save() override;
-
-private:
-    void doLoadFromGlobalSettings() override;
-    void doLoadOther() override;
-
-private:
-    Ui::ComposerCryptoConfiguration *mWidget = nullptr;
-};
-
-class SecurityPageWarningTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit SecurityPageWarningTab(QWidget *parent = nullptr);
-    ~SecurityPageWarningTab() override;
+    explicit SecurityPageEncryptionTab(QWidget *parent = nullptr);
+    ~SecurityPageEncryptionTab() override;
 
     Q_REQUIRED_RESULT QString helpAnchor() const;
 
@@ -95,7 +75,7 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui::WarningConfiguration *mWidget = nullptr;
+    Ui::SecurityPageEncryptionTab *mWidget = nullptr;
 };
 
 class SecurityPageSMimeTab : public ConfigModuleTab

@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SecurityPageEncryptionTab</class>
+ <widget class="QWidget" name="SecurityPageEncryptionTab">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>581</width>
+    <height>757</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout">
+   <item>
+    <widget class="QGroupBox" name="optionsGroup">
+     <property name="title">
+      <string>Security defaults</string>
+     </property>
+     <layout class="QVBoxLayout">
+      <item>
+       <widget class="QCheckBox" name="mEncToSelf">
+        <property name="whatsThis">
+         <string>When this option is enabled, the message/file will not only be encrypted with the receiver's public key, but also with your key. This will enable you to decrypt the message/file at a later time. This is generally a good idea.</string>
+        </property>
+        <property name="text">
+         <string>When encrypting emails, always also encr&amp;ypt to the certificate of my own identity</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mStoreEncrypted">
+        <property name="toolTip">
+         <string>Check to store messages encrypted </string>
+        </property>
+        <property name="whatsThis">
+         <string>&lt;qt&gt;
+&lt;h1&gt;Store Messages Encrypted&lt;/h1&gt;
+When this box is checked, sent messages are stored encrypted like they were sent. This is not recommended, as you will not be able to read the messages any longer if a necessary certificate expires.
+&lt;p&gt;
+However, there may be local rules that require you to turn this option on. When in doubt, check with your local administrator.
+&lt;/p&gt;&lt;/qt&gt;</string>
+        </property>
+        <property name="text">
+         <string>Store sent messages encry&amp;pted</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mShowKeyApprovalDlg">
+        <property name="whatsThis">
+         <string>When this option is enabled, the application will always show you a list of public keys from which you can choose the one it will use for encryption. If it is off, the application will only show the dialog if it cannot find the right key or if there are several which could be used.</string>
+        </property>
+        <property name="text">
+         <string>Always show the encryption keys &amp;for approval</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mAlwaysEncryptWhenSavingInDrafts">
+        <property name="text">
+         <string>When sa&amp;ving as draft, sign/encrypt as indicated</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mShowEncSignIndicator">
+        <property name="text">
+         <string>Show sign/encrypt indicator in editor</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="optionsGroup2">
+     <property name="title">
+      <string>Encryption indicators</string>
+     </property>
+     <layout class="QVBoxLayout">
+      <item>
+       <widget class="QCheckBox" name="mShowEncSignIndicator2">
+        <property name="text">
+         <string>Show sign/encrypt indicator</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mShowEncSignIndicator3">
+        <property name="text">
+         <string>Show encryption key ownertrust level</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="optionsGroup3">
+     <property name="title">
+      <string>Alerts</string>
+     </property>
+     <layout class="QVBoxLayout">
+      <item>
+       <widget class="QCheckBox" name="mShowEncSignIndicator4">
+        <property name="text">
+         <string>Always approve encryption keys before send</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="mWarnUnsigned">
+        <property name="text">
+         <string>Warn when tryping to send unsigned messages</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="warnUnencryptedCB">
+        <property name="text">
+         <string>Warn when tryping to send unencrypted messages</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="warnGroupBox">
+        <property name="title">
+         <string>Warn if certificates/ke&amp;ys expire soon (configure thresholds below)</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <layout class="QGridLayout" name="_2">
+         <item row="0" column="2">
+          <widget class="QLabel" name="textLabel2_2">
+           <property name="text">
+            <string>For Encryption</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="textLabel1">
+           <property name="text">
+            <string>For end-user certificates/&amp;keys:</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="buddy">
+            <cstring>mWarnSignKeyExpiresSB</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="2">
+          <widget class="KPluralHandlingSpinBox" name="mWarnEncrRootCertExpiresSB">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Select the number of days here</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Root Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the root certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/p&gt;&lt;/qt&gt;</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>14</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="KPluralHandlingSpinBox" name="mWarnSignKeyExpiresSB">
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Select the number of days here</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Signature Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the signature certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/p&gt;&lt;/qt&gt;</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>14</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="textLabel1_2">
+           <property name="text">
+            <string>For intermediate CA certificates:</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="buddy">
+            <cstring>mWarnSignChainCertExpiresSB</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="KPluralHandlingSpinBox" name="mWarnEncrChainCertExpiresSB">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Select the number of days here</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If A Certificate In The Chain Expires&lt;/h1&gt;
+Select the minimum number of days all certificates in the chain should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/p&gt;&lt;/qt&gt;</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>14</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <spacer name="spacer5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="3" column="1">
+          <widget class="KPluralHandlingSpinBox" name="mWarnSignChainCertExpiresSB">
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Select the number of days here</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If CA Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the CA certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/p&gt;&lt;/qt&gt;</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>14</number>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="textLabel1_2_2">
+           <property name="text">
+            <string>For &amp;root certificates:</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="buddy">
+            <cstring>mWarnSignRootCertExpiresSB</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="KPluralHandlingSpinBox" name="mWarnEncrKeyExpiresSB">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Select the number of days here</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Encryption Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the encryption certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/p&gt;&lt;/qt&gt;</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>14</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="textLabel2">
+           <property name="text">
+            <string>For Signing</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="KPluralHandlingSpinBox" name="mWarnSignRootCertExpiresSB">
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Select the number of days here</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Root Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the root certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/p&gt;&lt;/qt&gt;</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>14</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="textLabel7">
+           <property name="text">
+            <string>For own certificates</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+           <property name="buddy">
+            <cstring>mWarnSignOwnKeyExpiresSB</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="KPluralHandlingSpinBox" name="mWarnSignOwnKeyExpiresSB">
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Select the number of days here</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If own Certificates Expires&lt;/h1&gt;
+Select the minimum number of days own certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 30 days.
+&lt;/p&gt;&lt;/qt&gt;</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>30</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="KPluralHandlingSpinBox" name="mWarnEncrOwnKeyExpiresSB">
+           <property name="minimumSize">
+            <size>
+             <width>110</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Select the number of days here</string>
+           </property>
+           <property name="whatsThis">
+            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If own Certificates Expires&lt;/h1&gt;
+Select the minimum number of days own certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 30 days.
+&lt;/p&gt;&lt;/qt&gt;</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>999</number>
+           </property>
+           <property name="value">
+            <number>30</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="gnupgButton">
+       <property name="text">
+        <string>GnuPG Settings...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="_3">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="spacer4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="enableAllWarningsPB">
+       <property name="text">
+        <string>Re-enable All &quot;Do not Ask Again&quot; Warnings</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="spacer22">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KPluralHandlingSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>kpluralhandlingspinbox.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>mEncToSelf</tabstop>
+  <tabstop>mStoreEncrypted</tabstop>
+  <tabstop>mShowKeyApprovalDlg</tabstop>
+  <tabstop>mAlwaysEncryptWhenSavingInDrafts</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
