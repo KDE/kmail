@@ -82,6 +82,8 @@
 #include <Libkleo/ExpiryChecker>
 #include <Libkleo/KeyCache>
 #include <Libkleo/KeyResolverCore>
+#include <Libkleo/NewKeyApprovalDialog>
+#include <Libkleo/Enum>
 
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/FolderRequester>
@@ -387,6 +389,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::runKeyResolver);
     connect(&mEncryptionState, &EncryptionState::acceptedSolutionChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
+    connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
+    connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptionSettingsAction, &QAction::setEnabled);
 
     mRunKeyResolverTimer = new QTimer(this);
     mRunKeyResolverTimer->setSingleShot(true);
@@ -1450,6 +1454,11 @@ void KMComposerWin::setupActions()
     action->setIconText(i18n("Spellchecker"));
     actionCollection()->addAction(QStringLiteral("setup_spellchecker"), action);
     connect(action, &QAction::triggered, this, &KMComposerWin::slotSpellcheckConfig);
+
+    mEncryptionSettingsAction = new QAction(QIcon::fromTheme(QStringLiteral("document-encrypt")), i18n("Open key resolver dialog"), this);
+    mEncryptionSettingsAction->setIconText(i18n("Encryption ..."));
+    actionCollection()->addAction(QStringLiteral("encryption_setting"), mEncryptionSettingsAction);
+    connect(mEncryptionSettingsAction, &QAction::triggered, this, &KMComposerWin::showKeyApprovalDialog);
 
     mEncryptAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("document-encrypt")), i18n("&Encrypt Message"), this);
     mEncryptAction->setIconText(i18n("Encrypt"));
@@ -3641,13 +3650,31 @@ std::unique_ptr<Kleo::KeyResolverCore> KMComposerWin::fillKeyResolver()
 
     keyResolverCore->setSender(ident.fullEmailAddr());
     keyResolverCore->setSigningKeys(signingKeys);
-    keyResolverCore->setOverrideKeys({{GpgME::UnknownProtocol, {{keyResolverCore->normalizedSender(), encryptionKeys}}}});
+
+    if (!mOverrides.isEmpty()) {
+        keyResolverCore->setOverrideKeys({{GpgME::UnknownProtocol, mOverrides}});
+    } else {
+        keyResolverCore->setOverrideKeys({{GpgME::UnknownProtocol, {{keyResolverCore->normalizedSender(), encryptionKeys}}}});
+    }
 
     QStringList recipients;
     const auto lst = mComposerBase->recipientsEditor()->lines();
     for (auto line : lst) {
         auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
-        recipients.push_back(recipient->email());
+
+        if (recipient->email().isEmpty()) {
+            continue;
+        }
+
+        QString dummy;
+        QString addrSpec;
+        if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
+            addrSpec = recipient->email();
+        }
+
+        if (mOverrides.isEmpty() || !mOverrides.contains(addrSpec)  || !mOverrides[addrSpec].isEmpty()) {
+            recipients.push_back(recipient->email());
+        }
     }
 
     keyResolverCore->setRecipients(recipients);
@@ -3681,8 +3708,85 @@ void KMComposerWin::slotEncryptionButtonIconUpdate()
             icon = KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner);
         }
     }
+    mEncryptionSettingsAction->setIcon(icon);
+    mEncryptionSettingsAction->setToolTip(tooltip);
+
     mEncryptAction->setIcon(icon);
     mEncryptAction->setToolTip(tooltip);
+}
+
+void KMComposerWin::showKeyApprovalDialog()
+{
+    auto keyResolverCore = fillKeyResolver();
+    auto result = keyResolverCore->resolve();
+    auto solution = std::move(result.solution);
+    const QString sender =  keyResolverCore->normalizedSender();
+
+    // Add skipped recipients
+    for (const auto &o: mOverrides.keys()) {
+        if (mOverrides[o].isEmpty()) {
+            solution.encryptionKeys[o] = {};
+        }
+    }
+
+    auto dialog = std::make_unique<Kleo::NewKeyApprovalDialog>(true,
+                                                     sign(),
+                                                     sender,
+                                                     solution,
+                                                     std::move(result.alternative),
+                                                     true,
+                                                     GpgME::UnknownProtocol,
+                                                     this);
+    // TODO: set OK text
+    if (dialog->exec() == QDialog::Rejected) {
+            return;
+    }
+
+    const auto dialogSolution = dialog->result();
+
+    QMap<QString, QStringList> overrides;
+
+    for (const auto &name: dialogSolution.encryptionKeys.keys()) {
+        auto s = solution.encryptionKeys[name];
+        auto d = dialogSolution.encryptionKeys[name];
+
+        QStringList dSet;
+
+        for (const auto &k: d) {
+            dSet << QString::fromLatin1(k.primaryFingerprint());
+        }
+
+        if (name == sender) {
+            overrides[name] = dSet;
+        } else if (s.size() != d.size()) {
+            overrides[name] = dSet;
+            continue;
+        }
+
+        bool _override = false;
+        for (const auto &k: s) {
+            if (!dSet.contains(QString::fromLatin1(k.primaryFingerprint()))) {
+                _override = true;
+                break;
+            }
+        }
+
+        if (_override) {
+            overrides[name] = dSet;
+        }
+    }
+
+    for (const auto &name: solution.encryptionKeys.keys()) {
+        if (!dialogSolution.encryptionKeys.contains(name)) {
+            overrides[name] = QStringList();
+        }
+    }
+
+    mOverrides = overrides;
+
+    mEncryptionState.setOverride(true);
+
+    runKeyResolver();
 }
 
 void KMComposerWin::runKeyResolver()

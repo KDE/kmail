@@ -594,6 +594,7 @@ private:
     Q_REQUIRED_RESULT bool sign() const;
 
     std::unique_ptr<Kleo::KeyResolverCore> fillKeyResolver();
+    void showKeyApprovalDialog();
     void runKeyResolver();
     void annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey);
 
@@ -654,6 +655,7 @@ private:
     KToggleAction *mDictionaryAction = nullptr;
     KToggleAction *mSnippetAction = nullptr;
     KToggleAction *mShowMenuBarAction = nullptr;
+    QAction *mEncryptionSettingsAction = nullptr;
     QAction *mAppendSignature = nullptr;
     QAction *mPrependSignature = nullptr;
     QAction *mInsertSignatureAtCursorPosition = nullptr;
@@ -720,6 +722,7 @@ private:
     KHamburgerMenu *mHamburgerMenu = nullptr;
 
     std::shared_ptr<Kleo::KeyCache> mKeyCache;
+    QMap<QString, QStringList> mOverrides;
 
     ModeType mModeType = ModeType::ComposerType;
 };
