@@ -38,6 +38,7 @@ class QUrl;
 class QByteArray;
 class QGridLayout;
 class QLabel;
+class QPushButton;
 class QSplitter;
 class KSplitterCollapserButton;
 class CodecAction;
@@ -672,6 +673,9 @@ private:
 
     QSplitter *mHeadersToEditorSplitter = nullptr;
     QWidget *mHeadersArea = nullptr;
+    QWidget *mSubjectLine = nullptr;
+    QPushButton *mBtnEncrypt = nullptr;
+    QPushButton *mBtnSign = nullptr;
     QSplitter *mSplitter = nullptr;
     QSplitter *mSnippetSplitter = nullptr;
     QByteArray mOriginalPreferredCharset = nullptr;

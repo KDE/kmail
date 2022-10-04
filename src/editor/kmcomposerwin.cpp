@@ -384,18 +384,44 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
         insertFromMimeData(mimeData, false);
     });
 
+    mSubjectLine = new QWidget(mHeadersArea);
+    auto topLayout = new QHBoxLayout(mSubjectLine);
+    topLayout->setContentsMargins(0, 0, 0, 0);
+    topLayout->addWidget(mEdtSubject);
+    mBtnEncrypt = new QPushButton(QString(), mSubjectLine);
+    mBtnEncrypt->setIcon(QIcon::fromTheme(QStringLiteral("document-decrypt")));
+    mBtnEncrypt->setCheckable(true);
+    topLayout->addWidget(mBtnEncrypt);
+
+    connect(mBtnEncrypt, &QPushButton::clicked, &mEncryptionState, &EncryptionState::toggleOverride);
+
     connect(&mEncryptionState, &EncryptionState::encryptChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::encryptChanged, this, &KMComposerWin::updateSignatureAndEncryptionStateIndicators);
     connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::runKeyResolver);
     connect(&mEncryptionState, &EncryptionState::acceptedSolutionChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
+    connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mBtnEncrypt, &QPushButton::setEnabled);
     connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptionSettingsAction, &QAction::setEnabled);
 
     mRunKeyResolverTimer = new QTimer(this);
     mRunKeyResolverTimer->setSingleShot(true);
     mRunKeyResolverTimer->setInterval(500ms);
     connect(mRunKeyResolverTimer, &QTimer::timeout, this, &KMComposerWin::runKeyResolver);
+
+    mBtnSign = new QPushButton(QString(), mSubjectLine);
+    mBtnSign->setIcon(QIcon::fromTheme(QStringLiteral("document-sign")));
+    mBtnSign->setCheckable(true);
+    topLayout->addWidget(mBtnSign);
+
+    connect(mBtnSign, &QPushButton::clicked, this, &KMComposerWin::slotSignToggled);
+    connect(mBtnSign, &QPushButton::toggled, this, [=](bool state){
+        if (state) {
+            mBtnSign->setToolTip(i18n("Sign message"));
+        } else {
+            mBtnSign->setToolTip(i18n("Not sign message"));
+        }
+    });
 
     mLblIdentity = new QLabel(i18n("&Identity:"), mHeadersArea);
     mDictionaryLabel = new QLabel(i18n("&Dictionary:"), mHeadersArea);
@@ -1053,7 +1079,8 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
     if (!fromSlot) {
         mSubjectAction->setChecked(std::abs(mShowHeaders) & HDR_SUBJECT);
     }
-    rethinkHeaderLine(showHeaders, HDR_SUBJECT, row, mLblSubject, mEdtSubject);
+
+    rethinkHeaderLine(showHeaders, HDR_SUBJECT, row, mLblSubject, mSubjectLine);
     connectFocusMoving(mEdtSubject, mComposerBase->editor());
 
     assert(row <= mNumHeaders + 1);
@@ -2703,6 +2730,7 @@ void KMComposerWin::setSigning(bool sign, bool setByUser)
 
     // make sure the mSignAction is in the right state
     mSignAction->setChecked(sign);
+    mBtnSign->setChecked(sign);
 
     if (!setByUser) {
         updateSignatureAndEncryptionStateIndicators();
@@ -3608,7 +3636,9 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
     rethinkFields(false);
     setModified(wasModified);
 
-    if (ident.pgpAutoEncrypt() && mKeyCache->initialized()) {
+    mOverrides.clear();
+
+    if (mKeyCache->initialized()) {
         runKeyResolver();
     }
 }
@@ -3685,7 +3715,11 @@ void KMComposerWin::slotEncryptionButtonIconUpdate()
 {
     const auto state = mEncryptionState.encrypt();
     const auto setByUser = mEncryptionState.override();
+    const auto hasOverride = mEncryptionState.hasOverride();
     const auto acceptedSolution = mEncryptionState.acceptedSolution();
+
+    mBtnEncrypt->setChecked(hasOverride || state);
+    mEncryptAction->setChecked(hasOverride || state);
 
     auto icon = QIcon::fromTheme(QStringLiteral("document-encrypt"));
     QString tooltip;
@@ -3704,10 +3738,13 @@ void KMComposerWin::slotEncryptionButtonIconUpdate()
         icon = KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner);
     } else {
         if (state && setByUser) {
-            auto overlay = QIcon::fromTheme(QStringLiteral("emblem-warning"));
+            const auto overlay = QIcon::fromTheme(QStringLiteral("emblem-warning"));
             icon = KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner);
         }
     }
+    mBtnEncrypt->setIcon(icon);
+    mBtnEncrypt->setToolTip(tooltip);
+
     mEncryptionSettingsAction->setIcon(icon);
     mEncryptionSettingsAction->setToolTip(tooltip);
 
