@@ -1813,7 +1813,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     }
     slotIdentityChanged(mId, true /*initalChange*/);
     // Fixing the identities with auto signing activated
-    mLastSignActionState = mSignAction->isChecked();
+    mLastSignActionState = sign();
 
     // Add initial data.
     MessageComposer::PluginEditorConverterInitialData data;
@@ -2933,11 +2933,10 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
     if (mForceDisableHtml) {
         disableHtml(MessageComposer::ComposerViewBase::NoConfirmationNeeded);
     }
-    const bool sign = mSignAction->isChecked();
     const bool encrypt = mEncryptAction->isChecked();
 
     mComposerBase->setCryptoOptions(
-        sign,
+        sign(),
         encrypt,
         cryptoMessageFormat(),
         ((saveIn != MessageComposer::MessageSender::SaveInNone && !KMailSettings::self()->alwaysEncryptDrafts()) || mSigningAndEncryptionExplicitlyDisabled));
@@ -3456,6 +3455,7 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
             if (ident.pgpAutoEncrypt() || mEncryptAction->isEnabled()) {
                 runKeyResolver();
             }
+            runKeyResolver();
         });
     } else {
         checkOwnKeyExpiry(ident);
@@ -3466,8 +3466,9 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
         mLastEncryptActionState = mEncryptAction->isChecked();
         setEncryption(false);
     }
+
     if (!bNewIdentityHasSigningKey && mLastIdentityHasSigningKey) {
-        mLastSignActionState = mSignAction->isChecked();
+        mLastSignActionState = sign();
         setSigning(false);
     }
     // restore the last state of the sign and encrypt button
@@ -3847,7 +3848,7 @@ void KMComposerWin::setMaximumHeaderSize()
 
 void KMComposerWin::updateSignatureAndEncryptionStateIndicators()
 {
-    mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(mSignAction->isChecked(), mEncryptAction->isChecked());
+    mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(sign(), mEncryptAction->isChecked());
 }
 
 void KMComposerWin::slotDictionaryLanguageChanged(const QString &language)
@@ -3985,6 +3986,11 @@ void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
     });
 
     slotRecipientEditorFocusChanged();
+}
+
+bool KMComposerWin::sign() const
+{
+    return mSignAction->isEnabled();
 }
 
 void KMComposerWin::slotRecipientEditorFocusChanged()

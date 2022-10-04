@@ -593,6 +593,7 @@ private:
     void addFaceHeaders(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg);
     void slotTooManyRecipients(bool b);
 
+    Q_REQUIRED_RESULT bool sign() const;
     void runKeyResolver();
     void annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey);
 
