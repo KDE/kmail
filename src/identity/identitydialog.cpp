@@ -91,6 +91,7 @@ using MailTransport::TransportManager;
 #include <Akonadi/SpecialMailCollections>
 #include <QDialogButtonBox>
 #include <QStandardPaths>
+#include <QGroupBox>
 
 using namespace KPIM;
 using namespace MailTransport;
@@ -366,7 +367,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "to digitally sign emails using OpenPGP; "
         "normal mail functions will not be affected.</p>"
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP signing key:"), mCryptographyTab);
+    label = new QLabel(i18n("OpenPGP key:"), mCryptographyTab);
     label->setBuddy(mPGPSigningKeyRequester);
     mPGPSigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
@@ -383,12 +384,13 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "to encrypt copies of outgoing messages to you using OpenPGP; "
         "normal mail functions will not be affected.</p>"
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP encryption key:"), mCryptographyTab);
-    label->setBuddy(mPGPEncryptionKeyRequester);
-    mPGPEncryptionKeyRequester->setWhatsThis(msg);
-    label->setWhatsThis(msg);
+    //label = new QLabel(i18n("OpenPGP encryption key:"), mCryptographyTab);
+    //label->setBuddy(mPGPEncryptionKeyRequester);
+    //label->setWhatsThis(msg);
+    //mPGPEncryptionKeyRequester->setWhatsThis(msg);
+    mPGPEncryptionKeyRequester->setVisible(false);
 
-    formLayout->addRow(label, mPGPEncryptionKeyRequester);
+    //formLayout->addRow(label, mPGPEncryptionKeyRequester);
 
     // "S/MIME Signature Key" requester and label:
     mSMIMESigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::CMS, mCryptographyTab);
@@ -440,16 +442,38 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     formLayout->addRow(label, mPreferredCryptoMessageFormat);
 
-    mAutocrypt = new QComboBox(i18n("Enable Autocrypt"));
+    mAutocrypt = new QGroupBox(i18n("Enable Autocrypt"));
+    mAutocrypt->setCheckable(true);
+    mAutocrypt->setChecked(true);
 
     label = new QLabel(i18n("Autocrypt:"), tab);
     formLayout->addRow(label, mAutocrypt);
 
+    vlay = new QVBoxLayout(mAutocrypt);
+
+    mAutocryptPrefer = new QCheckBox(i18n("Let others know you prefer encryption"));
+    vlay->addWidget(mAutocryptPrefer);
+
+    auto groupBox = new QGroupBox(i18n("Overwrite global settings for security defaults"));
+    groupBox->setCheckable(true);
+    groupBox->setChecked(false);
+    label = new QLabel(i18n("Overwrite defaults:"), tab);
+    formLayout->addRow(label, groupBox);
+
+    vlay = new QVBoxLayout(groupBox);
+
     mAutoSign = new QCheckBox(i18n("Automatically sign messages"));
-    formLayout->addWidget(mAutoSign);
+    vlay->addWidget(mAutoSign);
 
     mAutoEncrypt = new QCheckBox(i18n("Automatically encrypt messages when possible"));
-    formLayout->addWidget(mAutoEncrypt);
+    vlay->addWidget(mAutoEncrypt);
+
+    auto checkBox = new QCheckBox(i18n("Warn when trying to send unsigned messages"));
+    vlay->addWidget(checkBox);
+
+    checkBox = new QCheckBox(i18n("Warn when trying to send unencrypted messages"));
+    vlay->addWidget(checkBox);
+
 
     //
     // Tab Widget: Advanced
