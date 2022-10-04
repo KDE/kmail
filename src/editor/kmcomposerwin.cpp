@@ -16,6 +16,7 @@
 #include "attachment/attachmentview.h"
 #include "codec/codecaction.h"
 #include "custommimeheader.h"
+#include "editor/encryptionstate.h"
 #include "editor/kmcomposereditorng.h"
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorconverttextmanagerinterface.h"
@@ -366,6 +367,11 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mEdtSubject, &SubjectLineEditWithAutoCorrection::handleMimeData, this, [this](const QMimeData *mimeData) {
         insertFromMimeData(mimeData, false);
     });
+
+    connect(&mEncryptionState, &EncryptionState::encryptChanged, this, &KMComposerWin::updateSignatureAndEncryptionStateIndicators);
+    connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::runKeyResolver);
+    connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
+
     mLblIdentity = new QLabel(i18n("&Identity:"), mHeadersArea);
     mDictionaryLabel = new QLabel(i18n("&Dictionary:"), mHeadersArea);
     mLblFcc = new QLabel(i18n("&Sent-Mail folder:"), mHeadersArea);
@@ -1441,7 +1447,7 @@ void KMComposerWin::setupActions()
 
     changeCryptoAction();
 
-    connect(mEncryptAction, &KToggleAction::triggered, this, &KMComposerWin::slotEncryptToggled);
+    connect(mEncryptAction, &KToggleAction::triggered, &mEncryptionState, &EncryptionState::toggleOverride);
     connect(mSignAction, &KToggleAction::triggered, this, &KMComposerWin::slotSignToggled);
 
     QStringList listCryptoFormat;
@@ -1605,14 +1611,13 @@ void KMComposerWin::changeCryptoAction()
     if (!QGpgME::openpgp() && !QGpgME::smime()) {
         // no crypto whatsoever
         mEncryptAction->setEnabled(false);
-        setEncryption(false);
+        mEncryptionState.setPossibleEncrypt(false);
         mSignAction->setEnabled(false);
         setSigning(false);
     } else {
         const bool canOpenPGPSign = QGpgME::openpgp() && !ident.pgpSigningKey().isEmpty();
         const bool canSMIMESign = QGpgME::smime() && !ident.smimeSigningKey().isEmpty();
 
-        setEncryption(false);
         setSigning((canOpenPGPSign || canSMIMESign) && ident.pgpAutoSign());
     }
 }
@@ -1875,8 +1880,9 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         const bool canOpenPGPSign = QGpgME::openpgp() && !ident.pgpSigningKey().isEmpty();
         const bool canSMIMESign = QGpgME::smime() && !ident.smimeSigningKey().isEmpty();
 
-        setEncryption(mLastEncryptActionState);
         setSigning((canOpenPGPSign || canSMIMESign) && mLastSignActionState);
+    } else {
+        mEncryptionState.setPossibleEncrypt(false);
     }
     updateSignatureAndEncryptionStateIndicators();
 
@@ -2546,19 +2552,13 @@ void KMComposerWin::slotUpdateWindowTitle()
     }
 }
 
-void KMComposerWin::slotEncryptToggled(bool on)
-{
-    setEncryption(on, true);
-    updateSignatureAndEncryptionStateIndicators();
-}
-
 void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
 {
     const bool wasModified = isModified();
     if (setByUser) {
         setModified(true);
     }
-    if (!mEncryptAction->isEnabled()) {
+    if (!mEncryptionState.encrypt()) {
         encrypt = false;
     }
     // check if the user wants to encrypt messages to himself and if he defined
@@ -2579,11 +2579,10 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
         encrypt = false;
     }
 
-    // make sure the mEncryptAction is in the right state
-    mEncryptAction->setChecked(encrypt);
-    mEncryptAction->setProperty("setByUser", setByUser);
-    if (!setByUser) {
-        updateSignatureAndEncryptionStateIndicators();
+    if (setByUser) {
+        mEncryptionState.setOverride(setByUser);
+    } else {
+        mEncryptionState.unsetOverride();
     }
 
     // show the appropriate icon
@@ -2878,7 +2877,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
         // we'll call send from within slotDoDelaySend
     } else {
-        if (saveIn == MessageComposer::MessageSender::SaveInDrafts && mEncryptAction->isChecked() && KMailSettings::self()->alwaysEncryptDrafts()
+        if (saveIn == MessageComposer::MessageSender::SaveInDrafts && mEncryptionState.encrypt() && KMailSettings::self()->alwaysEncryptDrafts()
             && mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty()) {
             KMessageBox::information(this,
                                      i18n("You must specify at least one receiver "
@@ -2933,7 +2932,7 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
     if (mForceDisableHtml) {
         disableHtml(MessageComposer::ComposerViewBase::NoConfirmationNeeded);
     }
-    const bool encrypt = mEncryptAction->isChecked();
+    const bool encrypt = mEncryptionState.encrypt();
 
     mComposerBase->setCryptoOptions(
         sign(),
@@ -3452,9 +3451,6 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
         mKeyCache->startKeyListing();
         connect(mKeyCache.get(), &Kleo::KeyCache::keyListingDone, this, [this, &ident](){
             checkOwnKeyExpiry(ident);
-            if (ident.pgpAutoEncrypt() || mEncryptAction->isEnabled()) {
-                runKeyResolver();
-            }
             runKeyResolver();
         });
     } else {
@@ -3463,8 +3459,7 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
 
     // save the state of the sign and encrypt button
     if (!bNewIdentityHasEncryptionKey && mLastIdentityHasEncryptionKey) {
-        mLastEncryptActionState = mEncryptAction->isChecked();
-        setEncryption(false);
+        mLastEncryptActionState = mEncryptionState.encrypt();
     }
 
     if (!bNewIdentityHasSigningKey && mLastIdentityHasSigningKey) {
@@ -3472,9 +3467,6 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
         setSigning(false);
     }
     // restore the last state of the sign and encrypt button
-    if (bNewIdentityHasEncryptionKey && !mLastIdentityHasEncryptionKey) {
-        setEncryption(mLastEncryptActionState);
-    }
     if (bNewIdentityHasSigningKey && !mLastIdentityHasSigningKey) {
         setSigning(mLastSignActionState);
     }
@@ -3491,7 +3483,13 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
     mInsertSignatureAtCursorPosition->setEnabled(isEnabledSignature);
 
     mId = uoid;
+
+    mEncryptionState.setPossibleEncrypt(true);
     changeCryptoAction();
+    mEncryptionState.unsetOverride();
+    mEncryptionState.setPossibleEncrypt(mEncryptionState.possibleEncrypt() && bNewIdentityHasEncryptionKey);
+    mEncryptionState.setAutoEncrypt(ident.pgpAutoEncrypt());
+
     // make sure the From and BCC fields are shown if necessary
     rethinkFields(false);
     setModified(wasModified);
@@ -3600,6 +3598,8 @@ void KMComposerWin::runKeyResolver()
     }
 
 
+    mEncryptionState.setAcceptedSolution(result.flags & Kleo::KeyResolverCore::AllResolved);
+
     for (auto line_ : lst) {
         auto line = qobject_cast<MessageComposer::RecipientLineNG *>(line_);
         Q_ASSERT(line);
@@ -3629,9 +3629,6 @@ void KMComposerWin::runKeyResolver()
         annotateRecipientEditorLineWithCrpytoInfo(line, autocryptKey, gossipKey);
     }
 
-    if (!mEncryptAction->property("setByUser").toBool()) {
-        setEncryption(result.flags & Kleo::KeyResolverCore::AllResolved, false);
-    }
 }
 
 void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG* line, bool autocryptKey, bool gossipKey)
@@ -3854,7 +3851,7 @@ void KMComposerWin::setMaximumHeaderSize()
 
 void KMComposerWin::updateSignatureAndEncryptionStateIndicators()
 {
-    mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(sign(), mEncryptAction->isChecked());
+    mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(sign(), mEncryptionState.encrypt());
 }
 
 void KMComposerWin::slotDictionaryLanguageChanged(const QString &language)
@@ -4001,15 +3998,8 @@ bool KMComposerWin::sign() const
 
 void KMComposerWin::slotRecipientEditorFocusChanged()
 {
-    // Already disabled
-    if (mEncryptAction->property("setByUser").toBool()) {
-        return;
-    }
-
-    // Identity has no encryption key so no encryption is possible.
-    // Same if auto-encryption is not enabled in current identity settings
-    if (!identity().pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
-        setEncryption(false, false);
+    // Encryption is possible not possible to find encryption keys.
+    if (!mEncryptionState.possibleEncrypt()) {
         return;
     }
 
@@ -4037,13 +4027,8 @@ void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineN
 
 void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
 {
-    // User has disabled encryption, don't bother checking the key...
-    if (!mEncryptAction->isChecked() && mEncryptAction->property("setByUser").toBool()) {
-        return;
-    }
-
-    // Same if auto-encryption is not enabled in current identity settings
-    if (!identity().pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
+    // Encryption is possible not possible to find encryption keys.
+    if (!mEncryptionState.possibleEncrypt()) {
         return;
     }
 
@@ -4071,12 +4056,8 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
 
 void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *line)
 {
-    if (mEncryptAction->property("setByUser").toBool()) {
-        return;
-    }
-
-    // Same if auto-encryption is not enabled in current identity settings
-    if (!identity().pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
+    // Encryption is possible not possible to find encryption keys.
+    if (!mEncryptionState.possibleEncrypt()) {
         return;
     }
 

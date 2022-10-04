@@ -14,6 +14,7 @@
 
 // KMail includes
 #include "editor/composer.h"
+#include "editor/encryptionstate.h"
 #include <MessageComposer/PluginEditorConvertTextInterface>
 // Qt includes
 #include <QFont>
@@ -354,12 +355,6 @@ private Q_SLOTS:
     void slotUpdateWindowTitle();
 
     /**
-     * Switch the icon to lock or unlock respectively.
-     * Change states of all encrypt check boxes in the attachments listview
-     */
-    void slotEncryptToggled(bool);
-
-    /**
      * Change states of all sign check boxes in the attachments listview
      */
     void slotSignToggled(bool);
@@ -602,6 +597,8 @@ private:
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
+
+    EncryptionState mEncryptionState;
 
     QWidget *mMainWidget = nullptr;
     MessageComposer::ComposerLineEdit *mEdtFrom = nullptr;
