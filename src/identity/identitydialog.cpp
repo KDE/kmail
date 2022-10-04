@@ -440,6 +440,11 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     formLayout->addRow(label, mPreferredCryptoMessageFormat);
 
+    mAutocrypt = new QComboBox(i18n("Enable Autocrypt"));
+
+    label = new QLabel(i18n("Autocrypt:"), tab);
+    formLayout->addRow(label, mAutocrypt);
+
     mAutoSign = new QCheckBox(i18n("Automatically sign messages"));
     formLayout->addWidget(mAutoSign);
 
@@ -832,6 +837,7 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mSMIMEEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.smimeEncryptionKey()));
 
     mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
+    mAutocrypt->setChecked(ident.autocryptEnabled());
     mAutoSign->setChecked(ident.pgpAutoSign());
     mAutoEncrypt->setChecked(ident.pgpAutoEncrypt());
 
@@ -952,6 +958,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setSMIMESigningKey(mSMIMESigningKeyRequester->currentKey().primaryFingerprint());
     ident.setSMIMEEncryptionKey(mSMIMEEncryptionKeyRequester->currentKey().primaryFingerprint());
     ident.setPreferredCryptoMessageFormat(QLatin1String(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
+    ident.setAutocryptEnabled(mAutocrypt->isChecked());
     ident.setPgpAutoSign(mAutoSign->isChecked());
     ident.setPgpAutoEncrypt(mAutoEncrypt->isChecked());
     // "Advanced" tab:

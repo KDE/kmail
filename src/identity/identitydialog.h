@@ -105,6 +105,7 @@ private:
     KeySelectionCombo *mSMIMESigningKeyRequester = nullptr;
     KeySelectionCombo *mSMIMEEncryptionKeyRequester = nullptr;
     QComboBox *mPreferredCryptoMessageFormat = nullptr;
+    QComboBox *mAutocrypt = nullptr;
     QCheckBox *mAutoSign = nullptr;
     QCheckBox *mAutoEncrypt = nullptr;
     // "advanced" tab:
